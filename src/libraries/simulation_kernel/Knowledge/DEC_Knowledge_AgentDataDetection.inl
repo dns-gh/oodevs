@@ -26,7 +26,17 @@ bool DEC_Knowledge_AgentDataDetection::IsDead() const
 inline
 bool DEC_Knowledge_AgentDataDetection::IsSurrendered() const
 {
-    return bSurrendered_;
+    return pArmySurrenderedTo_ != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::GetArmySurrenderedTo
+// Created: NLD 2007-02-14
+// -----------------------------------------------------------------------------
+inline
+const MIL_Army* DEC_Knowledge_AgentDataDetection::GetArmySurrenderedTo() const
+{
+    return pArmySurrenderedTo_;
 }
           
 // -----------------------------------------------------------------------------

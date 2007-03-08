@@ -62,12 +62,6 @@ private:
     virtual void WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg );
     //@}
 
-    //! @name Events
-    //@{
-    virtual void ProcessAgentInside  ( MIL_Agent_ABC& agent );
-    virtual void ProcessAgentExiting ( MIL_Agent_ABC& agent );
-    //@}
-
 private:
     MIL_AutomateLOG*                pTC2_;
     ASN1T_AttrObjectCampPrisonniers asnAttributes_;

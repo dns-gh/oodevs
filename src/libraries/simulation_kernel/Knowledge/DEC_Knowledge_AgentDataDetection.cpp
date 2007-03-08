@@ -17,6 +17,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
+#include "Entities/MIL_Army.h"
 #include "DEC_Knowledge_AgentPerceptionDataDetection.h"
 #include "Tools/MIL_Tools.h"
 #include "Network/NET_ASN_Tools.h"
@@ -32,7 +33,7 @@ DEC_Knowledge_AgentDataDetection::DEC_Knowledge_AgentDataDetection()
     : nTimeLastUpdate_             ( 0 )
     , rSpeed_                      ( std::numeric_limits< MT_Float >::max() )
     , rAltitude_                   ( std::numeric_limits< MT_Float >::max() )
-    , bSurrendered_                ( false )
+    , pArmySurrenderedTo_          ( 0 )
     , bPrisoner_                   ( false )
     , bRefugeeManaged_             ( false )
     , bDead_                       ( false )
@@ -73,7 +74,7 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
          >> vDirection_
          >> rSpeed_
          >> rAltitude_
-         >> bSurrendered_
+         >> const_cast< MIL_Army*& >( pArmySurrenderedTo_ )
          >> bPrisoner_
          >> bRefugeeManaged_
          >> bDead_;
@@ -114,7 +115,7 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
          << vDirection_
          << rSpeed_
          << rAltitude_
-         << bSurrendered_
+         << pArmySurrenderedTo_
          << bPrisoner_
          << bRefugeeManaged_
          << bDead_;
@@ -184,11 +185,11 @@ void DEC_Knowledge_AgentDataDetection::DoUpdate( const T& data )
         rSpeed_        = rNewSpeed;
         bSpeedUpdated_ = true;
     }
-//
-    const bool bNewSurrendered = data.IsSurrendered();
-    if( bSurrendered_ != bNewSurrendered )
+
+    const MIL_Army* pNewArmySurrenderedTo = data.GetArmySurrenderedTo();
+    if( pArmySurrenderedTo_ != pNewArmySurrenderedTo )
     {
-        bSurrendered_        = bNewSurrendered;
+        pArmySurrenderedTo_  = pNewArmySurrenderedTo;
         bSurrenderedUpdated_ = true;
     }
 
@@ -275,13 +276,13 @@ void DEC_Knowledge_AgentDataDetection::SendFullState( ASN1T_MsgUnitKnowledgeUpda
     asnMsg.speed = (int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
 
     asnMsg.m.renduPresent = 1;
-    asnMsg.rendu          = bSurrendered_;
+    asnMsg.rendu          = pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0;
 
     asnMsg.m.prisonnierPresent = 1;
     asnMsg.prisonnier          = bPrisoner_;
 
     asnMsg.m.refugie_pris_en_comptePresent = 1;
-    asnMsg.refugie_pris_en_compte = bRefugeeManaged_;
+    asnMsg.refugie_pris_en_compte          = bRefugeeManaged_;
 
     asnMsg.m.mortPresent = 1;
     asnMsg.mort          = bDead_;
@@ -314,7 +315,7 @@ void DEC_Knowledge_AgentDataDetection::SendChangedState( ASN1T_MsgUnitKnowledgeU
     if( bSurrenderedUpdated_ )
     {
         asnMsg.m.renduPresent = 1;
-        asnMsg.rendu          = bSurrendered_;
+        asnMsg.rendu          = pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0;
     }
     
     if( bPrisonerUpdated_ )

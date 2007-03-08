@@ -19,6 +19,7 @@
 class MIL_Agent_ABC;
 class PHY_PerceptionLevel;
 class PHY_Posture;
+class MIL_Army;
 
 // =============================================================================
 // Created: NLD 2004-03-11
@@ -56,7 +57,7 @@ public:
     const PHY_Posture&           GetLastPosture                () const;
     const PHY_Posture&           GetCurrentPosture             () const;
           MT_Float               GetPostureCompletionPercentage() const;
-          bool                   IsSurrendered                 () const;
+    const MIL_Army*              GetArmySurrenderedTo          () const;
           bool                   IsPrisoner                    () const;
           bool                   IsRefugeeManaged              () const;
           bool                   IsDead                        () const;
@@ -69,11 +70,12 @@ private:
     MT_Vector2D vDirection_;
     MT_Float    rAltitude_;
     MT_Float    rSpeed_;
-    bool        bSurrendered_;
-    bool        bPrisoner_; 
-    bool        bRefugeeManaged_;
     bool        bDead_;
 
+    const MIL_Army* pArmySurrenderedTo_;
+          bool      bPrisoner_; 
+          bool      bRefugeeManaged_;
+    
     // Attributes used by the vision, to see if we see a knowledge which doesn't exist anymore
     T_ComposanteVolumeSet visionVolumes_;
     const PHY_Posture*    pLastPosture_;

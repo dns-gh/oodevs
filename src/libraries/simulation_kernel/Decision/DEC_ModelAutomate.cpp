@@ -32,4 +32,3 @@ DEC_ModelAutomate::~DEC_ModelAutomate()
 {
 
 }
-

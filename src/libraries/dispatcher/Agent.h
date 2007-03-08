@@ -28,6 +28,7 @@ class Publisher_ABC;
 class AgentLogMedical;
 class AgentLogMaintenance;
 class AgentLogSupply;
+class Side;
 
 // =============================================================================
 /** @class  Agent
@@ -115,7 +116,7 @@ private:
     ASN1T_EnumUnitFatigue         nTiredness_;
     ASN1T_EnumUnitMoral           nMorale_;
     ASN1T_EnumUnitExperience      nExperience_;
-    bool                          bSurrendered_;
+    const Side*                   pSideSurrenderedTo_;
     bool                          bPrisonner_;
     bool                          bRefugeeManaged_;
 

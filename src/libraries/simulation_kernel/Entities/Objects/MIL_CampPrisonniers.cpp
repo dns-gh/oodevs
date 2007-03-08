@@ -147,32 +147,6 @@ ASN1T_EnumObjectErrorCode MIL_CampPrisonniers::Initialize( const ASN1T_MagicActi
 }
 
 // =============================================================================
-// EVENTS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: MIL_CampPrisonniers::ProcessAgentInside
-// Created: NLD 2005-03-07
-// -----------------------------------------------------------------------------
-void MIL_CampPrisonniers::ProcessAgentInside( MIL_Agent_ABC& agent )
-{
-    MIL_RealObject_ABC::ProcessAgentInside( agent );
-    if( pTC2_ && CanInteractWith( agent ) )
-        agent.GetRole< PHY_RoleInterface_Surrender >().NotifyInsidePrisonerCamp( *this );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MIL_CampPrisonniers::ProcessAgentExiting
-// Created: NLD 2005-03-07
-// -----------------------------------------------------------------------------
-void MIL_CampPrisonniers::ProcessAgentExiting( MIL_Agent_ABC& agent )
-{
-    MIL_RealObject_ABC::ProcessAgentExiting( agent );
-    if( pTC2_ )
-        agent.GetRole< PHY_RoleInterface_Surrender >().NotifyOutsidePrisonerCamp( *this );
-}
-
-// =============================================================================
 // KNOWLEDGE
 // =============================================================================
 

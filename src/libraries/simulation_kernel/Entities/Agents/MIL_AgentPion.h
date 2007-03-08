@@ -110,13 +110,15 @@ public:
     void SendCreation () const;
     void SendFullState() const;
     void SendKnowledge() const;
-    void OnReceiveMsgUnitMagicAction( DIN::DIN_Input&           msg );
-    void OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& msg, uint nCtx );
-    void OnReceiveMsgOrder          ( ASN1T_MsgPionOrder&       msg ); 
-    void OnReceiveMsgFragOrder      ( ASN1T_MsgFragOrder&       msg );
-    void OnReceiveMsgChangeAutomate ( ASN1T_MsgChangeAutomate&  msg, uint nCtx );
-    void OnReceiveMagicSurrender    ();
-    void OnReceiveMsgMagicMove      ( const MT_Vector2D& vPosition ); // Magic move automate
+
+    void OnReceiveMsgUnitMagicAction  ( DIN::DIN_Input&           msg );
+    void OnReceiveMsgUnitMagicAction  ( ASN1T_MsgUnitMagicAction& msg, uint nCtx );
+    void OnReceiveMsgOrder            ( ASN1T_MsgPionOrder&       msg ); 
+    void OnReceiveMsgFragOrder        ( ASN1T_MsgFragOrder&       msg );
+    void OnReceiveMsgChangeAutomate   ( ASN1T_MsgChangeAutomate&  msg, uint nCtx );
+    void OnReceiveMagicSurrender      ();
+    void OnReceiveMagicCancelSurrender();
+    void OnReceiveMsgMagicMove        ( const MT_Vector2D& vPosition ); // Magic move automate
     //@}
 
     //! @name HLA
@@ -132,7 +134,6 @@ public:
     virtual void NotifyAttackedBy( MIL_AgentPion& pion );
     virtual void NotifyAttackedBy( MIL_Population& population );
             void ChangeAutomate  ( MIL_Automate& newAutomate );
-            void Surrender       ();
     //@}
 
 private:

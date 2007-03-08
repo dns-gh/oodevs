@@ -34,13 +34,6 @@ public:
         eNbrGuiElements
     };
 
-    enum E_MiscMissions
-    {
-        eSurrenderMission,
-        eGoToRefugeeCampMission,
-        eNbrMiscMissionsElements
-    };
-
     //! @name Constructors/Destructor
     //@{
     explicit ADN_Missions_GUI( ADN_Missions_Data& data );
@@ -55,7 +48,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildMissions( QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions, bool isAutomat );
+    QWidget* BuildMissions( QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions );
     QWidget* BuildUnitMissions( QWidget* parent );
     QWidget* BuildAutomatMissions( QWidget* parent );
     QWidget* BuildPopulationMissions( QWidget* parent );

@@ -150,7 +150,8 @@ public:
 
     //! @name Prisoners
     //@{
-    void NotifyTakenPrisoner();
+    void NotifyCaptured();
+    void NotifyReleased();
     //@}
 
     //! @name Fire / Dangerosity

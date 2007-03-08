@@ -3651,7 +3651,7 @@ du tireur</translation>
     <name>ADN_Missions_GUI</name>
     <message>
         <source>Special missions</source>
-        <translation>Missions spéciales</translation>
+        <translation type="obsolete">Missions spéciales</translation>
     </message>
     <message>
         <source>&apos;Surrender&apos; mission</source>
@@ -3691,11 +3691,11 @@ du tireur</translation>
     </message>
     <message>
         <source>Surrender mission</source>
-        <translation>Mission &apos;Se Rendre&apos;</translation>
+        <translation type="obsolete">Mission &apos;Se Rendre&apos;</translation>
     </message>
     <message>
         <source>Go to refugee camp mission</source>
-        <translation>Mission &apos;Aller Vers Camp de Refugiés&apos;</translation>
+        <translation type="obsolete">Mission &apos;Aller Vers Camp de Refugiés&apos;</translation>
     </message>
     <message>
         <source>Fragmentary orders</source>

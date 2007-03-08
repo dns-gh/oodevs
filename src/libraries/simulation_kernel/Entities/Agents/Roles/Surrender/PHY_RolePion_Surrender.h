@@ -18,6 +18,7 @@
 
 class NET_ASN_MsgUnitAttributes;
 class MIL_AgentPion;
+class MIL_Army;
 
 // =============================================================================
 // @class  PHY_RolePion_Surrender
@@ -46,17 +47,19 @@ public:
 
     //! @name Main
     //@{
-            bool Surrender                ();
-    virtual bool TakePrisoner             ( const MIL_AgentPion& pionTakingPrisoner, const MIL_CampPrisonniers& camp );
-            bool NotifyTakenPrisoner      ();
-    virtual void NotifyInsidePrisonerCamp ( const MIL_CampPrisonniers& camp );
-    virtual void NotifyOutsidePrisonerCamp( const MIL_CampPrisonniers& camp );
+            void NotifySurrendered      ();    
+            void NotifySurrenderCanceled();
+    virtual bool Capture                ( const MIL_AgentPion& pionTakingPrisoner );
+    virtual bool Release                ();
+    virtual bool Imprison               ( const MIL_CampPrisonniers& camp );
     //@}
 
     //! @name Accessors
     //@{
-    virtual bool IsSurrendered() const;
-    virtual bool IsPrisoner   () const;
+    virtual const MIL_Army* GetArmySurrenderedTo() const;
+    virtual       bool      IsSurrendered       () const;
+    virtual       bool      IsPrisoner          () const;
+    virtual       bool      IsImprisoned        ( const MIL_CampPrisonniers& camp );
     //@}
 
     //! @name Network
@@ -66,10 +69,10 @@ public:
     //@}
 
 private:
-    MIL_AgentPion* pPion_;
-    bool           bSurrendered_;
-    bool           bPrisoner_;
-    bool           bHasChanged_;
+          MIL_AgentPion*       pPion_;
+          bool                 bPrisoner_;
+    const MIL_CampPrisonniers* pPrison_;
+          bool                 bHasChanged_;
 };
 
 #include "PHY_RolePion_Surrender.inl"

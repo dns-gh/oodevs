@@ -28,10 +28,19 @@ signatures
     B                                       A::DEC_Agent_PeutTransporterPion         ( A /*T_Pion à transporter*/, B /*Transporte seulement embarquables*/ );
                                             
     // Prisonniers                          
-    B                                       A::DEC_FairePrisonnier( U /*T_ConnaissanceAgent*/, U /*T_ConnaissanceObjet camp de prisonniers*/, I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_Prisonniers_CapturerEtEmbarquer( U /*T_ConnaissanceAgent*/, I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_Prisonniers_Debarquer          ( U /*T_ConnaissanceAgent*/, I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_Prisonniers_DebarquerDansCamp  ( U /*T_ConnaissanceAgent*/, U /*T_ConnaissangeObjet*/, I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_Prisonniers_EstEmbarque        ( U /*T_ConnaissanceAgent*/, I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_Prisonniers_EstDebarqueDansCamp( U /*T_ConnaissanceAgent*/, U /*T_ConnaissangeObjet*/, I /*E_ValiditeRequete&*/ );
                                             
     // Refugies                             
-    B                                       A::DEC_OrienterRefugies( U /*T_ConnaissanceAgent*/, U /*T_ConnaissanceObjet camp de refugiés*/, I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_Refugies_OrienterEtEmbarquer( U /*T_ConnaissanceAgent*/, I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_Refugies_Debarquer          ( U /*T_ConnaissanceAgent*/, I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_Refugies_DebarquerDansCamp  ( U /*T_ConnaissanceAgent*/, U /*T_ConnaissangeObjet*/, I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_Refugies_EstEmbarque        ( U /*T_ConnaissanceAgent*/, I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_Refugies_EstDebarqueDansCamp( U /*T_ConnaissanceAgent*/, U /*T_ConnaissangeObjet*/, I /*E_ValiditeRequete&*/ );
+    
     
     // Installation
     B                                       A::DEC_Agent_EstInstalle   ();
@@ -301,26 +310,28 @@ signatures
     B                                       A::DEC_Automate_SetMissionLimaFlag( U /*T_Lima*/, B /*bFlag*/ );
                                             
     // Geometrie                            
-    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionAppui                     ( A /*T_Pion*/, R /*rDist*/ ); 
-    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionEmbuscade                 ( U /*T_Point point d'embuscade*/, U /*T_Point point de retraite*/, R /*Distance*/ );
-    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionSurete                    ( U /*T_ConnaissanceAgent*/, R /*distance min*/, I /*E_ValiditeRequete&*/ );
-    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionSureteAvecPopulation      ( U /*T_ConnaissancePopulation*/, R /*distance min*/, I /*E_ValiditeRequete&*/ );
-    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionSureteAvecObjectif        ( U /*T_ConnaissanceAgent*/, R /*distance min*/, U /*T_Point objectif*/, I /*E_ValiditeRequete&*/ );
-    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionObstacle                  ( I /*E_ObjectType*/, U /*vCircleCenter*/, R /*rayon*/ );    
-    B                                       A::DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau ( U /*T_Localisation localisation*/, U /*T_Point result*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionAppui                              ( A /*T_Pion*/, R /*rDist*/ ); 
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionEmbuscade                          ( U /*T_Point point d'embuscade*/, U /*T_Point point de retraite*/, R /*Distance*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionSurete                             ( U /*T_ConnaissanceAgent*/, R /*distance min*/, I /*E_ValiditeRequete&*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionSureteAvecPopulation               ( U /*T_ConnaissancePopulation*/, R /*distance min*/, I /*E_ValiditeRequete&*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionSureteAvecObjectif                 ( U /*T_ConnaissanceAgent*/, R /*distance min*/, U /*T_Point objectif*/, I /*E_ValiditeRequete&*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionObstacle                           ( I /*E_ObjectType*/, U /*vCircleCenter*/, R /*rayon*/ );    
+    B                                       A::DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau          ( U /*T_Localisation localisation*/, U /*T_Point result*/ );
     B                                       A::DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau( U /*T_Localisation localisation*/, U /*T_Point result*/ );
-    S /*T_ListeLocalisations*/              A::DEC_Geometrie_DecoupeLocalisation                       ( U /*T_Localisation*/, R /*nbr part*/, I /*E_LocalisationFunctionsReturnCode*/ );
-    S /*T_ListeLocalisations*/              A::DEC_Geometrie_DecoupeLocalisationSurface                ( U /*T_Localisation*/, R /*surface moyenne en m2*/, I /*E_LocalisationFunctionsReturnCode*/ );
-    S /*T_LIsteLocalisations*/              A::DEC_Geometrie_DecoupeFuseauEnTroncons                   ( R /*profondeur des segments en m*/ );
-    U /*T_Point*/                           A::DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau  ( U /*T_Localisation*/, I /*E_LocalisationFunctionsReturnCode*/ );
-    B                                       A::DEC_Geometrie_EstPointDansFuseau                        ( U /*T_Point*/ );
-    U /*T_Point*/                           A::DEC_Geometrie_CalculerEntreeFuseauLaPlusProche          ();           
-    U /*T_Point*/                           A::DEC_Geometrie_CalculerPointArrivee                      ();
-    U /*T_Point*/                           A::DEC_Geometrie_CalculerPointDepart                       ();    
-    U /*T_Point*/                           A::DEC_Geometrie_CalculerBarycentreListeConnaissancesAgents( S /*T_ListeConnaissancesAgent*/ );
-    A                                       A::DEC_Geometrie_PionDevant                                ( S /*T_ListePions*/, U /*T_Direction*/ );
-    A                                       A::DEC_Geometrie_PionDerriere                              ( S /*T_ListePions*/, U /*T_Direction*/ );
-    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionParRapportALima                    ( U /*T_Lima*/, R /*dist avant lima*/, B /*retour*/ );
+    S /*T_ListeLocalisations*/              A::DEC_Geometrie_DecoupeLocalisation                                ( U /*T_Localisation*/, R /*nbr part*/, I /*E_LocalisationFunctionsReturnCode*/ );
+    S /*T_ListeLocalisations*/              A::DEC_Geometrie_DecoupeLocalisationSurface                         ( U /*T_Localisation*/, R /*surface moyenne en m2*/, I /*E_LocalisationFunctionsReturnCode*/ );
+    S /*T_LIsteLocalisations*/              A::DEC_Geometrie_DecoupeFuseauEnTroncons                            ( R /*profondeur des segments en m*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau           ( U /*T_Localisation*/, I /*E_LocalisationFunctionsReturnCode*/ );
+    B                                       A::DEC_Geometrie_EstPointDansFuseau                                 ( U /*T_Point*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerEntreeFuseauLaPlusProche                   ();           
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPointArrivee                               ();
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPointDepart                                ();    
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerBarycentreListeConnaissancesAgents         ( S /*T_ListeConnaissancesAgent*/ );
+    A                                       A::DEC_Geometrie_PionDevant                                         ( S /*T_ListePions*/, U /*T_Direction*/ );
+    A                                       A::DEC_Geometrie_PionDerriere                                       ( S /*T_ListePions*/, U /*T_Direction*/ );
+
+    // $$$$GGR : for tests
+    //U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionParRapportALima                    ( U /*T_Lima*/, R /*dist avant lima*/, B /*retour*/ );
                                             
     // Etat                                 
     V                                       A::DEC_Elongation( R /*facteur d'élongation du pion*/ );

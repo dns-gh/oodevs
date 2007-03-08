@@ -10,16 +10,6 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Surrender::Update
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-inline
-void PHY_RolePion_Surrender::Update( bool /*bIsDead*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Surrender::Clean
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
@@ -39,16 +29,6 @@ bool PHY_RolePion_Surrender::HasChanged() const
     return bHasChanged_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Surrender::IsSurrendered
-// Created: NLD 2005-02-24
-// -----------------------------------------------------------------------------
-inline
-bool PHY_RolePion_Surrender::IsSurrendered() const
-{
-    return bSurrendered_;
-}
-    
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Surrender::IsPrisoner
 // Created: NLD 2005-02-24

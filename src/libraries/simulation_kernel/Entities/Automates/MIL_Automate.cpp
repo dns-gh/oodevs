@@ -28,8 +28,8 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
-#include "Entities/Objects/MIL_CampPrisonniers.h"
 #include "Entities/Objects/MIL_CampRefugies.h"
+#include "Entities/Objects/MIL_CampPrisonniers.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateTypeLOG.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
@@ -72,10 +72,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formatio
     , dotationSupplyStates_              ( )
     , nTickRcDotationSupplyQuerySent_    ( 0 )
     , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) )
-    , bSurrendered_                      ( false )
-    , bPrisoner_                         ( false )
-    , pPrisonerCamp_                     ( 0 )
-    , pRefugeeCamp_                      ( false )
+    , pArmySurrenderedTo_                ( 0 )
 {
     archive.ReadAttribute( "engaged", bEngaged_, MIL_InputArchive::eNothing );
     archive.ReadAttribute( "name"   , strName_ , MIL_InputArchive::eNothing );
@@ -117,10 +114,7 @@ MIL_Automate::MIL_Automate()
     , dotationSupplyStates_              ( )
     , nTickRcDotationSupplyQuerySent_    ( 0 )
     , pKnowledgeBlackBoard_              ( 0 )
-    , bSurrendered_                      ( false )
-    , bPrisoner_                         ( false )
-    , pPrisonerCamp_                     ( 0 )
-    , pRefugeeCamp_                      ( false )
+    , pArmySurrenderedTo_                ( 0 )
 {
 }
 
@@ -204,20 +198,8 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
          >> bDotationSupplyExplicitlyRequested_
          >> dotationSupplyStates_
          >> pKnowledgeBlackBoard_
-         >> bSurrendered_
-         >> bPrisoner_
-         >> const_cast< MIL_CampPrisonniers*& >( pPrisonerCamp_ )
-         >> const_cast< MIL_CampRefugies*&    >( pRefugeeCamp_  )
+         >> const_cast< MIL_Army*& >( pArmySurrenderedTo_ )
          >> nTickRcDotationSupplyQuerySent_;
-
-    if( pRefugeeCamp_ )
-    {
-        Engage();
-        orderManager_.OnReceiveMission( MIL_AutomateMissionType::GetMoveToRefugeeCampMissionType() );
-    }
-
-    if( bPrisoner_ && bEngaged_ )
-        orderManager_.OnReceiveMission( MIL_AutomateMissionType::GetSurrenderingMissionType() );
 }
 
 // -----------------------------------------------------------------------------
@@ -245,10 +227,7 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
          << bDotationSupplyExplicitlyRequested_
          << dotationSupplyStates_
          << pKnowledgeBlackBoard_
-         << bSurrendered_
-         << bPrisoner_
-         << pPrisonerCamp_
-         << pRefugeeCamp_
+         << pArmySurrenderedTo_
          << nTickRcDotationSupplyQuerySent_;
 }
 
@@ -489,11 +468,11 @@ void MIL_Automate::UpdateNetwork() const
 // -----------------------------------------------------------------------------
 void MIL_Automate::UpdateState()
 {
-    if( !bDotationSupplyNeeded_ || !dotationSupplyStates_.empty() || ( !pTC2_ && !pNominalTC2_ ) )
+    if( !bDotationSupplyNeeded_ || !dotationSupplyStates_.empty() || ( !pTC2_ && !GetNominalTC2() ) )
         return;
 
     PHY_SupplyDotationRequestContainer supplyRequests( *this, bDotationSupplyExplicitlyRequested_ );
-    bDotationSupplyNeeded_ = !supplyRequests.Execute( pTC2_, pNominalTC2_, dotationSupplyStates_ );
+    bDotationSupplyNeeded_ = !supplyRequests.Execute( pTC2_, GetNominalTC2(), dotationSupplyStates_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -632,71 +611,38 @@ MIL_Army& MIL_Automate::GetArmy() const
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::OrientateRefugee
-// Created: NLD 2005-03-10
+// Name: MIL_Automate::NotifyRefugeeOrientated
+// Created: NLD 2007-02-15
 // -----------------------------------------------------------------------------
-bool MIL_Automate::OrientateRefugee( const MIL_CampRefugies& camp )
+void MIL_Automate::NotifyRefugeeOriented( const MIL_AgentPion& pionManaging )
 {
-    assert( pType_ );
-    
-    if ( !pType_->IsRefugee() || pRefugeeCamp_ )
-        return false;
-
-    pRefugeeCamp_ = &camp;
-
-    Engage();
-
-    orderManager_.OnReceiveMission( MIL_AutomateMissionType::GetMoveToRefugeeCampMissionType() );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::NotifyRefugeeManagedStateChanged
-// Created: NLD 2005-03-10
-// -----------------------------------------------------------------------------
-void MIL_Automate::NotifyRefugeeManagedStateChanged( bool bManaged )
-{
-    assert( pType_ );
-    
     if ( !pType_->IsRefugee() )
         return;
-
-    if( bManaged )
-    {
-        for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-            (**itPion).GetRole< PHY_RolePion_Refugee >().NotifyManaged();
-    }
-    else
-    {
-        for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-            (**itPion).GetRole< PHY_RolePion_Refugee >().NotifyUnmanaged();
-        pRefugeeCamp_ = 0;
-    }
+    pTC2_ = pionManaging.GetAutomate().GetTC2();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::NotifyInsideRefugeeCamp
-// Created: NLD 2005-03-10
+// Name: MIL_Automate::NotifyRefugeeReleased
+// Created: NLD 2007-02-15
 // -----------------------------------------------------------------------------
-void MIL_Automate::NotifyInsideRefugeeCamp( const MIL_CampRefugies& camp )
+void MIL_Automate::NotifyRefugeeReleased()
 {
-    assert( pType_ );
-    
-    if ( pType_->IsRefugee() )
-        pTC2_ = &camp.GetTC2();
+    if ( !pType_->IsRefugee() )
+        return;
+    pTC2_ = pNominalTC2_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::NotifyOutsideRefugeeCamp
-// Created: NLD 2005-03-10
+// Name: MIL_Automate::NotifyRefugeeReleased
+// Created: NLD 2007-02-15
 // -----------------------------------------------------------------------------
-void MIL_Automate::NotifyOutsideRefugeeCamp( const MIL_CampRefugies& /*camp*/ )
+void MIL_Automate::NotifyRefugeeReleased( const MIL_CampRefugies& camp )
 {
-    assert( pType_ );
-    
-    if ( pType_->IsRefugee() )
-        pTC2_ = 0;
+    if ( !pType_->IsRefugee() )
+        return;
+    pTC2_ = &camp.GetTC2();
 }
+
 
 // =============================================================================
 // PRISONERS
@@ -706,62 +652,62 @@ void MIL_Automate::NotifyOutsideRefugeeCamp( const MIL_CampRefugies& /*camp*/ )
 // Name: MIL_Automate::Surrender
 // Created: NLD 2005-02-24
 // -----------------------------------------------------------------------------
-void MIL_Automate::Surrender()
+void MIL_Automate::Surrender( const MIL_Army& amrySurrenderedTo )
 {
-    if( bSurrendered_ )
+    if( pArmySurrenderedTo_ )
         return;
 
     orderManager_.ReplaceMission();
-    pPrisonerCamp_ = 0;
-    bSurrendered_  = true;
-    pTC2_          = 0;
-    pNominalTC2_   = 0;
+    pArmySurrenderedTo_ = &amrySurrenderedTo;
+    pTC2_               = 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::TakePrisoner
+// Name: MIL_Automate::CancelSurrender
+// Created: NLD 2007-02-15
+// -----------------------------------------------------------------------------
+void MIL_Automate::CancelSurrender()
+{
+    pArmySurrenderedTo_ = 0;
+    pTC2_               = pNominalTC2_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::NotifyCaptured
 // Created: NLD 2005-03-04
 // -----------------------------------------------------------------------------
-bool MIL_Automate::TakePrisoner( const MIL_AgentPion& pionTakingPrisoner, const MIL_CampPrisonniers& camp )
+bool MIL_Automate::NotifyCaptured( const MIL_AgentPion& pionTakingPrisoner )
 {
-    if( !bSurrendered_ )
+    if( !IsSurrendered() )
         return false;
-    if( bPrisoner_ )
-        return true;
 
-    assert( !pPrisonerCamp_ );
-    assert( !pTC2_ && !pNominalTC2_ );
-
-    pPrisonerCamp_ = &camp;
-    bPrisoner_     = true;
-    pTC2_          = pionTakingPrisoner.GetAutomate().GetTC2();
-    for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-        (**itPion).GetRole< PHY_RolePion_Surrender >().NotifyTakenPrisoner();
-
-    Engage();
-
-    orderManager_.OnReceiveMission( MIL_AutomateMissionType::GetSurrenderingMissionType() );
+    pTC2_ = pionTakingPrisoner.GetAutomate().GetTC2();
     return true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::NotifyInsidePrisonerCamp
-// Created: NLD 2005-03-07
+// Name: MIL_Automate::NotifyReleased
+// Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-void MIL_Automate::NotifyInsidePrisonerCamp( const MIL_CampPrisonniers& camp )
+bool MIL_Automate::NotifyReleased()
 {
-    if( bPrisoner_ )
-        pTC2_ = &camp.GetTC2();
+    if( !IsSurrendered() )
+        return false;
+    pTC2_ = 0;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::NotifyOutsidePrisonerCamp
+// Name: MIL_Automate::NotifyImprisoned
 // Created: NLD 2005-03-07
 // -----------------------------------------------------------------------------
-void MIL_Automate::NotifyOutsidePrisonerCamp( const MIL_CampPrisonniers& /*camp*/ )
+bool MIL_Automate::NotifyImprisoned( const MIL_CampPrisonniers& camp )
 {
-    if( bPrisoner_ )
-        pTC2_ = 0;
+    if( !IsSurrendered() )
+        return false;
+
+    pTC2_ = &camp.GetTC2();
+    return true;
 }
 
 // =============================================================================
@@ -933,13 +879,32 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg
     }
     else if( asnMsg.action.t == T_MsgUnitMagicAction_action_se_rendre )
     {
-        Surrender();
+        NET_ASN_MsgUnitMagicActionAck asnReplyMsg;
+        asnReplyMsg().oid        = asnMsg.oid;       
+        asnReplyMsg().error_code = EnumUnitAttrErrorCode::no_error;
+
+        const MIL_Army* pSurrenderedToArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asnMsg.action.u.se_rendre );
+        if( !pSurrenderedToArmy || *pSurrenderedToArmy == GetArmy() )
+            asnReplyMsg().error_code = EnumUnitAttrErrorCode::error_invalid_attribute;
+        else if( IsSurrendered() )
+            asnReplyMsg().error_code = EnumUnitAttrErrorCode::error_unit_surrendered;
+        else        
+        {
+            Surrender( *pSurrenderedToArmy );
+            for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+                (**itPion).OnReceiveMagicSurrender();
+        }
+        asnReplyMsg.Send( nCtx );
+    }
+    else if( asnMsg.action.t == T_MsgUnitMagicAction_action_annuler_reddition )
+    {
+        CancelSurrender();
         for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-            (**itPion).OnReceiveMagicSurrender(); 
-        
+            (**itPion).OnReceiveMagicCancelSurrender();
+
         NET_ASN_MsgUnitMagicActionAck asnReplyMsg;
         asnReplyMsg().oid        = asnMsg.oid;
-            asnReplyMsg().error_code = EnumUnitAttrErrorCode::no_error;
+        asnReplyMsg().error_code = EnumUnitAttrErrorCode::no_error;
         asnReplyMsg.Send( nCtx );
     }
     else

@@ -1208,6 +1208,7 @@ void PHY_RolePion_Composantes::SendFullState( NET_ASN_MsgUnitAttributes& msg ) c
 {
     msg().dotation_eff_materiel.n        = composanteTypes_.size();
     msg().m.dotation_eff_materielPresent = 1;
+
     if( !composanteTypes_.empty() )
     {
         ASN1T_DotationEquipement* pEquipments = new ASN1T_DotationEquipement[ composanteTypes_.size() ];
@@ -1720,15 +1721,29 @@ void PHY_RolePion_Composantes::RetrieveLentComposante( PHY_RolePion_Composantes&
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::NotifyTakenPrisoner
+// Name: PHY_RolePion_Composantes::NotifyCaptured
 // C: NLD 2005-03-07
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::NotifyTakenPrisoner()
+void PHY_RolePion_Composantes::NotifyCaptured()
 {
-    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
+    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
-        PHY_ComposantePion& composante = **itComposante;
+        PHY_ComposantePion& composante = **it;
         if( composante.GetState().IsUsable() )
             composante.ReinitializeState( PHY_ComposanteState::prisoner_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::NotifyReleased
+// Created: NLD 2007-02-15
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::NotifyReleased()
+{
+    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        PHY_ComposantePion& composante = **it;
+        if( composante.GetState().IsUsable() )
+            composante.ReinitializeState( PHY_ComposanteState::undamaged_ );
     }
 }

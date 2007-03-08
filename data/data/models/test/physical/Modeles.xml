@@ -80,6 +80,8 @@
         <Mission nom="Test Fire"/>
         <Mission nom="LOG Trier Blesses"/>
         <Mission nom="Canaliser Populations"/>
+        <Mission nom="Prendre En Compte Prisonniers"/>
+        <Mission nom="Orienter Refugies"/>
       </Missions>
     </Modele>
     <Modele nom="Test 2">
@@ -148,7 +150,6 @@
       <File>For Tests\Tests\Automate\Files.hal</File>
       <Missions>
         <Mission nom="Test Move To"/>
-        <Mission nom="Faire Mouvement Vers Camp Refugies"/>
         <Mission nom="GEN Realiser Travaux"/>
         <Mission nom="GEN Retablir Itineraires"/>
         <Mission nom="LOG Se Deployer"/>

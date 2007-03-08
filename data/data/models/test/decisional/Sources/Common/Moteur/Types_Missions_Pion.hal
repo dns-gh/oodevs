@@ -139,3 +139,15 @@ typedef struct T_Mission_Pion_CanaliserPopulations : T_Mission_Pion
 T_Localisation zone_;
 };
 
+
+typedef struct T_Mission_Pion_PrendreEnComptePrisonniers : T_Mission_Pion
+{
+T_ListeConnaissancesAgent unitesRendues_;
+T_ConnaissanceObjet campPrisonniers_;
+};
+
+typedef struct T_Mission_Pion_OrienterRefugies : T_Mission_Pion
+{
+T_ListeConnaissancesAgent refugies_;
+T_ConnaissanceObjet campRefugies_;
+};

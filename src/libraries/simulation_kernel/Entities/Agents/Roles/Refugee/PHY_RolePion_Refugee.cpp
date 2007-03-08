@@ -14,6 +14,7 @@
 #include "PHY_RolePion_Refugee.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Objects/MIL_CampRefugies.h"
 #include "Entities/Automates/MIL_Automate.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Refugee, "PHY_RolePion_Refugee" )
@@ -26,8 +27,10 @@ PHY_RolePion_Refugee::PHY_RolePion_Refugee( MT_RoleContainer& role, MIL_AgentPio
     : PHY_RoleInterface_Refugee( role )
     , pPion_                   ( &pion )
     , bManaged_                ( false )
+    , pCamp_                   ( 0 )
     , bHasChanged_             ( true )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,8 +41,10 @@ PHY_RolePion_Refugee::PHY_RolePion_Refugee()
     : PHY_RoleInterface_Refugee()
     , pPion_                   ( 0 )
     , bManaged_                ( false )
+    , pCamp_                   ( 0 )
     , bHasChanged_             ( true )    
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,11 +53,13 @@ PHY_RolePion_Refugee::PHY_RolePion_Refugee()
 // -----------------------------------------------------------------------------
 PHY_RolePion_Refugee::~PHY_RolePion_Refugee()
 {
+    // NOTHING
 }
 
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Refugee::serialize
 // Created: JVT 2005-03-31
@@ -61,76 +68,85 @@ template< typename Archive >
 void PHY_RolePion_Refugee::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Refugee >( *this )
-         & pPion_;
+         & pPion_
+         & bManaged_
+         & const_cast< MIL_CampRefugies*& >( pCamp_ );
 }
 
 // =============================================================================
 // OPERATIONS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Refugee::OrientateRefugee
-// Created: NLD 2005-03-04
+// Name: PHY_RolePion_Refugee::Update
+// Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Refugee::OrientateRefugee( const MIL_CampRefugies& camp )
+void PHY_RolePion_Refugee::Update( bool /*bIsDead*/ )
 {
-    assert( pPion_ );
-    if ( !pPion_->GetType().IsRefugee() )
-        return false;
-    return pPion_->GetAutomate().OrientateRefugee( camp );
+    if( pCamp_ && pCamp_->IsMarkedForDestruction() )
+        pCamp_ = 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Refugee::NotifyManaged
-// Created: NLD 2005-02-28
+// Name: PHY_RolePion_Refugee::Orientate
+// Created: NLD 2007-02-15
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Refugee::NotifyManaged()
+bool PHY_RolePion_Refugee::Orientate( const MIL_AgentPion& pionManaging )
 {
     assert( pPion_ );
-    if( bManaged_ || !pPion_->GetType().IsRefugee() )
+    if( !pPion_->GetType().IsRefugee() )
         return false;
 
+    pCamp_       = 0;
     bManaged_    = true;
     bHasChanged_ = true;
+    pPion_->GetAutomate().NotifyRefugeeOriented( pionManaging );
     return true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Refugee::NotifyUnmanaged
-// Created: NLD 2005-02-28
+// Name: PHY_RolePion_Refugee::Release
+// Created: NLD 2007-02-15
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Refugee::NotifyUnmanaged()
+bool PHY_RolePion_Refugee::Release()
 {
     assert( pPion_ );
-    
-    if ( !bManaged_ || !pPion_->GetType().IsRefugee() )
+    if( !pPion_->GetType().IsRefugee() || !bManaged_ )
         return false;
 
+    pCamp_       = 0;
     bManaged_    = false;
     bHasChanged_ = true;
+    pPion_->GetAutomate().NotifyRefugeeReleased();
     return true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Refugee::NotifyInsideRefugeeCamp
-// Created: NLD 2005-03-07
+// Name: PHY_RolePion_Refugee::Release
+// Created: NLD 2007-02-15
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Refugee::NotifyInsideRefugeeCamp( const MIL_CampRefugies& camp )
+bool PHY_RolePion_Refugee::Release( const MIL_CampRefugies& camp )
 {
     assert( pPion_ );
-    if ( pPion_->GetType().IsRefugee() )
-        pPion_->GetAutomate().NotifyInsideRefugeeCamp( camp );
+    if( !pPion_->GetType().IsRefugee() || !bManaged_ )
+        return false;
+    
+    pCamp_       = &camp;
+    bManaged_    = true;
+    bHasChanged_ = true;
+    pPion_->GetAutomate().NotifyRefugeeReleased( camp );
+    return true;
 }
-    
+
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Refugee::NotifyOutsideRefugeeCamp
-// Created: NLD 2005-03-07
+// Name: PHY_RolePion_Refugee::IsManaged
+// Created: NLD 2007-02-26
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Refugee::NotifyOutsideRefugeeCamp( const MIL_CampRefugies& camp )
+bool PHY_RolePion_Refugee::IsManaged( const MIL_CampRefugies& camp ) const
 {
-    assert( pPion_ );
-    
-    if ( pPion_->GetType().IsRefugee() )
-        pPion_->GetAutomate().NotifyOutsideRefugeeCamp( camp );
+    if( !pCamp_ )
+        return false;
+    return pCamp_ == &camp; //$$$$
 }
 
 // =============================================================================

@@ -16,7 +16,10 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Objects/MIL_CampPrisonniers.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Orders/MIL_Report.h"
+#include "Entities/MIL_Army.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Surrender, "PHY_RolePion_Surrender" )
 
@@ -27,10 +30,11 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Surrender, "PHY_RolePion_Surrender" )
 PHY_RolePion_Surrender::PHY_RolePion_Surrender( MT_RoleContainer& role, MIL_AgentPion& pion )
     : PHY_RoleInterface_Surrender( role )
     , pPion_                     ( &pion )
-    , bSurrendered_              ( false )
     , bPrisoner_                 ( false )
+    , pPrison_                   ( 0 )
     , bHasChanged_               ( true )
 {
+    // NOTHING
 }
   
 // -----------------------------------------------------------------------------
@@ -40,10 +44,11 @@ PHY_RolePion_Surrender::PHY_RolePion_Surrender( MT_RoleContainer& role, MIL_Agen
 PHY_RolePion_Surrender::PHY_RolePion_Surrender()
     : PHY_RoleInterface_Surrender()
     , pPion_                     ()
-    , bSurrendered_              ( false )
     , bPrisoner_                 ( false )
+    , pPrison_                   ( 0 )
     , bHasChanged_               ( true )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -52,6 +57,7 @@ PHY_RolePion_Surrender::PHY_RolePion_Surrender()
 // -----------------------------------------------------------------------------
 PHY_RolePion_Surrender::~PHY_RolePion_Surrender()
 {
+    // NOTHING
 }
 
 // =============================================================================
@@ -67,78 +73,128 @@ void PHY_RolePion_Surrender::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Surrender >( *this )
          & pPion_
-         & bSurrendered_
-         & bPrisoner_;
+         & bPrisoner_
+         & const_cast< MIL_CampPrisonniers*& >( pPrison_ );
 }
-
 
 // =============================================================================
 // OPERATIONS
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Surrender::Surrender
-// Created: NLD 2005-02-24
+// Name: PHY_RolePion_Surrender::Update
+// Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Surrender::Surrender()
+void PHY_RolePion_Surrender::Update( bool /*bIsDead*/ )
 {
-    if( bSurrendered_ )
-        return false;
-    bSurrendered_ = true;
-    bHasChanged_  = true;
-    return true;
+    if( pPrison_ && pPrison_->IsMarkedForDestruction() )
+        pPrison_ = 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Surrender::TakePrisoner
-// Created: NLD 2005-03-04
+// Name: PHY_RolePion_Surrender::NotifySurrendered
+// Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Surrender::TakePrisoner( const MIL_AgentPion& pionTakingPrisoner, const MIL_CampPrisonniers& camp )
+void PHY_RolePion_Surrender::NotifySurrendered()
 {
     assert( pPion_ );
-    return pPion_->GetAutomate().TakePrisoner( pionTakingPrisoner, camp );
+    MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_Surrendered );
+    bHasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Surrender::NotifyTakenPrisoner
-// Created: NLD 2005-02-28
+// Name: PHY_RolePion_Surrender::NotifySurrenderCanceled
+// Created: NLD 2007-02-15
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Surrender::NotifyTakenPrisoner()
+void PHY_RolePion_Surrender::NotifySurrenderCanceled()
 {
-    if( !bSurrendered_ || bPrisoner_ )
+    assert( pPion_ );
+    Release();
+    MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_CancelSurrender );
+    bHasChanged_ = true;
+}
+            
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Surrender::Capture
+// Created: NLD 2005-03-04
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Surrender::Capture( const MIL_AgentPion& pionTakingPrisoner )
+{
+    assert( pPion_ );
+    if( !IsSurrendered() )
         return false;
 
+    pPrison_     = 0;
     bPrisoner_   = true;
     bHasChanged_ = true;
-    GetRole< PHY_RolePion_Dotations   >().NotifyTakenPrisoner();
-    GetRole< PHY_RolePion_Composantes >().NotifyTakenPrisoner();
-    return true;
+    GetRole< PHY_RolePion_Dotations   >().NotifyCaptured();
+    GetRole< PHY_RolePion_Composantes >().NotifyCaptured();
+    return pPion_->GetAutomate().NotifyCaptured( pionTakingPrisoner );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Surrender::NotifyInsidePrisonerCamp
-// Created: NLD 2005-03-07
+// Name: PHY_RolePion_Surrender::Release
+// Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Surrender::NotifyInsidePrisonerCamp( const MIL_CampPrisonniers& camp )
+bool PHY_RolePion_Surrender::Release()
 {
-    if( bPrisoner_ )
-    {
-        assert( pPion_ );
-        pPion_->GetAutomate().NotifyInsidePrisonerCamp( camp );
-    }
+    if( !IsSurrendered() || !bPrisoner_ )
+        return false;
+
+    pPrison_     = 0;
+    bPrisoner_   = false;
+    bHasChanged_ = true;
+    GetRole< PHY_RolePion_Dotations   >().NotifyReleased();
+    GetRole< PHY_RolePion_Composantes >().NotifyReleased();
+    return pPion_->GetAutomate().NotifyReleased();
 }
     
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Surrender::NotifyOutsidePrisonerCamp
-// Created: NLD 2005-03-07
+// Name: PHY_RolePion_Surrender::Imprison
+// Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Surrender::NotifyOutsidePrisonerCamp( const MIL_CampPrisonniers& camp )
+bool PHY_RolePion_Surrender::Imprison( const MIL_CampPrisonniers& camp )
 {
-    if( bPrisoner_ )
-    {
-        assert( pPion_ );
-        pPion_->GetAutomate().NotifyOutsidePrisonerCamp( camp );
-    }
+    if( !IsSurrendered() || !bPrisoner_ )
+        return false;
+    pPrison_ = &camp;
+    pPion_->GetAutomate().NotifyImprisoned( camp );    
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Surrender::IsImprisoned
+// Created: NLD 2007-02-26
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Surrender::IsImprisoned( const MIL_CampPrisonniers& camp )
+{
+    if( !pPrison_ )
+        return false;
+    return pPrison_ == &camp; //$$$$
+}
+
+// =============================================================================
+// ACCESSORS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Surrender::IsSurrendered
+// Created: NLD 2005-02-24
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Surrender::IsSurrendered() const
+{
+    assert( pPion_ );
+    return pPion_->GetAutomate().IsSurrendered();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Surrender::GetArmySurrenderedTo
+// Created: NLD 2007-02-14
+// -----------------------------------------------------------------------------
+const MIL_Army* PHY_RolePion_Surrender::GetArmySurrenderedTo() const
+{
+    assert( pPion_ );
+    return pPion_->GetAutomate().GetArmySurrenderedTo();
 }
 
 // =============================================================================
@@ -151,11 +207,13 @@ void PHY_RolePion_Surrender::NotifyOutsidePrisonerCamp( const MIL_CampPrisonnier
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Surrender::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
+    assert( pPion_ );
     msg().m.prisonnierPresent = 1;
-    msg().prisonnier          = bPrisoner_;
+    msg().prisonnier          = IsPrisoner();
 
+    const MIL_Army* pArmySurrenderedTo = GetArmySurrenderedTo();
     msg().m.renduPresent  = 1;
-    msg().rendu           = bSurrendered_;
+    msg().rendu           = pArmySurrenderedTo ? pArmySurrenderedTo->GetID() : 0;
 }
 
 // -----------------------------------------------------------------------------

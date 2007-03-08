@@ -13,8 +13,6 @@
 
 #include "PHY_RoleInterface_Transported.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RoleInterface_Transported, "PHY_RoleInterface_Transported" )
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Transported constructor
 // Created: NLD 2004-08-12
@@ -41,12 +39,4 @@ PHY_RoleInterface_Transported::~PHY_RoleInterface_Transported()
 {
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Transported::serialize
-// Created: JVT 2005-03-31
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void PHY_RoleInterface_Transported::serialize( Archive& file, const uint )
-{
-    file & boost::serialization::base_object< MT_Role_ABC >( *this );
-}
+

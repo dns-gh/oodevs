@@ -20,6 +20,7 @@ class DEC_Knowledge_AgentPerceptionDataDetection;
 class MIL_KnowledgeGroupType;
 class PHY_Posture;
 class MIL_Agent_ABC;
+class MIL_Army;
 
 struct ASN1T_MsgUnitKnowledgeUpdate;
 
@@ -61,6 +62,7 @@ public:
     const PHY_Posture&           GetCurrentPosture             () const;
           MT_Float               GetPostureCompletionPercentage() const;
           uint                   GetTimeLastUpdate             () const;
+    const MIL_Army*              GetArmySurrenderedTo          () const;
           bool                   IsSurrendered                 () const;
           bool                   IsPrisoner                    () const;
           bool                   IsRefugeeManaged              () const;
@@ -87,11 +89,12 @@ private:
     MT_Vector2D vDirection_;
     MT_Float    rSpeed_;
     MT_Float    rAltitude_;
-    bool        bSurrendered_;
-    bool        bPrisoner_; 
-    bool        bRefugeeManaged_;
     bool        bDead_;
 
+    const MIL_Army*   pArmySurrenderedTo_;
+          bool        bPrisoner_; 
+          bool        bRefugeeManaged_;
+          
     // Attributes used by the vision, to see if we see a knowledge which doesn't exist anymore
     T_ComposanteVolumeSet visionVolumes_;
     const PHY_Posture*    pLastPosture_;

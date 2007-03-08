@@ -106,9 +106,7 @@ private:
 private:
     //! @name Tools
     //@{
-    MIL_RealObject_ABC* GetRealObject                     ( uint nKnowledgeObjectID );
-    void                ComputeDataWithReinforcement      ( PHY_RoleAction_Objects_DataComputer& dataComputer ) const;
-    void                ComputeCapabilityWithReinforcement( PHY_RoleAction_Objects_CapabilityComputer& capabilityComputer ) const;
+    MIL_RealObject_ABC* GetRealObject( uint nKnowledgeObjectID );
 
     int Construct( MIL_RealObject_ABC& object );
     int Prepare  ( MIL_RealObject_ABC& object );

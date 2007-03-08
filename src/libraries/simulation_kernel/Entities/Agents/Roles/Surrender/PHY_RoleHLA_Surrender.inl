@@ -16,7 +16,7 @@
 inline
 bool PHY_RoleHLA_Surrender::IsSurrendered() const
 {
-    return bSurrendered_;
+    return false;
 }
     
 // -----------------------------------------------------------------------------
@@ -27,4 +27,14 @@ inline
 bool PHY_RoleHLA_Surrender::IsPrisoner() const
 {
     return bPrisoner_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Surrender::GetArmySurrenderedTo
+// Created: NLD 2007-02-14
+// -----------------------------------------------------------------------------
+inline
+const MIL_Army* PHY_RoleHLA_Surrender::GetArmySurrenderedTo() const
+{
+    return 0;
 }

@@ -64,7 +64,8 @@ public:
     MT_Float Supply                   ( MT_Float rValue );
     void     ChangeValueUsingTC2      ( MT_Float rCapacityFactor, MIL_AutomateLOG& tc2 );
 
-    void     NotifyTakenPrisoner();
+    void NotifyCaptured(); //$$$ a renommer et abstraire
+    void NotifyReleased();
     //@}
 
     //! @name Accessors

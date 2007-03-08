@@ -11,10 +11,8 @@
 
 #include "MIL_AutomateMissionType.h"
 
-      MIL_AutomateMissionType::T_MissionIDMap   MIL_AutomateMissionType::missionIDs_;
-      MIL_AutomateMissionType::T_MissionNameMap MIL_AutomateMissionType::missionNames_;
-const MIL_AutomateMissionType*                  MIL_AutomateMissionType::pSurrenderingMissionType_      = 0;
-const MIL_AutomateMissionType*                  MIL_AutomateMissionType::pMoveToRefugeeCampMissionType_ = 0;
+MIL_AutomateMissionType::T_MissionIDMap   MIL_AutomateMissionType::missionIDs_;
+MIL_AutomateMissionType::T_MissionNameMap MIL_AutomateMissionType::missionNames_;
 
 // =============================================================================
 // FACTORY
@@ -49,12 +47,6 @@ void MIL_AutomateMissionType::Initialize( MIL_InputArchive& archive )
         archive.EndList(); // mission
     }
     archive.EndList(); // automats
-
-    archive.Section( "misc" );
-    pSurrenderingMissionType_       = &InitializeAutomaticMission( archive, "mission-automat-surrender" );
-    pMoveToRefugeeCampMissionType_  = &InitializeAutomaticMission( archive, "mission-automat-go-to-refugee-camp" );    
-    archive.EndSection(); // misc
-
     archive.EndSection(); // missions
 }
 

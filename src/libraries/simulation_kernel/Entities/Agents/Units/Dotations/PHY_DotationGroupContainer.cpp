@@ -379,15 +379,24 @@ void PHY_DotationGroupContainer::ChangeDotationsValueUsingTC2( const PHY_Dotatio
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationGroupContainer::NotifyTakenPrisoner
+// Name: PHY_DotationGroupContainer::NotifyCaptured
 // Created: NLD 2005-02-28
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::NotifyTakenPrisoner()
+void PHY_DotationGroupContainer::NotifyCaptured()
 {
     for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
-        it->second->NotifyTakenPrisoner();
+        it->second->NotifyCaptured();
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::NotifyReleased
+// Created: NLD 2005-02-28
+// -----------------------------------------------------------------------------
+void PHY_DotationGroupContainer::NotifyReleased()
+{
+    for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
+        it->second->NotifyReleased();
+}
 
 // =============================================================================
 // NETWORK

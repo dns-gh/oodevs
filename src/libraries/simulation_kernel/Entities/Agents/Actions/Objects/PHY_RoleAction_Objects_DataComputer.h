@@ -14,11 +14,11 @@
 
 #include "MIL.h"
 
+#include "PHY_RoleAction_Objects_DataComputerPionData.h"
+
 class MIL_RealObject_ABC;
 class MIL_AgentPion;
 class PHY_ComposantePion;
-class PHY_ConsumptionType;
-class PHY_DotationCategory;
 
 // =============================================================================
 // @class  PHY_RoleAction_Objects_DataComputer
@@ -29,63 +29,47 @@ class PHY_RoleAction_Objects_DataComputer
     MT_COPYNOTALLOWED( PHY_RoleAction_Objects_DataComputer )
 
 public:
-    //! @name Types
-    //@{
-    enum E_Operation
-    {
-        eConstruct,
-        eDestroy,
-        eMine,
-        eDemine,
-        eBypass,
-        ePrepare
-    };
-    //@}
-
-public:
-     PHY_RoleAction_Objects_DataComputer( E_Operation nOperation, const MIL_RealObject_ABC& object );
+     PHY_RoleAction_Objects_DataComputer( MIL_AgentPion& pion, PHY_RoleAction_Objects_DataComputerPionData::E_Operation nOperation, const MIL_RealObject_ABC& object );
     ~PHY_RoleAction_Objects_DataComputer();
 
-    //! @name Operations
-    //@{
-    void     ReserveConsumptions             ();
-    void     RollbackConsumptionsReservations();
-    bool     HasDotations                    ( uint nNbr, const PHY_DotationCategory& category ) const;
-    void     ConsumeDotations                ( uint nNbr, const PHY_DotationCategory& category );
-    void     RecoverDotations                ( uint nNbr, const PHY_DotationCategory& category );
-    MT_Float GetDeltaPercentage              () const;
 
-    void     SetActivePion( MIL_AgentPion& pion );
-    void     operator()   ( const PHY_ComposantePion& composante ) const;
+    //! @name Operations
+    //@{  
+    bool     HasDotations                    ( const PHY_DotationCategory& category, uint nNbr ) const;
+    void     ConsumeDotations                ( const PHY_DotationCategory& category, uint nNbr );
+    void     RecoverDotations                ( const PHY_DotationCategory& category, uint nNbr );
+
+    MT_Float ComputeDeltaPercentage          ();
+
+    void     operator()                      ( const PHY_ComposantePion& composante );
+    //@}
+
+private:
+    //! @name Tools
+    //@{
+    void CollectData                     ( MIL_AgentPion& pion );
+    void FilterData                      ();
+
+    void ReserveConsumptions             ();
+    void RollbackConsumptionsReservations();   
     //@}
 
 private:
     //! @name Types
     //@{
-    struct sPionData
-    {
-        sPionData();
-        sPionData( MIL_AgentPion& pion );
-        MIL_AgentPion*             pPion_;
-        MT_Float                   rTotalTime_;
-        uint                       nNbrComposantes_;
-        const PHY_ConsumptionType* pConsumptionMode_;
-        bool                       bConsumptionReserved_;
-    };
-    typedef std::vector< sPionData >                 T_PionDataVector;
-    typedef T_PionDataVector::iterator               IT_PionDataVector;
-    typedef T_PionDataVector::reverse_iterator       RIT_PionDataVector;
-    typedef T_PionDataVector::const_iterator         CIT_PionDataVector;
-    typedef T_PionDataVector::const_reverse_iterator CRIT_PionDataVector;
+    typedef std::vector< PHY_RoleAction_Objects_DataComputerPionData >  T_PionDataVector;
+    typedef T_PionDataVector::iterator                                  IT_PionDataVector;
+    typedef T_PionDataVector::reverse_iterator                          RIT_PionDataVector;
+    typedef T_PionDataVector::const_reverse_iterator                    CRIT_PionDataVector;
+    typedef T_PionDataVector::const_iterator                            CIT_PionDataVector;
     //@}
 
 private:
-    const E_Operation         nOperation_;
-    const MIL_RealObject_ABC& object_;
-          T_PionDataVector    pionsData_;
-          sPionData*          pCurrentPionData_;
-};
+          MIL_AgentPion&                                            pion_;
+    const PHY_RoleAction_Objects_DataComputerPionData::E_Operation  operation_;
+    const MIL_RealObject_ABC&                                       object_;
+          T_PionDataVector                                          pionsData_;
 
-#include "PHY_RoleAction_Objects_DataComputer.inl"
+};
 
 #endif // __PHY_RoleAction_Objects_DataComputer_h_

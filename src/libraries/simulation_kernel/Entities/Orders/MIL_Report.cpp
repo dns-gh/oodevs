@@ -83,6 +83,7 @@ void MIL_Report::Initialize( MIL_InputArchive& archive )
     diaEvents_[ eReport_OutOfGas                                    ] = "EVT_RC_PlusDeCarburant";                                  
     diaEvents_[ eReport_DifficultTerrain                            ] = "EVT_RC_TerrainDifficile";                                 
     diaEvents_[ eReport_Surrendered                                 ] = "EVT_RC_Rendu";                                            
+    diaEvents_[ eReport_CancelSurrender                             ] = "EVT_RC_RedditionAnnulee";    
     diaEvents_[ eReport_MaintenanceWorkRateExceeded                 ] = "EVT_RC_RegimeMaintenanceDelaiDepasse";                    
     diaEvents_[ eReport_EquipmentLoanInProgress                     ] = "EVT_RC_PretMaterielEnCours";                              
     diaEvents_[ eReport_EquipmentLoanCanceled                       ] = "EVT_RC_PretMaterielAnnule";                               

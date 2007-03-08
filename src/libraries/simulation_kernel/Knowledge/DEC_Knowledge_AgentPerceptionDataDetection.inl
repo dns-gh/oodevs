@@ -112,13 +112,13 @@ const T_ComposanteVolumeSet& DEC_Knowledge_AgentPerceptionDataDetection::GetVisi
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentPerceptionDataDetection::IsSurrendered
-// Created: NLD 2005-02-24
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::GetArmySurrenderedTo
+// Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
 inline
-bool DEC_Knowledge_AgentPerceptionDataDetection::IsSurrendered() const
+const MIL_Army* DEC_Knowledge_AgentPerceptionDataDetection::GetArmySurrenderedTo() const
 {
-    return bSurrendered_;
+    return pArmySurrenderedTo_;
 }
 
 // -----------------------------------------------------------------------------

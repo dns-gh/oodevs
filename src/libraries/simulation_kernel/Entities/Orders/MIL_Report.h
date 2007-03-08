@@ -74,6 +74,7 @@ public:
         eReport_OutOfGas,
         eReport_DifficultTerrain,
         eReport_Surrendered,
+        eReport_CancelSurrender,
         eReport_MaintenanceWorkRateExceeded,
         eReport_EquipmentLoanInProgress,
         eReport_EquipmentLoanCanceled,

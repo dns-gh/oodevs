@@ -209,10 +209,10 @@ void PHY_Dotation::RemoveCapacity( const PHY_DotationCapacity& capacity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Dotation::NotifyTakenPrisoner
+// Name: PHY_Dotation::NotifyCaptured
 // Created: NLD 2005-03-07
 // -----------------------------------------------------------------------------
-void PHY_Dotation::NotifyTakenPrisoner()
+void PHY_Dotation::NotifyCaptured()
 {
     rValue_                  = 0;
     rConsumptionReservation_ = 0;
@@ -221,6 +221,16 @@ void PHY_Dotation::NotifyTakenPrisoner()
     
     assert( pGroup_ );
     pGroup_->NotifyDotationChanged( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Dotation::NotifyReleased
+// Created: NLD 2007-02-15
+// -----------------------------------------------------------------------------
+void PHY_Dotation::NotifyReleased()
+{
+    bDotationBlocked_ = false;
+    Resupply();
 }
 
 // -----------------------------------------------------------------------------

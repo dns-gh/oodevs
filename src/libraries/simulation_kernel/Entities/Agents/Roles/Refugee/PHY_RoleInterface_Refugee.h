@@ -17,6 +17,7 @@
 #include "MT_Tools/MT_Role_ABC.h"
 
 class MIL_CampRefugies;
+class MIL_AgentPion;
 
 // =============================================================================
 // @class  PHY_RoleInterface_Refugee
@@ -42,13 +43,14 @@ public:
     //! @name Accessors
     //@{
     virtual bool IsManaged() const = 0;
+    virtual bool IsManaged( const MIL_CampRefugies& camp ) const = 0;
     //@}
 
     //! @name Operations
     //@{
-    virtual bool OrientateRefugee        ( const MIL_CampRefugies& camp ) = 0;
-    virtual void NotifyInsideRefugeeCamp ( const MIL_CampRefugies& camp ) = 0;
-    virtual void NotifyOutsideRefugeeCamp( const MIL_CampRefugies& camp ) = 0;
+    virtual bool Orientate( const MIL_AgentPion& pionManaging ) = 0;
+    virtual bool Release  () = 0;
+    virtual bool Release  ( const MIL_CampRefugies& camp ) = 0;
     //@}
 };
 

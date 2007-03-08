@@ -122,21 +122,18 @@ public:
 
     //! @name Prisoners
     //@{
-          bool                 IsSurrendered            () const;
-          bool                 IsPrisoner               () const;
-    const MIL_CampPrisonniers* GetPrisonerCamp          () const;
-          bool                 TakePrisoner             ( const MIL_AgentPion& pionTakingPrisoner, const MIL_CampPrisonniers& camp );
-          void                 NotifyInsidePrisonerCamp ( const MIL_CampPrisonniers& camp );
-          void                 NotifyOutsidePrisonerCamp( const MIL_CampPrisonniers& camp );
+          bool      IsSurrendered       () const;
+    const MIL_Army* GetArmySurrenderedTo() const;
+          bool      NotifyCaptured      ( const MIL_AgentPion& pionTakingPrisoner );
+          bool      NotifyReleased      ();
+          bool      NotifyImprisoned    ( const MIL_CampPrisonniers& camp );
     //@}
 
-    //! @name Refugees
+    //! @name Refugees $$$$ A revoir
     //@{
-    const MIL_CampRefugies* GetRefugeeCamp                  () const;
-          bool              OrientateRefugee                ( const MIL_CampRefugies& camp );
-          void              NotifyRefugeeManagedStateChanged( bool bManaged );
-          void              NotifyInsideRefugeeCamp         ( const MIL_CampRefugies& camp );
-          void              NotifyOutsideRefugeeCamp        ( const MIL_CampRefugies& camp );
+    void NotifyRefugeeOriented( const MIL_AgentPion& pionManaging );
+    void NotifyRefugeeReleased();
+    void NotifyRefugeeReleased( const MIL_CampRefugies& camp );
     //@}
 
     //! @name Network
@@ -182,8 +179,10 @@ public:
 protected:
     //! @name Tools
     //@{
-    virtual void SendLogisticLinks() const;
-            void Surrender        ();
+    virtual void             SendLogisticLinks() const;
+            void             Surrender        ( const MIL_Army& amrySurrenderedTo );
+            void             CancelSurrender  ();
+            MIL_AutomateLOG* GetNominalTC2    () const;
     //@}
 
 private:
@@ -224,12 +223,7 @@ private:
     DEC_KnowledgeBlackBoard_Automate* pKnowledgeBlackBoard_;
 
     // Surrendered / prisoner
-          bool                  bSurrendered_;
-          bool                  bPrisoner_;
-    const MIL_CampPrisonniers*  pPrisonerCamp_;
-
-    // Refugees
-    const MIL_CampRefugies*     pRefugeeCamp_;
+    const MIL_Army*             pArmySurrenderedTo_;
 };
 
 #include "MIL_Automate.inl"

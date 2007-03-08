@@ -17,6 +17,7 @@
 #include "MT_Tools/MT_Role_ABC.h"
 
 class NET_ASN_MsgUnitAttributes;
+class MIL_Agent_ABC;
 class MIL_AgentPion;
 class PHY_ComposantePion;
 class MIL_NbcAgent;
@@ -44,13 +45,13 @@ public:
 
         const bool     bTransportOnlyLoadable_;
         const MT_Float rTotalWeight_;
-              MT_Float rRemainingWeight_;       
+              MT_Float rRemainingWeight_;
               MT_Float rTransportedWeight_;
       private:
         sTransportData& operator=( const sTransportData& rhs );
     };
 
-    typedef std::map< MIL_AgentPion*, sTransportData > T_TransportedPionMap;
+    typedef std::map< MIL_Agent_ABC*, sTransportData > T_TransportedPionMap;
     typedef T_TransportedPionMap::iterator             IT_TransportedPionMap;
     typedef T_TransportedPionMap::const_iterator       CIT_TransportedPionMap;
     //@}
@@ -64,7 +65,7 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
     //@}
-    
+
     //! @name Operations
     //@{
     void Update    ( bool bIsDead );
@@ -81,23 +82,24 @@ public:
     //@}
 
     //! @name Action
-    //@{   
+    //@{
     bool IsFinished    () const;
     bool IsTransporting() const;
 
-    bool AddPion         ( MIL_AgentPion& pion, bool bTransportOnlyLoadable );
+    bool AddPion         ( MIL_Agent_ABC& pion, bool bTransportOnlyLoadable );
     void Cancel          ();
-    bool MagicLoadPion   ( MIL_AgentPion& pion, bool bTransportOnlyLoadable );
-    bool MagicUnloadPion ( MIL_AgentPion& pion );
-    bool CanTransportPion( const MIL_AgentPion& transported, bool bTransportOnlyLoadable ) const;
-        
+    bool MagicLoadPion   ( MIL_Agent_ABC& pion, bool bTransportOnlyLoadable );
+    bool MagicUnloadPion ( MIL_Agent_ABC& pion );
+    bool CanTransportPion( const MIL_Agent_ABC& transported, bool bTransportOnlyLoadable ) const;
+    bool IsLoaded        ( const MIL_Agent_ABC& transported ) const;
+
     int  Load           ();
     void LoadSuspended  ();
     int  Unload         ();
     void UnloadSuspended();
     //@}
 
-    //! @name Notifications
+    //! @name Notifications on transporter
     //@{
     void NotifyComposanteChanged     ( const PHY_ComposantePion& composante );
     void NotifyComposanteContaminated( const MIL_NbcAgent&       nbcAgent );
@@ -134,7 +136,7 @@ private:
     void     ComputeLoadingTime  ( MT_Float& rLoadingTime, MT_Float& rWeightToLoad ) const;
     MT_Float ComputeUnloadingTime() const;
 
-    MT_Float DoLoad  ( const MT_Float rWeightToLoad );
+    MT_Float DoLoad  ( const MT_Float rWeightToLoad   );
     MT_Float DoUnload( const MT_Float rWeightToUnload );
     //@}
 
@@ -144,7 +146,7 @@ private:
           E_State               nState_;
           bool                  bLoadUnloadHasBeenUpdated_;
           T_TransportedPionMap  transportedPions_;
-          MT_Float              rWeightTransported_;          
+          MT_Float              rWeightTransported_; 
 };
 
 #include "PHY_RoleAction_Transport.inl"

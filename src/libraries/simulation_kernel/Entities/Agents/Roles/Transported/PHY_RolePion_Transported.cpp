@@ -27,8 +27,9 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Transported, "PHY_RolePion_Transported" )
 // Name: PHY_RolePion_Transported constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePion_Transported::PHY_RolePion_Transported( MT_RoleContainer& role )
+PHY_RolePion_Transported::PHY_RolePion_Transported( MT_RoleContainer& role, MIL_AgentPion& pion )
     : PHY_RoleInterface_Transported( role )
+    , pPion_                       ( &pion )
     , bHasChanged_                 ( true )
     , pTransporter_                ( 0 )
     , vLoadingPosition_            ()
@@ -42,6 +43,7 @@ PHY_RolePion_Transported::PHY_RolePion_Transported( MT_RoleContainer& role )
 // -----------------------------------------------------------------------------
 PHY_RolePion_Transported::PHY_RolePion_Transported()
     : PHY_RoleInterface_Transported()
+    , pPion_                       ( 0 )
     , bHasChanged_                 ( true )
     , pTransporter_                ( 0 )
     , vLoadingPosition_            ()
@@ -69,6 +71,7 @@ PHY_RolePion_Transported::~PHY_RolePion_Transported()
 void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> boost::serialization::base_object< PHY_RoleInterface_Transported >( *this )
+         >> pPion_ 
          >> const_cast< MIL_Agent_ABC*& >( pTransporter_ )
          >> vLoadingPosition_
          >> vHumanTransporterPosition_;
@@ -84,6 +87,7 @@ void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const uint )
 void PHY_RolePion_Transported::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << boost::serialization::base_object< PHY_RoleInterface_Transported >( *this )
+         << pPion_
          << pTransporter_
          << vLoadingPosition_
          << vHumanTransporterPosition_;
@@ -92,6 +96,50 @@ void PHY_RolePion_Transported::save( MIL_CheckPointOutArchive& file, const uint 
 // =============================================================================
 // OPERATIONS
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: sTransportedData
+// Created: JVT 2005-02-01
+// -----------------------------------------------------------------------------
+struct sTransportedData
+{
+    sTransportedData( const MIL_AgentPion& transported, const bool bTransportOnlyLoadable )
+        : rTotalWeight_             ( 0. )
+        , rHeaviestComposanteWeight_( 0. )
+        , bTransportOnlyLoadable_   ( bTransportOnlyLoadable )
+    {
+        transported.GetRole< PHY_RolePion_Composantes >().Apply( *this );
+    }
+
+    void operator() ( const PHY_ComposantePion& composante )
+    {
+        if( composante.CanBeTransported() && ( !bTransportOnlyLoadable_ || composante.CanBeLoaded() ) )
+        {
+            rTotalWeight_             += composante.GetWeight();
+            rHeaviestComposanteWeight_ = std::max( rHeaviestComposanteWeight_, composante.GetWeight() );
+        }
+    }
+
+          MT_Float rTotalWeight_;
+          MT_Float rHeaviestComposanteWeight_;
+    const bool     bTransportOnlyLoadable_;
+
+    MT_COPYNOTALLOWED( sTransportedData );
+};
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Transported::GetTransportWeight
+// Created: NLD 2007-02-14
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Transported::GetTransportWeight( bool bTransportOnlyLoadable, MT_Float& rTotalWeight, MT_Float& rHeaviestComposanteWeight ) const
+{
+    assert( pPion_ );
+    sTransportedData data( *pPion_, bTransportOnlyLoadable );
+
+    rTotalWeight              = data.rTotalWeight_;
+    rHeaviestComposanteWeight = data.rHeaviestComposanteWeight_;    
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported::CancelTransport
 // Created: NLD 2004-11-24

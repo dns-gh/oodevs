@@ -28,9 +28,6 @@ public:
     static void                           Initialize( MIL_InputArchive& archive );
     static const MIL_AutomateMissionType* Find      ( uint nID );
     static const MIL_AutomateMissionType* Find      ( const std::string& strName );
-
-    static const MIL_AutomateMissionType& GetSurrenderingMissionType     ();
-    static const MIL_AutomateMissionType& GetMoveToRefugeeCampMissionType();
     //@}
 
     //! @name Accessors
@@ -73,9 +70,6 @@ private:
 private:
     static T_MissionIDMap   missionIDs_;
     static T_MissionNameMap missionNames_;    
-
-    static const MIL_AutomateMissionType* pSurrenderingMissionType_;
-    static const MIL_AutomateMissionType* pMoveToRefugeeCampMissionType_;
 };
 
 #include "MIL_AutomateMissionType.inl"

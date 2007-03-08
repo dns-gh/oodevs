@@ -407,8 +407,6 @@ void ADN_Missions_Data::FragOrder::WriteArchive( MT_OutputArchive_ABC& output )
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::ADN_Missions_Data()
-    : ptrSurrenderMission_( automatMissions_, 0 )
-    , ptrGoToRefugeeCampMission_( automatMissions_, 0 )
 {
     // NOTHING
 }
@@ -505,12 +503,6 @@ void ADN_Missions_Data::ReadArchive( ADN_XmlInput_Helper& input )
         input.EndList();
     }
     input.EndList();
-
-    input.Section( "misc" );
-    ReadMiscMission( input, "mission-automat-surrender"         , ptrSurrenderMission_ );
-    ReadMiscMission( input, "mission-automat-go-to-refugee-camp", ptrGoToRefugeeCampMission_ );
-    input.EndSection();
-
     input.EndSection();
 }
 
@@ -560,16 +552,6 @@ void ADN_Missions_Data::WriteArchive( MT_OutputArchive_ABC& output )
             output.EndList();
         }
     output.EndList();
-
-    output.Section( "misc" );
-        output.Section( "mission-automat-surrender" );
-            output.WriteAttribute( "name", ptrSurrenderMission_.GetData()->strName_.GetData() );
-        output.EndSection();
-        output.Section( "mission-automat-go-to-refugee-camp" );
-            output.WriteAttribute( "name", ptrGoToRefugeeCampMission_.GetData()->strName_.GetData() );
-        output.EndSection();
-    output.EndSection();
-
     output.EndSection(); // missions
 }
 

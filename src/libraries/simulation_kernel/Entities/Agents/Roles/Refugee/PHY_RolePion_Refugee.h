@@ -46,16 +46,18 @@ public:
 
     //! @name Main
     //@{
-    virtual bool OrientateRefugee        ( const MIL_CampRefugies& camp );
-    virtual void NotifyInsideRefugeeCamp ( const MIL_CampRefugies& camp );
-    virtual void NotifyOutsideRefugeeCamp( const MIL_CampRefugies& camp );
-            bool NotifyManaged           ();
-            bool NotifyUnmanaged         ();
+    virtual bool Orientate( const MIL_AgentPion& pionManaging );
+    virtual bool Release  ();
+    virtual bool Release  ( const MIL_CampRefugies& camp );
+
+            bool NotifyManaged  ();
+            bool NotifyUnmanaged();
     //@}
 
     //! @name Accessors
     //@{
     virtual bool IsManaged() const;
+    virtual bool IsManaged( const MIL_CampRefugies& camp ) const;
     //@}
 
     //! @name Network
@@ -65,9 +67,10 @@ public:
     //@}
 
 private:
-    MIL_AgentPion* pPion_;
-    bool           bManaged_;
-    bool           bHasChanged_;
+          MIL_AgentPion*    pPion_;
+          bool              bManaged_;
+    const MIL_CampRefugies* pCamp_;
+          bool              bHasChanged_;
 };
 
 #include "PHY_RolePion_Refugee.inl"

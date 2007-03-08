@@ -72,7 +72,8 @@ public:
 
     //! @name 
     //@{
-    void NotifyTakenPrisoner();
+    void NotifyCaptured();
+    void NotifyReleased();
     //@}
 
     //! @name Logistic

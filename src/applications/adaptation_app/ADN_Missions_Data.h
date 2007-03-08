@@ -166,8 +166,6 @@ public:
     T_Mission_Vector   populationMissions_;
     T_FragOrder_Vector fragOrders_;
 
-    ADN_TypePtr_InVector_ABC< Mission > ptrSurrenderMission_;
-    ADN_TypePtr_InVector_ABC< Mission > ptrGoToRefugeeCampMission_;
 };
 
 #endif // __ADN_Missions_Data_h_

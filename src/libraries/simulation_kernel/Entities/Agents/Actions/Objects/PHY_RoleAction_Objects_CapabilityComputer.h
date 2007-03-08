@@ -16,6 +16,7 @@
 
 class MIL_RealObjectType;
 class PHY_ComposantePion;
+class MIL_AgentPion;
 
 // =============================================================================
 // @class  PHY_RoleAction_Objects_CapabilityComputer
@@ -40,13 +41,19 @@ public:
     //@}
 
 public:
-     PHY_RoleAction_Objects_CapabilityComputer( E_Operation nOperation, const MIL_RealObjectType& objectType );
+     PHY_RoleAction_Objects_CapabilityComputer( const MIL_AgentPion& pion, E_Operation nOperation, const MIL_RealObjectType& objectType );
     ~PHY_RoleAction_Objects_CapabilityComputer();
 
     //! @name Operations
     //@{
     bool HasCapability() const;
     void operator()   ( const PHY_ComposantePion& composante );
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    void CollectData( const MIL_AgentPion& pion );
     //@}
 
 private:

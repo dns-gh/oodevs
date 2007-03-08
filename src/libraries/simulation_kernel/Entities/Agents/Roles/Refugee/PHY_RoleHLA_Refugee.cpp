@@ -39,31 +39,42 @@ PHY_RoleHLA_Refugee::~PHY_RoleHLA_Refugee()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Refugee::OrientateRefugee
-// Created: NLD 2005-03-04
+// Name: PHY_RoleHLA_Refugee::Orientate
+// Created: NLD 2007-02-15
 // -----------------------------------------------------------------------------
-bool PHY_RoleHLA_Refugee::OrientateRefugee( const MIL_CampRefugies& /*camp*/ )
+bool PHY_RoleHLA_Refugee::Orientate( const MIL_AgentPion& /*pionManaging*/ )
 {
-    // $$$$ _RC_ NLD 2005-03-10: 
+     // $$$$ NLD 2007-02-15: 
     return false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Refugee::NotifyInsideRefugeeCamp
-// Created: NLD 2005-03-07
+// Name: PHY_RoleHLA_Refugee::Release
+// Created: NLD 2007-02-15
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Refugee::NotifyInsideRefugeeCamp( const MIL_CampRefugies& /*camp*/ )
+bool PHY_RoleHLA_Refugee::Release()
 {
-    // $$$$ _RC_ NLD 2005-03-10: 
+    // $$$$ NLD 2007-02-15: 
+    return false;
 }
-    
+
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Refugee::NotifyOutsideRefugeeCamp
-// Created: NLD 2005-03-07
+// Name: PHY_RoleHLA_Refugee::Release
+// Created: NLD 2007-02-15
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Refugee::NotifyOutsideRefugeeCamp( const MIL_CampRefugies& /*camp*/ )
+bool PHY_RoleHLA_Refugee::Release( const MIL_CampRefugies& /*camp*/ )
 {
-    // $$$$ _RC_ NLD 2005-03-10: 
+    // $$$$ NLD 2007-02-15: 
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Refugee::IsManaged
+// Created: NLD 2007-02-26
+// -----------------------------------------------------------------------------
+bool PHY_RoleHLA_Refugee::IsManaged( const MIL_CampRefugies& /*camp*/ ) const
+{
+    return false;
 }
 
 // =============================================================================

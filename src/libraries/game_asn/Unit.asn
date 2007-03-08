@@ -200,7 +200,7 @@ MsgUnitAttributes ::= SEQUENCE
     moral                         EnumUnitMoral                     OPTIONAL,
     experience                    EnumUnitExperience                OPTIONAL,
     
-    rendu                         BOOLEAN                           OPTIONAL,
+    rendu                         Camp                              OPTIONAL, -- '0' quand pas rendu
     prisonnier                    BOOLEAN                           OPTIONAL,
     refugie-pris-en-compte        BOOLEAN                           OPTIONAL
 }
@@ -208,7 +208,8 @@ MsgUnitAttributes ::= SEQUENCE
 -- Actions magiques
 
 MagicActionRecupererTransporteurs   ::= NULL
-MagicActionSeRendre                 ::= NULL        
+MagicActionSeRendre                 ::= Camp
+MagicActionAnnulerReddition         ::= NULL
 MagicActionMoveTo                   ::= CoordUTM    -- Position
 MagicActionDestructionTotale        ::= NULL
 MagicActionRecompletementTotal      ::= NULL
@@ -275,6 +276,7 @@ MsgUnitMagicAction ::= SEQUENCE
         change-facteurs-humains     MagicActionChangeFacteursHumains,
         destruction-totale          MagicActionDestructionTotale,
         se-rendre                   MagicActionSeRendre,
+        annuler-reddition           MagicActionAnnulerReddition,
         recuperer-transporteurs     MagicActionRecupererTransporteurs
     }       
 }

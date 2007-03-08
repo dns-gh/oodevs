@@ -31,43 +31,35 @@ MIL_AutomateLOG* MIL_Automate::GetTC2() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Automate::GetNominalTC2
+// Created: NLD 2007-02-14
+// -----------------------------------------------------------------------------
+inline
+MIL_AutomateLOG* MIL_Automate::GetNominalTC2() const
+{
+    if( IsSurrendered() )
+        return 0;
+    return pNominalTC2_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Automate::IsSurrendered
 // Created: NLD 2005-02-24
 // -----------------------------------------------------------------------------
 inline
 bool MIL_Automate::IsSurrendered() const
 {
-    return bSurrendered_;
+    return pArmySurrenderedTo_ != 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::IsPrisoner
-// Created: NLD 2005-03-04
+// Name: MIL_Automate::GetArmySurrenderedTo
+// Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
 inline
-bool MIL_Automate::IsPrisoner() const
+const MIL_Army* MIL_Automate::GetArmySurrenderedTo() const
 {
-    return bPrisoner_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetPrisonerCamp
-// Created: NLD 2005-03-04
-// -----------------------------------------------------------------------------
-inline
-const MIL_CampPrisonniers* MIL_Automate::GetPrisonerCamp() const
-{
-    return pPrisonerCamp_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetRefugeeCamp
-// Created: NLD 2005-03-10
-// -----------------------------------------------------------------------------
-inline
-const MIL_CampRefugies* MIL_Automate::GetRefugeeCamp() const
-{
-    return pRefugeeCamp_;
+    return pArmySurrenderedTo_;
 }
 
 // -----------------------------------------------------------------------------

@@ -57,7 +57,9 @@ public:
     void ReadOverloading              ( MIL_InputArchive& archive );
     void RegisterDotationsCapacities  ( const PHY_DotationCapacities& capacities );
     void UnregisterDotationsCapacities( const PHY_DotationCapacities& capacities );
-    void NotifyTakenPrisoner          ();
+
+    void NotifyCaptured();
+    void NotifyReleased();
     //@}
 
     //! @name Operations 

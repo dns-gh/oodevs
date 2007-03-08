@@ -16,7 +16,7 @@
 
 #include "PHY_RoleInterface_Transported.h"
 
-class MIL_Agent_ABC;
+class MIL_AgentPion;
 class NET_ASN_MsgUnitAttributes;
 
 // =============================================================================
@@ -28,7 +28,7 @@ class PHY_RolePion_Transported : public PHY_RoleInterface_Transported
     MT_COPYNOTALLOWED( PHY_RolePion_Transported )
 
 public:
-             PHY_RolePion_Transported( MT_RoleContainer& role );
+             PHY_RolePion_Transported( MT_RoleContainer& role, MIL_AgentPion& pion );
              PHY_RolePion_Transported();
     virtual ~PHY_RolePion_Transported();
 
@@ -39,8 +39,7 @@ public:
     void load( MIL_CheckPointInArchive& , const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
-
-    
+   
     //! @name Operations
     //@{
     void Update    ( bool bIsDead );
@@ -48,21 +47,20 @@ public:
     bool HasChanged() const;
     //@}
 
-    //! @name Actions
+    //! @name Transport
     //@{
-    void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
-    void UnloadFromTransport( bool bTransportOnlyLoadable );
-    void CancelTransport    ();
-    
-    
-    bool HasHumanTransportersReady() const;
-    void DisableHumanTransporters ( const MT_Vector2D& vPosition );
-    void RecoverHumanTransporters ();
+    virtual void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
+    virtual void UnloadFromTransport( bool bTransportOnlyLoadable );
+    virtual void CancelTransport    ();
+    virtual void GetTransportWeight ( bool bTransportOnlyLoadable, MT_Float& rTotalWeight, MT_Float& rHeaviestComposanteWeight ) const;
+    virtual bool IsTransported      () const;
     //@}
 
-    //! @name Accessors
+    //! @name Human transporters ... $$$
     //@{
-    bool IsTransported                () const;
+    bool HasHumanTransportersReady    () const;
+    void DisableHumanTransporters     ( const MT_Vector2D& vPosition );
+    void RecoverHumanTransporters     ();
     bool HasHumanTransportersToRecover() const;
     //@}
 
@@ -73,6 +71,7 @@ public:
     //@}
 
 private:
+          MIL_AgentPion* pPion_;
           bool           bHasChanged_;
     const MIL_Agent_ABC* pTransporter_;
 

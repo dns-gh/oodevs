@@ -438,119 +438,121 @@
 
   <report id="188" message="rendu"/>
 
-  <report id="189" message="tir dans zone interdite"/>
+  <report id="189" message="reddition annulee"/>
 
-  <report id="190" message="tir sur camp ami"/>
+  <report id="190" message="tir dans zone interdite"/>
 
-  <report id="191" message="tire par camp ami"/>
+  <report id="191" message="tir sur camp ami"/>
 
-  <report id="192" message="tir sur camp neutre"/>
+  <report id="192" message="tire par camp ami"/>
 
-  <report id="193" message="tire par camp neutre"/>
+  <report id="193" message="tir sur camp neutre"/>
 
-  <report id="194" message="tir sur civil"/>
+  <report id="194" message="tire par camp neutre"/>
 
-  <report id="195" message="tire par civil"/>
+  <report id="195" message="tir sur civil"/>
 
-  <report id="196" message="tir indirect fratricide"/>
+  <report id="196" message="tire par civil"/>
 
-  <report id="197" message="tir indirect sur population"/>
+  <report id="197" message="tir indirect fratricide"/>
 
-  <report id="198" message="destruction pc"/>
+  <report id="198" message="tir indirect sur population"/>
 
-  <report id="199" message="deces blesse"/>
+  <report id="199" message="destruction pc"/>
 
-  <report id="200" message="deces blesse pendant transport"/>
+  <report id="200" message="deces blesse"/>
 
-  <report id="201" message="deces blesse pendant hospitalisation"/>
+  <report id="201" message="deces blesse pendant transport"/>
 
-  <report id="202" message="mission impossible unites subordonnees non operationnelles"/>
+  <report id="202" message="deces blesse pendant hospitalisation"/>
 
-  <report id="203" message="mission impossible lima invalide"/>
+  <report id="203" message="mission impossible unites subordonnees non operationnelles"/>
 
-  <report id="204" message="mission impossible zone hors fuseau"/>
+  <report id="204" message="mission impossible lima invalide"/>
 
-  <report id="205" message="rapport de force defavorable"/>
+  <report id="205" message="mission impossible zone hors fuseau"/>
 
-  <report id="206" message="terrain difficile"/>
+  <report id="206" message="rapport de force defavorable"/>
 
-  <report id="207" message="plus de carburant"/>
+  <report id="207" message="terrain difficile"/>
 
-  <report id="208" message="dispositif disperse"/>
+  <report id="208" message="plus de carburant"/>
 
-  <report id="209" message="debut neutralisation"/>
+  <report id="209" message="dispositif disperse"/>
 
-  <report id="210" message="fin neutralisation"/>
+  <report id="210" message="debut neutralisation"/>
 
-  <report id="211" message="debut silence radio"/>
+  <report id="211" message="fin neutralisation"/>
 
-  <report id="212" message="fin silence radio"/>
+  <report id="212" message="debut silence radio"/>
 
-  <report id="213" message="debut silence radar"/>
+  <report id="213" message="fin silence radio"/>
 
-  <report id="214" message="fin silence radar"/>
+  <report id="214" message="debut silence radar"/>
 
-  <report id="215" message="tir restreint"/>
+  <report id="215" message="fin silence radar"/>
 
-  <report id="216" message="tir interdit"/>
+  <report id="216" message="tir restreint"/>
 
-  <report id="217" message="tir libre"/>
+  <report id="217" message="tir interdit"/>
 
-  <report id="218" message="trace">
+  <report id="218" message="tir libre"/>
+
+  <report id="219" message="trace">
     <parameter type="String"/>
   </report>
 
-  <report id="219" message="trace id">
+  <report id="220" message="trace id">
     <parameter type="Numeric"/>
   </report>
 
-  <report id="220" message="emploi force interdit"/>
+  <report id="221" message="emploi force interdit"/>
 
-  <report id="221" message="maintien a distance par moyens non letaux"/>
+  <report id="222" message="maintien a distance par moyens non letaux"/>
 
-  <report id="222" message="dispersion par moyens de defense actifs"/>
+  <report id="223" message="dispersion par moyens de defense actifs"/>
 
-  <report id="223" message="armes letales autorisees"/>
+  <report id="224" message="armes letales autorisees"/>
 
-  <report id="224" message="population detectee">
+  <report id="225" message="population detectee">
     <parameter type="PopulationKnowledge"/>
   </report>
 
-  <report id="225" message="prise a partie par population">
+  <report id="226" message="prise a partie par population">
     <parameter type="PopulationKnowledge"/>
   </report>
 
-  <report id="226" message="riposte contre population">
+  <report id="227" message="riposte contre population">
     <parameter type="PopulationKnowledge"/>
   </report>
 
-  <report id="227" message="population dangereuse a proximite"/>
+  <report id="228" message="population dangereuse a proximite"/>
 
-  <report id="228" message="esquive face a population"/>
+  <report id="229" message="esquive face a population"/>
 
-  <report id="229" message="decrochage face a population"/>
+  <report id="230" message="decrochage face a population"/>
 
-  <report id="230" message="mise en place controle de foule"/>
+  <report id="231" message="mise en place controle de foule"/>
 
-  <report id="231" message="mise en place filtrage"/>
+  <report id="232" message="mise en place filtrage"/>
 
-  <report id="232" message="animation barrage"/>
+  <report id="233" message="animation barrage"/>
 
-  <report id="233" message="animation canalisation"/>
+  <report id="234" message="animation canalisation"/>
 
-  <report id="234" message="collecte renseignements sur populations"/>
+  <report id="235" message="collecte renseignements sur populations"/>
 
-  <report id="235" message="population reconnue"/>
+  <report id="236" message="population reconnue"/>
 
-  <report id="236" message="situation difficilement tenable face a population"/>
+  <report id="237" message="situation difficilement tenable face a population"/>
 
-  <report id="237" message="utilisation armes non letales face a population"/>
+  <report id="238" message="utilisation armes non letales face a population"/>
 
-  <report id="238" message="utilisation moyens defense actifs face a population"/>
+  <report id="239" message="utilisation moyens defense actifs face a population"/>
 
-  <report id="239" message="utilisation armements face a population"/>
+  <report id="240" message="utilisation armements face a population"/>
 
-  <report id="240" message="debut intervention face a population">
+  <report id="241" message="debut intervention face a population">
     <parameter type="Enumeration">
       <value id="0" name="calme"/>
       <value id="1" name="agitee"/>
@@ -559,12 +561,12 @@
     </parameter>
   </report>
 
-  <report id="241" message="population victime affrontements">
+  <report id="242" message="population victime affrontements">
     <parameter type="Numeric"/>
     <parameter type="Numeric"/>
   </report>
 
-  <report id="242" message="attitude population">
+  <report id="243" message="attitude population">
     <parameter type="Enumeration">
       <value id="0" name="calme"/>
       <value id="1" name="agitee"/>
@@ -573,43 +575,43 @@
     </parameter>
   </report>
 
-  <report id="243" message="aggravation attitude"/>
+  <report id="244" message="aggravation attitude"/>
 
-  <report id="244" message="affrontement avec forces ennemies"/>
+  <report id="245" message="affrontement avec forces ennemies"/>
 
-  <report id="245" message="population temporairement controlee"/>
+  <report id="246" message="population temporairement controlee"/>
 
-  <report id="246" message="population temporairement repoussee"/>
+  <report id="247" message="population temporairement repoussee"/>
 
-  <report id="247" message="reprise des affrontements"/>
+  <report id="248" message="reprise des affrontements"/>
 
-  <report id="248" message="agression de population">
+  <report id="249" message="agression de population">
     <parameter type="PopulationKnowledge"/>
   </report>
 
-  <report id="249" message="agression par population">
+  <report id="250" message="agression par population">
     <parameter type="PopulationKnowledge"/>
   </report>
 
-  <report id="250" message="riposte contre agression par population">
+  <report id="251" message="riposte contre agression par population">
     <parameter type="PopulationKnowledge"/>
   </report>
 
-  <report id="251" message="attaque installation"/>
+  <report id="252" message="attaque installation"/>
 
-  <report id="252" message="en stationnement"/>
+  <report id="253" message="en stationnement"/>
 
-  <report id="253" message="bloquee"/>
+  <report id="254" message="bloquee"/>
 
-  <report id="254" message="filtree"/>
+  <report id="255" message="filtree"/>
 
-  <report id="255" message="attentat terroriste dans population"/>
+  <report id="256" message="attentat terroriste dans population"/>
 
-  <report id="256" message="population victime explosion mines">
+  <report id="257" message="population victime explosion mines">
     <parameter type="Numeric"/>
     <parameter type="Numeric"/>
   </report>
 
-  <report id="257" message="execution attentat"/>
+  <report id="258" message="execution attentat"/>
 
 </reports>

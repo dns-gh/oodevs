@@ -42,7 +42,7 @@ MsgUnitKnowledgeUpdate ::= SEQUENCE
     camp                        OID                            OPTIONAL,
     nature-pc                   BOOLEAN                        OPTIONAL,
     perception-par-compagnie    SEQUENCE OF AutomatePerception OPTIONAL,
-    rendu                       BOOLEAN                        OPTIONAL,
+    rendu                       Camp                           OPTIONAL, -- '0' quand pas rendu
     prisonnier                  BOOLEAN                        OPTIONAL,
     refugie-pris-en-compte      BOOLEAN                        OPTIONAL
 }

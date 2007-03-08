@@ -14,8 +14,8 @@
 #include "PHY_RoleAction_Transport.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
-#include "Entities/Agents/Roles/NBC/PHY_RolePion_NBC.h"
+#include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
+#include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Messages.h"
 
@@ -141,7 +141,7 @@ void PHY_RoleAction_Transport::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 struct sTransporterData
 {
-    sTransporterData( const MIL_AgentPion& transporter)
+    sTransporterData( const MIL_AgentPion& transporter )
         : rWeightCapacity_                ( 0. )
         , rWeightLoadedPerTimeStep_       ( 0. )
         , rWeightUnloadedPerTimeStep_     ( 0. )
@@ -165,36 +165,6 @@ struct sTransporterData
     MT_Float rWeightLoadedPerTimeStep_;
     MT_Float rWeightUnloadedPerTimeStep_;
     MT_Float rMaxComposanteTransportedWeight_;
-};
-
-// -----------------------------------------------------------------------------
-// Name: sTransportedData
-// Created: JVT 2005-02-01
-// -----------------------------------------------------------------------------
-struct sTransportedData
-{
-    sTransportedData( const MIL_AgentPion& transported, const bool bTransportOnlyLoadable )
-        : rTotalWeight_             ( 0. )
-        , rHeaviestComposanteWeight_( 0. )
-        , bTransportOnlyLoadable_   ( bTransportOnlyLoadable )
-    {
-        transported.GetRole< PHY_RolePion_Composantes >().Apply( *this );
-    }
-
-    void operator() ( const PHY_ComposantePion& composante )
-    {
-        if(  composante.CanBeTransported() && ( !bTransportOnlyLoadable_ || composante.CanBeLoaded() ) )
-        {
-            rTotalWeight_             += composante.GetWeight();
-            rHeaviestComposanteWeight_ = std::max( rHeaviestComposanteWeight_, composante.GetWeight() );
-        }
-    }
-
-          MT_Float rTotalWeight_;
-          MT_Float rHeaviestComposanteWeight_;
-    const bool     bTransportOnlyLoadable_;
-
-    MT_COPYNOTALLOWED( sTransportedData );
 };
 
 // =============================================================================
@@ -240,7 +210,7 @@ MT_Float PHY_RoleAction_Transport::DoLoad( const MT_Float rWeightToLoad )
 
     for( IT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end() && rWeightLoaded < rWeightToLoad; ++it )
     {
-        MIL_AgentPion&  pion          = *it->first;
+        MIL_Agent_ABC&  pion          = *it->first;
         sTransportData& transportData =  it->second;
 
         if( it->second.rRemainingWeight_ <= 0. )
@@ -248,7 +218,7 @@ MT_Float PHY_RoleAction_Transport::DoLoad( const MT_Float rWeightToLoad )
 
         if( it->second.rTransportedWeight_ <= 0. )
         {
-            pion.GetRole< PHY_RolePion_Transported >().LoadForTransport( *pTransporter_, transportData.bTransportOnlyLoadable_ ); // Filer position embarquement si bTransportOnlyLoadable_  + transporteur
+            pion.GetRole< PHY_RoleInterface_Transported >().LoadForTransport( *pTransporter_, transportData.bTransportOnlyLoadable_ ); // Filer position embarquement si bTransportOnlyLoadable_  + transporteur
             bHasChanged_ = true;
         }
 
@@ -314,8 +284,8 @@ MT_Float PHY_RoleAction_Transport::DoUnload( const MT_Float rWeightToUnload )
         if( it->second.rTransportedWeight_ <= 0. && it->second.rRemainingWeight_ <= 0. )
         {
             bHasChanged_ = true;
-            MIL_AgentPion& pion = *it->first;
-            pion.GetRole< PHY_RolePion_Transported >().UnloadFromTransport( it->second.bTransportOnlyLoadable_ );
+            MIL_Agent_ABC& pion = *it->first;
+            pion.GetRole< PHY_RoleInterface_Transported >().UnloadFromTransport( it->second.bTransportOnlyLoadable_ );
             it = transportedPions_.erase( it );
         }
         else
@@ -370,7 +340,7 @@ void PHY_RoleAction_Transport::NotifyComposanteContaminated( const MIL_NbcAgent&
         if( it->second.rTransportedWeight_ )
         {
             rWeightDamaged -= it->second.rTransportedWeight_;
-            (*it->first).GetRole< PHY_RolePion_NBC >().Contaminate( nbcAgent );
+            (*it->first).GetRole< PHY_RoleInterface_NBC >().Contaminate( nbcAgent );
         }
     }
 }
@@ -394,22 +364,24 @@ void PHY_RoleAction_Transport::CheckConsistency()
 // Name: PHY_RoleAction_Transport::AddPion
 // Created: NLD 2005-04-18
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Transport::AddPion( MIL_AgentPion& transported, bool bTransportOnlyLoadable )
+bool PHY_RoleAction_Transport::AddPion( MIL_Agent_ABC& transported, bool bTransportOnlyLoadable )
 {
-    if(   transported == *pTransporter_
-        || transported.GetRole< PHY_RolePion_Transported >().IsTransported()
+    if(    transported == *pTransporter_
+        || transported.GetRole< PHY_RoleInterface_Transported >().IsTransported()
         || transportedPions_.find( &transported ) != transportedPions_.end() )
         return false;
    
-    sTransportedData transportedData( transported, bTransportOnlyLoadable );
-    if( transportedData.rTotalWeight_ <= 0. )
+    MT_Float rTotalTransportedWeight              = 0.;
+    MT_Float rHeaviestComposanteTransportedWeight = 0.;
+    transported.GetRole< PHY_RoleInterface_Transported >().GetTransportWeight( bTransportOnlyLoadable, rTotalTransportedWeight, rHeaviestComposanteTransportedWeight );
+    if( rTotalTransportedWeight <= 0. )
         return false;
 
     sTransporterData transporterData( *pTransporter_ );
-    if( !bTransportOnlyLoadable && transportedData.rHeaviestComposanteWeight_ > transporterData.rMaxComposanteTransportedWeight_ )
+    if( !bTransportOnlyLoadable && rHeaviestComposanteTransportedWeight > transporterData.rMaxComposanteTransportedWeight_ )
         return false;
 
-    transportedPions_[ &transported ].sTransportData::sTransportData( transportedData.rTotalWeight_, bTransportOnlyLoadable );
+    transportedPions_[ &transported ].sTransportData::sTransportData( rTotalTransportedWeight, bTransportOnlyLoadable );
     return true;
 }       
 
@@ -417,21 +389,23 @@ bool PHY_RoleAction_Transport::AddPion( MIL_AgentPion& transported, bool bTransp
 // Name: PHY_RoleAction_Transport::MagicLoadPion
 // Created: NLD 2005-04-18
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Transport::MagicLoadPion( MIL_AgentPion& transported, bool bTransportOnlyLoadable )
+bool PHY_RoleAction_Transport::MagicLoadPion( MIL_Agent_ABC& transported, bool bTransportOnlyLoadable )
 {
     if(   transported == *pTransporter_
-        || transported.GetRole< PHY_RolePion_Transported >().IsTransported()
+        || transported.GetRole< PHY_RoleInterface_Transported >().IsTransported()
         || transportedPions_.find( &transported ) != transportedPions_.end() )
         return false;
 
-    sTransportedData transportedData( transported, bTransportOnlyLoadable );
+    MT_Float rTotalTransportedWeight              = 0.;
+    MT_Float rHeaviestComposanteTransportedWeight = 0.;
+    transported.GetRole< PHY_RoleInterface_Transported >().GetTransportWeight( bTransportOnlyLoadable, rTotalTransportedWeight, rHeaviestComposanteTransportedWeight );
 
-    sTransportData& data = transportedPions_[ &transported ].sTransportData::sTransportData( transportedData.rTotalWeight_, bTransportOnlyLoadable );
+    sTransportData& data = transportedPions_[ &transported ].sTransportData::sTransportData( rTotalTransportedWeight, bTransportOnlyLoadable );
     data.rRemainingWeight_   = 0.;
     data.rTransportedWeight_ = data.rTotalWeight_;
     rWeightTransported_ += data.rTotalWeight_;
 
-    transported.GetRole< PHY_RolePion_Transported >().LoadForTransport( *pTransporter_, bTransportOnlyLoadable ); // Filer position embarquement si bTransportOnlyLoadable_  + transporteur
+    transported.GetRole< PHY_RoleInterface_Transported >().LoadForTransport( *pTransporter_, bTransportOnlyLoadable ); // Filer position embarquement si bTransportOnlyLoadable_  + transporteur
     bHasChanged_ = true;
 
     return true;
@@ -441,13 +415,13 @@ bool PHY_RoleAction_Transport::MagicLoadPion( MIL_AgentPion& transported, bool b
 // Name: PHY_RoleAction_Transport::MagicUnloadPion
 // Created: NLD 2005-04-19
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Transport::MagicUnloadPion( MIL_AgentPion& transported )
+bool PHY_RoleAction_Transport::MagicUnloadPion( MIL_Agent_ABC& transported )
 {
     IT_TransportedPionMap it = transportedPions_.find( &transported );
     if( it == transportedPions_.end() )
         return false;
 
-    transported.GetRole< PHY_RolePion_Transported >().UnloadFromTransport( it->second.bTransportOnlyLoadable_ );
+    transported.GetRole< PHY_RoleInterface_Transported >().UnloadFromTransport( it->second.bTransportOnlyLoadable_ );
 
     assert( rWeightTransported_ >= it->second.rTransportedWeight_ );
     rWeightTransported_ -= it->second.rTransportedWeight_;
@@ -464,7 +438,7 @@ void PHY_RoleAction_Transport::Cancel()
 {
     for( IT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end(); ++it)
     {
-        it->first->GetRole< PHY_RolePion_Transported >().CancelTransport();
+        it->first->GetRole< PHY_RoleInterface_Transported >().CancelTransport();
         it->second.rTransportedWeight_ = 0;
     }
     transportedPions_.clear();
@@ -476,18 +450,32 @@ void PHY_RoleAction_Transport::Cancel()
 // Name: PHY_RoleAction_Transport::CanTransportPion
 // Created: JVT 2005-02-01
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Transport::CanTransportPion( const MIL_AgentPion& transported, bool bTransportOnlyLoadable ) const
+bool PHY_RoleAction_Transport::CanTransportPion( const MIL_Agent_ABC& transported, bool bTransportOnlyLoadable ) const
 {
     assert( pTransporter_ );
     if( *pTransporter_ == transported )
         return false;
 
-    sTransportedData transportedData( transported, bTransportOnlyLoadable );
-    if( transportedData.rTotalWeight_ <= 0. )
+    MT_Float rTotalTransportedWeight              = 0.;
+    MT_Float rHeaviestComposanteTransportedWeight = 0.;
+    transported.GetRole< PHY_RoleInterface_Transported >().GetTransportWeight( bTransportOnlyLoadable, rTotalTransportedWeight, rHeaviestComposanteTransportedWeight );
+    if( rTotalTransportedWeight <= 0. )
         return false;
 
     sTransporterData transporterData( *pTransporter_ );
-    if( !bTransportOnlyLoadable && transportedData.rHeaviestComposanteWeight_ > transporterData.rMaxComposanteTransportedWeight_ )
+    if( !bTransportOnlyLoadable && rHeaviestComposanteTransportedWeight > transporterData.rMaxComposanteTransportedWeight_ )
+        return false;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::IsLoaded
+// Created: NLD 2007-02-26
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Transport::IsLoaded( const MIL_Agent_ABC& transported ) const
+{
+    CIT_TransportedPionMap it = transportedPions_.find( const_cast< MIL_Agent_ABC* >( &transported ) );
+    if( it == transportedPions_.end() || it->second.rRemainingWeight_ > 0. )
         return false;
     return true;
 }

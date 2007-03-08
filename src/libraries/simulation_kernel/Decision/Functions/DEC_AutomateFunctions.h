@@ -27,7 +27,6 @@ public:
     //@{
     // Accessors    
     static void IsSurrendered      ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void IsPrisoner         ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     static void IsEngaged          ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     static void DebrayeAutomate    ( DIA_Call_ABC& call,       MIL_Automate& callerAutomate );
 
@@ -44,10 +43,7 @@ public:
     static void NotifyRulesOfEngagementStateChanged( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void NotifyCloseCombatStateChanged      ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void NotifyOperationalStateChanged      ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-
-    // Etat refugies
-    static void NotifyRefugeeManagedStateChanged( DIA_Call_ABC& call, MIL_Automate& callerAgent );
-   
+  
     // Test / debug
     static void Debug          ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     static void Trace          ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );

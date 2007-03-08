@@ -30,15 +30,17 @@ public:
 
     //! @name Main
     //@{
-    virtual bool TakePrisoner             ( const MIL_AgentPion& pionTakingPrisoner, const MIL_CampPrisonniers& camp );
-    virtual void NotifyInsidePrisonerCamp ( const MIL_CampPrisonniers& camp );
-    virtual void NotifyOutsidePrisonerCamp( const MIL_CampPrisonniers& camp );
+    virtual bool Capture     ( const MIL_AgentPion& pionTakingPrisoner );
+    virtual bool Release     ();
+    virtual bool Imprison    ( const MIL_CampPrisonniers& camp );
     //@}
 
     //! @name Accessors
     //@{
-    virtual bool IsSurrendered() const;
-    virtual bool IsPrisoner   () const;
+    virtual const MIL_Army* GetArmySurrenderedTo() const;
+    virtual       bool      IsSurrendered       () const;
+    virtual       bool      IsPrisoner          () const;
+    virtual       bool      IsImprisoned        ( const MIL_CampPrisonniers& camp );
     //@}
 
     //! @name Modifiers
@@ -47,7 +49,6 @@ public:
     //@}
 
 private:
-    bool bSurrendered_;
     bool bPrisoner_;
 };
 

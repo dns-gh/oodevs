@@ -27,10 +27,14 @@ T_ListePoints itineraire_;
 };
 
 
-typedef struct T_Mission_Automate_SeRendre : T_Mission_Automate
+typedef struct T_Mission_Automate_PrendreEnComptePrisonniers : T_Mission_Automate
 {
+T_ListeConnaissancesAgent unitesRendues_;
+T_ConnaissanceObjet campPrisonniers_;
 };
 
-typedef struct T_Mission_Automate_FaireMouvementVersCampRefugies : T_Mission_Automate
+typedef struct T_Mission_Automate_OrienterRefugies : T_Mission_Automate
 {
+T_ListeConnaissancesAgent refugies_;
+T_ConnaissanceObjet campRefugies_;
 };

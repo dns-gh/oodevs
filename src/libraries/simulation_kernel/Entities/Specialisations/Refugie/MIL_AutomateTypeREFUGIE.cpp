@@ -22,8 +22,6 @@
 MIL_AutomateTypeREFUGIE::MIL_AutomateTypeREFUGIE( const std::string& strName, MIL_InputArchive& archive )
     : MIL_AutomateType( strName, archive )
 {
-    if( !GetModel().IsMissionAvailable( MIL_AutomateMissionType::GetMoveToRefugeeCampMissionType() ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Mission 'SeRendreVersCampRefugies' not specified/available in model", archive.GetContext() );
 }
 
 // -----------------------------------------------------------------------------

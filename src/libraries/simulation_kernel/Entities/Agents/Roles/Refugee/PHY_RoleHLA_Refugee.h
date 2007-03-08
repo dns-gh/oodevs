@@ -28,16 +28,17 @@ public:
     PHY_RoleHLA_Refugee( MT_RoleContainer& role );
     virtual ~PHY_RoleHLA_Refugee();
 
-    //! @name Main
-    //@{
-    virtual bool OrientateRefugee        ( const MIL_CampRefugies& camp );
-    virtual void NotifyInsideRefugeeCamp ( const MIL_CampRefugies& camp );
-    virtual void NotifyOutsideRefugeeCamp( const MIL_CampRefugies& camp );
-    //@}
-
     //! @name Accessors
     //@{
     virtual bool IsManaged() const;
+    virtual bool IsManaged( const MIL_CampRefugies& camp ) const;
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual bool Orientate( const MIL_AgentPion& pionManaging );
+    virtual bool Release  ();
+    virtual bool Release  ( const MIL_CampRefugies& camp );
     //@}
 
     //! @name Modifiers

@@ -622,11 +622,18 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::CanTransportPion                        , "DEC_Agent_PeutTransporterPion"          );        
 
     // Prisonniers
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::TakePrisoner, "DEC_FairePrisonnier" );
-
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Prisoners_CaptureAndLoad                , "DEC_Prisonniers_CapturerEtEmbarquer" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Prisoners_Unload                        , "DEC_Prisonniers_Debarquer"           );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Prisoners_UnloadInCamp                  , "DEC_Prisonniers_DebarquerDansCamp"   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Prisoners_IsLoaded                      , "DEC_Prisonniers_EstEmbarque"         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Prisoners_IsUnloadedInCamp              , "DEC_Prisonniers_EstDebarqueDansCamp" );
+    
     // Refugies
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::OrientateRefugee, "DEC_OrienterRefugies" );
-
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Refugees_OrientateAndLoad               , "DEC_Refugies_OrienterEtEmbarquer" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Refugees_Unload                         , "DEC_Refugies_Debarquer"           );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Refugees_UnloadInCamp                   , "DEC_Refugies_DebarquerDansCamp"   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Refugees_IsLoaded                       , "DEC_Refugies_EstEmbarque"         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Refugees_IsUnloadedInCamp               , "DEC_Refugies_EstDebarqueDansCamp" );
 }
 
 // =============================================================================

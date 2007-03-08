@@ -203,6 +203,7 @@ typedef enum E_TypeRC
     eRC_OrientationEnnemiRenduVersCampPrisonniers,
     eRC_PasDeCampPrisonniersDisponible,
     eRC_Rendu,
+    eRC_RedditionAnnulee,
     eRC_TirDansZoneInterdite,
     eRC_TirSurCampAmi,
     eRC_TireParCampAmi,

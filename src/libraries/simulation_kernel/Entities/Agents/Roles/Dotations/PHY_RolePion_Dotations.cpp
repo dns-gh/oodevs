@@ -186,13 +186,23 @@ void PHY_RolePion_Dotations::UnregisterDotationsCapacities( const PHY_DotationCa
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Dotations::NotifyTakenPrisoner
+// Name: PHY_RolePion_Dotations::NotifyCaptured
 // Created: NLD 2005-02-28
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::NotifyTakenPrisoner()
+void PHY_RolePion_Dotations::NotifyCaptured()
 {
     assert( pDotations_ );
-    pDotations_->NotifyTakenPrisoner();
+    pDotations_->NotifyCaptured();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::NotifyReleased
+// Created: NLD 2007-02-15
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Dotations::NotifyReleased()
+{
+    assert( pDotations_ );
+    pDotations_->NotifyReleased();
 }
 
 // =============================================================================

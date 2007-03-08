@@ -148,32 +148,6 @@ ASN1T_EnumObjectErrorCode MIL_CampRefugies::Initialize( const ASN1T_MagicActionC
 }
 
 // =============================================================================
-// EVENTS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: MIL_CampRefugies::ProcessAgentInside
-// Created: NLD 2005-03-07
-// -----------------------------------------------------------------------------
-void MIL_CampRefugies::ProcessAgentInside( MIL_Agent_ABC& agent )
-{
-    MIL_RealObject_ABC::ProcessAgentInside( agent );
-    if( pTC2_ && CanInteractWith( agent ) )
-        agent.GetRole< PHY_RoleInterface_Refugee >().NotifyInsideRefugeeCamp( *this );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MIL_CampRefugies::ProcessAgentExiting
-// Created: NLD 2005-03-07
-// -----------------------------------------------------------------------------
-void MIL_CampRefugies::ProcessAgentExiting( MIL_Agent_ABC& agent )
-{
-    MIL_RealObject_ABC::ProcessAgentExiting( agent );
-    if( pTC2_ )
-        agent.GetRole< PHY_RoleInterface_Refugee >().NotifyOutsideRefugeeCamp( *this );
-}
-
-// =============================================================================
 // KNOWLEDGE
 // =============================================================================
 

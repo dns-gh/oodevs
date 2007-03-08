@@ -16,45 +16,10 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
-#include "Entities/Objects/MIL_CampPrisonniers.h"
 #include "Entities/Objects/MIL_CampRefugies.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/Genie/DEC_Gen_Object.h"
-
-// -----------------------------------------------------------------------------
-// Name: DEC_ObjectFunctions::GetPrisonerCampPosition
-// Created: NLD 2005-03-04
-// -----------------------------------------------------------------------------
-void DEC_ObjectFunctions::GetPrisonerCampPosition( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
-{
-    const MIL_CampPrisonniers* pCamp = callerAutomate.GetPrisonerCamp();
-    if( !pCamp )
-    {
-        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
-        return;
-    }
-
-    MT_Vector2D* pPos = new MT_Vector2D( pCamp->GetLocalisation().ComputeBarycenter() );
-    call.GetResult().SetValue( pPos, &DEC_Tools::GetTypePoint() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_ObjectFunctions::GetRefugeeCampPosition
-// Created: NLD 2005-03-10
-// -----------------------------------------------------------------------------
-void DEC_ObjectFunctions::GetRefugeeCampPosition( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
-{
-    const MIL_CampRefugies* pCamp = callerAutomate.GetRefugeeCamp();
-    if( !pCamp )
-    {
-        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
-        return;
-    }
-
-    MT_Vector2D* pPos = new MT_Vector2D( pCamp->GetLocalisation().ComputeBarycenter() );
-    call.GetResult().SetValue( pPos, &DEC_Tools::GetTypePoint() );
-}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_ObjectFunctions::CanObjectTypeBeBypassed

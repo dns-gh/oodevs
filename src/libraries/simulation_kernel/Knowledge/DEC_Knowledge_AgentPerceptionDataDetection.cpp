@@ -21,6 +21,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
+#include "Entities/MIL_Army.h"
 
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
@@ -37,12 +38,11 @@ DEC_Knowledge_AgentPerceptionDataDetection::DEC_Knowledge_AgentPerceptionDataDet
     , pLastPosture_                ( 0 )
     , pCurrentPosture_             ( 0 )
     , rPostureCompletionPercentage_( 1. )
-    , bSurrendered_                ( false )
+    , pArmySurrenderedTo_          ( false )
     , bPrisoner_                   ( false ) 
     , bRefugeeManaged_             ( false )
     , bDead_                       ( false )
 {
-
 }
 
 
@@ -70,7 +70,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::load( MIL_CheckPointInArchive& 
          >> vDirection_
          >> rAltitude_
          >> rSpeed_
-         >> bSurrendered_
+         >> const_cast< MIL_Army*& >( pArmySurrenderedTo_ )
          >> bPrisoner_
          >> bRefugeeManaged_
          >> bDead_
@@ -105,7 +105,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive&
          << vDirection_
          << rAltitude_
          << rSpeed_
-         << bSurrendered_
+         << pArmySurrenderedTo_
          << bPrisoner_
          << bRefugeeManaged_
          << bDead_
@@ -166,8 +166,8 @@ void DEC_Knowledge_AgentPerceptionDataDetection::Update( const MIL_Agent_ABC& ag
     rSpeed_     = roleLocation.GetCurrentSpeed();
 
     const PHY_RoleInterface_Surrender& roleSurrender = agentPerceived.GetRole< PHY_RoleInterface_Surrender >();
-    bSurrendered_ = roleSurrender.IsSurrendered();
-    bPrisoner_    = roleSurrender.IsPrisoner   ();
+    pArmySurrenderedTo_ = roleSurrender.GetArmySurrenderedTo();
+    bPrisoner_          = roleSurrender.IsPrisoner          ();
 
     bRefugeeManaged_ = agentPerceived.GetRole< PHY_RoleInterface_Refugee >().IsManaged();
     bDead_           = agentPerceived.IsDead();

@@ -1143,18 +1143,6 @@ behavior MIS_Pion_Test_Fire( T_Mission_Pion_Test_Fire mission, id nDummy )
                 E_ValiditeRequete nValidite;
                 
                 DEC_Tir_LancerFumigeneSurConnaissance( tmp );
-                
-                if( DEC_ConnaissanceAgent_SEstRendu( tmp, nValidite ) && nValidite == eRequeteValide )
-                {
-                    T_ConnaissanceObjet camp = DEC_Connaissances_ObjetLePlusProche( eTypeObjectCampPrisonniers );
-                    DEC_FairePrisonnier( tmp, camp, nValidite );               
-                }
-
-                if( DEC_ConnaissanceAgent_EstRefugie( tmp, nValidite ) && nValidite == eRequeteValide )
-                {
-                    T_ConnaissanceObjet camp = DEC_Connaissances_ObjetLePlusProche( eTypeObjectCampRefugies );
-                    DEC_OrienterRefugies( tmp, camp, nValidite );               
-                }
             }
         }
     }
@@ -1162,6 +1150,95 @@ behavior MIS_Pion_Test_Fire( T_Mission_Pion_Test_Fire mission, id nDummy )
     {
         DEC_Debug( "MIS_Pion_Test_Fire : on spontaneous end" );
     }       
+}
+
+
+
+behavior MIS_Pion_PrendreEnComptePrisonniers( T_Mission_Pion_PrendreEnComptePrisonniers mission, id nDummy )
+{
+    when updated:
+    {
+        persistent T_Point ptCamp;
+    
+        if( DIA_ModuleBegins() )
+        {
+            E_ValiditeRequete nValidite;
+            ptCamp = DEC_Geometrie_CalculerBarycentreLocalisation( DEC_ConnaissanceObjet_Localisation( mission.campPrisonniers_, nValidite ) );           
+            with( prisonnier in mission.unitesRendues_ )
+            {
+                DEC_Debug( "DEC_Prisonniers_EstEmbarque before: " + BoolToString( DEC_Prisonniers_EstEmbarque( prisonnier, nValidite ) ) );
+                DEC_Prisonniers_CapturerEtEmbarquer( prisonnier, nValidite );
+                DEC_Debug( "DEC_Prisonniers_EstEmbarque after: " + BoolToString( DEC_Prisonniers_EstEmbarque( prisonnier, nValidite ) ) );
+            }
+        }
+        
+        behavior BEH_MoveToTmp( ptCamp );
+        if( DEC_Geometrie_PositionsEgales( DEC_Agent_Position(), ptCamp ) )
+        {
+            E_ValiditeRequete nValidite;
+            with( prisonnier in mission.unitesRendues_ )
+            {                            
+                DEC_Debug( "DEC_Prisonniers_EstDebarqueDansCamp before: " + BoolToString( DEC_Prisonniers_EstDebarqueDansCamp( prisonnier, mission.campPrisonniers_, nValidite ) ) );
+                DEC_Prisonniers_DebarquerDansCamp( prisonnier, mission.campPrisonniers_, nValidite );
+                DEC_Debug( "DEC_Prisonniers_EstDebarqueDansCamp after: " + BoolToString( DEC_Prisonniers_EstDebarqueDansCamp( prisonnier, mission.campPrisonniers_, nValidite ) ) );
+            }
+        }
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "MIS_Pion_PrendreEnComptePrisonniers : on spontaneous end" );
+        E_ValiditeRequete nValidite;
+        with( prisonnier in mission.unitesRendues_ )
+        {
+            DEC_Debug( "DEC_Prisonniers_EstDebarqueDansCamp before: " + BoolToString( DEC_Prisonniers_EstDebarqueDansCamp( prisonnier, mission.campPrisonniers_, nValidite ) ) );
+            DEC_Prisonniers_Debarquer( prisonnier, nValidite );
+            DEC_Debug( "DEC_Prisonniers_EstDebarqueDansCamp after: " + BoolToString( DEC_Prisonniers_EstDebarqueDansCamp( prisonnier, mission.campPrisonniers_, nValidite ) ) );
+        }            
+    }
+}
+
+    
+behavior MIS_Pion_OrienterRefugies( T_Mission_Pion_OrienterRefugies mission, id nDummy )
+{
+    when updated:
+    {
+        persistent T_Point ptCamp;
+    
+        if( DIA_ModuleBegins() )
+        {
+            E_ValiditeRequete nValidite;
+            ptCamp = DEC_Geometrie_CalculerBarycentreLocalisation( DEC_ConnaissanceObjet_Localisation( mission.campRefugies_, nValidite ) );
+            with( refugie in mission.refugies_ )
+            {
+                DEC_Debug( "DEC_Refugies_EstEmbarque before: " + BoolToString( DEC_Refugies_EstEmbarque( refugie, nValidite ) ) );
+                DEC_Refugies_OrienterEtEmbarquer( refugie, nValidite );
+                DEC_Debug( "DEC_Refugies_EstEmbarque after: " + BoolToString( DEC_Refugies_EstEmbarque( refugie, nValidite ) ) );
+            }            
+        }
+        
+        behavior BEH_MoveToTmp( ptCamp );
+        if( DEC_Geometrie_PositionsEgales( DEC_Agent_Position(), ptCamp ) )
+        {
+            E_ValiditeRequete nValidite;
+            with( refugie in mission.refugies_ )
+            {
+                DEC_Debug( "DEC_Refugies_EstDebarqueDansCamp before: " + BoolToString( DEC_Refugies_EstDebarqueDansCamp( refugie, mission.campRefugies_, nValidite ) ) );
+                DEC_Refugies_DebarquerDansCamp( refugie, mission.campRefugies_, nValidite );
+                DEC_Debug( "DEC_Refugies_EstDebarqueDansCamp after: " + BoolToString( DEC_Refugies_EstDebarqueDansCamp( refugie, mission.campRefugies_, nValidite ) ) );
+            }
+        }
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "MIS_Pion_PrendreEnComptePrisonniers : on spontaneous end" );
+        E_ValiditeRequete nValidite;
+        with( refugie in mission.refugies_ )
+        {
+            DEC_Debug( "DEC_Refugies_EstDebarqueDansCamp before: " + BoolToString( DEC_Refugies_EstDebarqueDansCamp( refugie, mission.campRefugies_, nValidite ) ) );        
+            DEC_Refugies_Debarquer( refugie, nValidite );
+            DEC_Debug( "DEC_Refugies_EstDebarqueDansCamp after: " + BoolToString( DEC_Refugies_EstDebarqueDansCamp( refugie, mission.campRefugies_, nValidite ) ) );            
+        }
+    }
 }
 
 
@@ -1263,7 +1340,5 @@ behavior MIS_Pion_CanaliserPopulations( T_Mission_Pion_CanaliserPopulations miss
         DEC_Debug( "MIS_Canaliser : on spontaneous end" );
     }
 }
-
-
 
 

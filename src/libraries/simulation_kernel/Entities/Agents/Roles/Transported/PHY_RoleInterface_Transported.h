@@ -16,6 +16,8 @@
 
 #include "MT_Tools/MT_Role_ABC.h"
 
+class MIL_Agent_ABC;
+
 // =============================================================================
 // @class  PHY_RoleInterface_Transported
 // Created: JVT 2004-08-03
@@ -31,6 +33,15 @@ public:
              PHY_RoleInterface_Transported( MT_RoleContainer& role );
              PHY_RoleInterface_Transported();
     virtual ~PHY_RoleInterface_Transported();
+
+    //! @name Operations
+    //@{
+    virtual void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable ) = 0;
+    virtual void UnloadFromTransport( bool bTransportOnlyLoadable )  = 0;
+    virtual void CancelTransport    ()  = 0;
+    virtual void GetTransportWeight ( bool bTransportOnlyLoadable, MT_Float& rTotalWeight, MT_Float& rHeaviestComposanteWeight ) const = 0 ;
+    virtual bool IsTransported      () const = 0;
+    //@}
     
     //! @name CheckPoints
     //@{

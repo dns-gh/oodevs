@@ -301,8 +301,9 @@ void PHY_RolePion_Posture::UnsetPosturePostePrepareGenie()
 bool PHY_RolePion_Posture::CanBePerceived( const MIL_AgentPion& perceiver ) const
 {
     assert( pPion_ );
-    return     ( !bIsStealth_ || perceiver.GetRole< PHY_RolePion_Perceiver >().WasPerceived( *pPion_ ) ) 
-            && !GetRole< PHY_RolePion_Transported >().IsTransported();
+    if( bIsStealth_ && !perceiver.GetRole< PHY_RolePion_Perceiver >().WasPerceived( *pPion_ ) )
+        return false;
+    return true;
 }
 
 // =============================================================================

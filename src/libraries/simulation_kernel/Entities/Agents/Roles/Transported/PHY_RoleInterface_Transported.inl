@@ -8,3 +8,13 @@
 // $Workfile: PHY_RoleInterface_Transported.inl $
 //
 // *****************************************************************************
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleInterface_Transported::serialize
+// Created: JVT 2005-03-31
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_RoleInterface_Transported::serialize( Archive& file, const uint )
+{
+    file & boost::serialization::base_object< MT_Role_ABC >( *this );
+}

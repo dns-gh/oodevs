@@ -81,7 +81,8 @@ public:
 
     //! @name Misc
     //@{
-    void NotifyTakenPrisoner();
+    void NotifyCaptured();
+    void NotifyReleased();
     //@}
 
     //! @name Notifications

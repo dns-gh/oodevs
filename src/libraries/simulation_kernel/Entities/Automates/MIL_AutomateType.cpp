@@ -355,7 +355,6 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::NotifyOperationalStateChanged      , "DEC_Automate_ChangeEtatOperationnel"      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsEngaged                          , "DEC_Automate_EstEmbraye"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsSurrendered                      , "DEC_Automate_SEstRendu"                   );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPrisoner                         , "DEC_Automate_EstPrisonnier"               );
        
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::DebrayeAutomate, "DEC_Automate_Debrayer" ); 
     
@@ -487,13 +486,6 @@ void MIL_AutomateType::InitializeDiaFunctions()
     // Objects
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ObjectFunctions::MagicCreateObject < MIL_Automate >, "DEC_CreerObjetSansDelais"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ObjectFunctions::MagicDestroyObject< MIL_Automate >, "DEC_DetruireObjetSansDelais" );
-
-    // Prisonniers
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ObjectFunctions::GetPrisonerCampPosition, "DEC_PositionCampPrisonniers" );
-
-    // Refugies
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ObjectFunctions  ::GetRefugeeCampPosition          , "DEC_PositionCampRefugies" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::NotifyRefugeeManagedStateChanged, "DEC_Automate_ChangeEtatPriseEnCompteRefugies" );
 
     // Populations
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::GetDominationState< MIL_Automate >, "DEC_ConnaissancePopulation_Domination"  );

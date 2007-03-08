@@ -40,8 +40,17 @@ public:
     static void Transport_Cancel          ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );        
     static void CanTransportPion          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
 
-    static void TakePrisoner    ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void OrientateRefugee( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void Prisoners_CaptureAndLoad  ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void Prisoners_Unload          ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void Prisoners_UnloadInCamp    ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void Prisoners_IsLoaded        ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void Prisoners_IsUnloadedInCamp( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+
+    static void Refugees_OrientateAndLoad( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void Refugees_Unload          ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void Refugees_UnloadInCamp    ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void Refugees_IsLoaded        ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void Refugees_IsUnloadedInCamp( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     //@}
 };
 

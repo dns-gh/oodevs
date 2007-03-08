@@ -14,17 +14,20 @@
 #include "PHY_RoleAction_Objects_CapabilityComputer.h"
 
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects_CapabilityComputer constructor
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-PHY_RoleAction_Objects_CapabilityComputer::PHY_RoleAction_Objects_CapabilityComputer( E_Operation nOperation, const MIL_RealObjectType& objectType )
+PHY_RoleAction_Objects_CapabilityComputer::PHY_RoleAction_Objects_CapabilityComputer( const MIL_AgentPion& pion, E_Operation nOperation, const MIL_RealObjectType& objectType )
     : nOperation_    ( nOperation )
     , objectType_    ( objectType )
     , bHasCapability_( false )
 {
-
+    CollectData( pion );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,7 +36,23 @@ PHY_RoleAction_Objects_CapabilityComputer::PHY_RoleAction_Objects_CapabilityComp
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Objects_CapabilityComputer::~PHY_RoleAction_Objects_CapabilityComputer()
 {
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects_CapabilityComputer::CollectData
+// Created: NLD 2007-02-13
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Objects_CapabilityComputer::CollectData( const MIL_AgentPion& pion )
+{
+    pion.GetRole< PHY_RolePion_Composantes >().Apply( *this );
+    
+    if( bHasCapability_ )
+        return;
+
+    const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = pion.GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
+    for( PHY_RolePion_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
+        CollectData( **itReinforcement );
 }
 
 // -----------------------------------------------------------------------------

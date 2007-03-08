@@ -29,6 +29,7 @@ none EVT_RC_UniteDecontaminee                               () { DEC_RC( eRC_Uni
 none EVT_RC_PlusDeCarburant                                 () { DEC_RC( eRC_PlusDeCarburant                                 ); }
 none EVT_RC_TerrainDifficile                                () { DEC_RC( eRC_TerrainDifficile                                ); }
 none EVT_RC_Rendu                                           () { DEC_RC( eRC_Rendu                                           ); }
+none EVT_RC_RedditionAnnulee                                () { DEC_RC( eRC_RedditionAnnulee                                ); }
 none EVT_RC_RegimeMaintenanceDelaiDepasse                   () { DEC_RC( eRC_RegimeMaintenanceDelaiDepasse                   ); }
 none EVT_RC_PretMaterielEnCours                             () { DEC_RC( eRC_PretMaterielEnCours                             ); }
 none EVT_RC_PretMaterielAnnule                              () { DEC_RC( eRC_PretMaterielAnnule                              ); }

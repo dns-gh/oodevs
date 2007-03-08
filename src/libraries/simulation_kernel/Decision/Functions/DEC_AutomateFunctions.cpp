@@ -269,15 +269,6 @@ void DEC_AutomateFunctions::IsSurrendered( DIA_Call_ABC& call, const MIL_Automat
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::IsPrisoner
-// Created: NLD 2005-03-04
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::IsPrisoner( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
-{
-    call.GetResult().SetValue( callerAutomate.IsPrisoner() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::IsPionInAutomate
 // Created: JVT 2004-11-26
 // -----------------------------------------------------------------------------
@@ -697,16 +688,3 @@ void DEC_AutomateFunctions::ComputePionNearestLocalisationPointInFuseau( DIA_Cal
     DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau( call, pPion->GetPion() );
 }
 
-
-// =============================================================================
-// ETAT REFUGEE
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::NotifyRefugeeManagedStateChanged
-// Created: NLD 2005-03-10
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::NotifyRefugeeManagedStateChanged( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
-{
-    callerAutomate.NotifyRefugeeManagedStateChanged( call.GetParameter( 0 ).ToBool() );
-}

@@ -17,6 +17,7 @@
 #include "Dotation.h"
 #include "Humans.h"
 #include "Loan.h"
+#include "Side.h"
 #include "AgentLogMedical.h"
 #include "AgentLogMaintenance.h"
 #include "AgentLogSupply.h"
@@ -68,7 +69,7 @@ Agent::Agent( Model& model, const ASN1T_MsgPionCreation& msg )
     , nTiredness_                   ( EnumUnitFatigue        ::normal )
     , nMorale_                      ( EnumUnitMoral          ::bon )
     , nExperience_                  ( EnumUnitExperience     ::experimente )
-    , bSurrendered_                 ( false )
+    , pSideSurrenderedTo_           ( 0 )
     , bPrisonner_                   ( false )
     , bRefugeeManaged_              ( false )
     , equipments_                   ()
@@ -165,11 +166,14 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
     UPDATE_ASN_ATTRIBUTE( fatigue, nTiredness_ );
     UPDATE_ASN_ATTRIBUTE( moral, nMorale_ );
     UPDATE_ASN_ATTRIBUTE( experience, nExperience_ );
-    UPDATE_ASN_ATTRIBUTE( rendu, bSurrendered_ );
+
+    if( asnMsg.m.renduPresent )
+        pSideSurrenderedTo_ = asnMsg.rendu == 0 ? 0 : &model_.GetSides().Get( asnMsg.rendu );
+
     UPDATE_ASN_ATTRIBUTE( prisonnier, bPrisonner_ );
     UPDATE_ASN_ATTRIBUTE( refugie_pris_en_compte, bRefugeeManaged_ );
 
-  if( asnMsg.m.dotation_eff_materielPresent )
+    if( asnMsg.m.dotation_eff_materielPresent )
     {
         for( uint i = 0; i < asnMsg.dotation_eff_materiel.n; ++i )
         {
@@ -393,7 +397,7 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
         asn().fatigue = nTiredness_;
         asn().moral = nMorale_;
         asn().experience = nExperience_;
-        asn().rendu = bSurrendered_;
+        asn().rendu = pSideSurrenderedTo_ ? 0 : pSideSurrenderedTo_->GetID();
         asn().prisonnier = bPrisonner_;
         asn().refugie_pris_en_compte = bRefugeeManaged_;
 

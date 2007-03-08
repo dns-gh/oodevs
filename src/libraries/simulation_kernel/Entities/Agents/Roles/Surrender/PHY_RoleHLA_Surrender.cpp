@@ -21,10 +21,9 @@
 // -----------------------------------------------------------------------------
 PHY_RoleHLA_Surrender::PHY_RoleHLA_Surrender( MT_RoleContainer& role )
     : PHY_RoleInterface_Surrender( role )
-    , bSurrendered_              ( false )
     , bPrisoner_                 ( false )
 {
-
+    // NOTHING
 }
   
 // -----------------------------------------------------------------------------
@@ -33,7 +32,7 @@ PHY_RoleHLA_Surrender::PHY_RoleHLA_Surrender( MT_RoleContainer& role )
 // -----------------------------------------------------------------------------
 PHY_RoleHLA_Surrender::~PHY_RoleHLA_Surrender()
 {
-
+    // NOTHING
 }
 
 // =============================================================================
@@ -41,31 +40,43 @@ PHY_RoleHLA_Surrender::~PHY_RoleHLA_Surrender()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Surrender::TakePrisoner
-// Created: NLD 2005-03-04
+// Name: PHY_RoleHLA_Surrender::Capture
+// Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-bool PHY_RoleHLA_Surrender::TakePrisoner( const MIL_AgentPion& /*pionTakingPrisoner*/, const MIL_CampPrisonniers& /*camp*/ )
+bool PHY_RoleHLA_Surrender::Capture( const MIL_AgentPion& /*pionTakingPrisoner*/ )
 {
     // $$$$ _RC_ NLD 2005-03-10: 
     return false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Surrender::NotifyInsidePrisonerCamp
-// Created: NLD 2005-03-07
+// Name: PHY_RoleHLA_Surrender::Release
+// Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Surrender::NotifyInsidePrisonerCamp( const MIL_CampPrisonniers& /*camp*/ )
+bool PHY_RoleHLA_Surrender::Release()
 {
     // $$$$ _RC_ NLD 2005-03-10: 
+    return false;
 }
-    
+
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Surrender::NotifyOutsidePrisonerCamp
-// Created: NLD 2005-03-07
+// Name: PHY_RoleHLA_Surrender::Imprison
+// Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Surrender::NotifyOutsidePrisonerCamp( const MIL_CampPrisonniers& /*camp*/ )
+bool PHY_RoleHLA_Surrender::Imprison( const MIL_CampPrisonniers& /*camp*/ )
 {
     // $$$$ _RC_ NLD 2005-03-10: 
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Surrender::IsImprisoned
+// Created: NLD 2007-02-26
+// -----------------------------------------------------------------------------
+bool PHY_RoleHLA_Surrender::IsImprisoned( const MIL_CampPrisonniers& /*camp*/ )
+{
+    // $$$$ _RC_ NLD 2007-02-26: 
+    return false;
 }
 
 // =============================================================================
@@ -79,5 +90,5 @@ void PHY_RoleHLA_Surrender::NotifyOutsidePrisonerCamp( const MIL_CampPrisonniers
 void PHY_RoleHLA_Surrender::ChangeStatus( const std::vector< std::string >& statuses )
 {
     bPrisoner_    = std::find( statuses.begin(), statuses.end(), "prisonnier" ) != statuses.end();
-    bSurrendered_ = std::find( statuses.begin(), statuses.end(), "rendu" ) != statuses.end();
+    // $$$$ NLD 2007-02-14: Surrendered state
 }

@@ -338,10 +338,10 @@ void PHY_DotationGroup::ChangeDotationsValueUsingTC2( const PHY_AmmoDotationClas
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationGroup::NotifyTakenPrisoner
+// Name: PHY_DotationGroup::NotifyCaptured
 // Created: NLD 2005-02-28
 // -----------------------------------------------------------------------------
-void PHY_DotationGroup::NotifyTakenPrisoner()
+void PHY_DotationGroup::NotifyCaptured()
 {
     assert( pType_ );
     
@@ -349,5 +349,20 @@ void PHY_DotationGroup::NotifyTakenPrisoner()
         return;
 
     for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
-        it->second->NotifyTakenPrisoner();
+        it->second->NotifyCaptured();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroup::NotifyReleased
+// Created: NLD 2005-02-28
+// -----------------------------------------------------------------------------
+void PHY_DotationGroup::NotifyReleased()
+{
+    assert( pType_ );
+    
+    if ( *pType_ == PHY_DotationType::ration_ )
+        return;
+
+    for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
+        it->second->NotifyReleased();
 }

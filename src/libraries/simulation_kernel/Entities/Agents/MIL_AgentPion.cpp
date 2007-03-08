@@ -257,7 +257,7 @@ void MIL_AgentPion::Initialize( const MT_Vector2D& vPosition )
     RegisterRole< PHY_RolePion_NBC               >( *this );
     RegisterRole< PHY_RolePion_Communications    >( *this );
     RegisterRole< PHY_RolePion_HumanFactors      >();
-    RegisterRole< PHY_RolePion_Transported       >();
+    RegisterRole< PHY_RolePion_Transported       >( *this );
     RegisterRole< PHY_RolePion_Maintenance       >();
     RegisterRole< PHY_RolePion_Medical           >();
     RegisterRole< PHY_RolePion_Supply            >();
@@ -858,6 +858,7 @@ void MIL_AgentPion::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMs
         case T_MsgUnitMagicAction_action_destruction_totale         : asnReplyMsg().error_code = OnReceiveMsgDestroyAll               (); break;
         case T_MsgUnitMagicAction_action_recuperer_transporteurs    : asnReplyMsg().error_code = OnReceiveMsgRecoverHumansTransporters(); break;
         case T_MsgUnitMagicAction_action_se_rendre                  : pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg, nCtx ); return;        
+        case T_MsgUnitMagicAction_action_annuler_reddition          : pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg, nCtx ); return;        
         default:
             assert( false );
     }
@@ -871,9 +872,18 @@ void MIL_AgentPion::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMs
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveMagicSurrender()
 {
-    MIL_Report::PostEvent( *this, MIL_Report::eReport_Surrendered );
-    GetRole< PHY_RolePion_Surrender >().Surrender();
+    GetRole< PHY_RolePion_Surrender >().NotifySurrendered();
     orderManager_.ReplaceMission();
+    UpdatePhysicalState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveMagicCancelSurrender
+// Created: NLD 2007-02-15
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReceiveMagicCancelSurrender()
+{
+    GetRole< PHY_RolePion_Surrender >().NotifySurrenderCanceled();
     UpdatePhysicalState();
 }
 
@@ -945,8 +955,7 @@ void MIL_AgentPion::Serialize( HLA_UpdateFunctor& functor ) const
         statuses.push_back( "radaractif" );
     if( GetRole< PHY_RolePion_Surrender >().IsPrisoner() )
         statuses.push_back( "prisonnier" );
-    if( GetRole< PHY_RolePion_Surrender >().IsSurrendered() )
-        statuses.push_back( "rendu" );
+    // $$$$ NLD 2007-02-14: Surrender
     if( GetRole< PHY_RolePion_Refugee >().IsManaged() )
         statuses.push_back( "refugie_prisencompte" );
     if( GetRole< PHY_RolePion_Population >().IsInvulnerable() )
@@ -971,16 +980,6 @@ void MIL_AgentPion::ChangeAutomate( MIL_Automate& newAutomate )
     asnMsg().oid_pion     = GetID();
     asnMsg().oid_automate = newAutomate.GetID();
     asnMsg.Send();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::Surrender
-// Created: NLD 2005-02-24
-// -----------------------------------------------------------------------------
-void MIL_AgentPion::Surrender()
-{
-    orderManager_.ReplaceMission();
-    GetRole< PHY_RolePion_Surrender >().Surrender();
 }
 
 // -----------------------------------------------------------------------------

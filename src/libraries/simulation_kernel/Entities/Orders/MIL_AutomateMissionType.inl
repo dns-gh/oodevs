@@ -34,28 +34,6 @@ const MIL_AutomateMissionType* MIL_AutomateMissionType::Find( const std::string&
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateMissionType::GetSurrenderingMissionType
-// Created: NLD 2006-11-24
-// -----------------------------------------------------------------------------
-inline
-const MIL_AutomateMissionType& MIL_AutomateMissionType::GetSurrenderingMissionType()
-{
-    assert( pSurrenderingMissionType_ );
-    return *pSurrenderingMissionType_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateMissionType::GetMoveToRefugeeCampMissionType
-// Created: NLD 2006-11-24
-// -----------------------------------------------------------------------------
-inline
-const MIL_AutomateMissionType& MIL_AutomateMissionType::GetMoveToRefugeeCampMissionType()
-{
-    assert( pMoveToRefugeeCampMissionType_ );
-    return *pMoveToRefugeeCampMissionType_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AutomateMissionType::GetDIAMrtBehavior
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------

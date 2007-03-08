@@ -68,7 +68,7 @@ void ADN_Missions_GUI::Build()
 // Name: ADN_Missions_GUI::BuildMissions
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-QWidget* ADN_Missions_GUI::BuildMissions( QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions, bool isAutomat )
+QWidget* ADN_Missions_GUI::BuildMissions( QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions )
 {
     ADN_GuiBuilder builder;
 
@@ -92,17 +92,6 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget* parent, ADN_Missions_Data::T_
     ADN_MissionParameterValues_Table* valueList = new ADN_MissionParameterValues_Table( pEnum, "" );
     vInfosConnectors[eParameterValues] = &valueList->GetConnector();
     
-    if( isAutomat )
-    {
-        T_ConnectorVector vMiscMissionsConnectors( eNbrMiscMissionsElements, (ADN_Connector_ABC*)0 );
-        QGroupBox* pMiscMissions = new QGroupBox( 1, Qt::Horizontal, tr( "Special missions" ), pGroup );
-        pParamHolder = builder.AddFieldHolder( pMiscMissions );
-        builder.AddField< ADN_ComboBox_Vector<ADN_Missions_Data::Mission> >( pParamHolder, tr( "Surrender mission" ), vMiscMissionsConnectors[eSurrenderMission]  );
-        builder.AddField< ADN_ComboBox_Vector<ADN_Missions_Data::Mission> >( pParamHolder, tr( "Go to refugee camp mission" ), vMiscMissionsConnectors[eGoToRefugeeCampMission]  );
-        vMiscMissionsConnectors[ADN_Missions_GUI::eSurrenderMission]      ->Connect( &data_.ptrSurrenderMission_ );
-        vMiscMissionsConnectors[ADN_Missions_GUI::eGoToRefugeeCampMission]->Connect( &data_.ptrGoToRefugeeCampMission_ );
-    }
-
     // Connect the gui to the data.
     paramList->SetItemConnectors( vInfosConnectors );
     listMissions->SetItemConnectors( vInfosConnectors );
@@ -120,7 +109,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget* parent, ADN_Missions_Data::T_
 // -----------------------------------------------------------------------------
 QWidget* ADN_Missions_GUI::BuildUnitMissions( QWidget* parent )
 {
-    return BuildMissions( parent, data_.unitMissions_, false );
+    return BuildMissions( parent, data_.unitMissions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -129,7 +118,7 @@ QWidget* ADN_Missions_GUI::BuildUnitMissions( QWidget* parent )
 // -----------------------------------------------------------------------------
 QWidget* ADN_Missions_GUI::BuildAutomatMissions( QWidget* parent )
 {
-    return BuildMissions( parent, data_.automatMissions_, true );
+    return BuildMissions( parent, data_.automatMissions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +127,7 @@ QWidget* ADN_Missions_GUI::BuildAutomatMissions( QWidget* parent )
 // -----------------------------------------------------------------------------
 QWidget* ADN_Missions_GUI::BuildPopulationMissions( QWidget* parent )
 {
-    return BuildMissions( parent, data_.populationMissions_, false );    
+    return BuildMissions( parent, data_.populationMissions_ );    
 }
 
 // -----------------------------------------------------------------------------
