@@ -30,12 +30,14 @@ DrawerStyle::DrawerStyle( xml::xistream& input, kernel::GlTools_ABC& tools, svg:
 {
     SVGFactory factory( renderer_ );
     
-    std::string name, description;
+    std::string name, type, description;
     input >> xml::attribute( "name", name )
+          >> xml::attribute( "type", type )
           >> xml::optional() >> xml::content( "description", description )
           >> xml::start( "segment" );
 
     name_ = name.c_str(); 
+    type_ = type.c_str();
     if( ! description.empty() )
         description_ = description.c_str();
     else 
@@ -66,6 +68,15 @@ DrawerStyle::~DrawerStyle()
 QString DrawerStyle::GetName() const
 {
     return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerStyle::GetType
+// Created: SBO 2007-03-07
+// -----------------------------------------------------------------------------
+QString DrawerStyle::GetType() const
+{
+    return type_;
 }
 
 // -----------------------------------------------------------------------------
@@ -124,6 +135,19 @@ void DrawerStyle::Draw( const T_PointVector& points, svg::RenderingContext_ABC& 
             DrawMiddleMarker( context, *it, *(it-1), *(it+1) );
     if( markerEnd_ )
         DrawEndMarker( context, points.back(), points[ points.size() - 2 ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerStyle::Draw
+// Created: SBO 2007-03-07
+// -----------------------------------------------------------------------------
+void DrawerStyle::Draw( const geometry::Point2f& point, svg::RenderingContext_ABC& context ) const
+{
+    if( markerStart_ )
+    {
+        const geometry::Point2f secondPoint = point + geometry::Vector2f( 1.f, 0.f ) * 10.f;
+        DrawStartMarker( context, point, secondPoint );
+    }
 }
 
 // -----------------------------------------------------------------------------

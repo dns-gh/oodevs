@@ -26,7 +26,7 @@ DrawerToolbar::DrawerToolbar( QMainWindow* mainWindow, ExclusiveEventStrategy& s
     , strategy_( strategy )
     , layer_   ( layer )
 {
-    setLabel( tr( "Drawing" ) );
+    setLabel( tr( "Drawing tools" ) );
 
     dock_ = new QDockWindow( mainWindow );
     DrawerPanel* panel = new DrawerPanel( dock_, layer_, tools );

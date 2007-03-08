@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "DrawerLayer.h"
 #include "DrawerShape.h"
+#include "DrawerShapeFactory.h"
 #include "clients_kernel/GlTools_ABC.h"
 
 using namespace gui;
@@ -20,9 +21,13 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 DrawerLayer::DrawerLayer( const kernel::GlTools_ABC& tools )
     : tools_( tools )
+    , factory_( *new DrawerShapeFactory() )
     , current_( 0 )
     , show_( true )
-    , overlined_( false )
+    , selected_( 0 )
+    , overlined_( 0 )
+    , selectedStyle_( 0 )
+    , selectedColor_()
 {
     // NOTHING
 }
@@ -33,7 +38,7 @@ DrawerLayer::DrawerLayer( const kernel::GlTools_ABC& tools )
 // -----------------------------------------------------------------------------
 DrawerLayer::~DrawerLayer()
 {
-    // NOTHING
+    delete &factory_;
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +67,9 @@ void DrawerLayer::Show( bool show )
 void DrawerLayer::StartShape( const DrawerStyle& style, const QColor& color )
 {
     delete current_;
-    current_ = new DrawerShape( style, color );
+    current_ = factory_.CreateShape( style, color );
+    selectedStyle_ = &style;
+    selectedColor_ = color;
 }
 
 // -----------------------------------------------------------------------------

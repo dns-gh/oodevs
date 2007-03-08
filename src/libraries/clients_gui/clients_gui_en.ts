@@ -69,6 +69,10 @@
         <source>Display drawings</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Drawing tools</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditorFactory</name>

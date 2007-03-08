@@ -51,8 +51,10 @@ public:
     //! @name Operations
     //@{
     QString GetName() const;
+    QString GetType() const;
     QString GetDescription() const;
     void Draw( const T_PointVector& points, svg::RenderingContext_ABC& context ) const;
+    void Draw( const geometry::Point2f& point, svg::RenderingContext_ABC& context ) const;
     //@}
 
 private:
@@ -92,6 +94,7 @@ private:
     kernel::GlTools_ABC& tools_;
     svg::TextRenderer& renderer_;
     QString name_;
+    QString type_;
     QString description_;
     svg::References* references_;
     svg::Node_ABC* line_;

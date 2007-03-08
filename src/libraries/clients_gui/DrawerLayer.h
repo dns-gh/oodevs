@@ -21,6 +21,7 @@ namespace gui
 {
     class DrawerShape;
     class DrawerStyle;
+    class DrawerShapeFactory;
 
 // =============================================================================
 /** @class  DrawerLayer
@@ -77,12 +78,16 @@ private:
     //! @name Member data
     //@{
     const kernel::GlTools_ABC& tools_;
+    DrawerShapeFactory& factory_;
     bool         show_;
     DrawerShape* current_;
     T_Shapes     shapes_;
     DrawerShape* overlined_;
     DrawerShape* selected_;
     geometry::Point2f dragPoint_;
+
+    const DrawerStyle* selectedStyle_;
+    QColor             selectedColor_;
     //@}
 };
 

@@ -1188,10 +1188,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Agent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Mine parameters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1201,6 +1197,10 @@
     </message>
     <message>
         <source>Density:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agent</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1305,15 +1305,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>TC2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sub-type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Density</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1324,10 +1324,6 @@
 <context>
     <name>ParamObstacleList</name>
     <message>
-        <source>Obstacle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New obstacle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1337,6 +1333,10 @@
     </message>
     <message>
         <source>Clear list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1426,15 +1426,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Heading:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Known chunks:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Heading:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1448,23 +1448,15 @@
 <context>
     <name>RecorderToolbar</name>
     <message>
-        <source>Stop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fichiers d&apos;ordres (*.ord)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enregistrer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Order recorder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Replay order file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1477,6 +1469,14 @@
     </message>
     <message>
         <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fichiers d&apos;ordres (*.ord)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enregistrer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1552,14 +1552,6 @@
 <context>
     <name>SIMControlToolbar</name>
     <message>
-        <source>Pause (P)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Simulation control</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1568,7 +1560,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Pause (P)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Speed factor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1616,26 +1616,6 @@ Message : </source>
 <context>
     <name>gui</name>
     <message>
-        <source>Type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Construction:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Camp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TC2:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ROTA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1648,7 +1628,15 @@ Message : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Location:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Construction:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1692,11 +1680,23 @@ Message : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Camp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>NBC cloud/zone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>NBC agent:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ROTA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1728,14 +1728,6 @@ Message : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Apply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Mine parameters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1745,6 +1737,14 @@ Message : </source>
     </message>
     <message>
         <source>Density:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
