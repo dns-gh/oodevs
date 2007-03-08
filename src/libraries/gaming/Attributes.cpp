@@ -26,9 +26,10 @@ using namespace kernel;
 // Name: Attributes constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& converter, PropertiesDictionary& dictionary )
+Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& converter, PropertiesDictionary& dictionary, const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver )
     : controller_( controller )
     , converter_ ( converter )
+    , teamResolver_( teamResolver )
     , vPos_( 0, 0 )
     , nSpeed_( 0 )
     , nAltitude_( 0 )
@@ -53,7 +54,7 @@ Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& c
     , bCommJammed_( false )
     , bRadarEnabled_( false )
     , bPrisoner_( false )
-    , bSurrendered_( false )
+    , surrenderedTo_( 0 )
     , bRefugeesManaged_( false )
     , aggregated_( false )
 {
@@ -87,7 +88,7 @@ void Attributes::CreateDictionary( PropertiesDictionary& dictionary ) const
     dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Intention" ),           nCloseCombatState_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Force ratio" ),         nFightRateState_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Military state/Prisoner" ),              bPrisoner_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Military state/Surrender" ),             bSurrendered_ );
+    dictionary.Register( *this, tools::translate( "Attributes", "Military state/Surrender" ),             surrenderedTo_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Military state/Refugees picked up" ),    bRefugeesManaged_ );
 }
 
@@ -170,7 +171,7 @@ void Attributes::DoUpdate( const ASN1T_MsgUnitAttributes& message )
         bPrisoner_ = message.prisonnier;
 
     if( message.m.renduPresent )
-        bSurrendered_ = message.rendu;
+        surrenderedTo_ = teamResolver_.Find( message.rendu );
 
     if( message.m.refugie_pris_en_comptePresent )
         bRefugeesManaged_ = message.refugie_pris_en_compte;
@@ -220,7 +221,7 @@ void Attributes::Display( Displayer_ABC& displayer ) const
   
     displayer.Group( tools::translate( "Attributes", "Military state" ) )
             .Display( tools::translate( "Attributes", "Prisoner:" ), bPrisoner_ )
-            .Display( tools::translate( "Attributes", "Surrender:" ), bSurrendered_ )
+            .Display( tools::translate( "Attributes", "Surrender:" ), surrenderedTo_ )
             .Display( tools::translate( "Attributes", "Refugees picked up:" ), bRefugeesManaged_ );
 }
 

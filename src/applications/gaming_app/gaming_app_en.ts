@@ -754,10 +754,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Surrender</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Change population attitude</source>
         <translation type="unfinished"></translation>
     </message>
@@ -779,6 +775,14 @@
     </message>
     <message>
         <source>Enter value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Surrender to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel surrender</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

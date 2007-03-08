@@ -14,6 +14,7 @@
 #include "clients_kernel/SafePointer.h"
 #include "clients_gui/ShapeHandler_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -23,6 +24,7 @@ namespace kernel
     class Controllers;
     class Profile_ABC;
     class Population_ABC;
+    class Team_ABC;
 }
 
 namespace gui
@@ -45,6 +47,7 @@ class MagicOrdersInterface : public QObject
                            , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                            , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                            , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
+                           , public kernel::ElementObserver_ABC< kernel::Team_ABC >
                            , public gui::ShapeHandler_ABC
                            , private kernel::LocationVisitor_ABC
 {
@@ -71,8 +74,8 @@ private slots:
     void Magic( int );
     void DestroyComponent();
     void Move();
-    void Surrender();
     void RecoverHumanTransporters();
+    void SurrenderTo( int );
 
     void KillAllPopulation();
     void KillSomePopulation();
@@ -101,6 +104,16 @@ private:
     virtual void VisitPoint  ( const geometry::Point2f& point );
     template< typename Message >
     void SendMagicMove( const geometry::Point2f& point, int action );
+
+    void AddSurrenderMenu( QPopupMenu* parent, const kernel::Entity_ABC& entity );
+    virtual void NotifyCreated( const kernel::Team_ABC& team );
+    virtual void NotifyDeleted( const kernel::Team_ABC& team );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< const kernel::Team_ABC* > T_Teams;
+    typedef T_Teams::const_iterator              CIT_Teams;
     //@}
 
 private:
@@ -113,6 +126,7 @@ private:
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     bool magicMove_;
     gui::LocationCreator* magicMoveLocation_;
+    T_Teams teams_;
     //@}
 };
 

@@ -96,7 +96,7 @@ public:
     kernel::OptionalValue< kernel::E_PerceptionResult > nMaxPerceptionLevel_;
     kernel::OptionalValue< E_NatureLevel >              nLevel_;
     kernel::OptionalValue< bool >                       bIsPC_;
-    kernel::OptionalValue< bool >                       bSurrendered_;
+    kernel::OptionalValue< const kernel::Team_ABC* >    surrenderedTo_;
     kernel::OptionalValue< bool >                       bPrisonner_;
     kernel::OptionalValue< bool >                       bRefugies_;
     kernel::OptionalValue< uint >                       nRelevance_;

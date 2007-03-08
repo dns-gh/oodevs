@@ -140,7 +140,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
 
     result->Attach( *new Lives( controllers_.controller_ ) );
-    result->Attach< Attributes_ABC >( *new Attributes( controllers_.controller_, static_.coordinateConverter_, dico ) );
+    result->Attach< Attributes_ABC >( *new Attributes( controllers_.controller_, static_.coordinateConverter_, dico, model_.teams_ ) );
     result->Attach( *new CommandPostAttributes( *result ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_ ) );

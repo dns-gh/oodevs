@@ -22,11 +22,14 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/AgentExtensions.h"
+#include "clients_kernel/Team_ABC.h"
 
 #include "gaming/StaticModel.h"
 #include "gaming/MagicOrders.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/ASN_Messages.h"
+#include "gaming/Attributes.h"
 #include "ENT/ENT_Tr.h"
 
 using namespace kernel;
@@ -79,7 +82,7 @@ MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, Controllers& contro
     , magicMove_( false )
 {
     magicMoveLocation_ = new LocationCreator( 0, layer, *this );
-    magicMoveLocation_->Allow( true, false, false, false );
+    magicMoveLocation_->Allow( false, false, false, false );
     controllers_.Register( *this );
 }
 
@@ -107,6 +110,7 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, ContextMen
         QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
         magicMenu->setItemEnabled( moveId, orders->CanMagicMove() );
+        AddSurrenderMenu( magicMenu, agent );
         if( orders->CanRetrieveTransporters() )
             AddMagic( tr( "Recover - Transporters" ), SLOT( RecoverHumanTransporters() ), magicMenu );
         AddMagic( tr( "Destroy - Component" ),  SLOT( DestroyComponent() ),  magicMenu );
@@ -125,12 +129,12 @@ void MagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& agent, 
 
     selectedEntity_ = &agent;
     QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
-    AddMagic( tr( "Surrender" ), SLOT( Surrender() ), magicMenu );
     int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
     bool bMoveAllowed = false;
     if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
         bMoveAllowed = decisions->IsEmbraye();
     magicMenu->setItemEnabled( moveId, bMoveAllowed );
+    AddSurrenderMenu( magicMenu, agent );
     FillCommonOrders( magicMenu );
 }
 
@@ -167,6 +171,42 @@ void MagicOrdersInterface::FillCommonOrders( QPopupMenu* magicMenu )
     AddMagic( tr( "Recover - Equipments" ), T_MsgUnitMagicAction_action_recompletement_equipement, magicMenu );
     AddMagic( tr( "Recover - Resources" ),  T_MsgUnitMagicAction_action_recompletement_ressources, magicMenu );
     AddMagic( tr( "Destroy - All" ),        T_MsgUnitMagicAction_action_destruction_totale,        magicMenu );
+}
+
+namespace
+{
+    // $$$$ SBO 2007-03-08: temporary, surrendered status should be also present on Automat attributes...
+    bool IsSurrendered( const kernel::Entity_ABC& entity )
+    {
+        if( const Attributes* attr = static_cast< const Attributes* >( entity.Retrieve< kernel::Attributes_ABC >() ) )
+            if( attr->surrenderedTo_ )
+                return true;
+        if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
+        {
+            kernel::Iterator< const kernel::Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+                if( IsSurrendered( it.NextElement() ) )
+                    return true;
+        }
+        return false;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::AddSurrenderMenu
+// Created: SBO 2007-03-08
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::AddSurrenderMenu( QPopupMenu* parent, const kernel::Entity_ABC& entity )
+{
+    if( IsSurrendered( entity ) )
+        AddMagic( tr( "Cancel surrender" ), T_MsgUnitMagicAction_action_annuler_reddition, parent );
+    else
+    {
+        QPopupMenu* menu = new QPopupMenu( parent );
+        for( CIT_Teams it = teams_.begin(); it != teams_.end(); ++it )
+            menu->insertItem( (*it)->GetName(), this, SLOT( SurrenderTo( int ) ), 0, (*it)->GetId() );
+        parent->insertItem( tr( "Surrender to" ), menu );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -334,16 +374,17 @@ void MagicOrdersInterface::VisitPoint( const geometry::Point2f& point )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MagicOrdersInterface::Surrender
+// Name: MagicOrdersInterface::SurrenderTo
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void MagicOrdersInterface::Surrender()
+void MagicOrdersInterface::SurrenderTo( int id )
 {
     if( selectedEntity_ )
     {
         ASN_MsgUnitMagicAction asnMsg;
         asnMsg.GetAsnMsg().oid      = selectedEntity_->GetId();
         asnMsg.GetAsnMsg().action.t = T_MsgUnitMagicAction_action_se_rendre;
+        asnMsg.GetAsnMsg().action.u.se_rendre = id;
         asnMsg.Send( publisher_ );
     }
 }
@@ -431,4 +472,27 @@ void MagicOrdersInterface::ResurectSomePopulation()
             asn.GetAsnMsg().action.u.ressusciter = editor->text().toUInt();
             asn.Send( publisher_ );
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::NotifyCreated
+// Created: SBO 2007-03-08
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::NotifyCreated( const kernel::Team_ABC& team )
+{
+    teams_.push_back( &team );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::NotifyDeleted
+// Created: SBO 2007-03-08
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::NotifyDeleted( const kernel::Team_ABC& team )
+{
+    T_Teams::iterator it = std::find( teams_.begin(), teams_.end(), &team );
+    if( it != teams_.end() )
+    {
+        std::swap( *it, teams_.back() );
+        teams_.pop_back();
+    }
 }

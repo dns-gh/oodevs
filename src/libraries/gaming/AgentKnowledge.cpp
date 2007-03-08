@@ -95,7 +95,7 @@ void AgentKnowledge::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
         bPrisonner_ = message.prisonnier;
 
     if( message.m.renduPresent )
-        bSurrendered_ = message.rendu;
+        surrenderedTo_ = teamResolver_.Find( message.rendu );
 
     if( message.m.refugie_pris_en_comptePresent )
         bRefugies_ = message.refugie_pris_en_compte;
@@ -168,7 +168,7 @@ void AgentKnowledge::Display( Displayer_ABC& displayer ) const
              .Display( tools::translate( "AgentKnowledge", "Side:" ), team_  )
              .Display( tools::translate( "AgentKnowledge", "Level:" ), nLevel_ )
              .Display( tools::translate( "AgentKnowledge", "Nature:" ), currentNature_ )
-             .Display( tools::translate( "AgentKnowledge", "Surrender:" ), bSurrendered_ )
+             .Display( tools::translate( "AgentKnowledge", "Surrender:" ), surrenderedTo_ )
              .Display( tools::translate( "AgentKnowledge", "Prisoner:" ), bPrisonner_ )
              .Display( tools::translate( "AgentKnowledge", "Refugees picked up:" ), bRefugies_ )
              .Display( tools::translate( "AgentKnowledge", "Command post:" ), bIsPC_ )
