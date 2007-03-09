@@ -52,6 +52,7 @@ WeatherModel::~WeatherModel()
 void WeatherModel::Purge()
 {
     DeleteAll();
+    globalWeather_.reset();
 }
 
 // -----------------------------------------------------------------------------
