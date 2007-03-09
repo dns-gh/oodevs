@@ -15,7 +15,6 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "clients_kernel/Positions.h"
 
 namespace kernel
 {
@@ -31,7 +30,6 @@ namespace kernel
 class PopulationFlow : public kernel::PopulationFlow_ABC
                      , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxUpdate >
                      , public kernel::Drawable_ABC
-                     , public kernel::Positions
 {
 public:
     //! @name Constructors/Destructor

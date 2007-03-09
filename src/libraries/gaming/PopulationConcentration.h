@@ -14,7 +14,6 @@
 #include "clients_kernel/PopulationConcentration_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "clients_kernel/Positions.h"
 
 namespace kernel
 {
@@ -27,7 +26,6 @@ namespace kernel
 class PopulationConcentration : public kernel::PopulationConcentration_ABC
                               , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationUpdate >
                               , public kernel::Drawable_ABC
-                              , public kernel::Positions
 {
 
 public:
