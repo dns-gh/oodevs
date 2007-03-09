@@ -30,6 +30,7 @@ class Simulation
 public:
     struct sStartTick{};
     struct sEndTick{};
+    struct sCheckPoint { bool start_; bool load_; };
     
 public:
     //! @name Constructors/Destructor
@@ -48,8 +49,11 @@ public:
     void Update( const ProfilingValuesMessage& message );
     void BeginTick( int );
     void EndTick( const ASN1T_MsgCtrlEndTick& asnMsg );
-    const std::string& GetSimulationHost() const;
 
+    void BeginCheckPoint( bool loading );
+    void EndCheckPoint( bool loading );
+
+    const std::string& GetSimulationHost() const;
     int GetTime() const;
     bool IsPaused() const;
     bool IsConnected() const;
@@ -74,6 +78,7 @@ private:
     bool connected_;
     sStartTick startTick_;
     sEndTick endTick_;
+    sCheckPoint checkPoint_;
     std::string simulationHost_;
     Profiling profiling_;
     //@}

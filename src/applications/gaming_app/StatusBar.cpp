@@ -22,7 +22,12 @@ using namespace kernel;
 StatusBar::StatusBar( QStatusBar* parent, const DetectionMap& detection, const CoordinateConverter_ABC& converter, Controllers& controllers )
     : gui::StatusBar( parent, detection, converter )
     , lastSimulationStatus_( false )
+    , controllers_( controllers )
 {
+    checkPoint_ = new QLabel( parent );
+    checkPoint_->setMinimumWidth( 20 );
+    checkPoint_->setAlignment( Qt::AlignCenter );
+
     pTime_ = new QLabel( "---", parent );
     pTime_->setMinimumWidth( 50 );
     pTime_->setAlignment( Qt::AlignCenter );
@@ -32,12 +37,15 @@ StatusBar::StatusBar( QStatusBar* parent, const DetectionMap& detection, const C
     pTick_->setPixmap( MAKE_PIXMAP( tickoff ) );
 
     pLagTimer_ = new QTimer( this );
+    checkPointTimer_ = new QTimer( this );
+    parent->addWidget( checkPoint_, 0, true );
     parent->addWidget( pTime_, 0, true );
 	parent->addWidget( pTick_, 0, true );
 
-    connect( pLagTimer_, SIGNAL( timeout() ), this, SLOT( OnLag() ) );
+    connect( pLagTimer_, SIGNAL( timeout() ), SLOT( OnLag() ) );
+    connect( checkPointTimer_, SIGNAL( timeout() ), SLOT( OnCheckPoint() ) );
 
-    controllers.Register( *this );
+    controllers_.Register( *this );
 }
     
 // -----------------------------------------------------------------------------
@@ -46,7 +54,7 @@ StatusBar::StatusBar( QStatusBar* parent, const DetectionMap& detection, const C
 // -----------------------------------------------------------------------------
 StatusBar::~StatusBar()
 {
-    // NOTHING
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,4 +106,37 @@ void StatusBar::NotifyUpdated( const Simulation::sEndTick& )
 {
     pTick_->setPixmap( MAKE_PIXMAP( tickoff ) );
     pLagTimer_->start( 10000, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StatusBar::NotifyUpdated
+// Created: SBO 2007-03-09
+// -----------------------------------------------------------------------------
+void StatusBar::NotifyUpdated( const Simulation::sCheckPoint& checkpoint )
+{
+    if( !checkpoint.start_ )
+    {
+        checkPoint_->setPixmap( QPixmap() );
+        QToolTip::remove( checkPoint_ );
+        checkPointTimer_->stop();
+        return;
+    }
+    if( !checkpoint.load_ )
+    {
+        OnCheckPoint();
+        QToolTip::add( checkPoint_, tr( "Saving checkpoint..." ) );
+        checkPointTimer_->start( 200 );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: StatusBar::OnCheckPoint
+// Created: SBO 2007-03-09
+// -----------------------------------------------------------------------------
+void StatusBar::OnCheckPoint()
+{
+    static unsigned int i = 0;
+    static QPixmap pixmaps[3] = { MAKE_PIXMAP( checkpoint1 ), MAKE_PIXMAP( checkpoint2 ), MAKE_PIXMAP( checkpoint3 ) };
+    checkPoint_->setPixmap( pixmaps[i] );
+    i = (i + 1) % 3;
 }

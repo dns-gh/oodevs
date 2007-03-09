@@ -30,8 +30,9 @@ class StatusBar : public gui::StatusBar
                 , public kernel::ElementObserver_ABC< Simulation >
                 , public kernel::ElementObserver_ABC< Simulation::sStartTick >
                 , public kernel::ElementObserver_ABC< Simulation::sEndTick >
+                , public kernel::ElementObserver_ABC< Simulation::sCheckPoint >
 {
-    Q_OBJECT
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -44,6 +45,7 @@ private slots:
     //! @name Slots
     //@{
     void OnLag();
+    void OnCheckPoint();
     //@}
 
 private:
@@ -58,15 +60,19 @@ private:
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void NotifyUpdated( const Simulation::sStartTick& startTick );
     virtual void NotifyUpdated( const Simulation::sEndTick& endTick );
+    virtual void NotifyUpdated( const Simulation::sCheckPoint& checkpoint );
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     bool lastSimulationStatus_;
     QLabel* pTime_;
     QLabel* pTick_;
     QTimer* pLagTimer_;
+    QLabel* checkPoint_;
+    QTimer* checkPointTimer_;
     //@}
 };
 

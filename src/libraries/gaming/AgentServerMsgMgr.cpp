@@ -922,7 +922,7 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateEnd()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveBegin()
 {
-    // $$$$ AGE 2006-07-06: Status dans la barre d'etat ?
+    simulation_.BeginCheckPoint( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -931,7 +931,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveBegin()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveEnd()
 {
-    // $$$$ AGE 2006-07-06: Status dans la barre d'etat ?
+    simulation_.EndCheckPoint( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -940,7 +940,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveEnd()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCheckPointLoadBegin()
 {
-    // $$$$ AGE 2006-07-06: Status dans la barre d'etat ?
+    simulation_.BeginCheckPoint( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -949,7 +949,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointLoadBegin()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCheckPointLoadEnd()
 {
-    // $$$$ AGE 2006-07-06: Status dans la barre d'etat ?
+    simulation_.EndCheckPoint( true );
 }
 
 // -----------------------------------------------------------------------------

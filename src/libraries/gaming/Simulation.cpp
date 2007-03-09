@@ -123,6 +123,30 @@ void Simulation::EndTick( const ASN1T_MsgCtrlEndTick& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Simulation::BeginCheckPoint
+// Created: SBO 2007-03-09
+// -----------------------------------------------------------------------------
+void Simulation::BeginCheckPoint( bool loading )
+{
+    checkPoint_.load_  = loading;
+    checkPoint_.start_ = true;
+    controller_.Update( checkPoint_ );
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::EndCheckPoint
+// Created: SBO 2007-03-09
+// -----------------------------------------------------------------------------
+void Simulation::EndCheckPoint( bool loading )
+{
+    checkPoint_.load_  = loading;
+    checkPoint_.start_ = false;
+    controller_.Update( checkPoint_ );
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Simulation::GetTime
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------

@@ -47,4 +47,9 @@ DECLARE_ICON( stance_engineered );
 DECLARE_ICON( stance_arrow );
 DECLARE_ICON( parent );
 
+// $$$$ SBO 2007-03-09: non status... rename file
+DECLARE_ICON( checkpoint1 );
+DECLARE_ICON( checkpoint2 );
+DECLARE_ICON( checkpoint3 );
+
 #endif // __statusicons_h_
