@@ -121,12 +121,9 @@ void StatusBar::NotifyUpdated( const Simulation::sCheckPoint& checkpoint )
         checkPointTimer_->stop();
         return;
     }
-    if( !checkpoint.load_ )
-    {
-        OnCheckPoint();
-        QToolTip::add( checkPoint_, tr( "Saving checkpoint..." ) );
-        checkPointTimer_->start( 200 );
-    }
+    OnCheckPoint();
+    QToolTip::add( checkPoint_, tr( "Saving checkpoint..." ) );
+    checkPointTimer_->start( 200 );
 }
 
 // -----------------------------------------------------------------------------

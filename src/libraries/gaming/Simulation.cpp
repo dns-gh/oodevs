@@ -126,9 +126,8 @@ void Simulation::EndTick( const ASN1T_MsgCtrlEndTick& message )
 // Name: Simulation::BeginCheckPoint
 // Created: SBO 2007-03-09
 // -----------------------------------------------------------------------------
-void Simulation::BeginCheckPoint( bool loading )
+void Simulation::BeginCheckPoint()
 {
-    checkPoint_.load_  = loading;
     checkPoint_.start_ = true;
     controller_.Update( checkPoint_ );
     controller_.Update( *this );
@@ -138,9 +137,8 @@ void Simulation::BeginCheckPoint( bool loading )
 // Name: Simulation::EndCheckPoint
 // Created: SBO 2007-03-09
 // -----------------------------------------------------------------------------
-void Simulation::EndCheckPoint( bool loading )
+void Simulation::EndCheckPoint()
 {
-    checkPoint_.load_  = loading;
     checkPoint_.start_ = false;
     controller_.Update( checkPoint_ );
     controller_.Update( *this );

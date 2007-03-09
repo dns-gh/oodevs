@@ -30,7 +30,7 @@ class Simulation
 public:
     struct sStartTick{};
     struct sEndTick{};
-    struct sCheckPoint { bool start_; bool load_; };
+    struct sCheckPoint { bool start_; };
     
 public:
     //! @name Constructors/Destructor
@@ -50,8 +50,8 @@ public:
     void BeginTick( int );
     void EndTick( const ASN1T_MsgCtrlEndTick& asnMsg );
 
-    void BeginCheckPoint( bool loading );
-    void EndCheckPoint( bool loading );
+    void BeginCheckPoint();
+    void EndCheckPoint();
 
     const std::string& GetSimulationHost() const;
     int GetTime() const;

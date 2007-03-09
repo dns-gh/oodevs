@@ -123,8 +123,6 @@ private:
     void OnReceiveMsgCtrlMeteoLocalAck        ();
     void OnReceiveMsgCheckPointSaveBegin      ();
     void OnReceiveMsgCheckPointSaveEnd        ();
-    void OnReceiveMsgCheckPointLoadBegin      ();
-    void OnReceiveMsgCheckPointLoadEnd        ();
     void OnReceiveMsgCheckPointSetFrequencyAck();
     void OnReceiveMsgCheckPointSaveNowAck     ();
     void OnReceiveMsgCtrlSendCurrentStateBegin();

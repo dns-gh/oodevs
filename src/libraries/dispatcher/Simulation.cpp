@@ -81,41 +81,39 @@ void Simulation::OnReceive( const ASN1T_MsgsOutSim& asnInMsg )
     
     switch( asnInMsg.msg.t )
     {
-        DISPATCH_ASN_MSG( limit_creation_request_ack                        );
-        DISPATCH_ASN_MSG( limit_destruction_request_ack                     );
-        DISPATCH_ASN_MSG( limit_update_request_ack                          );
-        DISPATCH_ASN_MSG( lima_creation_request_ack                         );
-        DISPATCH_ASN_MSG( lima_destruction_request_ack                      );
-        DISPATCH_ASN_MSG( lima_update_request_ack                           );
-        DISPATCH_ASN_MSG( pion_order_ack                                    );
-        DISPATCH_ASN_MSG( automate_order_ack                                );
-        DISPATCH_ASN_MSG( population_order_ack                              );
-        DISPATCH_ASN_MSG( frag_order_ack                                    );
-        DISPATCH_ASN_MSG( set_automate_mode_ack                             );
-        DISPATCH_ASN_MSG( unit_magic_action_ack                             );
-        DISPATCH_ASN_MSG( object_magic_action_ack                           );
-        DISPATCH_ASN_MSG( population_magic_action_ack                       );
-        DISPATCH_ASN_MSG( change_diplomatie_ack                             );
-        DISPATCH_ASN_MSG( change_groupe_connaissance_ack                    );
-        DISPATCH_ASN_MSG( change_liens_logistiques_ack                      );
-        DISPATCH_ASN_MSG( change_automate_ack                               );
-        DISPATCH_ASN_MSG( log_ravitaillement_pousser_flux_ack               );
-        DISPATCH_ASN_MSG( log_ravitaillement_change_quotas_ack              );
-        DISPATCH_ASN_MSG( ctrl_info                                         );
-        DISPATCH_ASN_MSG( ctrl_begin_tick                                   );
-        DISPATCH_ASN_MSG( ctrl_end_tick                                     );
-        DISPATCH_ASN_MSG( ctrl_stop_ack                                     );
-        DISPATCH_ASN_MSG( ctrl_pause_ack                                    );
-        DISPATCH_ASN_MSG( ctrl_resume_ack                                   );
-        DISPATCH_ASN_MSG( ctrl_change_time_factor_ack                       );
-        DISPATCH_EMPTY_ASN_MSG( ctrl_meteo_globale_ack                            );
-        DISPATCH_EMPTY_ASN_MSG( ctrl_meteo_locale_ack                             );
-        DISPATCH_EMPTY_ASN_MSG( ctrl_checkpoint_save_begin                        );
-        DISPATCH_EMPTY_ASN_MSG( ctrl_checkpoint_save_end                          );
-        DISPATCH_EMPTY_ASN_MSG( ctrl_checkpoint_load_begin                        );
-        DISPATCH_EMPTY_ASN_MSG( ctrl_checkpoint_load_end                          );
-        DISPATCH_EMPTY_ASN_MSG( ctrl_checkpoint_set_frequency_ack                 );
-        DISPATCH_EMPTY_ASN_MSG( ctrl_checkpoint_save_now_ack                      );
+        DISPATCH_ASN_MSG( limit_creation_request_ack              );
+        DISPATCH_ASN_MSG( limit_destruction_request_ack           );
+        DISPATCH_ASN_MSG( limit_update_request_ack                );
+        DISPATCH_ASN_MSG( lima_creation_request_ack               );
+        DISPATCH_ASN_MSG( lima_destruction_request_ack            );
+        DISPATCH_ASN_MSG( lima_update_request_ack                 );
+        DISPATCH_ASN_MSG( pion_order_ack                          );
+        DISPATCH_ASN_MSG( automate_order_ack                      );
+        DISPATCH_ASN_MSG( population_order_ack                    );
+        DISPATCH_ASN_MSG( frag_order_ack                          );
+        DISPATCH_ASN_MSG( set_automate_mode_ack                   );
+        DISPATCH_ASN_MSG( unit_magic_action_ack                   );
+        DISPATCH_ASN_MSG( object_magic_action_ack                 );
+        DISPATCH_ASN_MSG( population_magic_action_ack             );
+        DISPATCH_ASN_MSG( change_diplomatie_ack                   );
+        DISPATCH_ASN_MSG( change_groupe_connaissance_ack          );
+        DISPATCH_ASN_MSG( change_liens_logistiques_ack            );
+        DISPATCH_ASN_MSG( change_automate_ack                     );
+        DISPATCH_ASN_MSG( log_ravitaillement_pousser_flux_ack     );
+        DISPATCH_ASN_MSG( log_ravitaillement_change_quotas_ack    );
+        DISPATCH_ASN_MSG( ctrl_info                               );
+        DISPATCH_ASN_MSG( ctrl_begin_tick                         );
+        DISPATCH_ASN_MSG( ctrl_end_tick                           );
+        DISPATCH_ASN_MSG( ctrl_stop_ack                           );
+        DISPATCH_ASN_MSG( ctrl_pause_ack                          );
+        DISPATCH_ASN_MSG( ctrl_resume_ack                         );
+        DISPATCH_ASN_MSG( ctrl_change_time_factor_ack             );
+        DISPATCH_EMPTY_ASN_MSG( ctrl_meteo_globale_ack            );
+        DISPATCH_EMPTY_ASN_MSG( ctrl_meteo_locale_ack             );
+        DISPATCH_EMPTY_ASN_MSG( ctrl_checkpoint_save_begin        );
+        DISPATCH_EMPTY_ASN_MSG( ctrl_checkpoint_save_end          );
+        DISPATCH_EMPTY_ASN_MSG( ctrl_checkpoint_set_frequency_ack );
+        DISPATCH_EMPTY_ASN_MSG( ctrl_checkpoint_save_now_ack      );
 
         //$$$ a déplacer
         case T_MsgsOutSim_msg_msg_ctrl_send_current_state_begin:

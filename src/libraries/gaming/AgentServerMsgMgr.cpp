@@ -922,7 +922,7 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateEnd()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveBegin()
 {
-    simulation_.BeginCheckPoint( false );
+    simulation_.BeginCheckPoint();
 }
 
 // -----------------------------------------------------------------------------
@@ -931,25 +931,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveBegin()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveEnd()
 {
-    simulation_.EndCheckPoint( false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgCheckPointLoadBegin
-// Created: NLD 2003-08-05
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCheckPointLoadBegin()
-{
-    simulation_.BeginCheckPoint( true );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgCheckPointLoadEnd
-// Created: NLD 2003-08-05
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCheckPointLoadEnd()
-{
-    simulation_.EndCheckPoint( true );
+    simulation_.EndCheckPoint();
 }
 
 // -----------------------------------------------------------------------------
@@ -1699,8 +1681,6 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
         case T_MsgsInClient_msg_msg_ctrl_meteo_locale_ack:                OnReceiveMsgCtrlMeteoLocalAck         (); break;
         case T_MsgsInClient_msg_msg_ctrl_checkpoint_save_begin:           OnReceiveMsgCheckPointSaveBegin       (); break;
         case T_MsgsInClient_msg_msg_ctrl_checkpoint_save_end:             OnReceiveMsgCheckPointSaveEnd         (); break;
-        case T_MsgsInClient_msg_msg_ctrl_checkpoint_load_begin:           OnReceiveMsgCheckPointLoadBegin       (); break;
-        case T_MsgsInClient_msg_msg_ctrl_checkpoint_load_end:             OnReceiveMsgCheckPointLoadEnd         (); break;
         case T_MsgsInClient_msg_msg_ctrl_checkpoint_set_frequency_ack:    OnReceiveMsgCheckPointSetFrequencyAck (); break;
         case T_MsgsInClient_msg_msg_ctrl_checkpoint_save_now_ack:         OnReceiveMsgCheckPointSaveNowAck      (); break;
         case T_MsgsInClient_msg_msg_ctrl_send_current_state_begin:        OnReceiveMsgCtrlSendCurrentStateBegin (); break;

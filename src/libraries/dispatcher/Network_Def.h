@@ -131,8 +131,6 @@ GENERATE_EMPTY_ASN_MSG_SENDER   ( Client, CtrlMeteoGlobaleAck                   
 GENERATE_EMPTY_ASN_MSG_SENDER   ( Client, CtrlMeteoLocaleAck                            , ctrl_meteo_locale_ack                             );
 GENERATE_EMPTY_ASN_MSG_SENDER   ( Client, CtrlCheckPointSaveBegin                       , ctrl_checkpoint_save_begin                        );
 GENERATE_EMPTY_ASN_MSG_SENDER   ( Client, CtrlCheckPointSaveEnd                         , ctrl_checkpoint_save_end                          );
-GENERATE_EMPTY_ASN_MSG_SENDER   ( Client, CtrlCheckPointLoadBegin                       , ctrl_checkpoint_load_begin                        );
-GENERATE_EMPTY_ASN_MSG_SENDER   ( Client, CtrlCheckPointLoadEnd                         , ctrl_checkpoint_load_end                          );
 GENERATE_EMPTY_ASN_MSG_SENDER   ( Client, CtrlCheckPointSetFrequencyAck                 , ctrl_checkpoint_set_frequency_ack                 );
 GENERATE_EMPTY_ASN_MSG_SENDER   ( Client, CtrlCheckPointSaveNowAck                      , ctrl_checkpoint_save_now_ack                      );
 GENERATE_EMPTY_ASN_MSG_SENDER   ( Client, CtrlSendCurrentStateBegin                     , ctrl_send_current_state_begin                     );

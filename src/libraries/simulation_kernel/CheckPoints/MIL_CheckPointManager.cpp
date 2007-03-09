@@ -75,9 +75,6 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config )
     MT_LOG_STARTUP_MESSAGE( "------------------------------" );
 
     MT_LOG_INFO_MSG( MT_FormatString( "Loading SIM state from checkpoint '%s'", config.BuildCheckpointChildFile( "" ).c_str() ) )
-
-    NET_ASN_MsgCtrlCheckPointLoadBegin asnLoadBeginMsg;
-    asnLoadBeginMsg.Send();
     
     if( config.UseCheckPointCRC() )
         CheckCRC( config );
@@ -97,8 +94,6 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config )
     delete pArchive;
 #endif
  
-    NET_ASN_MsgCtrlCheckPointLoadEnd asnLoadEndMsg;
-    asnLoadEndMsg.Send();
 }
 
 // -----------------------------------------------------------------------------
