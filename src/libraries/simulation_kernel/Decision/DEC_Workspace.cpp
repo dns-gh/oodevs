@@ -253,8 +253,8 @@ void DEC_Workspace::InitializeDIATypes( MIL_InputArchive& initArchive, bool& bNe
         // Updating opened files archive
         MT_FlatBinaryOutputArchive openedFilesArchive;
         openedFilesArchive << openedFiles.size();
-        for( CIT_StringVector it = openedFiles.begin(); it != openedFiles.end(); ++it )
-            openedFilesArchive << (*it);
+        for( IT_StringVector it = openedFiles.begin(); it != openedFiles.end(); ++it )
+            openedFilesArchive << it->erase( 0, DIA_Workspace::Instance().GetWorkingDirectory().size() );
         openedFilesArchive.WriteToFile( strOpenedFileArchiveName, true );
     }
 }
@@ -287,8 +287,8 @@ void DEC_Workspace::InitializeDIAWorkspace( MIL_InputArchive& initArchive, bool&
         // Updating opened files archive
         MT_FlatBinaryOutputArchive openedFilesArchive;
         openedFilesArchive << openedFiles.size();
-        for( CIT_StringVector it = openedFiles.begin(); it != openedFiles.end(); ++it )
-            openedFilesArchive << (*it);
+        for( IT_StringVector it = openedFiles.begin(); it != openedFiles.end(); ++it )
+            openedFilesArchive << it->erase( 0, DIA_Workspace::Instance().GetWorkingDirectory().size() );
         openedFilesArchive.WriteToFile( strOpenedFileArchiveName, true );
     }
 }
@@ -519,7 +519,7 @@ float DEC_Workspace::GetTime() const
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Workspace::CheckFilesDepencies
+// Name: DEC_Workspace::k
 // Created: AGN 03-06-16
 //-----------------------------------------------------------------------------
 // static
@@ -541,8 +541,8 @@ bool DEC_Workspace::CheckFilesDepencies( const std::string& strArchiveFile )
         needFilesArchive >> strOpenFileName;
         struct _stat scriptInfo;
         // We need to read script model if the types file have been has been modified
-        if( (_stat( strOpenFileName.c_str(), & scriptInfo ) == -1) || ( scriptInfo.st_mtime > binInfo.st_mtime ) )
-            return true;;
+        if( (_stat( ( DIA_Workspace::Instance().GetWorkingDirectory() + strOpenFileName ).c_str(), & scriptInfo ) == -1) || ( scriptInfo.st_mtime > binInfo.st_mtime ) )
+            return true;
     }
     return false;
 }

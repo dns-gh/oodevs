@@ -89,7 +89,7 @@ bool DEC_Model_ABC< T >::NeedScriptParsing( bool bNeedParsing, const std::string
         if( n == 0 && strOpenFileName != strFormatedFileName )
             return true;
 
-        if( FileChanged( strOpenFileName, binInfo.st_mtime ) )
+        if( FileChanged( ( DIA_Workspace::Instance().GetWorkingDirectory() + strOpenFileName ).c_str(), binInfo.st_mtime ) )
             return true;
     }
     return false;
@@ -139,7 +139,7 @@ void DEC_Model_ABC< T >::InitializeModel( const DEC_Workspace& decWorkspace, boo
     std::string strArchiveName           = strBinaryPath + "/" + strPrefix + "/" + strModel_ + ".model";
     std::string strOpenedFileArchiveName = strBinaryPath + "/" + strPrefix + "/" + strModel_ + ".files";
 
-    if( !bUseOnlyArchive && NeedScriptParsing( bNeedParsing, strArchiveName, strSourcePath + "/" + strScript_ /*$$$ n'importe quoi */, strOpenedFileArchiveName ) )
+    if( !bUseOnlyArchive && NeedScriptParsing( bNeedParsing, strArchiveName, strScript_, strOpenedFileArchiveName ) )
     {
         std::string    strReport;
         T_StringVector openedFiles;
@@ -151,8 +151,8 @@ void DEC_Model_ABC< T >::InitializeModel( const DEC_Workspace& decWorkspace, boo
         // Updating opened files archive
         MT_FlatBinaryOutputArchive openedFilesArchive;
         openedFilesArchive << openedFiles.size();
-        for( CIT_StringVector it = openedFiles.begin(); it != openedFiles.end(); ++it )
-            openedFilesArchive << (*it);
+        for( IT_StringVector it = openedFiles.begin(); it != openedFiles.end(); ++it )
+            openedFilesArchive << it->erase( 0, DIA_Workspace::Instance().GetWorkingDirectory().size() );
         openedFilesArchive.WriteToFile( strOpenedFileArchiveName, true );
 
         // Write binary archive
