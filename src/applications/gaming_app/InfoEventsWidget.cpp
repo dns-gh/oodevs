@@ -40,14 +40,13 @@ namespace
             int width = 0;
             while( QObject* obj = it.current() )
             {
-                if( QButton* btn = static_cast< QButton* >( obj ) )
-                    if( btn->isShown() )
-                        width += btn->width() + 2;
+                QButton* btn = static_cast< QButton* >( obj );
+                if( btn->isShown() )
+                    width += btn->width() + 2;
                 ++it;
             }
             return QSize( width, height() );
         }
-
     };
 
     class TransparentButton : public QButton
@@ -159,7 +158,7 @@ QButton* InfoEventsWidget::MakeButton( QWidget* parent, const QPixmap& pixmap, c
 // Name: InfoEventsWidget::AddEventButton
 // Created: SBO 2007-02-05
 // -----------------------------------------------------------------------------
-void InfoEventsWidget::AddEventButton( const std::string& event, bool add /* = true */ )
+void InfoEventsWidget::AddEventButton( const std::string& event, bool add )
 {
     eventButtons_[event]->setShown( add );
 }

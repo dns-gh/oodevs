@@ -10,7 +10,6 @@
 #ifndef __InfoDialog_h_
 #define __InfoDialog_h_
 
-#include "clients_gui/PanelStack_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/SelectionObserver_ABC.h"
@@ -22,7 +21,6 @@
 // Created: SBO 2007-02-15
 // =============================================================================
 class InfoDialog_Base : public QDialog
-                      , public gui::PanelStack_ABC
 {
     Q_OBJECT;
 
@@ -35,8 +33,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Add( QWidget* widget );
-    virtual void Remove( QWidget* widget );
     virtual QSize sizeHint() const;
     virtual void hideEvent( QHideEvent* );
     QWidget* RootWidget(); // $$$$ SBO 2007-02-19: 

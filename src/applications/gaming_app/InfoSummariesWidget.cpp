@@ -14,11 +14,13 @@
 #include "clients_kernel/AgentExtensions.h"
 #include "SummariesDisplayer.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: InfoSummariesWidget constructor
 // Created: SBO 2007-02-28
 // -----------------------------------------------------------------------------
-InfoSummariesWidget::InfoSummariesWidget( QWidget* parent, kernel::Controllers& controllers )
+InfoSummariesWidget::InfoSummariesWidget( QWidget* parent, Controllers& controllers )
     : QVBox( parent )
     , controllers_( controllers )
     , selected_( controllers )
@@ -26,7 +28,7 @@ InfoSummariesWidget::InfoSummariesWidget( QWidget* parent, kernel::Controllers& 
     QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, this );
     group->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Expanding );
     group->setFixedWidth( 250 );
-    display_ = new SummariesDisplayer( group );
+    display_.reset( new SummariesDisplayer( group ) );
     controllers_.Register( *this );
     group->hide();
 }
@@ -46,7 +48,7 @@ InfoSummariesWidget::~InfoSummariesWidget()
 // -----------------------------------------------------------------------------
 void InfoSummariesWidget::showEvent( QShowEvent* )
 {
-    const kernel::Entity_ABC* selected = selected_;
+    const Entity_ABC* selected = selected_;
     selected_ = 0;
     NotifySelected( selected );
 }
@@ -55,14 +57,14 @@ void InfoSummariesWidget::showEvent( QShowEvent* )
 // Name: InfoSummariesWidget::NotifySelected
 // Created: SBO 2007-02-28
 // -----------------------------------------------------------------------------
-void InfoSummariesWidget::NotifySelected( const kernel::Entity_ABC* entity )
+void InfoSummariesWidget::NotifySelected( const Entity_ABC* entity )
 {
     if( selected_ != entity )
     {
         selected_ = entity;
         display_->Hide();
         if( selected_ )
-            entity->Interface().Apply( &kernel::Displayable_ABC::DisplayInSummary, *display_ );
+            entity->Interface().Apply( &Displayable_ABC::DisplayInSummary, *display_ );
     }
 }
 
@@ -70,20 +72,20 @@ void InfoSummariesWidget::NotifySelected( const kernel::Entity_ABC* entity )
 // Name: InfoSummariesWidget::NotifyUpdated
 // Created: SBO 2007-03-01
 // -----------------------------------------------------------------------------
-void InfoSummariesWidget::NotifyUpdated( const kernel::Entity_ABC& entity )
+void InfoSummariesWidget::NotifyUpdated( const Entity_ABC& entity )
 {
     if( !selected_ || selected_ != &entity )
         return;
-    entity.Interface().Apply( &kernel::Displayable_ABC::DisplayInSummary, *display_ );
+    entity.Interface().Apply( &Displayable_ABC::DisplayInSummary, *display_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InfoSummariesWidget::NotifyUpdated
 // Created: SBO 2007-02-28
 // -----------------------------------------------------------------------------
-void InfoSummariesWidget::NotifyUpdated( const kernel::Attributes_ABC& extension )
+void InfoSummariesWidget::NotifyUpdated( const Attributes_ABC& extension )
 {
-    if( !selected_ || ( selected_->Retrieve< kernel::Attributes_ABC >() != &extension ) )
+    if( !selected_ || ( selected_->Retrieve< Attributes_ABC >() != &extension ) )
         return;
     extension.DisplayInSummary( *display_ );
 }

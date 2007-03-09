@@ -62,7 +62,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    kernel::Displayer_ABC* display_;
+    std::auto_ptr< kernel::Displayer_ABC > display_;
     //@}
 };
 

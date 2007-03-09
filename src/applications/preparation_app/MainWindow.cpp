@@ -316,6 +316,7 @@ bool MainWindow::Load()
     try
     {
         BuildIconLayout();
+        glProxy_->Reset2d();
         delete widget2d_;
         widget2d_ = new GlWidget( this, controllers_, config_, *iconLayout_ );
         moveLayer_.reset( new DragMovementLayer( *widget2d_ ) );

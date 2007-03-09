@@ -57,7 +57,7 @@ private:
     virtual void NotifyUpdated( const kernel::Attributes_ABC& element );
     virtual void NotifyUpdated( const Contaminations& element );
 
-    void AddEventButton( const std::string& event, bool add = true );
+    void AddEventButton( const std::string& event, bool add );
     QButton* MakeButton( QWidget* parent, const QPixmap& pixmap, const QString& text );
 
     void InitializeEventButtons( QWidget* parent );
