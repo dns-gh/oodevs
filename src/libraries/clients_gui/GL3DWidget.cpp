@@ -433,21 +433,21 @@ void Gl3dWidget::keyPressEvent( QKeyEvent* event  )
 
         if( event->key() == Qt::Key_Plus )
             zRatio_ *= 1.1f;
-        if( event->key() == Qt::Key_Minus )
+        else if( event->key() == Qt::Key_Minus )
             zRatio_ *= 0.9f;
-        if( event->key() == Qt::Key_Home )
+        else if( event->key() == Qt::Key_Home )
             CenterView();
-        if( event->key() == Qt::Key_Left )
+        else if( event->key() == Qt::Key_Left )
             Rotate( Vector3f( 0, 0, 1 ), 0.02f * speedFactor );
-        if( event->key() == Qt::Key_Right )
+        else if( event->key() == Qt::Key_Right )
             Rotate( Vector3f( 0, 0, 1 ), -0.02f * speedFactor );
-        if( event->key() == Qt::Key_Up )
+        else if( event->key() == Qt::Key_Up )
             Translate( Vector3f( 0, 1, 0 ), 500.f * speedFactor );
-        if( event->key() == Qt::Key_Down )
+        else if( event->key() == Qt::Key_Down )
             Translate( Vector3f( 0, 1, 0 ), -500.f * speedFactor );
-        if( event->key() == Qt::Key_PageUp )
+        else if( event->key() == Qt::Key_PageUp )
             Translate( Vector3f( 0, 0, 1 ), 500.f * speedFactor );
-        if( event->key() == Qt::Key_PageDown )
+        else if( event->key() == Qt::Key_PageDown )
             Translate( Vector3f( 0, 0, 1 ), -500.f * speedFactor );
     }
     strategy_.HandleKeyPress( event );

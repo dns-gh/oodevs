@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "SymbolIcons.h"
+#include "moc_SymbolIcons.cpp"
 #include "GlWidget.h"
 
 using namespace gui;
@@ -17,9 +18,9 @@ using namespace gui;
 // Name: SymbolIcons constructor
 // Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-SymbolIcons::SymbolIcons( QObject* parent, GlWidget*& widget )
+SymbolIcons::SymbolIcons( QObject* parent )
     : QObject( parent )
-    , widget_( widget )
+    , widget_( 0 )
 {
     // NOTHING
 }
@@ -31,6 +32,15 @@ SymbolIcons::SymbolIcons( QObject* parent, GlWidget*& widget )
 SymbolIcons::~SymbolIcons()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolIcons::OnWidget2dChanged
+// Created: AGE 2007-03-09
+// -----------------------------------------------------------------------------
+void SymbolIcons::OnWidget2dChanged( gui::GlWidget* widget )
+{
+    widget_ = widget;
 }
 
 // -----------------------------------------------------------------------------

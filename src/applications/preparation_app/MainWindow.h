@@ -26,7 +26,6 @@ namespace gui
     class OptionsPanel;
     class GlProxy;
     class GlWidget;
-    class StatusBar;
     class ParametersLayer;
     class GlPlaceHolder;
     class IconLayout;
@@ -35,6 +34,8 @@ namespace gui
     class ExclusiveEventStrategy;
     class GraphicPreferences;
     class DrawerLayer;
+    class LightingProxy;
+    class GlSelector;
 }
 
 class AgentsLayer;
@@ -95,7 +96,6 @@ private:
 
     //! @name Helpers
     //@{
-    void BuildIconLayout();
     void CreateLayers( ObjectCreationPanel& objects, gui::ParametersLayer& parameters, WeatherLayer& weather, AgentsLayer& agents, gui::DrawerLayer& drawer, gui::GraphicPreferences& setup, const kernel::Profile_ABC& profile );
     void closeEvent( QCloseEvent* pEvent );
     void WriteSettings();
@@ -124,14 +124,11 @@ private:
 
     gui::GlProxy*       glProxy_;
     gui::ColorStrategy* strategy_;
-    gui::GlWidget*      widget2d_;
-    gui::GlPlaceHolder* glPlaceHolder_;
-    gui::IconLayout*    iconLayout_;
+    gui::LightingProxy* lighting_;
 
-    QTimer* displayTimer_;
+    gui::GlSelector* selector_;
 
     gui::OptionsPanel*    pOptionsPanel_;
-    gui::StatusBar*       pStatus_;
     gui::ParametersLayer* parameters_;
     bool                  loading_;
     bool                  needsSaving_;

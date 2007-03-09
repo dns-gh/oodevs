@@ -25,10 +25,10 @@ using namespace gui;
 // Name: MiniViews constructor
 // Created: AGE 2006-06-23
 // -----------------------------------------------------------------------------
-MiniViews::MiniViews( QMainWindow* parent, Controllers& controllers, GlWidget* const& widget )
+MiniViews::MiniViews( QMainWindow* parent, Controllers& controllers )
     : QDockWindow( parent )
     , controllers_( controllers )
-    , widget_( widget )
+    , widget_( 0 )
     , selected_( controllers_ )
 {
     setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
@@ -49,6 +49,15 @@ MiniViews::MiniViews( QMainWindow* parent, Controllers& controllers, GlWidget* c
 MiniViews::~MiniViews()
 {
     controllers_.Remove( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MiniViews::OnWidget2dChanged
+// Created: AGE 2007-03-09
+// -----------------------------------------------------------------------------
+void MiniViews::OnWidget2dChanged( gui::GlWidget* widget )
+{
+    widget_ = widget;
 }
 
 // -----------------------------------------------------------------------------

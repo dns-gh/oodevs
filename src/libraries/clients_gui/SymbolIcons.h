@@ -24,11 +24,12 @@ namespace gui
 // =============================================================================
 class SymbolIcons : public QObject, private IconHandler_ABC
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             SymbolIcons( QObject* parent, GlWidget*& widget );
+    explicit SymbolIcons( QObject* parent );
     virtual ~SymbolIcons();
     //@}
 
@@ -36,6 +37,12 @@ public:
     //@{
     virtual QPixmap GetSymbol( const std::string& symbol, const QColor& color = Qt::white );
     virtual QPixmap GetSymbol( const std::string& symbol, const std::string& level, const QColor& color = Qt::white );
+    //@}
+
+public slots:
+    //! @name Slots
+    //@{
+    void OnWidget2dChanged( gui::GlWidget* );
     //@}
 
 private:
@@ -77,7 +84,7 @@ private:
 private:
     //! @name Member data
     //@{
-    GlWidget*& widget_;
+    GlWidget* widget_;
     T_PendingIcons pending_;
     T_Icons icons_;
     //@}

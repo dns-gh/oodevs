@@ -15,6 +15,9 @@ namespace kernel
     class Controllers;
 }
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  DisplayToolbar
     @brief  DisplayToolbar
@@ -31,5 +34,7 @@ public:
     virtual ~DisplayToolbar();
     //@}
 };
+
+}
 
 #endif // __DisplayToolbar_h_

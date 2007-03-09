@@ -7,12 +7,14 @@
 //
 // *****************************************************************************
 
-#include "gaming_app_pch.h"
+#include "clients_gui_pch.h"
 #include "DisplayToolbar.h"
+#include "BooleanOptionButton.h"
+#include "resources.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
-#include "clients_gui/BooleanOptionButton.h"
-#include "clients_gui/resources.h"
+
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: DisplayToolbar constructor
@@ -22,7 +24,7 @@ DisplayToolbar::DisplayToolbar( QMainWindow* pParent, kernel::Controllers& contr
     : QToolBar( pParent, "display toolbar" )
 {
     setLabel( tr( "Display toolbar" ) );
-    new gui::BooleanOptionButton( MAKE_ICON( threed ), tr( "3D" ), this, controllers.options_, "3D" );
+    new BooleanOptionButton( MAKE_ICON( threed ), tr( "3D" ), this, controllers.options_, "3D" );
 }
 
 // -----------------------------------------------------------------------------

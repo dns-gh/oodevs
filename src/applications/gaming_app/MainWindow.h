@@ -25,13 +25,8 @@ namespace kernel
 namespace gui
 {
     class OptionsPanel;
-    class GlWidget;
-    class Gl3dWidget;
-    class StatusBar;
     class ParametersLayer;
     class AgentsLayer;
-    class GlPlaceHolder;
-    class IconLayout;
     class ColorStrategy;
     class GlProxy;
     class DrawerLayer;
@@ -39,6 +34,7 @@ namespace gui
     class CircularEventStrategy;
     class PreferencesDialog;
     class LightingProxy;
+    class GlSelector;
 }
 
 class Spy;
@@ -50,7 +46,6 @@ class Network;
 class MissionPanel;
 class ObjectCreationPanel;
 class LoginDialog;
-class MapLayer_ABC;
 
 // =============================================================================
 /** @class  MainWindow
@@ -66,7 +61,6 @@ class MapLayer_ABC;
 // =============================================================================
 class MainWindow : public QMainWindow
                  , public kernel::Observer_ABC
-                 , public kernel::OptionsObserver_ABC
                  , public kernel::ElementObserver_ABC< Simulation >
                  , public kernel::ElementObserver_ABC< Profile >
 {
@@ -102,13 +96,10 @@ private:
     void WriteOptions();
     void ReadOptions();
 
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void NotifyUpdated( const Profile& profile );
 
     static std::string BuildRemotePath( std::string server, std::string path );
-
-    void BuildIconLayout();
 
     void CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, gui::ParametersLayer& parameters, 
                        gui::AgentsLayer& agents, gui::DrawerLayer& drawer, gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile );
@@ -132,22 +123,13 @@ private:
 
     std::auto_ptr< gui::CircularEventStrategy >  forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
-    std::auto_ptr< MapLayer_ABC >                moveLayer_;
-
     gui::GlProxy*                glProxy_;
     gui::ColorStrategy*          strategy_;
     gui::LightingProxy*          lighting_;
-    gui::GlWidget*               widget2d_;
-    gui::Gl3dWidget*             widget3d_;
-    gui::GlPlaceHolder*          glPlaceHolder_;
-    gui::IconLayout*             iconLayout_;
 
-    bool b3d_;
-
-    QTimer* displayTimer_;
+    gui::GlSelector* selector_;
 
     gui::OptionsPanel*    pOptionsPanel_;
-    gui::StatusBar*       pStatus_;
     gui::ParametersLayer* parameters_;
     gui::AgentsLayer*     agents_;
     Spy*      spy_;

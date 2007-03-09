@@ -45,7 +45,6 @@
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/ExerciseConfig.h"
 
-#include "clients_gui/GlWidget.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/GraphicPreferences.h"
 #include "clients_gui/OptionsPanel.h"
@@ -53,7 +52,6 @@
 #include "clients_gui/Settings.h"
 #include "clients_gui/StatusBar.h"
 #include "clients_gui/PreferencesDialog.h"
-#include "clients_gui/GlPlaceHolder.h"
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/ColorStrategy.h"
@@ -66,7 +64,6 @@
 #include "clients_gui/CircularEventStrategy.h"
 #include "clients_gui/ExclusiveEventStrategy.h"
 #include "clients_gui/DefaultLayer.h"
-#include "clients_gui/IconLayout.h"
 #include "clients_gui/EntitySearchBox.h"
 #include "clients_gui/SymbolIcons.h"
 #include "clients_gui/EntitySymbols.h"
@@ -74,6 +71,10 @@
 #include "clients_gui/LocationEditorToolbar.h"
 #include "clients_gui/DrawerLayer.h"
 #include "clients_gui/DrawerToolbar.h"
+#include "clients_gui/GlSelector.h"
+#include "clients_gui/DisplayToolbar.h"
+#include "clients_gui/RasterLayer.h"
+#include "clients_gui/Elevation3dLayer.h"
 #include "graphics/DragMovementLayer.h"
 
 #include "xeumeuleu/xml.h"
@@ -103,18 +104,19 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , forward_      ( new CircularEventStrategy() )
     , eventStrategy_( new ExclusiveEventStrategy( *forward_ ) )
     , glProxy_      ( 0 )
-    , widget2d_     ( 0 )
-    , iconLayout_   ( 0 )
     , needsSaving_  ( false )
 {
     setIcon( MAKE_PIXMAP( csword ) );
     SetWindowTitle( false );
 
-    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *new LightingProxy( this ) );
+    lighting_ = new LightingProxy( this );
+    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_ );
     new Dialogs( this, controllers );
-
+    
     glProxy_ = new GlProxy();
     strategy_ = new ColorStrategy( controllers, *glProxy_ );
+
+    selector_ = new GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
 
     RichItemFactory* factory = new RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
 
@@ -123,7 +125,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
-    gui::SymbolIcons* symbols = new gui::SymbolIcons( this, widget2d_ );
+    gui::SymbolIcons* symbols = new gui::SymbolIcons( this );
+    connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
     ProfileDialog* profileDialog = new ProfileDialog( this, controllers, *factory, *icons, model_.profiles_ );
 
@@ -186,6 +189,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pCreationPanel->AddPanel( weatherPanel );
 
     new FileToolbar( this );
+    new DisplayToolbar( this, controllers );
 
     // Drawer
     DrawerLayer* drawer = new DrawerLayer( *glProxy_ );
@@ -193,16 +197,13 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     new Menu( this, controllers, *prefDialog, *profileDialog );
 
-    glPlaceHolder_ = new GlPlaceHolder( this );
-    setCentralWidget( glPlaceHolder_ );
-
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
     CreateLayers( *objectCreationPanel, *paramLayer, *weatherLayer, *agentsLayer, *drawer, prefDialog->GetPreferences(), PreparationProfile::GetProfile() );
 
-    pStatus_ = new StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_ );
+    StatusBar* pStatus = new StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_ );
+    connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
+    connect( selector_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
     controllers_.Register( *this );
-
-    displayTimer_ = new QTimer( this );
 
     ReadSettings();
     ReadOptions();
@@ -223,9 +224,12 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // -----------------------------------------------------------------------------
 void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, WeatherLayer& weather, ::AgentsLayer& agents, DrawerLayer& drawer, GraphicPreferences& setup, const Profile_ABC& profile )
 {
+    // $$$$ AGE 2007-03-09: preferences !
     Layer_ABC& objectCreationLayer = *new MiscLayer< ObjectCreationPanel >( objects );
     Elevation2dLayer& elevation2d  = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
+    Layer2d_ABC& raster            = *new RasterLayer( controllers_.controller_ );
     Layer_ABC& terrain             = *new TerrainLayer( controllers_, *glProxy_, setup );
+    Layer_ABC& elevation3d         = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     Layer_ABC& grid                = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics             = *new MetricsLayer( *glProxy_ );
     Layer_ABC& limits              = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile );
@@ -236,7 +240,9 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     // ordre de dessin
     glProxy_->Register( defaultLayer );
     glProxy_->Register( elevation2d );
+    glProxy_->Register( raster );
     glProxy_->Register( terrain );
+    glProxy_->Register( elevation3d );
     glProxy_->Register( grid );
     glProxy_->Register( weather );
     glProxy_->Register( limits );
@@ -256,6 +262,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     forward_->Register( weather );
     forward_->Register( limits );
     forward_->Register( metrics );
+    forward_->Register( elevation3d );
     forward_->SetDefault( defaultLayer );
 }
 
@@ -315,26 +322,10 @@ bool MainWindow::Load()
 {
     try
     {
-        BuildIconLayout();
-        glProxy_->Reset2d();
-        delete widget2d_;
-        widget2d_ = new GlWidget( this, controllers_, config_, *iconLayout_ );
-        moveLayer_.reset( new DragMovementLayer( *widget2d_ ) );
-        widget2d_->Configure( *eventStrategy_ );
-        widget2d_->Configure( *moveLayer_ );
-        glProxy_->ChangeTo( widget2d_ );
-        glProxy_->RegisterTo( widget2d_ );
-        delete glPlaceHolder_;
-        glPlaceHolder_ = 0;
-        setCentralWidget( widget2d_ );
+        selector_->Load();
         model_.Purge();
         staticModel_.Load( config_ );
         SetWindowTitle( false );
-
-        connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
-        connect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );
-        displayTimer_->start( 50 );
-        widget2d_->show();
     }
     catch( xml::exception& e )
     {
@@ -354,11 +345,7 @@ void MainWindow::Close()
     model_.Purge();
     SetWindowTitle( false );
     staticModel_.Purge();
-    glPlaceHolder_ = new GlPlaceHolder( this );
-    setCentralWidget( glPlaceHolder_ );
-    glPlaceHolder_->show();
-    delete widget2d_;
-    widget2d_ = 0;
+    selector_->Close();
 }
 
 // -----------------------------------------------------------------------------
@@ -505,26 +492,6 @@ void MainWindow::ReadOptions()
     controllers_.options_.Load( settings );
     settings.endGroup();
     settings.endGroup();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::BuildIconLayout
-// Created: SBO 2006-08-18
-// -----------------------------------------------------------------------------
-void MainWindow::BuildIconLayout()
-{
-    if( iconLayout_ )
-        return;
-    iconLayout_ = new IconLayout();
-//    iconLayout_->AddIcon( xpm_cadenas        , -200, 270 );
-//    iconLayout_->AddIcon( xpm_radars_on      ,  200, 270 );
-//    iconLayout_->AddIcon( xpm_brouillage     ,  200, 50 );
-//    iconLayout_->AddIcon( xpm_talkie_interdit,  100, 50 );
-//    iconLayout_->AddIcon( xpm_gas            , -200, 170 );
-//    iconLayout_->AddIcon( xpm_ammo           , -200, 100 );
-//    iconLayout_->AddIcon( xpm_nbc            , -200, 25 );
-//    iconLayout_->AddIcon( xpm_construction   ,  200, 150 );
-//    iconLayout_->AddIcon( xpm_observe        ,  200, 150 );
 }
 
 // -----------------------------------------------------------------------------

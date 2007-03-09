@@ -43,7 +43,7 @@ class MiniViews : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             MiniViews( QMainWindow* parent, kernel::Controllers& controllers, GlWidget* const& widget );
+             MiniViews( QMainWindow* parent, kernel::Controllers& controllers );
     virtual ~MiniViews();
     //@}
 
@@ -51,6 +51,7 @@ private slots:
     //! @name Slots
     //@{
     void OnMiniView();
+    void OnWidget2dChanged( gui::GlWidget* );
     //@}
 
 private:
@@ -75,7 +76,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    GlWidget* const & widget_;
+    GlWidget* widget_;
     SmartGridWidget* grid_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     T_MiniViews miniViews_;

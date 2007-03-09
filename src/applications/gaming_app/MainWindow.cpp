@@ -20,7 +20,6 @@
 #include "MissionPanel.h"
 #include "ObjectCreationPanel.h"
 #include "RecorderToolbar.h"
-#include "DisplayToolbar.h"
 #include "SIMControlToolbar.h"
 #include "LinkInterpreter.h"
 #include "AgentsLayer.h"
@@ -40,6 +39,7 @@
 #include "ProfilingPanel.h"
 #include "UserProfileDialog.h"
 #include "InfoDock.h"
+#include "icons.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -58,8 +58,8 @@
 #include "gaming/Profile.h"
 #include "gaming/ProfileFilter.h"
 
-#include "clients_gui/Gl3dWidget.h"
-#include "clients_gui/GlWidget.h"
+#include "clients_gui/DisplayToolbar.h"
+#include "clients_gui/GlSelector.h"
 #include "clients_gui/GraphicPreferences.h"
 #include "clients_gui/Logger.h"
 #include "clients_gui/MissionLayer.h"
@@ -69,11 +69,9 @@
 #include "clients_gui/Settings.h"
 #include "clients_gui/PopulationList.h"
 #include "clients_gui/PreferencesDialog.h"
-#include "clients_gui/GlPlaceHolder.h"
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/MiniViews.h"
 #include "clients_gui/resources.h"
-#include "clients_gui/IconLayout.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/ColorStrategy.h"
 #include "clients_gui/ParametersLayer.h"
@@ -94,8 +92,6 @@
 #include "clients_gui/EntitySymbols.h"
 #include "clients_gui/LightingProxy.h"
 #include "clients_gui/LocationEditorToolbar.h"
-#include "graphics/DragMovementLayer.h"
-#include "icons.h"
 
 #include "xeumeuleu/xml.h"
 
@@ -121,13 +117,9 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , model_        ( model )
     , network_      ( network )
     , config_       ( config )
-    , forward_      ( new CircularEventStrategy() )
-    , eventStrategy_( new ExclusiveEventStrategy( *forward_ ) )
+    , forward_      ( new gui::CircularEventStrategy() )
+    , eventStrategy_( new gui::ExclusiveEventStrategy( *forward_ ) )
     , glProxy_      ( 0 )
-    , widget2d_     ( 0 )
-    , widget3d_     ( 0 )
-    , iconLayout_   ( 0 )
-    , b3d_          ( false )
 {
     setIcon( MAKE_PIXMAP( csword ) );
     setCaption( APP_NAME + tr( " - Not connected" ) );
@@ -142,6 +134,17 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     glProxy_ = new GlProxy();
     strategy_ = new ColorStrategy( controllers, *glProxy_ );
+
+    selector_ = new GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
+    selector_->AddIcon( xpm_cadenas        , -200, 270 );
+    selector_->AddIcon( xpm_radars_on      ,  200, 270 );
+    selector_->AddIcon( xpm_brouillage     ,  200, 50 );
+    selector_->AddIcon( xpm_talkie_interdit,  100, 50 );
+    selector_->AddIcon( xpm_gas            , -200, 170 );
+    selector_->AddIcon( xpm_ammo           , -200, 100 );
+    selector_->AddIcon( xpm_nbc            , -200, 25 );
+    selector_->AddIcon( xpm_construction   ,  200, 150 );
+    selector_->AddIcon( xpm_observe        ,  200, 150 );
 
     RichItemFactory* factory = new RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
     LinkInterpreter* interpreter = new LinkInterpreter( this, controllers );
@@ -158,7 +161,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new OrbatToolbar( box, controllers, profile, *agentsLayer );
     QTabWidget* pListsTabWidget = new QTabWidget( box );
 
-    SymbolIcons* symbols = new SymbolIcons( this, widget2d_ );
+    SymbolIcons* symbols = new SymbolIcons( this );
+    connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     EntitySymbols* icons = new EntitySymbols( *symbols, *strategy_ );
     UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *factory, profile, *icons, model_.userProfileFactory_ );
 
@@ -183,7 +187,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setDockEnabled( pSpyWnd, Qt::DockTop, false );
 
     // Mini views
-    MiniViews* miniviews = new MiniViews( this, controllers_, widget2d_ ); // $$$$ AGE 2006-08-21: widget2d en *& dégueu. Instancier l'un quand l'autre
+    MiniViews* miniviews = new MiniViews( this, controllers_ );
+    connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), miniviews, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     miniviews->hide();
 
     // Properties
@@ -262,16 +267,13 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     new Menu( this, controllers, *prefDialog, *profileDialog, *recorderToolbar, *factory );
 
-    glPlaceHolder_ = new GlPlaceHolder( this );
-    setCentralWidget( glPlaceHolder_ );
-
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
     CreateLayers( *pMissionPanel_, *objectCreationPanel, *paramLayer, *agentsLayer, *drawer, *prefDialog, profile );
 
-    pStatus_ = new ::StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_, controllers_ );
+    ::StatusBar* pStatus = new ::StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_, controllers_ );
+    connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
+    connect( selector_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
     controllers_.Register( *this );
-
-    displayTimer_ = new QTimer( this );
 
     ReadSettings();
     ReadOptions();
@@ -375,38 +377,9 @@ void MainWindow::Open()
 // -----------------------------------------------------------------------------
 void MainWindow::Load()
 {
-    BuildIconLayout();
-    if( widget3d_ )
-    {
-        widget3d_->makeCurrent();
-        glProxy_->Reset3d();
-        delete widget3d_; widget3d_ = 0;
-    }
-    if( widget2d_ )
-    {
-        widget2d_->makeCurrent();
-        glProxy_->Reset2d();
-        delete widget2d_; widget2d_ = 0;
-    }
-
-    widget2d_ = new GlWidget( this, controllers_, config_, *iconLayout_ );
-    moveLayer_.reset( new DragMovementLayer( *widget2d_ ) );
-    widget2d_->Configure( *eventStrategy_ );
-    widget2d_->Configure( *moveLayer_ );
-    glProxy_->ChangeTo( widget2d_ );
-    glProxy_->RegisterTo( widget2d_ );
-    delete glPlaceHolder_; glPlaceHolder_ = 0;
-    setCentralWidget( widget2d_ );
     model_.Purge();
+    selector_->Load();
     staticModel_.Load( config_ );
-
-    b3d_ = false;
-    controllers_.options_.Change( "3D", b3d_ );
-
-    connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT(OnMouseMove( const geometry::Point2f& )) );
-    connect( displayTimer_, SIGNAL(timeout()), centralWidget(), SLOT(updateGL()) );
-    displayTimer_->start( 50 );
-    widget2d_->show();
 }
 
 // -----------------------------------------------------------------------------
@@ -417,11 +390,7 @@ void MainWindow::Close()
 {
     network_.Disconnect();
     model_.Purge();
-    glPlaceHolder_ = new GlPlaceHolder( this );
-    setCentralWidget( glPlaceHolder_ );
-    glPlaceHolder_->show();
-    delete widget2d_; widget2d_ = 0;
-    delete widget3d_; widget3d_ = 0;
+    selector_->Close();
 }
 
 // -----------------------------------------------------------------------------
@@ -431,8 +400,7 @@ void MainWindow::Close()
 MainWindow::~MainWindow()
 {
     controllers_.Remove( *this );
-    delete widget2d_;
-    delete widget3d_;
+    delete selector_;
 }
 
 // -----------------------------------------------------------------------------
@@ -518,42 +486,6 @@ void MainWindow::ReadOptions()
     settings.endGroup();
 }
 
-// -----------------------------------------------------------------------------
-// Name: MainWindow::OptionChanged
-// Created: AGE 2006-03-28
-// -----------------------------------------------------------------------------
-void MainWindow::OptionChanged( const std::string& name, const OptionVariant& value )
-{
-    if( name == "3D" )
-    {
-        bool new3d = value.To< bool >();
-        if( new3d != b3d_ )
-        {
-            centralWidget()->hide();
-            disconnect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );
-            if( new3d )
-            {
-                if( ! widget3d_ )
-                {
-                    widget3d_ = new Gl3dWidget( this, controllers_, config_, staticModel_.detection_, *eventStrategy_ );
-                    connect( widget3d_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
-                    glProxy_->RegisterTo( widget3d_ );
-                }
-                glProxy_->ChangeTo( widget3d_ );
-                setCentralWidget( widget3d_ );
-            }
-            else
-            {
-                glProxy_->ChangeTo( widget2d_ );
-                setCentralWidget( widget2d_ );
-            }
-            centralWidget()->show();
-            connect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );
-            b3d_ = new3d;
-        }
-    }
-}
-
 namespace
 {
     struct SelectionStub{};
@@ -635,22 +567,3 @@ std::string MainWindow::BuildRemotePath( std::string server, std::string path )
     return "\\\\" + server + "\\" + drive + '$' + path;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MainWindow::BuildIconLayout
-// Created: SBO 2006-08-18
-// -----------------------------------------------------------------------------
-void MainWindow::BuildIconLayout()
-{
-    if( iconLayout_ )
-        return;
-    iconLayout_ = new IconLayout();
-    iconLayout_->AddIcon( xpm_cadenas        , -200, 270 );
-    iconLayout_->AddIcon( xpm_radars_on      ,  200, 270 );
-    iconLayout_->AddIcon( xpm_brouillage     ,  200, 50 );
-    iconLayout_->AddIcon( xpm_talkie_interdit,  100, 50 );
-    iconLayout_->AddIcon( xpm_gas            , -200, 170 );
-    iconLayout_->AddIcon( xpm_ammo           , -200, 100 );
-    iconLayout_->AddIcon( xpm_nbc            , -200, 25 );
-    iconLayout_->AddIcon( xpm_construction   ,  200, 150 );
-    iconLayout_->AddIcon( xpm_observe        ,  200, 150 );
-}
