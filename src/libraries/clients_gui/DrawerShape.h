@@ -40,7 +40,7 @@ public:
     virtual void PopPoint();
     virtual void AddPoint( const geometry::Point2f& point );
 
-    void Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision );
+    virtual void Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision );
     bool IsAt( const geometry::Point2f& point, float precision = 100.f ) const;
     virtual void Draw( const geometry::Rectangle2f& viewport, bool overlined ) const;
     virtual void Draw( const geometry::Rectangle2f& viewport, const QColor& color, bool overlined ) const;

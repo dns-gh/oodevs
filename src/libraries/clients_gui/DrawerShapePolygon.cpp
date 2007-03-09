@@ -42,7 +42,6 @@ void DrawerShapePolygon::AddPoint( const geometry::Point2f& point )
     points_.push_back( point );
     if( points_.size() > 2 )
         std::swap( *( points_.end() - 2 ), points_.back() );
-        
 }
 
 // -----------------------------------------------------------------------------
@@ -58,4 +57,15 @@ void DrawerShapePolygon::PopPoint()
     }
     else if( points_.size() == 2 )
         points_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerShapePolygon::Translate
+// Created: AGE 2007-03-09
+// -----------------------------------------------------------------------------
+void DrawerShapePolygon::Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision )
+{
+    DrawerShape::Translate( from, translation, precision );
+    if( ! points_.empty() )
+        points_.back() = points_.front();
 }
