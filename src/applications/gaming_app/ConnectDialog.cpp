@@ -64,16 +64,7 @@ ConnectDialog::ConnectDialog( QWidget* pParent, Network& network )
 //-----------------------------------------------------------------------------
 ConnectDialog::~ConnectDialog()
 {
-    QSettings settings;
-    settings.setPath( "MASA", "CSword" );
-    settings.beginGroup( "/ConnectWindow" );
-    
-    QStringList list;
-    for( int n = 0; n < pHostNameComboBox_->count(); ++n )
-        list.push_back( pHostNameComboBox_->text( n ) );
-    settings.writeEntry( "/hosts", list, ';' );
-    settings.writeEntry( "/index", pHostNameComboBox_->currentItem() );
-    settings.endGroup();
+    // NOTHING
 }
 
 
@@ -90,6 +81,7 @@ void ConnectDialog::Validate()
     try
     {
         network_.Connect( std::string( pHostNameComboBox_->currentText() ), pPortSpinBox_->value() );
+        SaveConfig();
     }
     catch ( std::exception& e )
     {
@@ -122,7 +114,28 @@ void ConnectDialog::LoadDefaultConfig()
 
     if( list.empty() )
         list.push_back( "localhost" );
+    const QString currentItem = nIndex < int( list.count() ) ? list[ nIndex ] : list[0];
+    QStringList::iterator newEnd = std::unique( list.begin(), list.end() );
+    list.erase( newEnd, list.end() );
 
     pHostNameComboBox_->insertStringList( list );
-    pHostNameComboBox_->setCurrentItem( nIndex );
+    pHostNameComboBox_->setCurrentText( currentItem );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConnectDialog::SaveConfig
+// Created: SBO 2007-03-12
+// -----------------------------------------------------------------------------
+void ConnectDialog::SaveConfig()
+{
+    QSettings settings;
+    settings.setPath( "MASA", "CSword" );
+    settings.beginGroup( "/ConnectWindow" );
+    
+    QStringList list;
+    for( int n = 0; n < pHostNameComboBox_->count(); ++n )
+        list.push_back( pHostNameComboBox_->text( n ) );
+    settings.writeEntry( "/hosts", list, ';' );
+    settings.writeEntry( "/index", pHostNameComboBox_->currentItem() );
+    settings.endGroup();
 }

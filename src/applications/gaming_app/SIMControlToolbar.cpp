@@ -71,7 +71,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
 
     pConnectButton_ = new QToolButton( this );
     pConnectButton_->setAccel( Key_C );
-    pConnectButton_->setIconSet( MAKE_ICON( connexionred ) );
+    pConnectButton_->setIconSet( MAKE_ICON( notconnected ) );
     pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
     
     pPlayButton_ = new QToolButton( this );
@@ -127,13 +127,13 @@ void SIMControlToolbar::SlotConnectDisconnect()
     }
     else
     {
-        pConnectButton_->setIconSet( MAKE_ICON( connexionorange ) );
-        pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
+        pConnectButton_->setIconSet( MAKE_ICON( connecting ) );
+        pConnectButton_->setTextLabel( tr( "Connecting (C)" ) );
         int nResult = pConnectDlg_->exec();
         if( nResult == QDialog::Rejected )
         {
-            pConnectButton_->setIconSet( MAKE_ICON( connexionred ) );
-            pConnectButton_->setTextLabel( tr( "Disconnect (C)" ) );
+            pConnectButton_->setIconSet( MAKE_ICON( notconnected ) );
+            pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
         }
     }
 }
@@ -188,14 +188,16 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
     connected_ = simulation.IsConnected();
     if( connected_ )
     {
-        pConnectButton_->setIconSet( MAKE_ICON( connexiongreen ) );
+        pConnectButton_->setIconSet( MAKE_ICON( connected ) );
+        pConnectButton_->setTextLabel( tr( "Disconnect (C)" ) );
         pPlayButton_->setEnabled( true );
         if( !pSpeedSpinBox_->isEnabled() )
             pSpeedSpinBox_->setEnabled( true );
     }
     else
     {
-        pConnectButton_->setIconSet( MAKE_ICON( connexionred ) );
+        pConnectButton_->setIconSet( MAKE_ICON( notconnected ) );
+        pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
         pPlayButton_->setEnabled( false );
         pSpeedSpinBox_->setEnabled( false );
         pSpeedButton_->setEnabled( false );

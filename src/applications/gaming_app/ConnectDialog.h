@@ -48,10 +48,10 @@ private:
     ConnectDialog& operator=( const ConnectDialog& );
     //@}
 
-private:
-    //! @name Config management
+    //! @name Helpers
     //@{
     void LoadDefaultConfig();
+    void SaveConfig();
     //@}
 
 private:

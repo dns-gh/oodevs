@@ -1583,6 +1583,10 @@
         <source>Unpause (P)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Connecting (C)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Spy</name>

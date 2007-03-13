@@ -22,9 +22,9 @@
 #define static 
 
 #include "res/csword.xpm"
-#include "res/connexiongreen.xpm"
-#include "res/connexionorange.xpm"
-#include "res/connexionred.xpm"
+#include "res/connected.xpm"
+#include "res/connecting.xpm"
+#include "res/notconnected.xpm"
 #include "res/play.xpm"
 #include "res/stop.xpm"
 #include "res/textsmall.xpm"

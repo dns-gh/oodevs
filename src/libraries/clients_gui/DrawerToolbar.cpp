@@ -36,6 +36,7 @@ DrawerToolbar::DrawerToolbar( QMainWindow* mainWindow, ExclusiveEventStrategy& s
     dock_->setCaption( tr( "Drawing" ) );
     dock_->setMaximumWidth( 140 );
     mainWindow->moveDockWindow( dock_, Qt::DockTornOff );
+    mainWindow->setAppropriate( dock_, false );
     dock_->hide();
 
     draw_ = new QToolButton( this, "draw" );
