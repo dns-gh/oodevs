@@ -19,7 +19,7 @@
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class ParamDirection : public QHBox, public Param_ABC
+class ParamDirection : public Param_ABC
 {
 
 public:

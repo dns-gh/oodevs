@@ -19,7 +19,7 @@
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class ParamAgentType : public QButtonGroup, public Param_ABC
+class ParamAgentType : public Param_ABC
 {
 
 public:

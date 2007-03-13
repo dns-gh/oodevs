@@ -3,50 +3,48 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __ParamBool_h_
-#define __ParamBool_h_
-
-#include "game_asn/Asn.h"
-#include "Param_ABC.h"
+#ifndef __ActionsToolbar_h_
+#define __ActionsToolbar_h_
 
 // =============================================================================
-/** @class  ParamBool
-    @brief  ParamBool
+/** @class  ActionsToolbar
+    @brief  ActionsToolbar
 */
-// Created: AGE 2006-03-15
+// Created: SBO 2007-03-12
 // =============================================================================
-class ParamBool : public Param_ABC
+class ActionsToolbar : public QHBox
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamBool( QWidget* parent, ASN1BOOL& asn, const QString& label, bool defaultValue = false );
-    virtual ~ParamBool();
+    explicit ActionsToolbar( QWidget* parent );
+    virtual ~ActionsToolbar();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Commit();
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
-    ParamBool( const ParamBool& );            //!< Copy constructor
-    ParamBool& operator=( const ParamBool& ); //!< Assignement operator
+    ActionsToolbar( const ActionsToolbar& );            //!< Copy constructor
+    ActionsToolbar& operator=( const ActionsToolbar& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
     //@}
 
 private:
     //! @name Member data
     //@{
-    ASN1BOOL& asn_;
-    QCheckBox* checkBox_;
     //@}
 };
 
-#endif // __ParamBool_h_
+#endif // __ActionsToolbar_h_

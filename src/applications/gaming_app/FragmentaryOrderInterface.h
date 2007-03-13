@@ -42,9 +42,9 @@ private:
     FragmentaryOrderInterface& operator=( const FragmentaryOrderInterface& );
     //@}
 
-    //! @name Virtual Slots
+    //! @name Helpers
     //@{
-    virtual void OnOk();
+    virtual void Publish();
     //@}
 
 private:

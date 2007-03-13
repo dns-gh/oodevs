@@ -25,21 +25,23 @@ using namespace gui;
 // Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
 ParamPathList::ParamPathList( QWidget* parent, ASN1T_ListItineraire*& asnPathList, const QString& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent, ActionController& controller )
-    : QVBox( parent )
+    : QObject( parent )
     , layer_( layer )
     , converter_( converter )
     , controller_( controller )
     , agent_( agent )
     , asn_( new ASN1T_ListItineraire() )
     , paths_( 0 )
-    , listView_( new ParamListView( this, label ) )
     , selected_( 0 )
-    , popup_( new QPopupMenu( this ) )
 {
     asnPathList = asn_;
-    connect( listView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
-    disconnect( listView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), listView_, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
-    connect( listView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
+
+    box_ = new QVBox( parent );
+    list_ = new ParamListView( box_, label );
+    popup_ = new QPopupMenu( box_ );
+    connect( list_->ListView(), SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChanged( QListViewItem* ) ) );
+    disconnect( list_->ListView(), SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), list_->ListView(), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
+    connect( list_->ListView(), SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
     NewPath();
 }
 
@@ -59,8 +61,8 @@ ParamPathList::~ParamPathList()
 // -----------------------------------------------------------------------------
 bool ParamPathList::CheckValidity()
 {
-    if( listView_->childCount() == 0 )
-        return listView_->Invalid();
+    if( list_->ListView()->childCount() == 0 )
+        return list_->Invalid();
 
     if( selected_  )
     {
@@ -81,7 +83,7 @@ void ParamPathList::Commit()
     if( ! ChangeSelection() )
         return;
     
-    const unsigned int childs = listView_->childCount();
+    const unsigned int childs = list_->ListView()->childCount();
     asn_->n = childs;
 
     if( !childs && IsOptional() )
@@ -90,7 +92,7 @@ void ParamPathList::Commit()
     paths_ = new ASN1T_Itineraire[ childs ];
     asn_->elem = paths_;
 
-    QListViewItemIterator it( listView_ );
+    QListViewItemIterator it( list_->ListView() );
     for( unsigned int i = 0; it.current(); ++it, ++i )
     {
         ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
@@ -111,11 +113,11 @@ bool ParamPathList::ChangeSelection()
     path->Commit();
     if( !path->CheckValidity() )
     {
-        listView_->setSelected( selected_, true );
+        list_->ListView()->setSelected( selected_, true );
         return false;
     }
     path->RemoveFromController();
-    path->hide();
+    path->Hide();
     selected_ = 0;
     return true;
 }
@@ -130,7 +132,7 @@ void ParamPathList::OnSelectionChanged( QListViewItem* item )
         return;
     ValuedListItem* current = static_cast< ValuedListItem* >( item );
     ParamPath* path = current->GetValue< ParamPath >();
-    path->show();
+    path->Show();
     path->RegisterIn( controller_ );
     selected_ = current;
 }
@@ -161,13 +163,13 @@ void ParamPathList::NewPath()
         return;
 
     ASN1T_Itineraire* asn = new ASN1T_Itineraire();
-    ValuedListItem* item = new ValuedListItem( listView_ );
+    ValuedListItem* item = new ValuedListItem( list_->ListView() );
     item->setText( 0, tr( "Route" ) );
     
-    ParamPath* param = new ParamPath( this, asn, tr( "Route" ).ascii(), tr( "Route" ).ascii(), layer_, converter_, agent_ );
+    ParamPath* param = new ParamPath( box_, asn, tr( "Route" ).ascii(), tr( "Route" ).ascii(), layer_, converter_, agent_ );
     item->SetValue( param );
-    param->show();
-    listView_->setSelected( item, true );
+    param->Show();
+    list_->ListView()->setSelected( item, true );
     selected_ = item;
 }
 
@@ -177,7 +179,7 @@ void ParamPathList::NewPath()
 // -----------------------------------------------------------------------------
 void ParamPathList::DeleteSelected()
 {
-    DeleteItem( *listView_->selectedItem() );
+    DeleteItem( *list_->ListView()->selectedItem() );
 }
 
 // -----------------------------------------------------------------------------
@@ -205,6 +207,6 @@ void ParamPathList::DeleteItem( QListViewItem& item )
 // -----------------------------------------------------------------------------
 void ParamPathList::ClearList()
 {
-    while( listView_->childCount() )
-        DeleteItem( *listView_->firstChild() );
+    while( list_->ListView()->childCount() )
+        DeleteItem( *list_->ListView()->firstChild() );
 }

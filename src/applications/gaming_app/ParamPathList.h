@@ -33,7 +33,7 @@ namespace gui
 */
 // Created: SBO 2006-06-28
 // =============================================================================
-class ParamPathList : public QVBox, public Param_ABC
+class ParamPathList : public QObject, public Param_ABC
 {
     Q_OBJECT;
 
@@ -77,7 +77,8 @@ private:
     ASN1T_ListItineraire* asn_;
     ASN1T_Itineraire* paths_;
 
-    ParamListView* listView_;
+    QVBox* box_;
+    ParamListView* list_;
     gui::ValuedListItem* selected_;
     QPopupMenu* popup_;
     //@}

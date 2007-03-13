@@ -21,26 +21,28 @@ using namespace gui;
 // Created: SBO 2005-09-27
 // -----------------------------------------------------------------------------
 ParamHumanWoundList::ParamHumanWoundList( QWidget* parent, ASN1T_SantePriorites*& asnListHumanWound, const QString& /*strLabel*/ )
-    : QTable( 0, 1, parent )
+    : QObject( parent )
     , pAsnHumanWoundList_( new ASN1T_SantePriorites() )
 {
     asnListHumanWound = pAsnHumanWoundList_;
-    horizontalHeader()->setLabel( 0, tr( "Injuries" ) );
-    setColumnWidth( 0, 200 );
-    setLeftMargin( 0 );
-    setShowGrid( false );
-    setSorting( false );
+
+    table_ = new QTable( 0, 1, parent );
+    table_->horizontalHeader()->setLabel( 0, tr( "Injuries" ) );
+    table_->setColumnWidth( 0, 200 );
+    table_->setLeftMargin( 0 );
+    table_->setShowGrid( false );
+    table_->setSorting( false );
 
     humanWoundsList_.append( "" );
     for( unsigned int i = eHumanWound_BlesseUrgence1; i < eNbrHumanWound; ++i )
         humanWoundsList_.append( ENT_Tr::ConvertFromHumanWound( ( E_HumanWound )i ).c_str() );
 
-    setNumRows( 0 );
-    insertRows( 0, 1 );
-    setItem( 0, 0, new ExclusiveComboTableItem( this, humanWoundsList_ ) );
-    setMinimumHeight( rowHeight( 0 ) * 8 );
+    table_->setNumRows( 0 );
+    table_->insertRows( 0, 1 );
+    table_->setItem( 0, 0, new ExclusiveComboTableItem( table_, humanWoundsList_ ) );
+    table_->setMinimumHeight( table_->rowHeight( 0 ) * 8 );
 
-    connect( this, SIGNAL( valueChanged( int, int ) ), SLOT( OnHumanWoundChanged( int, int ) ) );
+    connect( table_, SIGNAL( valueChanged( int, int ) ), SLOT( OnHumanWoundChanged( int, int ) ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -58,14 +60,14 @@ ParamHumanWoundList::~ParamHumanWoundList()
 // -----------------------------------------------------------------------------
 void ParamHumanWoundList::Commit()
 {
-    if( !pAsnHumanWoundList_ || numRows() <= 1 )
+    if( !pAsnHumanWoundList_ || table_->numRows() <= 1 )
         return;
-    pAsnHumanWoundList_->n = numRows() - 1;
+    pAsnHumanWoundList_->n = table_->numRows() - 1;
 
     ASN1T_EnumHumanWound* pAsnHumanWound = new ASN1T_EnumHumanWound[ pAsnHumanWoundList_->n ]; //$$$ RAM
     for( unsigned int i = 0; i < pAsnHumanWoundList_->n; ++i )
     {
-        QComboTableItem* comboItem  = static_cast< QComboTableItem* >( item( i, 0 ) );
+        QComboTableItem* comboItem  = static_cast< QComboTableItem* >( table_->item( i, 0 ) );
         if( comboItem )
             pAsnHumanWound[i] = ( ASN1T_EnumHumanWound )ENT_Tr::ConvertToHumanWound( comboItem->currentText().ascii() );
     }
@@ -79,31 +81,31 @@ void ParamHumanWoundList::Commit()
 // -----------------------------------------------------------------------------
 void ParamHumanWoundList::OnHumanWoundChanged( int row, int /*col*/ )
 {
-    QComboTableItem* pComboTableItem = static_cast< QComboTableItem* >( item( row, 0 ) );
+    QComboTableItem* pComboTableItem = static_cast< QComboTableItem* >( table_->item( row, 0 ) );
     if( !pComboTableItem )
         return;
 
     if( pComboTableItem->currentItem() == 0 )
     {
         // if not last row, delete empty row
-        if( row != numRows() - 1 )
+        if( row != table_->numRows() - 1 )
         {
-            removeRow( row );
+            table_->removeRow( row );
             // select last row quantity field
-            setCurrentCell( numRows() - 1, 0 );
+            table_->setCurrentCell( table_->numRows() - 1, 0 );
         }
     }
     else
     {
         // if last row is set, add a new row to table
-        if( row == numRows() - 1 )
+        if( row == table_->numRows() - 1 )
         {
             // need to save combo box selected element before to insert a line
             const int current = pComboTableItem->currentItem();
-            insertRows( row + 1, 1 );
-            setItem( row + 1, 0, new ExclusiveComboTableItem( this, humanWoundsList_ ) );
+            table_->insertRows( row + 1, 1 );
+            table_->setItem( row + 1, 0, new ExclusiveComboTableItem( table_, humanWoundsList_ ) );
             pComboTableItem->setCurrentItem( current );
         }
-        setCurrentCell( row, 0 );
+        table_->setCurrentCell( row, 0 );
     }
 }

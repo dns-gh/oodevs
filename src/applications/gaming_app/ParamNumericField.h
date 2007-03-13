@@ -24,7 +24,7 @@ namespace gui
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class ParamNumericField : public QHBox, public Param_ABC
+class ParamNumericField : public Param_ABC
 {
 
 public:
@@ -39,6 +39,8 @@ public:
     //@{
     virtual bool CheckValidity();
     virtual void Commit();
+    virtual void Show();
+    virtual void Hide();
     void CommitTo( ASN1INT& asn );
     void CommitTo( ASN1REAL& asn );
     //@}

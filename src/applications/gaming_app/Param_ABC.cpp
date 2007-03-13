@@ -67,7 +67,7 @@ void Param_ABC::SetOptional( OptionalParamFunctor_ABC* optional )
 // Name: Param_ABC::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void Param_ABC::Draw( const geometry::Point2f&, const Viewport_ABC& extent, const GlTools_ABC& ) const
+void Param_ABC::Draw( const geometry::Point2f&, const Viewport_ABC&, const GlTools_ABC& ) const
 {
     // NOTHING
 }

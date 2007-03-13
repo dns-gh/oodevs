@@ -16,24 +16,26 @@
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 ParamGDH::ParamGDH( QWidget* parent, ASN1T_GDH*& asn, const QString& label )
-    : QHBox( parent )
+    : QObject( parent )
     , asn_( new ASN1T_GDH() )
 {
     asn = asn_;
-    setSpacing( 5 );
-    setSizePolicy( QSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum ) );
+
+    QHBox* box = new QHBox( parent );
+    box->setSpacing( 5 );
+    box->setSizePolicy( QSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum ) );
 
     // Title
-    QLabel* pLabel = new QLabel( label, this, "" );
-    pDateTimeEdit_ = new QDateTimeEdit( QDateTime::currentDateTime(), this );
-    pCheckbox_ = new QCheckBox( this );
+    QLabel* pLabel = new QLabel( label, box, "" );
+    pDateTimeEdit_ = new QDateTimeEdit( QDateTime::currentDateTime(), box );
+    pCheckbox_ = new QCheckBox( box );
 
     pDateTimeEdit_->setEnabled( false );
     pCheckbox_->setChecked( false );
 
-    setStretchFactor( pLabel, 2 );
-    setStretchFactor( pDateTimeEdit_, 0 );
-    setStretchFactor( pCheckbox_, 0 );
+    box->setStretchFactor( pLabel, 2 );
+    box->setStretchFactor( pDateTimeEdit_, 0 );
+    box->setStretchFactor( pCheckbox_, 0 );
 
     connect( pCheckbox_, SIGNAL( toggled( bool ) ), SLOT( OnCheckboxToogled( bool ) ) );
 }

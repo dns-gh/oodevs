@@ -33,7 +33,7 @@ class Limit;
 */
 // Created: SBO 2006-11-14
 // =============================================================================
-class LimitParameter : public QHBox
+class LimitParameter : public QObject
                      , public Param_ABC
                      , public kernel::ContextMenuObserver_ABC< kernel::TacticalLine_ABC >
                      , public kernel::ElementObserver_ABC< Limit >

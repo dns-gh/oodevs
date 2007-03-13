@@ -33,7 +33,7 @@ namespace gui
 */
 // Created: APE 2004-05-06
 // =============================================================================
-class ParamLocation : public QHBox, public Param_ABC, private gui::ShapeHandler_ABC
+class ParamLocation : public Param_ABC, private gui::ShapeHandler_ABC
 {
 public:
     //! @name Constructors/Destructor

@@ -23,7 +23,10 @@ namespace kernel
 class OptionalParamFunctor_ABC;
 
 // =============================================================================
-// Created: APE 2004-03-18
+/** @class  Param_ABC
+    @brief  Param_ABC
+*/
+// Created: APE 2004-04-20
 // =============================================================================
 class Param_ABC : public kernel::Observer_ABC
                 , public kernel::Drawable_ABC
@@ -44,6 +47,8 @@ public:
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
     virtual void Commit() = 0;
+    virtual void Show() {}
+    virtual void Hide() {}
     //@}
 
     //! @name Accessors
@@ -60,8 +65,11 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     OptionalParamFunctor_ABC* pOptional_;
     kernel::ActionController* controller_;
+    //@}
 };
 
 #endif // __Param_ABC_h_

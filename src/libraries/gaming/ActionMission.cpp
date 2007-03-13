@@ -3,42 +3,41 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#include "gaming_app_pch.h"
-#include "ParamDirection.h"
+#include "gaming_pch.h"
+#include "ActionMission.h"
+#include "clients_kernel/Mission.h"
+#include "clients_kernel/Entity_ABC.h"
 
 // -----------------------------------------------------------------------------
-// Name: ParamDirection constructor
-// Created: AGE 2006-03-15
+// Name: ActionMission constructor
+// Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ParamDirection::ParamDirection( QWidget* parent, ASN1T_Direction& direction, const QString& label )
-    : direction_( direction )
-{
-    QHBox* box = new QHBox( parent );
-    new QLabel( label, box );
-    pDial_ = new QDial( 0, 359, 1, 0, box );
-    pDial_->setWrapping( true );
-    pDial_->setMaximumSize( 50, 50 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamDirection destructor
-// Created: AGE 2006-03-15
-// -----------------------------------------------------------------------------
-ParamDirection::~ParamDirection()
+ActionMission::ActionMission( kernel::Entity_ABC& target, const kernel::Mission& mission, kernel::Controller& controller )
+    : Action_ABC( controller )
+    , target_( target )
+    , mission_( mission )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamDirection::Commit
-// Created: AGE 2006-03-15
+// Name: ActionMission destructor
+// Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-void ParamDirection::Commit()
+ActionMission::~ActionMission()
 {
-    direction_ = pDial_->value();
-    direction_ += (direction_ > 180 ) ? -180 : 180;
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionMission::GetName
+// Created: SBO 2007-03-12
+// -----------------------------------------------------------------------------
+QString ActionMission::GetName() const
+{
+    return mission_.GetName();
 }

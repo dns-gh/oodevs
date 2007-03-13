@@ -15,10 +15,10 @@
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 ParamBool::ParamBool( QWidget* parent, ASN1BOOL& asn, const QString& label, bool defaultValue /*= false*/ )
-    : QCheckBox( label, parent )
-    , asn_     ( asn )
+    : asn_( asn )
 {
-    setChecked( defaultValue );
+    checkBox_ = new QCheckBox( label, parent );
+    checkBox_->setChecked( defaultValue );
 }
 
 // -----------------------------------------------------------------------------
@@ -36,5 +36,5 @@ ParamBool::~ParamBool()
 // -----------------------------------------------------------------------------
 void ParamBool::Commit()
 {
-    asn_ = isChecked();
+    asn_ = checkBox_->isChecked();
 }

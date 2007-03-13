@@ -23,7 +23,7 @@ using namespace gui;
 // Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
 ParamObstacleList::ParamObstacleList( QWidget* parent, ASN1T_ListMissionGenObject*& asnObjectList, const QString& label, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter, ActionController& controller )
-    : QVBox( parent )
+    : QObject( parent )
     , controller_( controller )
     , objectTypes_( objectTypes )
     , layer_( layer )
@@ -31,13 +31,15 @@ ParamObstacleList::ParamObstacleList( QWidget* parent, ASN1T_ListMissionGenObjec
     , asn_( new ASN1T_ListMissionGenObject() )
     , objects_( 0 )
     , selected_( 0 )
-    , popup_( new QPopupMenu( this ) )
 {
     asnObjectList = asn_;
-    listView_ = new ParamListView( this, label );
-    connect( listView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
-    disconnect( listView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), listView_, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
-    connect( listView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
+    
+    box_ = new QVBox( parent );
+    popup_ = new QPopupMenu( box_ );
+    list_ = new ParamListView( box_, label );
+    connect( list_->ListView(), SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChanged( QListViewItem* ) ) );
+    disconnect( list_->ListView(), SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), list_->ListView(), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
+    connect( list_->ListView(), SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
 }
 
 
@@ -57,8 +59,8 @@ ParamObstacleList::~ParamObstacleList()
 // -----------------------------------------------------------------------------
 bool ParamObstacleList::CheckValidity()
 {
-    if( listView_->childCount() == 0 )
-        return listView_->Invalid();
+    if( list_->ListView()->childCount() == 0 )
+        return list_->Invalid();
 
     if( selected_  )
     {
@@ -79,7 +81,7 @@ void ParamObstacleList::Commit()
     if( ! ChangeSelection() )
         return;
     
-    const unsigned int childs = listView_->childCount();
+    const unsigned int childs = list_->ListView()->childCount();
     asn_->n = childs;
 
     if( !childs && IsOptional() )
@@ -88,7 +90,7 @@ void ParamObstacleList::Commit()
     objects_ = new ASN1T_MissionGenObject[ childs ];
     asn_->elem = objects_;
 
-    QListViewItemIterator it( listView_ );
+    QListViewItemIterator it( list_->ListView() );
     for( unsigned int i = 0; it.current(); ++it, ++i )
     {
         ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
@@ -109,11 +111,11 @@ bool ParamObstacleList::ChangeSelection()
     obstacle->Commit();
     if( !obstacle->CheckValidity() )
     {
-        listView_->setSelected( selected_, true );
+        list_->ListView()->setSelected( selected_, true );
         return false;
     }
     obstacle->RemoveFromController();
-    obstacle->hide();
+    obstacle->Hide();
     selected_ = 0;
     return true;
 }
@@ -128,7 +130,7 @@ void ParamObstacleList::OnSelectionChanged( QListViewItem* item )
         return;
     ValuedListItem* current = static_cast< ValuedListItem* >( item );
     ParamObstacle* obstacle = current->GetValue< ParamObstacle >();
-    obstacle->show();
+    obstacle->Show();
     obstacle->RegisterIn( controller_ );
     selected_ = current;
 }
@@ -159,12 +161,12 @@ void ParamObstacleList::NewObstacle()
         return;
 
     ASN1T_MissionGenObject* object = new ASN1T_MissionGenObject();
-    ValuedListItem* item = new ValuedListItem( listView_ );
+    ValuedListItem* item = new ValuedListItem( list_->ListView() );
     item->setText( 0, tr( "Obstacle" ) );
-    ParamObstacle* param = new ParamObstacle( this, object, tr( "Obstacle" ).ascii(), objectTypes_, layer_, converter_ );
+    ParamObstacle* param = new ParamObstacle( box_, object, tr( "Obstacle" ).ascii(), objectTypes_, layer_, converter_ );
     item->SetValue( param );
-    param->show();
-    listView_->setSelected( item, true );
+    param->Show();
+    list_->ListView()->setSelected( item, true );
     selected_ = item;
 }
 
@@ -174,7 +176,7 @@ void ParamObstacleList::NewObstacle()
 // -----------------------------------------------------------------------------
 void ParamObstacleList::DeleteSelected()
 {
-    DeleteItem( *listView_->selectedItem() );
+    DeleteItem( *list_->ListView()->selectedItem() );
 }
 
 // -----------------------------------------------------------------------------
@@ -202,8 +204,8 @@ void ParamObstacleList::DeleteItem( QListViewItem& item )
 // -----------------------------------------------------------------------------
 void ParamObstacleList::ClearList()
 {
-    while( listView_->childCount() )
-        DeleteItem( *listView_->firstChild() );
+    while( list_->ListView()->childCount() )
+        DeleteItem( *list_->ListView()->firstChild() );
 }
 
 // -----------------------------------------------------------------------------
@@ -212,7 +214,7 @@ void ParamObstacleList::ClearList()
 // -----------------------------------------------------------------------------
 void ParamObstacleList::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    QListViewItemIterator it( listView_ );
+    QListViewItemIterator it( list_->ListView() );
     for( unsigned int i = 0; it.current(); ++it, ++i )
     {
         ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );

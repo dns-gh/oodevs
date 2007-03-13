@@ -39,6 +39,7 @@
 #include "ProfilingPanel.h"
 #include "UserProfileDialog.h"
 #include "InfoDock.h"
+#include "ActionsPanel.h"
 #include "icons.h"
 
 #include "clients_kernel/ActionController.h"
@@ -217,6 +218,13 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setDockEnabled( pMissionPanel_, Qt::DockTop, false );
     setAppropriate( pMissionPanel_, false );
     pMissionPanel_->hide();
+
+    // Actions panel
+    ActionsPanel* actionsPanel = new ActionsPanel( this );
+    moveDockWindow( actionsPanel, Qt::DockRight );
+    setDockEnabled( actionsPanel, Qt::DockTop, false );
+    actionsPanel->hide();
+
 
     // Logger
     QDockWindow* pLogDockWnd_ = new QDockWindow( this );

@@ -17,7 +17,7 @@
 // Created: APE 2004-04-20
 // =============================================================================
 template< typename T >
-class ParamRadioBtnGroup : public QHButtonGroup, public Param_ABC
+class ParamRadioBtnGroup : public Param_ABC
 {
 
 public:
@@ -43,6 +43,7 @@ private:
 private:
     //! @name Member data
     //@{
+    QHButtonGroup* group_;
     T& output_;
     std::vector< T > values_;
     //@}
@@ -54,7 +55,7 @@ private:
 // -----------------------------------------------------------------------------
 template< typename T >
 ParamRadioBtnGroup<T>::ParamRadioBtnGroup( QWidget* parent, T& output, const QString& strLabel  )
-    : QHButtonGroup( strLabel, parent, strLabel )
+    : group_( new QHButtonGroup( strLabel, parent, strLabel ) )
     , output_( output )
 {
     // NOTHING
@@ -77,7 +78,7 @@ ParamRadioBtnGroup<T>::~ParamRadioBtnGroup()
 template< typename T >
 void ParamRadioBtnGroup<T>::AddButton( const QString& label, const T& value, bool selected /*= false*/ )
 {
-    QRadioButton* button = new QRadioButton( label, this, 0 );
+    QRadioButton* button = new QRadioButton( label, group_, 0 );
     button->setChecked( values_.empty() || selected );
     values_.push_back( value );
 }
@@ -89,7 +90,7 @@ void ParamRadioBtnGroup<T>::AddButton( const QString& label, const T& value, boo
 template< typename T >
 void ParamRadioBtnGroup<T>::Commit()
 {
-    output_ = values_.at( selectedId() );
+    output_ = values_.at( group_->selectedId() );
 }
 
 #endif // __ParamRadioBtnGroup_h_

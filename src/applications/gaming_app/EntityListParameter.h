@@ -22,7 +22,7 @@
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class EntityListParameterBase : public QListView
+class EntityListParameterBase : public QObject
                               , public Param_ABC
 {
     Q_OBJECT;
@@ -55,6 +55,12 @@ protected:
     void AddToMenu( kernel::ContextMenu& menu );
     virtual bool Invalid();
     virtual unsigned long GetId( gui::ValuedListItem* item ) = 0;
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    QListView* listView_;
     //@}
 
 private:

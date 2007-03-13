@@ -36,7 +36,7 @@ EntityListParameter< ConcreteEntity >::~EntityListParameter()
 template< typename ConcreteEntity >
 void EntityListParameter< ConcreteEntity >::NotifyDeleted( const ConcreteEntity& entity )
 {
-    delete gui::FindItem( &entity, firstChild() );
+    delete gui::FindItem( &entity, listView_->firstChild() );
     if( &entity == potential_ )
         potential_ = 0;
 }
@@ -48,7 +48,7 @@ void EntityListParameter< ConcreteEntity >::NotifyDeleted( const ConcreteEntity&
 template< typename ConcreteEntity >
 void EntityListParameter< ConcreteEntity >::NotifyContextMenu( const ConcreteEntity& entity, kernel::ContextMenu& menu )
 {
-    if( ! gui::FindItem( &entity, firstChild() ) )
+    if( ! gui::FindItem( &entity, listView_->firstChild() ) )
     {
         potential_ = &entity;
         AddToMenu( menu );
@@ -64,7 +64,7 @@ void EntityListParameter< ConcreteEntity >::MenuItemValidated()
 {
     if( potential_ )
     {
-        gui::ValuedListItem* item = new gui::ValuedListItem( this );
+        gui::ValuedListItem* item = new gui::ValuedListItem( listView_ );
         item->SetNamed( *potential_ );
     }
 }

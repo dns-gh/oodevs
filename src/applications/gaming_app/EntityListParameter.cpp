@@ -18,19 +18,21 @@ using namespace gui;
 // Name: EntityListParameterBase constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-EntityListParameterBase::EntityListParameterBase( QWidget* pParent, ASN1T_ListOID*& list, const QString& label, const QString& menu )
-    : QListView( pParent )
+EntityListParameterBase::EntityListParameterBase( QWidget* parent, ASN1T_ListOID*& list, const QString& label, const QString& menu )
+    : QObject( parent )
     , list_( new ASN1T_ListOID() )
     , n_( list_->n )
     , pIds_( 0 )
     , ids_( list_->elem )
     , menu_( menu )
-    , pPopupMenu_( new QPopupMenu( this ) )
 {
     list = list_;
-    addColumn( label );
-    setResizeMode( QListView::LastColumn );
-    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
+
+    listView_ = new QListView( parent );
+    pPopupMenu_ = new QPopupMenu( listView_ );
+    listView_->addColumn( label );
+    listView_->setResizeMode( QListView::LastColumn );
+    connect( listView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +64,7 @@ void EntityListParameterBase::OnRequestPopup( QListViewItem* pItem, const QPoint
 // -----------------------------------------------------------------------------
 void EntityListParameterBase::OnDeleteSelectedItem()
 {
-     delete currentItem();
+     delete listView_->currentItem();
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +73,7 @@ void EntityListParameterBase::OnDeleteSelectedItem()
 // -----------------------------------------------------------------------------
 void EntityListParameterBase::OnClearList()
 {
-    clear();
+    listView_->clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +82,7 @@ void EntityListParameterBase::OnClearList()
 // -----------------------------------------------------------------------------
 void EntityListParameterBase::TurnHeaderBlack()
 {
-    header()->setPaletteForegroundColor( Qt::black );
+    listView_->header()->setPaletteForegroundColor( Qt::black );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +91,7 @@ void EntityListParameterBase::TurnHeaderBlack()
 // -----------------------------------------------------------------------------
 bool EntityListParameterBase::Invalid()
 {
-    header()->setPaletteForegroundColor( Qt::red );
+    listView_->header()->setPaletteForegroundColor( Qt::red );
     QTimer::singleShot( 3000, this, SLOT( TurnHeaderBlack() ) );
     return false;
 }
@@ -121,15 +123,15 @@ bool EntityListParameterBase::CheckValidity()
 // -----------------------------------------------------------------------------
 void EntityListParameterBase::Commit()
 {
-    n_ = childCount();
-    if( ! childCount() )
+    n_ = listView_->childCount();
+    if( ! listView_->childCount() )
         return;
     
     delete pIds_;
     ids_ = pIds_ = new ASN1T_OID[ n_ ];
 
     unsigned int i = 0;
-    ValuedListItem* item = (ValuedListItem*)( firstChild() );
+    ValuedListItem* item = (ValuedListItem*)( listView_->firstChild() );
     while( item )
     {
         ids_[ i ] = GetId( item );

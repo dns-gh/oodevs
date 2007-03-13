@@ -17,8 +17,8 @@
 // Name: LimitParameter constructor
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-LimitParameter::LimitParameter( QWidget* pParent, ASN1T_Line& limit, const QString& label, const QString& menu )
-    : QHBox     ( pParent )
+LimitParameter::LimitParameter( QWidget* parent, ASN1T_Line& limit, const QString& label, const QString& menu )
+    : QObject   ( parent )
     , result_   ( limit )
     , menu_     ( menu )
     , potential_( 0 )
@@ -27,9 +27,9 @@ LimitParameter::LimitParameter( QWidget* pParent, ASN1T_Line& limit, const QStri
 	result_.vecteur_point.n    = 0;
 	result_.vecteur_point.elem = 0;
 
-    pLabel_ = new gui::RichLabel( label, false, this, "" );
-
-    entityLabel_ = new QLabel( "---", this );
+    QHBox* box = new QHBox( parent );
+    pLabel_ = new gui::RichLabel( label, false, box, "" );
+    entityLabel_ = new QLabel( "---", box );
     entityLabel_->setMinimumWidth( 100 );
     entityLabel_->setAlignment( Qt::AlignCenter );
     entityLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );

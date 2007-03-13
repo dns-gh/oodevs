@@ -25,9 +25,8 @@ using namespace gui;
 // Name: ParamLocation constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamLocation::ParamLocation( QWidget* pParent, ASN1T_Localisation*& asn, const QString& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
-    : QHBox      ( pParent )
-    , converter_ ( converter )
+ParamLocation::ParamLocation( QWidget* parent, ASN1T_Localisation*& asn, const QString& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+    : converter_ ( converter )
     , asn_       ( new ASN1T_Localisation() )
     , serializer_( converter, *asn_ )
     , controller_( 0 )
@@ -35,15 +34,16 @@ ParamLocation::ParamLocation( QWidget* pParent, ASN1T_Localisation*& asn, const 
 {
     asn = asn_;
 
-    setSpacing( 5 );
-    pLabel_ = new RichLabel( label, false, this, "" );
+    QHBox* box = new QHBox( parent );
+    box->setSpacing( 5 );
+    pLabel_ = new RichLabel( label, false, box, "" );
 
-    pShapeLabel_ = new QLabel( "---", this );
+    pShapeLabel_ = new QLabel( "---", box );
     pShapeLabel_->setMinimumWidth( 100 );
     pShapeLabel_->setAlignment( Qt::AlignCenter );
     pShapeLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 
-    creator_ = new LocationCreator( this, label, layer, *this );
+    creator_ = new LocationCreator( box, label, layer, *this );
 
     asn_->vecteur_point.elem = 0;
     asn_->vecteur_point.n = 0;
@@ -116,7 +116,7 @@ void ParamLocation::Handle( Location_ABC& location )
     if( location.IsValid() )
         pShapeLabel_->setText( location.GetName() );
     else
-        pShapeLabel_->setText( tr( "---" ) );
+        pShapeLabel_->setText( "---" );
 }
 
 // -----------------------------------------------------------------------------

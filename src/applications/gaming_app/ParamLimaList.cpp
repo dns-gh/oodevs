@@ -20,20 +20,22 @@ using namespace gui;
 // Name: ParamLimaList constructor
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-ParamLimaList::ParamLimaList( QWidget* pParent, ASN1T_LimasOrder& limas, const QString& label, const QString& menu )
-    : QListView  ( pParent )
+ParamLimaList::ParamLimaList( QWidget* parent, ASN1T_LimasOrder& limas, const QString& label, const QString& menu )
+    : QObject    ( parent )
     , result_    ( limas )
     , menu_      ( menu )
-    , pPopupMenu_( new QPopupMenu( this ) )
     , potential_ ( 0 )
 {
     result_.n = 0;
     result_.elem = 0;
 
-    addColumn( label );
-    addColumn( tr( "Function" ) );
-    setResizeMode( QListView::LastColumn );
-    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
+    list_ = new QListView( parent );
+    pPopupMenu_ = new QPopupMenu( list_ );
+    
+    list_->addColumn( label );
+    list_->addColumn( tr( "Function" ) );
+    list_->setResizeMode( QListView::LastColumn );
+    connect( list_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,9 +53,9 @@ ParamLimaList::~ParamLimaList()
 // -----------------------------------------------------------------------------
 bool ParamLimaList::CheckValidity()
 {
-    if( !IsOptional() && childCount() == 0 )
+    if( !IsOptional() && list_->childCount() == 0 )
     {
-        header()->setPaletteForegroundColor( Qt::red );
+        list_->header()->setPaletteForegroundColor( Qt::red );
         QTimer::singleShot( 3000, this, SLOT( TurnHeaderBlack() ) );
         return false;
     }
@@ -66,14 +68,14 @@ bool ParamLimaList::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamLimaList::Commit()
 {
-    if( ! childCount() )
+    if( ! list_->childCount() )
         return;
     
     Clean();
-    result_.n = childCount();
+    result_.n = list_->childCount();
     result_.elem = new ASN1T_LimaOrder[result_.n];
 
-    ValuedListItem* item = (ValuedListItem*)( firstChild() );
+    ValuedListItem* item = (ValuedListItem*)( list_->firstChild() );
     unsigned int i = 0;
     while( item )
     {
@@ -111,7 +113,7 @@ void ParamLimaList::OnRequestPopup( QListViewItem* pItem, const QPoint& pos )
 // -----------------------------------------------------------------------------
 void ParamLimaList::OnDeleteSelectedItem()
 {
-    delete currentItem();
+    delete list_->currentItem();
 }
 
 // -----------------------------------------------------------------------------
@@ -120,7 +122,7 @@ void ParamLimaList::OnDeleteSelectedItem()
 // -----------------------------------------------------------------------------
 void ParamLimaList::OnClearList()
 {
-    clear();
+    list_->clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -129,7 +131,7 @@ void ParamLimaList::OnClearList()
 // -----------------------------------------------------------------------------
 void ParamLimaList::TurnHeaderBlack()
 {
-    header()->setPaletteForegroundColor( Qt::black );
+    list_->header()->setPaletteForegroundColor( Qt::black );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,9 +142,9 @@ void ParamLimaList::MenuItemValidated( int function )
 {
     if( potential_ )
     {
-        gui::ValuedListItem* item = gui::FindItem( potential_, firstChild() );
+        gui::ValuedListItem* item = gui::FindItem( potential_, list_->firstChild() );
         if( !item )
-            item = new gui::ValuedListItem( this );
+            item = new gui::ValuedListItem( list_ );
         QStringList functions = QStringList::split( ',', item->text( 1 ) );
         if( !functions.contains( tools::ToString( (E_FuncLimaType)function ) ) )
             functions.append( tools::ToString( (E_FuncLimaType)function ) );
@@ -175,7 +177,7 @@ void ParamLimaList::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, k
 // -----------------------------------------------------------------------------
 void ParamLimaList::NotifyDeleted( const Lima& entity )
 {
-    delete gui::FindItem( &entity, firstChild() );
+    delete gui::FindItem( &entity, list_->firstChild() );
     if( &entity == potential_ )
         potential_ = 0;
 }
@@ -197,7 +199,7 @@ void ParamLimaList::Clean()
 // -----------------------------------------------------------------------------
 void ParamLimaList::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    ValuedListItem* item = (ValuedListItem*)( firstChild() );
+    ValuedListItem* item = (ValuedListItem*)( list_->firstChild() );
     while( item )
     {
         if( const Lima* lima = item->GetValue< const Lima >() )

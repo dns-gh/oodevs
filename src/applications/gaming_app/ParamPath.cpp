@@ -25,8 +25,8 @@ using namespace gui;
 // Name: ParamPath constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamPath::ParamPath( QWidget* pParent, ASN1T_Itineraire*& asn, const QString& label, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent )
-    : QHBox( pParent )
+ParamPath::ParamPath( QWidget* parent, ASN1T_Itineraire*& asn, const QString& label, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent )
+    : QObject( parent )
     , converter_( converter )
     , layer_( layer )
     , positions_( agent.Get< Positions >() )
@@ -36,10 +36,12 @@ ParamPath::ParamPath( QWidget* pParent, ASN1T_Itineraire*& asn, const QString& l
     , location_( 0 )
 {
     asn = asn_;
-    setSpacing( 5 );
-    pLabel_ = new RichLabel( label, false, this, "" );
 
-    pPosLabel_ = new QLabel( "---", this );
+    QHBox* box = new QHBox( parent );
+    box->setSpacing( 5 );
+    pLabel_ = new RichLabel( label, false, box, "" );
+
+    pPosLabel_ = new QLabel( "---", box );
     pPosLabel_->setMinimumWidth( 100 );
     pPosLabel_->setAlignment( Qt::AlignCenter );
     pPosLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
@@ -132,4 +134,22 @@ void ParamPath::Handle( Location_ABC& location )
         location_ = &location;
         pPosLabel_->setText( location.GetName() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPath::Show
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamPath::Show()
+{
+    pLabel_->parentWidget()->show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPath::Hide
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamPath::Hide()
+{
+    pLabel_->parentWidget()->hide();
 }

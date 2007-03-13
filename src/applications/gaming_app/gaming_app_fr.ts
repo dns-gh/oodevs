@@ -1296,13 +1296,6 @@
     </message>
 </context>
 <context>
-    <name>ParamLocation</name>
-    <message>
-        <source>---</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ParamObstacle</name>
     <message>
         <source>Type:</source>

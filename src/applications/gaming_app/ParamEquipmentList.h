@@ -27,8 +27,7 @@ namespace kernel
 */
 // Created: SBO 2005-09-27
 // =============================================================================
-class ParamEquipmentList : public QTable
-                         , public Param_ABC
+class ParamEquipmentList : public QObject, public Param_ABC
 {
     Q_OBJECT;
 
@@ -60,6 +59,7 @@ private:
     //! @name Member data
     //@{
     ASN1T_MaintenancePriorites* pAsnEquipmentList_;
+    QTable*                     table_;
     QStringList                 equipmentList_;
     T_EquipmentTypes            equipmentTypes_;
     //@}

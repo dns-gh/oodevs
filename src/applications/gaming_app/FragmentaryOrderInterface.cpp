@@ -56,15 +56,10 @@ FragmentaryOrderInterface::~FragmentaryOrderInterface()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FragmentaryOrderInterface::OnOk
-// Created: APE 2004-05-12
+// Name: FragmentaryOrderInterface::Publish
+// Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-void FragmentaryOrderInterface::OnOk()
+void FragmentaryOrderInterface::Publish()
 {
-    if( ! CheckValidity() )
-        return;
-
-    Commit();
     order_->Send( publisher_, 36999 );
-    parentWidget()->hide();
 }

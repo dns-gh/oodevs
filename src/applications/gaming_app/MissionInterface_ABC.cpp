@@ -11,43 +11,12 @@
 #include "MissionInterface_ABC.h"
 #include "moc_MissionInterface_ABC.cpp"
 
-#include "ParamPoint.h"
-#include "ParamAgent.h"
-#include "ParamAgentList.h"
-#include "ParamAutomat.h"
-#include "ParamAutomatList.h"
-#include "ParamPath.h"
-#include "ParamPathList.h"
-#include "ParamGDH.h"
-#include "ParamBool.h"
-#include "ParamLocation.h"
-#include "ParamLocationList.h"
-#include "ParamAgentType.h"
-#include "ParamAgentKnowledge.h"
-#include "ParamAgentKnowledgeList.h"
-#include "ParamPopulationKnowledge.h"
-#include "ParamObjectKnowledge.h"
-#include "ParamObjectKnowledgeList.h"
-#include "ParamObstacle.h"
-#include "ParamObstacleList.h"
-#include "ParamDirection.h"
-#include "ParamNumericField.h"
-#include "ParamEquipmentList.h"
-#include "ParamHumanWoundList.h"
-#include "ParamDotationDType.h"
 #include "OptionalParamFunctor_ABC.h"
-#include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include "gaming/ObjectKnowledge_ABC.h"
-#include "gaming/AgentKnowledge_ABC.h"
-#include "gaming/PopulationKnowledge_ABC.h"
-#include "gaming/Lima.h"
 
 using namespace kernel;
-using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC constructor
@@ -145,4 +114,17 @@ void MissionInterface_ABC::Draw( const GlTools_ABC& tools, Viewport_ABC& extent 
         extent.SetHotpoint( p );
         (*it)->Draw( p, extent, tools );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::OnOk
+// Created: SBO 2007-03-12
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::OnOk()
+{
+    if( !CheckValidity() )
+        return;
+    Commit();
+    Publish();
+    parentWidget()->hide();
 }

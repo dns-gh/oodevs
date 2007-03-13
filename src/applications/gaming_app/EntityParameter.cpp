@@ -19,14 +19,14 @@ using namespace gui;
 // Name: EntityParameterBase constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-EntityParameterBase::EntityParameterBase( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu )
-    : QHBox( pParent )
+EntityParameterBase::EntityParameterBase( QWidget* parent, ASN1T_OID& id, const QString& label, const QString& menu )
+    : QObject( parent )
     , id_  ( id )
     , menu_( menu )
 {
-    pLabel_ = new RichLabel( label, false, this, "" );
-
-    entityLabel_ = new QLabel( "---", this );
+    QHBox* box = new QHBox( parent );
+    pLabel_ = new RichLabel( label, false, box, "" );
+    entityLabel_ = new QLabel( "---", box );
     entityLabel_->setMinimumWidth( 100 );
     entityLabel_->setAlignment( Qt::AlignCenter );
     entityLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
@@ -41,6 +41,23 @@ EntityParameterBase::~EntityParameterBase()
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: EntityParameterBase::Show
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void EntityParameterBase::Show()
+{
+    pLabel_->parentWidget()->show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityParameterBase::Hide
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void EntityParameterBase::Hide()
+{
+    pLabel_->parentWidget()->hide();
+}
 
 // -----------------------------------------------------------------------------
 // Name: EntityParameterBase::Invalid

@@ -53,18 +53,13 @@ AutomateMissionInterface::~AutomateMissionInterface()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::OnOk
-// Created: APE 2004-05-06
+// Name: AutomateMissionInterface::Publish
+// Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-void AutomateMissionInterface::OnOk()
+void AutomateMissionInterface::Publish()
 {
-    if( ! CheckValidity() )
-        return;
-
-    Commit();
     ASN1T_MsgAutomateOrder& order = order_->GetAsnMsg();
     order.order_context.m.limite_gauchePresent = 1; // $$$$ SBO 2006-11-23: move somehow in ParamLimits
     order.order_context.m.limite_droitePresent = 1; // $$$$ SBO 2006-11-23: 
     order_->Send( publisher_, 45 );
-    parentWidget()->hide();
 }

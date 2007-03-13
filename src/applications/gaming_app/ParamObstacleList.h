@@ -34,7 +34,7 @@ class ParamListView;
 */
 // Created: APE 2004-05-18
 // =============================================================================
-class ParamObstacleList : public QVBox, public Param_ABC
+class ParamObstacleList : public QObject, public Param_ABC
 {
     Q_OBJECT;
 
@@ -79,7 +79,8 @@ private:
     
     ASN1T_ListMissionGenObject* asn_;
     ASN1T_MissionGenObject* objects_;
-    ParamListView* listView_;
+    QVBox* box_;
+    ParamListView* list_;
     gui::ValuedListItem* selected_;
     QPopupMenu* popup_;
     //@}

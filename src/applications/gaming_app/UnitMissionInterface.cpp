@@ -53,19 +53,14 @@ UnitMissionInterface::~UnitMissionInterface()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::OnOk
-// Created: APE 2004-04-26
+// Name: UnitMissionInterface::Publish
+// Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-void UnitMissionInterface::OnOk()
+void UnitMissionInterface::Publish()
 {
-    if( ! CheckValidity() )
-        return;
-
-    Commit();
     ASN1T_MsgPionOrder& order = order_->GetAsnMsg();
     // $$$$ SBO 2006-11-14: Use BuildOptionalParameter instead ?
     order.order_context.m.limite_gauchePresent = (order.order_context.limite_gauche.vecteur_point.n > 1) ? 1 : 0;
     order.order_context.m.limite_droitePresent = (order.order_context.limite_droite.vecteur_point.n > 1) ? 1 : 0;
     order_->Send( publisher_, 45 );
-    parentWidget()->hide();
 }

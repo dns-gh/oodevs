@@ -15,13 +15,14 @@
 // Name: ParamListView constructor
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
-ParamListView::ParamListView( QWidget* pParent, const QString& label )
-    : QListView     ( pParent )
-    , pPopupMenu_   ( new QPopupMenu( this ) )
+ParamListView::ParamListView( QWidget* parent, const QString& label )
+    : QObject    ( parent )
+    , list_      ( new QListView( parent ) ) 
+    , pPopupMenu_( new QPopupMenu( list_ ) )
 {
-    addColumn( label );
-    setResizeMode( QListView::LastColumn );
-    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
+    list_->addColumn( label );
+    list_->setResizeMode( QListView::LastColumn );
+    connect( list_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +40,7 @@ ParamListView::~ParamListView()
 // -----------------------------------------------------------------------------
 bool ParamListView::Invalid()
 {
-    header()->setPaletteForegroundColor( Qt::red );
+    list_->header()->setPaletteForegroundColor( Qt::red );
     QTimer::singleShot( 3000, this, SLOT( TurnHeaderBlack() ) );
     return false;
 }
@@ -63,7 +64,7 @@ void ParamListView::OnRequestPopup( QListViewItem* pItem, const QPoint& pos )
 // -----------------------------------------------------------------------------
 void ParamListView::OnDeleteSelectedItem()
 {
-    delete selectedItem();
+    delete list_->selectedItem();
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +73,7 @@ void ParamListView::OnDeleteSelectedItem()
 // -----------------------------------------------------------------------------
 void ParamListView::OnClearList()
 {
-    clear();
+    list_->clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -81,5 +82,14 @@ void ParamListView::OnClearList()
 // -----------------------------------------------------------------------------
 void ParamListView::TurnHeaderBlack()
 {
-    header()->setPaletteForegroundColor( Qt::black );
+    list_->header()->setPaletteForegroundColor( Qt::black );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamListView::ListView
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+QListView* ParamListView::ListView()
+{
+    return list_;
 }

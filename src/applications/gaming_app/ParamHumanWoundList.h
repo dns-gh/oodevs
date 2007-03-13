@@ -21,7 +21,7 @@
 */
 // Created: SBO 2005-09-27
 // =============================================================================
-class ParamHumanWoundList : public QTable, public Param_ABC
+class ParamHumanWoundList : public QObject, public Param_ABC
 {
     Q_OBJECT;
 
@@ -47,6 +47,7 @@ private:
     //! @name Member data
     //@{
     ASN1T_SantePriorites* pAsnHumanWoundList_;
+    QTable*               table_;
     QStringList           humanWoundsList_;
     //@}
 };

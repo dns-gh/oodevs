@@ -22,17 +22,19 @@ using namespace gui;
 // Name: ParamPoint constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamPoint::ParamPoint( QWidget* pParent, ASN1T_Point*& asn, const QString& label, const QString& menu, const CoordinateConverter_ABC& converter )
-    : QHBox     ( pParent )
+ParamPoint::ParamPoint( QWidget* parent, ASN1T_Point*& asn, const QString& label, const QString& menu, const CoordinateConverter_ABC& converter )
+    : QObject   ( parent )
     , asn_      ( new ASN1T_Point() )
     , converter_( converter )
     , menu_     ( menu )
 {
     asn = asn_;
-    setSpacing( 5 );
-    pLabel_ = new RichLabel( label, false, this, "" );
 
-    pPosLabel_ = new QLabel( "---", this );
+    QHBox* box = new QHBox( parent );
+    box->setSpacing( 5 );
+    pLabel_ = new RichLabel( label, false, box, "" );
+
+    pPosLabel_ = new QLabel( "---", box );
     pPosLabel_->setMinimumWidth( 100 );
     pPosLabel_->setAlignment( Qt::AlignCenter );
     pPosLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );

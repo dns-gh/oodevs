@@ -17,15 +17,15 @@
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 ParamNumericField::ParamNumericField( QWidget* parent, ASN1INT& asn, const QString& label, int min /*= 0*/, int max /*= 9999*/ )
-    : QHBox( parent )
-    , int_( &asn )
+    : int_( &asn )
     , real_( 0 )
 {
-    setSpacing( 5 );
-    pLabel_ = new gui::RichLabel( label, this );
-    pLabel_->setAlignment( AlignVCenter | AlignLeft );
+    QHBox* box = new QHBox( parent );
+    box->setSpacing( 5 );
+    pLabel_ = new gui::RichLabel( label, box );
+    pLabel_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
 
-    pEdit_ = new QLineEdit( QString::number( 0 ), this );
+    pEdit_ = new QLineEdit( QString::number( 0 ), box );
     pEdit_->setValidator( new QIntValidator( min, max, pEdit_ ) );
 }
 
@@ -34,15 +34,15 @@ ParamNumericField::ParamNumericField( QWidget* parent, ASN1INT& asn, const QStri
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 ParamNumericField::ParamNumericField( QWidget* parent, ASN1REAL& asn, const QString& label, float min /*= 0.*/, float max /*= 9999.*/, int precision /*= 2*/ )
-    : QHBox( parent )
-    , int_ ( 0 )
+    : int_ ( 0 )
     , real_( &asn )
 {
-    setSpacing( 5 );
-    pLabel_ = new gui::RichLabel( label, this );
-    pLabel_->setAlignment( AlignVCenter | AlignLeft );
+    QHBox* box = new QHBox( parent );
+    box->setSpacing( 5 );
+    pLabel_ = new gui::RichLabel( label, box );
+    pLabel_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
 
-    pEdit_ = new QLineEdit( QString::number( 0. ), this );
+    pEdit_ = new QLineEdit( QString::number( 0. ), box );
     pEdit_->setValidator( new QDoubleValidator( min, max, precision, pEdit_ ) );
 }
 
@@ -100,4 +100,22 @@ void ParamNumericField::CommitTo( ASN1INT& asn )
 void ParamNumericField::CommitTo( ASN1REAL& asn )
 {
     asn = pEdit_->text().toFloat();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamNumericField::Show
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamNumericField::Show()
+{
+    pLabel_->parentWidget()->show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamNumericField::Hide
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamNumericField::Hide()
+{
+    pLabel_->parentWidget()->hide();
 }

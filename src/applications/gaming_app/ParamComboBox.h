@@ -20,7 +20,7 @@
 // Created: APE 2004-04-21
 // =============================================================================
 template< class T >
-class ParamComboBox : public QHBox, public Param_ABC
+class ParamComboBox : public Param_ABC
 {
 
 public:
@@ -57,12 +57,12 @@ private:
 // -----------------------------------------------------------------------------
 template< class T >
 ParamComboBox<T>::ParamComboBox( QWidget* parent, T& asn, const QString& label )
-    : QHBox( parent )
-    , asn_ ( asn )
+    : asn_ ( asn )
 {
-    QLabel* pLabel = new QLabel( label, this );
-    pLabel->setAlignment( AlignVCenter | AlignLeft );
-    pComboBox_ = new gui::ValuedComboBox<T>( this );
+    QHBox* box = new QHBox( parent );
+    QLabel* pLabel = new QLabel( label, box );
+    pLabel->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
+    pComboBox_ = new gui::ValuedComboBox<T>( box );
     pComboBox_->setSorting( true );
 }
 

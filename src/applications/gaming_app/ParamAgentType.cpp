@@ -9,27 +9,29 @@
 
 #include "gaming_app_pch.h"
 #include "ParamAgentType.h"
+#include "clients_gui/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamAgentType constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 ParamAgentType::ParamAgentType( QWidget* parent, ASN1T_NatureAtlas*& asn, const QString& label )
-    : QButtonGroup( 2, Qt::Horizontal, label, parent )
-    , asn_        ( new ASN1T_NatureAtlas() )
+    : asn_ ( new ASN1T_NatureAtlas() )
 {
     asn = asn_;
-    pArmoredCheckBox_        = new QCheckBox( tr( "Armored" )         , this );
-    pASSCheckBox_            = new QCheckBox( tr( "SSA" )             , this );
-    pHQCheckBox_             = new QCheckBox( tr( "Command post" )    , this );
-    pLogCheckBox_            = new QCheckBox( tr( "Logistic" )        , this );
-    pMortarCheckBox_         = new QCheckBox( tr( "Mortar" )          , this );
-    pRocketLauncherCheckBox_ = new QCheckBox( tr( "Rocket launcher" ) , this );
-    pVehiculeCheckBox_       = new QCheckBox( tr( "Vehicle" )         , this );
-    pFootTroopsCheckBox_     = new QCheckBox( tr( "Footman")          , this );
-    pHelicopterCheckBox_     = new QCheckBox( tr( "Helicopter" )      , this );
-    pUndefinedCheckBox_      = new QCheckBox( tr( "Undefined" )       , this );
-    pNoneCheckBox_           = new QCheckBox( tr( "None" )            , this );
+
+    QButtonGroup* group      = new QButtonGroup( 2, Qt::Horizontal, label, parent );
+    pArmoredCheckBox_        = new QCheckBox( tools::translate( "ParamAgentType", "Armored" )         , group );
+    pASSCheckBox_            = new QCheckBox( tools::translate( "ParamAgentType", "SSA" )             , group );
+    pHQCheckBox_             = new QCheckBox( tools::translate( "ParamAgentType", "Command post" )    , group );
+    pLogCheckBox_            = new QCheckBox( tools::translate( "ParamAgentType", "Logistic" )        , group );
+    pMortarCheckBox_         = new QCheckBox( tools::translate( "ParamAgentType", "Mortar" )          , group );
+    pRocketLauncherCheckBox_ = new QCheckBox( tools::translate( "ParamAgentType", "Rocket launcher" ) , group );
+    pVehiculeCheckBox_       = new QCheckBox( tools::translate( "ParamAgentType", "Vehicle" )         , group );
+    pFootTroopsCheckBox_     = new QCheckBox( tools::translate( "ParamAgentType", "Footman")          , group );
+    pHelicopterCheckBox_     = new QCheckBox( tools::translate( "ParamAgentType", "Helicopter" )      , group );
+    pUndefinedCheckBox_      = new QCheckBox( tools::translate( "ParamAgentType", "Undefined" )       , group );
+    pNoneCheckBox_           = new QCheckBox( tools::translate( "ParamAgentType", "None" )            , group );
 }
 
 // -----------------------------------------------------------------------------

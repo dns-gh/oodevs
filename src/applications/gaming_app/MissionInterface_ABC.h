@@ -22,6 +22,8 @@ namespace kernel
 
 class Param_ABC;
 class OptionalParamFunctor_ABC;
+class Action_ABC;
+class ActionsModel;
 
 // =============================================================================
 /** @class  MissionInterface_ABC
@@ -41,7 +43,6 @@ public:
 
     //! @name Operations
     //@{
-    bool CheckValidity();
     void Draw( const kernel::GlTools_ABC& tools, kernel::Viewport_ABC& extent ) const;
     bool IsEmpty() const;
     void AddParameter( Param_ABC& parameter, OptionalParamFunctor_ABC* pOptional );
@@ -50,36 +51,13 @@ public:
 public slots:
     //! @name Slots
     //@{
-    virtual void OnOk() = 0;
+    virtual void OnOk();
     //@}
 
 protected:
     //! @name Helpers
     //@{
     void CreateOkCancelButtons();
-    
-//    template < class T >
-//    ParamComboBox< T >& CreateVarList( T& value, const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 )
-//    {
-//        ParamComboBox< T >* pParam = new ParamComboBox<T>( this, value, strName );
-//        AddParameter( *pParam, pOptional  );
-//        return *pParam;
-//    }
-//
-//    template < class T >
-//    ParamRadioBtnGroup< T >& CreateRadioButtonGroup( T& value, const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 )
-//    {
-//        ParamRadioBtnGroup< T >* pParam = new ParamRadioBtnGroup<T>( this, value, strName );
-//        AddParameter( *pParam, pOptional );
-//        return *pParam;
-//    }
-//
-//    template< typename T, typename U > T* BuildOptionalParamFunctor( U& asnMission )
-//    {
-//        T* result = new T( asnMission );
-//        optionalFunctors_.push_back( result );
-//        return result;
-//    }
     //@}
 
 private:
@@ -89,6 +67,13 @@ private:
     MissionInterface_ABC& operator=( const MissionInterface_ABC& );
     //@}
 
+    //! @name Helpers
+    //@{
+    bool CheckValidity();
+    void Commit();
+    virtual void Publish() = 0;
+    //@}
+
     //! @name Types
     //@{
     typedef std::vector< Param_ABC* >      T_Parameters;
@@ -96,12 +81,6 @@ private:
 
     typedef std::vector< OptionalParamFunctor_ABC* >  T_OptionalFunctors;
     typedef T_OptionalFunctors::const_iterator      CIT_OptionalFunctors;
-    //@}
-
-protected:
-    //! @name Helpers
-    //@{
-    void Commit();
     //@}
 
 private:

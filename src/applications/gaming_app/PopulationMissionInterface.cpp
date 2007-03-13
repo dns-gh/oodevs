@@ -53,15 +53,10 @@ PopulationMissionInterface::~PopulationMissionInterface()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::OnOk
-// Created: APE 2004-04-26
+// Name: PopulationMissionInterface::Publish
+// Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-void PopulationMissionInterface::OnOk()
+void PopulationMissionInterface::Publish()
 {
-    if( ! CheckValidity() )
-        return;
-
-    Commit();
     order_->Send( publisher_, 45 );
-    parentWidget()->hide();
 }

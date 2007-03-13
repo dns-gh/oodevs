@@ -19,7 +19,7 @@
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class ParamGDH : public QHBox, public Param_ABC
+class ParamGDH : public QObject, public Param_ABC
 {
     Q_OBJECT;
 

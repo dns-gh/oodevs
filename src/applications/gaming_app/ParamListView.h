@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-04-19 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamListView.h $
-// $Author: Ape $
-// $Modtime: 23/09/04 17:43 $
-// $Revision: 4 $
-// $Workfile: ParamListView.h $
-//
-// *****************************************************************************
 
 #ifndef __ParamListView_h_
 #define __ParamListView_h_
@@ -25,7 +16,7 @@
 */
 // Created: APE 2004-04-19
 // =============================================================================
-class ParamListView : public QListView
+class ParamListView : public QObject
 {
     Q_OBJECT;
 
@@ -39,6 +30,7 @@ public:
     //! @name Operations
     //@{
     bool Invalid();
+    QListView* ListView(); // $$$$ SBO 2007-03-13: bof bof
     //@}
 
 public slots:
@@ -60,6 +52,7 @@ private:
 private:
     //! @name Member data
     //@{
+    QListView* list_;
     QPopupMenu* pPopupMenu_;
     //@}
 };

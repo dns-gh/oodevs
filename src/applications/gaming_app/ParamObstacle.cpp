@@ -27,14 +27,14 @@ using namespace gui;
 // Created: APE 2004-05-18
 // -----------------------------------------------------------------------------
 ParamObstacle::ParamObstacle( QWidget* parent, ASN1T_MissionGenObject*& asnObject, const QString& label, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
-    : QGroupBox( 0, Qt::Horizontal, label, parent )
+    : QObject( parent )
     , asnObject_( new ASN1T_MissionGenObject() )
 {
     asnObject = asnObject_;
-    QGridLayout* grid = new QGridLayout( 5, 2, 2 );
-    layout()->addItem( grid );
-    grid->addWidget( new QLabel( tr( "Type:" ), this ), 0, 0 );
-    typeCombo_ = new ValuedComboBox< const ObjectType* >( this );
+
+    QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, label, parent );
+    new QLabel( tr( "Type:" ), box );
+    typeCombo_ = new ValuedComboBox< const ObjectType* >( box );
     typeCombo_->setSorting( true );
     Iterator< const ObjectType& > it = objectTypes.Resolver2< ObjectType, unsigned long >::CreateIterator();
     while( it.HasMoreElements() )
@@ -42,22 +42,17 @@ ParamObstacle::ParamObstacle( QWidget* parent, ASN1T_MissionGenObject*& asnObjec
         const ObjectType& type = it.NextElement();
         typeCombo_->AddItem( type.GetName(), &type );
     }
-    grid->addWidget( typeCombo_, 0, 1 );
 
-    grid->addWidget( new QLabel( tr( "Sub-type:" ), this ), 1, 0 );
-    preliminaryCombo_ = new QComboBox( this );
+    new QLabel( tr( "Sub-type:" ), box );
+    preliminaryCombo_ = new QComboBox( box );
     for( int i = 0; i < eNbrMissionGenSousTypeObstacle; ++i )
         preliminaryCombo_->insertItem( ENT_Tr::ConvertFromMissionGenSousTypeObstacle( ( E_MissionGenSousTypeObstacle )i ).c_str(), i );
-    grid->addWidget( preliminaryCombo_, 1, 1 );
 
-    density_ = new ParamNumericField( this, asnObject_->densite, tr( "Density" ), 0., 5. );
-    grid->addMultiCellWidget( density_, 2, 2, 0, 1 );
-    tc2_     = new EntityParameter< kernel::Automat_ABC >( this, asnObject_->tc2, tr( "TC2" ), tr( "TC2" ) );
-    grid->addMultiCellWidget( tc2_, 3, 3, 0, 1 );
-    location_ = new ParamLocation( this, (ASN1T_Localisation*&)asnObject_->position, tr( "Location" ), layer, converter );
-    grid->addMultiCellWidget( location_, 4, 4, 0, 1 );
+    density_ = new ParamNumericField( box, asnObject_->densite, tr( "Density" ), 0., 5. );
+    tc2_     = new EntityParameter< kernel::Automat_ABC >( box, asnObject_->tc2, tr( "TC2" ), tr( "TC2" ) );
+    location_ = new ParamLocation( box, (ASN1T_Localisation*&)asnObject_->position, tr( "Location" ), layer, converter );
 
-    connect( typeCombo_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
+    connect( typeCombo_, SIGNAL( activated( int ) ), SLOT( OnTypeChanged() ) );
     OnTypeChanged();
 }
 
@@ -171,22 +166,40 @@ void ParamObstacle::Draw( const geometry::Point2f& point, const kernel::Viewport
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParamObstacle::Show
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamObstacle::Show()
+{
+    typeCombo_->parentWidget()->show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::Hide
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamObstacle::Hide()
+{
+    typeCombo_->parentWidget()->hide();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParamObstacle::OnTypeChanged
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
 void ParamObstacle::OnTypeChanged()
 {
-    density_->hide();
-    tc2_->hide();
+    density_->Hide();
+    tc2_->Hide();
     switch( typeCombo_->GetValue()->id_ )
     {
     case EnumObjectType::zone_minee_lineaire:
     case EnumObjectType::zone_minee_par_dispersion:
-        density_->show();
+        density_->Show();
         break;
     case EnumObjectType::camp_prisonniers:
     case EnumObjectType::camp_refugies:
-        tc2_->show();
+        tc2_->Show();
         break;
     };
 }

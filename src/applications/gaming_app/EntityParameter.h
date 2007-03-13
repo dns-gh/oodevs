@@ -26,7 +26,7 @@ namespace gui
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class EntityParameterBase : public QHBox
+class EntityParameterBase : public QObject
                           , public Param_ABC
 {
     Q_OBJECT;
@@ -36,6 +36,12 @@ public:
     //@{
              EntityParameterBase( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu );
     virtual ~EntityParameterBase();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Show();
+    virtual void Hide();
     //@}
 
 private slots:

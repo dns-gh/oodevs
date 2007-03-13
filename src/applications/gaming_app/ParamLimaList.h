@@ -28,7 +28,7 @@ class Lima;
 */
 // Created: SBO 2006-11-14
 // =============================================================================
-class ParamLimaList : public QListView
+class ParamLimaList : public QObject
                     , public Param_ABC
                     , public kernel::ElementObserver_ABC< Lima >
                     , public kernel::ContextMenuObserver_ABC< kernel::TacticalLine_ABC >
@@ -79,6 +79,7 @@ private:
     //@{
     ASN1T_LimasOrder& result_;
     std::string menu_;
+    QListView* list_;
     QPopupMenu* pPopupMenu_;
     const Lima* potential_;
     //@}

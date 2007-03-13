@@ -45,9 +45,9 @@ private:
     UnitMissionInterface& operator=( const UnitMissionInterface& );
     //@}
 
-    //! @name Virtual Slots
+    //! @name Helpers
     //@{
-    virtual void OnOk();
+    virtual void Publish();
     //@}
 
 private:

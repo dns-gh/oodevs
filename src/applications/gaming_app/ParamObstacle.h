@@ -38,8 +38,7 @@ class ParamAgent;
 */
 // Created: APE 2004-05-18
 // =============================================================================
-class ParamObstacle : public QGroupBox
-                    , public Param_ABC
+class ParamObstacle : public QObject, public Param_ABC
 {
     Q_OBJECT;
 public:
@@ -55,6 +54,8 @@ public:
     virtual void RegisterIn( kernel::ActionController& controller );
     virtual bool CheckValidity();
     virtual void Commit();
+    virtual void Show();
+    virtual void Hide();
     void CommitTo( ASN1T_MissionGenObject& destination );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}

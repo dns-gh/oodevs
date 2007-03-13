@@ -45,9 +45,9 @@ private:
     AutomateMissionInterface& operator=( const AutomateMissionInterface& );
     //@}
 
-    //! @name Virtual Slots
+    //! @name Helpers
     //@{
-    virtual void OnOk();
+    virtual void Publish();
     //@}
 
 private:
