@@ -32,6 +32,7 @@ ParamObstacleList::ParamObstacleList( QObject* parent, ASN1T_ListMissionGenObjec
     , asn_( new ASN1T_ListMissionGenObject() )
     , objects_( 0 )
     , box_( 0 )
+    , list_( new ParamListView( this, GetName() ) )
     , selected_( 0 )
 {
     asnObjectList = asn_;
@@ -44,6 +45,7 @@ ParamObstacleList::ParamObstacleList( QObject* parent, ASN1T_ListMissionGenObjec
 // -----------------------------------------------------------------------------
 ParamObstacleList::~ParamObstacleList()
 {
+    ClearList();
     delete asn_;
     delete objects_;
 }
@@ -56,9 +58,9 @@ void ParamObstacleList::BuildInterface( QWidget* parent )
 {
     box_ = new QVBox( parent );
     popup_ = new QPopupMenu( box_ );
-    list_ = new ParamListView( box_, GetName() );
+    list_->BuildInterface( box_ );
     connect( list_->ListView(), SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChanged( QListViewItem* ) ) );
-    disconnect( list_->ListView(), SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), list_->ListView(), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
+    disconnect( list_->ListView(), SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
     connect( list_->ListView(), SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
 }
 
@@ -175,6 +177,7 @@ void ParamObstacleList::NewObstacle()
     ValuedListItem* item = new ValuedListItem( list_->ListView() );
     item->setText( 0, tr( "Obstacle" ) );
     ParamObstacle* param = new ParamObstacle( box_, object, tr( "Obstacle" ).ascii(), objectTypes_, layer_, converter_ );
+    param->BuildInterface( box_ ); // $$$$ SBO 2007-03-14: 
     item->SetValue( param );
     param->Show();
     list_->ListView()->setSelected( item, true );
@@ -225,6 +228,8 @@ void ParamObstacleList::ClearList()
 // -----------------------------------------------------------------------------
 void ParamObstacleList::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
+    if( !list_ )
+        return;
     QListViewItemIterator it( list_->ListView() );
     for( unsigned int i = 0; it.current(); ++it, ++i )
     {

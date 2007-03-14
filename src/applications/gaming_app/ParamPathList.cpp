@@ -46,6 +46,7 @@ ParamPathList::ParamPathList( QObject* parent, ASN1T_ListItineraire*& asnPathLis
 // -----------------------------------------------------------------------------
 ParamPathList::~ParamPathList()
 {
+    ClearList();
     delete asn_;
     delete[] paths_;
 }
@@ -60,7 +61,7 @@ void ParamPathList::BuildInterface( QWidget* parent )
     list_->BuildInterface( box_ );
     popup_ = new QPopupMenu( list_->ListView() );
     connect( list_->ListView(), SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChanged( QListViewItem* ) ) );
-    disconnect( list_->ListView(), SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), list_->ListView(), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
+    disconnect( list_->ListView(), SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
     connect( list_->ListView(), SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
     NewPath();
 }
@@ -179,6 +180,7 @@ void ParamPathList::NewPath()
     item->setText( 0, tr( "Route" ) );
     
     ParamPath* param = new ParamPath( box_, asn, tr( "Route" ).ascii(), tr( "Route" ).ascii(), layer_, converter_, agent_ );
+    param->BuildInterface( box_ );
     item->SetValue( param );
     param->Show();
     list_->ListView()->setSelected( item, true );

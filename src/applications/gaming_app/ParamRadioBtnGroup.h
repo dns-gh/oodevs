@@ -41,12 +41,18 @@ private:
     ParamRadioBtnGroup& operator=( const ParamRadioBtnGroup& );
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::vector< std::pair< QString, bool > > T_Entries;
+    //@}
+
 private:
     //! @name Member data
     //@{
     QHButtonGroup* group_;
     T& output_;
     std::vector< T > values_;
+    T_Entries initialEntries_;
     //@}
 };
 
@@ -81,6 +87,11 @@ template< typename T >
 void ParamRadioBtnGroup<T>::BuildInterface( QWidget* parent )
 {
     group_ = new QHButtonGroup( GetName(), parent );
+    for( T_Entries::const_iterator it = initialEntries_.begin(); it != initialEntries_.end(); ++it )
+    {
+        QRadioButton* button = new QRadioButton( it->first, group_, 0 );
+        button->setChecked( it->second );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -90,10 +101,7 @@ void ParamRadioBtnGroup<T>::BuildInterface( QWidget* parent )
 template< typename T >
 void ParamRadioBtnGroup<T>::AddButton( const QString& label, const T& value, bool selected /*= false*/ )
 {
-    if( !group_ )
-        InterfaceNotInitialized();
-    QRadioButton* button = new QRadioButton( label, group_, 0 );
-    button->setChecked( values_.empty() || selected );
+    initialEntries_.push_back( std::make_pair( label, values_.empty() || selected ) );
     values_.push_back( value );
 }
 

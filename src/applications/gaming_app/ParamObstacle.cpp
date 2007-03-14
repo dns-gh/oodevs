@@ -71,8 +71,11 @@ void ParamObstacle::BuildInterface( QWidget* parent )
         preliminaryCombo_->insertItem( ENT_Tr::ConvertFromMissionGenSousTypeObstacle( ( E_MissionGenSousTypeObstacle )i ).c_str(), i );
 
     density_ = new ParamNumericField( box, asnObject_->densite, tr( "Density" ), 0., 5. );
+    density_->BuildInterface( box );
     tc2_     = new EntityParameter< kernel::Automat_ABC >( box, asnObject_->tc2, tr( "TC2" ), tr( "TC2" ) );
+    tc2_->BuildInterface( box );
     location_ = new ParamLocation( (ASN1T_Localisation*&)asnObject_->position, tr( "Location" ), layer_, converter_ );
+    location_->BuildInterface( box );
 
     connect( typeCombo_, SIGNAL( activated( int ) ), SLOT( OnTypeChanged() ) );
     OnTypeChanged();
