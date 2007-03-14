@@ -22,24 +22,19 @@ using namespace gui;
 // Name: ParamObstacleList constructor
 // Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-ParamObstacleList::ParamObstacleList( QWidget* parent, ASN1T_ListMissionGenObject*& asnObjectList, const QString& label, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter, ActionController& controller )
+ParamObstacleList::ParamObstacleList( QObject* parent, ASN1T_ListMissionGenObject*& asnObjectList, const QString& name, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter, ActionController& controller )
     : QObject( parent )
+    , Param_ABC( name )
     , controller_( controller )
     , objectTypes_( objectTypes )
     , layer_( layer )
     , converter_( converter )
     , asn_( new ASN1T_ListMissionGenObject() )
     , objects_( 0 )
+    , box_( 0 )
     , selected_( 0 )
 {
     asnObjectList = asn_;
-    
-    box_ = new QVBox( parent );
-    popup_ = new QPopupMenu( box_ );
-    list_ = new ParamListView( box_, label );
-    connect( list_->ListView(), SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChanged( QListViewItem* ) ) );
-    disconnect( list_->ListView(), SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), list_->ListView(), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
-    connect( list_->ListView(), SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
 }
 
 
@@ -51,6 +46,20 @@ ParamObstacleList::~ParamObstacleList()
 {
     delete asn_;
     delete objects_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacleList::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamObstacleList::BuildInterface( QWidget* parent )
+{
+    box_ = new QVBox( parent );
+    popup_ = new QPopupMenu( box_ );
+    list_ = new ParamListView( box_, GetName() );
+    connect( list_->ListView(), SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChanged( QListViewItem* ) ) );
+    disconnect( list_->ListView(), SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), list_->ListView(), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
+    connect( list_->ListView(), SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,6 +87,8 @@ bool ParamObstacleList::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamObstacleList::Commit()
 {
+    if( !box_ )
+        InterfaceNotInitialized();
     if( ! ChangeSelection() )
         return;
     

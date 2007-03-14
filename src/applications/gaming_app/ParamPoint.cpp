@@ -22,22 +22,15 @@ using namespace gui;
 // Name: ParamPoint constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamPoint::ParamPoint( QWidget* parent, ASN1T_Point*& asn, const QString& label, const QString& menu, const CoordinateConverter_ABC& converter )
+ParamPoint::ParamPoint( QObject* parent, ASN1T_Point*& asn, const QString& name, const QString& menu, const CoordinateConverter_ABC& converter )
     : QObject   ( parent )
+    , Param_ABC ( name )
     , asn_      ( new ASN1T_Point() )
     , converter_( converter )
     , menu_     ( menu )
+    , pLabel_   ( 0 )
 {
     asn = asn_;
-
-    QHBox* box = new QHBox( parent );
-    box->setSpacing( 5 );
-    pLabel_ = new RichLabel( label, false, box, "" );
-
-    pPosLabel_ = new QLabel( "---", box );
-    pPosLabel_->setMinimumWidth( 100 );
-    pPosLabel_->setAlignment( Qt::AlignCenter );
-    pPosLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,6 +40,21 @@ ParamPoint::ParamPoint( QWidget* parent, ASN1T_Point*& asn, const QString& label
 ParamPoint::~ParamPoint()
 {
     delete asn_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPoint::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamPoint::BuildInterface( QWidget* parent )
+{
+    QHBox* box = new QHBox( parent );
+    box->setSpacing( 5 );
+    pLabel_ = new RichLabel( GetName(), false, box );
+    pPosLabel_ = new QLabel( "---", box );
+    pPosLabel_->setMinimumWidth( 100 );
+    pPosLabel_->setAlignment( Qt::AlignCenter );
+    pPosLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,6 +87,8 @@ void ParamPoint::Draw( const geometry::Point2f& /*point*/, const kernel::Viewpor
 // -----------------------------------------------------------------------------
 void ParamPoint::Commit()
 {
+    if( !pPosLabel_ )
+        InterfaceNotInitialized();
     if( pPosLabel_->text() == "---" )
         return;
     SetOptionalPresent();

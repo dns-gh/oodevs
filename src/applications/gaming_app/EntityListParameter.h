@@ -29,7 +29,7 @@ class EntityListParameterBase : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityListParameterBase( QWidget* pParent, ASN1T_ListOID*& list, const QString& label, const QString& menu );
+             EntityListParameterBase( QObject* parent, ASN1T_ListOID*& list, const QString& name, const QString& menu );
     virtual ~EntityListParameterBase();
     //@}
 
@@ -37,6 +37,7 @@ public:
     //@{
     virtual bool CheckValidity();
     virtual void Commit();
+    virtual void BuildInterface( QWidget* parent );
     //@}
 
 private slots:
@@ -90,7 +91,7 @@ class EntityListParameter : public EntityListParameterBase
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityListParameter( QWidget* pParent, ASN1T_ListOID*& list, const QString& label, const QString& menu );
+             EntityListParameter( QObject* pParent, ASN1T_ListOID*& list, const QString& name, const QString& menu );
     virtual ~EntityListParameter();
     //@}
 

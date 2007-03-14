@@ -19,17 +19,13 @@ using namespace gui;
 // Name: EntityParameterBase constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-EntityParameterBase::EntityParameterBase( QWidget* parent, ASN1T_OID& id, const QString& label, const QString& menu )
+EntityParameterBase::EntityParameterBase( QObject* parent, ASN1T_OID& id, const QString& name, const QString& menu )
     : QObject( parent )
+    , Param_ABC( name )
     , id_  ( id )
     , menu_( menu )
 {
-    QHBox* box = new QHBox( parent );
-    pLabel_ = new RichLabel( label, false, box, "" );
-    entityLabel_ = new QLabel( "---", box );
-    entityLabel_->setMinimumWidth( 100 );
-    entityLabel_->setAlignment( Qt::AlignCenter );
-    entityLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,6 +35,20 @@ EntityParameterBase::EntityParameterBase( QWidget* parent, ASN1T_OID& id, const 
 EntityParameterBase::~EntityParameterBase()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityParameterBase::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void EntityParameterBase::BuildInterface( QWidget* parent )
+{
+    QHBox* box = new QHBox( parent );
+    pLabel_ = new RichLabel( GetName(), false, box );
+    entityLabel_ = new QLabel( "---", box );
+    entityLabel_->setMinimumWidth( 100 );
+    entityLabel_->setAlignment( Qt::AlignCenter );
+    entityLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 }
 
 // -----------------------------------------------------------------------------

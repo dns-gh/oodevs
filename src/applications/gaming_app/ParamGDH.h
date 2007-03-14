@@ -26,12 +26,13 @@ class ParamGDH : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamGDH( QWidget* parent, ASN1T_GDH*& asn, const QString& label );
+             ParamGDH( QObject* parent, ASN1T_GDH*& asn, const QString& name );
     virtual ~ParamGDH();
     //@}
 
     //! @name Operations
     //@{
+    virtual void BuildInterface( QWidget* parent );
     virtual void Commit();
     //@}
 

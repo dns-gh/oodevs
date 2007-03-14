@@ -10,6 +10,8 @@
 #ifndef __ParamListView_h_
 #define __ParamListView_h_
 
+#include "Param_ABC.h"
+
 // =============================================================================
 /** @class  ParamListView
     @brief  ParamListView
@@ -17,18 +19,21 @@
 // Created: APE 2004-04-19
 // =============================================================================
 class ParamListView : public QObject
+                    , public Param_ABC
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamListView( QWidget* pParent, const QString& label );
+             ParamListView( QObject* parent, const QString& name );
     virtual ~ParamListView();
     //@}
 
     //! @name Operations
     //@{
+    virtual void BuildInterface( QWidget* parent );
+    virtual void Commit();
     bool Invalid();
     QListView* ListView(); // $$$$ SBO 2007-03-13: bof bof
     //@}

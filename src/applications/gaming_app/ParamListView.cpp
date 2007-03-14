@@ -15,14 +15,13 @@
 // Name: ParamListView constructor
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
-ParamListView::ParamListView( QWidget* parent, const QString& label )
+ParamListView::ParamListView( QObject* parent, const QString& name )
     : QObject    ( parent )
-    , list_      ( new QListView( parent ) ) 
-    , pPopupMenu_( new QPopupMenu( list_ ) )
+    , Param_ABC  ( name )
+    , list_      ( 0 )
+    , pPopupMenu_( 0 )
 {
-    list_->addColumn( label );
-    list_->setResizeMode( QListView::LastColumn );
-    connect( list_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -35,12 +34,35 @@ ParamListView::~ParamListView()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParamListView::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamListView::BuildInterface( QWidget* parent )
+{
+    list_ = new QListView( parent );
+    pPopupMenu_ = new QPopupMenu( list_ );
+    list_->addColumn( GetName() );
+    list_->setResizeMode( QListView::LastColumn );
+    connect( list_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamListView::Commit
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamListView::Commit()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParamListView::TurnHeaderRed
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
 bool ParamListView::Invalid()
 {
-    list_->header()->setPaletteForegroundColor( Qt::red );
+    if( list_ )
+        list_->header()->setPaletteForegroundColor( Qt::red );
     QTimer::singleShot( 3000, this, SLOT( TurnHeaderBlack() ) );
     return false;
 }
@@ -64,7 +86,8 @@ void ParamListView::OnRequestPopup( QListViewItem* pItem, const QPoint& pos )
 // -----------------------------------------------------------------------------
 void ParamListView::OnDeleteSelectedItem()
 {
-    delete list_->selectedItem();
+    if( list_ )
+        delete list_->selectedItem();
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +96,8 @@ void ParamListView::OnDeleteSelectedItem()
 // -----------------------------------------------------------------------------
 void ParamListView::OnClearList()
 {
-    list_->clear();
+    if( list_ )
+        list_->clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +106,8 @@ void ParamListView::OnClearList()
 // -----------------------------------------------------------------------------
 void ParamListView::TurnHeaderBlack()
 {
-    list_->header()->setPaletteForegroundColor( Qt::black );
+    if( list_ )
+        list_->header()->setPaletteForegroundColor( Qt::black );
 }
 
 // -----------------------------------------------------------------------------

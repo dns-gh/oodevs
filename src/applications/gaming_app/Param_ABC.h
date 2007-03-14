@@ -34,7 +34,7 @@ class Param_ABC : public kernel::Observer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Param_ABC();
+    explicit Param_ABC( const QString& name );
     virtual ~Param_ABC();
     //@}
 
@@ -45,6 +45,7 @@ public:
     virtual void SetOptional( OptionalParamFunctor_ABC* optional );
 
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void BuildInterface( QWidget* parent ) = 0;
     virtual bool CheckValidity();
     virtual void Commit() = 0;
     virtual void Show() {}
@@ -53,8 +54,15 @@ public:
 
     //! @name Accessors
     //@{
+    virtual QString GetName() const;
     void SetOptionalPresent();
     bool IsOptional() const;
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    void InterfaceNotInitialized();
     //@}
 
 private:
@@ -67,6 +75,7 @@ private:
 private:
     //! @name Member data
     //@{
+    QString name_;
     OptionalParamFunctor_ABC* pOptional_;
     kernel::ActionController* controller_;
     //@}

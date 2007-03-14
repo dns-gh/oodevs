@@ -20,14 +20,32 @@ using namespace gui;
 // Name: ParamHumanWoundList constructor
 // Created: SBO 2005-09-27
 // -----------------------------------------------------------------------------
-ParamHumanWoundList::ParamHumanWoundList( QWidget* parent, ASN1T_SantePriorites*& asnListHumanWound, const QString& /*strLabel*/ )
+ParamHumanWoundList::ParamHumanWoundList( QObject* parent, ASN1T_SantePriorites*& asnListHumanWound, const QString& /*strLabel*/ )
     : QObject( parent )
+    , Param_ABC( tr( "Injuries" ) )
     , pAsnHumanWoundList_( new ASN1T_SantePriorites() )
+    , table_( 0 )
 {
     asnListHumanWound = pAsnHumanWoundList_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ParamHumanWoundList destructor
+// Created: SBO 2005-09-27
+// -----------------------------------------------------------------------------
+ParamHumanWoundList::~ParamHumanWoundList()
+{
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: ParamHumanWoundList::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamHumanWoundList::BuildInterface( QWidget* parent )
+{
     table_ = new QTable( 0, 1, parent );
-    table_->horizontalHeader()->setLabel( 0, tr( "Injuries" ) );
+    table_->horizontalHeader()->setLabel( 0, GetName() );
     table_->setColumnWidth( 0, 200 );
     table_->setLeftMargin( 0 );
     table_->setShowGrid( false );
@@ -44,15 +62,6 @@ ParamHumanWoundList::ParamHumanWoundList( QWidget* parent, ASN1T_SantePriorites*
 
     connect( table_, SIGNAL( valueChanged( int, int ) ), SLOT( OnHumanWoundChanged( int, int ) ) );
 }
-    
-// -----------------------------------------------------------------------------
-// Name: ParamHumanWoundList destructor
-// Created: SBO 2005-09-27
-// -----------------------------------------------------------------------------
-ParamHumanWoundList::~ParamHumanWoundList()
-{
-    // NOTHING
-}
 
 // -----------------------------------------------------------------------------
 // Name: ParamHumanWoundList::Commit
@@ -60,6 +69,8 @@ ParamHumanWoundList::~ParamHumanWoundList()
 // -----------------------------------------------------------------------------
 void ParamHumanWoundList::Commit()
 {
+    if( !table_ )
+        InterfaceNotInitialized();
     if( !pAsnHumanWoundList_ || table_->numRows() <= 1 )
         return;
     pAsnHumanWoundList_->n = table_->numRows() - 1;

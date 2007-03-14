@@ -44,7 +44,7 @@ class ParamObstacle : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObstacle( QWidget* parent, ASN1T_MissionGenObject*& asnObject, const QString& label, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamObstacle( QObject* parent, ASN1T_MissionGenObject*& asnObject, const QString& name, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ParamObstacle();
     //@}
 
@@ -58,6 +58,7 @@ public:
     virtual void Hide();
     void CommitTo( ASN1T_MissionGenObject& destination );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void BuildInterface( QWidget* parent );
     //@}
 
 private slots:
@@ -76,6 +77,9 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::ObjectTypes& objectTypes_;
+    gui::ParametersLayer& layer_;
+    const kernel::CoordinateConverter_ABC& converter_;
     ASN1T_MissionGenObject* asnObject_;
     ParamLocation* location_;
 

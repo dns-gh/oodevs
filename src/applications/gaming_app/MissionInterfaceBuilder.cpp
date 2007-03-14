@@ -197,8 +197,8 @@ void MissionInterfaceBuilder::AddParameter( ASN1T_OrderContext& context, bool op
 void MissionInterfaceBuilder::AddParameter( ASN1T_EnumAutomateOrderFormation& formation, bool optional )
 {
     ParamRadioBtnGroup<ASN1T_EnumAutomateOrderFormation>& param = BuildRadioButtonGroup( formation, tools::translate( "MissionInterfaceBuilder", "Formation" ) );
-    param.AddButton( tools::translate( "MissionInterfaceBuilder", "One echelon" )  , EnumAutomateOrderFormation::un_echelon );
-    param.AddButton( tools::translate( "MissionInterfaceBuilder", "Deux échelons" ), EnumAutomateOrderFormation::deux_echelons, true );
+    param.AddButton( tools::translate( "MissionInterfaceBuilder", "One echelon" ) , EnumAutomateOrderFormation::un_echelon );
+    param.AddButton( tools::translate( "MissionInterfaceBuilder", "Two echelons" ), EnumAutomateOrderFormation::deux_echelons, true );
     missionInterface_->AddParameter( param, BuildOptional( optional ) );
 }
 
@@ -258,7 +258,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAutomatList( ASN1T_MissionParameter& as
 Param_ABC* MissionInterfaceBuilder::BuildAtlasNature( ASN1T_MissionParameter& asnParameter, const QString& name ) const
 {
     asnParameter.value.t = T_MissionParameter_value_natureAtlas;
-    return new ParamAgentType( missionInterface_, asnParameter.value.u.natureAtlas, name );
+    return new ParamAgentType( asnParameter.value.u.natureAtlas, name );
 }
 
 // -----------------------------------------------------------------------------
@@ -268,7 +268,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAtlasNature( ASN1T_MissionParameter& as
 Param_ABC* MissionInterfaceBuilder::BuildDotation( ASN1T_MissionParameter& asnParameter, const QString& name ) const
 {
     asnParameter.value.t = T_MissionParameter_value_typeDotation;
-    return new ParamDotationDType( missionInterface_, asnParameter.value.u.typeDotation, name, objectTypes_ );
+    return new ParamDotationDType( asnParameter.value.u.typeDotation, name, objectTypes_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -278,7 +278,7 @@ Param_ABC* MissionInterfaceBuilder::BuildDotation( ASN1T_MissionParameter& asnPa
 Param_ABC* MissionInterfaceBuilder::BuildBoolean( ASN1T_MissionParameter& asnParameter, const QString& name ) const
 {
     asnParameter.value.t = T_MissionParameter_value_aBool;
-    return new ParamBool( missionInterface_, asnParameter.value.u.aBool, name, name );
+    return new ParamBool( asnParameter.value.u.aBool, name, name );
 }
 
 // -----------------------------------------------------------------------------
@@ -288,7 +288,7 @@ Param_ABC* MissionInterfaceBuilder::BuildBoolean( ASN1T_MissionParameter& asnPar
 Param_ABC* MissionInterfaceBuilder::BuildDirection( ASN1T_MissionParameter& asnParameter, const QString& name ) const
 {
     asnParameter.value.t = T_MissionParameter_value_direction;
-    return new ParamDirection( missionInterface_, asnParameter.value.u.direction, name );
+    return new ParamDirection( asnParameter.value.u.direction, name );
 }
 
 // -----------------------------------------------------------------------------
@@ -408,7 +408,7 @@ Param_ABC* MissionInterfaceBuilder::BuildPointList( ASN1T_MissionParameter& asnP
 Param_ABC* MissionInterfaceBuilder::BuildPolygon( ASN1T_MissionParameter& asnParameter, const QString& name ) const
 {
     asnParameter.value.t = T_MissionParameter_value_polygon;
-    return new ParamLocation( missionInterface_, asnParameter.value.u.polygon, name, layer_, converter_ );
+    return new ParamLocation( asnParameter.value.u.polygon, name, layer_, converter_ );
 }
     
 // -----------------------------------------------------------------------------
@@ -428,7 +428,7 @@ Param_ABC* MissionInterfaceBuilder::BuildPolygonList( ASN1T_MissionParameter& as
 Param_ABC* MissionInterfaceBuilder::BuildLocation( ASN1T_MissionParameter& asnParameter, const QString& name ) const
 {
     asnParameter.value.t = T_MissionParameter_value_localisation;
-    return new ParamLocation( missionInterface_, asnParameter.value.u.localisation, name, layer_, converter_ );
+    return new ParamLocation( asnParameter.value.u.localisation, name, layer_, converter_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -505,7 +505,7 @@ Param_ABC* MissionInterfaceBuilder::BuildLimaList( ASN1T_LimasOrder& asn, const 
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildDirection( ASN1T_Direction&  asn, const QString& name ) const
 {
-    return new ParamDirection( missionInterface_, asn, name );
+    return new ParamDirection( asn, name );
 }
 
 // -----------------------------------------------------------------------------

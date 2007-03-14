@@ -40,7 +40,7 @@ class ParamPathList : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPathList( QWidget* parent, ASN1T_ListItineraire*& asnPathList, const QString& label, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent, kernel::ActionController& controller );
+             ParamPathList( QObject* parent, ASN1T_ListItineraire*& asnPathList, const QString& label, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent, kernel::ActionController& controller );
     virtual ~ParamPathList();
     //@}
 
@@ -48,6 +48,7 @@ public:
     //@{
     virtual bool CheckValidity();
     virtual void Commit();
+    virtual void BuildInterface( QWidget* parent );
     //@}
 
 private slots:

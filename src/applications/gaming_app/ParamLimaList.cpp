@@ -20,22 +20,16 @@ using namespace gui;
 // Name: ParamLimaList constructor
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-ParamLimaList::ParamLimaList( QWidget* parent, ASN1T_LimasOrder& limas, const QString& label, const QString& menu )
+ParamLimaList::ParamLimaList( QObject* parent, ASN1T_LimasOrder& limas, const QString& name, const QString& menu )
     : QObject    ( parent )
+    , Param_ABC  ( name )
     , result_    ( limas )
     , menu_      ( menu )
+    , list_      ( 0 )
     , potential_ ( 0 )
 {
     result_.n = 0;
     result_.elem = 0;
-
-    list_ = new QListView( parent );
-    pPopupMenu_ = new QPopupMenu( list_ );
-    
-    list_->addColumn( label );
-    list_->addColumn( tr( "Function" ) );
-    list_->setResizeMode( QListView::LastColumn );
-    connect( list_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,11 +57,28 @@ bool ParamLimaList::CheckValidity()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParamLimaList::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamLimaList::BuildInterface( QWidget* parent )
+{
+    list_ = new QListView( parent );
+    pPopupMenu_ = new QPopupMenu( list_ );
+    
+    list_->addColumn( GetName() );
+    list_->addColumn( tr( "Function" ) );
+    list_->setResizeMode( QListView::LastColumn );
+    connect( list_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParamLimaList::Commit
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
 void ParamLimaList::Commit()
 {
+    if( !list_ )
+        InterfaceNotInitialized();
     if( ! list_->childCount() )
         return;
     

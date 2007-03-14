@@ -38,8 +38,8 @@ class LocationCreator : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             LocationCreator( QWidget* parent, const QString& menu, ParametersLayer& layer, ShapeHandler_ABC& handler );
-             LocationCreator( QWidget* parent, ParametersLayer& layer, ShapeHandler_ABC& handler );
+             LocationCreator( QObject* parent, const QString& menu, ParametersLayer& layer, ShapeHandler_ABC& handler );
+             LocationCreator( QObject* parent, ParametersLayer& layer, ShapeHandler_ABC& handler );
     virtual ~LocationCreator();
     //@}
 

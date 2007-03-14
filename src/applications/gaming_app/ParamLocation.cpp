@@ -25,26 +25,17 @@ using namespace gui;
 // Name: ParamLocation constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamLocation::ParamLocation( QWidget* parent, ASN1T_Localisation*& asn, const QString& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
-    : converter_ ( converter )
+ParamLocation::ParamLocation( ASN1T_Localisation*& asn, const QString& name, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+    : Param_ABC  ( name )
+    , converter_ ( converter )
+    , layer_     ( layer )
     , asn_       ( new ASN1T_Localisation() )
     , serializer_( converter, *asn_ )
     , controller_( 0 )
-    , location_( 0 )
+    , pLabel_    ( 0 )
+    , location_  ( 0 )
 {
     asn = asn_;
-
-    QHBox* box = new QHBox( parent );
-    box->setSpacing( 5 );
-    pLabel_ = new RichLabel( label, false, box, "" );
-
-    pShapeLabel_ = new QLabel( "---", box );
-    pShapeLabel_->setMinimumWidth( 100 );
-    pShapeLabel_->setAlignment( Qt::AlignCenter );
-    pShapeLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
-
-    creator_ = new LocationCreator( box, label, layer, *this );
-
     asn_->vecteur_point.elem = 0;
     asn_->vecteur_point.n = 0;
 }
@@ -57,6 +48,22 @@ ParamLocation::~ParamLocation()
 {
     delete asn_;
     delete location_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocation::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamLocation::BuildInterface( QWidget* parent )
+{
+    QHBox* box = new QHBox( parent );
+    box->setSpacing( 5 );
+    pLabel_ = new RichLabel( GetName(), false, box );
+    pShapeLabel_ = new QLabel( "---", box );
+    pShapeLabel_->setMinimumWidth( 100 );
+    pShapeLabel_->setAlignment( Qt::AlignCenter );
+    pShapeLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    creator_ = new LocationCreator( box, GetName(), layer_, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,6 +108,8 @@ bool ParamLocation::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamLocation::Commit()
 {
+    if( !pLabel_ )
+        InterfaceNotInitialized();
     if( location_ )
         serializer_.Serialize( *location_ );
 }

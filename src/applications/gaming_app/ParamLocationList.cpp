@@ -23,30 +23,30 @@ using namespace gui;
 // Name: ParamLocationList constructor
 // Created: AGE 2006-04-03
 // -----------------------------------------------------------------------------
-ParamLocationList::ParamLocationList( QWidget* parent, ASN1T_ListLocalisation*& asn, const QString& label, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
-    : ParamListView( parent, label )
+ParamLocationList::ParamLocationList( QObject* parent, ASN1T_ListLocalisation*& asn, const QString& name, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+    : ParamListView( parent, name )
     , converter_( converter )
     , asn_( new ASN1T_ListLocalisation() )
     , pAsnLocalisationList_( 0 )
     , controller_( 0 )
 {
     asn = asn_;
-    creator_ = new LocationCreator( ListView(), menu, layer, *this );
+    creator_ = new LocationCreator( this, menu, layer, *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ParamLocationList constructor
 // Created: AGE 2006-04-03
 // -----------------------------------------------------------------------------
-ParamLocationList::ParamLocationList( QWidget* parent, ASN1T_ListPolygon*& asn, const QString& label, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
-    : ParamListView( parent, label )
+ParamLocationList::ParamLocationList( QObject* parent, ASN1T_ListPolygon*& asn, const QString& name, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+    : ParamListView( parent, name )
     , converter_( converter )
     , asn_( new ASN1T_ListLocalisation() )
     , pAsnLocalisationList_( 0 )
     , controller_( 0 )
 {
     asn = (ASN1T_ListPolygon*&)asn_;
-    creator_ = new LocationCreator( ListView(), menu, layer, *this );
+    creator_ = new LocationCreator( this, menu, layer, *this );
     creator_->Allow( false, false, true, false );
 }
 
@@ -54,15 +54,15 @@ ParamLocationList::ParamLocationList( QWidget* parent, ASN1T_ListPolygon*& asn, 
 // Name: ParamLocationList constructor
 // Created: AGE 2006-04-03
 // -----------------------------------------------------------------------------
-ParamLocationList::ParamLocationList( QWidget* parent, ASN1T_ListPoint*& asn, const QString& label, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
-    : ParamListView( parent, label )
+ParamLocationList::ParamLocationList( QObject* parent, ASN1T_ListPoint*& asn, const QString& name, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+    : ParamListView( parent, name )
     , converter_( converter )
     , asn_( new ASN1T_ListLocalisation() )
     , pAsnLocalisationList_( 0 )
     , controller_( 0 )
 {
     asn = (ASN1T_ListPoint*&)asn_;
-    creator_ = new LocationCreator( ListView(), menu, layer, *this );
+    creator_ = new LocationCreator( this, menu, layer, *this );
     creator_->Allow( true, false, false, false );
 }
 
@@ -128,6 +128,8 @@ bool ParamLocationList::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamLocationList::Commit()
 {
+    if( !ListView() )
+        InterfaceNotInitialized();
     const unsigned nNbrChilds = locations_.size();
     asn_->n = nNbrChilds;
 

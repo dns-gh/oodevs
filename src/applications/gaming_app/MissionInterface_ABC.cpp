@@ -90,6 +90,7 @@ void MissionInterface_ABC::AddParameter( Param_ABC& parameter, OptionalParamFunc
     parameters_.push_back( &parameter );
     parameter.SetOptional( pOptional );
     parameter.RegisterIn( controller_ );
+    parameter.BuildInterface( this );
 }
 
 // -----------------------------------------------------------------------------

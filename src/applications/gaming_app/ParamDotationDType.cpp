@@ -18,16 +18,11 @@ using namespace kernel;
 // Name: ParamDotationDType constructor
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-ParamDotationDType::ParamDotationDType( QWidget* pParent, ASN1T_TypeDotationTrancheD& asn, const QString& label, const Resolver_ABC< DotationType >& resolver )
-    : ParamComboBox< ASN1T_TypeDotationTrancheD >( pParent, asn, label )
+ParamDotationDType::ParamDotationDType( ASN1T_TypeDotationTrancheD& asn, const QString& name, const Resolver_ABC< DotationType >& resolver )
+    : ParamComboBox< ASN1T_TypeDotationTrancheD >( asn, name )
+    , resolver_( resolver )
 {
-    Iterator< const DotationType& > it = resolver.CreateIterator();
-    while( it.HasMoreElements() )
-    {
-        const DotationType& type = it.NextElement();
-        if( type.IsDType() )
-            AddItem( type.GetCategory(), type.GetId() );
-    }
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -37,4 +32,20 @@ ParamDotationDType::ParamDotationDType( QWidget* pParent, ASN1T_TypeDotationTran
 ParamDotationDType::~ParamDotationDType()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamDotationDType::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamDotationDType::BuildInterface( QWidget* parent )
+{
+    ParamComboBox< ASN1T_TypeDotationTrancheD >::BuildInterface( parent );
+    Iterator< const DotationType& > it = resolver_.CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const DotationType& type = it.NextElement();
+        if( type.IsDType() )
+            AddItem( type.GetCategory(), type.GetId() );
+    }
 }

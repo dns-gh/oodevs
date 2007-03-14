@@ -38,15 +38,16 @@ class ParamLimaList : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLimaList( QWidget* pParent, ASN1T_LimasOrder& limas, const QString& label, const QString& menu );
+             ParamLimaList( QObject* parent, ASN1T_LimasOrder& limas, const QString& label, const QString& menu );
     virtual ~ParamLimaList();
     //@}
 
     //! @name Operations
     //@{
     virtual bool CheckValidity();
-    virtual void Commit();
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void BuildInterface( QWidget* parent );
+    virtual void Commit();
     //@}
 
 private slots:

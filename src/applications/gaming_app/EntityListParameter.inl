@@ -12,8 +12,8 @@
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-EntityListParameter< ConcreteEntity >::EntityListParameter( QWidget* pParent, ASN1T_ListOID*& list, const QString& label, const QString& menu )
-    : EntityListParameterBase( pParent, list, label, menu )
+EntityListParameter< ConcreteEntity >::EntityListParameter( QObject* parent, ASN1T_ListOID*& list, const QString& name, const QString& menu )
+    : EntityListParameterBase( parent, list, name, menu )
     , potential_             ( 0 )
 {
     // NOTHING

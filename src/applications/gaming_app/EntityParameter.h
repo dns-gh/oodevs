@@ -34,7 +34,7 @@ class EntityParameterBase : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityParameterBase( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu );
+             EntityParameterBase( QObject* parent, ASN1T_OID& id, const QString& name, const QString& menu );
     virtual ~EntityParameterBase();
     //@}
 
@@ -42,6 +42,7 @@ public:
     //@{
     virtual void Show();
     virtual void Hide();
+    virtual void BuildInterface( QWidget* parent );
     //@}
 
 private slots:
@@ -83,7 +84,7 @@ class EntityParameter : public EntityParameterBase
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityParameter( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu );
+             EntityParameter( QObject* parent, ASN1T_OID& id, const QString& name, const QString& menu );
     virtual ~EntityParameter();
     //@}
 

@@ -44,16 +44,17 @@ class LimitParameter : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitParameter( QWidget* pParent, ASN1T_Line& limit, const QString& label, const QString& menu );
+             LimitParameter( QObject* pParent, ASN1T_Line& limit, const QString& label, const QString& menu );
     virtual ~LimitParameter();
     //@}
 
     //! @name Operations
     //@{
     virtual bool CheckValidity();
+    virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void BuildInterface( QWidget* parent );
     virtual void Commit();
     void CommitTo( ASN1T_Line& asn );
-    virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private slots:
@@ -84,8 +85,8 @@ private:
     std::string     menu_;
     gui::RichLabel* pLabel_;
     QLabel*         entityLabel_; // $$$$ AGE 2006-03-14: LabelDisplayer ?
-    const Limit* potential_;
-    const Limit* selected_;
+    const Limit*    potential_;
+    const Limit*    selected_;
     //@}
 };
 

@@ -15,29 +15,13 @@
 // Name: ParamGDH constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamGDH::ParamGDH( QWidget* parent, ASN1T_GDH*& asn, const QString& label )
+ParamGDH::ParamGDH( QObject* parent, ASN1T_GDH*& asn, const QString& name )
     : QObject( parent )
+    , Param_ABC( name )
     , asn_( new ASN1T_GDH() )
+    , pDateTimeEdit_( 0 )
 {
     asn = asn_;
-
-    QHBox* box = new QHBox( parent );
-    box->setSpacing( 5 );
-    box->setSizePolicy( QSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum ) );
-
-    // Title
-    QLabel* pLabel = new QLabel( label, box, "" );
-    pDateTimeEdit_ = new QDateTimeEdit( QDateTime::currentDateTime(), box );
-    pCheckbox_ = new QCheckBox( box );
-
-    pDateTimeEdit_->setEnabled( false );
-    pCheckbox_->setChecked( false );
-
-    box->setStretchFactor( pLabel, 2 );
-    box->setStretchFactor( pDateTimeEdit_, 0 );
-    box->setStretchFactor( pCheckbox_, 0 );
-
-    connect( pCheckbox_, SIGNAL( toggled( bool ) ), SLOT( OnCheckboxToogled( bool ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,11 +34,33 @@ ParamGDH::~ParamGDH()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParamGDH::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamGDH::BuildInterface( QWidget* parent )
+{
+    QHBox* box = new QHBox( parent );
+    box->setSpacing( 5 );
+    box->setSizePolicy( QSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum ) );
+    QLabel* label = new QLabel( GetName(), box );
+    pDateTimeEdit_ = new QDateTimeEdit( QDateTime::currentDateTime(), box );
+    pCheckbox_ = new QCheckBox( box );
+    pDateTimeEdit_->setEnabled( false );
+    pCheckbox_->setChecked( false );
+    box->setStretchFactor( label, 2 );
+    box->setStretchFactor( pDateTimeEdit_, 0 );
+    box->setStretchFactor( pCheckbox_, 0 );
+    connect( pCheckbox_, SIGNAL( toggled( bool ) ), SLOT( OnCheckboxToogled( bool ) ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParamGDH::Commit
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 void ParamGDH::Commit()
 {
+    if( !pDateTimeEdit_ )
+        throw std::runtime_error( "'GDH' parameter interface not initialized" );
     asn_->qualificatif = EnumGDH_Qualificatif::at;
     if( pCheckbox_->isChecked() )
     {

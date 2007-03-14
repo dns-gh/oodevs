@@ -25,12 +25,13 @@ class ParamBool : public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamBool( QWidget* parent, ASN1BOOL& asn, const QString& label, bool defaultValue = false );
+             ParamBool( ASN1BOOL& asn, const QString& name, bool defaultValue = false );
     virtual ~ParamBool();
     //@}
 
     //! @name Operations
     //@{
+    virtual void BuildInterface( QWidget* parent );
     virtual void Commit();
     //@}
 
@@ -45,6 +46,7 @@ private:
     //! @name Member data
     //@{
     ASN1BOOL& asn_;
+    const bool default_;
     QCheckBox* checkBox_;
     //@}
 };

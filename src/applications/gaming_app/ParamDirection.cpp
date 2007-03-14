@@ -14,14 +14,12 @@
 // Name: ParamDirection constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamDirection::ParamDirection( QWidget* parent, ASN1T_Direction& direction, const QString& label )
-    : direction_( direction )
+ParamDirection::ParamDirection( ASN1T_Direction& direction, const QString& name )
+    : Param_ABC( name )
+    , direction_( direction )
+    , dial_( 0 )
 {
-    QHBox* box = new QHBox( parent );
-    new QLabel( label, box );
-    pDial_ = new QDial( 0, 359, 1, 0, box );
-    pDial_->setWrapping( true );
-    pDial_->setMaximumSize( 50, 50 );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -34,11 +32,26 @@ ParamDirection::~ParamDirection()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParamDirection::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamDirection::BuildInterface( QWidget* parent )
+{
+    QHBox* box = new QHBox( parent );
+    new QLabel( GetName(), box );
+    dial_ = new QDial( 0, 359, 1, 0, box );
+    dial_->setWrapping( true );
+    dial_->setMaximumSize( 50, 50 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParamDirection::Commit
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 void ParamDirection::Commit()
 {
-    direction_ = pDial_->value();
+    if( !dial_ )
+        InterfaceNotInitialized();
+    direction_ = dial_->value();
     direction_ += (direction_ > 180 ) ? -180 : 180;
 }

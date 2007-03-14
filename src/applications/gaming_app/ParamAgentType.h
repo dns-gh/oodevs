@@ -25,12 +25,13 @@ class ParamAgentType : public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAgentType( QWidget* parent, ASN1T_NatureAtlas*& asn, const QString& label );
+             ParamAgentType( ASN1T_NatureAtlas*& asn, const QString& name );
     virtual ~ParamAgentType();
     //@}
 
     //! @name Operations
     //@{
+    virtual void BuildInterface( QWidget* parent );
     virtual void Commit();
     //@}
 

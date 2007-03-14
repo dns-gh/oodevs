@@ -11,7 +11,6 @@
 #define __ParamLocationList_h_
 
 #include "game_asn/Asn.h"
-#include "Param_ABC.h"
 #include "clients_gui/ShapeHandler_ABC.h"
 #include "ParamListView.h"
 
@@ -34,14 +33,14 @@ class LocationSerializer;
 */
 // Created: AGE 2006-04-03
 // =============================================================================
-class ParamLocationList : public ParamListView, public Param_ABC, private gui::ShapeHandler_ABC
+class ParamLocationList : public ParamListView, private gui::ShapeHandler_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLocationList( QWidget* pParent, ASN1T_ListLocalisation*& asn, const QString& label, const QString& menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
-             ParamLocationList( QWidget* pParent, ASN1T_ListPolygon*& asn,      const QString& label, const QString& menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
-             ParamLocationList( QWidget* pParent, ASN1T_ListPoint*& asn,        const QString& label, const QString& menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamLocationList( QObject* pParent, ASN1T_ListLocalisation*& asn, const QString& label, const QString& menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamLocationList( QObject* pParent, ASN1T_ListPolygon*& asn,      const QString& label, const QString& menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamLocationList( QObject* pParent, ASN1T_ListPoint*& asn,        const QString& label, const QString& menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ParamLocationList();
 
     //! @name Operations

@@ -16,34 +16,26 @@
 // Name: ParamNumericField constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamNumericField::ParamNumericField( QWidget* parent, ASN1INT& asn, const QString& label, int min /*= 0*/, int max /*= 9999*/ )
-    : int_( &asn )
+ParamNumericField::ParamNumericField( QObject* parent, ASN1INT& asn, const QString& name, int min /*= 0*/, int max /*= 9999*/ )
+    : Param_ABC( name )
+    , int_( &asn )
     , real_( 0 )
+    , validator_( new QIntValidator( min, max, parent ) )
 {
-    QHBox* box = new QHBox( parent );
-    box->setSpacing( 5 );
-    pLabel_ = new gui::RichLabel( label, box );
-    pLabel_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
-
-    pEdit_ = new QLineEdit( QString::number( 0 ), box );
-    pEdit_->setValidator( new QIntValidator( min, max, pEdit_ ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: ParamNumericField constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamNumericField::ParamNumericField( QWidget* parent, ASN1REAL& asn, const QString& label, float min /*= 0.*/, float max /*= 9999.*/, int precision /*= 2*/ )
-    : int_ ( 0 )
+ParamNumericField::ParamNumericField( QObject* parent, ASN1REAL& asn, const QString& name, float min /*= 0.*/, float max /*= 9999.*/, int precision /*= 2*/ )
+    : Param_ABC( name )
+    , int_ ( 0 )
     , real_( &asn )
+    , validator_( new QDoubleValidator( min, max, precision, parent ) )
 {
-    QHBox* box = new QHBox( parent );
-    box->setSpacing( 5 );
-    pLabel_ = new gui::RichLabel( label, box );
-    pLabel_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
-
-    pEdit_ = new QLineEdit( QString::number( 0. ), box );
-    pEdit_->setValidator( new QDoubleValidator( min, max, precision, pEdit_ ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -53,6 +45,21 @@ ParamNumericField::ParamNumericField( QWidget* parent, ASN1REAL& asn, const QStr
 ParamNumericField::~ParamNumericField()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamNumericField::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamNumericField::BuildInterface( QWidget* parent )
+{
+    QHBox* box = new QHBox( parent );
+    box->setSpacing( 5 );
+    pLabel_ = new gui::RichLabel( GetName(), box );
+    pLabel_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
+
+    pEdit_ = new QLineEdit( "0", box );
+    pEdit_->setValidator( validator_ );
 }
 
 // -----------------------------------------------------------------------------

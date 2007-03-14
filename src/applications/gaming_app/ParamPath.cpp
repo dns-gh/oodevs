@@ -25,26 +25,19 @@ using namespace gui;
 // Name: ParamPath constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamPath::ParamPath( QWidget* parent, ASN1T_Itineraire*& asn, const QString& label, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent )
+ParamPath::ParamPath( QObject* parent, ASN1T_Itineraire*& asn, const QString& name, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent )
     : QObject( parent )
+    , Param_ABC( name )
     , converter_( converter )
     , layer_( layer )
     , positions_( agent.Get< Positions >() )
     , asn_ ( new ASN1T_Itineraire() )
     , serializer_( converter, *asn_ )
     , menu_( menu )
+    , pLabel_( 0 )
     , location_( 0 )
 {
     asn = asn_;
-
-    QHBox* box = new QHBox( parent );
-    box->setSpacing( 5 );
-    pLabel_ = new RichLabel( label, false, box, "" );
-
-    pPosLabel_ = new QLabel( "---", box );
-    pPosLabel_->setMinimumWidth( 100 );
-    pPosLabel_->setAlignment( Qt::AlignCenter );
-    pPosLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,6 +48,21 @@ ParamPath::~ParamPath()
 {
     delete asn_;
     delete location_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPath::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamPath::BuildInterface( QWidget* parent )
+{
+    QHBox* box = new QHBox( parent );
+    box->setSpacing( 5 );
+    pLabel_ = new RichLabel( GetName(), false, box );
+    pPosLabel_ = new QLabel( "---", box );
+    pPosLabel_->setMinimumWidth( 100 );
+    pPosLabel_->setAlignment( Qt::AlignCenter );
+    pPosLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,6 +95,8 @@ bool ParamPath::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamPath::Commit()
 {
+    if( !pLabel_ )
+        InterfaceNotInitialized();
     if( location_ )
         serializer_.Serialize( *location_ );
 }

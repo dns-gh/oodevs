@@ -15,23 +15,12 @@
 // Name: ParamAgentType constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamAgentType::ParamAgentType( QWidget* parent, ASN1T_NatureAtlas*& asn, const QString& label )
-    : asn_ ( new ASN1T_NatureAtlas() )
+ParamAgentType::ParamAgentType( ASN1T_NatureAtlas*& asn, const QString& name )
+    : Param_ABC( name )
+    , asn_( new ASN1T_NatureAtlas() )
+    , pArmoredCheckBox_( 0 )
 {
     asn = asn_;
-
-    QButtonGroup* group      = new QButtonGroup( 2, Qt::Horizontal, label, parent );
-    pArmoredCheckBox_        = new QCheckBox( tools::translate( "ParamAgentType", "Armored" )         , group );
-    pASSCheckBox_            = new QCheckBox( tools::translate( "ParamAgentType", "SSA" )             , group );
-    pHQCheckBox_             = new QCheckBox( tools::translate( "ParamAgentType", "Command post" )    , group );
-    pLogCheckBox_            = new QCheckBox( tools::translate( "ParamAgentType", "Logistic" )        , group );
-    pMortarCheckBox_         = new QCheckBox( tools::translate( "ParamAgentType", "Mortar" )          , group );
-    pRocketLauncherCheckBox_ = new QCheckBox( tools::translate( "ParamAgentType", "Rocket launcher" ) , group );
-    pVehiculeCheckBox_       = new QCheckBox( tools::translate( "ParamAgentType", "Vehicle" )         , group );
-    pFootTroopsCheckBox_     = new QCheckBox( tools::translate( "ParamAgentType", "Footman")          , group );
-    pHelicopterCheckBox_     = new QCheckBox( tools::translate( "ParamAgentType", "Helicopter" )      , group );
-    pUndefinedCheckBox_      = new QCheckBox( tools::translate( "ParamAgentType", "Undefined" )       , group );
-    pNoneCheckBox_           = new QCheckBox( tools::translate( "ParamAgentType", "None" )            , group );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,11 +33,34 @@ ParamAgentType::~ParamAgentType()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParamAgentType::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamAgentType::BuildInterface( QWidget* parent )
+{
+    QButtonGroup* group      = new QButtonGroup( 2, Qt::Horizontal, GetName(), parent );
+    pArmoredCheckBox_        = new QCheckBox( group->tr( "Armored" )         , group );
+    pASSCheckBox_            = new QCheckBox( group->tr( "SSA" )             , group );
+    pHQCheckBox_             = new QCheckBox( group->tr( "Command post" )    , group );
+    pLogCheckBox_            = new QCheckBox( group->tr( "Logistic" )        , group );
+    pMortarCheckBox_         = new QCheckBox( group->tr( "Mortar" )          , group );
+    pRocketLauncherCheckBox_ = new QCheckBox( group->tr( "Rocket launcher" ) , group );
+    pVehiculeCheckBox_       = new QCheckBox( group->tr( "Vehicle" )         , group );
+    pFootTroopsCheckBox_     = new QCheckBox( group->tr( "Footman")          , group );
+    pHelicopterCheckBox_     = new QCheckBox( group->tr( "Helicopter" )      , group );
+    pUndefinedCheckBox_      = new QCheckBox( group->tr( "Undefined" )       , group );
+    pNoneCheckBox_           = new QCheckBox( group->tr( "None" )            , group );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParamAgentType::Commit
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 void ParamAgentType::Commit()
 {
+    if( !pArmoredCheckBox_ )
+        InterfaceNotInitialized();
+
     asn_->numbits = 11;
     asn_->data[0] = 0;
     asn_->data[1] = 0;

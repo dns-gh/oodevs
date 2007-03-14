@@ -14,11 +14,13 @@
 // Name: ParamBool constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamBool::ParamBool( QWidget* parent, ASN1BOOL& asn, const QString& label, bool defaultValue /*= false*/ )
-    : asn_( asn )
+ParamBool::ParamBool( ASN1BOOL& asn, const QString& name, bool defaultValue /*= false*/ )
+    : Param_ABC( name )
+    , asn_( asn )
+    , default_( defaultValue )
+    , checkBox_( 0 )
 {
-    checkBox_ = new QCheckBox( label, parent );
-    checkBox_->setChecked( defaultValue );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,10 +33,22 @@ ParamBool::~ParamBool()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParamBool::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamBool::BuildInterface( QWidget* parent )
+{
+    checkBox_ = new QCheckBox( GetName(), parent );
+    checkBox_->setChecked( default_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParamBool::Commit
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 void ParamBool::Commit()
 {
+    if( !checkBox_ )
+        InterfaceNotInitialized();
     asn_ = checkBox_->isChecked();
 }

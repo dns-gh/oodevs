@@ -26,17 +26,39 @@ using namespace gui;
 // Name: ParamObstacle constructor
 // Created: APE 2004-05-18
 // -----------------------------------------------------------------------------
-ParamObstacle::ParamObstacle( QWidget* parent, ASN1T_MissionGenObject*& asnObject, const QString& label, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+ParamObstacle::ParamObstacle( QObject* parent, ASN1T_MissionGenObject*& asnObject, const QString& name, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : QObject( parent )
+    , Param_ABC( name )
+    , objectTypes_( objectTypes )
+    , layer_( layer )
+    , converter_( converter )
     , asnObject_( new ASN1T_MissionGenObject() )
+    , typeCombo_( 0 )
 {
     asnObject = asnObject_;
+}
 
-    QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, label, parent );
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle destructor
+// Created: APE 2004-05-18
+// -----------------------------------------------------------------------------
+ParamObstacle::~ParamObstacle()
+{
+    delete asnObject_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamObstacle::BuildInterface( QWidget* parent )
+{
+    QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, GetName(), parent );
     new QLabel( tr( "Type:" ), box );
     typeCombo_ = new ValuedComboBox< const ObjectType* >( box );
     typeCombo_->setSorting( true );
-    Iterator< const ObjectType& > it = objectTypes.Resolver2< ObjectType, unsigned long >::CreateIterator();
+    Iterator< const ObjectType& > it = objectTypes_.Resolver2< ObjectType, unsigned long >::CreateIterator();
     while( it.HasMoreElements() )
     {
         const ObjectType& type = it.NextElement();
@@ -50,20 +72,10 @@ ParamObstacle::ParamObstacle( QWidget* parent, ASN1T_MissionGenObject*& asnObjec
 
     density_ = new ParamNumericField( box, asnObject_->densite, tr( "Density" ), 0., 5. );
     tc2_     = new EntityParameter< kernel::Automat_ABC >( box, asnObject_->tc2, tr( "TC2" ), tr( "TC2" ) );
-    location_ = new ParamLocation( box, (ASN1T_Localisation*&)asnObject_->position, tr( "Location" ), layer, converter );
+    location_ = new ParamLocation( (ASN1T_Localisation*&)asnObject_->position, tr( "Location" ), layer_, converter_ );
 
     connect( typeCombo_, SIGNAL( activated( int ) ), SLOT( OnTypeChanged() ) );
     OnTypeChanged();
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ParamObstacle destructor
-// Created: APE 2004-05-18
-// -----------------------------------------------------------------------------
-ParamObstacle::~ParamObstacle()
-{
-    delete asnObject_;
 }
 
 // -----------------------------------------------------------------------------
@@ -115,6 +127,8 @@ bool ParamObstacle::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamObstacle::Commit()
 {
+    if( !typeCombo_ )
+        InterfaceNotInitialized();
     asnObject_->type          = (ASN1T_EnumObjectType)typeCombo_->GetValue()->id_;
     asnObject_->preliminaire  = (ASN1T_EnumMissionGenSousTypeObstacle)preliminaryCombo_->currentItem();
     switch( typeCombo_->GetValue()->id_ )

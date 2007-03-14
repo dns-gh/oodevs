@@ -9,8 +9,9 @@
 
 #include "gaming_app_pch.h"
 #include "Param_ABC.h"
-#include "clients_kernel/ActionController.h"
 #include "OptionalParamFunctor_ABC.h"
+#include "clients_kernel/ActionController.h"
+#include "clients_gui/Tools.h"
 
 using namespace kernel;
 
@@ -18,8 +19,9 @@ using namespace kernel;
 // Name: Param_ABC constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-Param_ABC::Param_ABC()
-    : pOptional_( 0 )
+Param_ABC::Param_ABC( const QString& name )
+    : name_( name )
+    , pOptional_( 0 )
     , controller_( 0 )
 {
     // NOTHING
@@ -98,4 +100,22 @@ void Param_ABC::SetOptionalPresent()
 {
     if( pOptional_ )
         pOptional_->SetOptionalPresent();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::GetName
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+QString Param_ABC::GetName() const
+{
+    return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::InterfaceNotInitialized
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void Param_ABC::InterfaceNotInitialized()
+{
+    throw std::runtime_error( tools::translate( "Param_ABC", "'%1' parameter interface not initialized" ).arg( name_ ).ascii() );
 }

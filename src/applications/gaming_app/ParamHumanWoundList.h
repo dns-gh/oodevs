@@ -28,12 +28,13 @@ class ParamHumanWoundList : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamHumanWoundList( QWidget* pParent, ASN1T_SantePriorites*& asnListHumanWound, const QString& strLabel );
+             ParamHumanWoundList( QObject* parent, ASN1T_SantePriorites*& asnListHumanWound, const QString& name );
     virtual ~ParamHumanWoundList();
     //@}
 
     //! @name Operations
     //@{
+    virtual void BuildInterface( QWidget* parent );
     virtual void Commit();
     //@}
 

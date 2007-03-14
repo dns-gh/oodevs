@@ -46,12 +46,13 @@ class ParamPath : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPath( QWidget* pParent, ASN1T_Itineraire*& asn, const QString& label, const QString& menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamPath( QObject* parent, ASN1T_Itineraire*& asn, const QString& name, const QString& menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent );
     virtual ~ParamPath();
     //@}
 
     //! @name Operations
     //@{
+    virtual void BuildInterface( QWidget* parent );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
     virtual void Commit();

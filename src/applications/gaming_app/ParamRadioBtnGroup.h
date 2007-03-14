@@ -23,7 +23,7 @@ class ParamRadioBtnGroup : public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamRadioBtnGroup( QWidget* parent, T& output, const QString& strLabel );
+             ParamRadioBtnGroup( T& output, const QString& name );
     virtual ~ParamRadioBtnGroup();
     //@}
 
@@ -31,6 +31,7 @@ public:
     //@{
     void AddButton( const QString& label, const T& value, bool selected = false );
     virtual void Commit();
+    virtual void BuildInterface( QWidget* parent );
     //@}
 
 private:
@@ -54,8 +55,9 @@ private:
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
 template< typename T >
-ParamRadioBtnGroup<T>::ParamRadioBtnGroup( QWidget* parent, T& output, const QString& strLabel  )
-    : group_( new QHButtonGroup( strLabel, parent, strLabel ) )
+ParamRadioBtnGroup<T>::ParamRadioBtnGroup( T& output, const QString& name )
+    : Param_ABC( name )
+    , group_( 0 )
     , output_( output )
 {
     // NOTHING
@@ -72,12 +74,24 @@ ParamRadioBtnGroup<T>::~ParamRadioBtnGroup()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParamRadioBtnGroup::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+template< typename T >
+void ParamRadioBtnGroup<T>::BuildInterface( QWidget* parent )
+{
+    group_ = new QHButtonGroup( GetName(), parent );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParamRadioBtnGroup::AddButton
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
 template< typename T >
 void ParamRadioBtnGroup<T>::AddButton( const QString& label, const T& value, bool selected /*= false*/ )
 {
+    if( !group_ )
+        InterfaceNotInitialized();
     QRadioButton* button = new QRadioButton( label, group_, 0 );
     button->setChecked( values_.empty() || selected );
     values_.push_back( value );
@@ -90,6 +104,8 @@ void ParamRadioBtnGroup<T>::AddButton( const QString& label, const T& value, boo
 template< typename T >
 void ParamRadioBtnGroup<T>::Commit()
 {
+    if( !group_ )
+        InterfaceNotInitialized();
     output_ = values_.at( group_->selectedId() );
 }
 

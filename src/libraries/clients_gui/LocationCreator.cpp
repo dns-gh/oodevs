@@ -23,7 +23,7 @@ using namespace gui;
 // Name: LocationCreator constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-LocationCreator::LocationCreator( QWidget* parent, const QString& menu, ParametersLayer& layer, ShapeHandler_ABC& handler  )
+LocationCreator::LocationCreator( QObject* parent, const QString& menu, ParametersLayer& layer, ShapeHandler_ABC& handler  )
     : QObject        ( parent )
     , layer_         ( layer )
     , handler_       ( handler )
@@ -40,7 +40,7 @@ LocationCreator::LocationCreator( QWidget* parent, const QString& menu, Paramete
 // Name: LocationCreator constructor
 // Created: SBO 2006-06-19
 // -----------------------------------------------------------------------------
-LocationCreator::LocationCreator( QWidget* parent, ParametersLayer& layer, ShapeHandler_ABC& handler )
+LocationCreator::LocationCreator( QObject* parent, ParametersLayer& layer, ShapeHandler_ABC& handler )
     : QObject        ( parent )
     , layer_         ( layer )
     , handler_       ( handler )

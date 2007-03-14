@@ -20,20 +20,40 @@ using namespace gui;
 // Name: ParamEquipmentList constructor
 // Created: SBO 2005-09-27
 // -----------------------------------------------------------------------------
-ParamEquipmentList::ParamEquipmentList( QWidget* parent, ASN1T_MaintenancePriorites*& asnListEquipment, const QString& /*label*/, const Resolver< EquipmentType >& resolver )
+ParamEquipmentList::ParamEquipmentList( QObject* parent, ASN1T_MaintenancePriorites*& asnListEquipment, const QString& /*label*/, const Resolver< EquipmentType >& resolver )
     : QObject( parent )
+    , Param_ABC( tr( "Equipment" ) )
+    , resolver_( resolver )
     , pAsnEquipmentList_ ( new ASN1T_MaintenancePriorites() )
+    , table_( 0 )
+{
+    asnListEquipment = pAsnEquipmentList_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ParamEquipmentList destructor
+// Created: SBO 2005-09-27
+// -----------------------------------------------------------------------------
+ParamEquipmentList::~ParamEquipmentList()
+{
+    delete pAsnEquipmentList_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamEquipmentList::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamEquipmentList::BuildInterface( QWidget* parent )
 {
     table_ = new QTable( 0, 1, parent );
-    asnListEquipment = pAsnEquipmentList_;
-    table_->horizontalHeader()->setLabel( 0, tr( "Equipment" ) );
+    table_->horizontalHeader()->setLabel( 0, GetName() );
     table_->setColumnWidth( 0, 200 );
     table_->setLeftMargin( 0 );
     table_->setShowGrid( false );
     table_->setSorting( false );
 
     equipmentList_.append( "" );
-    Iterator< const EquipmentType& > it = resolver.CreateIterator();
+    Iterator< const EquipmentType& > it = resolver_.CreateIterator();
     while( it.HasMoreElements() )
     {
         const QString name = it.NextElement().GetName();
@@ -48,15 +68,6 @@ ParamEquipmentList::ParamEquipmentList( QWidget* parent, ASN1T_MaintenancePriori
 
     connect( table_, SIGNAL( valueChanged( int, int ) ), SLOT( OnEquipmentChanged( int, int ) ) );
 }
-    
-// -----------------------------------------------------------------------------
-// Name: ParamEquipmentList destructor
-// Created: SBO 2005-09-27
-// -----------------------------------------------------------------------------
-ParamEquipmentList::~ParamEquipmentList()
-{
-    delete pAsnEquipmentList_;
-}
 
 // -----------------------------------------------------------------------------
 // Name: ParamEquipmentList::Commit
@@ -64,6 +75,8 @@ ParamEquipmentList::~ParamEquipmentList()
 // -----------------------------------------------------------------------------
 void ParamEquipmentList::Commit()
 {
+    if( !table_ )
+        InterfaceNotInitialized();
     if( !pAsnEquipmentList_ || table_->numRows() <= 1 )
         return;
     pAsnEquipmentList_->n = table_->numRows() - 1;

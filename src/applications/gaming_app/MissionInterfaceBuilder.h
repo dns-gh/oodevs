@@ -111,13 +111,13 @@ private:
     template < class T >
     ParamComboBox<T>& BuildVarList( T& value, const QString& name )
     {
-        return *new ParamComboBox<T>( missionInterface_, value, name );
+        return *new ParamComboBox<T>( value, name );
     }
 
     template < class T >
     ParamRadioBtnGroup<T>& BuildRadioButtonGroup( T& value, const QString& name )
     {
-        return *new ParamRadioBtnGroup<T>( missionInterface_, value, name );
+        return *new ParamRadioBtnGroup<T>( value, name );
     }
     //@}
 

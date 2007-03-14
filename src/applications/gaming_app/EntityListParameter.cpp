@@ -18,8 +18,9 @@ using namespace gui;
 // Name: EntityListParameterBase constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-EntityListParameterBase::EntityListParameterBase( QWidget* parent, ASN1T_ListOID*& list, const QString& label, const QString& menu )
+EntityListParameterBase::EntityListParameterBase( QObject* parent, ASN1T_ListOID*& list, const QString& name, const QString& menu )
     : QObject( parent )
+    , Param_ABC( name )
     , list_( new ASN1T_ListOID() )
     , n_( list_->n )
     , pIds_( 0 )
@@ -27,12 +28,6 @@ EntityListParameterBase::EntityListParameterBase( QWidget* parent, ASN1T_ListOID
     , menu_( menu )
 {
     list = list_;
-
-    listView_ = new QListView( parent );
-    pPopupMenu_ = new QPopupMenu( listView_ );
-    listView_->addColumn( label );
-    listView_->setResizeMode( QListView::LastColumn );
-    connect( listView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,6 +38,19 @@ EntityListParameterBase::~EntityListParameterBase()
 {
     delete list_;
     delete[] pIds_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityListParameterBase::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void EntityListParameterBase::BuildInterface( QWidget* parent )
+{
+    listView_ = new QListView( parent );
+    pPopupMenu_ = new QPopupMenu( listView_ );
+    listView_->addColumn( GetName() );
+    listView_->setResizeMode( QListView::LastColumn );
+    connect( listView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -34,12 +34,13 @@ class ParamEquipmentList : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamEquipmentList( QWidget* pParent, ASN1T_MaintenancePriorites*& asnListEquipment, const QString& strLabel, const kernel::Resolver< kernel::EquipmentType >& resolver );
+             ParamEquipmentList( QObject* parent, ASN1T_MaintenancePriorites*& asnListEquipment, const QString& strLabel, const kernel::Resolver< kernel::EquipmentType >& resolver );
     virtual ~ParamEquipmentList();
     //@}
 
     //! @name Operations
     //@{
+    virtual void BuildInterface( QWidget* parent );
     virtual void Commit();
     //@}
 
@@ -58,6 +59,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::Resolver< kernel::EquipmentType >& resolver_;
     ASN1T_MaintenancePriorites* pAsnEquipmentList_;
     QTable*                     table_;
     QStringList                 equipmentList_;

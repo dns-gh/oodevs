@@ -24,25 +24,20 @@ using namespace gui;
 // Name: ParamPathList constructor
 // Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-ParamPathList::ParamPathList( QWidget* parent, ASN1T_ListItineraire*& asnPathList, const QString& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent, ActionController& controller )
+ParamPathList::ParamPathList( QObject* parent, ASN1T_ListItineraire*& asnPathList, const QString& name, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent, ActionController& controller )
     : QObject( parent )
+    , Param_ABC( name )
     , layer_( layer )
     , converter_( converter )
     , controller_( controller )
     , agent_( agent )
     , asn_( new ASN1T_ListItineraire() )
     , paths_( 0 )
+    , box_( 0 )
+    , list_( new ParamListView( this, GetName() ) )
     , selected_( 0 )
 {
     asnPathList = asn_;
-
-    box_ = new QVBox( parent );
-    list_ = new ParamListView( box_, label );
-    popup_ = new QPopupMenu( box_ );
-    connect( list_->ListView(), SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChanged( QListViewItem* ) ) );
-    disconnect( list_->ListView(), SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), list_->ListView(), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
-    connect( list_->ListView(), SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
-    NewPath();
 }
 
 // -----------------------------------------------------------------------------
@@ -53,6 +48,21 @@ ParamPathList::~ParamPathList()
 {
     delete asn_;
     delete[] paths_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPathList::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void ParamPathList::BuildInterface( QWidget* parent )
+{
+    box_ = new QVBox( parent );
+    list_->BuildInterface( box_ );
+    popup_ = new QPopupMenu( list_->ListView() );
+    connect( list_->ListView(), SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChanged( QListViewItem* ) ) );
+    disconnect( list_->ListView(), SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), list_->ListView(), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
+    connect( list_->ListView(), SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
+    NewPath();
 }
 
 // -----------------------------------------------------------------------------
@@ -80,6 +90,8 @@ bool ParamPathList::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamPathList::Commit()
 {
+    if( !box_ )
+        InterfaceNotInitialized();
     if( ! ChangeSelection() )
         return;
     

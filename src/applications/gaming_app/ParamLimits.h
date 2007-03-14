@@ -28,8 +28,7 @@ class ParamLimits : public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLimits( QWidget* pParent, ASN1T_Line& limit1, ASN1T_Line& limit2, 
-                          const QString& label1, const QString& label2, const QString& menu1 , const QString& menu2 );
+             ParamLimits( QObject* parent, ASN1T_Line& limit1, ASN1T_Line& limit2, const QString& name1, const QString& name2, const QString& menu1, const QString& menu2 );
     virtual ~ParamLimits();
     //@}
 
@@ -40,6 +39,7 @@ public:
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
     virtual void RegisterIn( kernel::ActionController& controller );
     virtual bool CheckValidity();
+    virtual void BuildInterface( QWidget* parent );
     virtual void Commit();
     //@}
 

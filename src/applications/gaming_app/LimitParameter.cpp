@@ -17,22 +17,17 @@
 // Name: LimitParameter constructor
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-LimitParameter::LimitParameter( QWidget* parent, ASN1T_Line& limit, const QString& label, const QString& menu )
+LimitParameter::LimitParameter( QObject* parent, ASN1T_Line& limit, const QString& name, const QString& menu )
     : QObject   ( parent )
+    , Param_ABC ( name )
     , result_   ( limit )
     , menu_     ( menu )
+    , pLabel_   ( 0 )
     , potential_( 0 )
     , selected_ ( 0 )
 {
 	result_.vecteur_point.n    = 0;
 	result_.vecteur_point.elem = 0;
-
-    QHBox* box = new QHBox( parent );
-    pLabel_ = new gui::RichLabel( label, false, box, "" );
-    entityLabel_ = new QLabel( "---", box );
-    entityLabel_->setMinimumWidth( 100 );
-    entityLabel_->setAlignment( Qt::AlignCenter );
-    entityLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 }
     
 // -----------------------------------------------------------------------------
@@ -42,6 +37,20 @@ LimitParameter::LimitParameter( QWidget* parent, ASN1T_Line& limit, const QStrin
 LimitParameter::~LimitParameter()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitParameter::BuildInterface
+// Created: SBO 2007-03-13
+// -----------------------------------------------------------------------------
+void LimitParameter::BuildInterface( QWidget* parent )
+{
+    QHBox* box = new QHBox( parent );
+    pLabel_ = new gui::RichLabel( GetName(), false, box );
+    entityLabel_ = new QLabel( "---", box );
+    entityLabel_->setMinimumWidth( 100 );
+    entityLabel_->setAlignment( Qt::AlignCenter );
+    entityLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,6 +73,8 @@ bool LimitParameter::CheckValidity()
 // -----------------------------------------------------------------------------
 void LimitParameter::Commit()
 {
+    if( !pLabel_ )
+        InterfaceNotInitialized();
     if( ! selected_ )
     {
         if( IsOptional() )
