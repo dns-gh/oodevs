@@ -12,7 +12,6 @@
 
 #include "clients_kernel/Resolver.h"
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "game_asn/Asn.h"
 
 namespace kernel
 {
@@ -47,10 +46,10 @@ public:
 
     //! @name Operations
     //@{
-    void CreateMissionInterface( MissionInterfaceBuilder& builder, unsigned long id, ASN1T_MsgAutomateOrder&   order );
-    void CreateMissionInterface( MissionInterfaceBuilder& builder, unsigned long id, ASN1T_MsgPionOrder&       order );
-    void CreateMissionInterface( MissionInterfaceBuilder& builder, unsigned long id, ASN1T_MsgPopulationOrder& order );
-    void CreateMissionInterface( MissionInterfaceBuilder& builder, unsigned long id, ASN1T_MsgFragOrder&       order );
+    void CreateAutomatMissionInterface   ( MissionInterfaceBuilder& builder, unsigned long id );
+    void CreateUnitMissionInterface      ( MissionInterfaceBuilder& builder, unsigned long id );
+    void CreatePopulationMissionInterface( MissionInterfaceBuilder& builder, unsigned long id );
+    void CreateFragOrderInterface        ( MissionInterfaceBuilder& builder, unsigned long id );
     //@}
 
 private:
@@ -70,7 +69,7 @@ private:
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& message );
     void ReadMission( xml::xistream& xis, T_MissionTemplates& missions );
-    bool CreateMissionInterface( MissionInterfaceBuilder& builder, unsigned long id, ASN1T_MissionParameters& parameters, T_MissionTemplates& missions );
+    bool CreateMissionInterface( MissionInterfaceBuilder& builder, unsigned long id, T_MissionTemplates& missions );
     //@}
 
 private:

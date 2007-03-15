@@ -11,7 +11,6 @@
 #define __ParamLimaList_h_
 
 #include "Param_ABC.h"
-#include "game_asn/Asn.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 
@@ -38,7 +37,7 @@ class ParamLimaList : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLimaList( QObject* parent, ASN1T_LimasOrder& limas, const QString& label, const QString& menu );
+             ParamLimaList( QObject* parent, const QString& name );
     virtual ~ParamLimaList();
     //@}
 
@@ -47,7 +46,8 @@ public:
     virtual bool CheckValidity();
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void BuildInterface( QWidget* parent );
-    virtual void Commit();
+    virtual void CommitTo( ASN1T_OrderContext& asn ) const;
+    virtual void Clean( ASN1T_OrderContext& asn ) const;
     //@}
 
 private slots:
@@ -69,7 +69,6 @@ private:
 
     //! @name Helpers
     //@{
-    void Clean();
     virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyUpdated( const Lima& ) {};
     virtual void NotifyDeleted( const Lima& entity );
@@ -78,8 +77,6 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_LimasOrder& result_;
-    std::string menu_;
     QListView* list_;
     QPopupMenu* pPopupMenu_;
     const Lima* potential_;

@@ -25,20 +25,11 @@ FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Entity_AB
                                                     , Publisher_ABC& publisher, MissionInterfaceFactory& factory, MissionInterfaceBuilder& builder )
     : MissionInterface_ABC( parent, entity, controller )
     , publisher_          ( publisher )
-    , order_              ( new ASN_MsgFragOrder() )
+    , fragOrder_          ( fragOrder )
 {
-    order_->GetAsnMsg().oid_unite_executante = entity.GetId();
-    order_->GetAsnMsg().frag_order = fragOrder.GetId();
-
-    QLabel* pLabel = new QLabel( fragOrder.GetName(), this );
-    pLabel->setFrameStyle( QFrame::Box | QFrame::Sunken );
-    pLabel->setAlignment( Qt::AlignCenter );
-    QFont font = pLabel->font();
-    font.setBold( true );
-    pLabel->setFont( font );
-
+    CreateTitle( fragOrder.GetName() );
     builder.Begin( *this, entity );
-    factory.CreateMissionInterface( builder, fragOrder.GetId(), order_->GetAsnMsg() );
+    factory.CreateFragOrderInterface( builder, fragOrder.GetId() );
     builder.End();
     CreateOkCancelButtons();
 
@@ -61,5 +52,12 @@ FragmentaryOrderInterface::~FragmentaryOrderInterface()
 // -----------------------------------------------------------------------------
 void FragmentaryOrderInterface::Publish()
 {
-    order_->Send( publisher_, 36999 );
+    ASN_MsgFragOrder asn;
+    ASN1T_MsgFragOrder& order = asn.GetAsnMsg();
+
+    order.oid_unite_executante = GetEntity().GetId();
+    order.frag_order = fragOrder_.GetId();
+    CommitTo( order.parametres );
+    asn.Send( publisher_ );
+    Clean( order.parametres );
 }

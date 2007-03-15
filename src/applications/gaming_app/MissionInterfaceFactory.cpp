@@ -85,45 +85,44 @@ void MissionInterfaceFactory::ReadMission( xml::xistream& xis, T_MissionTemplate
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterfaceFactory::CreateMissionInterface
+// Name: MissionInterfaceFactory::CreateAutomatMissionInterface
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-void MissionInterfaceFactory::CreateMissionInterface( MissionInterfaceBuilder& builder, unsigned long id, ASN1T_MsgAutomateOrder& order )
+void MissionInterfaceFactory::CreateAutomatMissionInterface( MissionInterfaceBuilder& builder, unsigned long id )
 {
-    if( !CreateMissionInterface( builder, id, order.parametres, automatMissions_ ) )
+    if( !CreateMissionInterface( builder, id, automatMissions_ ) )
         throw std::runtime_error( tools::translate( "MissionInterfaceFactory", "Unknown automat mission id '%1'." ).arg( id ).ascii() );
-    builder.AddParameter( order.order_context, false );
-    builder.AddParameter( order.formation, false );
+    builder.AddOrderContext( false );
 }
     
 // -----------------------------------------------------------------------------
-// Name: MissionInterfaceFactory::CreateMissionInterface
+// Name: MissionInterfaceFactory::CreateUnitMissionInterface
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-void MissionInterfaceFactory::CreateMissionInterface( MissionInterfaceBuilder& builder, unsigned long id, ASN1T_MsgPionOrder& order )
+void MissionInterfaceFactory::CreateUnitMissionInterface( MissionInterfaceBuilder& builder, unsigned long id )
 {
-    if( !CreateMissionInterface( builder, id, order.parametres, unitMissions_ ) )
+    if( !CreateMissionInterface( builder, id, unitMissions_ ) )
         throw std::runtime_error( tools::translate( "MissionInterfaceFactory", "Unknown unit mission id '%1'." ).arg( id ).ascii() );
-    builder.AddParameter( order.order_context, true );
+    builder.AddOrderContext( true );
 }
     
 // -----------------------------------------------------------------------------
-// Name: MissionInterfaceFactory::CreateMissionInterface
+// Name: MissionInterfaceFactory::CreatePopulationMissionInterface
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-void MissionInterfaceFactory::CreateMissionInterface( MissionInterfaceBuilder& builder, unsigned long id, ASN1T_MsgPopulationOrder& order )
+void MissionInterfaceFactory::CreatePopulationMissionInterface( MissionInterfaceBuilder& builder, unsigned long id )
 {
-    if( !CreateMissionInterface( builder, id, order.parametres, populationMissions_ ) )
+    if( !CreateMissionInterface( builder, id, populationMissions_ ) )
         throw std::runtime_error( tools::translate( "MissionInterfaceFactory", "Unknown population mission id '%1'." ).arg( id ).ascii() );
 }
     
 // -----------------------------------------------------------------------------
-// Name: MissionInterfaceFactory::CreateMissionInterface
+// Name: MissionInterfaceFactory::CreateFragOrderInterface
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-void MissionInterfaceFactory::CreateMissionInterface( MissionInterfaceBuilder& builder, unsigned long id, ASN1T_MsgFragOrder& order )
+void MissionInterfaceFactory::CreateFragOrderInterface( MissionInterfaceBuilder& builder, unsigned long id )
 {
-    if( !CreateMissionInterface( builder, id, order.parametres, fragOrders_ ) )
+    if( !CreateMissionInterface( builder, id, fragOrders_ ) )
         throw std::runtime_error( tools::translate( "MissionInterfaceFactory", "Unknown frag-order id '%1'." ).arg( id ).ascii() );
 }
 
@@ -131,12 +130,12 @@ void MissionInterfaceFactory::CreateMissionInterface( MissionInterfaceBuilder& b
 // Name: MissionInterfaceFactory::CreateMissionInterface
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-bool MissionInterfaceFactory::CreateMissionInterface( MissionInterfaceBuilder& builder, unsigned long id, ASN1T_MissionParameters& parameters, T_MissionTemplates& missions )
+bool MissionInterfaceFactory::CreateMissionInterface( MissionInterfaceBuilder& builder, unsigned long id, T_MissionTemplates& missions )
 {
     CIT_MissionTemplates it = missions.find( id );
     if( it != missions.end() )
     {
-        it->second->BuildInterface( builder, parameters );
+        it->second->BuildInterface( builder );
         return true;
     }
     return false;

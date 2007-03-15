@@ -10,7 +10,6 @@
 #ifndef __ParamGDH_h_
 #define __ParamGDH_h_
 
-#include "game_asn/Asn.h"
 #include "Param_ABC.h"
 
 // =============================================================================
@@ -26,14 +25,15 @@ class ParamGDH : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamGDH( QObject* parent, ASN1T_GDH*& asn, const QString& name );
+             ParamGDH( QObject* parent, const QString& name );
     virtual ~ParamGDH();
     //@}
 
     //! @name Operations
     //@{
     virtual void BuildInterface( QWidget* parent );
-    virtual void Commit();
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( ASN1T_MissionParameter& asn ) const;
     //@}
 
 private slots:
@@ -52,7 +52,6 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_GDH*     asn_;
     QDateTimeEdit* pDateTimeEdit_;
     QCheckBox*     pCheckbox_;
     //@}

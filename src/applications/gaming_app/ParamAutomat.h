@@ -25,15 +25,13 @@ class ParamAutomat : public EntityParameter< kernel::Automat_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAutomat(  QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu );
+             ParamAutomat( QObject* parent, const QString& name );
     virtual ~ParamAutomat();
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Operations
     //@{
-    ParamAutomat( const ParamAutomat& );            //!< Copy constructor
-    ParamAutomat& operator=( const ParamAutomat& ); //!< Assignement operator
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     //@}
 };
 

@@ -25,19 +25,16 @@ using namespace gui;
 // Name: ParamPath constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamPath::ParamPath( QObject* parent, ASN1T_Itineraire*& asn, const QString& name, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent )
+ParamPath::ParamPath( QObject* parent, const QString& name, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent )
     : QObject( parent )
     , Param_ABC( name )
     , converter_( converter )
     , layer_( layer )
     , positions_( agent.Get< Positions >() )
-    , asn_ ( new ASN1T_Itineraire() )
-    , serializer_( converter, *asn_ )
-    , menu_( menu )
     , pLabel_( 0 )
     , location_( 0 )
 {
-    asn = asn_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +43,6 @@ ParamPath::ParamPath( QObject* parent, ASN1T_Itineraire*& asn, const QString& na
 // -----------------------------------------------------------------------------
 ParamPath::~ParamPath()
 {
-    delete asn_;
     delete location_;
 }
 
@@ -90,22 +86,34 @@ bool ParamPath::CheckValidity()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamPath::Commit
-// Created: AGE 2006-03-31
+// Name: ParamPath::CommitTo
+// Created: SBO 2007-03-15
 // -----------------------------------------------------------------------------
-void ParamPath::Commit()
+void ParamPath::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    if( !pLabel_ )
+    if( ! pLabel_ )
         InterfaceNotInitialized();
-    if( location_ )
-        serializer_.Serialize( *location_ );
+    asn.value.t = T_MissionParameter_value_itineraire;
+    asn.value.u.itineraire = new ASN1T_Itineraire();
+    CommitTo( *asn.value.u.itineraire );
+    asn.null_value = asn.value.u.itineraire->vecteur_point.n ? 0 : 1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPath::Clean
+// Created: SBO 2007-03-15
+// -----------------------------------------------------------------------------
+void ParamPath::Clean( ASN1T_MissionParameter& asn ) const
+{
+    // $$$$ SBO 2007-03-15: clean coords!
+    delete asn.value.u.itineraire;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ParamPath::CommitTo
 // Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-void ParamPath::CommitTo( ASN1T_Itineraire& destination )
+void ParamPath::CommitTo( ASN1T_Itineraire& destination ) const
 {
     if( location_ )
     {
@@ -120,7 +128,7 @@ void ParamPath::CommitTo( ASN1T_Itineraire& destination )
 // -----------------------------------------------------------------------------
 void ParamPath::NotifyContextMenu( const kernel::Nothing&, ContextMenu& menu )
 {   
-    menu.InsertItem( "Parameter", menu_, this, SLOT( StartPath() ) );
+    menu.InsertItem( "Parameter", GetName(), this, SLOT( StartPath() ) );
 }
 
 // -----------------------------------------------------------------------------

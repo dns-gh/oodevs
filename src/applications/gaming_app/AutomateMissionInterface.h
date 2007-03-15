@@ -17,7 +17,6 @@ namespace kernel
     class Mission;
 }
 
-class ASN_MsgAutomateOrder;
 class Publisher_ABC;
 class MissionInterfaceFactory;
 class MissionInterfaceBuilder;
@@ -53,8 +52,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Publisher_ABC&        publisher_;
-    ASN_MsgAutomateOrder* order_;
+    Publisher_ABC&         publisher_;
+    const kernel::Mission& mission_;
     //@}
 };
 

@@ -13,23 +13,21 @@
 #include "gaming/Lima.h"
 #include "gaming/Tools.h"
 #include "clients_gui/ValuedListItem.h"
+#include "game_asn/Asn.h"
 
 using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: ParamLimaList constructor
 // Created: SBO 2006-11-14
-// -----------------------------------------------------------------------------
-ParamLimaList::ParamLimaList( QObject* parent, ASN1T_LimasOrder& limas, const QString& name, const QString& menu )
+// ----------------------------------------------------------------------------
+ParamLimaList::ParamLimaList( QObject* parent, const QString& name )
     : QObject    ( parent )
     , Param_ABC  ( name )
-    , result_    ( limas )
-    , menu_      ( menu )
     , list_      ( 0 )
     , potential_ ( 0 )
 {
-    result_.n = 0;
-    result_.elem = 0;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +36,7 @@ ParamLimaList::ParamLimaList( QObject* parent, ASN1T_LimasOrder& limas, const QS
 // -----------------------------------------------------------------------------
 ParamLimaList::~ParamLimaList()
 {
-    Clean();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -72,37 +70,50 @@ void ParamLimaList::BuildInterface( QWidget* parent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamLimaList::Commit
-// Created: SBO 2006-11-14
+// Name: ParamLimaList::CommitTo
+// Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
-void ParamLimaList::Commit()
+void ParamLimaList::CommitTo( ASN1T_OrderContext& asn ) const
 {
     if( !list_ )
         InterfaceNotInitialized();
+    asn.limas.n = 0;
+    asn.limas.elem = 0;
     if( ! list_->childCount() )
         return;
-    
-    Clean();
-    result_.n = list_->childCount();
-    result_.elem = new ASN1T_LimaOrder[result_.n];
+
+    ASN1T_LimasOrder& list = asn.limas;
+    list.n = list_->childCount();
+    list.elem = new ASN1T_LimaOrder[list.n];
 
     ValuedListItem* item = (ValuedListItem*)( list_->firstChild() );
     unsigned int i = 0;
     while( item )
     {
         QStringList functions = QStringList::split( ',', item->text( 1 ) );
-        result_.elem[i].fonctions.n = functions.count();
-        if( result_.elem[i].fonctions.n > 0 )
+        list.elem[i].fonctions.n = functions.count();
+        if( list.elem[i].fonctions.n > 0 )
         {
-            result_.elem[i].fonctions.elem = new ASN1T_EnumTypeLima[result_.elem[i].fonctions.n];
-            for( unsigned int j = 0; j < result_.elem[i].fonctions.n; ++j )
-                result_.elem[i].fonctions.elem[j] = (ASN1T_EnumTypeLima)tools::FromString( functions[j] );
+            list.elem[i].fonctions.elem = new ASN1T_EnumTypeLima[list.elem[i].fonctions.n];
+            for( unsigned int j = 0; j < list.elem[i].fonctions.n; ++j )
+                list.elem[i].fonctions.elem[j] = (ASN1T_EnumTypeLima)tools::FromString( functions[j] );
         }
         const Lima* lima = item->GetValue< const Lima >();
-        lima->CopyTo( result_.elem[i].lima );
+        lima->CopyTo( list.elem[i].lima );
         item = (ValuedListItem*)( item->nextSibling() );
         ++i;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLimaList::Clean
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void ParamLimaList::Clean( ASN1T_OrderContext& asn ) const
+{
+    for( unsigned int i = 0; i < asn.limas.n; ++i )
+        delete[] asn.limas.elem[i].fonctions.elem;
+    delete[] asn.limas.elem;
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +189,7 @@ void ParamLimaList::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, k
             int nId = limaMenu->insertItem( tools::ToString( (E_FuncLimaType)n ), this, SLOT( MenuItemValidated( int ) ) ); 
             limaMenu->setItemParameter( nId, n );
         }
-        menu.InsertItem( "Parameter", menu_.c_str(), limaMenu );
+        menu.InsertItem( "Parameter", GetName(), limaMenu );
     }
 }
 
@@ -191,17 +202,6 @@ void ParamLimaList::NotifyDeleted( const Lima& entity )
     delete gui::FindItem( &entity, list_->firstChild() );
     if( &entity == potential_ )
         potential_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLimaList::Clean
-// Created: SBO 2006-11-14
-// -----------------------------------------------------------------------------
-void ParamLimaList::Clean()
-{
-    for( unsigned int i = 0; i < result_.n; ++i )
-        delete[] result_.elem[i].fonctions.elem;
-    delete[] result_.elem;
 }
 
 // -----------------------------------------------------------------------------

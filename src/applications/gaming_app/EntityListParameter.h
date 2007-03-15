@@ -29,14 +29,13 @@ class EntityListParameterBase : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityListParameterBase( QObject* parent, ASN1T_ListOID*& list, const QString& name, const QString& menu );
+             EntityListParameterBase( QObject* parent, const QString& name );
     virtual ~EntityListParameterBase();
     //@}
 
     //! @name Operations
     //@{
     virtual bool CheckValidity();
-    virtual void Commit();
     virtual void BuildInterface( QWidget* parent );
     //@}
 
@@ -55,7 +54,9 @@ protected:
     //@{
     void AddToMenu( kernel::ContextMenu& menu );
     virtual bool Invalid();
-    virtual unsigned long GetId( gui::ValuedListItem* item ) = 0;
+    virtual unsigned long GetId( gui::ValuedListItem* item ) const = 0;
+    virtual void CommitTo( ASN1T_ListOID*& asn ) const;
+    virtual void Clean( ASN1T_ListOID*& asn ) const;
     //@}
 
 protected:
@@ -67,11 +68,6 @@ protected:
 private:
     //! @name Member data
     //@{
-    ASN1T_ListOID* list_;
-    unsigned int& n_;
-    ASN1T_OID* pIds_;
-    ASN1T_OID*& ids_;
-    std::string menu_;
     QPopupMenu* pPopupMenu_;
     //@}
 };
@@ -91,7 +87,7 @@ class EntityListParameter : public EntityListParameterBase
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityListParameter( QObject* pParent, ASN1T_ListOID*& list, const QString& name, const QString& menu );
+             EntityListParameter( QObject* pParent, const QString& name );
     virtual ~EntityListParameter();
     //@}
 
@@ -109,7 +105,7 @@ protected:
     virtual void MenuItemValidated();
     virtual void NotifyUpdated( const ConcreteEntity& ) {};
     virtual void NotifyDeleted( const ConcreteEntity& entity );
-    virtual unsigned long GetId( gui::ValuedListItem* item );
+    virtual unsigned long GetId( gui::ValuedListItem* item ) const;
     //@}
 
 private:

@@ -11,7 +11,6 @@
 #include "MissionInterface_ABC.h"
 #include "moc_MissionInterface_ABC.cpp"
 
-#include "OptionalParamFunctor_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Viewport_ABC.h"
@@ -22,10 +21,10 @@ using namespace kernel;
 // Name: MissionInterface_ABC constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, Entity_ABC& agent, ActionController& controller )
+MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, Entity_ABC& entity, ActionController& controller )
     : QVBox      ( parent )
     , controller_( controller )
-    , agent_     ( agent )
+    , entity_    ( entity )
 {
     setMargin( 5 );
     setSpacing( 4 );
@@ -39,9 +38,11 @@ MissionInterface_ABC::~MissionInterface_ABC()
 {
     for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
         (*it)->RemoveFromController();
-    for( CIT_OptionalFunctors it = optionalFunctors_.begin(); it != optionalFunctors_.end(); ++it )
-        delete *it;
+    for( CIT_Parameters it = orderContext_.begin(); it != orderContext_.end(); ++it )
+        (*it)->RemoveFromController();
     for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
+        delete *it;
+    for( CIT_Parameters it = orderContext_.begin(); it != orderContext_.end(); ++it )
         delete *it;
 }
 
@@ -54,6 +55,8 @@ bool MissionInterface_ABC::CheckValidity()
     bool b = true;
     for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
         b = (*it)->CheckValidity() && b;
+    for( CIT_Parameters it = orderContext_.begin(); it != orderContext_.end(); ++it )
+        b = (*it)->CheckValidity() && b;
     return b;
 }
 
@@ -63,7 +66,30 @@ bool MissionInterface_ABC::CheckValidity()
 // -----------------------------------------------------------------------------
 bool MissionInterface_ABC::IsEmpty() const
 {
-    return parameters_.empty();
+    return parameters_.empty() && orderContext_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::GetEntity
+// Created: SBO 2007-03-15
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC& MissionInterface_ABC::GetEntity() const
+{
+    return entity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::CreateTitle
+// Created: SBO 2007-03-15
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::CreateTitle( const QString& title )
+{
+    QLabel* label = new QLabel( title, this );
+    label->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    label->setAlignment( Qt::AlignCenter );
+    QFont font = label->font();
+    font.setBold( true );
+    label->setFont( font );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,22 +111,69 @@ void MissionInterface_ABC::CreateOkCancelButtons()
 // Name: MissionInterface_ABC::AddParameter
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::AddParameter( Param_ABC& parameter, OptionalParamFunctor_ABC* pOptional )
+void MissionInterface_ABC::AddParameter( Param_ABC& parameter, bool optional )
 {
     parameters_.push_back( &parameter );
-    parameter.SetOptional( pOptional );
+    parameter.SetOptional( optional );
     parameter.BuildInterface( this );
     parameter.RegisterIn( controller_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::Commit
-// Created: AGE 2006-03-31
+// Name: MissionInterface_ABC::AddOrderContext
+// Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::Commit()
+void MissionInterface_ABC::AddOrderContext( Param_ABC& parameter, bool optional )
 {
-    for( CIT_Parameters it = parameters_.begin() ; it != parameters_.end() ; ++it )
-        (*it)->Commit();
+    orderContext_.push_back( &parameter );
+    parameter.SetOptional( optional );
+    parameter.BuildInterface( this );
+    parameter.RegisterIn( controller_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::CommitTo
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::CommitTo( ASN1T_MissionParameters& asn ) const
+{
+    asn.n = parameters_.size();
+    asn.elem = new ASN1T_MissionParameter[asn.n];
+    unsigned int i = 0;
+    for( CIT_Parameters it = parameters_.begin() ; it != parameters_.end(); ++it, ++i )
+        (*it)->CommitTo( asn.elem[i] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::CommitTo
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::CommitTo( ASN1T_OrderContext& asn ) const
+{
+    for( CIT_Parameters it = orderContext_.begin() ; it != orderContext_.end(); ++it )
+        (*it)->CommitTo( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::Clean
+// Created: SBO 2007-03-15
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::Clean( ASN1T_MissionParameters& asn ) const
+{
+    unsigned int i = 0;
+    for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it, ++i )
+        (*it)->Clean( asn.elem[i] );
+    delete[] asn.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::Clean
+// Created: SBO 2007-03-15
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::Clean( ASN1T_OrderContext& asn ) const
+{
+    for( CIT_Parameters it = orderContext_.begin(); it != orderContext_.end(); ++it )
+        (*it)->Clean( asn );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +184,13 @@ void MissionInterface_ABC::Draw( const GlTools_ABC& tools, Viewport_ABC& extent 
 {
     for( CIT_Parameters it = parameters_.begin() ; it != parameters_.end() ; ++it )
     {
-        const geometry::Point2f p = agent_.Get< Positions >().GetPosition();
+        const geometry::Point2f p = entity_.Get< Positions >().GetPosition();
+        extent.SetHotpoint( p );
+        (*it)->Draw( p, extent, tools );
+    }
+    for( CIT_Parameters it = orderContext_.begin() ; it != orderContext_.end() ; ++it )
+    {
+        const geometry::Point2f p = entity_.Get< Positions >().GetPosition();
         extent.SetHotpoint( p );
         (*it)->Draw( p, extent, tools );
     }
@@ -125,7 +204,6 @@ void MissionInterface_ABC::OnOk()
 {
     if( !CheckValidity() )
         return;
-    Commit();
     Publish();
     parentWidget()->hide();
 }

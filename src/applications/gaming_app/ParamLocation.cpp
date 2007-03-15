@@ -25,19 +25,15 @@ using namespace gui;
 // Name: ParamLocation constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamLocation::ParamLocation( ASN1T_Localisation*& asn, const QString& name, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+ParamLocation::ParamLocation( const QString& name, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : Param_ABC  ( name )
     , converter_ ( converter )
     , layer_     ( layer )
-    , asn_       ( new ASN1T_Localisation() )
-    , serializer_( converter, *asn_ )
     , controller_( 0 )
     , pLabel_    ( 0 )
     , location_  ( 0 )
 {
-    asn = asn_;
-    asn_->vecteur_point.elem = 0;
-    asn_->vecteur_point.n = 0;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +42,6 @@ ParamLocation::ParamLocation( ASN1T_Localisation*& asn, const QString& name, Par
 // -----------------------------------------------------------------------------
 ParamLocation::~ParamLocation()
 {
-    delete asn_;
     delete location_;
 }
 
@@ -56,14 +51,12 @@ ParamLocation::~ParamLocation()
 // -----------------------------------------------------------------------------
 void ParamLocation::BuildInterface( QWidget* parent )
 {
-    QHBox* box = new QHBox( parent );
-    box->setSpacing( 5 );
-    pLabel_ = new RichLabel( GetName(), false, box );
-    pShapeLabel_ = new QLabel( "---", box );
+    pLabel_ = new RichLabel( GetName(), false, parent );
+    pShapeLabel_ = new QLabel( "---", parent );
     pShapeLabel_->setMinimumWidth( 100 );
     pShapeLabel_->setAlignment( Qt::AlignCenter );
     pShapeLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
-    creator_ = new LocationCreator( box, GetName(), layer_, *this );
+    creator_ = new LocationCreator( parent, GetName(), layer_, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,17 +96,42 @@ bool ParamLocation::CheckValidity()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamLocation::Commit
-// Created: AGE 2006-03-31
+// Name: ParamLocation::CommitTo
+// Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
-void ParamLocation::Commit()
+void ParamLocation::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    if( !pLabel_ )
+    if( ! pLabel_ )
         InterfaceNotInitialized();
-    if( location_ )
-        serializer_.Serialize( *location_ );
+    asn.value.t = T_MissionParameter_value_localisation;
+    asn.value.u.localisation = new ASN1T_Localisation();
+    CommitTo( *asn.value.u.localisation );
+    asn.null_value = asn.value.u.localisation->vecteur_point.n ? 0 : 1;
 }
-    
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocation::Clean
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void ParamLocation::Clean( ASN1T_MissionParameter& asn ) const
+{
+    // $$$$ SBO 2007-03-15: clean coords
+    delete asn.value.u.localisation;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocation::CommitTo
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void ParamLocation::CommitTo( ASN1T_Localisation& asn ) const
+{
+    if( location_ )
+    {
+        LocationSerializer serializer( converter_ );
+        serializer.Serialize( *location_, asn );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ParamLocation::Handle
 // Created: AGE 2006-03-31
@@ -136,17 +154,4 @@ void ParamLocation::Draw( const geometry::Point2f& , const Viewport_ABC& extent,
 {
     if( location_ )
         location_->Draw( tools );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLocation::CommitTo
-// Created: SBO 2006-06-28
-// -----------------------------------------------------------------------------
-void ParamLocation::CommitTo( ASN1T_Localisation& destination )
-{
-    if( location_ )
-    {
-        LocationSerializer serializer( converter_ );
-        serializer.Serialize( *location_, destination );
-    }
 }

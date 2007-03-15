@@ -34,8 +34,13 @@ class ParamObjectKnowledge : public EntityParameter< ObjectKnowledge_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObjectKnowledge( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamObjectKnowledge( QObject* parent, const QString& name, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
     virtual ~ParamObjectKnowledge();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     //@}
 
 private:

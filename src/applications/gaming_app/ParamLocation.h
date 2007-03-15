@@ -38,7 +38,7 @@ class ParamLocation : public Param_ABC, private gui::ShapeHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLocation( ASN1T_Localisation*& asn, const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamLocation( const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ParamLocation();
     //@}
 
@@ -48,9 +48,12 @@ public:
     virtual void RegisterIn( kernel::ActionController& controller );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
-    virtual void Commit();
     virtual void Handle( kernel::Location_ABC& location );
-    void CommitTo( ASN1T_Localisation& destination );
+
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    void CommitTo( ASN1T_Localisation& asn ) const;
+
     virtual void BuildInterface( QWidget* parent );
     //@}
 
@@ -66,8 +69,6 @@ private:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     gui::ParametersLayer& layer_;
-    ASN1T_Localisation* asn_;
-    LocationSerializer serializer_;
     gui::LocationCreator* creator_;
     gui::RichLabel* pLabel_;
     QLabel* pShapeLabel_;

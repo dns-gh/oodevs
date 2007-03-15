@@ -33,9 +33,8 @@ public:
     //! @name Operations
     //@{
     virtual void BuildInterface( QWidget* parent );
-    virtual void Commit();
     bool Invalid();
-    QListView* ListView(); // $$$$ SBO 2007-03-13: bof bof
+    QListView* ListView() const; // $$$$ SBO 2007-03-13: bof bof
     //@}
 
 public slots:

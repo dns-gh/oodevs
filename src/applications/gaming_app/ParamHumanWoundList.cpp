@@ -11,6 +11,7 @@
 #include "ParamHumanWoundList.h"
 #include "moc_ParamHumanWoundList.cpp"
 #include "clients_gui/ExclusiveComboTableItem.h"
+#include "game_asn/Asn.h"
 
 #include "ENT/ENT_Tr.h"
 
@@ -20,13 +21,12 @@ using namespace gui;
 // Name: ParamHumanWoundList constructor
 // Created: SBO 2005-09-27
 // -----------------------------------------------------------------------------
-ParamHumanWoundList::ParamHumanWoundList( QObject* parent, ASN1T_SantePriorites*& asnListHumanWound, const QString& /*strLabel*/ )
+ParamHumanWoundList::ParamHumanWoundList( QObject* parent, const QString& name )
     : QObject( parent )
-    , Param_ABC( tr( "Injuries" ) )
-    , pAsnHumanWoundList_( new ASN1T_SantePriorites() )
+    , Param_ABC( name )
     , table_( 0 )
 {
-    asnListHumanWound = pAsnHumanWoundList_;
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -64,26 +64,37 @@ void ParamHumanWoundList::BuildInterface( QWidget* parent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamHumanWoundList::Commit
-// Created: SBO 2006-06-27
+// Name: ParamHumanWoundList::CommitTo
+// Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
-void ParamHumanWoundList::Commit()
+void ParamHumanWoundList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     if( !table_ )
         InterfaceNotInitialized();
-    if( !pAsnHumanWoundList_ || table_->numRows() <= 1 )
+    asn.value.t = T_MissionParameter_value_santePriorites;
+    ASN1T_SantePriorites*& list = asn.value.u.santePriorites = new ASN1T_SantePriorites();
+    list->n = 0;
+    list->elem = 0;
+    asn.null_value = table_->numRows() <= 1 ? 1 : 0;
+    if( asn.null_value )
         return;
-    pAsnHumanWoundList_->n = table_->numRows() - 1;
-
-    ASN1T_EnumHumanWound* pAsnHumanWound = new ASN1T_EnumHumanWound[ pAsnHumanWoundList_->n ]; //$$$ RAM
-    for( unsigned int i = 0; i < pAsnHumanWoundList_->n; ++i )
+    list->n = table_->numRows() - 1;
+    list->elem = new ASN1T_EnumHumanWound[ list->n ];
+    for( unsigned int i = 0; i < list->n; ++i )
     {
         QComboTableItem* comboItem  = static_cast< QComboTableItem* >( table_->item( i, 0 ) );
         if( comboItem )
-            pAsnHumanWound[i] = ( ASN1T_EnumHumanWound )ENT_Tr::ConvertToHumanWound( comboItem->currentText().ascii() );
+            list->elem[i] = ( ASN1T_EnumHumanWound )ENT_Tr::ConvertToHumanWound( comboItem->currentText().ascii() );
     }
+}
 
-    pAsnHumanWoundList_->elem = pAsnHumanWound;
+// -----------------------------------------------------------------------------
+// Name: ParamHumanWoundList::Clean
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void ParamHumanWoundList::Clean( ASN1T_MissionParameter& asn ) const
+{
+    delete[] asn.value.u.santePriorites;
 }
 
 // -----------------------------------------------------------------------------

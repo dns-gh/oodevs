@@ -19,8 +19,8 @@ using namespace kernel;
 // Name: ParamAgentKnowledgeList constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamAgentKnowledgeList::ParamAgentKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeAgent*& asn, const QString& label, const QString& menu, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
-    : EntityListParameter< AgentKnowledge_ABC >( pParent, (ASN1T_ListOID*&)asn, label, menu )
+ParamAgentKnowledgeList::ParamAgentKnowledgeList( QObject* parent, const QString& name, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
+    : EntityListParameter< AgentKnowledge_ABC >( parent, name )
     , converter_( converter )
     , agent_    ( agent )
 {
@@ -34,6 +34,26 @@ ParamAgentKnowledgeList::ParamAgentKnowledgeList( QWidget* pParent, ASN1T_ListKn
 ParamAgentKnowledgeList::~ParamAgentKnowledgeList()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamAgentKnowledgeList::CommitTo
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void ParamAgentKnowledgeList::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.value.t = T_MissionParameter_value_listKnowledgeAgent;
+    EntityListParameter< AgentKnowledge_ABC >::CommitTo( (ASN1T_ListOID*&)asn.value.u.listKnowledgeAgent );
+    asn.null_value = asn.value.u.listKnowledgeAgent->n ? 0 : 1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamAgentKnowledgeList::Clean
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void ParamAgentKnowledgeList::Clean( ASN1T_MissionParameter& asn ) const
+{
+    EntityListParameter< AgentKnowledge_ABC >::Clean( (ASN1T_ListOID*&)asn.value.u.listKnowledgeAgent );
 }
 
 // -----------------------------------------------------------------------------

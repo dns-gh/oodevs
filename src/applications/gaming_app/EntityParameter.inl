@@ -12,8 +12,8 @@
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, ASN1T_OID& id, const QString& label, const QString& menu )
-    : EntityParameterBase( parent, id, label, menu )
+EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const QString& label )
+    : EntityParameterBase( parent, label )
     , potential_         ( 0 )
     , selected_          ( 0 )
 {
@@ -54,28 +54,13 @@ bool EntityParameter< ConcreteEntity >::CheckValidity()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityParameter::Commit
-// Created: AGE 2006-03-14
-// -----------------------------------------------------------------------------
-template< typename ConcreteEntity >
-void EntityParameter< ConcreteEntity >::Commit()
-{
-    if( ! selected_ )
-    {
-        if( IsOptional() )
-            return;
-        throw std::runtime_error( "Entity not set!" );
-    }
-    SetId( selected_->GetId() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: EntityParameter::CommitTo
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityParameter< ConcreteEntity >::CommitTo( ASN1T_OID& asn )
+void EntityParameter< ConcreteEntity >::CommitTo( ASN1T_OID& asn ) const
 {
+    asn = 0;
     if( ! selected_ )
     {
         if( IsOptional() )

@@ -31,15 +31,14 @@ class ParamAutomatList : public EntityListParameter< kernel::Automat_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAutomatList( QWidget* pParent, ASN1T_ListAutomate*& asn, const QString& label, const QString& menu );
+             ParamAutomatList( QObject* parent, const QString& name );
     virtual ~ParamAutomatList();
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Operations
     //@{
-    ParamAutomatList( const ParamAutomatList& );            //!< Copy constructor
-    ParamAutomatList& operator=( const ParamAutomatList& ); //!< Assignement operator
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( ASN1T_MissionParameter& asn ) const;
     //@}
 };
 

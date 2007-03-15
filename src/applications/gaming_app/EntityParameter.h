@@ -34,7 +34,7 @@ class EntityParameterBase : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityParameterBase( QObject* parent, ASN1T_OID& id, const QString& name, const QString& menu );
+             EntityParameterBase( QObject* parent, const QString& name );
     virtual ~EntityParameterBase();
     //@}
 
@@ -55,7 +55,6 @@ protected:
     //! @name Helpers
     //@{
     bool Invalid();
-    void SetId( ASN1T_OID id );
     void AddToMenu( kernel::ContextMenu& menu );
     void Display( const QString& what );
     //@}
@@ -63,8 +62,6 @@ protected:
 private:
     //! @name Member data
     //@{
-    ASN1T_OID& id_;
-    std::string menu_;
     gui::RichLabel* pLabel_;
     QLabel* entityLabel_; // $$$$ AGE 2006-03-14: LabelDisplayer ?
     //@}
@@ -84,15 +81,14 @@ class EntityParameter : public EntityParameterBase
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityParameter( QObject* parent, ASN1T_OID& id, const QString& name, const QString& menu );
+             EntityParameter( QObject* parent, const QString& name );
     virtual ~EntityParameter();
     //@}
 
     //! @name Operations
     //@{
     virtual bool CheckValidity();
-    virtual void Commit();
-    void CommitTo( ASN1T_OID& asn );
+    void CommitTo( ASN1T_OID& asn ) const;
     //@}
 
 private:

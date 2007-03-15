@@ -31,13 +31,14 @@ class ParamDotationDType : public ParamComboBox< ASN1T_TypeDotationTrancheD >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamDotationDType( ASN1T_TypeDotationTrancheD& asnListEquipment, const QString& name, const kernel::Resolver_ABC< kernel::DotationType >& resolver );
+             ParamDotationDType( const QString& name, const kernel::Resolver_ABC< kernel::DotationType >& resolver );
     virtual ~ParamDotationDType();
     //@}
 
     //! @name Operations
     //@{
     virtual void BuildInterface( QWidget* parent );
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     //@}
 
 private:

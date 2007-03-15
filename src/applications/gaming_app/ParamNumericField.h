@@ -30,20 +30,19 @@ class ParamNumericField : public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamNumericField( QObject* parent, ASN1INT& asn, const QString& label, int min = 0, int max = 9999 );
-             ParamNumericField( QObject* parent, ASN1REAL& asn, const QString& label, float min = 0., float max = 9999., int precision = 2 );
+             ParamNumericField( const QString& name, bool isReal );
     virtual ~ParamNumericField();
     //@}
 
     //! @name Operations
     //@{
     virtual bool CheckValidity();
-    virtual void Commit();
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    void CommitTo( ASN1REAL& asn ) const;
     virtual void Show();
     virtual void Hide();
     virtual void BuildInterface( QWidget* parent );
-    void CommitTo( ASN1INT& asn );
-    void CommitTo( ASN1REAL& asn );
+    void SetLimits( float min, float max );
     //@}
 
 private:
@@ -56,9 +55,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1INT*  int_;
-    ASN1REAL* real_;
-    QValidator* validator_;
+    bool isReal_;
     gui::RichLabel* pLabel_;
     QLineEdit* pEdit_;
     //@}

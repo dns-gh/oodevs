@@ -21,6 +21,8 @@ namespace kernel
 }
 
 class OptionalParamFunctor_ABC;
+struct ASN1T_MissionParameter;
+struct ASN1T_OrderContext;
 
 // =============================================================================
 /** @class  Param_ABC
@@ -42,27 +44,30 @@ public:
     //@{
     virtual void RemoveFromController();
     virtual void RegisterIn( kernel::ActionController& controller );
-    virtual void SetOptional( OptionalParamFunctor_ABC* optional );
+    virtual void SetOptional( bool optional );
 
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void BuildInterface( QWidget* parent ) = 0;
     virtual bool CheckValidity();
-    virtual void Commit() = 0;
     virtual void Show() {}
     virtual void Hide() {}
+
+    virtual void CommitTo( ASN1T_MissionParameter& ) const {};
+    virtual void Clean( ASN1T_MissionParameter& ) const {};
+    virtual void CommitTo( ASN1T_OrderContext& ) const {};
+    virtual void Clean( ASN1T_OrderContext& ) const {};
     //@}
 
     //! @name Accessors
     //@{
     virtual QString GetName() const;
-    void SetOptionalPresent();
     bool IsOptional() const;
     //@}
 
 protected:
     //! @name Helpers
     //@{
-    void InterfaceNotInitialized();
+    void InterfaceNotInitialized() const;
     //@}
 
 private:
@@ -76,7 +81,7 @@ private:
     //! @name Member data
     //@{
     QString name_;
-    OptionalParamFunctor_ABC* pOptional_;
+    bool optional_;
     kernel::ActionController* controller_;
     //@}
 };

@@ -10,7 +10,6 @@
 #ifndef __ParamBool_h_
 #define __ParamBool_h_
 
-#include "game_asn/Asn.h"
 #include "Param_ABC.h"
 
 // =============================================================================
@@ -25,14 +24,14 @@ class ParamBool : public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamBool( ASN1BOOL& asn, const QString& name, bool defaultValue = false );
+             ParamBool( const QString& name, bool defaultValue = false );
     virtual ~ParamBool();
     //@}
 
     //! @name Operations
     //@{
     virtual void BuildInterface( QWidget* parent );
-    virtual void Commit();
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     //@}
 
 private:
@@ -45,7 +44,6 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1BOOL& asn_;
     const bool default_;
     QCheckBox* checkBox_;
     //@}

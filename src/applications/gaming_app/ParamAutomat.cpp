@@ -16,8 +16,8 @@ using namespace kernel;
 // Name: ParamAutomat constructor
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-ParamAutomat::ParamAutomat( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu )
-    : EntityParameter< Automat_ABC >( pParent, id, label, menu )
+ParamAutomat::ParamAutomat( QObject* parent, const QString& name )
+    : EntityParameter< Automat_ABC >( parent, name )
 {
     // NOTHING
 }
@@ -29,4 +29,15 @@ ParamAutomat::ParamAutomat( QWidget* pParent, ASN1T_OID& id, const QString& labe
 ParamAutomat::~ParamAutomat()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamAutomat::CommitTo
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void ParamAutomat::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.value.t = T_MissionParameter_value_automate;
+    EntityParameter< Automat_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.automate );
+    asn.null_value = asn.value.u.automate ? 0 : 1;
 }

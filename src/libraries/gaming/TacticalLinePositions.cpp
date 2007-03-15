@@ -152,6 +152,11 @@ void TacticalLinePositions::WriteGeometry( ASN1T_Line& line ) const
 {
     line.type               = EnumTypeLocalisation::line;
     line.vecteur_point.n    = pointList_.size();
+    if( pointList_.empty() )
+    {
+        line.vecteur_point.elem = 0;
+        return;
+    }
     line.vecteur_point.elem = new ASN1T_CoordUTM[ pointList_.size() ];
 
     unsigned int i = 0;

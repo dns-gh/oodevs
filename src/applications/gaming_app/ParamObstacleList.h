@@ -41,14 +41,15 @@ class ParamObstacleList : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObstacleList( QObject* parent, ASN1T_ListMissionGenObject*& asnObjectList, const QString& label, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& controller );
+             ParamObstacleList( QObject* parent, const QString& label, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& controller );
     virtual ~ParamObstacleList();
     //@}
 
     //! @name Operations
     //@{
     virtual bool CheckValidity();
-    virtual void Commit();
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( ASN1T_MissionParameter& asn ) const;
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void BuildInterface( QWidget* parent );
     //@}
@@ -73,13 +74,10 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::CoordinateConverter_ABC& converter_;
     kernel::ActionController& controller_;
     const kernel::ObjectTypes& objectTypes_;
     gui::ParametersLayer& layer_;
-    const kernel::CoordinateConverter_ABC& converter_;
-    
-    ASN1T_ListMissionGenObject* asn_;
-    ASN1T_MissionGenObject* objects_;
     QVBox* box_;
     ParamListView* list_;
     gui::ValuedListItem* selected_;

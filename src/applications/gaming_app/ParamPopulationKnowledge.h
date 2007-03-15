@@ -34,8 +34,13 @@ class ParamPopulationKnowledge : public EntityParameter< PopulationKnowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPopulationKnowledge( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamPopulationKnowledge( QObject* parent, const QString& name, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
     virtual ~ParamPopulationKnowledge();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     //@}
 
 private:

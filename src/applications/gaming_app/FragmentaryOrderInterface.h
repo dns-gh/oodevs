@@ -23,7 +23,10 @@ class MissionInterfaceFactory;
 class MissionInterfaceBuilder;
 
 // =============================================================================
-// Created: APE 2004-05-12
+/** @class  FragmentaryOrderInterface
+    @brief  Fragmentatry order interface builder
+*/
+// Created: SBO 2006-11-22
 // =============================================================================
 class FragmentaryOrderInterface : public MissionInterface_ABC
 {
@@ -50,8 +53,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Publisher_ABC&    publisher_;
-    ASN_MsgFragOrder* order_;
+    Publisher_ABC& publisher_;
+    const kernel::FragOrder& fragOrder_;
     //@}
 };
 

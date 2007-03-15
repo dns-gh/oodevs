@@ -19,11 +19,9 @@ using namespace gui;
 // Name: EntityParameterBase constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-EntityParameterBase::EntityParameterBase( QObject* parent, ASN1T_OID& id, const QString& name, const QString& menu )
+EntityParameterBase::EntityParameterBase( QObject* parent, const QString& name )
     : QObject( parent )
     , Param_ABC( name )
-    , id_  ( id )
-    , menu_( menu )
 {
     // NOTHING
 }
@@ -43,9 +41,8 @@ EntityParameterBase::~EntityParameterBase()
 // -----------------------------------------------------------------------------
 void EntityParameterBase::BuildInterface( QWidget* parent )
 {
-    QHBox* box = new QHBox( parent );
-    pLabel_ = new RichLabel( GetName(), false, box );
-    entityLabel_ = new QLabel( "---", box );
+    pLabel_ = new RichLabel( GetName(), false, parent );
+    entityLabel_ = new QLabel( "---", parent );
     entityLabel_->setMinimumWidth( 100 );
     entityLabel_->setAlignment( Qt::AlignCenter );
     entityLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
@@ -57,7 +54,8 @@ void EntityParameterBase::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 void EntityParameterBase::Show()
 {
-    pLabel_->parentWidget()->show();
+    pLabel_->show();
+    entityLabel_->show();
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +64,8 @@ void EntityParameterBase::Show()
 // -----------------------------------------------------------------------------
 void EntityParameterBase::Hide()
 {
-    pLabel_->parentWidget()->hide();
+    pLabel_->hide();
+    entityLabel_->hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -80,21 +79,12 @@ bool EntityParameterBase::Invalid()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityParameterBase::SetId
-// Created: AGE 2006-03-14
-// -----------------------------------------------------------------------------
-void EntityParameterBase::SetId( ASN1T_OID id )
-{
-    id_ = id;
-}
-
-// -----------------------------------------------------------------------------
 // Name: EntityParameterBase::AddToMenu
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 void EntityParameterBase::AddToMenu( ContextMenu& menu )
 {
-    menu.InsertItem( "Parameter", menu_.c_str(), this, SLOT( MenuItemValidated() ) );
+    menu.InsertItem( "Parameter", GetName(), this, SLOT( MenuItemValidated() ) );
 }
 
 // -----------------------------------------------------------------------------

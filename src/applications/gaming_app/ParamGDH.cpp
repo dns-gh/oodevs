@@ -10,18 +10,18 @@
 #include "gaming_app_pch.h"
 #include "ParamGDH.h"
 #include "moc_ParamGDH.cpp"
+#include "game_asn/Asn.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamGDH constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamGDH::ParamGDH( QObject* parent, ASN1T_GDH*& asn, const QString& name )
+ParamGDH::ParamGDH( QObject* parent, const QString& name )
     : QObject( parent )
     , Param_ABC( name )
-    , asn_( new ASN1T_GDH() )
     , pDateTimeEdit_( 0 )
 {
-    asn = asn_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -30,7 +30,7 @@ ParamGDH::ParamGDH( QObject* parent, ASN1T_GDH*& asn, const QString& name )
 // -----------------------------------------------------------------------------
 ParamGDH::~ParamGDH()
 {
-    delete asn_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,36 +39,42 @@ ParamGDH::~ParamGDH()
 // -----------------------------------------------------------------------------
 void ParamGDH::BuildInterface( QWidget* parent )
 {
+    new QLabel( GetName(), parent );
     QHBox* box = new QHBox( parent );
-    box->setSpacing( 5 );
-    box->setSizePolicy( QSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum ) );
-    QLabel* label = new QLabel( GetName(), box );
     pDateTimeEdit_ = new QDateTimeEdit( QDateTime::currentDateTime(), box );
     pCheckbox_ = new QCheckBox( box );
     pDateTimeEdit_->setEnabled( false );
     pCheckbox_->setChecked( false );
-    box->setStretchFactor( label, 2 );
-    box->setStretchFactor( pDateTimeEdit_, 0 );
-    box->setStretchFactor( pCheckbox_, 0 );
     connect( pCheckbox_, SIGNAL( toggled( bool ) ), SLOT( OnCheckboxToogled( bool ) ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamGDH::Commit
-// Created: AGE 2006-03-15
+// Name: ParamGDH::CommitTo
+// Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
-void ParamGDH::Commit()
+void ParamGDH::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     if( !pDateTimeEdit_ )
-        throw std::runtime_error( "'GDH' parameter interface not initialized" );
-    asn_->qualificatif = EnumGDH_Qualificatif::at;
+        InterfaceNotInitialized();
+    asn.value.t = T_MissionParameter_value_gDH;
+    ASN1T_GDH*& gdh = asn.value.u.gDH = new ASN1T_GDH();
+    gdh->qualificatif = EnumGDH_Qualificatif::at;
+    gdh->datation = 0;
+    asn.null_value = pCheckbox_->isChecked() ? 0 : 1;
     if( pCheckbox_->isChecked() )
     {
         static QDateTime baseDateTime( QDate( 1901, 1, 1 ) );
-        asn_->datation = baseDateTime.secsTo( pDateTimeEdit_->dateTime() );
+        gdh->datation = baseDateTime.secsTo( pDateTimeEdit_->dateTime() );
     }
-    else
-        asn_->datation = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamGDH::Clean
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void ParamGDH::Clean( ASN1T_MissionParameter& asn ) const
+{
+    delete asn.value.u.gDH;
 }
 
 // -----------------------------------------------------------------------------

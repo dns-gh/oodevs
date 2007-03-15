@@ -44,7 +44,7 @@ class ParamObstacle : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObstacle( QObject* parent, ASN1T_MissionGenObject*& asnObject, const QString& name, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamObstacle( QObject* parent, const QString& name, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ParamObstacle();
     //@}
 
@@ -53,10 +53,11 @@ public:
     virtual void RemoveFromController();
     virtual void RegisterIn( kernel::ActionController& controller );
     virtual bool CheckValidity();
-    virtual void Commit();
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( ASN1T_MissionParameter& asn ) const;
     virtual void Show();
     virtual void Hide();
-    void CommitTo( ASN1T_MissionGenObject& destination );
+    void CommitTo( ASN1T_MissionGenObject& object ) const;
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void BuildInterface( QWidget* parent );
     //@}
@@ -80,7 +81,6 @@ private:
     const kernel::ObjectTypes& objectTypes_;
     gui::ParametersLayer& layer_;
     const kernel::CoordinateConverter_ABC& converter_;
-    ASN1T_MissionGenObject* asnObject_;
     ParamLocation* location_;
 
     gui::ValuedComboBox< const kernel::ObjectType* >* typeCombo_;

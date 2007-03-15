@@ -53,8 +53,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Publisher_ABC&    publisher_;
-    ASN_MsgPionOrder* order_;
+    Publisher_ABC& publisher_;
+    const kernel::Mission& mission_;
     //@}
 };
 

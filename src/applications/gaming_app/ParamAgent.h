@@ -25,8 +25,13 @@ class ParamAgent : public EntityParameter< kernel::Agent_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAgent( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu );
+             ParamAgent( QObject* parent, const QString& name );
     virtual ~ParamAgent();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     //@}
 };
 

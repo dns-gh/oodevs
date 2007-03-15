@@ -10,7 +10,6 @@
 #ifndef __ParamAgentType_h_
 #define __ParamAgentType_h_
 
-#include "game_asn/Asn.h"
 #include "Param_ABC.h"
 
 // =============================================================================
@@ -25,14 +24,15 @@ class ParamAgentType : public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAgentType( ASN1T_NatureAtlas*& asn, const QString& name );
+    explicit ParamAgentType( const QString& name );
     virtual ~ParamAgentType();
     //@}
 
     //! @name Operations
     //@{
     virtual void BuildInterface( QWidget* parent );
-    virtual void Commit();
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( ASN1T_MissionParameter& asn ) const;
     //@}
 
 private:
@@ -45,8 +45,6 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_NatureAtlas* asn_;
-
     QCheckBox* pArmoredCheckBox_;
     QCheckBox* pASSCheckBox_;
     QCheckBox* pHQCheckBox_;

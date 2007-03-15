@@ -18,8 +18,8 @@ using namespace kernel;
 // Name: ParamDotationDType constructor
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-ParamDotationDType::ParamDotationDType( ASN1T_TypeDotationTrancheD& asn, const QString& name, const Resolver_ABC< DotationType >& resolver )
-    : ParamComboBox< ASN1T_TypeDotationTrancheD >( asn, name )
+ParamDotationDType::ParamDotationDType( const QString& name, const Resolver_ABC< DotationType >& resolver )
+    : ParamComboBox< ASN1T_TypeDotationTrancheD >( name )
     , resolver_( resolver )
 {
     // NOTHING
@@ -40,7 +40,6 @@ ParamDotationDType::~ParamDotationDType()
 // -----------------------------------------------------------------------------
 void ParamDotationDType::BuildInterface( QWidget* parent )
 {
-    ParamComboBox< ASN1T_TypeDotationTrancheD >::BuildInterface( parent );
     Iterator< const DotationType& > it = resolver_.CreateIterator();
     while( it.HasMoreElements() )
     {
@@ -48,4 +47,16 @@ void ParamDotationDType::BuildInterface( QWidget* parent )
         if( type.IsDType() )
             AddItem( type.GetCategory(), type.GetId() );
     }
+    ParamComboBox< ASN1T_TypeDotationTrancheD >::BuildInterface( parent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamDotationDType::CommitTo
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void ParamDotationDType::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.null_value = 0;
+    asn.value.t = T_MissionParameter_value_typeDotation;
+    ParamComboBox< ASN1T_TypeDotationTrancheD >::CommitTo( (ASN1T_OID&)asn.value.u.typeDotation );
 }

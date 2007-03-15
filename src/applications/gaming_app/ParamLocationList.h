@@ -25,8 +25,6 @@ namespace gui
     class ParametersLayer;
 }
 
-class LocationSerializer;
-
 // =============================================================================
 /** @class  ParamLocationList
     @brief  ParamLocationList
@@ -38,9 +36,7 @@ class ParamLocationList : public ParamListView, private gui::ShapeHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLocationList( QObject* pParent, ASN1T_ListLocalisation*& asn, const QString& label, const QString& menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
-             ParamLocationList( QObject* pParent, ASN1T_ListPolygon*& asn,      const QString& label, const QString& menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
-             ParamLocationList( QObject* pParent, ASN1T_ListPoint*& asn,        const QString& label, const QString& menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamLocationList( QObject* pParent, const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ParamLocationList();
 
     //! @name Operations
@@ -49,7 +45,8 @@ public:
     virtual void RegisterIn( kernel::ActionController& controller );
     virtual void Handle( kernel::Location_ABC& location );
     virtual bool CheckValidity();
-    virtual void Commit();
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( ASN1T_MissionParameter& asn ) const;
     //@}
 
 public:
@@ -57,6 +54,14 @@ public:
     //@{
     virtual void OnDeleteSelectedItem();
     virtual void OnClearList();
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    void CommitTo( ASN1T_ListLocalisation*& asn ) const;
+    void Clean( ASN1T_ListLocalisation*& asn ) const;
+    void SetShapeFilter( bool point, bool line, bool polygon, bool circle );
     //@}
 
 private:
@@ -68,25 +73,15 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< kernel::Location_ABC* >       T_Locations;
-    typedef std::vector< LocationSerializer* > T_Serializers;
-    //@}
-
-    //! @name Helpers
-    //@{
-    void ClearSerializers();
+    typedef std::vector< kernel::Location_ABC* > T_Locations;
     //@}
 
 private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    ASN1T_ListLocalisation* asn_;
-    ASN1T_Localisation* pAsnLocalisationList_;
-
     gui::LocationCreator* creator_;
     T_Locations locations_;
-    T_Serializers serializers_;
     kernel::ActionController* controller_;
     //@}
 };

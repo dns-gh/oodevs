@@ -12,8 +12,8 @@
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-EntityListParameter< ConcreteEntity >::EntityListParameter( QObject* parent, ASN1T_ListOID*& list, const QString& name, const QString& menu )
-    : EntityListParameterBase( parent, list, name, menu )
+EntityListParameter< ConcreteEntity >::EntityListParameter( QObject* parent, const QString& name )
+    : EntityListParameterBase( parent, name )
     , potential_             ( 0 )
 {
     // NOTHING
@@ -74,7 +74,7 @@ void EntityListParameter< ConcreteEntity >::MenuItemValidated()
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-unsigned long EntityListParameter< ConcreteEntity >::GetId( gui::ValuedListItem* item )
+unsigned long EntityListParameter< ConcreteEntity >::GetId( gui::ValuedListItem* item ) const
 {
     return item->GetValue< const ConcreteEntity >()->GetId();
 }

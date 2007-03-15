@@ -10,10 +10,7 @@
 #ifndef __ParamHumanWoundList_h_
 #define __ParamHumanWoundList_h_
 
-#include "game_asn/Asn.h"
 #include "Param_ABC.h"
-
-#include <qtable.h>
 
 // =============================================================================
 /** @class  ParamHumanWoundList
@@ -28,14 +25,15 @@ class ParamHumanWoundList : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamHumanWoundList( QObject* parent, ASN1T_SantePriorites*& asnListHumanWound, const QString& name );
+             ParamHumanWoundList( QObject* parent, const QString& name );
     virtual ~ParamHumanWoundList();
     //@}
 
     //! @name Operations
     //@{
     virtual void BuildInterface( QWidget* parent );
-    virtual void Commit();
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( ASN1T_MissionParameter& asn ) const;
     //@}
 
 private slots:
@@ -47,9 +45,8 @@ private slots:
 private:
     //! @name Member data
     //@{
-    ASN1T_SantePriorites* pAsnHumanWoundList_;
-    QTable*               table_;
-    QStringList           humanWoundsList_;
+    QTable*     table_;
+    QStringList humanWoundsList_;
     //@}
 };
 

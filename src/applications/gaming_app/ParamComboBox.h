@@ -19,14 +19,14 @@
 */
 // Created: APE 2004-04-21
 // =============================================================================
-template< class T >
+template< typename T >
 class ParamComboBox : public Param_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamComboBox( T& asn, const QString& name );
+    explicit ParamComboBox( const QString& name );
     virtual ~ParamComboBox();
     //@}
 
@@ -34,7 +34,13 @@ public:
     //@{
     virtual void BuildInterface( QWidget* parent );
     void AddItem( const QString& name, const T& value );
-    virtual void Commit();
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    //@}
+
+protected:
+    //! @name Operations
+    //@{
+    virtual void CommitTo( ASN1T_OID& asn ) const;
     //@}
 
 private:
@@ -53,7 +59,6 @@ private:
     //! @name Member data
     //@{
     T_Values values_;
-    T& asn_;
     gui::ValuedComboBox<T>* comboBox_;
     //@}
 };
@@ -62,10 +67,9 @@ private:
 // Name: ParamComboBox constructor
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
-template< class T >
-ParamComboBox<T>::ParamComboBox( T& asn, const QString& name )
+template< typename T >
+ParamComboBox<T>::ParamComboBox( const QString& name )
     : Param_ABC( name )
-    , asn_ ( asn )
     , comboBox_( 0 )
 {
     // NOTHING
@@ -75,7 +79,7 @@ ParamComboBox<T>::ParamComboBox( T& asn, const QString& name )
 // Name: ParamComboBox destructor
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
-template< class T >
+template< typename T >
 ParamComboBox<T>::~ParamComboBox()
 {
     // NOTHING
@@ -85,7 +89,7 @@ ParamComboBox<T>::~ParamComboBox()
 // Name: ParamComboBox::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-template< class T >
+template< typename T >
 void ParamComboBox<T>::BuildInterface( QWidget* parent )
 {
     QHBox* box = new QHBox( parent );
@@ -101,22 +105,35 @@ void ParamComboBox<T>::BuildInterface( QWidget* parent )
 // Name: ParamComboBox::AddItem
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
-template< class T >
+template< typename T >
 void ParamComboBox<T>::AddItem( const QString& name, const T& value )
 {
     values_.push_back( std::make_pair( name, &value ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamComboBox::WriteMsg
-// Created: APE 2004-04-21
+// Name: ParamComboBox::CommitTo
+// Created: SBO 2007-03-15
 // -----------------------------------------------------------------------------
-template< class T >
-void ParamComboBox<T>::Commit()
+template< typename T >
+void ParamComboBox<T>::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.null_value = 0;
+    asn.value.t = T_MissionParameter_value_enumeration;
+    asn.value.u.enumeration = comboBox_->GetValue();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamComboBox::CommitTo
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+template< typename T >
+void ParamComboBox<T>::CommitTo( ASN1T_OID& asn ) const
 {
     if( !comboBox_ )
         InterfaceNotInitialized();
-    asn_ = comboBox_->GetValue();
+    if( comboBox_->count() )
+        asn = comboBox_->GetValue();
 }
 
 #endif // __ParamComboBox_h_

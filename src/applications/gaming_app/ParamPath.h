@@ -46,7 +46,7 @@ class ParamPath : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPath( QObject* parent, ASN1T_Itineraire*& asn, const QString& name, const QString& menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamPath( QObject* parent, const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent );
     virtual ~ParamPath();
     //@}
 
@@ -55,12 +55,13 @@ public:
     virtual void BuildInterface( QWidget* parent );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
-    virtual void Commit();
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( ASN1T_MissionParameter& asn ) const;
     virtual void Show();
     virtual void Hide();
     virtual void NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& );
     virtual void Handle( kernel::Location_ABC& location );
-    void CommitTo( ASN1T_Itineraire& destination );
+    void CommitTo( ASN1T_Itineraire& destination ) const;
     //@}
 
 private slots:
@@ -82,10 +83,6 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     gui::ParametersLayer& layer_;
     const kernel::Positions& positions_;
-    ASN1T_Itineraire* asn_;
-    LocationSerializer serializer_;
-
-    QString               menu_;
     gui::RichLabel*       pLabel_;
     QLabel*               pPosLabel_;
     kernel::Location_ABC* location_;

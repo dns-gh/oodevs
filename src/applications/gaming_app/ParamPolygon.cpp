@@ -3,51 +3,49 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
-#include "ParamAutomatList.h"
-#include "clients_kernel/Automat_ABC.h"
-
-using namespace kernel;
+#include "ParamPolygon.h"
 
 // -----------------------------------------------------------------------------
-// Name: ParamAutomatList constructor
-// Created: AGE 2006-11-29
+// Name: ParamPolygon constructor
+// Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
-ParamAutomatList::ParamAutomatList( QObject* parent, const QString& name )
-    : EntityListParameter< Automat_ABC >( parent, name )
-{
-    // NOTHING
-}
-    
-// -----------------------------------------------------------------------------
-// Name: ParamAutomatList destructor
-// Created: AGE 2006-11-29
-// -----------------------------------------------------------------------------
-ParamAutomatList::~ParamAutomatList()
+ParamPolygon::ParamPolygon( const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter )
+    : ParamLocation( name, layer, converter )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamAutomatList::CommitTo
+// Name: ParamPolygon destructor
 // Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
-void ParamAutomatList::CommitTo( ASN1T_MissionParameter& asn ) const
+ParamPolygon::~ParamPolygon()
 {
-    asn.value.t = T_MissionParameter_value_listAutomate;
-    EntityListParameter< Automat_ABC >::CommitTo( (ASN1T_ListOID*&)asn.value.u.listAutomate );
-    asn.null_value = asn.value.u.listAutomate->n ? 0 : 1;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamAutomatList::Clean
+// Name: ParamPolygon::CommitTo
 // Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
-void ParamAutomatList::Clean( ASN1T_MissionParameter& asn ) const
+void ParamPolygon::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    EntityListParameter< Automat_ABC >::Clean( (ASN1T_ListOID*&)asn.value.u.listAutomate );
+    asn.value.t = T_MissionParameter_value_polygon;
+    asn.value.u.polygon = new ASN1T_Localisation();
+    ParamLocation::CommitTo( *asn.value.u.polygon );
+    asn.null_value = asn.value.u.polygon->vecteur_point.n ? 0 : 1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPolygon::Clean
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void ParamPolygon::Clean( ASN1T_MissionParameter& asn ) const
+{
+    delete asn.value.u.polygon;
 }

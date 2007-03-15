@@ -38,7 +38,7 @@ class ParamPoint : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPoint( QObject* parent, ASN1T_Point*& asn, const QString& name, const QString& menu, const kernel::CoordinateConverter_ABC& converter );
+             ParamPoint( QObject* parent, const QString& name, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ParamPoint();
     //@}
 
@@ -46,7 +46,7 @@ public:
     //@{
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
-    virtual void Commit();
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
     virtual void BuildInterface( QWidget* parent );
     //@}
@@ -67,14 +67,9 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_Point*       asn_;
     const kernel::CoordinateConverter_ABC& converter_;
-
-    QString         menu_;
-    gui::RichLabel* pLabel_;
-    QLabel*         pPosLabel_;
-
-    ASN1T_CoordUTM    asnPoint_;
+    gui::RichLabel*   pLabel_;
+    QLabel*           pPosLabel_;
     geometry::Point2f popupPoint_;
     geometry::Point2f paramPoint_;
     //@}

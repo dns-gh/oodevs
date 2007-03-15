@@ -25,11 +25,8 @@ UnitMissionInterface::UnitMissionInterface( QWidget* parent, Entity_ABC& entity,
                                           , Publisher_ABC& publisher, MissionInterfaceFactory& factory, MissionInterfaceBuilder& builder )
     : MissionInterface_ABC( parent, entity, controller )
     , publisher_          ( publisher )
-    , order_              ( new ASN_MsgPionOrder() )
+    , mission_            ( mission )
 {
-    order_->GetAsnMsg().oid_unite_executante = entity.GetId();
-    order_->GetAsnMsg().mission = mission.GetId();
-
     QLabel* pLabel = new QLabel( mission.GetName(), this );
     pLabel->setFrameStyle( QFrame::Box | QFrame::Sunken );
     pLabel->setAlignment( Qt::AlignCenter );
@@ -38,7 +35,7 @@ UnitMissionInterface::UnitMissionInterface( QWidget* parent, Entity_ABC& entity,
     pLabel->setFont( font );
 
     builder.Begin( *this, entity );
-    factory.CreateMissionInterface( builder, mission.GetId(), order_->GetAsnMsg() );
+    factory.CreateUnitMissionInterface( builder, mission.GetId() );
     builder.End();
     CreateOkCancelButtons();
 }
@@ -58,9 +55,13 @@ UnitMissionInterface::~UnitMissionInterface()
 // -----------------------------------------------------------------------------
 void UnitMissionInterface::Publish()
 {
-    ASN1T_MsgPionOrder& order = order_->GetAsnMsg();
-    // $$$$ SBO 2006-11-14: Use BuildOptionalParameter instead ?
-    order.order_context.m.limite_gauchePresent = (order.order_context.limite_gauche.vecteur_point.n > 1) ? 1 : 0;
-    order.order_context.m.limite_droitePresent = (order.order_context.limite_droite.vecteur_point.n > 1) ? 1 : 0;
-    order_->Send( publisher_, 45 );
+    ASN_MsgPionOrder asn;
+    ASN1T_MsgPionOrder& order = asn.GetAsnMsg();
+    order.oid_unite_executante = GetEntity().GetId();
+    order.mission = mission_.GetId();
+    CommitTo( order.parametres );
+    CommitTo( order.order_context );
+    asn.Send( publisher_ );
+    Clean( order.parametres );
+    Clean( order.order_context );
 }

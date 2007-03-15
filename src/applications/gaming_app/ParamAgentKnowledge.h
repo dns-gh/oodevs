@@ -34,8 +34,13 @@ class ParamAgentKnowledge : public EntityParameter< AgentKnowledge_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAgentKnowledge( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamAgentKnowledge( QWidget* pParent, const QString& name, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
     virtual ~ParamAgentKnowledge();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     //@}
 
 private:

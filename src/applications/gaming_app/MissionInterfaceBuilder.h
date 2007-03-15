@@ -12,7 +12,6 @@
 
 #include "game_asn/Asn.h"
 #include "ParamComboBox.h"
-#include "ParamRadioBtnGroup.h"
 
 namespace kernel
 {
@@ -60,9 +59,8 @@ public:
     void Begin( MissionInterface_ABC& missionInterface, kernel::Entity_ABC& entity );
     void End();
 
-    void AddParameter( ASN1T_MissionParameter& asnParameter, const QString& type, const QString& name, bool optional, const T_Values& values );
-    void AddParameter( ASN1T_OrderContext& context, bool optional );
-    void AddParameter( ASN1T_EnumAutomateOrderFormation& formation, bool optional );
+    void AddParameter( const QString& type, const QString& name, bool optional, const T_Values& values );
+    void AddOrderContext( bool optional );
     //@}
 
 private:
@@ -74,56 +72,49 @@ private:
 
     //! @name Helpers
     //@{
-    Param_ABC* BuildAgent              ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildAgentList          ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildAutomat            ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildAutomatList        ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildDotation           ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildAtlasNature        ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildBoolean            ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildDirection          ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildGDH                ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildNumeric            ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildAgentKnowledge     ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildAgentKnowledgeList ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildObjectKnowledge    ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildObjectKnowledgeList( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildPopulationKnowledge( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildPath               ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildPathList           ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildPoint              ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildPointList          ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildPolygon            ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildPolygonList        ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildLocation           ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildLocationList       ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildGenObject          ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildGenObjectList      ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildMaintenancePriorities( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
-    Param_ABC* BuildMedicalPriorities    ( ASN1T_MissionParameter& asnParameter, const QString& name ) const;
+    Param_ABC* BuildAgent                ( const QString& name ) const;
+    Param_ABC* BuildAgentList            ( const QString& name ) const;
+    Param_ABC* BuildAutomat              ( const QString& name ) const;
+    Param_ABC* BuildAutomatList          ( const QString& name ) const;
+    Param_ABC* BuildDotation             ( const QString& name ) const;
+    Param_ABC* BuildAtlasNature          ( const QString& name ) const;
+    Param_ABC* BuildBoolean              ( const QString& name ) const;
+    Param_ABC* BuildDirection            ( const QString& name ) const;
+    Param_ABC* BuildGDH                  ( const QString& name ) const;
+    Param_ABC* BuildNumeric              ( const QString& name ) const;
+    Param_ABC* BuildAgentKnowledge       ( const QString& name ) const;
+    Param_ABC* BuildAgentKnowledgeList   ( const QString& name ) const;
+    Param_ABC* BuildObjectKnowledge      ( const QString& name ) const;
+    Param_ABC* BuildObjectKnowledgeList  ( const QString& name ) const;
+    Param_ABC* BuildPopulationKnowledge  ( const QString& name ) const;
+    Param_ABC* BuildPath                 ( const QString& name ) const;
+    Param_ABC* BuildPathList             ( const QString& name ) const;
+    Param_ABC* BuildPoint                ( const QString& name ) const;
+    Param_ABC* BuildPointList            ( const QString& name ) const;
+    Param_ABC* BuildPolygon              ( const QString& name ) const;
+    Param_ABC* BuildPolygonList          ( const QString& name ) const;
+    Param_ABC* BuildLocation             ( const QString& name ) const;
+    Param_ABC* BuildLocationList         ( const QString& name ) const;
+    Param_ABC* BuildGenObject            ( const QString& name ) const;
+    Param_ABC* BuildGenObjectList        ( const QString& name ) const;
+    Param_ABC* BuildMaintenancePriorities( const QString& name ) const;
+    Param_ABC* BuildMedicalPriorities    ( const QString& name ) const;
 
-    Param_ABC* BuildLimits             ( ASN1T_Line& limit1, ASN1T_Line& limit2, const QString& name1, const QString& name2 ) const;
-    Param_ABC* BuildLimaList           ( ASN1T_LimasOrder& asn, const QString& name ) const;
-    Param_ABC* BuildDirection          ( ASN1T_Direction&  asn, const QString& name ) const;
-    Param_ABC* BuildEnumeration        ( ASN1T_MissionParameter& asnParameter, const QString& name, const T_Values& values );
+    Param_ABC* BuildLimits             ( const QString& name1, const QString& name2 ) const;
+    Param_ABC* BuildLimaList           ( const QString& name ) const;
+    Param_ABC* BuildEnumeration        ( const QString& name, const T_Values& values );
 
-
-    template < class T >
-    ParamComboBox<T>& BuildVarList( T& value, const QString& name )
-    {
-        return *new ParamComboBox<T>( value, name );
-    }
 
     template < class T >
-    ParamRadioBtnGroup<T>& BuildRadioButtonGroup( T& value, const QString& name )
+    ParamComboBox<T>& BuildVarList( const QString& name )
     {
-        return *new ParamRadioBtnGroup<T>( value, name );
+        return *new ParamComboBox<T>( name );
     }
     //@}
 
     //! @name Types
     //@{
-    typedef Param_ABC* (MissionInterfaceBuilder::*T_BuilderFunctor)( ASN1T_MissionParameter&, const QString& ) const;
+    typedef Param_ABC* (MissionInterfaceBuilder::*T_BuilderFunctor)( const QString& ) const;
     typedef std::map< QString, T_BuilderFunctor > T_BuilderFunctors;
     typedef T_BuilderFunctors::const_iterator   CIT_BuilderFunctors;
     //@}

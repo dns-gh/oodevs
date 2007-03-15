@@ -23,47 +23,13 @@ using namespace gui;
 // Name: ParamLocationList constructor
 // Created: AGE 2006-04-03
 // -----------------------------------------------------------------------------
-ParamLocationList::ParamLocationList( QObject* parent, ASN1T_ListLocalisation*& asn, const QString& name, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+ParamLocationList::ParamLocationList( QObject* parent, const QString& name, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : ParamListView( parent, name )
     , converter_( converter )
-    , asn_( new ASN1T_ListLocalisation() )
-    , pAsnLocalisationList_( 0 )
+    , creator_( new LocationCreator( this, name, layer, *this ) )
     , controller_( 0 )
 {
-    asn = asn_;
-    creator_ = new LocationCreator( this, menu, layer, *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLocationList constructor
-// Created: AGE 2006-04-03
-// -----------------------------------------------------------------------------
-ParamLocationList::ParamLocationList( QObject* parent, ASN1T_ListPolygon*& asn, const QString& name, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
-    : ParamListView( parent, name )
-    , converter_( converter )
-    , asn_( new ASN1T_ListLocalisation() )
-    , pAsnLocalisationList_( 0 )
-    , controller_( 0 )
-{
-    asn = (ASN1T_ListPolygon*&)asn_;
-    creator_ = new LocationCreator( this, menu, layer, *this );
-    creator_->Allow( false, false, true, false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLocationList constructor
-// Created: AGE 2006-04-03
-// -----------------------------------------------------------------------------
-ParamLocationList::ParamLocationList( QObject* parent, ASN1T_ListPoint*& asn, const QString& name, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
-    : ParamListView( parent, name )
-    , converter_( converter )
-    , asn_( new ASN1T_ListLocalisation() )
-    , pAsnLocalisationList_( 0 )
-    , controller_( 0 )
-{
-    asn = (ASN1T_ListPoint*&)asn_;
-    creator_ = new LocationCreator( this, menu, layer, *this );
-    creator_->Allow( true, false, false, false );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -72,21 +38,16 @@ ParamLocationList::ParamLocationList( QObject* parent, ASN1T_ListPoint*& asn, co
 // -----------------------------------------------------------------------------
 ParamLocationList::~ParamLocationList()
 {
-    delete asn_;
-    delete[] pAsnLocalisationList_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamLocationList::ClearSerializers
-// Created: AGE 2006-08-09
+// Name: ParamLocationList::SetShapeFilter
+// Created: SBO 2007-03-15
 // -----------------------------------------------------------------------------
-void ParamLocationList::ClearSerializers()
+void ParamLocationList::SetShapeFilter( bool point, bool line, bool polygon, bool circle )
 {
-    while( ! serializers_.empty() )
-    {
-        delete serializers_.back();
-        serializers_.pop_back();
-    }
+    creator_->Allow( point, line, polygon, circle );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,29 +84,54 @@ bool ParamLocationList::CheckValidity()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamLocationList::Commit
-// Created: AGE 2006-04-03
+// Name: ParamLocationList::CommitTo
+// Created: SBO 2007-03-15
 // -----------------------------------------------------------------------------
-void ParamLocationList::Commit()
+void ParamLocationList::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.value.t = T_MissionParameter_value_listLocalisation;
+    CommitTo( asn.value.u.listLocalisation );
+    asn.null_value = asn.value.u.listLocalisation->n ? 0 : 1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationList::Clean
+// Created: SBO 2007-03-15
+// -----------------------------------------------------------------------------
+void ParamLocationList::Clean( ASN1T_MissionParameter& asn ) const
+{
+    Clean( asn.value.u.listLocalisation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationList::CommitTo
+// Created: SBO 2007-03-15
+// -----------------------------------------------------------------------------
+void ParamLocationList::CommitTo( ASN1T_ListLocalisation*& asn ) const
 {
     if( !ListView() )
         InterfaceNotInitialized();
-    const unsigned nNbrChilds = locations_.size();
-    asn_->n = nNbrChilds;
 
-    if( nNbrChilds == 0 && IsOptional() )
+    asn = new ASN1T_ListLocalisation();
+    asn->n = locations_.size();
+    if( asn->n == 0 && IsOptional() )
         return;
 
-    delete[] pAsnLocalisationList_;
-    pAsnLocalisationList_ = new ASN1T_Localisation[ nNbrChilds ];
-    asn_->elem = pAsnLocalisationList_;
-
-    ClearSerializers();
+    asn->elem = new ASN1T_Localisation[ asn->n ];
+    LocationSerializer serializer( converter_ );
     for( unsigned i = 0; i < locations_.size(); ++i )
-    {
-        serializers_.push_back( new LocationSerializer( converter_, asn_->elem[i] ) );
-        serializers_.back()->Serialize( *locations_.at( i ) );
-    }
+        serializer.Serialize( *locations_.at( i ), asn->elem[i] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationList::Clean
+// Created: SBO 2007-03-15
+// -----------------------------------------------------------------------------
+void ParamLocationList::Clean( ASN1T_ListLocalisation*& asn ) const
+{
+    // $$$$ SBO 2007-03-15: clean points
+    delete[] asn->elem;
+    delete asn;
 }
 
 // -----------------------------------------------------------------------------
@@ -186,7 +172,5 @@ void ParamLocationList::OnDeleteSelectedItem()
 // -----------------------------------------------------------------------------
 void ParamLocationList::OnClearList()
 {
-    delete[] pAsnLocalisationList_;
-    ClearSerializers();
     ParamListView::OnClearList();
 }

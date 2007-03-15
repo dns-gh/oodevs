@@ -20,8 +20,8 @@ using namespace kernel;
 // Name: ParamPopulationKnowledge constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamPopulationKnowledge::ParamPopulationKnowledge( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
-    : EntityParameter< PopulationKnowledge_ABC >( pParent, id, label, menu )
+ParamPopulationKnowledge::ParamPopulationKnowledge( QObject* parent, const QString& name, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
+    : EntityParameter< PopulationKnowledge_ABC >( parent, name )
     , converter_( converter )
     , agent_( agent )
 {
@@ -35,6 +35,17 @@ ParamPopulationKnowledge::ParamPopulationKnowledge( QWidget* pParent, ASN1T_OID&
 ParamPopulationKnowledge::~ParamPopulationKnowledge()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPopulationKnowledge::CommitTo
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void ParamPopulationKnowledge::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.value.t = T_MissionParameter_value_knowledgePopulation;
+    EntityParameter< PopulationKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.knowledgePopulation );
+    asn.null_value = asn.value.u.knowledgePopulation ? 0 : 1;
 }
 
 // -----------------------------------------------------------------------------

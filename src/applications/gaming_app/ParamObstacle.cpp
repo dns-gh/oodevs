@@ -26,16 +26,19 @@ using namespace gui;
 // Name: ParamObstacle constructor
 // Created: APE 2004-05-18
 // -----------------------------------------------------------------------------
-ParamObstacle::ParamObstacle( QObject* parent, ASN1T_MissionGenObject*& asnObject, const QString& name, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+ParamObstacle::ParamObstacle( QObject* parent, const QString& name, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : QObject( parent )
     , Param_ABC( name )
     , objectTypes_( objectTypes )
     , layer_( layer )
     , converter_( converter )
-    , asnObject_( new ASN1T_MissionGenObject() )
+    , location_( 0 )
     , typeCombo_( 0 )
+    , density_( 0 )
+    , tc2_( 0 )
+
 {
-    asnObject = asnObject_;
+    // NOTHING
 }
 
 
@@ -45,7 +48,8 @@ ParamObstacle::ParamObstacle( QObject* parent, ASN1T_MissionGenObject*& asnObjec
 // -----------------------------------------------------------------------------
 ParamObstacle::~ParamObstacle()
 {
-    delete asnObject_;
+    delete density_;
+    delete location_;
 }
 
 // -----------------------------------------------------------------------------
@@ -70,11 +74,12 @@ void ParamObstacle::BuildInterface( QWidget* parent )
     for( int i = 0; i < eNbrMissionGenSousTypeObstacle; ++i )
         preliminaryCombo_->insertItem( ENT_Tr::ConvertFromMissionGenSousTypeObstacle( ( E_MissionGenSousTypeObstacle )i ).c_str(), i );
 
-    density_ = new ParamNumericField( box, asnObject_->densite, tr( "Density" ), 0., 5. );
+    density_ = new ParamNumericField( tr( "Density" ), true );
     density_->BuildInterface( box );
-    tc2_     = new EntityParameter< kernel::Automat_ABC >( box, asnObject_->tc2, tr( "TC2" ), tr( "TC2" ) );
+    density_->SetLimits( 0.f, 5.f );
+    tc2_     = new EntityParameter< kernel::Automat_ABC >( this, tr( "TC2" ) );
     tc2_->BuildInterface( box );
-    location_ = new ParamLocation( (ASN1T_Localisation*&)asnObject_->position, tr( "Location" ), layer_, converter_ );
+    location_ = new ParamLocation( tr( "Location" ), layer_, converter_ );
     location_->BuildInterface( box );
 
     connect( typeCombo_, SIGNAL( activated( int ) ), SLOT( OnTypeChanged() ) );
@@ -123,54 +128,52 @@ bool ParamObstacle::CheckValidity()
     return bOk;
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: ParamObstacle::Commit
-// Created: SBO 2006-06-28
+// Name: ParamObstacle::CommitTo
+// Created: SBO 2007-03-15
 // -----------------------------------------------------------------------------
-void ParamObstacle::Commit()
+void ParamObstacle::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    if( !typeCombo_ )
+    ASN1T_MissionGenObject*& object = asn.value.u.missionGenObject;
+    object = 0;
+    if( ! typeCombo_ )
         InterfaceNotInitialized();
-    asnObject_->type          = (ASN1T_EnumObjectType)typeCombo_->GetValue()->id_;
-    asnObject_->preliminaire  = (ASN1T_EnumMissionGenSousTypeObstacle)preliminaryCombo_->currentItem();
-    switch( typeCombo_->GetValue()->id_ )
-    {
-    case EnumObjectType::zone_minee_lineaire:
-    case EnumObjectType::zone_minee_par_dispersion:
-        density_->Commit();
-        break;
-    case EnumObjectType::camp_prisonniers:
-    case EnumObjectType::camp_refugies:
-        if( tc2_->CheckValidity() ) // $$$$ SBO 2006-11-08: ParamObstacleList commits before to CheckValidity => throw
-            tc2_->Commit();
-        break;
-    };
-    location_->Commit();
+    asn.null_value = 0;
+    asn.value.t = T_MissionParameter_value_missionGenObject;
+    object = new ASN1T_MissionGenObject();
+    CommitTo( *object );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ParamObstacle::CommitTo
-// Created: SBO 2006-06-28
+// Created: SBO 2007-03-15
 // -----------------------------------------------------------------------------
-void ParamObstacle::CommitTo( ASN1T_MissionGenObject& destination )
+void ParamObstacle::CommitTo( ASN1T_MissionGenObject& object ) const
 {
-    destination.preliminaire = asnObject_->preliminaire;
-    destination.type         = asnObject_->type;
-    destination.densite      = 0;
-    destination.tc2          = 0;
-    switch( destination.type )
+    object.type          = (ASN1T_EnumObjectType)typeCombo_->GetValue()->id_;
+    object.preliminaire  = (ASN1T_EnumMissionGenSousTypeObstacle)preliminaryCombo_->currentItem();
+    switch( typeCombo_->GetValue()->id_ )
     {
     case EnumObjectType::zone_minee_lineaire:
     case EnumObjectType::zone_minee_par_dispersion:
-        density_->CommitTo( destination.densite );
+        density_->CommitTo( object.densite );
         break;
     case EnumObjectType::camp_prisonniers:
     case EnumObjectType::camp_refugies:
-        tc2_->CommitTo( destination.tc2 );
+        if( tc2_->CheckValidity() ) // $$$$ SBO 2006-11-08: ParamObstacleList commits before to CheckValidity => throw
+            tc2_->CommitTo( object.tc2 );
         break;
     };
-    location_->CommitTo( destination.position );
+    location_->CommitTo( object.position );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::Clean
+// Created: SBO 2007-03-15
+// -----------------------------------------------------------------------------
+void ParamObstacle::Clean( ASN1T_MissionParameter& asn ) const
+{
+    delete asn.value.u.missionGenObject;
 }
 
 // -----------------------------------------------------------------------------

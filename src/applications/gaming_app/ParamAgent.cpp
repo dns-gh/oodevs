@@ -17,8 +17,8 @@ using namespace kernel;
 // Name: ParamAgent constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamAgent::ParamAgent(  QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu )
-    : EntityParameter< Agent_ABC >( pParent, id, label, menu )
+ParamAgent::ParamAgent( QObject* parent, const QString& name )
+    : EntityParameter< Agent_ABC >( parent, name )
 {
     // NOTHING
 }
@@ -30,4 +30,15 @@ ParamAgent::ParamAgent(  QWidget* pParent, ASN1T_OID& id, const QString& label, 
 ParamAgent::~ParamAgent()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamAgent::CommitTo
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void ParamAgent::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.value.t = T_MissionParameter_value_agent;
+    EntityParameter< Agent_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.agent );
+    asn.null_value = asn.value.u.agent ? 0 : 1;
 }

@@ -12,6 +12,7 @@
 #include "moc_ParamEquipmentList.cpp"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
+#include "game_asn/Asn.h"
 
 using namespace kernel;
 using namespace gui;
@@ -20,14 +21,13 @@ using namespace gui;
 // Name: ParamEquipmentList constructor
 // Created: SBO 2005-09-27
 // -----------------------------------------------------------------------------
-ParamEquipmentList::ParamEquipmentList( QObject* parent, ASN1T_MaintenancePriorites*& asnListEquipment, const QString& /*label*/, const Resolver< EquipmentType >& resolver )
+ParamEquipmentList::ParamEquipmentList( QObject* parent, const QString& name, const Resolver< EquipmentType >& resolver )
     : QObject( parent )
-    , Param_ABC( tr( "Equipment" ) )
+    , Param_ABC( name )
     , resolver_( resolver )
-    , pAsnEquipmentList_ ( new ASN1T_MaintenancePriorites() )
     , table_( 0 )
 {
-    asnListEquipment = pAsnEquipmentList_;
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -36,7 +36,7 @@ ParamEquipmentList::ParamEquipmentList( QObject* parent, ASN1T_MaintenancePriori
 // -----------------------------------------------------------------------------
 ParamEquipmentList::~ParamEquipmentList()
 {
-    delete pAsnEquipmentList_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -70,25 +70,41 @@ void ParamEquipmentList::BuildInterface( QWidget* parent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamEquipmentList::Commit
-// Created: SBO 2006-06-27
+// Name: ParamEquipmentList::CommitTo
+// Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
-void ParamEquipmentList::Commit()
+void ParamEquipmentList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     if( !table_ )
         InterfaceNotInitialized();
-    if( !pAsnEquipmentList_ || table_->numRows() <= 1 )
+    asn.value.t = T_MissionParameter_value_maintenancePriorites;
+    ASN1T_MaintenancePriorites*& list = asn.value.u.maintenancePriorites = new ASN1T_MaintenancePriorites();
+    list->n = 0;
+    list->elem = 0;
+    asn.null_value = table_->numRows() <= 1 ? 1 : 0;
+    if( asn.null_value )
         return;
-    pAsnEquipmentList_->n = table_->numRows() - 1;
-
-    ASN1T_TypeEquipement* pAsnEquipement = new ASN1T_TypeEquipement[ pAsnEquipmentList_->n ]; //$$$ RAM
-    for( uint i = 0; i < pAsnEquipmentList_->n; ++i )
+    list->n = table_->numRows() - 1;
+    list->elem = new ASN1T_TypeEquipement[ list->n ];
+    for( unsigned int i = 0; i < list->n; ++i )
     {
         ExclusiveComboTableItem* comboItem  = static_cast< ExclusiveComboTableItem* >( table_->item( i, 0 ) );
         if( comboItem && !comboItem->currentText().isEmpty() )
-            pAsnEquipement[i] = equipmentTypes_[ comboItem->currentText() ]->GetId();
+        {
+            CIT_EquipmentTypes it = equipmentTypes_.find( comboItem->currentText() );
+            list->elem[i] = it->second->GetId();
+        }
     }
-    pAsnEquipmentList_->elem = pAsnEquipement;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamEquipmentList::Clean
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void ParamEquipmentList::Clean( ASN1T_MissionParameter& asn ) const
+{
+    delete[] asn.value.u.maintenancePriorites->elem;
+    delete asn.value.u.maintenancePriorites;
 }
 
 // -----------------------------------------------------------------------------

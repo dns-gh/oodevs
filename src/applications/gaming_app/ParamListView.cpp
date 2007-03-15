@@ -47,15 +47,6 @@ void ParamListView::BuildInterface( QWidget* parent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamListView::Commit
-// Created: SBO 2007-03-13
-// -----------------------------------------------------------------------------
-void ParamListView::Commit()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: ParamListView::TurnHeaderRed
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
@@ -114,7 +105,7 @@ void ParamListView::TurnHeaderBlack()
 // Name: ParamListView::ListView
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-QListView* ParamListView::ListView()
+QListView* ParamListView::ListView() const
 {
     return list_;
 }

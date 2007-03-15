@@ -21,8 +21,8 @@ using namespace kernel;
 // Name: ParamObjectKnowledgeList constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamObjectKnowledgeList::ParamObjectKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeObject*& asn, const QString& label, const QString& menu, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent )
-    : EntityListParameter< ObjectKnowledge_ABC >( pParent, (ASN1T_ListOID*&)asn, label, menu )
+ParamObjectKnowledgeList::ParamObjectKnowledgeList( QObject* parent, const QString& name, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent )
+    : EntityListParameter< ObjectKnowledge_ABC >( parent, name )
     , converter_( converter )
     , agent_( agent )
 {
@@ -36,6 +36,26 @@ ParamObjectKnowledgeList::ParamObjectKnowledgeList( QWidget* pParent, ASN1T_List
 ParamObjectKnowledgeList::~ParamObjectKnowledgeList()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObjectKnowledgeList::CommitTo
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void ParamObjectKnowledgeList::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.value.t = T_MissionParameter_value_listKnowledgeObject;
+    EntityListParameter< ObjectKnowledge_ABC >::CommitTo( (ASN1T_ListOID*&)asn.value.u.listKnowledgeObject );
+    asn.null_value = asn.value.u.listKnowledgeObject->n ? 0 : 1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObjectKnowledgeList::Clean
+// Created: SBO 2007-03-15
+// -----------------------------------------------------------------------------
+void ParamObjectKnowledgeList::Clean( ASN1T_MissionParameter& asn ) const
+{
+    EntityListParameter< ObjectKnowledge_ABC >::Clean( (ASN1T_ListOID*&)asn.value.u.listKnowledgeObject );
 }
 
 // -----------------------------------------------------------------------------

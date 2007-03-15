@@ -38,7 +38,7 @@ public:
     //! @name Operations
     //@{
     QString GetName() const;
-    void BuildInterface( MissionInterfaceBuilder& builder, ASN1T_MissionParameter& asnParam ) const;
+    void BuildInterface( MissionInterfaceBuilder& builder ) const;
     //@}
 
 private:

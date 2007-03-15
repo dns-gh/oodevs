@@ -18,16 +18,11 @@ using namespace gui;
 // Name: EntityListParameterBase constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-EntityListParameterBase::EntityListParameterBase( QObject* parent, ASN1T_ListOID*& list, const QString& name, const QString& menu )
+EntityListParameterBase::EntityListParameterBase( QObject* parent, const QString& name )
     : QObject( parent )
     , Param_ABC( name )
-    , list_( new ASN1T_ListOID() )
-    , n_( list_->n )
-    , pIds_( 0 )
-    , ids_( list_->elem )
-    , menu_( menu )
 {
-    list = list_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -36,8 +31,7 @@ EntityListParameterBase::EntityListParameterBase( QObject* parent, ASN1T_ListOID
 // -----------------------------------------------------------------------------
 EntityListParameterBase::~EntityListParameterBase()
 {
-    delete list_;
-    delete[] pIds_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +104,7 @@ bool EntityListParameterBase::Invalid()
 // -----------------------------------------------------------------------------
 void EntityListParameterBase::AddToMenu( ContextMenu& menu )
 {
-    menu.InsertItem( "Parameter", menu_.c_str(), this, SLOT( MenuItemValidated() ) );
+    menu.InsertItem( "Parameter", GetName(), this, SLOT( MenuItemValidated() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,24 +120,34 @@ bool EntityListParameterBase::CheckValidity()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityListParameterBase::Commit
-// Created: AGE 2006-03-14
+// Name: EntityListParameterBase::CommitTo
+// Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
-void EntityListParameterBase::Commit()
+void EntityListParameterBase::CommitTo( ASN1T_ListOID*& asn ) const
 {
-    n_ = listView_->childCount();
-    if( ! listView_->childCount() )
+    asn = new ASN1T_ListOID();
+    if( !( asn->n = listView_->childCount() ) )
+    {
+        asn->elem = 0;
         return;
-    
-    delete pIds_;
-    ids_ = pIds_ = new ASN1T_OID[ n_ ];
-
+    }
+    asn->elem = new ASN1T_OID[ asn->n ];
     unsigned int i = 0;
     ValuedListItem* item = (ValuedListItem*)( listView_->firstChild() );
     while( item )
     {
-        ids_[ i ] = GetId( item );
+        asn->elem[ i ] = GetId( item );
         item = (ValuedListItem*)( item->nextSibling() );
         ++i;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityListParameterBase::Clean
+// Created: SBO 2007-03-15
+// -----------------------------------------------------------------------------
+void EntityListParameterBase::Clean( ASN1T_ListOID*& asn ) const
+{
+    delete[] asn->elem;
+    delete asn;
 }

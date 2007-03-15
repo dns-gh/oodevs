@@ -22,15 +22,13 @@ using namespace gui;
 // Name: ParamPoint constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamPoint::ParamPoint( QObject* parent, ASN1T_Point*& asn, const QString& name, const QString& menu, const CoordinateConverter_ABC& converter )
+ParamPoint::ParamPoint( QObject* parent, const QString& name, const CoordinateConverter_ABC& converter )
     : QObject   ( parent )
     , Param_ABC ( name )
-    , asn_      ( new ASN1T_Point() )
     , converter_( converter )
-    , menu_     ( menu )
     , pLabel_   ( 0 )
 {
-    asn = asn_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +37,7 @@ ParamPoint::ParamPoint( QObject* parent, ASN1T_Point*& asn, const QString& name,
 // -----------------------------------------------------------------------------
 ParamPoint::~ParamPoint()
 {
-    delete asn_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -82,21 +80,22 @@ void ParamPoint::Draw( const geometry::Point2f& /*point*/, const kernel::Viewpor
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamPoint::Commit
+// Name: ParamPoint::CommitTo
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamPoint::Commit()
+void ParamPoint::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     if( !pPosLabel_ )
         InterfaceNotInitialized();
+    asn.value.t = T_MissionParameter_value_point;
     if( pPosLabel_->text() == "---" )
         return;
-    SetOptionalPresent();
-    asn_->type                  = EnumTypeLocalisation::point;
-    asn_->vecteur_point.n       = 1;
-    asn_->vecteur_point.elem    = &asnPoint_;
-    const std::string coord = converter_.ConvertToMgrs( paramPoint_ );
-    asnPoint_ = coord.c_str();
+    asn.null_value = 0; // $$$$ SBO 2007-03-15: paramPoint_.IsNull() ?
+    ASN1T_Point*& point = asn.value.u.point = new ASN1T_Point();
+    point->type               = EnumTypeLocalisation::point;
+    point->vecteur_point.n    = 1;
+    point->vecteur_point.elem = new ASN1T_CoordUTM[1];
+    point->vecteur_point.elem[0] = converter_.ConvertToMgrs( paramPoint_ ).c_str();
 }
 
 
@@ -107,7 +106,7 @@ void ParamPoint::Commit()
 void ParamPoint::NotifyContextMenu( const geometry::Point2f& point, ContextMenu& menu )
 {
     popupPoint_ = point;
-    menu.InsertItem( "Parameter", menu_, this, SLOT( AcceptPopupMenuPoint() ) );
+    menu.InsertItem( "Parameter", GetName(), this, SLOT( AcceptPopupMenuPoint() ) );
 }
 
 // -----------------------------------------------------------------------------

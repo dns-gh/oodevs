@@ -16,24 +16,9 @@
 // Name: ParamNumericField constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamNumericField::ParamNumericField( QObject* parent, ASN1INT& asn, const QString& name, int min /*= 0*/, int max /*= 9999*/ )
+ParamNumericField::ParamNumericField( const QString& name, bool isReal )
     : Param_ABC( name )
-    , int_( &asn )
-    , real_( 0 )
-    , validator_( new QIntValidator( min, max, parent ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamNumericField constructor
-// Created: AGE 2006-03-15
-// -----------------------------------------------------------------------------
-ParamNumericField::ParamNumericField( QObject* parent, ASN1REAL& asn, const QString& name, float min /*= 0.*/, float max /*= 9999.*/, int precision /*= 2*/ )
-    : Param_ABC( name )
-    , int_ ( 0 )
-    , real_( &asn )
-    , validator_( new QDoubleValidator( min, max, precision, parent ) )
+    , isReal_( isReal )
 {
     // NOTHING
 }
@@ -53,13 +38,24 @@ ParamNumericField::~ParamNumericField()
 // -----------------------------------------------------------------------------
 void ParamNumericField::BuildInterface( QWidget* parent )
 {
-    QHBox* box = new QHBox( parent );
-    box->setSpacing( 5 );
-    pLabel_ = new gui::RichLabel( GetName(), box );
+    pLabel_ = new gui::RichLabel( GetName(), parent );
     pLabel_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
+    pEdit_ = new QLineEdit( "0", parent );
+    SetLimits( 0.f, 99999.f );
+}
 
-    pEdit_ = new QLineEdit( "0", box );
-    pEdit_->setValidator( validator_ );
+// -----------------------------------------------------------------------------
+// Name: ParamNumericField::SetLimits
+// Created: SBO 2007-03-15
+// -----------------------------------------------------------------------------
+void ParamNumericField::SetLimits( float min, float max )
+{
+    QValidator* validator;
+    if( isReal_ )
+        validator = new QDoubleValidator( min, max, 2, pEdit_ );
+    else
+        validator = new QIntValidator( int( min ), int( max ), pEdit_ );
+    pEdit_->setValidator( validator );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,32 +75,21 @@ bool ParamNumericField::CheckValidity()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamNumericField::Commit
-// Created: AGE 2006-03-15
+// Name: ParamNumericField::CommitTo
+// Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
-void ParamNumericField::Commit()
+void ParamNumericField::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    const float rValue = pEdit_->text().toFloat();
-    if( int_ )
-        *int_ = (int)rValue;
-    else
-        *real_ = (float)rValue;
+    asn.null_value = 0;
+    asn.value.t = T_MissionParameter_value_aReal;
+    asn.value.u.aReal = pEdit_->text().toFloat();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ParamNumericField::CommitTo
-// Created: SBO 2006-11-08
+// Created: SBO 2007-03-15
 // -----------------------------------------------------------------------------
-void ParamNumericField::CommitTo( ASN1INT& asn )
-{
-    asn = pEdit_->text().toInt();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamNumericField::CommitTo
-// Created: SBO 2006-11-08
-// -----------------------------------------------------------------------------
-void ParamNumericField::CommitTo( ASN1REAL& asn )
+void ParamNumericField::CommitTo( ASN1REAL& asn ) const
 {
     asn = pEdit_->text().toFloat();
 }
@@ -115,7 +100,8 @@ void ParamNumericField::CommitTo( ASN1REAL& asn )
 // -----------------------------------------------------------------------------
 void ParamNumericField::Show()
 {
-    pLabel_->parentWidget()->show();
+    pLabel_->show();
+    pEdit_->show();
 }
 
 // -----------------------------------------------------------------------------
@@ -124,5 +110,6 @@ void ParamNumericField::Show()
 // -----------------------------------------------------------------------------
 void ParamNumericField::Hide()
 {
-    pLabel_->parentWidget()->hide();
+    pLabel_->hide();
+    pEdit_->hide();
 }

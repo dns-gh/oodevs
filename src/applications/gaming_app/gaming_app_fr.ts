@@ -317,6 +317,53 @@
     </message>
 </context>
 <context>
+    <name>AtlasNature</name>
+    <message>
+        <source>Armored</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SSA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command post</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mortar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rocket launcher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vehicle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Footman</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Helicopter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undefined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AttributeView</name>
     <message>
         <source>Attribute</source>
@@ -1205,67 +1252,6 @@
     </message>
     <message>
         <source>Density:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ParamAgentType</name>
-    <message>
-        <source>Armored</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SSA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Command post</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mortar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rocket launcher</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vehicle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Footman</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Helicopter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Undefined</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ParamEquipmentList</name>
-    <message>
-        <source>Equipment</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ParamHumanWoundList</name>
-    <message>
-        <source>Injuries</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

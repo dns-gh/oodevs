@@ -3,35 +3,29 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __ParamAgentList_h_
-#define __ParamAgentList_h_
+#ifndef __ParamPolygonList_h_
+#define __ParamPolygonList_h_
 
-#include "game_asn/Asn.h"
-#include "EntityListParameter.h"
-
-namespace kernel
-{
-    class Agent_ABC;
-}
+#include "ParamLocationList.h"
 
 // =============================================================================
-/** @class  ParamAgentList
-    @brief  ParamAgentList
+/** @class  ParamPolygonList
+    @brief  ParamPolygonList
 */
-// Created: AGE 2006-03-14
+// Created: SBO 2007-03-15
 // =============================================================================
-class ParamAgentList : public EntityListParameter< kernel::Agent_ABC >
+class ParamPolygonList : public ParamLocationList
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAgentList( QObject* parent, const QString& name );
-    virtual ~ParamAgentList();
+             ParamPolygonList( QObject* parent, const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+    virtual ~ParamPolygonList();
     //@}
 
     //! @name Operations
@@ -41,4 +35,4 @@ public:
     //@}
 };
 
-#endif // __ParamAgentList_h_
+#endif // __ParamPolygonList_h_

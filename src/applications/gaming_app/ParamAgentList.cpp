@@ -17,8 +17,8 @@ using namespace kernel;
 // Name: ParamAgentList constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamAgentList::ParamAgentList( QWidget* pParent, ASN1T_ListAgent*& asn, const QString& label, const QString& menu )
-    : EntityListParameter< Agent_ABC >( pParent, (ASN1T_ListOID*&)asn, label, menu )
+ParamAgentList::ParamAgentList( QObject* parent, const QString& name )
+    : EntityListParameter< Agent_ABC >( parent, name )
 {
     // NOTHING
 }
@@ -30,4 +30,24 @@ ParamAgentList::ParamAgentList( QWidget* pParent, ASN1T_ListAgent*& asn, const Q
 ParamAgentList::~ParamAgentList()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamAgentList::CommitTo
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void ParamAgentList::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.value.t = T_MissionParameter_value_listAgent;
+    EntityListParameter< Agent_ABC >::CommitTo( (ASN1T_ListOID*&)asn.value.u.listAgent );
+    asn.null_value = asn.value.u.listAgent->n ? 0 : 1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamAgentList::Clean
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void ParamAgentList::Clean( ASN1T_MissionParameter& asn ) const
+{
+    EntityListParameter< Agent_ABC >::Clean( (ASN1T_ListOID*&)asn.value.u.listAgent );
 }

@@ -9,7 +9,6 @@
 
 #include "gaming_app_pch.h"
 #include "Param_ABC.h"
-#include "OptionalParamFunctor_ABC.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_gui/Tools.h"
 
@@ -21,7 +20,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Param_ABC::Param_ABC( const QString& name )
     : name_( name )
-    , pOptional_( 0 )
+    , optional_( false )
     , controller_( 0 )
 {
     // NOTHING
@@ -60,9 +59,9 @@ void Param_ABC::RegisterIn( ActionController& controller )
 // Name: Param_ABC::SetOptional
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void Param_ABC::SetOptional( OptionalParamFunctor_ABC* optional )
+void Param_ABC::SetOptional( bool optional )
 {
-    pOptional_ = optional;
+    optional_ = optional;
 }
 
 // -----------------------------------------------------------------------------
@@ -89,17 +88,7 @@ bool Param_ABC::CheckValidity()
 // -----------------------------------------------------------------------------
 bool Param_ABC::IsOptional() const
 {
-    return pOptional_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Param_ABC::SetOptionalPresent
-// Created: SBO 2006-11-20
-// -----------------------------------------------------------------------------
-void Param_ABC::SetOptionalPresent()
-{
-    if( pOptional_ )
-        pOptional_->SetOptionalPresent();
+    return optional_;
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +104,7 @@ QString Param_ABC::GetName() const
 // Name: Param_ABC::InterfaceNotInitialized
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-void Param_ABC::InterfaceNotInitialized()
+void Param_ABC::InterfaceNotInitialized() const
 {
     throw std::runtime_error( tools::translate( "Param_ABC", "'%1' parameter interface not initialized" ).arg( name_ ).ascii() );
 }

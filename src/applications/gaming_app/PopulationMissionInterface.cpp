@@ -25,20 +25,11 @@ PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Entity_
                                                       , Publisher_ABC& publisher, MissionInterfaceFactory& factory, MissionInterfaceBuilder& builder )
     : MissionInterface_ABC( parent, entity, controller )
     , publisher_          ( publisher )
-    , order_              ( new ASN_MsgPopulationOrder() )
+    , mission_            ( mission )
 {
-    order_->GetAsnMsg().oid_unite_executante = entity.GetId();
-    order_->GetAsnMsg().mission = mission.GetId();
-
-    QLabel* pLabel = new QLabel( mission.GetName(), this );
-    pLabel->setFrameStyle( QFrame::Box | QFrame::Sunken );
-    pLabel->setAlignment( Qt::AlignCenter );
-    QFont font = pLabel->font();
-    font.setBold( true );
-    pLabel->setFont( font );
-
+    CreateTitle( mission.GetName() );
     builder.Begin( *this, entity );
-    factory.CreateMissionInterface( builder, mission.GetId(), order_->GetAsnMsg() );
+    factory.CreatePopulationMissionInterface( builder, mission.GetId() );
     builder.End();
     CreateOkCancelButtons();
 }
@@ -58,5 +49,11 @@ PopulationMissionInterface::~PopulationMissionInterface()
 // -----------------------------------------------------------------------------
 void PopulationMissionInterface::Publish()
 {
-    order_->Send( publisher_, 45 );
+    ASN_MsgPopulationOrder asn;
+    ASN1T_MsgPopulationOrder& order = asn.GetAsnMsg();
+    order.oid_unite_executante = GetEntity().GetId();
+    order.mission = mission_.GetId();
+    CommitTo( order.parametres );
+    asn.Send( publisher_ );
+    Clean( order.parametres );
 }

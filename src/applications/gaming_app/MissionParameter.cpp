@@ -67,7 +67,7 @@ void MissionParameter::ReadValue( xml::xistream& xis )
 // Name: MissionParameter::BuildInterface
 // Created: SBO 2006-11-22
 // -----------------------------------------------------------------------------
-void MissionParameter::BuildInterface( MissionInterfaceBuilder& builder, ASN1T_MissionParameter& asnParam ) const
+void MissionParameter::BuildInterface( MissionInterfaceBuilder& builder ) const
 {
-    builder.AddParameter( asnParam, type_, name_, optional_, values_ );
+    builder.AddParameter( type_, name_, optional_, values_ );
 }

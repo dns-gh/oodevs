@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ParamLimits.h"
 #include "LimitParameter.h"
-#include "gaming/Limit.h"
+#include "game_asn/Asn.h"
 
 using namespace kernel;
 
@@ -18,10 +18,10 @@ using namespace kernel;
 // Name: ParamLimits constructor
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-ParamLimits::ParamLimits( QObject* parent, ASN1T_Line& limit1, ASN1T_Line& limit2, const QString& name1, const QString& name2, const QString& menu1, const QString& menu2 )
+ParamLimits::ParamLimits( QObject* parent, const QString& name1, const QString& name2 )
     : Param_ABC( parent->tr( "Limits" ) )
-    , limit1_( new LimitParameter( parent, limit1, name1, menu1 ) )
-    , limit2_( new LimitParameter( parent, limit2, name2, menu2 ) )
+    , limit1_( new LimitParameter( parent, name1 ) )
+    , limit2_( new LimitParameter( parent, name2 ) )
 {
     // NOTHING
 }
@@ -71,11 +71,11 @@ void ParamLimits::RegisterIn( ActionController& controller )
 // Name: ParamLimits::SetOptional
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamLimits::SetOptional( OptionalParamFunctor_ABC* functor )
+void ParamLimits::SetOptional( bool optional )
 {
-    Param_ABC::SetOptional( functor );
-    limit1_->SetOptional( functor );
-    limit2_->SetOptional( functor );
+    Param_ABC::SetOptional( optional );
+    limit1_->SetOptional( optional );
+    limit2_->SetOptional( optional );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,11 +99,23 @@ void ParamLimits::BuildInterface( QWidget* parent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamLimits::Commit
-// Created: AGE 2006-03-24
+// Name: ParamLimits::CommitTo
+// Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
-void ParamLimits::Commit()
+void ParamLimits::CommitTo( ASN1T_OrderContext& asn ) const
 {
-    limit1_->Commit();
-    limit2_->Commit();
+    asn.m.limite_gauchePresent = limit1_->IsSet();
+    asn.m.limite_droitePresent = limit2_->IsSet();
+    limit1_->CommitTo( asn.limite_gauche );
+    limit2_->CommitTo( asn.limite_droite );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLimits::Clean
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void ParamLimits::Clean( ASN1T_OrderContext& asn ) const
+{
+    limit1_->Clean( asn.limite_gauche );
+    limit2_->Clean( asn.limite_droite );
 }

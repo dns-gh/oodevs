@@ -10,16 +10,15 @@
 #ifndef __ParamEquipmentList_h_
 #define __ParamEquipmentList_h_
 
-#include "game_asn/Asn.h"
 #include "Param_ABC.h"
 #include "clients_kernel/Resolver.h"
-
-#include <qtable.h>
 
 namespace kernel
 {
     class EquipmentType;
 }
+
+class QTable;
 
 // =============================================================================
 /** @class  ParamEquipmentList
@@ -34,14 +33,15 @@ class ParamEquipmentList : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamEquipmentList( QObject* parent, ASN1T_MaintenancePriorites*& asnListEquipment, const QString& strLabel, const kernel::Resolver< kernel::EquipmentType >& resolver );
+             ParamEquipmentList( QObject* parent, const QString& name, const kernel::Resolver< kernel::EquipmentType >& resolver );
     virtual ~ParamEquipmentList();
     //@}
 
     //! @name Operations
     //@{
     virtual void BuildInterface( QWidget* parent );
-    virtual void Commit();
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( ASN1T_MissionParameter& asn ) const;
     //@}
 
 private slots:
@@ -54,13 +54,13 @@ private:
     //! @name Types
     //@{
     typedef std::map< QString, const kernel::EquipmentType* > T_EquipmentTypes;
+    typedef T_EquipmentTypes::const_iterator                CIT_EquipmentTypes;
     //@}
 
 private:
     //! @name Member data
     //@{
     const kernel::Resolver< kernel::EquipmentType >& resolver_;
-    ASN1T_MaintenancePriorites* pAsnEquipmentList_;
     QTable*                     table_;
     QStringList                 equipmentList_;
     T_EquipmentTypes            equipmentTypes_;

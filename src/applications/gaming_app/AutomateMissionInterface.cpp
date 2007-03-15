@@ -25,20 +25,11 @@ AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Entity_ABC&
                                                   , Publisher_ABC& publisher, MissionInterfaceFactory& factory, MissionInterfaceBuilder& builder )
     : MissionInterface_ABC( parent, entity, controller )
     , publisher_          ( publisher )
-    , order_              ( new ASN_MsgAutomateOrder() )
+    , mission_            ( mission )
 {
-    order_->GetAsnMsg().oid_unite_executante = entity.GetId();
-    order_->GetAsnMsg().mission = mission.GetId();
-
-    QLabel* pLabel = new QLabel( mission.GetName(), this );
-    pLabel->setFrameStyle( QFrame::Box | QFrame::Sunken );
-    pLabel->setAlignment( Qt::AlignCenter );
-    QFont font = pLabel->font();
-    font.setBold( true );
-    pLabel->setFont( font );
-
+    CreateTitle( mission.GetName() );
     builder.Begin( *this, entity );
-    factory.CreateMissionInterface( builder, mission.GetId(), order_->GetAsnMsg() );
+    factory.CreateAutomatMissionInterface( builder, mission.GetId() );
     builder.End();
     CreateOkCancelButtons();
 }
@@ -58,8 +49,14 @@ AutomateMissionInterface::~AutomateMissionInterface()
 // -----------------------------------------------------------------------------
 void AutomateMissionInterface::Publish()
 {
-    ASN1T_MsgAutomateOrder& order = order_->GetAsnMsg();
-    order.order_context.m.limite_gauchePresent = 1; // $$$$ SBO 2006-11-23: move somehow in ParamLimits
-    order.order_context.m.limite_droitePresent = 1; // $$$$ SBO 2006-11-23: 
-    order_->Send( publisher_, 45 );
+    ASN_MsgAutomateOrder asn;
+    ASN1T_MsgAutomateOrder& order = asn.GetAsnMsg();
+    order.oid_unite_executante = GetEntity().GetId();
+    order.mission = mission_.GetId();
+    order.formation = (ASN1T_EnumAutomateOrderFormation)EnumAutomateOrderFormation::deux_echelons; // $$$$ SBO 2007-03-15: move to order.parameters
+    CommitTo( order.order_context );
+    CommitTo( order.parametres );
+    asn.Send( publisher_ );
+    Clean( order.order_context );
+    Clean( order.parametres );
 }

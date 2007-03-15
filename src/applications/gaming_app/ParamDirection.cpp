@@ -14,9 +14,8 @@
 // Name: ParamDirection constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamDirection::ParamDirection( ASN1T_Direction& direction, const QString& name )
+ParamDirection::ParamDirection( const QString& name )
     : Param_ABC( name )
-    , direction_( direction )
     , dial_( 0 )
 {
     // NOTHING
@@ -45,13 +44,25 @@ void ParamDirection::BuildInterface( QWidget* parent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamDirection::Commit
-// Created: AGE 2006-03-15
+// Name: ParamDirection::CommitTo
+// Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
-void ParamDirection::Commit()
+void ParamDirection::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     if( !dial_ )
         InterfaceNotInitialized();
-    direction_ = dial_->value();
-    direction_ += (direction_ > 180 ) ? -180 : 180;
+    asn.null_value = 0;
+    asn.value.t = T_MissionParameter_value_direction;
+    asn.value.u.direction = dial_->value() + ( dial_->value() > 180 ? -180 : 180 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamDirection::CommitTo
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void ParamDirection::CommitTo( ASN1T_OrderContext& asn ) const
+{
+    if( !dial_ )
+        InterfaceNotInitialized();
+    asn.direction_dangereuse = dial_->value() + ( dial_->value() > 180 ? -180 : 180 );
 }

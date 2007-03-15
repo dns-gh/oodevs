@@ -40,14 +40,15 @@ class ParamPathList : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPathList( QObject* parent, ASN1T_ListItineraire*& asnPathList, const QString& label, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent, kernel::ActionController& controller );
+             ParamPathList( QObject* parent, const QString& label, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent, kernel::ActionController& controller );
     virtual ~ParamPathList();
     //@}
 
     //! @name Operations
     //@{
     virtual bool CheckValidity();
-    virtual void Commit();
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( ASN1T_MissionParameter& asn ) const;
     virtual void BuildInterface( QWidget* parent );
     //@}
 

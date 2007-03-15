@@ -60,10 +60,8 @@ unsigned long MissionTemplate::GetId() const
 // Name: MissionTemplate::BuildInterface
 // Created: SBO 2006-11-22
 // -----------------------------------------------------------------------------
-void MissionTemplate::BuildInterface( MissionInterfaceBuilder& builder, ASN1T_MissionParameters& mission ) const
+void MissionTemplate::BuildInterface( MissionInterfaceBuilder& builder ) const
 {
-    mission.n = parameters_.size();
-    mission.elem = new ASN1T_MissionParameter[mission.n]; // $$$$ SBO 2006-11-22: 
-    for( unsigned int i = 0; i < parameters_.size(); ++i )
-        parameters_[i]->BuildInterface( builder, mission.elem[i] );
+    for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
+        (*it)->BuildInterface( builder );
 }

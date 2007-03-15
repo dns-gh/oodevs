@@ -19,8 +19,8 @@ using namespace kernel;
 // Name: ParamAgentKnowledge constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamAgentKnowledge::ParamAgentKnowledge( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
-    : EntityParameter< AgentKnowledge_ABC >( pParent, id, label, menu )
+ParamAgentKnowledge::ParamAgentKnowledge( QWidget* pParent, const QString& name, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
+    : EntityParameter< AgentKnowledge_ABC >( pParent, name )
     , converter_( converter )
     , agent_    ( agent )
 {
@@ -34,6 +34,17 @@ ParamAgentKnowledge::ParamAgentKnowledge( QWidget* pParent, ASN1T_OID& id, const
 ParamAgentKnowledge::~ParamAgentKnowledge()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamAgentKnowledge::CommitTo
+// Created: SBO 2007-03-14
+// -----------------------------------------------------------------------------
+void ParamAgentKnowledge::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.value.t = T_MissionParameter_value_knowledgeAgent;
+    EntityParameter< AgentKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.knowledgeAgent );
+    asn.null_value = asn.value.u.knowledgeAgent ? 0 : 1;
 }
 
 // -----------------------------------------------------------------------------

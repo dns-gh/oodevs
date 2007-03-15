@@ -40,7 +40,7 @@ public:
     //! @name Operations
     //@{
     unsigned long GetId() const;
-    void BuildInterface( MissionInterfaceBuilder& builder, ASN1T_MissionParameters& mission ) const;
+    void BuildInterface( MissionInterfaceBuilder& builder ) const;
     //@}
 
 private:

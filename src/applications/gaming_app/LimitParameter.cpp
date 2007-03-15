@@ -17,17 +17,14 @@
 // Name: LimitParameter constructor
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-LimitParameter::LimitParameter( QObject* parent, ASN1T_Line& limit, const QString& name, const QString& menu )
+LimitParameter::LimitParameter( QObject* parent, const QString& name )
     : QObject   ( parent )
     , Param_ABC ( name )
-    , result_   ( limit )
-    , menu_     ( menu )
     , pLabel_   ( 0 )
     , potential_( 0 )
     , selected_ ( 0 )
 {
-	result_.vecteur_point.n    = 0;
-	result_.vecteur_point.elem = 0;
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -66,36 +63,47 @@ bool LimitParameter::CheckValidity()
     }
     return true;
 }
-    
+
 // -----------------------------------------------------------------------------
-// Name: LimitParameter::Commit
+// Name: LimitParameter::IsSet
+// Created: SBO 2007-03-15
+// -----------------------------------------------------------------------------
+bool LimitParameter::IsSet() const
+{
+    return selected_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitParameter::CommitTo
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void LimitParameter::Commit()
+void LimitParameter::CommitTo( ASN1T_Line& asn ) const
 {
-    if( !pLabel_ )
+    if( ! pLabel_ )
         InterfaceNotInitialized();
+    asn.vecteur_point.n = 0;
+    asn.vecteur_point.elem = 0;
     if( ! selected_ )
     {
         if( IsOptional() )
             return;
         throw std::runtime_error( "Limit not set!" );
     }
-    selected_->CopyTo( result_ );
+    selected_->CopyTo( asn ); // $$$$ SBO 2007-03-14: use a serializer or something...
+//    asn.type = EnumTypeLocalisation::line;
+//    asn.vecteur_point.n = result_.vecteur_point.n;
+//    asn.vecteur_point.elem = new ASN1T_CoordUTM[asn.vecteur_point.n];
+//    for( unsigned int i = 0; i < result_.vecteur_point.n; ++i )
+//        asn.vecteur_point.elem[i] = result_.vecteur_point.elem[i];
 }
-    
+
 // -----------------------------------------------------------------------------
-// Name: LimitParameter::CommitTo
-// Created: SBO 2006-11-14
+// Name: LimitParameter::Clean
+// Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
-void LimitParameter::CommitTo( ASN1T_Line& asn )
+void LimitParameter::Clean( ASN1T_Line& asn ) const
 {
-    SetOptionalPresent();
-    asn.type = EnumTypeLocalisation::line;
-    asn.vecteur_point.n = result_.vecteur_point.n;
-    asn.vecteur_point.elem = new ASN1T_CoordUTM[asn.vecteur_point.n];
-    for( unsigned int i = 0; i < result_.vecteur_point.n; ++i )
-        asn.vecteur_point.elem[i] = result_.vecteur_point.elem[i];
+    delete[] asn.vecteur_point.elem;
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +115,7 @@ void LimitParameter::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, 
     if( entity.IsLimit() )
     {
         potential_ = static_cast< const Limit* >( &entity );
-        menu.InsertItem( "Parameter", menu_.c_str(), this, SLOT( MenuItemValidated() ) );
+        menu.InsertItem( "Parameter", GetName(), this, SLOT( MenuItemValidated() ) );
     }
 }
     

@@ -25,14 +25,15 @@ class ParamDirection : public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamDirection( ASN1T_Direction& direction, const QString& name );
+    explicit ParamDirection( const QString& name );
     virtual ~ParamDirection();
     //@}
 
     //! @name Operations
     //@{
     virtual void BuildInterface( QWidget* parent );
-    virtual void Commit();
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( ASN1T_OrderContext& asn ) const;
     //@}
 
 private:
@@ -45,7 +46,6 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_Direction& direction_;
     QDial* dial_;
     //@}
 };

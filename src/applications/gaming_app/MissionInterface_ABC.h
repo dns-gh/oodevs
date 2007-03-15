@@ -12,7 +12,6 @@
 
 #include "game_asn/Asn.h"
 #include "ParamComboBox.h"
-#include "ParamRadioBtnGroup.h"
 
 namespace kernel
 {
@@ -21,7 +20,6 @@ namespace kernel
 }
 
 class Param_ABC;
-class OptionalParamFunctor_ABC;
 class Action_ABC;
 class ActionsModel;
 
@@ -37,7 +35,7 @@ class MissionInterface_ABC : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionInterface_ABC( QWidget* parent, kernel::Entity_ABC& agent, kernel::ActionController& controller );
+             MissionInterface_ABC( QWidget* parent, kernel::Entity_ABC& entity, kernel::ActionController& controller );
     virtual ~MissionInterface_ABC();
     //@}
 
@@ -45,7 +43,8 @@ public:
     //@{
     void Draw( const kernel::GlTools_ABC& tools, kernel::Viewport_ABC& extent ) const;
     bool IsEmpty() const;
-    void AddParameter( Param_ABC& parameter, OptionalParamFunctor_ABC* pOptional );
+    void AddParameter( Param_ABC& parameter, bool optional );
+    void AddOrderContext( Param_ABC& parameter, bool optional );
     //@}
 
 public slots:
@@ -57,7 +56,13 @@ public slots:
 protected:
     //! @name Helpers
     //@{
+    const kernel::Entity_ABC& GetEntity() const;
+    void CreateTitle( const QString& title );
     void CreateOkCancelButtons();
+    void CommitTo( ASN1T_MissionParameters& asn ) const;
+    void CommitTo( ASN1T_OrderContext& asn ) const;
+    void Clean( ASN1T_MissionParameters& asn ) const;
+    void Clean( ASN1T_OrderContext& asn ) const;
     //@}
 
 private:
@@ -78,19 +83,16 @@ private:
     //@{
     typedef std::vector< Param_ABC* >      T_Parameters;
     typedef T_Parameters::const_iterator CIT_Parameters;
-
-    typedef std::vector< OptionalParamFunctor_ABC* >  T_OptionalFunctors;
-    typedef T_OptionalFunctors::const_iterator      CIT_OptionalFunctors;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::ActionController& controller_;
-    kernel::Entity_ABC& agent_;
-
-    T_Parameters  parameters_;
-    T_OptionalFunctors optionalFunctors_;
+    kernel::Entity_ABC& entity_;
+    T_Parameters parameters_;
+    T_Parameters orderContext_;
+    //@}
 };
 
 #endif // __MissionInterface_ABC_h_
