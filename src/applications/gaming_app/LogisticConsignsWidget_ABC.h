@@ -105,9 +105,10 @@ LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::LogisticCon
     pConsignHandledListView_->AddColumn( "" );
     pConsignHandledListView_->setResizeMode( QListView::AllColumns );
 
-    logDisplay_ = new gui::SubItemDisplayer( tr( "Consign :" ), factory );
-    logDisplay_->AddChild( tr( "Requesting unit :" ) )
-                .AddChild( tr( "Processing unit :" ) );
+    logDisplay_ = new gui::SubItemDisplayer( tr( "Consign:" ), factory );
+    logDisplay_->AddChild( tr( "Instruction:" ) )
+                .AddChild( tr( "Consumer:" ) )
+                .AddChild( tr( "Handler:" ) );
     controllers_.Register( *this );
     hide();
 }
