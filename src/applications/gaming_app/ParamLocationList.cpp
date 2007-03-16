@@ -129,8 +129,12 @@ void ParamLocationList::CommitTo( ASN1T_ListLocalisation*& asn ) const
 // -----------------------------------------------------------------------------
 void ParamLocationList::Clean( ASN1T_ListLocalisation*& asn ) const
 {
-    // $$$$ SBO 2007-03-15: clean points
-    delete[] asn->elem;
+    if( asn )
+    {
+        for( unsigned int i = 0; i < asn->n; ++i )
+            delete[] asn->elem[i].vecteur_point.elem;
+        delete[] asn->elem;
+    }
     delete asn;
 }
 

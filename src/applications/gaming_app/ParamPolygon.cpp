@@ -47,5 +47,7 @@ void ParamPolygon::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamPolygon::Clean( ASN1T_MissionParameter& asn ) const
 {
+    if( asn.value.u.polygon )
+        delete[] asn.value.u.polygon->vecteur_point.elem;
     delete asn.value.u.polygon;
 }

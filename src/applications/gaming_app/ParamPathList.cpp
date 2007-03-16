@@ -112,7 +112,12 @@ void ParamPathList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamPathList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    delete[] asn.value.u.listItineraire->elem;
+    if( asn.value.u.listItineraire )
+    {
+        for( unsigned int i = 0; i < asn.value.u.listItineraire->n; ++i )
+            delete[] asn.value.u.listItineraire->elem[i].vecteur_point.elem;
+        delete[] asn.value.u.listItineraire->elem;
+    }
     delete asn.value.u.listItineraire;
 }
 

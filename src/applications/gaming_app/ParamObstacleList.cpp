@@ -85,14 +85,12 @@ bool ParamObstacleList::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamObstacleList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    ASN1T_ListMissionGenObject*& list = asn.value.u.listMissionGenObject;
-    list = 0;
     if( ! box_ )
         InterfaceNotInitialized();
 //    if( ! ChangeSelection() )
 //        return;
+    ASN1T_ListMissionGenObject*& list = asn.value.u.listMissionGenObject = new ASN1T_ListMissionGenObject();
     asn.value.t = T_MissionParameter_value_listMissionGenObject;
-    list = new ASN1T_ListMissionGenObject();
     list->n = list_->ListView()->childCount();
     asn.null_value = list->n ? 0 : 1;
     if( asn.null_value )
@@ -112,7 +110,8 @@ void ParamObstacleList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamObstacleList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    delete[] asn.value.u.listMissionGenObject->elem;
+    if( asn.value.u.listMissionGenObject )
+        delete[] asn.value.u.listMissionGenObject->elem;
     delete asn.value.u.listMissionGenObject;
 }
 

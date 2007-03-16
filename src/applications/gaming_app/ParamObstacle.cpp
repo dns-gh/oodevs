@@ -134,13 +134,11 @@ bool ParamObstacle::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamObstacle::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    ASN1T_MissionGenObject*& object = asn.value.u.missionGenObject;
-    object = 0;
     if( ! typeCombo_ )
         InterfaceNotInitialized();
+    ASN1T_MissionGenObject*& object = asn.value.u.missionGenObject = new ASN1T_MissionGenObject();
     asn.null_value = 0;
     asn.value.t = T_MissionParameter_value_missionGenObject;
-    object = new ASN1T_MissionGenObject();
     CommitTo( *object );
 }
 

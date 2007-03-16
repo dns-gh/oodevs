@@ -105,7 +105,8 @@ void ParamPath::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamPath::Clean( ASN1T_MissionParameter& asn ) const
 {
-    // $$$$ SBO 2007-03-15: clean coords!
+    if( asn.value.u.itineraire )
+        delete[] asn.value.u.itineraire->vecteur_point.elem;
     delete asn.value.u.itineraire;
 }
 

@@ -103,7 +103,8 @@ void ParamEquipmentList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamEquipmentList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    delete[] asn.value.u.maintenancePriorites->elem;
+    if( asn.value.u.maintenancePriorites )
+        delete[] asn.value.u.maintenancePriorites->elem;
     delete asn.value.u.maintenancePriorites;
 }
 

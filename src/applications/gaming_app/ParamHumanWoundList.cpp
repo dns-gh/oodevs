@@ -94,7 +94,9 @@ void ParamHumanWoundList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamHumanWoundList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    delete[] asn.value.u.santePriorites;
+    if( asn.value.u.santePriorites )
+        delete[] asn.value.u.santePriorites->elem;
+    delete asn.value.u.santePriorites;
 }
 
 // -----------------------------------------------------------------------------

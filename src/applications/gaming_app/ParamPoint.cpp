@@ -85,19 +85,29 @@ void ParamPoint::Draw( const geometry::Point2f& /*point*/, const kernel::Viewpor
 // -----------------------------------------------------------------------------
 void ParamPoint::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    asn.value.t = T_MissionParameter_value_point;
+    ASN1T_Point*& point = asn.value.u.point = new ASN1T_Point();
     if( !pPosLabel_ )
         InterfaceNotInitialized();
-    asn.value.t = T_MissionParameter_value_point;
-    if( pPosLabel_->text() == "---" )
+    asn.null_value = pPosLabel_->text() == "---" ? 1 : 0;
+    if( asn.null_value )
         return;
-    asn.null_value = 0; // $$$$ SBO 2007-03-15: paramPoint_.IsNull() ?
-    ASN1T_Point*& point = asn.value.u.point = new ASN1T_Point();
     point->type               = EnumTypeLocalisation::point;
     point->vecteur_point.n    = 1;
     point->vecteur_point.elem = new ASN1T_CoordUTM[1];
     point->vecteur_point.elem[0] = converter_.ConvertToMgrs( paramPoint_ ).c_str();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ParamPoint::Clean
+// Created: SBO 2007-03-16
+// -----------------------------------------------------------------------------
+void ParamPoint::Clean( ASN1T_MissionParameter& asn ) const
+{
+    if( asn.value.u.point )
+        delete[] asn.value.u.point->vecteur_point.elem;
+    delete asn.value.u.point;
+}
 
 // -----------------------------------------------------------------------------
 // Name: ParamPoint::NotifyContextMenu

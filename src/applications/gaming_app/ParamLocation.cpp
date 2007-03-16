@@ -115,7 +115,8 @@ void ParamLocation::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamLocation::Clean( ASN1T_MissionParameter& asn ) const
 {
-    // $$$$ SBO 2007-03-15: clean coords
+    if( asn.value.u.localisation )
+        delete[] asn.value.u.localisation->vecteur_point.elem;
     delete asn.value.u.localisation;
 }
 

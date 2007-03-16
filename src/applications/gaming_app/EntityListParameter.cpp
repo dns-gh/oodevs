@@ -148,6 +148,7 @@ void EntityListParameterBase::CommitTo( ASN1T_ListOID*& asn ) const
 // -----------------------------------------------------------------------------
 void EntityListParameterBase::Clean( ASN1T_ListOID*& asn ) const
 {
-    delete[] asn->elem;
+    if( asn )
+        delete[] asn->elem;
     delete asn;
 }

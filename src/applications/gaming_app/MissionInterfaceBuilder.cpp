@@ -12,7 +12,7 @@
 #include "MissionInterface_ABC.h"
 #include "ParamAgent.h"
 #include "ParamAgentList.h"
-#include "ParamAgentType.h"
+#include "ParamAtlasNature.h"
 #include "ParamAutomat.h"
 #include "ParamAutomatList.h"
 #include "ParamPath.h"
@@ -205,7 +205,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAutomatList( const QString& name ) cons
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAtlasNature( const QString& name ) const
 {
-    return new ParamAgentType( name ); // $$$$ SBO 2007-03-14: rename AtlasNature or something
+    return new ParamAtlasNature( missionInterface_, name );
 }
 
 // -----------------------------------------------------------------------------

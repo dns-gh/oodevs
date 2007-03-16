@@ -32,7 +32,8 @@ ParamLimits::ParamLimits( QObject* parent, const QString& name1, const QString& 
 // -----------------------------------------------------------------------------
 ParamLimits::~ParamLimits()
 {
-    // NOTHING
+    delete limit1_;
+    delete limit2_;
 }
 
 // -----------------------------------------------------------------------------
