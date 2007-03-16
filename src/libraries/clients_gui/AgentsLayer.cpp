@@ -141,6 +141,10 @@ void AgentsLayer::Select( const Entity_ABC& entity, bool shift )
 // -----------------------------------------------------------------------------
 void AgentsLayer::ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& point, const QPoint& where )
 {
-    const kernel::Agent_ABC& agent = static_cast< const kernel::Agent_ABC& >( entity );
-    controllers_.actions_.ContextMenu( agent, entity, point, where );
+    const kernel::Automat_ABC* automat = static_cast< const kernel::Automat_ABC* >( &entity );
+    const kernel::Agent_ABC*   agent   = static_cast< const kernel::Agent_ABC* >  ( &entity );
+    if( aggregated_.find( automat ) != aggregated_.end() )
+        controllers_.actions_.ContextMenu( *automat, entity, point, where );
+    else
+        controllers_.actions_.ContextMenu( *agent, entity, point, where );
 }

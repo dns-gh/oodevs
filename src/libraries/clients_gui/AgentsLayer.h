@@ -72,14 +72,14 @@ private:
 
     //! @name Types
     //@{
-    typedef std::set< const kernel::Automat_ABC* > T_Agents;
+    typedef std::set< const kernel::Automat_ABC* > T_Automats;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::SafePointer< kernel::Automat_ABC > selected_;
-    T_Agents aggregated_;
+    T_Automats aggregated_;
     //@}
 };
 
