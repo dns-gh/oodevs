@@ -34,6 +34,7 @@ public:
     template< typename T > static void GetMissionLimaFlag        ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetLima                   ( DIA_Call_ABC& call, const T& caller );
                            static void AutomateSetMissionLimaFlag( DIA_Call_ABC& call,       MIL_AgentPion& caller );
+                           static void AutomateGetMissionLimaFlag( DIA_Call_ABC& call,       MIL_AgentPion& caller );
 
 
     // Automate

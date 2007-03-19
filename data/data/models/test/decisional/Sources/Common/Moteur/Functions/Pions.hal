@@ -308,6 +308,7 @@ signatures
     B                                       A::DEC_GetMissionLimaFlag         ( U /*T_Lima*/ );
     U /*T_Lima*/                            A::DEC_GetLima                    ( I /*E_TypeLima*/ ); // Retourn un T_Lima, ou 0 si pas de lima du type demandé
     B                                       A::DEC_Automate_SetMissionLimaFlag( U /*T_Lima*/, B /*bFlag*/ );
+    U /*T_Lima*/                            A::DEC_Automate_GetMissionLimaFlag( U /*T_Lima*/ );
                                             
     // Geometrie                            
     U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionAppui                              ( A /*T_Pion*/, R /*rDist*/ ); 
