@@ -51,12 +51,14 @@ ParamLocation::~ParamLocation()
 // -----------------------------------------------------------------------------
 void ParamLocation::BuildInterface( QWidget* parent )
 {
-    pLabel_ = new RichLabel( GetName(), false, parent );
-    pShapeLabel_ = new QLabel( "---", parent );
+    QHBox* box = new QHBox( parent );
+    box->setSpacing( 5 );
+    pLabel_ = new RichLabel( GetName(), false, box );
+    pShapeLabel_ = new QLabel( "---", box );
     pShapeLabel_->setMinimumWidth( 100 );
     pShapeLabel_->setAlignment( Qt::AlignCenter );
     pShapeLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
-    creator_ = new LocationCreator( parent, GetName(), layer_, *this );
+    creator_ = new LocationCreator( box, GetName(), layer_, *this );
 }
 
 // -----------------------------------------------------------------------------

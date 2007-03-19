@@ -42,8 +42,10 @@ ParamGDH::~ParamGDH()
 // -----------------------------------------------------------------------------
 void ParamGDH::BuildInterface( QWidget* parent )
 {
-    new QLabel( GetName(), parent );
     QHBox* box = new QHBox( parent );
+    box->setSpacing( 5 );
+    new QLabel( GetName(), box );
+    box = new QHBox( box );
     QDateTimeEdit* dateTimeEdit = new QDateTimeEdit( datetime_, box );
     dateTimeEdit->setEnabled( valueSet_ );
     QCheckBox* checkbox = new QCheckBox( box );
@@ -86,12 +88,11 @@ void ParamGDH::Clean( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamGDH::CommitTo( Action_ABC& action ) const
 {
-    if( valueSet_ )
-    {
-        std::auto_ptr< ActionParameter< QDateTime > > param( new ActionParameter< QDateTime >( GetName() ) );
-        param->SetValue( datetime_ );
-        action.AddParameter( *param.release() );
-    }
+    if( !valueSet_ )
+        return;
+    std::auto_ptr< ActionParameter< QDateTime > > param( new ActionParameter< QDateTime >( GetName() ) );
+    param->SetValue( datetime_ );
+    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

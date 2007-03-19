@@ -95,9 +95,11 @@ ParamComboBox<T>::~ParamComboBox()
 template< typename T >
 void ParamComboBox<T>::BuildInterface( QWidget* parent )
 {
-    QLabel* label = new QLabel( GetName(), parent );
+    QHBox* box = new QHBox( parent );
+    box->setSpacing( 5 );
+    QLabel* label = new QLabel( GetName(), box );
     label->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
-    comboBox_ = new gui::ValuedComboBox<T>( parent );
+    comboBox_ = new gui::ValuedComboBox<T>( box );
     comboBox_->setSorting( true );
     for( T_Values::const_iterator it = values_.begin(); it != values_.end(); ++it )
         comboBox_->AddItem( it->first, *it->second );

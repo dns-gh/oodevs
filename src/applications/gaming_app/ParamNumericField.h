@@ -43,6 +43,7 @@ public:
     virtual void Hide();
     virtual void BuildInterface( QWidget* parent );
     void SetLimits( float min, float max );
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private:

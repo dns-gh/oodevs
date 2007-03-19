@@ -12,6 +12,8 @@
 #include "moc_ParamObstacle.cpp"
 #include "ParamLocation.h"
 #include "ParamNumericField.h"
+#include "gaming/ActionParameter.h"
+#include "gaming/Action_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Resolver.h"
@@ -58,7 +60,9 @@ ParamObstacle::~ParamObstacle()
 // -----------------------------------------------------------------------------
 void ParamObstacle::BuildInterface( QWidget* parent )
 {
-    QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, GetName(), parent );
+    QGroupBox* group = new QGroupBox( 1, Qt::Horizontal, GetName(), parent );
+    QHBox* box = new QHBox( group );
+    box->setSpacing( 5 );
     new QLabel( tr( "Type:" ), box );
     typeCombo_ = new ValuedComboBox< const ObjectType* >( box );
     typeCombo_->setSorting( true );
@@ -69,18 +73,20 @@ void ParamObstacle::BuildInterface( QWidget* parent )
         typeCombo_->AddItem( type.GetName(), &type );
     }
 
+    box = new QHBox( group );
+    box->setSpacing( 5 );
     new QLabel( tr( "Sub-type:" ), box );
     preliminaryCombo_ = new QComboBox( box );
     for( int i = 0; i < eNbrMissionGenSousTypeObstacle; ++i )
         preliminaryCombo_->insertItem( ENT_Tr::ConvertFromMissionGenSousTypeObstacle( ( E_MissionGenSousTypeObstacle )i ).c_str(), i );
 
     density_ = new ParamNumericField( tr( "Density" ), true );
-    density_->BuildInterface( box );
+    density_->BuildInterface( group );
     density_->SetLimits( 0.f, 5.f );
     tc2_     = new EntityParameter< kernel::Automat_ABC >( this, tr( "TC2" ) );
-    tc2_->BuildInterface( box );
+    tc2_->BuildInterface( group );
     location_ = new ParamLocation( tr( "Location" ), layer_, converter_ );
-    location_->BuildInterface( box );
+    location_->BuildInterface( group );
 
     connect( typeCombo_, SIGNAL( activated( int ) ), SLOT( OnTypeChanged() ) );
     OnTypeChanged();
@@ -175,6 +181,17 @@ void ParamObstacle::Clean( ASN1T_MissionParameter& asn ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParamObstacle::CommitTo
+// Created: SBO 2007-03-19
+// -----------------------------------------------------------------------------
+void ParamObstacle::CommitTo( Action_ABC& action ) const
+{
+    std::auto_ptr< ActionParameter< QString > > param( new ActionParameter< QString >( GetName() ) );
+    param->SetValue( typeCombo_->GetValue()->GetName() ); // $$$$ SBO 2007-03-19: create Object displayer
+    action.AddParameter( *param.release() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParamObstacle::Draw
 // Created: AGE 2006-09-15
 // -----------------------------------------------------------------------------
@@ -189,7 +206,7 @@ void ParamObstacle::Draw( const geometry::Point2f& point, const kernel::Viewport
 // -----------------------------------------------------------------------------
 void ParamObstacle::Show()
 {
-    typeCombo_->parentWidget()->show();
+    typeCombo_->parentWidget()->parentWidget()->show();
 }
 
 // -----------------------------------------------------------------------------
@@ -198,7 +215,7 @@ void ParamObstacle::Show()
 // -----------------------------------------------------------------------------
 void ParamObstacle::Hide()
 {
-    typeCombo_->parentWidget()->hide();
+    typeCombo_->parentWidget()->parentWidget()->hide();
 }
 
 // -----------------------------------------------------------------------------

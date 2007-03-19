@@ -29,13 +29,7 @@ UnitMissionInterface::UnitMissionInterface( QWidget* parent, Entity_ABC& entity,
     , publisher_          ( publisher )
     , mission_            ( mission )
 {
-    QLabel* pLabel = new QLabel( mission.GetName(), this );
-    pLabel->setFrameStyle( QFrame::Box | QFrame::Sunken );
-    pLabel->setAlignment( Qt::AlignCenter );
-    QFont font = pLabel->font();
-    font.setBold( true );
-    pLabel->setFont( font );
-
+    CreateTitle( mission.GetName() );
     builder.Begin( *this, entity );
     factory.CreateUnitMissionInterface( builder, mission.GetId() );
     builder.End();

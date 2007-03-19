@@ -10,6 +10,8 @@
 #include "gaming_app_pch.h"
 #include "ParamNumericField.h"
 #include "clients_gui/RichLabel.h"
+#include "gaming/Action_ABC.h"
+#include "gaming/ActionParameter.h"
 #include <qvalidator.h>
 
 // -----------------------------------------------------------------------------
@@ -19,6 +21,8 @@
 ParamNumericField::ParamNumericField( const QString& name, bool isReal )
     : Param_ABC( name )
     , isReal_( isReal )
+    , pLabel_( 0 )
+    , pEdit_ ( 0 )
 {
     // NOTHING
 }
@@ -38,9 +42,11 @@ ParamNumericField::~ParamNumericField()
 // -----------------------------------------------------------------------------
 void ParamNumericField::BuildInterface( QWidget* parent )
 {
-    pLabel_ = new gui::RichLabel( GetName(), parent );
+    QHBox* box = new QHBox( parent );
+    box->setSpacing( 5 );
+    QLabel* pLabel_ = new gui::RichLabel( GetName(), box );
     pLabel_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
-    pEdit_ = new QLineEdit( "0", parent );
+    pEdit_ = new QLineEdit( "0", box );
     SetLimits( 0.f, 99999.f );
 }
 
@@ -95,13 +101,27 @@ void ParamNumericField::CommitTo( ASN1REAL& asn ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParamNumericField::CommitTo
+// Created: SBO 2007-03-19
+// -----------------------------------------------------------------------------
+void ParamNumericField::CommitTo( Action_ABC& action ) const
+{
+    std::auto_ptr< ActionParameter< float > > param( new ActionParameter< float >( GetName() ) );
+    param->SetValue( pEdit_->text().toFloat() );
+    action.AddParameter( *param.release() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParamNumericField::Show
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
 void ParamNumericField::Show()
 {
-    pLabel_->show();
-    pEdit_->show();
+    if( pLabel_ && pEdit_ )
+    {
+        pLabel_->show();
+        pEdit_->show();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -110,6 +130,9 @@ void ParamNumericField::Show()
 // -----------------------------------------------------------------------------
 void ParamNumericField::Hide()
 {
-    pLabel_->hide();
-    pEdit_->hide();
+    if( pLabel_ && pEdit_ )
+    {
+        pLabel_->hide();
+        pEdit_->hide();
+    }
 }

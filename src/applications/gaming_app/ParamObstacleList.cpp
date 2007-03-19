@@ -182,8 +182,8 @@ void ParamObstacleList::NewObstacle()
     ParamObstacle* param = new ParamObstacle( box_, tr( "Obstacle" ), objectTypes_, layer_, converter_ );
     param->BuildInterface( box_ ); // $$$$ SBO 2007-03-14: 
     item->SetValue( param );
-    param->Show();
     list_->ListView()->setSelected( item, true );
+    param->Show();
     selected_ = item;
 }
 

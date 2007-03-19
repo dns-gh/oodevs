@@ -14,6 +14,8 @@
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
+#include "gaming/ActionParameter.h"
+#include "gaming/Action_ABC.h"
 
 namespace gui
 {
@@ -89,6 +91,7 @@ public:
     //@{
     virtual bool CheckValidity();
     void CommitTo( ASN1T_OID& asn ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private:

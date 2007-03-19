@@ -41,8 +41,10 @@ EntityParameterBase::~EntityParameterBase()
 // -----------------------------------------------------------------------------
 void EntityParameterBase::BuildInterface( QWidget* parent )
 {
-    pLabel_ = new RichLabel( GetName(), false, parent );
-    entityLabel_ = new QLabel( "---", parent );
+    QHBox* box = new QHBox( parent );
+    box->setSpacing( 5 );
+    pLabel_ = new RichLabel( GetName(), false, box );
+    entityLabel_ = new QLabel( "---", box );
     entityLabel_->setMinimumWidth( 100 );
     entityLabel_->setAlignment( Qt::AlignCenter );
     entityLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );

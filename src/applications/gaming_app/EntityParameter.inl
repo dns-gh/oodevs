@@ -71,6 +71,20 @@ void EntityParameter< ConcreteEntity >::CommitTo( ASN1T_OID& asn ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityParameter::CommitTo
+// Created: SBO 2007-03-19
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void EntityParameter< ConcreteEntity >::CommitTo( Action_ABC& action ) const
+{
+    if( !selected_ )
+        return;
+    std::auto_ptr< ActionParameter< const ConcreteEntity* > > param( new ActionParameter< const ConcreteEntity* >( GetName() ) );
+    param->SetValue( selected_ );
+    action.AddParameter( *param.release() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityParameter::MenuItemValidated
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
