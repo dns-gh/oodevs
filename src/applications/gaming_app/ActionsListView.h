@@ -10,24 +10,38 @@
 #ifndef __ActionsListView_h_
 #define __ActionsListView_h_
 
+#include "clients_gui/ListDisplayer.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+
+namespace kernel
+{
+    class Controllers;
+}
+
+class Action_ABC;
+class ActionParameter_ABC;
+
 // =============================================================================
 /** @class  ActionsListView
     @brief  ActionsListView
 */
 // Created: SBO 2007-03-12
 // =============================================================================
-class ActionsListView : public QListView
+class ActionsListView : public gui::ListDisplayer< ActionsListView >
+                      , public kernel::Observer_ABC
+                      , public kernel::ElementObserver_ABC< Action_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionsListView( QWidget* parent );
+             ActionsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~ActionsListView();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Display( const ActionParameter_ABC& param, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
     //@}
 
 private:
@@ -39,11 +53,16 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void NotifyCreated( const Action_ABC& action );
+    virtual void NotifyUpdated( const Action_ABC& action );
+    virtual void NotifyDeleted( const Action_ABC& action );
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
+    gui::ItemFactory_ABC& factory_;
     //@}
 };
 

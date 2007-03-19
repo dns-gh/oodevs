@@ -10,12 +10,15 @@
 #include "gaming_pch.h"
 #include "ActionParameter_ABC.h"
 
+unsigned long ActionParameter_ABC::idManager_ = 0; // $$$$ SBO 2007-03-12: real id manager maybe
+
 // -----------------------------------------------------------------------------
 // Name: ActionParameter_ABC constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionParameter_ABC::ActionParameter_ABC()
-    : id_( 0 ) // $$$$ SBO 2007-03-12: 
+ActionParameter_ABC::ActionParameter_ABC( const QString& name )
+    : id_( idManager_++ )
+    , name_( name )
 {
     // NOTHING
 }
@@ -44,5 +47,5 @@ unsigned long ActionParameter_ABC::GetId() const
 // -----------------------------------------------------------------------------
 QString ActionParameter_ABC::GetName() const
 {
-    return "";
+    return name_;
 }

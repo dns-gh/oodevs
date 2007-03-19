@@ -9,16 +9,19 @@
 
 #include "gaming_app_pch.h"
 #include "ParamBool.h"
+#include "moc_ParamBool.cpp"
 #include "game_asn/Asn.h"
+#include "gaming/Action_ABC.h"
+#include "gaming/ActionParameter.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamBool constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamBool::ParamBool( const QString& name, bool defaultValue /*= false*/ )
-    : Param_ABC( name )
-    , default_( defaultValue )
-    , checkBox_( 0 )
+ParamBool::ParamBool( QObject* parent, const QString& name, bool defaultValue /*= false*/ )
+    : QObject( parent )
+    , Param_ABC( name )
+    , value_( defaultValue )
 {
     // NOTHING
 }
@@ -38,8 +41,9 @@ ParamBool::~ParamBool()
 // -----------------------------------------------------------------------------
 void ParamBool::BuildInterface( QWidget* parent )
 {
-    checkBox_ = new QCheckBox( GetName(), parent );
-    checkBox_->setChecked( default_ );
+    QCheckBox* checkBox = new QCheckBox( GetName(), parent );
+    checkBox->setChecked( value_ );
+    connect( checkBox, SIGNAL( clicked() ), SLOT( OnClicked() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,9 +52,27 @@ void ParamBool::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 void ParamBool::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    if( !checkBox_ )
-        InterfaceNotInitialized();
     asn.null_value = 0;
     asn.value.t = T_MissionParameter_value_aBool;
-    asn.value.u.aBool = checkBox_->isChecked();
+    asn.value.u.aBool = value_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamBool::CommitTo
+// Created: SBO 2007-03-19
+// -----------------------------------------------------------------------------
+void ParamBool::CommitTo( Action_ABC& action ) const
+{
+    std::auto_ptr< ActionParameter< bool > > param( new ActionParameter< bool >( GetName() ) );
+    param->SetValue( value_ );
+    action.AddParameter( *param.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamBool::OnClicked
+// Created: SBO 2007-03-16
+// -----------------------------------------------------------------------------
+void ParamBool::OnClicked()
+{
+    value_ = !value_;
 }

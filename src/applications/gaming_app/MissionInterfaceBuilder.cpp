@@ -223,7 +223,7 @@ Param_ABC* MissionInterfaceBuilder::BuildDotation( const QString& name ) const
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildBoolean( const QString& name ) const
 {
-    return new ParamBool( name ); // $$$$ SBO 2007-03-14: default value?
+    return new ParamBool( missionInterface_, name ); // $$$$ SBO 2007-03-14: default value?
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +232,7 @@ Param_ABC* MissionInterfaceBuilder::BuildBoolean( const QString& name ) const
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildDirection( const QString& name ) const
 {
-    return new ParamDirection( name );
+    return new ParamDirection( missionInterface_, name );
 }
 
 // -----------------------------------------------------------------------------

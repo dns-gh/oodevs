@@ -11,6 +11,8 @@
 #include "ParamGDH.h"
 #include "moc_ParamGDH.cpp"
 #include "game_asn/Asn.h"
+#include "gaming/ActionParameter.h"
+#include "gaming/Action_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamGDH constructor
@@ -19,7 +21,8 @@
 ParamGDH::ParamGDH( QObject* parent, const QString& name )
     : QObject( parent )
     , Param_ABC( name )
-    , pDateTimeEdit_( 0 )
+    , datetime_( QDateTime::currentDateTime() )
+    , valueSet_( false )
 {
     // NOTHING
 }
@@ -41,11 +44,13 @@ void ParamGDH::BuildInterface( QWidget* parent )
 {
     new QLabel( GetName(), parent );
     QHBox* box = new QHBox( parent );
-    pDateTimeEdit_ = new QDateTimeEdit( QDateTime::currentDateTime(), box );
-    pCheckbox_ = new QCheckBox( box );
-    pDateTimeEdit_->setEnabled( false );
-    pCheckbox_->setChecked( false );
-    connect( pCheckbox_, SIGNAL( toggled( bool ) ), SLOT( OnCheckboxToogled( bool ) ) );
+    QDateTimeEdit* dateTimeEdit = new QDateTimeEdit( datetime_, box );
+    dateTimeEdit->setEnabled( valueSet_ );
+    QCheckBox* checkbox = new QCheckBox( box );
+    checkbox->setChecked( valueSet_ );
+    connect( checkbox, SIGNAL( toggled( bool ) ), dateTimeEdit, SLOT( setEnabled( bool ) ) );
+    connect( checkbox, SIGNAL( toggled( bool ) ), SLOT( OnEnabled( bool ) ) );
+    connect( dateTimeEdit, SIGNAL( valueChanged( const QDateTime& ) ), SLOT( OnValueChanged( const QDateTime& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,17 +59,15 @@ void ParamGDH::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 void ParamGDH::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    if( !pDateTimeEdit_ )
-        InterfaceNotInitialized();
     asn.value.t = T_MissionParameter_value_gDH;
     ASN1T_GDH*& gdh = asn.value.u.gDH = new ASN1T_GDH();
     gdh->qualificatif = EnumGDH_Qualificatif::at;
     gdh->datation = 0;
-    asn.null_value = pCheckbox_->isChecked() ? 0 : 1;
-    if( pCheckbox_->isChecked() )
+    asn.null_value = valueSet_ ? 0 : 1;
+    if( valueSet_ )
     {
         static QDateTime baseDateTime( QDate( 1901, 1, 1 ) );
-        gdh->datation = baseDateTime.secsTo( pDateTimeEdit_->dateTime() );
+        gdh->datation = baseDateTime.secsTo( datetime_ );
     }
 }
 
@@ -78,10 +81,33 @@ void ParamGDH::Clean( ASN1T_MissionParameter& asn ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamGDH::OnCheckboxToogled
-// Created: AGE 2006-03-15
+// Name: ParamGDH::CommitTo
+// Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamGDH::OnCheckboxToogled( bool b )
+void ParamGDH::CommitTo( Action_ABC& action ) const
 {
-    pDateTimeEdit_->setEnabled( b );
+    if( valueSet_ )
+    {
+        std::auto_ptr< ActionParameter< QDateTime > > param( new ActionParameter< QDateTime >( GetName() ) );
+        param->SetValue( datetime_ );
+        action.AddParameter( *param.release() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamGDH::OnEnabled
+// Created: SBO 2007-03-16
+// -----------------------------------------------------------------------------
+void ParamGDH::OnEnabled( bool enabled )
+{
+    valueSet_ = enabled;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamGDH::OnValueChanged
+// Created: SBO 2007-03-16
+// -----------------------------------------------------------------------------
+void ParamGDH::OnValueChanged( const QDateTime& datetime )
+{
+    datetime_ = datetime;
 }

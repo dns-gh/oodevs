@@ -19,13 +19,14 @@
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class ParamDirection : public Param_ABC
+class ParamDirection : public QObject, public Param_ABC
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ParamDirection( const QString& name );
+             ParamDirection( QObject* parent, const QString& name );
     virtual ~ParamDirection();
     //@}
 
@@ -34,6 +35,13 @@ public:
     virtual void BuildInterface( QWidget* parent );
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void CommitTo( ASN1T_OrderContext& asn ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnValueChanged( int value );
     //@}
 
 private:
@@ -46,7 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QDial* dial_;
+    int value_;
     //@}
 };
 

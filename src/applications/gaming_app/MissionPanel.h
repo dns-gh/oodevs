@@ -46,6 +46,7 @@ class ObjectKnowledgeConverter_ABC;
 class Publisher_ABC;
 class MissionInterfaceFactory;
 class MissionInterfaceBuilder;
+class ActionsModel;
 
 // =============================================================================
 // Created: APE 2004-03-19
@@ -62,7 +63,7 @@ class MissionPanel : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionPanel( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const kernel::Profile_ABC& profile );
+             MissionPanel( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const kernel::Profile_ABC& profile, ActionsModel& actionsModel );
     virtual ~MissionPanel();
     //@}
 
@@ -109,6 +110,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const StaticModel& static_;
+    ActionsModel& actionsModel_;
     Publisher_ABC& publisher_;
     gui::ParametersLayer& layer_;
     const kernel::CoordinateConverter_ABC& converter_;

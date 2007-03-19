@@ -21,7 +21,6 @@ namespace kernel
 
 class Param_ABC;
 class Action_ABC;
-class ActionsModel;
 
 // =============================================================================
 /** @class  MissionInterface_ABC
@@ -63,6 +62,8 @@ protected:
     void CommitTo( ASN1T_OrderContext& asn ) const;
     void Clean( ASN1T_MissionParameters& asn ) const;
     void Clean( ASN1T_OrderContext& asn ) const;
+
+    void CommitTo( Action_ABC& action ) const;
     //@}
 
 private:

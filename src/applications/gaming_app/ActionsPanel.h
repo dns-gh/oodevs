@@ -10,6 +10,16 @@
 #ifndef __ActionsPanel_h_
 #define __ActionsPanel_h_
 
+namespace kernel
+{
+    class Controllers;
+}
+
+namespace gui
+{
+    class ItemFactory_ABC;
+}
+
 // =============================================================================
 /** @class  ActionsPanel
     @brief  ActionsPanel
@@ -22,7 +32,7 @@ class ActionsPanel : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionsPanel( QMainWindow* parent );
+             ActionsPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~ActionsPanel();
     //@}
 

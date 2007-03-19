@@ -14,8 +14,8 @@
 
 namespace kernel
 {
-    class Entity_ABC;
     class Mission;
+    class Controller;
 }
 
 // =============================================================================
@@ -30,13 +30,14 @@ class ActionMission : public Action_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionMission( kernel::Entity_ABC& target, const kernel::Mission& mission, kernel::Controller& controller );
+             ActionMission( const kernel::Entity_ABC& entity, const kernel::Mission& mission, kernel::Controller& controller );
     virtual ~ActionMission();
     //@}
 
     //! @name Operations
     //@{
     virtual QString GetName() const;
+    virtual const kernel::Entity_ABC& GetEntity() const;
     //@}
 
 private:
@@ -53,7 +54,8 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Entity_ABC& target_;
+    kernel::Controller& controller_;
+    const kernel::Entity_ABC& entity_;
     const kernel::Mission& mission_;
     //@}
 };

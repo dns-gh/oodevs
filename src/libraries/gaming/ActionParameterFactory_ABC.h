@@ -7,39 +7,29 @@
 //
 // *****************************************************************************
 
-#ifndef __ActionFactory_ABC_h_
-#define __ActionFactory_ABC_h_
-
-namespace kernel
-{
-    class Entity_ABC;
-    class Mission;
-    class FragOrder;
-}
-
-class Action_ABC;
+#ifndef __ActionParameterFactory_ABC_h_
+#define __ActionParameterFactory_ABC_h_
 
 // =============================================================================
-/** @class  ActionFactory_ABC
-    @brief  ActionFactory_ABC
+/** @class  ActionParameterFactory_ABC
+    @brief  ActionParameterFactory_ABC
 */
-// Created: SBO 2007-03-12
+// Created: SBO 2007-03-19
 // =============================================================================
-class ActionFactory_ABC
+class ActionParameterFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionFactory_ABC() {}
-    virtual ~ActionFactory_ABC() {}
+             ActionParameterFactory_ABC() {}
+    virtual ~ActionParameterFactory_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::Mission& mission ) const = 0;
-    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrder& fragOrder ) const = 0;
+    virtual ActionParameter_ABC* CreateParameter() const = 0;
     //@}
 };
 
-#endif // __ActionFactory_ABC_h_
+#endif // __ActionParameterFactory_ABC_h_

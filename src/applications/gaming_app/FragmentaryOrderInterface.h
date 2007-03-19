@@ -21,6 +21,7 @@ class ASN_MsgFragOrder;
 class Publisher_ABC;
 class MissionInterfaceFactory;
 class MissionInterfaceBuilder;
+class ActionsModel;
 
 // =============================================================================
 /** @class  FragmentaryOrderInterface
@@ -34,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              FragmentaryOrderInterface( QWidget* parent, kernel::Entity_ABC& entity, const kernel::FragOrder& fragOrder, kernel::ActionController& controller
-                                      , Publisher_ABC& publisher, MissionInterfaceFactory& factory, MissionInterfaceBuilder& builder );
+                                      , Publisher_ABC& publisher, MissionInterfaceFactory& factory, MissionInterfaceBuilder& builder, ActionsModel& model );
     virtual ~FragmentaryOrderInterface();
     //@}
 
@@ -53,6 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
+    ActionsModel& model_;
     Publisher_ABC& publisher_;
     const kernel::FragOrder& fragOrder_;
     //@}

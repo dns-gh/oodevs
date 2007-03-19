@@ -12,6 +12,8 @@
 
 #include "Param_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
+#include "gaming/ActionParameter.h"
+#include "gaming/Action_ABC.h"
 
 // =============================================================================
 /** @class  ParamComboBox
@@ -35,6 +37,7 @@ public:
     virtual void BuildInterface( QWidget* parent );
     void AddItem( const QString& name, const T& value );
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 protected:
@@ -92,10 +95,9 @@ ParamComboBox<T>::~ParamComboBox()
 template< typename T >
 void ParamComboBox<T>::BuildInterface( QWidget* parent )
 {
-    QHBox* box = new QHBox( parent );
-    QLabel* label = new QLabel( GetName(), box );
+    QLabel* label = new QLabel( GetName(), parent );
     label->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
-    comboBox_ = new gui::ValuedComboBox<T>( box );
+    comboBox_ = new gui::ValuedComboBox<T>( parent );
     comboBox_->setSorting( true );
     for( T_Values::const_iterator it = values_.begin(); it != values_.end(); ++it )
         comboBox_->AddItem( it->first, *it->second );
@@ -134,6 +136,18 @@ void ParamComboBox<T>::CommitTo( ASN1T_OID& asn ) const
         InterfaceNotInitialized();
     if( comboBox_->count() )
         asn = comboBox_->GetValue();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamComboBox::CommitTo
+// Created: SBO 2007-03-19
+// -----------------------------------------------------------------------------
+template< typename T >
+void ParamComboBox<T>::CommitTo( Action_ABC& action ) const
+{
+    std::auto_ptr< ActionParameter< T > > param( new ActionParameter< T >( GetName() ) );
+    param->SetValue( comboBox_->GetValue() );
+    action.AddParameter( *param.release() );
 }
 
 #endif // __ParamComboBox_h_

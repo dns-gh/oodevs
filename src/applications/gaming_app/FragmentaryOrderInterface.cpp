@@ -12,6 +12,7 @@
 #include "MissionInterfaceFactory.h"
 #include "MissionInterfaceBuilder.h"
 #include "gaming/ASN_Messages.h"
+#include "gaming/ActionsModel.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/FragOrder.h"
 
@@ -22,8 +23,9 @@ using namespace kernel;
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
 FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Entity_ABC& entity, const FragOrder& fragOrder, ActionController& controller
-                                                    , Publisher_ABC& publisher, MissionInterfaceFactory& factory, MissionInterfaceBuilder& builder )
+                                                    , Publisher_ABC& publisher, MissionInterfaceFactory& factory, MissionInterfaceBuilder& builder, ActionsModel& model )
     : MissionInterface_ABC( parent, entity, controller )
+    , model_              ( model )
     , publisher_          ( publisher )
     , fragOrder_          ( fragOrder )
 {
@@ -32,9 +34,6 @@ FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Entity_AB
     factory.CreateFragOrderInterface( builder, fragOrder.GetId() );
     builder.End();
     CreateOkCancelButtons();
-
-    QWidget* pSpacer = new QWidget( this ); // $$$$ SBO 2006-11-23: ?
-    setStretchFactor( pSpacer, 100 );       // $$$$ SBO 2006-11-23: ?
 }
 
 // -----------------------------------------------------------------------------
@@ -52,6 +51,9 @@ FragmentaryOrderInterface::~FragmentaryOrderInterface()
 // -----------------------------------------------------------------------------
 void FragmentaryOrderInterface::Publish()
 {
+    Action_ABC* action = model_.CreateAction( GetEntity(), fragOrder_ );
+    CommitTo( *action );
+
     ASN_MsgFragOrder asn;
     ASN1T_MsgFragOrder& order = asn.GetAsnMsg();
 

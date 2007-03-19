@@ -177,6 +177,18 @@ void MissionInterface_ABC::Clean( ASN1T_OrderContext& asn ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::CommitTo
+// Created: SBO 2007-03-19
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::CommitTo( Action_ABC& action ) const
+{
+    for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
+        (*it)->CommitTo( action );
+    for( CIT_Parameters it = orderContext_.begin(); it != orderContext_.end(); ++it )
+        (*it)->CommitTo( action );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------

@@ -45,9 +45,18 @@ void ActionsModel::Purge()
 // Name: ActionsModel::CreateAction
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateAction( kernel::Entity_ABC& target, const kernel::Mission& mission )
+Action_ABC* ActionsModel::CreateAction( const kernel::Entity_ABC& target, const kernel::Mission& mission )
 {
     Action_ABC* action = factory_.CreateAction( target, mission );
     Register( action->GetId(), *action );
     return action;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::CreateAction
+// Created: SBO 2007-03-19
+// -----------------------------------------------------------------------------
+Action_ABC* ActionsModel::CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrder& fragOrder )
+{
+    return 0; // $$$$ SBO 2007-03-19: TODO
 }

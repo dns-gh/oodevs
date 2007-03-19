@@ -11,6 +11,8 @@
 #include "LimitParameter.h"
 #include "moc_LimitParameter.cpp"
 #include "gaming/Limit.h"
+#include "gaming/ActionParameter.h"
+#include "gaming/Action_ABC.h"
 #include "clients_gui/RichLabel.h"
 
 // -----------------------------------------------------------------------------
@@ -162,7 +164,21 @@ void LimitParameter::Draw( const geometry::Point2f& point, const kernel::Viewpor
     if( !selected_ )
         return;
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-        glColor4f( 1, 0, 0, 0.5f );
+        glColor4f( 1.f, 1.f, 1.f, 1.f );
         selected_->Interface().Apply( &kernel::Drawable_ABC::Draw, point, viewport, tools );
     glPopAttrib();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitParameter::CommitTo
+// Created: SBO 2007-03-19
+// -----------------------------------------------------------------------------
+void LimitParameter::CommitTo( Action_ABC& action ) const
+{
+    if( !selected_ )
+        return;
+    // $$$$ SBO 2007-03-19: limit displayer somehow
+    std::auto_ptr< ActionParameter< QString > > param( new ActionParameter< QString >( GetName() ) );
+    param->SetValue( selected_->GetName() );
+    action.AddParameter( *param.release() ); // $$$$ SBO 2007-03-19: order context
 }

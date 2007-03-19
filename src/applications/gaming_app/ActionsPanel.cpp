@@ -16,7 +16,7 @@
 // Name: ActionsPanel constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionsPanel::ActionsPanel( QMainWindow* parent )
+ActionsPanel::ActionsPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : QDockWindow( parent )
 {
     setResizeEnabled( true );
@@ -26,7 +26,7 @@ ActionsPanel::ActionsPanel( QMainWindow* parent )
     QVBox* box = new QVBox( this );
     setWidget( box );
     new ActionsToolbar( box );
-    new ActionsListView( box );
+    new ActionsListView( box, controllers, factory );
 }
 
 // -----------------------------------------------------------------------------

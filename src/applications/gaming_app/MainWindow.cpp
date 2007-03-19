@@ -213,14 +213,14 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
 
      // Mission panel
-    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *paramLayer, *glProxy_, profile );
+    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *paramLayer, *glProxy_, profile, model_.actions_ );
     moveDockWindow( pMissionPanel_, Qt::DockLeft );
     setDockEnabled( pMissionPanel_, Qt::DockTop, false );
     setAppropriate( pMissionPanel_, false );
     pMissionPanel_->hide();
 
     // Actions panel
-    ActionsPanel* actionsPanel = new ActionsPanel( this );
+    ActionsPanel* actionsPanel = new ActionsPanel( this, controllers_, *factory );
     moveDockWindow( actionsPanel, Qt::DockRight );
     setDockEnabled( actionsPanel, Qt::DockTop, false );
     actionsPanel->hide();

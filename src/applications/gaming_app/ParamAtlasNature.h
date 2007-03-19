@@ -35,6 +35,7 @@ public:
     virtual void BuildInterface( QWidget* parent );
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private slots:
@@ -57,15 +58,7 @@ private:
 
     //! @name Types
     //@{
-    struct AtlasField
-    {
-        AtlasField( const QString& name, unsigned char byte, unsigned char mask )
-            : name_( name ), byte_( byte ), mask_( mask ) {}
-        QString name_;
-        unsigned char byte_;
-        unsigned char mask_;
-    };
-    typedef std::vector< const AtlasField* > T_AtlasFields;
+    typedef std::vector< std::pair< QString, unsigned short > > T_AtlasFields;
     //@}
 
 private:

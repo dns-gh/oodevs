@@ -7,42 +7,44 @@
 //
 // *****************************************************************************
 
-#ifndef __ActionParameter_ABC_h_
-#define __ActionParameter_ABC_h_
+#ifndef __ActionFragOrder_h_
+#define __ActionFragOrder_h_
+
+#include "Action_ABC.h"
 
 namespace kernel
 {
-    class Displayer_ABC;
+    class FragOrder;
+    class Controller;
 }
 
 // =============================================================================
-/** @class  ActionParameter_ABC
-    @brief  ActionParameter_ABC
+/** @class  ActionFragOrder
+    @brief  ActionFragOrder
 */
-// Created: SBO 2007-03-12
+// Created: SBO 2007-03-19
 // =============================================================================
-class ActionParameter_ABC
+class ActionFragOrder : public Action_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionParameter_ABC( const QString& name );
-    virtual ~ActionParameter_ABC();
+             ActionFragOrder( const kernel::Entity_ABC& entity, const kernel::FragOrder& fragOrder, kernel::Controller& controller );
+    virtual ~ActionFragOrder();
     //@}
 
     //! @name Operations
     //@{
-    virtual unsigned long GetId() const;
     virtual QString GetName() const;
-    virtual void Display( kernel::Displayer_ABC& displayer ) const = 0;
+    virtual const kernel::Entity_ABC& GetEntity() const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ActionParameter_ABC( const ActionParameter_ABC& );            //!< Copy constructor
-    ActionParameter_ABC& operator=( const ActionParameter_ABC& ); //!< Assignment operator
+    ActionFragOrder( const ActionFragOrder& );            //!< Copy constructor
+    ActionFragOrder& operator=( const ActionFragOrder& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -52,10 +54,10 @@ private:
 private:
     //! @name Member data
     //@{
-    static unsigned long idManager_;
-    unsigned long id_;
-    QString name_;
+    kernel::Controller& controller_;
+    const kernel::Entity_ABC& entity_;
+    const kernel::FragOrder& fragOrder_;
     //@}
 };
 
-#endif // __ActionParameter_ABC_h_
+#endif // __ActionFragOrder_h_

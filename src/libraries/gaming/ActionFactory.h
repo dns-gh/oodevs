@@ -14,7 +14,7 @@
 
 namespace kernel
 {
-    class Controller;
+    class Controllers;
 }
 
 // =============================================================================
@@ -29,13 +29,14 @@ class ActionFactory : public ActionFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionFactory( kernel::Controller& controller );
+    explicit ActionFactory( kernel::Controllers& controllers );
     virtual ~ActionFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual Action_ABC* CreateAction( kernel::Entity_ABC& target, const kernel::Mission& mission ) const;
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::Mission& mission ) const;
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrder& fragOrder ) const;
     //@}
 
 private:
@@ -52,7 +53,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
+    kernel::Controllers& controllers_;
     //@}
 };
 

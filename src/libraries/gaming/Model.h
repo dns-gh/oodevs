@@ -39,6 +39,8 @@ class RcEntityResolver_ABC;
 class TacticalLineFactory;
 class UserProfilesModel;
 class UserProfileFactory_ABC;
+class ActionsModel;
+class ActionFactory_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -78,6 +80,7 @@ public:
     TacticalLineFactory&        tacticalLineFactory_;
     FireResultFactory&          fireResultsFactory_;
     UserProfileFactory_ABC&     userProfileFactory_;
+    ActionFactory_ABC&          actionFactory_;
 
     AgentsModel&          agents_;
     ObjectsModel&         objects_;
@@ -88,6 +91,7 @@ public:
     FiresModel&           fires_;
     WeatherModel&         weather_;
     UserProfilesModel&    profiles_;
+    ActionsModel&         actions_;
     //@}
 
 private:

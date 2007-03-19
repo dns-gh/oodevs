@@ -18,13 +18,23 @@
 ActionsToolbar::ActionsToolbar( QWidget* parent )
     : QHBox( parent )
 {
+    setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
+    setBackgroundMode( Qt::PaletteButton );
+    setFrameStyle( QFrame::ToolBarPanel | QFrame::Raised );
+
     setMaximumHeight( 32 );
     QToolButton* btn = new QToolButton( this );
+    btn->setAutoRaise( true );
     btn->setPixmap( MAKE_PIXMAP( recplay ) );
+    btn->setDisabled( true );
     btn = new QToolButton( this );
+    btn->setAutoRaise( true );
     btn->setPixmap( MAKE_PIXMAP( recstop ) );
+    btn->setDisabled( true );
     btn = new QToolButton( this );
+    btn->setAutoRaise( true );
     btn->setPixmap( MAKE_PIXMAP( recrec ) );
+    btn->setDisabled( true );
 }
 
 // -----------------------------------------------------------------------------

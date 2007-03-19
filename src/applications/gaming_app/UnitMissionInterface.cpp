@@ -12,6 +12,7 @@
 #include "MissionInterfaceFactory.h"
 #include "MissionInterfaceBuilder.h"
 #include "gaming/ASN_Messages.h"
+#include "gaming/ActionsModel.h"
 #include "clients_kernel/Mission.h"
 #include "clients_kernel/Entity_ABC.h"
 
@@ -22,8 +23,9 @@ using namespace kernel;
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
 UnitMissionInterface::UnitMissionInterface( QWidget* parent, Entity_ABC& entity, const Mission& mission, ActionController& controller
-                                          , Publisher_ABC& publisher, MissionInterfaceFactory& factory, MissionInterfaceBuilder& builder )
+                                          , Publisher_ABC& publisher, MissionInterfaceFactory& factory, MissionInterfaceBuilder& builder, ActionsModel& model )
     : MissionInterface_ABC( parent, entity, controller )
+    , model_              ( model )
     , publisher_          ( publisher )
     , mission_            ( mission )
 {
@@ -55,6 +57,9 @@ UnitMissionInterface::~UnitMissionInterface()
 // -----------------------------------------------------------------------------
 void UnitMissionInterface::Publish()
 {
+    Action_ABC* action = model_.CreateAction( GetEntity(), mission_ );
+    CommitTo( *action );
+
     ASN_MsgPionOrder asn;
     ASN1T_MsgPionOrder& order = asn.GetAsnMsg();
     order.oid_unite_executante = GetEntity().GetId();

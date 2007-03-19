@@ -22,7 +22,7 @@ Action_ABC::Action_ABC( kernel::Controller& controller )
     : controller_( controller )
     , id_( ++idManager_ )
 {
-    controller_.Create( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -32,7 +32,6 @@ Action_ABC::Action_ABC( kernel::Controller& controller )
 Action_ABC::~Action_ABC()
 {
     DeleteAll();
-    controller_.Delete( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,15 +41,6 @@ Action_ABC::~Action_ABC()
 unsigned long Action_ABC::GetId() const
 {
     return id_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Action_ABC::GetName
-// Created: SBO 2007-03-12
-// -----------------------------------------------------------------------------
-QString Action_ABC::GetName() const
-{
-    return "";
 }
 
 // -----------------------------------------------------------------------------

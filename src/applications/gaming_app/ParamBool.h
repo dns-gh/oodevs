@@ -18,13 +18,14 @@
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class ParamBool : public Param_ABC
+class ParamBool : public QObject, public Param_ABC
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamBool( const QString& name, bool defaultValue = false );
+             ParamBool( QObject* parent, const QString& name, bool defaultValue = false );
     virtual ~ParamBool();
     //@}
 
@@ -32,6 +33,13 @@ public:
     //@{
     virtual void BuildInterface( QWidget* parent );
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnClicked();
     //@}
 
 private:
@@ -44,8 +52,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const bool default_;
-    QCheckBox* checkBox_;
+    bool value_;
     //@}
 };
 

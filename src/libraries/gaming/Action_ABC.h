@@ -16,6 +16,7 @@
 namespace kernel
 {
     class Controller;
+    class Entity_ABC;
 }
 
 class ActionParameter_ABC;
@@ -39,7 +40,8 @@ public:
     //! @name Operations
     //@{
     virtual unsigned long GetId() const;
-    virtual QString GetName() const;
+    virtual QString GetName() const = 0;
+    virtual const kernel::Entity_ABC& GetEntity() const = 0;
     virtual void AddParameter( ActionParameter_ABC& parameter );
     //@}
 

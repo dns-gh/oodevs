@@ -120,3 +120,13 @@ void ParamLimits::Clean( ASN1T_OrderContext& asn ) const
     limit1_->Clean( asn.limite_gauche );
     limit2_->Clean( asn.limite_droite );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamLimits::CommitTo
+// Created: SBO 2007-03-19
+// -----------------------------------------------------------------------------
+void ParamLimits::CommitTo( Action_ABC& action ) const
+{
+    limit1_->CommitTo( action );
+    limit2_->CommitTo( action );
+}

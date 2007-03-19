@@ -20,7 +20,7 @@ namespace kernel
     class Viewport_ABC;
 }
 
-class OptionalParamFunctor_ABC;
+class Action_ABC;
 struct ASN1T_MissionParameter;
 struct ASN1T_OrderContext;
 
@@ -56,6 +56,7 @@ public:
     virtual void Clean( ASN1T_MissionParameter& ) const {};
     virtual void CommitTo( ASN1T_OrderContext& ) const {};
     virtual void Clean( ASN1T_OrderContext& ) const {};
+    virtual void CommitTo( Action_ABC& ) const {};
     //@}
 
     //! @name Accessors

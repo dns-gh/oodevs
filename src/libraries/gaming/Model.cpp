@@ -29,6 +29,8 @@
 #include "TacticalLineFactory.h"
 #include "UserProfilesModel.h"
 #include "UserProfileFactory.h"
+#include "ActionFactory.h"
+#include "ActionsModel.h"
 
 using namespace kernel;
 
@@ -49,6 +51,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , tacticalLineFactory_( *new TacticalLineFactory( controllers, staticModel.coordinateConverter_, *this, publisher ) )
     , fireResultsFactory_( *new FireResultFactory( *this ) )
     , userProfileFactory_( *new UserProfileFactory( *this, controllers, publisher ) )
+    , actionFactory_( *new ActionFactory( controllers ) )
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
     , teams_( *new TeamsModel( teamFactory_ ) )
@@ -58,6 +61,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , fires_( *new FiresModel( agents_, agents_ ) )
     , weather_( *new WeatherModel( controllers, *this ) )
     , profiles_( *new UserProfilesModel( userProfileFactory_ ) )
+    , actions_( *new ActionsModel( actionFactory_ ) )
 {
     // NOTHING
 }
@@ -68,6 +72,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete &actions_;
     delete &profiles_;
     delete &weather_;
     delete &fires_;
@@ -77,6 +82,7 @@ Model::~Model()
     delete &teams_;
     delete &objects_;
     delete &agents_;
+    delete &actionFactory_;
     delete &userProfileFactory_;
     delete &fireResultsFactory_;
     delete &tacticalLineFactory_;
@@ -96,6 +102,7 @@ Model::~Model()
 void Model::Purge()
 {
     // $$$$ SBO 2007-01-19: limits_ ?
+    actions_.Purge();
     profiles_.Purge();
     weather_.Purge();
     logistics_.Purge();

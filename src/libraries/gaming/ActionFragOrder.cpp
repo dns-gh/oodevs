@@ -8,47 +8,46 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "ActionMission.h"
-#include "clients_kernel/Mission.h"
-#include "clients_kernel/Entity_ABC.h"
+#include "ActionFragOrder.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/FragOrder.h"
 
 // -----------------------------------------------------------------------------
-// Name: ActionMission constructor
-// Created: SBO 2007-03-12
+// Name: ActionFragOrder constructor
+// Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-ActionMission::ActionMission( const kernel::Entity_ABC& entity, const kernel::Mission& mission, kernel::Controller& controller )
+ActionFragOrder::ActionFragOrder( const kernel::Entity_ABC& entity, const kernel::FragOrder& fragOrder, kernel::Controller& controller )
     : Action_ABC( controller )
     , controller_( controller )
     , entity_( entity )
-    , mission_( mission )
+    , fragOrder_( fragOrder )
 {
     controller_.Create( *(Action_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionMission destructor
-// Created: SBO 2007-03-12
+// Name: ActionFragOrder destructor
+// Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-ActionMission::~ActionMission()
+ActionFragOrder::~ActionFragOrder()
 {
     controller_.Delete( *(Action_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionMission::GetName
-// Created: SBO 2007-03-12
+// Name: ActionFragOrder::GetName
+// Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-QString ActionMission::GetName() const
+QString ActionFragOrder::GetName() const
 {
-    return mission_.GetName();
+    return fragOrder_.GetName();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionMission::GetEntity
+// Name: ActionFragOrder::GetEntity
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC& ActionMission::GetEntity() const
+const kernel::Entity_ABC& ActionFragOrder::GetEntity() const
 {
     return entity_;
 }

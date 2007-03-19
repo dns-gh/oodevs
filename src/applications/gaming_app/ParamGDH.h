@@ -34,12 +34,14 @@ public:
     virtual void BuildInterface( QWidget* parent );
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnCheckboxToogled( bool );
+    void OnEnabled( bool );
+    void OnValueChanged( const QDateTime& datetime );
     //@}
 
 private:
@@ -52,8 +54,8 @@ private:
 private:
     //! @name Member data
     //@{
-    QDateTimeEdit* pDateTimeEdit_;
-    QCheckBox*     pCheckbox_;
+    QDateTime datetime_;
+    bool valueSet_;
     //@}
 };
 

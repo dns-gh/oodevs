@@ -44,10 +44,11 @@ using namespace gui;
 // Name: MissionPanel constructor
 // Created: APE 2004-03-19
 // -----------------------------------------------------------------------------
-MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, ParametersLayer& layer, const GlTools_ABC& tools, const kernel::Profile_ABC& profile )
+MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, ParametersLayer& layer, const GlTools_ABC& tools, const kernel::Profile_ABC& profile, ActionsModel& actionsModel )
     : QDockWindow              ( pParent )
     , controllers_             ( controllers )
     , static_                  ( model )
+    , actionsModel_            ( actionsModel )
     , publisher_               ( publisher )
     , layer_                   ( layer )
     , converter_               ( static_.coordinateConverter_ )
@@ -225,7 +226,7 @@ void MissionPanel::ActivateAgentMission( int id )
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
     Mission& mission = ((Resolver_ABC< Mission >&)static_.types_).Get( id );
-    pMissionInterface_ = new UnitMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_ );
+    pMissionInterface_ = new UnitMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_, actionsModel_ );
     setWidget( pMissionInterface_ );
 
     // For some magic reason, the following line resizes the widget
@@ -246,7 +247,7 @@ void MissionPanel::ActivateAutomatMission( int id )
     Entity_ABC* entity = selectedEntity_.ConstCast();
     if( !entity->Retrieve< AutomatDecisions >() )
         entity = const_cast< kernel::Entity_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() );
-    pMissionInterface_ = new AutomateMissionInterface( this, *entity, mission, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_ );
+    pMissionInterface_ = new AutomateMissionInterface( this, *entity, mission, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_, actionsModel_ );
     setWidget( pMissionInterface_ );
     resize( 10, 10 );
     show();
@@ -262,7 +263,7 @@ void MissionPanel::ActivatePopulationMission( int id )
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
     Mission& mission = ((Resolver_ABC< Mission >&)static_.types_).Get( id );
-    pMissionInterface_ = new PopulationMissionInterface( this, const_cast< Entity_ABC& >( *selectedEntity_ ), mission, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_ );
+    pMissionInterface_ = new PopulationMissionInterface( this, const_cast< Entity_ABC& >( *selectedEntity_ ), mission, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_, actionsModel_ );
     setWidget( pMissionInterface_ );
     resize( 10, 10 );
     show();
@@ -278,7 +279,7 @@ void MissionPanel::ActivateFragOrder( int id )
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
     FragOrder& order = ((Resolver_ABC< FragOrder >&)static_.types_).Get( id );
-    pMissionInterface_ = new FragmentaryOrderInterface( this, *selectedEntity_.ConstCast(), order, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_ );
+    pMissionInterface_ = new FragmentaryOrderInterface( this, *selectedEntity_.ConstCast(), order, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_, actionsModel_ );
     if( pMissionInterface_->IsEmpty() )
         pMissionInterface_->OnOk();
     else
