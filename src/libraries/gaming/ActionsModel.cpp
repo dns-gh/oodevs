@@ -58,5 +58,7 @@ Action_ABC* ActionsModel::CreateAction( const kernel::Entity_ABC& target, const 
 // -----------------------------------------------------------------------------
 Action_ABC* ActionsModel::CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrder& fragOrder )
 {
-    return 0; // $$$$ SBO 2007-03-19: TODO
+    Action_ABC* action = factory_.CreateAction( target, fragOrder );
+    Register( action->GetId(), *action );
+    return action;
 }
