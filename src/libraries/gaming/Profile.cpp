@@ -341,6 +341,29 @@ void Profile::Remove( const Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Profile::Clean
+// Created: SBO 2007-03-20
+// -----------------------------------------------------------------------------
+void Profile::Clean()
+{
+    login_ = "";
+    password_ = "";
+    firstTicked_ = false;
+    supervision_ = false;
+    loggedIn_ = false;
+    readEntities_.clear();
+    readWriteEntities_.clear();
+    readTeams_.clear();
+    writeTeams_.clear();
+    readAutomats_.clear();
+    writeAutomats_.clear();
+    readPopulations_.clear();
+    writePopulations_.clear();
+    readFormations_.clear();
+    writeFormations_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Profile::NotifyUpdated
 // Created: AGE 2006-10-13
 // -----------------------------------------------------------------------------
@@ -352,4 +375,14 @@ void Profile::NotifyUpdated( const Simulation::sEndTick& )
         firstTicked_ = true;
         controller_.Update( *(Profile_ABC*)this );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::NotifyUpdated
+// Created: SBO 2007-03-20
+// -----------------------------------------------------------------------------
+void Profile::NotifyUpdated( const Simulation& simulation )
+{
+    if( !simulation.IsConnected() )
+        Clean();
 }

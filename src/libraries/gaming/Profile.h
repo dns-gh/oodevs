@@ -41,6 +41,7 @@ class Profile : public kernel::Profile_ABC
               , public kernel::ElementObserver_ABC< kernel::Team_ABC >
               , public kernel::ElementObserver_ABC< kernel::Formation_ABC >
               , public kernel::ElementObserver_ABC< Simulation::sEndTick >
+              , public kernel::ElementObserver_ABC< Simulation >
 {
 
 public:
@@ -91,6 +92,7 @@ private:
     //! @name Helpers
     //@{
     void Update( const ASN1T_Profile& profile );
+    void Clean();
 
     template< typename T >
     void ReadList( const T& idList, T_Ids& ids );
@@ -104,6 +106,7 @@ private:
     virtual void NotifyDeleted( const kernel::Formation_ABC& formation );
 
     virtual void NotifyUpdated( const Simulation::sEndTick& endTick );
+    virtual void NotifyUpdated( const Simulation& simulation );
     
     void Add   ( const kernel::Entity_ABC& entity, const T_Ids& readIds, const T_Ids& readWriteIds );
     void Remove( const kernel::Entity_ABC& entity );
