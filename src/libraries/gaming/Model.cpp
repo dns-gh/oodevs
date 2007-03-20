@@ -101,10 +101,10 @@ Model::~Model()
 // -----------------------------------------------------------------------------
 void Model::Purge()
 {
-    // $$$$ SBO 2007-01-19: limits_ ?
     actions_.Purge();
     profiles_.Purge();
     weather_.Purge();
+    limits_.Purge();
     logistics_.Purge();
     fires_.Purge();
     agents_.Purge();

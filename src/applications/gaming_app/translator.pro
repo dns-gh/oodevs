@@ -26,7 +26,7 @@ SOURCES         =   AboutDialog.cpp \
                     ObjectCreationPanel.cpp \
                     ObjectKnowledgePanel.cpp \
                     ObjectPanel.cpp \
-                    ParamAgentType.cpp \
+                    ParamAtlasNature.cpp \
                     ParamEquipmentList.cpp \
                     ParamHumanWoundList.cpp \
                     ParamLimaList.cpp \

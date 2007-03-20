@@ -67,6 +67,8 @@ GlSelector::~GlSelector()
 // -----------------------------------------------------------------------------
 void GlSelector::Load()
 {
+    if( widget2d_ )
+        return;
     widget2d_ = new GlWidget( parent_, controllers_, config_, *iconLayout_ );
     moveLayer_.reset( new DragMovementLayer( *widget2d_ ) );
     widget2d_->Configure( strategy_ );

@@ -54,7 +54,6 @@
 #include "gaming/Model.h"
 #include "gaming/Network.h"
 #include "gaming/Population.h"
-#include "gaming/Simulation.h"
 #include "gaming/StaticModel.h"
 #include "gaming/Profile.h"
 #include "gaming/ProfileFilter.h"
@@ -399,6 +398,7 @@ void MainWindow::Close()
     network_.Disconnect();
     model_.Purge();
     selector_->Close();
+    staticModel_.Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -513,20 +513,31 @@ namespace
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow::NotifyUpdated
-// Created: AGE 2006-04-20
+// Created: SBO 2007-03-20
 // -----------------------------------------------------------------------------
 void MainWindow::NotifyUpdated( const Simulation& simulation )
 {
-    if( ! simulation.IsConnected() )
-    {
-        setCaption( APP_NAME + tr( " - Not connected" ) );
-        controllers_.actions_.Select( SelectionStub() );
-        model_.Purge();
-    }
     if( simulation.IsConnected() )
+        setCaption( APP_NAME + QString( " - [%1@%2][%3]" )
+                                      .arg( profile_ )
+                                      .arg( simulation.GetSimulationHost().c_str() )
+                                      .arg( ExtractExerciceName( "" ) ) ); //$$$$$ POURRI
+    else
+        setCaption( APP_NAME + tr( " - Not connected" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::NotifyUpdated
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+void MainWindow::NotifyUpdated( const Simulation::sConnection& connection )
+{
+    if( connection.connected_ )
+        Load();
+    else
     {
-//        CompareConfigPath( simulation.GetSimulationHost(), simulation.GetConfigPath() );
-        setCaption( APP_NAME + QString( " - [%1@%2][%3]" ).arg( profile_ ).arg( simulation.GetSimulationHost().c_str() ).arg( ExtractExerciceName( "" ) ) ); //$$$$$ POURRI
+        controllers_.actions_.Select( SelectionStub() );
+        Close();
     }
 }
 
@@ -546,22 +557,6 @@ void MainWindow::NotifyUpdated( const Profile& profile )
     else
         profile_ = profile.GetLogin();
 }
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::CompareConfigPath
-// Created: AGE 2006-07-03
-// -----------------------------------------------------------------------------
-//void MainWindow::CompareConfigPath( const std::string& server, const std::string& serverPath )
-//{
-    // $$$$ NLD 2007-01-12: TODO: change ASN message...
-//    if( serverPath.empty() || ! scipioXml_.empty() )
-//        return;
-//    
-//    if( server.find( "127.0.0.1" ) != std::string::npos )
-//        Load( serverPath );
-//    else
-//        Load( BuildRemotePath( server, serverPath ) );
-//}
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow::BuildRemotePath

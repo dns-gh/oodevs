@@ -31,6 +31,7 @@ public:
     struct sStartTick{};
     struct sEndTick{};
     struct sCheckPoint { bool start_; };
+    struct sConnection { bool connected_; };
     
 public:
     //! @name Constructors/Destructor
@@ -76,6 +77,7 @@ private:
     int time_;
     bool paused_;
     bool connected_;
+    sConnection connection_;
     sStartTick startTick_;
     sEndTick endTick_;
     sCheckPoint checkPoint_;

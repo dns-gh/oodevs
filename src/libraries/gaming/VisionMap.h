@@ -63,8 +63,8 @@ private:
     //! @name Member data
     //@{
     const kernel::DetectionMap& map_;
-    geometry::Rectangle2f boundingBox_;
     int left_, bottom_, right_, top_;
+    geometry::Rectangle2f boundingBox_;
     int width_, height_;
     char* vision_;
     //@}

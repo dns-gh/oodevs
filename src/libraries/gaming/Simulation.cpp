@@ -46,6 +46,8 @@ void Simulation::Connect( const std::string& host )
 {
     connected_ = true;
     simulationHost_ = host;
+    connection_.connected_ = connected_;
+    controller_.Update( connection_ );
     controller_.Update( *this );
 }
 
@@ -55,7 +57,11 @@ void Simulation::Connect( const std::string& host )
 // -----------------------------------------------------------------------------
 void Simulation::Disconnect()
 {
+    if( !connected_ )
+        return;
     connected_ = false;
+    connection_.connected_ = connected_;
+    controller_.Update( connection_ );
     controller_.Update( *this );
 }
 

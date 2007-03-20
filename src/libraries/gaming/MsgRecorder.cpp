@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-10-20 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/MsgRecorder.cpp $
-// $Author: Ape $
-// $Modtime: 6/07/05 11:35 $
-// $Revision: 3 $
-// $Workfile: MsgRecorder.cpp $
-//
-// *****************************************************************************
 
 #include "gaming_pch.h"
 #include "MsgRecorder.h"
@@ -132,7 +123,8 @@ void MsgRecorder::OnNewMsg( int nType, ASN1PEREncodeBuffer& asnPEREncodeBuffer )
 
     if( nType != T_MsgsOutClient_msg_msg_pion_order
         && nType != T_MsgsOutClient_msg_msg_frag_order
-        && nType != T_MsgsOutClient_msg_msg_automate_order )
+        && nType != T_MsgsOutClient_msg_msg_automate_order
+        && nType != T_MsgsOutClient_msg_msg_population_order )
         return;
     Message* message = new Message( asnPEREncodeBuffer );
 

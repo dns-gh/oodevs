@@ -25,6 +25,7 @@ VisionMap::VisionMap( const DetectionMap& map )
     , bottom_(  2000000 )
     , right_ ( -2000000 )
     , top_   ( -2000000 )
+    , boundingBox_( float( left_ ), float( bottom_ ), float( right_ ), float( top_ ) )
     , vision_( 0 )
 {
     // NOTHING

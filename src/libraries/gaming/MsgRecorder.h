@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-10-20 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/MsgRecorder.h $
-// $Author: Ape $
-// $Modtime: 21/10/04 10:36 $
-// $Revision: 1 $
-// $Workfile: MsgRecorder.h $
-//
-// *****************************************************************************
 
 #ifndef __MsgRecorder_h_
 #define __MsgRecorder_h_
@@ -23,6 +14,7 @@
 #include "boost/thread/mutex.hpp"
 class AgentServerMsgMgr;
 class Network;
+
 namespace internal
 {
     class Message;

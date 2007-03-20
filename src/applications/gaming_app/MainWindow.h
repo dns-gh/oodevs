@@ -12,6 +12,7 @@
 
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
+#include "gaming/Simulation.h"
 #include <qmainwindow.h>
 
 namespace kernel
@@ -40,7 +41,6 @@ namespace gui
 class Spy;
 class Model;
 class StaticModel;
-class Simulation;
 class Profile;
 class Network;
 class MissionPanel;
@@ -62,6 +62,7 @@ class LoginDialog;
 class MainWindow : public QMainWindow
                  , public kernel::Observer_ABC
                  , public kernel::ElementObserver_ABC< Simulation >
+                 , public kernel::ElementObserver_ABC< Simulation::sConnection >
                  , public kernel::ElementObserver_ABC< Profile >
 {
     Q_OBJECT;
@@ -97,6 +98,7 @@ private:
     void ReadOptions();
 
     virtual void NotifyUpdated( const Simulation& simulation );
+    virtual void NotifyUpdated( const Simulation::sConnection& connection );
     virtual void NotifyUpdated( const Profile& profile );
 
     static std::string BuildRemotePath( std::string server, std::string path );

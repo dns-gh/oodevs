@@ -64,10 +64,8 @@ QPixmap SymbolIcons::GetSymbol( const std::string& s, const std::string& level, 
     const Key key( symbolName, level, color );
     const QPixmap& result = icons_[ key ];
     if( result.isNull() )
-    {
-        if( pending_.insert( key ).second )
+        if( widget_ && pending_.insert( key ).second )
             widget_->CreateIcon( key.symbol_, key.level_, key.color_, *this );
-    }
     return result;
 }
 

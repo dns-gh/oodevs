@@ -10,23 +10,8 @@
 #ifndef __LimitsModel_h_
 #define __LimitsModel_h_
 
-#include "Types.h"
+#include "game_asn/Asn.h"
 #include "clients_kernel/Resolver.h"
-
-namespace kernel
-{
-    class Controllers;
-    class CoordinateConverter_ABC;
-    class Entity_ABC;
-}
-
-namespace xml {
-    class xistream;
-}
-
-namespace DIN {
-    class DIN_Input;
-}
 
 class TacticalLine_ABC;
 class TacticalLineFactory;
@@ -56,6 +41,7 @@ public:
     void DeleteLima( unsigned long id );
 
     void Save( const std::string& tacticalLines ) const;
+    void Purge();
     //@}
 
 private:

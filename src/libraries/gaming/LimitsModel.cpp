@@ -10,7 +10,6 @@
 #include "gaming_pch.h"
 #include "LimitsModel.h"
 #include "TacticalLine_ABC.h"
-#include "Publisher_ABC.h"
 #include "TacticalLineFactory.h"
 #include "xeumeuleu/xml.h"
 
@@ -29,6 +28,15 @@ LimitsModel::LimitsModel( TacticalLineFactory& factory )
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
 LimitsModel::~LimitsModel()
+{
+    Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsModel::Purge
+// Created: SBO 2007-03-20
+// -----------------------------------------------------------------------------
+void LimitsModel::Purge()
 {
     DeleteAll();
 }
