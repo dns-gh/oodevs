@@ -54,6 +54,7 @@ bool LimitsLayer::CanCreateLine()
 void LimitsLayer::Delete( const kernel::TacticalLine_ABC& line )
 {
     modelBuilder_.DeleteEntity( line );
+    eventStrategy_.ReleaseExclusiveFocus();
 }
 
 // -----------------------------------------------------------------------------
