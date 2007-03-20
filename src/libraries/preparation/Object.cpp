@@ -121,8 +121,8 @@ const kernel::ObjectType& Object::ReadType( xml::xistream& xis, const Resolver_A
 // -----------------------------------------------------------------------------
 bool Object::ReadPrepared( xml::xistream& xis )
 {
-    bool prepared;
-    xis >> attribute( "prepared", prepared );
+    bool prepared = false;
+    xis >> xml::optional() >> attribute( "prepared", prepared );
     return prepared;
 }
 
