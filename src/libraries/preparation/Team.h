@@ -60,7 +60,7 @@ public:
     //@{
     void CreateKnowledgeGroup();
     void CreateKnowledgeGroup( xml::xistream& xis );
-    kernel::Object_ABC* CreateObject( const kernel::ObjectType& type, const kernel::Location_ABC& location );
+    kernel::Object_ABC* CreateObject( const kernel::ObjectType& type, const QString& name, bool prepare, const kernel::Location_ABC& location );
     void CreateObject( xml::xistream& xis );
     void Rename( const QString& name );
     virtual void SerializeAttributes( xml::xostream& xos ) const;

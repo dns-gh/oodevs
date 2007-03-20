@@ -31,21 +31,21 @@ using namespace xml;
 // Name: Object::Object
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-Object::Object( Controller& controller, const CoordinateConverter_ABC& converter, const kernel::ObjectType& type, IdManager& idManager )
+Object::Object( Controller& controller, const CoordinateConverter_ABC& converter, const kernel::ObjectType& type, const QString& name, bool prepare, IdManager& idManager )
     : EntityImplementation< Object_ABC >( controller, idManager.GetNextId(), "" )
     , converter_                     ( converter )
     , type_                          ( type )
     , rConstructionPercentage_       ( 0.0 )
     , rValorizationPercentage_       ( 0.0 )
     , rBypassConstructionPercentage_ ( 0.0 )
-    , bPrepared_                     ( false )
+    , bPrepared_                     ( prepare )
     , construction_                  ( 0 )
     , valorization_                  ( 0 )
     , nDotationConstruction_         ( 0 )
     , nDotationValorization_         ( 0 )
 {
     RegisterSelf( *this );
-    name_ = tools::translate( "Object", "%1 [%2]" ).arg( type.GetName() ).arg( id_ );
+    name_ = name.isEmpty() ? tools::translate( "Object", "%1 [%2]" ).arg( type.GetName() ).arg( id_ ) : name;
     CreateDictionary( controller );
 }
 
@@ -60,7 +60,7 @@ Object::Object( xml::xistream& xis, kernel::Controller& controller, const kernel
     , rConstructionPercentage_       ( 0.0 )
     , rValorizationPercentage_       ( 0.0 )
     , rBypassConstructionPercentage_ ( 0.0 )
-    , bPrepared_                     ( false )
+    , bPrepared_                     ( ReadPrepared( xis ) )
     , construction_                  ( 0 )
     , valorization_                  ( 0 )
     , nDotationConstruction_         ( 0 )
@@ -113,6 +113,17 @@ const kernel::ObjectType& Object::ReadType( xml::xistream& xis, const Resolver_A
     std::string type;
     xis >> attribute( "type", type );
     return types.Get( QString( type.c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::ReadPrepared
+// Created: SBO 2007-03-20
+// -----------------------------------------------------------------------------
+bool Object::ReadPrepared( xml::xistream& xis )
+{
+    bool prepared;
+    xis >> attribute( "prepared", prepared );
+    return prepared;
 }
 
 // -----------------------------------------------------------------------------
@@ -177,7 +188,8 @@ void Object::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
         << attribute( "type", type_.GetName().ascii() )
-        << attribute( "name", name_ );
+        << attribute( "name", name_ )
+        << attribute( "prepared", bPrepared_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -192,4 +204,5 @@ void Object::CreateDictionary( kernel::Controller& controller )
     dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Identifier" ), constSelf.id_ );
     dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Name" ), name_ );
     dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Type" ), constSelf.type_ );
+    dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Prepare" ), bPrepared_ );
 }

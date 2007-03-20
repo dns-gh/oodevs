@@ -100,6 +100,7 @@ protected:
     ValuedComboBox< const kernel::Team_ABC* >* teams_;
     ValuedComboBox< const kernel::ObjectType* >* objectTypes_;
     QLineEdit* name_;
+    QCheckBox* prepare_;
 
     LocationCreator* locationCreator_;
     kernel::Location_ABC* location_;

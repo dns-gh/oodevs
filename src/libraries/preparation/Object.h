@@ -47,7 +47,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Object( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
-                     const kernel::ObjectType& type, IdManager& idManager );
+                     const kernel::ObjectType& type, const QString& name, bool prepare, IdManager& idManager );
              Object( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, 
                      const kernel::Resolver_ABC< kernel::ObjectType, QString >& types, IdManager& idManager );
     virtual ~Object();
@@ -79,6 +79,7 @@ private:
     static unsigned long             ReadId  ( xml::xistream& xis );
     static QString                   ReadName( xml::xistream& xis );
     static const kernel::ObjectType& ReadType( xml::xistream& xis, const kernel::Resolver_ABC< kernel::ObjectType, QString >& types );
+    static bool                      ReadPrepared( xml::xistream& xis );
     //@}
 
 public:

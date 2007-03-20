@@ -111,9 +111,9 @@ void Team::CreateKnowledgeGroup( xml::xistream& xis )
 // Name: Team::CreateObject
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-Object_ABC* Team::CreateObject( const kernel::ObjectType& type, const kernel::Location_ABC& location )
+Object_ABC* Team::CreateObject( const kernel::ObjectType& type, const QString& name, bool prepare, const kernel::Location_ABC& location )
 {
-    Object_ABC* object = objectFactory_.CreateObject( type, *this, location );
+    Object_ABC* object = objectFactory_.CreateObject( type, *this, name, prepare, location );
     Resolver< Object_ABC >::Register( object->GetId(), *object );
     return object;
 }

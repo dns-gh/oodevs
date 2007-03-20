@@ -65,6 +65,9 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
     new QLabel( tr( "Type:" ), this );
     objectTypes_ = new ValuedComboBox< const ObjectType* >( this );
 
+    new QLabel( tr( "Prepare:" ), this );
+    prepare_ = new QCheckBox( this );
+
     position_ = new RichLabel( tr( "Location:" ), this );
     locationLabel_ = new QLabel( tr( "---" ), this );
     locationLabel_->setMinimumWidth( 100 );
@@ -166,6 +169,8 @@ bool ObjectPrototype_ABC::CheckValidity() const
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::Clean()
 {
+    name_->setText( "" );
+    prepare_->setChecked( false );
     if( activeAttributes_ )
         activeAttributes_->Clean();
 }

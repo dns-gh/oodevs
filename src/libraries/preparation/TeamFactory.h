@@ -49,7 +49,7 @@ public:
     virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( kernel::Team_ABC& team );
     virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( xml::xistream& xis, kernel::Team_ABC& team );
 
-    virtual kernel::Object_ABC* CreateObject( const kernel::ObjectType& type, kernel::Team_ABC& team, const kernel::Location_ABC& location );
+    virtual kernel::Object_ABC* CreateObject( const kernel::ObjectType& type, kernel::Team_ABC& team, const QString& name, bool prepare, const kernel::Location_ABC& location );
     virtual kernel::Object_ABC* CreateObject( xml::xistream& xis, kernel::Team_ABC& team );
     //@}
 

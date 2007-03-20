@@ -248,6 +248,10 @@
         <source>New object</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Prepare:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OptionsPanel</name>
