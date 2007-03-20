@@ -97,5 +97,5 @@ bool MIL_ParameterType_AgentKnowledge::Copy( const DIA_Variable_ABC& from, ASN1T
 //-----------------------------------------------------------------------------
 void MIL_ParameterType_AgentKnowledge::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_knowledgeObject );
+    assert( to.value.t == T_MissionParameter_value_knowledgeAgent );
 }

@@ -97,5 +97,5 @@ bool MIL_ParameterType_PopulationKnowledge::Copy( const DIA_Variable_ABC& from, 
 //-----------------------------------------------------------------------------
 void MIL_ParameterType_PopulationKnowledge::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_knowledgeObject );
+    assert( to.value.t == T_MissionParameter_value_knowledgePopulation );
 }
