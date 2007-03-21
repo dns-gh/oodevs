@@ -77,7 +77,7 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MT_RoleContainer& role, MIL_AgentP
         SetType ( model.GetDIAType() );
         CopyFrom( &model.GetDIAModel() );
         GetVariable( nDIANameIdx_      ).SetValue( pion.GetName() );
-        GetVariable( nDIAMissionIdx_   ).SetValue( *(DIA_TypedObject*)0 );
+        GetVariable( nDIAMissionIdx_   ).Reset();
         GetVariable( nDIAAutomateIdx_  ).SetValue( pion.GetAutomate().GetDecision() );
         DIA_Workspace::Instance().SetObjectName( *this, pion.GetName() ); // ????
     }
@@ -170,7 +170,7 @@ void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
         std::string strName;
         file >> strName;
         GetVariable( nDIANameIdx_    ).SetValue( strName );
-        GetVariable( nDIAMissionIdx_ ).SetValue( *(DIA_TypedObject*)0 );
+        GetVariable( nDIAMissionIdx_ ).Reset();
         
         DEC_AutomateDecision* pDecision;
         file >> pDecision;
@@ -319,7 +319,7 @@ void DEC_RolePion_Decision::StopMissionBehavior( MIL_PionMission& mission )
     {
         const std::string& strBehavior = mission.GetType().GetDIABehavior();
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionBehaviorParameters_, true );
-        GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_PionMission*)0 );
+        GetVariable( nDIAMissionIdx_ ).Reset();
     }
     __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
     {

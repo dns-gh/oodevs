@@ -37,9 +37,9 @@ TER_PathFindManager& TER_PathFindManager::GetPathFindManager()
 // Created: AGE 2005-02-01
 // -----------------------------------------------------------------------------
 TER_PathFindManager::TER_PathFindManager( const std::string& strGraphArchive, const std::string& strNodeArchive, const std::string& strLinkArchive )
-    : strGraphArchive_( MT_GetCurrentDir() + "\\" + strGraphArchive )
-    , strNodeArchive_( MT_GetCurrentDir() + "\\" + strNodeArchive )
-    , strLinkArchive_( MT_GetCurrentDir() + "\\" + strLinkArchive )
+    : strGraphArchive_( strGraphArchive )
+    , strNodeArchive_ ( strNodeArchive  )
+    , strLinkArchive_ ( strLinkArchive  )
 {
     //NOTHING
 }

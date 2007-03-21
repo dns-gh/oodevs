@@ -200,7 +200,8 @@ MagicActionCreateObject ::= SEQUENCE
     type                    EnumObjectType,
     localisation            Localisation,
     nom                     VisibleString      OPTIONAL,    
-    attributs-specifiques   AttrObjectSpecific OPTIONAL
+    attributs-specifiques   AttrObjectSpecific OPTIONAL,
+    en-preparation          BOOLEAN
 }
 
 MagicActionDestroyObjet ::= NULL

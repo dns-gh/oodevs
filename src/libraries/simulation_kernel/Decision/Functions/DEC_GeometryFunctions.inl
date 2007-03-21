@@ -317,7 +317,7 @@ void DEC_GeometryFunctions::ComputeFrontestAgent( DIA_Call_ABC& call, const T& )
     if( pions.empty() )
     {
         assert( !"La liste ne doit pas etre vide" );
-        call.GetResult().SetValue( *(DEC_RolePion_Decision*)0 );
+        call.GetResult().Reset(); // $$$$ SetValue( *(DEC_RolePion_Decision*)0 );
         return;
     }
     
@@ -343,7 +343,7 @@ void DEC_GeometryFunctions::ComputeBackestAgent( DIA_Call_ABC& call, const T& )
     if ( pions.empty() )
     {
         assert( !"La liste ne doit pas etre vide" );
-        call.GetResult().SetValue( *(DEC_RolePion_Decision*)0 );
+        call.GetResult().Reset(); // $$$ SetValue( *(DEC_RolePion_Decision*)0 );
         return;
     }
     

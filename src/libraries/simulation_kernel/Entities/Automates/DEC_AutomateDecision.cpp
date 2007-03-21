@@ -67,7 +67,7 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate )
     {
         SetType ( model.GetDIAType() );
         CopyFrom( &model.GetDIAModel() );
-        GetVariable( nDIAMissionIdx_ ).SetValue( *(DIA_TypedObject*)0 );
+        GetVariable( nDIAMissionIdx_ ).Reset();
         DIA_Workspace::Instance().SetObjectName( *this, automate.GetName() ); // ????
     }
     catch( DIA_Internal_Exception& e )
@@ -154,7 +154,7 @@ void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const uint )
         SetType ( model.GetDIAType() );
         CopyFrom( &model.GetDIAModel() );
         
-        GetVariable( nDIAMissionIdx_ ).SetValue( *(DIA_TypedObject*)0 );
+        GetVariable( nDIAMissionIdx_ ).Reset();
         DIA_Workspace::Instance().SetObjectName( *this, pAutomate_->GetName() ); // ????
 
         DIA_Serializer diaSerializer( static_cast< DIA_Motivation_Part& >( *pMotivationTool_ ) );
@@ -281,7 +281,7 @@ void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_AutomateMission& mission 
     {
         const std::string& strBehavior = mission.GetType().GetDIAMrtBehavior();
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionMrtBehaviorParameters_, true );
-        GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_AutomateMission*)0 );
+        GetVariable( nDIAMissionIdx_ ).Reset();
     }
     __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
     {
@@ -312,7 +312,7 @@ void DEC_AutomateDecision::StopMissionConduiteBehavior( MIL_AutomateMission& mis
     {
         const std::string& strBehavior = mission.GetType().GetDIACdtBehavior();
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionConduiteBehaviorParameters_, true );
-        GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_AutomateMission*)0 );
+        GetVariable( nDIAMissionIdx_ ).Reset();
     }
     __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
     {

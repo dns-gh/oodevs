@@ -65,7 +65,7 @@ DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population )
         SetType ( model.GetDIAType() );
         CopyFrom( &model.GetDIAModel() );
         GetVariable( nDIANameIdx_    ).SetValue( population.GetName() );
-        GetVariable( nDIAMissionIdx_ ).SetValue( *(DIA_TypedObject*)0 );
+        GetVariable( nDIAMissionIdx_ ).Reset();
         DIA_Workspace::Instance().SetObjectName( *this, population.GetName() ); // ????
     }
     catch( DIA_Internal_Exception& e )
@@ -133,7 +133,7 @@ void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const uint )
         SetType ( model.GetDIAType() );
         CopyFrom( &model.GetDIAModel() );
         GetVariable( nDIANameIdx_    ).SetValue( pPopulation_->GetName() );
-        GetVariable( nDIAMissionIdx_ ).SetValue( *(DIA_TypedObject*)0 );
+        GetVariable( nDIAMissionIdx_ ).Reset();
         DIA_Workspace::Instance().SetObjectName( *this, pPopulation_->GetName() ); // ????
 
         DIA_Serializer diaSerializer( static_cast< DIA_Motivation_Part& >( *pMotivationTool_ ) );
@@ -253,7 +253,7 @@ void DEC_PopulationDecision::StopMissionBehavior( MIL_PopulationMission& mission
     {
         const std::string& strBehavior = mission.GetType().GetDIABehavior();
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionBehaviorParameters_, true );
-        GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_PopulationMission*)0 );
+        GetVariable( nDIAMissionIdx_ ).Reset();
     }
     __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
     {

@@ -218,9 +218,11 @@ void MIL_RealObject_ABC::WriteODB( MT_XXmlOutputArchive& archive ) const
 
     archive.Section( "object" );
 
-    archive.WriteAttribute( "id"   , nID_ );
-    archive.WriteAttribute( "type" , pType_  ->GetName() );
-
+    archive.WriteAttribute( "id"      , nID_ );
+    archive.WriteAttribute( "name"    , strName_ );
+    archive.WriteAttribute( "type"    , pType_  ->GetName() );
+    archive.WriteAttribute( "prepared", bPrepared_ );
+    
     GetLocalisation().Write( archive );
 
     WriteSpecificAttributes( archive );
@@ -275,7 +277,8 @@ void MIL_RealObject_ABC::InitializeCommon( const TER_Localisation& localisation 
 void MIL_RealObject_ABC::Initialize( MIL_InputArchive& archive )
 {
     std::string strName;
-    archive.ReadField( "name", strName_, MIL_InputArchive::eNothing );
+    archive.ReadAttribute( "name"    , strName_, MIL_InputArchive::eNothing );
+    archive.ReadAttribute( "prepared", bPrepared_ );
     
     TER_Localisation localisation;
     localisation.Read( archive );
