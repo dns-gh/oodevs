@@ -45,7 +45,7 @@ void ParamDotationDType::BuildInterface( QWidget* parent )
     {
         const DotationType& type = it.NextElement();
         if( type.IsDType() )
-            AddItem( type.GetCategory(), type.GetId() );
+            AddItem( type.GetCategory(), (ASN1T_TypeDotationTrancheD)type.GetId() );
     }
     ParamComboBox< ASN1T_TypeDotationTrancheD >::BuildInterface( parent );
 }

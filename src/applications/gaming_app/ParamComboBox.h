@@ -35,7 +35,7 @@ public:
     //! @name Operations
     //@{
     virtual void BuildInterface( QWidget* parent );
-    void AddItem( const QString& name, const T& value );
+    void AddItem( const QString& name, T value );
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void CommitTo( Action_ABC& action ) const;
     //@}
@@ -55,7 +55,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< std::pair< QString, const T* > > T_Values;
+    typedef std::vector< std::pair< QString, T > > T_Values;
     //@}
 
 private:
@@ -102,7 +102,7 @@ void ParamComboBox<T>::BuildInterface( QWidget* parent )
     comboBox_ = new gui::ValuedComboBox<T>( box );
     comboBox_->setSorting( true );
     for( T_Values::const_iterator it = values_.begin(); it != values_.end(); ++it )
-        comboBox_->AddItem( it->first, *it->second );
+        comboBox_->AddItem( it->first, it->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,9 +110,9 @@ void ParamComboBox<T>::BuildInterface( QWidget* parent )
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 template< typename T >
-void ParamComboBox<T>::AddItem( const QString& name, const T& value )
+void ParamComboBox<T>::AddItem( const QString& name, T value )
 {
-    values_.push_back( std::make_pair( name, &value ) );
+    values_.push_back( std::make_pair( name, value ) );
 }
 
 // -----------------------------------------------------------------------------

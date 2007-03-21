@@ -22,6 +22,7 @@ namespace kernel
 // =============================================================================
 /** @class  ParamDotationDType
     @brief  ParamDotationDType
+    // $$$$ SBO 2007-03-21: ParamComboBox< const DotationType* > ?
 */
 // Created: SBO 2006-08-09
 // =============================================================================
