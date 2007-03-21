@@ -122,7 +122,7 @@ const kernel::ObjectType& Object::ReadType( xml::xistream& xis, const Resolver_A
 bool Object::ReadPrepared( xml::xistream& xis )
 {
     bool prepared = false;
-    xis >> xml::optional() >> attribute( "prepared", prepared );
+    xis >> attribute( "prepared", prepared );
     return prepared;
 }
 
@@ -204,5 +204,5 @@ void Object::CreateDictionary( kernel::Controller& controller )
     dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Identifier" ), constSelf.id_ );
     dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Name" ), name_ );
     dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Type" ), constSelf.type_ );
-    dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Prepare" ), bPrepared_ );
+    dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Prepared" ), bPrepared_ );
 }

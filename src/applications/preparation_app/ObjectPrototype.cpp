@@ -58,10 +58,10 @@ ObjectPrototype::~ObjectPrototype()
 void ObjectPrototype::Commit()
 {
     const QString name = name_->text();
-    const bool prepare = prepare_->isChecked();
+    const bool prepared = prepared_->isChecked();
     const kernel::Team_ABC* team = teams_->GetValue();
 
-    creation_ = teamsModel_.CreateObject( *team, const_cast< ObjectType& >( GetType() ), name, prepare, *location_ );
+    creation_ = teamsModel_.CreateObject( *team, const_cast< ObjectType& >( GetType() ), name, prepared, *location_ );
     if( creation_ && activeAttributes_ )
         activeAttributes_->Commit();
     creation_ = 0;
