@@ -91,6 +91,7 @@ void Elevation2dLayer::SetElevations( unsigned short min, unsigned short max )
 // -----------------------------------------------------------------------------
 void Elevation2dLayer::NotifyUpdated( const ModelLoaded& /*modelLoaded*/ )
 {
+    layer_.reset(); // $$$$ SBO 2007-03-21: hack because ElevationExtrema/TextureSet keeps a reference on elevation_.GetMap() which has been reset
     modelLoaded_ = true;
 }
 
@@ -204,6 +205,7 @@ void Elevation2dLayer::SetShader()
     {
         try
         {
+            std::cout << "Creating shader: 0 to " << elevation_.MaximumElevation() << std::endl;
             shader_.reset( new ElevationShader() );
             SetElevations( 0, elevation_.MaximumElevation() );
         }
@@ -224,6 +226,7 @@ void Elevation2dLayer::Reset()
 {
     extrema_.reset();
     shader_.reset();
+    modelLoaded_ = false;
     ignore_ = false;
     layer_.reset();
     glDeleteTextures( 1, &gradient_ );

@@ -375,7 +375,6 @@ void MainWindow::Open()
     }
     config_.LoadExercise( current );
     Load();
-    // $$$$ NLD 2007-01-12: change window title ?
 }
 
 // -----------------------------------------------------------------------------
