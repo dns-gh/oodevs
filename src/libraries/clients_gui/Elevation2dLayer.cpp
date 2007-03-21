@@ -205,7 +205,6 @@ void Elevation2dLayer::SetShader()
     {
         try
         {
-            std::cout << "Creating shader: 0 to " << elevation_.MaximumElevation() << std::endl;
             shader_.reset( new ElevationShader() );
             SetElevations( 0, elevation_.MaximumElevation() );
         }

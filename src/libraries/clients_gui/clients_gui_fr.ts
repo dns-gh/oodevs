@@ -249,7 +249,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Prepare:</source>
+        <source>Prepared:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -285,17 +285,6 @@
     </message>
     <message>
         <source>Display detection reports</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Oui/Non</name>
-    <message>
-        <source>Oui</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Non</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -450,6 +439,17 @@
     <name>Time Format</name>
     <message>
         <source>hh:mm:ss</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Yes/No</name>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -57,9 +57,9 @@ BaseDisplayer::~BaseDisplayer()
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const bool& value )
 {
-    static const QString oui = tools::translate( "Oui/Non", "Oui" ) ;
-    static const QString non = tools::translate( "Oui/Non", "Non" ) ;
-    AddToDisplay( value ? oui : non );
+    static const QString yes = tools::translate( "Yes/No", "Yes" ) ;
+    static const QString no = tools::translate( "Yes/No", "No" ) ;
+    AddToDisplay( value ? yes : no );
 }
 
 // -----------------------------------------------------------------------------
