@@ -114,7 +114,7 @@ void Object::Display( Displayer_ABC& displayer ) const
              .Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage )
              .Display( tools::translate( "Object", "Development:" ), rValorizationPercentage_ * Units::percentage )
              .Display( tools::translate( "Object", "Bypass:" ), rBypassConstructionPercentage_ * Units::percentage )
-             .Display( tools::translate( "Object", "Setting up:" ), bPrepared_ )
+             .Display( tools::translate( "Object", "Prepared:" ), bPrepared_ )
              .Item( tools::translate( "Object", "Construction dotation:" ) )
                 .Start( nDotationConstruction_ )
                 .Add( " " ).Add( construction_ ).End(); // $$$ AGE 2006-02-22: End devrait renvoyer le parent

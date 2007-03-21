@@ -765,10 +765,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Setting up:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Development dotation:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -802,6 +798,10 @@
     </message>
     <message>
         <source>Construction dotation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prepared:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
