@@ -375,19 +375,6 @@ ADN_Tr::T_ConverterStockCategory ADN_Tr::stockCategoryConverter_[] =
     T_ConverterStockCategory( "",  "",   (E_StockCategory)-1 )
 };
 
-ADN_Tr::T_ConverterDeviceCategory ADN_Tr::deviceCategoryConverter_[] =
-{
-    T_ConverterDeviceCategory( "VCI"                    , QT_TRANSLATE_NOOP("ADN_Tr" ,"VCI")                    , eDeviceCategory_VCI ),
-    T_ConverterDeviceCategory( "Char"                   , QT_TRANSLATE_NOOP("ADN_Tr" ,"Char")                   , eDeviceCategory_Char ),
-    T_ConverterDeviceCategory( "Mortier"                , QT_TRANSLATE_NOOP("ADN_Tr" ,"Mortier")                , eDeviceCategory_Mortier ),
-    T_ConverterDeviceCategory( "Artillerie"             , QT_TRANSLATE_NOOP("ADN_Tr" ,"Artillerie")             , eDeviceCategory_Artillerie ),
-    T_ConverterDeviceCategory( "Hommes"                 , QT_TRANSLATE_NOOP("ADN_Tr" ,"Hommes")                 , eDeviceCategory_Hommes ),
-    T_ConverterDeviceCategory( "Armes Légères"          , QT_TRANSLATE_NOOP("ADN_Tr" ,"Armes Légères")          , eDeviceCategory_ArmesLegeres ),
-    T_ConverterDeviceCategory( "Matériel Franchissement", QT_TRANSLATE_NOOP("ADN_Tr" ,"Matériel Franchissement"), eDeviceCategory_MaterielFranchissement ),
-    T_ConverterDeviceCategory( "Autres"                 , QT_TRANSLATE_NOOP("ADN_Tr" ,"Autres")                 , eDeviceCategory_Autres ),
-    T_ConverterDeviceCategory( "",  "",   (E_DeviceCategory)-1 )
-};
-
 ADN_Tr::T_ConverterEquipmentState ADN_Tr::equipmentStateConverter_[] =
 {
     T_ConverterEquipmentState( "ReparableAvecEvacuation", QT_TRANSLATE_NOOP("ADN_Tr", "ReparableAvecEvacuation" ), eEquipmentState_FixableWithEvac ),
@@ -607,15 +594,6 @@ const std::string& ADN_Tr::ConvertFromStockCategory( E_StockCategory nValue, E_C
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertFromDeviceCategory
-// Created: SBO 2006-01-12
-// -----------------------------------------------------------------------------
-const std::string& ADN_Tr::ConvertFromDeviceCategory( E_DeviceCategory nValue, E_Conversion nConversion )
-{
-    return ADN_Tr::InverseFindInConverter( deviceCategoryConverter_, nValue, nConversion );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromEquipmentState
 // Created: SBO 2006-07-28
 // -----------------------------------------------------------------------------
@@ -813,15 +791,6 @@ E_StockCategory ADN_Tr::ConvertToStockCategory( const std::string& strName )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertToStockCategory
-// Created: SBO 2006-01-12
-// -----------------------------------------------------------------------------
-E_DeviceCategory ADN_Tr::ConvertToDeviceCategory( const std::string& strName )
-{
-    return ADN_Tr::FindInConverter( deviceCategoryConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToEquipmentState
 // Created: SBO 2006-07-28
 // -----------------------------------------------------------------------------
@@ -872,7 +841,6 @@ void ADN_Tr::InitTranslations()
     InitTr( capacityMissionConverter_, "ADN_Tr" );
     InitTr( radarTypeConverter_, "ADN_Tr" );
     InitTr( stockCategoryConverter_, "ADN_Tr" );
-    InitTr( deviceCategoryConverter_, "ADN_Tr" );
     InitTr( equipmentStateConverter_, "ADN_Tr" );
     InitTr( munitionTirIndirectConverter_ , "ADN_Tr" );
     InitTr( missionParameterTypeConverter_, "ADN_Tr" );

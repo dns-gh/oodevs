@@ -7,7 +7,6 @@
     <CodeEMAT8>Drone</CodeEMAT8>
     <CodeLFRIL>Drone</CodeLFRIL>
     <CodeNNO>Drone</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>Aeronef</Protection>
     <Volume>Petit</Volume>
     <Vitesses maximum="90">
@@ -181,7 +180,6 @@
     <CodeEMAT8>CompTestEMAT8</CodeEMAT8>
     <CodeLFRIL>CompTestLFRIL</CodeLFRIL>
     <CodeNNO>CompTestNNO</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -356,7 +354,6 @@
     <CodeEMAT8>CompTest2</CodeEMAT8>
     <CodeLFRIL>CompTest2</CodeLFRIL>
     <CodeNNO>CompTest2</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>Combattant</Protection>
     <Volume>Petit</Volume>
     <Vitesses maximum="10">
@@ -481,7 +478,6 @@
     <CodeEMAT8>CompNBC</CodeEMAT8>
     <CodeLFRIL>CompNBC</CodeLFRIL>
     <CodeNNO>CompNBC</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -622,7 +618,6 @@
     <CodeEMAT8>Remorqueur</CodeEMAT8>
     <CodeLFRIL>Remorqueur</CodeLFRIL>
     <CodeNNO>Remorqueur</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -731,7 +726,6 @@
     <CodeEMAT8>Remorqueur</CodeEMAT8>
     <CodeLFRIL>Remorqueur</CodeLFRIL>
     <CodeNNO>Remorqueur</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -840,7 +834,6 @@
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -946,7 +939,6 @@
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -1054,7 +1046,6 @@
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -1162,7 +1153,6 @@
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -1273,7 +1263,6 @@
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -1384,7 +1373,6 @@
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -1499,7 +1487,6 @@
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -1615,7 +1602,6 @@
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -1718,7 +1704,6 @@
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -1823,7 +1808,6 @@
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -1931,7 +1915,6 @@
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -2039,7 +2022,6 @@
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -2144,7 +2126,6 @@
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -2249,7 +2230,6 @@
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -2358,7 +2338,6 @@
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -2467,7 +2446,6 @@
     <CodeEMAT8></CodeEMAT8>
     <CodeLFRIL></CodeLFRIL>
     <CodeNNO></CodeNNO>
-    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">

@@ -177,7 +177,7 @@
       <parameter dia-name="zone_" name="Zone" optional="false" type="Location"/>
     </mission>
     <mission dia-behavior="MIS_Pion_PrendreEnComptePrisonniers" dia-type="T_Mission_Pion_PrendreEnComptePrisonniers" id="22" name="Prendre En Compte Prisonniers">
-      <parameter dia-name="unitesRendues_" name="Unite rendues" optional="false" type="AgentKnowledgeList"/>
+      <parameter dia-name="uniteRendues_" name="Unite rendues" optional="false" type="AgentKnowledgeList"/>
       <parameter dia-name="campPrisonniers_" name="Camp prisonniers" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_OrienterRefugies" dia-type="T_Mission_Pion_OrienterRefugies" id="23" name="Orienter Refugies">

@@ -1129,7 +1129,7 @@
     </message>
     <message>
         <source>Device category:</source>
-        <translation>Catégorie matériel:</translation>
+        <translation type="obsolete">Catégorie matériel:</translation>
     </message>
     <message>
         <source>Conveyor</source>
@@ -6124,27 +6124,27 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Char</source>
-        <translation>Char</translation>
+        <translation type="obsolete">Char</translation>
     </message>
     <message>
         <source>Artillerie</source>
-        <translation>Artillerie</translation>
+        <translation type="obsolete">Artillerie</translation>
     </message>
     <message>
         <source>Hommes</source>
-        <translation>Hommes</translation>
+        <translation type="obsolete">Hommes</translation>
     </message>
     <message>
         <source>Armes L&#xe9;g&#xe8;res</source>
-        <translation>Armes Légères</translation>
+        <translation type="obsolete">Armes Légères</translation>
     </message>
     <message>
         <source>Mat&#xe9;riel Franchissement</source>
-        <translation>Matériel Franchissement</translation>
+        <translation type="obsolete">Matériel Franchissement</translation>
     </message>
     <message>
         <source>Autres</source>
-        <translation>Autres</translation>
+        <translation type="obsolete">Autres</translation>
     </message>
     <message>
         <source>Unite essence</source>
@@ -6168,7 +6168,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>VCI</source>
-        <translation>VCI</translation>
+        <translation type="obsolete">VCI</translation>
     </message>
     <message>
         <source>ReparableAvecEvacuation</source>

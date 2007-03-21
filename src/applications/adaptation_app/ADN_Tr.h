@@ -43,7 +43,6 @@ public:
     static const std::string& ConvertFromCapacityMission( E_CapacityMission, E_Conversion = eToSim );
     static const std::string& ConvertFromRadarType( E_RadarType, E_Conversion = eToSim );
     static const std::string& ConvertFromStockCategory( E_StockCategory, E_Conversion = eToSim );
-    static const std::string& ConvertFromDeviceCategory( E_DeviceCategory, E_Conversion = eToSim );
     static const std::string& ConvertFromEquipmentState( E_EquipmentState, E_Conversion = eToSim );
     static const std::string& ConvertFromTypeMunitionTirIndirect( E_TypeMunitionTirIndirect, E_Conversion = eToSim );
     static const std::string& ConvertFromMissionParameterType( E_MissionParameterType, E_Conversion = eToSim );
@@ -69,7 +68,6 @@ public:
     static E_CapacityMission ConvertToCapacityMission  ( const std::string& );
     static E_RadarType       ConvertToRadarType        ( const std::string& );
     static E_StockCategory   ConvertToStockCategory    ( const std::string& );
-    static E_DeviceCategory  ConvertToDeviceCategory   ( const std::string& );
     static E_EquipmentState  ConvertToEquipmentState   ( const std::string& );
     static E_TypeMunitionTirIndirect ConvertToTypeMunitionTirIndirect( const std::string& );
     static E_MissionParameterType ConvertToMissionParameterType( const std::string& );
@@ -98,7 +96,6 @@ public:
     typedef converter<E_CapacityMission>     T_ConverterCapacityMission;
     typedef converter<E_RadarType>           T_ConverterRadarType;
     typedef converter<E_StockCategory>       T_ConverterStockCategory;
-    typedef converter<E_DeviceCategory>      T_ConverterDeviceCategory;
     typedef converter<E_EquipmentState>      T_ConverterEquipmentState;
     typedef converter<E_TypeMunitionTirIndirect> T_ConverterTypeMunitionTirIndirect;
     typedef converter<E_MissionParameterType> T_ConverterMissionParameterType;
@@ -124,7 +121,6 @@ public:
     static T_ConverterCapacityMission   capacityMissionConverter_[];
     static T_ConverterRadarType         radarTypeConverter_[];
     static T_ConverterStockCategory     stockCategoryConverter_[];
-    static T_ConverterDeviceCategory    deviceCategoryConverter_[];
     static T_ConverterEquipmentState    equipmentStateConverter_[];
     static T_ConverterTypeMunitionTirIndirect munitionTirIndirectConverter_ [];
     static T_ConverterMissionParameterType missionParameterTypeConverter_ [];

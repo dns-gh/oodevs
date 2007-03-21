@@ -62,7 +62,6 @@ public:
         eEMAT6Code,
         eEMAT8Code,
         eLFRILCode,
-        eDeviceCategory,        
         eHasEmbarkTimes,
         eEmbarkingTimePerPerson,
         eDisembarkingTimePerPerson,

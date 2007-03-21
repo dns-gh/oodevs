@@ -1807,7 +1807,6 @@ ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
 , nMosId_( ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetNextId() )
 , ptrArmor_(ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(),0)
 , ptrSize_(ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(),0)
-, eDeviceCategory_((E_DeviceCategory)0)
 , rWeight_(0)
 , vSpeeds_( false )
 , vWeapons_()
@@ -1837,10 +1836,6 @@ ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
     ptrArmor_.SetParentNode( *this );
     ptrSize_.SetNodeName( "le volume" );
     ptrSize_.SetParentNode( *this );
-
-    ADN_Type_Enum<E_DeviceCategory, eNbrDeviceCategory>::SetConverter( &ADN_Tr::ConvertFromDeviceCategory );
-    eDeviceCategory_.SetDataName( "la catégorie de matériel" );
-    eDeviceCategory_.SetParentNode( *this );
 
     vSpeeds_.SetParentNode( *this );
 
@@ -1917,7 +1912,6 @@ ADN_Composantes_Data::ComposanteInfos* ADN_Composantes_Data::ComposanteInfos::Cr
     pCopy->ptrSize_ = ptrSize_.GetData();
     pCopy->rWeight_ = rWeight_.GetData();
     pCopy->rMaxSpeed_ = rMaxSpeed_.GetData();
-    pCopy->eDeviceCategory_ = eDeviceCategory_.GetData();
 
     for( int iTerrain = 0; iTerrain < eNbrLocation; ++iTerrain )
         pCopy->vSpeeds_[ iTerrain ]->rSpeed_ = vSpeeds_[ iTerrain ]->rSpeed_.GetData();
@@ -1989,17 +1983,6 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( ADN_XmlInput_Helper& in
     input.ReadField( "CodeEMAT8", strCodeEMAT8_, ADN_XmlInput_Helper::eNothing );
     input.ReadField( "CodeLFRIL", strCodeLFRIL_, ADN_XmlInput_Helper::eNothing );
     input.ReadField( "CodeNNO", strCodeNNO_    , ADN_XmlInput_Helper::eNothing );
-
-    std::string strDeviceCategory;
-    if( input.ReadField( "CategorieMateriel", strDeviceCategory, ADN_XmlInput_Helper::eNothing ) )
-    {
-        E_DeviceCategory eDeviceCategory = ADN_Tr::ConvertToDeviceCategory( strDeviceCategory );
-        if( eDeviceCategory == (E_DeviceCategory)-1 )
-            input.ThrowError( MT_FormatString( "La catégorie de matériel '%s' est invalide", strDeviceCategory.c_str() ) );
-        eDeviceCategory_ = eDeviceCategory;
-    }
-    else
-        eDeviceCategory_ = eDeviceCategory_Autres; // default value
 
     std::string strArmor;
     input.ReadField( "Protection", strArmor );
@@ -2127,7 +2110,6 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( MT_OutputArchive_ABC& 
     output.WriteField( "CodeEMAT8", strCodeEMAT8_.GetData() );
     output.WriteField( "CodeLFRIL", strCodeLFRIL_.GetData() );
     output.WriteField( "CodeNNO", strCodeNNO_.GetData() );
-    output.WriteField( "CategorieMateriel", ADN_Tr::ConvertFromDeviceCategory( eDeviceCategory_.GetData() ) );
 
     output.WriteField( "Protection", ptrArmor_.GetData()->strName_.GetData() );
     output.WriteField( "Volume", ptrSize_.GetData()->GetData() );
