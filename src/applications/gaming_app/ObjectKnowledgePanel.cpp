@@ -45,7 +45,7 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
                 .AddLabel( tr( "Construction:" ) )
                 .AddLabel( tr( "Development:" ) )
                 .AddLabel( tr( "Bypass:" ) )
-                .AddLabel( tr( "Setting up:" ) )
+                .AddLabel( tr( "Prepared:" ) )
                 .AddLabel( tr( "Perceived:" ) )
                 .AddLabel( tr( "Relevance:" ) );
 

@@ -300,6 +300,7 @@ ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::Initialize( const ASN1T_MagicActio
     if( asnCreateObject.m.nomPresent ) 
         strName_ = asnCreateObject.nom;
 
+    bPrepared_ = asnCreateObject.en_preparation;
     InitializeCommon( localisation );
     return EnumObjectErrorCode::no_error;
 }

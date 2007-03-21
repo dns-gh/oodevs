@@ -40,7 +40,7 @@ using namespace kernel;
                 .AddSpinBox( tr( "Construction:" ), 0, 100, 1 )
                 .AddSpinBox( tr( "Development:" ), 0, 100, 1 )
                 .AddSpinBox( tr( "Bypass:" ), 0, 100, 1 )
-                .AddCheckBox( tr( "Setting up:" ) );
+                .AddCheckBox( tr( "Prepared:" ) );
 
     GetBuilder().Group( tr( "Information" ) )
                 .AddLabel( tr( "Construction dotation:" ) )
@@ -77,7 +77,7 @@ using namespace kernel;
     construction_  = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Construction:" ) ) );
     valorisation_  = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Development:" ) ) );
     contournement_ = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Bypass:" ) ) );
-    prepared_      = dynamic_cast< CheckBoxDisplayer* >( & infos.Item( tr( "Setting up:" ) ) );
+    prepared_      = dynamic_cast< CheckBoxDisplayer* >( & infos.Item( tr( "Prepared:" ) ) );
 
     QWidget* pSpacer = new QWidget( this );
     pSpacer->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Expanding );
