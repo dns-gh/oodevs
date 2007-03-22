@@ -317,8 +317,8 @@ bool MainWindow::Load()
 {
     try
     {
-        selector_->Load();
         model_.Purge();
+        selector_->Load();
         staticModel_.Load( config_ );
         SetWindowTitle( false );
     }
@@ -339,8 +339,8 @@ void MainWindow::Close()
 {
     model_.Purge();
     SetWindowTitle( false );
-    staticModel_.Purge();
     selector_->Close();
+    staticModel_.Purge();
 }
 
 // -----------------------------------------------------------------------------
