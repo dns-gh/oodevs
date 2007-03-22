@@ -13,6 +13,7 @@
 namespace kernel
 {
     class GlTools_ABC;
+    class Controllers;
 }
 
 namespace gui
@@ -33,7 +34,7 @@ class DrawerToolbar : public QToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerToolbar( QMainWindow* mainWindow, ExclusiveEventStrategy& strategy, DrawerLayer& layer, kernel::GlTools_ABC& tools );
+             DrawerToolbar( QMainWindow* mainWindow, ExclusiveEventStrategy& strategy, DrawerLayer& layer, kernel::GlTools_ABC& tools, kernel::Controllers& controllers );
     virtual ~DrawerToolbar();
     //@}
 

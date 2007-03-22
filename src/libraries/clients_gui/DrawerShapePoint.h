@@ -28,6 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DrawerShapePoint( const DrawerStyle& style, const QColor& color );
+             DrawerShapePoint( const DrawerStyle& style, xml::xistream& xis );
     virtual ~DrawerShapePoint();
     //@}
 

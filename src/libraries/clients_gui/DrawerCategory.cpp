@@ -11,6 +11,7 @@
 #include "DrawerCategory.h"
 #include "moc_DrawerCategory.cpp"
 #include "DrawerStyle.h"
+#include "clients_kernel/Controller.h"
 #include "xeumeuleu/xml.h"
 
 using namespace gui;
@@ -19,8 +20,9 @@ using namespace gui;
 // Name: DrawerCategory constructor
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-DrawerCategory::DrawerCategory( QWidget* parent, kernel::GlTools_ABC& tools, xml::xistream& input, svg::TextRenderer& renderer )
+DrawerCategory::DrawerCategory( QWidget* parent, kernel::GlTools_ABC& tools, xml::xistream& input, svg::TextRenderer& renderer, kernel::Controller& controller )
     : QVButtonGroup( parent )
+    , controller_( controller )
     , renderer_( renderer )
 {
     setExclusive( true );
@@ -36,6 +38,7 @@ DrawerCategory::DrawerCategory( QWidget* parent, kernel::GlTools_ABC& tools, xml
     description_ = description.c_str();
 
     connect( this, SIGNAL( clicked( int ) ), this, SLOT( OnClicked( int ) ) );
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,8 +47,8 @@ DrawerCategory::DrawerCategory( QWidget* parent, kernel::GlTools_ABC& tools, xml
 // -----------------------------------------------------------------------------
 DrawerCategory::~DrawerCategory()
 {
-    for( CIT_Styles it = styles_.begin(); it != styles_.end(); ++it )
-        delete it->second;
+    DeleteAll();
+    controller_.Delete( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,8 +84,8 @@ void DrawerCategory::ReadTemplates( xml::xistream& input, kernel::GlTools_ABC& t
 // -----------------------------------------------------------------------------
 void DrawerCategory::ReadTemplate( xml::xistream& input, kernel::GlTools_ABC& tools )
 {
-    DrawerStyle* style = new DrawerStyle( input, tools, renderer_ );
-    QPushButton* button = new QPushButton( style->GetName(), this, style->GetName() );
+    DrawerStyle* style = new DrawerStyle( input, *this, tools, renderer_ );
+    QPushButton* button = new QPushButton( style->GetPixmap(), style->GetName(), this, style->GetName() );
     button->setToggleButton( true );
     button->setBackgroundColor( Qt::white );
     button->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Preferred );
@@ -90,7 +93,7 @@ void DrawerCategory::ReadTemplate( xml::xistream& input, kernel::GlTools_ABC& to
     QToolTip::add( button, style->GetDescription() );
 
     int id = insert( button );
-    styles_[ id ] = style;
+    Register( id, style->GetName(), *style );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +102,6 @@ void DrawerCategory::ReadTemplate( xml::xistream& input, kernel::GlTools_ABC& to
 // -----------------------------------------------------------------------------
 void DrawerCategory::OnClicked( int id )
 {
-    DrawerStyle* style = styles_[ id ];
-    if( style )
+    if( DrawerStyle* style = Find( id ) )
         emit Selected( *style );
 }

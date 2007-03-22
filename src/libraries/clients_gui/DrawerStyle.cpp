@@ -9,9 +9,11 @@
 
 #include "clients_gui_pch.h"
 #include "DrawerStyle.h"
+#include "DrawerCategory.h"
 #include "svgl/svgl.h"
 #include "xeumeuleu/xml.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "resources.h"
 
 using namespace gui;
 
@@ -19,8 +21,9 @@ using namespace gui;
 // Name: DrawerStyle constructor
 // Created: AGE 2006-08-31
 // -----------------------------------------------------------------------------
-DrawerStyle::DrawerStyle( xml::xistream& input, kernel::GlTools_ABC& tools, svg::TextRenderer& renderer )
-    : tools_       ( tools )
+DrawerStyle::DrawerStyle( xml::xistream& input, const DrawerCategory& category, kernel::GlTools_ABC& tools, svg::TextRenderer& renderer )
+    : category_    ( category )
+    , tools_       ( tools )
     , references_  ( new svg::References() )
     , renderer_    ( renderer )
     , line_        ( 0 )
@@ -86,6 +89,22 @@ QString DrawerStyle::GetType() const
 QString DrawerStyle::GetDescription() const
 {
     return description_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerStyle::GetPixmap
+// Created: SBO 2007-03-22
+// -----------------------------------------------------------------------------
+QPixmap DrawerStyle::GetPixmap() const
+{
+    // $$$$ SBO 2007-03-22: bof
+    if( type_ == "line" )
+        return MAKE_PIXMAP( line );
+    if( type_ == "point" )
+        return MAKE_PIXMAP( point );
+    if( type_ == "polygon" )
+        return MAKE_PIXMAP( polygon );
+    return QPixmap();
 }
 
 // -----------------------------------------------------------------------------
@@ -241,4 +260,15 @@ void DrawerStyle::Align( geometry::Vector2f u ) const
     if( u.Y() < 0 )
         angle=-angle;
     glRotatef( angle, 0, 0, 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerStyle::Serialize
+// Created: SBO 2007-03-21
+// -----------------------------------------------------------------------------
+void DrawerStyle::Serialize( xml::xostream& xos ) const
+{
+    xos << xml::attribute( "template", name_ )
+        << xml::attribute( "category", category_.GetName() )
+        << xml::attribute( "type", type_ );
 }

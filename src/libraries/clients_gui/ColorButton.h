@@ -21,7 +21,7 @@ namespace gui
 */
 // Created: SBO 2006-04-04
 // =============================================================================
-class ColorButton : public QPushButton
+class ColorButton : public QToolButton
 {
     Q_OBJECT;
 

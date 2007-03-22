@@ -21,7 +21,7 @@ using namespace gui;
 // Name: DrawerToolbar constructor
 // Created: AGE 2006-09-04
 // -----------------------------------------------------------------------------
-DrawerToolbar::DrawerToolbar( QMainWindow* mainWindow, ExclusiveEventStrategy& strategy, DrawerLayer& layer, kernel::GlTools_ABC& tools )
+DrawerToolbar::DrawerToolbar( QMainWindow* mainWindow, ExclusiveEventStrategy& strategy, DrawerLayer& layer, kernel::GlTools_ABC& tools, kernel::Controllers& controllers )
     : QToolBar( mainWindow )
     , strategy_( strategy )
     , layer_   ( layer )
@@ -29,7 +29,7 @@ DrawerToolbar::DrawerToolbar( QMainWindow* mainWindow, ExclusiveEventStrategy& s
     setLabel( tr( "Drawing tools" ) );
 
     dock_ = new QDockWindow( mainWindow );
-    DrawerPanel* panel = new DrawerPanel( dock_, layer_, tools );
+    DrawerPanel* panel = new DrawerPanel( dock_, layer_, tools, controllers );
     dock_->setWidget( panel );
     dock_->setResizeEnabled( true );
     dock_->setCloseMode( QDockWindow::Always );

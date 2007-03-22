@@ -12,8 +12,10 @@
 #include "DrawerShape.h"
 #include "DrawerShapeFactory.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "xeumeuleu/xml.h"
 
 using namespace gui;
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: DrawerLayer constructor
@@ -210,4 +212,52 @@ bool DrawerLayer::HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Po
     if( mouse->button() == Qt::LeftButton )
         Done();
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerLayer::Load
+// Created: SBO 2007-03-21
+// -----------------------------------------------------------------------------
+void DrawerLayer::Load( const std::string& filename, const DrawerModel& model )
+{
+    xml::xifstream xis( filename );
+    xis >> start( "shapes" )
+            >> list( "shape", *this, &DrawerLayer::ReadShape, model )
+        >> end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerLayer::ReadShape
+// Created: SBO 2007-03-21
+// -----------------------------------------------------------------------------
+void DrawerLayer::ReadShape( xml::xistream& xis, const DrawerModel& model )
+{
+    std::auto_ptr< DrawerShape > newShape( factory_.CreateShape( xis, model ) );
+    if( newShape.get() )
+        shapes_.push_back( newShape.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerLayer::Save
+// Created: SBO 2007-03-21
+// -----------------------------------------------------------------------------
+void DrawerLayer::Save( const std::string& filename ) const
+{
+    xml::xofstream xos( filename );
+    xos << start( "shapes" );
+    for( CIT_Shapes it = shapes_.begin(); it != shapes_.end(); ++it )
+        (*it)->Serialize( xos );
+    xos << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerLayer::Clear
+// Created: SBO 2007-03-22
+// -----------------------------------------------------------------------------
+void DrawerLayer::Clear()
+{
+    Done();
+    for( CIT_Shapes it = shapes_.begin(); it != shapes_.end(); ++it )
+        delete *it;
+    shapes_.clear();
 }

@@ -11,6 +11,7 @@
 #define __DrawerCategory_h_
 
 #include <qvbuttongroup.h>
+#include "clients_kernel/Resolver2.h"
 
 namespace xml {
     class xistream;
@@ -18,6 +19,7 @@ namespace xml {
 
 namespace kernel {
     class GlTools_ABC;
+    class Controller;
 }
 
 namespace svg {
@@ -35,13 +37,14 @@ namespace gui
 // Created: AGE 2006-09-01
 // =============================================================================
 class DrawerCategory : public QVButtonGroup
+                     , public kernel::Resolver2< DrawerStyle, int, QString >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    DrawerCategory( QWidget* parent, kernel::GlTools_ABC& tools, xml::xistream& input, svg::TextRenderer& renderer );
+             DrawerCategory( QWidget* parent, kernel::GlTools_ABC& tools, xml::xistream& input, svg::TextRenderer& renderer, kernel::Controller& controller );
     virtual ~DrawerCategory();
     //@}
 
@@ -76,19 +79,13 @@ private:
     void ReadTemplate( xml::xistream& input, kernel::GlTools_ABC& tools );
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::map< int, DrawerStyle* > T_Styles;
-    typedef T_Styles::const_iterator    CIT_Styles;
-    //@}
-
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     svg::TextRenderer& renderer_;
     QString name_;
     QString description_;
-    T_Styles styles_;
     //@}
 };
 

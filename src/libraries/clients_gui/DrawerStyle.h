@@ -13,6 +13,7 @@
 namespace xml
 {
     class xistream;
+    class xostream;
 }
 
 namespace kernel
@@ -30,6 +31,7 @@ namespace svg
 
 namespace gui
 {
+    class DrawerCategory;
 
 // =============================================================================
 /** @class  DrawerStyle
@@ -44,7 +46,7 @@ class DrawerStyle
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerStyle( xml::xistream& input, kernel::GlTools_ABC& tools, svg::TextRenderer& renderer );
+             DrawerStyle( xml::xistream& input, const DrawerCategory& category, kernel::GlTools_ABC& tools, svg::TextRenderer& renderer );
     virtual ~DrawerStyle();
     //@}
 
@@ -53,8 +55,10 @@ public:
     QString GetName() const;
     QString GetType() const;
     QString GetDescription() const;
+    QPixmap GetPixmap() const;
     void Draw( const T_PointVector& points, svg::RenderingContext_ABC& context ) const;
     void Draw( const geometry::Point2f& point, svg::RenderingContext_ABC& context ) const;
+    void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:
@@ -91,6 +95,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const DrawerCategory& category_;
     kernel::GlTools_ABC& tools_;
     svg::TextRenderer& renderer_;
     QString name_;

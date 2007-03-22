@@ -15,7 +15,11 @@
 #include "DrawerCategory.h"
 #include "DrawerLayer.h"
 #include "ColorButton.h"
+#include "DrawerFactory.h"
+#include "DrawerModel.h"
+#include "clients_kernel/Controllers.h"
 #include "svgl/TextRenderer.h"
+#include "resources.h"
 
 using namespace gui;
 
@@ -23,16 +27,47 @@ using namespace gui;
 // Name: DrawerPanel constructor
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-DrawerPanel::DrawerPanel( QWidget* parent, DrawerLayer& layer, kernel::GlTools_ABC& tools )
+DrawerPanel::DrawerPanel( QWidget* parent, DrawerLayer& layer, kernel::GlTools_ABC& tools, kernel::Controllers& controllers )
     : QVBox( parent, "Drawer" )
+    , controllers_( controllers )
     , layer_( layer )
     , renderer_( new svg::TextRenderer() )
+    , factory_( *new DrawerFactory( this, tools, *renderer_, controllers_ ) )
+    , model_( *new DrawerModel( factory_ ) )
 {
-    color_ = new ColorButton( this, "" );
+    QHBox* box = new QHBox( this );
+    box->layout()->setAlignment( Qt::AlignCenter );
+    box->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
+    box->setBackgroundMode( Qt::PaletteButton );
+    box->setFrameStyle( QFrame::ToolBarPanel | QFrame::Raised );
+
+    QToolButton* btn = new QToolButton( box );
+    btn->setAutoRaise( true );
+    btn->setIconSet( MAKE_PIXMAP( open ) );
+    QToolTip::add( btn, tr( "Load drawings file" ) );
+    connect( btn, SIGNAL( clicked() ), SLOT( Open() ) );
+
+    btn = new QToolButton( box );
+    btn->setAutoRaise( true );
+    btn->setIconSet( MAKE_PIXMAP( save ) );
+    QToolTip::add( btn, tr( "Save drawings to file" ) );
+    connect( btn, SIGNAL( clicked() ), SLOT( Save() ) );
+
+    btn = new QToolButton( box );
+    btn->setAutoRaise( true );
+    btn->setIconSet( MAKE_PIXMAP( cross ) );
+    btn->setFixedSize( 25, 25 );
+    QToolTip::add( btn, tr( "Clear drawings" ) );
+    connect( btn, SIGNAL( clicked() ), SLOT( Clear() ) );
+
+    color_ = new ColorButton( box, "" );
     toolBox_ = new QToolBox( this );
     toolBox_->setMargin( 0 );
     toolBox_->setBackgroundColor( Qt::white );
-    ReadTemplates( tools );
+    
+    controllers_.Register( *this );
+
+    model_.Load( "DrawingTemplates.xml" ); // $$$$ SBO 2007-03-22: 
 }
 
 // -----------------------------------------------------------------------------
@@ -41,31 +76,22 @@ DrawerPanel::DrawerPanel( QWidget* parent, DrawerLayer& layer, kernel::GlTools_A
 // -----------------------------------------------------------------------------
 DrawerPanel::~DrawerPanel()
 {
-    // NOTHING
+    controllers_.Remove( *this );
+    // $$$$ SBO 2007-03-22: renderer ?
+    delete &factory_;
+    delete &model_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawerPanel::ReadTemplates
-// Created: AGE 2006-09-01
+// Name: DrawerPanel::NotifyCreated
+// Created: SBO 2007-03-22
 // -----------------------------------------------------------------------------
-void DrawerPanel::ReadTemplates( kernel::GlTools_ABC& tools )
+void DrawerPanel::NotifyCreated( const DrawerCategory& category )
 {
-    xml::xifstream input( "DrawingTemplates.xml" ); // $$$$ AGE 2006-09-01: 
-    input >> xml::start( "templates" )
-            >> xml::list( "category", *this, &DrawerPanel::ReadCategory, tools )
-        >> xml::end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerPanel::ReadCategory
-// Created: AGE 2006-09-01
-// -----------------------------------------------------------------------------
-void DrawerPanel::ReadCategory( xml::xistream& input, kernel::GlTools_ABC& tools )
-{
-    DrawerCategory* category = new DrawerCategory( this, tools, input, *renderer_ );
-    connect( category, SIGNAL( Selected( DrawerStyle& ) ), this, SLOT( OnSelect( DrawerStyle& ) ) );
-    int id = toolBox_->addItem( category, category->GetName() );
-    toolBox_->setItemToolTip ( id, category->GetDescription() );
+    DrawerCategory* cat = const_cast< DrawerCategory* >( &category );
+    connect( cat, SIGNAL( Selected( DrawerStyle& ) ), SLOT( OnSelect( DrawerStyle& ) ) );
+    int id = toolBox_->addItem( cat, category.GetName() );
+    toolBox_->setItemToolTip ( id, category.GetDescription() );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,4 +111,41 @@ void DrawerPanel::OnSelect( DrawerStyle& style )
 void DrawerPanel::hideEvent( QHideEvent* )
 {
     emit Closed();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerPanel::Open
+// Created: SBO 2007-03-21
+// -----------------------------------------------------------------------------
+void DrawerPanel::Open()
+{
+    QString filename = QFileDialog::getOpenFileName( "", tr( "Drawings file (*.xml)" ), this, 0, tr( "Load drawings file" ) );
+    if( filename.isEmpty() )
+        return;
+    if( filename.startsWith( "//" ) )
+        filename.replace( "/", "\\" ); 
+    layer_.Load( filename.ascii(), model_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerPanel::Save
+// Created: SBO 2007-03-21
+// -----------------------------------------------------------------------------
+void DrawerPanel::Save()
+{
+    QString filename = QFileDialog::getSaveFileName( "", tr( "Drawings file (*.xml)" ), this, 0, tr( "Save drawings to file" ) );
+    if( filename.isEmpty() )
+        return;
+    if( filename.startsWith( "//" ) )
+        filename.replace( "/", "\\" ); 
+    layer_.Save( filename.ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerPanel::Clear
+// Created: SBO 2007-03-22
+// -----------------------------------------------------------------------------
+void DrawerPanel::Clear()
+{
+    layer_.Clear();
 }

@@ -28,6 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DrawerShapePolygon( const DrawerStyle& style, const QColor& color );
+             DrawerShapePolygon( const DrawerStyle& style, xml::xistream& xis );
     virtual ~DrawerShapePolygon();
     //@}
 

@@ -15,6 +15,12 @@ namespace svg
     class RenderingContext;
 }
 
+namespace xml
+{
+    class xistream;
+    class xostream;
+}
+
 namespace gui
 {
     class DrawerStyle;
@@ -32,6 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DrawerShape( const DrawerStyle& style, const QColor& color );
+             DrawerShape( const DrawerStyle& style, xml::xistream& xis );
     virtual ~DrawerShape();
     //@}
 
@@ -44,6 +51,9 @@ public:
     bool IsAt( const geometry::Point2f& point, float precision = 100.f ) const;
     virtual void Draw( const geometry::Rectangle2f& viewport, bool overlined ) const;
     virtual void Draw( const geometry::Rectangle2f& viewport, const QColor& color, bool overlined ) const;
+
+    void ReadPoint( xml::xistream& xis );
+    void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:

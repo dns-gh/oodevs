@@ -21,10 +21,12 @@ using namespace gui;
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
 ColorButton::ColorButton( QWidget* parent /*= 0*/, const char* name /*= 0*/, QColor color /*= black*/ )
-    : QPushButton( parent, name )
+    : QToolButton( parent, name )
     , previous_( color )
     , current_( color )
 {
+    setAutoRaise( true );
+    setMinimumSize( 25, 25 );
     setMaximumWidth( height() * 4 / 3 );
     connect( this, SIGNAL( clicked() ), SLOT( OnClick() ) );
 }
@@ -44,7 +46,7 @@ ColorButton::~ColorButton()
 // -----------------------------------------------------------------------------
 void ColorButton::drawButton( QPainter* painter )
 {
-    QPushButton::drawButton( painter );
+    QToolButton::drawButton( painter );
     painter->fillRect( 4, 4, width() - 8, height() - 8, QBrush( QColor( current_ ) ) );
     painter->drawRect( 4, 4, width() - 8, height() - 8 );
 }

@@ -17,11 +17,17 @@ namespace kernel
     class GlTools_ABC;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace gui
 {
     class DrawerShape;
     class DrawerStyle;
     class DrawerShapeFactory;
+    class DrawerModel;
 
 // =============================================================================
 /** @class  DrawerLayer
@@ -43,6 +49,9 @@ public:
     //@{
     void TakeFocus( bool take );
     void Show( bool show );
+    void Load( const std::string& filename, const DrawerModel& model );
+    void Save( const std::string& filename ) const;
+    void Clear();
 
     void StartShape( const DrawerStyle& style, const QColor& color );
 
@@ -66,6 +75,8 @@ private:
     void Done();
     void DeleteSelected();
     float Precision() const;
+
+    void ReadShape( xml::xistream& xis, const DrawerModel& model );
     //@}
 
     //! @name Types

@@ -193,7 +193,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     // Drawer
     DrawerLayer* drawer = new DrawerLayer( *glProxy_ );
-    new DrawerToolbar( this, *eventStrategy_, *drawer, *glProxy_ );
+    new DrawerToolbar( this, *eventStrategy_, *drawer, *glProxy_, controllers_ );
 
     new Menu( this, controllers, *prefDialog, *profileDialog );
 
@@ -272,17 +272,12 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
 // -----------------------------------------------------------------------------
 bool MainWindow::New()
 {
-    std::string current;
-    while( ! bfs::exists( bfs::path( current, bfs::native ) ) )
-    {
-        const QString filename = QFileDialog::getOpenFileName( config_.GetExerciseFile().c_str(), "Exercise (*.xml)", this, 0, tr( "Load exercise definition file (exercise.xml)" ) );
-        if( filename.isEmpty() )
-            return false;
-        current = filename;
-        if( current.substr( 0, 2 ) == "//" )
-            std::replace( current.begin(), current.end(), '/', '\\' );
-    }
-    config_.LoadExercise( current );
+    QString filename = QFileDialog::getOpenFileName( config_.GetExerciseFile().c_str(), "Exercise (*.xml)", this, 0, tr( "Load exercise definition file (exercise.xml)" ) );
+    if( filename.isEmpty() )
+        return false;
+    if( filename.startsWith( "//" ) )
+        filename.replace( "/", "\\" );
+    config_.LoadExercise( filename.ascii() );
     if( Load() )
     {
         SetWindowTitle( true );

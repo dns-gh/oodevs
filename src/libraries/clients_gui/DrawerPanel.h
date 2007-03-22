@@ -10,6 +10,8 @@
 #ifndef __DrawerPanel_h_
 #define __DrawerPanel_h_
 
+#include "clients_kernel/ElementObserver_ABC.h"
+
 class QToolBox;
 
 namespace xml {
@@ -18,6 +20,7 @@ namespace xml {
 
 namespace kernel {
     class GlTools_ABC;
+    class Controllers;
 }
 
 namespace svg {
@@ -28,7 +31,10 @@ namespace gui
 {
     class DrawerLayer;
     class DrawerStyle;
+    class DrawerCategory;
     class ColorButton;
+    class DrawerFactory;
+    class DrawerModel;
 
 // =============================================================================
 /** @class  DrawerPanel
@@ -37,13 +43,15 @@ namespace gui
 // Created: AGE 2006-09-01
 // =============================================================================
 class DrawerPanel : public QVBox
+                  , public kernel::Observer_ABC
+                  , public kernel::ElementObserver_ABC< DrawerCategory >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerPanel( QWidget* parent, DrawerLayer& layer, kernel::GlTools_ABC& tools );
+             DrawerPanel( QWidget* parent, DrawerLayer& layer, kernel::GlTools_ABC& tools, kernel::Controllers& controllers );
     virtual ~DrawerPanel();
     //@}
 
@@ -60,6 +68,9 @@ signals:
 private slots:
     //! @name Slots
     //@{
+    void Open();
+    void Save();
+    void Clear();
     void OnSelect( DrawerStyle& style );
     //@}
 
@@ -72,16 +83,19 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void hideEvent ( QHideEvent* );
-    void ReadTemplates( kernel::GlTools_ABC& tools );
-    void ReadCategory( xml::xistream& input, kernel::GlTools_ABC& tools );
+    virtual void NotifyCreated( const DrawerCategory& category );
+    virtual void hideEvent( QHideEvent* );
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     DrawerLayer& layer_;
     svg::TextRenderer* renderer_;
+    DrawerFactory& factory_;
+    DrawerModel& model_;
+
     ColorButton* color_;
     QToolBox* toolBox_;
     //@}

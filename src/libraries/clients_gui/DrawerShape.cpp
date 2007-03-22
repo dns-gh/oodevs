@@ -11,8 +11,26 @@
 #include "DrawerShape.h"
 #include "DrawerStyle.h"
 #include "svgl/svgl.h"
+#include "xeumeuleu/xml.h"
 
 using namespace gui;
+using namespace xml;
+
+namespace
+{
+    QColor Complement( const QColor& color )
+    {
+        int h, s, v;
+        color.getHsv( &h, &s, &v );
+        if( h == -1 )
+            v = 255 - v;
+        else
+            h += 180;
+        QColor complement;
+        complement.setHsv( h, s, v );
+        return complement;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: DrawerShape constructor
@@ -22,15 +40,24 @@ DrawerShape::DrawerShape( const DrawerStyle& style, const QColor& color )
     : style_( style )
     , context_( new svg::RenderingContext() )
     , color_( color )
-    , complement_( color )
+    , complement_( Complement( color ) )
 {
-    int h, s, v;
-    color_.getHsv( &h, &s, &v );
-    if( h == -1 )
-        v = 255-v;
-    else
-        h+= 180;
-    complement_.setHsv( h, s, v );
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerShape constructor
+// Created: SBO 2007-03-22
+// -----------------------------------------------------------------------------
+DrawerShape::DrawerShape( const DrawerStyle& style, xml::xistream& xis )
+    : style_( style )
+    , context_( new svg::RenderingContext() )
+{
+    std::string color;
+    xis >> attribute( "color", color )
+        >> list( "point", *this, &DrawerShape::ReadPoint );
+    color_.setNamedColor( color.c_str() );
+    complement_ = Complement( color_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,6 +67,19 @@ DrawerShape::DrawerShape( const DrawerStyle& style, const QColor& color )
 DrawerShape::~DrawerShape()
 {
     delete context_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerShape::ReadPoint
+// Created: SBO 2007-03-22
+// -----------------------------------------------------------------------------
+void DrawerShape::ReadPoint( xml::xistream& xis )
+{
+    float x, y;
+    xis >> attribute( "x", x )
+        >> attribute( "y", y );
+    geometry::Point2f point( x, y );
+    AddPoint( point );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,4 +176,21 @@ bool DrawerShape::IsAt( const geometry::Point2f& point, float precision ) const
             return true;
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerShape::Serialize
+// Created: SBO 2007-03-21
+// -----------------------------------------------------------------------------
+void DrawerShape::Serialize( xml::xostream& xos ) const
+{
+    xos << start( "shape" )
+            << attribute( "color", color_.name() );
+    style_.Serialize( xos );
+    for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
+        xos << start( "point" ) // $$$$ SBO 2007-03-21: UTM ?
+                << attribute( "x", it->X() )
+                << attribute( "y", it->Y() )
+            << end();
+    xos << end();
 }

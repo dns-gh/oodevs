@@ -10,10 +10,16 @@
 #ifndef __DrawerShapeFactory_h_
 #define __DrawerShapeFactory_h_
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace gui
 {
     class DrawerShape;
     class DrawerStyle;
+    class DrawerModel;
 
 // =============================================================================
 /** @class  DrawerShapeFactory
@@ -34,6 +40,7 @@ public:
     //! @name Operations
     //@{
     DrawerShape* CreateShape( const DrawerStyle& style, const QColor& color ) const;
+    DrawerShape* CreateShape( xml::xistream& xis, const DrawerModel& model ) const;
     //@}
 
 private:

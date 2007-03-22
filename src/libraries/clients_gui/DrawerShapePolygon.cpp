@@ -23,6 +23,16 @@ DrawerShapePolygon::DrawerShapePolygon( const DrawerStyle& style, const QColor& 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DrawerShapePolygon constructor
+// Created: SBO 2007-03-22
+// -----------------------------------------------------------------------------
+DrawerShapePolygon::DrawerShapePolygon( const DrawerStyle& style, xml::xistream& xis )
+    : DrawerShape( style, xis )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: DrawerShapePolygon destructor
 // Created: SBO 2007-03-07
 // -----------------------------------------------------------------------------
