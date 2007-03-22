@@ -64,14 +64,13 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     list_ = new PreferencesList( box, *pages );
     grid->addWidget( box, 1, 0 );
 
-    AddPage( tr( "General" ), *new OptionsPanel( this, controllers ) );
     pGraphicPrefPanel_ = new GraphicsPanel( this );
     layersPanel_       = new LayersPanel( this );
-    AddPage( tr( "2D" )        , *layersPanel_ ); 
-    AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
     AddPage( tr( "3D" ), *new Graphics3dPanel( this ) );
     AddPage( tr( "3D/Lighting" ), *new LightingPanel( this, lighting ) );
-    
+    AddPage( tr( "2D" )        , *layersPanel_ ); 
+    AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
+    AddPage( tr( "General" ), *new OptionsPanel( this, controllers ) );    
 
     box = new QHBox( this );
     box->setMargin( 5 );

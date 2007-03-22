@@ -10,7 +10,7 @@
 #ifndef __SizeButton_h_
 #define __SizeButton_h_
 
-#include <qpushbutton.h>
+#include <qtoolbutton.h>
 
 namespace gui
 {
@@ -21,7 +21,7 @@ namespace gui
 */
 // Created: SBO 2006-04-05
 // =============================================================================
-class SizeButton : public QPushButton
+class SizeButton : public QToolButton
 {
     Q_OBJECT;
 

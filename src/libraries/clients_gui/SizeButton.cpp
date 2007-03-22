@@ -21,7 +21,7 @@ using namespace gui;
 // Created: SBO 2006-04-05
 // -----------------------------------------------------------------------------
 SizeButton::SizeButton( QWidget* parent /*= 0*/, const char* name /*= 0*/, float value /*= 1*/ )
-    : QPushButton( parent, name )
+    : QToolButton( parent, name )
     , slider_( 0 )
     , size_( value )
     , prefix_()
@@ -29,8 +29,10 @@ SizeButton::SizeButton( QWidget* parent /*= 0*/, const char* name /*= 0*/, float
     , changed_( false )
     , previous_( value )
 {
+    setAutoRaise( true );
     setText( name );
     QPopupMenu* menu = new QPopupMenu( this );
+    setPopupDelay( 1 );
     slider_ = new QSlider( 0, 20, 1, 0, Qt::Orientation::Horizontal, menu );
     slider_->setTickmarks( QSlider::Below );
     slider_->setTickInterval( 2 );

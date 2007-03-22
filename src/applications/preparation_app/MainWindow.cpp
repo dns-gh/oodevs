@@ -198,7 +198,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new Menu( this, controllers, *prefDialog, *profileDialog );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
-    CreateLayers( *objectCreationPanel, *paramLayer, *weatherLayer, *agentsLayer, *drawer, prefDialog->GetPreferences(), PreparationProfile::GetProfile() );
+    CreateLayers( *objectCreationPanel, *paramLayer, *weatherLayer, *agentsLayer, *drawer, prefDialog->GetPreferences(), *prefDialog, PreparationProfile::GetProfile() );
 
     StatusBar* pStatus = new StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
@@ -222,13 +222,13 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, WeatherLayer& weather, ::AgentsLayer& agents, DrawerLayer& drawer, GraphicPreferences& setup, const Profile_ABC& profile )
+void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, WeatherLayer& weather, ::AgentsLayer& agents, DrawerLayer& drawer, GraphicPreferences& setup, PreferencesDialog& preferences, const Profile_ABC& profile )
 {
     // $$$$ AGE 2007-03-09: preferences !
     Layer_ABC& objectCreationLayer = *new MiscLayer< ObjectCreationPanel >( objects );
     Elevation2dLayer& elevation2d  = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     Layer2d_ABC& raster            = *new RasterLayer( controllers_.controller_ );
-    Layer_ABC& terrain             = *new TerrainLayer( controllers_, *glProxy_, setup );
+    Layer2d_ABC& terrain           = *new TerrainLayer( controllers_, *glProxy_, setup );
     Layer_ABC& elevation3d         = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     Layer_ABC& grid                = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics             = *new MetricsLayer( *glProxy_ );
@@ -236,6 +236,10 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     Layer_ABC& objectsLayer        = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& populations         = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
     Layer_ABC& defaultLayer        = *new DefaultLayer( controllers_ );
+
+    preferences.AddLayer( tr( "Terrain" ), terrain );
+    preferences.AddLayer( tr( "Raster" ), raster );
+    preferences.AddLayer( tr( "Elevation" ), elevation2d );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );

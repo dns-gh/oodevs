@@ -36,6 +36,7 @@ namespace gui
     class DrawerLayer;
     class LightingProxy;
     class GlSelector;
+    class PreferencesDialog;
 }
 
 class AgentsLayer;
@@ -96,7 +97,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateLayers( ObjectCreationPanel& objects, gui::ParametersLayer& parameters, WeatherLayer& weather, AgentsLayer& agents, gui::DrawerLayer& drawer, gui::GraphicPreferences& setup, const kernel::Profile_ABC& profile );
+    void CreateLayers( ObjectCreationPanel& objects, gui::ParametersLayer& parameters, WeatherLayer& weather, AgentsLayer& agents, gui::DrawerLayer& drawer, gui::GraphicPreferences& setup, gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile );
     void closeEvent( QCloseEvent* pEvent );
     void WriteSettings();
     void ReadSettings();

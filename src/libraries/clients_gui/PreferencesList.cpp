@@ -54,7 +54,7 @@ void PreferencesList::AddPage( const QString& name, QWidget* widget )
     if( parent )
         item = new QListViewItem( parent );
     else
-        item = new QListViewItem( this, lastItem() );
+        item = new QListViewItem( this );
     item->setText( 0, list.last() );
 }
 
