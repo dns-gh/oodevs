@@ -100,6 +100,7 @@
 #include "res/goto.xpm"
 #include "res/add_point.xpm"
 #include "res/special_point.xpm"
+#include "res/drawings.xpm"
 
 QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {

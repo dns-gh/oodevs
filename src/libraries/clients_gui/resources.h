@@ -94,5 +94,6 @@ DECLARE_ICON( pencil_checkbox );
 DECLARE_ICON( goto );
 DECLARE_ICON( add_point );
 DECLARE_ICON( special_point );
+DECLARE_ICON( drawings );
 
 #endif // __demo_resources_h_

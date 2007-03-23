@@ -90,7 +90,7 @@ void DrawerPanel::NotifyCreated( const DrawerCategory& category )
 {
     DrawerCategory* cat = const_cast< DrawerCategory* >( &category );
     connect( cat, SIGNAL( Selected( DrawerStyle& ) ), SLOT( OnSelect( DrawerStyle& ) ) );
-    int id = toolBox_->addItem( cat, category.GetName() );
+    int id = toolBox_->addItem( cat, MAKE_PIXMAP( drawings ), category.GetName() );
     toolBox_->setItemToolTip ( id, category.GetDescription() );
 }
 
@@ -119,12 +119,19 @@ void DrawerPanel::hideEvent( QHideEvent* )
 // -----------------------------------------------------------------------------
 void DrawerPanel::Open()
 {
-    QString filename = QFileDialog::getOpenFileName( "", tr( "Drawings file (*.xml)" ), this, 0, tr( "Load drawings file" ) );
+    QString filename = QFileDialog::getOpenFileName( "", tr( "Drawings (*.xml)" ), this, 0, tr( "Load drawings file" ) );
     if( filename.isEmpty() )
         return;
     if( filename.startsWith( "//" ) )
-        filename.replace( "/", "\\" ); 
-    layer_.Load( filename.ascii(), model_ );
+        filename.replace( "/", "\\" );
+    try
+    {
+        layer_.Load( filename.ascii(), model_ );
+    }
+    catch( xml::exception& )
+    {
+        QMessageBox::critical( this, tr( "Error" ), tr( "'%1' is not a valid drawings file." ).arg( filename ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -133,12 +140,21 @@ void DrawerPanel::Open()
 // -----------------------------------------------------------------------------
 void DrawerPanel::Save()
 {
-    QString filename = QFileDialog::getSaveFileName( "", tr( "Drawings file (*.xml)" ), this, 0, tr( "Save drawings to file" ) );
+    QString filename = QFileDialog::getSaveFileName( "", tr( "Drawings (*.xml)" ), this, 0, tr( "Save drawings to file" ) );
     if( filename.isEmpty() )
         return;
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" ); 
-    layer_.Save( filename.ascii() );
+    if( !filename.endsWith( ".xml" ) )
+        filename.append( ".xml" );
+    try
+    {
+        layer_.Save( filename.ascii() );
+    }
+    catch( xml::exception& )
+    {
+        QMessageBox::critical( this, tr( "Error" ), tr( "Unable to save drawings to file '%1'. \nPlease check access rights or write protection." ).arg( filename ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

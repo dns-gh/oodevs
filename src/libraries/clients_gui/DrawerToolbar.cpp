@@ -37,23 +37,23 @@ DrawerToolbar::DrawerToolbar( QMainWindow* mainWindow, ExclusiveEventStrategy& s
     dock_->setMaximumWidth( 140 );
     mainWindow->moveDockWindow( dock_, Qt::DockTornOff );
     mainWindow->setAppropriate( dock_, false );
-    dock_->hide();
+    connect( dock_, SIGNAL( visibilityChanged( bool ) ), SLOT( OnDockVisibilityChanged( bool ) ) );
 
     draw_ = new QToolButton( this, "draw" );
     draw_->setIconSet( MAKE_ICON( pencil ) );
     draw_->setTextLabel( tr( "Draw" ) );
     draw_->setToggleButton( true );
     draw_->setOn( false );
-    connect( draw_, SIGNAL( toggled( bool ) ), this, SLOT( OnDraw( bool ) ) );
+    connect( draw_, SIGNAL( toggled( bool ) ), SLOT( OnDraw( bool ) ) );
 
     show_ = new QToolButton( this, "show" );
     show_->setIconSet( MAKE_ICON( pencil_checkbox ) );
     show_->setTextLabel( tr( "Display drawings" ) );
     show_->setToggleButton( true );
     show_->setOn( true );
-    connect( show_, SIGNAL( toggled( bool ) ), this, SLOT( OnShow( bool ) ) );
+    connect( show_, SIGNAL( toggled( bool ) ), SLOT( OnShow( bool ) ) );
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: DrawerToolbar destructor
 // Created: AGE 2006-09-04
@@ -95,10 +95,10 @@ void DrawerToolbar::OnDraw( bool draw )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawerToolbar::OnPanelClosed
-// Created: AGE 2006-09-07
+// Name: DrawerToolbar::OnDockVisibilityChanged
+// Created: SBO 2007-03-23
 // -----------------------------------------------------------------------------
-void DrawerToolbar::OnPanelClosed()
+void DrawerToolbar::OnDockVisibilityChanged( bool visible )
 {
-    OnDraw( false );
+    draw_->setOn( visible );
 }
