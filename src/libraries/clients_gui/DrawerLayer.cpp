@@ -68,8 +68,6 @@ void DrawerLayer::Show( bool show )
 // -----------------------------------------------------------------------------
 void DrawerLayer::StartShape( const DrawerStyle& style, const QColor& color )
 {
-    delete current_;
-    current_ = factory_.CreateShape( style, color );
     selectedStyle_ = &style;
     selectedColor_ = color;
 }
@@ -184,18 +182,25 @@ bool DrawerLayer::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& 
 // -----------------------------------------------------------------------------
 bool DrawerLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    if( mouse->button() == Qt::LeftButton && mouse->state() == Qt::NoButton ) 
-        dragPoint_ = point;
-    else 
-        dragPoint_ = geometry::Point2f();
+    const bool leftDown     = mouse->button() == Qt::LeftButton  && mouse->state() == Qt::NoButton;
+    const bool leftRelease  = mouse->button() == Qt::LeftButton  && mouse->state() == Qt::LeftButton;
+    const bool rightRelease = mouse->button() == Qt::RightButton && mouse->state() == Qt::RightButton;
 
-    if( current_ && mouse->button() == Qt::LeftButton && mouse->state() == Qt::LeftButton )
-        current_->AddPoint( point );
-    else if( current_ && mouse->button() == Qt::RightButton && mouse->state() == Qt::RightButton )
-        current_->PopPoint();
-    else if( mouse->button() == Qt::LeftButton )
+    dragPoint_ = leftDown ? point : geometry::Point2f();
+    if( overlined_ )
+    {
         selected_ = overlined_;
-
+        return true;
+    }
+    if( !current_ && leftDown )
+    {
+        delete current_;
+        current_ = factory_.CreateShape( *selectedStyle_, selectedColor_ );
+    }
+    if( current_ && leftRelease )
+        current_->AddPoint( point );
+    else if( current_ && rightRelease )
+        current_->PopPoint();
     return true;
 }
 
