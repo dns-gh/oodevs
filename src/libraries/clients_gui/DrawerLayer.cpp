@@ -194,6 +194,8 @@ bool DrawerLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f&
     }
     if( !current_ && leftDown )
     {
+        if( !selectedStyle_ )
+            return false;
         delete current_;
         current_ = factory_.CreateShape( *selectedStyle_, selectedColor_ );
     }
