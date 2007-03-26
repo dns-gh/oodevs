@@ -67,11 +67,6 @@ ConnectDialog::~ConnectDialog()
     // NOTHING
 }
 
-
-//=============================================================================
-// SLOTS
-//=============================================================================
-
 //-----------------------------------------------------------------------------
 // Name: ConnectDialog::Validate
 // Created:  NLD 2002-01-03 
@@ -95,7 +90,6 @@ void ConnectDialog::Validate()
     }
     accept();
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ConnectDialog::LoadDefaultConfig
@@ -138,4 +132,28 @@ void ConnectDialog::SaveConfig()
     settings.writeEntry( "/hosts", list, ';' );
     settings.writeEntry( "/index", pHostNameComboBox_->currentItem() );
     settings.endGroup();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConnectDialog::SetContextMenu
+// Created: SBO 2007-03-26
+// -----------------------------------------------------------------------------
+void ConnectDialog::SetContextMenu( QToolButton* btn )
+{
+    QPopupMenu* popup = new QPopupMenu( btn );
+    btn->setPopup( popup );
+    btn->setPopupDelay( 0 );
+    const QString port = QString::number( pPortSpinBox_->value() );
+    for( int n = 0; n < pHostNameComboBox_->count(); ++n )
+        popup->insertItem( pHostNameComboBox_->text( n ) + ":" + port, this, SLOT( QuickConnect( int ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConnectDialog::QuickConnect
+// Created: SBO 2007-03-26
+// -----------------------------------------------------------------------------
+void ConnectDialog::QuickConnect( int index )
+{
+    pHostNameComboBox_->setCurrentItem( index );
+    Validate();
 }

@@ -19,14 +19,13 @@ using namespace gui;
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
 BooleanOptionButton::BooleanOptionButton( const QIconSet& iconSet, const QString& toolTip, QToolBar* parent, kernel::Options& options, const std::string& option)
-    : QToolButton( iconSet, "", "", 0, "", parent, "" )
+    : QToolButton( parent )
     , options_( options )
     , option_( option )
     , toolTip_( toolTip )
 {
+    setIconSet( iconSet );
     QToolTip::add( this, toolTip_ );
-    setUsesTextLabel( true );                  
-    setTextPosition( QToolButton::BesideIcon );
     setToggleButton( true );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( OnToggled( bool ) ) );
     options_.Register( *this );

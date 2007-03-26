@@ -93,6 +93,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     pSpeedButton_->setEnabled( false );
 
     pConnectDlg_ = new ConnectDialog( this, network );
+    pConnectDlg_->SetContextMenu( pConnectButton_ );
     pConnectDlg_->hide();
 
     pDisconnectDlg_ = new DisconnectDialog( this, network );

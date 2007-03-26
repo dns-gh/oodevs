@@ -35,10 +35,16 @@ public:
     virtual ~ConnectDialog();
     //@}
 
+    //! @name Operations
+    //@{
+    void SetContextMenu( QToolButton* btn );
+    //@}
+
 private slots:
     //! @name Main methods
     //@{
     void Validate();
+    void QuickConnect( int index );
     //@}
 
 private:
