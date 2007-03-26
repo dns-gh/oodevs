@@ -37,6 +37,7 @@ class PopulationListView : public ListView< PopulationListView >
                          , public kernel::ElementObserver_ABC< kernel::Population_ABC >
                          , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
                          , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
+                         , public kernel::ElementObserver_ABC< kernel::Team_ABC >
                          , public kernel::SelectionObserver< kernel::Entity_ABC >
 {
     Q_OBJECT;
@@ -48,10 +49,15 @@ public:
     virtual ~PopulationListView();
     //@}
 
+protected slots:
+    //! @name Slots
+    //@{
+    virtual void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
+    //@}
+
 private slots:
     //! @name Slots
     //@{
-    void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
     void OnSelectionChange( QListViewItem* item );
     void OnRequestCenter();
     //@}
@@ -60,6 +66,7 @@ protected:
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
+    virtual void NotifyCreated( const kernel::Team_ABC& team );
     //@}
 
 private:
@@ -76,6 +83,7 @@ private:
     virtual void NotifyUpdated( const kernel::Entity_ABC& element );
     virtual void NotifyDeleted( const kernel::Population_ABC& popu );
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
+    virtual void NotifyDeleted( const kernel::Team_ABC& team );
     //@}
 
 private:

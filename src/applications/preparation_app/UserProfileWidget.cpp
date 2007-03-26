@@ -86,8 +86,10 @@ void UserProfileWidget::Commit( const ProfilesModel& model )
         profile.SetLogin( login_->text() );
         profile.SetPassword( password_->text() );
         profile.SetSupervisor( supervisor_->isChecked() );
-        unitRights_->CommitTo( profile );
-        populationRights_->CommitTo( profile );
+        if( unitRights_->NeedSaving() )
+            unitRights_->CommitTo( profile );
+        if( populationRights_->NeedSaving() )
+            populationRights_->CommitTo( profile );
     }
 }
 

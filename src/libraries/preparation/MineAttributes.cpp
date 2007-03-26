@@ -36,10 +36,12 @@ MineAttributes::MineAttributes( xml::xistream& xis, kernel::PropertiesDictionary
     : activityTime_( 0, Units::hours )
     , density_     ( 1, Units::minesPerMeter )
 {
+    std::string density;
     xis >> start( "specific-attributes" )
             >> content( "activity-time", activityTime_.value_ )
-            >> content( "density", density_.value_ )
+            >> content( "density", density )
         >> end();
+    density_.value_ = QString( density.c_str() ).toDouble();
     CreateDictionary( dico );
 }
 

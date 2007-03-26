@@ -148,7 +148,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pListsTabWidget->addTab( listsTabBox, tr( "Objects" ) );
     listsTabBox = new QVBox( pListsTabWidget );
     new EntitySearchBox< Population_ABC >( listsTabBox, controllers );
-    new ::PopulationListView( listsTabBox, controllers, *factory );
+    new ::PopulationListView( listsTabBox, controllers, *factory, *modelBuilder_ );
     pListsTabWidget->addTab( listsTabBox, tr( "Populations" ) );
     pListDockWnd_->setWidget( pListsTabWidget );
     pListDockWnd_->setResizeEnabled( true );

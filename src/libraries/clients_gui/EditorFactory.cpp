@@ -13,6 +13,7 @@
 #include "clients_kernel/Units.h"
 #include "ValuedComboBox.h"
 #include "Tools.h"
+#include <qvalidator.h>
 
 using namespace gui;
 using namespace kernel;
@@ -93,50 +94,98 @@ void EditorFactory::Call( QString* const& value )
 // =============================================================================
 namespace 
 {
+    class DecimalSpinBox : public QSpinBox
+    {
+    public:
+                 DecimalSpinBox( QWidget* parent, unsigned short decimals = 0 )
+                     : QSpinBox( parent )
+                     , decimals_( std::pow( 10, decimals ) )
+                 {}
+        virtual ~DecimalSpinBox() {}
+        
+        virtual QString mapValueToText( int value )
+        {
+            if( decimals_ > 1 )
+                return QString( "%1.%2" ).arg( value / decimals_ ).arg( value % decimals_ );
+            return QString::number( value );
+        }
+
+        virtual int mapTextToValue( bool *ok )
+        {
+            QString textValue = text().mid( prefix().length(), text().length() - prefix().length() - suffix().length() );
+            std::string txt = textValue.ascii();
+            if( decimals_ > 1 )
+                return int( textValue.toDouble( ok ) * decimals_ );
+            return textValue.toInt( ok );
+        }
+
+    protected:
+        template< typename T >
+        T DecimalValue()
+        {
+            return T( value() ) / T( decimals_ );
+        }
+
+        template< typename T >
+        void SetValue( const T& value )
+        {
+            setValue( value * T( decimals_ ) );
+        }
+
+    private:
+        unsigned int decimals_;
+    };
+
+
+
     template< typename T >
-    class NumberEditor : public QSpinBox
+    class NumberEditor : public DecimalSpinBox
                        , public ValueEditor< T >
     {
     public:
-                 NumberEditor( QWidget* parent, const T& value ) : QSpinBox( 0, std::numeric_limits< T >::max(), 1, parent )
+                 NumberEditor( QWidget* parent, const T& value, unsigned short decimals = 0 )
+                     : DecimalSpinBox( parent, decimals )
                  {
-                     setValue( value );
+                     SetValue( value );
                  }
         virtual ~NumberEditor() {}
 
         virtual T GetValue()
         {
-            return value();
+            return DecimalValue< T >();
         }
 
     };
 
     template< typename T >
-    class UnitEditor : public QSpinBox
+    class UnitEditor : public DecimalSpinBox
                      , public ValueEditor< UnitedValue< T > >
     {
     public:
-                 UnitEditor( QWidget* parent, const UnitedValue< T >& value ) : QSpinBox( 0, std::numeric_limits< T >::max(), 1, parent ), unit_( value.unit_ )
+                 UnitEditor( QWidget* parent, const UnitedValue< T >& value, unsigned short decimals = 0 )
+                     : DecimalSpinBox( parent, decimals )
+                     , unit_( value.unit_ )
                  {
-                     setValue( value.value_ );
                      setSuffix( value.unit_ );
+                     SetValue( value.value_ );
                  }
         virtual ~UnitEditor() {}
 
         virtual UnitedValue< T > GetValue()
         {
-            return UnitedValue< T >( value(), unit_ );
+            return UnitedValue< T >( DecimalValue< T >(), unit_ );
         }
+
     private:
         Unit unit_;
     };
 
     template< typename T >
-    QWidget* CreateNumberEditor( QWidget* parent, const T& value, const Unit* unit )
+    QWidget* CreateNumberEditor( QWidget* parent, const T& value, const Unit* unit, unsigned short decimals = 0 )
     {
         if( unit )
-            return new UnitEditor< T >( parent, UnitedValue< T >( value, *unit ) );
-        return new NumberEditor< T >( parent, value );
+            return new UnitEditor< T >( parent, UnitedValue< T >( value, *unit ), decimals );
+        return new NumberEditor< T >( parent, value, decimals );
     }
 }
 
@@ -146,7 +195,7 @@ namespace
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( double* const& value )
 {
-    result_ = CreateNumberEditor( parent_, *value, unit_ );
+    result_ = CreateNumberEditor( parent_, *value, unit_, 2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +204,7 @@ void EditorFactory::Call( double* const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( float* const& value )
 {
-    result_ = CreateNumberEditor( parent_, *value, unit_ );
+    result_ = CreateNumberEditor( parent_, *value, unit_, 2 );
 }
 
 // -----------------------------------------------------------------------------

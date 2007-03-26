@@ -9,18 +9,20 @@
 
 #include "preparation_app_pch.h"
 #include "PopulationListView.h"
+#include "moc_PopulationListView.cpp"
 #include "PreparationProfile.h"
-#include "PreparationProfile.h"
+#include "ModelBuilder.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationListView constructor
 // Created: SBO 2006-10-16
 // -----------------------------------------------------------------------------
-PopulationListView::PopulationListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
+PopulationListView::PopulationListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder )
     : gui::PopulationListView( pParent, controllers, factory, PreparationProfile::GetProfile() )
     , selected_( controllers )
+    , modelBuilder_( modelBuilder )
 {
-    // NOTHING
+    connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -50,4 +52,31 @@ void PopulationListView::NotifySelected( const kernel::Entity_ABC* element )
 {
     selected_ = element;
     gui::PopulationListView::NotifySelected( element );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationListView::OnContextMenuRequested
+// Created: SBO 2007-03-23
+// -----------------------------------------------------------------------------
+void PopulationListView::OnContextMenuRequested( QListViewItem* item, const QPoint& pos, int index )
+{
+    gui::PopulationListView::OnContextMenuRequested( item, pos, index );
+    if( item || !isVisible() )
+        return;
+    modelBuilder_.ClearSelection();
+    QPopupMenu* menu = new QPopupMenu( this );
+    menu->insertItem( tr( "Create side" ), &modelBuilder_, SLOT( OnCreate() ) );
+    menu->exec( pos, index );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationListView::NotifyCreated
+// Created: SBO 2007-03-23
+// -----------------------------------------------------------------------------
+void PopulationListView::NotifyCreated( const kernel::Team_ABC& team )
+{
+    gui::PopulationListView::NotifyCreated( team );
+    gui::ValuedListItem* item = gui::FindSibling( (const kernel::Entity_ABC*)&team, firstChild() );
+    if( item )
+        item->setRenameEnabled( 0, true );
 }

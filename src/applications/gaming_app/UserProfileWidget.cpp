@@ -82,8 +82,10 @@ void UserProfileWidget::Commit()
         std::auto_ptr< UserProfile > profile( &selectedProfile_->Clone() );
         profile->SetPassword  ( password_->text() );
         profile->SetSupervisor( supervisor_->isChecked() );
-        unitRights_      ->CommitTo( *profile );
-        populationRights_->CommitTo( *profile );
+        if( unitRights_->NeedSaving() )
+            unitRights_->CommitTo( *profile );
+        if( populationRights_->NeedSaving() )
+            populationRights_->CommitTo( *profile );
         profile->RequestUpdate( login_->text() );
     }
 }

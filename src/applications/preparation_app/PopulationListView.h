@@ -13,6 +13,8 @@
 #include "clients_gui/PopulationListView.h"
 #include "clients_kernel/SafePointer.h"
 
+class ModelBuilder;
+
 // =============================================================================
 /** @class  PopulationListView
     @brief  PopulationListView
@@ -21,12 +23,19 @@
 // =============================================================================
 class PopulationListView : public gui::PopulationListView
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             PopulationListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder );
     virtual ~PopulationListView();
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
     //@}
 
 private:
@@ -38,6 +47,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void keyPressEvent( QKeyEvent* key );
     //@}
@@ -46,6 +56,7 @@ private:
     //! @name Member data
     //@{
     kernel::SafePointer< kernel::Entity_ABC > selected_;
+    ModelBuilder& modelBuilder_;
     //@}
 };
 

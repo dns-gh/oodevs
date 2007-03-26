@@ -37,6 +37,11 @@ public:
     virtual ~UserProfileUnitRights();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual bool NeedSaving() const;
+    //@}
+
 private slots:
     //! @name Slots
     //@{

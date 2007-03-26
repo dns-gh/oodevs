@@ -72,7 +72,7 @@ private:
     //! @name Member data
     //@{
     kernel::UnitedValue< unsigned int > activityTime_;
-    kernel::UnitedValue< float >        density_;
+    kernel::UnitedValue< double >       density_;
     //@}
 };
 

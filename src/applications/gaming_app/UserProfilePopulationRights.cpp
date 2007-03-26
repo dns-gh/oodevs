@@ -68,3 +68,12 @@ void UserProfilePopulationRights::OnItemClicked( QListViewItem* item, const QPoi
 {
     UserProfileRights_ABC::OnItemClicked( item, point, column );
 }
+
+// -----------------------------------------------------------------------------
+// Name: UserProfilePopulationRights::NeedSaving
+// Created: SBO 2007-03-26
+// -----------------------------------------------------------------------------
+bool UserProfilePopulationRights::NeedSaving() const
+{
+    return isVisible();
+}

@@ -176,3 +176,26 @@ void PopulationListView::NotifyUpdated( const kernel::Profile_ABC& profile )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: PopulationListView::NotifyCreated
+// Created: SBO 2007-03-23
+// -----------------------------------------------------------------------------
+void PopulationListView::NotifyCreated( const kernel::Team_ABC& team )
+{
+    ValuedListItem* teamItem = FindSibling( (const Entity_ABC*)&team, firstChild() );
+    if( ! teamItem )
+    {
+        teamItem = factory_.CreateItem( this );
+        teamItem->SetNamed( (const Entity_ABC&)team );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationListView::NotifyDeleted
+// Created: SBO 2007-03-23
+// -----------------------------------------------------------------------------
+void PopulationListView::NotifyDeleted( const kernel::Team_ABC& team )
+{
+    if( ValuedListItem* teamItem = FindSibling( (const Entity_ABC*)&team, firstChild() ) )
+        DeleteHierarchy( teamItem );
+}

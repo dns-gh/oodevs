@@ -37,6 +37,7 @@ public:
     //@{
     void CommitTo( UserProfile& profile );
     void Reset();
+    virtual bool NeedSaving() const = 0;
 
     void Display( const UserProfile& profile );
     //@}
