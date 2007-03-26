@@ -185,7 +185,7 @@ kernel::Object_ABC* TeamFactory::CreateObject( xml::xistream& xis, kernel::Team_
     case eObjectType_BouchonMines:
     case eObjectType_ZoneMineeLineaire:
     case eObjectType_ZoneMineeParDispersion:
-        result->Attach< MineAttributes_ABC >( *new MineAttributes( dico ) );
+        result->Attach< MineAttributes_ABC >( *new MineAttributes( xis, dico ) );
         break;
     default:
         break;
