@@ -25,6 +25,7 @@ ActionController::ActionController()
     menu_.AddCategory( "Interface" );
     menu_.AddCategory( "Order" );
     menu_.AddCategory( "Command" );
+    menu_.AddCategory( "Helpers" );
 }
 
 // -----------------------------------------------------------------------------

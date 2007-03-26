@@ -11,6 +11,7 @@
 #define __LocationEditorToolbar_h_
 
 #include "LocationEditor_ABC.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
 
 namespace kernel
 {
@@ -31,6 +32,8 @@ namespace gui
 // =============================================================================
 class LocationEditorToolbar : public QToolBar
                             , public LocationEditor_ABC
+                            , public kernel::Observer_ABC
+                            , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
 {
     Q_OBJECT;
 
@@ -53,6 +56,10 @@ private slots:
     void Goto();
     void AddPoint();
     void AddParamPoint();
+
+    void Bookmark();
+    void GotoBookmark( int index );
+    void ClearBookmarks();
     //@}
 
 private:
@@ -64,7 +71,14 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu );
     geometry::Point2f GetPosition() const;
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< std::string >    T_Bookmarks;
+    typedef T_Bookmarks::const_iterator CIT_Bookmarks;
     //@}
 
 private:
@@ -78,6 +92,9 @@ private:
     QToolButton* okButton_;
     QToolButton* paramsButton_;
     QToolButton* gotoButton_;
+    QPopupMenu* bookmarksMenu_;
+    T_Bookmarks bookmarks_;
+    geometry::Point2f menuPoint_;
     //@}
 };
 

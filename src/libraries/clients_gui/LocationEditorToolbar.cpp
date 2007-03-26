@@ -29,6 +29,7 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
     , converter_( converter )
     , view_( view )
     , parameters_( 0 )
+    , bookmarksMenu_( 0 )
 {
     setLabel( tr( "Location editor" ) );
     new QLabel( tr( "Location: " ), this );
@@ -38,7 +39,12 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
     utm_->setFixedWidth( 110 );
     gotoButton_ = new QToolButton( this );
     gotoButton_->setIconSet( MAKE_PIXMAP( goto ) );
+    gotoButton_->setPopupDelay( 0 );
+    bookmarksMenu_ = new QPopupMenu( gotoButton_ );
+    gotoButton_->setPopup( bookmarksMenu_ );
+    ClearBookmarks();
     QToolTip::add( gotoButton_, tr( "Center on location" ) );
+    
     okButton_ = new QToolButton( this );
     okButton_->setIconSet( MAKE_PIXMAP( add_point ) );
     QToolTip::add( okButton_, tr( "Add point to current location" ) );
@@ -46,10 +52,13 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
     paramsButton_ = new QToolButton( this );
     paramsButton_->setIconSet( MAKE_PIXMAP( special_point ) );
     QToolTip::add( paramsButton_, tr( "Set special point" ) );
+
     connect( utm_, SIGNAL( returnPressed() ), SLOT( Goto() ) );
     connect( gotoButton_, SIGNAL( clicked() ), SLOT( Goto() ) );
     connect( okButton_, SIGNAL( clicked() ), SLOT( AddPoint() ) );
     connect( paramsButton_, SIGNAL( clicked() ), SLOT( AddParamPoint() ) );
+
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +67,7 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
 // -----------------------------------------------------------------------------
 LocationEditorToolbar::~LocationEditorToolbar()
 {
-    // NOTHING
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,6 +143,56 @@ void LocationEditorToolbar::AddParamPoint()
 }
 
 // -----------------------------------------------------------------------------
+// Name: LocationEditorToolbar::Bookmark
+// Created: SBO 2007-03-26
+// -----------------------------------------------------------------------------
+void LocationEditorToolbar::Bookmark()
+{
+    try
+    {
+        std::string utm = converter_.ConvertToMgrs( menuPoint_ );
+        bookmarksMenu_->clear();
+        bookmarks_.push_back( utm );
+        unsigned int i = 0;
+        for( CIT_Bookmarks it = bookmarks_.begin(); it != bookmarks_.end(); ++it, ++i )
+            bookmarksMenu_->insertItem( it->c_str(), this, SLOT( GotoBookmark( int ) ), 0, i );
+        bookmarksMenu_->insertSeparator();
+        bookmarksMenu_->insertItem( tr( "Clear bookmarks" ), this, SLOT( ClearBookmarks() ) );
+    }
+    catch( ... )
+    {
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationEditorToolbar::GotoBookmark
+// Created: SBO 2007-03-26
+// -----------------------------------------------------------------------------
+void LocationEditorToolbar::GotoBookmark( int index )
+{
+    if( index >= 0 && index < int( bookmarks_.size() ) )
+        try
+        {
+            view_.CenterOn( converter_.ConvertToXY( bookmarks_[index] ) );
+        }
+        catch( ... )
+        {
+            bookmarks_.erase( bookmarks_.begin() + index );
+        }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationEditorToolbar::ClearBookmarks
+// Created: SBO 2007-03-26
+// -----------------------------------------------------------------------------
+void LocationEditorToolbar::ClearBookmarks()
+{
+    bookmarks_.clear();
+    bookmarksMenu_->clear();
+    bookmarksMenu_->insertItem( tr( "No bookmark defined" ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LocationEditorToolbar::GetPosition
 // Created: SBO 2007-03-06
 // -----------------------------------------------------------------------------
@@ -148,4 +207,14 @@ geometry::Point2f LocationEditorToolbar::GetPosition() const
         QMessageBox::critical( topLevelWidget(), tr( "Error" ), tr( "Location is not valid UTM coordinates." ) );
         throw;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationEditorToolbar::NotifyContextMenu
+// Created: SBO 2007-03-26
+// -----------------------------------------------------------------------------
+void LocationEditorToolbar::NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu )
+{
+    menuPoint_ = point;
+    menu.InsertItem( "Helpers", tr( "Bookmark location" ), this, SLOT( Bookmark() ) );
 }
