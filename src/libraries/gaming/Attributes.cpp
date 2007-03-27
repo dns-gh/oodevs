@@ -245,7 +245,8 @@ void Attributes::DisplayInTooltip( Displayer_ABC& displayer ) const
 void Attributes::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Attributes", "Speed:" ) , nSpeed_ * Units::kilometersPerHour )
-             .Display( tools::translate( "Attributes", "Height:" ), nAltitude_ * Units::meters );
+             .Display( tools::translate( "Attributes", "Height:" ), nAltitude_ * Units::meters )
+             .Display( tools::translate( "Attributes", "Troops:" ), bLoadingState_ ? tools::translate( "Attributes", "on-board" ) : tools::translate( "Attributes", "off-board" ) );
 }
 
 // -----------------------------------------------------------------------------
