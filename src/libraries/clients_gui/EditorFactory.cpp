@@ -100,7 +100,10 @@ namespace
                  DecimalSpinBox( QWidget* parent, unsigned short decimals = 0 )
                      : QSpinBox( parent )
                      , decimals_( std::pow( 10, decimals ) )
-                 {}
+                 {
+                     setMinValue( 0 );
+                     setMaxValue( std::numeric_limits< int >::max() );
+                 }
         virtual ~DecimalSpinBox() {}
         
         virtual QString mapValueToText( int value )
