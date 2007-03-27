@@ -31,6 +31,7 @@
 #include "SupplyStates.h"
 #include "Tc2States.h"
 #include "TacticalLines.h"
+#include "CommandPostAttributes.h"
 #include "Population.h"
 #include "PopulationPositions.h"
 #include "PopulationHierarchies.h"
@@ -82,7 +83,8 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     result->Attach( *new Dotations( controllers_.controller_, *result, dico ) );
-    result->Attach( *new CommandPostAttributes( *result ) );
+    if( commandPost )
+        result->Attach( *new CommandPostAttributes( *result ) );
 //    if( parent.GetType().IsTC2() && commandPost )
 //        result->Attach( *new Stocks( controllers_.controller_, *result, dico ) );
 
@@ -160,7 +162,8 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     result->Attach( *new Dotations( xis, controllers_.controller_, *result, static_.objectTypes_, dico ) );
-    result->Attach( *new CommandPostAttributes( *result ) );
+    if( result->IsCommandPost() )
+        result->Attach( *new CommandPostAttributes( *result ) );
 //    if( parent.GetType().IsTC2() && result->IsCommandPost() )
 //        result->Attach( *new Stocks( xis, controllers_.controller_, *result, static_.objectTypes_, dico ) );
 

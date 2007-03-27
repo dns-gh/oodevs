@@ -10,6 +10,8 @@
 #include "preparation_pch.h"
 #include "MedicalStates.h"
 #include "clients_gui/Tools.h"
+#include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/AutomatType.h"
 
 // -----------------------------------------------------------------------------
 // Name: MedicalStates constructor
@@ -47,4 +49,24 @@ void MedicalStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel
 void MedicalStates::SetSuperior( const MedicalSuperior& automat )
 {
     ::LogisticHierarchies< MedicalSuperior, kernel::MedicalHierarchies >::SetSuperior( automat );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalStates::Draw
+// Created: SBO 2007-03-27
+// -----------------------------------------------------------------------------
+void MedicalStates::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+{
+    const bool displayLinks   = tools.ShouldDisplay( "LogisticLinks" );
+    const bool displayMissing = tools.ShouldDisplay( "MissingLogisticLinks" ) && viewport.IsHotpointVisible();
+    if( ! displayLinks && ! displayMissing )
+        return;
+
+    const kernel::Automat_ABC& automat = static_cast< const kernel::Automat_ABC& >( GetEntity() );
+
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+    glLineWidth( 3.f );
+    glColor4f( COLOR_PINK );
+    DrawLink( where, tools, 0.5f, displayLinks, displayMissing && automat.GetType().IsLogisticMedical() );
+    glPopAttrib();
 }

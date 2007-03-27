@@ -10,6 +10,8 @@
 #include "preparation_pch.h"
 #include "SupplyStates.h"
 #include "clients_gui/Tools.h"
+#include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/AutomatType.h"
 
 using namespace kernel;
 
@@ -50,4 +52,24 @@ void SupplyStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel:
 void SupplyStates::SetSuperior( const SupplySuperior& automat )
 {
     ::LogisticHierarchies< SupplySuperior, kernel::SupplyHierarchies >::SetSuperior( automat );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyStates::Draw
+// Created: SBO 2007-03-27
+// -----------------------------------------------------------------------------
+void SupplyStates::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+{
+    const bool displayLinks   = tools.ShouldDisplay( "LogisticLinks" );
+    const bool displayMissing = tools.ShouldDisplay( "MissingLogisticLinks" ) && viewport.IsHotpointVisible();
+    if( ! displayLinks && ! displayMissing )
+        return;
+
+    const kernel::Automat_ABC& automat = static_cast< const kernel::Automat_ABC& >( GetEntity() );
+
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+    glLineWidth( 3.f );
+    glColor4f( COLOR_ORANGE );
+    DrawLink( where, tools, 0.5f, displayLinks, displayMissing && automat.GetType().IsLogisticSupply() );
+    glPopAttrib();
 }

@@ -287,6 +287,8 @@ void Gl3dWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/ ) co
         px = cx; py = cy;
     }
     DrawLine( Point2f( px, py ), Point2f( center.X() + radius, center.Y() ) );
+
+    DrawDisc( center, radius );
 }
 
 // -----------------------------------------------------------------------------
@@ -296,7 +298,23 @@ void Gl3dWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/ ) co
 void Gl3dWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/ ) const
 {
     // $$$$ AGE 2006-03-30: sphere ?
-    DrawCircle( center, radius );
+//    DrawCircle( center, radius );
+    if( radius < 0 )
+        radius = 10.f * Pixels();
+
+    GLUquadric* quad = gluNewQuadric(); // $$$$ SBO 2007-03-23: keep it
+    glPushMatrix();
+    glPushAttrib( GL_CURRENT_BIT );
+        GLfloat color[4];
+        glGetFloatv( GL_CURRENT_COLOR, color );
+        color[3] = 0.3f;
+        glColor4fv( color );
+        glTranslatef( center.X(), center.Y(), ElevationAt( center ) );
+        gluQuadricOrientation( quad, GLU_OUTSIDE );
+        gluSphere( quad, radius, 16, 16 );
+    glPopAttrib();
+    glPopMatrix();
+    gluDeleteQuadric( quad );
 }
 
 // -----------------------------------------------------------------------------

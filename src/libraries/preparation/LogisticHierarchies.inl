@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel/Automat_ABC.h"
-
 // -----------------------------------------------------------------------------
 // Name: LogisticHierarchies constructor
 // Created: SBO 2006-10-24
@@ -62,4 +60,17 @@ void LogisticHierarchies< Superior, I >::SetSuperiorInternal( kernel::Entity_ABC
 {
     tc2_ = static_cast< kernel::Automat_ABC* >( superior );
     LogisticHierarchies_ABC< I >::SetSuperiorInternal( superior );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticHierarchies::DrawLink
+// Created: SBO 2007-03-27
+// -----------------------------------------------------------------------------
+template< typename Superior, typename I >
+void LogisticHierarchies< Superior, I >::DrawLink( const geometry::Point2f& where, const kernel::GlTools_ABC& tools, float curve, bool displayLinks, bool displayMissings ) const
+{
+    if( tc2_ && displayLinks )
+        tools.DrawCurvedArrow( where, tc2_->Get< kernel::Positions >().GetPosition(), curve );
+    else if( ! tc2_ && displayMissings )
+        tools.DrawCircle( geometry::Point2f( where.X(), where.Y() + 150 ), 300.0 );
 }

@@ -12,6 +12,9 @@
 
 #include "LogisticHierarchies_ABC.h"
 #include "clients_kernel/LogisticHierarchies.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Positions.h"
 
 // =============================================================================
 /** @class  LogisticHierarchies
@@ -47,6 +50,7 @@ protected:
     //@{
     void SetSuperior( const Superior& automat );
     virtual void SetSuperiorInternal( kernel::Entity_ABC* superior );
+    void DrawLink( const geometry::Point2f& where, const kernel::GlTools_ABC& tools, float curve, bool displayLinks, bool displayMissings ) const;
     //@}
 
 protected:

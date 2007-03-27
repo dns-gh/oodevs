@@ -14,6 +14,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Resolver.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
 {
@@ -42,6 +43,7 @@ template< typename I >
 class LogisticHierarchies_ABC : public kernel::EntityHierarchies< I > 
                               , public kernel::Resolver< Dotation >
                               , public kernel::Serializable_ABC
+                              , public kernel::Drawable_ABC
 {
 
 public:

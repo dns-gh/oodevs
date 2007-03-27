@@ -32,6 +32,7 @@ public:
     //! @name Operations
     //@{
     void SetSuperior( const TC2& automat );
+    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:

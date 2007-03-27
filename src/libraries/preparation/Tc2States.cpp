@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "Tc2States.h"
 #include "clients_gui/Tools.h"
+#include "clients_kernel/Viewport_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Tc2States constructor
@@ -47,4 +48,22 @@ void Tc2States::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::En
 void Tc2States::SetSuperior( const TC2& automat )
 {
     ::LogisticHierarchies< TC2, kernel::TC2Hierarchies >::SetSuperior( automat );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Tc2States::Draw
+// Created: SBO 2007-03-27
+// -----------------------------------------------------------------------------
+void Tc2States::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+{
+    const bool displayLinks   = tools.ShouldDisplay( "LogisticLinks" );
+    const bool displayMissing = tools.ShouldDisplay( "MissingLogisticLinks" ) && viewport.IsHotpointVisible();
+    if( ! displayLinks && ! displayMissing )
+        return;
+
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+    glLineWidth( 3.f );
+    glColor4f( COLOR_YELLOW );
+    DrawLink( where, tools, 0.5f, displayLinks, displayMissing );
+    glPopAttrib();
 }
