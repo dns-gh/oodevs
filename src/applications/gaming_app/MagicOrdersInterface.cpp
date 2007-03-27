@@ -202,10 +202,13 @@ void MagicOrdersInterface::AddSurrenderMenu( QPopupMenu* parent, const kernel::E
         AddMagic( tr( "Cancel surrender" ), T_MsgUnitMagicAction_action_annuler_reddition, parent );
     else
     {
+        const kernel::Entity_ABC& team = entity.Get< kernel::TacticalHierarchies >().GetTop();
         QPopupMenu* menu = new QPopupMenu( parent );
         for( CIT_Teams it = teams_.begin(); it != teams_.end(); ++it )
-            menu->insertItem( (*it)->GetName(), this, SLOT( SurrenderTo( int ) ), 0, (*it)->GetId() );
-        parent->insertItem( tr( "Surrender to" ), menu );
+            if( *it != &team )
+                menu->insertItem( (*it)->GetName(), this, SLOT( SurrenderTo( int ) ), 0, (*it)->GetId() );
+        if( menu->count() )
+            parent->insertItem( tr( "Surrender to" ), menu );
     }
 }
 
