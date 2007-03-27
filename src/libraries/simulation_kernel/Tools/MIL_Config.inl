@@ -30,13 +30,13 @@ bool MIL_Config::UseOnlyDIAArchive() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::ForceODBAutomateComposition
+// Name: MIL_Config::CheckAutomateComposition
 // Created: NLD 2003-12-04
 // -----------------------------------------------------------------------------
 inline
-bool MIL_Config::ForceODBAutomateComposition() const
+bool MIL_Config::CheckAutomateComposition() const
 {
-    return bForceODBAutomateComposition_;
+    return bCheckAutomateComposition_;
 }
 
 // -----------------------------------------------------------------------------

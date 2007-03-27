@@ -317,11 +317,11 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     odbArchive.Close();
 
     // Check automate composition
-    if( !MIL_AgentServer::GetWorkspace().GetConfig().ForceODBAutomateComposition() )
+    if( MIL_AgentServer::GetWorkspace().GetConfig().CheckAutomateComposition() )
     {
-        for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
+        for( CIT_AutomateMap it = automates_.begin(); it != automates_.end(); ++it )
         {
-            const MIL_Automate& automate = *itAutomate->second;
+            const MIL_Automate& automate = *it->second;
             if( !automate.CheckComposition() )
                 throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "The effective composition of the automate '%d' ('%s') is not consistent with the composition described in the type '%s'", automate.GetID(), automate.GetName().c_str(), automate.GetType().GetName().c_str() ) );
         }

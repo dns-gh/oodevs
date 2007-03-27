@@ -38,7 +38,7 @@ public:
     //! @name Accessors
     //@{  
           bool         UseOnlyDIAArchive          () const;
-          bool         ForceODBAutomateComposition() const;
+          bool         CheckAutomateComposition   () const;
           bool         UseDecDebug                () const;
           bool         UsePathDebug               () const;
           bool         IsProfilingEnabled         () const;
@@ -121,7 +121,7 @@ private:
     unsigned int               checkPointsKept_;
     unsigned int               checkPointsFrequency_;
     bool                       bUseOnlyDIAArchive_;
-    bool                       bForceODBAutomateComposition_;
+    bool                       bCheckAutomateComposition_;
     bool                       bUseDecDebug_;
     bool                       bUsePathDebug_;
     bool                       bUseDiaDebugger_;
