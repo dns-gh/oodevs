@@ -57,6 +57,15 @@ QStringList Settings::EntryList( const char* path )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Settings::SubEntriesList
+// Created: SBO 2007-03-27
+// -----------------------------------------------------------------------------
+QStringList Settings::SubEntriesList( const char* path )
+{
+    return subkeyList( path );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Settings::WriteEntry
 // Created: APE 2004-06-01
 // -----------------------------------------------------------------------------
@@ -88,13 +97,24 @@ void Settings::ReadEntry( const QString& field, QWidget& widget, int nW, int nH,
     endGroup();
 }
 
+namespace
+{
+    std::string AddType( const std::string& path, const char type )
+    {
+        unsigned int i = path.find_last_of( '/' );
+        if( i == path.npos )
+            return type + path;
+        return path.substr( 0, i + 1 ) + type + path.substr( i + 1 );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Settings::Save
 // Created: AGE 2006-04-19
 // -----------------------------------------------------------------------------
 void Settings::Save( const std::string& name, int value )
 {
-    writeEntry( ( "/" + ( intPrefix + name ) ).c_str(), value );
+    writeEntry( ( "/" + AddType( name, intPrefix ) ).c_str(), value );
 }
     
 // -----------------------------------------------------------------------------
@@ -103,7 +123,7 @@ void Settings::Save( const std::string& name, int value )
 // -----------------------------------------------------------------------------
 void Settings::Save( const std::string& name, bool value )
 {
-    writeEntry( ( "/" + ( boolPrefix + name ) ).c_str(), value );
+    writeEntry( ( "/" + AddType( name, boolPrefix ) ).c_str(), value );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +132,7 @@ void Settings::Save( const std::string& name, bool value )
 // -----------------------------------------------------------------------------
 void Settings::Save( const std::string& name, float value )
 {
-    writeEntry( ( "/" + ( floatPrefix + name ) ).c_str(), value );
+    writeEntry( ( "/" + AddType( name, floatPrefix ) ).c_str(), value );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,7 +141,16 @@ void Settings::Save( const std::string& name, float value )
 // -----------------------------------------------------------------------------
 void Settings::Save( const std::string& name, const TristateOption& value )
 {
-    writeEntry( ( "/" + ( tristatePrefix + name ) ).c_str(), (QString)value );
+    writeEntry( ( "/" + AddType( name, tristatePrefix ) ).c_str(), (QString)value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Settings::Save
+// Created: SBO 2007-03-27
+// -----------------------------------------------------------------------------
+void Settings::Save( const std::string& name, const QString& value )
+{
+    writeEntry( ( "/" + AddType( name, stringPrefix ) ).c_str(), value );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,7 +159,7 @@ void Settings::Save( const std::string& name, const TristateOption& value )
 // -----------------------------------------------------------------------------
 int Settings::Load( const std::string& name, int defaultValue )
 {
-    return readNumEntry( ( "/" + ( intPrefix + name ) ).c_str(), defaultValue );
+    return readNumEntry( ( "/" + AddType( name, intPrefix ) ).c_str(), defaultValue );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +168,7 @@ int Settings::Load( const std::string& name, int defaultValue )
 // -----------------------------------------------------------------------------
 bool Settings::Load( const std::string& name, bool defaultValue )
 {
-    return readBoolEntry( ( "/" + ( boolPrefix + name  )).c_str(), defaultValue );
+    return readBoolEntry( ( "/" + AddType( name, boolPrefix ) ).c_str(), defaultValue );
 }
     
 // -----------------------------------------------------------------------------
@@ -148,7 +177,7 @@ bool Settings::Load( const std::string& name, bool defaultValue )
 // -----------------------------------------------------------------------------
 float Settings::Load( const std::string& name, float defaultValue )
 {
-    return (float)readDoubleEntry( ( "/" + ( floatPrefix + name ) ).c_str(), defaultValue );
+    return (float)readDoubleEntry( ( "/" + AddType( name, floatPrefix ) ).c_str(), defaultValue );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,6 +186,15 @@ float Settings::Load( const std::string& name, float defaultValue )
 // -----------------------------------------------------------------------------
 TristateOption Settings::Load( const std::string& name, const TristateOption& defaultValue )
 {
-    QString value = readEntry( ( "/" + ( tristatePrefix + name ) ).c_str(), QString( defaultValue ) );
+    QString value = readEntry( ( "/" + AddType( name, tristatePrefix ) ).c_str(), QString( defaultValue ) );
     return TristateOption( value.ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Settings::Load
+// Created: SBO 2007-03-27
+// -----------------------------------------------------------------------------
+QString Settings::Load( const std::string& name, const QString& defaultValue )
+{
+    return readEntry( ( "/" + AddType( name, stringPrefix ) ).c_str(), defaultValue );
 }

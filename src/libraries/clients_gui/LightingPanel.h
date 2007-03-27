@@ -11,6 +11,13 @@
 #define __LightingPanel_h_
 
 #include "PreferencePanel_ABC.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
+
+namespace kernel
+{
+    class Controllers;
+    class Options;
+}
 
 namespace gui
 {
@@ -25,13 +32,15 @@ namespace gui
 // Created: SBO 2007-01-03
 // =============================================================================
 class LightingPanel : public PreferencePanel_ABC
+                    , public kernel::Observer_ABC
+                    , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LightingPanel( QWidget* parent, LightingProxy& lighting );
+             LightingPanel( QWidget* parent, LightingProxy& lighting, kernel::Controllers& controllers );
     virtual ~LightingPanel();
     //@}
 
@@ -58,9 +67,16 @@ private:
     LightingPanel& operator=( const LightingPanel& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    //@}
+
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
+    kernel::Options& options_;
     LightingProxy& lighting_;
 
     QGroupBox* fixedLightBox_;

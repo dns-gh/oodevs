@@ -11,6 +11,9 @@
 #include "LayersPanel.h"
 #include "moc_LayersPanel.cpp"
 #include "Layer_ABC.h"
+#include "clients_kernel/Options.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/OptionVariant.h"
 
 using namespace gui;
 
@@ -18,10 +21,12 @@ using namespace gui;
 // Name: LayersPanel constructor
 // Created: AGE 2007-01-04
 // -----------------------------------------------------------------------------
-LayersPanel::LayersPanel( QWidget* parent )
+LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers )
     : PreferencePanel_ABC( parent )
+    , controllers_( controllers )
+    , options_( controllers.options_ )
 {
-    // NOTHING
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -30,7 +35,7 @@ LayersPanel::LayersPanel( QWidget* parent )
 // -----------------------------------------------------------------------------
 LayersPanel::~LayersPanel()
 {
-    // NOTHING
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,10 +46,11 @@ void LayersPanel::AddLayer( const QString& name, Layer2d_ABC& layer )
 {
     QGroupBox* alphaBox = new QGroupBox( 1, Qt::Vertical, name, this );
     QSlider* slider = new QSlider( 0, 100, 1, 100, Qt::Horizontal, alphaBox );
-    connect( slider, SIGNAL( valueChanged( int ) ), this, SLOT( OnValueChanged( int ) ) );
+    connect( slider, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged() ) );
     layers_.push_back( T_Layer( &layer, slider ) );
     current_.push_back( 1 );
     new_    .push_back( 1 );
+    names_  .push_back( "Layers/" + std::string( name.ascii() ) + "/Alpha" );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +60,10 @@ void LayersPanel::AddLayer( const QString& name, Layer2d_ABC& layer )
 void LayersPanel::Commit()
 {
     for( unsigned i = 0; i < layers_.size(); ++i )
+    {
         current_[ i ] = new_[ i ];
+        options_.Change( names_[ i ], current_[ i ] );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -67,6 +76,7 @@ void LayersPanel::Reset()
     {
         new_[ i ] = current_[ i ];
         layers_[ i ].first->SetAlpha( new_[ i ] );
+        layers_[ i ].second->setValue( new_[ i ] * 100 );
     }
 }
 
@@ -74,11 +84,31 @@ void LayersPanel::Reset()
 // Name: LayersPanel::OnValueChanged
 // Created: AGE 2007-01-04
 // -----------------------------------------------------------------------------
-void LayersPanel::OnValueChanged( int )
+void LayersPanel::OnValueChanged()
 {
     for( unsigned i = 0; i < layers_.size(); ++i )
     {
         new_[ i ] = layers_[ i ].second->value() * 0.01f;
         layers_[ i ].first->SetAlpha( new_[ i ] );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LayersPanel::OptionChanged
+// Created: SBO 2007-03-27
+// -----------------------------------------------------------------------------
+void LayersPanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    const QString option( name.c_str() );
+    if( !option.startsWith( "Layers/" ) )
+        return;
+    for( unsigned i = 0; i < layers_.size(); ++i )
+        if( names_[i] == name )
+        {
+            const float alpha = value.To< float >();
+            new_[ i ] = current_[ i ] = alpha;
+            layers_[ i ].second->setValue( alpha * 100 );
+            layers_[ i ].first->SetAlpha( new_[ i ] );
+            return;
+        }
 }

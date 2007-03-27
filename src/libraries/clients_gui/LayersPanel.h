@@ -11,6 +11,13 @@
 #define __LayersPanel_h_
 
 #include "PreferencePanel_ABC.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
+
+namespace kernel
+{
+    class Controllers;
+    class Options;
+}
 
 namespace gui
 {
@@ -23,13 +30,15 @@ namespace gui
 // Created: AGE 2007-01-04
 // =============================================================================
 class LayersPanel : public PreferencePanel_ABC
+                  , public kernel::Observer_ABC
+                  , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LayersPanel( QWidget* parent );
+             LayersPanel( QWidget* parent, kernel::Controllers& controllers );
     virtual ~LayersPanel();
     //@}
 
@@ -44,7 +53,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnValueChanged( int );
+    void OnValueChanged();
     //@}
 
 private:
@@ -54,19 +63,28 @@ private:
     LayersPanel& operator=( const LayersPanel& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    //@}
+
     //! @name Types
     //@{
     typedef std::pair< Layer2d_ABC*, QSlider* > T_Layer;
     typedef std::vector< T_Layer >              T_Layers;
     typedef std::vector< float >                T_Alphas;
+    typedef std::vector< std::string >          T_Names;
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
+    kernel::Options& options_;
     T_Layers layers_;
     T_Alphas current_;
     T_Alphas new_;
+    T_Names  names_;
     //@}
 };
 

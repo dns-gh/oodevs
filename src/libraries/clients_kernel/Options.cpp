@@ -100,16 +100,18 @@ void Options::Load( Settings_ABC& settings, const std::string& name, T defaultVa
 // Name: Options::Load
 // Created: AGE 2006-04-19
 // -----------------------------------------------------------------------------
-void Options::Load( Settings_ABC& settings )
+void Options::Load( Settings_ABC& settings, const std::string& path /* = "" */)
 {
-    QStringList list = settings.EntryList( "/" );
+    const std::string root = QString( path.c_str() ).endsWith( "/" ) ? path : path + "/";
+    QStringList list = settings.EntryList( root.c_str() );
     for( QStringList::const_iterator it = list.begin(); it != list.end(); ++it )
     {
         const std::string typedName = (*it).ascii();
         if( ! typedName.empty() )
         {
             char type = typedName[0];
-            const std::string name = typedName.substr( 1 );
+            std::string name = root + typedName.substr( 1 );
+            name = name[0] == '/' ? name.substr( 1 ) : name;
             if( type == Settings_ABC::intPrefix )
                 Load( settings, name, 1 );
             else if( type == Settings_ABC::boolPrefix )
@@ -118,8 +120,13 @@ void Options::Load( Settings_ABC& settings )
                 Load( settings, name, 1.f );
             else if( type == Settings_ABC::tristatePrefix )
                 Load( settings, name, TristateOption::Auto() );
+            else if( type == Settings_ABC::stringPrefix )
+                Load( settings, name, QString( "" ) );
         }
     }
+    list = settings.SubEntriesList( root.c_str() );
+    for( QStringList::const_iterator it = list.begin(); it != list.end(); ++it )
+        Load( settings, ( root + (*it).ascii() ).c_str() );
 }
 
 // -----------------------------------------------------------------------------

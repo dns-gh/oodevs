@@ -49,7 +49,6 @@ private:
     //! @name Member data
     //@{
     GraphicPreferences& preferences_;
-    QWidget* parent_;
     //@}
 };
 

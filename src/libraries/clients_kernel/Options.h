@@ -45,7 +45,7 @@ public:
     void Change( const std::string& name, const OptionVariant& value );
     const OptionVariant& GetOption( const std::string& name, const OptionVariant& defaultValue );
 
-    void Load( Settings_ABC& settings );
+    void Load( Settings_ABC& settings, const std::string& path = "" );
     void Save( Settings_ABC& settings );
     //@}
 

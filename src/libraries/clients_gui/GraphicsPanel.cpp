@@ -20,7 +20,6 @@ using namespace gui;
 GraphicsPanel::GraphicsPanel( QWidget* parent )
     : PreferencePanel_ABC( parent )
     , preferences_( *new GraphicPreferences() )
-    , parent_( parent )
 {
     preferences_.Display( this );
 }

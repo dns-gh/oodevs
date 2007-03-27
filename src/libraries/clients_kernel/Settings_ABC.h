@@ -32,6 +32,7 @@ public:
     static const char boolPrefix     = 'B';
     static const char floatPrefix    = 'F';
     static const char tristatePrefix = 'T';
+    static const char stringPrefix   = 'S';
     //@}
 
 public:
@@ -44,11 +45,13 @@ public:
     //! @name Operations
     //@{
     virtual QStringList EntryList( const char* path ) = 0;
+    virtual QStringList SubEntriesList( const char* path ) = 0;
 
     virtual void Save( const std::string& name, int value ) = 0;
     virtual void Save( const std::string& name, bool value ) = 0;
     virtual void Save( const std::string& name, float value ) = 0;
     virtual void Save( const std::string& name, const TristateOption& value ) = 0;
+    virtual void Save( const std::string& name, const QString& value ) = 0;
 
     template< typename T >
     void Save( const std::string& , const T& )
@@ -59,6 +62,7 @@ public:
     virtual bool           Load( const std::string& name, bool defaultValue ) = 0;
     virtual float          Load( const std::string& name, float defaultValue ) = 0;
     virtual TristateOption Load( const std::string& name, const TristateOption& defaultValue ) = 0;
+    virtual QString        Load( const std::string& name, const QString& defaultValue ) = 0;
 
     template< typename T >
     T Load( const std::string& , const T& defaultValue )

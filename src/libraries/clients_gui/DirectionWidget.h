@@ -34,6 +34,8 @@ public:
     //@{
     void Commit();
     void Revert();
+    QString GetValue() const;
+    void SetValue( const QString& value );
     //@}
 
 signals:

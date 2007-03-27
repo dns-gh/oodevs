@@ -65,9 +65,9 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     grid->addWidget( box, 1, 0 );
 
     pGraphicPrefPanel_ = new GraphicsPanel( this );
-    layersPanel_       = new LayersPanel( this );
+    layersPanel_       = new LayersPanel( this, controllers );
     AddPage( tr( "3D" ), *new Graphics3dPanel( this ) );
-    AddPage( tr( "3D/Lighting" ), *new LightingPanel( this, lighting ) );
+    AddPage( tr( "3D/Lighting" ), *new LightingPanel( this, lighting, controllers ) );
     AddPage( tr( "2D" )        , *layersPanel_ ); 
     AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
     AddPage( tr( "General" ), *new OptionsPanel( this, controllers ) );    

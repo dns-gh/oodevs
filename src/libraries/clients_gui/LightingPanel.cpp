@@ -13,6 +13,8 @@
 #include "ColorButton.h"
 #include "DirectionWidget.h"
 #include "LightingProxy.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Options.h"
 
 using namespace gui;
 
@@ -20,8 +22,10 @@ using namespace gui;
 // Name: LightingPanel constructor
 // Created: SBO 2007-01-03
 // -----------------------------------------------------------------------------
-LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting )
+LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting, kernel::Controllers& controllers )
     : PreferencePanel_ABC( parent )
+    , controllers_( controllers )
+    , options_( controllers.options_ )
     , lighting_( lighting )
 {
     lighting_.SetAmbient( 0.2f, 0.2f, 0.2f );
@@ -48,6 +52,8 @@ LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting )
     connect( direction_, SIGNAL( DirectionChanged( const geometry::Vector3f& ) ), this, SLOT( DirectionChanged( const geometry::Vector3f& ) ) );
     connect( ambient_, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( AmbientChanged( const QColor& ) ) );
     connect( diffuse_, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( DiffuseChanged( const QColor& ) ) );
+
+    controllers_.Register( *this );
 }
     
 // -----------------------------------------------------------------------------
@@ -56,7 +62,7 @@ LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting )
 // -----------------------------------------------------------------------------
 LightingPanel::~LightingPanel()
 {
-    // NOTHING
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,6 +74,10 @@ void LightingPanel::Commit()
     direction_->Commit();
     ambient_  ->Commit();
     diffuse_  ->Commit();
+
+    options_.Change( "Lighting/Ambient", ambient_->GetColor().name() );
+    options_.Change( "Lighting/Diffuse", diffuse_->GetColor().name() );
+    options_.Change( "Lighting/Direction", direction_->GetValue() );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,4 +129,30 @@ void LightingPanel::AmbientChanged( const QColor& color )
 void LightingPanel::DiffuseChanged( const QColor& color )
 {
     lighting_.SetDiffuse( color.red() / 255.f, color.green() / 255.f, color.blue() / 255.f );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LightingPanel::OptionChanged
+// Created: SBO 2007-03-27
+// -----------------------------------------------------------------------------
+void LightingPanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    const QStringList option = QStringList::split( "/", name.c_str() );
+    if( !( option[0] == "Lighting" ) )
+        return;
+    if( option[1] == "Ambient" )
+    {
+        ambient_->SetColor( QColor( value.To< QString >() ) );
+        ambient_->Commit();
+    }
+    else if( option[1] == "Diffuse" )
+    {
+        diffuse_->SetColor( QColor( value.To< QString >() ) );
+        diffuse_->Commit();
+    }
+    else if( option[1] == "Direction" )
+    {
+        direction_->SetValue( value.To< QString >() );
+        direction_->Commit();
+    }
 }

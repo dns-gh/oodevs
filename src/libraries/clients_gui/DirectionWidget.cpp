@@ -120,3 +120,24 @@ void DirectionWidget::paintEvent( QPaintEvent* )
     paint.drawLine( rect().center() - QPoint( 0, 2 ), rect().center() + QPoint( 0, 2 ) );
     paint.drawEllipse( point_.x() - 2, point_.y() - 2, 5, 5 );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DirectionWidget::GetValue
+// Created: SBO 2007-03-27
+// -----------------------------------------------------------------------------
+QString DirectionWidget::GetValue() const
+{
+    return QString::number( point_.x() ) + ":" + QString::number( point_.y() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DirectionWidget::SetValue
+// Created: SBO 2007-03-27
+// -----------------------------------------------------------------------------
+void DirectionWidget::SetValue( const QString& value )
+{
+    QStringList list = QStringList::split( ":", value );
+    if( list.size() != 2 )
+        return;
+    Move( QPoint( list[0].toInt(), list[1].toInt() ) );
+}
