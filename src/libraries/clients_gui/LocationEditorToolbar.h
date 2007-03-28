@@ -22,6 +22,7 @@ namespace kernel
 namespace gui
 {
     class ParametersLayer;
+    class LocationsLayer;
     class View_ABC;
 
 // =============================================================================
@@ -40,7 +41,7 @@ class LocationEditorToolbar : public QToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, View_ABC& view );
+             LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, View_ABC& view, LocationsLayer& layer );
     virtual ~LocationEditorToolbar();
     //@}
 
@@ -87,6 +88,7 @@ private:
     kernel::Controllers& controllers_;
     const kernel::CoordinateConverter_ABC& converter_;
     View_ABC& view_;
+    LocationsLayer& layer_;
     ParametersLayer* parameters_;
     QLineEdit* utm_;
     QToolButton* okButton_;

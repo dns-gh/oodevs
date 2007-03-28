@@ -131,9 +131,9 @@ void PopulationConcentrationKnowledge::Draw( const geometry::Point2f&, const ker
     if( pConcentration_ ) // $$$$ SBO 2007-02-27: isPerceived?
     {
         float currentColor[4];
-        currentColor[3] = 0.5f * ( 1.f + rRelevance_ * 0.01f );
         glPushAttrib( GL_CURRENT_BIT );
         glGetFloatv( GL_CURRENT_COLOR, currentColor );
+        currentColor[3] = 0.5f * ( 1.f + rRelevance_ * 0.01f );
         glColor4fv( currentColor );
         tools.DrawDisc( position_, radius_ );
         glColor4f( COLOR_BLACK );

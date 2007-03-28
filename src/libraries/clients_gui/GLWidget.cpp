@@ -600,6 +600,38 @@ void GlWidget::DrawCell( const geometry::Point2f& center ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlWidget::DrawFlag
+// Created: SBO 2007-03-28
+// -----------------------------------------------------------------------------
+void GlWidget::DrawFlag( const geometry::Point2f& center ) const
+{
+    DrawCross( center );
+    glPushMatrix();
+    glTranslatef( center.X(), center.Y(), 0 );
+//    glScalef( Pixels(), Pixels(), 1 );
+
+    // $$$$ SBO 2007-03-28: hard coded shape
+    std::vector< geometry::Point2f > points;
+    points.push_back( geometry::Point2f(    0, 600.f ) );
+    points.push_back( geometry::Point2f( 300.f, 450.f ) );
+    points.push_back( geometry::Point2f(    0, 300.f ) );
+    points.push_back( geometry::Point2f(    0, 0 ) );
+
+    glPushAttrib( GL_CURRENT_BIT );
+    glColor4f( 1, 1, 1, 0.7f );
+    glEnableClientState( GL_VERTEX_ARRAY );
+    glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
+    glDrawArrays( GL_TRIANGLE_FAN, 0, points.size() );    
+    glPopAttrib();
+
+    glPushAttrib( GL_LINE_BIT );
+    glLineWidth( 2.f );
+    glDrawArrays( GL_LINE_LOOP, 0, points.size() );    
+    glPopAttrib();
+    glPopMatrix();
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::CenterOn
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------

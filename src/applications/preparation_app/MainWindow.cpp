@@ -75,6 +75,7 @@
 #include "clients_gui/DisplayToolbar.h"
 #include "clients_gui/RasterLayer.h"
 #include "clients_gui/Elevation3dLayer.h"
+#include "clients_gui/LocationsLayer.h"
 #include "graphics/DragMovementLayer.h"
 
 #include "xeumeuleu/xml.h"
@@ -177,7 +178,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
 
     // A few layers
-    ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_ ) );
+    LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );
+    ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_, *locationsLayer ) );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile() );
 
     // object creation window
@@ -198,7 +200,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new Menu( this, controllers, *prefDialog, *profileDialog );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
-    CreateLayers( *objectCreationPanel, *paramLayer, *weatherLayer, *agentsLayer, *drawer, prefDialog->GetPreferences(), *prefDialog, PreparationProfile::GetProfile() );
+    CreateLayers( *objectCreationPanel, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *drawer, prefDialog->GetPreferences(), *prefDialog, PreparationProfile::GetProfile() );
 
     StatusBar* pStatus = new StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
@@ -222,7 +224,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, WeatherLayer& weather, ::AgentsLayer& agents, DrawerLayer& drawer, GraphicPreferences& setup, PreferencesDialog& preferences, const Profile_ABC& profile )
+void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, LocationsLayer& locations, WeatherLayer& weather, ::AgentsLayer& agents, DrawerLayer& drawer, GraphicPreferences& setup, PreferencesDialog& preferences, const Profile_ABC& profile )
 {
     // $$$$ AGE 2007-03-09: preferences !
     Layer_ABC& objectCreationLayer = *new MiscLayer< ObjectCreationPanel >( objects );
@@ -256,6 +258,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     glProxy_->Register( objectCreationLayer );
     glProxy_->Register( parameters );
     glProxy_->Register( metrics );
+    glProxy_->Register( locations );
     glProxy_->Register( drawer );
 
     // ordre des evenements

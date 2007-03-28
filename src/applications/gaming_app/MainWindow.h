@@ -36,6 +36,7 @@ namespace gui
     class PreferencesDialog;
     class LightingProxy;
     class GlSelector;
+    class LocationsLayer;
 }
 
 class Spy;
@@ -103,7 +104,7 @@ private:
 
     static std::string BuildRemotePath( std::string server, std::string path );
 
-    void CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, gui::ParametersLayer& parameters, 
+    void CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, gui::ParametersLayer& parameters, gui::LocationsLayer& locationsLayer,
                        gui::AgentsLayer& agents, gui::DrawerLayer& drawer, gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile );
     //@}
 

@@ -92,6 +92,7 @@
 #include "clients_gui/EntitySymbols.h"
 #include "clients_gui/LightingProxy.h"
 #include "clients_gui/LocationEditorToolbar.h"
+#include "clients_gui/LocationsLayer.h"
 
 #include "xeumeuleu/xml.h"
 
@@ -151,7 +152,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
     // A few layers
-    ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_ ) );
+    LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );
+    ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_, *locationsLayer ) );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, profile );
 
     // Agent list panel
@@ -275,7 +277,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new Menu( this, controllers, *prefDialog, *profileDialog, *recorderToolbar, *factory );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
-    CreateLayers( *pMissionPanel_, *objectCreationPanel, *paramLayer, *agentsLayer, *drawer, *prefDialog, profile );
+    CreateLayers( *pMissionPanel_, *objectCreationPanel, *paramLayer, *locationsLayer, *agentsLayer, *drawer, *prefDialog, profile );
 
     ::StatusBar* pStatus = new ::StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_, controllers_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
@@ -296,7 +298,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, ParametersLayer& parameters, gui::AgentsLayer& agents, DrawerLayer& drawer, PreferencesDialog& preferences, const Profile_ABC& profile )
+void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, ParametersLayer& parameters, LocationsLayer& locationsLayer, gui::AgentsLayer& agents, DrawerLayer& drawer, PreferencesDialog& preferences, const Profile_ABC& profile )
 {
     Layer_ABC& missionsLayer        = *new MiscLayer< MissionPanel >( missions );
     Layer_ABC& objectCreationLayer  = *new MiscLayer< ObjectCreationPanel >( objects );
@@ -340,6 +342,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     glProxy_->Register( objectCreationLayer );
     glProxy_->Register( parameters );
     glProxy_->Register( metrics );
+    glProxy_->Register( locationsLayer );
     glProxy_->Register( drawer );
     glProxy_->Register( logoLayer );
     

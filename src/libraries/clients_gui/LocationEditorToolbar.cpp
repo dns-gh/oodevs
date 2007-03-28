@@ -12,6 +12,7 @@
 #include "moc_LocationEditorToolbar.cpp"
 #include "ParametersLayer.h"
 #include "View_ABC.h"
+#include "LocationsLayer.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
@@ -23,11 +24,12 @@ using namespace gui;
 // Name: LocationEditorToolbar constructor
 // Created: SBO 2007-03-06
 // -----------------------------------------------------------------------------
-LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, View_ABC& view )
+LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, View_ABC& view, LocationsLayer& layer )
     : QToolBar( parent, "location editor" )
     , controllers_( controllers )
     , converter_( converter )
     , view_( view )
+    , layer_( layer )
     , parameters_( 0 )
     , bookmarksMenu_( 0 )
 {
@@ -153,6 +155,7 @@ void LocationEditorToolbar::Bookmark()
         std::string utm = converter_.ConvertToMgrs( menuPoint_ );
         bookmarksMenu_->clear();
         bookmarks_.push_back( utm );
+        layer_.AddLocation( menuPoint_ );
         unsigned int i = 0;
         for( CIT_Bookmarks it = bookmarks_.begin(); it != bookmarks_.end(); ++it, ++i )
             bookmarksMenu_->insertItem( it->c_str(), this, SLOT( GotoBookmark( int ) ), 0, i );
@@ -177,7 +180,7 @@ void LocationEditorToolbar::GotoBookmark( int index )
         }
         catch( ... )
         {
-            bookmarks_.erase( bookmarks_.begin() + index );
+            // $$$$ SBO 2007-03-28: remove invalid location from list?
         }
 }
 
@@ -188,6 +191,7 @@ void LocationEditorToolbar::GotoBookmark( int index )
 void LocationEditorToolbar::ClearBookmarks()
 {
     bookmarks_.clear();
+    layer_.Reset();
     bookmarksMenu_->clear();
     bookmarksMenu_->insertItem( tr( "No bookmark defined" ) );
 }

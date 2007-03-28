@@ -287,8 +287,6 @@ void Gl3dWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/ ) co
         px = cx; py = cy;
     }
     DrawLine( Point2f( px, py ), Point2f( center.X() + radius, center.Y() ) );
-
-    DrawDisc( center, radius );
 }
 
 // -----------------------------------------------------------------------------
@@ -302,14 +300,11 @@ void Gl3dWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/ ) cons
     if( radius < 0 )
         radius = 10.f * Pixels();
 
-    GLUquadric* quad = gluNewQuadric(); // $$$$ SBO 2007-03-23: keep it
+    GLUquadric* quad = gluNewQuadric();
     glPushMatrix();
     glPushAttrib( GL_CURRENT_BIT );
-        GLfloat color[4];
-        glGetFloatv( GL_CURRENT_COLOR, color );
-        color[3] = 0.3f;
-        glColor4fv( color );
         glTranslatef( center.X(), center.Y(), ElevationAt( center ) );
+        glScalef( 1.f, 1.f, 0.5f );
         gluQuadricOrientation( quad, GLU_OUTSIDE );
         gluSphere( quad, radius, 16, 16 );
     glPopAttrib();
@@ -428,6 +423,38 @@ void Gl3dWidget::DrawCell( const geometry::Point2f& center ) const
         glVertex3f( p.X(), p.Y(), ElevationAt( p ) );
     }
     glEnd();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawFlag
+// Created: SBO 2007-03-28
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawFlag( const geometry::Point2f& center ) const
+{
+    DrawCross( center );
+    glPushMatrix();
+    glTranslatef( center.X(), center.Y(), ElevationAt( center ) );
+    UndoRotations();
+
+    // $$$$ SBO 2007-03-28: hard coded shape
+    std::vector< geometry::Point3f > points;
+    points.push_back( geometry::Point3f(   0.f, 600.f, 0.f ) );
+    points.push_back( geometry::Point3f( 300.f, 450.f, 0.f ) );
+    points.push_back( geometry::Point3f(   0.f, 300.f, 0.f ) );
+    points.push_back( geometry::Point3f(   0.f,   0.f, 0.f ) );
+
+    glPushAttrib( GL_CURRENT_BIT );
+    glColor4f( 1, 1, 1, 0.7f );
+    glEnableClientState( GL_VERTEX_ARRAY );
+    glVertexPointer( 3, GL_FLOAT, 0, (const void*)(&points.front()) );
+    glDrawArrays( GL_TRIANGLE_FAN, 0, points.size() );    
+    glPopAttrib();
+
+    glPushAttrib( GL_LINE_BIT );
+    glLineWidth( 2.f );
+    glDrawArrays( GL_LINE_LOOP, 0, points.size() );    
+    glPopAttrib();
+    glPopMatrix();
 }
 
 // -----------------------------------------------------------------------------
