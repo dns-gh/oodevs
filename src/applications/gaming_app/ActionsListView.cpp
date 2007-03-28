@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "ActionsListView.h"
+#include "GamingListItemDisplayer.h"
 #include "clients_kernel/Controllers.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionParameter_ABC.h"
@@ -19,13 +20,14 @@
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
 ActionsListView::ActionsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : gui::ListDisplayer< ActionsListView >( parent, *this, factory )
+    : gui::ListView< ActionsListView >( parent, *this, factory )
     , controllers_( controllers )
     , factory_( factory )
 {
-    AddColumn( "" )
-    .AddColumn( tr( "Action" ) )
-    .AddColumn( tr( "Value" ) );
+    sub_ = new GamingListItemDisplayer();
+    AddColumn( "" );
+    AddColumn( tr( "Action" ) );
+    AddColumn( tr( "Value" ) );
     header()->setLabel( 0, MAKE_PIXMAP( check ), "", 25 );
     setColumnWidth( 1, 80 );
 
@@ -39,6 +41,16 @@ ActionsListView::ActionsListView( QWidget* parent, kernel::Controllers& controll
 ActionsListView::~ActionsListView()
 {
     controllers_.Remove( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsListView::AddColumn
+// Created: SBO 2007-03-28
+// -----------------------------------------------------------------------------
+void ActionsListView::AddColumn( const QString& column )
+{
+    addColumn( column );
+    sub_->AddColumn( column );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +73,7 @@ void ActionsListView::NotifyCreated( const Action_ABC& action )
 void ActionsListView::NotifyUpdated( const Action_ABC& action )
 {
     if( gui::ValuedListItem* item = gui::FindItem( &action, firstChild() ) )
-        DeleteTail( DisplayList( action.CreateIterator(), item ) );
+        DeleteTail( gui::ListView< ActionsListView >::Display( action.CreateIterator(), item ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +90,7 @@ void ActionsListView::NotifyDeleted( const Action_ABC& action )
 // Name: ActionsListView::Display
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ActionsListView::Display( const ActionParameter_ABC& param, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item )
+void ActionsListView::Display( const ActionParameter_ABC& param, gui::ValuedListItem* item )
 {
-    param.Display( displayer );
+    param.Display( (*sub_)( item ) );
 }

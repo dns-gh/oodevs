@@ -27,7 +27,7 @@ class ActionParameter_ABC;
 */
 // Created: SBO 2007-03-12
 // =============================================================================
-class ActionsListView : public gui::ListDisplayer< ActionsListView >
+class ActionsListView : public gui::ListView< ActionsListView >
                       , public kernel::Observer_ABC
                       , public kernel::ElementObserver_ABC< Action_ABC >
 {
@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Display( const ActionParameter_ABC& param, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
+    virtual void Display( const ActionParameter_ABC& param, gui::ValuedListItem* item );
     //@}
 
 private:
@@ -53,6 +53,7 @@ private:
 
     //! @name Helpers
     //@{
+    void AddColumn( const QString& column );
     virtual void NotifyCreated( const Action_ABC& action );
     virtual void NotifyUpdated( const Action_ABC& action );
     virtual void NotifyDeleted( const Action_ABC& action );
@@ -63,6 +64,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     gui::ItemFactory_ABC& factory_;
+    gui::ListItemDisplayer* sub_;
     //@}
 };
 
