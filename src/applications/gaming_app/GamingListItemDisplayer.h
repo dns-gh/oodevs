@@ -12,7 +12,9 @@
 
 #include "clients_gui/ListItemDisplayer.h"
 
+class AgentKnowledge_ABC;
 class PopulationKnowledge_ABC;
+class ObjectKnowledge_ABC;
 
 // =============================================================================
 /** @class  GamingListItemDisplayer
@@ -21,7 +23,9 @@ class PopulationKnowledge_ABC;
 // Created: SBO 2007-03-28
 // =============================================================================
 class GamingListItemDisplayer : public gui::ListItemDisplayer
+                              , public kernel::Caller< AgentKnowledge_ABC >
                               , public kernel::Caller< PopulationKnowledge_ABC >
+                              , public kernel::Caller< ObjectKnowledge_ABC >
 {
 
 public:
@@ -40,7 +44,9 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void Call( const AgentKnowledge_ABC& value );
     virtual void Call( const PopulationKnowledge_ABC& value );
+    virtual void Call( const ObjectKnowledge_ABC& value );
     //@}
 };
 

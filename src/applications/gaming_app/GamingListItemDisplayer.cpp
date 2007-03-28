@@ -9,7 +9,9 @@
 
 #include "gaming_app_pch.h"
 #include "GamingListItemDisplayer.h"
+#include "gaming/AgentKnowledge_ABC.h"
 #include "gaming/PopulationKnowledge_ABC.h"
+#include "gaming/ObjectKnowledge_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: GamingListItemDisplayer constructor
@@ -33,7 +35,25 @@ GamingListItemDisplayer::~GamingListItemDisplayer()
 // Name: GamingListItemDisplayer::Call
 // Created: SBO 2007-03-28
 // -----------------------------------------------------------------------------
+void GamingListItemDisplayer::Call( const AgentKnowledge_ABC& value )
+{
+    AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GamingListItemDisplayer::Call
+// Created: SBO 2007-03-28
+// -----------------------------------------------------------------------------
 void GamingListItemDisplayer::Call( const PopulationKnowledge_ABC& value )
+{
+    AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GamingListItemDisplayer::Call
+// Created: SBO 2007-03-28
+// -----------------------------------------------------------------------------
+void GamingListItemDisplayer::Call( const ObjectKnowledge_ABC& value )
 {
     AddToDisplay( value.GetName() );
 }
