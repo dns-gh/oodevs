@@ -227,11 +227,30 @@ void ObjectPositions::Draw( const geometry::Point2f& where, const kernel::Viewpo
     if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() )
         return;
 
+    const bool selected = tools.Select( false );
+    tools.Select( selected );
     glPushAttrib( GL_LINE_BIT );
+    if( selected )
+    {
+        glPushAttrib( GL_CURRENT_BIT );
+        glColor4f( 0, 0, 0, 0.5f );
+        glLineWidth( 6.f );
+        Draw( tools );
+        glPopAttrib();
+    }
     glLineWidth( 2.f );
+    Draw( tools );
+    glPopAttrib();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPositions::Draw
+// Created: SBO 2007-03-28
+// -----------------------------------------------------------------------------
+void ObjectPositions::Draw( const kernel::GlTools_ABC& tools ) const
+{
     if( points_.size() >= 2 )
         tools.DrawLines( points_ );
     else
         tools.DrawCross( points_.front(), GL_CROSSSIZE );
-    glPopAttrib();
 }

@@ -54,6 +54,11 @@ private:
     LocationPositions& operator=( const LocationPositions& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void Draw( const kernel::GlTools_ABC& tools ) const;
+    //@}
+
 protected:
     //! @name Helpers
     //@{
