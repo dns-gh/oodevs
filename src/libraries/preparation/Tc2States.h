@@ -25,7 +25,7 @@ class Tc2States : public LogisticHierarchies< TC2, kernel::TC2Hierarchies >
 public:
     //! @name Constructors/Destructor
     //@{
-             Tc2States( kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver, kernel::PropertiesDictionary& dico );
+             Tc2States( kernel::Controller& controller, kernel::Automat_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver, kernel::PropertiesDictionary& dico );
     virtual ~Tc2States();
     //@}
 

@@ -25,12 +25,14 @@ using namespace xml;
 AgentType::AgentType( xml::xistream& xis, const Resolver_ABC< ComponentType, QString >& componentResolver, const Resolver_ABC< DecisionalModel, QString >& modelResolver, const SymbolFactory& symbolFactory )
     : nature_( 0 )
 {
-    std::string modelName, name;
+    std::string modelName, name, type;
     int id;
     xis >> attribute( "nom", name )
+        >> attribute( "type", type )
         >> content( "MosID", id )
         >> content(  "ModeleDecisionnel", modelName );
     name_ = name.c_str();
+    type_ = type.c_str();
     id_ = id;
     model_ = & modelResolver.Get( modelName.c_str() );
 
@@ -141,3 +143,41 @@ void AgentType::Draw( const geometry::Point2f& where, const Viewport_ABC& viewpo
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentType::IsTC2
+// Created: SBO 2007-03-28
+// -----------------------------------------------------------------------------
+bool AgentType::IsTC2() const
+{
+    return type_ == "Pion LOG TC2";
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::IsLogisticSupply
+// Created: SBO 2007-03-28
+// -----------------------------------------------------------------------------
+bool AgentType::IsLogisticSupply() const
+{
+    return type_ == "Pion LOG BLD Ravitaillement"
+        || type_ == "Pion LOG BLT Ravitaillement";
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::IsLogisticMaintenance
+// Created: SBO 2007-03-28
+// -----------------------------------------------------------------------------
+bool AgentType::IsLogisticMaintenance() const
+{
+    return type_ == "Pion LOG BLD Maintenance"
+        || type_ == "Pion LOG BLT Maintenance";
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::IsLogisticMedical
+// Created: SBO 2007-03-28
+// -----------------------------------------------------------------------------
+bool AgentType::IsLogisticMedical() const
+{
+    return type_ == "Pion LOG BLD Sante"
+        || type_ == "Pion LOG BLT Sante";
+}

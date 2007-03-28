@@ -52,6 +52,11 @@ public:
     const std::string& GetLevelSymbol() const;
     const std::string& GetHQSymbol() const;
 
+    bool IsTC2() const;
+    bool IsLogisticSupply() const;
+    bool IsLogisticMaintenance() const;
+    bool IsLogisticMedical() const;
+
     void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools, bool pc ) const;
     //@}
 
@@ -76,6 +81,7 @@ private:
     //! @name Member data
     //@{
     QString name_;
+    QString type_;
     unsigned long id_;
 
     DecisionalModel* model_;

@@ -16,10 +16,11 @@
 // Name: Tc2States constructor
 // Created: SBO 2006-10-26
 // -----------------------------------------------------------------------------
-Tc2States::Tc2States( kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver, kernel::PropertiesDictionary& dico )
+Tc2States::Tc2States( kernel::Controller& controller, kernel::Automat_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver, kernel::PropertiesDictionary& dico )
     : ::LogisticHierarchies< TC2, kernel::TC2Hierarchies >( controller, entity, resolver )
 {
     CreateDictionary( dico, entity );
+    ::LogisticHierarchies< TC2, kernel::TC2Hierarchies >::SetSuperior( &entity );
 }
 
 // -----------------------------------------------------------------------------

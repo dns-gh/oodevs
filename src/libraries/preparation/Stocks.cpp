@@ -53,13 +53,15 @@ Stocks::~Stocks()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Stocks::CreateDictionary
+// Name: Stocks::ReadDotation
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void Stocks::CreateDictionary( Entity_ABC& entity, PropertiesDictionary& dico )
+void Stocks::ReadDotation( xml::xistream& xis, const Resolver_ABC< DotationType, QString >& resolver )
 {
-    item_ = new DotationsItem( controller_, entity, dico, tools::translate( "Stocks", "Stocks" ), *(Resolver< Dotation >*)this );
-    dico.Register( entity, tools::translate( "Stocks", "Stocks/Stocks" ), item_ );
+    Dotation* dotation = new Dotation( xis, resolver );
+    item_->AddDotation( *dotation );
+    Register( dotation->type_->GetId(), *dotation );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,13 +83,11 @@ void Stocks::SerializeAttributes( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Stocks::ReadDotation
+// Name: Stocks::CreateDictionary
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void Stocks::ReadDotation( xml::xistream& xis, const Resolver_ABC< DotationType, QString >& resolver )
+void Stocks::CreateDictionary( Entity_ABC& entity, PropertiesDictionary& dico )
 {
-    Dotation* dotation = new Dotation( xis, resolver );
-    item_->AddDotation( *dotation );
-    Register( dotation->type_->GetId(), *dotation );
-    controller_.Update( *this );
+    item_ = new DotationsItem( controller_, entity, dico, tools::translate( "Stocks", "Stocks" ), *(Resolver< Dotation >*)this );
+    dico.Register( entity, tools::translate( "Stocks", "Stocks/Stocks" ), item_ );
 }
