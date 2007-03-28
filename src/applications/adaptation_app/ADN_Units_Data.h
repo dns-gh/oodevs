@@ -219,8 +219,6 @@ public:
         ADN_Type_Int                                                nNbOfficer_;        // officer
         ADN_Type_Int                                                nNbNCOfficer_;      // non-commisioned officer
         ADN_Type_Time                                               decontaminationDelay_;
-        ADN_Type_Double                                             rWeaponsReach_;
-        ADN_Type_Double                                             rSensorsReach_;
         ADN_Type_Bool                                               bCanFly_;
         ADN_Type_Bool                                               bIsAutonomous_;
 

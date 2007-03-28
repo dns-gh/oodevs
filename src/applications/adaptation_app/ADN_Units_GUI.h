@@ -60,8 +60,6 @@ public:
         eHasStrengthRatioFeedbackTime,
         eCanFly,
         eIsAutonomous,
-        eWeaponsReach,
-        eSensorsReach,
         eHasInstallation,
         eInstallationDelay,
         eUninstallationDelay,

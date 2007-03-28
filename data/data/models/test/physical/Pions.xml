@@ -80,8 +80,6 @@
     <RapportDeForce>
       <TempsDeRemontee>6000s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="PC BLD Maintenance" type="Pion LOG BLD Maintenance">
@@ -144,8 +142,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="PC BLT Maintenance" type="Pion LOG BLT Maintenance">
@@ -208,8 +204,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Cie Reparation BLT - M" type="Pion LOG BLT Maintenance">
@@ -279,8 +273,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Cie Reparation BLT - EA" type="Pion LOG BLT Maintenance">
@@ -345,8 +337,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Groupe evacuation maintenance BLT" type="Pion LOG BLT Maintenance">
@@ -413,8 +403,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Cie Reparation BLD - M" type="Pion LOG BLT Maintenance">
@@ -484,8 +472,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Cie Reparation BLD - EA" type="Pion LOG BLD Maintenance">
@@ -550,8 +536,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Groupe evacuation maintenance BLD" type="Pion LOG BLD Maintenance">
@@ -617,8 +601,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Section Combat GEN" type="Pion INF">
@@ -692,8 +674,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Section Combat GEN 2" type="Pion INF">
@@ -755,8 +735,6 @@
       <Largeur>100</Largeur>
       <Longueur>5000</Longueur>
     </CoupDeSonde>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Escadrille ALAT" type="Pion ALAT">
@@ -819,8 +797,6 @@
       <Longueur>5000</Longueur>
     </CoupDeSonde>
     <PeutVoler/>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Section Combat NBC" type="Pion NBC">
@@ -882,8 +858,6 @@
       <Largeur>100</Largeur>
       <Longueur>5000</Longueur>
     </CoupDeSonde>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Section Combat RENS" type="Pion RENS">
@@ -948,8 +922,6 @@
       <Longueur>5000</Longueur>
     </CoupDeSonde>
     <PeutVoler/>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Drone RENS" type="Pion RENS">
@@ -1013,8 +985,6 @@
     </CoupDeSonde>
     <PeutVoler/>
     <EstAutonome/>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="PC BLD Sante" type="Pion LOG BLD Sante">
@@ -1079,8 +1049,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Secteur tri BLD" type="Pion LOG BLD Sante">
@@ -1145,8 +1113,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Secteur soin chirurgical BLD" type="Pion LOG BLD Sante">
@@ -1209,8 +1175,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Secteur soin mental BLD" type="Pion LOG BLD Sante">
@@ -1276,8 +1240,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Secteur soin NBC BLD" type="Pion LOG BLD Sante">
@@ -1342,8 +1304,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Secteur tri/soin BLD" type="Pion LOG BLD Sante">
@@ -1409,8 +1369,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Groupe evacuation sante BLD" type="Pion LOG BLD Sante">
@@ -1475,8 +1433,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="PC BLT Sante" type="Pion LOG BLT Sante">
@@ -1539,8 +1495,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Secteur tri BLT" type="Pion LOG BLT Sante">
@@ -1605,8 +1559,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Secteur soin chirurgical BLT" type="Pion LOG BLT Sante">
@@ -1672,8 +1624,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Secteur soin mental BLT" type="Pion LOG BLT Sante">
@@ -1738,8 +1688,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Secteur soin NBC BLT" type="Pion LOG BLT Sante">
@@ -1804,8 +1752,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Secteur tri/soin BLT" type="Pion LOG BLT Sante">
@@ -1872,8 +1818,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Groupe evacuation sante BLT" type="Pion LOG BLT Sante">
@@ -1938,8 +1882,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="PC BLD Ravitaillement" type="Pion LOG BLD Ravitaillement">
@@ -2004,8 +1946,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Pion RAV stocks" type="Pion LOG BLD Ravitaillement">
@@ -2079,8 +2019,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Pion RAV camions" type="Pion LOG BLD Ravitaillement">
@@ -2155,8 +2093,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Pion Convoi" type="Pion LOG Convoi">
@@ -2228,8 +2164,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
   <Unite nom="Pion Refugie" type="Pion REFUGIE">
@@ -2303,8 +2237,6 @@
     <RapportDeForce>
       <TempsDeRemontee>100s</TempsDeRemontee>
     </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
 </Pions>

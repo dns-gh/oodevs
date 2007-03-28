@@ -6424,11 +6424,11 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Sensors reach</source>
-        <translation>Portée des capteurs</translation>
+        <translation type="obsolete">Portée des capteurs</translation>
     </message>
     <message>
         <source>Weapons reach</source>
-        <translation>Portée des armements</translation>
+        <translation type="obsolete">Portée des armements</translation>
     </message>
     <message>
         <source>Force ratio feedback time</source>
