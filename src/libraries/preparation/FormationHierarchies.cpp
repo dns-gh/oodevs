@@ -90,6 +90,8 @@ void FormationHierarchies::SerializeLogistics( xml::xostream& xos ) const
                 xos << end();
             }
         }
+        else
+            it->second->Interface().Apply( & Serializable_ABC::SerializeLogistics, xos );
 }
 
 // -----------------------------------------------------------------------------
