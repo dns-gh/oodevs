@@ -59,8 +59,6 @@ ObjectPrototype::~ObjectPrototype()
 // -----------------------------------------------------------------------------
 void ObjectPrototype::Commit( Publisher_ABC& publisher )
 {
-    msg_.GetAsnMsg().oid_objet = GetType().manager_.GetFreeIdentifier();
-
     creation_.m.nomPresent = 0;
     if( !name_->text().isEmpty() )
     {

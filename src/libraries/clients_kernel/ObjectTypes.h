@@ -12,7 +12,6 @@
 
 #include "Resolver.h"
 #include "Resolver2.h"
-#include "IDManager.h"
 
 namespace xml { class xistream; };
 
@@ -59,15 +58,8 @@ private:
     ObjectTypes& operator=( const ObjectTypes& ); //!< Assignement operator
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::map< int         , unsigned int >  T_ObjectIDs;
-    typedef std::map< unsigned int, IDManager* >    T_Managers;
-    //@}
-
     //! @name Helpers
     //@{
-    void ReadObjectClasses( xml::xistream& xis );
     void ReadObjectTypes( const std::string& objects );
     void ReadObjectType( xml::xistream& xis );
     void ReadDotations( const std::string& dotations );
@@ -79,13 +71,6 @@ private:
     void ReadNBCAgent( xml::xistream& xis );
     void ReadBreakdowns( const std::string& breakdowns );
     void ReadBreakdown( xml::xistream& xis );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    T_ObjectIDs objectIds_;
-    T_Managers  managers_;
     //@}
 };
 

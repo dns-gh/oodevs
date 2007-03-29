@@ -188,6 +188,7 @@ MsgObjectDestruction ::= OID
 
 MagicActionUpdateObject ::= SEQUENCE
 {
+    oid-objet                           OID,
     pourcentage-construction            INTEGER( 0..100 ) OPTIONAL, 
     pourcentage-valorisation            INTEGER( 0..100 ) OPTIONAL,
     pourcentage-creation-contournement  INTEGER( 0..100 ) OPTIONAL,
@@ -204,13 +205,12 @@ MagicActionCreateObject ::= SEQUENCE
     en-preparation          BOOLEAN
 }
 
-MagicActionDestroyObjet ::= NULL
+MagicActionDestroyObjet ::= OID -- oid-objet
 
 
 MsgObjectMagicAction ::= SEQUENCE
 {
-    oid-objet             OID,
-    action                CHOICE
+    action CHOICE
     {
         create-object   MagicActionCreateObject,
         update-object   MagicActionUpdateObject,
@@ -220,10 +220,7 @@ MsgObjectMagicAction ::= SEQUENCE
 
 MsgObjectMagicActionAck ::= SEQUENCE
 {
-    oid         OID,
     error-code  EnumObjectErrorCode
 }
-
-
 
 END -- Object

@@ -17,7 +17,6 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/IDManager.h"
 
 using namespace kernel;
 
@@ -44,8 +43,6 @@ Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, 
     
     if( message.m.type_dotation_valorisationPresent )
         valorization_ = & dotationResolver.Get( message.type_dotation_valorisation );
-
-    type_.manager_.LockIdentifier( id_ );
 }
 
 // -----------------------------------------------------------------------------

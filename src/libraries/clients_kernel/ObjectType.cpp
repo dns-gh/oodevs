@@ -22,9 +22,8 @@ using namespace xml;
 // Name: ObjectType constructor
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-ObjectType::ObjectType( xistream& xis, unsigned long id, IDManager& manager )
-    : manager_( manager )
-    , id_( id )
+ObjectType::ObjectType( xistream& xis, unsigned long id )
+    : id_( id )
 {
     xpm_ = TypeIcon();
     std::string name;

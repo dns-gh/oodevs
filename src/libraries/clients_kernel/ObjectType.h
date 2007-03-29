@@ -16,8 +16,6 @@ namespace xml { class xistream; };
 
 namespace kernel
 {
-    class IDManager;
-
 // =============================================================================
 /** @class  ObjectType
     @brief  ObjectType
@@ -30,7 +28,7 @@ class ObjectType : public Drawable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectType( xml::xistream& xis, unsigned long id, IDManager& manager );
+             ObjectType( xml::xistream& xis, unsigned long id );
     virtual ~ObjectType();
     //@}
 
@@ -59,8 +57,6 @@ private:
 public:
     //! @name Static members
     //@{
-    IDManager& manager_;
-
     unsigned long id_;
     QString name_;
     const char** xpm_;

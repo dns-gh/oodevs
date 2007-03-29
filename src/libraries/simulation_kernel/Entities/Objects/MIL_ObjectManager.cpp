@@ -189,22 +189,17 @@ MIL_RealObject_ABC& MIL_ObjectManager::CreateObject( const MIL_RealObjectType& t
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_ObjectManager::CreateObject( uint nID, const ASN1T_MagicActionCreateObject& asn )
+ASN1T_EnumObjectErrorCode MIL_ObjectManager::CreateObject( const ASN1T_MagicActionCreateObject& asn )
 {
     const MIL_RealObjectType* pType = MIL_RealObjectType::Find( asn.type );
     if( !pType )
         return EnumObjectErrorCode::error_invalid_object;
 
-    if( realObjects_.find( nID ) != realObjects_.end() )
-        return EnumObjectErrorCode::error_invalid_id;
-    if ( !pType->GetIDManager().IsMosIDValid( nID ) || !pType->GetIDManager().LockMosID( nID ) )
-        return EnumObjectErrorCode::error_invalid_id;
-
     MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asn.oid_camp );
     if( !pArmy )
         return EnumObjectErrorCode::error_invalid_camp;
 
-    MIL_RealObject_ABC& object = pType->InstanciateObject( nID, *pArmy );
+    MIL_RealObject_ABC& object = pType->InstanciateObject( pType->GetIDManager().GetFreeSimID(), *pArmy );
     ASN1T_EnumObjectErrorCode nErrorCode = object.Initialize( asn );
     if( nErrorCode != EnumObjectErrorCode::no_error )
     {
@@ -309,28 +304,26 @@ void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( ASN1T_MsgObjectMagicActio
 {
     ASN1T_EnumObjectErrorCode nErrorCode = EnumObjectErrorCode::no_error;
 
-    NET_ASN_MsgObjectMagicActionAck asnReplyMsg;
-    asnReplyMsg().oid = asnMsg.oid_objet;
-
     if( asnMsg.action.t == T_MsgObjectMagicAction_action_create_object )
-        nErrorCode = CreateObject( asnMsg.oid_objet, *asnMsg.action.u.create_object );
-    else
+        nErrorCode = CreateObject( *asnMsg.action.u.create_object );
+    else if( asnMsg.action.t == T_MsgObjectMagicAction_action_destroy_object )
     {
-        MIL_RealObject_ABC* pObject = FindRealObject( asnMsg.oid_objet );
+        MIL_RealObject_ABC* pObject = FindRealObject( asnMsg.action.u.destroy_object );
         if( !pObject )
             nErrorCode = EnumObjectErrorCode::error_invalid_object;
         else
-        {
-            switch( asnMsg.action.t )
-            {
-                case T_MsgObjectMagicAction_action_destroy_object :              pObject->Destroy(); break;
-                case T_MsgObjectMagicAction_action_update_object  : nErrorCode = pObject->OnReceiveMagicActionUpdate( *asnMsg.action.u.update_object ); break;
-                default:
-                    assert( false );
-            }
-        }
+            pObject->Destroy();
     }
+    else if( asnMsg.action.t == T_MsgObjectMagicAction_action_update_object )
+    {
+        MIL_RealObject_ABC* pObject = FindRealObject( asnMsg.action.u.update_object->oid_objet );
+        if( !pObject )
+            nErrorCode = EnumObjectErrorCode::error_invalid_object;
+        else
+            nErrorCode = pObject->OnReceiveMagicActionUpdate( *asnMsg.action.u.update_object );
+    }
+    
+    NET_ASN_MsgObjectMagicActionAck asnReplyMsg;
     asnReplyMsg().error_code = nErrorCode;
     asnReplyMsg.Send( nCtx );
 }
-

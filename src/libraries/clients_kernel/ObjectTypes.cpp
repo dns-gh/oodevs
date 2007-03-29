@@ -39,19 +39,14 @@ void ObjectTypes::Load( const ExerciseConfig& config )
     Purge();
 
     xml::xifstream scipio( config.GetPhysicalFile() );
-    std::string idFile, dotations, equipments, nbc, pannes, objects;
+    std::string dotations, equipments, nbc, pannes, objects;
     scipio >> start( "physical" )
-                >> content( "ClasseIDs", idFile )
                 >> content( "Dotations", dotations )
                 >> content( "Composantes", equipments )
                 >> content( "NBC", nbc )
                 >> content( "Pannes", pannes )
                 >> content( "Objets", objects );
-
-    xml::xifstream xis( config.BuildPhysicalChildFile( idFile ) );
-    xis >> start( "Classes" )
-		>> list( "Classe", *this, &ObjectTypes::ReadObjectClasses );
-    
+   
     ReadObjectTypes( config.BuildPhysicalChildFile( objects ) );
     ReadDotations( config.BuildPhysicalChildFile( dotations ) );
     ReadEquipments( config.BuildPhysicalChildFile( equipments ) );
@@ -83,28 +78,6 @@ ObjectTypes::~ObjectTypes()
 
 // -----------------------------------------------------------------------------
 // Name: ObjectTypes::ReadObjectTypes
-// Created: AGE 2006-03-13
-// -----------------------------------------------------------------------------
-void ObjectTypes::ReadObjectClasses( xml::xistream& xis )
-{
-    std::string strObjectName;
-    int nId;
-
-    xis >> attribute( "nom", strObjectName )
-        >> attribute( "id", nId );
-
-    int nType = ENT_Tr::ConvertToObjectType( strObjectName );
-    if( nType != -1 )
-    {
-        objectIds_[ nType ] = nId;
-        IDManager*& pManager = managers_[ nId ];
-        if( ! pManager )
-            pManager = new IDManager( nId );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectTypes::ReadObjectTypes
 // Created: AGE 2006-10-17
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadObjectTypes( const std::string& objects )
@@ -124,7 +97,7 @@ void ObjectTypes::ReadObjectType( xml::xistream& xis )
     std::string type;
     xis >> attribute( "type", type );
     int nType = ENT_Tr::ConvertToObjectType( type );
-    Resolver2< ObjectType >::Register( nType, type.c_str(), *new ObjectType( xis, nType, *managers_[ objectIds_[ nType ] ] ) );
+    Resolver2< ObjectType >::Register( nType, type.c_str(), *new ObjectType( xis, nType ) );
 }
 
 // -----------------------------------------------------------------------------

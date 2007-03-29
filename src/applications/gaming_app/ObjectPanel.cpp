@@ -116,13 +116,13 @@ void ::ObjectPanel::OnApply()
         asnAction.m.pourcentage_creation_contournementPresent = 1;
         asnAction.m.en_preparationPresent                     = 1;
 
+        asnAction.oid_objet                          = object->GetId();
         asnAction.pourcentage_construction           = construction_ ->GetValue();
         asnAction.pourcentage_valorisation           = valorisation_ ->GetValue();
         asnAction.pourcentage_creation_contournement = contournement_->GetValue();
         asnAction.en_preparation                     = prepared_     ->IsChecked();
 
         ASN_MsgObjectMagicAction asnMsg;
-        asnMsg.GetAsnMsg().oid_objet                = object->GetId();
         asnMsg.GetAsnMsg().action.t                 = T_MsgObjectMagicAction_action_update_object;
         asnMsg.GetAsnMsg().action.u.update_object   = &asnAction;
 

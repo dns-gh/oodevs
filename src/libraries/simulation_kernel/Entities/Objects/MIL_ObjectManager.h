@@ -81,7 +81,7 @@ private:
 private:
     //! @name Tools
     //@{
-    ASN1T_EnumObjectErrorCode CreateObject  ( uint nID, const ASN1T_MagicActionCreateObject& asn );
+    ASN1T_EnumObjectErrorCode CreateObject  ( const ASN1T_MagicActionCreateObject& asn );
     void                      RegisterObject( MIL_VirtualObject_ABC& object );
     void                      RegisterObject( MIL_RealObject_ABC& object    );
     //@}
