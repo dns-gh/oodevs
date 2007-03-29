@@ -303,15 +303,23 @@ void AgentsModel::ReadLogisticLink( xml::xistream& xis, kernel::Automat_ABC& aut
         >> attribute( "link", linkType );
     if( Entity_ABC* entity = Resolver< Automat_ABC >::Find( id ) )
     {
-        if( linkType == entity->Get< TC2Hierarchies >().GetLinkType().ascii() )
-            entity->Get< TC2Hierarchies >().Load( xis, &automat );
-        else if( linkType == entity->Get< MedicalHierarchies >().GetLinkType().ascii() )
-            entity->Get< MedicalHierarchies >().Load( xis, &automat );
-        else if( linkType == entity->Get< MaintenanceHierarchies >().GetLinkType().ascii() )
-            entity->Get< MaintenanceHierarchies >().Load( xis, &automat );
-        else if( linkType == entity->Get< SupplyHierarchies >().GetLinkType().ascii() )
-            entity->Get< SupplyHierarchies >().Load( xis, &automat );
+        ReadLogisticLink< TC2Hierarchies >        ( xis, linkType, automat, *entity );
+        ReadLogisticLink< MedicalHierarchies >    ( xis, linkType, automat, *entity );
+        ReadLogisticLink< MaintenanceHierarchies >( xis, linkType, automat, *entity );
+        ReadLogisticLink< SupplyHierarchies >     ( xis, linkType, automat, *entity );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::ReadLogisticLink
+// Created: SBO 2007-03-29
+// -----------------------------------------------------------------------------
+template< typename H >
+void AgentsModel::ReadLogisticLink( xml::xistream& xis, const std::string& type, kernel::Automat_ABC& superior, kernel::Entity_ABC& entity )
+{
+    H* hierarchies = entity.Retrieve< H >();
+    if( hierarchies && hierarchies->GetLinkType().ascii() == type )
+        hierarchies->Load( xis, &superior );
 }
 
 // -----------------------------------------------------------------------------

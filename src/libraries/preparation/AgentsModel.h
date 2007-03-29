@@ -83,6 +83,8 @@ public:
     //! @name Delayed initialization
     //@{
     void ReadLogistic( xml::xistream& xis );
+    template< typename H >
+    void ReadLogisticLink( xml::xistream& xis, const std::string& type, kernel::Automat_ABC& source, kernel::Entity_ABC& destination );
     //@}
 
 private:
