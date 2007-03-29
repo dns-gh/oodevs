@@ -134,6 +134,7 @@ void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::Displa
     if( consign )
     {
         item->SetValue( consign );
+        item->setText( 0, "toto" );
         consign->Display( (*logDisplay_)( item ) );
     }
 }
@@ -196,12 +197,7 @@ template< typename ConcreteDisplayer, typename Consign, typename Extension >
 void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::NotifySelected( const kernel::Entity_ABC* element )
 {
     selected_ = element;
-    if( !selected_  || !selected_->Retrieve< Extension >() )
-    {
-        hide();
-        return;
-    }
-    if( const LogisticConsigns* extension = selected_->Retrieve< LogisticConsigns >() )
+    if( const LogisticConsigns* extension = selected_ ? selected_->Retrieve< LogisticConsigns >() : 0 )
     {
         show();
         NotifyUpdated( *extension );
