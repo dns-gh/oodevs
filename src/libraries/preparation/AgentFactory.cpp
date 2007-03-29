@@ -86,7 +86,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
     result->Attach( *new Dotations( controllers_.controller_, *result, dico ) );
     if( commandPost )
         result->Attach( *new CommandPostAttributes( *result ) );
-    if( type.IsLogisticSupply() )
+    if( type.IsTC2() || type.IsLogisticSupply() )
         result->Attach( *new Stocks( controllers_.controller_, *result, dico ) );
 
     result->Polish();
@@ -168,7 +168,7 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
     result->Attach( *new Dotations( xis, controllers_.controller_, *result, static_.objectTypes_, dico ) );
     if( result->IsCommandPost() )
         result->Attach( *new CommandPostAttributes( *result ) );
-    if( result->GetType().IsLogisticSupply() )
+    if( result->GetType().IsTC2() || result->GetType().IsLogisticSupply() )
         result->Attach( *new Stocks( xis, controllers_.controller_, *result, static_.objectTypes_, dico ) );
 
     result->Polish();
