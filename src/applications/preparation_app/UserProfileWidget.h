@@ -37,14 +37,14 @@ class UserProfileWidget : public QTabWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons );
+             UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, ProfilesModel& model );
     virtual ~UserProfileWidget();
     //@}
 
     //! @name Operations
     //@{
     void Display( const UserProfile& profile );
-    void Commit( const ProfilesModel& model );
+    void Commit();
     void Reset();
     void SetEnabled( bool enabled );
     //@}
@@ -58,13 +58,16 @@ private:
 
     //! @name Helpers
     //@{
-    bool CheckValidity( const ProfilesModel& model ) const;
+    bool NeedsSaving() const;
+    bool CheckValidity() const;
     //@}
 
 private:
     //! @name Member data
     //@{
+    ProfilesModel& model_;
     const UserProfile* selectedProfile_;
+    std::auto_ptr< UserProfile > editedProfile_;
     UserProfileRights_ABC* unitRights_;
     UserProfileRights_ABC* populationRights_;
     QLineEdit* login_;

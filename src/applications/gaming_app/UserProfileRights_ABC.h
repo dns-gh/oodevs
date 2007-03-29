@@ -35,11 +35,12 @@ public:
 
     //! @name Operations
     //@{
-    void CommitTo( UserProfile& profile );
+    void Commit( bool savedStatus );
     void Reset();
-    virtual bool NeedSaving() const = 0;
+    bool NeedsSaving() const;
+    virtual bool NeedsCommit() const = 0;
 
-    void Display( const UserProfile& profile );
+    void Display( UserProfile& profile );
     //@}
 
 protected:
@@ -47,6 +48,7 @@ protected:
     //@{
     void OnItemClicked( QListViewItem* item, const QPoint& point, int column );
     void OnShow();
+    void OnHide();
     //@}
 
 private:
@@ -83,8 +85,8 @@ private:
     //! @name Member data
     //@{
     QListView* listView_;
-    const UserProfile* selectedProfile_;
-    bool hasChanged_;
+    UserProfile* selectedProfile_;
+    bool needsSaving_;
     //@}
 };
 

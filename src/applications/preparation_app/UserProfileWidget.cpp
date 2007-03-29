@@ -18,9 +18,11 @@
 // Name: UserProfileWidget constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons  )
+UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, ProfilesModel& model )
     : QTabWidget( parent )
+    , model_( model )
     , selectedProfile_( 0 )
+    , editedProfile_( 0 )
 {
     QVBox* box = new QVBox( this );
     box->setSpacing( 5 );
@@ -65,11 +67,17 @@ UserProfileWidget::~UserProfileWidget()
 // -----------------------------------------------------------------------------
 void UserProfileWidget::Display( const UserProfile& profile )
 {
+    if( selectedProfile_ && selectedProfile_ != &profile && NeedsSaving() )
+        if( QMessageBox::question( this, tr( "Profile edition" ), tr( "Profile has changed, commit modifications?" )
+                                 , QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+            Commit();
+
+    editedProfile_.reset( new UserProfile( profile ) );
     login_->setText( profile.GetLogin() );
     password_->setText( profile.GetPassword() );
     supervisor_->setChecked( profile.IsSupervisor() );
-    unitRights_->Display( profile );
-    populationRights_->Display( profile );
+    unitRights_->Display( *editedProfile_ );
+    populationRights_->Display( *editedProfile_ );
     selectedProfile_ = &profile;
     SetEnabled( true );
 }
@@ -78,18 +86,19 @@ void UserProfileWidget::Display( const UserProfile& profile )
 // Name: UserProfileWidget::Commit
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-void UserProfileWidget::Commit( const ProfilesModel& model )
+void UserProfileWidget::Commit()
 {
-    if( CheckValidity( model ) )
+    if( CheckValidity() )
     {
         UserProfile& profile = const_cast< UserProfile& >( *selectedProfile_ );
+        if( unitRights_->NeedsCommit() )
+            unitRights_->Commit( true );
+        if( populationRights_->NeedsCommit() )
+            populationRights_->Commit( true );
+        profile = *editedProfile_;
         profile.SetLogin( login_->text() );
         profile.SetPassword( password_->text() );
         profile.SetSupervisor( supervisor_->isChecked() );
-        if( unitRights_->NeedSaving() )
-            unitRights_->CommitTo( profile );
-        if( populationRights_->NeedSaving() )
-            populationRights_->CommitTo( profile );
     }
 }
 
@@ -105,14 +114,27 @@ void UserProfileWidget::Reset()
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfileWidget::NeedsSaving
+// Created: SBO 2007-03-29
+// -----------------------------------------------------------------------------
+bool UserProfileWidget::NeedsSaving() const
+{
+    if( !selectedProfile_ )
+        return false;
+    return selectedProfile_->GetLogin() != login_->text() || selectedProfile_->GetPassword() != password_->text()
+        || selectedProfile_->IsSupervisor() != supervisor_->isChecked()
+        || unitRights_->NeedsSaving() || populationRights_->NeedsSaving();
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfileWidget::CheckValidity
 // Created: SBO 2007-01-17
 // -----------------------------------------------------------------------------
-bool UserProfileWidget::CheckValidity( const ProfilesModel& model ) const
+bool UserProfileWidget::CheckValidity() const
 {
     if( !selectedProfile_ )
         return true;
-    if( login_->text() != selectedProfile_->GetLogin() && model.Exists( login_->text() ) )
+    if( login_->text() != selectedProfile_->GetLogin() && model_.Exists( login_->text() ) )
     {
         UserProfileWidget* that = const_cast< UserProfileWidget* >( this );
         QMessageBox::warning( that, tr( "Invalid profile information" )

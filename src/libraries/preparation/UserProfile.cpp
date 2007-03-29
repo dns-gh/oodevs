@@ -30,6 +30,7 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     : controller_( controller )
     , model_( model )
     , supervisor_( false )
+    , isClone_( false )
 {
     const ExistenceChecker< kernel::Resolver< kernel::Team_ABC > >       teamChecker( model_.teams_ );
     const ExistenceChecker< kernel::Resolver< kernel::Formation_ABC > >  formationChecker( model_.formations_ );
@@ -68,8 +69,32 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
     , model_     ( model )
     , login_     ( login )
     , supervisor_( false )
+    , isClone_   ( false )
 {
     controller_.Create( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile constructor
+// Created: SBO 2007-03-29
+// -----------------------------------------------------------------------------
+UserProfile::UserProfile( const UserProfile& p )
+    : controller_       ( p.controller_ )
+    , model_            ( p.model_ )
+    , login_            ( p.login_ )
+    , password_         ( p.password_ )
+    , supervisor_       ( p.supervisor_ )
+    , readSides_        ( p.readSides_ )
+    , readFormations_   ( p.readFormations_ )
+    , readAutomats_     ( p.readAutomats_ )
+    , readPopulations_  ( p.readPopulations_ )
+    , writeSides_       ( p.writeSides_ ) 
+    , writeFormations_  ( p.writeFormations_ )
+    , writeAutomats_    ( p.writeAutomats_ )
+    , writePopulations_ ( p.writePopulations_ )
+    , isClone_          ( true )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +103,8 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
 // -----------------------------------------------------------------------------
 UserProfile::~UserProfile()
 {
-    controller_.Delete( *this );
+    if( !isClone_ )
+        controller_.Delete( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -200,7 +226,8 @@ bool UserProfile::IsWriteable( const kernel::Entity_ABC& entity ) const
 void UserProfile::SetLogin( const QString& value )
 {
     login_ = value;
-    controller_.Update( *this );
+    if( !isClone_ )
+        controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -210,7 +237,8 @@ void UserProfile::SetLogin( const QString& value )
 void UserProfile::SetPassword( const QString& value )
 {
     password_ = value;
-    controller_.Update( *this );
+    if( !isClone_ )
+        controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -220,7 +248,8 @@ void UserProfile::SetPassword( const QString& value )
 void UserProfile::SetSupervisor( bool value )
 {
     supervisor_ = value;
-    controller_.Update( *this );
+    if( !isClone_ )
+        controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -268,4 +297,24 @@ void UserProfile::SetWriteable( const kernel::Entity_ABC& entity, bool writeable
         SetRight( id, writeAutomats_, writeable );
     else if( dynamic_cast< const kernel::Population_ABC* >( &entity ) )
         SetRight( id, writePopulations_, writeable );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::operator=
+// Created: SBO 2007-03-29
+// -----------------------------------------------------------------------------
+UserProfile& UserProfile::operator=( const UserProfile& p )
+{
+    login_            = p.login_;
+    password_         = p.password_;
+    supervisor_       = p.supervisor_;
+    readSides_        = p.readSides_;
+    readFormations_   = p.readFormations_;
+    readAutomats_     = p.readAutomats_;
+    readPopulations_  = p.readPopulations_;
+    writeSides_       = p.writeSides_;
+    writeFormations_  = p.writeFormations_;
+    writeAutomats_    = p.writeAutomats_;
+    writePopulations_ = p.writePopulations_;
+    return *this;
 }

@@ -59,15 +59,12 @@ UserProfileDialog::UserProfileDialog( QWidget* parent, kernel::Controllers& cont
     box->setMargin( 5 );
     box->setMaximumHeight( 40 );
     QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
-    QButton* applyBtn = new QPushButton( tr( "Apply" ), box );
     QButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
     okBtn->setDefault( true );
     grid->addWidget( box, 2, 1, Qt::AlignRight );
 
-    connect( okBtn, SIGNAL( clicked() ), SLOT( OnOk() ) );
-    connect( applyBtn, SIGNAL( clicked() ), SLOT( OnApply() ) );
-    connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnCancel() ) );
-
+    connect( okBtn, SIGNAL( clicked() ), SLOT( OnAccept() ) );
+    connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnReject() ) );
     hide();
 }
 
@@ -99,30 +96,21 @@ bool UserProfileDialog::CanBeShown( const Profile& profile ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileDialog::OnOk
+// Name: UserProfileDialog::OnAccept
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-void UserProfileDialog::OnOk()
-{
-    OnApply();
-    hide();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileDialog::OnApply
-// Created: SBO 2007-01-16
-// -----------------------------------------------------------------------------
-void UserProfileDialog::OnApply()
+void UserProfileDialog::OnAccept()
 {
     pages_->Commit();
+    accept();
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileDialog::OnCancel
+// Name: UserProfileDialog::OnReject
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-void UserProfileDialog::OnCancel()
+void UserProfileDialog::OnReject()
 {
     pages_->Reset();
-    hide();
+    reject();
 }

@@ -50,9 +50,8 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnOk();
-    void OnApply();
-    void OnCancel();
+    void OnAccept();
+    void OnReject();
     //@}
 
 private:

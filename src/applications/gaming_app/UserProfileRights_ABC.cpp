@@ -24,7 +24,7 @@ using namespace kernel;
 UserProfileRights_ABC::UserProfileRights_ABC( QListView* listView )
     : listView_( listView )
     , selectedProfile_( 0 )
-    , hasChanged_( true )
+    , needsSaving_( false )
 {
     listView_->header()->show();
     listView_->addColumn( tools::translate( "UserProfileRights", "Read" ) , 40 );
@@ -45,11 +45,14 @@ UserProfileRights_ABC::~UserProfileRights_ABC()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC::CommitTo
+// Name: UserProfileRights_ABC::Commit
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::CommitTo( UserProfile& profile )
+void UserProfileRights_ABC::Commit( bool savedStatus )
 {
+    needsSaving_ = savedStatus;
+    if( !selectedProfile_ )
+        return;
     QListViewItemIterator it( listView_ );
     while( QListViewItem* item = it.current() )
     {
@@ -59,8 +62,8 @@ void UserProfileRights_ABC::CommitTo( UserProfile& profile )
             const Status status = Status( item->text( 3 ).toInt() );
             const bool isWriteable = status == eWrite;
             const bool isReadable  = status == eReadOnly;
-            profile.SetReadable ( *entity, isReadable && !isWriteable );
-            profile.SetWriteable( *entity, isWriteable );
+            selectedProfile_->SetReadable ( *entity, isReadable && !isWriteable );
+            selectedProfile_->SetWriteable( *entity, isWriteable );
         }
         ++it;
     }
@@ -79,11 +82,11 @@ void UserProfileRights_ABC::Reset()
 // Name: UserProfileRights_ABC::Display
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::Display( const UserProfile& profile )
+void UserProfileRights_ABC::Display( UserProfile& profile )
 {
     CloseAll();
     listView_->setDisabled( false );
-    hasChanged_ = selectedProfile_ != &profile;
+    needsSaving_ = false;
     selectedProfile_ = &profile;
     ValuedListItem* value = static_cast< ValuedListItem* >( listView_->firstChild() );
     while( value )
@@ -113,6 +116,7 @@ void UserProfileRights_ABC::OnItemClicked( QListViewItem* item, const QPoint&, i
     if( column == 1 )
         read = !read;
     SetStatus( static_cast< ValuedListItem* >( item ), read, write, false, false );
+    needsSaving_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -121,8 +125,17 @@ void UserProfileRights_ABC::OnItemClicked( QListViewItem* item, const QPoint&, i
 // -----------------------------------------------------------------------------
 void UserProfileRights_ABC::OnShow()
 {
-    if( selectedProfile_ && hasChanged_ )
+    if( selectedProfile_ )
         Display( *selectedProfile_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileRights_ABC::OnHide
+// Created: SBO 2007-03-29
+// -----------------------------------------------------------------------------
+void UserProfileRights_ABC::OnHide()
+{
+    Commit( needsSaving_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -230,4 +243,13 @@ void UserProfileRights_ABC::SetInheritedStatus( QListViewItem* item, Status stat
         return;
     for( QListViewItem* child = item->firstChild(); child; child = child->nextSibling() )
         SetStatus( child, status );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileRights_ABC::NeedsSaving
+// Created: SBO 2007-03-29
+// -----------------------------------------------------------------------------
+bool UserProfileRights_ABC::NeedsSaving() const
+{
+    return needsSaving_;
 }

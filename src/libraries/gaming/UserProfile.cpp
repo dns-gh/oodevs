@@ -46,6 +46,29 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfile constructor
+// Created: SBO 2007-03-29
+// -----------------------------------------------------------------------------
+UserProfile::UserProfile( const UserProfile& p )
+    : controller_       ( p.controller_ )
+    , publisher_        ( p.publisher_ )
+    , registered_       ( false )
+    , login_            ( p.login_ )
+    , password_         ( p.password_ )
+    , supervision_      ( p.supervision_ )
+    , readSides_        ( p.readSides_ )
+    , readFormations_   ( p.readFormations_ )
+    , readAutomats_     ( p.readAutomats_ )
+    , readPopulations_  ( p.readPopulations_ )
+    , writeSides_       ( p.writeSides_ ) 
+    , writeFormations_  ( p.writeFormations_ )
+    , writeAutomats_    ( p.writeAutomats_ )
+    , writePopulations_ ( p.writePopulations_ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfile destructor
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
@@ -244,26 +267,6 @@ bool UserProfile::IsWriteable( const kernel::Entity_ABC& entity ) const
         || FindIn( entity.GetId(), writeFormations_ )
         || FindIn( entity.GetId(), writeAutomats_ )
         || FindIn( entity.GetId(), writePopulations_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfile::Clone
-// Created: SBO 2007-01-22
-// -----------------------------------------------------------------------------
-UserProfile& UserProfile::Clone() const
-{
-    UserProfile& clone      = *new UserProfile( login_, controller_, publisher_ );
-    clone.password_         = password_;
-    clone.supervision_      = supervision_;
-    clone.readSides_        = readSides_;
-    clone.readFormations_   = readFormations_;
-    clone.readAutomats_     = readAutomats_;
-    clone.readPopulations_  = readPopulations_;
-    clone.writeSides_       = writeSides_;
-    clone.writeFormations_  = writeFormations_;
-    clone.writeAutomats_    = writeAutomats_;
-    clone.writePopulations_ = writePopulations_;
-    return clone;
 }
 
 // -----------------------------------------------------------------------------

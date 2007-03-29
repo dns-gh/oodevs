@@ -46,7 +46,7 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
 
     box = new QVBox( this );
     box->setMargin( 5 );
-    pages_ = new UserProfileWidget( box, controllers, factory, icons );
+    pages_ = new UserProfileWidget( box, controllers, factory, icons, model );
     pages_->setMargin( 5 );
     grid->addWidget( box, 1, 1 );
     
@@ -59,15 +59,12 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
     box->setMargin( 5 );
     box->setMaximumHeight( 40 );
     QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
-    QButton* applyBtn = new QPushButton( tr( "Apply" ), box );
-    QButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
     okBtn->setDefault( true );
+    QButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
     grid->addWidget( box, 2, 1, Qt::AlignRight );
 
-    connect( okBtn, SIGNAL( clicked() ), SLOT( OnOk() ) );
-    connect( applyBtn, SIGNAL( clicked() ), SLOT( OnApply() ) );
-    connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnCancel() ) );
-
+    connect( okBtn, SIGNAL( clicked() ), SLOT( OnAccept() ) );
+    connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnReject() ) );
     hide();
 }
 
@@ -90,30 +87,21 @@ QSize ProfileDialog::sizeHint() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileDialog::OnOk
+// Name: ProfileDialog::OnAccept
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-void ProfileDialog::OnOk()
+void ProfileDialog::OnAccept()
 {
-    OnApply();
-    hide();
+    pages_->Commit();
+    accept();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileDialog::OnApply
+// Name: ProfileDialog::OnReject
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-void ProfileDialog::OnApply()
-{
-    pages_->Commit( model_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProfileDialog::OnCancel
-// Created: SBO 2007-01-16
-// -----------------------------------------------------------------------------
-void ProfileDialog::OnCancel()
+void ProfileDialog::OnReject()
 {
     pages_->Reset();
-    hide();
+    reject();
 }

@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool NeedSaving() const;
+    virtual bool NeedsCommit() const;
     //@}
 
 private slots:
@@ -54,6 +54,7 @@ private:
     virtual void viewportResizeEvent( QResizeEvent* e );
     virtual void setColumnWidth( int column, int w );
     virtual void showEvent( QShowEvent* event );
+    virtual void hideEvent( QHideEvent* event );
     //@}
 };
 

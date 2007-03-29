@@ -65,6 +65,16 @@ void UserProfileUnitRights::showEvent( QShowEvent* event )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfileUnitRights::hideEvent
+// Created: SBO 2007-03-29
+// -----------------------------------------------------------------------------
+void UserProfileUnitRights::hideEvent( QHideEvent* event )
+{
+    OnHide();
+    T_Parent::hideEvent( event );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfileUnitRights::OnItemClicked
 // Created: SBO 2007-01-17
 // -----------------------------------------------------------------------------
@@ -74,10 +84,10 @@ void UserProfileUnitRights::OnItemClicked( QListViewItem* item, const QPoint& po
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileUnitRights::NeedSaving
-// Created: SBO 2007-03-23
+// Name: UserProfileUnitRights::NeedsCommit
+// Created: SBO 2007-03-29
 // -----------------------------------------------------------------------------
-bool UserProfileUnitRights::NeedSaving() const
+bool UserProfileUnitRights::NeedsCommit() const
 {
-    return isVisible(); // $$$$ SBO 2007-03-23: 
+    return isVisible();
 }

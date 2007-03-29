@@ -61,6 +61,16 @@ void UserProfilePopulationRights::showEvent( QShowEvent* event )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfilePopulationRights::hideEvent
+// Created: SBO 2007-03-29
+// -----------------------------------------------------------------------------
+void UserProfilePopulationRights::hideEvent( QHideEvent* event )
+{
+    OnHide();
+    gui::PopulationListView::hideEvent( event );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfilePopulationRights::OnItemClicked
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
@@ -70,10 +80,10 @@ void UserProfilePopulationRights::OnItemClicked( QListViewItem* item, const QPoi
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfilePopulationRights::NeedSaving
+// Name: UserProfilePopulationRights::NeedsCommit
 // Created: SBO 2007-03-26
 // -----------------------------------------------------------------------------
-bool UserProfilePopulationRights::NeedSaving() const
+bool UserProfilePopulationRights::NeedsCommit() const
 {
     return isVisible();
 }

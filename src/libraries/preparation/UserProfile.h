@@ -38,6 +38,7 @@ public:
     //@{
              UserProfile( xml::xistream& xis, kernel::Controller& controller, const Model& model );
              UserProfile( const QString& login, kernel::Controller& controller, const Model& model );
+             UserProfile( const UserProfile& );
     virtual ~UserProfile();
     //@}
 
@@ -64,15 +65,10 @@ public:
     //! @name Operations
     //@{
     void Serialize( xml::xostream& xos ) const;
+    UserProfile& operator=( const UserProfile& );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    UserProfile( const UserProfile& );            //!< Copy constructor
-    UserProfile& operator=( const UserProfile& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< unsigned long > T_Ids;
@@ -119,6 +115,8 @@ private:
     T_Ids writeFormations_;
     T_Ids writeAutomats_;
     T_Ids writePopulations_;
+
+    bool isClone_;
     //@}
 };
 

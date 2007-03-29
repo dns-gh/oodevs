@@ -37,6 +37,7 @@ public:
     //@{
              UserProfile( const ASN1T_MsgProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher );
              UserProfile( const QString& login, kernel::Controller& controller, Publisher_ABC& publisher );
+             UserProfile( const UserProfile& );
     virtual ~UserProfile();
     //@}
 
@@ -56,7 +57,6 @@ public:
     bool    IsReadable  ( const kernel::Entity_ABC& entity ) const;
     bool    IsWriteable ( const kernel::Entity_ABC& entity ) const;
 
-    UserProfile& Clone() const;
     void SetPassword  ( const QString& password );
     void SetSupervisor( bool supervisor );
     void SetReadable  ( const kernel::Entity_ABC& entity, bool readable );
@@ -66,7 +66,6 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    UserProfile( const UserProfile& );            //!< Copy constructor
     UserProfile& operator=( const UserProfile& ); //!< Assignment operator
     //@}
 

@@ -63,11 +63,17 @@ UserProfileWidget::~UserProfileWidget()
 // -----------------------------------------------------------------------------
 void UserProfileWidget::Display( const UserProfile& profile )
 {
+    if( selectedProfile_ && selectedProfile_ != &profile && NeedsSaving() )
+        if( QMessageBox::question( this, tr( "Profile edition" ), tr( "Profile has changed, commit modifications?" )
+                                 , QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+            Commit();
+
+    editedProfile_.reset( new UserProfile( profile ) );
     login_->setText( profile.GetLogin() );
     password_->setText( profile.GetPassword() );
     supervisor_->setChecked( profile.IsSupervisor() );
-    unitRights_->Display( profile );
-    populationRights_->Display( profile );
+    unitRights_->Display( *editedProfile_ );
+    populationRights_->Display( *editedProfile_ );
     selectedProfile_ = &profile;
 }
 
@@ -79,14 +85,13 @@ void UserProfileWidget::Commit()
 {
     if( selectedProfile_ )
     {
-        std::auto_ptr< UserProfile > profile( &selectedProfile_->Clone() );
-        profile->SetPassword  ( password_->text() );
-        profile->SetSupervisor( supervisor_->isChecked() );
-        if( unitRights_->NeedSaving() )
-            unitRights_->CommitTo( *profile );
-        if( populationRights_->NeedSaving() )
-            populationRights_->CommitTo( *profile );
-        profile->RequestUpdate( login_->text() );
+        editedProfile_->SetPassword  ( password_->text() );
+        editedProfile_->SetSupervisor( supervisor_->isChecked() );
+        if( unitRights_->NeedsSaving() )
+            unitRights_->Commit( true );
+        if( populationRights_->NeedsSaving() )
+            populationRights_->Commit( true );
+        editedProfile_->RequestUpdate( login_->text() );
     }
 }
 
@@ -98,4 +103,17 @@ void UserProfileWidget::Reset()
 {
     if( selectedProfile_ )
         Display( *selectedProfile_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileWidget::NeedsSaving
+// Created: SBO 2007-03-29
+// -----------------------------------------------------------------------------
+bool UserProfileWidget::NeedsSaving() const
+{
+    if( !selectedProfile_ )
+        return false;
+    return selectedProfile_->GetLogin() != login_->text() || selectedProfile_->GetPassword() != password_->text()
+        || selectedProfile_->IsSupervisor() != supervisor_->isChecked()
+        || unitRights_->NeedsSaving() || populationRights_->NeedsSaving();
 }
