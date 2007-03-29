@@ -56,7 +56,7 @@ LogConsignMedical::~LogConsignMedical()
 void LogConsignMedical::Update( const ASN1T_MsgLogSanteTraitementHumainUpdate& msg )
 {
     if( msg.m.oid_pion_log_traitantPresent )
-        pTreatingAgent_ = &model_.GetAgents().Get( msg.oid_pion_log_traitant );
+        pTreatingAgent_ = ( msg.oid_pion_log_traitant == 0 ) ? 0 : &model_.GetAgents().Get( msg.oid_pion_log_traitant );
 
     if( msg.m.blessurePresent )
         nWound_ = msg.blessure;

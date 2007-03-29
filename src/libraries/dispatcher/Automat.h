@@ -12,6 +12,7 @@
 
 #include "game_asn/Asn.h"
 #include "ModelRefsContainer.h"
+#include "ModelsContainer.h"
 
 namespace dispatcher
 {
@@ -21,6 +22,7 @@ class KnowledgeGroup;
 class Model;
 class Formation;
 class Agent;
+class DotationQuota;
 class Publisher_ABC;
 
 // =============================================================================
@@ -47,6 +49,7 @@ public:
     //! @name Main
     //@{
     void Update        ( const ASN1T_MsgAutomateAttributes&          msg );
+    void Update        ( const ASN1T_MsgLogRavitaillementQuotas&     msg );
     void Update        ( const ASN1T_MsgChangeLiensLogistiquesAck&   msg );
     void Update        ( const ASN1T_MsgChangeLiensLogistiques&      msg );
     void Update        ( const ASN1T_MsgChangeGroupeConnaissanceAck& msg );
@@ -62,14 +65,15 @@ private:
     //@}
 
 private:
-          Model&                      model_;
-    const unsigned long               nID_;
-    const unsigned long               nType_; // XML reference - no resolved by dispatcher
-    const std::string                 strName_;
-          Side&                       side_;
-          Formation&                  formation_;
-          KnowledgeGroup*             pKnowledgeGroup_;
-          ModelRefsContainer< Agent > agents_;
+          Model&                              model_;
+    const unsigned long                       nID_;
+    const unsigned long                       nType_; // XML reference - no resolved by dispatcher
+    const std::string                         strName_;
+          Side&                               side_;
+          Formation&                          formation_;
+          KnowledgeGroup*                     pKnowledgeGroup_;
+          ModelRefsContainer< Agent >         agents_;
+          ModelsContainer   < DotationQuota > quotas_;
 
     ASN1T_EnumAutomateState       nAutomatState_;
     ASN1T_EnumEtatRapFor          nForceRatioState_;

@@ -58,6 +58,8 @@ void LogConsignMaintenance::Update( const ASN1T_MsgLogMaintenanceTraitementEquip
 
     if( msg.m.etatPresent )
         nState_ = msg.etat;
+
+    pTreatingAgent_ = ( msg.oid_pion_log_traitant == 0 ) ? 0 : &model_.GetAgents().Get( msg.oid_pion_log_traitant );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,6 +94,7 @@ void LogConsignMaintenance::SendFullUpdate( Publisher_ABC& publisher ) const
     asn().m.diagnostique_effectuePresent = 1;
     asn().m.etatPresent                  = 1;
 
+    asn().oid_pion_log_traitant = pTreatingAgent_ ? pTreatingAgent_->GetID() : 0;
     asn().etat                  = nState_;
     asn().diagnostique_effectue = bDiagnosed_;
 

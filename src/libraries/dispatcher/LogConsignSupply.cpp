@@ -55,13 +55,13 @@ LogConsignSupply::~LogConsignSupply()
 void LogConsignSupply::Update( const ASN1T_MsgLogRavitaillementTraitementUpdate& msg )
 {
     if( msg.m.oid_automate_log_traitantPresent )
-        pTreatingAutomat_ = &model_.GetAutomats().Get( msg.oid_automate_log_traitant );
+        pTreatingAutomat_ = ( msg.oid_automate_log_traitant == 0 ) ? 0 : &model_.GetAutomats().Get( msg.oid_automate_log_traitant );
 
     if( msg.m.oid_automate_log_fournissant_moyens_convoiPresent )
-        pConvoyingAutomat_ = &model_.GetAutomats().Get( msg.oid_automate_log_fournissant_moyens_convoi );
+        pConvoyingAutomat_ = ( msg.oid_automate_log_fournissant_moyens_convoi == 0 ) ? 0 : &model_.GetAutomats().Get( msg.oid_automate_log_fournissant_moyens_convoi );
 
     if( msg.m.oid_pion_convoyantPresent )
-        pConvoy_ = &model_.GetAgents().Get( msg.oid_pion_convoyant );
+        pConvoy_ = ( msg.oid_pion_convoyant == 0 ) ? 0 : &model_.GetAgents().Get( msg.oid_pion_convoyant );
 
     if( msg.m.etatPresent )
         nState_ = msg.etat;

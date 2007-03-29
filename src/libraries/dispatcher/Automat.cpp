@@ -17,6 +17,7 @@
 #include "KnowledgeGroup.h"
 #include "Network_Def.h"
 #include "Agent.h"
+#include "DotationQuota.h"
 
 using namespace dispatcher;
 
@@ -33,6 +34,7 @@ Automat::Automat( Model& model, const ASN1T_MsgAutomateCreation& msg )
     , formation_        ( model.GetFormations().Get( msg.oid_formation ) )
     , pKnowledgeGroup_  ( &model.GetKnowledgeGroups().Get( msg.oid_groupe_connaissance ) )
     , agents_           ()
+    , quotas_           ()
     , pTC2_             ( 0 )
     , pLogMaintenance_  ( 0 )
     , pLogMedical_      ( 0 )
@@ -123,6 +125,17 @@ void Automat::Update( const ASN1T_MsgAutomateAttributes& msg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Automat::Update
+// Created: NLD 2007-03-29
+// -----------------------------------------------------------------------------
+void Automat::Update( const ASN1T_MsgLogRavitaillementQuotas& msg )
+{
+    quotas_.Clear();
+    for( unsigned i = 0; i < msg.quotas.n; ++i )
+        quotas_.Create( model_, msg.quotas.elem[ i ].ressource_id, msg.quotas.elem[ i ] );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Automat::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
@@ -137,7 +150,14 @@ void Automat::SendCreation( Publisher_ABC& publisher ) const
     asn().oid_formation           = formation_.GetID();
     asn.Send( publisher );
 
-	agents_.Apply( std::mem_fun_ref( &Agent::SendCreation ), publisher );
+    AsnMsgInClientLogRavitaillementQuotas asnQuotas;
+    asnQuotas().oid_automate = nID_;
+    quotas_.Send< ASN1T__SeqOfDotationQuota, ASN1T_DotationQuota >( asnQuotas().quotas );
+    asnQuotas.Send( publisher );
+    if( asnQuotas().quotas.n > 0 )
+        delete [] asnQuotas().quotas.elem;
+
+    agents_.Apply( std::mem_fun_ref( &Agent::SendCreation ), publisher );
 }
 
 // -----------------------------------------------------------------------------
