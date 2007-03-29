@@ -108,11 +108,11 @@ kernel::Automat_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatT
     Entity_ABC* kg = FindKnowledgeGroup( parent );
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
     result->Attach< TC2Hierarchies >( *new Tc2States( controllers_.controller_, *result, dico ) );
-    if( type.IsLogisticMaintenance() )
+    if( type.IsTC2() || type.IsLogisticMaintenance() )
         result->Attach< MaintenanceHierarchies >( *new MaintenanceStates( controllers_.controller_, *result, dico ) );
-    if( type.IsLogisticMedical() )
+    if( type.IsTC2() || type.IsLogisticMedical() )
         result->Attach< MedicalHierarchies >( *new MedicalStates( controllers_.controller_, *result, dico ) );
-    if( type.IsLogisticSupply() )
+    if( type.IsTC2() || type.IsLogisticSupply() )
         result->Attach< SupplyHierarchies >( *new SupplyStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
     result->Attach( *new TacticalLines() );
 
@@ -188,11 +188,11 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Formation
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
     result->Attach< TC2Hierarchies >        ( *new Tc2States( controllers_.controller_, *result, dico ) );
-    if( result->GetType().IsLogisticMaintenance() )
+    if( result->GetType().IsTC2() || result->GetType().IsLogisticMaintenance() )
         result->Attach< MaintenanceHierarchies >( *new MaintenanceStates( controllers_.controller_, *result, dico ) );
-    if( result->GetType().IsLogisticMedical() )
+    if( result->GetType().IsTC2() || result->GetType().IsLogisticMedical() )
         result->Attach< MedicalHierarchies >( *new MedicalStates( controllers_.controller_, *result, dico ) );
-    if( result->GetType().IsLogisticSupply() )
+    if( result->GetType().IsTC2() || result->GetType().IsLogisticSupply() )
         result->Attach< SupplyHierarchies >( *new SupplyStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
     result->Attach( *new TacticalLines() );
 
