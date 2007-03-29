@@ -19,8 +19,8 @@ using namespace kernel;
 // Name: MaintenanceStates constructor
 // Created: SBO 2006-10-24
 // -----------------------------------------------------------------------------
-MaintenanceStates::MaintenanceStates( Controller& controller, Entity_ABC& entity, const Resolver_ABC< DotationType, QString >& resolver, PropertiesDictionary& dico )
-    : ::LogisticHierarchies< MaintenanceSuperior, kernel::MaintenanceHierarchies >( controller, entity, resolver )
+MaintenanceStates::MaintenanceStates( Controller& controller, Entity_ABC& entity, PropertiesDictionary& dico )
+    : ::LogisticHierarchies< MaintenanceSuperior, kernel::MaintenanceHierarchies >( controller, entity )
 {
     CreateDictionary( dico, entity );
 }
@@ -38,9 +38,8 @@ MaintenanceStates::~MaintenanceStates()
 // Name: MaintenanceStates::CreateDictionary
 // Created: SBO 2006-10-24
 // -----------------------------------------------------------------------------
-void MaintenanceStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner )
+void MaintenanceStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& )
 {
-    ::LogisticHierarchies< MaintenanceSuperior, kernel::MaintenanceHierarchies >::CreateDictionary( dico, owner, tools::translate( "MaintenanceStates", "Logistic/Maintenance/Quotas" ) );
     dico.Register( *(const kernel::MaintenanceHierarchies*)this, tools::translate( "MaintenanceStates", "Logistic/Maintenance/Superior" ), tc2_, *this, &MaintenanceStates::SetSuperior );
 }
 

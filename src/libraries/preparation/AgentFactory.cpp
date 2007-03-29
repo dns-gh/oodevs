@@ -107,11 +107,11 @@ kernel::Automat_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatT
 
     Entity_ABC* kg = FindKnowledgeGroup( parent );
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
-    result->Attach< TC2Hierarchies >( *new Tc2States( controllers_.controller_, *result, static_.objectTypes_, dico ) );
+    result->Attach< TC2Hierarchies >( *new Tc2States( controllers_.controller_, *result, dico ) );
     if( type.IsLogisticMaintenance() )
-        result->Attach< MaintenanceHierarchies >( *new MaintenanceStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
+        result->Attach< MaintenanceHierarchies >( *new MaintenanceStates( controllers_.controller_, *result, dico ) );
     if( type.IsLogisticMedical() )
-        result->Attach< MedicalHierarchies >( *new MedicalStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
+        result->Attach< MedicalHierarchies >( *new MedicalStates( controllers_.controller_, *result, dico ) );
     if( type.IsLogisticSupply() )
         result->Attach< SupplyHierarchies >( *new SupplyStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
     result->Attach( *new TacticalLines() );
@@ -187,11 +187,11 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Formation
     result->Attach( *new AutomatDecisions( xis, controllers_.controller_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
-    result->Attach< TC2Hierarchies >        ( *new Tc2States( controllers_.controller_, *result, static_.objectTypes_, dico ) );
+    result->Attach< TC2Hierarchies >        ( *new Tc2States( controllers_.controller_, *result, dico ) );
     if( result->GetType().IsLogisticMaintenance() )
-        result->Attach< MaintenanceHierarchies >( *new MaintenanceStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
+        result->Attach< MaintenanceHierarchies >( *new MaintenanceStates( controllers_.controller_, *result, dico ) );
     if( result->GetType().IsLogisticMedical() )
-        result->Attach< MedicalHierarchies >( *new MedicalStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
+        result->Attach< MedicalHierarchies >( *new MedicalStates( controllers_.controller_, *result, dico ) );
     if( result->GetType().IsLogisticSupply() )
         result->Attach< SupplyHierarchies >( *new SupplyStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
     result->Attach( *new TacticalLines() );

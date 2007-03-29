@@ -25,7 +25,7 @@ class MaintenanceStates : public LogisticHierarchies< MaintenanceSuperior, kerne
 public:
     //! @name Constructors/Destructor
     //@{
-             MaintenanceStates( kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver, kernel::PropertiesDictionary& dico );
+             MaintenanceStates( kernel::Controller& controller, kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dico );
     virtual ~MaintenanceStates();
     //@}
 

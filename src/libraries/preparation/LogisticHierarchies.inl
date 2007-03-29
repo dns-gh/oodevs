@@ -12,8 +12,8 @@
 // Created: SBO 2006-10-24
 // -----------------------------------------------------------------------------
 template< typename Superior, typename I >
-LogisticHierarchies< Superior, I >::LogisticHierarchies( kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver )
-    : LogisticHierarchies_ABC< I >( controller, entity, resolver )
+LogisticHierarchies< Superior, I >::LogisticHierarchies( kernel::Controller& controller, kernel::Entity_ABC& entity )
+    : LogisticHierarchies_ABC< I >( controller, entity )
     , tc2_( 0 )
 {
     // NOTHING

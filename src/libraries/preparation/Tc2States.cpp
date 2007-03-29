@@ -11,16 +11,18 @@
 #include "Tc2States.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/AutomatType.h"
 
 // -----------------------------------------------------------------------------
 // Name: Tc2States constructor
 // Created: SBO 2006-10-26
 // -----------------------------------------------------------------------------
-Tc2States::Tc2States( kernel::Controller& controller, kernel::Automat_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver, kernel::PropertiesDictionary& dico )
-    : ::LogisticHierarchies< TC2, kernel::TC2Hierarchies >( controller, entity, resolver )
+Tc2States::Tc2States( kernel::Controller& controller, kernel::Automat_ABC& entity, kernel::PropertiesDictionary& dico )
+    : ::LogisticHierarchies< TC2, kernel::TC2Hierarchies >( controller, entity )
 {
     CreateDictionary( dico, entity );
-    ::LogisticHierarchies< TC2, kernel::TC2Hierarchies >::SetSuperior( &entity );
+    if( entity.GetType().IsTC2() )
+        ::LogisticHierarchies< TC2, kernel::TC2Hierarchies >::SetSuperior( &entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -36,9 +38,8 @@ Tc2States::~Tc2States()
 // Name: Tc2States::CreateDictionary
 // Created: SBO 2006-10-26
 // -----------------------------------------------------------------------------
-void Tc2States::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner )
+void Tc2States::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& )
 {
-    ::LogisticHierarchies< TC2, kernel::TC2Hierarchies >::CreateDictionary( dico, owner, tools::translate( "TC2States", "Logistic/TC2/Quotas" ) );
     dico.Register( *(const kernel::TC2Hierarchies*)this, tools::translate( "Tc2States", "Logistic/TC2/Superior" ), tc2_, *this, &Tc2States::SetSuperior );
 }
 

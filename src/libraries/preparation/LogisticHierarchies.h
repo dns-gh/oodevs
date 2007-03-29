@@ -29,13 +29,13 @@ class LogisticHierarchies : public LogisticHierarchies_ABC< I >
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticHierarchies( kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver );
+             LogisticHierarchies( kernel::Controller& controller, kernel::Entity_ABC& entity );
     virtual ~LogisticHierarchies();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Load( xml::xistream& xis, const kernel::Automat_ABC* superior );
+    void Load( xml::xistream& xis, const kernel::Automat_ABC* superior );
     //@}
 
 private:

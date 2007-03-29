@@ -17,8 +17,8 @@
 // Name: MedicalStates constructor
 // Created: SBO 2006-10-24
 // -----------------------------------------------------------------------------
-MedicalStates::MedicalStates( kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver, kernel::PropertiesDictionary& dico )
-    : ::LogisticHierarchies< MedicalSuperior, kernel::MedicalHierarchies >( controller, entity, resolver )
+MedicalStates::MedicalStates( kernel::Controller& controller, kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dico )
+    : ::LogisticHierarchies< MedicalSuperior, kernel::MedicalHierarchies >( controller, entity )
 {
     CreateDictionary( dico, entity );
 }
@@ -36,9 +36,8 @@ MedicalStates::~MedicalStates()
 // Name: MedicalStates::CreateDictionary
 // Created: SBO 2006-10-24
 // -----------------------------------------------------------------------------
-void MedicalStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner )
+void MedicalStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& )
 {
-    ::LogisticHierarchies< MedicalSuperior, kernel::MedicalHierarchies >::CreateDictionary( dico, owner, tools::translate( "MedicalStates", "Logistic/Medical/Quotas" ) );
     dico.Register( *(const kernel::MedicalHierarchies*)this, tools::translate( "MedicalStates", "Logistic/Medical/Superior" ), tc2_, *this, &MedicalStates::SetSuperior );
 }
 

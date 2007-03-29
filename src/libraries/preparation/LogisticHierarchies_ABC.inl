@@ -18,11 +18,8 @@
 // Created: AGE 2006-11-21
 // -----------------------------------------------------------------------------
 template< typename I >
-LogisticHierarchies_ABC< I >::LogisticHierarchies_ABC( kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver )
+LogisticHierarchies_ABC< I >::LogisticHierarchies_ABC( kernel::Controller& controller, kernel::Entity_ABC& entity )
     : kernel::EntityHierarchies< I >( controller, entity, 0 )
-    , controller_( controller )
-    , resolver_( resolver )
-    , item_( 0 )
 {
     // NOTHING
 }
@@ -34,32 +31,7 @@ LogisticHierarchies_ABC< I >::LogisticHierarchies_ABC( kernel::Controller& contr
 template< typename I >
 LogisticHierarchies_ABC< I >::~LogisticHierarchies_ABC()
 {
-    kernel::Resolver< Dotation >::DeleteAll();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticHierarchies_ABC::Load
-// Created: AGE 2006-11-21
-// -----------------------------------------------------------------------------
-template< typename I >
-void LogisticHierarchies_ABC< I >::Load( xml::xistream& xis )
-{
-    xis >> xml::start( "quotas" )
-            >> xml::list( "dotation", *this, &LogisticHierarchies_ABC::ReadDotation )
-        >> xml::end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticHierarchies_ABC::ReadDotation
-// Created: AGE 2006-11-21
-// -----------------------------------------------------------------------------
-template< typename I >
-void LogisticHierarchies_ABC< I >::ReadDotation( xml::xistream& xis )
-{
-    Dotation* dotation = new Dotation( xis, resolver_ );
-    item_->AddDotation( *dotation );
-    kernel::Resolver< Dotation >::Register( dotation->type_->GetId(), *dotation );
-    controller_.Update( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -76,27 +48,7 @@ void LogisticHierarchies_ABC< I >::SerializeLogistics( xml::xostream& xos ) cons
         xos << xml::start( "subordinate" )
                 << xml::attribute( "id", long( entity.GetId() ) )
                 << xml::attribute( "link", GetLinkType() );
-        const kernel::Resolver< Dotation >& resolver = static_cast< const LogisticHierarchies_ABC& >( entity.Get< I >() );
-        kernel::Iterator< const Dotation& > itQuota = resolver.CreateIterator();
-        xos << xml::start( "quotas" );
-        while( itQuota.HasMoreElements() )
-        {
-            xos << xml::start( "dotation" );
-            itQuota.NextElement().SerializeAttributes( xos );
-            xos << xml::end();
-        }
-        xos << xml::end();
+        static_cast< const LogisticHierarchies_ABC< I >& >( entity.Get< I >() ).SerializeQuotas( xos );
         xos << xml::end();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticHierarchies_ABC::CreateDictionary
-// Created: AGE 2006-11-21
-// -----------------------------------------------------------------------------
-template< typename I >
-void LogisticHierarchies_ABC< I >::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner, const QString& name )
-{
-    item_ = new DotationsItem( controller_, owner, dico, name, *(kernel::Resolver< Dotation >*)this );
-    dico.Register( *(const kernel::TacticalHierarchies*)this, name + tools::translate( "LogisticHierarchies", "/<Dotations>" ), item_ );
 }

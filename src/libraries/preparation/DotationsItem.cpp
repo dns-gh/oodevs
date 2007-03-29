@@ -88,7 +88,7 @@ void DotationsItem::Update()
 }
 
 // -----------------------------------------------------------------------------
-// Name: kernel::Iterator< const Dotation& > DotationsItem::CreateIterator
+// Name: DotationsItem::CreateIterator
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
 kernel::Iterator< const Dotation& > DotationsItem::CreateIterator() const

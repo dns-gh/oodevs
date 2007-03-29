@@ -20,7 +20,10 @@ using namespace kernel;
 // Created: SBO 2006-10-24
 // -----------------------------------------------------------------------------
 SupplyStates::SupplyStates( Controller& controller, Entity_ABC& entity, const Resolver_ABC< DotationType, QString >& resolver, PropertiesDictionary& dico )
-    : ::LogisticHierarchies< SupplySuperior, kernel::SupplyHierarchies >( controller, entity, resolver )
+    : ::LogisticHierarchies< SupplySuperior, kernel::SupplyHierarchies >( controller, entity )
+    , controller_( controller )
+    , resolver_( resolver )
+    , item_( 0 )
 {
     CreateDictionary( dico, entity );
 }
@@ -31,7 +34,7 @@ SupplyStates::SupplyStates( Controller& controller, Entity_ABC& entity, const Re
 // -----------------------------------------------------------------------------
 SupplyStates::~SupplyStates()
 {
-    // NOTHING
+    Resolver< Dotation >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -40,7 +43,9 @@ SupplyStates::~SupplyStates()
 // -----------------------------------------------------------------------------
 void SupplyStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner )
 {
-    ::LogisticHierarchies< SupplySuperior, kernel::SupplyHierarchies >::CreateDictionary( dico, owner, tools::translate( "SupplyStates", "Logistic/Supply/Quotas" ) );
+    const QString name = tools::translate( "SupplyStates", "Logistic/Supply/Quotas" );
+    item_ = new DotationsItem( controller_, owner, dico, name, *this );
+    dico.Register( *(const kernel::SupplyHierarchies*)this, name + tools::translate( "SupplyStates", "/<Dotations>" ), item_ );
     dico.Register( *(const kernel::SupplyHierarchies*)this, tools::translate( "SupplyStates", "Logistic/Supply/Superior" ), tc2_, *this, &SupplyStates::SetSuperior );
 }
 
@@ -72,4 +77,43 @@ void SupplyStates::Draw( const geometry::Point2f& where, const kernel::Viewport_
     glColor4f( COLOR_ORANGE );
     DrawLink( where, tools, 0.5f, displayLinks, displayMissing && automat.GetType().IsLogisticSupply() );
     glPopAttrib();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyStates::Load
+// Created: SBO 2007-03-29
+// -----------------------------------------------------------------------------
+void SupplyStates::Load( xml::xistream& xis )
+{
+    xis >> xml::start( "quotas" )
+            >> xml::list( "dotation", *this, &SupplyStates::ReadDotation )
+        >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyStates::ReadDotation
+// Created: SBO 2007-03-29
+// -----------------------------------------------------------------------------
+void SupplyStates::ReadDotation( xml::xistream& xis )
+{
+    Dotation* dotation = new Dotation( xis, resolver_ );
+    item_->AddDotation( *dotation );
+    kernel::Resolver< Dotation >::Register( dotation->type_->GetId(), *dotation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyStates::SerializeQuotas
+// Created: SBO 2007-03-29
+// -----------------------------------------------------------------------------
+void SupplyStates::SerializeQuotas( xml::xostream& xos ) const
+{
+    kernel::Iterator< const Dotation& > it = Resolver< Dotation >::CreateIterator();
+    xos << xml::start( "quotas" );
+    while( it.HasMoreElements() )
+    {
+        xos << xml::start( "dotation" );
+        it.NextElement().SerializeAttributes( xos );
+        xos << xml::end();
+    }
+    xos << xml::end();
 }

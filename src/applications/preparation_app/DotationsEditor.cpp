@@ -73,7 +73,7 @@ void DotationsEditor::OnAccept()
     for( int i = 0; i < table_->numRows() - 1; ++i )
         value_->AddDotation( dotationTypes_.Get( table_->text( i, 0 ) ), table_->text( i, 1 ).toUInt() );
     value_->Update();
-    hide();
+    accept();
 }
     
 // -----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ void DotationsEditor::OnAccept()
 // -----------------------------------------------------------------------------
 void DotationsEditor::OnReject()
 {
-    hide();
+    reject();
 }
 
 // -----------------------------------------------------------------------------

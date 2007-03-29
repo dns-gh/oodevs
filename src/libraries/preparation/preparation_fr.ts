@@ -111,13 +111,6 @@
     </message>
 </context>
 <context>
-    <name>LogisticHierarchies</name>
-    <message>
-        <source>/&lt;Dotations&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Object</name>
     <message>
         <source>Camp</source>

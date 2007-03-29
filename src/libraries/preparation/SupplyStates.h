@@ -12,6 +12,15 @@
 
 #include "Types.h"
 #include "LogisticHierarchies.h"
+#include "clients_kernel/Resolver.h"
+
+namespace kernel
+{
+    class DotationType;
+}
+
+class Dotation;
+class DotationsItem;
 
 // =============================================================================
 /** @class  SupplyStates
@@ -20,6 +29,7 @@
 // Created: SBO 2006-10-24
 // =============================================================================
 class SupplyStates : public LogisticHierarchies< SupplySuperior, kernel::SupplyHierarchies >
+                   , public kernel::Resolver< Dotation >
 {
 
 public:
@@ -44,7 +54,18 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void Load( xml::xistream& xis );
+    void ReadDotation( xml::xistream& xis );
     virtual void CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner );
+    virtual void SerializeQuotas( xml::xostream& xos ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    kernel::Controller& controller_;
+    const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver_;
+    DotationsItem* item_;
     //@}
 };
 

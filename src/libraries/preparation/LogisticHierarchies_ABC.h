@@ -12,7 +12,6 @@
 
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/Resolver.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
@@ -20,7 +19,6 @@ namespace kernel
 {
     class Controller;
     class Entity_ABC;
-    class DotationType;
     class PropertiesDictionary;
 }
 
@@ -30,9 +28,6 @@ namespace xml
     class xistream;
 }
 
-class Dotation;
-class DotationsItem;
-
 // =============================================================================
 /** @class  LogisticHierarchies_ABC
     @brief  LogisticHierarchies_ABC
@@ -41,7 +36,6 @@ class DotationsItem;
 // =============================================================================
 template< typename I >
 class LogisticHierarchies_ABC : public kernel::EntityHierarchies< I > 
-                              , public kernel::Resolver< Dotation >
                               , public kernel::Serializable_ABC
                               , public kernel::Drawable_ABC
 {
@@ -49,20 +43,16 @@ class LogisticHierarchies_ABC : public kernel::EntityHierarchies< I >
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticHierarchies_ABC( kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver );
+             LogisticHierarchies_ABC( kernel::Controller& controller, kernel::Entity_ABC& entity );
     virtual ~LogisticHierarchies_ABC();
-    //@}
-
-    //! @name Operations
-    //@{
-    void Load( xml::xistream& xis );
     //@}
 
 protected:
     //! @name Operations
     //@{
-    virtual void CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner, const QString& name );
+    virtual void Load( xml::xistream& ) {};
     virtual void SerializeLogistics( xml::xostream& xos ) const;
+    virtual void SerializeQuotas( xml::xostream& ) const {};
     //@}
 
 private:
@@ -70,19 +60,6 @@ private:
     //@{
     LogisticHierarchies_ABC( const LogisticHierarchies_ABC& );            //!< Copy constructor
     LogisticHierarchies_ABC& operator=( const LogisticHierarchies_ABC& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void ReadDotation( xml::xistream& xis );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver_;
-    DotationsItem* item_;
     //@}
 };
 

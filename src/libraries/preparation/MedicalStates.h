@@ -25,7 +25,7 @@ class MedicalStates : public LogisticHierarchies< MedicalSuperior, kernel::Medic
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalStates( kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver, kernel::PropertiesDictionary& dico );
+             MedicalStates( kernel::Controller& controller, kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dico );
     virtual ~MedicalStates();
     //@}
 
