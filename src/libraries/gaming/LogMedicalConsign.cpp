@@ -90,18 +90,21 @@ void LogMedicalConsign::Update( const ASN1T_MsgLogSanteTraitementHumainUpdate& m
 // Name: LogMedicalConsign::Display
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-void LogMedicalConsign::Display( Displayer_ABC& displayer ) const
+void LogMedicalConsign::Display( Displayer_ABC& displayer, Displayer_ABC& itemDisplayer ) const
 {
-    displayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ )
-             .Display( tools::translate( "Logistic", "Consumer:" ), pion_ )
-             .Display( tools::translate( "Logistic", "Handler:" ), pPionLogHandling_ )
-             .Display( tools::translate( "Logistic", "Mentally injured:" ), bMentalDeceased_ )
-             .Display( tools::translate( "Logistic", "NBC contaminated:" ), bContaminated_ )
-             .Display( tools::translate( "Logistic", "State:" ), nState_ );
+    displayer.Display( tools::translate( "Logistic", "Logistic requests" ), pion_ )
+             .Display( "", nState_ );
+
+    itemDisplayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ )
+                 .Display( tools::translate( "Logistic", "Consumer:" ), pion_ )
+                 .Display( tools::translate( "Logistic", "Handler:" ), pPionLogHandling_ )
+                 .Display( tools::translate( "Logistic", "Mentally injured:" ), bMentalDeceased_ )
+                 .Display( tools::translate( "Logistic", "NBC contaminated:" ), bContaminated_ )
+                 .Display( tools::translate( "Logistic", "State:" ), nState_ );
     if( diagnosed_ )
-        displayer.Display( tools::translate( "Logistic", "Injury:" ), wound_ );
+        itemDisplayer.Display( tools::translate( "Logistic", "Injury:" ), wound_ );
     else
-        displayer.Display( tools::translate( "Logistic", "Injury:" ), tools::translate( "Logistic", "Not diagnosed" ) );
+        itemDisplayer.Display( tools::translate( "Logistic", "Injury:" ), tools::translate( "Logistic", "Not diagnosed" ) );
 }
 
 // -----------------------------------------------------------------------------

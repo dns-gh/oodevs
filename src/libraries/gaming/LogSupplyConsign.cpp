@@ -117,14 +117,17 @@ void LogSupplyConsign::Update( const ASN1T_MsgLogRavitaillementTraitementUpdate&
 // Name: LogSupplyConsign::Display
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-void LogSupplyConsign::Display( Displayer_ABC& displayer ) const
+void LogSupplyConsign::Display( kernel::Displayer_ABC& displayer, kernel::Displayer_ABC& itemDisplayer ) const
 {
-    displayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ )
-             .Display( tools::translate( "Logistic", "Consumer:" ), pion_ )
-             .Display( tools::translate( "Logistic", "Handler:" ), pAutomateLogHandling_ )
-             .Display( tools::translate( "Logistic", "Supplier:" ), pAutomateLogProvidingConvoyResources_ )
-             .Display( tools::translate( "Logistic", "Convoyer:" ), pPionLogConvoying_ )
-             .Display( tools::translate( "Logistic", "State:" ), nState_ );
+    displayer.Display( tools::translate( "Logistic", "Logistic requests" ), pion_ )
+             .Display( "", nState_ );
+
+    itemDisplayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ )
+                 .Display( tools::translate( "Logistic", "Consumer:" ), pion_ )
+                 .Display( tools::translate( "Logistic", "Handler:" ), pAutomateLogHandling_ )
+                 .Display( tools::translate( "Logistic", "Supplier:" ), pAutomateLogProvidingConvoyResources_ )
+                 .Display( tools::translate( "Logistic", "Convoyer:" ), pPionLogConvoying_ )
+                 .Display( tools::translate( "Logistic", "State:" ), nState_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -100,7 +100,6 @@ public:
     }
     //@}
 
-protected:
     //! @name Operations
     //@{
     kernel::Displayer_ABC& GetItemDisplayer( ValuedListItem* item ) { return itemDisplayer_( item ); };

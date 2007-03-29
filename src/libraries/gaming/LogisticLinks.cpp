@@ -101,13 +101,13 @@ Automat_ABC* LogisticLinks::GetSupply() const
 void LogisticLinks::DoUpdate( const ASN1T_MsgChangeLiensLogistiquesAck& message )
 {
     if( message.m.oid_tc2Present )
-        tc2_ = &resolver_.Get( message.oid_tc2 );
+        tc2_ = resolver_.Find( message.oid_tc2 );
     if( message.m.oid_maintenancePresent )
-        maintenanceSuperior_ = &resolver_.Get( message.oid_maintenance );
+        maintenanceSuperior_ = resolver_.Find( message.oid_maintenance );
     if( message.m.oid_santePresent )
-         medicalSuperior_ = &resolver_.Get( message.oid_sante );
+         medicalSuperior_ = resolver_.Find( message.oid_sante );
     if( message.m.oid_ravitaillementPresent )
-        supplySuperior_ = &resolver_.Get( message.oid_ravitaillement );
+        supplySuperior_ = resolver_.Find( message.oid_ravitaillement );
 
     controller_.Update( *(LogisticLinks_ABC*)this );
 }
@@ -119,13 +119,13 @@ void LogisticLinks::DoUpdate( const ASN1T_MsgChangeLiensLogistiquesAck& message 
 void LogisticLinks::DoUpdate( const ASN1T_MsgChangeLiensLogistiques& message )
 {
     if( message.m.oid_tc2Present )
-        tc2_ = &resolver_.Get( message.oid_tc2 );
+        tc2_ = resolver_.Find( message.oid_tc2 );
     if( message.m.oid_maintenancePresent )
-        maintenanceSuperior_ = &resolver_.Get( message.oid_maintenance );
+        maintenanceSuperior_ = resolver_.Find( message.oid_maintenance );
     if( message.m.oid_santePresent )
-         medicalSuperior_ = &resolver_.Get( message.oid_sante );
+         medicalSuperior_ = resolver_.Find( message.oid_sante );
     if( message.m.oid_ravitaillementPresent )
-        supplySuperior_ = &resolver_.Get( message.oid_ravitaillement );
+        supplySuperior_ = resolver_.Find( message.oid_ravitaillement );
 
     controller_.Update( *(LogisticLinks_ABC*)this );
 }

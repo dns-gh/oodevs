@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2004-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/LogMaintenanceConsign.h $
-// $Author: Age $
-// $Modtime: 1/04/05 11:06 $
-// $Revision: 1 $
-// $Workfile: LogMaintenanceConsign.h $
-//
-// *****************************************************************************
 
 #ifndef __LogMaintenanceConsign_h_
 #define __LogMaintenanceConsign_h_
@@ -49,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    void Display( kernel::Displayer_ABC& displayer ) const;
+    void Display( kernel::Displayer_ABC& displayer, kernel::Displayer_ABC& itemDisplayer ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 

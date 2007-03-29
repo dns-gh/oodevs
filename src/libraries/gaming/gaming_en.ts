@@ -513,6 +513,10 @@
         <source>Supplier:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Logistic requests</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceStates</name>

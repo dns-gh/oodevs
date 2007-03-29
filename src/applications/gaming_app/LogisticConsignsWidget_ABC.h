@@ -129,13 +129,12 @@ LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::~LogisticCo
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
 template< typename ConcreteDisplayer, typename Consign, typename Extension >
-void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::Display( const Consign* consign, kernel::Displayer_ABC&, gui::ValuedListItem* item )
+void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::Display( const Consign* consign, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item )
 {
     if( consign )
     {
         item->SetValue( consign );
-        item->setText( 0, "toto" );
-        consign->Display( (*logDisplay_)( item ) );
+        consign->Display( displayer, (*logDisplay_)( item ) );
     }
 }
 
@@ -182,11 +181,11 @@ void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::Notify
 template< typename ConcreteDisplayer, typename Consign, typename Extension >
 void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::NotifyUpdated( const Consign& consign )
 {
-    gui::ValuedListItem* item = gui::FindItem( &consign, pConsignListView_->firstChild() );
-    if( ! item )
-        item = gui::FindItem( &consign, pConsignHandledListView_->firstChild() );
-    if( item )
-        consign.Display( (*logDisplay_)( item ) );
+    gui::ValuedListItem* item = 0;
+    if( item = gui::FindItem( &consign, pConsignListView_->firstChild() ) )
+        consign.Display( pConsignListView_->GetItemDisplayer( item ), (*logDisplay_)( item ) );
+    else if( item = gui::FindItem( &consign, pConsignHandledListView_->firstChild() ) )
+        consign.Display( pConsignHandledListView_->GetItemDisplayer( item ), (*logDisplay_)( item ) );
 }
 
 // -----------------------------------------------------------------------------

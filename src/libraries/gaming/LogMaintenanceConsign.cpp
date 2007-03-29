@@ -82,14 +82,17 @@ void LogMaintenanceConsign::Update( const ASN1T_MsgLogMaintenanceTraitementEquip
 // Name: LogMaintenanceConsign::Display
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-void LogMaintenanceConsign::Display( Displayer_ABC& displayer ) const
+void LogMaintenanceConsign::Display( Displayer_ABC& displayer, Displayer_ABC& itemDisplayer ) const
 {
-    displayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ )
-             .Display( tools::translate( "Logistic", "Consumer:" ), pion_ )
-             .Display( tools::translate( "Logistic", "Handler:" ), pPionLogHandling_ )
-             .Display( tools::translate( "Logistic", "Equipment:" ), diagnosed_ ? equipmentType_ : 0 )
-             .Display( tools::translate( "Logistic", "Breakdown:" ), diagnosed_ ? breakdownType_ : 0 )
-             .Display( tools::translate( "Logistic", "State:" ), nState_ );
+    displayer.Display( tools::translate( "Logistic", "Logistic requests" ), pion_ )
+             .Display( "", nState_ );
+
+    itemDisplayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ )
+                 .Display( tools::translate( "Logistic", "Consumer:" ), pion_ )
+                 .Display( tools::translate( "Logistic", "Handler:" ), pPionLogHandling_ )
+                 .Display( tools::translate( "Logistic", "Equipment:" ), diagnosed_ ? equipmentType_ : 0 )
+                 .Display( tools::translate( "Logistic", "Breakdown:" ), diagnosed_ ? breakdownType_ : 0 )
+                 .Display( tools::translate( "Logistic", "State:" ), nState_ );
 }
 
 // -----------------------------------------------------------------------------
