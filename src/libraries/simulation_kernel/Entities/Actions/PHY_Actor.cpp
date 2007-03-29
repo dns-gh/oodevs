@@ -29,9 +29,8 @@ PHY_Actor::PHY_Actor()
 // -----------------------------------------------------------------------------
 PHY_Actor::~PHY_Actor()
 {
-    for( CIT_ActionSet itAction = actions_.begin(); itAction != actions_.end(); ++itAction )
-        delete *itAction;
-    actions_.clear();
+    while( !actions_.empty() )
+        delete *actions_.begin();
 }
 
 // =============================================================================
