@@ -30,6 +30,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_MedicalHumanState, "PHY_MedicalHumanState" )
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState::PHY_MedicalHumanState( MIL_AgentPion& pion, PHY_Human& human, bool bEvacuatedByThirdParty )
     : nID_                   ( MIL_IDManager::medicalHumanStates_.GetFreeSimID() )
+    , nCreationTick_         ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
     , pPion_                 ( &pion )
     , pHuman_                ( &human )
     , pConsign_              ( 0 )
@@ -51,6 +52,7 @@ PHY_MedicalHumanState::PHY_MedicalHumanState( MIL_AgentPion& pion, PHY_Human& hu
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState::PHY_MedicalHumanState()
     : nID_                   ()
+    , nCreationTick_         ( 0 )
     , pPion_                 ( 0 )
     , pHuman_                ( 0 )
     , pConsign_              ( 0 )
@@ -84,7 +86,8 @@ PHY_MedicalHumanState::~PHY_MedicalHumanState()
 // -----------------------------------------------------------------------------
 void PHY_MedicalHumanState::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> nID_
+    file >> const_cast< uint& >( nID_ )
+         >> const_cast< uint& >( nCreationTick_ )
          >> pPion_
          >> pHuman_
          >> pConsign_
@@ -103,6 +106,7 @@ void PHY_MedicalHumanState::load( MIL_CheckPointInArchive& file, const uint )
 void PHY_MedicalHumanState::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << nID_
+         << nCreationTick_
          << pPion_
          << pHuman_
          << pConsign_
@@ -306,12 +310,13 @@ void PHY_MedicalHumanState::SendMsgCreation() const
     assert( pHuman_ );
 
     NET_ASN_MsgLogSanteTraitementHumainCreation asn;
-    asn().oid_consigne    = nID_;
-    asn().oid_pion        = pPion_->GetID();
-    asn().rang            = pHuman_->GetRank ().GetAsnID();
-    asn().blessure        = pHuman_->GetWound().GetAsnID();
-    asn().blesse_mental   = pHuman_->IsMentalDiseased();
-    asn().contamine_nbc   = pHuman_->IsContaminated();
+    asn().oid_consigne   = nID_;
+    asn().oid_pion       = pPion_->GetID();
+    asn().tick_creation  = nCreationTick_;
+    asn().rang           = pHuman_->GetRank ().GetAsnID();
+    asn().blessure       = pHuman_->GetWound().GetAsnID();
+    asn().blesse_mental  = pHuman_->IsMentalDiseased();
+    asn().contamine_nbc  = pHuman_->IsContaminated();
     asn.Send();
 }
     

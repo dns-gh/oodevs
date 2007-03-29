@@ -25,6 +25,7 @@ LogConsignMaintenance::LogConsignMaintenance( Model& model, const ASN1T_MsgLogMa
     : model_            ( model )
     , nID_              ( msg.oid_consigne )
     , agent_            ( model.GetAgents().Get( msg.oid_pion ) )
+    , nTickCreation_    ( msg.tick_creation )
     , nEquipmentType_   ( msg.type_equipement )
     , nBreakdownType_   ( msg.type_panne )
     , pTreatingAgent_   ( 0 )
@@ -67,8 +68,9 @@ void LogConsignMaintenance::SendCreation( Publisher_ABC& publisher ) const
 {
     AsnMsgInClientLogMaintenanceTraitementEquipementCreation asn;
     
-    asn().oid_consigne = nID_;
-    asn().oid_pion     = agent_.GetID();
+    asn().oid_consigne  = nID_;
+    asn().oid_pion      = agent_.GetID();
+    asn().tick_creation = nTickCreation_;
 
     asn().type_equipement = nEquipmentType_;
     asn().type_panne      = nBreakdownType_;

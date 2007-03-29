@@ -57,6 +57,7 @@ private:
           Model&        model_;
     const unsigned long nID_;
     const Agent&        agent_;
+    const unsigned long nTickCreation_;
     const unsigned int  nEquipmentType_; // XML reference - no resolved by dispatcher
     const unsigned int  nBreakdownType_; // XML reference - no resolved by dispatcher
 

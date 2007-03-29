@@ -88,6 +88,7 @@ private:
 
 private:
     const uint                    nID_;
+    const uint                    nCreationTick_;
           MIL_AgentPion*          pPion_;
           PHY_Human*              pHuman_;
           PHY_MedicalConsign_ABC* pConsign_;

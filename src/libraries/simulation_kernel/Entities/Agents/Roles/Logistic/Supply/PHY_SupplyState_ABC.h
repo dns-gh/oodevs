@@ -36,6 +36,7 @@ public:
 
 protected:
     const uint nID_;
+    const uint nCreationTick_;
 };
 
 #include "PHY_SupplyState_ABC.inl"

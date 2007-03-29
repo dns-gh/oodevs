@@ -24,6 +24,7 @@ MsgLogRavitaillementTraitementCreation ::= SEQUENCE
 {
     oid-consigne    OID,
     oid-automate    Automate,  
+    tick-creation   INTEGER,
     dotations       SEQUENCE OF DemandeDotation
 }
 

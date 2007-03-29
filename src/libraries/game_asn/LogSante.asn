@@ -40,12 +40,13 @@ EnumLogSanteTraitementEtat ::= ENUMERATED
 
 MsgLogSanteTraitementHumainCreation ::= SEQUENCE
 {
-    oid-consigne        OID,
-    oid-pion            Agent,          -- pion possèdant l'Humain    
-    rang                EnumHumanRank,
-    blessure            EnumHumanWound,
-    blesse-mental       BOOLEAN DEFAULT FALSE,
-    contamine-nbc       BOOLEAN DEFAULT FALSE    
+    oid-consigne    OID,
+    oid-pion        Agent,          -- pion possèdant l'Humain    
+    tick-creation   INTEGER,
+    rang            EnumHumanRank,
+    blessure        EnumHumanWound,
+    blesse-mental   BOOLEAN DEFAULT FALSE,
+    contamine-nbc   BOOLEAN DEFAULT FALSE    
 }
 
 MsgLogSanteTraitementHumainUpdate ::= SEQUENCE

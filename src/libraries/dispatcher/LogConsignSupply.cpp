@@ -26,6 +26,7 @@ LogConsignSupply::LogConsignSupply( Model& model, const ASN1T_MsgLogRavitailleme
     : model_            ( model )
     , nID_              ( msg.oid_consigne )
     , automat_          ( model.GetAutomats().Get( msg.oid_automate ) )
+    , nTickCreation_    ( msg.tick_creation )
     , pTreatingAutomat_ ( 0 )
     , pConvoyingAutomat_( 0 )
     , pConvoy_          ( 0 )
@@ -86,8 +87,9 @@ void LogConsignSupply::SendCreation( Publisher_ABC& publisher ) const
 {
     AsnMsgInClientLogRavitaillementTraitementCreation asn;
 
-    asn().oid_consigne = nID_;
-    asn().oid_automate = automat_.GetID();
+    asn().oid_consigne  = nID_;
+    asn().oid_automate  = automat_.GetID();
+    asn().tick_creation = nTickCreation_;
 
     dotations_.Send< ASN1T__SeqOfDemandeDotation, ASN1T_DemandeDotation >( asn().dotations );
 

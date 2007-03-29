@@ -60,6 +60,7 @@ private:
           Model&        model_;
     const unsigned long nID_;
     const Automat&      automat_;
+    const unsigned long nTickCreation_;
           
     Automat*                                  pTreatingAutomat_;
     Automat*                                  pConvoyingAutomat_;

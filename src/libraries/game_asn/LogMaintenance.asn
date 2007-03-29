@@ -24,6 +24,7 @@ MsgLogMaintenanceTraitementEquipementCreation ::= SEQUENCE
 {
     oid-consigne    OID,
     oid-pion        Agent,          -- pion possèdant l'equipement
+    tick-creation   INTEGER,
     type-equipement TypeEquipement,
     type-panne      TypePanne       -- Cf. data/pannes.xml
 }

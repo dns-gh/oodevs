@@ -224,8 +224,9 @@ void PHY_SupplyStockState::SendMsgCreation() const
     assert( pSuppliedAutomate_ );
 
     NET_ASN_MsgLogRavitaillementTraitementCreation asn;
-    asn().oid_consigne    = nID_;
-    asn().oid_automate    = pSuppliedAutomate_->GetID();
+    asn().oid_consigne  = nID_;
+    asn().oid_automate  = pSuppliedAutomate_->GetID();
+    asn().tick_creation = nCreationTick_;
 
     ASN1T_DemandeDotation* pAsnRequests = new ASN1T_DemandeDotation[ requests_.size() ];
     uint i = 0;

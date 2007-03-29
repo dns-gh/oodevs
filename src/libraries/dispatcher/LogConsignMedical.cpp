@@ -25,6 +25,7 @@ LogConsignMedical::LogConsignMedical( Model& model, const ASN1T_MsgLogSanteTrait
     : model_            ( model )
     , nID_              ( msg.oid_consigne )
     , agent_            ( model.GetAgents().Get( msg.oid_pion ) )
+    , nTickCreation_    ( msg.tick_creation )
     , pTreatingAgent_   ( 0 )
     , nRank_            ( msg.rang )
     , nWound_           ( msg.blessure )
@@ -83,6 +84,7 @@ void LogConsignMedical::SendCreation( Publisher_ABC& publisher ) const
 
     asn().oid_consigne  = nID_;
     asn().oid_pion      = agent_.GetID();
+    asn().tick_creation = nTickCreation_;
     asn().rang          = nRank_;
     asn().blessure      = nWound_;
     asn().blesse_mental = bMentalDiseased_;

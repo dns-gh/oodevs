@@ -57,6 +57,7 @@ private:
           Model&        model_;
     const unsigned long nID_;
     const Agent&        agent_;
+    const unsigned long nTickCreation_;
           
     Agent*                           pTreatingAgent_;
     ASN1T_EnumHumanRank              nRank_;

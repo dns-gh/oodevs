@@ -29,6 +29,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_MaintenanceComposanteState, "PHY_MaintenanceComposa
 // -----------------------------------------------------------------------------
 PHY_MaintenanceComposanteState::PHY_MaintenanceComposanteState( MIL_AgentPion& pion, PHY_ComposantePion& composante )
     : nID_                ( MIL_IDManager::maintenanceComposanteStates_.GetFreeSimID() )
+    , nCreationTick_      ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
     , pPion_              ( &pion )
     , pComposante_        ( &composante )
     , pConsign_           ( 0 )
@@ -45,6 +46,7 @@ PHY_MaintenanceComposanteState::PHY_MaintenanceComposanteState( MIL_AgentPion& p
 // -----------------------------------------------------------------------------
 PHY_MaintenanceComposanteState::PHY_MaintenanceComposanteState()
     : nID_                ()
+    , nCreationTick_      ()
     , pPion_              ( 0 )
     , pComposante_        ( 0 )
     , pConsign_           ( 0 )
@@ -74,6 +76,7 @@ PHY_MaintenanceComposanteState::~PHY_MaintenanceComposanteState()
 void PHY_MaintenanceComposanteState::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> const_cast< uint& >( nID_ )
+         >> const_cast< uint& >( nCreationTick_ )
          >> pPion_
          >> pComposante_
          >> pConsign_
@@ -88,6 +91,7 @@ void PHY_MaintenanceComposanteState::load( MIL_CheckPointInArchive& file, const 
 void PHY_MaintenanceComposanteState::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << nID_
+         << nCreationTick_
          << pPion_
          << pComposante_
          << pConsign_
@@ -256,6 +260,7 @@ void PHY_MaintenanceComposanteState::SendMsgCreation() const
     NET_ASN_MsgLogMaintenanceTraitementEquipementCreation asn;
     asn().oid_consigne    = nID_;
     asn().oid_pion        = pPion_->GetID();
+    asn().tick_creation   = nCreationTick_;
     asn().type_equipement = pComposante_->GetType().GetMosID();
     asn().type_panne      = GetComposanteBreakdown().GetID();
     asn.Send();

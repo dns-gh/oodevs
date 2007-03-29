@@ -81,6 +81,7 @@ private:
 
 private:
     const uint                        nID_;
+    const uint                        nCreationTick_;
           MIL_AgentPion*              pPion_;
           PHY_ComposantePion*         pComposante_;
           PHY_MaintenanceConsign_ABC* pConsign_;
