@@ -17,10 +17,10 @@
 // Name: TacticalList constructor
 // Created: AGE 2006-10-20
 // -----------------------------------------------------------------------------
-TacticalList::TacticalList( kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
+TacticalList::TacticalList( kernel::Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
 {
     new gui::EntitySearchBox< kernel::Entity_ABC >( this, controllers );
-    new TacticalListView( this, controllers, factory, profile, icons );
+    new TacticalListView( this, controllers, publisher, factory, profile, icons );
 }
 
 // -----------------------------------------------------------------------------

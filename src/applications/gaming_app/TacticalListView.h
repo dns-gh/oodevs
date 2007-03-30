@@ -12,7 +12,15 @@
 
 #include "clients_gui/HierarchyListView.h"
 #include "clients_kernel/TacticalHierarchies.h"
+
+namespace kernel
+{
+    class Agent_ABC;
+    class Automat_ABC;
+}
+
 class AutomatDecisions;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  TacticalListView
@@ -28,7 +36,7 @@ class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarch
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
+             TacticalListView( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
     virtual ~TacticalListView();
     //@}
 
@@ -49,6 +57,15 @@ private:
     //@{
     virtual void viewportResizeEvent( QResizeEvent* e );
     virtual void setColumnWidth( int column, int w );
+
+    virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
+    bool Drop( const kernel::Agent_ABC& item,  const kernel::Automat_ABC& target );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    Publisher_ABC& publisher_;
     //@}
 };
 

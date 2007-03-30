@@ -92,7 +92,7 @@ void AgentListView::NotifyUpdated( const AutomatDecisions& decisions )
 // -----------------------------------------------------------------------------
 bool AgentListView::Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target )
 {
-    const Agent_ABC* agent   = dynamic_cast< const Agent_ABC* >  ( &item );
+    const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( &item );
     if( agent )
     {
         const Automat_ABC* automat = dynamic_cast< const Automat_ABC* >( &target );
@@ -104,7 +104,7 @@ bool AgentListView::Drop( const kernel::Entity_ABC& item, const kernel::Entity_A
         return false;
     }
 
-    const Automat_ABC* automat      = dynamic_cast< const Automat_ABC* >       ( &item );
+    const Automat_ABC* automat = dynamic_cast< const Automat_ABC* >( &item );
     if( automat )
     {
         const KnowledgeGroup_ABC* group = dynamic_cast< const KnowledgeGroup_ABC* >( &target );
@@ -130,11 +130,9 @@ bool AgentListView::Drop( const Agent_ABC& item, const Automat_ABC& target )
 {
     if( & item.Get< CommunicationHierarchies >().GetUp() == &target )
         return false;
-
-    unsigned int superiorId = target.GetId();
     ASN_MsgChangeAutomate asnMsg;
     asnMsg.GetAsnMsg().oid_pion = item.GetId();
-    asnMsg.GetAsnMsg().oid_automate = superiorId;
+    asnMsg.GetAsnMsg().oid_automate = target.GetId();
     asnMsg.Send( publisher_ );
     return true;
 }
