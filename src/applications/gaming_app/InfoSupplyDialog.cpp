@@ -40,3 +40,14 @@ InfoSupplyDialog::~InfoSupplyDialog()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: InfoSupplyDialog::ShouldDisplay
+// Created: SBO 2007-03-30
+// -----------------------------------------------------------------------------
+bool InfoSupplyDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
+{
+    return element.Retrieve< SupplyStates >()
+        || element.Retrieve< LogSupplyConsigns >()
+        || element.Retrieve< Quotas >();
+}

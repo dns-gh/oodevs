@@ -18,7 +18,7 @@
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
 SupplyConsignsWidget::SupplyConsignsWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : LogisticConsignsWidget_ABC< SupplyConsignsWidget, LogSupplyConsign, SupplyStates >( parent, controllers, factory )
+    : LogisticConsignsWidget_ABC< SupplyConsignsWidget, LogSupplyConsign, LogSupplyConsigns >( parent, controllers, factory )
     , factory_( factory )
 {
     AddConsignColumn( tr( "Supplier:" ) );
@@ -36,29 +36,6 @@ SupplyConsignsWidget::~SupplyConsignsWidget()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyConsignsWidget::DisplayRequested
-// Created: AGE 2006-07-04
-// -----------------------------------------------------------------------------
-void SupplyConsignsWidget::DisplayRequested( const LogisticConsigns& consigns, gui::ListDisplayer< SupplyConsignsWidget >* list )
-{
-    list->DeleteTail( 
-        list->DisplayList( consigns.requestedSupplies_.begin(), consigns.requestedSupplies_.end() )
-    );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyConsignsWidget::DisplayHandled
-// Created: AGE 2006-07-04
-// -----------------------------------------------------------------------------
-void SupplyConsignsWidget::DisplayHandled( const LogisticConsigns& consigns, gui::ListDisplayer< SupplyConsignsWidget >* list )
-{
-    list->DeleteTail( 
-        list->DisplayList( consigns.handledSupplies_.begin(), consigns.handledSupplies_.end() )
-    );
-}
-
-
-// -----------------------------------------------------------------------------
 // Name: SupplyConsignsWidget::Display
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
@@ -67,7 +44,7 @@ void SupplyConsignsWidget::Display( const LogSupplyConsign* consign, kernel::Dis
     if( ! consign )
         return;
 
-    LogisticConsignsWidget_ABC< SupplyConsignsWidget, LogSupplyConsign, SupplyStates >::Display( consign, displayer, item );
+    LogisticConsignsWidget_ABC< SupplyConsignsWidget, LogSupplyConsign, LogSupplyConsigns >::Display( consign, displayer, item );
 
     // $$$$ AGE 2006-02-28: crado
     QListViewItem* last  = item->firstChild();

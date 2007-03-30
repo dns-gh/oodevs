@@ -38,6 +38,12 @@ public:
              InfoMaintenanceDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~InfoMaintenanceDialog();
     //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual bool ShouldDisplay( const kernel::Entity_ABC& element ) const;
+    //@}
 };
 
 #endif // __InfoMaintenanceDialog_h_

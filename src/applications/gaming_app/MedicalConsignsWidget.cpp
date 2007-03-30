@@ -17,7 +17,7 @@
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
 MedicalConsignsWidget::MedicalConsignsWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : LogisticConsignsWidget_ABC< MedicalConsignsWidget, LogMedicalConsign, MedicalStates >( parent, controllers, factory )
+    : LogisticConsignsWidget_ABC< MedicalConsignsWidget, LogMedicalConsign, LogMedicalConsigns >( parent, controllers, factory )
 {
     AddConsignColumn( tr( "Injury:" ) );
     AddConsignColumn( tr( "Mentally injured:" ) );
@@ -32,26 +32,4 @@ MedicalConsignsWidget::MedicalConsignsWidget( QWidget* parent, kernel::Controlle
 MedicalConsignsWidget::~MedicalConsignsWidget()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MedicalConsignsWidget::DisplayRequested
-// Created: AGE 2006-07-04
-// -----------------------------------------------------------------------------
-void MedicalConsignsWidget::DisplayRequested( const LogisticConsigns& consigns, gui::ListDisplayer< MedicalConsignsWidget >* list )
-{
-    list->DeleteTail( 
-        list->DisplayList( consigns.requestedMedical_.begin(), consigns.requestedMedical_.end() )
-        );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MedicalConsignsWidget::DisplayHandled
-// Created: AGE 2006-07-04
-// -----------------------------------------------------------------------------
-void MedicalConsignsWidget::DisplayHandled( const LogisticConsigns& consigns, gui::ListDisplayer< MedicalConsignsWidget >* list )
-{
-    list->DeleteTail( 
-        list->DisplayList( consigns.handledMedical_.begin(), consigns.handledMedical_.end() )
-        );
 }

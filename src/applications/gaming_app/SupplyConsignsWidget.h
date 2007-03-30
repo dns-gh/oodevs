@@ -13,7 +13,6 @@
 #include "gaming/LogSupplyConsign.h"
 #include "LogisticConsignsWidget_ABC.h"
 
-class SupplyStates;
 class DotationRequest;
 
 // =============================================================================
@@ -22,7 +21,7 @@ class DotationRequest;
 */
 // Created: SBO 2007-02-19
 // =============================================================================
-class SupplyConsignsWidget : public LogisticConsignsWidget_ABC< SupplyConsignsWidget, LogSupplyConsign, SupplyStates >
+class SupplyConsignsWidget : public LogisticConsignsWidget_ABC< SupplyConsignsWidget, LogSupplyConsign, LogSupplyConsigns >
 {
 
 public:
@@ -43,12 +42,6 @@ private:
     //@{
     SupplyConsignsWidget( const SupplyConsignsWidget& );            //!< Copy constructor
     SupplyConsignsWidget& operator=( const SupplyConsignsWidget& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void DisplayRequested( const LogisticConsigns& consigns, gui::ListDisplayer< SupplyConsignsWidget >* list );
-    virtual void DisplayHandled( const LogisticConsigns& consigns, gui::ListDisplayer< SupplyConsignsWidget >* list );
     //@}
 
 private:

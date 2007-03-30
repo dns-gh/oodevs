@@ -32,7 +32,7 @@ namespace gui
 template< typename ConcreteDisplayer, typename Consign, typename Extension >
 class LogisticConsignsWidget_ABC : public QVBox
                                  , public kernel::Observer_ABC
-                                 , public kernel::ElementObserver_ABC< LogisticConsigns >
+                                 , public kernel::ElementObserver_ABC< Extension >
                                  , public kernel::ElementObserver_ABC< Consign >
                                  , public kernel::SelectionObserver< kernel::Entity_ABC >
 {
@@ -52,7 +52,6 @@ public:
 protected:
     //! @name Operations
     //@{
-
     void AddConsignColumn( const QString& column );
     //@}
 
@@ -66,12 +65,12 @@ private:
     //! @name Helpers
     //@{
     virtual void showEvent( QShowEvent* );
-    virtual void NotifyUpdated( const LogisticConsigns& consigns );
+    virtual void NotifyUpdated( const Extension& consigns );
     virtual void NotifyUpdated( const Consign& consigns );
     virtual void NotifySelected( const kernel::Entity_ABC* agent );
 
-    virtual void DisplayRequested( const LogisticConsigns& consigns, gui::ListDisplayer< ConcreteDisplayer >* list ) = 0;
-    virtual void DisplayHandled( const LogisticConsigns& consigns, gui::ListDisplayer< ConcreteDisplayer >* list ) = 0;
+    virtual void DisplayRequested( const Extension& consigns, gui::ListDisplayer< ConcreteDisplayer >* list );
+    virtual void DisplayHandled( const Extension& consigns, gui::ListDisplayer< ConcreteDisplayer >* list );
     //@}
 
 private:
@@ -110,7 +109,6 @@ LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::LogisticCon
                 .AddChild( tr( "Consumer:" ) )
                 .AddChild( tr( "Handler:" ) );
     controllers_.Register( *this );
-    hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -153,11 +151,12 @@ void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::AddCon
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
 template< typename ConcreteDisplayer, typename Consign, typename Extension >
-void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::showEvent( QShowEvent* )
+void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::showEvent( QShowEvent* event )
 {
     const kernel::Entity_ABC* entity = selected_;
     selected_ = 0;
     NotifySelected( entity );
+    QVBox::showEvent( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -165,9 +164,9 @@ void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::showEv
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
 template< typename ConcreteDisplayer, typename Consign, typename Extension >
-void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::NotifyUpdated( const LogisticConsigns& consigns )
+void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::NotifyUpdated( const Extension& consigns )
 {
-    if( selected_ && selected_->Retrieve< LogisticConsigns >() == &consigns )
+    if( selected_ && selected_->Retrieve< Extension >() == &consigns )
     {
         DisplayRequested( consigns, pConsignListView_ );
         DisplayHandled( consigns, pConsignHandledListView_ );
@@ -196,13 +195,37 @@ template< typename ConcreteDisplayer, typename Consign, typename Extension >
 void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::NotifySelected( const kernel::Entity_ABC* element )
 {
     selected_ = element;
-    if( const LogisticConsigns* extension = selected_ ? selected_->Retrieve< LogisticConsigns >() : 0 )
+    if( const Extension* extension = selected_ ? selected_->Retrieve< Extension >() : 0 )
     {
         show();
         NotifyUpdated( *extension );
     }
     else
         hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticConsignsWidget_ABC::DisplayRequested
+// Created: SBO 2007-03-30
+// -----------------------------------------------------------------------------
+template< typename ConcreteDisplayer, typename Consign, typename Extension >
+void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::DisplayRequested( const Extension& consigns, gui::ListDisplayer< ConcreteDisplayer >* list )
+{
+    list->DeleteTail( 
+        list->DisplayList( consigns.requested_.begin(), consigns.requested_.end() )
+        );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticConsignsWidget_ABC::DisplayHandled
+// Created: SBO 2007-03-30
+// -----------------------------------------------------------------------------
+template< typename ConcreteDisplayer, typename Consign, typename Extension >
+void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::DisplayHandled( const Extension& consigns, gui::ListDisplayer< ConcreteDisplayer >* list )
+{
+    list->DeleteTail( 
+        list->DisplayList( consigns.handled_.begin(), consigns.handled_.end() )
+        );
 }
 
 #endif // __LogisticConsignsWidget_ABC_h_

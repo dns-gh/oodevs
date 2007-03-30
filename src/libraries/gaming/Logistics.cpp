@@ -72,22 +72,15 @@ void Logistics::DoUpdate( const ASN1T_MsgLogSanteEtat& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Logistics::InstanciateSupplyState
-// Created: AGE 2006-03-01
-// -----------------------------------------------------------------------------
-SupplyStates& Logistics::InstanciateSupplyState()
-{
-    SupplyStates* ext = new SupplyStates( controller_, static_.objectTypes_, static_.objectTypes_, dico_);
-    holder_.Attach( *ext );
-    return *ext;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Logistics::DoUpdate
 // Created: AGE 2006-03-01
 // -----------------------------------------------------------------------------
 void Logistics::DoUpdate( const ASN1T_MsgLogRavitaillementEtat& message )
 {
     if( ! holder_.Retrieve< SupplyStates >() )
-        InstanciateSupplyState().DoUpdate( message );
+    {
+        SupplyStates* ext = new SupplyStates( controller_, static_.objectTypes_, static_.objectTypes_, dico_);
+        holder_.Attach( *ext );
+        ext->DoUpdate( message );
+    }
 }

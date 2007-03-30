@@ -13,15 +13,13 @@
 #include "gaming/LogMaintenanceConsign.h"
 #include "LogisticConsignsWidget_ABC.h"
 
-class MaintenanceStates;
-
 // =============================================================================
 /** @class  MaintenanceConsignsWidget
     @brief  MaintenanceConsignsWidget
 */
 // Created: SBO 2007-02-19
 // =============================================================================
-class MaintenanceConsignsWidget : public LogisticConsignsWidget_ABC< MaintenanceConsignsWidget, LogMaintenanceConsign, MaintenanceStates >
+class MaintenanceConsignsWidget : public LogisticConsignsWidget_ABC< MaintenanceConsignsWidget, LogMaintenanceConsign, LogMaintenanceConsigns >
 {
 
 public:
@@ -36,12 +34,6 @@ private:
     //@{
     MaintenanceConsignsWidget( const MaintenanceConsignsWidget& );            //!< Copy constructor
     MaintenanceConsignsWidget& operator=( const MaintenanceConsignsWidget& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void DisplayRequested( const LogisticConsigns& consigns, gui::ListDisplayer< MaintenanceConsignsWidget >* list );
-    virtual void DisplayHandled( const LogisticConsigns& consigns, gui::ListDisplayer< MaintenanceConsignsWidget >* list );
     //@}
 };
 

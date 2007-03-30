@@ -40,3 +40,13 @@ InfoMedicalDialog::~InfoMedicalDialog()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: InfoMedicalDialog::ShouldDisplay
+// Created: SBO 2007-03-30
+// -----------------------------------------------------------------------------
+bool InfoMedicalDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
+{
+    return element.Retrieve< MedicalStates >()
+        || element.Retrieve< LogMedicalConsigns >();
+}

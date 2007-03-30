@@ -101,6 +101,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual bool ShouldDisplay( const kernel::Entity_ABC& element ) const;
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     //@}
 
@@ -134,13 +135,23 @@ InfoDialog< Extension >::~InfoDialog()
 }
 
 // -----------------------------------------------------------------------------
+// Name: InfoDialog::ShouldDisplay
+// Created: SBO 2007-03-30
+// -----------------------------------------------------------------------------
+template< typename Extension >
+bool InfoDialog< Extension >::ShouldDisplay( const kernel::Entity_ABC& element ) const
+{
+    return element.Retrieve< Extension >();
+}
+
+// -----------------------------------------------------------------------------
 // Name: InfoDialog::NotifySelected
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
 template< typename Extension >
 void InfoDialog< Extension >::NotifySelected( const kernel::Entity_ABC* element )
 {
-    SetEnabled( element && element->Retrieve< Extension >() );
+    SetEnabled( element && ShouldDisplay( *element ) );
 }
 
 #endif // __InfoDialog_h_

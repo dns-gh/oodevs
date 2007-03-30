@@ -17,7 +17,7 @@
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
 MaintenanceConsignsWidget::MaintenanceConsignsWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : LogisticConsignsWidget_ABC< MaintenanceConsignsWidget, LogMaintenanceConsign, MaintenanceStates >( parent, controllers, factory )
+    : LogisticConsignsWidget_ABC< MaintenanceConsignsWidget, LogMaintenanceConsign, LogMaintenanceConsigns >( parent, controllers, factory )
 {
     AddConsignColumn( tr( "Equipment:" ) );
     AddConsignColumn( tr( "Breakdown:" ) );
@@ -31,26 +31,4 @@ MaintenanceConsignsWidget::MaintenanceConsignsWidget( QWidget* parent, kernel::C
 MaintenanceConsignsWidget::~MaintenanceConsignsWidget()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MaintenanceConsignsWidget::DisplayRequested
-// Created: AGE 2006-07-04
-// -----------------------------------------------------------------------------
-void MaintenanceConsignsWidget::DisplayRequested( const LogisticConsigns& consigns, gui::ListDisplayer< MaintenanceConsignsWidget >* list )
-{
-    list->DeleteTail( 
-        list->DisplayList( consigns.requestedMaintenances_.begin(), consigns.requestedMaintenances_.end() )
-        );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MaintenanceConsignsWidget::DisplayHandled
-// Created: AGE 2006-07-04
-// -----------------------------------------------------------------------------
-void MaintenanceConsignsWidget::DisplayHandled( const LogisticConsigns& consigns, gui::ListDisplayer< MaintenanceConsignsWidget >* list )
-{
-    list->DeleteTail( 
-        list->DisplayList( consigns.handledMaintenances_.begin(), consigns.handledMaintenances_.end() )
-        );
 }

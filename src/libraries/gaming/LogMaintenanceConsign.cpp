@@ -36,7 +36,7 @@ LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const ASN1
     , diagnosed_       ( false )
     , nState_          ( eLogMaintenanceTraitementEtat_Termine )
 {
-    if( LogisticConsigns* consign = pion_.Retrieve< LogisticConsigns >() )
+    if( LogMaintenanceConsigns* consign = pion_.Retrieve< LogMaintenanceConsigns >() )
         consign->AddConsign( *this );
 }
 
@@ -46,10 +46,10 @@ LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const ASN1
 // -----------------------------------------------------------------------------
 LogMaintenanceConsign::~LogMaintenanceConsign()
 {
-    if( LogisticConsigns* consign = pion_.Retrieve< LogisticConsigns >() )
+    if( LogMaintenanceConsigns* consign = pion_.Retrieve< LogMaintenanceConsigns >() )
         consign->RemoveConsign( *this );
     if( pPionLogHandling_ )
-        if( LogisticConsigns* consign = pPionLogHandling_->Retrieve< LogisticConsigns >() )
+        if( LogMaintenanceConsigns* consign = pPionLogHandling_->Retrieve< LogMaintenanceConsigns >() )
             consign->TerminateConsign( *this );
 }
 
@@ -70,10 +70,10 @@ void LogMaintenanceConsign::Update( const ASN1T_MsgLogMaintenanceTraitementEquip
         diagnosed_ = message.diagnostique_effectue;
 
     if( pPionLogHandling_ )
-        pPionLogHandling_->Get< LogisticConsigns >().TerminateConsign( *this );
+        pPionLogHandling_->Get< LogMaintenanceConsigns >().TerminateConsign( *this );
     pPionLogHandling_ = resolver_.Find( message.oid_pion_log_traitant );
     if( pPionLogHandling_ )
-        pPionLogHandling_->Get< LogisticConsigns >().HandleConsign( *this );
+        pPionLogHandling_->Get< LogMaintenanceConsigns >().HandleConsign( *this );
     
     controller_.Update( *this );
 }

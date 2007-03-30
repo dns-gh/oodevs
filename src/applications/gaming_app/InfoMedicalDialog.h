@@ -38,6 +38,12 @@ public:
              InfoMedicalDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~InfoMedicalDialog();
     //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual bool ShouldDisplay( const kernel::Entity_ABC& element ) const;
+    //@}
 };
 
 #endif // __InfoMedicalDialog_h_

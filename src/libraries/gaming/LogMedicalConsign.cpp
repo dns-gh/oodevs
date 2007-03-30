@@ -39,7 +39,7 @@ LogMedicalConsign::LogMedicalConsign( Controller& controller, const Resolver_ABC
     , diagnosed_       ( false )
     , nState_          ( eLogSanteTraitementEtat_Termine )
 {
-    pion_.Get< LogisticConsigns >().AddConsign( *this );
+    pion_.Get< LogMedicalConsigns >().AddConsign( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,9 +48,9 @@ LogMedicalConsign::LogMedicalConsign( Controller& controller, const Resolver_ABC
 // -----------------------------------------------------------------------------
 LogMedicalConsign::~LogMedicalConsign()
 {
-    pion_.Get< LogisticConsigns >().RemoveConsign( *this );
+    pion_.Get< LogMedicalConsigns >().RemoveConsign( *this );
     if( pPionLogHandling_ )
-        pPionLogHandling_->Get< LogisticConsigns >().TerminateConsign( *this );
+        pPionLogHandling_->Get< LogMedicalConsigns >().TerminateConsign( *this );
 }
 
 // =============================================================================
@@ -66,10 +66,10 @@ void LogMedicalConsign::Update( const ASN1T_MsgLogSanteTraitementHumainUpdate& m
     if( message.m.oid_pion_log_traitantPresent )
     {
         if( pPionLogHandling_ )
-            pPionLogHandling_->Get< LogisticConsigns >().TerminateConsign( *this );
+            pPionLogHandling_->Get< LogMedicalConsigns >().TerminateConsign( *this );
         pPionLogHandling_ = resolver_.Find( message.oid_pion_log_traitant );
         if( pPionLogHandling_ )
-            pPionLogHandling_->Get< LogisticConsigns >().HandleConsign( *this );
+            pPionLogHandling_->Get< LogMedicalConsigns >().HandleConsign( *this );
     }
 
     if( message.m.blesse_mentalPresent )

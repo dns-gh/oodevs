@@ -10,7 +10,6 @@
 #ifndef __LogisticConsigns_h_
 #define __LogisticConsigns_h_
 
-#include "game_asn/Asn.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
@@ -24,71 +23,97 @@ class LogMaintenanceConsign;
 class LogMedicalConsign;
 
 // =============================================================================
-/** @class  LogisticConsigns
-    @brief  LogisticConsigns
+/** @class  LogisticConsigns_ABC
+    @brief  LogisticConsigns_ABC
 */
 // Created: AGE 2006-02-28
 // =============================================================================
-class LogisticConsigns : public kernel::Extension_ABC
-                       , public kernel::Drawable_ABC
+template< typename ConcreteExtension, typename Consign >
+class LogisticConsigns_ABC : public kernel::Extension_ABC
+                           , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LogisticConsigns( kernel::Controller& controller );
-    virtual ~LogisticConsigns();
+    explicit LogisticConsigns_ABC( kernel::Controller& controller );
+    virtual ~LogisticConsigns_ABC();
     //@}
 
     //! @name Operations
     //@{
-    void AddConsign   ( LogSupplyConsign& consign );
-    void RemoveConsign( LogSupplyConsign& consign );
+    void AddConsign      ( Consign& consign );
+    void RemoveConsign   ( Consign& consign );
 
-    void AddConsign   ( LogMaintenanceConsign& consign );
-    void RemoveConsign( LogMaintenanceConsign& consign );
-
-    void AddConsign   ( LogMedicalConsign& consign );
-    void RemoveConsign( LogMedicalConsign& consign );
-
-    void HandleConsign   ( LogSupplyConsign& consign );
-    void TerminateConsign( LogSupplyConsign& consign );
-
-    void HandleConsign   ( LogMaintenanceConsign& consign );
-    void TerminateConsign( LogMaintenanceConsign& consign );
-
-    void HandleConsign   ( LogMedicalConsign& consign );
-    void TerminateConsign( LogMedicalConsign& consign );
+    void HandleConsign   ( Consign& consign );
+    void TerminateConsign( Consign& consign );
 
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    virtual void SelectColor() const = 0;
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    LogisticConsigns( const LogisticConsigns& );            //!< Copy constructor
-    LogisticConsigns& operator=( const LogisticConsigns& ); //!< Assignement operator
+    LogisticConsigns_ABC( const LogisticConsigns_ABC& );            //!< Copy constructor
+    LogisticConsigns_ABC& operator=( const LogisticConsigns_ABC& ); //!< Assignement operator
     //@}
 
     //! @name Types
     //@{
-    typedef std::set< const LogSupplyConsign* >      T_SupplyConsigns;
-    typedef std::set< const LogMaintenanceConsign* > T_MaintenanceConsigns;
-    typedef std::set< const LogMedicalConsign* >     T_MedicalConsigns;
+    typedef std::set< const Consign* > T_Consigns;
     //@}
 
 public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-
-    T_SupplyConsigns      requestedSupplies_;
-    T_SupplyConsigns      handledSupplies_;
-    T_MaintenanceConsigns requestedMaintenances_;
-    T_MaintenanceConsigns handledMaintenances_;
-    T_MedicalConsigns     requestedMedical_;
-    T_MedicalConsigns     handledMedical_;
+    T_Consigns requested_;
+    T_Consigns handled_;
     //@}
+};
+
+#include "LogisticConsigns.inl"
+
+class LogMaintenanceConsigns : public LogisticConsigns_ABC< LogMaintenanceConsigns, LogMaintenanceConsign >
+{
+public:
+    explicit LogMaintenanceConsigns( kernel::Controller& controller )
+        : LogisticConsigns_ABC< LogMaintenanceConsigns, LogMaintenanceConsign >( controller )
+    {}
+    virtual ~LogMaintenanceConsigns() {}
+
+protected:
+    virtual void SelectColor() const { glColor4f( COLOR_MAROON ); } // $$$$ SBO 2007-03-30: 
+};
+
+class LogMedicalConsigns : public LogisticConsigns_ABC< LogMedicalConsigns, LogMedicalConsign >
+{
+public:
+    explicit LogMedicalConsigns( kernel::Controller& controller )
+        : LogisticConsigns_ABC< LogMedicalConsigns, LogMedicalConsign >( controller )
+    {}
+    virtual ~LogMedicalConsigns() {}
+
+protected:
+    virtual void SelectColor() const { glColor4f( COLOR_PINK ); } // $$$$ SBO 2007-03-30: 
+};
+
+class LogSupplyConsigns : public LogisticConsigns_ABC< LogSupplyConsigns, LogSupplyConsign >
+{
+public:
+    explicit LogSupplyConsigns( kernel::Controller& controller )
+        : LogisticConsigns_ABC< LogSupplyConsigns, LogSupplyConsign >( controller )
+    {}
+    virtual ~LogSupplyConsigns() {}
+
+protected:
+    virtual void SelectColor() const { glColor4f( COLOR_ORANGE ); } // $$$$ SBO 2007-03-30: 
 };
 
 #endif // __LogisticConsigns_h_

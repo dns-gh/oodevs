@@ -44,7 +44,7 @@ LogSupplyConsign::LogSupplyConsign( Controller& controller, const Resolver_ABC< 
                                          message.dotations.elem[i].quantite_demandee,
                                          message.dotations.elem[i].quantite_accordee,
                                          message.dotations.elem[i].quantite_en_transit ) );
-    pion_.Get< LogisticConsigns >().AddConsign( *this );
+    pion_.Get< LogSupplyConsigns >().AddConsign( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,11 +53,11 @@ LogSupplyConsign::LogSupplyConsign( Controller& controller, const Resolver_ABC< 
 // -----------------------------------------------------------------------------
 LogSupplyConsign::~LogSupplyConsign()
 {
-    pion_.Get< LogisticConsigns >().RemoveConsign( *this );
+    pion_.Get< LogSupplyConsigns >().RemoveConsign( *this );
     if( pAutomateLogHandling_ )
-        pAutomateLogHandling_->Get< LogisticConsigns >().TerminateConsign( *this );
+        pAutomateLogHandling_->Get< LogSupplyConsigns >().TerminateConsign( *this );
     if( pPionLogConvoying_ )
-        pPionLogConvoying_->Get< LogisticConsigns >().TerminateConsign( *this );
+        pPionLogConvoying_->Get< LogSupplyConsigns >().TerminateConsign( *this );
     DeleteAll();
 }
 
@@ -70,19 +70,19 @@ void LogSupplyConsign::Update( const ASN1T_MsgLogRavitaillementTraitementUpdate&
     if( message.m.oid_automate_log_traitantPresent )
     {
         if( pAutomateLogHandling_ )
-            pAutomateLogHandling_->Get< LogisticConsigns >().TerminateConsign( *this );
+            pAutomateLogHandling_->Get< LogSupplyConsigns >().TerminateConsign( *this );
         pAutomateLogHandling_ = resolver_.Find( message.oid_automate_log_traitant );
         if( pAutomateLogHandling_ )
-            pAutomateLogHandling_->Get< LogisticConsigns >().HandleConsign( *this );
+            pAutomateLogHandling_->Get< LogSupplyConsigns >().HandleConsign( *this );
     }
 
     if( message.m.oid_pion_convoyantPresent )
     {
         if( pPionLogConvoying_ )
-            pPionLogConvoying_->Get< LogisticConsigns >().TerminateConsign( *this );
+            pPionLogConvoying_->Get< LogSupplyConsigns >().TerminateConsign( *this );
         pPionLogConvoying_ = resolver_.Find(message.oid_pion_convoyant );
         if( message.oid_pion_convoyant )
-            pPionLogConvoying_->Get< LogisticConsigns >().HandleConsign( *this );
+            pPionLogConvoying_->Get< LogSupplyConsigns >().HandleConsign( *this );
     }
 
     if( message.m.oid_automate_log_fournissant_moyens_convoiPresent )
@@ -119,8 +119,7 @@ void LogSupplyConsign::Update( const ASN1T_MsgLogRavitaillementTraitementUpdate&
 // -----------------------------------------------------------------------------
 void LogSupplyConsign::Display( kernel::Displayer_ABC& displayer, kernel::Displayer_ABC& itemDisplayer ) const
 {
-    displayer.Display( tools::translate( "Logistic", "Logistic requests" ), pion_ )
-             .Display( "", nState_ );
+    displayer.Display( pion_ ).Display( nState_ );
 
     itemDisplayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ )
                  .Display( tools::translate( "Logistic", "Consumer:" ), pion_ )

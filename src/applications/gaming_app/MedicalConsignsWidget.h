@@ -13,15 +13,13 @@
 #include "gaming/LogMedicalConsign.h"
 #include "LogisticConsignsWidget_ABC.h"
 
-class MedicalStates;
-
 // =============================================================================
 /** @class  MedicalConsignsWidget
     @brief  MedicalConsignsWidget
 */
 // Created: SBO 2007-02-19
 // =============================================================================
-class MedicalConsignsWidget : public LogisticConsignsWidget_ABC< MedicalConsignsWidget, LogMedicalConsign, MedicalStates >
+class MedicalConsignsWidget : public LogisticConsignsWidget_ABC< MedicalConsignsWidget, LogMedicalConsign, LogMedicalConsigns >
 {
 
 public:
@@ -36,12 +34,6 @@ private:
     //@{
     MedicalConsignsWidget( const MedicalConsignsWidget& );            //!< Copy constructor
     MedicalConsignsWidget& operator=( const MedicalConsignsWidget& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void DisplayRequested( const LogisticConsigns& consigns, gui::ListDisplayer< MedicalConsignsWidget >* list );
-    virtual void DisplayHandled( const LogisticConsigns& consigns, gui::ListDisplayer< MedicalConsignsWidget >* list );
     //@}
 };
 

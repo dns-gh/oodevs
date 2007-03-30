@@ -38,7 +38,7 @@ InfoButtonsWidget::InfoButtonsWidget( QWidget* widget, kernel::Controllers& cont
     AddButton< InfoDotationsDialog >  ( MAKE_PIXMAP( dotations )  , controllers, factory );
     AddButton< InfoMedicalDialog >    ( MAKE_PIXMAP( medical )    , controllers, factory );
     AddButton< InfoLendingsDialog >   ( MAKE_PIXMAP( lendborrow ) , controllers, factory );
-    AddButton< InfoSupplyDialog>      ( MAKE_PIXMAP( supply )     , controllers, factory );
+    AddButton< InfoSupplyDialog >     ( MAKE_PIXMAP( supply )     , controllers, factory );
 }
 
 // -----------------------------------------------------------------------------

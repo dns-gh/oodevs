@@ -56,7 +56,6 @@ private:
     virtual void DoUpdate( const ASN1T_MsgLogSanteEtat& message );
     virtual void DoUpdate( const ASN1T_MsgLogMaintenanceEtat& message );
     virtual void DoUpdate( const ASN1T_MsgLogRavitaillementEtat& message );
-    SupplyStates& InstanciateSupplyState();
     //@}
 
 private:

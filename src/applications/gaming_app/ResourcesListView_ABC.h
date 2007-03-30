@@ -15,11 +15,11 @@
 #include "clients_kernel/SafePointer.h"
 #include "clients_gui/ListDisplayer.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 
 namespace kernel
 {
-    class Agent_ABC;
+    class Entity_ABC;
     class Controllers;
     class Displayer_ABC;
 }
@@ -40,7 +40,7 @@ template< typename ConcreteDisplayer, typename Extension >
 class ResourcesListView_ABC : public gui::ListDisplayer< ConcreteDisplayer >
                             , public kernel::Observer_ABC
                             , public kernel::ElementObserver_ABC< Extension >
-                            , public kernel::SelectionObserver< kernel::Agent_ABC >
+                            , public kernel::SelectionObserver< kernel::Entity_ABC >
 {
 
 public:
@@ -67,7 +67,7 @@ private:
     //@{
     virtual void polish();
     virtual void showEvent( QShowEvent* );
-    virtual void NotifySelected( const kernel::Agent_ABC* agent );
+    virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void NotifyUpdated( const Extension& a ) = 0;
     //@}
 
@@ -75,7 +75,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    kernel::SafePointer< kernel::Agent_ABC > selected_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };
 
@@ -128,11 +128,12 @@ void ResourcesListView_ABC< ConcreteDisplayer, Extension >::polish()
 // Created: SBO 2007-02-16
 // -----------------------------------------------------------------------------
 template< typename ConcreteDisplayer, typename Extension >
-void ResourcesListView_ABC< ConcreteDisplayer, Extension >::showEvent( QShowEvent* )
+void ResourcesListView_ABC< ConcreteDisplayer, Extension >::showEvent( QShowEvent* event )
 {
-    const kernel::Agent_ABC* selected = selected_;
+    const kernel::Entity_ABC* selected = selected_;
     selected_ = 0;
     NotifySelected( selected );
+    gui::ListDisplayer< ConcreteDisplayer >::showEvent( event );
 }
     
 // -----------------------------------------------------------------------------
@@ -140,15 +141,10 @@ void ResourcesListView_ABC< ConcreteDisplayer, Extension >::showEvent( QShowEven
 // Created: SBO 2007-02-16
 // -----------------------------------------------------------------------------
 template< typename ConcreteDisplayer, typename Extension >
-void ResourcesListView_ABC< ConcreteDisplayer, Extension >::NotifySelected( const kernel::Agent_ABC* agent )
+void ResourcesListView_ABC< ConcreteDisplayer, Extension >::NotifySelected( const kernel::Entity_ABC* entity )
 {
-    selected_ = agent;
-    if( !selected_ )
-    {
-        hide();
-        return;
-    }
-    if( const Extension* extension = selected_->Retrieve< Extension >() )
+    selected_ = entity;
+    if( const Extension* extension = selected_ ? selected_->Retrieve< Extension >() : 0 )
     {
         show();
         NotifyUpdated( *extension );

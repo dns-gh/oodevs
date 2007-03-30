@@ -38,6 +38,12 @@ public:
              InfoSupplyDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~InfoSupplyDialog();
     //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual bool ShouldDisplay( const kernel::Entity_ABC& element ) const;
+    //@}
 };
 
 #endif // __InfoSupplyDialog_h_
