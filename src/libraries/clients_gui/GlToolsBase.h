@@ -44,6 +44,7 @@ public:
     geometry::Point2f IconLocation( const char** xpm );
     void PrintApp6( const std::string& symbol, const geometry::Rectangle2f& viewport, unsigned vWidth = 640, unsigned vHeight = 480 );
     void SetIconLocation( const char** xpm, const geometry::Point2f& position );
+    void DrawBillboardRect();
     //@}
 
 private:
@@ -67,6 +68,8 @@ private:
 
     T_Icons         icons_;
     GLSymbols*      symbols_;
+
+    unsigned billboard_;
     //@}
 };
 

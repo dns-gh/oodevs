@@ -80,6 +80,9 @@ private:
     DisconnectDialog*   pDisconnectDlg_;
     int speed_;
     bool connected_, paused_;
+
+    QIconSet connectedPix_, disconnectedPix_;
+    QIconSet playPix_, stopPix_;
     //@}
 };
 

@@ -27,6 +27,7 @@ GlToolsBase::GlToolsBase( Controllers& controllers )
     : controllers_( controllers )
     , selected_( false )
     , symbols_( new GLSymbols() )
+    , billboard_( 0 )
 {
     // NOTHING
 }
@@ -39,6 +40,7 @@ GlToolsBase::~GlToolsBase()
 {
     for( CIT_Icons it = icons_.begin(); it != icons_.end(); ++it )
         glDeleteTextures( 1, & it->second );
+    glDeleteLists( billboard_, 1 );
     delete symbols_;
 }
 
@@ -121,4 +123,29 @@ void GlToolsBase::PrintApp6( const std::string& symbol, const geometry::Rectangl
 GlToolsBase& GlToolsBase::Base() const
 {
     return const_cast< GlToolsBase& >( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlToolsBase::DrawBillboardRect
+// Created: AGE 2007-04-02
+// -----------------------------------------------------------------------------
+void GlToolsBase::DrawBillboardRect()
+{
+    if( ! billboard_ )
+    {
+        billboard_ = glGenLists( 1 );
+        glNewList( billboard_, GL_COMPILE );
+        glBegin( GL_QUADS );
+            glTexCoord2f( 0.f, 1.f );
+            glVertex2f( -1, -1 );
+            glTexCoord2f( 1.f, 1.f );
+            glVertex2f( 1, -1 );
+            glTexCoord2f( 1.f, 0.f );
+            glVertex2f( 1, 1 );
+            glTexCoord2f( 0.f, 0.f );
+            glVertex2f( -1, 1 );
+        glEnd();
+        glEndList();
+    }
+    glCallList( billboard_ );
 }

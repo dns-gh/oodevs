@@ -324,10 +324,10 @@ void GlWidget::DrawCross( const Point2f& at, float size /*= -1.f*/ ) const
     if( size < 0 )
         size = 10.f * Pixels();
     glBegin( GL_LINES );
-        glVertex2f(  at.X() - size, at.Y() - size );
-        glVertex2f(  at.X() + size, at.Y() + size );
-        glVertex2f(  at.X() + size, at.Y() - size );
-        glVertex2f(  at.X() - size, at.Y() + size );
+        glVertex2f( at.X() - size, at.Y() - size );
+        glVertex2f( at.X() + size, at.Y() + size );
+        glVertex2f( at.X() + size, at.Y() - size );
+        glVertex2f( at.X() - size, at.Y() + size );
     glEnd();
 }
 
@@ -562,18 +562,10 @@ void GlWidget::DrawIcon( const char** xpm, const Point2f& where, float size /*= 
     Base().BindIcon( xpm );
     const Point2f iconTranslation = iconLayout_.IconLocation( xpm );
     glTranslatef( where.X() + iconTranslation.X(), where.Y() + iconTranslation.Y(), 0.f );
-        glBegin( GL_QUADS );
-            glTexCoord2f( 0.f, 1.f );
-            glVertex2f( -size, -size );
-            glTexCoord2f( 1.f, 1.f );
-            glVertex2f( size, -size );
-            glTexCoord2f( 1.f, 0.f );
-            glVertex2f( size, size );
-            glTexCoord2f( 0.f, 0.f );
-            glVertex2f( -size, size );
-        glEnd();
-    glPopAttrib();
+    glScalef( size, size, size );
+    Base().DrawBillboardRect();
     glPopMatrix();
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------

@@ -66,6 +66,10 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     , speed_( 4212 )
     , connected_( false )
     , paused_( false )
+    , connectedPix_   ( MAKE_ICON( connected ) )
+    , disconnectedPix_( MAKE_ICON( notconnected ) )
+    , playPix_        ( MAKE_ICON( play ) )
+    , stopPix_        ( MAKE_ICON( stop ) )
 {
     setLabel( tr( "Simulation control" ) );
 
@@ -189,7 +193,7 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
     connected_ = simulation.IsConnected();
     if( connected_ )
     {
-        pConnectButton_->setIconSet( MAKE_ICON( connected ) );
+        pConnectButton_->setIconSet( connectedPix_ );
         pConnectButton_->setTextLabel( tr( "Disconnect (C)" ) );
         pPlayButton_->setEnabled( true );
         if( !pSpeedSpinBox_->isEnabled() )
@@ -197,7 +201,7 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
     }
     else
     {
-        pConnectButton_->setIconSet( MAKE_ICON( notconnected ) );
+        pConnectButton_->setIconSet( disconnectedPix_ );
         pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
         pPlayButton_->setEnabled( false );
         pSpeedSpinBox_->setEnabled( false );
@@ -207,12 +211,12 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
     paused_ = simulation.IsPaused();
     if( paused_ )
     {
-        pPlayButton_->setIconSet( MAKE_ICON( play ) );
+        pPlayButton_->setIconSet( playPix_ );
         pPlayButton_->setTextLabel( tr( "Unpause (P)" ) );
     }
     else
     {
-        pPlayButton_->setIconSet( MAKE_ICON( stop ) );
+        pPlayButton_->setIconSet( stopPix_ );
         pPlayButton_->setTextLabel( tr( "Pause (P)" ) );
     }
 

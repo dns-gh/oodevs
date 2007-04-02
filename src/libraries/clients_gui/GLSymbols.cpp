@@ -76,8 +76,7 @@ svg::Node_ABC* GLSymbols::Compile( const std::string& filename, float lod ) cons
 // -----------------------------------------------------------------------------
 void GLSymbols::PrintApp6( const std::string& symbol, const geometry::Rectangle2f& viewport, unsigned vWidth /*= 640*/, unsigned vHeight /*= 480*/ )
 {
-    // $$$$ AGE 2006-10-24: 
-    const bool create = symbols_.find( symbol ) == symbols_.end();
+    const bool create = ! symbol.empty() && symbols_.find( symbol ) == symbols_.end();
     T_LodSymbol& node = symbols_[ symbol ];
     if( create )
     {
