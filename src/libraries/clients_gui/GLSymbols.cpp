@@ -95,6 +95,7 @@ void GLSymbols::PrintApp6( const std::string& symbol, const geometry::Rectangle2
     Node_ABC* renderNode = viewport.Width() > 30000 ? node.second : node.first;  // $$$$ AGE 2006-09-11: hardcoded lod
     if( renderNode )
     {
+        glEnableClientState( GL_VERTEX_ARRAY );
         const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
         SetCurrentColor( *current_ ); // $$$$ AGE 2006-10-25: 
         renderingContext_->SetViewport( box, vWidth, vHeight );
