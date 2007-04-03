@@ -33,7 +33,6 @@ public:
              MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion& pion, const ASN1T_MsgPionOrder& asn );
              MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion& pion, const MIL_AutomateMission& parent );
              MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion& pion );
-             MIL_PionMission( MIL_AgentPion& pion, const MIL_PionMission&     rhs );
     virtual ~MIL_PionMission();
     //@}
 
@@ -56,6 +55,11 @@ public:
     //@}
 
 private:
+    //! @name Constructors/Destructor
+    //@{
+    MIL_PionMission( MIL_AgentPion& pion, const MIL_PionMission& rhs );
+    //@}
+
     //! @name Tools
     //@{
     void Stop();

@@ -167,8 +167,9 @@ bool MIL_PionOrderManager::RelievePion( const MIL_AgentPion& pion )
     if( !pPionMission )
         return false;
 
-    MIL_PionMission* pMission = new MIL_PionMission( pion_, *pPionMission );
-    MIL_OrderManager_ABC::ReplaceMission( pMission );
+    MIL_PionMission& newMission = pPionMission->CreateCopy( pion_ );
+    MIL_OrderManager_ABC::ReplaceMission( &newMission );
     return true;
 }
+
 

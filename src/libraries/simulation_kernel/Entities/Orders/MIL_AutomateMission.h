@@ -31,7 +31,6 @@ public:
     //@{
              MIL_AutomateMission( const MIL_AutomateMissionType& type, MIL_Automate& automate, const ASN1T_MsgAutomateOrder& asn );
              MIL_AutomateMission( const MIL_AutomateMissionType& type, MIL_Automate& automate );
-             MIL_AutomateMission( MIL_Automate& automate, const MIL_AutomateMission& rhs );
     virtual ~MIL_AutomateMission();
     //@}
 
@@ -54,6 +53,11 @@ public:
     //@}
 
 private:
+    //! @name Constructors/Destructor
+    //@{
+    MIL_AutomateMission( MIL_Automate& automate, const MIL_AutomateMission& rhs );
+    //@}
+
     //! @name Tools
     //@{
     void Stop();
