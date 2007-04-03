@@ -25,6 +25,12 @@
 !ifndef DOCDIR
     !define DOCDIR "..\..\out\documentation"
 !endif
+!ifndef LIBRARIESDIR
+    !define LIBRARIESDIR "..\..\src\libraries"
+!endif
+!ifndef APPLICATIONSDIR
+    !define APPLICATIONSDIR "..\..\src\applications"
+!endif
 
 Name "C-Sword"
 OutFile "${DISTDIR}\csword-installer.exe"
