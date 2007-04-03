@@ -8,22 +8,22 @@
 ; ------------------------------------------------------------------------------
 
 !ifndef RUNDIR
-    !define RUNDIR "..\run\vc71"
+    !define RUNDIR "..\..\run\vc71"
 !endif
 !ifndef DATADIR
-    !define DATADIR "..\data"
+    !define DATADIR "..\..\data"
 !endif
 !ifndef LIBDIR
-    !define LIBDIR "..\lib\vc71"
+    !define LIBDIR "..\..\lib\vc71"
 !endif
 !ifndef OUTDIR
-    !define OUTDIR "..\out\vc71"
+    !define OUTDIR "..\..\out\vc71"
 !endif
 !ifndef DISTDIR
     !define DISTDIR "."
 !endif
 !ifndef DOCDIR
-    !define DOCDIR "..\out\documentation"
+    !define DOCDIR "..\..\out\documentation"
 !endif
 
 Name "C-Sword"

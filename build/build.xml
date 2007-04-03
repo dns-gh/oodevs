@@ -426,7 +426,7 @@
     </target>
 
     <target name="installer" description="create the installer">
-        <nsis todir="${dist.dir}/current" dir="${basedir}" script="installer.nsi"/>
+        <nsis todir="${dist.dir}/current" script="installer.nsi"/>
     </target>
 
     <!--
