@@ -7,55 +7,29 @@
 ;
 ; ------------------------------------------------------------------------------
 
-!include "MUI.nsh"
-
 !ifndef RUNDIR
     !define RUNDIR "..\run\vc71"
 !endif
-!define DATADIR "..\data"
+!ifndef DATADIR
+    !define DATADIR "..\data"
+!endif
 !ifndef LIBDIR
     !define LIBDIR "..\lib\vc71"
-!endif
-!ifndef APPLICATIONSDIR
-    !define APPLICATIONSDIR "..\applications\vc71"
 !endif
 !ifndef OUTDIR
     !define OUTDIR "..\out\vc71"
 !endif
 !ifndef DISTDIR
-    !define DISTDIR "..\dist"
+    !define DISTDIR "."
 !endif
 !ifndef DOCDIR
     !define DOCDIR "..\out\documentation"
 !endif
 
-SetCompressor lzma
 Name "C-Sword"
 OutFile "${DISTDIR}\csword-installer.exe"
-XPStyle on
 InstallDir "$PROGRAMFILES\C-Sword"
 InstallDirRegKey HKLM "Software\Masa\C-Sword" "Install_Dir"
-
-;--------------------------------
-;Interface Settings
-  !define MUI_ABORTWARNING
-
-;Pages
-  !insertmacro MUI_PAGE_WELCOME
-  ;!insertmacro MUI_PAGE_LICENSE "${NSISDIR}\Docs\Modern UI\License.txt"
-  !insertmacro MUI_PAGE_COMPONENTS
-  !insertmacro MUI_PAGE_DIRECTORY
-  !insertmacro MUI_PAGE_INSTFILES
-  !insertmacro MUI_PAGE_FINISH
-
-  !insertmacro MUI_UNPAGE_WELCOME
-  !insertmacro MUI_UNPAGE_CONFIRM
-  !insertmacro MUI_UNPAGE_INSTFILES
-  !insertmacro MUI_UNPAGE_FINISH
-
-;Languages
-  !insertmacro MUI_LANGUAGE "English"
-
 
 ;--------------------------------
 Function .onInit
