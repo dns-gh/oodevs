@@ -24,11 +24,13 @@ InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, kernel::Controllers& contro
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );
     tabs->addTab( new SupplyConsignsWidget( tabs, controllers, factory ), tr( "Consigns" ) );
-    QVBox* box = new QVBox( tabs );
-    new SupplyStocksListView( box, controllers, factory );
-    new SupplyQuotasListView( box, controllers, factory );
-    tabs->addTab( box, tr( "Stocks && Quotas" ) );
-    tabs->addTab( new SupplyTransportersListView( tabs, controllers, factory ), tr( "Transporters" ) );
+    QVBox* sqbox = new QVBox( tabs );
+    new SupplyStocksListView( sqbox, controllers, factory );
+    new SupplyQuotasListView( sqbox, controllers, factory );
+    tabs->addTab( sqbox, tr( "Stocks && Quotas" ) );
+    QVBox* tbox = new QVBox( tabs );
+    new SupplyTransportersListView( tbox, controllers, factory );
+    tabs->addTab( tbox, tr( "Transporters" ) );
     new SupplyStatusWidget( RootWidget(), controllers, factory );
 }
 
@@ -48,7 +50,8 @@ InfoSupplyDialog::~InfoSupplyDialog()
 bool InfoSupplyDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
 {
     const LogSupplyConsigns* consigns = element.Retrieve< LogSupplyConsigns >();
+    const Quotas* quotas = element.Retrieve< Quotas >();
     return ( consigns && consigns->IsRelevant() ) 
-        || element.Retrieve< MedicalStates >()
-        || element.Retrieve< Quotas >();
+        || ( quotas && quotas->IsRelevant() ) 
+        || element.Retrieve< MedicalStates >();
 }

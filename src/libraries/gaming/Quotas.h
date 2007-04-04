@@ -43,6 +43,7 @@ public:
 
     //! @name Operations
     //@{
+    bool IsRelevant() const;
     virtual void DoUpdate( const ASN1T_MsgLogRavitaillementQuotas& message );
     //@}
 

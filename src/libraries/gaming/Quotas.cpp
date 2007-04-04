@@ -45,3 +45,12 @@ void Quotas::DoUpdate( const ASN1T_MsgLogRavitaillementQuotas& message )
                                , message.quotas.elem[i].quota_disponible );
     controller_.Update( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Quotas::IsRelevant
+// Created: AGE 2007-04-04
+// -----------------------------------------------------------------------------
+bool Quotas::IsRelevant() const
+{
+    return !quotas_.empty();
+}
