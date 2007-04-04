@@ -115,9 +115,9 @@ void ChangeLogisticLinksDialog::Show()
     medicalCombo_->SetCurrentItem( log->GetMedical() );
     supplyCombo_->SetCurrentItem( log->GetSupply() );
 
-    maintenanceCombo_->setEnabled( type.IsTC2() || type.IsLogisticMaintenance() );
-    medicalCombo_->setEnabled( type.IsTC2() || type.IsLogisticMedical() );
-    supplyCombo_->setEnabled( type.IsTC2() || type.IsLogisticSupply() );
+    maintenanceCombo_->setEnabled( type.IsLogisticMaintenance() );
+    medicalCombo_->setEnabled( type.IsLogisticMedical() );
+    supplyCombo_->setEnabled( type.IsLogisticSupply() );
     show();
 }
 
@@ -131,11 +131,11 @@ void ChangeLogisticLinksDialog::NotifyCreated( const Automat_ABC& agent )
     const AutomatType& type = agent.GetType();
     if( type.IsTC2() )
         tc2Combo_->AddItem( agent.GetName(), &agent );
-    if( type.IsLogisticMaintenance() )
+    if( type.IsLogisticMaintenance() && !type.IsTC2() )
         maintenanceCombo_->AddItem( agent.GetName(), &agent );
-    if( type.IsLogisticMedical() )
+    if( type.IsLogisticMedical() && !type.IsTC2() )
         medicalCombo_->AddItem( agent.GetName(), &agent );
-    if( type.IsLogisticSupply() )
+    if( type.IsLogisticSupply() && !type.IsTC2() )
         supplyCombo_->AddItem( agent.GetName(), &agent );
 }
 
@@ -148,11 +148,11 @@ void ChangeLogisticLinksDialog::NotifyDeleted( const Automat_ABC& agent )
     const AutomatType& type = agent.GetType();
     if( type.IsTC2() )
         tc2Combo_->RemoveItem( &agent );
-    if( type.IsLogisticMaintenance() )
+    if( type.IsLogisticMaintenance() && !type.IsTC2() )
         maintenanceCombo_->RemoveItem( &agent );
-    if( type.IsLogisticMedical() )
+    if( type.IsLogisticMedical() && !type.IsTC2() )
         medicalCombo_->RemoveItem( &agent );
-    if( type.IsLogisticSupply() )
+    if( type.IsLogisticSupply() && !type.IsTC2() )
         supplyCombo_->RemoveItem( &agent );    
 }
 

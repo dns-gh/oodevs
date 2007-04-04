@@ -121,12 +121,9 @@ Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     result->Attach< Positions >( *new AutomatPositions( *result ) );
     result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dico ) );
     result->Attach( *new Quotas( controllers_.controller_, static_.objectTypes_ ) );
-    if( result->GetType().IsLogisticMaintenance() )
-        result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );
-    if( result->GetType().IsLogisticMedical() )
-        result->Attach( *new LogMedicalConsigns( controllers_.controller_ ) );
-    if( result->GetType().IsLogisticSupply() )
-        result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
+    result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );
+    result->Attach( *new LogMedicalConsigns( controllers_.controller_ ) );
+    result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
     result->Attach( *new Reports( *result, controllers_.controller_, simulation_, static_.reportFactory_ ) );
 
     result->Update( asnMsg );
@@ -153,12 +150,9 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, *result ) );
     result->Attach( *new MagicOrders( *result ) );
     result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dico ) );
-    if( result->GetType().IsLogisticMaintenance() )
-        result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );
-    if( result->GetType().IsLogisticMedical() )
-        result->Attach( *new LogMedicalConsigns( controllers_.controller_ ) );
-    if( result->GetType().IsLogisticSupply() )
-        result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
+    result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );
+    result->Attach( *new LogMedicalConsigns( controllers_.controller_ ) );
+    result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
     result->Attach< CommunicationHierarchies >( *new AgentHierarchies< CommunicationHierarchies >( controllers_.controller_, *result, model_.agents_ ) );
     result->Attach< TacticalHierarchies >     ( *new AgentHierarchies< TacticalHierarchies >     ( controllers_.controller_, *result, model_.agents_ ) );
     if( asnMsg.pc )

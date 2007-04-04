@@ -86,7 +86,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
     result->Attach( *new Dotations( controllers_.controller_, *result, dico ) );
     if( commandPost )
         result->Attach( *new CommandPostAttributes( *result ) );
-    if( type.IsTC2() || type.IsLogisticSupply() )
+    if( type.IsLogisticSupply() )
         result->Attach( *new Stocks( controllers_.controller_, *result, dico ) );
 
     result->Polish();
@@ -108,11 +108,11 @@ kernel::Automat_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatT
     Entity_ABC* kg = FindKnowledgeGroup( parent );
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
     result->Attach< TC2Hierarchies >( *new Tc2States( controllers_.controller_, *result, dico ) );
-    if( type.IsTC2() || type.IsLogisticMaintenance() )
+    if( type.IsLogisticMaintenance() )
         result->Attach< MaintenanceHierarchies >( *new MaintenanceStates( controllers_.controller_, *result, dico ) );
-    if( type.IsTC2() || type.IsLogisticMedical() )
+    if( type.IsLogisticMedical() )
         result->Attach< MedicalHierarchies >( *new MedicalStates( controllers_.controller_, *result, dico ) );
-    if( type.IsTC2() || type.IsLogisticSupply() )
+    if( type.IsLogisticSupply() )
         result->Attach< SupplyHierarchies >( *new SupplyStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
     result->Attach( *new TacticalLines() );
 
@@ -168,7 +168,7 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
     result->Attach( *new Dotations( xis, controllers_.controller_, *result, static_.objectTypes_, dico ) );
     if( result->IsCommandPost() )
         result->Attach( *new CommandPostAttributes( *result ) );
-    if( result->GetType().IsTC2() || result->GetType().IsLogisticSupply() )
+    if( result->GetType().IsLogisticSupply() )
         result->Attach( *new Stocks( xis, controllers_.controller_, *result, static_.objectTypes_, dico ) );
 
     result->Polish();
@@ -188,11 +188,11 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Formation
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
     result->Attach< TC2Hierarchies >        ( *new Tc2States( controllers_.controller_, *result, dico ) );
-    if( result->GetType().IsTC2() || result->GetType().IsLogisticMaintenance() )
+    if( result->GetType().IsLogisticMaintenance() )
         result->Attach< MaintenanceHierarchies >( *new MaintenanceStates( controllers_.controller_, *result, dico ) );
-    if( result->GetType().IsTC2() || result->GetType().IsLogisticMedical() )
+    if( result->GetType().IsLogisticMedical() )
         result->Attach< MedicalHierarchies >( *new MedicalStates( controllers_.controller_, *result, dico ) );
-    if( result->GetType().IsTC2() || result->GetType().IsLogisticSupply() )
+    if( result->GetType().IsLogisticSupply() )
         result->Attach< SupplyHierarchies >( *new SupplyStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
     result->Attach( *new TacticalLines() );
 

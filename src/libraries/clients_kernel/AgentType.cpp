@@ -159,7 +159,8 @@ bool AgentType::IsTC2() const
 bool AgentType::IsLogisticSupply() const
 {
     return type_ == "Pion LOG BLD Ravitaillement"
-        || type_ == "Pion LOG BLT Ravitaillement";
+        || type_ == "Pion LOG BLT Ravitaillement"
+        || IsTC2();
 }
 
 // -----------------------------------------------------------------------------
@@ -169,7 +170,8 @@ bool AgentType::IsLogisticSupply() const
 bool AgentType::IsLogisticMaintenance() const
 {
     return type_ == "Pion LOG BLD Maintenance"
-        || type_ == "Pion LOG BLT Maintenance";
+        || type_ == "Pion LOG BLT Maintenance"
+        || IsTC2();
 }
 
 // -----------------------------------------------------------------------------
@@ -179,5 +181,6 @@ bool AgentType::IsLogisticMaintenance() const
 bool AgentType::IsLogisticMedical() const
 {
     return type_ == "Pion LOG BLD Sante"
-        || type_ == "Pion LOG BLT Sante";
+        || type_ == "Pion LOG BLT Sante"
+        || IsTC2();
 }

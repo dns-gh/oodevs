@@ -124,7 +124,7 @@ const DecisionalModel& AutomatType::GetDecisionalModel() const
 // -----------------------------------------------------------------------------
 bool AutomatType::HasLogistics() const
 {
-    return IsTC2() || IsLogisticMaintenance() || IsLogisticMedical() || IsLogisticSupply();
+    return IsLogisticMaintenance() || IsLogisticMedical() || IsLogisticSupply();
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +133,7 @@ bool AutomatType::HasLogistics() const
 // -----------------------------------------------------------------------------
 bool AutomatType::IsTC2() const
 {
-    return name_.find( "TC2" ) != -1;
+    return type_ == "Automate LOG TC2";
 }
 
 // -----------------------------------------------------------------------------
@@ -143,7 +143,8 @@ bool AutomatType::IsTC2() const
 bool AutomatType::IsLogisticSupply() const
 {
     return type_ == "Automate LOG BLD Ravitaillement"
-        || type_ == "Automate LOG BLT Ravitaillement";
+        || type_ == "Automate LOG BLT Ravitaillement"
+        || IsTC2();
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +154,8 @@ bool AutomatType::IsLogisticSupply() const
 bool AutomatType::IsLogisticMaintenance() const
 {
     return type_ == "Automate LOG BLD Maintenance"
-        || type_ == "Automate LOG BLT Maintenance";
+        || type_ == "Automate LOG BLT Maintenance"
+        || IsTC2();
 }
 
 // -----------------------------------------------------------------------------
@@ -163,5 +165,6 @@ bool AutomatType::IsLogisticMaintenance() const
 bool AutomatType::IsLogisticMedical() const
 {
     return type_ == "Automate LOG BLD Sante"
-        || type_ == "Automate LOG BLT Sante";
+        || type_ == "Automate LOG BLT Sante"
+        || IsTC2();
 }
