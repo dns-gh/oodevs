@@ -826,29 +826,13 @@ void MIL_Automate::OnReceiveMsgSetAutomateMode( ASN1T_MsgSetAutomateMode& asnMsg
     asnReplyMsg().unit_id    = asnMsg.unit_id;
     asnReplyMsg().error_code = EnumSetAutomateModeErrorCode::no_error;
 
-//    if( IsSurrendered() )
-//    {
-//        asnReplyMsg().error_code = EnumSetAutomateModeErrorCode::error_unit_surrendered;
-//        asnReplyMsg.Send( nCtx );
-//        return;
-//    }
-
-    if( asnMsg.mode == EnumAutomateState::debraye )
+    switch( asnMsg.mode )
     {
-        if( !IsEngaged() )
-            asnReplyMsg().error_code = EnumSetAutomateModeErrorCode::error_already_debraye;
-        else
-            Disengage();
-    }
-    else if( asnMsg.mode == EnumAutomateState::embraye )
-    {
-        if( IsEngaged() )
-            asnReplyMsg().error_code = EnumSetAutomateModeErrorCode::error_already_embraye;
-        else
-            Engage();
-    }
-    else
-        assert( false );
+        case EnumAutomateState::debraye: Disengage(); break;
+        case EnumAutomateState::embraye: Engage   (); break;
+        default:
+            assert( false );
+    };
 
     asnReplyMsg.Send( nCtx );
 }

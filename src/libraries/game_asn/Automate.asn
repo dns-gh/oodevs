@@ -42,12 +42,9 @@ MsgAutomateAttributes ::= SEQUENCE
 -- Misc
 EnumSetAutomateModeErrorCode ::= ENUMERATED
 {
-    no-error                  (0),
-    error-invalid-unit        (1),
-    error-unit-not-automate   (2),
-    error-already-embraye     (3),
-    error-already-debraye     (4),
-    error-unit-surrendered    (5)
+    no-error          (0),
+    error-invalid-unit(1),
+    error-not-allowed (2)
 }
 MsgSetAutomateMode ::= SEQUENCE
 {
