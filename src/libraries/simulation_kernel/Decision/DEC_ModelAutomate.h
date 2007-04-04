@@ -26,7 +26,7 @@ class DEC_ModelAutomate : public DEC_Model_ABC< MIL_AutomateMissionType >
     MT_COPYNOTALLOWED( DEC_ModelAutomate );
 
 public:
-    DEC_ModelAutomate( const DEC_Workspace& decWorkspace, const std::string& strName, MIL_InputArchive& input, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strArchivePath, const std::string& strSourcePath );
+    DEC_ModelAutomate( const DEC_Workspace& decWorkspace, const std::string& strName, MIL_InputArchive& input, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strArchivePath );
     virtual ~DEC_ModelAutomate();
 };
 

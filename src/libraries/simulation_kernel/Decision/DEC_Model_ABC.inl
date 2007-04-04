@@ -23,7 +23,7 @@
 // Created: NLD 2003-11-24
 // -----------------------------------------------------------------------------
 template< typename T >
-DEC_Model_ABC< T >::DEC_Model_ABC( const DEC_Workspace& decWorkspace, const std::string& strModel, MIL_InputArchive& input, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strSourcePath, const std::string& strPrefix )
+DEC_Model_ABC< T >::DEC_Model_ABC( const DEC_Workspace& decWorkspace, const std::string& strModel, MIL_InputArchive& input, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strPrefix )
     : strModel_            ( strModel )
     , pDIAModel_           ( 0 )
     , pDIAType_            ( 0 )
@@ -39,7 +39,7 @@ DEC_Model_ABC< T >::DEC_Model_ABC( const DEC_Workspace& decWorkspace, const std:
     if( !pDIAType_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, std::string( "Unknown DIA Type : " ) + strDIAType );
 
-    InitializeModel   ( decWorkspace, bNeedParsing, bUseOnlyArchive, strBinaryPath, strSourcePath, strPrefix );
+    InitializeModel   ( decWorkspace, bNeedParsing, bUseOnlyArchive, strBinaryPath, strPrefix );
     InitializeMissions( input );
 }
 
@@ -124,7 +124,7 @@ bool DEC_Model_ABC< T >::FileChanged( const std::string& strFileName, time_t sin
 // Created: NLD 2006-12-13
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_Model_ABC< T >::InitializeModel( const DEC_Workspace& decWorkspace, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strSourcePath, const std::string& strPrefix )
+void DEC_Model_ABC< T >::InitializeModel( const DEC_Workspace& decWorkspace, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strPrefix )
 {
     pDIAModel_ = decWorkspace.FindDIAModelFromScript( strScript_ );
     if( pDIAModel_ )

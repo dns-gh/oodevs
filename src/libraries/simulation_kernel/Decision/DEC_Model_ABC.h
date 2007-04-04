@@ -45,7 +45,7 @@ public:
 protected:
     //! @name Constructors/Destructor
     //@{
-    DEC_Model_ABC( const DEC_Workspace& decWorkspace, const std::string& strModel, MIL_InputArchive& input, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strSourcePath, const std::string& strPrefix );
+    DEC_Model_ABC( const DEC_Workspace& decWorkspace, const std::string& strModel, MIL_InputArchive& input, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strPrefix );
     virtual ~DEC_Model_ABC();
     //@}
 
@@ -58,7 +58,7 @@ private:
 
     //! @name Initialization
     //@{
-    void InitializeModel            ( const DEC_Workspace& decWorkspace, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strSourcePath, const std::string& strPrefix );
+    void InitializeModel            ( const DEC_Workspace& decWorkspace, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strPrefix );
     void InitializeMissions         ( MIL_InputArchive& archive );
     void InitializeMissionFragOrders( MIL_InputArchive& archive, const T& missionType );
     //@}

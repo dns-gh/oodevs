@@ -53,9 +53,9 @@ private:
     void InitializeConfig      ( MIL_Config& config );
     void InitializeMissions    ( MIL_Config& config );
     void InitializeDIA         ( MIL_Config& config );
-    void InitializeDIATypes    ( MIL_InputArchive& initArchive, bool& bNeedScriptParsing, const std::string& strBinaryPath, const std::string& strSourcePath );
-    void InitializeDIAWorkspace( MIL_InputArchive& initArchive, bool& bNeedScriptParsing, const std::string& strBinaryPath, const std::string& strSourcePath );
-    void InitializeModels      ( MIL_Config&       config     , bool  bNeedScriptParsing, const std::string& strBinaryPath, const std::string& strSourcePath );   
+    void InitializeDIATypes    ( MIL_InputArchive& initArchive, bool& bNeedScriptParsing, const std::string& strBinaryPath );
+    void InitializeDIAWorkspace( MIL_InputArchive& initArchive, bool& bNeedScriptParsing, const std::string& strBinaryPath );
+    void InitializeModels      ( MIL_Config&       config     , bool  bNeedScriptParsing, const std::string& strBinaryPath );   
     //@}
 
 private:

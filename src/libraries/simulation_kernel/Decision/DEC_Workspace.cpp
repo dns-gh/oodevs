@@ -228,7 +228,7 @@ void DEC_Workspace::InitializeConfig( MIL_Config& config )
 // Name: DEC_Workspace::InitializeDIATypes
 // Created: NLD 2005-04-11
 // -----------------------------------------------------------------------------
-void DEC_Workspace::InitializeDIATypes( MIL_InputArchive& initArchive, bool& bNeedScriptParsing, const std::string& strBinaryPath, const std::string& /*strSourcePath*/ )
+void DEC_Workspace::InitializeDIATypes( MIL_InputArchive& initArchive, bool& bNeedScriptParsing, const std::string& strBinaryPath )
 {
     MT_LOG_INFO_MSG( "\tReading DIA types" );
 
@@ -263,7 +263,7 @@ void DEC_Workspace::InitializeDIATypes( MIL_InputArchive& initArchive, bool& bNe
 // Name: DEC_Workspace::InitializeDIAWorkspace
 // Created: NLD 2005-04-11
 // -----------------------------------------------------------------------------
-void DEC_Workspace::InitializeDIAWorkspace( MIL_InputArchive& initArchive, bool& bNeedScriptParsing, const std::string& strBinaryPath, const std::string& /*strSourcePath*/ )
+void DEC_Workspace::InitializeDIAWorkspace( MIL_InputArchive& initArchive, bool& bNeedScriptParsing, const std::string& strBinaryPath )
 { 
     MT_LOG_INFO_MSG( "\tReading DIA Workspace" );
 
@@ -343,8 +343,8 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
     bool bNeedScriptParsing = false;//!MIL_AgentServer::GetWorkspace().GetConfig().UseDIAArchive();
 
     MT_LOG_INFO_MSG( "Initializing DIA" );
-    InitializeDIATypes    ( decArchive, bNeedScriptParsing, strBinaryPath, strSourcePath );
-    InitializeDIAWorkspace( decArchive, bNeedScriptParsing, strBinaryPath, strSourcePath );
+    InitializeDIATypes    ( decArchive, bNeedScriptParsing, strBinaryPath );
+    InitializeDIAWorkspace( decArchive, bNeedScriptParsing, strBinaryPath );
 
     DEC_Tools                ::InitializeDIA();
     DEC_PopulationDecision   ::InitializeDIA();
@@ -361,7 +361,7 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
     MIL_ParameterType_ABC    ::Initialize   ();
 
     InitializeMissions( config );
-    InitializeModels  ( config, bNeedScriptParsing, strBinaryPath, strSourcePath );
+    InitializeModels  ( config, bNeedScriptParsing, strBinaryPath );
             
     // Finish the initialiazation of the Workspace by linking function calls
     pFuncTable_ = new DIA_FunctionTable< DEC_Workspace >();
@@ -426,7 +426,7 @@ void DEC_Workspace::InitializeMissions( MIL_Config& config )
 // Name: DEC_Workspace::InitializeModels
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_Workspace::InitializeModels( MIL_Config& config, bool bNeedScriptParsing, const std::string& strBinaryPath, const std::string& strSourcePath )
+void DEC_Workspace::InitializeModels( MIL_Config& config, bool bNeedScriptParsing, const std::string& strBinaryPath )
 {
     MIL_InputArchive phyArchive;
     phyArchive.Open( config.GetPhysicalFile() );
@@ -457,7 +457,7 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, bool bNeedScriptParsin
         const DEC_ModelPion*& pModel = pionModels_[ strName ];
         if( pModel )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown model name", modelArchive.GetContext() );   
-        pModel = new DEC_ModelPion( *this, strName, modelArchive, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath, strSourcePath );
+        pModel = new DEC_ModelPion( *this, strName, modelArchive, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath );
         static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
 
         modelArchive.EndSection(); // Modele
@@ -477,7 +477,7 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, bool bNeedScriptParsin
         const DEC_ModelAutomate*& pModel = automateModels_[ strName ];
         if( pModel )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknwon model name", modelArchive.GetContext() );   
-        pModel = new DEC_ModelAutomate( *this, strName, modelArchive, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath, strSourcePath );
+        pModel = new DEC_ModelAutomate( *this, strName, modelArchive, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath );
         static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
 
         modelArchive.EndSection(); // Modele
@@ -497,7 +497,7 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, bool bNeedScriptParsin
         const DEC_ModelPopulation*& pModel = populationModels_[ strName ];
         if( pModel )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknwon model name", modelArchive.GetContext() );   
-        pModel = new DEC_ModelPopulation( *this, strName, modelArchive, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath, strSourcePath );
+        pModel = new DEC_ModelPopulation( *this, strName, modelArchive, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath );
         static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
 
         modelArchive.EndSection(); // Modele
@@ -598,5 +598,6 @@ DIA_Model* DEC_Workspace::FindDIAModelFromScript( const std::string& strScriptNa
     }
     return 0;
 }
+
 
 
