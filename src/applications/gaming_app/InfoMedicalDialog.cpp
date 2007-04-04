@@ -47,6 +47,6 @@ InfoMedicalDialog::~InfoMedicalDialog()
 // -----------------------------------------------------------------------------
 bool InfoMedicalDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
 {
-    return element.Retrieve< MedicalStates >()
-        || element.Retrieve< LogMedicalConsigns >();
+    const LogMedicalConsigns* consigns = element.Retrieve< LogMedicalConsigns >();
+    return ( consigns && consigns->IsRelevant() ) || element.Retrieve< MedicalStates >();
 }

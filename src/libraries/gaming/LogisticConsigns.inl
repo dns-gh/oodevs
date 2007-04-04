@@ -35,6 +35,16 @@ LogisticConsigns_ABC< ConcreteExtension, Consign >::~LogisticConsigns_ABC()
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticConsigns::IsRelevant
+// Created: AGE 2007-04-04
+// -----------------------------------------------------------------------------
+template< typename ConcreteExtension, typename Consign >
+bool LogisticConsigns_ABC< ConcreteExtension, Consign >::IsRelevant() const
+{
+    return ! requested_.empty() || ! handled_.empty();
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticConsigns_ABC::AddConsign
 // Created: SBO 2007-03-30
 // -----------------------------------------------------------------------------

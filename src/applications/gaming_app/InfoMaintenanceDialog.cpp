@@ -45,6 +45,6 @@ InfoMaintenanceDialog::~InfoMaintenanceDialog()
 // -----------------------------------------------------------------------------
 bool InfoMaintenanceDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
 {
-    return element.Retrieve< MaintenanceStates >()
-        || element.Retrieve< LogMaintenanceConsigns >();
+    const LogMaintenanceConsigns* consigns = element.Retrieve< LogMaintenanceConsigns >();
+    return ( consigns && consigns->IsRelevant() ) || element.Retrieve< MaintenanceStates >();
 }
