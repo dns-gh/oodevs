@@ -50,7 +50,7 @@ TacticalLinesLayer::~TacticalLinesLayer()
 // -----------------------------------------------------------------------------
 bool TacticalLinesLayer::IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const
 {
-    return entity.Get< Positions >().IsAt( point, 10.f * tools_.Pixels() );
+    return entity.Get< Positions >().IsAt( point, 10.f * tools_.Pixels( point ) );
 }
 
 // -----------------------------------------------------------------------------

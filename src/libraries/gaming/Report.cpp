@@ -15,6 +15,7 @@
 #include "clients_kernel/Styles.h"
 #include "Simulation.h"
 #include "Tools.h"
+#include <qdatetime.h>
 
 using namespace kernel;
 

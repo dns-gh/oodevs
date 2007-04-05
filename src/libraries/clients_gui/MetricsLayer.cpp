@@ -78,7 +78,7 @@ bool MetricsLayer::HandleMouseMove( QMouseEvent* event, const geometry::Point2f&
 {
     if( event->state() == Qt::LeftButton  )
     {
-        if( ! start_.IsZero() && start_.Distance( point ) > 10 * tools_.Pixels() )
+        if( ! start_.IsZero() && start_.Distance( point ) > 10 * tools_.Pixels( point ) )
             ruling_ = true;
         if( ruling_ )
             end_ = point;

@@ -38,7 +38,6 @@ Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, const Exerci
     , strategy_( strategy )
     , zRatio_( 5 )
     , frame_( 0 )
-    , pixels_( 100.f )
     , isInitialized_( false )
 {
     // NOTHING
@@ -71,7 +70,7 @@ void Gl3dWidget::initializeGL()
 {
     if( !isInitialized_ )
     {
-        const geometry::Rectangle2f viewport( 0, 0, width_, height_ );
+        const Rectangle2f viewport( 0, 0, width_, height_ );
         Widget3D::initializeGL();
         for( CIT_Layers it = layers_.begin(); it != layers_.end(); ++it )
             (*it)->Initialize( viewport );
@@ -86,7 +85,7 @@ void Gl3dWidget::initializeGL()
 // -----------------------------------------------------------------------------
 void Gl3dWidget::Paint( const ViewFrustum& view )
 {
-    pixels_ = view.ExpectedDetailLevel();
+    current_ = view;
     ++frame_;
     glLineWidth( 1.f );
     glColor3f( 1, 1, 1 );
@@ -96,15 +95,6 @@ void Gl3dWidget::Paint( const ViewFrustum& view )
 }
 
 // $$$$ AGE 2006-04-04: ceci n'est pas un copy/paste
-
-// -----------------------------------------------------------------------------
-// Name: Gl3dWidget::Pixels
-// Created: AGE 2006-03-28
-// -----------------------------------------------------------------------------
-float Gl3dWidget::Pixels() const
-{
-    return pixels_;
-}
 
 // -----------------------------------------------------------------------------
 // Name: Gl3dWidget::StipplePattern
@@ -122,13 +112,25 @@ unsigned short Gl3dWidget::StipplePattern( int factor /*= 1*/ ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Gl3dWidget::Pixels
+// Created: AGE 2007-04-05
+// -----------------------------------------------------------------------------
+float Gl3dWidget::Pixels( const Point2f& at ) const
+{
+    return current_.Pixels( Point3f( at.X(), at.Y(), 0.f ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Gl3dWidget::DrawCross
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawCross( const Point2f& at, float size /*= -1.f*/ ) const
+void Gl3dWidget::DrawCross( const Point2f& at, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
     if( size < 0 )
-        size = 10.f * Pixels();
+        size = 10.f * Pixels( at );
+    else if( unit == pixels )
+        size *= Pixels( at );
+    
     const Vector2f u( size, size );
     const Vector2f v( size, -size );
     DrawLine( at + u, at - u );
@@ -140,7 +142,7 @@ void Gl3dWidget::DrawCross( const Point2f& at, float size /*= -1.f*/ ) const
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
 inline
-float Gl3dWidget::ElevationAt( const geometry::Point2f& point ) const
+float Gl3dWidget::ElevationAt( const Point2f& point ) const
 {
     return ( elevation_.ElevationAt( point ) + 2.f ) * zRatio_;
 }
@@ -183,10 +185,12 @@ void Gl3dWidget::DrawLines( const T_PointVector& points ) const
 // Name: Gl3dWidget::DrawArrow
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /*= -1.f*/ ) const
+void Gl3dWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
     if( size < 0 )
-        size = 15.f * Pixels();
+        size = 15.f * Pixels( to );
+    else if( unit == pixels )
+        size *= Pixels( to );
 
     const Vector2f u = Vector2f( from, to ).Normalize() * size;
     const Vector2f v = 0.5f * u.Normal();
@@ -202,7 +206,7 @@ void Gl3dWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /
 // Name: Gl3dWidget::DrawArc
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawArc( const geometry::Point2f& center, const geometry::Point2f& from, const geometry::Point2f& to ) const
+void Gl3dWidget::DrawArc( const Point2f& center, const Point2f& from, const Point2f& to ) const
 {
     const float radius = center.Distance( from );
     if( radius == 0 )
@@ -222,11 +226,11 @@ void Gl3dWidget::DrawArc( const geometry::Point2f& center, const geometry::Point
     glBegin( GL_LINE_STRIP );
     for( float angle = minAngle; angle < maxAngle; angle += deltaAngle )
     {
-        const geometry::Point2f p = center + radius * geometry::Vector2f( std::cos( angle ), std::sin( angle ) );
+        const Point2f p = center + radius * Vector2f( std::cos( angle ), std::sin( angle ) );
         const float elevation = ElevationAt( from );
         glVertex3f( p.X(), p.Y(), elevation );
     }
-    const geometry::Point2f p = center + radius * geometry::Vector2f( std::cos( maxAngle ), std::sin( maxAngle ) );
+    const Point2f p = center + radius * Vector2f( std::cos( maxAngle ), std::sin( maxAngle ) );
     const float elevation = ElevationAt( from );
     glVertex3f( p.X(), p.Y(), elevation );
     glEnd();
@@ -236,11 +240,11 @@ void Gl3dWidget::DrawArc( const geometry::Point2f& center, const geometry::Point
 // Name: Gl3dWidget::DrawCurvedArrow
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float curveRatio /*= 0.2f*/, float size /*= -1.f*/ ) const
+void Gl3dWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float curveRatio /*= 0.2f*/, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
     if( curveRatio == 0 )
     {
-        DrawArrow( from, to, size );
+        DrawArrow( from, to, size, unit );
         return;
     }
     Vector2f u( from, to );
@@ -272,11 +276,13 @@ void Gl3dWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float 
 // Name: Gl3dWidget::DrawCircle
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/ ) const
+void Gl3dWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
     static const float twoPi = 2.f * std::acos( -1.f );
     if( radius < 0 )
-        radius = 10.f * Pixels();
+        radius = 10.f * Pixels( center );
+    else if( unit == pixels )
+        radius *= Pixels( center );
 
     float px = center.X() + radius, py = center.Y();
     for( float angle = twoPi / 40.f; angle < twoPi; angle += twoPi / 40.f + 1e-7 )
@@ -293,12 +299,13 @@ void Gl3dWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/ ) co
 // Name: Gl3dWidget::DrawDisc
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/ ) const
+void Gl3dWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
-    // $$$$ AGE 2006-03-30: sphere ?
-//    DrawCircle( center, radius );
+
     if( radius < 0 )
-        radius = 10.f * Pixels();
+        radius = 10.f * Pixels( center );
+    else if( unit == pixels )
+        radius *= Pixels( center );
 
     GLUquadric* quad = gluNewQuadric();
     glPushMatrix();
@@ -316,7 +323,7 @@ void Gl3dWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/ ) cons
 // Name: Gl3dWidget::DrawLife
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawLife( const geometry::Point2f& center, float h, float factor /*= 1.f*/ ) const
+void Gl3dWidget::DrawLife( const Point2f& center, float h, float factor /*= 1.f*/ ) const
 {
     // $$$$ AGE 2006-09-11: 
     const float halfWidth   = factor * 600.f * 0.5f * 0.92f;
@@ -367,7 +374,7 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where
         glTranslatef( - expectedWidth * 0.5f, expectedHeight, 0 );
         glScalef( scaleRatio, -scaleRatio, scaleRatio );
         glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
-        const geometry::Rectangle2f bbox( -10000,-10000,10000,10000 ); // $$$$ AGE 2006-09-11: 
+        const Rectangle2f bbox( -10000,-10000,10000,10000 ); // $$$$ AGE 2006-09-11: 
         Base().PrintApp6( symbol, bbox );
     glPopAttrib();
     glPopMatrix();
@@ -377,7 +384,7 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where
 // Name: Gl3dWidget::DrawIcon
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawIcon( const char** xpm, const geometry::Point2f& where, float size /*= -1.f*/ ) const
+void Gl3dWidget::DrawIcon( const char** xpm, const Point2f& where, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
     // $$$$ AGE 2006-05-16: ca va dégager de toute facon...
 }
@@ -386,7 +393,7 @@ void Gl3dWidget::DrawIcon( const char** xpm, const geometry::Point2f& where, flo
 // Name: Gl3dWidget::DrawImage
 // Created: AGE 2006-11-17
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawImage( const QImage& image, const geometry::Point2f& where ) const
+void Gl3dWidget::DrawImage( const QImage& image, const Point2f& where ) const
 {
     if( image.bits() )
     {
@@ -402,24 +409,24 @@ void Gl3dWidget::DrawImage( const QImage& image, const geometry::Point2f& where 
 // Name: Gl3dWidget::DrawCell
 // Created: AGE 2006-12-01
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawCell( const geometry::Point2f& center ) const
+void Gl3dWidget::DrawCell( const Point2f& center ) const
 {
     static const float halfCellSize = elevation_.GetCellSize() * 0.5f;
     glBegin( GL_QUADS );
     {
-        const geometry::Point2f p( center.X() - halfCellSize, center.Y() - halfCellSize );
+        const Point2f p( center.X() - halfCellSize, center.Y() - halfCellSize );
         glVertex3f( p.X(), p.Y(), ElevationAt( p ) );
     }
     {
-        const geometry::Point2f p( center.X() + halfCellSize, center.Y() - halfCellSize );
+        const Point2f p( center.X() + halfCellSize, center.Y() - halfCellSize );
         glVertex3f( p.X(), p.Y(), ElevationAt( p ) );
     }
     {
-        const geometry::Point2f p( center.X() + halfCellSize, center.Y() + halfCellSize );
+        const Point2f p( center.X() + halfCellSize, center.Y() + halfCellSize );
         glVertex3f( p.X(), p.Y(), ElevationAt( p ) );
     }
     {
-        const geometry::Point2f p( center.X() - halfCellSize, center.Y() + halfCellSize );
+        const Point2f p( center.X() - halfCellSize, center.Y() + halfCellSize );
         glVertex3f( p.X(), p.Y(), ElevationAt( p ) );
     }
     glEnd();
@@ -429,7 +436,7 @@ void Gl3dWidget::DrawCell( const geometry::Point2f& center ) const
 // Name: Gl3dWidget::DrawFlag
 // Created: SBO 2007-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawFlag( const geometry::Point2f& center ) const
+void Gl3dWidget::DrawFlag( const Point2f& center ) const
 {
     DrawCross( center );
     glPushMatrix();
@@ -437,11 +444,11 @@ void Gl3dWidget::DrawFlag( const geometry::Point2f& center ) const
     UndoRotations();
 
     // $$$$ SBO 2007-03-28: hard coded shape
-    std::vector< geometry::Point3f > points;
-    points.push_back( geometry::Point3f(   0.f, 600.f, 0.f ) );
-    points.push_back( geometry::Point3f( 300.f, 450.f, 0.f ) );
-    points.push_back( geometry::Point3f(   0.f, 300.f, 0.f ) );
-    points.push_back( geometry::Point3f(   0.f,   0.f, 0.f ) );
+    std::vector< Point3f > points;
+    points.push_back( Point3f(   0.f, 600.f, 0.f ) );
+    points.push_back( Point3f( 300.f, 450.f, 0.f ) );
+    points.push_back( Point3f(   0.f, 300.f, 0.f ) );
+    points.push_back( Point3f(   0.f,   0.f, 0.f ) );
 
     glPushAttrib( GL_CURRENT_BIT );
     glColor4f( 1, 1, 1, 0.7f );
@@ -461,7 +468,7 @@ void Gl3dWidget::DrawFlag( const geometry::Point2f& center ) const
 // Name: Gl3dWidget::CenterOn
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::CenterOn( const geometry::Point2f& point )
+void Gl3dWidget::CenterOn( const Point2f& point )
 {
     Widget3D::CenterOn( point );
 }
@@ -505,10 +512,10 @@ void Gl3dWidget::keyPressEvent( QKeyEvent* event  )
 // -----------------------------------------------------------------------------
 void Gl3dWidget::mouseMoveEvent( QMouseEvent* event )
 {
-    const geometry::Point3f point3 = PointAt( event->pos() );
+    const Point3f point3 = PointAt( event->pos() );
     if( point3.Z() > -1000 )
     {
-        const geometry::Point2f point( point3.X(), point3.Y() );
+        const Point2f point( point3.X(), point3.Y() );
         strategy_.HandleMouseMove( event, point );
     }
 
@@ -521,10 +528,10 @@ void Gl3dWidget::mouseMoveEvent( QMouseEvent* event )
 // -----------------------------------------------------------------------------
 void Gl3dWidget::mouseDoubleClickEvent( QMouseEvent* event )
 {
-    const geometry::Point3f point3 = PointAt( event->pos() );
+    const Point3f point3 = PointAt( event->pos() );
     if( point3.Z() > -1000 )
     {
-        const geometry::Point2f point( point3.X(), point3.Y() );
+        const Point2f point( point3.X(), point3.Y() );
         strategy_.HandleMouseDoubleClick( event, point );
     }
 }
@@ -535,10 +542,10 @@ void Gl3dWidget::mouseDoubleClickEvent( QMouseEvent* event )
 // -----------------------------------------------------------------------------
 void Gl3dWidget::mouseReleaseEvent( QMouseEvent* event )
 {
-    const geometry::Point3f point3 = PointAt( event->pos() );
+    const Point3f point3 = PointAt( event->pos() );
     if( point3.Z() > -1000 )
     {
-        const geometry::Point2f point( point3.X(), point3.Y() );
+        const Point2f point( point3.X(), point3.Y() );
         strategy_.HandleMousePress( event, point );
     }
 }
@@ -559,7 +566,7 @@ void Gl3dWidget::mousePressEvent( QMouseEvent* event )
 // -----------------------------------------------------------------------------
 void Gl3dWidget::CenterView()
 {
-    const geometry::Rectangle2f& extent = elevation_.Extent();
+    const Rectangle2f& extent = elevation_.Extent();
     const Point3f eye( extent.Width() / 2, -extent.Height() / 2, std::min( extent.Width(), extent.Height() ) );
     Widget3D::LookFrom( eye );
     const Vector3f target = Vector3f( eye, Point3f( extent.Width() / 2, extent.Height() / 2, 0 ) ).Normalize();

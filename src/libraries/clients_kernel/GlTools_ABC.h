@@ -28,6 +28,16 @@ class GlTools_ABC
 {
 
 public:
+    //! @name Types
+    //@{
+    enum E_Unit
+    {
+        pixels,
+        meters
+    };
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              GlTools_ABC() {};
@@ -45,24 +55,24 @@ public:
 
     //! @name Accessors
     //@{
-    virtual float Pixels() const = 0;
+    virtual float Pixels( const geometry::Point2f& at = geometry::Point2f() ) const = 0;
     virtual unsigned short StipplePattern( int factor = 1 ) const = 0;
     //@}
 
     //! @name Operations
     //@{
-    virtual void DrawCross      ( const geometry::Point2f& at, float size = -1.f ) const = 0;
+    virtual void DrawCross      ( const geometry::Point2f& at, float size = -1.f, E_Unit unit = meters ) const = 0;
     virtual void DrawLine       ( const geometry::Point2f& from, const geometry::Point2f& to ) const = 0;
     virtual void DrawLines      ( const T_PointVector& points ) const = 0;
-    virtual void DrawArrow      ( const geometry::Point2f& from, const geometry::Point2f& to, float size = -1.f ) const = 0;
-    virtual void DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f ) const = 0;
+    virtual void DrawArrow      ( const geometry::Point2f& from, const geometry::Point2f& to, float size = -1.f, E_Unit unit = meters ) const = 0;
+    virtual void DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f, E_Unit unit = meters ) const = 0;
     virtual void DrawArc        ( const geometry::Point2f& center, const geometry::Point2f& from, const geometry::Point2f& to ) const = 0;
-    virtual void DrawCircle     ( const geometry::Point2f& center, float radius = -1.f ) const = 0;
-    virtual void DrawDisc       ( const geometry::Point2f& center, float radius = -1.f ) const = 0;
+    virtual void DrawCircle     ( const geometry::Point2f& center, float radius = -1.f, E_Unit unit = meters ) const = 0;
+    virtual void DrawDisc       ( const geometry::Point2f& center, float radius = -1.f, E_Unit unit = meters ) const = 0;
     virtual void DrawLife       ( const geometry::Point2f& center, float height, float factor = 1.f ) const = 0;
     virtual void Print          ( const std::string& message, const geometry::Point2f& where ) const = 0;
     virtual void DrawApp6Symbol ( const std::string& symbol, const geometry::Point2f& where, float factor = 1.f ) const = 0;
-    virtual void DrawIcon       ( const char** xpm, const geometry::Point2f& where, float size = -1.f ) const = 0;
+    virtual void DrawIcon       ( const char** xpm, const geometry::Point2f& where, float size = -1.f, E_Unit unit = meters ) const = 0;
     virtual void DrawImage      ( const QImage& image, const geometry::Point2f& where ) const = 0;
     virtual void DrawCell       ( const geometry::Point2f& center ) const = 0;
     virtual void DrawFlag       ( const geometry::Point2f& center ) const = 0;

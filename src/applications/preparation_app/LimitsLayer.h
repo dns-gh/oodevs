@@ -50,7 +50,7 @@ private:
     virtual void CreateLimit( const T_PointVector& points );
     virtual void CreateLima( const T_PointVector& points );
 
-    float Precision() const;
+    float Precision( const geometry::Point2f& point ) const;
     virtual bool MouseMove ( kernel::TacticalLine_ABC& entity, QMouseEvent* mouse, const geometry::Point2f& point );
     virtual bool MousePress( kernel::TacticalLine_ABC& entity, QMouseEvent* mouse, const geometry::Point2f& point );
     //@}

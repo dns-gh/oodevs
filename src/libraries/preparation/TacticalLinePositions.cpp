@@ -141,7 +141,7 @@ void TacticalLinePositions::Draw( const geometry::Point2f&, const kernel::Viewpo
         tools.Select( selected );
         if( selected )
             for( CIT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
-                tools.DrawDisc( *it, 5.f * tools.Pixels() );
+                tools.DrawDisc( *it, 5.f, kernel::GlTools_ABC::pixels );
     glPopAttrib();
 }
 

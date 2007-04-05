@@ -88,9 +88,9 @@ void LimitsLayer::CreateLima( const T_PointVector& points )
 // Name: LimitsLayer::Precision
 // Created: SBO 2006-12-18
 // -----------------------------------------------------------------------------
-float LimitsLayer::Precision() const
+float LimitsLayer::Precision( const geometry::Point2f& point ) const
 {
-    return 5.f * tools_.Pixels();
+    return 5.f * tools_.Pixels( point );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +102,7 @@ bool LimitsLayer::MouseMove( kernel::TacticalLine_ABC& entity, QMouseEvent* mous
     if( mouse->state() == Qt::LeftButton && ! dragPoint_.IsZero() )
     {
         const geometry::Vector2f translation( dragPoint_, point );
-        static_cast< TacticalLinePositions* >( &entity.Get< Positions >() )->Translate( dragPoint_, translation, Precision() );
+        static_cast< TacticalLinePositions* >( &entity.Get< Positions >() )->Translate( dragPoint_, translation, Precision( point ) );
         dragPoint_ = point;
     }
     return true;
@@ -114,12 +114,13 @@ bool LimitsLayer::MouseMove( kernel::TacticalLine_ABC& entity, QMouseEvent* mous
 // -----------------------------------------------------------------------------
 bool LimitsLayer::MousePress( kernel::TacticalLine_ABC& entity, QMouseEvent* mouse, const geometry::Point2f& point )
 {
+    const float precision = Precision( point );
     if( mouse->state() == Qt::ShiftButton )
-        static_cast< TacticalLinePositions* >( &entity.Get< Positions >() )->InsertPoint( point, Precision() );
+        static_cast< TacticalLinePositions* >( &entity.Get< Positions >() )->InsertPoint( point, precision );
     else if( mouse->state() == Qt::AltButton )
-        static_cast< TacticalLinePositions* >( &entity.Get< Positions >() )->RemovePoint( point, Precision() );
+        static_cast< TacticalLinePositions* >( &entity.Get< Positions >() )->RemovePoint( point, precision );
 
-    if( entity.Get< Positions >().IsAt( point, Precision() ) )
+    if( entity.Get< Positions >().IsAt( point, precision ) )
     {
         eventStrategy_.TakeExclusiveFocus( *this );
         if( mouse->button() == Qt::LeftButton && mouse->state() == Qt::NoButton ) 

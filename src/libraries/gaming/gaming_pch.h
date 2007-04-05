@@ -22,64 +22,8 @@
 #undef GetObject
 #undef GetMessage
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qcombobox.h>
-#include <qlistbox.h>
-#include <qpopupmenu.h>
-#include <qcursor.h>
-#include <qgroupbox.h>
-#include <qframe.h>
-#include <qspinbox.h>
-#include <qaction.h>
-#include <qgl.h>
-#include <qradiobutton.h>
-#include <qmainwindow.h>
-#include <qdialog.h>
-#include <qtoolbar.h>
-#include <qsignalmapper.h> 
-#include <qfiledialog.h>
-#include <qmessagebox.h>
-#include <qtextedit.h>
-#include <qtimer.h>
-#include <qstatusbar.h>
-#include <qsettings.h>
-#include <qheader.h>
-#include <qfile.h>
-#include <qobject.h>
-#include <qlistview.h>
-#include <qfont.h>
-#include <qfontmetrics.h>
-#include <qsplashscreen.h>
-#include <qtabwidget.h>
-#include <qlineedit.h>
-#include <qcheckbox.h>
-#include <qwidgetstack.h>
-#include <qvbox.h>
-#include <qdialog.h>
-#include <qtextedit.h>
-#include <qheader.h>
-#include <qdial.h>
-#include <qhbox.h>
-#include <qtoolbutton.h>
-#include <qtooltip.h>
-#include <qdragobject.h> 
-#include <qcheckbox.h>
-#include <qsimplerichtext.h>
-#include <qhbox.h>
-#include <qdial.h>
-#include <qgroupbox.h>
-#include <qslider.h>
-#include <qdatetimeedit.h>
-#include <qbuttongroup.h>
 #include <qstring.h>
-#include <qiconset.h>
-#include <qpixmap.h>
-#include <qimage.h>
-#include <qmainwindow.h>
-#include <qdockwindow.h>
-#include <qsound.h>
+#include <qgl.h>
 
 #include <stdexcept>
 #include <vector>
@@ -94,5 +38,11 @@ typedef T_PointVector::iterator         IT_PointVector;
 typedef T_PointVector::const_iterator  CIT_PointVector;
 
 #include "ENT/ENT_Tr.h"
+
+#include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
 
 #endif // __gaming_pch_h_

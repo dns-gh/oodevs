@@ -144,11 +144,11 @@ bool GlProxy::ShouldDisplay( const std::string& name, bool autoCondition ) const
 
 // -----------------------------------------------------------------------------
 // Name: GlProxy::Pixels
-// Created: AGE 2006-03-29
+// Created: AGE 2007-04-05
 // -----------------------------------------------------------------------------
-float GlProxy::Pixels() const
+float GlProxy::Pixels( const geometry::Point2f& at /*= geometry::Point2f()*/ ) const
 {
-    return tools_->Pixels();
+    return tools_->Pixels( at );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,9 +164,9 @@ unsigned short GlProxy::StipplePattern( int factor /*= 1*/ ) const
 // Name: GlProxy::DrawCross
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawCross( const geometry::Point2f& at, float size /*= -1.f*/ ) const
+void GlProxy::DrawCross( const geometry::Point2f& at, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
-    tools_->DrawCross( at, size );
+    tools_->DrawCross( at, size, unit );
 }
 
 // -----------------------------------------------------------------------------
@@ -191,18 +191,18 @@ void GlProxy::DrawLines( const T_PointVector& points ) const
 // Name: GlProxy::DrawArrow
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawArrow( const geometry::Point2f& from, const geometry::Point2f& to, float size /*= -1.f*/ ) const
+void GlProxy::DrawArrow( const geometry::Point2f& from, const geometry::Point2f& to, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
-    tools_->DrawArrow( from, to, size );
+    tools_->DrawArrow( from, to, size,unit );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GlProxy::DrawCurvedArrow
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio /*= 0.2f*/, float size /*= -1.f*/ ) const
+void GlProxy::DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio /*= 0.2f*/, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
-    tools_->DrawCurvedArrow( from, to, curveRatio, size );
+    tools_->DrawCurvedArrow( from, to, curveRatio, size, unit );
 }
 
 // -----------------------------------------------------------------------------
@@ -218,18 +218,18 @@ void GlProxy::DrawArc( const geometry::Point2f& center, const geometry::Point2f&
 // Name: GlProxy::DrawCircle
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawCircle( const geometry::Point2f& center, float radius /*= -1.f*/ ) const
+void GlProxy::DrawCircle( const geometry::Point2f& center, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
-    tools_->DrawCircle( center, radius );
+    tools_->DrawCircle( center, radius, unit );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GlProxy::DrawDisc
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawDisc( const geometry::Point2f& center, float radius /*= -1.f*/ ) const
+void GlProxy::DrawDisc( const geometry::Point2f& center, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
-    tools_->DrawDisc( center, radius );
+    tools_->DrawDisc( center, radius, unit );
 }
 
 // -----------------------------------------------------------------------------
@@ -263,9 +263,9 @@ void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f
 // Name: GlProxy::DrawIcon
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-void GlProxy::DrawIcon( const char** xpm, const geometry::Point2f& where, float size /*= -1.f*/ ) const
+void GlProxy::DrawIcon( const char** xpm, const geometry::Point2f& where, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
-    tools_->DrawIcon( xpm, where, size );
+    tools_->DrawIcon( xpm, where, size, unit );
 }
 
 // -----------------------------------------------------------------------------

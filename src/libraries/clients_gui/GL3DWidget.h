@@ -11,6 +11,7 @@
 #define __Gl3dWidget_h_
 
 #include "graphics/Widget3D.h"
+#include "graphics/ViewFrustum.h"
 #include "clients_kernel/WorldParameters.h"
 #include "GlToolsBase.h"
 #include "View_ABC.h"
@@ -54,21 +55,21 @@ public:
     //@{
     void Register( Layer_ABC& layer );
 
-    virtual float Pixels() const;
     virtual unsigned short StipplePattern( int factor = 1 ) const;
+    virtual float Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;
 
-    virtual void DrawCross      ( const geometry::Point2f& at, float size = -1.f ) const;
+    virtual void DrawCross      ( const geometry::Point2f& at, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawLine       ( const geometry::Point2f& from, const geometry::Point2f& to ) const;
     virtual void DrawLines      ( const T_PointVector& points ) const;
-    virtual void DrawArrow      ( const geometry::Point2f& from, const geometry::Point2f& to, float size = -1.f ) const;
+    virtual void DrawArrow      ( const geometry::Point2f& from, const geometry::Point2f& to, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawArc        ( const geometry::Point2f& center, const geometry::Point2f& p1, const geometry::Point2f& p2 ) const;
-    virtual void DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f ) const;
-    virtual void DrawCircle     ( const geometry::Point2f& center, float radius = -1.f ) const;
-    virtual void DrawDisc       ( const geometry::Point2f& center, float radius = -1.f ) const;
+    virtual void DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f, E_Unit unit = meters ) const;
+    virtual void DrawCircle     ( const geometry::Point2f& center, float radius = -1.f, E_Unit unit = meters ) const;
+    virtual void DrawDisc       ( const geometry::Point2f& center, float radius = -1.f, E_Unit unit = meters ) const;
     virtual void DrawLife       ( const geometry::Point2f& center, float height, float factor = 1.f ) const;
     virtual void Print          ( const std::string& message, const geometry::Point2f& where ) const;
     virtual void DrawApp6Symbol ( const std::string& symbol, const geometry::Point2f& where, float factor = 1.f ) const;
-    virtual void DrawIcon       ( const char** xpm, const geometry::Point2f& where, float size = -1.f ) const;
+    virtual void DrawIcon       ( const char** xpm, const geometry::Point2f& where, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawImage      ( const QImage& image, const geometry::Point2f& where ) const;
     virtual void DrawCell       ( const geometry::Point2f& center ) const;
     virtual void DrawFlag       ( const geometry::Point2f& center ) const;
@@ -112,8 +113,8 @@ private:
     T_Layers layers_;
     float zRatio_;
     unsigned int frame_;
-    float pixels_;
     bool isInitialized_;
+    ViewFrustum current_;
     //@}
 };
 

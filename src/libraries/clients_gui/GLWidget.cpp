@@ -291,9 +291,9 @@ unsigned int GlWidget::GenerateCircle()
 
 // -----------------------------------------------------------------------------
 // Name: GlWidget::Pixels
-// Created: AGE 2006-03-16
+// Created: AGE 2007-04-05
 // -----------------------------------------------------------------------------
-float GlWidget::Pixels() const
+float GlWidget::Pixels( const geometry::Point2f& ) const
 {
     if( windowWidth_ > 0 )
         return viewport_.Width() / windowWidth_;
@@ -319,10 +319,13 @@ unsigned short GlWidget::StipplePattern( int factor /*= 1*/ ) const
 // Name: GlWidget::DrawCross
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void GlWidget::DrawCross( const Point2f& at, float size /*= -1.f*/ ) const
+void GlWidget::DrawCross( const Point2f& at, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
     if( size < 0 )
         size = 10.f * Pixels();
+    else if( unit == pixels )
+        size*=Pixels();
+
     glBegin( GL_LINES );
         glVertex2f( at.X() - size, at.Y() - size );
         glVertex2f( at.X() + size, at.Y() + size );
@@ -358,10 +361,12 @@ void GlWidget::DrawLines( const T_PointVector& points ) const
 // Name: GlWidget::DrawArrow
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void GlWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /*= -1.f*/ ) const
+void GlWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
     if( size < 0 )
         size = 15.f * Pixels();
+    else if( unit == pixels )
+        size *= Pixels();
 
     const Vector2f u = Vector2f( from, to ).Normalize() * size;
     const Vector2f v = 0.5f * u.Normal();
@@ -416,11 +421,11 @@ void GlWidget::DrawArc( const geometry::Point2f& center, const geometry::Point2f
 // Name: GlWidget::DrawCurvedArrow
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void GlWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float curveRatio /*= 0.2f*/, float size /*= -1.f*/ ) const
+void GlWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float curveRatio /*= 0.2f*/, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
     if( curveRatio == 0 )
     {
-        DrawArrow( from, to, size );
+        DrawArrow( from, to, size, unit );
         return;
     }
     const Vector2f u( from, to );
@@ -438,10 +443,12 @@ void GlWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float cu
 // Name: GlWidget::DrawCircle
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void GlWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/ ) const
+void GlWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
     if( radius < 0 )
         radius = 10.f * Pixels();
+    else if( unit == pixels )
+        radius *= Pixels();
 
     glMatrixMode(GL_MODELVIEW);	
     glPushMatrix();
@@ -457,10 +464,12 @@ void GlWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/ ) cons
 // Name: GlWidget::DrawDisc
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void GlWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/ ) const
+void GlWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
     if( radius < 0 )
         radius = 10.f * Pixels();
+    else if( unit == pixels )
+        radius *= Pixels();
 
     glMatrixMode(GL_MODELVIEW);	
     glPushMatrix();
@@ -552,10 +561,13 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, 
 // Name: GlWidget::DrawIcon
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-void GlWidget::DrawIcon( const char** xpm, const Point2f& where, float size /*= -1.f*/ ) const
+void GlWidget::DrawIcon( const char** xpm, const Point2f& where, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
     if( size < 0 )
         size = 32 * Pixels();
+    else if( unit == pixels )
+        size *= Pixels();
+
     size *= 0.5f;
     glPushMatrix();
     glPushAttrib( GL_TEXTURE_BIT );
@@ -591,32 +603,39 @@ void GlWidget::DrawCell( const geometry::Point2f& center ) const
     glVertex2fv( (const float*)&center );
 }
 
+namespace
+{
+    std::vector< geometry::Point2f >& CreateFlagPoints()
+    {
+        // $$$$ SBO 2007-03-28: hard coded shape
+        static std::vector< geometry::Point2f > points;
+        points.push_back( geometry::Point2f(    0, 600.f ) );
+        points.push_back( geometry::Point2f( 300.f, 450.f ) );
+        points.push_back( geometry::Point2f(    0, 300.f ) );
+        points.push_back( geometry::Point2f(    0, 0 ) );
+        return points;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: GlWidget::DrawFlag
 // Created: SBO 2007-03-28
 // -----------------------------------------------------------------------------
 void GlWidget::DrawFlag( const geometry::Point2f& center ) const
 {
+    static std::vector< geometry::Point2f >& points = CreateFlagPoints();
+
     DrawCross( center );
     glPushMatrix();
     glTranslatef( center.X(), center.Y(), 0 );
 //    glScalef( Pixels(), Pixels(), 1 );
-
-    // $$$$ SBO 2007-03-28: hard coded shape
-    std::vector< geometry::Point2f > points;
-    points.push_back( geometry::Point2f(    0, 600.f ) );
-    points.push_back( geometry::Point2f( 300.f, 450.f ) );
-    points.push_back( geometry::Point2f(    0, 300.f ) );
-    points.push_back( geometry::Point2f(    0, 0 ) );
-
+    
     glPushAttrib( GL_CURRENT_BIT );
     glColor4f( 1, 1, 1, 0.7f );
     glEnableClientState( GL_VERTEX_ARRAY );
     glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
     glDrawArrays( GL_TRIANGLE_FAN, 0, points.size() );    
-    glPopAttrib();
 
-    glPushAttrib( GL_LINE_BIT );
     glLineWidth( 2.f );
     glDrawArrays( GL_LINE_LOOP, 0, points.size() );    
     glPopAttrib();
