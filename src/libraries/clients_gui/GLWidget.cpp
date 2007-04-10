@@ -512,7 +512,8 @@ namespace
         int result = glGenLists( 256 );
         HDC glHdc = qt_display_dc();
         SelectObject( glHdc, QFont().handle() );
-        wglUseFontBitmaps( glHdc, 0, 256, result );
+        if( !wglUseFontBitmaps( glHdc, 0, 256, result ) )
+            return 0;
         return result;
     }
 }
@@ -526,9 +527,12 @@ void GlWidget::Print( const std::string& message, const Point2f& where ) const
     glRasterPos2fv( (const float*)&where );
 
     if( ! listBase_ )
+    {
         const_cast< GlWidget* >( this )->listBase_ = GenerateList();
+        if( !listBase_ ) // GenerateList can fail
+            return;
+    }
     glListBase( listBase_ );
-
     glCallLists( message.length(), GL_UNSIGNED_BYTE, message.c_str() );
 }
 
