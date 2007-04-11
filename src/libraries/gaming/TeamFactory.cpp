@@ -26,6 +26,7 @@
 #include "StaticModel.h"
 #include "KnowledgeGroupsModel.h"
 #include "Equipments.h"
+#include "Troops.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -65,6 +66,7 @@ Team_ABC* TeamFactory::CreateTeam( const ASN1T_MsgSideCreation& asnMsg )
     result->Attach< CommunicationHierarchies >( *new TeamHierarchies        ( controllers_.controller_, *result, *this ) );
     result->Attach< TacticalHierarchies >     ( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
     result->Attach( *new Equipments( controllers_.controller_, model_.static_.objectTypes_, dico, *result ) );
+    result->Attach( *new Troops( controllers_.controller_, *result ) );
     result->Update( asnMsg );
     result->Polish();
     return result;
@@ -84,6 +86,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const ASN1T_MsgFormationCre
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< TacticalHierarchies >( *new FormationHierarchy( controllers_.controller_, *result, superior ) );
     result->Attach( *new Equipments( controllers_.controller_, model_.static_.objectTypes_, dico, *result ) );
+    result->Attach( *new Troops( controllers_.controller_, *result ) );
     result->Polish();
     return result;
 }
