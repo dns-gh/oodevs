@@ -28,12 +28,14 @@ public:
     //! @name Constructors/Destructor
     //@{
              Dotation();
-             Dotation( const kernel::DotationType& type, unsigned int quantity );
+    explicit Dotation( const kernel::DotationType& type, unsigned int quantity = 0 );
     virtual ~Dotation();
     //@}
 
-    //! @name Operations
+    //! @name Operators
     //@{
+    Dotation operator+( const Dotation& rhs ) const;
+    Dotation operator-( const Dotation& rhs ) const;
     //@}
 
 public:

@@ -43,8 +43,8 @@ public:
 
     //! @name Operators
     //@{
-    Equipment operator+( const Equipment& rhs );
-    Equipment operator-( const Equipment& rhs );
+    Equipment operator+( const Equipment& rhs ) const;
+    Equipment operator-( const Equipment& rhs ) const;
     Equipment& operator=( const Equipment& rhs );
     //@}
 

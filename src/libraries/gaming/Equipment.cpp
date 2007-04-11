@@ -87,7 +87,7 @@ unsigned Equipment::Total() const
 // Name: Equipment::operator+
 // Created: SBO 2007-04-11
 // -----------------------------------------------------------------------------
-Equipment Equipment::operator+( const Equipment& rhs )
+Equipment Equipment::operator+( const Equipment& rhs ) const
 {
     Equipment equipment( *this );
     equipment.available_     += rhs.available_;
@@ -102,7 +102,7 @@ Equipment Equipment::operator+( const Equipment& rhs )
 // Name: Equipment::operator-
 // Created: SBO 2007-04-11
 // -----------------------------------------------------------------------------
-Equipment Equipment::operator-( const Equipment& rhs )
+Equipment Equipment::operator-( const Equipment& rhs ) const
 {
     Equipment equipment( *this );
     equipment.available_     -= rhs.available_;

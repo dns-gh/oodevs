@@ -15,6 +15,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "statusicons.h"
 #include "Tools.h"
 
@@ -24,9 +25,10 @@ using namespace kernel;
 // Name: Dotations constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Dotations::Dotations( Controller& controller, const Resolver_ABC< DotationType >& resolver, PropertiesDictionary& dico )
+Dotations::Dotations( Controller& controller, const Resolver_ABC< DotationType >& resolver, PropertiesDictionary& dico, kernel::Entity_ABC& holder )
     : controller_( controller )
     , resolver_( resolver )
+    , holder_( holder )
     , dictionary_( dico )
     , bEmptyGasTank_( false )
 {
@@ -60,23 +62,44 @@ void Dotations::DoUpdate( const ASN1T_MsgUnitAttributes& message )
     if( ! message.m.dotation_eff_ressourcePresent  )
         return;
 
+    std::vector< Dotation > differences;
     uint nSize = message.dotation_eff_ressource.n;
-    while( nSize > 0 )
+    while ( nSize > 0 )
     {
         const ASN1T_DotationRessource& value = message.dotation_eff_ressource.elem[ --nSize ];
-        DotationType& type = resolver_.Get( value.ressource_id );
-        Dotation* dotation = Find( value.ressource_id );
-        if( dotation )
-            dotation->quantity_ = value.quantite_disponible;
-        else
-        {
-            Dotation& newDotation = *new Dotation( type, value.quantite_disponible );
-            Register( value.ressource_id, newDotation );
-            dictionary_.Register( *this, tools::translate( "Dotations", "Dotations" ) + "/" + type.GetCategory(), ((const Dotation&)newDotation).quantity_ ); // $$$$ AGE 2006-06-22: 
-        }
-        if( type.IsGas() )
-            bEmptyGasTank_ = ( value.quantite_disponible == 0 );
+        Dotation previous( resolver_.Get( value.ressource_id ) );
+        if( Dotation* dotation = Find( value.ressource_id ) )
+            previous = *dotation;
+        Dotation current( previous );
+        current.quantity_ = value.quantite_disponible;
+        differences.push_back( current - previous );
     }
+    Update( differences );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Dotations::Update
+// Created: SBO 2007-04-11
+// -----------------------------------------------------------------------------
+void Dotations::Update( const std::vector< Dotation >& differences )
+{
+    for( std::vector< Dotation >::const_iterator it = differences.begin(); it != differences.end(); ++it )
+    {
+        Dotation* dotation = Find( it->type_->GetId() );
+        if( !dotation )
+        {
+            dotation = new Dotation( *it );
+            Register( it->type_->GetId(), *dotation );
+            dictionary_.Register( *this, tools::translate( "Dotations", "Dotations" ) + "/" + it->type_->GetCategory(), ((const Dotation&)dotation).quantity_ ); // $$$$ AGE 2006-06-22: 
+        }
+        else
+            *dotation = *dotation + *it;
+        if( it->type_->IsGas() )
+            bEmptyGasTank_ = ( it->quantity_ == 0 );
+    }
+    if( const kernel::Entity_ABC* superior = holder_.Get< kernel::TacticalHierarchies >().GetSuperior() )
+        if( Dotations* dotations = const_cast< Dotations* >( superior->Retrieve< Dotations >() ) )
+            dotations->Update( differences );
     controller_.Update( *this );
 }
 

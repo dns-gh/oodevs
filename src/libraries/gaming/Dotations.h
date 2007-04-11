@@ -21,6 +21,7 @@ namespace kernel
     class Controller;
     class DotationType;
     class PropertiesDictionary;
+    class Entity_ABC;
 }
 
 class Dotation;
@@ -40,7 +41,7 @@ class Dotations : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Dotations( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::DotationType >& resolver, kernel::PropertiesDictionary& dico );
+             Dotations( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::DotationType >& resolver, kernel::PropertiesDictionary& dico, kernel::Entity_ABC& holder );
     virtual ~Dotations();
     //@}
 
@@ -60,14 +61,16 @@ private:
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    void Update( const std::vector< Dotation >& differences );
     //@}
 
 public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    kernel::PropertiesDictionary& dictionary_;
     const kernel::Resolver_ABC< kernel::DotationType >& resolver_;
+    kernel::Entity_ABC& holder_;
+    kernel::PropertiesDictionary& dictionary_;
     bool bEmptyGasTank_;
     //@}
 };
