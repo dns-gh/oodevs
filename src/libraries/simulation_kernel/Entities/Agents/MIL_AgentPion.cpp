@@ -888,26 +888,26 @@ void MIL_AgentPion::OnReceiveMagicCancelSurrender()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgChangeAutomate
+// Name: MIL_AgentPion::OnReceiveMsgChangeSuperior
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgChangeAutomate( ASN1T_MsgChangeAutomate& asnMsg, uint nCtx )
+void MIL_AgentPion::OnReceiveMsgChangeSuperior( ASN1T_MsgPionChangeSuperior& asnMsg, uint nCtx )
 {
-    NET_ASN_MsgChangeAutomateAck asnReplyMsg;
+    NET_ASN_MsgPionChangeSuperiorAck asnReplyMsg;
     asnReplyMsg().oid_pion     = asnMsg.oid_pion;
     asnReplyMsg().oid_automate = asnMsg.oid_automate;
 
     MIL_Automate* pNewAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( asnMsg.oid_automate );
     if( !pNewAutomate )
     {
-        asnReplyMsg().error_code = EnumChangeAutomateErrorCode::error_invalid_automate;
+        asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::error_invalid_automate;
         asnReplyMsg.Send( nCtx );
         return;
     }
 
     if( pNewAutomate->GetArmy() != GetArmy() )
     {
-        asnReplyMsg().error_code = EnumChangeAutomateErrorCode::error_camps_incompatibles;
+        asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::error_camps_incompatibles;
         asnReplyMsg.Send( nCtx );
         return;
     }
@@ -916,7 +916,7 @@ void MIL_AgentPion::OnReceiveMsgChangeAutomate( ASN1T_MsgChangeAutomate& asnMsg,
     pAutomate_ = pNewAutomate;
     pAutomate_->RegisterPion  ( *this );
 
-    asnReplyMsg().error_code = EnumChangeAutomateErrorCode::no_error;
+    asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::no_error;
     asnReplyMsg.Send( nCtx );
 }
 
@@ -964,10 +964,10 @@ void MIL_AgentPion::Serialize( HLA_UpdateFunctor& functor ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::ChangeAutomate
+// Name: MIL_AgentPion::ChangeSuperior
 // Created: NLD 2004-10-26
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::ChangeAutomate( MIL_Automate& newAutomate )
+void MIL_AgentPion::ChangeSuperior( MIL_Automate& newAutomate )
 {
     assert( GetArmy() == newAutomate.GetArmy() );
     pAutomate_->UnregisterPion( *this );
@@ -976,7 +976,7 @@ void MIL_AgentPion::ChangeAutomate( MIL_Automate& newAutomate )
 
     GetRole< DEC_RolePion_Decision >().NotifyAutomateChanged(); //$$$ à gicler quand myself.automate_ sera remplacé par une fonction DEC
 
-    NET_ASN_MsgChangeAutomate asnMsg;
+    NET_ASN_MsgPionChangeSuperior asnMsg;
     asnMsg().oid_pion     = GetID();
     asnMsg().oid_automate = newAutomate.GetID();
     asnMsg.Send();

@@ -973,17 +973,17 @@ void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( ASN1T_MsgChangeDiplomatie& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgChangeKnowledgeGroup
+// Name: MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgChangeKnowledgeGroup( ASN1T_MsgChangeGroupeConnaissance& asnMsg, uint nCtx )
+void MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup( ASN1T_MsgAutomateChangeGroupeConnaissance& asnMsg, uint nCtx )
 {
     MIL_Automate* pAutomate = FindAutomate( asnMsg.oid_automate );
     if( !pAutomate )
     {
-        NET_ASN_MsgChangeGroupeConnaissanceAck asnReplyMsg;
+        NET_ASN_MsgAutomateChangeGroupeConnaissanceAck asnReplyMsg;
         asnReplyMsg().oid_automate = asnMsg.oid_automate;
-        asnReplyMsg().error_code   = EnumChangeGroupeConnaissanceErrorCode::error_invalid_automate;
+        asnReplyMsg().error_code   = EnumChangeHierarchyErrorCode::error_invalid_automate;
         asnReplyMsg.Send( nCtx );
         return;
     }
@@ -991,17 +991,17 @@ void MIL_EntityManager::OnReceiveMsgChangeKnowledgeGroup( ASN1T_MsgChangeGroupeC
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgChangeLogisticLinks
+// Name: MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLogistiques& asnMsg, uint nCtx )
+void MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks( ASN1T_MsgAutomateChangeLiensLogistiques& asnMsg, uint nCtx )
 {
     MIL_Automate* pAutomate = FindAutomate( asnMsg.oid_automate );
     if( !pAutomate )
     {
-        NET_ASN_MsgChangeLiensLogistiquesAck asnReplyMsg;
+        NET_ASN_MsgAutomateChangeLiensLogistiquesAck asnReplyMsg;
         asnReplyMsg().oid_automate = asnMsg.oid_automate;
-        asnReplyMsg().error_code   = EnumChangeLiensLogistiquesErrorCode::error_invalid_automate;
+        asnReplyMsg().error_code   = EnumChangeHierarchyErrorCode::error_invalid_automate;
         asnReplyMsg.Send( nCtx );
         return;
     }
@@ -1009,22 +1009,22 @@ void MIL_EntityManager::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLog
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgChangeAutomate
+// Name: MIL_EntityManager::OnReceiveMsgPionChangeSuperior
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgChangeAutomate( ASN1T_MsgChangeAutomate& asnMsg, uint nCtx )
+void MIL_EntityManager::OnReceiveMsgPionChangeSuperior( ASN1T_MsgPionChangeSuperior& asnMsg, uint nCtx )
 {
     MIL_AgentPion* pPion = FindAgentPion( asnMsg.oid_pion );
     if( !pPion )
     {
-        NET_ASN_MsgChangeAutomateAck asnReplyMsg;
+        NET_ASN_MsgPionChangeSuperiorAck asnReplyMsg;
         asnReplyMsg().oid_pion     = asnMsg.oid_pion;
         asnReplyMsg().oid_automate = asnMsg.oid_automate;
-        asnReplyMsg().error_code   = EnumChangeAutomateErrorCode::error_invalid_pion;
+        asnReplyMsg().error_code   = EnumChangeHierarchyErrorCode::error_invalid_pion;
         asnReplyMsg.Send( nCtx );
         return;
     }
-    pPion->OnReceiveMsgChangeAutomate( asnMsg, nCtx );
+    pPion->OnReceiveMsgChangeSuperior( asnMsg, nCtx );
 }
 
 // -----------------------------------------------------------------------------

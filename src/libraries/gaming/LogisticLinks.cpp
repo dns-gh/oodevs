@@ -98,7 +98,7 @@ Automat_ABC* LogisticLinks::GetSupply() const
 // Name: LogisticLinks::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void LogisticLinks::DoUpdate( const ASN1T_MsgChangeLiensLogistiquesAck& message )
+void LogisticLinks::DoUpdate( const ASN1T_MsgAutomateChangeLiensLogistiquesAck& message )
 {
     if( message.m.oid_tc2Present )
         tc2_ = resolver_.Find( message.oid_tc2 );
@@ -116,7 +116,7 @@ void LogisticLinks::DoUpdate( const ASN1T_MsgChangeLiensLogistiquesAck& message 
 // Name: LogisticLinks::DoUpdate
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void LogisticLinks::DoUpdate( const ASN1T_MsgChangeLiensLogistiques& message )
+void LogisticLinks::DoUpdate( const ASN1T_MsgAutomateChangeLiensLogistiques& message )
 {
     if( message.m.oid_tc2Present )
         tc2_ = resolver_.Find( message.oid_tc2 );

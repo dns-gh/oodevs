@@ -2213,38 +2213,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error invalid automate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid groupe connaissance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid automate tc2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid automate maintenance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid automate sante</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid automate ravitaillement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid pion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error camps incompatibles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>deplacement vers chaine</source>
         <translation type="unfinished"></translation>
     </message>

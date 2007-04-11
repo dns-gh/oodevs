@@ -61,9 +61,9 @@ MsgsOutSim ::= SEQUENCE
         msg-population-magic-action-ack                         MsgPopulationMagicActionAck,
 
         msg-change-diplomatie-ack                               MsgChangeDiplomatieAck,
-        msg-change-groupe-connaissance-ack                      MsgChangeGroupeConnaissanceAck,
-        msg-change-liens-logistiques-ack                        MsgChangeLiensLogistiquesAck,
-        msg-change-automate-ack                                 MsgChangeAutomateAck,   
+        msg-automate-change-groupe-connaissance-ack             MsgAutomateChangeGroupeConnaissanceAck,
+        msg-automate-change-liens-logistiques-ack               MsgAutomateChangeLiensLogistiquesAck,
+        msg-pion-change-superior-ack                            MsgPionChangeSuperiorAck,   
 
         msg-log-ravitaillement-pousser-flux-ack                 MsgLogRavitaillementPousserFluxAck,
         msg-log-ravitaillement-change-quotas-ack                MsgLogRavitaillementChangeQuotasAck,   
@@ -104,8 +104,8 @@ MsgsOutSim ::= SEQUENCE
         msg-unit-pathfind                                       MsgUnitPathFind,                
 
         msg-change-diplomatie                                   MsgChangeDiplomatie,
-        msg-change-automate                                     MsgChangeAutomate,        
-        msg-change-liens-logistiques                            MsgChangeLiensLogistiques,
+        msg-pion-change-superior                                MsgPionChangeSuperior,        
+        msg-automate-change-liens-logistiques                   MsgAutomateChangeLiensLogistiques,
 
         msg-unit-knowledge-creation                             MsgUnitKnowledgeCreation,
         msg-unit-knowledge-update                               MsgUnitKnowledgeUpdate,
@@ -206,9 +206,9 @@ MsgsInSim ::= SEQUENCE
         msg-population-magic-action             MsgPopulationMagicAction,
 
         msg-change-diplomatie                   MsgChangeDiplomatie,
-        msg-change-groupe-connaissance          MsgChangeGroupeConnaissance,
-        msg-change-liens-logistiques            MsgChangeLiensLogistiques,
-        msg-change-automate                     MsgChangeAutomate,
+        msg-automate-change-groupe-connaissance MsgAutomateChangeGroupeConnaissance,
+        msg-automate-change-liens-logistiques   MsgAutomateChangeLiensLogistiques,
+        msg-pion-change-superior                MsgPionChangeSuperior,
 
         msg-log-ravitaillement-pousser-flux     MsgLogRavitaillementPousserFlux,
         msg-log-ravitaillement-change-quotas    MsgLogRavitaillementChangeQuotas
@@ -242,10 +242,10 @@ MsgsInClient ::= SEQUENCE
         msg-population-magic-action-ack                         MsgPopulationMagicActionAck,
        
         msg-change-diplomatie-ack                               MsgChangeDiplomatieAck,
-        msg-change-groupe-connaissance-ack                      MsgChangeGroupeConnaissanceAck,
-        msg-change-liens-logistiques-ack                        MsgChangeLiensLogistiquesAck,
-        msg-change-liens-logistiques                            MsgChangeLiensLogistiques,
-        msg-change-automate-ack                                 MsgChangeAutomateAck,   
+        msg-automate-change-groupe-connaissance-ack             MsgAutomateChangeGroupeConnaissanceAck,
+        msg-automate-change-liens-logistiques-ack               MsgAutomateChangeLiensLogistiquesAck,
+        msg-automate-change-liens-logistiques                   MsgAutomateChangeLiensLogistiques,
+        msg-pion-change-superior-ack                            MsgPionChangeSuperiorAck,   
         
         msg-log-ravitaillement-pousser-flux-ack                 MsgLogRavitaillementPousserFluxAck,
         msg-log-ravitaillement-change-quotas-ack                MsgLogRavitaillementChangeQuotasAck,   
@@ -323,7 +323,7 @@ MsgsInClient ::= SEQUENCE
         msg-object-knowledge-update                             MsgObjectKnowledgeUpdate,
         msg-object-knowledge-destruction                        MsgObjectKnowledgeDestruction,
         
-        msg-change-automate                                     MsgChangeAutomate,
+        msg-pion-change-superior                                MsgPionChangeSuperior,
            
         msg-log-sante-traitement-humain-creation                MsgLogSanteTraitementHumainCreation,
         msg-log-sante-traitement-humain-update                  MsgLogSanteTraitementHumainUpdate,
@@ -400,9 +400,9 @@ MsgsOutClient ::= SEQUENCE
         msg-population-magic-action             MsgPopulationMagicAction,
 
         msg-change-diplomatie                   MsgChangeDiplomatie,
-        msg-change-groupe-connaissance          MsgChangeGroupeConnaissance,
-        msg-change-liens-logistiques            MsgChangeLiensLogistiques,
-        msg-change-automate                     MsgChangeAutomate,
+        msg-automate-change-groupe-connaissance MsgAutomateChangeGroupeConnaissance,
+        msg-automate-change-liens-logistiques   MsgAutomateChangeLiensLogistiques,
+        msg-pion-change-superior                MsgPionChangeSuperior,
         
         msg-log-ravitaillement-pousser-flux     MsgLogRavitaillementPousserFlux,
         msg-log-ravitaillement-change-quotas    MsgLogRavitaillementChangeQuotas

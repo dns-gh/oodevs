@@ -43,8 +43,6 @@ public:
     //@{
     const MIL_Fuseau& GetFuseau         () const;
           bool        IsMissionAvailable( const MIL_MissionType_ABC& missionType ) const;
-          void        Engage            ();
-          void        Disengage         ();
     //@}
 
     //! @name Operations

@@ -248,27 +248,6 @@ ENT_Tr::T_ConverterSetAutomateModeErrorCode ENT_Tr::SetAutomateModeErrorCodeConv
     T_ConverterSetAutomateModeErrorCode( "", "", (E_SetAutomateModeErrorCode)-1 )
 };
 
-ENT_Tr::T_ConverterChangeAutomateErrorCode ENT_Tr::ChangeAutomateErrorCodeConverter_[] =
-{
-    T_ConverterChangeAutomateErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eChangeAutomateErrorCode_NoError ),
-    T_ConverterChangeAutomateErrorCode( "error invalid pion", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid pion" ), eChangeAutomateErrorCode_ErrorInvalidPion ),
-    T_ConverterChangeAutomateErrorCode( "error invalid automate", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate" ), eChangeAutomateErrorCode_ErrorInvalidAutomate ),
-    T_ConverterChangeAutomateErrorCode( "error camps incompatibles", QT_TRANSLATE_NOOP( "ENT_Tr", "error camps incompatibles" ), eChangeAutomateErrorCode_ErrorCampsIncompatibles ),
-    T_ConverterChangeAutomateErrorCode( "", "", (E_ChangeAutomateErrorCode)-1 )
-};
-
-ENT_Tr::T_ConverterChangeLiensLogistiquesErrorCode ENT_Tr::ChangeLiensLogistiquesErrorCodeConverter_[] =
-{
-    T_ConverterChangeLiensLogistiquesErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eChangeLiensLogistiquesErrorCode_NoError ),
-    T_ConverterChangeLiensLogistiquesErrorCode( "error invalid automate", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate" ), eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomate ),
-    T_ConverterChangeLiensLogistiquesErrorCode( "error invalid automate tc2", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate tc2" ), eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateTc2 ),
-    T_ConverterChangeLiensLogistiquesErrorCode( "error invalid automate maintenance", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate maintenance" ), eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateMaintenance ),
-    T_ConverterChangeLiensLogistiquesErrorCode( "error invalid automate sante", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate sante" ), eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateSante ),
-    T_ConverterChangeLiensLogistiquesErrorCode( "error invalid automate ravitaillement", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate ravitaillement" ), eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateRavitaillement ),
-    T_ConverterChangeLiensLogistiquesErrorCode( "error unit surrendered", QT_TRANSLATE_NOOP( "ENT_Tr", "error unit surrendered" ), eChangeLiensLogistiquesErrorCode_ErrorUnitSurrendered ),
-    T_ConverterChangeLiensLogistiquesErrorCode( "", "", (E_ChangeLiensLogistiquesErrorCode)-1 )
-};
-
 ENT_Tr::T_ConverterCtrlErrorCode ENT_Tr::CtrlErrorCodeConverter_[] =
 {
     T_ConverterCtrlErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eCtrlErrorCode_NoError ),
@@ -355,15 +334,6 @@ ENT_Tr::T_ConverterFireEffectType ENT_Tr::FireEffectTypeConverter_[] =
     T_ConverterFireEffectType( "fumigene", QT_TRANSLATE_NOOP( "ENT_Tr", "fumigene" ), eFireEffectType_Fumigene ),
     T_ConverterFireEffectType( "eclairant", QT_TRANSLATE_NOOP( "ENT_Tr", "eclairant" ), eFireEffectType_Eclairant ),
     T_ConverterFireEffectType( "", "", (E_FireEffectType)-1 )
-};
-
-ENT_Tr::T_ConverterChangeGroupeConnaissanceErrorCode ENT_Tr::ChangeGroupeConnaissanceErrorCodeConverter_[] =
-{
-    T_ConverterChangeGroupeConnaissanceErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eChangeGroupeConnaissanceErrorCode_NoError ),
-    T_ConverterChangeGroupeConnaissanceErrorCode( "error invalid automate", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate" ), eChangeGroupeConnaissanceErrorCode_ErrorInvalidAutomate ),
-    T_ConverterChangeGroupeConnaissanceErrorCode( "error invalid camp", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid camp" ), eChangeGroupeConnaissanceErrorCode_ErrorInvalidCamp ),
-    T_ConverterChangeGroupeConnaissanceErrorCode( "error invalid groupe connaissance", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid groupe connaissance" ), eChangeGroupeConnaissanceErrorCode_ErrorInvalidGroupeConnaissance ),
-    T_ConverterChangeGroupeConnaissanceErrorCode( "", "", (E_ChangeGroupeConnaissanceErrorCode)-1 )
 };
 
 ENT_Tr::T_ConverterLogMaintenanceRegimeTravail ENT_Tr::LogMaintenanceRegimeTravailConverter_[] =
@@ -572,8 +542,6 @@ void ENT_Tr::InitTranslations()
     InitTr( UnitExperienceConverter_, "ENT_Tr" );
     InitTr( AutomateStateConverter_, "ENT_Tr" );
     InitTr( SetAutomateModeErrorCodeConverter_, "ENT_Tr" );
-    InitTr( ChangeAutomateErrorCodeConverter_, "ENT_Tr" );
-    InitTr( ChangeLiensLogistiquesErrorCodeConverter_, "ENT_Tr" );
     InitTr( CtrlErrorCodeConverter_, "ENT_Tr" );
     InitTr( EtatSimConverter_, "ENT_Tr" );
     InitTr( PrecipitationTypeConverter_, "ENT_Tr" );
@@ -583,7 +551,6 @@ void ENT_Tr::InitTranslations()
     InitTr( PopulationAttrErrorCodeConverter_, "ENT_Tr" );
     InitTr( TypeCRConverter_, "ENT_Tr" );
     InitTr( FireEffectTypeConverter_, "ENT_Tr" );
-    InitTr( ChangeGroupeConnaissanceErrorCodeConverter_, "ENT_Tr" );
     InitTr( LogMaintenanceRegimeTravailConverter_, "ENT_Tr" );
     InitTr( LogMaintenanceTraitementEtatConverter_, "ENT_Tr" );
     InitTr( LogRavitaillementTraitementEtatConverter_, "ENT_Tr" );
@@ -807,24 +774,6 @@ const std::string& ENT_Tr::ConvertFromSetAutomateModeErrorCode( E_SetAutomateMod
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromChangeAutomateErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromChangeAutomateErrorCode( E_ChangeAutomateErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( ChangeAutomateErrorCodeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromChangeLiensLogistiquesErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromChangeLiensLogistiquesErrorCode( E_ChangeLiensLogistiquesErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( ChangeLiensLogistiquesErrorCodeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromCtrlErrorCode
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -903,15 +852,6 @@ const std::string& ENT_Tr::ConvertFromTypeCR( E_TypeCR nValue, ENT_Tr_ABC::E_Con
 const std::string& ENT_Tr::ConvertFromFireEffectType( E_FireEffectType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( FireEffectTypeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromChangeGroupeConnaissanceErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromChangeGroupeConnaissanceErrorCode( E_ChangeGroupeConnaissanceErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( ChangeGroupeConnaissanceErrorCodeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1230,24 +1170,6 @@ E_SetAutomateModeErrorCode ENT_Tr::ConvertToSetAutomateModeErrorCode( const std:
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToChangeAutomateErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_ChangeAutomateErrorCode ENT_Tr::ConvertToChangeAutomateErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( ChangeAutomateErrorCodeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToChangeLiensLogistiquesErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_ChangeLiensLogistiquesErrorCode ENT_Tr::ConvertToChangeLiensLogistiquesErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( ChangeLiensLogistiquesErrorCodeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToCtrlErrorCode
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -1326,15 +1248,6 @@ E_TypeCR ENT_Tr::ConvertToTypeCR( const std::string& strName )
 E_FireEffectType ENT_Tr::ConvertToFireEffectType( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( FireEffectTypeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToChangeGroupeConnaissanceErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_ChangeGroupeConnaissanceErrorCode ENT_Tr::ConvertToChangeGroupeConnaissanceErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( ChangeGroupeConnaissanceErrorCodeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------

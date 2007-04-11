@@ -131,7 +131,7 @@ void Client::OnReceiveMsgProfileCreationRequest( const ASN1T_MsgProfileCreationR
 {
     AsnMsgInClientProfileCreationRequestAck ack;
     ack().error_code = dispatcher_.GetProfileManager().Create( asnMsg );
-    ack().login       = asnMsg.login;
+    ack().login      = asnMsg.login;
     ack.Send( *this );
 }
 
@@ -143,7 +143,7 @@ void Client::OnReceiveMsgProfileUpdateRequest( const ASN1T_MsgProfileUpdateReque
 {
     AsnMsgInClientProfileUpdateRequestAck ack;
     ack().error_code = dispatcher_.GetProfileManager().Update( asnMsg );
-    ack().login       = asnMsg.login;
+    ack().login      = asnMsg.login;
     ack.Send( *this );
 }
 
@@ -222,9 +222,9 @@ void Client::OnReceive( const ASN1T_MsgsOutClient& asnInMsg )
         DISPATCH_ASN_MSG      ( object_magic_action );
         DISPATCH_ASN_MSG      ( population_magic_action );
         DISPATCH_ASN_MSG      ( change_diplomatie );
-        DISPATCH_ASN_MSG      ( change_groupe_connaissance );
-        DISPATCH_ASN_MSG      ( change_liens_logistiques );
-        DISPATCH_ASN_MSG      ( change_automate );
+        DISPATCH_ASN_MSG      ( automate_change_groupe_connaissance );
+        DISPATCH_ASN_MSG      ( automate_change_liens_logistiques );
+        DISPATCH_ASN_MSG      ( pion_change_superior );
         DISPATCH_ASN_MSG      ( log_ravitaillement_pousser_flux );
         DISPATCH_ASN_MSG      ( log_ravitaillement_change_quotas );
         default:

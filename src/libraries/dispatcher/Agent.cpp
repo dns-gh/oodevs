@@ -267,7 +267,7 @@ void Agent::Update( const ASN1T_MsgLogRavitaillementEtat& asnMsg )
 // Name: Agent::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Agent::Update( const ASN1T_MsgChangeAutomate& asnMsg )
+void Agent::Update( const ASN1T_MsgPionChangeSuperior& asnMsg )
 {
     pAutomat_->GetAgents().Unregister( *this );
     pAutomat_ = &model_.GetAutomats().Get( asnMsg.oid_automate );
@@ -278,9 +278,9 @@ void Agent::Update( const ASN1T_MsgChangeAutomate& asnMsg )
 // Name: Agent::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Agent::Update( const ASN1T_MsgChangeAutomateAck& asnMsg )
+void Agent::Update( const ASN1T_MsgPionChangeSuperiorAck& asnMsg )
 {
-    if( asnMsg.error_code == EnumChangeAutomateErrorCode::no_error )
+    if( asnMsg.error_code == EnumChangeHierarchyErrorCode::no_error )
     {
         pAutomat_->GetAgents().Unregister( *this );
         pAutomat_ = &model_.GetAutomats().Get( asnMsg.oid_automate );

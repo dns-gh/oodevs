@@ -96,9 +96,9 @@ void Simulation::OnReceive( const ASN1T_MsgsOutSim& asnInMsg )
         DISPATCH_ASN_MSG( object_magic_action_ack                 );
         DISPATCH_ASN_MSG( population_magic_action_ack             );
         DISPATCH_ASN_MSG( change_diplomatie_ack                   );
-        DISPATCH_ASN_MSG( change_groupe_connaissance_ack          );
-        DISPATCH_ASN_MSG( change_liens_logistiques_ack            );
-        DISPATCH_ASN_MSG( change_automate_ack                     );
+        DISPATCH_ASN_MSG( automate_change_groupe_connaissance_ack );
+        DISPATCH_ASN_MSG( automate_change_liens_logistiques_ack   );
+        DISPATCH_ASN_MSG( pion_change_superior_ack                );
         DISPATCH_ASN_MSG( log_ravitaillement_pousser_flux_ack     );
         DISPATCH_ASN_MSG( log_ravitaillement_change_quotas_ack    );
         DISPATCH_ASN_MSG( ctrl_info                               );
@@ -143,7 +143,7 @@ void Simulation::OnReceive( const ASN1T_MsgsOutSim& asnInMsg )
         DISPATCH_ASN_MSG( knowledge_group_creation                          );
         DISPATCH_ASN_MSG( formation_creation                                );
         DISPATCH_ASN_MSG( change_diplomatie                                 );
-        DISPATCH_ASN_MSG( change_liens_logistiques                          );
+        DISPATCH_ASN_MSG( automate_change_liens_logistiques                 );
         DISPATCH_ASN_MSG( unit_knowledge_creation                           );
         DISPATCH_ASN_MSG( unit_knowledge_update                             );
         DISPATCH_ASN_MSG( unit_knowledge_destruction                        );
@@ -170,7 +170,7 @@ void Simulation::OnReceive( const ASN1T_MsgsOutSim& asnInMsg )
         DISPATCH_ASN_MSG( object_knowledge_creation                         );
         DISPATCH_ASN_MSG( object_knowledge_update                           );
         DISPATCH_ASN_MSG( object_knowledge_destruction                      );
-        DISPATCH_ASN_MSG( change_automate                                   );
+        DISPATCH_ASN_MSG( pion_change_superior                              );
         DISPATCH_ASN_MSG( log_sante_traitement_humain_creation              );
         DISPATCH_ASN_MSG( log_sante_traitement_humain_update                );
         DISPATCH_ASN_MSG( log_sante_traitement_humain_destruction           );

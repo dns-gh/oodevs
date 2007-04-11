@@ -77,8 +77,7 @@ void Formation::SendCreation( Publisher_ABC& publisher ) const
     asn.Send( publisher );
 
     subordinates_.Apply( std::mem_fun_ref( &Formation::SendCreation ), publisher );
-	automats_    .Apply( std::mem_fun_ref( &Automat  ::SendCreation ), publisher );
-    
+	automats_    .Apply( std::mem_fun_ref( &Automat  ::SendCreation ), publisher );    
 }
 
 // -----------------------------------------------------------------------------

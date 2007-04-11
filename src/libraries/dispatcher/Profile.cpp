@@ -248,9 +248,9 @@ bool Profile::CheckRights( const ASN1T_MsgsOutClient& msg ) const
         case T_MsgsOutClient_msg_msg_object_magic_action                : return true;
         case T_MsgsOutClient_msg_msg_population_magic_action            : return true;
         case T_MsgsOutClient_msg_msg_change_diplomatie                  : return true;
-        case T_MsgsOutClient_msg_msg_change_groupe_connaissance         : return true;
-        case T_MsgsOutClient_msg_msg_change_liens_logistiques           : return true;
-        case T_MsgsOutClient_msg_msg_change_automate                    : return true;
+        case T_MsgsOutClient_msg_msg_automate_change_groupe_connaissance: return true;
+        case T_MsgsOutClient_msg_msg_automate_change_liens_logistiques  : return true;
+        case T_MsgsOutClient_msg_msg_pion_change_superior               : return true;
         case T_MsgsOutClient_msg_msg_log_ravitaillement_pousser_flux    : return true;
         case T_MsgsOutClient_msg_msg_log_ravitaillement_change_quotas   : return true;
         default:

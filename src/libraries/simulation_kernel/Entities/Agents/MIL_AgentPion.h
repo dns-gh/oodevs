@@ -91,12 +91,12 @@ public:
     //! @name Operations
     //@{
     void PreprocessRandomBreakdowns( uint nEndDayTimeStep ) const;
-    void UpdateKnowledges           ();
-    void CleanKnowledges            ();
-    void UpdateDecision             ();
-    void UpdateState                ();
-    void UpdateNetwork              ();
-    void Clean                      ();
+    void UpdateKnowledges          ();
+    void CleanKnowledges           ();
+    void UpdateDecision            ();
+    void UpdateState               ();
+    void UpdateNetwork             ();
+    void Clean                     ();
     //@}
 
     //! @name Knowledge
@@ -111,11 +111,11 @@ public:
     void SendFullState() const;
     void SendKnowledge() const;
 
-    void OnReceiveMsgUnitMagicAction  ( DIN::DIN_Input&           msg );
-    void OnReceiveMsgUnitMagicAction  ( ASN1T_MsgUnitMagicAction& msg, uint nCtx );
-    void OnReceiveMsgOrder            ( ASN1T_MsgPionOrder&       msg ); 
-    void OnReceiveMsgFragOrder        ( ASN1T_MsgFragOrder&       msg );
-    void OnReceiveMsgChangeAutomate   ( ASN1T_MsgChangeAutomate&  msg, uint nCtx );
+    void OnReceiveMsgUnitMagicAction  ( DIN::DIN_Input&              msg );
+    void OnReceiveMsgUnitMagicAction  ( ASN1T_MsgUnitMagicAction&    msg, uint nCtx );
+    void OnReceiveMsgOrder            ( ASN1T_MsgPionOrder&          msg ); 
+    void OnReceiveMsgFragOrder        ( ASN1T_MsgFragOrder&          msg );
+    void OnReceiveMsgChangeSuperior   ( ASN1T_MsgPionChangeSuperior& msg, uint nCtx );
     void OnReceiveMagicSurrender      ();
     void OnReceiveMagicCancelSurrender();
     void OnReceiveMsgMagicMove        ( const MT_Vector2D& vPosition ); // Magic move automate
@@ -133,7 +133,7 @@ public:
             void NotifyAttacking ( MIL_Population& target ) const;
     virtual void NotifyAttackedBy( MIL_AgentPion& pion );
     virtual void NotifyAttackedBy( MIL_Population& population );
-            void ChangeAutomate  ( MIL_Automate& newAutomate );
+            void ChangeSuperior  ( MIL_Automate& newAutomate );
     //@}
 
 private:

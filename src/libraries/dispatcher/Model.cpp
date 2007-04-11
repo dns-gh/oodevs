@@ -118,13 +118,13 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
 //        case T_MsgsOutSim_msg_msg_unit_magic_action_ack 12
 //        case T_MsgsOutSim_msg_msg_object_magic_action_ack 13
 //        case T_MsgsOutSim_msg_msg_population_magic_action_ack 14
-        case T_MsgsOutSim_msg_msg_change_diplomatie_ack:                sides_.Get( asnMsg.msg.u.msg_change_diplomatie_ack->oid_camp1 ).Update( *asnMsg.msg.u.msg_change_diplomatie_ack ); break;
-        case T_MsgsOutSim_msg_msg_change_diplomatie:                    sides_.Get( asnMsg.msg.u.msg_change_diplomatie->oid_camp1 ).Update( *asnMsg.msg.u.msg_change_diplomatie ); break;
-        case T_MsgsOutSim_msg_msg_change_groupe_connaissance_ack:       automats_.Get( asnMsg.msg.u.msg_change_groupe_connaissance_ack->oid_automate ).Update( *asnMsg.msg.u.msg_change_groupe_connaissance_ack ); break;
-        case T_MsgsOutSim_msg_msg_change_liens_logistiques_ack:         automats_.Get( asnMsg.msg.u.msg_change_liens_logistiques_ack->oid_automate ).Update( *asnMsg.msg.u.msg_change_liens_logistiques_ack ); break;
-        case T_MsgsOutSim_msg_msg_change_liens_logistiques:             automats_.Get( asnMsg.msg.u.msg_change_liens_logistiques->oid_automate ).Update( *asnMsg.msg.u.msg_change_liens_logistiques ); break;
-        case T_MsgsOutSim_msg_msg_change_automate_ack:                  agents_.Get( asnMsg.msg.u.msg_change_automate_ack->oid_pion ).Update( *asnMsg.msg.u.msg_change_automate_ack ); break;   
-        case T_MsgsOutSim_msg_msg_change_automate:                      agents_.Get( asnMsg.msg.u.msg_change_automate->oid_pion ).Update( *asnMsg.msg.u.msg_change_automate ); break;
+        case T_MsgsOutSim_msg_msg_change_diplomatie_ack:                    sides_.Get( asnMsg.msg.u.msg_change_diplomatie_ack->oid_camp1 ).Update( *asnMsg.msg.u.msg_change_diplomatie_ack ); break;
+        case T_MsgsOutSim_msg_msg_change_diplomatie:                        sides_.Get( asnMsg.msg.u.msg_change_diplomatie->oid_camp1 ).Update( *asnMsg.msg.u.msg_change_diplomatie ); break;
+        case T_MsgsOutSim_msg_msg_automate_change_groupe_connaissance_ack:  automats_.Get( asnMsg.msg.u.msg_automate_change_groupe_connaissance_ack->oid_automate ).Update( *asnMsg.msg.u.msg_automate_change_groupe_connaissance_ack ); break;
+        case T_MsgsOutSim_msg_msg_automate_change_liens_logistiques_ack:    automats_.Get( asnMsg.msg.u.msg_automate_change_liens_logistiques_ack->oid_automate ).Update( *asnMsg.msg.u.msg_automate_change_liens_logistiques_ack ); break;
+        case T_MsgsOutSim_msg_msg_automate_change_liens_logistiques:        automats_.Get( asnMsg.msg.u.msg_automate_change_liens_logistiques->oid_automate ).Update( *asnMsg.msg.u.msg_automate_change_liens_logistiques ); break;
+        case T_MsgsOutSim_msg_msg_pion_change_superior_ack:                 agents_.Get( asnMsg.msg.u.msg_pion_change_superior_ack->oid_pion ).Update( *asnMsg.msg.u.msg_pion_change_superior_ack ); break;   
+        case T_MsgsOutSim_msg_msg_pion_change_superior:                     agents_.Get( asnMsg.msg.u.msg_pion_change_superior->oid_pion ).Update( *asnMsg.msg.u.msg_pion_change_superior ); break;
 //        case T_MsgsOutSim_msg_msg_log_ravitaillement_pousser_flux_ack 19
 //        case T_MsgsOutSim_msg_msg_log_ravitaillement_change_quotas_ack 20
 
@@ -139,8 +139,6 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
 //        case T_MsgsOutSim_msg_msg_ctrl_meteo_locale_ack:                OnReceiveMsgCtrlMeteoLocalAck         (); break;
 //        case T_MsgsOutSim_msg_msg_ctrl_checkpoint_save_begin:           OnReceiveMsgCheckPointSaveBegin       (); break;
 //        case T_MsgsOutSim_msg_msg_ctrl_checkpoint_save_end:             OnReceiveMsgCheckPointSaveEnd         (); break;
-//        case T_MsgsOutSim_msg_msg_ctrl_checkpoint_load_begin:           OnReceiveMsgCheckPointLoadBegin       (); break;
-//        case T_MsgsOutSim_msg_msg_ctrl_checkpoint_load_end:             OnReceiveMsgCheckPointLoadEnd         (); break;
 //        case T_MsgsOutSim_msg_msg_ctrl_checkpoint_set_frequency_ack:    pSimulationModel_->Update( asnMsg.msg.u.msg_ctrl_checkpoint_set_frequency_ack ); break;
 //        case T_MsgsOutSim_msg_msg_ctrl_checkpoint_save_now_ack:         OnReceiveMsgCheckPointSaveNowAck      (); break;
         case T_MsgsOutSim_msg_msg_ctrl_send_current_state_begin:        /*NOTHING*/ break;

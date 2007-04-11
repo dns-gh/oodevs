@@ -35,8 +35,8 @@ namespace kernel
 template< typename I >
 class AgentHierarchies : public kernel::EntityHierarchies< I  >
                        , public kernel::Updatable_ABC< ASN1T_MsgPionCreation >
-                       , public kernel::Updatable_ABC< ASN1T_MsgChangeAutomateAck >
-                       , public kernel::Updatable_ABC< ASN1T_MsgChangeAutomate >
+                       , public kernel::Updatable_ABC< ASN1T_MsgPionChangeSuperiorAck >
+                       , public kernel::Updatable_ABC< ASN1T_MsgPionChangeSuperior >
 {
 
 public:
@@ -63,8 +63,8 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgPionCreation& message );
-    virtual void DoUpdate( const ASN1T_MsgChangeAutomateAck& message );
-    virtual void DoUpdate( const ASN1T_MsgChangeAutomate& message );
+    virtual void DoUpdate( const ASN1T_MsgPionChangeSuperiorAck& message );
+    virtual void DoUpdate( const ASN1T_MsgPionChangeSuperior& message );
 
     void UpdateSuperior( kernel::Entity_ABC& superior );
     //@}
@@ -123,7 +123,7 @@ void AgentHierarchies< I >::DoUpdate( const ASN1T_MsgPionCreation& message )
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
 template< typename I >
-void AgentHierarchies< I >::DoUpdate( const ASN1T_MsgChangeAutomateAck& message )
+void AgentHierarchies< I >::DoUpdate( const ASN1T_MsgPionChangeSuperiorAck& message )
 {
     if( message.error_code == EnumObjectErrorCode::no_error )
         UpdateSuperior( automatResolver_.Get( message.oid_automate ) );
@@ -134,7 +134,7 @@ void AgentHierarchies< I >::DoUpdate( const ASN1T_MsgChangeAutomateAck& message 
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
 template< typename I >
-void AgentHierarchies< I >::DoUpdate( const ASN1T_MsgChangeAutomate& message )
+void AgentHierarchies< I >::DoUpdate( const ASN1T_MsgPionChangeSuperior& message )
 {
     UpdateSuperior( automatResolver_.Get( message.oid_automate ) );
 }

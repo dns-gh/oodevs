@@ -57,28 +57,23 @@ MsgSetAutomateModeAck ::= SEQUENCE
     error-code  EnumSetAutomateModeErrorCode
 }
 
-
 -- Changement hierarchie
-EnumChangeAutomateErrorCode ::= ENUMERATED
+MsgAutomateChangeGroupeConnaissance ::= SEQUENCE
 {
-    no-error                  (0),
-    error-invalid-pion        (1),
-    error-invalid-automate    (2),
-    error-camps-incompatibles (3)
-}
-MsgChangeAutomateAck ::= SEQUENCE
-{
-    oid-pion     Agent,
-    oid-automate Automate,
-    error-code   EnumChangeAutomateErrorCode
-}
-MsgChangeAutomate ::= SEQUENCE
-{
-    oid-pion     Agent,
-    oid-automate Automate
+    oid-automate             Automate,
+    oid-camp                 Camp,
+    oid-groupe-connaissance  KnowledgeGroup 
 }
 
-MsgChangeLiensLogistiques ::= SEQUENCE
+MsgAutomateChangeGroupeConnaissanceAck ::= SEQUENCE
+{
+    oid-automate             Automate,
+    oid-camp                 Camp,
+    oid-groupe-connaissance  KnowledgeGroup,
+    error-code               EnumChangeHierarchyErrorCode
+}
+   
+MsgAutomateChangeLiensLogistiques ::= SEQUENCE
 {
     oid-automate       Automate,
     oid-tc2            Automate OPTIONAL,
@@ -87,25 +82,14 @@ MsgChangeLiensLogistiques ::= SEQUENCE
     oid-ravitaillement Automate OPTIONAL
 }
 
-EnumChangeLiensLogistiquesErrorCode ::= ENUMERATED
-{
-    no-error                             (0),
-    error-invalid-automate               (1),
-    error-invalid-automate-tc2           (2),
-    error-invalid-automate-maintenance   (3),
-    error-invalid-automate-sante         (4),
-    error-invalid-automate-ravitaillement(5),
-    error-unit-surrendered               (6)
-}
-
-MsgChangeLiensLogistiquesAck ::= SEQUENCE
+MsgAutomateChangeLiensLogistiquesAck ::= SEQUENCE
 {
     oid-automate       Automate,
     oid-tc2            Automate OPTIONAL,
     oid-maintenance    Automate OPTIONAL,
     oid-sante          Automate OPTIONAL,
     oid-ravitaillement Automate OPTIONAL,
-    error-code         EnumChangeLiensLogistiquesErrorCode   
+    error-code         EnumChangeHierarchyErrorCode   
 }
 
 END -- Automate

@@ -18,27 +18,4 @@ MsgKnowledgeGroupCreation ::= SEQUENCE
     oid-camp    Camp
 }
 
-MsgChangeGroupeConnaissance ::= SEQUENCE
-{
-    oid-automate             Automate,
-    oid-camp                 Camp,
-    oid-groupe-connaissance  KnowledgeGroup 
-}
-
-EnumChangeGroupeConnaissanceErrorCode ::= ENUMERATED
-{
-    no-error                         (0),
-    error-invalid-automate           (1),
-    error-invalid-camp               (2),
-    error-invalid-groupe-connaissance(3)
-}
-
-MsgChangeGroupeConnaissanceAck ::= SEQUENCE
-{
-    oid-automate             Automate,
-    oid-camp                 Camp,
-    oid-groupe-connaissance  KnowledgeGroup,
-    error-code               EnumChangeGroupeConnaissanceErrorCode
-}
-
 END -- KnowledgeGroup

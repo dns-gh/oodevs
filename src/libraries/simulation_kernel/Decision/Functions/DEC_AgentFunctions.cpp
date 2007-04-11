@@ -719,7 +719,7 @@ void DEC_AgentFunctions::ChangeAutomate( DIA_Call_ABC& call, MIL_AgentPion& call
         return;
     }
     
-    callerAgent.ChangeAutomate( pAutomate->GetAutomate() );
+    callerAgent.ChangeSuperior( pAutomate->GetAutomate() );
     call.GetResult().SetValue( true );
 }
 

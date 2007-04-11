@@ -48,11 +48,11 @@ public:
 
     //! @name Main
     //@{
-    void Update        ( const ASN1T_MsgAutomateAttributes&          msg );
-    void Update        ( const ASN1T_MsgLogRavitaillementQuotas&     msg );
-    void Update        ( const ASN1T_MsgChangeLiensLogistiquesAck&   msg );
-    void Update        ( const ASN1T_MsgChangeLiensLogistiques&      msg );
-    void Update        ( const ASN1T_MsgChangeGroupeConnaissanceAck& msg );
+    void Update        ( const ASN1T_MsgAutomateAttributes&                  msg );
+    void Update        ( const ASN1T_MsgLogRavitaillementQuotas&             msg );
+    void Update        ( const ASN1T_MsgAutomateChangeLiensLogistiquesAck&   msg );
+    void Update        ( const ASN1T_MsgAutomateChangeLiensLogistiques&      msg );
+    void Update        ( const ASN1T_MsgAutomateChangeGroupeConnaissanceAck& msg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
     void SendFullUpdate( Publisher_ABC& publisher ) const;
     //@}

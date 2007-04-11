@@ -51,9 +51,9 @@ struct ASN1T_MsgOrderConduite;
 struct ASN1T_MsgObjectMagicAction;
 struct ASN1T_MsgPopulationMagicAction;
 struct ASN1T_MsgChangeDiplomatie;
-struct ASN1T_MsgChangeGroupeConnaissance;
-struct ASN1T_MsgChangeLiensLogistiques;
-struct ASN1T_MsgChangeAutomate;
+struct ASN1T_MsgAutomateChangeGroupeConnaissance;
+struct ASN1T_MsgAutomateChangeLiensLogistiques;
+struct ASN1T_MsgPionChangeSuperior;
 struct ASN1T_MsgLogRavitaillementChangeQuotas;
 struct ASN1T_MsgLogRavitaillementPousserFlux;
 
@@ -134,21 +134,21 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveMsgUnitMagicAction      ( DIN::DIN_Input&                         msg );
-    void OnReceiveMsgUnitMagicAction      ( ASN1T_MsgUnitMagicAction&               msg, uint nCtx );
-    void OnReceiveMsgPopulationOrder      ( ASN1T_MsgPopulationOrder&               msg, uint nCtx );     
-    void OnReceiveMsgPionOrder            ( ASN1T_MsgPionOrder&                     msg, uint nCtx ); 
-    void OnReceiveMsgAutomateOrder        ( ASN1T_MsgAutomateOrder&                 msg, uint nCtx );
-    void OnReceiveMsgSetAutomateMode      ( ASN1T_MsgSetAutomateMode&               msg, uint nCtx );
-    void OnReceiveMsgFragOrder            ( ASN1T_MsgFragOrder&                     msg, uint nCtx );
-    void OnReceiveMsgObjectMagicAction    ( ASN1T_MsgObjectMagicAction&             msg, uint nCtx );
-    void OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction&         msg, uint nCtx );
-    void OnReceiveMsgChangeDiplomacy      ( ASN1T_MsgChangeDiplomatie&              msg, uint nCtx );
-    void OnReceiveMsgChangeKnowledgeGroup ( ASN1T_MsgChangeGroupeConnaissance&      msg, uint nCtx );
-    void OnReceiveMsgChangeLogisticLinks  ( ASN1T_MsgChangeLiensLogistiques&        msg, uint nCtx );
-    void OnReceiveMsgChangeAutomate       ( ASN1T_MsgChangeAutomate&                msg, uint nCtx );
-    void OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& msg, uint nCtx );
-    void OnReceiveMsgLogSupplyPushFlow    ( ASN1T_MsgLogRavitaillementPousserFlux&  msg, uint nCtx );
+    void OnReceiveMsgUnitMagicAction             ( DIN::DIN_Input&                            msg );
+    void OnReceiveMsgUnitMagicAction             ( ASN1T_MsgUnitMagicAction&                  msg, uint nCtx );
+    void OnReceiveMsgPopulationOrder             ( ASN1T_MsgPopulationOrder&                  msg, uint nCtx );     
+    void OnReceiveMsgPionOrder                   ( ASN1T_MsgPionOrder&                        msg, uint nCtx ); 
+    void OnReceiveMsgAutomateOrder               ( ASN1T_MsgAutomateOrder&                    msg, uint nCtx );
+    void OnReceiveMsgSetAutomateMode             ( ASN1T_MsgSetAutomateMode&                  msg, uint nCtx );
+    void OnReceiveMsgFragOrder                   ( ASN1T_MsgFragOrder&                        msg, uint nCtx );
+    void OnReceiveMsgObjectMagicAction           ( ASN1T_MsgObjectMagicAction&                msg, uint nCtx );
+    void OnReceiveMsgPopulationMagicAction       ( ASN1T_MsgPopulationMagicAction&            msg, uint nCtx );
+    void OnReceiveMsgChangeDiplomacy             ( ASN1T_MsgChangeDiplomatie&                 msg, uint nCtx );
+    void OnReceiveMsgAutomateChangeKnowledgeGroup( ASN1T_MsgAutomateChangeGroupeConnaissance& msg, uint nCtx );
+    void OnReceiveMsgAutomateChangeLogisticLinks ( ASN1T_MsgAutomateChangeLiensLogistiques&   msg, uint nCtx );
+    void OnReceiveMsgPionChangeSuperior          ( ASN1T_MsgPionChangeSuperior&               msg, uint nCtx );
+    void OnReceiveMsgLogSupplyChangeQuotas       ( ASN1T_MsgLogRavitaillementChangeQuotas&    msg, uint nCtx );
+    void OnReceiveMsgLogSupplyPushFlow           ( ASN1T_MsgLogRavitaillementPousserFlux&     msg, uint nCtx );
     //@}
 
     //! @name Population channeling

@@ -246,7 +246,7 @@ void DEC_AutomateFunctions::PionChangeAutomate( DIA_Call_ABC& call, MIL_Automate
         return;
     }
 
-    pPion->GetPion().ChangeAutomate( pAutomate->GetAutomate() );
+    pPion->GetPion().ChangeSuperior( pAutomate->GetAutomate() );
     call.GetResult().SetValue( true );
 }
 

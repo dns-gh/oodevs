@@ -793,9 +793,9 @@ void MIL_AutomateLOG::SendFullState() const
 // Name: MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks
 // Created: NLD 2005-01-17
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLogistiques& msg, uint nCtx )
+void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgAutomateChangeLiensLogistiques& msg, uint nCtx )
 {
-    NET_ASN_MsgChangeLiensLogistiquesAck asnReplyMsg;
+    NET_ASN_MsgAutomateChangeLiensLogistiquesAck asnReplyMsg;
     asnReplyMsg().oid_automate = msg.oid_automate;
 
     bool bNewTC2                 = false;
@@ -818,7 +818,7 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLogis
             pNewTC2 = GetLogisticAutomate( msg.oid_tc2 );
             if( !pNewTC2 )
             {
-                asnReplyMsg().error_code = EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_tc2;
+                asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::error_invalid_automate_tc2;
                 asnReplyMsg.Send( nCtx );
                 return;
             }
@@ -835,7 +835,7 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLogis
             pNewMaintenanceSuperior = GetLogisticAutomate( msg.oid_maintenance );
             if( !pNewMaintenanceSuperior )
             {
-                asnReplyMsg().error_code = EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_maintenance;
+                asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::error_invalid_automate_maintenance;
                 asnReplyMsg.Send( nCtx );
                 return;
             }
@@ -852,7 +852,7 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLogis
             pNewMedicalSuperior = GetLogisticAutomate( msg.oid_sante );
             if( !pNewMedicalSuperior )
             {
-                asnReplyMsg().error_code = EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_sante;
+                asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::error_invalid_automate_sante;
                 asnReplyMsg.Send( nCtx );
                 return;
             }
@@ -869,7 +869,7 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLogis
             pNewSupplySuperior = GetLogisticAutomate( msg.oid_ravitaillement );
             if( !pNewSupplySuperior )
             {
-                asnReplyMsg().error_code = EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_ravitaillement;
+                asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::error_invalid_automate_ravitaillement;
                 asnReplyMsg.Send( nCtx );
                 return;
             }
@@ -885,7 +885,7 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLogis
     if( bNewSupplySuperior )
         pSupplySuperior_ = pNewSupplySuperior;
 
-    asnReplyMsg().error_code = EnumChangeLiensLogistiquesErrorCode::no_error;
+    asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::no_error;
     asnReplyMsg.Send( nCtx );
 }
 
@@ -955,7 +955,7 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementP
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::SendLogisticLinks() const
 {
-    NET_ASN_MsgChangeLiensLogistiques asn;
+    NET_ASN_MsgAutomateChangeLiensLogistiques asn;
 
     asn().oid_automate = GetID();
 

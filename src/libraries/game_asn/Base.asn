@@ -183,6 +183,20 @@ EnumHumanRank ::= ENUMERATED
     sous-officer(1),
     mdr         (2)
 }
-                  
+
+EnumChangeHierarchyErrorCode ::= ENUMERATED
+{
+    no-error                             (0),
+    error-invalid-pion                   (1),
+    error-invalid-automate               (2),
+    error-invalid-automate-tc2           (3),
+    error-invalid-automate-maintenance   (4),
+    error-invalid-automate-sante         (5),
+    error-invalid-automate-ravitaillement(6),
+    error-unit-surrendered               (7),    
+    error-invalid-camp                   (8),
+    error-invalid-groupe-connaissance    (9),
+    error-camps-incompatibles            (10)
+}                  
 
 END -- Base

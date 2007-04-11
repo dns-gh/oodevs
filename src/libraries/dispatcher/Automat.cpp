@@ -67,7 +67,7 @@ Automat::~Automat()
 // Name: Automat::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Automat::Update( const ASN1T_MsgChangeLiensLogistiquesAck& msg )
+void Automat::Update( const ASN1T_MsgAutomateChangeLiensLogistiquesAck& msg )
 {
     if( msg.m.oid_tc2Present )
         pTC2_ = msg.oid_tc2 == 0 ? 0 : &model_.GetAutomats().Get( msg.oid_tc2 );
@@ -83,7 +83,7 @@ void Automat::Update( const ASN1T_MsgChangeLiensLogistiquesAck& msg )
 // Name: Automat::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Automat::Update( const ASN1T_MsgChangeLiensLogistiques& msg )
+void Automat::Update( const ASN1T_MsgAutomateChangeLiensLogistiques& msg )
 {
     if( msg.m.oid_tc2Present )
         pTC2_ = msg.oid_tc2 == 0 ? 0 : &model_.GetAutomats().Get( msg.oid_tc2 );
@@ -99,7 +99,7 @@ void Automat::Update( const ASN1T_MsgChangeLiensLogistiques& msg )
 // Name: Automat::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Automat::Update( const ASN1T_MsgChangeGroupeConnaissanceAck& msg )
+void Automat::Update( const ASN1T_MsgAutomateChangeGroupeConnaissanceAck& msg )
 {
     pKnowledgeGroup_->GetAutomats().Unregister( *this );
     pKnowledgeGroup_ = &model_.GetKnowledgeGroups().Get( msg.oid_groupe_connaissance );
@@ -183,7 +183,7 @@ void Automat::SendFullUpdate( Publisher_ABC& publisher ) const
     }
 
     {
-        AsnMsgInClientChangeLiensLogistiques asn;
+        AsnMsgInClientAutomateChangeLiensLogistiques asn;
         asn().oid_automate = nID_;
         if( pTC2_ )
         {

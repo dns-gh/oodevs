@@ -146,28 +146,6 @@ bool MIL_AutomateOrderManager::IsMissionAvailable( const MIL_MissionType_ABC& mi
     return automate_.GetType().GetModel().IsMissionAvailable( missionType );
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateOrderManager::Engage
-// Created: NLD 2006-11-24
-// -----------------------------------------------------------------------------
-void MIL_AutomateOrderManager::Engage()
-{
-    MIL_OrderManager_ABC::ReplaceMission( 0 );
-
-    const MIL_Automate::T_PionVector& pions = automate_.GetPions();
-    for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
-        (**it).GetOrderManager().ReplaceMission( 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateOrderManager::Disengage
-// Created: NLD 2006-11-24
-// -----------------------------------------------------------------------------
-void MIL_AutomateOrderManager::Disengage()
-{
-    MIL_OrderManager_ABC::ReplaceMission( 0 );
-}
-
 // =============================================================================
 // OPERATIONS
 // =============================================================================

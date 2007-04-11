@@ -271,30 +271,6 @@ enum E_SetAutomateModeErrorCode
     eNbrSetAutomateModeErrorCode
 };
 
-
-enum E_ChangeAutomateErrorCode
-{
-    eChangeAutomateErrorCode_NoError,
-    eChangeAutomateErrorCode_ErrorInvalidPion,
-    eChangeAutomateErrorCode_ErrorInvalidAutomate,
-    eChangeAutomateErrorCode_ErrorCampsIncompatibles,
-    eNbrChangeAutomateErrorCode
-};
-
-
-enum E_ChangeLiensLogistiquesErrorCode
-{
-    eChangeLiensLogistiquesErrorCode_NoError,
-    eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomate,
-    eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateTc2,
-    eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateMaintenance,
-    eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateSante,
-    eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateRavitaillement,
-    eChangeLiensLogistiquesErrorCode_ErrorUnitSurrendered,
-    eNbrChangeLiensLogistiquesErrorCode
-};
-
-
 enum E_CtrlErrorCode
 {
     eCtrlErrorCode_NoError,
@@ -389,16 +365,6 @@ enum E_FireEffectType
     eFireEffectType_Fumigene,
     eFireEffectType_Eclairant,
     eNbrFireEffectType
-};
-
-
-enum E_ChangeGroupeConnaissanceErrorCode
-{
-    eChangeGroupeConnaissanceErrorCode_NoError,
-    eChangeGroupeConnaissanceErrorCode_ErrorInvalidAutomate,
-    eChangeGroupeConnaissanceErrorCode_ErrorInvalidCamp,
-    eChangeGroupeConnaissanceErrorCode_ErrorInvalidGroupeConnaissance,
-    eNbrChangeGroupeConnaissanceErrorCode
 };
 
 

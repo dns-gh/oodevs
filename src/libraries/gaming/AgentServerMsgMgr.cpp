@@ -1154,21 +1154,21 @@ void AgentServerMsgMgr::OnReceiveMsgSetAutomateModeAck( const ASN1T_MsgSetAutoma
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck
+// Name: AgentServerMsgMgr::OnReceiveMsgPionChangeSuperiorAck
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChangeAutomateAck& message, unsigned long )
+void AgentServerMsgMgr::OnReceiveMsgPionChangeSuperiorAck( const ASN1T_MsgPionChangeSuperiorAck& message, unsigned long )
 {
-    if( CheckAcknowledge( message, "ChangeAutomateAck" ) )
+    if( CheckAcknowledge( message, "PionChangeSuperiorAck" ) )
         GetModel().agents_.GetAgent( message.oid_pion ).Update( message );
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgChangeAutomate
+// Name: AgentServerMsgMgr::OnReceiveMsgPionChangeSuperior
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgChangeAutomate( const ASN1T_MsgChangeAutomate& message )
+void AgentServerMsgMgr::OnReceiveMsgPionChangeSuperior( const ASN1T_MsgPionChangeSuperior& message )
 {
     GetModel().agents_.GetAgent( message.oid_pion ).Update( message );
 }
@@ -1186,33 +1186,32 @@ void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDip
     }
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck
+// Name: AgentServerMsgMgr::OnReceiveMsgAutomateChangeGroupeConnaissanceAck
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_MsgChangeGroupeConnaissanceAck& message, unsigned long )
+void AgentServerMsgMgr::OnReceiveMsgAutomateChangeGroupeConnaissanceAck( const ASN1T_MsgAutomateChangeGroupeConnaissanceAck& message, unsigned long )
 {
-    if( CheckAcknowledge( message, "ChangeGroupeConnaissanceAck" ) )
+    if( CheckAcknowledge( message, "AutomateChangeGroupeConnaissanceAck" ) )
         GetModel().agents_.GetAutomat( message.oid_automate ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiques
+// Name: AgentServerMsgMgr::OnReceiveMsgAutomateChangeLiensLogistiques
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiques( const ASN1T_MsgChangeLiensLogistiques& message )
+void AgentServerMsgMgr::OnReceiveMsgAutomateChangeLiensLogistiques( const ASN1T_MsgAutomateChangeLiensLogistiques& message )
 {
     GetModel().agents_.GetAutomat( message.oid_automate ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck
+// Name: AgentServerMsgMgr::OnReceiveMsgAutomateChangeLiensLogistiquesAck
 // Created: AGE 2005-04-06
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck( const ASN1T_MsgChangeLiensLogistiquesAck& message, unsigned long )
+void AgentServerMsgMgr::OnReceiveMsgAutomateChangeLiensLogistiquesAck( const ASN1T_MsgAutomateChangeLiensLogistiquesAck& message, unsigned long )
 {
-    if( CheckAcknowledge( message, "ChangeLiensLogistiquesAck" ) )
+    if( CheckAcknowledge( message, "AutomateChangeLiensLogistiquesAck" ) )
         GetModel().agents_.GetAutomat( message.oid_automate ).Update( message );
 }
 
@@ -1648,27 +1647,27 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
 
     switch( message.msg.t )
     {
-        case T_MsgsInClient_msg_msg_limit_creation_request_ack:             OnReceiveMsgLimitCreationRequestAck         ( message.msg.u.msg_limit_creation_request_ack          , message.context ); break;
-        case T_MsgsInClient_msg_msg_limit_update_request_ack:               OnReceiveMsgLimitUpdateRequestAck           ( message.msg.u.msg_limit_update_request_ack            , message.context ); break;
-        case T_MsgsInClient_msg_msg_limit_destruction_request_ack:          OnReceiveMsgLimitDestructionRequestAck      ( message.msg.u.msg_limit_destruction_request_ack       , message.context ); break;
-        case T_MsgsInClient_msg_msg_lima_creation_request_ack:              OnReceiveMsgLimaCreationRequestAck          ( message.msg.u.msg_lima_creation_request_ack           , message.context ); break;
-        case T_MsgsInClient_msg_msg_lima_update_request_ack:                OnReceiveMsgLimaUpdateRequestAck            ( message.msg.u.msg_lima_update_request_ack             , message.context ); break;
-        case T_MsgsInClient_msg_msg_lima_destruction_request_ack:           OnReceiveMsgLimaDestructionRequestAck       ( message.msg.u.msg_lima_destruction_request_ack        , message.context ); break;
-        case T_MsgsInClient_msg_msg_automate_order_ack:                     OnReceiveMsgAutomateOrderAck                ( *message.msg.u.msg_automate_order_ack                  , message.context ); break;
-        case T_MsgsInClient_msg_msg_pion_order_ack:                         OnReceiveMsgPionOrderAck                    ( *message.msg.u.msg_pion_order_ack                      , message.context ); break;
-        case T_MsgsInClient_msg_msg_frag_order_ack:                         OnReceiveMsgFragOrderAck                    ( *message.msg.u.msg_frag_order_ack                      , message.context ); break;
-        case T_MsgsInClient_msg_msg_unit_magic_action_ack:                  OnReceiveMsgUnitMagicActionAck              ( *message.msg.u.msg_unit_magic_action_ack               , message.context ); break;
-        case T_MsgsInClient_msg_msg_set_automate_mode_ack:                  OnReceiveMsgSetAutomateModeAck              ( *message.msg.u.msg_set_automate_mode_ack               , message.context ); break;
-        case T_MsgsInClient_msg_msg_change_automate_ack:                    OnReceiveMsgChangeAutomateAck               ( *message.msg.u.msg_change_automate_ack                 , message.context ); break;
-        case T_MsgsInClient_msg_msg_change_diplomatie_ack:                  OnReceiveMsgChangeDiplomacyAck              ( *message.msg.u.msg_change_diplomatie_ack               , message.context ); break;
-        case T_MsgsInClient_msg_msg_change_groupe_connaissance_ack:         OnReceiveMsgChangeGroupeConnaissanceAck     ( *message.msg.u.msg_change_groupe_connaissance_ack      , message.context ); break;
-        case T_MsgsInClient_msg_msg_object_magic_action_ack:                OnReceiveMsgObjectMagicActionAck            ( *message.msg.u.msg_object_magic_action_ack             , message.context ); break;
-        case T_MsgsInClient_msg_msg_change_liens_logistiques_ack:           OnReceiveMsgChangeLiensLogistiquesAck       ( *message.msg.u.msg_change_liens_logistiques_ack        , message.context ); break;
-        case T_MsgsInClient_msg_msg_change_liens_logistiques:               OnReceiveMsgChangeLiensLogistiques          ( *message.msg.u.msg_change_liens_logistiques ); break;
-        case T_MsgsInClient_msg_msg_log_ravitaillement_pousser_flux_ack:    OnReceiveMsgLogRavitaillementPousserFluxAck (  message.msg.u.msg_log_ravitaillement_pousser_flux_ack , message.context ); break;
-        case T_MsgsInClient_msg_msg_log_ravitaillement_change_quotas_ack:   OnReceiveMsgLogRavitaillementChangeQuotaAck (  message.msg.u.msg_log_ravitaillement_change_quotas_ack, message.context ); break;
-        case T_MsgsInClient_msg_msg_population_magic_action_ack:            OnReceiveMsgPopulationMagicActionAck        ( *message.msg.u.msg_population_magic_action_ack         , message.context ); break;
-        case T_MsgsInClient_msg_msg_population_order_ack:                   OnReceiveMsgPopulationOrderAck              ( *message.msg.u.msg_population_order_ack                , message.context ); break;
+        case T_MsgsInClient_msg_msg_limit_creation_request_ack:             OnReceiveMsgLimitCreationRequestAck            ( message.msg.u.msg_limit_creation_request_ack               , message.context ); break;
+        case T_MsgsInClient_msg_msg_limit_update_request_ack:               OnReceiveMsgLimitUpdateRequestAck              ( message.msg.u.msg_limit_update_request_ack                 , message.context ); break;
+        case T_MsgsInClient_msg_msg_limit_destruction_request_ack:          OnReceiveMsgLimitDestructionRequestAck         ( message.msg.u.msg_limit_destruction_request_ack            , message.context ); break;
+        case T_MsgsInClient_msg_msg_lima_creation_request_ack:              OnReceiveMsgLimaCreationRequestAck             ( message.msg.u.msg_lima_creation_request_ack                , message.context ); break;
+        case T_MsgsInClient_msg_msg_lima_update_request_ack:                OnReceiveMsgLimaUpdateRequestAck               ( message.msg.u.msg_lima_update_request_ack                  , message.context ); break;
+        case T_MsgsInClient_msg_msg_lima_destruction_request_ack:           OnReceiveMsgLimaDestructionRequestAck          ( message.msg.u.msg_lima_destruction_request_ack             , message.context ); break;
+        case T_MsgsInClient_msg_msg_automate_order_ack:                     OnReceiveMsgAutomateOrderAck                   ( *message.msg.u.msg_automate_order_ack                      , message.context ); break;
+        case T_MsgsInClient_msg_msg_pion_order_ack:                         OnReceiveMsgPionOrderAck                       ( *message.msg.u.msg_pion_order_ack                          , message.context ); break;
+        case T_MsgsInClient_msg_msg_frag_order_ack:                         OnReceiveMsgFragOrderAck                       ( *message.msg.u.msg_frag_order_ack                          , message.context ); break;
+        case T_MsgsInClient_msg_msg_unit_magic_action_ack:                  OnReceiveMsgUnitMagicActionAck                 ( *message.msg.u.msg_unit_magic_action_ack                   , message.context ); break;
+        case T_MsgsInClient_msg_msg_set_automate_mode_ack:                  OnReceiveMsgSetAutomateModeAck                 ( *message.msg.u.msg_set_automate_mode_ack                   , message.context ); break;
+        case T_MsgsInClient_msg_msg_pion_change_superior_ack:               OnReceiveMsgPionChangeSuperiorAck              ( *message.msg.u.msg_pion_change_superior_ack                , message.context ); break;
+        case T_MsgsInClient_msg_msg_change_diplomatie_ack:                  OnReceiveMsgChangeDiplomacyAck                 ( *message.msg.u.msg_change_diplomatie_ack                   , message.context ); break;
+        case T_MsgsInClient_msg_msg_automate_change_groupe_connaissance_ack:OnReceiveMsgAutomateChangeGroupeConnaissanceAck( *message.msg.u.msg_automate_change_groupe_connaissance_ack , message.context ); break;
+        case T_MsgsInClient_msg_msg_object_magic_action_ack:                OnReceiveMsgObjectMagicActionAck               ( *message.msg.u.msg_object_magic_action_ack                 , message.context ); break;
+        case T_MsgsInClient_msg_msg_automate_change_liens_logistiques_ack:  OnReceiveMsgAutomateChangeLiensLogistiquesAck  ( *message.msg.u.msg_automate_change_liens_logistiques_ack   , message.context ); break;
+        case T_MsgsInClient_msg_msg_automate_change_liens_logistiques:      OnReceiveMsgAutomateChangeLiensLogistiques     ( *message.msg.u.msg_automate_change_liens_logistiques                         ); break;
+        case T_MsgsInClient_msg_msg_log_ravitaillement_pousser_flux_ack:    OnReceiveMsgLogRavitaillementPousserFluxAck    (  message.msg.u.msg_log_ravitaillement_pousser_flux_ack     , message.context ); break;
+        case T_MsgsInClient_msg_msg_log_ravitaillement_change_quotas_ack:   OnReceiveMsgLogRavitaillementChangeQuotaAck    (  message.msg.u.msg_log_ravitaillement_change_quotas_ack    , message.context ); break;
+        case T_MsgsInClient_msg_msg_population_magic_action_ack:            OnReceiveMsgPopulationMagicActionAck           ( *message.msg.u.msg_population_magic_action_ack             , message.context ); break;
+        case T_MsgsInClient_msg_msg_population_order_ack:                   OnReceiveMsgPopulationOrderAck                 ( *message.msg.u.msg_population_order_ack                    , message.context ); break;
 
         case T_MsgsInClient_msg_msg_ctrl_info:                            OnReceiveMsgCtrlInfo                  ( *message.msg.u.msg_ctrl_info                           ); break;
         case T_MsgsInClient_msg_msg_ctrl_begin_tick:                      OnReceiveMsgCtrlBeginTick             (  message.msg.u.msg_ctrl_begin_tick                     ); break;
@@ -1737,7 +1736,7 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
         case T_MsgsInClient_msg_msg_object_knowledge_update:              OnReceiveMsgObjectKnowledgeUpdate     ( *message.msg.u.msg_object_knowledge_update             ); break;
         case T_MsgsInClient_msg_msg_object_knowledge_destruction:         OnReceiveMsgObjectKnowledgeDestruction( *message.msg.u.msg_object_knowledge_destruction        ); break;
 
-        case T_MsgsInClient_msg_msg_change_automate:                      OnReceiveMsgChangeAutomate            ( *message.msg.u.msg_change_automate ); break;
+        case T_MsgsInClient_msg_msg_pion_change_superior:                 OnReceiveMsgPionChangeSuperior        ( *message.msg.u.msg_pion_change_superior ); break;
 
         case T_MsgsInClient_msg_msg_pion_creation:                        OnReceiveMsgPionCreation              ( *message.msg.u.msg_pion_creation                       ); break;
         case T_MsgsInClient_msg_msg_automate_creation:                    OnReceiveMsgAutomateCreation          ( *message.msg.u.msg_automate_creation                   ); break;

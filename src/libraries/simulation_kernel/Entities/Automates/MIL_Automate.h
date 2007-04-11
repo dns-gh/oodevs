@@ -142,14 +142,14 @@ public:
     virtual void SendFullState                    () const;
             void SendKnowledge                    () const;
 
-            void OnReceiveMsgOrder                ( ASN1T_MsgAutomateOrder&                 msg );
-            void OnReceiveMsgFragOrder            ( ASN1T_MsgFragOrder&                     msg );
-            void OnReceiveMsgSetAutomateMode      ( ASN1T_MsgSetAutomateMode&               msg, uint nCtx );
-            void OnReceiveMsgUnitMagicAction      ( ASN1T_MsgUnitMagicAction&               msg, uint nCtx );
-            void OnReceiveMsgChangeKnowledgeGroup ( ASN1T_MsgChangeGroupeConnaissance&      msg, uint nCtx );
-    virtual void OnReceiveMsgChangeLogisticLinks  ( ASN1T_MsgChangeLiensLogistiques&        msg, uint nCtx );
-    virtual void OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& msg, uint nCtx );
-    virtual void OnReceiveMsgLogSupplyPushFlow    ( ASN1T_MsgLogRavitaillementPousserFlux&  msg, uint nCtx );
+            void OnReceiveMsgOrder                ( ASN1T_MsgAutomateOrder&                    msg );
+            void OnReceiveMsgFragOrder            ( ASN1T_MsgFragOrder&                        msg );
+            void OnReceiveMsgSetAutomateMode      ( ASN1T_MsgSetAutomateMode&                  msg, uint nCtx );
+            void OnReceiveMsgUnitMagicAction      ( ASN1T_MsgUnitMagicAction&                  msg, uint nCtx );
+            void OnReceiveMsgChangeKnowledgeGroup ( ASN1T_MsgAutomateChangeGroupeConnaissance& msg, uint nCtx );
+    virtual void OnReceiveMsgChangeLogisticLinks  ( ASN1T_MsgAutomateChangeLiensLogistiques&   msg, uint nCtx );
+    virtual void OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas&    msg, uint nCtx );
+    virtual void OnReceiveMsgLogSupplyPushFlow    ( ASN1T_MsgLogRavitaillementPousserFlux&     msg, uint nCtx );
     //@}
 
     //! @name Misc

@@ -59,8 +59,6 @@ public:
     static const std::string& ConvertFromUnitExperience( E_UnitExperience, E_Conversion = eToSim );
     static const std::string& ConvertFromAutomateState( E_AutomateState, E_Conversion = eToSim );
     static const std::string& ConvertFromSetAutomateModeErrorCode( E_SetAutomateModeErrorCode, E_Conversion = eToSim );
-    static const std::string& ConvertFromChangeAutomateErrorCode( E_ChangeAutomateErrorCode, E_Conversion = eToSim );
-    static const std::string& ConvertFromChangeLiensLogistiquesErrorCode( E_ChangeLiensLogistiquesErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromCtrlErrorCode( E_CtrlErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromEtatSim( E_EtatSim, E_Conversion = eToSim );
     static const std::string& ConvertFromPrecipitationType( E_PrecipitationType, E_Conversion = eToSim );
@@ -70,7 +68,6 @@ public:
     static const std::string& ConvertFromPopulationAttrErrorCode( E_PopulationAttrErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromTypeCR( E_TypeCR, E_Conversion = eToSim );
     static const std::string& ConvertFromFireEffectType( E_FireEffectType, E_Conversion = eToSim );
-    static const std::string& ConvertFromChangeGroupeConnaissanceErrorCode( E_ChangeGroupeConnaissanceErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromLogMaintenanceRegimeTravail( E_LogMaintenanceRegimeTravail, E_Conversion = eToSim );
     static const std::string& ConvertFromLogMaintenanceTraitementEtat( E_LogMaintenanceTraitementEtat, E_Conversion = eToSim );
     static const std::string& ConvertFromLogRavitaillementTraitementEtat( E_LogRavitaillementTraitementEtat, E_Conversion = eToSim );
@@ -108,8 +105,6 @@ public:
     static E_UnitExperience ConvertToUnitExperience( const std::string& );
     static E_AutomateState ConvertToAutomateState( const std::string& );
     static E_SetAutomateModeErrorCode ConvertToSetAutomateModeErrorCode( const std::string& );
-    static E_ChangeAutomateErrorCode ConvertToChangeAutomateErrorCode( const std::string& );
-    static E_ChangeLiensLogistiquesErrorCode ConvertToChangeLiensLogistiquesErrorCode( const std::string& );
     static E_CtrlErrorCode ConvertToCtrlErrorCode( const std::string& );
     static E_EtatSim ConvertToEtatSim( const std::string& );
     static E_PrecipitationType ConvertToPrecipitationType( const std::string& );
@@ -119,7 +114,6 @@ public:
     static E_PopulationAttrErrorCode ConvertToPopulationAttrErrorCode( const std::string& );
     static E_TypeCR ConvertToTypeCR( const std::string& );
     static E_FireEffectType ConvertToFireEffectType( const std::string& );
-    static E_ChangeGroupeConnaissanceErrorCode ConvertToChangeGroupeConnaissanceErrorCode( const std::string& );
     static E_LogMaintenanceRegimeTravail ConvertToLogMaintenanceRegimeTravail( const std::string& );
     static E_LogMaintenanceTraitementEtat ConvertToLogMaintenanceTraitementEtat( const std::string& );
     static E_LogRavitaillementTraitementEtat ConvertToLogRavitaillementTraitementEtat( const std::string& );
@@ -158,8 +152,6 @@ private:
     typedef ENT_Tr::converter<E_UnitExperience> T_ConverterUnitExperience;
     typedef ENT_Tr::converter<E_AutomateState> T_ConverterAutomateState;
     typedef ENT_Tr::converter<E_SetAutomateModeErrorCode> T_ConverterSetAutomateModeErrorCode;
-    typedef ENT_Tr::converter<E_ChangeAutomateErrorCode> T_ConverterChangeAutomateErrorCode;
-    typedef ENT_Tr::converter<E_ChangeLiensLogistiquesErrorCode> T_ConverterChangeLiensLogistiquesErrorCode;
     typedef ENT_Tr::converter<E_CtrlErrorCode> T_ConverterCtrlErrorCode;
     typedef ENT_Tr::converter<E_EtatSim> T_ConverterEtatSim;
     typedef ENT_Tr::converter<E_PrecipitationType> T_ConverterPrecipitationType;
@@ -169,7 +161,6 @@ private:
     typedef ENT_Tr::converter<E_PopulationAttrErrorCode> T_ConverterPopulationAttrErrorCode;
     typedef ENT_Tr::converter<E_TypeCR> T_ConverterTypeCR;
     typedef ENT_Tr::converter<E_FireEffectType> T_ConverterFireEffectType;
-    typedef ENT_Tr::converter<E_ChangeGroupeConnaissanceErrorCode> T_ConverterChangeGroupeConnaissanceErrorCode;
     typedef ENT_Tr::converter<E_LogMaintenanceRegimeTravail> T_ConverterLogMaintenanceRegimeTravail;
     typedef ENT_Tr::converter<E_LogMaintenanceTraitementEtat> T_ConverterLogMaintenanceTraitementEtat;
     typedef ENT_Tr::converter<E_LogRavitaillementTraitementEtat> T_ConverterLogRavitaillementTraitementEtat;
@@ -207,8 +198,6 @@ private:
     static T_ConverterUnitExperience UnitExperienceConverter_ [];
     static T_ConverterAutomateState AutomateStateConverter_ [];
     static T_ConverterSetAutomateModeErrorCode SetAutomateModeErrorCodeConverter_ [];
-    static T_ConverterChangeAutomateErrorCode ChangeAutomateErrorCodeConverter_ [];
-    static T_ConverterChangeLiensLogistiquesErrorCode ChangeLiensLogistiquesErrorCodeConverter_ [];
     static T_ConverterCtrlErrorCode CtrlErrorCodeConverter_ [];
     static T_ConverterEtatSim EtatSimConverter_ [];
     static T_ConverterPrecipitationType PrecipitationTypeConverter_ [];
@@ -218,7 +207,6 @@ private:
     static T_ConverterPopulationAttrErrorCode PopulationAttrErrorCodeConverter_ [];
     static T_ConverterTypeCR TypeCRConverter_ [];
     static T_ConverterFireEffectType FireEffectTypeConverter_ [];
-    static T_ConverterChangeGroupeConnaissanceErrorCode ChangeGroupeConnaissanceErrorCodeConverter_ [];
     static T_ConverterLogMaintenanceRegimeTravail LogMaintenanceRegimeTravailConverter_ [];
     static T_ConverterLogMaintenanceTraitementEtat LogMaintenanceTraitementEtatConverter_ [];
     static T_ConverterLogRavitaillementTraitementEtat LogRavitaillementTraitementEtatConverter_ [];

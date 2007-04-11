@@ -303,4 +303,16 @@ MsgUnitPathFind ::= SEQUENCE
     itineraire  Itineraire
 }
 
+MsgPionChangeSuperiorAck ::= SEQUENCE
+{
+    oid-pion     Agent,
+    oid-automate Automate,
+    error-code   EnumChangeHierarchyErrorCode
+}
+MsgPionChangeSuperior ::= SEQUENCE
+{
+    oid-pion     Agent,
+    oid-automate Automate
+}
+
 END -- Unit

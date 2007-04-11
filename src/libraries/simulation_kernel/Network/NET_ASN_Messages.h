@@ -117,13 +117,13 @@ NET_GENERATE_SEND_ASN_MSG_PTR( KnowledgeGroupCreation, knowledge_group_creation 
 NET_GENERATE_SEND_ASN_MSG_PTR( SideCreation          , side_creation            )
 
 // Hierarchie update
-NET_GENERATE_SEND_ASN_MSG_PTR( ChangeDiplomatieAck        , change_diplomatie_ack          )
-NET_GENERATE_SEND_ASN_MSG_PTR( ChangeGroupeConnaissanceAck, change_groupe_connaissance_ack )
-NET_GENERATE_SEND_ASN_MSG_PTR( ChangeLiensLogistiquesAck  , change_liens_logistiques_ack   )
-NET_GENERATE_SEND_ASN_MSG_PTR( ChangeLiensLogistiques     , change_liens_logistiques       )
-NET_GENERATE_SEND_ASN_MSG_PTR( ChangeAutomate             , change_automate                )
-NET_GENERATE_SEND_ASN_MSG_PTR( ChangeAutomateAck          , change_automate_ack            )
-NET_GENERATE_SEND_ASN_MSG_PTR( ChangeDiplomatie           , change_diplomatie              )
+NET_GENERATE_SEND_ASN_MSG_PTR( ChangeDiplomatieAck                , change_diplomatie_ack                   )
+NET_GENERATE_SEND_ASN_MSG_PTR( AutomateChangeGroupeConnaissanceAck, automate_change_groupe_connaissance_ack )
+NET_GENERATE_SEND_ASN_MSG_PTR( AutomateChangeLiensLogistiquesAck  , automate_change_liens_logistiques_ack   )
+NET_GENERATE_SEND_ASN_MSG_PTR( AutomateChangeLiensLogistiques     , automate_change_liens_logistiques       )
+NET_GENERATE_SEND_ASN_MSG_PTR( PionChangeSuperior                 , pion_change_superior                    )
+NET_GENERATE_SEND_ASN_MSG_PTR( PionChangeSuperiorAck              , pion_change_superior_ack                )
+NET_GENERATE_SEND_ASN_MSG_PTR( ChangeDiplomatie                   , change_diplomatie                       )
 
 // Logistic
 NET_GENERATE_SEND_ASN_MSG_PTR( LogMaintenanceTraitementEquipementCreation   , log_maintenance_traitement_equipement_creation    )

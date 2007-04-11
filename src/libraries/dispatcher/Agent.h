@@ -51,8 +51,8 @@ public:
     void Update        ( const ASN1T_MsgLogSanteEtat&          asnMsg );
     void Update        ( const ASN1T_MsgLogMaintenanceEtat&    asnMsg );
     void Update        ( const ASN1T_MsgLogRavitaillementEtat& asnMsg );
-    void Update        ( const ASN1T_MsgChangeAutomate&        asnMsg );
-    void Update        ( const ASN1T_MsgChangeAutomateAck&     asnMsg );
+    void Update        ( const ASN1T_MsgPionChangeSuperior&    asnMsg );
+    void Update        ( const ASN1T_MsgPionChangeSuperiorAck& asnMsg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
     void SendFullUpdate( Publisher_ABC& publisher ) const;
     //@}

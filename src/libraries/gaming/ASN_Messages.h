@@ -124,11 +124,11 @@ GENERATE_SEND_ASN_MSG_PTR( AutomateOrder, automate_order )
 GENERATE_SEND_ASN_MSG_PTR( SetAutomateMode, set_automate_mode )
 GENERATE_SEND_ASN_MSG_PTR( PopulationOrder, population_order )
 
-GENERATE_SEND_ASN_MSG_PTR( ChangeAutomate          , change_automate            )
-GENERATE_SEND_ASN_MSG_PTR( ChangeDiplomatie        , change_diplomatie          )
-GENERATE_SEND_ASN_MSG_PTR( ChangeGroupeConnaissance, change_groupe_connaissance )
-GENERATE_SEND_ASN_MSG_PTR( ChangeLiensLogistiques       , change_liens_logistiques         )
-GENERATE_SEND_ASN_MSG_PTR( LogRavitaillementPousserFlux , log_ravitaillement_pousser_flux  )
-GENERATE_SEND_ASN_MSG_PTR( LogRavitaillementChangeQuotas, log_ravitaillement_change_quotas )
+GENERATE_SEND_ASN_MSG_PTR( PionChangeSuperior              , pion_change_superior                )
+GENERATE_SEND_ASN_MSG_PTR( ChangeDiplomatie                , change_diplomatie                   )
+GENERATE_SEND_ASN_MSG_PTR( AutomateChangeGroupeConnaissance, automate_change_groupe_connaissance )
+GENERATE_SEND_ASN_MSG_PTR( AutomateChangeLiensLogistiques  , automate_change_liens_logistiques   )
+GENERATE_SEND_ASN_MSG_PTR( LogRavitaillementPousserFlux    , log_ravitaillement_pousser_flux     )
+GENERATE_SEND_ASN_MSG_PTR( LogRavitaillementChangeQuotas   , log_ravitaillement_change_quotas    )
 
 #endif // __ASN_Messages_h_
