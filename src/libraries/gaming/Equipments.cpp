@@ -11,7 +11,9 @@
 #include "Equipments.h"
 #include "clients_kernel/Controller.h"
 #include "Equipment.h"
+#include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -20,10 +22,11 @@ using namespace kernel;
 // Name: Equipments constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Equipments::Equipments( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, PropertiesDictionary& dico )
+Equipments::Equipments( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, PropertiesDictionary& dico, kernel::Entity_ABC& holder )
     : controller_( controller )
     , resolver_( resolver )
     , dico_( dico )
+    , holder_( holder )
 {
     // NOTHING   
 }
@@ -46,20 +49,42 @@ void Equipments::DoUpdate( const ASN1T_MsgUnitAttributes& message )
     if ( message.m.dotation_eff_materielPresent != 1 )
         return;
 
+    std::vector< Equipment > differences;
     uint nSize = message.dotation_eff_materiel.n;
     while ( nSize > 0 )
     {
         const ASN1T_DotationEquipement& value = message.dotation_eff_materiel.elem[ --nSize ];
-        Equipment* equipment = Find( value.type_equipement );
-        if( ! equipment )
-        {
-            equipment = new Equipment( resolver_.Get( value.type_equipement ) );
-            equipment->Update( value );
-            AddToDictionary( *equipment );
-            Register( value.type_equipement, *equipment );
-        }
-        equipment->Update( value );
+        Equipment previous( resolver_.Get( value.type_equipement ) );
+        if( Equipment* equipment = Find( value.type_equipement ) )
+            previous = *equipment;
+        Equipment current( previous );
+        current.Update( value );
+        differences.push_back( current - previous );
     }
+    Update( differences );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Equipments::Update
+// Created: SBO 2007-04-11
+// -----------------------------------------------------------------------------
+void Equipments::Update( const std::vector< Equipment >& differences )
+{
+    for( std::vector< Equipment >::const_iterator it = differences.begin(); it != differences.end(); ++it )
+    {
+        Equipment* equipment = Find( it->type_.GetId() );
+        if( !equipment )
+        {
+            equipment = new Equipment( *it );
+            AddToDictionary( *equipment );
+            Register( it->type_.GetId(), *equipment );
+        }
+        else
+            *equipment = *equipment + *it;
+    }
+    if( const kernel::Entity_ABC* superior = holder_.Get< kernel::TacticalHierarchies >().GetSuperior() )
+        if( Equipments* equipments = const_cast< Equipments* >( superior->Retrieve< Equipments >() ) )
+            equipments->Update( differences );
     controller_.Update( *this );
 }
 

@@ -24,9 +24,11 @@
 #include "FormationHierarchy.h"
 #include "Formation.h"
 #include "StaticModel.h"
+#include "KnowledgeGroupsModel.h"
+#include "Equipments.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Controllers.h"
-#include "KnowledgeGroupsModel.h"
+#include "clients_kernel/ObjectTypes.h"
 
 using namespace kernel;
 
@@ -57,10 +59,12 @@ TeamFactory::~TeamFactory()
 Team_ABC* TeamFactory::CreateTeam( const ASN1T_MsgSideCreation& asnMsg )
 {
     Team* result = new Team( asnMsg, controllers_.controller_ );
+    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach( *new ObjectKnowledges( *result, controllers_.controller_, model_.objectKnowledgeFactory_ ) );
     result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
     result->Attach< CommunicationHierarchies >( *new TeamHierarchies        ( controllers_.controller_, *result, *this ) );
     result->Attach< TacticalHierarchies >     ( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
+    result->Attach( *new Equipments( controllers_.controller_, model_.static_.objectTypes_, dico, *result ) );
     result->Update( asnMsg );
     result->Polish();
     return result;
@@ -77,7 +81,9 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const ASN1T_MsgFormationCre
         (Entity_ABC*) &model_.teams_.Resolver< Team_ABC >::Get( asnMsg.oid_camp );
 
     Formation* result = new Formation( asnMsg, controllers_.controller_, model_.static_.levels_ );
+    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< TacticalHierarchies >( *new FormationHierarchy( controllers_.controller_, *result, superior ) );
+    result->Attach( *new Equipments( controllers_.controller_, model_.static_.objectTypes_, dico, *result ) );
     result->Polish();
     return result;
 }

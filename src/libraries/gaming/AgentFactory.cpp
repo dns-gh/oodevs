@@ -125,6 +125,7 @@ Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     result->Attach( *new LogMedicalConsigns( controllers_.controller_ ) );
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
     result->Attach( *new Reports( *result, controllers_.controller_, simulation_, static_.reportFactory_ ) );
+    result->Attach( *new Equipments( controllers_.controller_, static_.objectTypes_, dico, *result ) );
 
     result->Update( asnMsg );
     result->Polish();
@@ -161,7 +162,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     result->Attach< HumanFactors_ABC >( *new HumanFactors( controllers_.controller_, dico ) );
     result->Attach( *new Reinforcements( controllers_.controller_, model_.agents_, dico ) );
     result->Attach( *new Dotations( controllers_.controller_, static_.objectTypes_, dico ) );
-    result->Attach( *new Equipments( controllers_.controller_, static_.objectTypes_, dico ) );
+    result->Attach( *new Equipments( controllers_.controller_, static_.objectTypes_, dico, *result ) );
     result->Attach( *new Lendings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
     result->Attach( *new Borrowings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
     result->Attach( *new Transports( controllers_.controller_, model_.agents_, dico ) );

@@ -45,6 +45,7 @@ private:
 
     //! @name Helpers
     //@{
+    void CreateDictionary( kernel::Controller& controller );
     //@}
 
 private:

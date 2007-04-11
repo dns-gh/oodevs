@@ -44,6 +44,11 @@ private:
     Team& operator=( const Team& );
     //@}
 
+    //! @name Helpers
+    //@{
+    void CreateDictionary( kernel::Controller& controller );
+    //@}
+
 private:
     //! @name Member data
     //@{

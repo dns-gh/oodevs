@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "Team.h"
 #include "Tools.h"
+#include "clients_kernel/PropertiesDictionary.h"
 
 using namespace kernel;
 
@@ -23,6 +24,7 @@ Team::Team( const ASN1T_MsgSideCreation& asnMsg, Controller& controller )
 {
     if( name_.isEmpty() )
         name_ = QString( tools::translate( "Team", "Army %1" ) ).arg( asnMsg.oid );
+    CreateDictionary( controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,4 +61,17 @@ bool Team::IsEnemy() const
 bool Team::IsNeutral() const
 {
     return karma_ == EnumDiplomatie::neutre;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateDictionary
+// Created: AGE 2006-06-27
+// -----------------------------------------------------------------------------
+void Team::CreateDictionary( kernel::Controller& controller )
+{
+    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
+    Attach( dictionary );
+    const Team& self = *this;
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Identifier" ), self.id_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Name" ), self.name_ );
 }

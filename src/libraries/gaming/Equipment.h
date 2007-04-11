@@ -30,6 +30,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit Equipment( const kernel::EquipmentType& type );
+             Equipment( const Equipment& rhs );
     virtual ~Equipment();
     //@}
 
@@ -40,11 +41,11 @@ public:
     unsigned Total() const;
     //@}
 
-private:
-    //! @name Copy/Assignement
+    //! @name Operators
     //@{
-    Equipment( const Equipment& );            //!< Copy constructor
-    Equipment& operator=( const Equipment& ); //!< Assignement operator
+    Equipment operator+( const Equipment& rhs );
+    Equipment operator-( const Equipment& rhs );
+    Equipment& operator=( const Equipment& rhs );
     //@}
 
 public:

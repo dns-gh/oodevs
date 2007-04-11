@@ -20,6 +20,7 @@ namespace kernel
     class Controller;
     class EquipmentType;
     class PropertiesDictionary;
+    class Entity_ABC;
 }
 
 class Equipment;
@@ -38,7 +39,7 @@ class Equipments : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Equipments( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, kernel::PropertiesDictionary& dico );
+             Equipments( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, kernel::PropertiesDictionary& dico, kernel::Entity_ABC& holder );
     virtual ~Equipments();
     //@}
 
@@ -53,6 +54,7 @@ private:
     //@{
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     void AddToDictionary( const Equipment& equipment );
+    void Update( const std::vector< Equipment >& differences );
     //@}
 
 private:
@@ -61,6 +63,7 @@ private:
     kernel::Controller& controller_;
     const kernel::Resolver_ABC< kernel::EquipmentType >& resolver_;
     kernel::PropertiesDictionary& dico_;
+    kernel::Entity_ABC& holder_;
     //@}
 };
 
