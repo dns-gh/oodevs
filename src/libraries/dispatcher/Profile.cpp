@@ -349,6 +349,9 @@ void Profile::Update( const ASN1T_MsgProfileUpdateRequest& message )
 
     AsnMsgInClientProfileUpdate asn;
     asn().login = message.login;
+    asn().profile.m.passwordPresent = message.profile.m.passwordPresent;
+    if( asn().profile.m.passwordPresent )
+        asn().profile.password = strPassword_.c_str();
     Send( asn().profile );
     asn.Send( dispatcher_.GetClientsNetworker() );
     Profile::AsnDelete( asn().profile );
