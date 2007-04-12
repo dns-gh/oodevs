@@ -14,6 +14,7 @@
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -22,11 +23,14 @@ using namespace kernel;
 // Name: Equipments constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Equipments::Equipments( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, PropertiesDictionary& dico, kernel::Entity_ABC& holder )
-    : controller_( controller )
+Equipments::Equipments( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, PropertiesDictionary& dico
+                       , const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver
+                       , const kernel::Resolver_ABC< kernel::Formation_ABC >& formationResolver
+                       , const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver)
+    : HierarchicExtension_ABC( automatResolver, formationResolver, teamResolver )
+    , controller_( controller )
     , resolver_( resolver )
     , dico_( dico )
-    , holder_( holder )
 {
     // NOTHING   
 }
@@ -81,11 +85,33 @@ void Equipments::Update( const std::vector< Equipment >& differences )
         }
         else
             *equipment = *equipment + *it;
+        // $$$$ SBO 2007-04-11: TODO: remove equipment if null
     }
-    if( const kernel::Entity_ABC* superior = holder_.Get< kernel::TacticalHierarchies >().GetSuperior() )
+    if( const kernel::Entity_ABC* superior = GetSuperior() )
         if( Equipments* equipments = const_cast< Equipments* >( superior->Retrieve< Equipments >() ) )
             equipments->Update( differences );
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Equipments::SetSuperior
+// Created: SBO 2007-04-11
+// -----------------------------------------------------------------------------
+void Equipments::SetSuperior( const kernel::Entity_ABC& automat )
+{
+    std::vector< Equipment > differences;
+    differences.reserve( elements_.size() );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        differences.push_back( *it->second );
+    if( Equipments* equipments = const_cast< Equipments* >( automat.Retrieve< Equipments >() ) )
+        equipments->Update( differences );
+
+    if( const kernel::Entity_ABC* previous = GetSuperior() )
+        if( Equipments* equipments = const_cast< Equipments* >( previous->Retrieve< Equipments >() ) )
+        {
+            std::transform( differences.begin(), differences.end(), differences.begin(), std::negate< Equipment >() );
+            equipments->Update( differences );
+        }
 }
 
 // -----------------------------------------------------------------------------

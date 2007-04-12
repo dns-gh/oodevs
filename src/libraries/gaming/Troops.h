@@ -11,14 +11,16 @@
 #define __Troops_h_
 
 #include "game_asn/Asn.h"
-#include "clients_kernel/Extension_ABC.h"
+#include "HierarchicExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include "clients_kernel/Resolver_ABC.h"
 #include "Humans.h"
 
 namespace kernel
 {
     class Controller;
     class Entity_ABC;
+    class Automat_ABC;
 }
 
 // =============================================================================
@@ -27,19 +29,15 @@ namespace kernel
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Troops : public kernel::Extension_ABC
+class Troops : public HierarchicExtension_ABC
              , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Troops( kernel::Controller& controller, kernel::Entity_ABC& holder );
+             Troops( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const kernel::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver );
     virtual ~Troops();
-    //@}
-
-    //! @name Operations
-    //@{
     //@}
 
 private:
@@ -58,6 +56,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    virtual void SetSuperior( const kernel::Entity_ABC& superior );
     void Update( const T_Differences& differences );
     void AddDifference( T_Differences& differences, kernel::E_TroopHealthState state, ASN1T_EnumHumanRank rank, int value );
     //@}
@@ -66,7 +65,6 @@ public: // $$$$ AGE 2006-04-28:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    kernel::Entity_ABC& holder_;
     Humans humans_[kernel::eTroopHealthStateNbrStates];
     //@}
 };

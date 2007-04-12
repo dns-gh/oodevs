@@ -11,6 +11,7 @@
 #include "TeamFactory.h"
 #include "Model.h"
 #include "TeamsModel.h"
+#include "AgentsModel.h"
 #include "ObjectKnowledges.h"
 #include "AgentKnowledges.h"
 #include "PopulationKnowledges.h"
@@ -66,9 +67,9 @@ Team_ABC* TeamFactory::CreateTeam( const ASN1T_MsgSideCreation& asnMsg )
     result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
     result->Attach< CommunicationHierarchies >( *new TeamHierarchies        ( controllers_.controller_, *result, *this ) );
     result->Attach< TacticalHierarchies >     ( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
-    result->Attach( *new Equipments( controllers_.controller_, model_.static_.objectTypes_, dico, *result ) );
-    result->Attach( *new Troops( controllers_.controller_, *result ) );
-    result->Attach( *new Dotations( controllers_.controller_, model_.static_.objectTypes_, dico, *result ) );
+    result->Attach( *new Equipments( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
+    result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
+    result->Attach( *new Dotations( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Update( asnMsg );
     result->Polish();
     return result;
@@ -87,9 +88,10 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const ASN1T_MsgFormationCre
     Formation* result = new Formation( asnMsg, controllers_.controller_, model_.static_.levels_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< TacticalHierarchies >( *new FormationHierarchy( controllers_.controller_, *result, superior ) );
-    result->Attach( *new Equipments( controllers_.controller_, model_.static_.objectTypes_, dico, *result ) );
-    result->Attach( *new Troops( controllers_.controller_, *result ) );
-    result->Attach( *new Dotations( controllers_.controller_, model_.static_.objectTypes_, dico, *result ) );
+    result->Attach( *new Equipments( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
+    result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
+    result->Attach( *new Dotations( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
+    result->Update( asnMsg );
     result->Polish();
     return result;
 }

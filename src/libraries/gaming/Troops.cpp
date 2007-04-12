@@ -11,6 +11,7 @@
 #include "Troops.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Automat_ABC.h"
 
 using namespace kernel;
 
@@ -18,9 +19,9 @@ using namespace kernel;
 // Name: Troops constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Troops::Troops( Controller& controller, kernel::Entity_ABC& holder )
-    : controller_( controller )
-    , holder_( holder )
+Troops::Troops( Controller& controller, const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const kernel::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver )
+    : HierarchicExtension_ABC( automatResolver, formationResolver, teamResolver )
+    , controller_( controller )
 {
     for( int i = 0; i < eTroopHealthStateNbrStates; ++i )
         humans_[ i ].state_ = E_TroopHealthState( i );
@@ -91,8 +92,38 @@ void Troops::Update( const T_Differences& differences )
     for( T_Differences::const_iterator it = differences.begin(); it != differences.end(); ++it )
         humans_[it->first.first].*Rank( it->first.second ) += it->second;
 
-    if( const kernel::Entity_ABC* superior = holder_.Get< kernel::TacticalHierarchies >().GetSuperior() )
+    if( const kernel::Entity_ABC* superior = GetSuperior() )
         if( Troops* troops = const_cast< Troops* >( superior->Retrieve< Troops >() ) )
             troops->Update( differences );
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Troops::SetSuperior
+// Created: SBO 2007-04-12
+// -----------------------------------------------------------------------------
+void Troops::SetSuperior( const kernel::Entity_ABC& superior )
+{
+    T_Differences differences;
+    for( unsigned int i = 0; i < (unsigned int)kernel::eTroopHealthStateNbrStates; ++i )
+    {
+        differences[std::make_pair( (kernel::E_TroopHealthState)i, EnumHumanRank::officier )]     = int( humans_[i].officers_ );
+        differences[std::make_pair( (kernel::E_TroopHealthState)i, EnumHumanRank::sous_officer )] = int( humans_[i].subOfficers_ );
+        differences[std::make_pair( (kernel::E_TroopHealthState)i, EnumHumanRank::mdr )]          = int( humans_[i].troopers_ );
+    }
+    if( Troops* troops = const_cast< Troops* >( superior.Retrieve< Troops >() ) )
+        troops->Update( differences );
+
+    if( const kernel::Entity_ABC* superior = GetSuperior() )
+        if( Troops* troops = const_cast< Troops* >( superior->Retrieve< Troops >() ) )
+        {
+            differences.clear();
+            for( unsigned int i = 0; i < (unsigned int)kernel::eTroopHealthStateNbrStates; ++i )
+            {
+                differences[std::make_pair( (kernel::E_TroopHealthState)i, EnumHumanRank::officier )]     = -int( humans_[i].officers_ );
+                differences[std::make_pair( (kernel::E_TroopHealthState)i, EnumHumanRank::sous_officer )] = -int( humans_[i].subOfficers_ );
+                differences[std::make_pair( (kernel::E_TroopHealthState)i, EnumHumanRank::mdr )]          = -int( humans_[i].troopers_ );
+            }
+            troops->Update( differences );
+        }
 }

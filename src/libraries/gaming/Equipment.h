@@ -45,6 +45,7 @@ public:
     //@{
     Equipment operator+( const Equipment& rhs ) const;
     Equipment operator-( const Equipment& rhs ) const;
+    Equipment operator-() const;
     Equipment& operator=( const Equipment& rhs );
     //@}
 

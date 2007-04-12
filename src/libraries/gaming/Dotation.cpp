@@ -64,3 +64,14 @@ Dotation Dotation::operator-( const Dotation& rhs ) const
     dotation.quantity_ -= rhs.quantity_;
     return dotation;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Dotation::operator-
+// Created: SBO 2007-04-12
+// -----------------------------------------------------------------------------
+Dotation Dotation::operator-() const
+{
+    Dotation dotation( *this );
+    dotation.quantity_ = -dotation.quantity_;
+    return dotation;
+}

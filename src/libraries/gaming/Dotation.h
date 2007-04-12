@@ -36,6 +36,7 @@ public:
     //@{
     Dotation operator+( const Dotation& rhs ) const;
     Dotation operator-( const Dotation& rhs ) const;
+    Dotation operator-() const;
     //@}
 
 public:

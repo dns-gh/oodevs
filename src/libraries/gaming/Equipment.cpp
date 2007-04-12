@@ -114,6 +114,21 @@ Equipment Equipment::operator-( const Equipment& rhs ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Equipment::operator-
+// Created: SBO 2007-04-11
+// -----------------------------------------------------------------------------
+Equipment Equipment::operator-() const
+{
+    Equipment equipment( *this );
+    equipment.available_     = -available_;
+    equipment.unavailable_   = -unavailable_;
+    equipment.repairable_    = -repairable_;
+    equipment.inMaintenance_ = -inMaintenance_;
+    equipment.prisonners_    = -prisonners_;
+    return equipment;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Equipment::operator=
 // Created: SBO 2007-04-11
 // -----------------------------------------------------------------------------

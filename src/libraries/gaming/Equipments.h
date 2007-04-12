@@ -11,7 +11,7 @@
 #define __Equipments_h_
 
 #include "game_asn/Asn.h"
-#include "clients_kernel/Extension_ABC.h"
+#include "HierarchicExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver.h"
 
@@ -21,6 +21,7 @@ namespace kernel
     class EquipmentType;
     class PropertiesDictionary;
     class Entity_ABC;
+    class Automat_ABC;
 }
 
 class Equipment;
@@ -31,7 +32,7 @@ class Equipment;
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Equipments : public kernel::Extension_ABC
+class Equipments : public HierarchicExtension_ABC
                  , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
                  , public kernel::Resolver< Equipment >
 {
@@ -39,7 +40,8 @@ class Equipments : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Equipments( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, kernel::PropertiesDictionary& dico, kernel::Entity_ABC& holder );
+             Equipments( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, kernel::PropertiesDictionary& dico
+                       , const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const kernel::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver );
     virtual ~Equipments();
     //@}
 
@@ -53,8 +55,9 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
-    void AddToDictionary( const Equipment& equipment );
+    virtual void SetSuperior( const kernel::Entity_ABC& superior );
     void Update( const std::vector< Equipment >& differences );
+    void AddToDictionary( const Equipment& equipment );
     //@}
 
 private:
@@ -63,7 +66,6 @@ private:
     kernel::Controller& controller_;
     const kernel::Resolver_ABC< kernel::EquipmentType >& resolver_;
     kernel::PropertiesDictionary& dico_;
-    kernel::Entity_ABC& holder_;
     //@}
 };
 

@@ -25,10 +25,11 @@ using namespace kernel;
 // Name: Dotations constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Dotations::Dotations( Controller& controller, const Resolver_ABC< DotationType >& resolver, PropertiesDictionary& dico, kernel::Entity_ABC& holder )
-    : controller_( controller )
+Dotations::Dotations( Controller& controller, const Resolver_ABC< DotationType >& resolver, PropertiesDictionary& dico
+                    , const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const kernel::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver )
+    : HierarchicExtension_ABC( automatResolver, formationResolver, teamResolver )
+    , controller_( controller )
     , resolver_( resolver )
-    , holder_( holder )
     , dictionary_( dico )
     , bEmptyGasTank_( false )
 {
@@ -97,10 +98,31 @@ void Dotations::Update( const std::vector< Dotation >& differences )
         if( it->type_->IsGas() )
             bEmptyGasTank_ = ( it->quantity_ == 0 );
     }
-    if( const kernel::Entity_ABC* superior = holder_.Get< kernel::TacticalHierarchies >().GetSuperior() )
+    if( const kernel::Entity_ABC* superior = GetSuperior() )
         if( Dotations* dotations = const_cast< Dotations* >( superior->Retrieve< Dotations >() ) )
             dotations->Update( differences );
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Dotations::SetSuperior
+// Created: SBO 2007-04-12
+// -----------------------------------------------------------------------------
+void Dotations::SetSuperior( const kernel::Entity_ABC& superior )
+{
+    std::vector< Dotation > differences;
+    differences.reserve( elements_.size() );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        differences.push_back( *it->second );
+    if( Dotations* dotations = const_cast< Dotations* >( superior.Retrieve< Dotations >() ) )
+        dotations->Update( differences );
+
+    if( const kernel::Entity_ABC* previous = GetSuperior() )
+        if( Dotations* dotations = const_cast< Dotations* >( previous->Retrieve< Dotations >() ) )
+        {
+            std::transform( differences.begin(), differences.end(), differences.begin(), std::negate< Dotation >() );
+            dotations->Update( differences );
+        }
 }
 
 // -----------------------------------------------------------------------------
