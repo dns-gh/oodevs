@@ -79,6 +79,7 @@ private:
 private:
     Dispatcher& dispatcher_;    
     Simulation* pSimulation_;
+    bool bRecord_;
 };
 
 }

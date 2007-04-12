@@ -12,12 +12,14 @@
 
 #include "game_asn/Asn.h"
 #include "Position.h"
+#include "Synchronisable.h"
 
 namespace dispatcher
 {
-class Publisher_ABC;
-class Model;
-class Population;
+    class Publisher_ABC;
+    class Model;
+    class Population;
+    class ModelVisitor_ABC;
 
 // =============================================================================
 /** @class  PopulationConcentration
@@ -25,13 +27,13 @@ class Population;
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class PopulationConcentration
+class PopulationConcentration : public Synchronisable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-     PopulationConcentration( Model& model, Population& population, const ASN1T_MsgPopulationConcentrationCreation& msg );
-    ~PopulationConcentration();
+             PopulationConcentration( Model& model, Population& population, const ASN1T_MsgPopulationConcentrationCreation& msg );
+    virtual ~PopulationConcentration();
     //@}
 
     //! @name Accessors
@@ -41,9 +43,12 @@ public:
 
     //! @name Operations
     //@{
+    void Update        ( const ASN1T_MsgPopulationConcentrationCreation& msg );
     void Update        ( const ASN1T_MsgPopulationConcentrationUpdate& msg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
-    void SendFullUpdate( Publisher_ABC& publisher ) const;
+    virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
+    virtual void CommitDestruction();
+    void Accept        ( ModelVisitor_ABC& visitor );
     //@}
 
 private:

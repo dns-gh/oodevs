@@ -10,7 +10,6 @@
 #include "dispatcher_pch.h"
 
 #include "ProfileManager.h"
-
 #include "Profile.h"
 #include "xeumeuleu/xml.h"
 
@@ -20,11 +19,12 @@ using namespace dispatcher;
 // Name: ProfileManager constructor
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-ProfileManager::ProfileManager( Dispatcher& dispatcher, const std::string& strFile )
-    : dispatcher_( dispatcher )
-    , strFile_   ( strFile )
+ProfileManager::ProfileManager( Model& model, ClientsNetworker& clients, const std::string& strFile )
+    : model_  ( model )
+    , clients_( clients )
+    , strFile_( strFile )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -33,7 +33,7 @@ ProfileManager::ProfileManager( Dispatcher& dispatcher, const std::string& strFi
 // -----------------------------------------------------------------------------
 ProfileManager::~ProfileManager()
 {
-
+    // NOTHING
 }
 
 // =============================================================================
@@ -57,7 +57,7 @@ void ProfileManager::ReadProfile( xml::xistream& xis )
     else
     {
         MT_LOG_INFO_MSG( "New profile loaded : '" << strName << "'" );
-        pProfile = new Profile( dispatcher_, strName, xis );
+        pProfile = new Profile( model_, clients_, strName, xis );
     }
 }
 
@@ -145,7 +145,7 @@ ASN1T_MsgProfileCreationRequestAck_error_code ProfileManager::Create( const ASN1
     if( pProfile )
         return MsgProfileCreationRequestAck_error_code::duplicate_login;
     MT_LOG_INFO_MSG( "New profile created : '" << login << "'" );
-    pProfile = new Profile( dispatcher_, message );
+    pProfile = new Profile( model_, clients_, message );
     return MsgProfileCreationRequestAck_error_code::success;
 }
 

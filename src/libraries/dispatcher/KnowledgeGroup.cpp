@@ -15,6 +15,7 @@
 #include "Model.h"
 #include "Publisher_ABC.h"
 #include "Network_Def.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -44,6 +45,15 @@ KnowledgeGroup::~KnowledgeGroup()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Update
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Update( const ASN1T_MsgKnowledgeGroupCreation& )
+{
+    FlagUpdate();
+}
+
+// -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
@@ -64,4 +74,13 @@ void KnowledgeGroup::SendCreation( Publisher_ABC& publisher ) const
 void KnowledgeGroup::SendFullUpdate( Publisher_ABC& /*publisher*/ ) const
 {
 	// NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Accept
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Accept( ModelVisitor_ABC& visitor )
+{
+    visitor.Visit( *this );
 }

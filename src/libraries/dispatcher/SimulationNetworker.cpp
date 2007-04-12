@@ -36,6 +36,17 @@ namespace
                         >> xml::attribute( "client", host );
         return host;
     }
+
+    bool ReadRecord( const std::string& configFile )
+    {
+        bool bDummy;
+        xml::xifstream xis( configFile );
+        xis >> xml::start( "config" )
+                >> xml::start( "dispatcher" )
+                    >> xml::start( "recorder" )
+                        >> xml::attribute( "enabled", bDummy );
+        return bDummy;
+    }
 }
 
 static const unsigned int magicCookie_ = 1;
@@ -48,6 +59,7 @@ SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, const std::str
     : ClientNetworker_ABC( magicCookie_, ReadHost( configFile ) )
     , dispatcher_        ( dispatcher )
     , pSimulation_       ( 0 )
+    , bRecord_           ( ReadRecord( configFile ) )
 {
     GetMessageService().RegisterReceivedMessage( eMsgOutSim                                , *this, &SimulationNetworker::OnReceiveMsgOutSim                                 );
     GetMessageService().RegisterReceivedMessage( eMsgProfilingValues                       , *this, &SimulationNetworker::OnReceiveMsgProfilingValues                        );
@@ -83,7 +95,7 @@ void SimulationNetworker::OnConnected( DIN_Link& link )
     ClientNetworker_ABC::OnConnected( link );
 
     assert( !pSimulation_ );
-    pSimulation_ = new Simulation( dispatcher_, GetMessageService(), link );
+    pSimulation_ = new Simulation( dispatcher_, GetMessageService(), link, bRecord_ );
 }
 
 // -----------------------------------------------------------------------------

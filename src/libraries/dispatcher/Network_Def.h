@@ -37,7 +37,7 @@ static enum
     eMsgPopulationConcentrationInterVisibility = 1011,
     eMsgPopulationFlowInterVisibility          = 1012,
     eMsgDebugDrawPoints                        = 1015,
-    eMsgEnvironmentType                        = 1016
+    eMsgEnvironmentType                        = 1016,
 };
 //@}
 
@@ -121,6 +121,7 @@ GENERATE_ASN_MSG_SENDER         ( Client, PionChangeSuperiorAck                 
 GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, LogRavitaillementPousserFluxAck               , log_ravitaillement_pousser_flux_ack               );
 GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, LogRavitaillementChangeQuotasAck              , log_ravitaillement_change_quotas_ack              );
 GENERATE_ASN_MSG_SENDER         ( Client, CtrlInfo                                      , ctrl_info                                         );
+GENERATE_ASN_MSG_SENDER         ( Client, CtrlReplayInfo                                , ctrl_replay_info                                  );
 GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, CtrlBeginTick                                 , ctrl_begin_tick                                   );
 GENERATE_ASN_MSG_SENDER         ( Client, CtrlEndTick                                   , ctrl_end_tick                                     );
 GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, CtrlStopAck                                   , ctrl_stop_ack                                     );

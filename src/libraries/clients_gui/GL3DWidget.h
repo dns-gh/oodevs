@@ -29,7 +29,6 @@ namespace kernel
 namespace gui
 {
     class Layer_ABC;
-    class GlFont;
 
 // =============================================================================
 /** @class  Gl3dWidget

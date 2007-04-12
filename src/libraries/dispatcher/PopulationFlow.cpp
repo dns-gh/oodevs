@@ -13,6 +13,7 @@
 
 #include "Population.h"
 #include "Network_Def.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -44,6 +45,15 @@ PopulationFlow::~PopulationFlow()
 // =============================================================================
 // OPERATIONS
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::Update
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void PopulationFlow::Update( const ASN1T_MsgPopulationFluxCreation& )
+{
+    FlagUpdate();
+}
 
 // -----------------------------------------------------------------------------
 // Name: PopulationFlow::Update
@@ -117,4 +127,25 @@ void PopulationFlow::SendFullUpdate( Publisher_ABC& publisher ) const
     Localisation::AsnDelete( asn().itineraire );
     Localisation::AsnDelete( asn().flux       );
 
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::Accept
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void PopulationFlow::Accept( ModelVisitor_ABC& visitor )
+{
+    visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::CommitDestruction
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void PopulationFlow::CommitDestruction()
+{
+    AsnMsgInClientPopulationFluxDestruction destruction;
+    destruction().oid_flux = nID_;
+    destruction().oid_population = population_.GetID();
+    SendDestruction( destruction );
 }

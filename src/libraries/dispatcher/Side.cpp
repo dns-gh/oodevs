@@ -18,6 +18,7 @@
 #include "KnowledgeGroup.h"
 #include "Object.h"
 #include "Population.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -52,10 +53,21 @@ Side::~Side()
 
 // -----------------------------------------------------------------------------
 // Name: Side::Update
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void Side::Update( const ASN1T_MsgSideCreation& asnMsg )
+{
+    FlagUpdate();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Side::Update
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
 void Side::Update( const ASN1T_MsgChangeDiplomatie& asnMsg )
 {
+    FlagUpdate();
+
     Side& side = model_.GetSides().Get( asnMsg.oid_camp2 );   
     diplomacies_[ &side ] = asnMsg.diplomatie;
 }
@@ -66,6 +78,8 @@ void Side::Update( const ASN1T_MsgChangeDiplomatie& asnMsg )
 // -----------------------------------------------------------------------------
 void Side::Update( const ASN1T_MsgChangeDiplomatieAck& asnMsg )
 {
+    FlagUpdate();
+
     Side& side = model_.GetSides().Get( asnMsg.oid_camp2 );   
     diplomacies_[ &side ] = asnMsg.diplomatie;
 }
@@ -81,11 +95,6 @@ void Side::SendCreation( Publisher_ABC& publisher ) const
     asn().nom  = strName_.c_str();
     asn().type = nType_;
     asn.Send( publisher );
-
-	knowledgeGroups_.Apply( std::mem_fun_ref( &KnowledgeGroup::SendCreation ), publisher );
-	formations_		.Apply( std::mem_fun_ref( &Formation     ::SendCreation ), publisher );
-	objects_		.Apply( std::mem_fun_ref( &Object        ::SendCreation ), publisher );
-	populations_	.Apply( std::mem_fun_ref( &Population    ::SendCreation ), publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,9 +111,17 @@ void Side::SendFullUpdate( Publisher_ABC& publisher ) const
         asn().diplomatie = it->second;
         asn.Send( publisher );
     }
+}
 
-	knowledgeGroups_.Apply( std::mem_fun_ref( &KnowledgeGroup::SendFullUpdate ), publisher );
-	formations_		.Apply( std::mem_fun_ref( &Formation     ::SendFullUpdate ), publisher );
-	objects_		.Apply( std::mem_fun_ref( &Object        ::SendFullUpdate ), publisher );
-	populations_	.Apply( std::mem_fun_ref( &Population    ::SendFullUpdate ), publisher );
+// -----------------------------------------------------------------------------
+// Name: Side::Accept
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void Side::Accept( ModelVisitor_ABC& visitor )
+{
+    visitor.Visit( *this );
+    knowledgeGroups_.Apply( std::mem_fun_ref( &KnowledgeGroup::Accept ), visitor );
+	formations_		.Apply( std::mem_fun_ref( &Formation     ::Accept ), visitor );
+	objects_		.Apply( std::mem_fun_ref( &Object        ::Accept ), visitor );
+	populations_	.Apply( std::mem_fun_ref( &Population    ::Accept ), visitor );
 }

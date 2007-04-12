@@ -19,7 +19,10 @@ namespace DIN { class DIN_Input; }
 namespace dispatcher
 {
     class Profile;
-    class Dispatcher;
+    class Model;
+    class ProfileManager;
+    class SimulationNetworker;
+    class LoaderFacade;
 
 // =============================================================================
 /** @class  Client
@@ -33,7 +36,8 @@ class Client : public tools::Client_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Client( Dispatcher& dispatcher, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link );
+             Client( const Model& model, ProfileManager& profiles, LoaderFacade& loader, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link );
+             Client( const Model& model, ProfileManager& profiles, SimulationNetworker& simulation, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link );
     virtual ~Client();
     //@}
 
@@ -67,14 +71,19 @@ private:
     //! @name Messages
     //@{
     void OnReceiveMsgAuthenticationRequest    ( const ASN1T_MsgAuthenticationRequest&     asnMsg );
-    void OnReceiveMsgProfileCreationRequest   ( const ASN1T_MsgProfileCreationRequest&    asnMsg );
-    void OnReceiveMsgProfileUpdateRequest     ( const ASN1T_MsgProfileUpdateRequest&      asnMsg );
-    void OnReceiveMsgProfileDestructionRequest( const ASN1T_MsgProfileDestructionRequest& asnMsg );
     //@}
 
 private:
-    Dispatcher& dispatcher_;
+    //! @name Member data
+    //@{
+    const Model& model_;
+    ProfileManager& profiles_;
     Profile*    pProfile_;
+
+    LoaderFacade* loader_;
+    SimulationNetworker* simulation_;
+    //@}
+    
 };
 
 }

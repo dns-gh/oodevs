@@ -16,12 +16,13 @@ namespace xml{ class xistream; };
 
 namespace dispatcher
 {
-class Dispatcher;
-class Automat;
-class Side;
-class Formation;
-class Population;
-class Publisher_ABC;
+    class Automat;
+    class Side;
+    class Formation;
+    class Population;
+    class Publisher_ABC;
+    class Model;
+    class ClientsNetworker;
 
 // =============================================================================
 /** @class  Profile
@@ -34,8 +35,8 @@ class Profile
 public:
     //! @name Constructors/Destructor
     //@{
-             Profile( Dispatcher& dispatcher, const std::string& strLogin, xml::xistream& xis );
-             Profile( Dispatcher& dispatcher, const ASN1T_MsgProfileCreationRequest& message );
+             Profile( Model& model, ClientsNetworker& clients, const std::string& strLogin, xml::xistream& xis );
+             Profile( Model& model, ClientsNetworker& clients, const ASN1T_MsgProfileCreationRequest& message );
     virtual ~Profile();
     //@}
 
@@ -43,6 +44,7 @@ public:
     //@{
     bool CheckPassword( const std::string& strPassword ) const;
     bool CheckRights  ( const ASN1T_MsgsOutClient& msg ) const;
+    bool CheckRights  () const;
     //@}
 
     //! @name Network
@@ -87,7 +89,9 @@ private:
     //@}
 
 private:
-    Dispatcher&     dispatcher_;
+    Model& model_;
+    ClientsNetworker& clients_;
+
     std::string     strLogin_;
     std::string     strPassword_;
 

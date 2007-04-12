@@ -10,11 +10,16 @@
 #ifndef __dispatcher_pch_h_
 #define __dispatcher_pch_h_
 
+#pragma warning ( push )
+#pragma warning ( disable : 4702 )
+
 #include <limits>
 #include <vector>
 #include <map>
 #include <set>
 #include <cassert>
+
+#pragma warning ( pop )
 
 #include "MT/MT_Logger/MT_Logger_lib.h"
 

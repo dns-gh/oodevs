@@ -37,8 +37,8 @@ class Dispatcher
 public:
     //! @name Constructors/Destructor
     //@{
-     Dispatcher( Config& config );
-    ~Dispatcher();
+    explicit Dispatcher( Config& config );
+    virtual ~Dispatcher();
     //@}
 
     //! @name Operations

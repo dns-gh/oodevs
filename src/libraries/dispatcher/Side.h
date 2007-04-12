@@ -12,6 +12,7 @@
 
 #include "game_asn/Asn.h"
 #include "ModelRefsContainer.h"
+#include "Synchronisable.h"
 
 namespace dispatcher
 {
@@ -22,6 +23,7 @@ namespace dispatcher
 	class Object;
 	class Population;
     class Publisher_ABC;
+    class ModelVisitor_ABC;
 
 // =============================================================================
 /** @class  Side
@@ -29,13 +31,13 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Side
+class Side : public Synchronisable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    Side( Model& model, const ASN1T_MsgSideCreation& msg );
-    ~Side();
+             Side( Model& model, const ASN1T_MsgSideCreation& msg );
+    virtual ~Side();
     //@}
 
     //! @name Accessors
@@ -49,10 +51,12 @@ public:
 
     //! @name Main
     //@{
+    void Update        ( const ASN1T_MsgSideCreation&        asnMsg );
     void Update        ( const ASN1T_MsgChangeDiplomatie&    asnMsg );
     void Update        ( const ASN1T_MsgChangeDiplomatieAck& asnMsg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
-    void SendFullUpdate( Publisher_ABC& publisher ) const;
+    virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
+    void Accept( ModelVisitor_ABC& visitor );
     //@}
 
 private:

@@ -37,10 +37,10 @@ Dispatcher::Dispatcher( Config& config )
                 >> xml::start( "profiles" )
                     >> xml::attribute( "file", profiles );
 
-    pModel_               = new Model              ( *this );
+    pModel_               = new Model              ();
     pSimulationNetworker_ = new SimulationNetworker( *this, config.GetGameFile() );
     pClientsNetworker_    = new ClientsNetworker   ( *this, config.GetGameFile() );
-    pProfileManager_      = new ProfileManager     ( *this, config.BuildExerciseChildFile( profiles ) );
+    pProfileManager_      = new ProfileManager     ( *pModel_, *pClientsNetworker_, config.BuildExerciseChildFile( profiles ) );
 }
 
 // -----------------------------------------------------------------------------

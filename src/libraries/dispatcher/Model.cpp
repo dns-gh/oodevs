@@ -23,9 +23,12 @@
 #include "LogConsignSupply.h"
 #include "LogConsignMedical.h"
 #include "Population.h"
+#include "PopulationFlow.h"
+#include "PopulationConcentration.h"
 #include "PopulationKnowledge.h"
 #include "Limit.h"
 #include "Lima.h"
+#include "Visitors.h"
 
 #include "SimulationModel.h"
 
@@ -36,26 +39,11 @@ using namespace DIN;
 // Name: Model constructor
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-Model::Model( Dispatcher& dispatcher )
-    : dispatcher_            ( dispatcher )
-    , pSimulationModel_      ( 0 )
-    , sides_                 ()
-    , knowledgeGroups_       ()
-    , formations_            ()
-    , automats_              ()
-    , agents_                ()
-    , objects_               ()
-    , agentKnowledges_       ()
-    , objectKnowledges_      ()
-    , logConsignsMaintenance_()
-    , logConsignsSupply_     ()
-    , logConsignsMedical_    ()
-    , populations_           ()
-    , populationKnowledges_  ()
-    , limits_                ()
-    , limas_                 ()
+Model::Model()
+    : pSimulationModel_( new SimulationModel() )
+    , synchroniser_( 0 )
 {
-    pSimulationModel_ = new SimulationModel();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -231,13 +219,115 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Model::CreateUpdate
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+template< typename T, typename P >
+void Model::CreateUpdate( ModelsContainer< T >& container, unsigned id, const P& parameter )
+{
+    T& object = container.Create( *this, id, parameter );
+    if( synchroniser_ )
+        object.StartSynchronisation( *synchroniser_ );
+    object.Update( parameter );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::Update
+// Created: AGE 2007-04-11
+// -----------------------------------------------------------------------------
+void Model::Update( const ASN1T_MsgsInClient& asnMsg )
+{
+    switch( asnMsg.msg.t )
+    {
+        case T_MsgsInClient_msg_msg_change_diplomatie_ack:                         sides_.Get( asnMsg.msg.u.msg_change_diplomatie_ack->oid_camp1 ).Update( *asnMsg.msg.u.msg_change_diplomatie_ack ); break;
+        case T_MsgsInClient_msg_msg_change_diplomatie:                             sides_.Get( asnMsg.msg.u.msg_change_diplomatie->oid_camp1 ).Update( *asnMsg.msg.u.msg_change_diplomatie ); break;
+        case T_MsgsInClient_msg_msg_automate_change_groupe_connaissance_ack:       automats_.Get( asnMsg.msg.u.msg_automate_change_groupe_connaissance_ack->oid_automate ).Update( *asnMsg.msg.u.msg_automate_change_groupe_connaissance_ack ); break;
+        case T_MsgsInClient_msg_msg_automate_change_liens_logistiques_ack:         automats_.Get( asnMsg.msg.u.msg_automate_change_liens_logistiques_ack->oid_automate ).Update( *asnMsg.msg.u.msg_automate_change_liens_logistiques_ack ); break;
+        case T_MsgsInClient_msg_msg_automate_change_liens_logistiques:             automats_.Get( asnMsg.msg.u.msg_automate_change_liens_logistiques->oid_automate ).Update( *asnMsg.msg.u.msg_automate_change_liens_logistiques ); break;
+        case T_MsgsInClient_msg_msg_pion_change_superior_ack:                      agents_.Get( asnMsg.msg.u.msg_pion_change_superior_ack->oid_pion ).Update( *asnMsg.msg.u.msg_pion_change_superior_ack ); break;   
+        case T_MsgsInClient_msg_msg_pion_change_superior:                          agents_.Get( asnMsg.msg.u.msg_pion_change_superior->oid_pion ).Update( *asnMsg.msg.u.msg_pion_change_superior ); break;
+
+        case T_MsgsInClient_msg_msg_ctrl_info:                            pSimulationModel_->Update( *asnMsg.msg.u.msg_ctrl_info ); break;
+        case T_MsgsInClient_msg_msg_ctrl_begin_tick:                      pSimulationModel_->Update( asnMsg.msg.u.msg_ctrl_begin_tick ); break;
+        case T_MsgsInClient_msg_msg_ctrl_end_tick:                        pSimulationModel_->Update( *asnMsg.msg.u.msg_ctrl_end_tick ); break;
+        case T_MsgsInClient_msg_msg_ctrl_stop_ack:                        pSimulationModel_->Update_Stop( asnMsg.msg.u.msg_ctrl_stop_ack ); break;
+        case T_MsgsInClient_msg_msg_ctrl_pause_ack:                       pSimulationModel_->Update_Pause( asnMsg.msg.u.msg_ctrl_pause_ack ); break;
+        case T_MsgsInClient_msg_msg_ctrl_resume_ack:                      pSimulationModel_->Update_Resume( asnMsg.msg.u.msg_ctrl_resume_ack ); break;
+        case T_MsgsInClient_msg_msg_ctrl_change_time_factor_ack:          pSimulationModel_->Update( *asnMsg.msg.u.msg_ctrl_change_time_factor_ack ); break;
+
+        case T_MsgsInClient_msg_msg_limit_creation:                       limits_.Create ( *this, asnMsg.msg.u.msg_limit_creation->oid, *asnMsg.msg.u.msg_limit_creation ); break;
+        case T_MsgsInClient_msg_msg_limit_update:                         limits_.Get    ( asnMsg.msg.u.msg_limit_update->oid ).Update( *asnMsg.msg.u.msg_limit_update ); break;
+        case T_MsgsInClient_msg_msg_limit_destruction:                    limits_.Destroy( asnMsg.msg.u.msg_limit_destruction ); break;
+        case T_MsgsInClient_msg_msg_lima_creation:                        limas_ .Create ( *this, asnMsg.msg.u.msg_lima_creation->oid, *asnMsg.msg.u.msg_lima_creation ); break;
+        case T_MsgsInClient_msg_msg_lima_update:                          limas_ .Get    ( asnMsg.msg.u.msg_lima_update->oid ).Update( *asnMsg.msg.u.msg_lima_update ); break;
+        case T_MsgsInClient_msg_msg_lima_destruction:                     limas_ .Destroy( asnMsg.msg.u.msg_lima_destruction ); break;
+
+        case T_MsgsInClient_msg_msg_unit_knowledge_creation:              agentKnowledges_.Create( *this, asnMsg.msg.u.msg_unit_knowledge_creation->oid_connaissance, *asnMsg.msg.u.msg_unit_knowledge_creation ); break;
+        case T_MsgsInClient_msg_msg_unit_knowledge_update:                agentKnowledges_.Get( asnMsg.msg.u.msg_unit_knowledge_update->oid_connaissance ).Update( *asnMsg.msg.u.msg_unit_knowledge_update ); break;
+        case T_MsgsInClient_msg_msg_unit_knowledge_destruction:           agentKnowledges_.Destroy( asnMsg.msg.u.msg_unit_knowledge_destruction->oid_connaissance ); break;
+
+        case T_MsgsInClient_msg_msg_side_creation:                        CreateUpdate( sides_,           asnMsg.msg.u.msg_side_creation           ->oid         , *asnMsg.msg.u.msg_side_creation ); break;
+        case T_MsgsInClient_msg_msg_knowledge_group_creation:             CreateUpdate( knowledgeGroups_, asnMsg.msg.u.msg_knowledge_group_creation->oid         , *asnMsg.msg.u.msg_knowledge_group_creation ); break;
+        case T_MsgsInClient_msg_msg_formation_creation:                   CreateUpdate( formations_,      asnMsg.msg.u.msg_formation_creation      ->oid         , *asnMsg.msg.u.msg_formation_creation ); break;
+        case T_MsgsInClient_msg_msg_pion_creation:                        CreateUpdate( agents_,          asnMsg.msg.u.msg_pion_creation           ->oid_pion    , *asnMsg.msg.u.msg_pion_creation     ); break;
+        case T_MsgsInClient_msg_msg_automate_creation:                    CreateUpdate( automats_,        asnMsg.msg.u.msg_automate_creation       ->oid_automate, *asnMsg.msg.u.msg_automate_creation ); break;
+
+        case T_MsgsInClient_msg_msg_unit_attributes:                      agents_.Get( asnMsg.msg.u.msg_unit_attributes->oid_pion ).Update( *asnMsg.msg.u.msg_unit_attributes ); break;
+        case T_MsgsInClient_msg_msg_automate_attributes:                  automats_.Get( asnMsg.msg.u.msg_automate_attributes->oid_automate ).Update( *asnMsg.msg.u.msg_automate_attributes  ); break;
+
+        case T_MsgsInClient_msg_msg_object_creation:                      CreateUpdate( objects_, asnMsg.msg.u.msg_object_creation->oid, *asnMsg.msg.u.msg_object_creation ); break;
+        case T_MsgsInClient_msg_msg_object_update:                        objects_.Get( asnMsg.msg.u.msg_object_update->oid ).Update( *asnMsg.msg.u.msg_object_update ); break;
+        case T_MsgsInClient_msg_msg_object_destruction:                   objects_.Destroy( asnMsg.msg.u.msg_object_destruction ); break;
+        case T_MsgsInClient_msg_msg_object_knowledge_creation:            objectKnowledges_.Create( *this, asnMsg.msg.u.msg_object_knowledge_creation->oid_connaissance, *asnMsg.msg.u.msg_object_knowledge_creation ); break;
+        case T_MsgsInClient_msg_msg_object_knowledge_update:              objectKnowledges_.Get( asnMsg.msg.u.msg_object_knowledge_update->oid_connaissance ).Update( *asnMsg.msg.u.msg_object_knowledge_update ); break;
+        case T_MsgsInClient_msg_msg_object_knowledge_destruction:         objectKnowledges_.Destroy( asnMsg.msg.u.msg_object_knowledge_destruction->oid_connaissance ); break;
+
+        case T_MsgsInClient_msg_msg_log_maintenance_traitement_equipement_creation:    logConsignsMaintenance_.Create( *this, asnMsg.msg.u.msg_log_maintenance_traitement_equipement_creation->oid_consigne, *asnMsg.msg.u.msg_log_maintenance_traitement_equipement_creation ); break;
+        case T_MsgsInClient_msg_msg_log_maintenance_traitement_equipement_destruction: logConsignsMaintenance_.Destroy( asnMsg.msg.u.msg_log_maintenance_traitement_equipement_destruction->oid_consigne ); break;
+        case T_MsgsInClient_msg_msg_log_maintenance_traitement_equipement_update:      logConsignsMaintenance_.Get( asnMsg.msg.u.msg_log_maintenance_traitement_equipement_update->oid_consigne ).Update( *asnMsg.msg.u.msg_log_maintenance_traitement_equipement_update ); break;
+        case T_MsgsInClient_msg_msg_log_maintenance_etat:                              agents_.Get( asnMsg.msg.u.msg_log_maintenance_etat->oid_pion ).Update( *asnMsg.msg.u.msg_log_maintenance_etat ); break;
+
+        case T_MsgsInClient_msg_msg_log_ravitaillement_traitement_creation:    logConsignsSupply_.Create ( *this, asnMsg.msg.u.msg_log_ravitaillement_traitement_creation->oid_consigne, *asnMsg.msg.u.msg_log_ravitaillement_traitement_creation ); break;
+        case T_MsgsInClient_msg_msg_log_ravitaillement_traitement_destruction: logConsignsSupply_.Destroy( asnMsg.msg.u.msg_log_ravitaillement_traitement_destruction->oid_consigne ); break;
+        case T_MsgsInClient_msg_msg_log_ravitaillement_traitement_update:      logConsignsSupply_.Get( asnMsg.msg.u.msg_log_ravitaillement_traitement_update->oid_consigne ).Update( *asnMsg.msg.u.msg_log_ravitaillement_traitement_update ); break;
+        case T_MsgsInClient_msg_msg_log_ravitaillement_etat:                   agents_.Get( asnMsg.msg.u.msg_log_ravitaillement_etat->oid_pion ).Update( *asnMsg.msg.u.msg_log_ravitaillement_etat ); break;
+        case T_MsgsInClient_msg_msg_log_ravitaillement_quotas:                 automats_.Get( asnMsg.msg.u.msg_log_ravitaillement_quotas->oid_automate ).Update( *asnMsg.msg.u.msg_log_ravitaillement_quotas ); break;
+
+        case T_MsgsInClient_msg_msg_log_sante_traitement_humain_creation:     logConsignsMedical_.Create ( *this, asnMsg.msg.u.msg_log_sante_traitement_humain_creation->oid_consigne, *asnMsg.msg.u.msg_log_sante_traitement_humain_creation ); break;
+        case T_MsgsInClient_msg_msg_log_sante_traitement_humain_destruction:  logConsignsMedical_.Destroy( asnMsg.msg.u.msg_log_sante_traitement_humain_destruction->oid_consigne ); break;
+        case T_MsgsInClient_msg_msg_log_sante_traitement_humain_update:       logConsignsMedical_.Get( asnMsg.msg.u.msg_log_sante_traitement_humain_update->oid_consigne ).Update( *asnMsg.msg.u.msg_log_sante_traitement_humain_update ); break;
+        case T_MsgsInClient_msg_msg_log_sante_etat:                           agents_.Get( asnMsg.msg.u.msg_log_sante_etat->oid_pion ).Update( *asnMsg.msg.u.msg_log_sante_etat ); break;
+
+        case T_MsgsInClient_msg_msg_population_creation                       : CreateUpdate( populations_, asnMsg.msg.u.msg_population_creation->oid_population, *asnMsg.msg.u.msg_population_creation ); break;
+        case T_MsgsInClient_msg_msg_population_update                         : populations_.Get( asnMsg.msg.u.msg_population_update->oid_population ).Update( *asnMsg.msg.u.msg_population_update ); break;
+        case T_MsgsInClient_msg_msg_population_concentration_creation         : populations_.Get( asnMsg.msg.u.msg_population_concentration_creation->oid_population ).Update( *asnMsg.msg.u.msg_population_concentration_creation ); break;
+        case T_MsgsInClient_msg_msg_population_concentration_destruction      : populations_.Get( asnMsg.msg.u.msg_population_concentration_destruction->oid_population ).Update( *asnMsg.msg.u.msg_population_concentration_destruction ); break;
+        case T_MsgsInClient_msg_msg_population_concentration_update           : populations_.Get( asnMsg.msg.u.msg_population_concentration_update->oid_population ).Update( *asnMsg.msg.u.msg_population_concentration_update ); break;
+        case T_MsgsInClient_msg_msg_population_flux_creation                  : populations_.Get( asnMsg.msg.u.msg_population_flux_creation->oid_population ).Update( *asnMsg.msg.u.msg_population_flux_creation ); break;
+        case T_MsgsInClient_msg_msg_population_flux_destruction               : populations_.Get( asnMsg.msg.u.msg_population_flux_destruction->oid_population ).Update( *asnMsg.msg.u.msg_population_flux_destruction ); break;
+        case T_MsgsInClient_msg_msg_population_flux_update                    : populations_.Get( asnMsg.msg.u.msg_population_flux_update->oid_population ).Update( *asnMsg.msg.u.msg_population_flux_update ); break;
+
+        case T_MsgsInClient_msg_msg_population_knowledge_creation                  : populationKnowledges_.Create( *this, asnMsg.msg.u.msg_population_knowledge_creation->oid_connaissance, *asnMsg.msg.u.msg_population_knowledge_creation ); break;
+        case T_MsgsInClient_msg_msg_population_knowledge_update                    : populationKnowledges_.Get( asnMsg.msg.u.msg_population_knowledge_update->oid_connaissance ).Update( *asnMsg.msg.u.msg_population_knowledge_update ); break;
+        case T_MsgsInClient_msg_msg_population_knowledge_destruction               : populationKnowledges_.Destroy( asnMsg.msg.u.msg_population_knowledge_destruction->oid_connaissance ); break; 
+        case T_MsgsInClient_msg_msg_population_concentration_knowledge_creation    : populationKnowledges_.Get( asnMsg.msg.u.msg_population_concentration_knowledge_creation->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_concentration_knowledge_creation ); break;
+        case T_MsgsInClient_msg_msg_population_concentration_knowledge_update      : populationKnowledges_.Get( asnMsg.msg.u.msg_population_concentration_knowledge_update->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_concentration_knowledge_update ); break;
+        case T_MsgsInClient_msg_msg_population_concentration_knowledge_destruction : populationKnowledges_.Get( asnMsg.msg.u.msg_population_concentration_knowledge_destruction->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_concentration_knowledge_destruction ); break;
+        case T_MsgsInClient_msg_msg_population_flux_knowledge_creation             : populationKnowledges_.Get( asnMsg.msg.u.msg_population_flux_knowledge_creation->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_flux_knowledge_creation ); break;
+        case T_MsgsInClient_msg_msg_population_flux_knowledge_update               : populationKnowledges_.Get( asnMsg.msg.u.msg_population_flux_knowledge_update->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_flux_knowledge_update ); break;
+        case T_MsgsInClient_msg_msg_population_flux_knowledge_destruction          : populationKnowledges_.Get( asnMsg.msg.u.msg_population_flux_knowledge_destruction->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_flux_knowledge_destruction ); break;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: Model::Update
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 void Model::Update( uint nMsgID, DIN::DIN_Input& msg )
 {
-    switch( nMsgID )
-    {
+    // $$$$ AGE 2007-04-10: TODO
+//    switch( nMsgID )
+//    {
 //        case eMsgEnableUnitVisionCones                  : break;
 //        case eMsgDisableUnitVisionCones                 : break;
 //        case eMsgUnitMagicAction                        : break;
@@ -252,9 +342,9 @@ void Model::Update( uint nMsgID, DIN::DIN_Input& msg )
 //        case eMsgPopulationFlowInterVisibility          : break;
 //        case eMsgDebugDrawPoints                        : break;
 //        case eMsgEnvironmentType                        : break;
-        default:
-            ;
-    }
+//        default:
+//            ;
+//    }
 }
 
 // -----------------------------------------------------------------------------
@@ -267,8 +357,14 @@ void Model::Send( Publisher_ABC& publisher ) const
 
     pSimulationModel_->Send( publisher );
 
-    sides_.Apply( /*std::bind2nd( */std::mem_fun_ref( &Side::SendCreation ), publisher /*)*/ ); //$$$$ booouh std::bind2nd sucks
-    sides_.Apply( std::mem_fun_ref( &Side      ::SendFullUpdate ), publisher );
+    {
+        CreationVisitor visitor( publisher );
+        Accept( visitor );
+    }
+    {
+        FullUpdateVisitor visitor( publisher );
+        Accept( visitor );
+    }
 
     // Logistic
     logConsignsMaintenance_.Apply( std::mem_fun_ref( &LogConsignMaintenance::SendCreation   ), publisher );
@@ -293,4 +389,49 @@ void Model::Send( Publisher_ABC& publisher ) const
     limas_ .Apply( std::mem_fun_ref( &Lima ::SendCreation ), publisher );
     
     AsnMsgInClientCtrlSendCurrentStateEnd().Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::Accept
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void Model::Accept( ModelVisitor_ABC& visitor ) const
+{
+    sides_.Apply( std::mem_fun_ref( &Side::Accept ), visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::StartSynchronisation
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void Model::StartSynchronisation( Publisher_ABC& publisher )
+{
+    synchroniser_ = &publisher;
+    toFlush_.clear();
+    StartSynchVisitor visitor( publisher );
+    Accept( visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::EndSynchronisation
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void Model::EndSynchronisation()
+{
+    EndSynchVisitor visitor( *this );
+    Accept( visitor );
+
+    for( std::vector< Synchronisable* >::const_iterator it = toFlush_.begin(); it != toFlush_.end(); ++it )
+        (*it)->CommitDestruction();
+    toFlush_.clear();
+    synchroniser_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::FlagForDestruction
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void Model::FlagForDestruction( Synchronisable& synch )
+{
+    toFlush_.push_back( &synch );
 }

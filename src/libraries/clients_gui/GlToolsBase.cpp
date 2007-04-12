@@ -12,7 +12,6 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/TristateOption.h"
-#include "GlFont.h"
 #include "GLSymbols.h"
 
 using namespace geometry;

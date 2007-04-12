@@ -14,6 +14,8 @@
 #include "Network_Def.h"
 #include "Dispatcher.h"
 #include "Client.h"
+#include "Replayer.h"
+#include "Loader.h"
 #include "tools/AsnMessageDecoder.h"
 #include "tools/AsnMessageEncoder.h"
 #include "xeumeuleu/xml.h"
@@ -40,13 +42,31 @@ namespace
 static const unsigned int magicCookie_ = 10;
 
 // -----------------------------------------------------------------------------
-// Name: ClientsNetworker constructor
+// Name: ClientsNetworkerc constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
 ClientsNetworker::ClientsNetworker( Dispatcher& dispatcher, const std::string& configFile )
     : ServerNetworker_ABC( magicCookie_, ReadPort( configFile ) )
-    , dispatcher_        ( dispatcher )
-    , clients_          ()
+    , dispatcher_        ( &dispatcher )
+    , replayer_          ( 0 )
+{
+    GetMessageService().RegisterReceivedMessage( eMsgOutClient             , *this, &ClientsNetworker::OnReceiveMsgOutClient              );
+    GetMessageService().RegisterReceivedMessage( eMsgEnableUnitVisionCones , *this, &ClientsNetworker::OnReceiveMsgEnableUnitVisionCones  );
+    GetMessageService().RegisterReceivedMessage( eMsgDisableUnitVisionCones, *this, &ClientsNetworker::OnReceiveMsgDisableUnitVisionCones );
+    GetMessageService().RegisterReceivedMessage( eMsgEnableProfiling       , *this, &ClientsNetworker::OnReceiveMsgEnableProfiling        );
+    GetMessageService().RegisterReceivedMessage( eMsgDisableProfiling      , *this, &ClientsNetworker::OnReceiveMsgDisableProfiling       );
+    GetMessageService().RegisterReceivedMessage( eMsgUnitMagicAction       , *this, &ClientsNetworker::OnReceiveMsgUnitMagicAction        );
+    GetMessageService().RegisterReceivedMessage( eMsgDebugDrawPoints       , *this, &ClientsNetworker::OnReceiveMsgDebugDrawPoints        );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker constructor
+// Created: AGE 2007-04-10
+// -----------------------------------------------------------------------------
+ClientsNetworker::ClientsNetworker( Replayer& replayer, const std::string& configFile )
+    : ServerNetworker_ABC( magicCookie_, ReadPort( configFile ) )
+    , dispatcher_        ( 0 )
+    , replayer_          ( &replayer )
 {
     GetMessageService().RegisterReceivedMessage( eMsgOutClient             , *this, &ClientsNetworker::OnReceiveMsgOutClient              );
     GetMessageService().RegisterReceivedMessage( eMsgEnableUnitVisionCones , *this, &ClientsNetworker::OnReceiveMsgEnableUnitVisionCones  );
@@ -103,7 +123,11 @@ void ClientsNetworker::OnConnectionReceived( DIN_Server& server, DIN_Link& link 
 {
     ServerNetworker_ABC::OnConnectionReceived( server, link );
 
-    Client* pClient = new Client( dispatcher_, GetMessageService(), link );
+    Client* pClient = 0;
+    if( dispatcher_ )
+        pClient = new Client( dispatcher_->GetModel(), dispatcher_->GetProfileManager(), dispatcher_->GetSimulationNetworker(), GetMessageService(), link );
+    else
+        pClient = new Client( replayer_->GetModel(), replayer_->GetProfiles(), replayer_->GetLoader(), GetMessageService(), link );
     clients_.insert( pClient );
 }
 

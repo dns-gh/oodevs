@@ -22,6 +22,7 @@ Simulation::Simulation( Controller& controller )
     : controller_( controller )
     , tickDuration_( 10 )
     , timeFactor_( 1 )
+    , tickCount_( unsigned( -1 ) )
     , time_( 0 )
     , paused_( false )
     , connected_( false )
@@ -92,6 +93,20 @@ void Simulation::ChangeSpeed( int timeFactor )
 void Simulation::Update( const ASN1T_MsgCtrlInfo& message )
 {
     tickDuration_ = message.tick_duration;
+    paused_       = message.etat == EnumEtatSim::paused;
+    timeFactor_   = message.time_factor;
+    time_         = message.current_tick * tickDuration_;
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::Update
+// Created: AGE 2007-04-11
+// -----------------------------------------------------------------------------
+void Simulation::Update( const ASN1T_MsgCtrlReplayInfo& message )
+{
+    tickDuration_ = message.tick_duration;
+    tickCount_    = message.tick_count;
     paused_       = message.etat == EnumEtatSim::paused;
     timeFactor_   = message.time_factor;
     time_         = message.current_tick * tickDuration_;
@@ -184,6 +199,24 @@ bool Simulation::IsConnected() const
 int Simulation::GetSpeed() const
 {
     return timeFactor_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetCurrentTick
+// Created: AGE 2007-04-11
+// -----------------------------------------------------------------------------
+unsigned Simulation::GetCurrentTick() const
+{
+    return tickDuration_ ? time_ / tickDuration_ : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetTickCount
+// Created: AGE 2007-04-11
+// -----------------------------------------------------------------------------
+unsigned Simulation::GetTickCount() const
+{
+    return tickCount_;
 }
 
 // -----------------------------------------------------------------------------

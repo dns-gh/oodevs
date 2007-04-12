@@ -12,6 +12,7 @@
 
 #include "game_asn/Asn.h"
 #include "ModelRefsContainer.h"
+#include "Synchronisable.h"
 
 namespace dispatcher
 {
@@ -20,6 +21,7 @@ namespace dispatcher
     class Model;
     class Side;
     class Publisher_ABC;
+    class ModelVisitor_ABC;
 
 // =============================================================================
 /** @class  Formation
@@ -27,13 +29,13 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Formation
+class Formation : public Synchronisable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    Formation( Model& model, const ASN1T_MsgFormationCreation& msg );
-    ~Formation();
+             Formation( Model& model, const ASN1T_MsgFormationCreation& msg );
+    virtual ~Formation();
     //@}
 
     //! @name Accessors
@@ -45,8 +47,10 @@ public:
 
     //! @name Main
     //@{
+    void Update( const ASN1T_MsgFormationCreation& msg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
-    void SendFullUpdate( Publisher_ABC& publisher ) const;
+    virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
+    void Accept( ModelVisitor_ABC& visitor );
     //@}
 
 private:

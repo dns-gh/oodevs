@@ -22,6 +22,8 @@ namespace DIN
 namespace dispatcher
 {
     class Dispatcher;
+    class SaverFacade;
+    class SimulationDispatcher;
 
 // =============================================================================
 /** @class  Simulation
@@ -35,7 +37,7 @@ class Simulation : public tools::Server_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Simulation( Dispatcher& dispatcher, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link );
+             Simulation( Dispatcher& dispatcher, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link, bool bRecord );
     virtual ~Simulation();
     //@}
 
@@ -62,6 +64,8 @@ private:
 
 private:
     Dispatcher& dispatcher_;
+    SaverFacade* saver_;
+    SimulationDispatcher* simDispatch_;
 };
 
 }

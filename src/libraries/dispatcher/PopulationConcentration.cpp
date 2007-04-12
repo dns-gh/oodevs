@@ -13,6 +13,7 @@
 
 #include "Population.h"
 #include "Network_Def.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -41,6 +42,15 @@ PopulationConcentration::~PopulationConcentration()
 // =============================================================================
 // OPERATIONS
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::Update
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void PopulationConcentration::Update( const ASN1T_MsgPopulationConcentrationCreation& )
+{
+    FlagUpdate();
+}
 
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentration::Update
@@ -94,4 +104,25 @@ void PopulationConcentration::SendFullUpdate( Publisher_ABC& publisher ) const
     asn().nb_humains_vivants = nNbrAliveHumans_;
     
     asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::Accept
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void PopulationConcentration::Accept( ModelVisitor_ABC& visitor )
+{
+    visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::CommitDestruction
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void PopulationConcentration::CommitDestruction()
+{
+    AsnMsgInClientPopulationConcentrationDestruction destruction;
+    destruction().oid_population    = population_.GetID();
+    destruction().oid_concentration = nID_;
+    SendDestruction( destruction );
 }

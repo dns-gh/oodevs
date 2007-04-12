@@ -72,7 +72,8 @@ static enum
     eMsgPopulationConcentrationInterVisibility = 1011,
     eMsgPopulationFlowInterVisibility          = 1012,
     eMsgDebugDrawPoints                        = 1015,
-    eMsgEnvironmentType                        = 1016
+    eMsgEnvironmentType                        = 1016,
+    eMsgReplay                                 = 1017
 };
 //@}
 
@@ -295,6 +296,15 @@ void AgentServerMsgMgr::SendMagicDestruction( const Entity_ABC& agent )
     dinMsg << (uint8)eUnitMagicActionDestroyComposante;
 
     Send( eMsgUnitMagicAction, dinMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::SendReplayerMessage
+// Created: AGE 2007-04-11
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::SendReplayerMessage( DIN::DIN_BufferedMessage& message )
+{
+    Send( eMsgReplay, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -574,6 +584,15 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlChangeTimeFactorAck( const ASN1T_MsgCtrl
         simulation_.ChangeSpeed( (int)message.time_factor );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgCtrlSkipToTickAck
+// Created: AGE 2007-04-11
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgCtrlSkipToTickAck( const ASN1T_MsgCtrlSkipToTickAck& message )
+{
+    CheckAcknowledge( message, "CtrlSkipToTickAck" );
+}
+
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgCtrlInfo
 // Created: NLD 2003-02-27
@@ -583,6 +602,16 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlInfo( const ASN1T_MsgCtrlInfo& message )
      // $$$$ NLD 2007-01-30: BULLSHIT A VIRER OU A GERER
 //    unsigned char visionCones, profiling;
 //    input >> visionCones >> profiling; // whatever
+    simulation_.Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgCtrReplayInfo
+// Created: AGE 2007-04-11
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgCtrReplayInfo( const ASN1T_MsgCtrlReplayInfo& message )
+{
+    // $$$$ AGE 2007-04-11: 
     simulation_.Update( message );
 }
 
@@ -1670,12 +1699,14 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
         case T_MsgsInClient_msg_msg_population_order_ack:                   OnReceiveMsgPopulationOrderAck                 ( *message.msg.u.msg_population_order_ack                    , message.context ); break;
 
         case T_MsgsInClient_msg_msg_ctrl_info:                            OnReceiveMsgCtrlInfo                  ( *message.msg.u.msg_ctrl_info                           ); break;
+        case T_MsgsInClient_msg_msg_ctrl_replay_info:                     OnReceiveMsgCtrReplayInfo             ( *message.msg.u.msg_ctrl_replay_info                    ); break;
         case T_MsgsInClient_msg_msg_ctrl_begin_tick:                      OnReceiveMsgCtrlBeginTick             (  message.msg.u.msg_ctrl_begin_tick                     ); break;
         case T_MsgsInClient_msg_msg_ctrl_end_tick:                        OnReceiveMsgCtrlEndTick               ( *message.msg.u.msg_ctrl_end_tick                       ); break;
         case T_MsgsInClient_msg_msg_ctrl_stop_ack:                        break;
         case T_MsgsInClient_msg_msg_ctrl_pause_ack:                       OnReceiveMsgCtrlPauseAck              ( message.msg.u.msg_ctrl_pause_ack                       ); break;
         case T_MsgsInClient_msg_msg_ctrl_resume_ack:                      OnReceiveMsgCtrlResumeAck             ( message.msg.u.msg_ctrl_resume_ack                      ); break;
         case T_MsgsInClient_msg_msg_ctrl_change_time_factor_ack:          OnReceiveMsgCtrlChangeTimeFactorAck   ( *message.msg.u.msg_ctrl_change_time_factor_ack         ); break;
+        case T_MsgsInClient_msg_msg_ctrl_skip_to_tick_ack:                OnReceiveMsgCtrlSkipToTickAck         ( *message.msg.u.msg_ctrl_skip_to_tick_ack               ); break;
         case T_MsgsInClient_msg_msg_ctrl_meteo_globale_ack:               OnReceiveMsgCtrlMeteoGlobalAck        (); break;
         case T_MsgsInClient_msg_msg_ctrl_meteo_locale_ack:                OnReceiveMsgCtrlMeteoLocalAck         (); break;
         case T_MsgsInClient_msg_msg_ctrl_checkpoint_save_begin:           OnReceiveMsgCheckPointSaveBegin       (); break;

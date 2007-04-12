@@ -20,7 +20,8 @@ namespace DIN
 
 namespace dispatcher
 {
-class Dispatcher;
+
+class ModelVisitor_ABC;
 class Side;
 class KnowledgeGroup;
 class Formation;
@@ -38,6 +39,7 @@ class SimulationModel;
 class Publisher_ABC;
 class Limit;
 class Lima;
+class Synchronisable;
 
 // =============================================================================
 /** @class  Model
@@ -50,8 +52,8 @@ class Model
 public:
     //! @name Constructors/Destructor
     //@{
-     Model( Dispatcher& dispatcher );
-    ~Model();
+             Model();
+    virtual ~Model();
     //@}
 
     //! @name Update
@@ -59,9 +61,19 @@ public:
     void Reset();
 
     void Update( const ASN1T_MsgsOutSim& asnMsg );
+    void Update( const ASN1T_MsgsInClient& asnMsg );
     void Update( uint nMsgID, DIN::DIN_Input& input );
 
     void Send  ( Publisher_ABC& publisher ) const;
+    //@}
+
+    //! @name Operations
+    //@{
+    void Accept( ModelVisitor_ABC& visitor ) const;
+    void StartSynchronisation( Publisher_ABC& publisher );
+    void EndSynchronisation();
+
+    void FlagForDestruction( Synchronisable& synch );
     //@}
 
     //! @name Accessors
@@ -85,8 +97,13 @@ private:
     Model& operator=( const Model& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    template< typename T, typename P >
+    void CreateUpdate( ModelsContainer< T >& container, unsigned id, const P& parameter );
+    //@}
+
 private:
-    Dispatcher&         dispatcher_;
     SimulationModel*    pSimulationModel_;
 
     ModelsContainer< Side                   > sides_;
@@ -104,6 +121,9 @@ private:
     ModelsContainer< PopulationKnowledge    > populationKnowledges_;
     ModelsContainer< Limit                  > limits_;
     ModelsContainer< Lima                   > limas_;
+
+    std::vector< Synchronisable* > toFlush_;
+    Publisher_ABC* synchroniser_;
 };
 
 }

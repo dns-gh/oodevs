@@ -22,6 +22,7 @@
 #include "AgentLogMaintenance.h"
 #include "AgentLogSupply.h"
 #include "Network_Def.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -97,6 +98,22 @@ Agent::~Agent()
 // =============================================================================
 // MAIN
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: Agent::Update
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void Agent::Update( const ASN1T_MsgPionCreation& asnMsg )
+{
+    if( FlagUpdate() && pAutomat_->GetID() != asnMsg.oid_automate )
+    {
+        AsnMsgInClientPionChangeSuperiorAck ack;
+        ack().error_code   = EnumChangeHierarchyErrorCode::no_error;
+        ack().oid_automate = asnMsg.oid_automate;
+        ack().oid_pion     = asnMsg.oid_pion;
+        Send( ack );
+    }
+}
 
 #define UPDATE_ASN_ATTRIBUTE( ASN, CPP ) \
     if( asnMsg.m.##ASN##Present )        \
@@ -436,4 +453,13 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
 
     if( pLogSupply_ )
         pLogSupply_->Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::Accept
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void Agent::Accept( ModelVisitor_ABC& visitor )
+{
+    visitor.Visit( *this );
 }

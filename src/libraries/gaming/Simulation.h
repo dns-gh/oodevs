@@ -47,8 +47,9 @@ public:
     void Pause( bool );
     void ChangeSpeed( int timeFactor );
     void Update( const ASN1T_MsgCtrlInfo& asnMsg );
+    void Update( const ASN1T_MsgCtrlReplayInfo& asnMsg );
     void Update( const ProfilingValuesMessage& message );
-    void BeginTick( int );
+    void BeginTick( int tick );
     void EndTick( const ASN1T_MsgCtrlEndTick& asnMsg );
 
     void BeginCheckPoint();
@@ -59,6 +60,8 @@ public:
     bool IsPaused() const;
     bool IsConnected() const;
     int GetSpeed() const;
+    unsigned GetCurrentTick() const;
+    unsigned GetTickCount() const;
     //@}
 
 private:
@@ -74,6 +77,7 @@ private:
     kernel::Controller& controller_;
     unsigned int tickDuration_;
     unsigned int timeFactor_;
+    unsigned int tickCount_;
     int time_;
     bool paused_;
     bool connected_;

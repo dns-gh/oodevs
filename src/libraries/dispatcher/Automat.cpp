@@ -18,6 +18,7 @@
 #include "Network_Def.h"
 #include "Agent.h"
 #include "DotationQuota.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -62,6 +63,23 @@ Automat::~Automat()
 // =============================================================================
 // OPERATIONS
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: Automat::Update
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void Automat::Update( const ASN1T_MsgAutomateCreation& msg )
+{
+    if( FlagUpdate() && pKnowledgeGroup_->GetID() != msg.oid_groupe_connaissance )
+    {
+        AsnMsgInClientAutomateChangeGroupeConnaissanceAck ack;
+        ack().error_code = EnumChangeHierarchyErrorCode::no_error;
+        ack().oid_automate = msg.oid_automate;
+        ack().oid_camp = msg.oid_camp;
+        ack().oid_groupe_connaissance = msg.oid_groupe_connaissance;
+        Send( ack );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: Automat::Update
@@ -156,8 +174,6 @@ void Automat::SendCreation( Publisher_ABC& publisher ) const
     asnQuotas.Send( publisher );
     if( asnQuotas().quotas.n > 0 )
         delete [] asnQuotas().quotas.elem;
-
-    agents_.Apply( std::mem_fun_ref( &Agent::SendCreation ), publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -207,7 +223,15 @@ void Automat::SendFullUpdate( Publisher_ABC& publisher ) const
         }
         asn.Send( publisher );
     }
+}
 
-	agents_.Apply( std::mem_fun_ref( &Agent::SendFullUpdate ), publisher );
+// -----------------------------------------------------------------------------
+// Name: Automat::Accept
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void Automat::Accept( ModelVisitor_ABC& visitor )
+{
+    visitor.Visit( *this );
+    agents_.Apply( std::mem_fun_ref( &Agent::Accept ), visitor );
 }
 

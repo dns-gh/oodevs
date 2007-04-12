@@ -16,6 +16,7 @@
 #include "Model.h"
 #include "Side.h"
 #include "Automat.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -56,6 +57,15 @@ Formation::~Formation()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: Formation::Update
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void Formation::Update( const ASN1T_MsgFormationCreation& )
+{
+    FlagUpdate();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Formation::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
@@ -75,17 +85,24 @@ void Formation::SendCreation( Publisher_ABC& publisher ) const
     }
 
     asn.Send( publisher );
-
-    subordinates_.Apply( std::mem_fun_ref( &Formation::SendCreation ), publisher );
-	automats_    .Apply( std::mem_fun_ref( &Automat  ::SendCreation ), publisher );    
 }
 
 // -----------------------------------------------------------------------------
 // Name: Formation::SendFullUpdate
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Formation::SendFullUpdate( Publisher_ABC& publisher ) const
+void Formation::SendFullUpdate( Publisher_ABC& ) const
 {
-    subordinates_.Apply( std::mem_fun_ref( &Formation::SendFullUpdate  ), publisher );
-    automats_    .Apply( std::mem_fun_ref( &Automat  ::SendFullUpdate ), publisher );
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::Accept
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void Formation::Accept( ModelVisitor_ABC& visitor )
+{
+    visitor.Visit( *this );
+    subordinates_.Apply( std::mem_fun_ref( &Formation::Accept ), visitor );
+    automats_    .Apply( std::mem_fun_ref( &Automat  ::Accept ), visitor );
 }

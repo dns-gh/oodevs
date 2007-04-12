@@ -32,6 +32,13 @@ MsgCtrlPauseAck ::= EnumCtrlErrorCode
 MsgCtrlResume    ::= NULL
 MsgCtrlResumeAck ::= EnumCtrlErrorCode
 
+MsgCtrlSkipToTick    ::= INTEGER
+MsgCtrlSkipToTickAck ::= SEQUENCE
+{
+    tick        INTEGER,
+    error-code  EnumCtrlErrorCode
+}
+
 MsgCtrlChangeTimeFactor    ::= INTEGER
 MsgCtrlChangeTimeFactorAck ::= SEQUENCE
 {
@@ -68,6 +75,15 @@ MsgCtrlInfo ::= SEQUENCE
     etat                    EnumEtatSim,
     send-vision-cones       BOOLEAN, -- No comment ...
     profiling-enabled       BOOLEAN
+}
+
+MsgCtrlReplayInfo ::= SEQUENCE
+{
+    current-tick            INTEGER,     
+    tick-duration           INTEGER,  -- En secondes
+    time-factor             INTEGER,
+    etat                    EnumEtatSim,
+    tick-count              INTEGER
 }
 
 ----------------

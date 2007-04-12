@@ -38,11 +38,8 @@ template< typename T > template< typename P > inline
 T& ModelsContainer< T >::Create( Model& model, unsigned long nID, P& param )
 {
     T*& pModel = models_[ nID ];
-    if( pModel )
-        return *pModel;
-
-    pModel = new T( model, param );
-//    MT_LOG_INFO_MSG( "New element type '" << typeid( T ).name() << "' '" << nID << "' " );
+    if( ! pModel )
+        pModel = new T( model, param );
     return *pModel;
 }
 
@@ -54,11 +51,8 @@ template< typename T > template< typename P1, typename P2 > inline
 T& ModelsContainer< T >::Create( Model& model, unsigned long nID, P1& param1, P2& param2 )
 {
     T*& pModel = models_[ nID ];
-    if( pModel )
-        return *pModel;
-
-    pModel = new T( model, param1, param2 );
-//    MT_LOG_INFO_MSG( "New element type '" << typeid( T ).name() << "' '" << nID << "' " );
+    if( ! pModel )
+        pModel = new T( model, param1, param2 );
     return *pModel;
 }
 

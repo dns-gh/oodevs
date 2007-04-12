@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "Gl3dWidget.h"
 #include "ColorStrategy.h"
-#include "GlFont.h"
 #include "EntityLayer.h"
 #include "ColorStrategy.h"
 #include "clients_kernel/DetectionMap.h"

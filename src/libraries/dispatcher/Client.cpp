@@ -12,12 +12,14 @@
 #include "Client.h"
 
 #include "game_asn/Asn.h"
-#include "Dispatcher.h"
 #include "Model.h"
 #include "Profile.h"
 #include "ProfileManager.h"
 #include "Network_Def.h"
 #include "SimulationNetworker.h"
+#include "ClientDispatcher.h"
+#include "ProfilesDispatcher.h"
+#include "LoaderFacade.h"
 #include "tools/AsnMessageEncoder.h"
 #include "DIN/MessageService/DIN_MessageService_ABC.h"
 #include "DIN/DIN_Link.h"
@@ -28,12 +30,30 @@ using namespace DIN;
 
 // -----------------------------------------------------------------------------
 // Name: Client constructor
-// Created: NLD 2006-09-20
+// Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-Client::Client( Dispatcher& dispatcher, DIN_MessageService_ABC& messageService, DIN_Link& link )
+Client::Client( const Model& model, ProfileManager& profiles, LoaderFacade& loader, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link )
     : Client_ABC ( messageService, link )
-    , dispatcher_( dispatcher )
+    , model_( model )
+    , profiles_( profiles )
     , pProfile_  ( 0 )
+    , loader_( &loader )
+    , simulation_( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client constructor
+// Created: AGE 2007-04-10
+// -----------------------------------------------------------------------------
+Client::Client( const Model& model, ProfileManager& profiles, SimulationNetworker& simulation, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link )
+    : Client_ABC ( messageService, link )
+    , model_( model )
+    , profiles_( profiles )
+    , pProfile_  ( 0 )
+    , loader_( 0 )
+    , simulation_( &simulation )
 {
     // NOTHING
 }
@@ -99,7 +119,7 @@ void Client::OnReceiveMsgAuthenticationRequest( const ASN1T_MsgAuthenticationReq
         return;
     }
 
-    pProfile_ = dispatcher_.GetProfileManager().Authenticate( msg.login, msg.password );
+    pProfile_ = profiles_.Authenticate( msg.login, msg.password );
     if( !pProfile_ )
     {
         AsnMsgInClientAuthenticationResponse ack;
@@ -116,69 +136,11 @@ void Client::OnReceiveMsgAuthenticationRequest( const ASN1T_MsgAuthenticationReq
     ack.Send( *this );
     Profile::AsnDelete( ack().profile );
 
-    // Model
-    dispatcher_.GetModel().Send( *this );
-
-    // Profiles
-    dispatcher_.GetProfileManager().Send( *this );
+    model_.Send( *this );
+    profiles_.Send( *this );
+    if( loader_ )
+        loader_->Send( *this );
 }
-
-// -----------------------------------------------------------------------------
-// Name: Client::OnReceiveMsgProfileCreationRequest
-// Created: SBO 2007-01-22
-// -----------------------------------------------------------------------------
-void Client::OnReceiveMsgProfileCreationRequest( const ASN1T_MsgProfileCreationRequest& asnMsg )
-{
-    AsnMsgInClientProfileCreationRequestAck ack;
-    ack().error_code = dispatcher_.GetProfileManager().Create( asnMsg );
-    ack().login      = asnMsg.login;
-    ack.Send( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::OnReceiveMsgProfileUpdateRequest
-// Created: SBO 2007-01-22
-// -----------------------------------------------------------------------------
-void Client::OnReceiveMsgProfileUpdateRequest( const ASN1T_MsgProfileUpdateRequest& asnMsg )
-{
-    AsnMsgInClientProfileUpdateRequestAck ack;
-    ack().error_code = dispatcher_.GetProfileManager().Update( asnMsg );
-    ack().login      = asnMsg.login;
-    ack.Send( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::OnReceiveMsgProfileDestructionRequest
-// Created: SBO 2007-01-22
-// -----------------------------------------------------------------------------
-void Client::OnReceiveMsgProfileDestructionRequest( const ASN1T_MsgProfileDestructionRequest& asnMsg )
-{
-    AsnMsgInClientProfileDestructionRequestAck ack;
-    ack().error_code = dispatcher_.GetProfileManager().Destroy( asnMsg );
-    ack().login       = asnMsg;
-    ack.Send( *this );
-}
-
-#define DISPATCH_ASN_MSG( NAME )                                 \
-    case T_MsgsOutClient_msg_msg_##NAME:                         \
-    {                                                            \
-        ASN1T_MsgsInSim asnOutMsg;                               \
-        asnOutMsg.context          = asnInMsg.context;           \
-        asnOutMsg.msg.t            = T_MsgsInSim_msg_msg_##NAME; \
-        asnOutMsg.msg.u.msg_##NAME = asnInMsg.msg.u.msg_##NAME;  \
-        dispatcher_.GetSimulationNetworker().Send( asnOutMsg );  \
-        break;                                                   \
-    } 
-
-#define DISPATCH_EMPTY_ASN_MSG( NAME )                           \
-    case T_MsgsOutClient_msg_msg_##NAME:                         \
-    {                                                            \
-        ASN1T_MsgsInSim asnOutMsg;                               \
-        asnOutMsg.context          = asnInMsg.context;           \
-        asnOutMsg.msg.t            = T_MsgsInSim_msg_msg_##NAME; \
-        dispatcher_.GetSimulationNetworker().Send( asnOutMsg );  \
-        break;                                                   \
-    } 
 
 // -----------------------------------------------------------------------------
 // Name: Client::OnReceive
@@ -192,44 +154,19 @@ void Client::OnReceive( const ASN1T_MsgsOutClient& asnInMsg )
         return;
     }
 
-    switch( asnInMsg.msg.t )
-    {
-        case T_MsgsOutClient_msg_msg_authentication_request      : OnReceiveMsgAuthenticationRequest    ( *asnInMsg.msg.u.msg_authentication_request      ); break;
-        case T_MsgsOutClient_msg_msg_profile_creation_request    : OnReceiveMsgProfileCreationRequest   ( *asnInMsg.msg.u.msg_profile_creation_request    ); break;
-        case T_MsgsOutClient_msg_msg_profile_update_request      : OnReceiveMsgProfileUpdateRequest     ( *asnInMsg.msg.u.msg_profile_update_request      ); break;
-        case T_MsgsOutClient_msg_msg_profile_destruction_request : OnReceiveMsgProfileDestructionRequest(  asnInMsg.msg.u.msg_profile_destruction_request ); break;
+    if( asnInMsg.msg.t == T_MsgsOutClient_msg_msg_authentication_request )
+        OnReceiveMsgAuthenticationRequest( *asnInMsg.msg.u.msg_authentication_request ); 
+    
+    ProfilesDispatcher dispatcher( profiles_, *this );
+    dispatcher.OnReceive( asnInMsg );
 
-        DISPATCH_EMPTY_ASN_MSG( ctrl_stop );
-        DISPATCH_EMPTY_ASN_MSG( ctrl_pause );
-        DISPATCH_EMPTY_ASN_MSG( ctrl_resume );
-        DISPATCH_ASN_MSG      ( ctrl_change_time_factor );
-        DISPATCH_ASN_MSG      ( ctrl_meteo_globale );
-        DISPATCH_ASN_MSG      ( ctrl_meteo_locale );
-        DISPATCH_ASN_MSG      ( ctrl_checkpoint_save_now );
-        DISPATCH_ASN_MSG      ( ctrl_checkpoint_set_frequency );
-        DISPATCH_ASN_MSG      ( limit_creation_request );
-        DISPATCH_ASN_MSG      ( limit_destruction_request );
-        DISPATCH_ASN_MSG      ( limit_update_request );
-        DISPATCH_ASN_MSG      ( lima_creation_request );
-        DISPATCH_ASN_MSG      ( lima_destruction_request );
-        DISPATCH_ASN_MSG      ( lima_update_request );
-        DISPATCH_ASN_MSG      ( pion_order );
-        DISPATCH_ASN_MSG      ( automate_order);
-        DISPATCH_ASN_MSG      ( population_order );
-        DISPATCH_ASN_MSG      ( frag_order );
-        DISPATCH_ASN_MSG      ( set_automate_mode );
-        DISPATCH_ASN_MSG      ( unit_magic_action );
-        DISPATCH_ASN_MSG      ( object_magic_action );
-        DISPATCH_ASN_MSG      ( population_magic_action );
-        DISPATCH_ASN_MSG      ( change_diplomatie );
-        DISPATCH_ASN_MSG      ( automate_change_groupe_connaissance );
-        DISPATCH_ASN_MSG      ( automate_change_liens_logistiques );
-        DISPATCH_ASN_MSG      ( pion_change_superior );
-        DISPATCH_ASN_MSG      ( log_ravitaillement_pousser_flux );
-        DISPATCH_ASN_MSG      ( log_ravitaillement_change_quotas );
-        default:
-            assert( false );
+    if( simulation_ )
+    {
+        ClientDispatcher dispatcher( *simulation_ );
+        dispatcher.OnReceive( asnInMsg );
     }
+    if( loader_ )
+        loader_->OnReceive( asnInMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -239,9 +176,9 @@ void Client::OnReceive( const ASN1T_MsgsOutClient& asnInMsg )
 void Client::OnReceive( unsigned int nMsgID, DIN::DIN_Input& dinMsg )
 {
     // $$$ TMP
-    if( !pProfile_ )
+    if( !pProfile_ || !simulation_ )
         return;
-    dispatcher_.GetSimulationNetworker().Send( nMsgID, dinMsg );
+    simulation_->Send( nMsgID, dinMsg );
 }
 
 // -----------------------------------------------------------------------------

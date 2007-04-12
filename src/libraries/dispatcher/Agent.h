@@ -14,6 +14,7 @@
 #include "Position.h"
 #include "ModelRefsContainer.h"
 #include "ModelsContainer.h"
+#include "Synchronisable.h"
 
 namespace dispatcher
 {
@@ -29,6 +30,7 @@ class AgentLogMedical;
 class AgentLogMaintenance;
 class AgentLogSupply;
 class Side;
+class ModelVisitor_ABC;
 
 // =============================================================================
 /** @class  Agent
@@ -36,17 +38,18 @@ class Side;
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Agent
+class Agent : public Synchronisable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-     Agent( Model& model, const ASN1T_MsgPionCreation& msg );
-    ~Agent();
+             Agent( Model& model, const ASN1T_MsgPionCreation& msg );
+    virtual ~Agent();
     //@}
 
     //! @name Main
     //@{
+    void Update        ( const ASN1T_MsgPionCreation&          asnMsg );
     void Update        ( const ASN1T_MsgUnitAttributes&        asnMsg );
     void Update        ( const ASN1T_MsgLogSanteEtat&          asnMsg );
     void Update        ( const ASN1T_MsgLogMaintenanceEtat&    asnMsg );
@@ -54,7 +57,9 @@ public:
     void Update        ( const ASN1T_MsgPionChangeSuperior&    asnMsg );
     void Update        ( const ASN1T_MsgPionChangeSuperiorAck& asnMsg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
-    void SendFullUpdate( Publisher_ABC& publisher ) const;
+    virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
+
+    void Accept( ModelVisitor_ABC& visitor );
     //@}
 
     //! @name Accessors

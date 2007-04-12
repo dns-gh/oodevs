@@ -77,6 +77,8 @@ public:
     void SendMsgUnitMagicActionDestroyComposante( const kernel::Agent_ABC& agent );
 
     void SetModel( Model& model );
+
+    void SendReplayerMessage( DIN::DIN_BufferedMessage& message );
     //@}
 
 private:
@@ -118,7 +120,9 @@ private:
     void OnReceiveMsgCtrlPauseAck             ( const ASN1T_MsgCtrlPauseAck&  asnMsg );
     void OnReceiveMsgCtrlResumeAck            ( const ASN1T_MsgCtrlResumeAck& asnMsg );
     void OnReceiveMsgCtrlChangeTimeFactorAck  ( const ASN1T_MsgCtrlChangeTimeFactorAck& asnMsg );
+    void OnReceiveMsgCtrlSkipToTickAck        ( const ASN1T_MsgCtrlSkipToTickAck& asnMsg );
     void OnReceiveMsgCtrlInfo                 ( const ASN1T_MsgCtrlInfo& asnMsg );
+    void OnReceiveMsgCtrReplayInfo            ( const ASN1T_MsgCtrlReplayInfo& asnMsg );
     void OnReceiveMsgCtrlMeteoGlobalAck       ();
     void OnReceiveMsgCtrlMeteoLocalAck        ();
     void OnReceiveMsgCheckPointSaveBegin      ();

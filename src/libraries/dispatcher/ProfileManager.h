@@ -16,9 +16,11 @@ namespace xml{ class xistream; };
 
 namespace dispatcher
 {
-class Dispatcher;
+
 class Profile;
 class Publisher_ABC;
+class Model;
+class ClientsNetworker;
 
 // =============================================================================
 /** @class  ProfileManager
@@ -31,7 +33,7 @@ class ProfileManager
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileManager( Dispatcher& dispatcher, const std::string& strFile );
+             ProfileManager( Model& model, ClientsNetworker& clients, const std::string& strFile );
     virtual ~ProfileManager();
     //@}
 
@@ -42,6 +44,7 @@ public:
     Profile* Find        ( const std::string& strName ) const;
 
     void Send( Publisher_ABC& publisher ) const;
+
     ASN1T_MsgProfileCreationRequestAck_error_code    Create ( const ASN1T_MsgProfileCreationRequest&    message );
     ASN1T_MsgProfileUpdateRequestAck_error_code      Update ( const ASN1T_MsgProfileUpdateRequest&      message );
     ASN1T_MsgProfileDestructionRequestAck_error_code Destroy( const ASN1T_MsgProfileDestructionRequest& message );
@@ -67,9 +70,10 @@ private:
     //@}
 
 private:
-    Dispatcher& dispatcher_;
-    const std::string strFile_;
+    Model& model_;
+    ClientsNetworker& clients_;
 
+    const std::string strFile_;
     T_ProfileMap profiles_;
 };
 

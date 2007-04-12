@@ -13,6 +13,7 @@
 #include "game_asn/Asn.h"
 #include "ModelRefsContainer.h"
 #include "ModelsContainer.h"
+#include "Synchronisable.h"
 
 namespace dispatcher
 {
@@ -24,6 +25,7 @@ class Formation;
 class Agent;
 class DotationQuota;
 class Publisher_ABC;
+class ModelVisitor_ABC;
 
 // =============================================================================
 /** @class  Automat
@@ -31,7 +33,7 @@ class Publisher_ABC;
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Automat
+class Automat : public Synchronisable
 {
 public:
     //! @name Constructors/Destructor
@@ -48,13 +50,16 @@ public:
 
     //! @name Main
     //@{
+    void Update        ( const ASN1T_MsgAutomateCreation&                    msg );
     void Update        ( const ASN1T_MsgAutomateAttributes&                  msg );
     void Update        ( const ASN1T_MsgLogRavitaillementQuotas&             msg );
     void Update        ( const ASN1T_MsgAutomateChangeLiensLogistiquesAck&   msg );
     void Update        ( const ASN1T_MsgAutomateChangeLiensLogistiques&      msg );
     void Update        ( const ASN1T_MsgAutomateChangeGroupeConnaissanceAck& msg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
-    void SendFullUpdate( Publisher_ABC& publisher ) const;
+    virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
+
+    void Accept( ModelVisitor_ABC& visitor );
     //@}
 
 private:

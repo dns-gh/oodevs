@@ -24,6 +24,7 @@ namespace DIN
 namespace dispatcher 
 {
 class Dispatcher;
+class Replayer;
 class Client;
 
 // =============================================================================
@@ -38,7 +39,8 @@ class ClientsNetworker : public tools::ServerNetworker_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ClientsNetworker( Dispatcher& dispatcher, const std::string& configFile );
+             ClientsNetworker( Dispatcher& dispatcher, const std::string& configFile );
+             ClientsNetworker( Replayer& replayer, const std::string& configFile );
     virtual ~ClientsNetworker();
     //@}
 
@@ -90,7 +92,8 @@ private:
     //@}
 
 private:
-    Dispatcher& dispatcher_;
+    Dispatcher* dispatcher_;
+    Replayer*   replayer_;
     T_ClientSet clients_;
 };
 

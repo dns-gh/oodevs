@@ -16,6 +16,7 @@
 #include "Network_Def.h"
 #include "PopulationConcentration.h"
 #include "PopulationFlow.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -51,6 +52,15 @@ Population::~Population()
 
 // -----------------------------------------------------------------------------
 // Name: Population::Update
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void Population::Update( const ASN1T_MsgPopulationCreation& )
+{
+    FlagUpdate();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationUpdate& msg )
@@ -65,7 +75,9 @@ void Population::Update( const ASN1T_MsgPopulationUpdate& msg )
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationConcentrationCreation& msg )
 {
-    concentrations_.Create( model_, msg.oid_concentration, *this, msg );
+    PopulationConcentration& concentration = concentrations_.Create( model_, msg.oid_concentration, *this, msg );
+    StartSynchronisation( concentration );
+    concentration.Update( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +88,6 @@ void Population::Update( const ASN1T_MsgPopulationConcentrationUpdate&  msg )
 {
     concentrations_.Get( msg.oid_concentration ).Update( msg );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Population::Update
@@ -93,7 +104,9 @@ void Population::Update( const ASN1T_MsgPopulationConcentrationDestruction& msg 
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationFluxCreation& msg )
 {
-    flows_.Create( model_, msg.oid_flux, *this, msg );
+    PopulationFlow& flow = flows_.Create( model_, msg.oid_flux, *this, msg );
+    StartSynchronisation( flow );
+    flow.Update( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,9 +146,6 @@ void Population::SendCreation( Publisher_ABC& publisher ) const
     asn().nom             = strName_.c_str();
 
     asn.Send( publisher );
-
-    concentrations_.Apply( std::mem_fun_ref( &PopulationConcentration::SendCreation ), publisher );
-    flows_         .Apply( std::mem_fun_ref( &PopulationFlow         ::SendCreation ), publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +162,15 @@ void Population::SendFullUpdate( Publisher_ABC& publisher ) const
     asn().etat_domination = nDominationState_;
 
     asn.Send( publisher );
+}
 
-    concentrations_.Apply( std::mem_fun_ref( &PopulationConcentration::SendFullUpdate ), publisher );
-    flows_         .Apply( std::mem_fun_ref( &PopulationFlow         ::SendFullUpdate ), publisher );
+// -----------------------------------------------------------------------------
+// Name: Population::Accept
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void Population::Accept( ModelVisitor_ABC& visitor )
+{
+    visitor.Visit( *this );
+    concentrations_.Apply( std::mem_fun_ref( &PopulationConcentration::Accept ), visitor );
+    flows_         .Apply( std::mem_fun_ref( &PopulationFlow         ::Accept ), visitor );
 }

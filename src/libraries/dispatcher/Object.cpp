@@ -22,6 +22,7 @@
 #include "DispersedMinedAreaObjectAttribute.h"
 #include "LinearMinedAreaObjectAttribute.h"
 #include "Network_Def.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -94,6 +95,15 @@ Object::~Object()
 // =============================================================================
 // OPERATIONS
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: Object::Update
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void Object::Update( const ASN1T_MsgObjectCreation& )
+{
+    FlagUpdate();
+}
 
 // -----------------------------------------------------------------------------
 // Name: Object::Update
@@ -217,4 +227,24 @@ void Object::SendFullUpdate( Publisher_ABC& publisher ) const
 
     if( pAttributes_ )
         pAttributes_->AsnDelete( asn().attributs_specifiques );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::Accept
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void Object::Accept( ModelVisitor_ABC& visitor )
+{
+    visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::CommitDestruction
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void Object::CommitDestruction()
+{
+    AsnMsgInClientObjectDestruction destruction;
+    destruction() = nID_;
+    SendDestruction( destruction );
 }

@@ -252,12 +252,14 @@ MsgsInClient ::= SEQUENCE
 
         -- MESSAGES
         msg-ctrl-info                                           MsgCtrlInfo,
+        msg-ctrl-replay-info                                    MsgCtrlReplayInfo,
         msg-ctrl-begin-tick                                     MsgCtrlBeginTick,
         msg-ctrl-end-tick                                       MsgCtrlEndTick,
         msg-ctrl-stop-ack                                       MsgCtrlStopAck,
         msg-ctrl-pause-ack                                      MsgCtrlPauseAck,
         msg-ctrl-resume-ack                                     MsgCtrlResumeAck,
         msg-ctrl-change-time-factor-ack                         MsgCtrlChangeTimeFactorAck,
+        msg-ctrl-skip-to-tick-ack                               MsgCtrlSkipToTickAck,
         msg-ctrl-meteo-globale-ack                              MsgCtrlMeteoGlobaleAck,
         msg-ctrl-meteo-locale-ack                               MsgCtrlMeteoLocaleAck,
         msg-ctrl-checkpoint-save-begin                          MsgCtrlCheckPointSaveBegin,
@@ -370,6 +372,7 @@ MsgsOutClient ::= SEQUENCE
         msg-ctrl-stop                           MsgCtrlStop,
         msg-ctrl-pause                          MsgCtrlPause,
         msg-ctrl-resume                         MsgCtrlResume,
+        msg-ctrl-skip-to-tick                   MsgCtrlSkipToTick,
         msg-ctrl-change-time-factor             MsgCtrlChangeTimeFactor,      
         msg-ctrl-meteo-globale                  MsgCtrlMeteoGlobale,
         msg-ctrl-meteo-locale                   MsgCtrlMeteoLocale,

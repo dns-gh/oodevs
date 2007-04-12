@@ -11,7 +11,6 @@
 
 #include "Profile.h"
 
-#include "Dispatcher.h"
 #include "Model.h"
 #include "Network_Def.h"
 #include "Automat.h"
@@ -27,19 +26,11 @@ using namespace dispatcher;
 // Name: Profile constructor
 // Created: NLD 2006-10-06
 // -----------------------------------------------------------------------------
-Profile::Profile( Dispatcher& dispatcher, const std::string& strLogin, xml::xistream& xis )
-    : dispatcher_           ( dispatcher )
-    , strLogin_             ( strLogin )
-    , strPassword_          () 
-    , readOnlyAutomats_     ()
-    , readOnlySides_        ()
-    , readOnlyFormations_   ()
-    , readOnlyPopulations_  ()
-    , readWriteAutomats_    ()
-    , readWriteSides_       ()
-    , readWriteFormations_  ()
-    , readWritePopulations_ ()
-    , bSupervision_         ( false )
+Profile::Profile( Model& model, ClientsNetworker& clients, const std::string& strLogin, xml::xistream& xis )
+    : model_       ( model )
+    , clients_     ( clients )
+    , strLogin_    ( strLogin )
+    , bSupervision_( false )
 {
     xis >> xml::attribute( "password", strPassword_ )
         >> xml::attribute( "supervision", bSupervision_ )
@@ -63,23 +54,16 @@ Profile::Profile( Dispatcher& dispatcher, const std::string& strLogin, xml::xist
 // Name: Profile constructor
 // Created: SBO 2007-01-22
 // -----------------------------------------------------------------------------
-Profile::Profile( Dispatcher& dispatcher, const ASN1T_MsgProfileCreationRequest& message )
-    : dispatcher_           ( dispatcher )
-    , strLogin_             ( message.login )
-    , strPassword_          ( message.m.passwordPresent ? message.password : "" )
-    , readOnlyAutomats_     ()
-    , readOnlySides_        ()
-    , readOnlyFormations_   ()
-    , readOnlyPopulations_  ()
-    , readWriteAutomats_    ()
-    , readWriteSides_       ()
-    , readWriteFormations_  ()
-    , readWritePopulations_ ()
-    , bSupervision_         ( message.superviseur )
+Profile::Profile( Model& model, ClientsNetworker& clients, const ASN1T_MsgProfileCreationRequest& message )
+    : model_       ( model )
+    , clients_     ( clients )
+    , strLogin_    ( message.login )
+    , strPassword_ ( message.m.passwordPresent ? message.password : "" )
+    , bSupervision_( message.superviseur )
 {
     ReadRights( message );
 
-    SendCreation( dispatcher_.GetClientsNetworker() );
+    SendCreation( clients_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +74,7 @@ Profile::~Profile()
 {
     AsnMsgInClientProfileDestruction asn;
     asn() = strLogin_.c_str();
-    asn.Send( dispatcher_.GetClientsNetworker() );
+    asn.Send( clients_ );
 }
 
 // =============================================================================
@@ -106,7 +90,7 @@ void Profile::ReadAutomatRights( xml::xistream& xis, T_AutomatSet& container )
     int nID;
     xis >> xml::attribute( "id", nID );
 
-    Automat* pAutomat = dispatcher_.GetModel().GetAutomats().Find( nID );
+    Automat* pAutomat = model_.GetAutomats().Find( nID );
     if( pAutomat )
         container.insert( pAutomat );
     else
@@ -122,7 +106,7 @@ void Profile::ReadSideRights( xml::xistream& xis, T_SideSet& container )
     int nID;
     xis >> xml::attribute( "id", nID );
 
-    Side* pSide = dispatcher_.GetModel().GetSides().Find( nID );
+    Side* pSide = model_.GetSides().Find( nID );
     if( pSide )
         container.insert( pSide );
     else
@@ -138,7 +122,7 @@ void Profile::ReadFormationRights( xml::xistream& xis, T_FormationSet&  containe
     int nID;
     xis >> xml::attribute( "id", nID );
 
-    Formation* pFormation = dispatcher_.GetModel().GetFormations().Find( nID );
+    Formation* pFormation = model_.GetFormations().Find( nID );
     if( pFormation )
         container.insert( pFormation );
     else
@@ -154,7 +138,7 @@ void Profile::ReadPopulationRights( xml::xistream& xis, T_PopulationSet& contain
     int nID;
     xis >> xml::attribute( "id", nID );
 
-    Population* pPopulation = dispatcher_.GetModel().GetPopulations().Find( nID );
+    Population* pPopulation = model_.GetPopulations().Find( nID );
     if( pPopulation )
         container.insert( pPopulation );
     else
@@ -181,23 +165,22 @@ namespace
 // -----------------------------------------------------------------------------
 void Profile::ReadRights( const ASN1T_Profile& message )
 {
-    Model& model = dispatcher_.GetModel();
     if( message.m.read_only_automatesPresent )
-        SetRights( (const ASN1T_ListOID&)message.read_only_automates, readOnlyAutomats_, model.GetAutomats() );
+        SetRights( (const ASN1T_ListOID&)message.read_only_automates, readOnlyAutomats_, model_.GetAutomats() );
     if( message.m.read_only_campsPresent )
-        SetRights( (const ASN1T_ListOID&)message.read_only_camps, readOnlySides_, model.GetSides() );
+        SetRights( (const ASN1T_ListOID&)message.read_only_camps, readOnlySides_, model_.GetSides() );
     if( message.m.read_only_formationsPresent )
-        SetRights( (const ASN1T_ListOID&)message.read_only_formations, readOnlyFormations_, model.GetFormations() );
+        SetRights( (const ASN1T_ListOID&)message.read_only_formations, readOnlyFormations_, model_.GetFormations() );
     if( message.m.read_only_populationsPresent )
-        SetRights( (const ASN1T_ListOID&)message.read_only_populations, readOnlyPopulations_, model.GetPopulations() );
+        SetRights( (const ASN1T_ListOID&)message.read_only_populations, readOnlyPopulations_, model_.GetPopulations() );
     if( message.m.read_write_automatesPresent )
-        SetRights( (const ASN1T_ListOID&)message.read_write_automates, readWriteAutomats_, model.GetAutomats() );
+        SetRights( (const ASN1T_ListOID&)message.read_write_automates, readWriteAutomats_, model_.GetAutomats() );
     if( message.m.read_write_campsPresent )
-        SetRights( (const ASN1T_ListOID&)message.read_write_camps, readWriteSides_, model.GetSides() );
+        SetRights( (const ASN1T_ListOID&)message.read_write_camps, readWriteSides_, model_.GetSides() );
     if( message.m.read_write_formationsPresent )
-        SetRights( (const ASN1T_ListOID&)message.read_write_formations, readWriteFormations_, model.GetFormations() );
+        SetRights( (const ASN1T_ListOID&)message.read_write_formations, readWriteFormations_, model_.GetFormations() );
     if( message.m.read_write_populationsPresent )
-        SetRights( (const ASN1T_ListOID&)message.read_write_populations, readWritePopulations_, model.GetPopulations() );
+        SetRights( (const ASN1T_ListOID&)message.read_write_populations, readWritePopulations_, model_.GetPopulations() );
 }
 
 // =============================================================================
@@ -225,6 +208,7 @@ bool Profile::CheckRights( const ASN1T_MsgsOutClient& msg ) const
         case T_MsgsOutClient_msg_msg_ctrl_pause                         : return bSupervision_;
         case T_MsgsOutClient_msg_msg_ctrl_resume                        : return bSupervision_; 
         case T_MsgsOutClient_msg_msg_ctrl_change_time_factor            : return bSupervision_;
+        case T_MsgsOutClient_msg_msg_ctrl_skip_to_tick                  : return bSupervision_;
         case T_MsgsOutClient_msg_msg_ctrl_meteo_globale                 : return bSupervision_;
         case T_MsgsOutClient_msg_msg_ctrl_meteo_locale                  : return bSupervision_;
         case T_MsgsOutClient_msg_msg_ctrl_checkpoint_save_now           : return bSupervision_;
@@ -256,6 +240,15 @@ bool Profile::CheckRights( const ASN1T_MsgsOutClient& msg ) const
         default:
             return false;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::CheckRights
+// Created: AGE 2007-04-11
+// -----------------------------------------------------------------------------
+bool Profile::CheckRights() const
+{
+    return bSupervision_;
 }
 
 // =============================================================================
@@ -353,6 +346,6 @@ void Profile::Update( const ASN1T_MsgProfileUpdateRequest& message )
     if( asn().profile.m.passwordPresent )
         asn().profile.password = strPassword_.c_str();
     Send( asn().profile );
-    asn.Send( dispatcher_.GetClientsNetworker() );
+    asn.Send( clients_ );
     Profile::AsnDelete( asn().profile );
 }

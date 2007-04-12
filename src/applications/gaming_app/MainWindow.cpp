@@ -40,6 +40,7 @@
 #include "UserProfileDialog.h"
 #include "InfoDock.h"
 #include "ActionsPanel.h"
+#include "ReplayerToolbar.h"
 #include "icons.h"
 
 #include "clients_kernel/ActionController.h"
@@ -266,6 +267,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     new MagicOrdersInterface( this, controllers_, publisher, staticModel_, *paramLayer, profile );
     new SIMControlToolbar( this, controllers, network, publisher );
+    new ReplayerToolbar( this, controllers, publisher );
     new DisplayToolbar( this, controllers );
     new EventToolbar( this, controllers, profile );
     RecorderToolbar* recorderToolbar = new RecorderToolbar( this, network );
