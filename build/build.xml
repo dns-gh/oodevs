@@ -158,7 +158,7 @@
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
-                         lib${ant.project.name}_dispatcher-${platform}-mt">
+                         lib${ant.project.name}_dispatcher-${platform}-mt,pathfind">
             <syslibset libs="dbghelp,psapi"/>
             <syslibset libs="iphlpapi"/> <!-- paranoia -->
             <includepath path="${include.dir}/ASN"/>
