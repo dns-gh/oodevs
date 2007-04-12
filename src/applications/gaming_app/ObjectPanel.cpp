@@ -123,8 +123,8 @@ void ::ObjectPanel::OnApply()
         asnAction.en_preparation                     = prepared_     ->IsChecked();
 
         ASN_MsgObjectMagicAction asnMsg;
-        asnMsg.GetAsnMsg().action.t                 = T_MsgObjectMagicAction_action_update_object;
-        asnMsg.GetAsnMsg().action.u.update_object   = &asnAction;
+        asnMsg().action.t                 = T_MsgObjectMagicAction_action_update_object;
+        asnMsg().action.u.update_object   = &asnAction;
 
         asnMsg.Send( publisher_ );
     }

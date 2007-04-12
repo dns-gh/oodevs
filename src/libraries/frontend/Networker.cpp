@@ -85,7 +85,7 @@ void Networker::OnReceiveMsgOutMaster( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Inp
     try
     {
         AsnMessageDecoder< ASN1T_MsgsOutMaster, ASN1C_MsgsOutMaster > asnDecoder( input );
-        master_->OnReceive( asnDecoder.GetAsnMsg() );
+        master_->OnReceive( asnDecoder() );
     }
     catch( std::runtime_error& exception )
     {

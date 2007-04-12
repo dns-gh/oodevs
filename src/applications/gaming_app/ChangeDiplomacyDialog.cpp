@@ -89,9 +89,9 @@ void ChangeDiplomacyDialog::Validate()
 {
     ASN_MsgChangeDiplomatie asn;
 
-    asn.GetAsnMsg().oid_camp1  = pArmy1ComboBox_->GetValue()->GetId();
-    asn.GetAsnMsg().oid_camp2  = pArmy2ComboBox_->GetValue()->GetId();
-    asn.GetAsnMsg().diplomatie = pDiplomacyComboBox_->GetValue();
+    asn().oid_camp1  = pArmy1ComboBox_->GetValue()->GetId();
+    asn().oid_camp2  = pArmy2ComboBox_->GetValue()->GetId();
+    asn().diplomatie = pDiplomacyComboBox_->GetValue();
     asn.Send( publisher_ );
     hide();
 }

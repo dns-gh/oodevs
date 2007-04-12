@@ -255,8 +255,8 @@ namespace
         void operator()( const Agent_ABC& agent ) const
         {
             ASN_MsgUnitMagicAction asnMsg;
-            asnMsg.GetAsnMsg().oid      = agent.GetId();
-            asnMsg.GetAsnMsg().action.t = id_;
+            asnMsg().oid      = agent.GetId();
+            asnMsg().action.t = id_;
             asnMsg.Send( publisher_ );
         }
     private:
@@ -354,11 +354,11 @@ void MagicOrdersInterface::SendMagicMove( const geometry::Point2f& point, int ac
     ASN1T_CoordUTM utm;
     utm = static_.coordinateConverter_.ConvertToMgrs( point ).c_str();
     Message message;
-    message.GetAsnMsg().oid = selectedEntity_->GetId();
-    message.GetAsnMsg().action.t = action;
-    message.GetAsnMsg().action.u.move_to = &utm;
+    message().oid = selectedEntity_->GetId();
+    message().action.t = action;
+    message().action.u.move_to = &utm;
     message.Send( publisher_, 56 );
-    const_cast< kernel::Entity_ABC& >( *selectedEntity_ ).Update( message.GetAsnMsg() );
+    const_cast< kernel::Entity_ABC& >( *selectedEntity_ ).Update( message() );
 }
 
 // -----------------------------------------------------------------------------
@@ -385,9 +385,9 @@ void MagicOrdersInterface::SurrenderTo( int id )
     if( selectedEntity_ )
     {
         ASN_MsgUnitMagicAction asnMsg;
-        asnMsg.GetAsnMsg().oid      = selectedEntity_->GetId();
-        asnMsg.GetAsnMsg().action.t = T_MsgUnitMagicAction_action_se_rendre;
-        asnMsg.GetAsnMsg().action.u.se_rendre = id;
+        asnMsg().oid      = selectedEntity_->GetId();
+        asnMsg().action.t = T_MsgUnitMagicAction_action_se_rendre;
+        asnMsg().action.u.se_rendre = id;
         asnMsg.Send( publisher_ );
     }
 }
@@ -401,8 +401,8 @@ void MagicOrdersInterface::RecoverHumanTransporters()
     if( selectedEntity_ )
     {
         ASN_MsgUnitMagicAction asnMsg;
-        asnMsg.GetAsnMsg().oid      = selectedEntity_ ->GetId();
-        asnMsg.GetAsnMsg().action.t = T_MsgUnitMagicAction_action_recuperer_transporteurs;
+        asnMsg().oid      = selectedEntity_ ->GetId();
+        asnMsg().action.t = T_MsgUnitMagicAction_action_recuperer_transporteurs;
         asnMsg.Send( publisher_ );
     }
 }
@@ -416,14 +416,14 @@ void MagicOrdersInterface::ChangePopulationAttitude( int index )
     if( selectedEntity_ )
     {
         ASN_MsgPopulationMagicAction asn;
-        asn.GetAsnMsg().oid      = selectedEntity_->GetId();
-        asn.GetAsnMsg().action.t = T_MsgPopulationMagicAction_action_change_attitude;
+        asn().oid      = selectedEntity_->GetId();
+        asn().action.t = T_MsgPopulationMagicAction_action_change_attitude;
 
         ASN1T_MagicActionPopulationChangeAttitude params;
         params.attitude       = (ASN1T_EnumPopulationAttitude)index;
         params.beneficiaire.t = T_MagicActionPopulationChangeAttitude_beneficiaire_global;
 
-        asn.GetAsnMsg().action.u.change_attitude = &params;
+        asn().action.u.change_attitude = &params;
         asn.Send( publisher_ );
     }
 }
@@ -437,8 +437,8 @@ void MagicOrdersInterface::KillAllPopulation()
     if( selectedEntity_ )
     {
         ASN_MsgPopulationMagicAction asn;
-        asn.GetAsnMsg().oid      = selectedEntity_->GetId();
-        asn.GetAsnMsg().action.t = T_MsgPopulationMagicAction_action_destruction_totale;
+        asn().oid      = selectedEntity_->GetId();
+        asn().action.t = T_MsgPopulationMagicAction_action_destruction_totale;
         asn.Send( publisher_ );
     }
 }
@@ -453,9 +453,9 @@ void MagicOrdersInterface::KillSomePopulation()
         if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
         {
             ASN_MsgPopulationMagicAction asn;
-            asn.GetAsnMsg().oid           = selectedEntity_->GetId();
-            asn.GetAsnMsg().action.t      = T_MsgPopulationMagicAction_action_tuer;
-            asn.GetAsnMsg().action.u.tuer = editor->text().toUInt();
+            asn().oid           = selectedEntity_->GetId();
+            asn().action.t      = T_MsgPopulationMagicAction_action_tuer;
+            asn().action.u.tuer = editor->text().toUInt();
             asn.Send( publisher_ );
         }
 }
@@ -470,9 +470,9 @@ void MagicOrdersInterface::ResurectSomePopulation()
         if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
         {
             ASN_MsgPopulationMagicAction asn;
-            asn.GetAsnMsg().oid                  = selectedEntity_->GetId();
-            asn.GetAsnMsg().action.t             = T_MsgPopulationMagicAction_action_ressusciter;
-            asn.GetAsnMsg().action.u.ressusciter = editor->text().toUInt();
+            asn().oid                  = selectedEntity_->GetId();
+            asn().action.t             = T_MsgPopulationMagicAction_action_ressusciter;
+            asn().action.u.ressusciter = editor->text().toUInt();
             asn.Send( publisher_ );
         }
 }

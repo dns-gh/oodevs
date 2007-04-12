@@ -170,7 +170,7 @@ void SIMControlToolbar::SlotSpeedChange()
     if( connected_ )
     {
         ASN_MsgCtrlChangeTimeFactor asnMsg;
-        asnMsg.GetAsnMsg() = pSpeedSpinBox_->value();
+        asnMsg() = pSpeedSpinBox_->value();
         asnMsg.Send( publisher_ );
     }
 }

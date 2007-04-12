@@ -42,7 +42,7 @@ public:                                                                         
         publisher.Send( message );                                              \
     }                                                                           \
                                                                                 \
-    ASN1T_Msg##ASNMSG& GetAsnMsg()                                              \
+    ASN1T_Msg##ASNMSG& operator() ()                                            \
     {                                                                           \
         return asnMsg_;                                                         \
     }                                                                           \
@@ -65,7 +65,7 @@ public:                                                                         
         publisher.Send( message );                                              \
     }                                                                           \
                                                                                 \
-    ASN1T_Msg##ASNMSG& GetAsnMsg()                                              \
+    ASN1T_Msg##ASNMSG& operator() ()                                            \
     {                                                                           \
         return asnMsg_;                                                         \
     }                                                                           \

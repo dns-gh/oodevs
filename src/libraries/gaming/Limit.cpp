@@ -62,27 +62,27 @@ void Limit::UpdateToSim( E_State state )
     case eStateCreated:
         {
             ASN_MsgLimitCreationRequest message;
-            message.GetAsnMsg().nom = GetName();
-            WriteGeometry ( message.GetAsnMsg().geometrie );
-            WriteDiffusion( message.GetAsnMsg().diffusion );
+            message().nom = GetName();
+            WriteGeometry ( message().geometrie );
+            WriteDiffusion( message().diffusion );
             Send( message );
-            delete[] message.GetAsnMsg().geometrie.vecteur_point.elem;
+            delete[] message().geometrie.vecteur_point.elem;
         }
         break;
     case eStateModified:
         {
             ASN_MsgLimitUpdateRequest message;
-            message.GetAsnMsg().oid = GetId();
-            message.GetAsnMsg().tactical_line.nom = GetName();
-            WriteGeometry ( message.GetAsnMsg().tactical_line.geometrie );
-            WriteDiffusion( message.GetAsnMsg().tactical_line.diffusion );
+            message().oid = GetId();
+            message().tactical_line.nom = GetName();
+            WriteGeometry ( message().tactical_line.geometrie );
+            WriteDiffusion( message().tactical_line.diffusion );
             Send( message );
-            delete[] message.GetAsnMsg().tactical_line.geometrie.vecteur_point.elem;
+            delete[] message().tactical_line.geometrie.vecteur_point.elem;
         }
         break;
     case eStateDeleted:
         ASN_MsgLimitDestructionRequest asnMsg;
-        asnMsg.GetAsnMsg() = GetId();
+        asnMsg() = GetId();
         Send( asnMsg );
         break;
     }

@@ -55,7 +55,7 @@ void PopulationMissionInterface::Publish()
     CommitTo( *action );
 
     ASN_MsgPopulationOrder asn;
-    ASN1T_MsgPopulationOrder& order = asn.GetAsnMsg();
+    ASN1T_MsgPopulationOrder& order = asn();
     order.oid_unite_executante = GetEntity().GetId();
     order.mission = mission_.GetId();
     CommitTo( order.parametres );

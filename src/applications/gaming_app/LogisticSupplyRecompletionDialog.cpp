@@ -553,11 +553,11 @@ void LogisticSupplyRecompletionDialog::Validate()
         return;
 
     ASN_MsgUnitMagicAction asnMsg;
-    asnMsg.GetAsnMsg().oid = selected_->GetId();
+    asnMsg().oid = selected_->GetId();
 
     ASN1T_MagicActionRecompletementPartiel asnMagicAction;
-    asnMsg.GetAsnMsg().action.t                        = T_MsgUnitMagicAction_action_recompletement_partiel;
-    asnMsg.GetAsnMsg().action.u.recompletement_partiel = &asnMagicAction;
+    asnMsg().action.t                        = T_MsgUnitMagicAction_action_recompletement_partiel;
+    asnMsg().action.u.recompletement_partiel = &asnMagicAction;
 
     FillPersonal( asnMagicAction );
     FillEquipments( asnMagicAction );

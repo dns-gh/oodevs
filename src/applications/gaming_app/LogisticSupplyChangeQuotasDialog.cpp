@@ -137,15 +137,15 @@ void LogisticSupplyChangeQuotasDialog::Validate()
 
     ASN_MsgLogRavitaillementChangeQuotas message;
 
-    message.GetAsnMsg().oid_donneur  = selected_->GetId();
-    message.GetAsnMsg().oid_receveur = target->GetId();
+    message().oid_donneur  = selected_->GetId();
+    message().oid_receveur = target->GetId();
 
     unsigned int rows = 0;
     for( int i = 0; i < table_->numRows(); ++i )
         if( !table_->item( i, 0 )->text().isEmpty() )
             ++rows;
 
-    message.GetAsnMsg().quotas.n = rows;
+    message().quotas.n = rows;
     if( rows > 0 )
     {
         ASN1T_DotationQuota* quota = new ASN1T_DotationQuota[rows];
@@ -157,11 +157,11 @@ void LogisticSupplyChangeQuotasDialog::Validate()
             quota[i].ressource_id     = supplies_[ text ].type_->GetId();
             quota[i].quota_disponible = table_->text( i, 1 ).toInt();
         }
-        message.GetAsnMsg().quotas.elem = quota;
+        message().quotas.elem = quota;
     }
     message.Send( publisher_ );
-    if( message.GetAsnMsg().quotas.n > 0 )
-        delete [] message.GetAsnMsg().quotas.elem;
+    if( message().quotas.n > 0 )
+        delete [] message().quotas.elem;
     hide();
 }
 

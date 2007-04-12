@@ -138,15 +138,15 @@ void LogisticSupplyPushFlowDialog::Validate()
 
     ASN_MsgLogRavitaillementPousserFlux message;
 
-    message.GetAsnMsg().oid_donneur  = selected_->GetId();
-    message.GetAsnMsg().oid_receveur = target->GetId();
+    message().oid_donneur  = selected_->GetId();
+    message().oid_receveur = target->GetId();
 
     unsigned int rows = 0;
     for( int i = 0; i < table_->numRows(); ++i )
         if( !table_->item( i, 0 )->text().isEmpty() )
             ++rows;
 
-    message.GetAsnMsg().stocks.n = rows;
+    message().stocks.n = rows;
     if( rows > 0 )
     {
         ASN1T_DotationStock* stock = new ASN1T_DotationStock[rows];
@@ -158,11 +158,11 @@ void LogisticSupplyPushFlowDialog::Validate()
             stock[i].ressource_id        = supplies_[ text ].type_->GetId();
             stock[i].quantite_disponible = table_->text( i, 1 ).toInt();
         }
-        message.GetAsnMsg().stocks.elem = stock;
+        message().stocks.elem = stock;
     }
     message.Send( publisher_ );
-    if( message.GetAsnMsg().stocks.n > 0 )
-        delete [] message.GetAsnMsg().stocks.elem;
+    if( message().stocks.n > 0 )
+        delete [] message().stocks.elem;
     hide();
 }
 

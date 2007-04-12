@@ -178,12 +178,12 @@ void ChangeLogisticLinksDialog::Validate()
     if( selected_ )
     {
         ASN_MsgAutomateChangeLiensLogistiques message;
-        message.GetAsnMsg().oid_automate = selected_->GetId();
+        message().oid_automate = selected_->GetId();
 
-        message.GetAsnMsg().m.oid_tc2Present            = SetId( *tc2Combo_, message.GetAsnMsg().oid_tc2 );
-        message.GetAsnMsg().m.oid_maintenancePresent    = SetId( *maintenanceCombo_, message.GetAsnMsg().oid_maintenance );
-        message.GetAsnMsg().m.oid_santePresent          = SetId( *medicalCombo_, message.GetAsnMsg().oid_sante );
-        message.GetAsnMsg().m.oid_ravitaillementPresent = SetId( *supplyCombo_, message.GetAsnMsg().oid_ravitaillement );
+        message().m.oid_tc2Present            = SetId( *tc2Combo_, message().oid_tc2 );
+        message().m.oid_maintenancePresent    = SetId( *maintenanceCombo_, message().oid_maintenance );
+        message().m.oid_santePresent          = SetId( *medicalCombo_, message().oid_sante );
+        message().m.oid_ravitaillementPresent = SetId( *supplyCombo_, message().oid_ravitaillement );
 	    message.Send( publisher_ );
     }
     Reject();

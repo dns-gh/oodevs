@@ -85,8 +85,8 @@ UserProfile::~UserProfile()
 void UserProfile::RequestCreation()
 {
     ASN_MsgProfileCreationRequest message;
-    message.GetAsnMsg().login       = login_.ascii();
-    message.GetAsnMsg().superviseur = supervision_;
+    message().login       = login_.ascii();
+    message().superviseur = supervision_;
     message.Send( publisher_ );
 }
 
@@ -97,7 +97,7 @@ void UserProfile::RequestCreation()
 void UserProfile::RequestDeletion()
 {
     ASN_MsgProfileDestructionRequest message;
-    message.GetAsnMsg() = login_.ascii();
+    message() = login_.ascii();
     message.Send( publisher_ );
 }
 
@@ -124,9 +124,9 @@ namespace
 void UserProfile::RequestUpdate( const QString& newLogin )
 {
     ASN_MsgProfileUpdateRequest message;
-    message.GetAsnMsg().login = login_.ascii();
+    message().login = login_.ascii();
 
-    ASN1T_Profile& profile = message.GetAsnMsg().profile;
+    ASN1T_Profile& profile = message().profile;
     profile.login       = newLogin.ascii();
     profile.m.passwordPresent = 1;
     profile.password    = password_.ascii();

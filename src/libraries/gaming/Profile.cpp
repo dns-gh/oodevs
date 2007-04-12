@@ -53,8 +53,8 @@ Profile::~Profile()
 void Profile::Login( Publisher_ABC& publisher ) const
 {
     ASN_MsgAuthenticationRequest asnMsg;
-    asnMsg.GetAsnMsg().login    = login_.c_str();
-    asnMsg.GetAsnMsg().password = password_.c_str();
+    asnMsg().login    = login_.c_str();
+    asnMsg().password = password_.c_str();
     asnMsg.Send( publisher );
 }
 

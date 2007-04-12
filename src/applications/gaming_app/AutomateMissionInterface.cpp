@@ -55,7 +55,7 @@ void AutomateMissionInterface::Publish()
     CommitTo( *action );
 
     ASN_MsgAutomateOrder asn;
-    ASN1T_MsgAutomateOrder& order = asn.GetAsnMsg();
+    ASN1T_MsgAutomateOrder& order = asn();
     order.oid_unite_executante = GetEntity().GetId();
     order.mission = mission_.GetId();
     order.formation = (ASN1T_EnumAutomateOrderFormation)EnumAutomateOrderFormation::deux_echelons; // $$$$ SBO 2007-03-15: move to order.parameters

@@ -120,8 +120,8 @@ bool AutomatDecisions::IsEmbraye() const
 void AutomatDecisions::Engage() const
 {
     ASN_MsgSetAutomateMode asnMsg;
-    asnMsg.GetAsnMsg().unit_id = agent_.GetId();
-    asnMsg.GetAsnMsg().mode    = EnumAutomateState::embraye;
+    asnMsg().unit_id = agent_.GetId();
+    asnMsg().mode    = EnumAutomateState::embraye;
     asnMsg.Send( publisher_, 0 );
 }
 
@@ -132,8 +132,8 @@ void AutomatDecisions::Engage() const
 void AutomatDecisions::Disengage() const
 {
     ASN_MsgSetAutomateMode asnMsg;
-    asnMsg.GetAsnMsg().unit_id = agent_.GetId();
-    asnMsg.GetAsnMsg().mode    = EnumAutomateState::debraye;
+    asnMsg().unit_id = agent_.GetId();
+    asnMsg().mode    = EnumAutomateState::debraye;
     asnMsg.Send( publisher_, 0 );
 }
 

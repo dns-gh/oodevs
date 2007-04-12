@@ -33,8 +33,8 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, con
     , creation_()
     , serializer_( model.coordinateConverter_, creation_.localisation )
 {
-    msg_.GetAsnMsg().action.t                 = T_MsgObjectMagicAction_action_create_object;
-    msg_.GetAsnMsg().action.u.create_object   = &creation_;
+    msg_().action.t                 = T_MsgObjectMagicAction_action_create_object;
+    msg_().action.u.create_object   = &creation_;
 
     campAttributes_          = new CampPrototype         ( parent, controllers, creation_ );        campAttributes_->hide();
     crossingSiteAttributes_  = new CrossingSitePrototype ( parent, creation_ );                     crossingSiteAttributes_->hide();

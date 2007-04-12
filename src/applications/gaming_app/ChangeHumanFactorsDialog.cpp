@@ -170,12 +170,12 @@ void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, AS
 void ChangeHumanFactorsDialog::SendMessage( uint id, ASN1T_EnumUnitFatigue tiredness, ASN1T_EnumUnitMoral moral, ASN1T_EnumUnitExperience experience )
 {
     ASN_MsgUnitMagicAction asnMsg;
-    asnMsg.GetAsnMsg().oid = id;
+    asnMsg().oid = id;
 
     ASN1T_MagicActionChangeFacteursHumains asnMagicAction;
 
-    asnMsg.GetAsnMsg().action.t                         = T_MsgUnitMagicAction_action_change_facteurs_humains;
-    asnMsg.GetAsnMsg().action.u.change_facteurs_humains = &asnMagicAction;
+    asnMsg().action.t                         = T_MsgUnitMagicAction_action_change_facteurs_humains;
+    asnMsg().action.u.change_facteurs_humains = &asnMagicAction;
 
     asnMagicAction.m.fatiguePresent = asnMagicAction.m.moralPresent = asnMagicAction.m.experiencePresent = 1;
     asnMagicAction.fatigue    = tiredness;
