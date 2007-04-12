@@ -153,12 +153,12 @@
             depends="application.gaming_app,application.preparation_app,application.adaptation_app" />
 
     <target name="application.dispatcher_app" description="build CSword Dispatcher executable" depends="library.dispatcher">
-        <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost,terrain"
-                   libs="masalloc,paranoia,xeumeuleu,tools,asn1per
+        <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu"
+                   libs="masalloc,paranoia,tools,asn1per
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
-                         lib${ant.project.name}_dispatcher-${platform}-mt,pathfind">
+                         lib${ant.project.name}_dispatcher-${platform}-mt">
             <syslibset libs="dbghelp,psapi"/>
             <syslibset libs="iphlpapi"/> <!-- paranoia -->
             <includepath path="${include.dir}/ASN"/>
@@ -166,8 +166,8 @@
     </target>
 
     <target name="application.simulation_app" description="build CSword Simulation executable" depends="library.dispatcher">
-        <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost"
-                   libs="HLA,libFedTime,masalloc,paranoia,tools,xeumeuleu,asn1per
+        <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost,xeumeuleu"
+                   libs="HLA,libFedTime,masalloc,paranoia,tools,asn1per
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
