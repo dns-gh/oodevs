@@ -153,7 +153,7 @@
             depends="application.gaming_app,application.preparation_app,application.adaptation_app" />
 
     <target name="application.dispatcher_app" description="build CSword Dispatcher executable" depends="library.dispatcher">
-        <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost"
+        <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost,terrain"
                    libs="masalloc,paranoia,xeumeuleu,tools,asn1per
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
