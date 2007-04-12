@@ -62,6 +62,6 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
 void ReplayerToolbar::OnSliderMove( int frame )
 {
     ASN_MsgCtrlSkipToTick skip;
-    skip.GetAsnMsg() = frame;
+    skip() = frame;
     skip.Send( network_ );
 }
