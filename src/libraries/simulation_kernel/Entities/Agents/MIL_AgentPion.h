@@ -112,10 +112,10 @@ public:
     void SendKnowledge() const;
 
     void OnReceiveMsgUnitMagicAction  ( DIN::DIN_Input&              msg );
-    void OnReceiveMsgUnitMagicAction  ( ASN1T_MsgUnitMagicAction&    msg, uint nCtx );
+    void OnReceiveMsgUnitMagicAction  ( ASN1T_MsgUnitMagicAction&    msg );
     void OnReceiveMsgOrder            ( ASN1T_MsgPionOrder&          msg ); 
     void OnReceiveMsgFragOrder        ( ASN1T_MsgFragOrder&          msg );
-    void OnReceiveMsgChangeSuperior   ( ASN1T_MsgPionChangeSuperior& msg, uint nCtx );
+    void OnReceiveMsgChangeSuperior   ( ASN1T_MsgPionChangeSuperior& msg );
     void OnReceiveMagicSurrender      ();
     void OnReceiveMagicCancelSurrender();
     void OnReceiveMsgMagicMove        ( const MT_Vector2D& vPosition ); // Magic move automate
@@ -146,15 +146,15 @@ private:
 
     //! @name Magic actions
     //@{
-    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgChangeHumanFactors       ( ASN1T_MagicActionChangeFacteursHumains& asn );
-    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgMagicMove                ( ASN1T_MagicActionMoveTo&                asn );
-    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgResupplyHumans           ();
-    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgResupplyResources        ();
-    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgResupplyEquipement       ();
-    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgResupplyAll              ();
-    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgResupply                 ( ASN1T_MagicActionRecompletementPartiel& asn );
-    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgDestroyAll               ();
-    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgRecoverHumansTransporters();
+    void OnReceiveMsgChangeHumanFactors       ( ASN1T_MagicActionChangeFacteursHumains& asn );
+    void OnReceiveMsgMagicMove                ( ASN1T_MagicActionMoveTo&                asn );
+    void OnReceiveMsgResupplyHumans           ();
+    void OnReceiveMsgResupplyResources        ();
+    void OnReceiveMsgResupplyEquipement       ();
+    void OnReceiveMsgResupplyAll              ();
+    void OnReceiveMsgResupply                 ( ASN1T_MagicActionRecompletementPartiel& asn );
+    void OnReceiveMsgDestroyAll               ();
+    void OnReceiveMsgRecoverHumansTransporters();
     //@}
 
 private:

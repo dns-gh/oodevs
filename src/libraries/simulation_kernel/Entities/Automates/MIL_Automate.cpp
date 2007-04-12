@@ -40,6 +40,7 @@
 #include "Network/NET_AS_MOSServerMsgMgr.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
+#include "Network/NET_AsnException.h"
 #include "Decision/DEC_ModelAutomate.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
@@ -823,12 +824,8 @@ void MIL_Automate::SendLogisticLinks() const
 // Name: MIL_Automate::OnReceiveMsgSetAutomateMode
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgSetAutomateMode( ASN1T_MsgSetAutomateMode& asnMsg, uint nCtx )
+void MIL_Automate::OnReceiveMsgSetAutomateMode( ASN1T_MsgSetAutomateMode& asnMsg )
 {
-    NET_ASN_MsgSetAutomateModeAck asnReplyMsg;
-    asnReplyMsg().unit_id    = asnMsg.unit_id;
-    asnReplyMsg().error_code = EnumSetAutomateModeErrorCode::no_error;
-
     switch( asnMsg.mode )
     {
         case EnumAutomateState::debraye: Disengage(); break;
@@ -836,23 +833,18 @@ void MIL_Automate::OnReceiveMsgSetAutomateMode( ASN1T_MsgSetAutomateMode& asnMsg
         default:
             assert( false );
     };
-
-    asnReplyMsg.Send( nCtx );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveMsgUnitMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg, uint nCtx )
+void MIL_Automate::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg )
 {
     if( asnMsg.action.t == T_MsgUnitMagicAction_action_move_to )
     {
         MT_Vector2D vPosTmp;
         MIL_Tools::ConvertCoordMosToSim( *asnMsg.action.u.move_to, vPosTmp );
-
-        NET_ASN_MsgUnitMagicActionAck asnReplyMsg;
-        asnReplyMsg().oid        = asnMsg.oid;
 
         const MT_Vector2D vTranslation( vPosTmp - pPionPC_->GetRole< PHY_RolePion_Location >().GetPosition() );
         for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
@@ -860,70 +852,44 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg
 
         pDecision_->Reset();
         orderManager_.ReplaceMission();
-
-        asnReplyMsg().error_code = EnumUnitAttrErrorCode::no_error;
-        asnReplyMsg.Send( nCtx );
     }
     else if( asnMsg.action.t == T_MsgUnitMagicAction_action_se_rendre )
     {
-        NET_ASN_MsgUnitMagicActionAck asnReplyMsg;
-        asnReplyMsg().oid        = asnMsg.oid;       
-        asnReplyMsg().error_code = EnumUnitAttrErrorCode::no_error;
-
         const MIL_Army* pSurrenderedToArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asnMsg.action.u.se_rendre );
         if( !pSurrenderedToArmy || *pSurrenderedToArmy == GetArmy() )
-            asnReplyMsg().error_code = EnumUnitAttrErrorCode::error_invalid_attribute;
+            throw NET_AsnException< ASN1T_EnumUnitAttrErrorCode >( EnumUnitAttrErrorCode::error_invalid_attribute );
         else if( IsSurrendered() )
-            asnReplyMsg().error_code = EnumUnitAttrErrorCode::error_unit_surrendered;
+            throw NET_AsnException< ASN1T_EnumUnitAttrErrorCode >( EnumUnitAttrErrorCode::error_unit_surrendered );
         else        
         {
             Surrender( *pSurrenderedToArmy );
             for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
                 (**itPion).OnReceiveMagicSurrender();
         }
-        asnReplyMsg.Send( nCtx );
     }
     else if( asnMsg.action.t == T_MsgUnitMagicAction_action_annuler_reddition )
     {
         CancelSurrender();
         for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
             (**itPion).OnReceiveMagicCancelSurrender();
-
-        NET_ASN_MsgUnitMagicActionAck asnReplyMsg;
-        asnReplyMsg().oid        = asnMsg.oid;
-        asnReplyMsg().error_code = EnumUnitAttrErrorCode::no_error;
-        asnReplyMsg.Send( nCtx );
     }
     else
-        pPionPC_->OnReceiveMsgUnitMagicAction( asnMsg, nCtx );
+        pPionPC_->OnReceiveMsgUnitMagicAction( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveMsgChangeKnowledgeGroup
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( ASN1T_MsgAutomateChangeGroupeConnaissance& asnMsg, uint nCtx )
+void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( ASN1T_MsgAutomateChangeGroupeConnaissance& asnMsg )
 {
-    NET_ASN_MsgAutomateChangeGroupeConnaissanceAck asnReplyMsg;
-    asnReplyMsg().oid_automate            = asnMsg.oid_automate;
-    asnReplyMsg().oid_camp                = asnMsg.oid_camp;
-    asnReplyMsg().oid_groupe_connaissance = asnMsg.oid_groupe_connaissance;
-    
     MIL_Army* pNewArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asnMsg.oid_camp );
     if( !pNewArmy || *pNewArmy != GetArmy() )
-    {
-        asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::error_invalid_camp;
-        asnReplyMsg.Send( nCtx );
-        return;
-    }
+        throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_camp );
     
     MIL_KnowledgeGroup* pNewKnowledgeGroup = pNewArmy->FindKnowledgeGroup( asnMsg.oid_groupe_connaissance );
     if( !pNewKnowledgeGroup )
-    {
-        asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::error_invalid_groupe_connaissance;
-        asnReplyMsg.Send( nCtx );
-        return;
-    }
+        throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_groupe_connaissance );
 
     if( *pKnowledgeGroup_ != *pNewKnowledgeGroup )
     {
@@ -931,72 +897,48 @@ void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( ASN1T_MsgAutomateChangeGrou
         pKnowledgeGroup_ = pNewKnowledgeGroup;
         pKnowledgeGroup_->RegisterAutomate( *this );
     }
-
-    asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::no_error;
-    asnReplyMsg.Send( nCtx );  
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveMsgChangeLogisticLinks
 // Created: NLD 2005-01-17
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgAutomateChangeLiensLogistiques& msg, uint nCtx )
+void MIL_Automate::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgAutomateChangeLiensLogistiques& msg )
 {
-    NET_ASN_MsgAutomateChangeLiensLogistiquesAck asnReplyMsg;
-    asnReplyMsg().oid_automate = msg.oid_automate;
-
     if( IsSurrendered() )
-    {
-        asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::error_unit_surrendered;
-        asnReplyMsg.Send( nCtx );
-        return;
-    }
+        throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_unit_surrendered );
 
     if( msg.m.oid_tc2Present )
     {
-        asnReplyMsg().m.oid_tc2Present = 1;
-        asnReplyMsg().oid_tc2 = msg.oid_tc2;
-
         if( msg.oid_tc2 == 0 )
             pTC2_ = 0;
         else
         {
             MIL_Automate* pTC2 = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( msg.oid_tc2 );
             if( !pTC2 || !pTC2->GetType().IsLogistic() )
-            {
-                asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::error_invalid_automate_tc2;
-                asnReplyMsg.Send( nCtx );
-                return;
-            }
+                throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate_tc2 );
             pTC2_ = static_cast< MIL_AutomateLOG* >( pTC2 );
         }
     }
-    asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::no_error;
-    asnReplyMsg.Send( nCtx );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& /*msg*/, uint nCtx )
+void MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& /*msg*/ )
 {
-    NET_ASN_MsgLogRavitaillementChangeQuotasAck asnReplyMsg;
-    asnReplyMsg() = MsgLogRavitaillementChangeQuotasAck::error_invalid_receveur;
-    asnReplyMsg.Send( nCtx );
+    throw NET_AsnException< ASN1T_MsgLogRavitaillementChangeQuotasAck >( MsgLogRavitaillementChangeQuotasAck::error_invalid_receveur );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveMsgLogSupplyPushFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementPousserFlux& /*msg*/, uint nCtx )
+void MIL_Automate::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementPousserFlux& /*msg*/ )
 {
-    NET_ASN_MsgLogRavitaillementPousserFluxAck asnReplyMsg;
-    asnReplyMsg() = MsgLogRavitaillementPousserFluxAck::error_invalid_receveur;
-    asnReplyMsg.Send( nCtx );
+    throw NET_AsnException< ASN1T_MsgLogRavitaillementPousserFluxAck >( MsgLogRavitaillementPousserFluxAck::error_invalid_receveur );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveMsgOrder

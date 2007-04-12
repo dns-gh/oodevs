@@ -814,30 +814,25 @@ void MIL_Population::OnReceiveMsgFragOrder( ASN1T_MsgFragOrder& msg )
 // Name: MIL_Population::OnReceiveMsgPopulationMagicAction
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction& asnMsg, uint nCtx )
+void MIL_Population::OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction& asnMsg )
 {
-    NET_ASN_MsgPopulationMagicActionAck asnReplyMsg;
-    asnReplyMsg().oid = asnMsg.oid;
-
     switch( asnMsg.action.t )
     {
-        case T_MsgPopulationMagicAction_action_move_to           : asnReplyMsg().error_code = OnReceiveMsgMagicMove     ( *asnMsg.action.u.move_to ); break;
-        case T_MsgPopulationMagicAction_action_destruction_totale: asnReplyMsg().error_code = OnReceiveMsgDestroyAll    (); break;
-        case T_MsgPopulationMagicAction_action_change_attitude   : asnReplyMsg().error_code = OnReceiveMsgChangeAttitude( *asnMsg.action.u.change_attitude ); break;
-        case T_MsgPopulationMagicAction_action_tuer              : asnReplyMsg().error_code = OnReceiveMsgKill          ( asnMsg.action.u.tuer ); break;
-        case T_MsgPopulationMagicAction_action_ressusciter       : asnReplyMsg().error_code = OnReceiveMsgResurrect     ( asnMsg.action.u.ressusciter ); break;
+        case T_MsgPopulationMagicAction_action_move_to           : OnReceiveMsgMagicMove     ( *asnMsg.action.u.move_to ); break;
+        case T_MsgPopulationMagicAction_action_destruction_totale: OnReceiveMsgDestroyAll    (); break;
+        case T_MsgPopulationMagicAction_action_change_attitude   : OnReceiveMsgChangeAttitude( *asnMsg.action.u.change_attitude ); break;
+        case T_MsgPopulationMagicAction_action_tuer              : OnReceiveMsgKill          ( asnMsg.action.u.tuer ); break;
+        case T_MsgPopulationMagicAction_action_ressusciter       : OnReceiveMsgResurrect     ( asnMsg.action.u.ressusciter ); break;
         default:
             assert( false );
     }
-
-    asnReplyMsg.Send( nCtx );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::OnReceiveMsgMagicMove
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgMagicMove( ASN1T_MagicActionPopulationMoveTo& asn )
+void MIL_Population::OnReceiveMsgMagicMove( ASN1T_MagicActionPopulationMoveTo& asn )
 {
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( asn, vPosTmp );
@@ -854,14 +849,13 @@ ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgMagicMove( ASN1T_M
     pDecision_->Reset();
     orderManager_.ReplaceMission();
     bHasDoneMagicMove_ = true;
-    return EnumPopulationAttrErrorCode::no_error;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::OnReceiveMsgDestroyAll
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgDestroyAll()
+void MIL_Population::OnReceiveMsgDestroyAll()
 {
     for( IT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
         (**it).KillAllHumans();
@@ -871,18 +865,17 @@ ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgDestroyAll()
 
     pDecision_->Reset();
     orderManager_.ReplaceMission();
-    return EnumPopulationAttrErrorCode::no_error;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::OnReceiveMsgChangeAttitude
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgChangeAttitude( ASN1T_MagicActionPopulationChangeAttitude& asn )
+void MIL_Population::OnReceiveMsgChangeAttitude( ASN1T_MagicActionPopulationChangeAttitude& asn )
 {
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( asn.attitude );
     if( !pAttitude )
-        return EnumPopulationAttrErrorCode::error_invalid_attribute;
+        throw NET_AsnException< ASN1T_EnumPopulationAttrErrorCode >( EnumPopulationAttrErrorCode::error_invalid_attribute );;
 
     // concentration
     if( asn.beneficiaire.t == T_MagicActionPopulationChangeAttitude_beneficiaire_concentration )
@@ -891,9 +884,9 @@ ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgChangeAttitude( AS
             if( ( **it ).GetID() == asn.beneficiaire.u.concentration )
             {
                 ( **it ).SetAttitude( *pAttitude );
-                return EnumPopulationAttrErrorCode::no_error;
+                return;
             }
-        return EnumPopulationAttrErrorCode::error_invalid_attribute;
+        throw NET_AsnException< ASN1T_EnumPopulationAttrErrorCode >( EnumPopulationAttrErrorCode::error_invalid_attribute );;
     }
     // flow
     else if( asn.beneficiaire.t == T_MagicActionPopulationChangeAttitude_beneficiaire_flux )
@@ -902,9 +895,9 @@ ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgChangeAttitude( AS
             if( ( **it ).GetID() == asn.beneficiaire.u.flux )
             {
                 ( **it ).SetAttitude( *pAttitude );
-                return EnumPopulationAttrErrorCode::no_error;
+                return;
             }
-        return EnumPopulationAttrErrorCode::error_invalid_attribute;
+        throw NET_AsnException< ASN1T_EnumPopulationAttrErrorCode >( EnumPopulationAttrErrorCode::error_invalid_attribute );;
     }
     // global
     else if( asn.beneficiaire.t == T_MagicActionPopulationChangeAttitude_beneficiaire_global )
@@ -914,51 +907,48 @@ ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgChangeAttitude( AS
         for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
             ( **it ).SetAttitude( *pAttitude );
     }
-    return EnumPopulationAttrErrorCode::no_error;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::OnReceiveMsgKill
 // Created: SBO 2006-04-05
 // -----------------------------------------------------------------------------
-ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgKill( ASN1T_MagicActionPopulationTuer& asn )
+void MIL_Population::OnReceiveMsgKill( ASN1T_MagicActionPopulationTuer& asn )
 {
     uint remainingKills = asn;
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
     {
         if( remainingKills == 0 )
-            return EnumPopulationAttrErrorCode::no_error;
+            return;
         remainingKills -= (**it).Kill( remainingKills );
     }
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
     {
         if( remainingKills == 0 )
-            return EnumPopulationAttrErrorCode::no_error;
+            return;
         remainingKills -= (**it).Kill( remainingKills );
     }
-    return EnumPopulationAttrErrorCode::no_error;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::OnReceiveMsgResurrect
 // Created: SBO 2006-04-05
 // -----------------------------------------------------------------------------
-ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgResurrect( ASN1T_MagicActionPopulationRessusciter& asn )
+void MIL_Population::OnReceiveMsgResurrect( ASN1T_MagicActionPopulationRessusciter& asn )
 {
     uint remainingResurrections = asn;
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
     {
         if( remainingResurrections == 0 )
-            return EnumPopulationAttrErrorCode::no_error;
+            return;
         remainingResurrections -= (**it).Resurrect( remainingResurrections );
     }
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
     {
         if( remainingResurrections == 0 )
-            return EnumPopulationAttrErrorCode::no_error;
+            return;
         remainingResurrections -= (**it).Resurrect( remainingResurrections );
     }
-    return EnumPopulationAttrErrorCode::no_error;
 }
 
 // -----------------------------------------------------------------------------

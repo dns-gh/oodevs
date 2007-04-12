@@ -27,6 +27,7 @@
 #include "MIL_Formation.h"
 #include "MIL_EntityManager.h"
 #include "Network/NET_ASN_Messages.h"
+#include "Network/NET_AsnException.h"
 #include "Tools/MIL_IDManager.h"
 
 MT_Converter< std::string, MIL_Army::E_Diplomacy > MIL_Army::diplomacyConverter_( eUnknown );
@@ -639,28 +640,19 @@ void MIL_Army::SendKnowledge() const
 // Name: MIL_Army::OnReceiveMsgChangeDiplomacy
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_Army::OnReceiveMsgChangeDiplomacy( ASN1T_MsgChangeDiplomatie& asnMsg, uint nCtx )
+void MIL_Army::OnReceiveMsgChangeDiplomacy( ASN1T_MsgChangeDiplomatie& asnMsg )
 {
-    NET_ASN_MsgChangeDiplomatieAck asnReplyMsg;
-    asnReplyMsg().oid_camp1   = asnMsg.oid_camp1;
-    asnReplyMsg().oid_camp2   = asnMsg.oid_camp2;
-    asnReplyMsg().diplomatie  = asnMsg.diplomatie;
-    asnReplyMsg().error_code  = EnumChangeDiplomatieErrorCode::no_error;
-
     MIL_Army* pArmy2 = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asnMsg.oid_camp2 );
     if( !pArmy2 || *pArmy2 == *this )
-        asnReplyMsg().error_code  = EnumChangeDiplomatieErrorCode::error_invalid_camp;
-    else
+        throw NET_AsnException< ASN1T_EnumChangeDiplomatieErrorCode >( EnumChangeDiplomatieErrorCode::error_invalid_camp );
+
+    E_Diplomacy nDiplomacy = eUnknown;
+    switch( asnMsg.diplomatie )
     {
-        E_Diplomacy nDiplomacy = eUnknown;
-        switch( asnMsg.diplomatie )
-        {
-            case EnumDiplomatie::inconnu: nDiplomacy = eUnknown; break;
-            case EnumDiplomatie::ami    : nDiplomacy = eFriend;  break;
-            case EnumDiplomatie::ennemi : nDiplomacy = eEnemy;   break;
-            case EnumDiplomatie::neutre : nDiplomacy = eNeutral; break;
-        }
-        diplomacies_[ pArmy2 ] = nDiplomacy;
+        case EnumDiplomatie::inconnu: nDiplomacy = eUnknown; break;
+        case EnumDiplomatie::ami    : nDiplomacy = eFriend;  break;
+        case EnumDiplomatie::ennemi : nDiplomacy = eEnemy;   break;
+        case EnumDiplomatie::neutre : nDiplomacy = eNeutral; break;
     }
-    asnReplyMsg.Send( nCtx );
+    diplomacies_[ pArmy2 ] = nDiplomacy;
 }

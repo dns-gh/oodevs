@@ -128,7 +128,7 @@ public:
     void SendFullState        ();
     void UpdateNetwork        ();
 
-    void OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction& asnMsg, uint nCtx );
+    void OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction& asnMsg );
     //@}
 
     //! @name CheckPoints
@@ -154,11 +154,11 @@ private:
 
     //! @name Magic actions
     //@{
-    ASN1T_EnumPopulationAttrErrorCode OnReceiveMsgMagicMove     ( ASN1T_MagicActionPopulationMoveTo& asn );
-    ASN1T_EnumPopulationAttrErrorCode OnReceiveMsgDestroyAll    ();
-    ASN1T_EnumPopulationAttrErrorCode OnReceiveMsgChangeAttitude( ASN1T_MagicActionPopulationChangeAttitude& asn );
-    ASN1T_EnumPopulationAttrErrorCode OnReceiveMsgKill          ( ASN1T_MagicActionPopulationTuer& asn );
-    ASN1T_EnumPopulationAttrErrorCode OnReceiveMsgResurrect     ( ASN1T_MagicActionPopulationRessusciter& asn );
+    void OnReceiveMsgMagicMove     ( ASN1T_MagicActionPopulationMoveTo& asn );
+    void OnReceiveMsgDestroyAll    ();
+    void OnReceiveMsgChangeAttitude( ASN1T_MagicActionPopulationChangeAttitude& asn );
+    void OnReceiveMsgKill          ( ASN1T_MagicActionPopulationTuer& asn );
+    void OnReceiveMsgResurrect     ( ASN1T_MagicActionPopulationRessusciter& asn );
     //@}
 
     //! @name Network

@@ -765,45 +765,6 @@ void MIL_EntityManager::SendStateToNewClient() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgUnitMagicAction
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgUnitMagicAction( DIN::DIN_Input& msg )
-{
-    uint32 nAgentID;
-    msg >> nAgentID;
-
-    MIL_AgentPion* pAgent = FindAgentPion( nAgentID );
-    if( !pAgent )
-        return;
-    pAgent->OnReceiveMsgUnitMagicAction( msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgUnitMagicAction
-// Created: NLD 2004-09-06
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg, uint nCtx )
-{
-    MIL_Automate* pAutomate = FindAutomate( asnMsg.oid );
-    if( !pAutomate || !pAutomate->IsEngaged() )
-    {
-        MIL_AgentPion* pPion = FindAgentPion( asnMsg.oid );
-        if( !pPion )
-        {
-            NET_ASN_MsgUnitMagicActionAck asnReplyMsg;
-            asnReplyMsg().oid        = asnMsg.oid;
-            asnReplyMsg().error_code = EnumUnitAttrErrorCode::error_invalid_unit;
-            asnReplyMsg.Send( nCtx );
-            return;
-        }
-        pPion->OnReceiveMsgUnitMagicAction( asnMsg, nCtx );
-    }
-    else
-        pAutomate->OnReceiveMsgUnitMagicAction( asnMsg, nCtx );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgPionOrder
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
@@ -845,6 +806,50 @@ void MIL_EntityManager::OnReceiveMsgAutomateOrder( ASN1T_MsgAutomateOrder& asnMs
         pAutomate->OnReceiveMsgOrder( asnMsg );
     }
     catch( NET_AsnException< ASN1T_EnumOrderErrorCode >& e )
+    {
+        ack().error_code = e.GetErrorID();
+    }
+    ack.Send( nCtx );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveMsgUnitMagicAction
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveMsgUnitMagicAction( DIN::DIN_Input& msg )
+{
+    uint32 nAgentID;
+    msg >> nAgentID;
+
+    MIL_AgentPion* pAgent = FindAgentPion( nAgentID );
+    if( !pAgent )
+        return;
+    pAgent->OnReceiveMsgUnitMagicAction( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveMsgUnitMagicAction
+// Created: NLD 2004-09-06
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg, uint nCtx )
+{
+    NET_ASN_MsgUnitMagicActionAck ack;
+    ack().oid        = asnMsg.oid;
+    ack().error_code = EnumUnitAttrErrorCode::no_error;
+
+    try
+    {
+        MIL_Automate*  pAutomate = FindAutomate ( asnMsg.oid );
+        MIL_AgentPion* pPion     = FindAgentPion( asnMsg.oid );
+
+        if( pAutomate )
+            pAutomate->OnReceiveMsgUnitMagicAction( asnMsg );
+        else if( pPion )
+            pPion->OnReceiveMsgUnitMagicAction( asnMsg );
+        else
+            throw NET_AsnException< ASN1T_EnumUnitAttrErrorCode >( EnumUnitAttrErrorCode::error_invalid_unit );
+    }
+    catch( NET_AsnException< ASN1T_EnumUnitAttrErrorCode >& e )
     {
         ack().error_code = e.GetErrorID();
     }
@@ -912,16 +917,22 @@ void MIL_EntityManager::OnReceiveMsgFragOrder( ASN1T_MsgFragOrder& asnMsg, uint 
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgSetAutomateMode( ASN1T_MsgSetAutomateMode& asnMsg, uint nCtx )
 {
-    MIL_Automate* pAutomate = FindAutomate( asnMsg.unit_id );
-    if( !pAutomate )
+    NET_ASN_MsgSetAutomateModeAck ack;
+    ack().unit_id    = asnMsg.unit_id;
+    ack().error_code = EnumSetAutomateModeErrorCode::no_error;
+
+    try
     {
-        NET_ASN_MsgSetAutomateModeAck asnReplyMsg;
-        asnReplyMsg().unit_id    = asnMsg.unit_id;
-        asnReplyMsg().error_code = EnumSetAutomateModeErrorCode::error_invalid_unit;
-        asnReplyMsg.Send( nCtx );
-        return;
+        MIL_Automate* pAutomate = FindAutomate( asnMsg.unit_id );
+        if( !pAutomate )
+            throw NET_AsnException< ASN1T_EnumSetAutomateModeErrorCode >( EnumSetAutomateModeErrorCode::error_invalid_unit );
+        pAutomate->OnReceiveMsgSetAutomateMode( asnMsg );
     }
-    pAutomate->OnReceiveMsgSetAutomateMode( asnMsg, nCtx );
+    catch( NET_AsnException< ASN1T_EnumSetAutomateModeErrorCode >& e )
+    {
+        ack().error_code = e.GetErrorID();
+    }
+    ack.Send( nCtx );
 }
 
 // -----------------------------------------------------------------------------
@@ -940,16 +951,22 @@ void MIL_EntityManager::OnReceiveMsgObjectMagicAction( ASN1T_MsgObjectMagicActio
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction& asnMsg, uint nCtx )
 {
-    MIL_Population* pPopulation = FindPopulation( asnMsg.oid );
-    if( !pPopulation )
+    NET_ASN_MsgPopulationMagicActionAck ack;
+    ack().oid        = asnMsg.oid;
+    ack().error_code = EnumPopulationAttrErrorCode::no_error;
+
+    try
     {
-        NET_ASN_MsgPopulationMagicActionAck asnReplyMsg;
-        asnReplyMsg().oid        = asnMsg.oid;
-        asnReplyMsg().error_code = EnumPopulationAttrErrorCode::error_invalid_unit;
-        asnReplyMsg.Send( nCtx );
-        return;
+        MIL_Population* pPopulation = FindPopulation( asnMsg.oid );    
+        if( !pPopulation )
+            throw NET_AsnException< ASN1T_EnumPopulationAttrErrorCode >( EnumPopulationAttrErrorCode::error_invalid_unit );
+        pPopulation->OnReceiveMsgPopulationMagicAction( asnMsg );
     }
-    pPopulation->OnReceiveMsgPopulationMagicAction( asnMsg, nCtx );
+    catch( NET_AsnException< ASN1T_EnumPopulationAttrErrorCode >& e )
+    {
+        ack().error_code = e.GetErrorID();
+    }
+    ack.Send( nCtx );
 }
 
 // -----------------------------------------------------------------------------
@@ -958,18 +975,23 @@ void MIL_EntityManager::OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMa
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( ASN1T_MsgChangeDiplomatie& asnMsg, uint nCtx )
 {
-    MIL_Army* pArmy1 = FindArmy( asnMsg.oid_camp1 );
-    if( !pArmy1 )
-    {
-        NET_ASN_MsgChangeDiplomatieAck asnReplyMsg;
-        asnReplyMsg().oid_camp1   = asnMsg.oid_camp1;
-        asnReplyMsg().oid_camp2   = asnMsg.oid_camp2;
-        asnReplyMsg().error_code  = EnumChangeDiplomatieErrorCode::error_invalid_camp;
-        asnReplyMsg.Send( nCtx );
-        return;
-    }
+    NET_ASN_MsgChangeDiplomatieAck ack;
+    ack().oid_camp1   = asnMsg.oid_camp1;
+    ack().oid_camp2   = asnMsg.oid_camp2;
+    ack().error_code  = EnumChangeDiplomatieErrorCode::no_error;
 
-    pArmy1->OnReceiveMsgChangeDiplomacy( asnMsg, nCtx );
+    try
+    {
+        MIL_Army* pArmy1 = FindArmy( asnMsg.oid_camp1 );
+        if( !pArmy1 )
+            throw NET_AsnException< ASN1T_EnumChangeDiplomatieErrorCode >( EnumChangeDiplomatieErrorCode::error_invalid_camp );
+        pArmy1->OnReceiveMsgChangeDiplomacy( asnMsg );
+    }
+    catch( NET_AsnException< ASN1T_EnumChangeDiplomatieErrorCode >& e )
+    {
+        ack().error_code = e.GetErrorID();
+    }
+    ack.Send( nCtx );
 }
 
 // -----------------------------------------------------------------------------
@@ -978,16 +1000,24 @@ void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( ASN1T_MsgChangeDiplomatie& 
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup( ASN1T_MsgAutomateChangeGroupeConnaissance& asnMsg, uint nCtx )
 {
-    MIL_Automate* pAutomate = FindAutomate( asnMsg.oid_automate );
-    if( !pAutomate )
+    NET_ASN_MsgAutomateChangeGroupeConnaissanceAck ack;
+    ack().oid_automate            = asnMsg.oid_automate;
+    ack().oid_camp                = asnMsg.oid_camp;
+    ack().oid_groupe_connaissance = asnMsg.oid_groupe_connaissance;
+    ack().error_code              = EnumChangeHierarchyErrorCode::no_error;
+
+    try
     {
-        NET_ASN_MsgAutomateChangeGroupeConnaissanceAck asnReplyMsg;
-        asnReplyMsg().oid_automate = asnMsg.oid_automate;
-        asnReplyMsg().error_code   = EnumChangeHierarchyErrorCode::error_invalid_automate;
-        asnReplyMsg.Send( nCtx );
-        return;
+        MIL_Automate* pAutomate = FindAutomate( asnMsg.oid_automate );
+        if( !pAutomate )
+            throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate );
+        pAutomate->OnReceiveMsgChangeKnowledgeGroup( asnMsg );
     }
-    pAutomate->OnReceiveMsgChangeKnowledgeGroup( asnMsg, nCtx );
+    catch( NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >& e )
+    {
+        ack().error_code = e.GetErrorID();
+    }
+    ack.Send( nCtx );
 }
 
 // -----------------------------------------------------------------------------
@@ -996,16 +1026,30 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup( ASN1T_MsgAutom
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks( ASN1T_MsgAutomateChangeLiensLogistiques& asnMsg, uint nCtx )
 {
-    MIL_Automate* pAutomate = FindAutomate( asnMsg.oid_automate );
-    if( !pAutomate )
+    NET_ASN_MsgAutomateChangeLiensLogistiquesAck ack;
+    ack().oid_automate                = asnMsg.oid_automate;
+    ack().m.oid_tc2Present            = asnMsg.m.oid_tc2Present;
+    ack().m.oid_maintenancePresent    = asnMsg.m.oid_maintenancePresent;
+    ack().m.oid_santePresent          = asnMsg.m.oid_santePresent;
+    ack().m.oid_ravitaillementPresent = asnMsg.m.oid_ravitaillementPresent;
+    ack().oid_tc2                     = asnMsg.oid_tc2;
+    ack().oid_maintenance             = asnMsg.oid_maintenance;
+    ack().oid_sante                   = asnMsg.oid_sante;
+    ack().oid_ravitaillement          = asnMsg.oid_ravitaillement;
+    ack().error_code                  = EnumChangeHierarchyErrorCode::no_error;
+
+    try
     {
-        NET_ASN_MsgAutomateChangeLiensLogistiquesAck asnReplyMsg;
-        asnReplyMsg().oid_automate = asnMsg.oid_automate;
-        asnReplyMsg().error_code   = EnumChangeHierarchyErrorCode::error_invalid_automate;
-        asnReplyMsg.Send( nCtx );
-        return;
+        MIL_Automate* pAutomate = FindAutomate( asnMsg.oid_automate );
+        if( !pAutomate )
+            throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate );
+        pAutomate->OnReceiveMsgChangeLogisticLinks( asnMsg );
     }
-    pAutomate->OnReceiveMsgChangeLogisticLinks( asnMsg, nCtx );
+    catch( NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >& e )
+    {
+        ack().error_code = e.GetErrorID();
+    }
+    ack.Send( nCtx );
 }
 
 // -----------------------------------------------------------------------------
@@ -1014,17 +1058,23 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks( ASN1T_MsgAutoma
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgPionChangeSuperior( ASN1T_MsgPionChangeSuperior& asnMsg, uint nCtx )
 {
-    MIL_AgentPion* pPion = FindAgentPion( asnMsg.oid_pion );
-    if( !pPion )
+    NET_ASN_MsgPionChangeSuperiorAck ack;
+    ack().oid_pion     = asnMsg.oid_pion;
+    ack().oid_automate = asnMsg.oid_automate;
+    ack().error_code   = EnumChangeHierarchyErrorCode::no_error;
+
+    try
     {
-        NET_ASN_MsgPionChangeSuperiorAck asnReplyMsg;
-        asnReplyMsg().oid_pion     = asnMsg.oid_pion;
-        asnReplyMsg().oid_automate = asnMsg.oid_automate;
-        asnReplyMsg().error_code   = EnumChangeHierarchyErrorCode::error_invalid_pion;
-        asnReplyMsg.Send( nCtx );
-        return;
+        MIL_AgentPion* pPion = FindAgentPion( asnMsg.oid_pion );
+        if( !pPion )
+            throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_pion );
+        pPion->OnReceiveMsgChangeSuperior( asnMsg );
     }
-    pPion->OnReceiveMsgChangeSuperior( asnMsg, nCtx );
+    catch( NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >& e )
+    {
+        ack().error_code = e.GetErrorID();
+    }
+    ack.Send( nCtx );
 }
 
 // -----------------------------------------------------------------------------
@@ -1033,15 +1083,21 @@ void MIL_EntityManager::OnReceiveMsgPionChangeSuperior( ASN1T_MsgPionChangeSuper
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& asnMsg, uint nCtx )
 {
-    MIL_Automate* pReceiver = FindAutomate( asnMsg.oid_receveur );
-    if( !pReceiver )
+    NET_ASN_MsgLogRavitaillementChangeQuotasAck ack;
+    ack() = MsgLogRavitaillementChangeQuotasAck::error_invalid_receveur;
+
+    try
     {
-        NET_ASN_MsgLogRavitaillementChangeQuotasAck asnReplyMsg;
-        asnReplyMsg() = MsgLogRavitaillementChangeQuotasAck::error_invalid_receveur;
-        asnReplyMsg.Send( nCtx );
-        return;
+        MIL_Automate* pReceiver = FindAutomate( asnMsg.oid_receveur );
+        if( !pReceiver )
+            throw NET_AsnException< ASN1T_MsgLogRavitaillementChangeQuotasAck >( MsgLogRavitaillementChangeQuotasAck::error_invalid_receveur );
+        pReceiver->OnReceiveMsgLogSupplyChangeQuotas( asnMsg );
     }
-    pReceiver->OnReceiveMsgLogSupplyChangeQuotas( asnMsg, nCtx );
+    catch( NET_AsnException< ASN1T_MsgLogRavitaillementChangeQuotasAck >& e )
+    {
+        ack() = e.GetErrorID();
+    }
+    ack.Send( nCtx );    
 }
 
 // -----------------------------------------------------------------------------
@@ -1050,15 +1106,21 @@ void MIL_EntityManager::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaill
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementPousserFlux&  asnMsg, uint nCtx )
 {
-    MIL_Automate* pReceiver = FindAutomate( asnMsg.oid_receveur );
-    if( !pReceiver )
+    NET_ASN_MsgLogRavitaillementPousserFluxAck ack;
+    ack() = MsgLogRavitaillementPousserFluxAck::error_invalid_receveur;
+
+    try
     {
-        NET_ASN_MsgLogRavitaillementPousserFluxAck asnReplyMsg;
-        asnReplyMsg() = MsgLogRavitaillementPousserFluxAck::error_invalid_receveur;
-        asnReplyMsg.Send( nCtx );
-        return;
+        MIL_Automate* pReceiver = FindAutomate( asnMsg.oid_receveur );
+        if( !pReceiver )
+            throw NET_AsnException< ASN1T_MsgLogRavitaillementPousserFluxAck >( MsgLogRavitaillementPousserFluxAck::error_invalid_receveur );
+        pReceiver->OnReceiveMsgLogSupplyPushFlow( asnMsg );
     }
-    pReceiver->OnReceiveMsgLogSupplyPushFlow( asnMsg, nCtx );
+    catch( NET_AsnException< ASN1T_MsgLogRavitaillementPousserFluxAck >& e )
+    {
+        ack() = e.GetErrorID();
+    }
+    ack.Send( nCtx ); 
 }
 
 // -----------------------------------------------------------------------------

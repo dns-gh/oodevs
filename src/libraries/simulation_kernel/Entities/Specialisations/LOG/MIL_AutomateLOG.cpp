@@ -31,6 +31,7 @@
 #include "Entities/Actions/PHY_ActionLogistic.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_ASN_Messages.h"
+#include "Network/NET_AsnException.h"
 
 BOOST_CLASS_EXPORT_GUID( MIL_AutomateLOG, "MIL_AutomateLOG" )
 
@@ -793,11 +794,8 @@ void MIL_AutomateLOG::SendFullState() const
 // Name: MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks
 // Created: NLD 2005-01-17
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgAutomateChangeLiensLogistiques& msg, uint nCtx )
+void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgAutomateChangeLiensLogistiques& msg )
 {
-    NET_ASN_MsgAutomateChangeLiensLogistiquesAck asnReplyMsg;
-    asnReplyMsg().oid_automate = msg.oid_automate;
-
     bool bNewTC2                 = false;
     bool bNewMaintenanceSuperior = false;
     bool bNewMedicalSuperior     = false;
@@ -811,68 +809,41 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgAutomateChangeLi
     if( msg.m.oid_tc2Present )
     {
         bNewTC2 = true;
-        asnReplyMsg().m.oid_tc2Present = 1;
-        asnReplyMsg().oid_tc2 = msg.oid_tc2;
         if( msg.oid_tc2 != 0 )
         {
             pNewTC2 = GetLogisticAutomate( msg.oid_tc2 );
             if( !pNewTC2 )
-            {
-                asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::error_invalid_automate_tc2;
-                asnReplyMsg.Send( nCtx );
-                return;
-            }
+                throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate_tc2 );
         }
     }    
     if( msg.m.oid_maintenancePresent )
     {
         bNewMaintenanceSuperior = true;
-        asnReplyMsg().m.oid_maintenancePresent = 1;
-        asnReplyMsg().oid_maintenance = msg.oid_maintenance;
-
         if( msg.oid_maintenance != 0 )
         {
             pNewMaintenanceSuperior = GetLogisticAutomate( msg.oid_maintenance );
             if( !pNewMaintenanceSuperior )
-            {
-                asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::error_invalid_automate_maintenance;
-                asnReplyMsg.Send( nCtx );
-                return;
-            }
+                throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate_maintenance );
         }
     }
     if( msg.m.oid_santePresent )
     {
         bNewMedicalSuperior = true;
-        asnReplyMsg().m.oid_santePresent = 1;
-        asnReplyMsg().oid_sante = msg.oid_sante;
-
         if( msg.oid_sante != 0 )
         {
             pNewMedicalSuperior = GetLogisticAutomate( msg.oid_sante );
             if( !pNewMedicalSuperior )
-            {
-                asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::error_invalid_automate_sante;
-                asnReplyMsg.Send( nCtx );
-                return;
-            }
+                throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate_sante );
         }
     }
     if( msg.m.oid_ravitaillementPresent )
     {
         bNewSupplySuperior = true;
-        asnReplyMsg().m.oid_ravitaillementPresent = 1;
-        asnReplyMsg().oid_ravitaillement = msg.oid_ravitaillement;
-
         if( msg.oid_ravitaillement != 0 )
         {
             pNewSupplySuperior = GetLogisticAutomate( msg.oid_ravitaillement );
             if( !pNewSupplySuperior )
-            {
-                asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::error_invalid_automate_ravitaillement;
-                asnReplyMsg.Send( nCtx );
-                return;
-            }
+                throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate_ravitaillement );
         }
     }
 
@@ -884,25 +855,16 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgAutomateChangeLi
         pMedicalSuperior_ = pNewMedicalSuperior;
     if( bNewSupplySuperior )
         pSupplySuperior_ = pNewSupplySuperior;
-
-    asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::no_error;
-    asnReplyMsg.Send( nCtx );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& asnMsg, uint nCtx )
+void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& asnMsg )
 {
-    NET_ASN_MsgLogRavitaillementChangeQuotasAck asnReplyMsg;
-
     if( !pSupplySuperior_ || GetLogisticAutomate( asnMsg.oid_donneur ) != pSupplySuperior_ )
-    {
-        asnReplyMsg() = MsgLogRavitaillementChangeQuotasAck::error_invalid_donneur;
-        asnReplyMsg.Send( nCtx );
-        return;
-    }
+        throw NET_AsnException< ASN1T_MsgLogRavitaillementChangeQuotasAck >( MsgLogRavitaillementChangeQuotasAck::error_invalid_donneur );
 
     for( uint i = 0; i < asnMsg.quotas.n; ++i )
     {
@@ -916,8 +878,6 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillem
             dotationQuota.rQuotaThreshold_ = asnQuota.quota_disponible * 0.1; //$$ fichier de conf cpp ;)
         }
     }
-    asnReplyMsg() = MsgLogRavitaillementChangeQuotasAck::no_error;
-    asnReplyMsg.Send( nCtx );
     bQuotasHaveChanged_ = true;
 }
 
@@ -925,18 +885,11 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillem
 // Name: MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementPousserFlux& asnMsg, uint nCtx )
+void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementPousserFlux& asnMsg )
 {
-    NET_ASN_MsgLogRavitaillementPousserFluxAck asnReplyMsg;
-
     MIL_AutomateLOG* pSupplier = GetLogisticAutomate( asnMsg.oid_donneur );
-
     if( !pSupplier )
-    {
-        asnReplyMsg() = MsgLogRavitaillementPousserFluxAck::error_invalid_donneur;
-        asnReplyMsg.Send( nCtx );
-        return;
-    }
+        throw NET_AsnException< ASN1T_MsgLogRavitaillementPousserFluxAck >( MsgLogRavitaillementPousserFluxAck::error_invalid_donneur );
 
     PHY_SupplyStockRequestContainer supplyRequests( *this, asnMsg.stocks );
 
@@ -944,9 +897,6 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementP
     supplyRequests.Execute( *pSupplier, pSupplyState );
     if( pSupplyState )
         pushedFlowsSupplyStates_.insert( pSupplyState );
-
-    asnReplyMsg() = MsgLogRavitaillementPousserFluxAck::no_error;
-    asnReplyMsg.Send( nCtx );
 }
 
 // -----------------------------------------------------------------------------

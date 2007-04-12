@@ -61,6 +61,7 @@
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_AS_MOSServerMsgMgr.h"
 #include "Network/NET_ASN_Messages.h"
+#include "Network/NET_AsnException.h"
 
 #include "Hla/HLA_UpdateFunctor.h"
 
@@ -656,31 +657,29 @@ void MIL_AgentPion::OnReceiveMsgMagicMove( const MT_Vector2D& vPosition )
 // Name: MIL_AgentPion::OnReceiveMsgMagicMove
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgMagicMove( ASN1T_MagicActionMoveTo& asn )
+void MIL_AgentPion::OnReceiveMsgMagicMove( ASN1T_MagicActionMoveTo& asn )
 {
     if( pAutomate_->IsEngaged() )
-        return EnumUnitAttrErrorCode::error_automate_embraye;
+        throw NET_AsnException< ASN1T_EnumUnitAttrErrorCode >( EnumUnitAttrErrorCode::error_automate_embraye );
 
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( asn, vPosTmp );
 
     MagicMove( vPosTmp );
     UpdatePhysicalState();
-
-    return EnumUnitAttrErrorCode::no_error;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveMsgChangeHumanFactors
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgChangeHumanFactors( ASN1T_MagicActionChangeFacteursHumains& asn )
+void  MIL_AgentPion::OnReceiveMsgChangeHumanFactors( ASN1T_MagicActionChangeFacteursHumains& asn )
 {
     if( asn.m.experiencePresent )
     {
         const PHY_Experience* pExperience = PHY_Experience::Find( asn.experience );
         if( !pExperience )
-            return EnumUnitAttrErrorCode::error_invalid_attribute;
+            throw NET_AsnException< ASN1T_EnumUnitAttrErrorCode >( EnumUnitAttrErrorCode::error_invalid_attribute );;
         GetRole< PHY_RolePion_HumanFactors >().SetExperience( *pExperience );
     }
 
@@ -688,7 +687,7 @@ ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgChangeHumanFactors( ASN1T
     {
         const PHY_Morale* pMoral = PHY_Morale::Find( asn.moral );
         if( !pMoral )
-            return EnumUnitAttrErrorCode::error_invalid_attribute;
+            throw NET_AsnException< ASN1T_EnumUnitAttrErrorCode >( EnumUnitAttrErrorCode::error_invalid_attribute );;
         GetRole< PHY_RolePion_HumanFactors >().SetMorale( *pMoral );
     }
 
@@ -696,63 +695,57 @@ ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgChangeHumanFactors( ASN1T
     {
         const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( asn.fatigue );
         if( !pTiredness )
-            return EnumUnitAttrErrorCode::error_invalid_attribute;
+            throw NET_AsnException< ASN1T_EnumUnitAttrErrorCode >( EnumUnitAttrErrorCode::error_invalid_attribute );;
         GetRole< PHY_RolePion_HumanFactors >().SetTiredness( *pTiredness );
     }
-
-    return EnumUnitAttrErrorCode::no_error;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveMsgResupplyHumans
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupplyHumans()
+void MIL_AgentPion::OnReceiveMsgResupplyHumans()
 {
     GetRole< PHY_RolePion_Humans >().HealAllHumans();
-    return EnumUnitAttrErrorCode::no_error;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveMsgResupplyResources
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupplyResources()
+void MIL_AgentPion::OnReceiveMsgResupplyResources()
 {
     GetRole< PHY_RolePion_Dotations >().ResupplyDotations();
     GetRole< PHY_RolePion_Supply    >().ResupplyStocks   ();
-    return EnumUnitAttrErrorCode::no_error;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveMsgResupplyEquipement
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupplyEquipement()
+void MIL_AgentPion::OnReceiveMsgResupplyEquipement()
 {
     GetRole< PHY_RolePion_Composantes >().RepairAllComposantes();
-    return EnumUnitAttrErrorCode::no_error;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveMsgResupplyAll
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupplyAll()
+void MIL_AgentPion::OnReceiveMsgResupplyAll()
 {
     GetRole< PHY_RolePion_Composantes >().RepairAllComposantes();
     GetRole< PHY_RolePion_Dotations   >().ResupplyDotations   ();
     GetRole< PHY_RolePion_Supply      >().ResupplyStocks      ();
     GetRole< PHY_RolePion_Humans      >().HealAllHumans       ();
     GetRole< PHY_RolePion_NBC         >().Decontaminate       ();
-    return EnumUnitAttrErrorCode::no_error;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveMsgResupply
 // Created: NLD 2005-07-27
 // -----------------------------------------------------------------------------
-ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupply( ASN1T_MagicActionRecompletementPartiel& asn )
+void  MIL_AgentPion::OnReceiveMsgResupply( ASN1T_MagicActionRecompletementPartiel& asn )
 {
     if( asn.m.equipementsPresent )
     {
@@ -813,57 +806,49 @@ ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupply( ASN1T_MagicActi
                 roleSupply.ResupplyStocks( *pDotationCategory, asnStock.quantite_disponible );
         }
     }
-
-    return EnumUnitAttrErrorCode::no_error;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveMsgDestroyAll
 // Created: NLD 2004-12-07
 // -----------------------------------------------------------------------------
-ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgDestroyAll()
+void  MIL_AgentPion::OnReceiveMsgDestroyAll()
 {
     GetRole< PHY_RolePion_Composantes >().DestroyAllComposantes();
-    return EnumUnitAttrErrorCode::no_error;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveMsgRecoverHumansTransporters
 // Created: NLD 2005-12-27
 // -----------------------------------------------------------------------------
-ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgRecoverHumansTransporters()
+void  MIL_AgentPion::OnReceiveMsgRecoverHumansTransporters()
 {
     GetRole< PHY_RolePion_Transported >().RecoverHumanTransporters();
-    return EnumUnitAttrErrorCode::no_error;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveMsgUnitMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg, uint nCtx )
+void MIL_AgentPion::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg )
 {
-    NET_ASN_MsgUnitMagicActionAck asnReplyMsg;
-    asnReplyMsg().oid        = asnMsg.oid;
-
     switch( asnMsg.action.t )
     {
-        case T_MsgUnitMagicAction_action_move_to                    : asnReplyMsg().error_code = OnReceiveMsgMagicMove                ( *asnMsg.action.u.move_to ); break;
-        case T_MsgUnitMagicAction_action_recompletement_personnel   : asnReplyMsg().error_code = OnReceiveMsgResupplyHumans           (); break;
-        case T_MsgUnitMagicAction_action_recompletement_ressources  : asnReplyMsg().error_code = OnReceiveMsgResupplyResources        (); break;
-        case T_MsgUnitMagicAction_action_recompletement_equipement  : asnReplyMsg().error_code = OnReceiveMsgResupplyEquipement       (); break;
-        case T_MsgUnitMagicAction_action_recompletement_total       : asnReplyMsg().error_code = OnReceiveMsgResupplyAll              (); break;
-        case T_MsgUnitMagicAction_action_recompletement_partiel     : asnReplyMsg().error_code = OnReceiveMsgResupply                 ( *asnMsg.action.u.recompletement_partiel ); break;
-        case T_MsgUnitMagicAction_action_change_facteurs_humains    : asnReplyMsg().error_code = OnReceiveMsgChangeHumanFactors       ( *asnMsg.action.u.change_facteurs_humains ); break;
-        case T_MsgUnitMagicAction_action_destruction_totale         : asnReplyMsg().error_code = OnReceiveMsgDestroyAll               (); break;
-        case T_MsgUnitMagicAction_action_recuperer_transporteurs    : asnReplyMsg().error_code = OnReceiveMsgRecoverHumansTransporters(); break;
-        case T_MsgUnitMagicAction_action_se_rendre                  : pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg, nCtx ); return;        
-        case T_MsgUnitMagicAction_action_annuler_reddition          : pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg, nCtx ); return;        
+        case T_MsgUnitMagicAction_action_move_to                    : OnReceiveMsgMagicMove                  ( *asnMsg.action.u.move_to ); break;
+        case T_MsgUnitMagicAction_action_recompletement_personnel   : OnReceiveMsgResupplyHumans             (); break;
+        case T_MsgUnitMagicAction_action_recompletement_ressources  : OnReceiveMsgResupplyResources          (); break;
+        case T_MsgUnitMagicAction_action_recompletement_equipement  : OnReceiveMsgResupplyEquipement         (); break;
+        case T_MsgUnitMagicAction_action_recompletement_total       : OnReceiveMsgResupplyAll                (); break;
+        case T_MsgUnitMagicAction_action_recompletement_partiel     : OnReceiveMsgResupply                   ( *asnMsg.action.u.recompletement_partiel ); break;
+        case T_MsgUnitMagicAction_action_change_facteurs_humains    : OnReceiveMsgChangeHumanFactors         ( *asnMsg.action.u.change_facteurs_humains ); break;
+        case T_MsgUnitMagicAction_action_destruction_totale         : OnReceiveMsgDestroyAll                 (); break;
+        case T_MsgUnitMagicAction_action_recuperer_transporteurs    : OnReceiveMsgRecoverHumansTransporters  (); break;
+        case T_MsgUnitMagicAction_action_se_rendre                  : pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg ); return;        
+        case T_MsgUnitMagicAction_action_annuler_reddition          : pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg ); return;        
         default:
             assert( false );
     }
     UpdatePhysicalState();
-    asnReplyMsg.Send( nCtx );
 }
 
 // -----------------------------------------------------------------------------
@@ -891,33 +876,18 @@ void MIL_AgentPion::OnReceiveMagicCancelSurrender()
 // Name: MIL_AgentPion::OnReceiveMsgChangeSuperior
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgChangeSuperior( ASN1T_MsgPionChangeSuperior& asnMsg, uint nCtx )
+void MIL_AgentPion::OnReceiveMsgChangeSuperior( ASN1T_MsgPionChangeSuperior& asnMsg )
 {
-    NET_ASN_MsgPionChangeSuperiorAck asnReplyMsg;
-    asnReplyMsg().oid_pion     = asnMsg.oid_pion;
-    asnReplyMsg().oid_automate = asnMsg.oid_automate;
-
     MIL_Automate* pNewAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( asnMsg.oid_automate );
     if( !pNewAutomate )
-    {
-        asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::error_invalid_automate;
-        asnReplyMsg.Send( nCtx );
-        return;
-    }
+        throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate );
 
     if( pNewAutomate->GetArmy() != GetArmy() )
-    {
-        asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::error_camps_incompatibles;
-        asnReplyMsg.Send( nCtx );
-        return;
-    }
+        throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_camps_incompatibles );
 
     pAutomate_->UnregisterPion( *this );
     pAutomate_ = pNewAutomate;
     pAutomate_->RegisterPion  ( *this );
-
-    asnReplyMsg().error_code = EnumChangeHierarchyErrorCode::no_error;
-    asnReplyMsg.Send( nCtx );
 }
 
 // -----------------------------------------------------------------------------

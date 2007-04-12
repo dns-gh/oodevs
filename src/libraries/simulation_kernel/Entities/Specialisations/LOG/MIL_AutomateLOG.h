@@ -120,9 +120,9 @@ public:
     //! @name Network
     //@{
     virtual void SendFullState                    () const;
-    virtual void OnReceiveMsgChangeLogisticLinks  ( ASN1T_MsgAutomateChangeLiensLogistiques& msg, uint nCtx );
-    virtual void OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas&  msg, uint nCtx );
-    virtual void OnReceiveMsgLogSupplyPushFlow    ( ASN1T_MsgLogRavitaillementPousserFlux&   msg, uint nCtx );
+    virtual void OnReceiveMsgChangeLogisticLinks  ( ASN1T_MsgAutomateChangeLiensLogistiques& msg );
+    virtual void OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas&  msg );
+    virtual void OnReceiveMsgLogSupplyPushFlow    ( ASN1T_MsgLogRavitaillementPousserFlux&   msg );
     //@}
 
 private:
