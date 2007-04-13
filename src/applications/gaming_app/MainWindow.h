@@ -28,6 +28,7 @@ namespace gui
     class OptionsPanel;
     class ParametersLayer;
     class AgentsLayer;
+    class AutomatsLayer;
     class ColorStrategy;
     class GlProxy;
     class DrawerLayer;
@@ -105,7 +106,7 @@ private:
     static std::string BuildRemotePath( std::string server, std::string path );
 
     void CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, gui::ParametersLayer& parameters, gui::LocationsLayer& locationsLayer,
-                       gui::AgentsLayer& agents, gui::DrawerLayer& drawer, gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile );
+                       gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::DrawerLayer& drawer, gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile );
     //@}
 
     //! @name Copy/Assignment

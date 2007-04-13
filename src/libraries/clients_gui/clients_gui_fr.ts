@@ -7,17 +7,6 @@
     </message>
 </context>
 <context>
-    <name>AgentsLayer</name>
-    <message>
-        <source>Aggregate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disaggregate</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>CampPrototype_ABC</name>
     <message>
         <source>TC2:</source>

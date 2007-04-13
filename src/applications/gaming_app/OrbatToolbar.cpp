@@ -14,19 +14,19 @@
 #include "clients_kernel/Options.h"
 #include "clients_gui/BooleanOptionButton.h"
 #include "clients_gui/resources.h"
-#include "clients_gui/AgentsLayer.h"
+#include "clients_gui/AutomatsLayer.h"
 #include "gaming/ProfileFilter.h"
 
 // -----------------------------------------------------------------------------
 // Name: OrbatToolbar constructor
 // Created: SBO 2007-03-05
 // -----------------------------------------------------------------------------
-OrbatToolbar::OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, ProfileFilter& filter, gui::AgentsLayer& agents )
-    : QHBox( parent )
-    , controllers_( controllers )
-    , filter_     ( filter )
-    , entity_     ( controllers_ )
-    , agents_( agents )
+OrbatToolbar::OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, ProfileFilter& filter, gui::AutomatsLayer& automats )
+    : QHBox         ( parent )
+    , controllers_  ( controllers )
+    , filter_       ( filter )
+    , entity_       ( controllers_ )
+    , automatsLayer_( automats )
 {
     setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
     setBackgroundMode( Qt::PaletteButton );
@@ -137,7 +137,7 @@ void OrbatToolbar::NotifyDeleted( const kernel::Automat_ABC& entity )
 void OrbatToolbar::AggregateAll()
 {
     for( CIT_Agents it = automats_.begin(); it != automats_.end(); ++it )
-        agents_.Aggregate( **it );
+        automatsLayer_.Aggregate( **it );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,7 +147,7 @@ void OrbatToolbar::AggregateAll()
 void OrbatToolbar::DisaggregateAll()
 {
     for( CIT_Agents it = automats_.begin(); it != automats_.end(); ++it )
-        agents_.Disaggregate( **it );
+        automatsLayer_.Disaggregate( **it );
 }
 
 // -----------------------------------------------------------------------------

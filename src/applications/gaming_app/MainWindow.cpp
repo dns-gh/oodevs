@@ -94,6 +94,7 @@
 #include "clients_gui/LightingProxy.h"
 #include "clients_gui/LocationEditorToolbar.h"
 #include "clients_gui/LocationsLayer.h"
+#include "clients_gui/AutomatsLayer.h"
 
 #include "xeumeuleu/xml.h"
 
@@ -156,12 +157,13 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_, *locationsLayer ) );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, profile );
+    AutomatsLayer* automatsLayer = new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *agentsLayer );
 
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QVBox* box = new QVBox( pListDockWnd_ );
-    new OrbatToolbar( box, controllers, profile, *agentsLayer );
+    new OrbatToolbar( box, controllers, profile, *automatsLayer );
     QTabWidget* pListsTabWidget = new QTabWidget( box );
 
     SymbolIcons* symbols = new SymbolIcons( this );
@@ -279,7 +281,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new Menu( this, controllers, *prefDialog, *profileDialog, *recorderToolbar, *factory );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
-    CreateLayers( *pMissionPanel_, *objectCreationPanel, *paramLayer, *locationsLayer, *agentsLayer, *drawer, *prefDialog, profile );
+    CreateLayers( *pMissionPanel_, *objectCreationPanel, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *drawer, *prefDialog, profile );
 
     ::StatusBar* pStatus = new ::StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_, controllers_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
@@ -300,7 +302,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, ParametersLayer& parameters, LocationsLayer& locationsLayer, gui::AgentsLayer& agents, DrawerLayer& drawer, PreferencesDialog& preferences, const Profile_ABC& profile )
+void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, ParametersLayer& parameters, LocationsLayer& locationsLayer, gui::AgentsLayer& agents, gui::AutomatsLayer& automats, DrawerLayer& drawer, PreferencesDialog& preferences, const Profile_ABC& profile )
 {
     Layer_ABC& missionsLayer        = *new MiscLayer< MissionPanel >( missions );
     Layer_ABC& objectCreationLayer  = *new MiscLayer< ObjectCreationPanel >( objects );
@@ -340,6 +342,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     glProxy_->Register( objectsLayer );
     glProxy_->Register( populations );
     glProxy_->Register( agents );
+    glProxy_->Register( automats );
     glProxy_->Register( missionsLayer );
     glProxy_->Register( objectCreationLayer );
     glProxy_->Register( parameters );
@@ -351,6 +354,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     // ordre des evenements
     forward_->Register( parameters );
     forward_->Register( agents );
+    forward_->Register( automats );
     forward_->Register( populations );
     forward_->Register( objectsLayer );
     forward_->Register( agentKnowledges );

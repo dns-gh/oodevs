@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "AgentsLayer.h"
-#include "moc_AgentsLayer.cpp"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -24,7 +23,6 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile )
     : EntityLayer< Agent_ABC >( controllers, tools, strategy, view, profile )
-    , selected_( controllers )
 {
     // NOTHING
 }
@@ -72,51 +70,6 @@ void AgentsLayer::Toggle( const Automat_ABC& automat, bool aggregate )
         else
             AddEntity( child );
     }
-    automat.Interface().Apply( & Aggregatable_ABC::Aggregate, aggregate );
-
-    if( aggregate )
-    {
-        AddEntity( automat ); // $$$$ AGE 2006-10-06: careful may have side effects
-        aggregated_.insert( &automat );
-    }
-    else
-    {
-        RemoveEntity( automat );
-        aggregated_.erase( &automat );
-    }
-}   
-
-// -----------------------------------------------------------------------------
-// Name: AgentsLayer::NotifyContextMenu
-// Created: AGE 2006-04-11
-// -----------------------------------------------------------------------------
-void AgentsLayer::NotifyContextMenu( const Automat_ABC& agent, ::ContextMenu& menu )
-{
-    selected_ = &agent;
-    if( aggregated_.find( &agent ) == aggregated_.end() )
-        menu.InsertItem( "Interface", tr( "Aggregate" ), this, SLOT( Aggregate() ) );
-    else
-        menu.InsertItem( "Interface", tr( "Disaggregate" ), this, SLOT( Disaggregate() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsLayer::Aggregate
-// Created: AGE 2006-04-11
-// -----------------------------------------------------------------------------
-void AgentsLayer::Aggregate()
-{
-    if( selected_ )
-        Aggregate( *selected_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsLayer::Disaggregate
-// Created: AGE 2006-04-11
-// -----------------------------------------------------------------------------
-void AgentsLayer::Disaggregate()
-{
-    if( selected_ )
-        Disaggregate( *selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,18 +86,4 @@ void AgentsLayer::Select( const Entity_ABC& entity, bool shift )
     }
     else
         entity.Select( controllers_.actions_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsLayer::ContextMenu
-// Created: AGE 2006-11-17
-// -----------------------------------------------------------------------------
-void AgentsLayer::ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& point, const QPoint& where )
-{
-    const kernel::Automat_ABC* automat = static_cast< const kernel::Automat_ABC* >( &entity );
-    const kernel::Agent_ABC*   agent   = static_cast< const kernel::Agent_ABC* >  ( &entity );
-    if( aggregated_.find( automat ) != aggregated_.end() )
-        controllers_.actions_.ContextMenu( *automat, entity, point, where );
-    else
-        controllers_.actions_.ContextMenu( *agent, entity, point, where );
 }

@@ -12,6 +12,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -34,6 +35,7 @@ ColorStrategy::ColorStrategy( Controllers& controllers, GlTools_ABC& tools )
     , tools_             ( tools )
     , selectedObject_    ( controllers )
     , selectedAgent_     ( controllers )
+    , selectedAutomat_   ( controllers )
     , selectedPopulation_( controllers )
     , selectedLine_      ( controllers )
     , selectedKnowledge_ ( controllers )
@@ -57,7 +59,7 @@ ColorStrategy::~ColorStrategy()
 // -----------------------------------------------------------------------------
 void ColorStrategy::BeforeSelection()
 {
-    selectedObject_ = 0; selectedAgent_ = 0;
+    selectedObject_ = 0; selectedAgent_ = 0; selectedAutomat_ = 0;
     selectedPopulation_ = 0; selectedLine_ = 0;
     selectedKnowledge_ = 0;
 }
@@ -69,6 +71,15 @@ void ColorStrategy::BeforeSelection()
 void ColorStrategy::Select( const Agent_ABC& element )
 {
     selectedAgent_   = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::Select
+// Created: SBO 2007-04-13
+// -----------------------------------------------------------------------------
+void ColorStrategy::Select( const Automat_ABC& element )
+{
+    selectedAutomat_ = &element;
 }
 
 // -----------------------------------------------------------------------------
@@ -128,15 +139,32 @@ void ColorStrategy::SelectColor( const Agent_ABC& agent )
         tools_.Select( true );
         color = SelectedColor( color );
     }
-    else if( selectedAgent_ && selectedAgent_->Get< CommunicationHierarchies >().GetSuperior()
-                            == agent.Get< CommunicationHierarchies >().GetSuperior() )
-    {
-        tools_.Select( false );
-        color = SuperiorSelectedColor( color );
-    }
     else
-        tools_.Select( false );
+    {
+        const kernel::Entity_ABC* superior = agent.Get< CommunicationHierarchies >().GetSuperior();
+        if(    ( superior && superior == selectedAutomat_ )
+            || ( selectedAgent_ && selectedAgent_->Get< CommunicationHierarchies >().GetSuperior() == superior ) )
+        {
+            tools_.Select( false );
+            color = SuperiorSelectedColor( color );
+        }
+        else
+            tools_.Select( false );
+    }
         
+    ApplyColor( color );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::SelectColor
+// Created: SBO 2007-04-13
+// -----------------------------------------------------------------------------
+void ColorStrategy::SelectColor( const kernel::Automat_ABC& automat )
+{
+    QColor color = FindColor( automat );
+    if( selectedAutomat_ == &automat )
+        color = SelectedColor( color );
+    tools_.Select( selectedAutomat_ == &automat );
     ApplyColor( color );
 }
 

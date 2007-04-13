@@ -23,7 +23,7 @@ namespace kernel
 
 namespace gui
 {
-    class AgentsLayer;
+    class AutomatsLayer;
 }
 
 class ProfileFilter;
@@ -44,7 +44,7 @@ class OrbatToolbar : public QHBox
 public:
     //! @name Constructors/Destructor
     //@{
-             OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, ProfileFilter& filter, gui::AgentsLayer& agents );
+             OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, ProfileFilter& filter, gui::AutomatsLayer& automats );
     virtual ~OrbatToolbar();
     //@}
 
@@ -86,7 +86,7 @@ private:
     kernel::Controllers& controllers_;
     ProfileFilter& filter_;
     kernel::SafePointer< kernel::Entity_ABC > entity_;
-    gui::AgentsLayer& agents_;
+    gui::AutomatsLayer& automatsLayer_;
     T_Agents automats_;
     QToolButton* filterBtn_;
     //@}

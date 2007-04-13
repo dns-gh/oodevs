@@ -41,6 +41,7 @@ class ColorStrategy : public ColorStrategy_ABC
                     , public kernel::ElementObserver_ABC< kernel::Team_ABC >
                     , public kernel::SelectionObserver_ABC
                     , public kernel::SelectionObserver_Base< kernel::Agent_ABC >
+                    , public kernel::SelectionObserver_Base< kernel::Automat_ABC >
                     , public kernel::SelectionObserver_Base< kernel::Object_ABC >
                     , public kernel::SelectionObserver_Base< kernel::Population_ABC >
                     , public kernel::SelectionObserver_Base< kernel::TacticalLine_ABC >
@@ -57,6 +58,7 @@ public:
     //! @name Operations
     //@{
     virtual void SelectColor( const kernel::Agent_ABC& agent );
+    virtual void SelectColor( const kernel::Automat_ABC& automat );
     virtual void SelectColor( const kernel::Object_ABC& object );
     virtual void SelectColor( const kernel::Population_ABC& population );
     virtual void SelectColor( const kernel::Knowledge_ABC& knowledge );
@@ -86,6 +88,7 @@ private:
 
     virtual void BeforeSelection();
     virtual void Select( const kernel::Agent_ABC& element );
+    virtual void Select( const kernel::Automat_ABC& element );
     virtual void Select( const kernel::Object_ABC& element );
     virtual void Select( const kernel::Population_ABC& element );
     virtual void Select( const kernel::TacticalLine_ABC& element );
@@ -110,6 +113,7 @@ private:
 
     kernel::SafePointer< kernel::Object_ABC >       selectedObject_;
     kernel::SafePointer< kernel::Agent_ABC >        selectedAgent_;
+    kernel::SafePointer< kernel::Automat_ABC >      selectedAutomat_;
     kernel::SafePointer< kernel::Population_ABC >   selectedPopulation_;
     kernel::SafePointer< kernel::TacticalLine_ABC > selectedLine_;
     kernel::SafePointer< kernel::Knowledge_ABC >    selectedKnowledge_;

@@ -31,10 +31,7 @@ namespace gui
 // =============================================================================
 class AgentsLayer : public QObject
                   , public EntityLayer< kernel::Agent_ABC >
-                  , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
 {
-    Q_OBJECT;
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -44,15 +41,8 @@ public:
 
     //! @name Operations
     //@{
-    void Aggregate   ( const kernel::Automat_ABC& agent );
-    void Disaggregate( const kernel::Automat_ABC& agent );
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void Aggregate   ();
-    void Disaggregate();
+    void Aggregate   ( const kernel::Automat_ABC& automat );
+    void Disaggregate( const kernel::Automat_ABC& automat );
     //@}
 
 private:
@@ -64,22 +54,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const kernel::Automat_ABC&, kernel::ContextMenu& );
-    virtual void Select           ( const kernel::Entity_ABC&, bool );
-    void Toggle                   ( const kernel::Automat_ABC& automat, bool aggregate );
-    virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::set< const kernel::Automat_ABC* > T_Automats;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    kernel::SafePointer< kernel::Automat_ABC > selected_;
-    T_Automats aggregated_;
+    void Toggle( const kernel::Automat_ABC& automat, bool aggregate );
+    virtual void Select     ( const kernel::Entity_ABC&, bool );
     //@}
 };
 
