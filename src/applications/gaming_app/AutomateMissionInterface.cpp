@@ -55,13 +55,12 @@ void AutomateMissionInterface::Publish()
     CommitTo( *action );
 
     ASN_MsgAutomateOrder asn;
-    ASN1T_MsgAutomateOrder& order = asn();
-    order.oid_unite_executante = GetEntity().GetId();
-    order.mission = mission_.GetId();
-    order.formation = (ASN1T_EnumAutomateOrderFormation)EnumAutomateOrderFormation::deux_echelons; // $$$$ SBO 2007-03-15: move to order.parameters
-    CommitTo( order.order_context );
-    CommitTo( order.parametres );
+    asn().oid_unite_executante = GetEntity().GetId();
+    asn().mission = mission_.GetId();
+    asn().formation = (ASN1T_EnumAutomateOrderFormation)EnumAutomateOrderFormation::deux_echelons; // $$$$ SBO 2007-03-15: move to order.parameters
+    CommitTo( asn().order_context );
+    CommitTo( asn().parametres );
     asn.Send( publisher_ );
-    Clean( order.order_context );
-    Clean( order.parametres );
+    Clean( asn().order_context );
+    Clean( asn().parametres );
 }

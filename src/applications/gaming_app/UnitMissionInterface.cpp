@@ -55,12 +55,11 @@ void UnitMissionInterface::Publish()
     CommitTo( *action );
 
     ASN_MsgPionOrder asn;
-    ASN1T_MsgPionOrder& order = asn();
-    order.oid_unite_executante = GetEntity().GetId();
-    order.mission = mission_.GetId();
-    CommitTo( order.parametres );
-    CommitTo( order.order_context );
+    asn().oid_unite_executante = GetEntity().GetId();
+    asn().mission = mission_.GetId();
+    CommitTo( asn().parametres );
+    CommitTo( asn().order_context );
     asn.Send( publisher_ );
-    Clean( order.parametres );
-    Clean( order.order_context );
+    Clean( asn().parametres );
+    Clean( asn().order_context );
 }
