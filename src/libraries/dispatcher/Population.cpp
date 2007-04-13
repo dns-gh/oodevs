@@ -75,8 +75,9 @@ void Population::Update( const ASN1T_MsgPopulationUpdate& msg )
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationConcentrationCreation& msg )
 {
+    bool create = ! concentrations_.Find( msg.oid_concentration );
     PopulationConcentration& concentration = concentrations_.Create( model_, msg.oid_concentration, *this, msg );
-    StartSynchronisation( concentration );
+    StartSynchronisation( concentration, create );
     concentration.Update( msg );
 }
 
@@ -104,8 +105,9 @@ void Population::Update( const ASN1T_MsgPopulationConcentrationDestruction& msg 
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationFluxCreation& msg )
 {
+    bool create = ! flows_.Find( msg.oid_flux );
     PopulationFlow& flow = flows_.Create( model_, msg.oid_flux, *this, msg );
-    StartSynchronisation( flow );
+    StartSynchronisation( flow, create );
     flow.Update( msg );
 }
 

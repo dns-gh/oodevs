@@ -21,15 +21,7 @@ namespace dispatcher
     {
     public:
         FullUpdateVisitor( Publisher_ABC& publisher );
-        virtual void Visit( Side& entity );
-        virtual void Visit( KnowledgeGroup& entity );
-        virtual void Visit( Formation& entity );
-        virtual void Visit( Automat& entity );
-        virtual void Visit( Agent& entity );
-        virtual void Visit( Object& entity );
-        virtual void Visit( Population& entity );
-        virtual void Visit( PopulationFlow& entity );
-        virtual void Visit( PopulationConcentration& entity );
+        virtual void Visit( Entity_ABC& entity );
     private:
         Publisher_ABC* publisher_;
     };
@@ -38,15 +30,7 @@ namespace dispatcher
     {
     public:
         CreationVisitor( Publisher_ABC& publisher );
-        virtual void Visit( Side& entity );
-        virtual void Visit( KnowledgeGroup& entity );
-        virtual void Visit( Formation& entity );
-        virtual void Visit( Automat& entity );
-        virtual void Visit( Agent& entity );
-        virtual void Visit( Object& entity );
-        virtual void Visit( Population& entity );
-        virtual void Visit( PopulationFlow& entity );
-        virtual void Visit( PopulationConcentration& entity );
+        virtual void Visit( Entity_ABC& entity );
     private:
         Publisher_ABC* publisher_;
     };
@@ -55,15 +39,7 @@ namespace dispatcher
     {
     public:
         StartSynchVisitor( Publisher_ABC& publisher );
-        virtual void Visit( Side& entity );
-        virtual void Visit( KnowledgeGroup& entity );
-        virtual void Visit( Formation& entity );
-        virtual void Visit( Automat& entity );
-        virtual void Visit( Agent& entity );
-        virtual void Visit( Object& entity );
-        virtual void Visit( Population& entity );
-        virtual void Visit( PopulationConcentration& entity );
-        virtual void Visit( PopulationFlow& entity );
+        virtual void Visit( Entity_ABC& entity );
     private:
         Publisher_ABC* publisher_;
     };
@@ -72,15 +48,7 @@ namespace dispatcher
     {
     public:
         EndSynchVisitor( Model& model );
-        virtual void Visit( Side& entity );
-        virtual void Visit( KnowledgeGroup& entity );
-        virtual void Visit( Formation& entity );
-        virtual void Visit( Automat& entity );
-        virtual void Visit( Agent& entity );
-        virtual void Visit( Object& entity );
-        virtual void Visit( Population& entity );
-        virtual void Visit( PopulationConcentration& entity );
-        virtual void Visit( PopulationFlow& entity );
+        virtual void Visit( Entity_ABC& entity );
     private:
         Model* model_;
     };

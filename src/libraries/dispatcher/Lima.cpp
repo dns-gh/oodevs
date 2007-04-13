@@ -12,6 +12,7 @@
 #include "Lima.h"
 #include "Model.h"
 #include "Network_Def.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -22,6 +23,7 @@ using namespace dispatcher;
 Lima::Lima( const Model& model, const ASN1T_MsgLimaCreation& message )
     : TacticalLine_ABC( model, message.oid, message.tactical_line )
 {
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -30,6 +32,17 @@ Lima::Lima( const Model& model, const ASN1T_MsgLimaCreation& message )
 // -----------------------------------------------------------------------------
 Lima::~Lima()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Lima::Update
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void Lima::Update( const ASN1T_MsgLimaCreation& message )
+{
+    FlagUpdate();
+    TacticalLine_ABC::Update( message.tactical_line );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,8 +63,37 @@ void Lima::SendCreation( Publisher_ABC& publisher ) const
     AsnMsgInClientLimaCreation asn;
 
     asn().oid = GetID();
-    Send( asn().tactical_line );
+    TacticalLine_ABC::Send( asn().tactical_line );
     asn.Send( publisher );
 
     Localisation::AsnDelete( asn().tactical_line.geometrie );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Lima::SendFullUpdate
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void Lima::SendFullUpdate( Publisher_ABC& ) const
+{
+    // NOTHING
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Lima::CommitDestruction
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void Lima::CommitDestruction()
+{
+    AsnMsgInClientLimaDestruction asn;
+    asn() = GetID();
+    Entity_ABC::Send( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Lima::Accept
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void Lima::Accept( ModelVisitor_ABC& visitor )
+{
+    visitor.Visit( *this );
 }

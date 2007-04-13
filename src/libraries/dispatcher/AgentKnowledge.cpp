@@ -16,6 +16,7 @@
 #include "Network_Def.h"
 #include "Model.h"
 #include "Side.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -67,7 +68,7 @@ AgentKnowledge::AgentKnowledge( Model& model, const ASN1T_MsgUnitKnowledgeCreati
 // -----------------------------------------------------------------------------
 AgentKnowledge::~AgentKnowledge()
 {
-
+    // NOTHING
 }
 
 // =============================================================================
@@ -115,14 +116,22 @@ void AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
     UPDATE_ASN_ATTRIBUTE( rendu                    , bDead_                 );
     UPDATE_ASN_ATTRIBUTE( prisonnier               , bPrisoner_             );
     UPDATE_ASN_ATTRIBUTE( refugie_pris_en_compte   , bRefugeeManaged_       );
+}
 
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::Update
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeCreation& )
+{
+    FlagUpdate();
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledge::SendCreation
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void AgentKnowledge::SendCreation( Publisher_ABC& publisher )
+void AgentKnowledge::SendCreation( Publisher_ABC& publisher ) const
 {
     AsnMsgInClientUnitKnowledgeCreation asn;
 
@@ -197,4 +206,25 @@ void AgentKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 
     if( asn().m.perception_par_compagniePresent && asn().perception_par_compagnie.n > 0 )
         delete [] asn().perception_par_compagnie.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::Accept
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void AgentKnowledge::Accept( ModelVisitor_ABC& visitor )
+{
+    visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::CommitDestruction
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void AgentKnowledge::CommitDestruction()
+{
+    AsnMsgInClientUnitKnowledgeDestruction asn;
+    asn().oid_connaissance      = nID_;
+    asn().oid_groupe_possesseur = knowledgeGroup_.GetID();
+    Send( asn );
 }

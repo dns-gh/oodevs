@@ -18,6 +18,7 @@
 #include "Network_Def.h"
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationFlowKnowledge.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -43,11 +44,21 @@ PopulationKnowledge::PopulationKnowledge( Model& model, const ASN1T_MsgPopulatio
 // -----------------------------------------------------------------------------
 PopulationKnowledge::~PopulationKnowledge()
 {
+    // NOTHING
 }
 
 // =============================================================================
 // OPERATIONS
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::Update
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeCreation& msg )
+{
+    FlagUpdate();
+}
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::Update
@@ -65,7 +76,10 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeUpdate& msg 
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& msg )
 {
-    concentrations_.Create( model_, msg.oid_connaissance_concentration, *this, msg );
+    bool create = ! concentrations_.Find( msg.oid_connaissance_concentration );
+    PopulationConcentrationKnowledge& concentration = concentrations_.Create( model_, msg.oid_connaissance_concentration, *this, msg );
+    StartSynchronisation( concentration, create );
+    concentration.Update( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,7 +106,10 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeCreation& msg )
 {
-    flows_.Create( model_, msg.oid_connaissance_flux, *this, msg );
+    bool create = ! flows_.Find( msg.oid_connaissance_flux );
+    PopulationFlowKnowledge& flow = flows_.Create( model_, msg.oid_connaissance_flux, *this, msg );
+    StartSynchronisation( flow, create );
+    flow.Update( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,9 +148,6 @@ void PopulationKnowledge::SendCreation( Publisher_ABC& publisher ) const
     asn().camp                  = side_.GetID();
 
     asn.Send( publisher );
-
-    concentrations_.Apply( std::mem_fun_ref( &PopulationConcentrationKnowledge::SendCreation ), publisher );
-    flows_         .Apply( std::mem_fun_ref( &PopulationFlowKnowledge         ::SendCreation ), publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +165,27 @@ void PopulationKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
     asn().etat_domination       = nDominationState_;
 
     asn.Send( publisher );
+}
 
-    concentrations_.Apply( std::mem_fun_ref( &PopulationConcentrationKnowledge::SendFullUpdate ), publisher );
-    flows_         .Apply( std::mem_fun_ref( &PopulationFlowKnowledge         ::SendFullUpdate ), publisher );
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::Accept
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void PopulationKnowledge::Accept( ModelVisitor_ABC& visitor )
+{
+    visitor.Visit( *this );
+    concentrations_.Apply( std::mem_fun_ref( &PopulationConcentrationKnowledge::Accept ), visitor );
+    flows_         .Apply( std::mem_fun_ref( &PopulationFlowKnowledge         ::Accept ), visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::CommitDestruction
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void PopulationKnowledge::CommitDestruction()
+{
+    AsnMsgInClientPopulationKnowledgeDestruction asn;
+    asn().oid_connaissance = nID_;
+    asn().oid_groupe_possesseur = knowledgeGroup_.GetID();
+    Send( asn );
 }

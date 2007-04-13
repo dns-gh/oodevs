@@ -12,6 +12,7 @@
 
 #include "game_asn/Asn.h"
 #include "Position.h"
+#include "Entity_ABC.h"
 
 namespace dispatcher
 {
@@ -27,20 +28,23 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class AgentKnowledge
+class AgentKnowledge : public Entity_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-     AgentKnowledge( Model& model, const ASN1T_MsgUnitKnowledgeCreation& asnMsg );
-    ~AgentKnowledge();
+             AgentKnowledge( Model& model, const ASN1T_MsgUnitKnowledgeCreation& asnMsg );
+    virtual ~AgentKnowledge();
     //@}
 
     //! @name Operations
     //@{
+    void Update        ( const ASN1T_MsgUnitKnowledgeCreation& asnMsg );
     void Update        ( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg );
-    void SendCreation  ( Publisher_ABC& publisher );
+    void SendCreation  ( Publisher_ABC& publisher ) const;
     void SendFullUpdate( Publisher_ABC& publisher ) const;
+    void CommitDestruction();
+    void Accept( ModelVisitor_ABC& visitor );
     //@}
 
 private:

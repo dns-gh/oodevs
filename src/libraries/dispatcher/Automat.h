@@ -13,7 +13,7 @@
 #include "game_asn/Asn.h"
 #include "ModelRefsContainer.h"
 #include "ModelsContainer.h"
-#include "Synchronisable.h"
+#include "Entity_ABC.h"
 
 namespace dispatcher
 {
@@ -25,7 +25,6 @@ class Formation;
 class Agent;
 class DotationQuota;
 class Publisher_ABC;
-class ModelVisitor_ABC;
 
 // =============================================================================
 /** @class  Automat
@@ -33,7 +32,7 @@ class ModelVisitor_ABC;
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Automat : public Synchronisable
+class Automat : public Entity_ABC
 {
 public:
     //! @name Constructors/Destructor

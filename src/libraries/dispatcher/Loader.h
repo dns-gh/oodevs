@@ -76,7 +76,7 @@ private:
     std::ifstream keys_;
     unsigned currentFrame_;
 
-    ASN1OCTET buffer_[10000];
+    ASN1OCTET buffer_[100000];
     //@}
 };
 

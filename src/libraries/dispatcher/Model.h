@@ -39,7 +39,7 @@ class SimulationModel;
 class Publisher_ABC;
 class Limit;
 class Lima;
-class Synchronisable;
+class Entity_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -73,7 +73,7 @@ public:
     void StartSynchronisation( Publisher_ABC& publisher );
     void EndSynchronisation();
 
-    void FlagForDestruction( Synchronisable& synch );
+    void FlagForDestruction( Entity_ABC& synch );
     //@}
 
     //! @name Accessors
@@ -122,7 +122,7 @@ private:
     ModelsContainer< Limit                  > limits_;
     ModelsContainer< Lima                   > limas_;
 
-    std::vector< Synchronisable* > toFlush_;
+    std::vector< Entity_ABC* > toFlush_;
     Publisher_ABC* synchroniser_;
 };
 

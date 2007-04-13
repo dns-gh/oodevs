@@ -24,6 +24,7 @@
 #include "MineJamObjectAttribute.h"
 #include "LinearMinedAreaObjectAttribute.h"
 #include "DispersedMinedAreaObjectAttribute.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -72,7 +73,16 @@ ObjectKnowledge::ObjectKnowledge( Model& model, const ASN1T_MsgObjectKnowledgeCr
 // -----------------------------------------------------------------------------
 ObjectKnowledge::~ObjectKnowledge()
 {
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::Update
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeCreation& )
+{
+    FlagUpdate();
 }
 
 // =============================================================================
@@ -166,7 +176,7 @@ void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
 // Name: ObjectKnowledge::SendCreation
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::SendCreation( Publisher_ABC& publisher )
+void ObjectKnowledge::SendCreation( Publisher_ABC& publisher ) const
 {
     AsnMsgInClientObjectKnowledgeCreation asn;
 
@@ -247,4 +257,25 @@ void ObjectKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 
     if( asn().m.perception_par_compagniePresent && asn().perception_par_compagnie.n > 0 )
         delete [] asn().perception_par_compagnie.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::Accept
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::Accept( ModelVisitor_ABC& visitor )
+{
+    visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::CommitDestruction
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::CommitDestruction()
+{
+    AsnMsgInClientObjectKnowledgeDestruction asn;
+    asn().oid_connaissance    = nID_;
+    asn().oid_camp_possesseur = side_.GetID();
+    Send( asn );
 }

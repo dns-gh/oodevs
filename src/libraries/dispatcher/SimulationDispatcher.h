@@ -56,6 +56,11 @@ private:
     SimulationDispatcher& operator=( const SimulationDispatcher& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    bool IsNotDestruction( const ASN1T_MsgsOutSim& asnMsg ) const;
+    //@}
+
 private:
     //! @name Member data
     //@{

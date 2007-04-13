@@ -12,6 +12,7 @@
 #include "Limit.h"
 #include "Model.h"
 #include "Network_Def.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -22,6 +23,7 @@ using namespace dispatcher;
 Limit::Limit( const Model& model, const ASN1T_MsgLimitCreation& message )
     : TacticalLine_ABC( model, message.oid, message.tactical_line )
 {
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -30,6 +32,17 @@ Limit::Limit( const Model& model, const ASN1T_MsgLimitCreation& message )
 // -----------------------------------------------------------------------------
 Limit::~Limit()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Limit::Update
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void Limit::Update( const ASN1T_MsgLimitCreation& message )
+{
+    FlagUpdate();
+    TacticalLine_ABC::Update( message.tactical_line );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,8 +63,37 @@ void Limit::SendCreation( Publisher_ABC& publisher ) const
     AsnMsgInClientLimitCreation asn;
 
     asn().oid = GetID();
-    Send( asn().tactical_line );
+    TacticalLine_ABC::Send( asn().tactical_line );
     asn.Send( publisher );
 
     Localisation::AsnDelete( asn().tactical_line.geometrie );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Limit::SendFullUpdate
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void Limit::SendFullUpdate( Publisher_ABC& ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Limit::CommitDestruction
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void Limit::CommitDestruction()
+{
+    AsnMsgInClientLimitDestruction asn;
+    asn() = GetID();
+    Entity_ABC::Send( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Limit::Accept
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void Limit::Accept( ModelVisitor_ABC& visitor )
+{
+    visitor.Visit( *this );
 }

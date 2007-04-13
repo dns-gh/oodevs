@@ -12,6 +12,7 @@
 
 #include "game_asn/Asn.h"
 #include "ModelsContainer.h"
+#include "Entity_ABC.h"
 
 namespace dispatcher
 {
@@ -27,13 +28,13 @@ class PopulationFlowPart;
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class PopulationFlowKnowledge
+class PopulationFlowKnowledge : public Entity_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-     PopulationFlowKnowledge( Model& model, PopulationKnowledge& populationKnowledge, const ASN1T_MsgPopulationFluxKnowledgeCreation& msg );
-    ~PopulationFlowKnowledge();
+             PopulationFlowKnowledge( Model& model, PopulationKnowledge& populationKnowledge, const ASN1T_MsgPopulationFluxKnowledgeCreation& msg );
+    virtual ~PopulationFlowKnowledge();
     //@}
 
     //! @name Accessors
@@ -44,8 +45,11 @@ public:
     //! @name Operations
     //@{
     void Update        ( const ASN1T_MsgPopulationFluxKnowledgeUpdate& msg );
+    void Update        ( const ASN1T_MsgPopulationFluxKnowledgeCreation& msg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
     void SendFullUpdate( Publisher_ABC& publisher ) const;
+    void Accept( ModelVisitor_ABC& visitor );
+    void CommitDestruction();
     //@}
 
 private:

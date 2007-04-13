@@ -12,6 +12,7 @@
 
 #include "game_asn/Asn.h"
 #include "Position.h"
+#include "Entity_ABC.h"
 
 namespace dispatcher
 {
@@ -26,13 +27,13 @@ class PopulationConcentration;
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class PopulationConcentrationKnowledge
+class PopulationConcentrationKnowledge : public Entity_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-     PopulationConcentrationKnowledge( Model& model, PopulationKnowledge& populationKnowledge, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& msg );
-    ~PopulationConcentrationKnowledge();
+             PopulationConcentrationKnowledge( Model& model, PopulationKnowledge& populationKnowledge, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& msg );
+    virtual ~PopulationConcentrationKnowledge();
     //@}
 
     //! @name Accessors
@@ -42,9 +43,12 @@ public:
 
     //! @name Operations
     //@{
+    void Update        ( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& msg );
     void Update        ( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& msg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
     void SendFullUpdate( Publisher_ABC& publisher ) const;
+    void Accept( ModelVisitor_ABC& visitor );
+    void CommitDestruction();
     //@}
 
 private:

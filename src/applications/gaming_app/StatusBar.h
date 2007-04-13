@@ -68,6 +68,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     bool lastSimulationStatus_;
+    QLabel* pSpeed_;
     QLabel* pTime_;
     QLabel* pTick_;
     QTimer* pLagTimer_;

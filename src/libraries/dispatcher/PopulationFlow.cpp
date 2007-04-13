@@ -32,6 +32,7 @@ PopulationFlow::PopulationFlow( Model& /*model*/, Population& population, const 
     , nNbrDeadHumans_ ( 0 )
     , nAttitude_      ( EnumPopulationAttitude::agressive )    
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -40,6 +41,7 @@ PopulationFlow::PopulationFlow( Model& /*model*/, Population& population, const 
 // -----------------------------------------------------------------------------
 PopulationFlow::~PopulationFlow()
 {
+    // NOTHING
 }
 
 // =============================================================================
@@ -147,5 +149,5 @@ void PopulationFlow::CommitDestruction()
     AsnMsgInClientPopulationFluxDestruction destruction;
     destruction().oid_flux = nID_;
     destruction().oid_population = population_.GetID();
-    SendDestruction( destruction );
+    Send( destruction );
 }

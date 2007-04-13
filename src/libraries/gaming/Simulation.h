@@ -62,6 +62,8 @@ public:
     int GetSpeed() const;
     unsigned GetCurrentTick() const;
     unsigned GetTickCount() const;
+
+    float GetEffectiveSpeed() const;
     //@}
 
 private:

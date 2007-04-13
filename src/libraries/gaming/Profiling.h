@@ -10,6 +10,7 @@
 #ifndef __Profiling_h_
 #define __Profiling_h_
 
+#include <ctime>
 struct ProfilingValuesMessage;
 
 // =============================================================================
@@ -30,7 +31,11 @@ public:
 
     //! @name Operations
     //@{
+    void Tick();
+    void Clear();
+
     void Update( const ProfilingValuesMessage& message );
+    float EffectiveSpeed() const;
     //@}
 
 private:
@@ -49,6 +54,10 @@ private:
 private:
     //! @name Member data
     //@{
+    clock_t lastCall_;
+    T_History ticks_;
+    float tickSum_;
+
     T_History perception_;
     T_History decision_;
     T_History action_;

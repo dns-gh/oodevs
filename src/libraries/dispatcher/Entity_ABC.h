@@ -15,29 +15,31 @@
 namespace dispatcher
 {
     class Publisher_ABC;
+    class ModelVisitor_ABC;
 
 // =============================================================================
-/** @class  Synchronisable
-    @brief  Synchronisable
+/** @class  Entity_ABC
+    @brief  Entity_ABC
 */
 // Created: AGE 2007-04-12
 // =============================================================================
-class Synchronisable
+class Entity_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Synchronisable();
-    virtual ~Synchronisable();
+             Entity_ABC();
+    virtual ~Entity_ABC();
     //@}
 
     //! @name Operations
     //@{
-    void StartSynchronisation( Publisher_ABC& publisher );
+    void StartSynchronisation( Publisher_ABC& publisher, bool create );
     void EndSynchronisation  ( Model& model );
 
-    virtual void SendFullUpdate   ( Publisher_ABC& publisher ) const = 0;
+    virtual void SendFullUpdate( Publisher_ABC& publisher ) const = 0;
+    virtual void SendCreation  ( Publisher_ABC& publisher ) const = 0;
     virtual void CommitDestruction();
     //@}
 
@@ -47,16 +49,14 @@ protected:
     bool FlagUpdate();
     template< typename T >
     void Send( T& message );
-    template< typename T >
-    void SendDestruction( T& message );
-    void StartSynchronisation( Synchronisable& next );
+    void StartSynchronisation( Entity_ABC& next, bool create );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    Synchronisable( const Synchronisable& );            //!< Copy constructor
-    Synchronisable& operator=( const Synchronisable& ); //!< Assignement operator
+    Entity_ABC( const Entity_ABC& );            //!< Copy constructor
+    Entity_ABC& operator=( const Entity_ABC& ); //!< Assignement operator
     //@}
 
 private:
@@ -64,30 +64,20 @@ private:
     //@{
     Publisher_ABC* publisher_;
     bool updated_;
+    bool create_;
     //@}
 };
 
 // -----------------------------------------------------------------------------
-// Name: Synchronisable::Send
+// Name: Entity_ABC::Send
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
 template< typename T >
-void Synchronisable::Send( T& message )
+void Entity_ABC::Send( T& message )
 {
     if( ! publisher_ )
-        throw std::runtime_error( __FUNCTION__ );
+        throw std::runtime_error( typeid( *this ).name() + std::string( "::Send" ) );
     message.Send( *publisher_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Synchronisable::SendDestruction
-// Created: AGE 2007-04-12
-// -----------------------------------------------------------------------------
-template< typename T >
-void Synchronisable::SendDestruction( T& message )
-{
-    Send( message );
-    publisher_ = 0;
 }
 
 }

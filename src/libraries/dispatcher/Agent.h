@@ -14,7 +14,7 @@
 #include "Position.h"
 #include "ModelRefsContainer.h"
 #include "ModelsContainer.h"
-#include "Synchronisable.h"
+#include "Entity_ABC.h"
 
 namespace dispatcher
 {
@@ -30,7 +30,6 @@ class AgentLogMedical;
 class AgentLogMaintenance;
 class AgentLogSupply;
 class Side;
-class ModelVisitor_ABC;
 
 // =============================================================================
 /** @class  Agent
@@ -38,7 +37,7 @@ class ModelVisitor_ABC;
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Agent : public Synchronisable
+class Agent : public Entity_ABC
 {
 public:
     //! @name Constructors/Destructor

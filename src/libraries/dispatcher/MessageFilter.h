@@ -38,20 +38,25 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    bool IsRelevant( const ASN1T_MsgUnitAttributes& message );
+    bool IsRelevant( const ASN1T_MsgUnitKnowledgeUpdate& message );
+    bool IsRelevant( const ASN1T_MsgObjectUpdate& message );
+    bool IsRelevant( const ASN1T_MsgObjectKnowledgeUpdate& message );
+    bool IsRelevant( const ASN1T_MsgPopulationUpdate& message );
+    bool IsRelevant( const ASN1T_MsgPopulationConcentrationUpdate& message );
+    bool IsRelevant( const ASN1T_MsgPopulationFluxUpdate& message );
+    bool IsRelevant( const ASN1T_MsgPopulationKnowledgeUpdate& message );
+    bool IsRelevant( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& message );
+    bool IsRelevant( const ASN1T_MsgPopulationFluxKnowledgeUpdate& message );
+    //@}
+
+private:
     //! @name Copy/Assignment
     //@{
     MessageFilter( const MessageFilter& );            //!< Copy constructor
     MessageFilter& operator=( const MessageFilter& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    bool IsRelevant( unsigned type );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 

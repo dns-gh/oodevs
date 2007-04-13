@@ -17,6 +17,7 @@
 #include "KnowledgeGroup.h"
 #include "Model.h"
 #include "Network_Def.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -48,11 +49,21 @@ PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Model& /*mod
 // -----------------------------------------------------------------------------
 PopulationConcentrationKnowledge::~PopulationConcentrationKnowledge()
 {
+    // NOTHING
 }
 
 // =============================================================================
 // OPERATIONS
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentrationKnowledge::Update
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void PopulationConcentrationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& )
+{
+    FlagUpdate();
+}
 
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentrationKnowledge::Update
@@ -162,4 +173,26 @@ void PopulationConcentrationKnowledge::SendFullUpdate( Publisher_ABC& publisher 
     }
 
     asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentrationKnowledge::Accept
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void PopulationConcentrationKnowledge::Accept( ModelVisitor_ABC& visitor )
+{
+    visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentrationKnowledge::CommitDestruction
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+void PopulationConcentrationKnowledge::CommitDestruction()
+{
+    AsnMsgInClientPopulationConcentrationKnowledgeDestruction asn;
+    asn().oid_connaissance_concentration = nID_;
+    asn().oid_connaissance_population    = populationKnowledge_.GetID();
+    asn().oid_groupe_possesseur          = populationKnowledge_.GetKnowledgeGroup().GetID();
+    Send( asn );
 }

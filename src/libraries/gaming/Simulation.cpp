@@ -45,6 +45,7 @@ Simulation::~Simulation()
 // -----------------------------------------------------------------------------
 void Simulation::Connect( const std::string& host )
 {
+    profiling_.Clear();
     connected_ = true;
     simulationHost_ = host;
     connection_.connected_ = connected_;
@@ -60,6 +61,7 @@ void Simulation::Disconnect()
 {
     if( !connected_ )
         return;
+    profiling_.Clear();
     connected_ = false;
     connection_.connected_ = connected_;
     controller_.Update( connection_ );
@@ -72,6 +74,7 @@ void Simulation::Disconnect()
 // -----------------------------------------------------------------------------
 void Simulation::Pause( bool paused )
 {
+    profiling_.Clear();
     paused_ = paused;
     controller_.Update( *this );
 }
@@ -128,6 +131,7 @@ void Simulation::Update( const ProfilingValuesMessage& message )
 // -----------------------------------------------------------------------------
 void Simulation::BeginTick( int tick )
 {
+    profiling_.Tick();
     time_ = tick * tickDuration_;
     controller_.Update( startTick_ );
     controller_.Update( *this );
@@ -137,7 +141,7 @@ void Simulation::BeginTick( int tick )
 // Name: Simulation::EndTick
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void Simulation::EndTick( const ASN1T_MsgCtrlEndTick& message )
+void Simulation::EndTick( const ASN1T_MsgCtrlEndTick&  )
 {
     controller_.Update( endTick_ );
     controller_.Update( *this );
@@ -226,4 +230,13 @@ unsigned Simulation::GetTickCount() const
 const std::string& Simulation::GetSimulationHost() const
 {
     return simulationHost_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetEffectiveSpeed
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+float Simulation::GetEffectiveSpeed() const
+{
+    return std::floor( ( profiling_.EffectiveSpeed() + 0.5f ) * tickDuration_ );
 }

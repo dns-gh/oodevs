@@ -73,6 +73,7 @@ private:
     std::auto_ptr< Loader > loader_;
     unsigned factor_;
     bool running_;
+    int skipToFrame_;
 
     MT_TimerManager manager_;
     //@}

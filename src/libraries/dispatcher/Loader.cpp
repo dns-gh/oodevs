@@ -154,7 +154,6 @@ void Loader::LoadOutSimMessage( InputBinaryWrapper& input )
         decoder.PrintErrorInfo();
         throw std::runtime_error( "ASN fussé" );
     }
-
     simulation_.OnReceive( message );
 }
 

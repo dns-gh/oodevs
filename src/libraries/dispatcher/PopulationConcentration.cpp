@@ -29,6 +29,7 @@ PopulationConcentration::PopulationConcentration( Model& /*model*/, Population& 
     , nNbrDeadHumans_ ( 0 )
     , nAttitude_      ( EnumPopulationAttitude::agressive )    
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,6 +38,7 @@ PopulationConcentration::PopulationConcentration( Model& /*model*/, Population& 
 // -----------------------------------------------------------------------------
 PopulationConcentration::~PopulationConcentration()
 {
+    // NOTHING
 }
 
 // =============================================================================
@@ -124,5 +126,5 @@ void PopulationConcentration::CommitDestruction()
     AsnMsgInClientPopulationConcentrationDestruction destruction;
     destruction().oid_population    = population_.GetID();
     destruction().oid_concentration = nID_;
-    SendDestruction( destruction );
+    Send( destruction );
 }

@@ -8,51 +8,53 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-#include "Synchronisable.h"
+#include "Entity_ABC.h"
 
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
-// Name: Synchronisable constructor
+// Name: Entity_ABC constructor
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-Synchronisable::Synchronisable()
+Entity_ABC::Entity_ABC()
     : publisher_( 0 )
     , updated_  ( false )
+    , create_   ( false )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Synchronisable destructor
+// Name: Entity_ABC destructor
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-Synchronisable::~Synchronisable()
+Entity_ABC::~Entity_ABC()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Synchronisable::StartSynchronisation
+// Name: Entity_ABC::StartSynchronisation
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Synchronisable::StartSynchronisation( Publisher_ABC& publisher )
+void Entity_ABC::StartSynchronisation( Publisher_ABC& publisher, bool create )
 {
     publisher_ = &publisher;
-    updated_  = false;
+    updated_ = create_ = create;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Synchronisable::EndSynchronisation
+// Name: Entity_ABC::EndSynchronisation
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Synchronisable::EndSynchronisation( Model& model )
+void Entity_ABC::EndSynchronisation( Model& model )
 {
     if( ! publisher_ )
-        throw std::runtime_error( __FUNCTION__ );
+        throw std::runtime_error( typeid( *this ).name() + std::string( "::EndSynchronisation" ) );
     if( updated_ )
     {
-        
+        if( create_ )
+            SendCreation( *publisher_ );
         SendFullUpdate( *publisher_ );
         publisher_ = 0;
     }
@@ -61,31 +63,30 @@ void Synchronisable::EndSynchronisation( Model& model )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Synchronisable::FlagUpdate
+// Name: Entity_ABC::FlagUpdate
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-bool Synchronisable::FlagUpdate()
+bool Entity_ABC::FlagUpdate()
 {
     updated_ = true;
     return publisher_ != 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Synchronisable::CommitDestruction
+// Name: Entity_ABC::CommitDestruction
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Synchronisable::CommitDestruction()
+void Entity_ABC::CommitDestruction()
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw std::runtime_error( typeid( *this ).name() + std::string( "::CommitDestruction" ) );
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: Synchronisable::StartSynchronisation
+// Name: Entity_ABC::StartSynchronisation
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Synchronisable::StartSynchronisation( Synchronisable& next )
+void Entity_ABC::StartSynchronisation( Entity_ABC& next, bool create )
 {
     if( publisher_ )
-        next.StartSynchronisation( *publisher_ );
+        next.StartSynchronisation( *publisher_, create );
 }

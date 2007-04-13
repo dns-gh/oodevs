@@ -25,6 +25,7 @@ LoaderFacade::LoaderFacade( ClientsNetworker& clients, SimulationDispatcher& sim
     , loader_( new Loader( simulation, directory ) )
     , factor_( 1 )
     , running_( false )
+    , skipToFrame_( -1 )
 {
     ChangeTimeFactor( factor_ );
     manager_.Register( *this );
@@ -57,7 +58,7 @@ void LoaderFacade::OnReceive( const ASN1T_MsgsOutClient& asnInMsg )
         ChangeTimeFactor( asnInMsg.msg.u.msg_ctrl_change_time_factor );
         break;
     case T_MsgsOutClient_msg_msg_ctrl_skip_to_tick:
-        SkipToFrame( asnInMsg.msg.u.msg_ctrl_skip_to_tick ); 
+        skipToFrame_ = asnInMsg.msg.u.msg_ctrl_skip_to_tick;
         break;
     };
 }
@@ -158,6 +159,11 @@ void LoaderFacade::Send( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void LoaderFacade::Update()
 {
+    if( skipToFrame_ > 0 )
+    {
+        SkipToFrame( skipToFrame_ );
+        skipToFrame_ = -1;
+    }
     manager_.Update();
 }
 

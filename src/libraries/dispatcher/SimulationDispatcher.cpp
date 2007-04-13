@@ -62,13 +62,40 @@ SimulationDispatcher::~SimulationDispatcher()
     } 
 
 // -----------------------------------------------------------------------------
+// Name: SimulationDispatcher::IsNotDestruction
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+bool SimulationDispatcher::IsNotDestruction( const ASN1T_MsgsOutSim& asnMsg ) const
+{
+    switch( asnMsg.msg.t )
+    {
+    case T_MsgsInClient_msg_msg_limit_destruction:
+    case T_MsgsInClient_msg_msg_lima_destruction:
+    case T_MsgsInClient_msg_msg_unit_knowledge_destruction:
+    case T_MsgsInClient_msg_msg_object_destruction:
+    case T_MsgsInClient_msg_msg_object_knowledge_destruction:
+//    case T_MsgsInClient_msg_msg_log_sante_traitement_humain_destruction:
+//    case T_MsgsInClient_msg_msg_log_maintenance_traitement_equipement_destruction:
+//    case T_MsgsInClient_msg_msg_log_ravitaillement_traitement_destruction:
+    case T_MsgsInClient_msg_msg_population_concentration_destruction:
+    case T_MsgsInClient_msg_msg_population_flux_destruction:
+    case T_MsgsInClient_msg_msg_population_knowledge_destruction:
+    case T_MsgsInClient_msg_msg_population_concentration_knowledge_destruction:
+    case T_MsgsInClient_msg_msg_population_flux_knowledge_destruction:
+        return false;
+    default:
+        return true;
+    };
+}
+
+// -----------------------------------------------------------------------------
 // Name: SimulationDispatcher::OnReceive
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
 void SimulationDispatcher::OnReceive( const ASN1T_MsgsOutSim& asnInMsg )
 {
     model_.Update( asnInMsg );
-    if( synching_ )
+    if( synching_ && IsNotDestruction( asnInMsg ) )
         return;
     switch( asnInMsg.msg.t )
     {

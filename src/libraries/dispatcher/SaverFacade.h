@@ -58,7 +58,7 @@ private:
     //@{
     Model& model_;
     std::auto_ptr< Saver > saver_;
-    ASN1OCTET aASNEncodeBuffer_[10000];
+    ASN1OCTET aASNEncodeBuffer_[100000];
     unsigned frameCount_;
 
     MessageFilter filter_;

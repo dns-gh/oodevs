@@ -12,7 +12,7 @@
 
 #include "game_asn/Asn.h"
 #include "ModelRefsContainer.h"
-#include "Synchronisable.h"
+#include "Entity_ABC.h"
 
 namespace dispatcher
 {
@@ -21,7 +21,6 @@ namespace dispatcher
     class Side;
     class Automat;
     class Publisher_ABC;
-    class ModelVisitor_ABC;
 
 // =============================================================================
 /** @class  KnowledgeGroup
@@ -29,7 +28,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class KnowledgeGroup : public Synchronisable
+class KnowledgeGroup : public Entity_ABC
 {
 public:
     //! @name Constructors/Destructor

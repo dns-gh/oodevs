@@ -28,6 +28,10 @@ StatusBar::StatusBar( QStatusBar* parent, const DetectionMap& detection, const C
     checkPoint_->setMinimumWidth( 20 );
     checkPoint_->setAlignment( Qt::AlignCenter );
 
+    pSpeed_ = new QLabel( "---", parent );
+    pSpeed_->setMinimumWidth( 50 );
+    pSpeed_->setAlignment( Qt::AlignCenter );
+
     pTime_ = new QLabel( "---", parent );
     pTime_->setMinimumWidth( 50 );
     pTime_->setAlignment( Qt::AlignCenter );
@@ -39,6 +43,7 @@ StatusBar::StatusBar( QStatusBar* parent, const DetectionMap& detection, const C
     pLagTimer_ = new QTimer( this );
     checkPointTimer_ = new QTimer( this );
     parent->addWidget( checkPoint_, 0, true );
+    parent->addWidget( pSpeed_, 0, true );
     parent->addWidget( pTime_, 0, true );
 	parent->addWidget( pTick_, 0, true );
 
@@ -86,6 +91,8 @@ void StatusBar::NotifyUpdated( const Simulation& simulation )
     pTime_->setText( QString( "%1:%2:%3" ).arg( ( seconds / 3600 ) % 24, 2 )
                                           .arg( ( seconds / 60   ) % 60, 2 )
                                           .arg( ( seconds % 60   )     , 2 ) );
+    const float speed = simulation.GetEffectiveSpeed();
+    pSpeed_->setText( speed > 0 ? QString::number( speed ) : QString( "---" ) );
 }
 
 // -----------------------------------------------------------------------------

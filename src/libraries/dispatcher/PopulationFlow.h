@@ -12,14 +12,13 @@
 
 #include "game_asn/Asn.h"
 #include "Localisation.h"
-#include "Synchronisable.h"
+#include "Entity_ABC.h"
 
 namespace dispatcher
 {
     class Publisher_ABC;
     class Model;
     class Population;
-    class ModelVisitor_ABC;
 
 // =============================================================================
 /** @class  PopulationFlow
@@ -27,7 +26,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class PopulationFlow : public Synchronisable
+class PopulationFlow : public Entity_ABC
 {
 public:
     //! @name Constructors/Destructor

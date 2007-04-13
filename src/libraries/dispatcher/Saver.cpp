@@ -47,7 +47,8 @@ Saver::~Saver()
 // -----------------------------------------------------------------------------
 void Saver::StartFrame( const Savable_ABC& message )
 {
-    current_.Reset( update_.tellp() );
+    if( ! frameCount_ )
+        current_.Reset( update_.tellp() );
     SaveUpdateMessage( message );
 }
 
@@ -60,6 +61,7 @@ void Saver::EndFrame( const Savable_ABC& message )
     ++frameCount_;
     SaveUpdateMessage( message );
     Flush();
+    current_.Reset( update_.tellp() );
 }
 
 // -----------------------------------------------------------------------------

@@ -246,5 +246,5 @@ void Object::CommitDestruction()
 {
     AsnMsgInClientObjectDestruction destruction;
     destruction() = nID_;
-    SendDestruction( destruction );
+    Send( destruction );
 }
