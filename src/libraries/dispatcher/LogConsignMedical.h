@@ -11,6 +11,7 @@
 #define __LogConsignMedical_h_
 
 #include "game_asn/Asn.h"
+#include "Entity_ABC.h"
 
 namespace dispatcher
 {
@@ -25,13 +26,13 @@ class Publisher_ABC;
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class LogConsignMedical
+class LogConsignMedical : public Entity_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-     LogConsignMedical( Model& model, const ASN1T_MsgLogSanteTraitementHumainCreation& msg );
-    ~LogConsignMedical();
+             LogConsignMedical( Model& model, const ASN1T_MsgLogSanteTraitementHumainCreation& msg );
+    virtual ~LogConsignMedical();
     //@}
 
     //! @name Accessors
@@ -41,9 +42,12 @@ public:
 
     //! @name Operations
     //@{
+    void Update        ( const ASN1T_MsgLogSanteTraitementHumainCreation& msg );
     void Update        ( const ASN1T_MsgLogSanteTraitementHumainUpdate& msg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
     void SendFullUpdate( Publisher_ABC& publisher ) const;
+    void CommitDestruction();
+    void Accept( ModelVisitor_ABC& visitor );
     //@}
 
 private:

@@ -13,6 +13,7 @@
 #include "game_asn/Asn.h"
 #include "LogSupplyDotation.h"
 #include "ModelsContainer.h"
+#include "Entity_ABC.h"
 
 namespace dispatcher
 {
@@ -28,13 +29,13 @@ class Publisher_ABC;
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class LogConsignSupply
+class LogConsignSupply : public Entity_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-     LogConsignSupply( Model& model, const ASN1T_MsgLogRavitaillementTraitementCreation& msg );
-    ~LogConsignSupply();
+             LogConsignSupply( Model& model, const ASN1T_MsgLogRavitaillementTraitementCreation& msg );
+    virtual ~LogConsignSupply();
     //@}
 
     //! @name Accessors
@@ -44,9 +45,12 @@ public:
 
     //! @name Operations
     //@{
+    void Update        ( const ASN1T_MsgLogRavitaillementTraitementCreation& msg );
     void Update        ( const ASN1T_MsgLogRavitaillementTraitementUpdate& msg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
     void SendFullUpdate( Publisher_ABC& publisher ) const;
+    void CommitDestruction();
+    void Accept( ModelVisitor_ABC& visitor );
     //@}
 
 private:

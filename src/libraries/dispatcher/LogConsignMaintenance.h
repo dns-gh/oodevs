@@ -11,6 +11,7 @@
 #define __LogConsignMaintenance_h_
 
 #include "game_asn/Asn.h"
+#include "Entity_ABC.h"
 
 namespace dispatcher
 {
@@ -25,13 +26,13 @@ class Publisher_ABC;
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class LogConsignMaintenance
+class LogConsignMaintenance : public Entity_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-     LogConsignMaintenance( Model& model, const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& msg );
-    ~LogConsignMaintenance();
+             LogConsignMaintenance( Model& model, const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& msg );
+    virtual ~LogConsignMaintenance();
     //@}
 
     //! @name Accessors
@@ -41,9 +42,12 @@ public:
 
     //! @name Operations
     //@{
+    void Update        ( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& msg );
     void Update        ( const ASN1T_MsgLogMaintenanceTraitementEquipementUpdate& msg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
     void SendFullUpdate( Publisher_ABC& publisher ) const;
+    void CommitDestruction();
+    void Accept( ModelVisitor_ABC& visitor );
     //@}
 
 private:

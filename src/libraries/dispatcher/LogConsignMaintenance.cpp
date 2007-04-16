@@ -14,6 +14,7 @@
 #include "Model.h"
 #include "Agent.h"
 #include "Network_Def.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -32,6 +33,7 @@ LogConsignMaintenance::LogConsignMaintenance( Model& model, const ASN1T_MsgLogMa
     , nState_           ( EnumLogMaintenanceTraitementEtat::attente_disponibilite_pieces )
     , bDiagnosed_       ( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -40,12 +42,21 @@ LogConsignMaintenance::LogConsignMaintenance( Model& model, const ASN1T_MsgLogMa
 // -----------------------------------------------------------------------------
 LogConsignMaintenance::~LogConsignMaintenance()
 {
-
+    // NOTHING
 }
 
 // =============================================================================
 // OPERATIONS
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: LogConsignMaintenance::Update
+// Created: AGE 2007-04-16
+// -----------------------------------------------------------------------------
+void LogConsignMaintenance::Update( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& )
+{
+    FlagUpdate();
+}
 
 // -----------------------------------------------------------------------------
 // Name: LogConsignMaintenance::Update
@@ -99,4 +110,25 @@ void LogConsignMaintenance::SendFullUpdate( Publisher_ABC& publisher ) const
     asn().diagnostique_effectue = bDiagnosed_;
 
     asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogConsignMaintenance::CommitDestruction
+// Created: AGE 2007-04-16
+// -----------------------------------------------------------------------------
+void LogConsignMaintenance::CommitDestruction()
+{
+    AsnMsgInClientLogMaintenanceTraitementEquipementDestruction asn;
+    asn().oid_consigne = nID_;
+    asn().oid_pion     = agent_.GetID();
+    Send( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogConsignMaintenance::Accept
+// Created: AGE 2007-04-16
+// -----------------------------------------------------------------------------
+void LogConsignMaintenance::Accept( ModelVisitor_ABC& visitor )
+{
+    visitor.Visit( *this );
 }

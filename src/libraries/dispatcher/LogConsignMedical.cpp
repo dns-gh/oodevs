@@ -14,6 +14,7 @@
 #include "Model.h"
 #include "Agent.h"
 #include "Network_Def.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -34,6 +35,7 @@ LogConsignMedical::LogConsignMedical( Model& model, const ASN1T_MsgLogSanteTrait
     , nState_           ( EnumLogSanteTraitementEtat::ambulance_ramassage_dechargement )
     , bDiagnosed_       ( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,12 +44,21 @@ LogConsignMedical::LogConsignMedical( Model& model, const ASN1T_MsgLogSanteTrait
 // -----------------------------------------------------------------------------
 LogConsignMedical::~LogConsignMedical()
 {
-
+    // NOTHING
 }
 
 // =============================================================================
 // OPERATIONS
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: LogConsignMedical::Update
+// Created: AGE 2007-04-16
+// -----------------------------------------------------------------------------
+void LogConsignMedical::Update( const ASN1T_MsgLogSanteTraitementHumainCreation& )
+{
+    FlagUpdate();
+}
 
 // -----------------------------------------------------------------------------
 // Name: LogConsignMedical::Update
@@ -119,4 +130,25 @@ void LogConsignMedical::SendFullUpdate( Publisher_ABC& publisher ) const
     asn().etat                  = nState_;
     
     asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogConsignMedical::CommitDestruction
+// Created: AGE 2007-04-16
+// -----------------------------------------------------------------------------
+void LogConsignMedical::CommitDestruction()
+{
+    AsnMsgInClientLogSanteTraitementHumainDestruction asn;
+    asn().oid_consigne = nID_;
+    asn().oid_pion     = agent_.GetID();
+    Send( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogConsignMedical::Accept
+// Created: AGE 2007-04-16
+// -----------------------------------------------------------------------------
+void LogConsignMedical::Accept( ModelVisitor_ABC& visitor )
+{
+    visitor.Visit( *this );
 }

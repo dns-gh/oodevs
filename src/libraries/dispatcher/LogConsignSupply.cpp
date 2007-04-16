@@ -15,6 +15,7 @@
 #include "Automat.h"
 #include "Agent.h"
 #include "Network_Def.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -33,6 +34,7 @@ LogConsignSupply::LogConsignSupply( Model& model, const ASN1T_MsgLogRavitailleme
     , nState_           ( EnumLogRavitaillementTraitementEtat::convoi_deplacement_vers_point_chargement )
     , dotations_        ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -41,12 +43,21 @@ LogConsignSupply::LogConsignSupply( Model& model, const ASN1T_MsgLogRavitailleme
 // -----------------------------------------------------------------------------
 LogConsignSupply::~LogConsignSupply()
 {
-
+    // NOTHING
 }
 
 // =============================================================================
 // OPERATIONS
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: LogConsignSupply::Update
+// Created: AGE 2007-04-16
+// -----------------------------------------------------------------------------
+void LogConsignSupply::Update( const ASN1T_MsgLogRavitaillementTraitementCreation& )
+{
+    FlagUpdate();
+}
 
 // -----------------------------------------------------------------------------
 // Name: LogConsignSupply::Update
@@ -126,4 +137,25 @@ void LogConsignSupply::SendFullUpdate( Publisher_ABC& publisher ) const
 
     if( asn().dotations.n > 0 )
         delete [] asn().dotations.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogConsignSupply::CommitDestruction
+// Created: AGE 2007-04-16
+// -----------------------------------------------------------------------------
+void LogConsignSupply::CommitDestruction()
+{
+    AsnMsgInClientLogRavitaillementTraitementDestruction asn;
+    asn().oid_consigne = nID_;
+    asn().oid_automate = automat_.GetID();
+    Send( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogConsignSupply::Accept
+// Created: AGE 2007-04-16
+// -----------------------------------------------------------------------------
+void LogConsignSupply::Accept( ModelVisitor_ABC& visitor )
+{
+    visitor.Visit( *this );
 }
