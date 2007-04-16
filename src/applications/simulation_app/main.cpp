@@ -150,7 +150,7 @@ void SetLowFragmentationHeapAlgorithm()
 int Run( uint nArgc, char* pArgv[] )
 {
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-    ParanoiaFacade::CheckLicense( "scipio" );
+    ParanoiaFacade::CheckLicense( "sword" );
 #endif
     _mkdir( "./Debug" );
     MT_ConsoleLogger        consoleLogger;

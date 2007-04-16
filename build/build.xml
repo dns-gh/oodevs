@@ -299,7 +299,7 @@
     <target name="generate-license" description="generate license file in run directory">
         <exec executable="${bin.dir}/hostid_light.exe" failonerror="true" outputproperty="hostid"/>
         <exec executable="${bin.dir}/paranoia_light.exe" failonerror="true" inputstring="${hostid}" output="${run.dir}/scipio.license"> <!-- FIXME license name is still scipio -->
-            <arg value="scipio"/>
+            <arg value="sword"/>
         </exec>
     </target>
 
