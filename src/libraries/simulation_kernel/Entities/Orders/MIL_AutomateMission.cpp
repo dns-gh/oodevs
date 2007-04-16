@@ -43,7 +43,7 @@ void MIL_AutomateMission::InitializeDIA()
 MIL_AutomateMission::MIL_AutomateMission( const MIL_AutomateMissionType& type, MIL_Automate& automate, const ASN1T_MsgAutomateOrder& asn )
     : MIL_Mission_ABC          ( type, automate.GetKnowledge(), asn.parametres, asn.order_context, automate.GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition() )
     , type_                    ( type )
-    , automate_                ( automate)
+    , automate_                ( automate )
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
 {
@@ -63,7 +63,7 @@ MIL_AutomateMission::MIL_AutomateMission( const MIL_AutomateMissionType& type, M
     , bDIACdtBehaviorActivated_( false )
 {
     GetVariable( nDIADirectionDanger_ ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
-    GetVariable( nDIAFormation_       ).SetValue( (int)EnumAutomateOrderFormation::un_echelon );
+    GetVariable( nDIAFormation_       ).SetValue( (int)EnumAutomateOrderFormation::deux_echelons );
 }
 
 // -----------------------------------------------------------------------------
