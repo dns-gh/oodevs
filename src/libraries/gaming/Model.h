@@ -40,6 +40,7 @@ class TacticalLineFactory;
 class UserProfilesModel;
 class UserProfileFactory_ABC;
 class ActionsModel;
+class ActionParameterFactory_ABC;
 class ActionFactory_ABC;
 
 // =============================================================================
@@ -80,6 +81,7 @@ public:
     TacticalLineFactory&        tacticalLineFactory_;
     FireResultFactory&          fireResultsFactory_;
     UserProfileFactory_ABC&     userProfileFactory_;
+    ActionParameterFactory_ABC& actionParameterFactory_;
     ActionFactory_ABC&          actionFactory_;
 
     AgentsModel&          agents_;

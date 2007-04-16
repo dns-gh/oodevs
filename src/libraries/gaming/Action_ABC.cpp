@@ -52,3 +52,13 @@ void Action_ABC::AddParameter( ActionParameter_ABC& parameter )
     Register( parameter.GetId(), parameter );
     controller_.Update( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Action_ABC::Draw
+// Created: SBO 2007-04-13
+// -----------------------------------------------------------------------------
+void Action_ABC::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+{
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->Draw( where, viewport, tools );
+}

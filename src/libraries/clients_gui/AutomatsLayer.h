@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __AutomatsLayer_h_
-#define __AutomatsLayer_h_
+#ifndef __gui_AutomatsLayer_h_
+#define __gui_AutomatsLayer_h_
 
 #include "EntityLayer.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -50,6 +50,12 @@ private slots:
     void Disaggregate();
     //@}
 
+protected:
+    //! @name Operations
+    //@{
+    virtual bool ShouldDisplay( const kernel::Entity_ABC& );
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -59,7 +65,6 @@ private:
 
     //! @name Helpers
     //@{
-    virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     virtual void NotifyContextMenu( const kernel::Automat_ABC&, kernel::ContextMenu& );
     virtual void Select( const kernel::Entity_ABC&, bool );
     virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
@@ -72,7 +77,7 @@ private:
     typedef std::set< const kernel::Entity_ABC* > T_Automats;
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     gui::AgentsLayer& agents_;
@@ -83,4 +88,4 @@ private:
 
 }
 
-#endif // __AutomatsLayer_h_
+#endif // __gui_AutomatsLayer_h_

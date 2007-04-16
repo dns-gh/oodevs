@@ -10,6 +10,8 @@
 #ifndef __ActionFactory_ABC_h_
 #define __ActionFactory_ABC_h_
 
+#include "game_asn/Asn.h"
+
 namespace kernel
 {
     class Entity_ABC;
@@ -39,6 +41,9 @@ public:
     //@{
     virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::Mission& mission ) const = 0;
     virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrder& fragOrder ) const = 0;
+
+    virtual Action_ABC* CreateAction( const ASN1T_MsgPionOrder& message ) const = 0;
+    virtual Action_ABC* CreateAction( const ASN1T_MsgAutomateOrder& message ) const = 0;
     //@}
 };
 

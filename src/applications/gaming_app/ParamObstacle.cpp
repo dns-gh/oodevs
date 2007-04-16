@@ -198,6 +198,8 @@ void ParamObstacle::CommitTo( Action_ABC& action ) const
 void ParamObstacle::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     location_->Draw( point, viewport, tools );
+//    if( const ObjectType* type = typeCombo_->GetValue() )
+//        type->Draw( location_->GetPosition(), viewport, tools );
 }
 
 // -----------------------------------------------------------------------------
@@ -206,7 +208,7 @@ void ParamObstacle::Draw( const geometry::Point2f& point, const kernel::Viewport
 // -----------------------------------------------------------------------------
 void ParamObstacle::Show()
 {
-    typeCombo_->parentWidget()->parentWidget()->show();
+    typeCombo_->parentWidget()->parentWidget()->show(); // $$$$ SBO 2007-04-13: ahah
 }
 
 // -----------------------------------------------------------------------------
@@ -215,7 +217,7 @@ void ParamObstacle::Show()
 // -----------------------------------------------------------------------------
 void ParamObstacle::Hide()
 {
-    typeCombo_->parentWidget()->parentWidget()->hide();
+    typeCombo_->parentWidget()->parentWidget()->hide(); // $$$$ SBO 2007-04-13: ohoh
 }
 
 // -----------------------------------------------------------------------------

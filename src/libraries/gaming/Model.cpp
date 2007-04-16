@@ -26,9 +26,11 @@
 #include "FireFactory.h"
 #include "WeatherModel.h"
 #include "StaticModel.h"
+#include "clients_kernel/AgentTypes.h"
 #include "TacticalLineFactory.h"
 #include "UserProfilesModel.h"
 #include "UserProfileFactory.h"
+#include "ActionParameterFactory.h"
 #include "ActionFactory.h"
 #include "ActionsModel.h"
 
@@ -51,7 +53,8 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , tacticalLineFactory_( *new TacticalLineFactory( controllers, staticModel.coordinateConverter_, *this, publisher ) )
     , fireResultsFactory_( *new FireResultFactory( *this ) )
     , userProfileFactory_( *new UserProfileFactory( *this, controllers, publisher ) )
-    , actionFactory_( *new ActionFactory( controllers ) )
+    , actionParameterFactory_( *new ActionParameterFactory( staticModel.coordinateConverter_, staticModel ) )
+    , actionFactory_( *new ActionFactory( controllers, actionParameterFactory_, *this, staticModel.types_ ) )
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
     , teams_( *new TeamsModel( teamFactory_ ) )
@@ -83,6 +86,7 @@ Model::~Model()
     delete &objects_;
     delete &agents_;
     delete &actionFactory_;
+    delete &actionParameterFactory_;
     delete &userProfileFactory_;
     delete &fireResultsFactory_;
     delete &tacticalLineFactory_;

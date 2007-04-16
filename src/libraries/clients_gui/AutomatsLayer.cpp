@@ -139,7 +139,7 @@ void AutomatsLayer::ContextMenu( const Entity_ABC& entity, const geometry::Point
 // -----------------------------------------------------------------------------
 bool AutomatsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 {
-    return EntityLayer< Automat_ABC >::ShouldDisplay( entity ) && ( aggregated_.find( &entity ) != aggregated_.end() || selected_ == &entity );
+    return EntityLayer< Automat_ABC >::ShouldDisplay( entity ) && aggregated_.find( &entity ) != aggregated_.end();
 }
 
 // -----------------------------------------------------------------------------

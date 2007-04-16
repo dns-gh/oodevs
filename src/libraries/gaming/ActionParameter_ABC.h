@@ -36,6 +36,7 @@ public:
     virtual unsigned long GetId() const;
     virtual QString GetName() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const = 0;
+    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:

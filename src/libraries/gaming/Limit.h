@@ -42,6 +42,7 @@ public:
 
     virtual void Serialize( xml::xostream& xos ) const;
     void CopyTo( ASN1T_Line& destination ) const;
+    void CopyTo( T_PointVector& points ) const;
     virtual bool IsLimit() const; // $$$$ SBO 2006-11-14: only for display...
     //@}
 

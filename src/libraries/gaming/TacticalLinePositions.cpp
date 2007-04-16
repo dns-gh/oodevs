@@ -169,6 +169,15 @@ void TacticalLinePositions::WriteGeometry( ASN1T_Line& line ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: TacticalLinePositions::WriteGeometry
+// Created: SBO 2007-04-16
+// -----------------------------------------------------------------------------
+void TacticalLinePositions::WriteGeometry( T_PointVector& points ) const
+{
+    points = pointList_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: TacticalLinePositions::DoUpdate
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------

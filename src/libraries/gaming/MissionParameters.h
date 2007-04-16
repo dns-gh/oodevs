@@ -13,13 +13,10 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "gaming/Types.h"
 #include "game_asn/Asn.h"
 
-namespace kernel
-{
-    class CoordinateConverter_ABC;
-}
+class Action_ABC;
+class ActionFactory_ABC;
 
 // =============================================================================
 /** @class  MissionParameters
@@ -38,7 +35,7 @@ class MissionParameters : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MissionParameters( const kernel::CoordinateConverter_ABC& converter );
+    explicit MissionParameters( const ActionFactory_ABC& factory );
     virtual ~MissionParameters();
     //@}
 
@@ -56,34 +53,17 @@ private:
 
     //! @name Helpers
     //@{
-    void Clear();
-    void DecodePointList( const ASN1T_Line& src, T_PointVector& dest );
-    void AddLima( const ASN1T_LimaOrder& lima );
-    
     virtual void DoUpdate( const ASN1T_MsgPionOrder& message );
     virtual void DoUpdate( const ASN1T_MsgPionOrderManagement& message );
     virtual void DoUpdate( const ASN1T_MsgAutomateOrder& message );
     virtual void DoUpdate( const ASN1T_MsgAutomateOrderManagement& message );
-
-    template< typename T >
-    void DoUpdateOrderManagement( const T& message );
-    void DoUpdateOrderContext( const ASN1T_OrderContext& context );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< E_FuncLimaType > T_LimaFunctions;
-    typedef std::vector< std::pair< T_PointVector, T_LimaFunctions > > T_Limas;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::CoordinateConverter_ABC& converter_;
-    geometry::Rectangle2f boundingBox_;
-    T_PointVector leftLimit_;
-    T_PointVector rightLimit_;
-    T_Limas limas_;
+    const ActionFactory_ABC& factory_;
+    std::auto_ptr< Action_ABC > mission_;
     //@}
 };
 

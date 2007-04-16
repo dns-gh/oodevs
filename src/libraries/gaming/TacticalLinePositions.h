@@ -56,6 +56,7 @@ public:
     virtual void SerializeAttributes( xml::xostream& ) const;
 
     void WriteGeometry( ASN1T_Line& line ) const; // $$$$ SBO 2006-11-06: void Accept( PositionVisitor_ABC& ) or something...
+    void WriteGeometry( T_PointVector& points ) const;
     //@}
 
 private:

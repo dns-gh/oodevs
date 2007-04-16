@@ -11,11 +11,16 @@
 #define __ActionFactory_h_
 
 #include "ActionFactory_ABC.h"
+#include "clients_kernel/Resolver_ABC.h"
 
 namespace kernel
 {
     class Controllers;
+    class Mission;
 }
+
+class Model;
+class ActionParameterFactory_ABC;
 
 // =============================================================================
 /** @class  ActionFactory
@@ -29,7 +34,8 @@ class ActionFactory : public ActionFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionFactory( kernel::Controllers& controllers );
+             ActionFactory( kernel::Controllers& controllers, const ActionParameterFactory_ABC& factory
+                          , const Model& model, const kernel::Resolver_ABC< kernel::Mission >& missions );
     virtual ~ActionFactory();
     //@}
 
@@ -37,6 +43,9 @@ public:
     //@{
     virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::Mission& mission ) const;
     virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrder& fragOrder ) const;
+
+    virtual Action_ABC* CreateAction( const ASN1T_MsgPionOrder& message ) const;
+    virtual Action_ABC* CreateAction( const ASN1T_MsgAutomateOrder& message ) const;
     //@}
 
 private:
@@ -54,6 +63,9 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    const ActionParameterFactory_ABC& factory_;
+    const Model& model_;
+    const kernel::Resolver_ABC< kernel::Mission >& missions_;
     //@}
 };
 

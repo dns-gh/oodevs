@@ -12,6 +12,8 @@
 #include "moc_ParamLimaList.cpp"
 #include "gaming/Lima.h"
 #include "gaming/Tools.h"
+#include "gaming/ActionParameterLimaList.h"
+#include "gaming/Action_ABC.h"
 #include "clients_gui/ValuedListItem.h"
 #include "game_asn/Asn.h"
 
@@ -114,6 +116,28 @@ void ParamLimaList::Clean( ASN1T_OrderContext& asn ) const
     for( unsigned int i = 0; i < asn.limas.n; ++i )
         delete[] asn.limas.elem[i].fonctions.elem;
     delete[] asn.limas.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLimaList::CommitTo
+// Created: SBO 2007-04-16
+// -----------------------------------------------------------------------------
+void ParamLimaList::CommitTo( Action_ABC& action ) const
+{
+    std::auto_ptr< ActionParameterLimaList > param( new ActionParameterLimaList( GetName() ) );
+    ValuedListItem* item = (ValuedListItem*)( list_->firstChild() );
+    QStringList functions;
+    while( item )
+    {
+        const Lima* lima = item->GetValue< const Lima >();
+        T_PointVector points;
+        lima->CopyTo( points );
+        param->AddLima( points, item->text( 1 ) );
+        functions.append( item->text( 1 ) );
+        item = (ValuedListItem*)( item->nextSibling() );
+    }
+    param->SetValue( functions.join( "," ) );
+    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

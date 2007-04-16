@@ -49,3 +49,12 @@ QString ActionParameter_ABC::GetName() const
 {
     return name_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter_ABC::Draw
+// Created: SBO 2007-04-13
+// -----------------------------------------------------------------------------
+void ActionParameter_ABC::Draw( const geometry::Point2f&, const kernel::Viewport_ABC&, const kernel::GlTools_ABC& ) const
+{
+    // NOTHING
+}

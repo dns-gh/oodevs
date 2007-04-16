@@ -7,50 +7,43 @@
 //
 // *****************************************************************************
 
-#ifndef __Action_ABC_h_
-#define __Action_ABC_h_
+#ifndef __ActionParameterLimit_h_
+#define __ActionParameterLimit_h_
 
-#include "game_asn/asn.h"
-#include "clients_kernel/Resolver.h"
+#include "game_asn/Asn.h"
+#include "ActionParameter.h"
 
 namespace kernel
 {
-    class Controller;
-    class Entity_ABC;
+    class CoordinateConverter_ABC;
 }
 
-class ActionParameter_ABC;
-
 // =============================================================================
-/** @class  Action_ABC
-    @brief  Action_ABC
+/** @class  ActionParameterLimit
+    @brief  ActionParameterLimit
 */
-// Created: SBO 2007-03-12
+// Created: SBO 2007-04-13
 // =============================================================================
-class Action_ABC : public kernel::Resolver< ActionParameter_ABC >
+class ActionParameterLimit : public ActionParameter< QString >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Action_ABC( kernel::Controller& controller );
-    virtual ~Action_ABC();
+             ActionParameterLimit( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Line& line );
+    virtual ~ActionParameterLimit();
     //@}
 
     //! @name Operations
     //@{
-    virtual unsigned long GetId() const;
-    virtual QString GetName() const = 0;
-    virtual const kernel::Entity_ABC& GetEntity() const = 0;
-    virtual void AddParameter( ActionParameter_ABC& parameter );
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    Action_ABC( const Action_ABC& );            //!< Copy constructor
-    Action_ABC& operator=( const Action_ABC& ); //!< Assignment operator
+    ActionParameterLimit( const ActionParameterLimit& );            //!< Copy constructor
+    ActionParameterLimit& operator=( const ActionParameterLimit& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -60,10 +53,9 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    static unsigned long idManager_;
-    unsigned long id_;
+    T_PointVector points_;
+    geometry::Rectangle2f boundingBox_;
     //@}
 };
 
-#endif // __Action_ABC_h_
+#endif // __ActionParameterLimit_h_

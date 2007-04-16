@@ -7,50 +7,38 @@
 //
 // *****************************************************************************
 
-#ifndef __Action_ABC_h_
-#define __Action_ABC_h_
+#ifndef __ActionParameterDirection_h_
+#define __ActionParameterDirection_h_
 
-#include "game_asn/asn.h"
-#include "clients_kernel/Resolver.h"
-
-namespace kernel
-{
-    class Controller;
-    class Entity_ABC;
-}
-
-class ActionParameter_ABC;
+#include "game_asn/Asn.h"
+#include "ActionParameter.h"
 
 // =============================================================================
-/** @class  Action_ABC
-    @brief  Action_ABC
+/** @class  ActionParameterDirection
+    @brief  ActionParameterDirection
 */
-// Created: SBO 2007-03-12
+// Created: SBO 2007-04-16
 // =============================================================================
-class Action_ABC : public kernel::Resolver< ActionParameter_ABC >
+class ActionParameterDirection : public ActionParameter< float >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Action_ABC( kernel::Controller& controller );
-    virtual ~Action_ABC();
+             ActionParameterDirection( const QString& name, const ASN1T_Direction& asn );
+    virtual ~ActionParameterDirection();
     //@}
 
     //! @name Operations
     //@{
-    virtual unsigned long GetId() const;
-    virtual QString GetName() const = 0;
-    virtual const kernel::Entity_ABC& GetEntity() const = 0;
-    virtual void AddParameter( ActionParameter_ABC& parameter );
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    Action_ABC( const Action_ABC& );            //!< Copy constructor
-    Action_ABC& operator=( const Action_ABC& ); //!< Assignment operator
+    ActionParameterDirection( const ActionParameterDirection& );            //!< Copy constructor
+    ActionParameterDirection& operator=( const ActionParameterDirection& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -60,10 +48,8 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    static unsigned long idManager_;
-    unsigned long id_;
+    geometry::Vector2f direction_;
     //@}
 };
 
-#endif // __Action_ABC_h_
+#endif // __ActionParameterDirection_h_

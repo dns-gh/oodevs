@@ -10,6 +10,10 @@
 #ifndef __ActionParameterFactory_ABC_h_
 #define __ActionParameterFactory_ABC_h_
 
+#include "game_asn/Asn.h"
+
+class ActionParameter_ABC;
+
 // =============================================================================
 /** @class  ActionParameterFactory_ABC
     @brief  ActionParameterFactory_ABC
@@ -28,7 +32,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual ActionParameter_ABC* CreateParameter() const = 0;
+    virtual ActionParameter_ABC* CreateParameter( const QString& name, const ASN1T_MissionParameter& parameter ) const = 0;
+    virtual ActionParameter_ABC* CreateParameter( const QString& name, const ASN1T_Line& parameter ) const = 0;
+    virtual ActionParameter_ABC* CreateParameter( const QString& name, const ASN1T_LimasOrder& parameter ) const = 0;
+    virtual ActionParameter_ABC* CreateParameter( const QString& name, const ASN1T_Direction& parameter ) const = 0;
     //@}
 };
 

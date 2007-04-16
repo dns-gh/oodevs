@@ -94,7 +94,7 @@
 #include "clients_gui/LightingProxy.h"
 #include "clients_gui/LocationEditorToolbar.h"
 #include "clients_gui/LocationsLayer.h"
-#include "clients_gui/AutomatsLayer.h"
+#include "AutomatsLayer.h"
 
 #include "xeumeuleu/xml.h"
 
@@ -157,7 +157,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_, *locationsLayer ) );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, profile );
-    AutomatsLayer* automatsLayer = new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *agentsLayer );
+    ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *agentsLayer );
 
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
