@@ -11,7 +11,7 @@
 #include "Loader.h"
 #include "SimulationDispatcher.h"
 #include "Publisher_ABC.h"
-#include "pathfind/InputBinaryStream.h"
+#include "tools/InputBinaryStream.h"
 #include "boost/filesystem/operations.hpp"
 #include "tools/AsnMessageDecoder.h"
 
@@ -52,7 +52,7 @@ Loader::~Loader()
 void Loader::LoadIndex( const std::string& file )
 {
     frames_.reserve( 100 );
-    InputBinaryStream input( file );
+    tools::InputBinaryStream input( file );
     while( ! input.EndOfFile() )
     {
         frames_.push_back( Frame() );
@@ -67,7 +67,7 @@ void Loader::LoadIndex( const std::string& file )
 void Loader::LoadKeyIndex( const std::string& file )
 {
     keyFrames_.reserve( 100 );
-    InputBinaryStream input( file );
+    tools::InputBinaryStream input( file );
     while( ! input.EndOfFile() )
     {
         keyFrames_.push_back( KeyFrame() );
@@ -93,7 +93,7 @@ void Loader::SkipToFrame( unsigned frame )
 
     simulation_.StartSynchronisation();
 
-    InputBinaryWrapper input( keys_ );
+    tools::InputBinaryWrapper input( keys_ );
     while( keys_.tellg() < keyFrame.offset_ + keyFrame.size_ )
         LoadInClientMessage( input ); 
 
@@ -131,7 +131,7 @@ bool Loader::Tick()
 // -----------------------------------------------------------------------------
 void Loader::LoadOutSimMessage( std::ifstream& inputStream, unsigned count )
 {
-    InputBinaryWrapper input( inputStream );
+    tools::InputBinaryWrapper input( inputStream );
     while( count-- )
         LoadOutSimMessage( input );
 }
@@ -140,7 +140,7 @@ void Loader::LoadOutSimMessage( std::ifstream& inputStream, unsigned count )
 // Name: Loader::LoadOutSimMessage
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-void Loader::LoadOutSimMessage( InputBinaryWrapper& input )
+void Loader::LoadOutSimMessage( tools::InputBinaryWrapper& input )
 {
     unsigned size;
     input >> size;
@@ -161,7 +161,7 @@ void Loader::LoadOutSimMessage( InputBinaryWrapper& input )
 // Name: Loader::LoadInClientMessage
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-void Loader::LoadInClientMessage( InputBinaryWrapper& input )
+void Loader::LoadInClientMessage( tools::InputBinaryWrapper& input )
 {
     unsigned size;
     input >> size;

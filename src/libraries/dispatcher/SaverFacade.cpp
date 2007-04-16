@@ -15,7 +15,7 @@
 #include "Side.h"
 #include "Publisher_ABC.h"
 #include "Visitors.h"
-#include "pathfind/OutputBinaryWrapper.h"
+#include "tools/OutputBinaryWrapper.h"
 
 using namespace dispatcher;
 
@@ -60,7 +60,7 @@ namespace
     {
         Message( ASN1PEREncodeBuffer& buffer )
             : buffer_( &buffer ) {};
-        virtual void Serialize( OutputBinaryWrapper& output ) const
+        virtual void Serialize( tools::OutputBinaryWrapper& output ) const
         {
             output << buffer_->GetMsgLen();
             output.Write( (const char*)buffer_->GetMsgPtr(), buffer_->GetMsgLen() );
@@ -91,7 +91,7 @@ namespace
             , output_( 0 ) 
             , buffer_( buffer ) 
             , size_( size ) {}
-        virtual void Serialize( OutputBinaryWrapper& output ) const
+        virtual void Serialize( tools::OutputBinaryWrapper& output ) const
         {
             ModelMessage* that = const_cast< ModelMessage* >( this );
             that->output_ = &output;
@@ -112,7 +112,7 @@ namespace
             Message( asnPEREncodeBuffer ).Serialize( *output_ );
         }
         Model* model_;
-        OutputBinaryWrapper* output_;
+        tools::OutputBinaryWrapper* output_;
         ASN1OCTET* buffer_;
         unsigned size_;
     };

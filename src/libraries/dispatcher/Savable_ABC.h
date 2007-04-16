@@ -10,7 +10,10 @@
 #ifndef __Savable_ABC_h_
 #define __Savable_ABC_h_
 
-class OutputBinaryWrapper;
+namespace tools
+{
+    class OutputBinaryWrapper;
+}
 
 namespace dispatcher
 {
@@ -33,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Serialize( OutputBinaryWrapper& output ) const = 0;
+    virtual void Serialize( tools::OutputBinaryWrapper& output ) const = 0;
     //@}
 };
 

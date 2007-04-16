@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "Saver.h"
 #include "Savable_ABC.h"
-#include "pathfind/OutputBinaryWrapper.h"
+#include "tools/OutputBinaryWrapper.h"
 #include "boost/filesystem/operations.hpp"
 namespace bfs = boost::filesystem;
 
@@ -74,12 +74,12 @@ void Saver::SaveKeyFrame( const Savable_ABC& message )
     frame.offset_ = key_.tellp();
     frame.frameNumber_ = frameCount_;
     {
-        OutputBinaryWrapper wrapper( key_ );
+        tools::OutputBinaryWrapper wrapper( key_ );
         message.Serialize( wrapper );
         frame.size_ = long( key_.tellp() ) - frame.offset_;
     }
     {
-        OutputBinaryWrapper wrapper( keyIndex_ );
+        tools::OutputBinaryWrapper wrapper( keyIndex_ );
         wrapper << frame;
     }
 }
@@ -90,7 +90,7 @@ void Saver::SaveKeyFrame( const Savable_ABC& message )
 // -----------------------------------------------------------------------------
 void Saver::Flush()
 {
-    OutputBinaryWrapper wrapper( index_ );
+    tools::OutputBinaryWrapper wrapper( index_ );
     wrapper << current_;
     current_.Reset();
 }
@@ -102,6 +102,6 @@ void Saver::Flush()
 void Saver::SaveUpdateMessage( const Savable_ABC& message )
 {
     ++current_.count_;
-    OutputBinaryWrapper wrapper( update_ );
+    tools::OutputBinaryWrapper wrapper( update_ );
     message.Serialize( wrapper );
 }

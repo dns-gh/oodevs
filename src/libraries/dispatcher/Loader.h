@@ -13,7 +13,10 @@
 #include "game_asn/Asn.h"
 #include "Frames.h"
 
-class InputBinaryWrapper;
+namespace tools
+{
+    class InputBinaryWrapper;
+}
 
 namespace dispatcher
 {
@@ -62,8 +65,8 @@ private:
     void LoadIndex( const std::string& file );
     void LoadKeyIndex( const std::string& file );
     void LoadOutSimMessage( std::ifstream& input, unsigned count );
-    void LoadOutSimMessage( InputBinaryWrapper& input );
-    void LoadInClientMessage( InputBinaryWrapper& input );
+    void LoadOutSimMessage( tools::InputBinaryWrapper& input );
+    void LoadInClientMessage( tools::InputBinaryWrapper& input );
     //@}
 
 private:

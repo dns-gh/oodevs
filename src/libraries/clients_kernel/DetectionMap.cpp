@@ -9,7 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "DetectionMap.h"
-#include "pathfind/InputBinaryStream.h"
+#include "tools/InputBinaryStream.h"
 #include "WorldParameters.h"
 
 using namespace kernel;
@@ -63,7 +63,7 @@ void DetectionMap::Load( const ExerciseConfig& config  )
     WorldParameters parameters( config );
     map_ = new ElevationMap( parameters.detection_ );
 
-    InputBinaryStream archive( parameters.detection_ );
+    tools::InputBinaryStream archive( parameters.detection_ );
     double rcs; unsigned uDummy;
     archive >> rcs >> uDummy >> uDummy;
     cellsize_ = static_cast< float >( rcs );
