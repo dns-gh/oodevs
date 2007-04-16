@@ -118,6 +118,8 @@ void ParamObstacle::RegisterIn( ActionController& controller )
 // -----------------------------------------------------------------------------
 bool ParamObstacle::CheckValidity()
 {
+    if( !typeCombo_->count() )
+        return false;
     bool bOk = true;
     switch( typeCombo_->GetValue()->id_ )
     {

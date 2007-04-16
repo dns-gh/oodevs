@@ -124,7 +124,7 @@ void ParamComboBox<T>::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value = 0;
     asn.value.t = T_MissionParameter_value_enumeration;
-    asn.value.u.enumeration = comboBox_->GetValue();
+    asn.value.u.enumeration = comboBox_->count() ? comboBox_->GetValue() : T( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +148,7 @@ template< typename T >
 void ParamComboBox<T>::CommitTo( Action_ABC& action ) const
 {
     std::auto_ptr< ActionParameter< T > > param( new ActionParameter< T >( GetName() ) );
-    param->SetValue( comboBox_->GetValue() );
+    param->SetValue( comboBox_->count() ? comboBox_->GetValue() : 0 );
     action.AddParameter( *param.release() );
 }
 

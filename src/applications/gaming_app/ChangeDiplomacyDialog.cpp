@@ -87,12 +87,14 @@ ChangeDiplomacyDialog::~ChangeDiplomacyDialog()
 // -----------------------------------------------------------------------------
 void ChangeDiplomacyDialog::Validate()
 {
-    ASN_MsgChangeDiplomatie asn;
-
-    asn().oid_camp1  = pArmy1ComboBox_->GetValue()->GetId();
-    asn().oid_camp2  = pArmy2ComboBox_->GetValue()->GetId();
-    asn().diplomatie = pDiplomacyComboBox_->GetValue();
-    asn.Send( publisher_ );
+    if( pArmy1ComboBox_->count() && pArmy2ComboBox_->count() )
+    {
+        ASN_MsgChangeDiplomatie asn;
+        asn().oid_camp1  = pArmy1ComboBox_->GetValue()->GetId();
+        asn().oid_camp2  = pArmy2ComboBox_->GetValue()->GetId();
+        asn().diplomatie = pDiplomacyComboBox_->GetValue();
+        asn.Send( publisher_ );
+    }
     hide();
 }
 
@@ -145,8 +147,8 @@ void ChangeDiplomacyDialog::NotifyContextMenu( const Team_ABC& team, ContextMenu
 // -----------------------------------------------------------------------------
 void ChangeDiplomacyDialog::UpdateDiplomacy()
 {
-    const Team_ABC* army1 = pArmy1ComboBox_->GetValue();
-    const Team_ABC* army2 = pArmy2ComboBox_->GetValue();
+    const Team_ABC* army1 = pArmy1ComboBox_->count() ? pArmy1ComboBox_->GetValue() : 0;
+    const Team_ABC* army2 = pArmy2ComboBox_->count() ? pArmy2ComboBox_->GetValue() : 0;
     if( army1 && army2 )
         pDiplomacyComboBox_->SetCurrentItem( army1->Get< Diplomacies >().GetRelationship( *army2 ) );
 }

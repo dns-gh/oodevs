@@ -131,7 +131,7 @@ void LogisticSupplyChangeQuotasDialog::Show()
 // -----------------------------------------------------------------------------
 void LogisticSupplyChangeQuotasDialog::Validate()
 {
-    const Automat_ABC* target = targetCombo_->GetValue();
+    const Automat_ABC* target = targetCombo_->count() ? targetCombo_->GetValue() : 0;
     if( !selected_ || !target )
         return;
 
@@ -186,7 +186,7 @@ void LogisticSupplyChangeQuotasDialog::OnSelectionChanged()
     supplies_.clear();
     dotationTypes_.clear();
     dotationTypes_.append( "" );
-    const Automat_ABC* agent = targetCombo_->GetValue();
+    const Automat_ABC* agent = targetCombo_->count() ? targetCombo_->GetValue() : 0;
     if( agent )
     {
         // $$$$ AGE 2006-10-06: use LogisticHierarchies ?
@@ -231,7 +231,7 @@ void LogisticSupplyChangeQuotasDialog::AddDotation( const kernel::Entity_ABC& en
 // -----------------------------------------------------------------------------
 void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int col )
 {
-    const Automat_ABC* agent = targetCombo_->GetValue();
+    const Automat_ABC* agent = targetCombo_->count() ? targetCombo_->GetValue() : 0;
     if( !selected_ || !agent )
         return;
 
@@ -278,7 +278,7 @@ void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int col )
 // -----------------------------------------------------------------------------
 void LogisticSupplyChangeQuotasDialog::AddItem()
 {
-    const Automat_ABC* agent = targetCombo_->GetValue();
+    const Automat_ABC* agent = targetCombo_->count() ? targetCombo_->GetValue() : 0;
     if( !selected_ || !agent )
         return;
     const unsigned int rows = table_->numRows() + 1;

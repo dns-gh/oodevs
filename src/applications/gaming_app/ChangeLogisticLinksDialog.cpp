@@ -162,7 +162,7 @@ namespace
     {
         if( combo.isEnabled() )
         {
-            const Automat_ABC* agent = combo.GetValue();
+            const Automat_ABC* agent = combo.count() ? combo.GetValue() : 0;
             id = agent ? agent->GetId() : 0;
         }
         return combo.isEnabled();
