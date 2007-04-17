@@ -126,11 +126,8 @@ void AutomatsLayer::Toggle( const Automat_ABC& automat, bool aggregate )
 void AutomatsLayer::ContextMenu( const Entity_ABC& entity, const geometry::Point2f& point, const QPoint& where )
 {
     const Automat_ABC* automat = static_cast< const Automat_ABC* >( &entity );
-    const Agent_ABC*   agent   = static_cast< const Agent_ABC* >  ( &entity );
     if( aggregated_.find( automat ) != aggregated_.end() )
         controllers_.actions_.ContextMenu( *automat, entity, point, where );
-    else
-        controllers_.actions_.ContextMenu( *agent, entity, point, where );
 }
 
 // -----------------------------------------------------------------------------
