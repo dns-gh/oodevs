@@ -10,6 +10,8 @@
 #ifndef __ActionParameter_ABC_h_
 #define __ActionParameter_ABC_h_
 
+#include "clients_kernel/Resolver.h"
+
 namespace kernel
 {
     class Displayer_ABC;
@@ -21,7 +23,7 @@ namespace kernel
 */
 // Created: SBO 2007-03-12
 // =============================================================================
-class ActionParameter_ABC
+class ActionParameter_ABC : public kernel::Resolver< ActionParameter_ABC >
 {
 
 public:

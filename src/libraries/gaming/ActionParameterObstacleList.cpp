@@ -19,7 +19,7 @@ ActionParameterObstacleList::ActionParameterObstacleList( const QString& name, c
     : ActionParameter_ABC( name )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        obstacles_.push_back( new ActionParameterObstacle( name, converter, types, asn.elem[i] ) );
+        Register( i, *new ActionParameterObstacle( "", converter, types, asn.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -28,8 +28,7 @@ ActionParameterObstacleList::ActionParameterObstacleList( const QString& name, c
 // -----------------------------------------------------------------------------
 ActionParameterObstacleList::~ActionParameterObstacleList()
 {
-    for( T_Obstacles::iterator it = obstacles_.begin(); it != obstacles_.end(); ++it )
-        delete *it;
+    DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -40,7 +39,6 @@ void ActionParameterObstacleList::Display( kernel::Displayer_ABC& displayer ) co
 {
     displayer.Item( tools::translate( "ActionParameter", "Action" ) ).Display( GetName() )
              .Item( tools::translate( "ActionParameter", "Value" ) ).Display( "" );
-    // $$$$ SBO 2007-04-16: display sub-items
 }
 
 // -----------------------------------------------------------------------------
@@ -49,6 +47,6 @@ void ActionParameterObstacleList::Display( kernel::Displayer_ABC& displayer ) co
 // -----------------------------------------------------------------------------
 void ActionParameterObstacleList::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    for( T_Obstacles::const_iterator it = obstacles_.begin(); it != obstacles_.end(); ++it )
-        (*it)->Draw( where, viewport, tools );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->Draw( where, viewport, tools );
 }

@@ -49,17 +49,6 @@ private:
     ActionParameterObstacleList( const ActionParameterObstacleList& );            //!< Copy constructor
     ActionParameterObstacleList& operator=( const ActionParameterObstacleList& ); //!< Assignment operator
     //@}
-
-    //! @name Helpers
-    //@{
-    typedef std::vector< ActionParameter_ABC* > T_Obstacles;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    T_Obstacles obstacles_;
-    //@}
 };
 
 #endif // __ActionParameterObstacleList_h_

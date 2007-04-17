@@ -55,7 +55,7 @@ private:
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();
-    QListViewItem* FindChild( const QString& name ) const;
+    QListViewItem* FindChild( const QString& name );
     //@}
 
     //! @name Types

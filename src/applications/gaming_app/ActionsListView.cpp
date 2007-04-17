@@ -25,12 +25,8 @@ ActionsListView::ActionsListView( QWidget* parent, kernel::Controllers& controll
     , factory_( factory )
 {
     sub_ = new GamingListItemDisplayer();
-    AddColumn( "" );
     AddColumn( tr( "Action" ) );
     AddColumn( tr( "Value" ) );
-    header()->setLabel( 0, MAKE_PIXMAP( check ), "", 25 );
-    setColumnWidth( 1, 80 );
-
     controllers_.Register( *this );
 }
 
@@ -62,8 +58,8 @@ void ActionsListView::NotifyCreated( const Action_ABC& action )
     gui::ValuedListItem* item = factory_.CreateItem( this, firstChild() );
     item->SetValue( &action );
     item->setPixmap( 0, MAKE_PIXMAP( check ) );
-    item->setText( 1, action.GetName() );
-    item->setText( 2, tr( "Target: %1" ).arg( action.GetEntity().GetName() ) );
+    item->setText( 0, action.GetName() );
+    item->setText( 1, tr( "Target: %1" ).arg( action.GetEntity().GetName() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,4 +89,5 @@ void ActionsListView::NotifyDeleted( const Action_ABC& action )
 void ActionsListView::Display( const ActionParameter_ABC& param, gui::ValuedListItem* item )
 {
     param.Display( (*sub_)( item ) );
+    DeleteTail( gui::ListView< ActionsListView >::Display( param.CreateIterator(), item ) );
 }

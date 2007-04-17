@@ -52,6 +52,7 @@ private:
 
     //! @name Helpers
     //@{
+    void SetParameters( const ASN1T_MissionGenObject& asn );
     //@}
 
 private:

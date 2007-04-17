@@ -23,7 +23,7 @@ ActionParameterLimit::ActionParameterLimit( const QString& name, const kernel::C
     points_.reserve( line.vecteur_point.n );
     for( unsigned int i = 0; i < line.vecteur_point.n; ++i )
     {
-        geometry::Point2f point = converter.ConvertToXY( line.vecteur_point.elem[i] );
+        const geometry::Point2f point = converter.ConvertToXY( line.vecteur_point.elem[i] );
         points_.push_back( point );
         boundingBox_.Incorporate( point );
     }

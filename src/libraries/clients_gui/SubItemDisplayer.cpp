@@ -108,7 +108,7 @@ void SubItemDisplayer::EndDisplay()
 // Name: SubItemDisplayer::FindChild
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-QListViewItem* SubItemDisplayer::FindChild( const QString& name ) const
+QListViewItem* SubItemDisplayer::FindChild( const QString& name )
 {
     if( ! parent_ )
         throw std::runtime_error( "Parent not set" );
@@ -125,5 +125,7 @@ QListViewItem* SubItemDisplayer::FindChild( const QString& name ) const
         previous = child;
         child = child->nextSibling();
     }
-    throw std::runtime_error( std::string( "Element '" ) + name.ascii() + "' does not exist" );
+    AddChild( name );
+    return FindChild( name );
+//    throw std::runtime_error( std::string( "Element '" ) + name.ascii() + "' does not exist" );
 }
