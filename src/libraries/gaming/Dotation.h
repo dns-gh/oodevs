@@ -43,7 +43,7 @@ public:
     //! @name Member data
     //@{
     const kernel::DotationType* type_;
-    unsigned int quantity_;
+    int quantity_;
     //@}
 };
 
