@@ -344,8 +344,8 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionPC           , "DEC_Automate_PionPC"           );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionPCOfAutomate , "DEC_Automate_PionPCDeAutomate" );
 
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionsOfAutomateWithoutPC, "DEC_Automate_PionsDeAutomateAvecPC" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionsOfAutomateWithPC   , "DEC_Automate_PionsDeAutomateSansPC" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionsOfAutomateWithoutPC, "DEC_Automate_PionsDeAutomateSansPC" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionsOfAutomateWithPC   , "DEC_Automate_PionsDeAutomateAvecPC" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionPCOfAutomate        , "DEC_Automate_PionPCDeAutomate" );
 
     // State
