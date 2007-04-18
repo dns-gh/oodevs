@@ -25,6 +25,8 @@ InfoStatusBar::InfoStatusBar( QWidget* parent, kernel::Controllers& controllers 
     : QWidget( parent )
     , controllers_( controllers )
     , selected_( controllers )
+    , reinforcingPixmap_( MAKE_PIXMAP( reinforcing ) )
+    , reinforcedPixmap_ ( MAKE_PIXMAP( reinforced ) )
 {
     setFixedSize( 250, 32 );
     QGridLayout* grid = new QGridLayout( this, 1, 7, 2, 0 );
@@ -148,7 +150,7 @@ void InfoStatusBar::SetReinforcements( const Reinforcements& reinforcements )
     show();
     if( reinforcements.reinforced_ )
     {
-        reinforcing_->setPixmap( MAKE_PIXMAP( reinforcing ) );    
+        reinforcing_->setPixmap( reinforcingPixmap_ );    
         const QString tip = tr( "Reinforcing unit '%1'." ).arg( reinforcements.reinforced_->GetName() );
         QToolTip::add( reinforcing_, tip );
     }
@@ -159,7 +161,7 @@ void InfoStatusBar::SetReinforcements( const Reinforcements& reinforcements )
     }
     if( !reinforcements.reinforcements_.empty() )
     {
-        reinforced_->setPixmap( MAKE_PIXMAP( reinforced ) );
+        reinforced_->setPixmap( reinforcedPixmap_ );
         QString tip = tr( "Reinforced by: " );
         for( unsigned int i = 0; i < reinforcements.reinforcements_.size(); ++i )
             tip += "\n" + reinforcements.reinforcements_[i]->GetName();

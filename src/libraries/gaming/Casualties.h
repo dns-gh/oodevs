@@ -27,10 +27,6 @@ public:
     virtual ~Casualties();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 public:
     //! @name Member data
     //@{

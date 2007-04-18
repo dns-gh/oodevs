@@ -20,6 +20,7 @@ class UserProfile;
 // =============================================================================
 /** @class  UserProfileRights_ABC
     @brief  UserProfileRights_ABC
+    // $$$$ AGE 2007-04-18: ^c^v
 */
 // Created: SBO 2007-01-18
 // =============================================================================
@@ -87,6 +88,7 @@ private:
     QListView* listView_;
     UserProfile* selectedProfile_;
     bool needsSaving_;
+    QPixmap check_, check_grey_;
     //@}
 };
 

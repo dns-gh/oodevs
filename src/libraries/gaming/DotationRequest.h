@@ -31,10 +31,6 @@ public:
     virtual ~DotationRequest();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 public:
     //! @name Member data
     //@{

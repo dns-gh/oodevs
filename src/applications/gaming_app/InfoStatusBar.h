@@ -84,6 +84,9 @@ private:
     QLabel* mood_;
     QLabel* experience_;
     QLabel* tiredness_;
+
+    QPixmap reinforcingPixmap_;
+    QPixmap reinforcedPixmap_;
     //@}
 };
 

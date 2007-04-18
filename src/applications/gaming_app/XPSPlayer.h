@@ -53,10 +53,6 @@ private:
     XPSPlayer& operator=( const XPSPlayer& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

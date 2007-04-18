@@ -55,10 +55,6 @@ public:
     virtual ~DrawerPanel();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 signals:
     //! @name Signals
     //@{

@@ -86,6 +86,8 @@ private:
     QLabel* icon_;
     QLabel* name_;
     QProgressBar* lifeBar_;
+
+    QPixmap csword_;
     //@}
 };
 

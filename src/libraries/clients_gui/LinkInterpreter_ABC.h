@@ -24,7 +24,7 @@ namespace gui
 
 // =============================================================================
 /** @class  LinkInterpreter_ABC
-    @brief  LinkInterpreter_ABC
+    @brief  Link interpreter base
 */
 // Created: AGE 2006-05-11
 // =============================================================================
@@ -69,7 +69,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< unsigned int, const kernel::Entity_ABC* > T_Entities;
-    typedef std::map< QString, T_Entities >             T_TypedEntities;
+    typedef std::map< QString, T_Entities >                     T_TypedEntities;
     //@}
 
 private:

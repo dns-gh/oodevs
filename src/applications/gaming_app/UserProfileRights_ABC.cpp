@@ -25,6 +25,8 @@ UserProfileRights_ABC::UserProfileRights_ABC( QListView* listView )
     : listView_( listView )
     , selectedProfile_( 0 )
     , needsSaving_( false )
+    , check_     ( MAKE_PIXMAP( check ) )
+    , check_grey_( MAKE_PIXMAP( check_grey ) )
 {
     listView_->header()->show();
     listView_->addColumn( tools::translate( "UserProfileRights", "Read" ) , 40 );
@@ -162,23 +164,23 @@ void UserProfileRights_ABC::SetStatus( QListViewItem* item, Status status )
     }
     else if( status == eReadOnly )
     {
-        item->setPixmap( 1, MAKE_PIXMAP( check ) );
+        item->setPixmap( 1, check_ );
         item->setPixmap( 2, QPixmap() );
     }
     else if( status == eReadInherited )
     {
-        item->setPixmap( 1, MAKE_PIXMAP( check_grey ) );
+        item->setPixmap( 1, check_grey_ );
         item->setPixmap( 2, QPixmap() );
     }
     else if( status == eWrite )
     {
-        item->setPixmap( 1, MAKE_PIXMAP( check ) );
-        item->setPixmap( 2, MAKE_PIXMAP( check ) );
+        item->setPixmap( 1, check_ );
+        item->setPixmap( 2, check_ );
     }
     else if( status == eWriteInherited )
     {
-        item->setPixmap( 1, MAKE_PIXMAP( check_grey ) );
-        item->setPixmap( 2, MAKE_PIXMAP( check_grey ) );
+        item->setPixmap( 1, check_grey_ );
+        item->setPixmap( 2, check_grey_ );
     }
 }
 
@@ -253,3 +255,4 @@ bool UserProfileRights_ABC::NeedsSaving() const
 {
     return needsSaving_;
 }
+

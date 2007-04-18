@@ -94,6 +94,7 @@ private:
     gui::ItemFactory_ABC& factory_;
     ModelBuilder& modelBuilder_;
     const kernel::FormationLevels& levels_;
+    QPixmap lock_, commandPost_;
     //@}
 };
 

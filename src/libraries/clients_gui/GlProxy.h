@@ -81,12 +81,6 @@ private:
     GlProxy& operator=( const GlProxy& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    void CheckView() const;
-    void CheckTools() const;
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< Layer_ABC* > T_Layers;

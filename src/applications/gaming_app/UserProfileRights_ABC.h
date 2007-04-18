@@ -87,6 +87,8 @@ private:
     QListView* listView_;
     UserProfile* selectedProfile_;
     bool needsSaving_;
+
+    QPixmap check_, check_grey_;
     //@}
 };
 

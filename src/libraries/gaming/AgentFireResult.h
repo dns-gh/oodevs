@@ -41,10 +41,6 @@ public:
     virtual ~AgentFireResult();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{

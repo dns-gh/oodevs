@@ -33,6 +33,7 @@ Spy::Spy( QWidget* parent, Controllers& controllers )
     : QVBox( parent, tr( "Spy" ) )
     , controllers_( controllers )
     , selected_( controllers )
+    , msg_( MAKE_PIXMAP( msg ) )
 {
     QVBox* box = new QVBox( this );
     QPushButton* button = new QPushButton( MAKE_ICON( cross ), tr( "Clear" ), box );
@@ -165,7 +166,7 @@ void Spy::NotifyCreated( const Report& report )
     CIT_Agents it = spied_.find( agent );
     if( it == spied_.end() )
         return;
-    toolBox_->setItemIconSet( it->second, MAKE_PIXMAP( msg ) );
+    toolBox_->setItemIconSet( it->second, msg_ );
 }
 
 // -----------------------------------------------------------------------------

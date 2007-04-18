@@ -37,6 +37,8 @@ TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, 
     , factory_( factory )
     , modelBuilder_( modelBuilder )
     , levels_( levels )
+    , lock_( MAKE_PIXMAP( lock ) )
+    , commandPost_( MAKE_PIXMAP( commandPost ) )
 {
     addColumn( "HiddenPuce", 15 );
     setColumnAlignment( 1, Qt::AlignCenter );
@@ -81,9 +83,9 @@ void TacticalListView::Display( const Entity_ABC& entity, gui::ValuedListItem* i
 {
     item->setRenameEnabled( 0, true );
     if( const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
-        item->setPixmap( 1, decisions->IsEmbraye() ? MAKE_PIXMAP( lock ) : QPixmap() );
+        item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
     else if( const kernel::CommandPostAttributes* commandPost = entity.Retrieve< kernel::CommandPostAttributes >() )
-        item->setPixmap( 1, commandPost->IsCommandPost() ? MAKE_PIXMAP( commandpost ) : QPixmap() );
+        item->setPixmap( 1, commandPost->IsCommandPost() ? commandpost_ : QPixmap() );
     HierarchyListView< kernel::TacticalHierarchies >::Display( entity, item );
 }
 
@@ -106,7 +108,7 @@ void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
     const Entity_ABC* agent = & decisions.GetAgent();
     gui::ValuedListItem* item = gui::FindItem( agent, firstChild() );
     if( item )
-        item->setPixmap( 1, decisions.IsEmbraye() ? MAKE_PIXMAP( lock ) : QPixmap() );
+        item->setPixmap( 1, decisions.IsEmbraye() ? lock_ : QPixmap() );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +121,7 @@ void TacticalListView::NotifyUpdated( const kernel::Entity_ABC& entity )
     {
         item->SetNamed( entity );
         if( const kernel::CommandPostAttributes* commandPost = entity.Retrieve< CommandPostAttributes >() )
-            item->setPixmap( 1, commandPost->IsCommandPost() ? MAKE_PIXMAP( commandpost ) : QPixmap() );
+            item->setPixmap( 1, commandPost->IsCommandPost() ? commandpost_ : QPixmap() );
     }
 }
 

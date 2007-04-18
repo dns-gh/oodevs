@@ -30,6 +30,9 @@ DrawerStyle::DrawerStyle( xml::xistream& input, const DrawerCategory& category, 
     , markerStart_ ( 0 )
     , markerMiddle_( 0 )
     , markerEnd_   ( 0 )
+    , linePixmap_( MAKE_PIXMAP( line ) )
+    , pointPixmap_( MAKE_PIXMAP( point ) )
+    , polygonPixmap_( MAKE_PIXMAP( polygon ) )
 {
     SVGFactory factory( renderer_ );
     
@@ -99,11 +102,11 @@ QPixmap DrawerStyle::GetPixmap() const
 {
     // $$$$ SBO 2007-03-22: bof
     if( type_ == "line" )
-        return MAKE_PIXMAP( line );
+        return linePixmap_;
     if( type_ == "point" )
-        return MAKE_PIXMAP( point );
+        return pointPixmap_;
     if( type_ == "polygon" )
-        return MAKE_PIXMAP( polygon );
+        return polygonPixmap_;
     return QPixmap();
 }
 

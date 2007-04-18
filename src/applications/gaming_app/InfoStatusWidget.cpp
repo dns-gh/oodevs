@@ -63,6 +63,7 @@ InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& contro
     , profile_( profile )
     , icons_( icons )
     , selected_( controllers )
+    , csword_( MAKE_PIXMAP( csword ) )
 {
     setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Expanding );
     setFixedWidth( 150 );
@@ -147,7 +148,7 @@ void InfoStatusWidget::SetDefault()
 {
     name_->setPaletteForegroundColor( Qt::black );
     name_->setText( selected_ ? selected_->GetName() : "" );
-    icon_->setPixmap( MAKE_PIXMAP( csword ) );
+    icon_->setPixmap( csword_ );
     lifeBar_->hide();
 }
 

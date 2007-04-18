@@ -46,10 +46,6 @@ public:
     virtual ~AgentKnowledges();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{

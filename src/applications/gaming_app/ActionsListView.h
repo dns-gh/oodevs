@@ -65,6 +65,9 @@ private:
     kernel::Controllers& controllers_;
     gui::ItemFactory_ABC& factory_;
     gui::ListItemDisplayer* sub_;
+
+    QPixmap mission_;
+    QPixmap parameter_;
     //@}
 };
 

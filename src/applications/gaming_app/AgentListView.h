@@ -64,6 +64,7 @@ private:
     //! @name Member data
     //@{
     Publisher_ABC& publisher_;
+    QPixmap lock_, commandPost_;
     //@}
 };
 

@@ -17,7 +17,7 @@ namespace gui
 
 // =============================================================================
 /** @class  MapLayerProxy
-    @brief  MapLayerProxy. To prevent ownership
+    @brief  MapLayer proxy. To prevent ownership
 */
 // Created: AGE 2006-03-29
 // =============================================================================

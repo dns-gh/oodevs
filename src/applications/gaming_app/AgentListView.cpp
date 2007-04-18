@@ -27,6 +27,8 @@ using namespace kernel;
 AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
     : gui::HierarchyListView< kernel::CommunicationHierarchies >( pParent, controllers, factory, profile, icons )
     , publisher_( publisher )
+    , lock_( MAKE_PIXMAP( lock ) )
+    , commandPost_( MAKE_PIXMAP( commandpost ) )
 {
     addColumn( "HiddenPuce", 15 );
     setColumnAlignment( 1, Qt::AlignCenter );
@@ -68,9 +70,9 @@ void AgentListView::Display( const Entity_ABC& entity, gui::ValuedListItem* item
 {
     const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >();
     if( decisions )
-        item->setPixmap( 1, decisions->IsEmbraye() ? MAKE_PIXMAP( lock ) : QPixmap() );
+        item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
     else if( const kernel::CommandPostAttributes* commandPost = entity.Retrieve< kernel::CommandPostAttributes >() )
-        item->setPixmap( 1, commandPost->IsCommandPost() ? MAKE_PIXMAP( commandpost ) : QPixmap() );
+        item->setPixmap( 1, commandPost->IsCommandPost() ? commandPost_ : QPixmap() );
     gui::HierarchyListView< kernel::CommunicationHierarchies >::Display( entity, item );
 }
 
@@ -83,7 +85,7 @@ void AgentListView::NotifyUpdated( const AutomatDecisions& decisions )
     const kernel::Entity_ABC* agent = & decisions.GetAgent();
     gui::ValuedListItem* item = gui::FindItem( agent, firstChild() );
     if( item )
-        item->setPixmap( 1, decisions.IsEmbraye() ? MAKE_PIXMAP( lock ) : QPixmap() );
+        item->setPixmap( 1, decisions.IsEmbraye() ? lock_ : QPixmap() );
 }
 
 // -----------------------------------------------------------------------------

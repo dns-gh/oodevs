@@ -39,10 +39,6 @@ public:
     virtual ~PerceptionMap();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{

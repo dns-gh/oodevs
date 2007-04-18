@@ -74,6 +74,9 @@ private:
     QTimer* pLagTimer_;
     QLabel* checkPoint_;
     QTimer* checkPointTimer_;
+    QPixmap tickred_;
+    QPixmap tickoff_;
+    QPixmap tickon_;
     //@}
 };
 

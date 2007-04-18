@@ -93,6 +93,7 @@ private:
     T_Agents spied_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     QToolBox* toolBox_;
+    QPixmap msg_;
     //@}
 };
 

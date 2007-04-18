@@ -23,6 +23,9 @@ StatusBar::StatusBar( QStatusBar* parent, const DetectionMap& detection, const C
     : gui::StatusBar( parent, detection, converter )
     , lastSimulationStatus_( false )
     , controllers_( controllers )
+    , tickred_( MAKE_PIXMAP( tickred ) )
+    , tickoff_( MAKE_PIXMAP( tickoff ) )
+    , tickon_ ( MAKE_PIXMAP( tickon ) )
 {
     checkPoint_ = new QLabel( parent );
     checkPoint_->setMinimumWidth( 20 );
@@ -68,7 +71,7 @@ StatusBar::~StatusBar()
 // -----------------------------------------------------------------------------
 void StatusBar::OnLag()
 {
-    pTick_->setPixmap( MAKE_PIXMAP( tickred ) );
+    pTick_->setPixmap( tickred_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +83,7 @@ void StatusBar::NotifyUpdated( const Simulation& simulation )
     if( !simulation.IsConnected() && lastSimulationStatus_ == true )
     {
         pLagTimer_->stop();
-        pTick_->setPixmap( MAKE_PIXMAP( tickoff ) );
+        pTick_->setPixmap( tickoff_ );
         pTime_->setText( "---" );
     }
     else if( lastSimulationStatus_ == false )
@@ -102,7 +105,7 @@ void StatusBar::NotifyUpdated( const Simulation& simulation )
 void StatusBar::NotifyUpdated( const Simulation::sStartTick& )
 {
     pLagTimer_->stop();
-    pTick_->setPixmap( MAKE_PIXMAP( tickon ) );
+    pTick_->setPixmap( tickon_ );
 }
     
 // -----------------------------------------------------------------------------
@@ -111,7 +114,7 @@ void StatusBar::NotifyUpdated( const Simulation::sStartTick& )
 // -----------------------------------------------------------------------------
 void StatusBar::NotifyUpdated( const Simulation::sEndTick& )
 {
-    pTick_->setPixmap( MAKE_PIXMAP( tickoff ) );
+    pTick_->setPixmap( tickoff_ );
     pLagTimer_->start( 10000, true );
 }
 

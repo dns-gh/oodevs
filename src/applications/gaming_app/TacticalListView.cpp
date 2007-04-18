@@ -23,6 +23,8 @@
 TacticalListView::TacticalListView( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
     : gui::HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory, profile, icons )
     , publisher_( publisher )
+    , lock_( MAKE_PIXMAP( lock ) )
+    , commandPost_( MAKE_PIXMAP( commandpost ) )
 {
     addColumn( "HiddenPuce", 15 );
     setColumnAlignment( 1, Qt::AlignCenter );
@@ -65,9 +67,9 @@ void TacticalListView::Display( const kernel::Entity_ABC& entity, gui::ValuedLis
 {
     const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >();
     if( decisions )
-        item->setPixmap( 1, decisions->IsEmbraye() ? MAKE_PIXMAP( lock ) : QPixmap() );
+        item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
     else if( const kernel::CommandPostAttributes* commandPost = entity.Retrieve< kernel::CommandPostAttributes >() )
-        item->setPixmap( 1, commandPost->IsCommandPost() ? MAKE_PIXMAP( commandpost ) : QPixmap() );
+        item->setPixmap( 1, commandPost->IsCommandPost() ? commandPost_ : QPixmap() );
     gui::HierarchyListView< kernel::TacticalHierarchies >::Display( entity, item );
 }
 
@@ -80,7 +82,7 @@ void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
     const kernel::Entity_ABC* agent = & decisions.GetAgent();
     gui::ValuedListItem* item = gui::FindItem( agent, firstChild() );
     if( item )
-        item->setPixmap( 1, decisions.IsEmbraye() ? MAKE_PIXMAP( lock ) : QPixmap() );
+        item->setPixmap( 1, decisions.IsEmbraye() ? lock_ : QPixmap() );
 }
 
 // -----------------------------------------------------------------------------
