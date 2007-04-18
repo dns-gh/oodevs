@@ -88,9 +88,9 @@ void StatusBar::NotifyUpdated( const Simulation& simulation )
     lastSimulationStatus_ = simulation.IsConnected();
 
     unsigned long seconds = simulation.GetTime();
-    pTime_->setText( QString( "%1:%2:%3" ).arg( ( seconds / 3600 ) % 24, 2 )
-                                          .arg( ( seconds / 60   ) % 60, 2 )
-                                          .arg( ( seconds % 60   )     , 2 ) );
+    pTime_->setText( QString( "%1:%2:%3" ).arg( QString::number( ( seconds / 3600 ) % 24 ).rightJustify( 2, '0' ) )
+                                          .arg( QString::number( ( seconds / 60   ) % 60 ).rightJustify( 2, '0' ) )
+                                          .arg( QString::number( ( seconds % 60   )      ).rightJustify( 2, '0' ) ) );
     const float speed = simulation.GetEffectiveSpeed();
     pSpeed_->setText( speed > 0 ? QString::number( speed ) : QString( "---" ) );
 }

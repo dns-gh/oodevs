@@ -42,6 +42,7 @@
 #include "ActionsPanel.h"
 #include "ReplayerToolbar.h"
 #include "icons.h"
+#include "ClockDock.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -245,6 +246,11 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     QDockWindow* infoWnd = new InfoDock( this, controllers_, p, *icons, *factory );
     moveDockWindow( infoWnd, Qt::DockBottom );
     setDockEnabled( infoWnd, Qt::DockTop, false );
+
+    // Clock
+    QDockWindow* clockWnd = new ClockDock( this, controllers_ );
+    moveDockWindow( clockWnd, Qt::DockRight );
+    setDockEnabled( clockWnd, Qt::DockTop, false );
 
     // Profiler
     QDockWindow* pProfilerDockWnd_ = new QDockWindow( this );

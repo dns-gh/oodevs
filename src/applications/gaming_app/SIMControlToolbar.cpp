@@ -87,7 +87,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     new QLabel( " ", this );
     new QLabel( tr( "Speed factor:" ), this );
 
-    pSpeedSpinBox_ = new SpinBox( 1, 500, 1, this, *this );
+    pSpeedSpinBox_ = new SpinBox( 1, 100000, 1, this, *this );
     pSpeedSpinBox_->setButtonSymbols( QSpinBox::PlusMinus );
     pSpeedSpinBox_->setValue( 1 );
     pSpeedSpinBox_->setEnabled( false );
