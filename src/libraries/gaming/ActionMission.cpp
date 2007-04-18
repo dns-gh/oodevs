@@ -17,13 +17,15 @@
 // Name: ActionMission constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionMission::ActionMission( const kernel::Entity_ABC& entity, const kernel::Mission& mission, kernel::Controller& controller )
+ActionMission::ActionMission( const kernel::Entity_ABC& entity, const kernel::Mission& mission, kernel::Controller& controller, bool registered /* = true */ )
     : Action_ABC( controller )
     , controller_( controller )
     , entity_( entity )
     , mission_( mission )
+    , registered_( registered )
 {
-    controller_.Create( *(Action_ABC*)this );
+    if( registered_ )
+        controller_.Create( *(Action_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,7 +34,8 @@ ActionMission::ActionMission( const kernel::Entity_ABC& entity, const kernel::Mi
 // -----------------------------------------------------------------------------
 ActionMission::~ActionMission()
 {
-    controller_.Delete( *(Action_ABC*)this );
+    if( registered_ )
+        controller_.Delete( *(Action_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

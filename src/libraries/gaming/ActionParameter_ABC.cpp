@@ -54,7 +54,8 @@ QString ActionParameter_ABC::GetName() const
 // Name: ActionParameter_ABC::Draw
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-void ActionParameter_ABC::Draw( const geometry::Point2f&, const kernel::Viewport_ABC&, const kernel::GlTools_ABC& ) const
+void ActionParameter_ABC::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    // NOTHING
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->Draw( where, viewport, tools );
 }

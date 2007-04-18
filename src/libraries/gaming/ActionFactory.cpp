@@ -47,7 +47,7 @@ ActionFactory::~ActionFactory()
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC& target, const kernel::Mission& mission ) const
 {
-    return new ActionMission( target, mission, controllers_.controller_ );
+    return new ActionMission( target, mission, controllers_.controller_, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +65,7 @@ Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC& target, const
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgPionOrder& message ) const
 {
-    std::auto_ptr< Action_ABC > action( new ActionMission( model_.agents_.GetAgent( message.oid_unite_executante ), missions_.Get( message.mission ), controllers_.controller_ ) );
+    std::auto_ptr< Action_ABC > action( new ActionMission( model_.agents_.GetAgent( message.oid_unite_executante ), missions_.Get( message.mission ), controllers_.controller_, false ) );
     for( unsigned int i = 0; i < message.parametres.n; ++i )
         if( ActionParameter_ABC* param = factory_.CreateParameter( QString( "Parameter %1" ).arg( i ), message.parametres.elem[i] ) )
             action->AddParameter( *param );
@@ -84,7 +84,7 @@ Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgPionOrder& message ) con
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgAutomateOrder& message ) const
 {
-    std::auto_ptr< Action_ABC > action( new ActionMission( model_.agents_.GetAutomat( message.oid_unite_executante ), missions_.Get( message.mission ), controllers_.controller_ ) );
+    std::auto_ptr< Action_ABC > action( new ActionMission( model_.agents_.GetAutomat( message.oid_unite_executante ), missions_.Get( message.mission ), controllers_.controller_, false ) );
     for( unsigned int i = 0; i < message.parametres.n; ++i )
         if( ActionParameter_ABC* param = factory_.CreateParameter( QString( "Parameter %1" ).arg( i ), message.parametres.elem[i] ) )
             action->AddParameter( *param );

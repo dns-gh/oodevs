@@ -42,7 +42,7 @@ void ActionParameterDirection::Draw( const geometry::Point2f& where, const kerne
     {
         glPushAttrib( GL_LINE_BIT );
         glLineWidth( 3.f );
-        tools.DrawArrow( where, where + direction_ * tools.Pixels() * 100.f );
+        tools.DrawArrow( where, where + direction_ * 1000.f );
         glPopAttrib();
     }
 }

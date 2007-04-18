@@ -18,6 +18,7 @@
 #include "InfoButtonsWidget.h"
 #include "InfoReportsTab.h"
 #include "InfoConflictsTab.h"
+#include "InfoMissionsTab.h"
 #include "icons.h"
 
 // -----------------------------------------------------------------------------
@@ -46,6 +47,7 @@ InfoWidget::InfoWidget( QWidget* parent, kernel::Controllers& controllers, const
     tabs->setTabShape( QTabWidget::Triangular );
     tabs->addTab( new InfoReportsTab( this, controllers, itemFactory ), MAKE_PIXMAP( msg ), tr( "Reports" ) );
     tabs->addTab( new InfoConflictsTab( this, controllers, itemFactory ), MAKE_PIXMAP( conflict ), tr( "Conflicts" ) );
+    tabs->addTab( new InfoMissionsTab( this, controllers, itemFactory ), MAKE_PIXMAP( mission ), tr( "Missions" ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -128,7 +128,7 @@ Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     result->Attach( *new Dotations( controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Equipments( controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
-    result->Attach( *new MissionParameters( model_.actionFactory_ ) );
+    result->Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_ ) );
 
     result->Update( asnMsg );
     result->Polish();
@@ -202,7 +202,7 @@ Population_ABC* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg 
 void AgentFactory::AttachExtensions( Entity_ABC& agent )
 {
     agent.Attach( *new DebugPoints() );
-    agent.Attach( *new MissionParameters( model_.actionFactory_ ) );
+    agent.Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_ ) );
     agent.Attach( *new Paths( static_.coordinateConverter_ ) );
     agent.Attach( *new Reports( agent, controllers_.controller_, simulation_, static_.reportFactory_ ) );
     agent.Attach( *new ObjectDetections( controllers_.controller_, model_.objects_ ) );

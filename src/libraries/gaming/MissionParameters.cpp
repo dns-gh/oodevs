@@ -11,6 +11,7 @@
 #include "MissionParameters.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/Controller.h"
 #include "ActionFactory_ABC.h"
 #include "Action_ABC.h"
 
@@ -18,9 +19,9 @@
 // Name: MissionParameters constructor
 // Created: SBO 2006-11-13
 // -----------------------------------------------------------------------------
-MissionParameters::MissionParameters( const ActionFactory_ABC& factory )
-    : factory_( factory )
-    , mission_( 0 )
+MissionParameters::MissionParameters( kernel::Controller& controller, const ActionFactory_ABC& factory )
+    : controller_( controller )
+    , factory_( factory )
 {
     // NOTHING
 }
@@ -40,7 +41,9 @@ MissionParameters::~MissionParameters()
 // -----------------------------------------------------------------------------
 void MissionParameters::DoUpdate( const ASN1T_MsgPionOrder& message )
 {
-    mission_.reset( factory_.CreateAction( message ) );
+    Action_ABC* action = factory_.CreateAction( message );
+    Register( action->GetId(), *action );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +52,9 @@ void MissionParameters::DoUpdate( const ASN1T_MsgPionOrder& message )
 // -----------------------------------------------------------------------------
 void MissionParameters::DoUpdate( const ASN1T_MsgAutomateOrder& message )
 {
-    mission_.reset( factory_.CreateAction( message ) );
+    Action_ABC* action = factory_.CreateAction( message );
+    Register( action->GetId(), *action );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,8 +63,9 @@ void MissionParameters::DoUpdate( const ASN1T_MsgAutomateOrder& message )
 // -----------------------------------------------------------------------------
 void MissionParameters::DoUpdate( const ASN1T_MsgPionOrderManagement& message )
 {
-    if( message.etat == EnumOrderState::stopped )
-        mission_.reset();
+//    if( message.etat == EnumOrderState::stopped )
+//        mission_.reset();
+//    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,8 +74,9 @@ void MissionParameters::DoUpdate( const ASN1T_MsgPionOrderManagement& message )
 // -----------------------------------------------------------------------------
 void MissionParameters::DoUpdate( const ASN1T_MsgAutomateOrderManagement& message )
 {
-    if( message.etat == EnumOrderState::stopped )
-        mission_.reset();
+//    if( message.etat == EnumOrderState::stopped )
+//        mission_.reset();
+//    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,6 +85,7 @@ void MissionParameters::DoUpdate( const ASN1T_MsgAutomateOrderManagement& messag
 // -----------------------------------------------------------------------------
 void MissionParameters::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    if( mission_.get() && tools.ShouldDisplay( "MissionParameters" ) )
-        mission_->Draw( where, viewport, tools );
+    if( tools.ShouldDisplay( "MissionParameters" ) )
+        for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+            it->second->Draw( where, viewport, tools );
 }

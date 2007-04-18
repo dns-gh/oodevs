@@ -37,6 +37,7 @@ ActionsListView::ActionsListView( QWidget* parent, kernel::Controllers& controll
 ActionsListView::~ActionsListView()
 {
     controllers_.Remove( *this );
+    delete sub_;
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +58,7 @@ void ActionsListView::NotifyCreated( const Action_ABC& action )
 {
     gui::ValuedListItem* item = factory_.CreateItem( this, firstChild() );
     item->SetValue( &action );
-    item->setPixmap( 0, MAKE_PIXMAP( check ) );
+    item->setPixmap( 0, MAKE_PIXMAP( mission ) );
     item->setText( 0, action.GetName() );
     item->setText( 1, tr( "Target: %1" ).arg( action.GetEntity().GetName() ) );
 }
@@ -78,8 +79,7 @@ void ActionsListView::NotifyUpdated( const Action_ABC& action )
 // -----------------------------------------------------------------------------
 void ActionsListView::NotifyDeleted( const Action_ABC& action )
 {
-    if( gui::ValuedListItem* item = gui::FindItem( &action, firstChild() ) )
-        RemoveItem( item );
+    delete gui::FindItem( &action, firstChild() );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,6 +88,7 @@ void ActionsListView::NotifyDeleted( const Action_ABC& action )
 // -----------------------------------------------------------------------------
 void ActionsListView::Display( const ActionParameter_ABC& param, gui::ValuedListItem* item )
 {
+    item->setPixmap( 0, MAKE_PIXMAP( parameter ) );
     param.Display( (*sub_)( item ) );
     DeleteTail( gui::ListView< ActionsListView >::Display( param.CreateIterator(), item ) );
 }

@@ -30,7 +30,7 @@ class ActionMission : public Action_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionMission( const kernel::Entity_ABC& entity, const kernel::Mission& mission, kernel::Controller& controller );
+             ActionMission( const kernel::Entity_ABC& entity, const kernel::Mission& mission, kernel::Controller& controller, bool registered = true );
     virtual ~ActionMission();
     //@}
 
@@ -57,6 +57,7 @@ private:
     kernel::Controller& controller_;
     const kernel::Entity_ABC& entity_;
     const kernel::Mission& mission_;
+    bool registered_;
     //@}
 };
 

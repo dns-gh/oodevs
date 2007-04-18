@@ -17,6 +17,7 @@ namespace kernel
 {
     class Controller;
     class Entity_ABC;
+    class Displayer_ABC;
 }
 
 class ActionParameter_ABC;
@@ -44,6 +45,7 @@ public:
     virtual const kernel::Entity_ABC& GetEntity() const = 0;
     virtual void AddParameter( ActionParameter_ABC& parameter );
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
     //@}
 
 private:

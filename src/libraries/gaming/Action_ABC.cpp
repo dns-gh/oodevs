@@ -11,6 +11,7 @@
 #include "Action_ABC.h"
 #include "ActionParameter_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "Tools.h"
 
 unsigned long Action_ABC::idManager_ = 0; // $$$$ SBO 2007-03-12: real id manager maybe
 
@@ -61,4 +62,14 @@ void Action_ABC::Draw( const geometry::Point2f& where, const kernel::Viewport_AB
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Draw( where, viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Action_ABC::Display
+// Created: SBO 2007-04-18
+// -----------------------------------------------------------------------------
+void Action_ABC::Display( kernel::Displayer_ABC& displayer ) const
+{
+    displayer.Item( tools::translate( "Action", "Action" ) ).Display( GetName() )
+             .Item( tools::translate( "Action", "Value" ) ).Display( "" );
 }

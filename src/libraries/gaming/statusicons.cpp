@@ -46,6 +46,8 @@
 #include "res/stance_engineered.xpm"
 #include "res/stance_arrow.xpm"
 #include "res/parent.xpm"
+#include "res/mission.xpm"
+#include "res/parameter.xpm"
 #include "res/checkpoint1.xpm"
 #include "res/checkpoint2.xpm"
 #include "res/checkpoint3.xpm"

@@ -13,7 +13,13 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/Resolver.h"
 #include "game_asn/Asn.h"
+
+namespace kernel
+{
+    class Controller;
+}
 
 class Action_ABC;
 class ActionFactory_ABC;
@@ -29,19 +35,21 @@ class MissionParameters : public kernel::Extension_ABC
                         , public kernel::Updatable_ABC< ASN1T_MsgPionOrderManagement >
                         , public kernel::Updatable_ABC< ASN1T_MsgAutomateOrder >
                         , public kernel::Updatable_ABC< ASN1T_MsgAutomateOrderManagement >
+                        , public kernel::Resolver< Action_ABC >
                         , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MissionParameters( const ActionFactory_ABC& factory );
+             MissionParameters( kernel::Controller& controller, const ActionFactory_ABC& factory );
     virtual ~MissionParameters();
     //@}
 
     //! @name Operations
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    void Display( kernel::Displayer_ABC& displayer ) const;
     //@}
 
 private:
@@ -62,8 +70,8 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     const ActionFactory_ABC& factory_;
-    std::auto_ptr< Action_ABC > mission_;
     //@}
 };
 
