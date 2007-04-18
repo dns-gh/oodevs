@@ -38,7 +38,7 @@ TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, 
     , modelBuilder_( modelBuilder )
     , levels_( levels )
     , lock_( MAKE_PIXMAP( lock ) )
-    , commandPost_( MAKE_PIXMAP( commandPost ) )
+    , commandPost_( MAKE_PIXMAP( commandpost ) )
 {
     addColumn( "HiddenPuce", 15 );
     setColumnAlignment( 1, Qt::AlignCenter );
@@ -85,7 +85,7 @@ void TacticalListView::Display( const Entity_ABC& entity, gui::ValuedListItem* i
     if( const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
         item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
     else if( const kernel::CommandPostAttributes* commandPost = entity.Retrieve< kernel::CommandPostAttributes >() )
-        item->setPixmap( 1, commandPost->IsCommandPost() ? commandpost_ : QPixmap() );
+        item->setPixmap( 1, commandPost->IsCommandPost() ? commandPost_ : QPixmap() );
     HierarchyListView< kernel::TacticalHierarchies >::Display( entity, item );
 }
 
@@ -121,7 +121,7 @@ void TacticalListView::NotifyUpdated( const kernel::Entity_ABC& entity )
     {
         item->SetNamed( entity );
         if( const kernel::CommandPostAttributes* commandPost = entity.Retrieve< CommandPostAttributes >() )
-            item->setPixmap( 1, commandPost->IsCommandPost() ? commandpost_ : QPixmap() );
+            item->setPixmap( 1, commandPost->IsCommandPost() ? commandPost_ : QPixmap() );
     }
 }
 
