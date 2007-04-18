@@ -1563,7 +1563,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Connecting (C)</source>
+        <source>Connecting</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

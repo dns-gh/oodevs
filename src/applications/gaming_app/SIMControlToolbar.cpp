@@ -65,6 +65,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     , publisher_( publisher )
     , speed_( 4212 )
     , connected_( false )
+    , lastConnectionStatus_( false )
     , paused_( false )
     , connectedPix_   ( MAKE_ICON( connected ) )
     , disconnectedPix_( MAKE_ICON( notconnected ) )
@@ -133,13 +134,10 @@ void SIMControlToolbar::SlotConnectDisconnect()
     else
     {
         pConnectButton_->setIconSet( MAKE_ICON( connecting ) );
-        pConnectButton_->setTextLabel( tr( "Connecting (C)" ) );
-        int nResult = pConnectDlg_->exec();
-        if( nResult == QDialog::Rejected )
-        {
-            pConnectButton_->setIconSet( MAKE_ICON( notconnected ) );
-            pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
-        }
+        pConnectButton_->setTextLabel( tr( "Connecting" ) );
+        pConnectDlg_->exec();
+        pConnectButton_->setIconSet( disconnectedPix_ );
+        pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
     }
 }
 
@@ -191,21 +189,27 @@ void SIMControlToolbar::SlotOnSpinBoxChange( int value )
 void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
 {
     connected_ = simulation.IsConnected();
-    if( connected_ )
+    if( lastConnectionStatus_ != connected_ )
     {
-        pConnectButton_->setIconSet( connectedPix_ );
-        pConnectButton_->setTextLabel( tr( "Disconnect (C)" ) );
-        pPlayButton_->setEnabled( true );
-        if( !pSpeedSpinBox_->isEnabled() )
-            pSpeedSpinBox_->setEnabled( true );
-    }
-    else
-    {
-        pConnectButton_->setIconSet( disconnectedPix_ );
-        pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
-        pPlayButton_->setEnabled( false );
-        pSpeedSpinBox_->setEnabled( false );
-        pSpeedButton_->setEnabled( false );
+        lastConnectionStatus_ = connected_;
+        if( connected_ )
+        {
+            pConnectButton_->setIconSet( connectedPix_ );
+            pConnectButton_->setTextLabel( tr( "Disconnect (C)" ) );
+            pConnectButton_->setPopup( 0 );
+            pPlayButton_->setEnabled( true );
+            if( !pSpeedSpinBox_->isEnabled() )
+                pSpeedSpinBox_->setEnabled( true );
+        }
+        else
+        {
+            pConnectButton_->setIconSet( disconnectedPix_ );
+            pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
+            pConnectDlg_->SetContextMenu( pConnectButton_ );
+            pPlayButton_->setEnabled( false );
+            pSpeedSpinBox_->setEnabled( false );
+            pSpeedButton_->setEnabled( false );
+        }
     }
 
     paused_ = simulation.IsPaused();
