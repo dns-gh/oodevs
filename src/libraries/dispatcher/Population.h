@@ -54,6 +54,7 @@ public:
     void Update        ( const ASN1T_MsgPopulationFluxCreation&    msg );
     void Update        ( const ASN1T_MsgPopulationFluxUpdate&      msg );
     void Update        ( const ASN1T_MsgPopulationFluxDestruction& msg );
+    void Update        ( const ASN1T_MsgPopulationOrderManagement& msg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
     virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
 
@@ -78,6 +79,7 @@ private:
 
     ModelsContainer< PopulationConcentration > concentrations_;
     ModelsContainer< PopulationFlow          > flows_;
+    ASN1T_EnumOrderState etat_;
 };
 
 }

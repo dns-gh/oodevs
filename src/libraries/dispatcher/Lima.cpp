@@ -12,7 +12,6 @@
 #include "Lima.h"
 #include "Model.h"
 #include "Network_Def.h"
-#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -87,13 +86,4 @@ void Lima::CommitDestruction()
     AsnMsgInClientLimaDestruction asn;
     asn() = GetID();
     Entity_ABC::Send( asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Lima::Accept
-// Created: AGE 2007-04-13
-// -----------------------------------------------------------------------------
-void Lima::Accept( ModelVisitor_ABC& visitor )
-{
-    visitor.Visit( *this );
 }

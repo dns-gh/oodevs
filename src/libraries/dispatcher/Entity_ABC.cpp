@@ -9,6 +9,8 @@
 
 #include "dispatcher_pch.h"
 #include "Entity_ABC.h"
+#include "ModelVisitor_ABC.h"
+#include "Model.h"
 
 using namespace dispatcher;
 
@@ -89,4 +91,13 @@ void Entity_ABC::StartSynchronisation( Entity_ABC& next, bool create )
 {
     if( publisher_ )
         next.StartSynchronisation( *publisher_, create );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Entity_ABC::Accept
+// Created: AGE 2007-04-18
+// -----------------------------------------------------------------------------
+void Entity_ABC::Accept( ModelVisitor_ABC& visitor )
+{
+    visitor.Visit( *this );
 }

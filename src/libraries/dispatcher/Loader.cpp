@@ -84,27 +84,38 @@ void Loader::SkipToFrame( unsigned frame )
     if( keyFrames_.empty() )
         return;
 
+    simulation_.StartSynchronisation();
+    LoadKeyFrame( frame );
+    while( currentFrame_+1 < frame && Tick() )
+        ;
+    simulation_.EndSynchronisation();
+
+    if( currentFrame_ < frame )
+        Tick();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Loader::LoadKeyFrame
+// Created: AGE 2007-04-18
+// -----------------------------------------------------------------------------
+void Loader::LoadKeyFrame( unsigned frame )
+{
     // $$$$ AGE 2007-04-11: 
     unsigned key = frame / 100;
+    unsigned currentKey = currentFrame_ / 100;
+    if( frame && key == currentKey && frame >= currentFrame_ )
+        return;
+
     if( key >= keyFrames_.size() )
         key = keyFrames_.size() - 1;
     const KeyFrame& keyFrame = keyFrames_[ key ];
     keys_.seekg( keyFrame.offset_ );
-
-    simulation_.StartSynchronisation();
 
     tools::InputBinaryWrapper input( keys_ );
     while( keys_.tellg() < keyFrame.offset_ + keyFrame.size_ )
         LoadInClientMessage( input ); 
 
     currentFrame_ = keyFrame.frameNumber_;
-    while( currentFrame_+1 < frame && Tick() )
-        ;
-
-    simulation_.EndSynchronisation();
-
-    if( currentFrame_ < frame )
-        Tick();
 }
 
 // -----------------------------------------------------------------------------

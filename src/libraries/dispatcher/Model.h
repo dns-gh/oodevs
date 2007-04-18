@@ -40,6 +40,9 @@ class Publisher_ABC;
 class Limit;
 class Lima;
 class Entity_ABC;
+class Fire;
+class PopulationFire;
+class FireEffect;
 
 // =============================================================================
 /** @class  Model
@@ -121,6 +124,9 @@ private:
     ModelsContainer< PopulationKnowledge    > populationKnowledges_;
     ModelsContainer< Limit                  > limits_;
     ModelsContainer< Lima                   > limas_;
+    ModelsContainer< Fire                   > fires_;
+    ModelsContainer< PopulationFire         > populationFires_;
+    ModelsContainer< FireEffect             > fireEffects_;
 
     std::vector< Entity_ABC* > toFlush_;
     Publisher_ABC* synchroniser_;

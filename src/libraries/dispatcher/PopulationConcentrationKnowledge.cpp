@@ -17,7 +17,6 @@
 #include "KnowledgeGroup.h"
 #include "Model.h"
 #include "Network_Def.h"
-#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -173,15 +172,6 @@ void PopulationConcentrationKnowledge::SendFullUpdate( Publisher_ABC& publisher 
     }
 
     asn.Send( publisher );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationConcentrationKnowledge::Accept
-// Created: AGE 2007-04-13
-// -----------------------------------------------------------------------------
-void PopulationConcentrationKnowledge::Accept( ModelVisitor_ABC& visitor )
-{
-    visitor.Visit( *this );
 }
 
 // -----------------------------------------------------------------------------

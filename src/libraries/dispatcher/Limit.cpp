@@ -12,7 +12,6 @@
 #include "Limit.h"
 #include "Model.h"
 #include "Network_Def.h"
-#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -87,13 +86,4 @@ void Limit::CommitDestruction()
     AsnMsgInClientLimitDestruction asn;
     asn() = GetID();
     Entity_ABC::Send( asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Limit::Accept
-// Created: AGE 2007-04-13
-// -----------------------------------------------------------------------------
-void Limit::Accept( ModelVisitor_ABC& visitor )
-{
-    visitor.Visit( *this );
 }

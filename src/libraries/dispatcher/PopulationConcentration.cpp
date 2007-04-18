@@ -13,7 +13,6 @@
 
 #include "Population.h"
 #include "Network_Def.h"
-#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -106,15 +105,6 @@ void PopulationConcentration::SendFullUpdate( Publisher_ABC& publisher ) const
     asn().nb_humains_vivants = nNbrAliveHumans_;
     
     asn.Send( publisher );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationConcentration::Accept
-// Created: AGE 2007-04-12
-// -----------------------------------------------------------------------------
-void PopulationConcentration::Accept( ModelVisitor_ABC& visitor )
-{
-    visitor.Visit( *this );
 }
 
 // -----------------------------------------------------------------------------

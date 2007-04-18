@@ -31,8 +31,7 @@ Population::Population( Model& model, const ASN1T_MsgPopulationCreation& msg )
     , strName_         ( msg.nom )
     , side_            ( model.GetSides().Get( msg.oid_camp ) )
     , nDominationState_( 0 )
-    , concentrations_  ()
-    , flows_           ()
+    , etat_             ( EnumOrderState::stopped )
 {
 	side_.GetPopulations().Register( *this );
 }
@@ -129,6 +128,15 @@ void Population::Update( const ASN1T_MsgPopulationFluxDestruction& msg )
     flows_.Destroy( msg.oid_flux );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Population::Update
+// Created: AGE 2007-04-18
+// -----------------------------------------------------------------------------
+void Population::Update( const ASN1T_MsgPopulationOrderManagement& msg )
+{
+    etat_ = msg.etat;
+}
+
 // =============================================================================
 // NETWORK
 // =============================================================================
@@ -156,14 +164,22 @@ void Population::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Population::SendFullUpdate( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientPopulationUpdate asn;
+    {
+        AsnMsgInClientPopulationUpdate asn;
 
-    asn().m.etat_dominationPresent = 1;
+        asn().m.etat_dominationPresent = 1;
 
-    asn().oid_population  = nID_;
-    asn().etat_domination = nDominationState_;
+        asn().oid_population  = nID_;
+        asn().etat_domination = nDominationState_;
 
-    asn.Send( publisher );
+        asn.Send( publisher );
+    }
+    {
+        AsnMsgInClientPopulationOrderManagement asn;
+        asn().oid_unite_executante = nID_;
+        asn().etat = etat_;
+        asn.Send( publisher );
+    }
 }
 
 // -----------------------------------------------------------------------------

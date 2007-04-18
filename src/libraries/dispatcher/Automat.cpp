@@ -45,6 +45,7 @@ Automat::Automat( Model& model, const ASN1T_MsgAutomateCreation& msg )
     , nCloseCombatState_( EnumEtatCombatRencontre::etat_fixe )
     , nOperationalState_( EnumEtatOperationnel::detruit_totalement )
     , nRoe_             ( EnumRoe::tir_interdit )
+    , etat_             ( EnumOrderState::stopped )
 {
     pKnowledgeGroup_->GetAutomats().Register( *this );
     formation_.GetAutomats().Register( *this );
@@ -154,6 +155,15 @@ void Automat::Update( const ASN1T_MsgLogRavitaillementQuotas& msg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Automat::Update
+// Created: AGE 2007-04-18
+// -----------------------------------------------------------------------------
+void Automat::Update( const ASN1T_MsgAutomateOrderManagement& msg )
+{
+    etat_ = msg.etat;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Automat::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
@@ -221,6 +231,12 @@ void Automat::SendFullUpdate( Publisher_ABC& publisher ) const
             asn().m.oid_ravitaillementPresent = 1;
             asn().oid_ravitaillement = pLogSupply_->GetID();
         }
+        asn.Send( publisher );
+    }
+    {
+        AsnMsgInClientAutomateOrderManagement asn;
+        asn().oid_unite_executante = nID_;
+        asn().etat = etat_;
         asn.Send( publisher );
     }
 }

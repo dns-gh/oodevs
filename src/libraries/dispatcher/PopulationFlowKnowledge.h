@@ -48,7 +48,6 @@ public:
     void Update        ( const ASN1T_MsgPopulationFluxKnowledgeCreation& msg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
     void SendFullUpdate( Publisher_ABC& publisher ) const;
-    void Accept( ModelVisitor_ABC& visitor );
     void CommitDestruction();
     //@}
 

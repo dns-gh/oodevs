@@ -24,7 +24,6 @@
 #include "MineJamObjectAttribute.h"
 #include "LinearMinedAreaObjectAttribute.h"
 #include "DispersedMinedAreaObjectAttribute.h"
-#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -257,15 +256,6 @@ void ObjectKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 
     if( asn().m.perception_par_compagniePresent && asn().perception_par_compagnie.n > 0 )
         delete [] asn().perception_par_compagnie.elem;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::Accept
-// Created: AGE 2007-04-13
-// -----------------------------------------------------------------------------
-void ObjectKnowledge::Accept( ModelVisitor_ABC& visitor )
-{
-    visitor.Visit( *this );
 }
 
 // -----------------------------------------------------------------------------

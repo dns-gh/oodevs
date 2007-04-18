@@ -55,6 +55,7 @@ public:
     void Update        ( const ASN1T_MsgAutomateChangeLiensLogistiquesAck&   msg );
     void Update        ( const ASN1T_MsgAutomateChangeLiensLogistiques&      msg );
     void Update        ( const ASN1T_MsgAutomateChangeGroupeConnaissanceAck& msg );
+    void Update        ( const ASN1T_MsgAutomateOrderManagement&             msg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
     virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
 
@@ -89,6 +90,8 @@ private:
     Automat* pLogMaintenance_;
     Automat* pLogMedical_;
     Automat* pLogSupply_;
+
+    ASN1T_EnumOrderState etat_;
 };
 
 }

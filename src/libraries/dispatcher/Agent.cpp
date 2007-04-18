@@ -22,7 +22,6 @@
 #include "AgentLogMaintenance.h"
 #include "AgentLogSupply.h"
 #include "Network_Def.h"
-#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -81,7 +80,7 @@ Agent::Agent( Model& model, const ASN1T_MsgPionCreation& msg )
     , pLogMedical_                  ()
     , pLogMaintenance_              ()
     , pLogSupply_                   ()
-
+    , orderState_                   ( EnumOrderState::stopped )
 {
     pAutomat_->GetAgents().Register( *this );
 }
@@ -306,6 +305,15 @@ void Agent::Update( const ASN1T_MsgPionChangeSuperiorAck& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::Update
+// Created: AGE 2007-04-18
+// -----------------------------------------------------------------------------
+void Agent::Update( const ASN1T_MsgPionOrderManagement& asnMsg )
+{
+    orderState_ = asnMsg.etat;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
@@ -453,13 +461,11 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
 
     if( pLogSupply_ )
         pLogSupply_->Send( publisher );
-}
 
-// -----------------------------------------------------------------------------
-// Name: Agent::Accept
-// Created: AGE 2007-04-12
-// -----------------------------------------------------------------------------
-void Agent::Accept( ModelVisitor_ABC& visitor )
-{
-    visitor.Visit( *this );
+    {
+        AsnMsgInClientPionOrderManagement asn;
+        asn().oid_unite_executante = nID_;
+        asn().etat = orderState_;
+        asn.Send( publisher );
+    }
 }

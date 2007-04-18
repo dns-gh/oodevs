@@ -14,7 +14,6 @@
 #include "Model.h"
 #include "Agent.h"
 #include "Network_Def.h"
-#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -122,13 +121,4 @@ void LogConsignMaintenance::CommitDestruction()
     asn().oid_consigne = nID_;
     asn().oid_pion     = agent_.GetID();
     Send( asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogConsignMaintenance::Accept
-// Created: AGE 2007-04-16
-// -----------------------------------------------------------------------------
-void LogConsignMaintenance::Accept( ModelVisitor_ABC& visitor )
-{
-    visitor.Visit( *this );
 }

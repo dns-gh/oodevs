@@ -159,7 +159,7 @@ void LoaderFacade::Send( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void LoaderFacade::Update()
 {
-    if( skipToFrame_ > 0 )
+    if( skipToFrame_ >= 0 )
     {
         SkipToFrame( skipToFrame_ );
         skipToFrame_ = -1;

@@ -18,7 +18,6 @@
 #include "KnowledgeGroup.h"
 #include "Model.h"
 #include "Network_Def.h"
-#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -201,15 +200,6 @@ void PopulationFlowKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
             PopulationFlowPart::AsnDelete( asn().portions_flux.elem[ i ] );
         delete [] asn().portions_flux.elem;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationFlowKnowledge::Accept
-// Created: AGE 2007-04-13
-// -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::Accept( ModelVisitor_ABC& visitor )
-{
-    visitor.Visit( *this );
 }
 
 // -----------------------------------------------------------------------------

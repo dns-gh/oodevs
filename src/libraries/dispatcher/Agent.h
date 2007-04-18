@@ -55,10 +55,9 @@ public:
     void Update        ( const ASN1T_MsgLogRavitaillementEtat& asnMsg );
     void Update        ( const ASN1T_MsgPionChangeSuperior&    asnMsg );
     void Update        ( const ASN1T_MsgPionChangeSuperiorAck& asnMsg );
+    void Update        ( const ASN1T_MsgPionOrderManagement&   asnMsg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
     virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
-
-    void Accept( ModelVisitor_ABC& visitor );
     //@}
 
     //! @name Accessors
@@ -134,6 +133,8 @@ private:
     AgentLogMedical*              pLogMedical_;
     AgentLogMaintenance*          pLogMaintenance_;
     AgentLogSupply*               pLogSupply_;
+
+    ASN1T_EnumOrderState          orderState_;
 };
 
 }

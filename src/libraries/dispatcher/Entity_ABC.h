@@ -10,12 +10,11 @@
 #ifndef __Synchronisable_h_
 #define __Synchronisable_h_
 
-#include "Model.h"
-
 namespace dispatcher
 {
     class Publisher_ABC;
     class ModelVisitor_ABC;
+    class Model;
 
 // =============================================================================
 /** @class  Entity_ABC
@@ -41,6 +40,7 @@ public:
     virtual void SendFullUpdate( Publisher_ABC& publisher ) const = 0;
     virtual void SendCreation  ( Publisher_ABC& publisher ) const = 0;
     virtual void CommitDestruction();
+    virtual void Accept( ModelVisitor_ABC& visitor );
     //@}
 
 protected:

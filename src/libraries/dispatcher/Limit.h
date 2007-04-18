@@ -40,7 +40,6 @@ public:
     void SendCreation( Publisher_ABC& publisher ) const;
     void SendFullUpdate( Publisher_ABC& publisher ) const;
     void CommitDestruction();
-    void Accept( ModelVisitor_ABC& visitor );
     //@}
 
 private:

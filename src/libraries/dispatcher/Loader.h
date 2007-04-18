@@ -67,6 +67,7 @@ private:
     void LoadOutSimMessage( std::ifstream& input, unsigned count );
     void LoadOutSimMessage( tools::InputBinaryWrapper& input );
     void LoadInClientMessage( tools::InputBinaryWrapper& input );
+    void LoadKeyFrame( unsigned frame );
     //@}
 
 private:
