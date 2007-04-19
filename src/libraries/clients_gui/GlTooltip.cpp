@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "GlTooltip.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Styles.h"
 #include <qpainter.h>
 
 using namespace gui;
@@ -45,10 +46,20 @@ void GlTooltip::Call( const QColor& value )
 
 // -----------------------------------------------------------------------------
 // Name: GlTooltip::Call
+// Created: SBO 2007-04-19
+// -----------------------------------------------------------------------------
+void GlTooltip::Call( const Styles::Style& value )
+{
+    font_.setBold( &value == &Styles::bold );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlTooltip::Call
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
 void GlTooltip::Call( const E_EtatOperationnel& value )
 {
+    font_.setItalic( true );
     if ( value == eEtatOperationnel_DetruitTactiquement )
         color_.setRgb( 255, 128, 0 );
     else if( value == eEtatOperationnel_DetruitTotalement )
@@ -62,10 +73,11 @@ void GlTooltip::Call( const E_EtatOperationnel& value )
 // -----------------------------------------------------------------------------
 void GlTooltip::Call( const E_EtatRapFor& value )
 {
+    font_.setBold( true );
     if ( value == eEtatRapFor_Defavorable )
-        color_.setRgb( 255, 154, 154 );
+        color_.setRgb( 160, 0, 0 );
     else
-        color_.setRgb( 204, 255, 204 );
+        color_.setRgb( 0, 160, 0 );
     Formatter< E_EtatRapFor >()( value, *this );
 }
 
@@ -95,7 +107,8 @@ Displayer_ABC& GlTooltip::SubItem( const QString& name )
 // -----------------------------------------------------------------------------
 void GlTooltip::StartDisplay()
 {
-    color_ = Qt::white;
+    color_ = Qt::black;
+    font_  = QFont();
     message_ = "";
 }
 
@@ -115,9 +128,9 @@ void GlTooltip::DisplayFormatted( const QString& formatted )
 void GlTooltip::EndDisplay()
 {
     if( ! currentItem_.isEmpty() )
-        messages_.push_back( T_Message( currentItem_ + " " + message_, color_ ) );
+        messages_.push_back( T_Message( currentItem_ + " " + message_, T_Style( color_, font_ ) ) );
     else if( ! message_.isEmpty() )
-        messages_.push_back( T_Message( message_, color_ ) );
+        messages_.push_back( T_Message( message_, T_Style( color_, font_ ) ) );
     image_ = QImage();
 }
 
@@ -141,17 +154,25 @@ void GlTooltip::GenerateImage()
     if( messages_.empty() )
         return;
     QPainter p;
-    const QFontMetrics metrics( p.font() );
-    const int fontHeight = metrics.height();
+    QFontMetrics metrics( p.font() );
+    int fontHeight = metrics.height();
     
-    QPixmap pixmap( CreatePixmap( p ) );
+    QPixmap pixmap( CreatePixmap() );
     pixmap.fill( Qt::magenta );
     p.begin( &pixmap );
+        p.setPen( Qt::black );
+        p.drawRect( pixmap.rect() );
         int y = fontHeight;
         for( CIT_Messages it = messages_.begin(); it != messages_.end(); ++it )
         {
-            p.setPen( it->second );
+            p.setPen( it->second.first );
+            if( p.font() != it->second.second )
+            {
+                p.setFont( it->second.second );
+                fontHeight = QFontMetrics( p.font() ).height();
+            }
             p.drawText( 4, y, it->first );
+            
             y += fontHeight;
         }
     p.end();
@@ -173,7 +194,7 @@ void GlTooltip::RestoreAlpha()
     for( int i = image_.width() * image_.height(); i > 0; --i )
     {
         if( *data == 0x00FF00FF ) 
-            *data = 0x80000000;
+            *data = 0xE0FFFFFF;
         else
             *data |= 0xFF000000;
         ++data;
@@ -184,13 +205,13 @@ void GlTooltip::RestoreAlpha()
 // Name: GlTooltip::CreatePixmap
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-QPixmap GlTooltip::CreatePixmap( QPainter& p )
+QPixmap GlTooltip::CreatePixmap()
 {
-    const QFontMetrics metrics( p.font() );
     int w = 0;
     int h = 0;
     for( CIT_Messages it = messages_.begin(); it != messages_.end(); ++it )
     {
+        const QFontMetrics metrics( it->second.second );
         const QRect bounds = metrics.boundingRect( it->first );
         w = std::max( w, bounds.width() );
         h += bounds.height() + 2;

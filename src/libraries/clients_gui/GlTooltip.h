@@ -11,6 +11,7 @@
 #define __GlTooltip_h_
 
 #include "NoLinkDisplayer.h"
+#include "clients_kernel/Styles.h"
 
 namespace kernel {
     class GlTools_ABC;
@@ -27,6 +28,7 @@ namespace gui
 // =============================================================================
 class GlTooltip : public NoLinkDisplayer
                 , public kernel::Caller< QColor >
+                , public kernel::Caller< kernel::Styles::Style >
                 , public kernel::Caller< E_EtatOperationnel >
                 , public kernel::Caller< E_EtatRapFor >
                 , public kernel::Caller< E_EtatCombatRencontre >
@@ -55,6 +57,7 @@ private:
     //! @name Helpers
     //@{
     virtual void Call( const QColor& value );
+    virtual void Call( const kernel::Styles::Style& value );
     virtual void Call( const E_EtatOperationnel& value );
     virtual void Call( const E_EtatRapFor& value );
     virtual void Call( const E_EtatCombatRencontre& value );
@@ -65,15 +68,16 @@ private:
     virtual void EndDisplay();
 
     void GenerateImage();
-    QPixmap CreatePixmap( QPainter& p );
+    QPixmap CreatePixmap();
     void RestoreAlpha();
     //@}
 
     //! @name Types
     //@{
-    typedef std::pair< QString, QColor > T_Message;
-    typedef std::vector< T_Message >     T_Messages;
-    typedef T_Messages::const_iterator CIT_Messages;
+    typedef std::pair< QColor, QFont >    T_Style;
+    typedef std::pair< QString, T_Style > T_Message;
+    typedef std::vector< T_Message >      T_Messages;
+    typedef T_Messages::const_iterator  CIT_Messages;
     //@}
 
 private:
@@ -82,6 +86,7 @@ private:
     const kernel::GlTools_ABC& tools_;
     QString currentItem_;
     QColor color_;
+    QFont font_;
     QString message_;
     T_Messages messages_;
     QImage image_;

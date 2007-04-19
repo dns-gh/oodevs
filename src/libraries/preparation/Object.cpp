@@ -22,6 +22,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/Styles.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -165,8 +166,8 @@ void Object::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    displayer.Display( "", *(Object_ABC*)this )
-             .Display( tools::translate( "Object", "Construction:" ),  rConstructionPercentage_ * Units::percentage )
+    displayer.Item( "" ).Start( Styles::bold ).Add( *(Object_ABC*)this ).End();
+    displayer.Display( tools::translate( "Object", "Construction:" ),  rConstructionPercentage_ * Units::percentage )
              .Display( tools::translate( "Object", "Development:" ),   rValorizationPercentage_ * Units::percentage )
              .Display( tools::translate( "Object", "Bypass:" ),        rBypassConstructionPercentage_ * Units::percentage );
 }

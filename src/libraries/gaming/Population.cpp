@@ -15,6 +15,7 @@
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/Styles.h"
 
 #include "PopulationFlow.h"
 #include "PopulationConcentration.h"
@@ -333,9 +334,9 @@ QString Population::GetTypeName() const
 // -----------------------------------------------------------------------------
 void Population::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    displayer.Display( "", (Population_ABC*)this )
-             .Display( tools::translate( "Population", "Alive:" ), GetLivingHumans() )
-             .Display( tools::translate( "Population", "Domination:" ), nDomination_ );
+    displayer.Item( "" ).Start( Styles::bold ).Add( (Population_ABC*)this ).End();
+    displayer.Display( tools::translate( "Population", "Alive:" ), GetLivingHumans() );
+    displayer.Display( tools::translate( "Population", "Domination:" ), nDomination_ );
 }
 
 // -----------------------------------------------------------------------------

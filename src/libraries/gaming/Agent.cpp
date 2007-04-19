@@ -16,6 +16,7 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/App6Symbol.h"
+#include "clients_kernel/Styles.h"
 #include "Diplomacies.h"
 #include "Tools.h"
 
@@ -107,7 +108,9 @@ bool Agent::IsCommandPost() const
 // -----------------------------------------------------------------------------
 void Agent::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    displayer.Display( "", (Agent_ABC*)this );
+    displayer.Item( "" ).Start( Styles::bold )
+                .Add( (Agent_ABC*)this )
+             .End();
 }
 
 // -----------------------------------------------------------------------------
