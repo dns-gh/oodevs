@@ -19,7 +19,7 @@
 // Created:  NLD 2002-01-03 
 //-----------------------------------------------------------------------------
 ConnectDialog::ConnectDialog( QWidget* pParent, Network& network )
-    : QDialog ( pParent, 0, true ) 
+    : QDialog ( pParent, 0, true, WStyle_Customize | WStyle_NormalBorder | WStyle_Title ) 
     , network_( network )
 {
     setCaption( tr("Connection parameters") );

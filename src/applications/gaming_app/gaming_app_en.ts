@@ -605,7 +605,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
+        <source>Disconnect</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

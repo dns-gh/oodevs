@@ -12,6 +12,7 @@
 
 class Profile;
 class Publisher_ABC;
+class Network;
 
 // =============================================================================
 /** @class  LoginDialog
@@ -26,7 +27,7 @@ class LoginDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             LoginDialog( QWidget* pParent, const Profile& profile, Publisher_ABC& publisher );
+             LoginDialog( QWidget* pParent, const Profile& profile, Publisher_ABC& publisher, Network& network );
     virtual ~LoginDialog();
     //@}
 
@@ -44,15 +45,12 @@ private:
     LoginDialog& operator=( const LoginDialog& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
     const Profile& profile_;
     Publisher_ABC& publisher_;
+    Network& network_;
     QLineEdit* login_;
     QLineEdit* password_;
     //@}

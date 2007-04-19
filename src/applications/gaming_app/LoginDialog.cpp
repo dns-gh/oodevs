@@ -9,17 +9,19 @@
 
 #include "gaming_app_pch.h"
 #include "LoginDialog.h"
-#include "gaming/Profile.h"
 #include "moc_LoginDialog.cpp"
+#include "gaming/Profile.h"
+#include "gaming/Network.h"
 
 // -----------------------------------------------------------------------------
 // Name: LoginDialog constructor
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-LoginDialog::LoginDialog( QWidget* pParent, const Profile& profile, Publisher_ABC& publisher )
-    : QDialog( pParent )
+LoginDialog::LoginDialog( QWidget* pParent, const Profile& profile, Publisher_ABC& publisher, Network& network )
+    : QDialog( pParent, 0, true, WStyle_Customize | WStyle_NormalBorder | WStyle_Title )
     , profile_( profile )
     , publisher_( publisher )
+    , network_( network )
 {
     setCaption( tr("Profile parameters") );
 
@@ -44,7 +46,7 @@ LoginDialog::LoginDialog( QWidget* pParent, const Profile& profile, Publisher_AB
     // Buttons
     ++ nCurRow;
     QPushButton* pOKButton     = new QPushButton( tr( "Ok" )    , this );
-    QPushButton* pCancelButton = new QPushButton( tr( "Cancel" ), this );
+    QPushButton* pCancelButton = new QPushButton( tr( "Disconnect" ), this );
     pMainLayout->addWidget( pOKButton, nCurRow, 0     );
     pMainLayout->addWidget( pCancelButton, nCurRow, 1 );
     pOKButton->setDefault( TRUE );
@@ -80,6 +82,6 @@ void LoginDialog::Validate()
 // -----------------------------------------------------------------------------
 void LoginDialog::Reject()
 {
-    // $$$$ AGE 2006-10-11: what ??
+    network_.Disconnect();
     reject();
 }

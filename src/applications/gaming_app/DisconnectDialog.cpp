@@ -18,7 +18,7 @@
 // Created:  NLD 2002-01-03 
 //-----------------------------------------------------------------------------
 DisconnectDialog::DisconnectDialog( QWidget* pParent, Network& network )
-    : QDialog( pParent ) 
+    : QDialog( pParent, 0, true, WStyle_Customize | WStyle_NormalBorder | WStyle_Title ) 
     , network_( network )
 {
     setCaption( tr("Disconnect") );

@@ -559,7 +559,7 @@ void MainWindow::NotifyUpdated( const Profile& profile )
     if( ! profile.IsLoggedIn() )
     {
         profile_ = profile.GetLogin();
-        static LoginDialog* dialog = new LoginDialog( this, profile, network_.GetMessageMgr() );
+        static LoginDialog* dialog = new LoginDialog( this, profile, network_.GetMessageMgr(), network_ );
         // $$$$ AGE 2006-10-11: exec would create a reentrance...
         QTimer::singleShot( 0, dialog, SLOT(exec()) );
     }
