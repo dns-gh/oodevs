@@ -13,6 +13,9 @@
 #include "gaming/ASN_Messages.h"
 #include "gaming/HumanFactors.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -194,15 +197,51 @@ QSize ChangeHumanFactorsDialog::sizeHint() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ChangeHumanFactorsDialog::NotifyContextMenu
+// Name: ChangeHumanFactorsDialog::DoContextMenu
 // Created: SBO 2006-08-10
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
+void ChangeHumanFactorsDialog::DoContextMenu( const kernel::Entity_ABC& entity, ContextMenu& menu )
 {
-    if( profile_.CanDoMagic( agent ) )
+    if( profile_.CanDoMagic( entity ) )
     {
-        selected_ = &agent;
+        selected_ = &entity;
         QPopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         subMenu->insertItem( tr( "Human factors" ), this, SLOT( Show() ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeHumanFactorsDialog::NotifyContextMenu
+// Created: SBO 2007-04-19
+// -----------------------------------------------------------------------------
+void ChangeHumanFactorsDialog::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
+{
+    DoContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeHumanFactorsDialog::NotifyContextMenu
+// Created: SBO 2007-04-19
+// -----------------------------------------------------------------------------
+void ChangeHumanFactorsDialog::NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu )
+{
+    DoContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeHumanFactorsDialog::NotifyContextMenu
+// Created: SBO 2007-04-19
+// -----------------------------------------------------------------------------
+void ChangeHumanFactorsDialog::NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu )
+{
+    DoContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeHumanFactorsDialog::NotifyContextMenu
+// Created: SBO 2007-04-19
+// -----------------------------------------------------------------------------
+void ChangeHumanFactorsDialog::NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu )
+{
+    DoContextMenu( entity, menu );
 }

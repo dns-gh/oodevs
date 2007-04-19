@@ -24,6 +24,7 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 
 #include "gaming/StaticModel.h"
 #include "gaming/MagicOrders.h"
@@ -158,6 +159,32 @@ void MagicOrdersInterface::NotifyContextMenu( const kernel::Population_ABC& enti
     for( unsigned int i = 0; i < (unsigned int)eNbrPopulationAttitude; ++i )
         choiceMenu->insertItem( ENT_Tr::ConvertFromPopulationAttitude( (E_PopulationAttitude)i ).c_str(), this, SLOT( ChangePopulationAttitude( int ) ), 0, i );
     magicMenu->insertItem( tr( "Change population attitude" ), choiceMenu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::NotifyContextMenu
+// Created: SBO 2007-04-19
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu )
+{
+    if( !profile_.CanDoMagic( entity ) )
+        return;
+    selectedEntity_ = &entity;
+    QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+    FillCommonOrders( magicMenu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::NotifyContextMenu
+// Created: SBO 2007-04-19
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu )
+{
+    if( !profile_.CanDoMagic( entity ) )
+        return;
+    selectedEntity_ = &entity;
+    QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+    FillCommonOrders( magicMenu );
 }
 
 // -----------------------------------------------------------------------------

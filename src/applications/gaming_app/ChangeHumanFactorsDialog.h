@@ -20,8 +20,11 @@ namespace kernel
 {
     class Controllers;
     class Profile_ABC;
-    class Agent_ABC;
     class Entity_ABC;
+    class Agent_ABC;
+    class Automat_ABC;
+    class Formation_ABC;
+    class Team_ABC;
 }
 
 class Publisher_ABC;
@@ -35,6 +38,9 @@ class Publisher_ABC;
 class ChangeHumanFactorsDialog : public QDialog
                                , public kernel::Observer_ABC
                                , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                               , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                               , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
+                               , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                                , public kernel::NullDisplayer
                                , public kernel::Caller< E_UnitFatigue >
                                , public kernel::Caller< E_UnitMoral >
@@ -50,7 +56,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu );
     virtual QSize sizeHint() const;
     //@}
 
@@ -70,6 +79,7 @@ private:
 
     //! @name Helpers
     //@{
+    void DoContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     void SendMessage( uint id, ASN1T_EnumUnitFatigue, ASN1T_EnumUnitMoral, ASN1T_EnumUnitExperience );
     void SendMessage( const kernel::Entity_ABC& entity, ASN1T_EnumUnitFatigue, ASN1T_EnumUnitMoral, ASN1T_EnumUnitExperience );
     virtual void Call( const E_UnitFatigue& fatigue );
