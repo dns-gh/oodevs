@@ -17,6 +17,7 @@ namespace kernel
     class CoordinateConverter_ABC;
 }
 
+class Model;
 class StaticModel;
 
 // =============================================================================
@@ -31,7 +32,7 @@ class ActionParameterFactory : public ActionParameterFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const StaticModel& staticModel );
+             ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const Model& model, const StaticModel& staticModel );
     virtual ~ActionParameterFactory();
     //@}
 
@@ -58,6 +59,7 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
+    const Model& model_;
     const StaticModel& staticModel_;
     //@}
 };

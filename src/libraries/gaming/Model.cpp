@@ -53,7 +53,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , tacticalLineFactory_( *new TacticalLineFactory( controllers, staticModel.coordinateConverter_, *this, publisher ) )
     , fireResultsFactory_( *new FireResultFactory( *this ) )
     , userProfileFactory_( *new UserProfileFactory( *this, controllers, publisher ) )
-    , actionParameterFactory_( *new ActionParameterFactory( staticModel.coordinateConverter_, staticModel ) )
+    , actionParameterFactory_( *new ActionParameterFactory( staticModel.coordinateConverter_, *this, staticModel ) )
     , actionFactory_( *new ActionFactory( controllers, actionParameterFactory_, *this, staticModel.types_ ) )
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )

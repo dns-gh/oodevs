@@ -28,6 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ActionParameter( const QString& name );
+             ActionParameter( const QString& name, const T& value );
     virtual ~ActionParameter();
     //@}
 
@@ -61,6 +62,17 @@ ActionParameter< T >::ActionParameter( const QString& name )
     : ActionParameter_ABC( name )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter constructor
+// Created: SBO 2007-04-19
+// -----------------------------------------------------------------------------
+template< typename T >
+ActionParameter< T >::ActionParameter( const QString& name, const T& value )
+    : ActionParameter_ABC( name )
+{
+    SetValue( value );
 }
 
 // -----------------------------------------------------------------------------
