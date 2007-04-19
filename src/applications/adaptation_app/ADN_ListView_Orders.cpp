@@ -104,10 +104,11 @@ void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
     for( ADN_Missions_Data::IT_FragOrder_Vector it = fragOrders.begin(); it != fragOrders.end(); ++it )
     {
         std::string strOrderName = (*it)->strName_.GetData();
-        if( Contains( strOrderName ) )
-            continue;
-        bDisplayAdd = true;
-        pTargetMenu->insertItem( strOrderName.c_str(), 2 + n );
+        const int id = pTargetMenu->insertItem( strOrderName.c_str(), 2 + n );
+        const bool added = Contains( strOrderName );
+        pTargetMenu->setItemEnabled( id, !added );
+        pTargetMenu->setItemChecked( id, added );
+        bDisplayAdd |= !added;
         ++n;
     }
     if( ! bDisplayAdd && !bDisplayRem )
@@ -162,7 +163,6 @@ void ADN_ListView_Orders::ConnectItem( bool /*bConnect*/ )
 void ADN_ListView_Orders::CreateNewItem( int n )
 {
     OrderInfos* pNewInfo = new OrderInfos();
-    // $$$$ SBO 2006-12-04: Close your eyes and begin to relax, take a deep breath and let it out slowly...
     if( ADN_Missions_Data::FragOrder* fragOrder = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders().at( n ) )
     {
         pNewInfo->strName_   = fragOrder->strName_.GetData();
