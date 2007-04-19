@@ -57,6 +57,8 @@ private:
 
     //! @name Helpers
     //@{
+    void AddParameters  ( Action_ABC& action, const kernel::Mission& mission, const ASN1T_MissionParameters& asn ) const;
+    void AddOrderContext( Action_ABC& action, const ASN1T_OrderContext& asn ) const;
     //@}
 
 private:

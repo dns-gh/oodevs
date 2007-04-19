@@ -98,7 +98,7 @@ Mission* MissionFactory::AddFragOrders( Mission* mission )
         if( !order.IsMissionRequired() )
         {
             FragOrder* newOrder = CreateFragOrder( order.GetName().ascii() );
-            mission->Register( newOrder->GetId(), *newOrder );
+            static_cast< Resolver< FragOrder >* >( mission )->Register( newOrder->GetId(), *newOrder );
         }
     }
     return mission;

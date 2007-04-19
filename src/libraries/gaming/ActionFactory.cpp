@@ -16,14 +16,18 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Mission.h"
+#include "clients_kernel/MissionParameter.h"
 #include "ActionParameterFactory_ABC.h"
+#include "Tools.h"
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ActionFactory constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionFactory::ActionFactory( kernel::Controllers& controllers, const ActionParameterFactory_ABC& factory
-                            , const Model& model, const kernel::Resolver_ABC< kernel::Mission >& missions )
+ActionFactory::ActionFactory( Controllers& controllers, const ActionParameterFactory_ABC& factory, const Model& model, const Resolver_ABC< Mission >& missions )
     : controllers_( controllers )
     , factory_( factory )
     , model_( model )
@@ -45,7 +49,7 @@ ActionFactory::~ActionFactory()
 // Name: ActionFactory::CreateAction
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC& target, const kernel::Mission& mission ) const
+Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const Mission& mission ) const
 {
     return new ActionMission( target, mission, controllers_.controller_, true );
 }
@@ -54,7 +58,7 @@ Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC& target, const
 // Name: ActionFactory::CreateAction
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrder& fragOrder ) const
+Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const FragOrder& fragOrder ) const
 {
     return new ActionFragOrder( target, fragOrder, controllers_.controller_ );
 }
@@ -65,16 +69,10 @@ Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC& target, const
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgPionOrder& message ) const
 {
-    std::auto_ptr< Action_ABC > action( new ActionMission( model_.agents_.GetAgent( message.oid_unite_executante ), missions_.Get( message.mission ), controllers_.controller_, false ) );
-    for( unsigned int i = 0; i < message.parametres.n; ++i )
-        if( ActionParameter_ABC* param = factory_.CreateParameter( QString( "Parameter %1" ).arg( i ), message.parametres.elem[i] ) )
-            action->AddParameter( *param );
-    if( message.order_context.m.limite_gauchePresent )
-        action->AddParameter( *factory_.CreateParameter( "Limit 1", message.order_context.limite_gauche ) );
-    if( message.order_context.m.limite_droitePresent )
-        action->AddParameter( *factory_.CreateParameter( "Limit 2", message.order_context.limite_droite ) );
-    action->AddParameter( *factory_.CreateParameter( "Direction", message.order_context.direction_dangereuse ) );
-    action->AddParameter( *factory_.CreateParameter( "Limas", message.order_context.limas ) );
+    const Mission& mission = missions_.Get( message.mission );
+    std::auto_ptr< Action_ABC > action( new ActionMission( model_.agents_.GetAgent( message.oid_unite_executante ), mission, controllers_.controller_, false ) );
+    AddParameters( *action, mission, message.parametres );
+    AddOrderContext( *action, message.order_context );
     return action.release();
 }
 
@@ -84,15 +82,35 @@ Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgPionOrder& message ) con
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgAutomateOrder& message ) const
 {
-    std::auto_ptr< Action_ABC > action( new ActionMission( model_.agents_.GetAutomat( message.oid_unite_executante ), missions_.Get( message.mission ), controllers_.controller_, false ) );
-    for( unsigned int i = 0; i < message.parametres.n; ++i )
-        if( ActionParameter_ABC* param = factory_.CreateParameter( QString( "Parameter %1" ).arg( i ), message.parametres.elem[i] ) )
-            action->AddParameter( *param );
-    if( message.order_context.m.limite_gauchePresent )
-        action->AddParameter( *factory_.CreateParameter( "Limit 1", message.order_context.limite_gauche ) );
-    if( message.order_context.m.limite_droitePresent )
-        action->AddParameter( *factory_.CreateParameter( "Limit 2", message.order_context.limite_droite ) );
-    action->AddParameter( *factory_.CreateParameter( "Direction", message.order_context.direction_dangereuse ) );
-    action->AddParameter( *factory_.CreateParameter( "Limas", message.order_context.limas ) );
+    const Mission& mission = missions_.Get( message.mission );
+    std::auto_ptr< Action_ABC > action( new ActionMission( model_.agents_.GetAutomat( message.oid_unite_executante ), mission, controllers_.controller_, false ) );
+    AddParameters( *action, mission, message.parametres );
+    AddOrderContext( *action, message.order_context );
     return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::AddParameters
+// Created: SBO 2007-04-19
+// -----------------------------------------------------------------------------
+void ActionFactory::AddParameters( Action_ABC& action, const Mission& mission, const ASN1T_MissionParameters& asn ) const
+{
+    Iterator< const MissionParameter& > params = static_cast< const Resolver_ABC< MissionParameter >& >( mission ).CreateIterator();
+    for( unsigned int i = 0; i < asn.n && params.HasMoreElements(); ++i )
+        if( ActionParameter_ABC* param = factory_.CreateParameter( params.NextElement().GetName(), asn.elem[i] ) )
+            action.AddParameter( *param );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::AddOrderContext
+// Created: SBO 2007-04-19
+// -----------------------------------------------------------------------------
+void ActionFactory::AddOrderContext( Action_ABC& action, const ASN1T_OrderContext& asn ) const
+{
+    if( asn.m.limite_gauchePresent )
+        action.AddParameter( *factory_.CreateParameter( tools::translate( "ActionFactory", "Limit 1" ), asn.limite_gauche ) );
+    if( asn.m.limite_droitePresent )
+        action.AddParameter( *factory_.CreateParameter( tools::translate( "ActionFactory", "Limit 2" ), asn.limite_droite ) );
+    action.AddParameter( *factory_.CreateParameter( tools::translate( "ActionFactory", "Dangerous direction" ), asn.direction_dangereuse ) );
+    action.AddParameter( *factory_.CreateParameter( tools::translate( "ActionFactory", "Limas" ), asn.limas ) );
 }

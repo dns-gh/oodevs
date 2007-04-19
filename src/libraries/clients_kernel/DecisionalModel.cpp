@@ -69,8 +69,8 @@ void DecisionalModel::ReadFragOrder( xml::xistream& xis, Mission& mission, Missi
     std::string name;
     xis >> attribute( "nom", name );
     FragOrder* order = factory.CreateFragOrder( name );
-    if( ! mission.Find( order->GetId() ) )
-        mission.Register( order->GetId(), *order );
+    if( ! static_cast< Resolver< FragOrder >& >( mission ).Find( order->GetId() ) )
+        static_cast< Resolver< FragOrder >& >( mission ).Register( order->GetId(), *order );
     else 
         delete order;
 }

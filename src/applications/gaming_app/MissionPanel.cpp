@@ -167,7 +167,7 @@ int MissionPanel::AddFragOrders( const D& decisions, ContextMenu& menu, const QS
     if( decisions.GetCurrentMission() )
     {
         const Mission& mission = *decisions.GetCurrentMission();
-        Iterator< const FragOrder& > fragIt = mission.CreateIterator();
+        Iterator< const FragOrder& > fragIt = static_cast< const Resolver< FragOrder >& >( mission ).CreateIterator();
         while( fragIt.HasMoreElements() )
         {
             const FragOrder& fragOrder = fragIt.NextElement();

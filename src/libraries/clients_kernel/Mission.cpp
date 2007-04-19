@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "Mission.h"
 #include "FragOrder.h"
+#include "MissionParameter.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -24,7 +25,8 @@ Mission::Mission( xml::xistream& xis )
     std::string name, mrt;
     xis >> attribute( "name", name )
         >> attribute( "id", (int&)id_ )
-        >> optional() >> attribute( "mrt-dia-behavior", mrt );
+        >> optional() >> attribute( "mrt-dia-behavior", mrt )
+        >> list( "parameter", *this, &Mission::ReadParameter );
     name_ = name.c_str();
     automat_ = !mrt.empty();
 }
@@ -47,7 +49,8 @@ Mission::Mission( const Mission& mission )
 // -----------------------------------------------------------------------------
 Mission::~Mission()
 {
-    DeleteAll();
+    Resolver< FragOrder >::DeleteAll();
+    Resolver< MissionParameter >::DeleteAll();
 }
 
 
@@ -76,4 +79,14 @@ QString Mission::GetName() const
 bool Mission::IsAutomat() const
 {
     return automat_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Mission::ReadParameter
+// Created: SBO 2007-04-19
+// -----------------------------------------------------------------------------
+void Mission::ReadParameter( xml::xistream& xis )
+{
+    MissionParameter* param = new MissionParameter( xis );
+    Resolver< MissionParameter >::Register( Resolver< MissionParameter >::Count(), *param );
 }

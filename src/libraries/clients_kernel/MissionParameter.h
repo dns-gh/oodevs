@@ -3,14 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __Mission_h_
-#define __Mission_h_
-
-#include "Resolver.h"
+#ifndef __MissionParameter_h_
+#define __MissionParameter_h_
 
 namespace xml
 {
@@ -19,49 +17,46 @@ namespace xml
 
 namespace kernel
 {
-    class FragOrder;
-    class MissionParameter;
 
 // =============================================================================
-/** @class  Mission
-    @brief  Mission
+/** @class  MissionParameter
+    @brief  MissionParameter
 */
-// Created: AGE 2006-03-14
+// Created: SBO 2007-04-19
 // =============================================================================
-class Mission : public Resolver< FragOrder >
-              , public Resolver< MissionParameter >
+class MissionParameter
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Mission( xml::xistream& xis );
-    explicit Mission( const Mission& mission );
-    virtual ~Mission();
+    explicit MissionParameter( xml::xistream& xis );
+    virtual ~MissionParameter();
     //@}
 
-    //! @name Accessors
+    //! @name Operations
     //@{
-    unsigned long GetId() const;
     QString GetName() const;
-    bool IsAutomat() const;
+    QString GetType() const;
+    bool IsOptional() const;
     //@}
 
 private:
-    //! @name Helpers
+    //! @name Copy/Assignment
     //@{
-    void ReadParameter( xml::xistream& xis );
+    MissionParameter( const MissionParameter& );            //!< Copy constructor
+    MissionParameter& operator=( const MissionParameter& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
     QString name_;
-    unsigned int id_;
-    bool automat_;
+    QString type_;
+    bool optional_;
     //@}
 };
 
 }
 
-#endif // __Mission_h_
+#endif // __MissionParameter_h_
