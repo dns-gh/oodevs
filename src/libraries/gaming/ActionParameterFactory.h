@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual ActionParameter_ABC* CreateParameter( const QString& name, const ASN1T_MissionParameter& parameter ) const;
+    virtual ActionParameter_ABC* CreateParameter( const QString& name, const ASN1T_MissionParameter& parameter, const kernel::Entity_ABC& entity ) const;
     virtual ActionParameter_ABC* CreateParameter( const QString& name, const ASN1T_Line& parameter ) const;
     virtual ActionParameter_ABC* CreateParameter( const QString& name, const ASN1T_LimasOrder& parameter ) const;
     virtual ActionParameter_ABC* CreateParameter( const QString& name, const ASN1T_Direction& parameter ) const;

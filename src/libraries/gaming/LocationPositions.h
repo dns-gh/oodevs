@@ -57,12 +57,15 @@ private:
     //! @name Helpers
     //@{
     void Draw( const kernel::GlTools_ABC& tools ) const;
+    void AddLocation( const ASN1T_Localisation& asn );
+    void AddPoint( const geometry::Point2f& point );
     //@}
 
 protected:
     //! @name Helpers
     //@{
-    void Update( const ASN1T_Localisation& localisation );
+    void Update( const ASN1T_Localisation& asn );
+    void Update( const ASN1T_Localisation& asn, const geometry::Point2f& startPoint );
     //@}
 
 private:

@@ -136,19 +136,46 @@ void LocationPositions::Draw( const kernel::GlTools_ABC& tools ) const
 // Name: LocationPositions::Update
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-void LocationPositions::Update( const ASN1T_Localisation& localisation )
+void LocationPositions::Update( const ASN1T_Localisation& asn )
 {
-    points_.clear(); points_.reserve( localisation.vecteur_point.n );
+    points_.clear(); points_.reserve( asn.vecteur_point.n );
     center_ = geometry::Point2f( 0, 0 );
     boundingBox_.Set( 0, 0, 0, 0 );
-    for( uint i = 0; i < localisation.vecteur_point.n; ++i )
-    {
-        const geometry::Point2f p = converter_.ConvertToXY( localisation.vecteur_point.elem[i] );
-        points_.push_back( p );
-        center_ += geometry::Vector2f( p.X(), p.Y() );
-        boundingBox_.Incorporate( p );
-    }
+    AddLocation( asn );
+}
 
-    if( localisation.vecteur_point.n )
-        center_.Set( center_.X() / localisation.vecteur_point.n, center_.Y() / localisation.vecteur_point.n );
+// -----------------------------------------------------------------------------
+// Name: LocationPositions::Update
+// Created: SBO 2007-04-20
+// -----------------------------------------------------------------------------
+void LocationPositions::Update( const ASN1T_Localisation& asn, const geometry::Point2f& startPoint )
+{
+    points_.clear(); points_.reserve( asn.vecteur_point.n + 1 );
+    center_ = geometry::Point2f( 0, 0 );
+    boundingBox_.Set( 0, 0, 0, 0 );
+    AddPoint( startPoint );
+    AddLocation( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationPositions::AddLocation
+// Created: SBO 2007-04-20
+// -----------------------------------------------------------------------------
+void LocationPositions::AddLocation( const ASN1T_Localisation& asn )
+{
+    for( uint i = 0; i < asn.vecteur_point.n; ++i )
+        AddPoint( converter_.ConvertToXY( asn.vecteur_point.elem[i] ) );
+    if( !points_.empty() )
+        center_.Set( center_.X() / points_.size(), center_.Y() / points_.size() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationPositions::AddPoint
+// Created: SBO 2007-04-20
+// -----------------------------------------------------------------------------
+void LocationPositions::AddPoint( const geometry::Point2f& point )
+{
+    points_.push_back( point );
+    center_ += geometry::Vector2f( point.X(), point.Y() );
+    boundingBox_.Incorporate( point );
 }

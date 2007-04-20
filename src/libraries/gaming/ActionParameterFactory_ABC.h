@@ -12,6 +12,11 @@
 
 #include "game_asn/Asn.h"
 
+namespace kernel
+{
+    class Entity_ABC;
+}
+
 class ActionParameter_ABC;
 
 // =============================================================================
@@ -32,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual ActionParameter_ABC* CreateParameter( const QString& name, const ASN1T_MissionParameter& parameter ) const = 0;
+    virtual ActionParameter_ABC* CreateParameter( const QString& name, const ASN1T_MissionParameter& parameter, const kernel::Entity_ABC& entity ) const = 0;
     virtual ActionParameter_ABC* CreateParameter( const QString& name, const ASN1T_Line& parameter ) const = 0;
     virtual ActionParameter_ABC* CreateParameter( const QString& name, const ASN1T_LimasOrder& parameter ) const = 0;
     virtual ActionParameter_ABC* CreateParameter( const QString& name, const ASN1T_Direction& parameter ) const = 0;

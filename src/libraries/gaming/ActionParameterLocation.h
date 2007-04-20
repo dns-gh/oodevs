@@ -13,6 +13,11 @@
 #include "ActionParameter.h"
 #include "LocationPositions.h"
 
+namespace kernel
+{
+    class Entity_ABC;
+}
+
 // =============================================================================
 /** @class  ActionParameterLocation
     @brief  ActionParameterLocation
@@ -27,6 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ActionParameterLocation( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn );
+             ActionParameterLocation( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn, const kernel::Entity_ABC& entity );
     virtual ~ActionParameterLocation();
     //@}
 

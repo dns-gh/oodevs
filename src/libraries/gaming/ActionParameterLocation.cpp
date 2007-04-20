@@ -11,6 +11,8 @@
 #include "ActionParameterLocation.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Positions.h"
 #include "Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -22,6 +24,18 @@ ActionParameterLocation::ActionParameterLocation( const QString& name, const ker
     , LocationPositions( converter )
 {
     Update( asn );
+    SetValue( tools::ToString( asn.type ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLocation constructor
+// Created: SBO 2007-04-20
+// -----------------------------------------------------------------------------
+ActionParameterLocation::ActionParameterLocation( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn, const kernel::Entity_ABC& entity )
+    : ActionParameter< QString >( name )
+    , LocationPositions( converter )
+{
+    Update( asn, entity.Get< kernel::Positions >().GetPosition() );
     SetValue( tools::ToString( asn.type ) );
 }
 

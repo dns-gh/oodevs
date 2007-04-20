@@ -29,7 +29,7 @@ ActionParameter_ABC::ActionParameter_ABC( const QString& name )
 // -----------------------------------------------------------------------------
 ActionParameter_ABC::~ActionParameter_ABC()
 {
-    // NOTHING
+    DeleteAll();
 }
 
 // -----------------------------------------------------------------------------

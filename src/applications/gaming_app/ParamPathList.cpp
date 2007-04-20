@@ -232,3 +232,19 @@ void ParamPathList::ClearList()
     while( list_->ListView()->childCount() )
         DeleteItem( *list_->ListView()->firstChild() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamPathList::Draw
+// Created: SBO 2007-04-20
+// -----------------------------------------------------------------------------
+void ParamPathList::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+{
+    if( !list_ )
+        return;
+    QListViewItemIterator it( list_->ListView() );
+    for( unsigned int i = 0; it.current(); ++it, ++i )
+    {
+        ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
+        item->GetValue< ParamPath >()->Draw( point, viewport, tools );
+    }
+}

@@ -97,7 +97,7 @@ void ActionFactory::AddParameters( Action_ABC& action, const Mission& mission, c
 {
     Iterator< const MissionParameter& > params = static_cast< const Resolver_ABC< MissionParameter >& >( mission ).CreateIterator();
     for( unsigned int i = 0; i < asn.n && params.HasMoreElements(); ++i )
-        if( ActionParameter_ABC* param = factory_.CreateParameter( params.NextElement().GetName(), asn.elem[i] ) )
+        if( ActionParameter_ABC* param = factory_.CreateParameter( params.NextElement().GetName(), asn.elem[i], action.GetEntity() ) )
             action.AddParameter( *param );
 }
 

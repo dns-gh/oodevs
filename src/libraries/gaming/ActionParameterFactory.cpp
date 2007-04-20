@@ -15,9 +15,12 @@
 #include "ActionParameterObstacleList.h"
 #include "ActionParameterDirection.h"
 #include "ActionParameterLocation.h"
+#include "ActionParameterLocationList.h"
 #include "Model.h"
 #include "StaticModel.h"
 #include "AgentsModel.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Positions.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "Tools.h"
 
@@ -46,7 +49,7 @@ ActionParameterFactory::~ActionParameterFactory()
 // Name: ActionParameterFactory::CreateParameter
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-ActionParameter_ABC* ActionParameterFactory::CreateParameter( const QString& name, const ASN1T_MissionParameter& parameter ) const
+ActionParameter_ABC* ActionParameterFactory::CreateParameter( const QString& name, const ASN1T_MissionParameter& parameter, const kernel::Entity_ABC& entity ) const
 {
     if( parameter.null_value )
         return new ActionParameter< QString >( name, tools::translate( "ActionParameterFactory", "not set" ) );
@@ -68,21 +71,26 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const QString& nam
     case T_MissionParameter_value_gDH:
         break;
     case T_MissionParameter_value_itineraire:
-        return new ActionParameterLocation( name, converter_, *parameter.value.u.itineraire );
+        return new ActionParameterLocation( name, converter_, *parameter.value.u.itineraire, entity );
     case T_MissionParameter_value_knowledgeAgent:
     case T_MissionParameter_value_knowledgeObject:
     case T_MissionParameter_value_knowledgePopulation:
     case T_MissionParameter_value_listAgent:
     case T_MissionParameter_value_listAutomate:
+        break;
     case T_MissionParameter_value_listItineraire:
+        return new ActionParameterLocationList< ASN1T_ListItineraire >( name, converter_, *parameter.value.u.listItineraire, entity );
     case T_MissionParameter_value_listKnowledgeAgent:
     case T_MissionParameter_value_listKnowledgeObject:
-    case T_MissionParameter_value_listLocalisation:
         break;
+    case T_MissionParameter_value_listLocalisation:
+        return new ActionParameterLocationList< ASN1T_ListLocalisation >( name, converter_, *parameter.value.u.listLocalisation );
     case T_MissionParameter_value_listMissionGenObject:
         return new ActionParameterObstacleList( name, converter_, staticModel_.objectTypes_, *parameter.value.u.listMissionGenObject );
     case T_MissionParameter_value_listPoint:
+        return new ActionParameterLocationList< ASN1T_ListPoint >( name, converter_, *parameter.value.u.listPoint );
     case T_MissionParameter_value_listPolygon:
+        return new ActionParameterLocationList< ASN1T_ListPolygon >( name, converter_, *parameter.value.u.listPolygon );
         break;
     case T_MissionParameter_value_localisation:
         return new ActionParameterLocation( name, converter_, *parameter.value.u.localisation );
