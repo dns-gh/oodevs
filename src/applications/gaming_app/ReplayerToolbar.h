@@ -63,6 +63,7 @@ private:
     kernel::Controllers& controllers_;
     Publisher_ABC& network_;
     QSlider* slider_;
+    unsigned previousTickCount_;
     //@}
 };
 

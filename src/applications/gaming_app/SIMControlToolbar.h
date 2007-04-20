@@ -79,7 +79,7 @@ private:
     ConnectDialog*      pConnectDlg_;
     DisconnectDialog*   pDisconnectDlg_;
     int speed_;
-    bool connected_, lastConnectionStatus_, paused_;
+    bool connected_, paused_;
 
     QIconSet connectedPix_, disconnectedPix_;
     QIconSet playPix_, stopPix_;

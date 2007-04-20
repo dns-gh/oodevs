@@ -65,7 +65,6 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     , publisher_( publisher )
     , speed_( 4212 )
     , connected_( false )
-    , lastConnectionStatus_( false )
     , paused_( false )
     , connectedPix_   ( MAKE_ICON( connected ) )
     , disconnectedPix_( MAKE_ICON( notconnected ) )
@@ -188,10 +187,9 @@ void SIMControlToolbar::SlotOnSpinBoxChange( int value )
 // -----------------------------------------------------------------------------
 void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
 {
-    connected_ = simulation.IsConnected();
-    if( lastConnectionStatus_ != connected_ )
+    if( simulation.IsConnected() != connected_ )
     {
-        lastConnectionStatus_ = connected_;
+        connected_ = simulation.IsConnected();
         if( connected_ )
         {
             pConnectButton_->setIconSet( connectedPix_ );
@@ -212,23 +210,25 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
         }
     }
 
-    paused_ = simulation.IsPaused();
-    if( paused_ )
+    if( paused_ != simulation.IsPaused() )
     {
-        pPlayButton_->setIconSet( playPix_ );
-        pPlayButton_->setTextLabel( tr( "Unpause (P)" ) );
-    }
-    else
-    {
-        pPlayButton_->setIconSet( stopPix_ );
-        pPlayButton_->setTextLabel( tr( "Pause (P)" ) );
+        paused_ = simulation.IsPaused();
+        if( paused_ )
+        {
+            pPlayButton_->setIconSet( playPix_ );
+            pPlayButton_->setTextLabel( tr( "Unpause (P)" ) );
+        }
+        else
+        {
+            pPlayButton_->setIconSet( stopPix_ );
+            pPlayButton_->setTextLabel( tr( "Pause (P)" ) );
+        }
     }
 
-    const int speed = simulation.GetSpeed();
-    if( speed_ != speed )
+    if( speed_ != simulation.GetSpeed() )
     {
-        speed_ = speed;
-        pSpeedSpinBox_->setValue( speed );
+        speed_ = simulation.GetSpeed();
+        pSpeedSpinBox_->setValue( speed_ );
         pSpeedButton_->setEnabled( false );
     }
 }

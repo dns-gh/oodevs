@@ -28,7 +28,7 @@ GlToolsBase::GlToolsBase( Controllers& controllers )
     , symbols_( new GLSymbols() )
     , billboard_( 0 )
 {
-    // NOTHING
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,6 +37,7 @@ GlToolsBase::GlToolsBase( Controllers& controllers )
 // -----------------------------------------------------------------------------
 GlToolsBase::~GlToolsBase()
 {
+    controllers_.Remove( *this );
     for( CIT_Icons it = icons_.begin(); it != icons_.end(); ++it )
         glDeleteTextures( 1, & it->second );
     glDeleteLists( billboard_, 1 );
@@ -69,8 +70,13 @@ bool GlToolsBase::ShouldDisplay( const std::string& name ) const
 // -----------------------------------------------------------------------------
 bool GlToolsBase::ShouldDisplay( const std::string& name, bool autoCondition ) const
 {
-    return controllers_.options_.GetOption( name, TristateOption::Auto() )
-        .To< TristateOption >().IsSet( autoCondition );
+    IT_Options it = options_.find( name );
+    if( it == options_.end() )
+    {
+        const TristateOption& option = controllers_.options_.GetOption( name, TristateOption::Auto() ).To< TristateOption >();
+        it = options_.insert( std::make_pair( name, option ) ).first;
+    }
+    return it->second.IsSet( autoCondition );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,4 +153,15 @@ void GlToolsBase::DrawBillboardRect()
         glEndList();
     }
     glCallList( billboard_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlToolsBase::OptionChanged
+// Created: AGE 2007-04-20
+// -----------------------------------------------------------------------------
+void GlToolsBase::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    IT_Options it = options_.find( name );
+    if( it != options_.end() )
+        it->second = value.To< TristateOption >();
 }

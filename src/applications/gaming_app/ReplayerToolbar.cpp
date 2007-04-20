@@ -24,6 +24,7 @@ ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& con
     , controllers_( controllers )
     , network_( network )
     , slider_( 0 )
+    , previousTickCount_( unsigned( -2 ) )
 {
     controllers_.Register( *this );
 }
@@ -43,15 +44,24 @@ ReplayerToolbar::~ReplayerToolbar()
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
 {
-    delete slider_; slider_ = 0;
     if( simulation.GetTickCount() != unsigned( -1 ) )
     {
-        slider_ = new QSlider( 0, simulation.GetTickCount(), 1, simulation.GetCurrentTick(), Qt::Horizontal, this );
-        slider_->setTracking( false );
-        connect( slider_, SIGNAL( valueChanged( int ) ), SLOT( OnSliderMove( int ) ) );
-        show();
+        if( previousTickCount_ != simulation.GetTickCount() )
+        {
+            delete slider_;
+            slider_ = 0;
+        }
+        if( ! slider_ )
+        {
+            previousTickCount_ = simulation.GetTickCount();
+            slider_ = new QSlider( 0, simulation.GetTickCount(), 1, simulation.GetCurrentTick(), Qt::Horizontal, this );
+            slider_->setTracking( false );
+            connect( slider_, SIGNAL( valueChanged( int ) ), SLOT( OnSliderMove( int ) ) );
+        }
+        if( ! isVisible() )
+            show();
     }
-    else
+    else if( isVisible() )
         hide();
 }
 

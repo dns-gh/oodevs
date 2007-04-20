@@ -11,6 +11,8 @@
 #define __GlToolsBase_h_
 
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/TristateOption.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace gui
 {
@@ -23,6 +25,8 @@ namespace gui
 // Created: AGE 2006-04-07
 // =============================================================================
 class GlToolsBase : public kernel::GlTools_ABC
+                  , public kernel::Observer_ABC
+                  , public kernel::OptionsObserver_ABC
 {
 
 public:
@@ -46,6 +50,12 @@ public:
     void DrawBillboardRect();
     //@}
 
+protected:
+    //! @name Operations
+    //@{
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{
@@ -57,6 +67,10 @@ private:
     //@{
     typedef std::map< const char**, unsigned >            T_Icons;
     typedef T_Icons::const_iterator                     CIT_Icons;
+
+    typedef std::map< std::string, kernel::TristateOption >  T_Options;
+    typedef T_Options::iterator                             IT_Options;
+    typedef T_Options::const_iterator                      CIT_Options;
     //@}
 
 private:
@@ -69,6 +83,8 @@ private:
     GLSymbols*      symbols_;
 
     unsigned billboard_;
+
+    mutable T_Options options_;
     //@}
 };
 

@@ -95,11 +95,11 @@ void LogisticConsigns_ABC< ConcreteExtension, Consign >::TerminateConsign( Consi
 template< typename ConcreteExtension, typename Consign >
 void LogisticConsigns_ABC< ConcreteExtension, Consign >::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    if( ! tools.ShouldDisplay( "RealTimeLogistic" ) )
+    if( ( handled_.empty() && requested_.empty() ) || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
         return;
 
     const bool handledOnly = tools.ShouldDisplay( "RealTimeLogistic", false );
-    if( handled_.empty() && ( handledOnly || requested_.empty() ) )
+    if( handled_.empty() && handledOnly )
         return;
 
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
