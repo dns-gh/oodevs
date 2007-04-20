@@ -18,8 +18,10 @@
 // -----------------------------------------------------------------------------
 ActionParameterDirection::ActionParameterDirection( const QString& name, const ASN1T_Direction& asn )
     : ActionParameter< float >( name )
-    , direction_( sin( asn * 3.14f / 180.f ), -cos( asn * 3.14f / 180.f ) )
+    , direction_()
 {
+    const float angle = asn * 3.14f / 180.f;
+    direction_ = geometry::Vector2f( sin( angle ), cos( angle ) );
     SetValue( asn );
 }
 

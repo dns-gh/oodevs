@@ -77,7 +77,7 @@ const Entity_ABC& Report::GetOwner() const
 void Report::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Item( "" )
-             .Start( QColor( 220, 220, 220 ) )
+             .Start( GetColor( type_ ) )
                 .Add( QTime().addSecs( time_ ) )
                 .Add( " " )
                 .Add( message_.section( " - ", 0 ) )

@@ -45,8 +45,8 @@ void ParamDirection::BuildInterface( QWidget* parent )
     QDial* dial = new QDial( 0, 359, 1, 0, box );
     dial->setWrapping( true );
     dial->setMaximumSize( 50, 50 );
-    dial->setValue( value_ );
     connect( dial, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged( int ) ) );
+    dial->setValue( value_ );
 }
 
 // -----------------------------------------------------------------------------
