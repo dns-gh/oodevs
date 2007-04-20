@@ -10,10 +10,9 @@
 #ifndef __RichLabel_h_
 #define __RichLabel_h_
 
-class QSimpleRichText;
-
 namespace gui
 {
+    class SimplerRichText;
 
 // =============================================================================
 /** @class  RichLabel
@@ -70,7 +69,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QSimpleRichText* richText_;
+    SimplerRichText* richText_;
     //@}
 };
 

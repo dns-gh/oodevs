@@ -12,6 +12,7 @@
 
 namespace gui
 {
+    class SimplerRichText;
 
 // =============================================================================
 /** @class  RichListItem
@@ -67,7 +68,7 @@ private:
     void AddColumns( const QString& label1, const QString& label2, const QString& label3, const QString& label4, 
                      const QString& label5, const QString& label6, const QString& label7, const QString& label8 );
     const QColor& GetBackgroundColor();
-    QSimpleRichText* CreateRichText( const QString& label );
+    SimplerRichText* CreateRichText( const QString& label );
     int Width( int nColumn ) const;
     //@}
 
@@ -76,9 +77,9 @@ private:
     struct RichText
     {
         RichText() : rich( 0 ), pixMap( 0 ) {}
-        RichText( const QString& s, QSimpleRichText* rich ) : base( s ), rich( rich ), pixMap( 0 ) {}
+        RichText( const QString& s, SimplerRichText* rich ) : base( s ), rich( rich ), pixMap( 0 ) {}
         QString          base;
-        QSimpleRichText* rich;
+        SimplerRichText* rich;
         QPixmap          pixMap;
     };
     typedef std::vector< RichText > T_RichTexts;

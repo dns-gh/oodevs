@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "RichListItem.h"
+#include "SimplerRichText.h"
 #include <qpainter.h>
 
 using namespace gui;
@@ -196,7 +197,7 @@ void RichListItem::SetFont( const QFont& font )
     font_ = font;
     for( IT_RichTexts it = columns_.begin(); it != columns_.end(); ++it )
     {
-        QSimpleRichText& rich = *it->rich;
+        SimplerRichText& rich = *it->rich;
         rich.setDefaultFont( font_ );
     }
     widthChanged();
@@ -264,7 +265,7 @@ void RichListItem::paintCell( QPainter* pPainter, const QColorGroup& cg, int nCo
         brush.setColor( GetBackgroundColor() );
     }
 
-    QSimpleRichText* pRichText = columns_[nColumn].rich;
+    SimplerRichText* pRichText = columns_[nColumn].rich;
     const QPixmap& pm = columns_[nColumn].pixMap;
     QRect rect( 0, 0, nWidth, height() );
 
@@ -312,7 +313,7 @@ void RichListItem::setText( int column, const QString& text )
     if( richText.base != text )
     {
         richText.base = text;
-        QSimpleRichText* rich = CreateRichText( text );
+        SimplerRichText* rich = CreateRichText( text );
         std::swap( rich, richText.rich );
         delete rich;
         widthChanged();
@@ -341,10 +342,10 @@ void RichListItem::setPixmap( int column, const QPixmap & pm )
 // Name: RichListItem::CreateRichText
 // Created: AGE 2006-03-06
 // -----------------------------------------------------------------------------
-QSimpleRichText* RichListItem::CreateRichText( const QString& label )
+SimplerRichText* RichListItem::CreateRichText( const QString& label )
 {
-    QSimpleRichText* text = new QSimpleRichText( label, font_ );
-    text->setWidth( 10000 ); // Unlimited width
+    SimplerRichText* text = new SimplerRichText( label, font_ );
+//    text->setWidth( 10000 ); // Unlimited width
     if( text->height() > height() )
         setHeight( text->height() );
     return text;

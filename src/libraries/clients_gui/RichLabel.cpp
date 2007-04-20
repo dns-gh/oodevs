@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "RichLabel.h"
 #include "moc_RichLabel.cpp"
-#include <qsimplerichtext.h>
+#include "SimplerRichText.h"
 #include <qprocess.h>
 
 using namespace gui;
@@ -21,7 +21,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 RichLabel::RichLabel( QWidget* parent /*= 0*/, const char* name /*= 0*/ )
     : QLabel( parent, name )
-    , richText_( new QSimpleRichText( "", font() ) )
+    , richText_( new SimplerRichText( "", font() ) )
 {
     setAlignment( AlignVCenter | AlignLeft );
     setMouseTracking( true );
@@ -33,7 +33,7 @@ RichLabel::RichLabel( QWidget* parent /*= 0*/, const char* name /*= 0*/ )
 // -----------------------------------------------------------------------------
 RichLabel::RichLabel( const QString& text, QWidget* parent, const char* name )
     : QLabel( text, parent, name )
-    , richText_( new QSimpleRichText( text, font() ) )
+    , richText_( new SimplerRichText( text, font() ) )
 {
     setAlignment( AlignVCenter | AlignLeft );
     setMouseTracking( true );
@@ -45,7 +45,7 @@ RichLabel::RichLabel( const QString& text, QWidget* parent, const char* name )
 // -----------------------------------------------------------------------------
 RichLabel::RichLabel( const QString& text, bool required, QWidget* parent, const char* name )
     : QLabel( text, parent, name )
-    , richText_( new QSimpleRichText( text, font() ) )
+    , richText_( new SimplerRichText( text, font() ) )
 {
     if( required )
     {
@@ -93,7 +93,7 @@ void RichLabel::OnWarnStop()
 void RichLabel::setText( const QString& message )
 {
     delete richText_;
-    richText_ = new QSimpleRichText( message , font() );
+    richText_ = new SimplerRichText( message , font() );
     QLabel::setText( message );
 }
 
@@ -130,6 +130,6 @@ void RichLabel::mouseMoveEvent( QMouseEvent* e )
 // -----------------------------------------------------------------------------
 void RichLabel::drawContents( QPainter* p )
 {
-    richText_->setWidth( p, width() );
+//    richText_->setWidth( p, width() );
     QLabel::drawContents( p );
 }
