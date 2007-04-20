@@ -49,8 +49,27 @@ private:
     //! @name Types
     //@{
     class RichElement;
-    typedef std::vector< RichElement* >  T_Elements;
+    typedef std::vector< RichElement >   T_Elements;
+    typedef T_Elements::iterator        IT_Elements;
     typedef T_Elements::const_iterator CIT_Elements;
+
+    class RichElement
+    {
+    public:
+        RichElement( SimplerRichText* parent, const QString& text, const QString& link );
+        void draw( QPainter* p, int x, int y, const QColorGroup& cg ) const;
+        int width() const;
+        int widthUsed() const;
+        bool IsAt( const QPoint& point ) const;
+        const QString& Anchor() const;
+        void UpdateOffset( SimplerRichText::CIT_Elements it );
+
+    private:
+        SimplerRichText* parent_;
+        QString label_;
+        QString anchor_;
+        int offset_;
+    };
     //@}
 
     //! @name Helpers

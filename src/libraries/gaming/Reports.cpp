@@ -46,6 +46,7 @@ Reports::~Reports()
 // -----------------------------------------------------------------------------
 void Reports::DoUpdate( const ASN1T_MsgCR& message )
 {
+    // $$$$ AGE 2007-04-20: limiter le nombre de reports ?
     Report* report = reportFactory_.CreateReport( agent_, simulation_, message );
     reports_.push_back( report );
     controller_.Create( *report );
@@ -57,6 +58,7 @@ void Reports::DoUpdate( const ASN1T_MsgCR& message )
 // -----------------------------------------------------------------------------
 void Reports::DoUpdate( const TraceMessage& message )
 {
+    // $$$$ AGE 2007-04-20: limiter le nombre de reports ?
     Report* trace = reportFactory_.CreateTrace( agent_, simulation_, message );
     reports_.push_back( trace );
     controller_.Create( *trace );

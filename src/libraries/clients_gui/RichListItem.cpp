@@ -313,9 +313,7 @@ void RichListItem::setText( int column, const QString& text )
     if( richText.base != text )
     {
         richText.base = text;
-        SimplerRichText* rich = CreateRichText( text );
-        std::swap( rich, richText.rich );
-        delete rich;
+        richText.rich->setText( text );
         widthChanged();
         listView()->triggerUpdate();
     }
@@ -345,7 +343,6 @@ void RichListItem::setPixmap( int column, const QPixmap & pm )
 SimplerRichText* RichListItem::CreateRichText( const QString& label )
 {
     SimplerRichText* text = new SimplerRichText( label, font_ );
-//    text->setWidth( 10000 ); // Unlimited width
     if( text->height() > height() )
         setHeight( text->height() );
     return text;

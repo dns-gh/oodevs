@@ -14,64 +14,86 @@
 
 using namespace gui;
 
-class SimplerRichText::RichElement
+// -----------------------------------------------------------------------------
+// Name: SimplerRichText::RichElement::RichElement
+// Created: AGE 2007-04-20
+// -----------------------------------------------------------------------------
+SimplerRichText::RichElement::RichElement( SimplerRichText* parent, const QString& text, const QString& link )
+    : parent_( parent )
+    , label_( text )
+    , anchor_( link )
+    , offset_( 0 )
 {
-public:
-    RichElement( SimplerRichText* parent, const QString& text, const QString& link )
-        : parent_( parent )
-        , label_( text )
-        , anchor_( link )
-        , offset_( 0 )
-    {
-        // NOTHING
-    }
+    // NOTHING
+}
 
-    void draw( QPainter* p, int x, int y, const QColorGroup& cg )
-    {
-        if( anchor_ ) {
-            p->setPen( cg.color( QColorGroup::Link ) );
-            p->setFont( parent_->linkFont_ );
-        }
-        else {
-            p->setPen( cg.color( QColorGroup::Text ) );
-            p->setFont( parent_->font_ );
-        }
-        p->drawText( x + offset_, y + parent_->height()-3, label_, -1 );
+// -----------------------------------------------------------------------------
+// Name: SimplerRichText::RichElement::draw
+// Created: AGE 2007-04-20
+// -----------------------------------------------------------------------------
+void SimplerRichText::RichElement::draw( QPainter* p, int x, int y, const QColorGroup& cg ) const
+{
+    if( anchor_ ) {
+        p->setPen( cg.color( QColorGroup::Link ) );
+        p->setFont( parent_->linkFont_ );
     }
+    else {
+        p->setPen( cg.color( QColorGroup::Text ) );
+        p->setFont( parent_->font_ );
+    }
+    p->drawText( x + offset_, y + parent_->height()-3, label_, -1 );
+}
 
-    int width() const
-    {
-        return QFontMetrics( parent_->font_ ).width( label_ );
-    }
-    int widthUsed() const
-    {
-        return offset_ + width();
-    }
-    bool IsAt( const QPoint& point ) const
-    {
-        return point.x() >= offset_ && point.x() < widthUsed();
-    }
-    const QString& Anchor() const
-    {
-        return anchor_;
-    }
+// -----------------------------------------------------------------------------
+// Name: SimplerRichText::RichElement::width
+// Created: AGE 2007-04-20
+// -----------------------------------------------------------------------------
+int SimplerRichText::RichElement::width() const
+{
+    return QFontMetrics( parent_->font_ ).width( label_ );
+}
 
-    void UpdateOffset( SimplerRichText::CIT_Elements it )
+// -----------------------------------------------------------------------------
+// Name: SimplerRichText::RichElement::widthUsed
+// Created: AGE 2007-04-20
+// -----------------------------------------------------------------------------
+int SimplerRichText::RichElement::widthUsed() const
+{
+    return offset_ + width();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimplerRichText::RichElement::IsAt
+// Created: AGE 2007-04-20
+// -----------------------------------------------------------------------------
+bool SimplerRichText::RichElement::IsAt( const QPoint& point ) const
+{
+    return point.x() >= offset_ && point.x() < widthUsed();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: SimplerRichText::RichElement::Anchor
+// Created: AGE 2007-04-20
+// -----------------------------------------------------------------------------
+const QString& SimplerRichText::RichElement::Anchor() const
+{
+    return anchor_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimplerRichText::RichElement::UpdateOffset
+// Created: AGE 2007-04-20
+// -----------------------------------------------------------------------------
+void SimplerRichText::RichElement::UpdateOffset( SimplerRichText::CIT_Elements it )
+{
+    if( it == parent_->elements_.begin() )
+        offset_ = 0;
+    else
     {
-        if( it == parent_->elements_.begin() )
-            offset_ = 0;
-        else
-        {
-            RichElement& previous = **(it-1);
-            offset_ = previous.widthUsed();
-        }
+        const RichElement& previous = *(it-1);
+        offset_ = previous.widthUsed();
     }
-public:
-    SimplerRichText* parent_;
-    QString label_;
-    QString anchor_;
-    int offset_;
-};
+}
 
 // -----------------------------------------------------------------------------
 // Name: SimplerRichText constructor
@@ -91,8 +113,7 @@ SimplerRichText::SimplerRichText( const QString& text, const QFont& font )
 // -----------------------------------------------------------------------------
 SimplerRichText::~SimplerRichText()
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        delete *it;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +127,7 @@ void SimplerRichText::draw( QPainter* p, int x, int y, const QRect& clipRect, co
     if( paper )
         p->fillRect( clipRect, *paper );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        (*it)->draw( p, x, y, cg );
+        it->draw( p, x, y, cg );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,6 +159,8 @@ void SimplerRichText::Parse( const QString& text )
     QStringList list;
     Breakdown( text, list );
     bool textOnly = true;
+    elements_.clear();
+    elements_.reserve( list.size() );
     for( QStringList::iterator it = list.begin(); it != list.end(); ++it )
     {
         if( textOnly )
@@ -154,8 +177,8 @@ void SimplerRichText::Parse( const QString& text )
 // -----------------------------------------------------------------------------
 void SimplerRichText::UpdateOffset()
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        (*it)->UpdateOffset( it );
+    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->UpdateOffset( it );
 }
 
 // -----------------------------------------------------------------------------
@@ -201,7 +224,7 @@ void SimplerRichText::AddLinkElement( const QString& text )
 // -----------------------------------------------------------------------------
 void SimplerRichText::AddLinkElement( const QString& link, const QString& text )
 {
-    elements_.push_back( new RichElement( this, text, link ) );
+    elements_.push_back( RichElement( this, text, link ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -212,8 +235,8 @@ QString SimplerRichText::anchorAt( const QPoint& point ) const
 {
     if( point.y() >= 0 && point.y() < height() )
         for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-            if( (*it)->IsAt( point ) )
-                return (*it)->Anchor();
+            if( it->IsAt( point ) )
+                return it->Anchor();
     return "";
 }
 
@@ -223,8 +246,7 @@ QString SimplerRichText::anchorAt( const QPoint& point ) const
 // -----------------------------------------------------------------------------
 int SimplerRichText::widthUsed() const
 {
-    return elements_.empty() ? 0
-                             : elements_.back()->widthUsed();
+    return elements_.empty() ? 0 : elements_.back().widthUsed();
 }
 
 // -----------------------------------------------------------------------------
