@@ -61,6 +61,16 @@ void DrawerShapePoint::Draw( const geometry::Rectangle2f& viewport, const QColor
 {
     if( points_.empty() )
         return;
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+    glLineWidth( 1 );
+
+    const geometry::BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
+    context_->SetViewport( box, 320, 200 ); // $$$$ AGE 2006-09-04: 
     const QColor& current = overlined ? complement_ : color;
-    DrawerShape::Draw( viewport, current, false );
+    svg::Color svgColor( current.name().ascii() );
+    context_->PushProperty( svg::RenderingContext_ABC::color, svgColor );
+    style_.Draw( points_.front(), *context_ );
+    context_->PopProperty( svg::RenderingContext_ABC::color );
+
+    glPopAttrib();
 }
