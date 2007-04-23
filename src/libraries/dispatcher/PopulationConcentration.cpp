@@ -10,7 +10,6 @@
 #include "dispatcher_pch.h"
 
 #include "PopulationConcentration.h"
-
 #include "Population.h"
 #include "Network_Def.h"
 

@@ -104,9 +104,9 @@
         <Angle balayage="true" unite="degre">30</Angle>
         <DistanceDeProximite>50</DistanceDeProximite>
         <DistancesDeBase>
-          <DD>5000</DD>
-          <DR>2000</DR>
-          <DI>1000</DI>
+          <DD>8000</DD>
+          <DR>5000</DR>
+          <DI>3000</DI>
         </DistancesDeBase>
         <ModificateursDeDistance>
           <PresencePopulation densitePopulation="1" modificateur="0.5"/>
@@ -139,17 +139,17 @@
             <Eclairant>1</Eclairant>
           </Eclairements>
           <PosturesSource>
-            <Mouvement>0.3</Mouvement>
-            <MouvementDiscret>0.3</MouvementDiscret>
-            <Arret>0.7</Arret>
-            <PosteReflexe>0.8</PosteReflexe>
+            <Mouvement>0.9</Mouvement>
+            <MouvementDiscret>0.9</MouvementDiscret>
+            <Arret>0.9</Arret>
+            <PosteReflexe>0.9</PosteReflexe>
             <Poste>0.9</Poste>
             <PosteAmenage>1</PosteAmenage>
             <PostePrepareGenie>1</PostePrepareGenie>
           </PosturesSource>
           <PosturesCible>
             <Mouvement>1</Mouvement>
-            <MouvementDiscret>0.25</MouvementDiscret>
+            <MouvementDiscret>0.9</MouvementDiscret>
             <Arret>0.9</Arret>
             <PosteReflexe>0.8</PosteReflexe>
             <Poste>0.7</Poste>
@@ -157,9 +157,9 @@
             <PostePrepareGenie>0.7</PostePrepareGenie>
           </PosturesCible>
           <Environnements>
-            <Sol>0</Sol>
+            <Sol>1</Sol>
             <Vide>1</Vide>
-            <Foret>0</Foret>
+            <Foret>1</Foret>
             <Urbain>1</Urbain>
           </Environnements>
         </ModificateursDeDistance>

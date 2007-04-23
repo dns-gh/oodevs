@@ -68,7 +68,6 @@ void Dotation::Send( ASN1T_DotationRessource& asnMsg ) const
 {
     asnMsg.ressource_id        = nDotationType_;
     asnMsg.quantite_disponible = nNbr_;
-
 }
 
 // -----------------------------------------------------------------------------

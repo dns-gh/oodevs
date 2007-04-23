@@ -164,11 +164,15 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
             break;  // $$$$ AGE 2007-04-18: Evenements, modèle client => rien, ou remanier
         case T_MsgsOutSim_msg_msg_start_fire_effect:                    CreateUpdate( fireEffects_, asnMsg.msg.u.msg_start_fire_effect->oid_effet, *asnMsg.msg.u.msg_start_fire_effect ); break;
         case T_MsgsOutSim_msg_msg_stop_fire_effect:                     fireEffects_.Destroy( asnMsg.msg.u.msg_stop_fire_effect ); break;
-        case T_MsgsOutSim_msg_msg_pion_order_management:                agents_.     Get( asnMsg.msg.u.msg_pion_order_management->oid_unite_executante ).Update( *asnMsg.msg.u.msg_pion_order_management ); break;
-        case T_MsgsOutSim_msg_msg_automate_order_management:            automats_.   Get( asnMsg.msg.u.msg_automate_order_management->oid_unite_executante ).Update( *asnMsg.msg.u.msg_automate_order_management ); break;
-        case T_MsgsOutSim_msg_msg_population_order_management:          populations_.Get( asnMsg.msg.u.msg_population_order_management->oid_unite_executante ).Update( *asnMsg.msg.u.msg_population_order_management ); break;
-//        case T_MsgsOutSim_msg_msg_automate_mrt:                         OnReceiveMsgAutomateMRT               ( *message.u.msg_automate_mrt                        ); break;
-//        case T_MsgsOutSim_msg_msg_pion_order:                           OnReceiveMsgPionOrder                 ( *message.u.msg_pion_order ); break;
+
+        case T_MsgsOutSim_msg_msg_pion_order:                           agents_     .Get( asnMsg.msg.u.msg_pion_order                 ->oid_unite_executante ).Update( *asnMsg.msg.u.msg_pion_order                  ); break;
+        case T_MsgsOutSim_msg_msg_automate_order:                       automats_   .Get( asnMsg.msg.u.msg_automate_order             ->oid_unite_executante ).Update( *asnMsg.msg.u.msg_automate_order              ); break;
+        case T_MsgsOutSim_msg_msg_population_order:                     populations_.Get( asnMsg.msg.u.msg_population_order           ->oid_unite_executante ).Update( *asnMsg.msg.u.msg_population_order            ); break;
+        
+        case T_MsgsOutSim_msg_msg_pion_order_management:                
+        case T_MsgsOutSim_msg_msg_automate_order_management:            
+        case T_MsgsOutSim_msg_msg_population_order_management:          
+            break;  // $$$$ NLD 2007-04-20: NOTHING : messages pourris et inutiles ... à virer
 
         case T_MsgsOutSim_msg_msg_object_creation:                      CreateUpdate( objects_, asnMsg.msg.u.msg_object_creation->oid, *asnMsg.msg.u.msg_object_creation ); break;
         case T_MsgsOutSim_msg_msg_object_update:                        objects_.Get( asnMsg.msg.u.msg_object_update->oid ).Update( *asnMsg.msg.u.msg_object_update ); break;
@@ -308,9 +312,15 @@ void Model::Update( const ASN1T_MsgsInClient& asnMsg )
             break;  // $$$$ AGE 2007-04-18: Evenements, modèle client => rien, ou remanier
         case T_MsgsInClient_msg_msg_start_fire_effect:                    CreateUpdate( fireEffects_, asnMsg.msg.u.msg_start_fire_effect->oid_effet, *asnMsg.msg.u.msg_start_fire_effect ); break;
         case T_MsgsInClient_msg_msg_stop_fire_effect:                     fireEffects_.Destroy( asnMsg.msg.u.msg_stop_fire_effect ); break;
-        case T_MsgsInClient_msg_msg_pion_order_management:                agents_.     Get( asnMsg.msg.u.msg_pion_order_management->oid_unite_executante ).Update( *asnMsg.msg.u.msg_pion_order_management ); break;
-        case T_MsgsInClient_msg_msg_automate_order_management:            automats_.   Get( asnMsg.msg.u.msg_automate_order_management->oid_unite_executante ).Update( *asnMsg.msg.u.msg_automate_order_management ); break;
-        case T_MsgsInClient_msg_msg_population_order_management:          populations_.Get( asnMsg.msg.u.msg_population_order_management->oid_unite_executante ).Update( *asnMsg.msg.u.msg_population_order_management ); break;
+
+        case T_MsgsInClient_msg_msg_pion_order:                           agents_     .Get( asnMsg.msg.u.msg_pion_order                 ->oid_unite_executante ).Update( *asnMsg.msg.u.msg_pion_order                  ); break;
+        case T_MsgsInClient_msg_msg_automate_order:                       automats_   .Get( asnMsg.msg.u.msg_automate_order             ->oid_unite_executante ).Update( *asnMsg.msg.u.msg_automate_order              ); break;
+        case T_MsgsInClient_msg_msg_population_order:                     populations_.Get( asnMsg.msg.u.msg_population_order           ->oid_unite_executante ).Update( *asnMsg.msg.u.msg_population_order            ); break;
+
+        case T_MsgsInClient_msg_msg_pion_order_management:                
+        case T_MsgsInClient_msg_msg_automate_order_management:            
+        case T_MsgsInClient_msg_msg_population_order_management:          
+            break;  // $$$$ NLD 2007-04-20: NOTHING : messages pourris et inutiles ... à virer
 
         case T_MsgsInClient_msg_msg_object_creation:                      CreateUpdate( objects_, asnMsg.msg.u.msg_object_creation->oid, *asnMsg.msg.u.msg_object_creation ); break;
         case T_MsgsInClient_msg_msg_object_update:                        objects_.Get( asnMsg.msg.u.msg_object_update->oid ).Update( *asnMsg.msg.u.msg_object_update ); break;
@@ -421,9 +431,9 @@ void Model::Accept( ModelVisitor_ABC& visitor ) const
     logConsignsMaintenance_.Apply( std::mem_fun_ref( &LogConsignMaintenance::Accept ), visitor );
     logConsignsSupply_     .Apply( std::mem_fun_ref( &LogConsignSupply     ::Accept ), visitor );
     logConsignsMedical_    .Apply( std::mem_fun_ref( &LogConsignMedical    ::Accept ), visitor );
-    fires_                 .Apply( std::mem_fun_ref( &Fire          ::Accept ), visitor );
-    populationFires_       .Apply( std::mem_fun_ref( &PopulationFire::Accept ), visitor );
-    fireEffects_           .Apply( std::mem_fun_ref( &FireEffect    ::Accept ), visitor );
+    fires_                 .Apply( std::mem_fun_ref( &Fire                 ::Accept ), visitor );
+    populationFires_       .Apply( std::mem_fun_ref( &PopulationFire       ::Accept ), visitor );
+    fireEffects_           .Apply( std::mem_fun_ref( &FireEffect           ::Accept ), visitor );
 }
 
 // -----------------------------------------------------------------------------

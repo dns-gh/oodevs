@@ -151,3 +151,31 @@ typedef struct T_Mission_Pion_OrienterRefugies : T_Mission_Pion
 T_ListeConnaissancesAgent refugies_;
 T_ConnaissanceObjet campRefugies_;
 };
+
+typedef struct T_Mission_Pion_Test_All : T_Mission_Pion 
+{
+    T_Pion agent_;
+    T_ListePions agentList_;
+    T_Automate automate_;
+    T_ListeAutomates automateList_;
+    E_NatureAtlasType natureAtlas_;
+    T_ConnaissanceAgent agentKnowledge_;
+    T_ListeConnaissancesAgent agentKnowledgeList_;
+    T_ConnaissanceObjet objectKnowledge_;
+    T_ListeConnaissancesObjet objectKnowledgeList_;
+    T_ConnaissancePopulation populationKnowledge_;
+    T_GenObjet genObject_;
+    T_ListeGenObjets genObjectList_;
+    T_ListePoints path_;
+    T_ListeListesPoints pathList_;
+    T_Point point_;
+    T_ListePoints pointList_;
+    T_Localisation polygon_;
+    T_ListeLocalisations polygonList_;
+    T_Localisation location_;
+    T_ListeLocalisations locationList_;
+    T_Dotation dotationType_;
+};
+
+
+

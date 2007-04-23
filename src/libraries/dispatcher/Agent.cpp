@@ -21,6 +21,7 @@
 #include "AgentLogMedical.h"
 #include "AgentLogMaintenance.h"
 #include "AgentLogSupply.h"
+#include "AgentOrder.h"
 #include "Network_Def.h"
 
 using namespace dispatcher;
@@ -80,7 +81,7 @@ Agent::Agent( Model& model, const ASN1T_MsgPionCreation& msg )
     , pLogMedical_                  ()
     , pLogMaintenance_              ()
     , pLogSupply_                   ()
-    , orderState_                   ( EnumOrderState::stopped )
+    , pOrder_                       ( 0 )
 {
     pAutomat_->GetAgents().Register( *this );
 }
@@ -306,11 +307,12 @@ void Agent::Update( const ASN1T_MsgPionChangeSuperiorAck& asnMsg )
 
 // -----------------------------------------------------------------------------
 // Name: Agent::Update
-// Created: AGE 2007-04-18
+// Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void Agent::Update( const ASN1T_MsgPionOrderManagement& asnMsg )
+void Agent::Update( const ASN1T_MsgPionOrder& asnMsg )
 {
-    orderState_ = asnMsg.etat;
+    delete pOrder_;
+    pOrder_ = new AgentOrder( model_, *this, asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -462,10 +464,6 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
     if( pLogSupply_ )
         pLogSupply_->Send( publisher );
 
-    {
-        AsnMsgInClientPionOrderManagement asn;
-        asn().oid_unite_executante = nID_;
-        asn().etat = orderState_;
-        asn.Send( publisher );
-    }
+    if( pOrder_ )
+        pOrder_->Send( publisher );
 }

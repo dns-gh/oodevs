@@ -165,6 +165,7 @@ GENERATE_ASN_MSG_SENDER         ( Client, AutomateOrderManagement               
 GENERATE_ASN_MSG_SENDER         ( Client, PopulationOrderManagement                     , population_order_management                       );
 GENERATE_ASN_MSG_SENDER         ( Client, PionOrder                                     , pion_order                                        );
 GENERATE_ASN_MSG_SENDER         ( Client, AutomateOrder                                 , automate_order                                    );
+GENERATE_ASN_MSG_SENDER         ( Client, PopulationOrder                               , population_order                                  );
 GENERATE_ASN_MSG_SENDER         ( Client, ObjectCreation                                , object_creation                                   );
 GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, ObjectDestruction                             , object_destruction                                );
 GENERATE_ASN_MSG_SENDER         ( Client, ObjectUpdate                                  , object_update                                     );

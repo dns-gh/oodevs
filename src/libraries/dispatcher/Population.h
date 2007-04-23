@@ -21,6 +21,7 @@ class Model;
 class Side;
 class PopulationConcentration;
 class PopulationFlow;
+class PopulationOrder;
 
 // =============================================================================
 /** @class  Population
@@ -46,15 +47,15 @@ public:
 
     //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgPopulationCreation& msg );
-    void Update        ( const ASN1T_MsgPopulationUpdate& msg );
+    void Update        ( const ASN1T_MsgPopulationCreation&                 msg );
+    void Update        ( const ASN1T_MsgPopulationUpdate&                   msg );
     void Update        ( const ASN1T_MsgPopulationConcentrationCreation&    msg );
     void Update        ( const ASN1T_MsgPopulationConcentrationUpdate&      msg );
     void Update        ( const ASN1T_MsgPopulationConcentrationDestruction& msg );
-    void Update        ( const ASN1T_MsgPopulationFluxCreation&    msg );
-    void Update        ( const ASN1T_MsgPopulationFluxUpdate&      msg );
-    void Update        ( const ASN1T_MsgPopulationFluxDestruction& msg );
-    void Update        ( const ASN1T_MsgPopulationOrderManagement& msg );
+    void Update        ( const ASN1T_MsgPopulationFluxCreation&             msg );
+    void Update        ( const ASN1T_MsgPopulationFluxUpdate&               msg );
+    void Update        ( const ASN1T_MsgPopulationFluxDestruction&          msg );
+    void Update        ( const ASN1T_MsgPopulationOrder&                    msg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
     virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
 
@@ -76,10 +77,10 @@ private:
           Side&         side_;
     
     unsigned int        nDominationState_;
+    PopulationOrder*    pOrder_;
 
     ModelsContainer< PopulationConcentration > concentrations_;
     ModelsContainer< PopulationFlow          > flows_;
-    ASN1T_EnumOrderState etat_;
 };
 
 }

@@ -35,9 +35,9 @@ public:
 
     //! @name Operations
     //@{
-    void Update      ( const ASN1T_MsgLimitCreation& message );
-    void Update      ( const ASN1T_MsgLimitUpdate& message );
-    void SendCreation( Publisher_ABC& publisher ) const;
+    void Update        ( const ASN1T_MsgLimitCreation& message );
+    void Update        ( const ASN1T_MsgLimitUpdate& message );
+    void SendCreation  ( Publisher_ABC& publisher ) const;
     void SendFullUpdate( Publisher_ABC& publisher ) const;
     void CommitDestruction();
     //@}

@@ -17,6 +17,7 @@
 #include "PopulationConcentration.h"
 #include "PopulationFlow.h"
 #include "ModelVisitor_ABC.h"
+#include "PopulationOrder.h"
 
 using namespace dispatcher;
 
@@ -31,7 +32,7 @@ Population::Population( Model& model, const ASN1T_MsgPopulationCreation& msg )
     , strName_         ( msg.nom )
     , side_            ( model.GetSides().Get( msg.oid_camp ) )
     , nDominationState_( 0 )
-    , etat_             ( EnumOrderState::stopped )
+    , pOrder_          ( 0 )
 {
 	side_.GetPopulations().Register( *this );
 }
@@ -130,17 +131,17 @@ void Population::Update( const ASN1T_MsgPopulationFluxDestruction& msg )
 
 // -----------------------------------------------------------------------------
 // Name: Population::Update
-// Created: AGE 2007-04-18
+// Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationOrderManagement& msg )
+void Population::Update( const ASN1T_MsgPopulationOrder& msg )
 {
-    etat_ = msg.etat;
+    delete pOrder_;
+    pOrder_ = new PopulationOrder( model_, *this, msg );
 }
 
 // =============================================================================
 // NETWORK
 // =============================================================================
-
 
 // -----------------------------------------------------------------------------
 // Name: Population::SendCreation
@@ -174,12 +175,9 @@ void Population::SendFullUpdate( Publisher_ABC& publisher ) const
 
         asn.Send( publisher );
     }
-    {
-        AsnMsgInClientPopulationOrderManagement asn;
-        asn().oid_unite_executante = nID_;
-        asn().etat = etat_;
-        asn.Send( publisher );
-    }
+
+    if( pOrder_ )
+        pOrder_->Send( publisher );
 }
 
 // -----------------------------------------------------------------------------

@@ -205,7 +205,7 @@ void Elevation2dLayer::SetShader()
     {
         try
         {
-            shader_.reset( new ElevationShader() );
+             shader_.reset( new ElevationShader() );
             SetElevations( 0, elevation_.MaximumElevation() );
         }
         catch( ... )
