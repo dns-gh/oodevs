@@ -49,7 +49,7 @@ RecorderToolbar::~RecorderToolbar()
 // -----------------------------------------------------------------------------
 void RecorderToolbar::Play()
 {
-    QString strFileName = QFileDialog::getOpenFileName( QString::null, tr( "Order files (*.ord)" ), 0, 0, tr("Open") );
+    QString strFileName = QFileDialog::getOpenFileName( QString::null, tr( "Order files (*.ord)" ), topLevelWidget(), 0, tr( "Open" ) );
     if( strFileName == QString::null )
         return;
 
@@ -67,7 +67,7 @@ void RecorderToolbar::Stop()
         pPlayButton_->setEnabled( true );
         pRecButton_->setEnabled( true );
         pStopButton_->setEnabled( false );
-        QString strFileName = QFileDialog::getSaveFileName( QString::null, tr( "Fichiers d'ordres (*.ord)" ), 0, 0, tr("Enregistrer") );
+        QString strFileName = QFileDialog::getSaveFileName( QString::null, tr( "Order files (*.ord)" ), topLevelWidget(), 0, tr( "Save" ) );
         if( strFileName == QString::null )
             return;
         if( strFileName.right( 4 ) != ".ord" )

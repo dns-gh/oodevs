@@ -1455,11 +1455,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fichiers d&apos;ordres (*.ord)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enregistrer</source>
+        <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
