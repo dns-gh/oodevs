@@ -73,9 +73,9 @@ void UserProfileWidget::Display( const UserProfile& profile )
             Commit();
 
     editedProfile_.reset( new UserProfile( profile ) );
-    login_->setText( profile.GetLogin() );
-    password_->setText( profile.GetPassword() );
-    supervisor_->setChecked( profile.IsSupervisor() );
+    login_->setText( editedProfile_->GetLogin() );
+    password_->setText( editedProfile_->GetPassword() );
+    supervisor_->setChecked( editedProfile_->IsSupervisor() );
     unitRights_->Display( *editedProfile_ );
     populationRights_->Display( *editedProfile_ );
     selectedProfile_ = &profile;
@@ -90,15 +90,15 @@ void UserProfileWidget::Commit()
 {
     if( CheckValidity() )
     {
-        UserProfile& profile = const_cast< UserProfile& >( *selectedProfile_ );
         if( unitRights_->NeedsCommit() )
             unitRights_->Commit( true );
         if( populationRights_->NeedsCommit() )
             populationRights_->Commit( true );
+        editedProfile_->SetLogin( login_->text() );
+        editedProfile_->SetPassword( password_->text() );
+        editedProfile_->SetSupervisor( supervisor_->isChecked() );
+        UserProfile& profile = const_cast< UserProfile& >( *selectedProfile_ );
         profile = *editedProfile_;
-        profile.SetLogin( login_->text() );
-        profile.SetPassword( password_->text() );
-        profile.SetSupervisor( supervisor_->isChecked() );
     }
 }
 

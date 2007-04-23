@@ -69,9 +69,9 @@ void UserProfileWidget::Display( const UserProfile& profile )
             Commit();
 
     editedProfile_.reset( new UserProfile( profile ) );
-    login_->setText( profile.GetLogin() );
-    password_->setText( profile.GetPassword() );
-    supervisor_->setChecked( profile.IsSupervisor() );
+    login_->setText( editedProfile_->GetLogin() );
+    password_->setText( editedProfile_->GetPassword() );
+    supervisor_->setChecked( editedProfile_->IsSupervisor() );
     unitRights_->Display( *editedProfile_ );
     populationRights_->Display( *editedProfile_ );
     selectedProfile_ = &profile;
