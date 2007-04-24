@@ -76,6 +76,17 @@ void Loader::LoadKeyIndex( const std::string& file )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Loader::RequiresKeyFrame
+// Created: AGE 2007-04-24
+// -----------------------------------------------------------------------------
+bool Loader::RequiresKeyFrame( unsigned frame )
+{
+    unsigned key = frame / 100;
+    unsigned currentKey = currentFrame_ / 100;
+    return !frame || key != currentKey || frame < currentFrame_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Loader::SkipToFrame
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
@@ -83,12 +94,16 @@ void Loader::SkipToFrame( unsigned frame )
 {
     if( keyFrames_.empty() )
         return;
-
-    simulation_.StartSynchronisation();
-    LoadKeyFrame( frame );
+    const bool requiresKeyFrame = RequiresKeyFrame( frame );
+    if( requiresKeyFrame )
+    {
+        simulation_.StartSynchronisation();
+        LoadKeyFrame( frame );
+    }
     while( currentFrame_+1 < frame && Tick() )
         ;
-    simulation_.EndSynchronisation();
+    if( requiresKeyFrame )
+        simulation_.EndSynchronisation();
 
     if( currentFrame_ < frame )
         Tick();
@@ -100,11 +115,7 @@ void Loader::SkipToFrame( unsigned frame )
 // -----------------------------------------------------------------------------
 void Loader::LoadKeyFrame( unsigned frame )
 {
-    // $$$$ AGE 2007-04-11: 
     unsigned key = frame / 100;
-    unsigned currentKey = currentFrame_ / 100;
-    if( frame && key == currentKey && frame >= currentFrame_ )
-        return;
 
     if( key >= keyFrames_.size() )
         key = keyFrames_.size() - 1;

@@ -68,6 +68,7 @@ private:
     void LoadOutSimMessage( tools::InputBinaryWrapper& input );
     void LoadInClientMessage( tools::InputBinaryWrapper& input );
     void LoadKeyFrame( unsigned frame );
+    bool RequiresKeyFrame( unsigned frame );
     //@}
 
 private:

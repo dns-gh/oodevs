@@ -15,6 +15,7 @@
 #include "Side.h"
 #include "Publisher_ABC.h"
 #include "Visitors.h"
+#include "network_def.h"
 #include "tools/OutputBinaryWrapper.h"
 
 using namespace dispatcher;
@@ -86,11 +87,12 @@ namespace
 {
     struct ModelMessage : public Savable_ABC, public Publisher_ABC
     {
-        ModelMessage( Model& model, ASN1OCTET* buffer, unsigned size )
+        ModelMessage( Model& model, ASN1OCTET* buffer, unsigned size, bool firstFrame )
             : model_( &model )
             , output_( 0 ) 
             , buffer_( buffer ) 
-            , size_( size ) {}
+            , size_( size )
+            , firstFrame_( firstFrame ) {}
         virtual void Serialize( tools::OutputBinaryWrapper& output ) const
         {
             ModelMessage* that = const_cast< ModelMessage* >( this );
@@ -103,6 +105,8 @@ namespace
                 FullUpdateVisitor visitor( *that );
                 model_->Accept( visitor );
             }
+            if( firstFrame_ )
+                that->SendStartTick();
         }
         virtual void Send( const ASN1T_MsgsInClient& msg )
         {
@@ -111,10 +115,17 @@ namespace
             asnMsgCtrl.Encode();
             Message( asnPEREncodeBuffer ).Serialize( *output_ );
         }
+        void SendStartTick()
+        {
+            AsnMsgInClientCtrlBeginTick tick;
+            tick() = 0;
+            tick.Send( *this );
+        }
         Model* model_;
         tools::OutputBinaryWrapper* output_;
         ASN1OCTET* buffer_;
         unsigned size_;
+        bool firstFrame_;
     };
 }
 
@@ -124,8 +135,9 @@ namespace
 // -----------------------------------------------------------------------------
 void SaverFacade::StartFrame( ASN1T_MsgsOutSim& asnMsg )
 {
-    if( (frameCount_++) % 100 == 0 ) // $$$$ AGE 2007-04-11: 
-        saver_->SaveKeyFrame( ModelMessage( model_, aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_) ) );
+    if( frameCount_ % 100 == 0 ) // $$$$ AGE 2007-04-11: 
+        saver_->SaveKeyFrame( ModelMessage( model_, aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), frameCount_ == 0 ) );
+    ++frameCount_;
 
     ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
     ASN1C_MsgsOutSim asnMsgCtrl( asnPEREncodeBuffer, asnMsg );

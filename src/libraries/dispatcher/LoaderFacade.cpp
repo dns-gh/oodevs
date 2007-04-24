@@ -129,6 +129,7 @@ void LoaderFacade::SkipToFrame( unsigned frame )
     {
         ack.tick = frame;    
         ack.error_code = EnumCtrlErrorCode::no_error;
+        MT_LOG_INFO_MSG( "Skipping to frame " << frame );
     }
     else
         ack.error_code = EnumCtrlErrorCode::error_invalid_time_factor;
