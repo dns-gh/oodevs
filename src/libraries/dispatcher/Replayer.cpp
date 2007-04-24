@@ -37,7 +37,7 @@ Replayer::Replayer( const Config& config )
     pModel_            = new Model              ();
     pClientsNetworker_ = new ClientsNetworker   ( *this, config.GetGameFile() );
     simulation_        = new SimulationDispatcher( *pClientsNetworker_, *pModel_ );
-    loader_            = new LoaderFacade( *pClientsNetworker_, *simulation_, "test" );
+    loader_            = new LoaderFacade( *pClientsNetworker_, *simulation_, "test" ); // $$$$ AGE 2007-04-24: 
     profiles_          = new ProfileManager( *pModel_, *pClientsNetworker_, config.BuildExerciseChildFile( profiles ) );
 
     profiles_->Reset();

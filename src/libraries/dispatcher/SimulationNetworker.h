@@ -37,8 +37,8 @@ class SimulationNetworker : public tools::ClientNetworker_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     SimulationNetworker( Dispatcher& dispatcher, const std::string& configFile );
-    ~SimulationNetworker();
+             SimulationNetworker( Dispatcher& dispatcher, const std::string& configFile );
+    virtual ~SimulationNetworker();
     //@}
 
     //! @name Dispatching
@@ -79,7 +79,7 @@ private:
 private:
     Dispatcher& dispatcher_;    
     Simulation* pSimulation_;
-    bool bRecord_;
+    std::string configFile_;
 };
 
 }

@@ -37,7 +37,7 @@ class Simulation : public tools::Server_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Simulation( Dispatcher& dispatcher, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link, bool bRecord );
+             Simulation( Dispatcher& dispatcher, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link, const std::string& configFile );
     virtual ~Simulation();
     //@}
 
@@ -60,6 +60,11 @@ private:
     //@{
     Simulation( const Simulation& );            //!< Copy constructor
     Simulation& operator=( const Simulation& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void CreateSaver( const std::string& configFile );
     //@}
 
 private:

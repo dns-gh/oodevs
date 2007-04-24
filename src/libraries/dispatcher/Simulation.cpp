@@ -22,6 +22,7 @@
 #include "tools/AsnMessageEncoder.h"
 #include "DIN/MessageService/DIN_MessageService_ABC.h"
 #include "DIN/DIN_Link.h"
+#include "xeumeuleu/xml.h"
 
 using namespace dispatcher;
 using namespace tools;
@@ -31,7 +32,7 @@ using namespace DIN;
 // Name: Simulation constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-Simulation::Simulation( Dispatcher& dispatcher, DIN_MessageService_ABC& messageService, DIN_Link& link, bool bRecord )
+Simulation::Simulation( Dispatcher& dispatcher, DIN_MessageService_ABC& messageService, DIN_Link& link, const std::string& configFile )
     : Server_ABC ( messageService, link )
     , dispatcher_( dispatcher )
     , saver_( 0 )
@@ -39,9 +40,7 @@ Simulation::Simulation( Dispatcher& dispatcher, DIN_MessageService_ABC& messageS
     AsnMsgInSimCtrlClientAnnouncement asnMsg;
     asnMsg.Send( *this );
 
-    // $$$$ AGE 2007-04-10: 
-    if( bRecord )
-        saver_ = new SaverFacade( dispatcher.GetModel(), "test" );
+    CreateSaver( configFile );
     simDispatch_ = new SimulationDispatcher( dispatcher.GetClientsNetworker(), dispatcher.GetModel() );
 }
 
@@ -51,6 +50,7 @@ Simulation::Simulation( Dispatcher& dispatcher, DIN_MessageService_ABC& messageS
 //-----------------------------------------------------------------------------
 Simulation::~Simulation()
 {
+    delete saver_;
     delete simDispatch_;
 }
 
@@ -131,4 +131,21 @@ Simulation& Simulation::GetSimulationFromLink( const DIN::DIN_Link& link )
     DIN::DIN_UserData_ABC* pTmp = link.GetUserData();
     assert( pTmp );
     return *static_cast< Simulation* >( pTmp );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::CreateSaver
+// Created: AGE 2007-04-24
+// -----------------------------------------------------------------------------
+void Simulation::CreateSaver( const std::string& configFile )
+{
+    xml::xifstream xis( configFile );
+    bool enable = false; std::string directory;
+    xis >> xml::start( "config" )
+            >> xml::start( "dispatcher" )
+                >> xml::start( "recorder" )
+                    >> xml::attribute( "enabled", enable )
+                    >> xml::optional() >> xml::attribute( "directory", directory );
+    if( enable )
+        saver_ = new SaverFacade( dispatcher_.GetModel(), directory );
 }
