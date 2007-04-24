@@ -12,15 +12,17 @@
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ActionMission constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
 ActionMission::ActionMission( const kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::Controller& controller, bool registered /* = true */ )
-    : Action_ABC( controller, mission )
+    : Action_ABC( controller, mission, entity )
     , controller_( controller )
-    , entity_( entity )
     , registered_( registered )
 {
     if( registered_ )
@@ -38,10 +40,12 @@ ActionMission::~ActionMission()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionMission::GetEntity
-// Created: SBO 2007-03-19
+// Name: ActionMission::Serialize
+// Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC& ActionMission::GetEntity() const
+void ActionMission::Serialize( xml::xostream& xos ) const
 {
-    return entity_;
+    xos << start( "mission" );
+    Action_ABC::Serialize( xos );
+    xos << end();
 }

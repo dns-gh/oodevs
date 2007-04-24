@@ -20,6 +20,8 @@ namespace gui
     class ItemFactory_ABC;
 }
 
+class ActionsModel;
+
 // =============================================================================
 /** @class  ActionsPanel
     @brief  ActionsPanel
@@ -32,7 +34,7 @@ class ActionsPanel : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             ActionsPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ActionsModel& actions );
     virtual ~ActionsPanel();
     //@}
 

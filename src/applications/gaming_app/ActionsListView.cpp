@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ActionsListView.h"
 #include "GamingListItemDisplayer.h"
+#include "ActionsToolbar.h"
 #include "clients_kernel/Controllers.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionParameter_ABC.h"
@@ -19,10 +20,11 @@
 // Name: ActionsListView constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionsListView::ActionsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
+ActionsListView::ActionsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const ActionsToolbar& recorder )
     : gui::ListView< ActionsListView >( parent, *this, factory )
     , controllers_( controllers )
     , factory_( factory )
+    , recorder_( recorder )
     , mission_  ( MAKE_PIXMAP( mission ) )
     , parameter_( MAKE_PIXMAP( parameter ) )
 {
@@ -58,6 +60,8 @@ void ActionsListView::AddColumn( const QString& column )
 // -----------------------------------------------------------------------------
 void ActionsListView::NotifyCreated( const Action_ABC& action )
 {
+    if( !recorder_.IsRecording() )
+        return;
     gui::ValuedListItem* item = factory_.CreateItem( this, firstChild() );
     item->SetValue( &action );
     item->setPixmap( 0, mission_ );

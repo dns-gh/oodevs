@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual const kernel::Entity_ABC& GetEntity() const;
+    virtual void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:
@@ -50,7 +50,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Entity_ABC& entity_;
     bool registered_;
     //@}
 };

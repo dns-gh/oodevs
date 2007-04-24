@@ -9,6 +9,9 @@
 
 #include "gaming_pch.h"
 #include "ActionParameter_ABC.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 unsigned long ActionParameter_ABC::idManager_ = 0; // $$$$ SBO 2007-03-12: real id manager maybe
 
@@ -58,4 +61,18 @@ void ActionParameter_ABC::Draw( const geometry::Point2f& where, const kernel::Vi
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Draw( where, viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter_ABC::Serialize
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+void ActionParameter_ABC::Serialize( xml::xostream& xos ) const
+{
+    // $$$$ SBO 2007-04-24: distinguish order context/parameters
+    xos << start( "parameter" )
+            << attribute( "name", name_ )
+            << attribute( "type", name_ ) // $$$$ SBO 2007-04-24: get from OrderParameter
+            // $$$$ SBO 2007-04-24: value
+        << end();
 }

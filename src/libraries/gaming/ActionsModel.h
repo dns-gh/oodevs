@@ -19,6 +19,11 @@ namespace kernel
     class FragOrderType;
 }
 
+namespace xml
+{
+    class xostream;
+}
+
 class Action_ABC;
 class ActionFactory_ABC;
 
@@ -43,6 +48,8 @@ public:
     Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission );
     Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder );
     void Purge();
+    void Load( const std::string& filename );
+    void Save( const std::string& filename ) const;
     //@}
 
 private:

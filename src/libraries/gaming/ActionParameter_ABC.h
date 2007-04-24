@@ -17,6 +17,11 @@ namespace kernel
     class Displayer_ABC;
 }
 
+namespace xml
+{
+    class xostream;
+}
+
 // =============================================================================
 /** @class  ActionParameter_ABC
     @brief  ActionParameter_ABC
@@ -39,6 +44,7 @@ public:
     virtual QString GetName() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const = 0;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:

@@ -178,3 +178,13 @@ void ParamLocationList::OnClearList()
 {
     ParamListView::OnClearList();
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationList::Draw
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+void ParamLocationList::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const
+{
+    for( T_Locations::const_iterator it = locations_.begin(); it != locations_.end(); ++it )
+        (*it)->Draw( tools );
+}

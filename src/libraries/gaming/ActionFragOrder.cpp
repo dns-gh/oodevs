@@ -11,15 +11,17 @@
 #include "ActionFragOrder.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/FragOrderType.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ActionFragOrder constructor
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
 ActionFragOrder::ActionFragOrder( const kernel::Entity_ABC& entity, const kernel::FragOrderType& fragOrder, kernel::Controller& controller )
-    : Action_ABC( controller, fragOrder )
+    : Action_ABC( controller, fragOrder, entity )
     , controller_( controller )
-    , entity_( entity )
 {
     controller_.Create( *(Action_ABC*)this );
 }
@@ -34,10 +36,12 @@ ActionFragOrder::~ActionFragOrder()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionFragOrder::GetEntity
-// Created: SBO 2007-03-19
+// Name: ActionFragOrder::Serialize
+// Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC& ActionFragOrder::GetEntity() const
+void ActionFragOrder::Serialize( xml::xostream& xos ) const
 {
-    return entity_;
+    xos << start( "fragorder" );
+    Action_ABC::Serialize( xos );
+    xos << end();
 }

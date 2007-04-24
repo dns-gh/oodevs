@@ -20,6 +20,7 @@ namespace kernel
 
 class Action_ABC;
 class ActionParameter_ABC;
+class ActionsToolbar;
 
 // =============================================================================
 /** @class  ActionsListView
@@ -35,7 +36,7 @@ class ActionsListView : public gui::ListView< ActionsListView >
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             ActionsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const ActionsToolbar& recorder );
     virtual ~ActionsListView();
     //@}
 
@@ -66,6 +67,7 @@ private:
     gui::ItemFactory_ABC& factory_;
     gui::ListItemDisplayer* sub_;
 
+    const ActionsToolbar& recorder_;
     QPixmap mission_;
     QPixmap parameter_;
     //@}

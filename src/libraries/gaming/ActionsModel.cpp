@@ -11,6 +11,9 @@
 #include "ActionsModel.h"
 #include "Action_ABC.h"
 #include "ActionFactory_ABC.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ActionsModel constructor
@@ -61,4 +64,26 @@ Action_ABC* ActionsModel::CreateAction( const kernel::Entity_ABC& target, const 
     Action_ABC* action = factory_.CreateAction( target, fragOrder );
     Register( action->GetId(), *action );
     return action;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::Load
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+void ActionsModel::Load( const std::string& filename )
+{
+    Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::Save
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+void ActionsModel::Save( const std::string& filename ) const
+{
+    xml::xofstream xos( filename );
+    xos << start( "actions" );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->Serialize( xos );
+    xos << end();
 }

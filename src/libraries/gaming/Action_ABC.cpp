@@ -12,7 +12,11 @@
 #include "ActionParameter_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/OrderType.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "Tools.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 unsigned long Action_ABC::idManager_ = 0; // $$$$ SBO 2007-03-12: real id manager maybe
 
@@ -20,9 +24,10 @@ unsigned long Action_ABC::idManager_ = 0; // $$$$ SBO 2007-03-12: real id manage
 // Name: Action_ABC constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType& type )
+Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType& type, const kernel::Entity_ABC& target )
     : controller_( controller )
     , id_( ++idManager_ )
+    , target_( target )
     , type_( type )
 {
     // NOTHING
@@ -65,6 +70,15 @@ const kernel::OrderType& Action_ABC::GetType() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Action_ABC::GetEntity
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC& Action_ABC::GetEntity() const
+{
+    return target_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Action_ABC::AddParameter
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
@@ -92,4 +106,16 @@ void Action_ABC::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Item( tools::translate( "Action", "Action" ) ).Display( GetName() )
              .Item( tools::translate( "Action", "Value" ) ).Display( "" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Action_ABC::Serialize
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+void Action_ABC::Serialize( xml::xostream& xos ) const
+{
+    xos << attribute( "id", type_.GetId() )
+        << attribute( "target", target_.GetId() );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->Serialize( xos );
 }

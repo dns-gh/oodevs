@@ -10,6 +10,8 @@
 #ifndef __ActionsToolbar_h_
 #define __ActionsToolbar_h_
 
+class ActionsModel;
+
 // =============================================================================
 /** @class  ActionsToolbar
     @brief  ActionsToolbar
@@ -18,16 +20,18 @@
 // =============================================================================
 class ActionsToolbar : public QHBox
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionsToolbar( QWidget* parent );
+             ActionsToolbar( QWidget* parent, ActionsModel& actions );
     virtual ~ActionsToolbar();
     //@}
 
-    //! @name Operations
+    //! @name Accessors
     //@{
+    bool IsRecording() const;
     //@}
 
 private:
@@ -37,13 +41,24 @@ private:
     ActionsToolbar& operator=( const ActionsToolbar& ); //!< Assignment operator
     //@}
 
+private slots:
     //! @name Helpers
     //@{
+    void Record();
+    void Play();
+    void Save();
     //@}
 
 private:
     //! @name Member data
     //@{
+    ActionsModel& actions_;
+    QToolButton*  playBtn_;
+    QToolButton*  recordBtn_;
+    QToolButton*  saveBtn_;
+    QPixmap       pixRecord_, pixStop_;
+
+    bool isRecording_;
     //@}
 };
 
