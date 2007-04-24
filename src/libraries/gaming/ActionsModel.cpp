@@ -45,7 +45,7 @@ void ActionsModel::Purge()
 // Name: ActionsModel::CreateAction
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateAction( const kernel::Entity_ABC& target, const kernel::Mission& mission )
+Action_ABC* ActionsModel::CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission )
 {
     Action_ABC* action = factory_.CreateAction( target, mission );
     Register( action->GetId(), *action );
@@ -56,7 +56,7 @@ Action_ABC* ActionsModel::CreateAction( const kernel::Entity_ABC& target, const 
 // Name: ActionsModel::CreateAction
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrder& fragOrder )
+Action_ABC* ActionsModel::CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder )
 {
     Action_ABC* action = factory_.CreateAction( target, fragOrder );
     Register( action->GetId(), *action );

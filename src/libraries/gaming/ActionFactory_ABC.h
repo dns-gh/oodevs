@@ -15,8 +15,8 @@
 namespace kernel
 {
     class Entity_ABC;
-    class Mission;
-    class FragOrder;
+    class MissionType;
+    class FragOrderType;
 }
 
 class Action_ABC;
@@ -39,8 +39,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::Mission& mission ) const = 0;
-    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrder& fragOrder ) const = 0;
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const = 0;
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder ) const = 0;
 
     virtual Action_ABC* CreateAction( const ASN1T_MsgPionOrder& message ) const = 0;
     virtual Action_ABC* CreateAction( const ASN1T_MsgAutomateOrder& message ) const = 0;

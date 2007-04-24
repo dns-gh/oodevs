@@ -18,6 +18,7 @@ namespace kernel
     class Controller;
     class Entity_ABC;
     class Displayer_ABC;
+    class OrderType;
 }
 
 class ActionParameter_ABC;
@@ -34,15 +35,16 @@ class Action_ABC : public kernel::Resolver< ActionParameter_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Action_ABC( kernel::Controller& controller );
+             Action_ABC( kernel::Controller& controller, const kernel::OrderType& type );
     virtual ~Action_ABC();
     //@}
 
     //! @name Operations
     //@{
     virtual unsigned long GetId() const;
-    virtual QString GetName() const = 0;
+    virtual QString GetName() const;
     virtual const kernel::Entity_ABC& GetEntity() const = 0;
+    virtual const kernel::OrderType& GetType() const;
     virtual void AddParameter( ActionParameter_ABC& parameter );
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
@@ -65,6 +67,7 @@ private:
     kernel::Controller& controller_;
     static unsigned long idManager_;
     unsigned long id_;
+    const kernel::OrderType& type_;
     //@}
 };
 

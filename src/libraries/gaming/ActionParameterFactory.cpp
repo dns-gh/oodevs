@@ -91,7 +91,6 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const QString& nam
         return new ActionParameterLocationList< ASN1T_ListPoint >( name, converter_, *parameter.value.u.listPoint );
     case T_MissionParameter_value_listPolygon:
         return new ActionParameterLocationList< ASN1T_ListPolygon >( name, converter_, *parameter.value.u.listPolygon );
-        break;
     case T_MissionParameter_value_localisation:
         return new ActionParameterLocation( name, converter_, *parameter.value.u.localisation );
     case T_MissionParameter_value_maintenancePriorites:

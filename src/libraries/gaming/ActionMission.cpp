@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "ActionMission.h"
-#include "clients_kernel/Mission.h"
+#include "clients_kernel/MissionType.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Controller.h"
 
@@ -17,11 +17,10 @@
 // Name: ActionMission constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionMission::ActionMission( const kernel::Entity_ABC& entity, const kernel::Mission& mission, kernel::Controller& controller, bool registered /* = true */ )
-    : Action_ABC( controller )
+ActionMission::ActionMission( const kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::Controller& controller, bool registered /* = true */ )
+    : Action_ABC( controller, mission )
     , controller_( controller )
     , entity_( entity )
-    , mission_( mission )
     , registered_( registered )
 {
     if( registered_ )
@@ -36,15 +35,6 @@ ActionMission::~ActionMission()
 {
     if( registered_ )
         controller_.Delete( *(Action_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionMission::GetName
-// Created: SBO 2007-03-12
-// -----------------------------------------------------------------------------
-QString ActionMission::GetName() const
-{
-    return mission_.GetName();
 }
 
 // -----------------------------------------------------------------------------

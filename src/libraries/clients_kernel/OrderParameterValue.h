@@ -3,54 +3,62 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __FragOrder_h_
-#define __FragOrder_h_
+#ifndef __OrderParameterValue_h_
+#define __OrderParameterValue_h_
+
+namespace xml
+{
+    class xistream;
+}
 
 namespace kernel
 {
-    class FragOrderType;
-
+    
 // =============================================================================
-/** @class  FragOrder
-    @brief  FragOrder
+/** @class  OrderParameterValue
+    @brief  OrderParameterValue
 */
-// Created: AGE 2006-03-14
+// Created: SBO 2007-04-23
 // =============================================================================
-class FragOrder
+class OrderParameterValue
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FragOrder( const FragOrderType& type );
-    virtual ~FragOrder();
+    explicit OrderParameterValue( xml::xistream& xis );
+    virtual ~OrderParameterValue();
     //@}
 
     //! @name Operations
     //@{
-    unsigned int GetId() const;
+    int GetId() const;
     QString GetName() const;
-    const FragOrderType& GetType() const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    FragOrder( const FragOrder& );            //!< Copy constructor
-    FragOrder& operator=( const FragOrder& ); //!< Assignment operator
+    OrderParameterValue( const OrderParameterValue& );            //!< Copy constructor
+    OrderParameterValue& operator=( const OrderParameterValue& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
     //@}
 
 private:
     //! @name Member data
     //@{
-    const FragOrderType& type_;
+    int id_;
+    QString name_;
     //@}
 };
 
 }
 
-#endif // __FragOrder_h_
+#endif // __OrderParameterValue_h_

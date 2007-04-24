@@ -9,12 +9,11 @@
 
 #include "gaming_app_pch.h"
 #include "FragmentaryOrderInterface.h"
-#include "MissionInterfaceFactory.h"
 #include "MissionInterfaceBuilder.h"
 #include "gaming/ASN_Messages.h"
 #include "gaming/ActionsModel.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/FragOrder.h"
+#include "clients_kernel/FragOrderType.h"
 
 using namespace kernel;
 
@@ -22,8 +21,8 @@ using namespace kernel;
 // Name: FragmentaryOrderInterface constructor
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Entity_ABC& entity, const FragOrder& fragOrder, ActionController& controller
-                                                    , Publisher_ABC& publisher, MissionInterfaceFactory& factory, MissionInterfaceBuilder& builder, ActionsModel& model )
+FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Entity_ABC& entity, const FragOrderType& fragOrder, ActionController& controller
+                                                    , Publisher_ABC& publisher, MissionInterfaceBuilder& builder, ActionsModel& model )
     : MissionInterface_ABC( parent, entity, controller )
     , model_              ( model )
     , publisher_          ( publisher )
@@ -31,7 +30,7 @@ FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Entity_AB
 {
     CreateTitle( fragOrder.GetName() );
     builder.Begin( *this, entity );
-    factory.CreateFragOrderInterface( builder, fragOrder.GetId() );
+    builder.Build( fragOrder );
     builder.End();
     CreateOkCancelButtons();
 }

@@ -117,7 +117,8 @@ void LimitParameter::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, 
     if( entity.IsLimit() )
     {
         potential_ = static_cast< const Limit* >( &entity );
-        menu.InsertItem( "Parameter", GetName(), this, SLOT( MenuItemValidated() ) );
+        int id = menu.InsertItem( "Parameter", tr( "Set %1" ).arg( GetName() ), this, SLOT( MenuItemValidated() ) );
+        menu.SetChecked( id, selected_ );
     }
 }
     

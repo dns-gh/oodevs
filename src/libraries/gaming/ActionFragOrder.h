@@ -14,7 +14,7 @@
 
 namespace kernel
 {
-    class FragOrder;
+    class FragOrderType;
     class Controller;
 }
 
@@ -30,13 +30,12 @@ class ActionFragOrder : public Action_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionFragOrder( const kernel::Entity_ABC& entity, const kernel::FragOrder& fragOrder, kernel::Controller& controller );
+             ActionFragOrder( const kernel::Entity_ABC& entity, const kernel::FragOrderType& fragOrder, kernel::Controller& controller );
     virtual ~ActionFragOrder();
     //@}
 
     //! @name Operations
     //@{
-    virtual QString GetName() const;
     virtual const kernel::Entity_ABC& GetEntity() const;
     //@}
 
@@ -47,16 +46,11 @@ private:
     ActionFragOrder& operator=( const ActionFragOrder& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
     const kernel::Entity_ABC& entity_;
-    const kernel::FragOrder& fragOrder_;
     //@}
 };
 

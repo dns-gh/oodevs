@@ -22,9 +22,10 @@ namespace kernel
     class SensorType;
     class AutomatType;
     class PopulationType;
-    class MissionFactory;
     class Mission;
-    class FragOrder;
+    class MissionType;
+    class MissionFactory;
+    class FragOrderType;
     class SymbolFactory;
     class KnowledgeGroupType;
     class ExerciseConfig;
@@ -45,9 +46,9 @@ class AgentTypes : public Resolver< AgentType >
                  , public Resolver< ComponentType, QString >
                  , public Resolver< SensorType, QString >
                  , public Resolver< KnowledgeGroupType, QString >
-                 , public Resolver< Mission >
-                 , public Resolver< FragOrder >
-                 , public Resolver< FragOrder, QString >
+                 , public Resolver< MissionType >
+                 , public Resolver< FragOrderType >
+                 , public Resolver< FragOrderType, QString >
 {
 
 public:
@@ -73,7 +74,7 @@ private:
     //! @name Types
     //@{
     typedef Mission* (MissionFactory::*T_Resolver)( const std::string& );
-    typedef Resolver< Mission, QString > T_MissionResolver;
+    typedef Resolver< MissionType, QString > T_MissionResolver;
     //@}
 
     //! @name Helpers
@@ -82,7 +83,7 @@ private:
     void ReadSensors( const std::string& sensors );
     void ReadAgents( const std::string& agents );
     void ReadAutomats( const std::string& automats );
-    void ReadMissions( const std::string& missions );
+    void ReadOrderTypes( const std::string& missions );
     void ReadModels( const std::string& models );
     void ReadPopulations( const std::string& populations );
     void ReadKnowledgeGroups( const std::string& groups );
@@ -95,8 +96,8 @@ private:
     void ReallyReadSensor( xml::xistream& xis, const std::string& sensor );
     void ReadSensor( xml::xistream& xis );
     void ReadModel( xml::xistream& xis, const T_Resolver& missionResolver, Resolver< DecisionalModel, QString >& models );
-    void ReadMission( xml::xistream& xis, T_MissionResolver& missions );
-    void ReadFragOrder( xml::xistream& xis );
+    void ReadMissionType( xml::xistream& xis, T_MissionResolver& missions );
+    void ReadFragOrderType( xml::xistream& xis );
     //@}
 
 private:
@@ -105,8 +106,6 @@ private:
     T_MissionResolver unitMissions_;
     T_MissionResolver automatMissions_;
     T_MissionResolver populationMissions_;
-
-    MissionFactory* missionFactory_;
     SymbolFactory* symbolFactory_;
     //@}
 

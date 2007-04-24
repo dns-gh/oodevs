@@ -3,71 +3,76 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#include "gaming_app_pch.h"
-#include "MissionParameter.h"
-#include "MissionInterfaceBuilder.h"
+#include "clients_kernel_pch.h"
+#include "OrderParameter.h"
+#include "OrderParameterValue.h"
 #include "xeumeuleu/xml.h"
 
+using namespace kernel;
 using namespace xml;
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter constructor
-// Created: SBO 2006-11-22
+// Name: OrderParameter constructor
+// Created: SBO 2007-04-23
 // -----------------------------------------------------------------------------
-MissionParameter::MissionParameter( xml::xistream& xis )
+OrderParameter::OrderParameter( xml::xistream& xis )
     : optional_( false )
 {
-    std::string name, diaName, type;
+    std::string name, type;
     xis >> attribute( "name", name )
-        >> attribute( "dia-name", diaName )
         >> attribute( "type", type )
         >> optional() >> attribute( "optional", optional_ )
-        >> list( "value", *this, ReadValue );
+        >> list( "value", *this, &OrderParameter::ReadValue );
     name_ = name.c_str();
-    diaName_ = diaName.c_str();
     type_ = type.c_str();
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MissionParameter destructor
-// Created: SBO 2006-11-22
-// -----------------------------------------------------------------------------
-MissionParameter::~MissionParameter()
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter::GetName
-// Created: SBO 2006-11-22
+// Name: OrderParameter destructor
+// Created: SBO 2007-04-23
 // -----------------------------------------------------------------------------
-QString MissionParameter::GetName() const
+OrderParameter::~OrderParameter()
+{
+    DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::GetName
+// Created: SBO 2007-04-23
+// -----------------------------------------------------------------------------
+QString OrderParameter::GetName() const
 {
     return name_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter::ReadValue
-// Created: SBO 2006-12-01
+// Name: OrderParameter::GetType
+// Created: SBO 2007-04-23
 // -----------------------------------------------------------------------------
-void MissionParameter::ReadValue( xml::xistream& xis )
+QString OrderParameter::GetType() const
 {
-    int id;
-    std::string name;
-    xis >> attribute( "id", id )
-        >> attribute( "name", name );
-    values_.push_back( std::make_pair( id, name ) );
+    return type_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter::BuildInterface
-// Created: SBO 2006-11-22
+// Name: OrderParameter::IsOptional
+// Created: SBO 2007-04-23
 // -----------------------------------------------------------------------------
-void MissionParameter::BuildInterface( MissionInterfaceBuilder& builder ) const
+bool OrderParameter::IsOptional() const
 {
-    builder.AddParameter( type_, name_, optional_, values_ );
+    return optional_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::ReadValue
+// Created: SBO 2007-04-23
+// -----------------------------------------------------------------------------
+void OrderParameter::ReadValue( xml::xistream& xis )
+{
+    OrderParameterValue* value = new OrderParameterValue( xis );
+    Register( value->GetId(), *value );
 }

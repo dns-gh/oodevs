@@ -10,17 +10,16 @@
 #include "gaming_pch.h"
 #include "ActionFragOrder.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/FragOrder.h"
+#include "clients_kernel/FragOrderType.h"
 
 // -----------------------------------------------------------------------------
 // Name: ActionFragOrder constructor
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-ActionFragOrder::ActionFragOrder( const kernel::Entity_ABC& entity, const kernel::FragOrder& fragOrder, kernel::Controller& controller )
-    : Action_ABC( controller )
+ActionFragOrder::ActionFragOrder( const kernel::Entity_ABC& entity, const kernel::FragOrderType& fragOrder, kernel::Controller& controller )
+    : Action_ABC( controller, fragOrder )
     , controller_( controller )
     , entity_( entity )
-    , fragOrder_( fragOrder )
 {
     controller_.Create( *(Action_ABC*)this );
 }
@@ -32,15 +31,6 @@ ActionFragOrder::ActionFragOrder( const kernel::Entity_ABC& entity, const kernel
 ActionFragOrder::~ActionFragOrder()
 {
     controller_.Delete( *(Action_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionFragOrder::GetName
-// Created: SBO 2007-03-19
-// -----------------------------------------------------------------------------
-QString ActionFragOrder::GetName() const
-{
-    return fragOrder_.GetName();
 }
 
 // -----------------------------------------------------------------------------

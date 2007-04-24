@@ -16,7 +16,7 @@
 namespace kernel
 {
     class Controllers;
-    class Mission;
+    class OrderType;
 }
 
 class Model;
@@ -35,14 +35,14 @@ public:
     //! @name Constructors/Destructor
     //@{
              ActionFactory( kernel::Controllers& controllers, const ActionParameterFactory_ABC& factory
-                          , const Model& model, const kernel::Resolver_ABC< kernel::Mission >& missions );
+                          , const Model& model, const kernel::Resolver_ABC< kernel::MissionType >& missions );
     virtual ~ActionFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::Mission& mission ) const;
-    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrder& fragOrder ) const;
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const;
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder ) const;
 
     virtual Action_ABC* CreateAction( const ASN1T_MsgPionOrder& message ) const;
     virtual Action_ABC* CreateAction( const ASN1T_MsgAutomateOrder& message ) const;
@@ -57,7 +57,7 @@ private:
 
     //! @name Helpers
     //@{
-    void AddParameters  ( Action_ABC& action, const kernel::Mission& mission, const ASN1T_MissionParameters& asn ) const;
+    void AddParameters  ( Action_ABC& action, const kernel::OrderType& mission, const ASN1T_MissionParameters& asn ) const;
     void AddOrderContext( Action_ABC& action, const ASN1T_OrderContext& asn ) const;
     //@}
 
@@ -67,7 +67,7 @@ private:
     kernel::Controllers& controllers_;
     const ActionParameterFactory_ABC& factory_;
     const Model& model_;
-    const kernel::Resolver_ABC< kernel::Mission >& missions_;
+    const kernel::Resolver_ABC< kernel::MissionType >& missions_;
     //@}
 };
 

@@ -7,8 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __MissionParameter_h_
-#define __MissionParameter_h_
+#ifndef __OrderType_h_
+#define __OrderType_h_
+
+#include "Resolver.h"
 
 namespace xml
 {
@@ -17,46 +19,45 @@ namespace xml
 
 namespace kernel
 {
+    class OrderParameter;
 
 // =============================================================================
-/** @class  MissionParameter
-    @brief  MissionParameter
+/** @class  OrderType
+    @brief  OrderType
 */
-// Created: SBO 2007-04-19
+// Created: SBO 2007-04-23
 // =============================================================================
-class MissionParameter
+class OrderType : public Resolver< OrderParameter >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MissionParameter( xml::xistream& xis );
-    virtual ~MissionParameter();
+    explicit OrderType( xml::xistream& xis );
+    virtual ~OrderType();
     //@}
 
     //! @name Operations
     //@{
+    unsigned long GetId() const;
     QString GetName() const;
-    QString GetType() const;
-    bool IsOptional() const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    MissionParameter( const MissionParameter& );            //!< Copy constructor
-    MissionParameter& operator=( const MissionParameter& ); //!< Assignment operator
+    OrderType( const OrderType& );            //!< Copy constructor
+    OrderType& operator=( const OrderType& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
+    unsigned long id_;
     QString name_;
-    QString type_;
-    bool optional_;
     //@}
 };
 
 }
 
-#endif // __MissionParameter_h_
+#endif // __OrderType_h_

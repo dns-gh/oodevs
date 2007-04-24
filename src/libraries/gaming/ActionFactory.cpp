@@ -16,8 +16,8 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Mission.h"
-#include "clients_kernel/MissionParameter.h"
+#include "clients_kernel/MissionType.h"
+#include "clients_kernel/OrderParameter.h"
 #include "ActionParameterFactory_ABC.h"
 #include "Tools.h"
 
@@ -27,7 +27,8 @@ using namespace kernel;
 // Name: ActionFactory constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionFactory::ActionFactory( Controllers& controllers, const ActionParameterFactory_ABC& factory, const Model& model, const Resolver_ABC< Mission >& missions )
+ActionFactory::ActionFactory( Controllers& controllers, const ActionParameterFactory_ABC& factory, const Model& model
+                            , const Resolver_ABC< MissionType >& missions )
     : controllers_( controllers )
     , factory_( factory )
     , model_( model )
@@ -49,7 +50,7 @@ ActionFactory::~ActionFactory()
 // Name: ActionFactory::CreateAction
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const Mission& mission ) const
+Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const MissionType& mission ) const
 {
     return new ActionMission( target, mission, controllers_.controller_, true );
 }
@@ -58,7 +59,7 @@ Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const Mission
 // Name: ActionFactory::CreateAction
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const FragOrder& fragOrder ) const
+Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const FragOrderType& fragOrder ) const
 {
     return new ActionFragOrder( target, fragOrder, controllers_.controller_ );
 }
@@ -69,7 +70,7 @@ Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const FragOrd
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgPionOrder& message ) const
 {
-    const Mission& mission = missions_.Get( message.mission );
+    const MissionType& mission = missions_.Get( message.mission );
     std::auto_ptr< Action_ABC > action( new ActionMission( model_.agents_.GetAgent( message.oid_unite_executante ), mission, controllers_.controller_, false ) );
     AddParameters( *action, mission, message.parametres );
     AddOrderContext( *action, message.order_context );
@@ -82,7 +83,7 @@ Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgPionOrder& message ) con
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgAutomateOrder& message ) const
 {
-    const Mission& mission = missions_.Get( message.mission );
+    const MissionType& mission = missions_.Get( message.mission );
     std::auto_ptr< Action_ABC > action( new ActionMission( model_.agents_.GetAutomat( message.oid_unite_executante ), mission, controllers_.controller_, false ) );
     AddParameters( *action, mission, message.parametres );
     AddOrderContext( *action, message.order_context );
@@ -93,9 +94,9 @@ Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgAutomateOrder& message )
 // Name: ActionFactory::AddParameters
 // Created: SBO 2007-04-19
 // -----------------------------------------------------------------------------
-void ActionFactory::AddParameters( Action_ABC& action, const Mission& mission, const ASN1T_MissionParameters& asn ) const
+void ActionFactory::AddParameters( Action_ABC& action, const OrderType& mission, const ASN1T_MissionParameters& asn ) const
 {
-    Iterator< const MissionParameter& > params = static_cast< const Resolver_ABC< MissionParameter >& >( mission ).CreateIterator();
+    Iterator< const OrderParameter& > params = mission.CreateIterator();
     for( unsigned int i = 0; i < asn.n && params.HasMoreElements(); ++i )
         if( ActionParameter_ABC* param = factory_.CreateParameter( params.NextElement().GetName(), asn.elem[i], action.GetEntity() ) )
             action.AddParameter( *param );

@@ -11,6 +11,7 @@
 #include "Action_ABC.h"
 #include "ActionParameter_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/OrderType.h"
 #include "Tools.h"
 
 unsigned long Action_ABC::idManager_ = 0; // $$$$ SBO 2007-03-12: real id manager maybe
@@ -19,9 +20,10 @@ unsigned long Action_ABC::idManager_ = 0; // $$$$ SBO 2007-03-12: real id manage
 // Name: Action_ABC constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-Action_ABC::Action_ABC( kernel::Controller& controller )
+Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType& type )
     : controller_( controller )
     , id_( ++idManager_ )
+    , type_( type )
 {
     // NOTHING
 }
@@ -42,6 +44,24 @@ Action_ABC::~Action_ABC()
 unsigned long Action_ABC::GetId() const
 {
     return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Action_ABC::GetName
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+QString Action_ABC::GetName() const
+{
+    return type_.GetName();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Action_ABC::GetType
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+const kernel::OrderType& Action_ABC::GetType() const
+{
+    return type_;
 }
 
 // -----------------------------------------------------------------------------

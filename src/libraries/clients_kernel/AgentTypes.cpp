@@ -20,8 +20,8 @@
 #include "SymbolFactory.h"
 #include "KnowledgeGroupType.h"
 #include "PathTools.h"
-#include "Mission.h"
-#include "FragOrder.h"
+#include "MissionType.h"
+#include "FragOrderType.h"
 #include "ExerciseConfig.h"
 #include "xeumeuleu/xml.h"
 
@@ -62,7 +62,7 @@ void AgentTypes::Load( const ExerciseConfig& config )
         >> content( "GroupesConnaissance", groups );
 
     ReadComponents( config.BuildPhysicalChildFile( components ) );
-    ReadMissions( config.BuildPhysicalChildFile( missions ) );
+    ReadOrderTypes( config.BuildPhysicalChildFile( missions ) );
     ReadModels( config.BuildPhysicalChildFile( models ) );
     ReadSensors( config.BuildPhysicalChildFile( sensors ) );
     ReadAgents( config.BuildPhysicalChildFile( agents ) );
@@ -83,9 +83,9 @@ void AgentTypes::Purge()
     unitMissions_.DeleteAll(); 
     automatMissions_.DeleteAll();
     populationMissions_.DeleteAll();
-    Resolver< Mission >::Clear();
-    Resolver< FragOrder >::DeleteAll();
-    Resolver< FragOrder, QString >::Clear();
+    Resolver< MissionType >::Clear();
+    Resolver< FragOrderType >::DeleteAll();
+    Resolver< FragOrderType, QString >::Clear();
     Resolver< KnowledgeGroupType, QString >::DeleteAll();
     Resolver< PopulationType >::DeleteAll();
     Resolver< PopulationType, QString >::Clear();
@@ -130,47 +130,47 @@ void AgentTypes::ReadComponent( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentTypes::ReadMissions
+// Name: AgentTypes::ReadOrderTypes
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void AgentTypes::ReadMissions( const std::string& missions )
+void AgentTypes::ReadOrderTypes( const std::string& missions )
 {
     xifstream xis( missions );
     xis >> start( "missions" )
             >> start( "units" )
-                >> list( "mission", *this, &AgentTypes::ReadMission, unitMissions_ )
+                >> list( "mission", *this, &AgentTypes::ReadMissionType, unitMissions_ )
             >> end()
             >> start( "automats" )
-                >> list( "mission", *this, &AgentTypes::ReadMission, automatMissions_ )
+                >> list( "mission", *this, &AgentTypes::ReadMissionType, automatMissions_ )
             >> end()
             >> start( "populations" )
-                >> list( "mission", *this, &AgentTypes::ReadMission, populationMissions_ )
+                >> list( "mission", *this, &AgentTypes::ReadMissionType, populationMissions_ )
             >> end()
             >> start( "fragorders" )
-                >> list( "fragorder", *this, &AgentTypes::ReadFragOrder )
+                >> list( "fragorder", *this, &AgentTypes::ReadFragOrderType )
             >> end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentTypes::ReadMission
+// Name: AgentTypes::ReadMissionType
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void AgentTypes::ReadMission( xml::xistream& xis, T_MissionResolver& missions )
+void AgentTypes::ReadMissionType( xml::xistream& xis, T_MissionResolver& missions )
 {
-    Mission* mission = new Mission( xis );
-    Resolver< Mission >::Register( mission->GetId(), *mission );
+    MissionType* mission = new MissionType( xis );
+    Resolver< MissionType >::Register( mission->GetId(), *mission );
     missions.Register( mission->GetName(), *mission );
 }
     
 // -----------------------------------------------------------------------------
-// Name: AgentTypes::ReadFragOrder
+// Name: AgentTypes::ReadFragOrderType
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void AgentTypes::ReadFragOrder( xml::xistream& xis )
+void AgentTypes::ReadFragOrderType( xml::xistream& xis )
 {
-    FragOrder* order = new FragOrder( xis );
-    Resolver< FragOrder >::Register( order->GetId(), *order );
-    Resolver< FragOrder, QString >::Register( order->GetName(), *order );
+    FragOrderType* order = new FragOrderType( xis );
+    Resolver< FragOrderType >::Register( order->GetId(), *order );
+    Resolver< FragOrderType, QString >::Register( order->GetName(), *order );
 }
 
 
@@ -204,7 +204,7 @@ void AgentTypes::ReadModels( const std::string& models )
 void AgentTypes::ReadModel( xml::xistream& xis, const T_Resolver& missionResolver, Resolver< DecisionalModel, QString >& models )
 {
     MissionFactory factory( unitMissions_, automatMissions_, populationMissions_, *this );
-    DecisionalModel* model = new DecisionalModel( xis, factory, missionResolver, (Resolver< FragOrder >&)*this );
+    DecisionalModel* model = new DecisionalModel( xis, factory, missionResolver, (Resolver< FragOrderType >&)*this );
     models.Register( model->GetName(), *model );
 }
 

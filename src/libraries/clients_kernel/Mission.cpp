@@ -9,36 +9,17 @@
 
 #include "clients_kernel_pch.h"
 #include "Mission.h"
+#include "MissionType.h"
 #include "FragOrder.h"
-#include "MissionParameter.h"
-#include "xeumeuleu/xml.h"
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: Mission constructor
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-Mission::Mission( xml::xistream& xis )
-{
-    std::string name, mrt;
-    xis >> attribute( "name", name )
-        >> attribute( "id", (int&)id_ )
-        >> optional() >> attribute( "mrt-dia-behavior", mrt )
-        >> list( "parameter", *this, &Mission::ReadParameter );
-    name_ = name.c_str();
-    automat_ = !mrt.empty();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Mission constructor
-// Created: SBO 2006-11-29
-// -----------------------------------------------------------------------------
-Mission::Mission( const Mission& mission )
-    : name_   ( mission.name_ )
-    , id_     ( mission.id_ )
-    , automat_( mission.automat_ )
+Mission::Mission( const MissionType& type )
+    : type_( type )
 {
     // NOTHING
 }
@@ -49,44 +30,32 @@ Mission::Mission( const Mission& mission )
 // -----------------------------------------------------------------------------
 Mission::~Mission()
 {
-    Resolver< FragOrder >::DeleteAll();
-    Resolver< MissionParameter >::DeleteAll();
+    DeleteAll();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Mission::GetId
-// Created: AGE 2006-04-05
+// Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-unsigned long Mission::GetId() const
+unsigned int Mission::GetId() const
 {
-    return id_;
+    return type_.GetId();
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: Mission::GetName
-// Created: AGE 2006-04-05
+// Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
 QString Mission::GetName() const
 {
-    return name_;
+    return type_.GetName();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Mission::IsAutomat
-// Created: AGE 2006-04-05
+// Name: Mission::GetType
+// Created: SBO 2007-04-23
 // -----------------------------------------------------------------------------
-bool Mission::IsAutomat() const
+const MissionType& Mission::GetType() const
 {
-    return automat_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Mission::ReadParameter
-// Created: SBO 2007-04-19
-// -----------------------------------------------------------------------------
-void Mission::ReadParameter( xml::xistream& xis )
-{
-    MissionParameter* param = new MissionParameter( xis );
-    Resolver< MissionParameter >::Register( Resolver< MissionParameter >::Count(), *param );
+    return type_;
 }

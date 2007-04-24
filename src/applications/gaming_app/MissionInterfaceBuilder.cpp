@@ -45,14 +45,19 @@
 #include "gaming/PopulationKnowledge_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/OrderType.h"
+#include "clients_kernel/OrderParameter.h"
+#include "clients_kernel/OrderParameterValue.h"
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder constructor
 // Created: SBO 2006-11-22
 // -----------------------------------------------------------------------------
-MissionInterfaceBuilder::MissionInterfaceBuilder( kernel::ActionController& controller, gui::ParametersLayer& layer
-                                                , const kernel::CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter
-                                                , ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const kernel::ObjectTypes& objectTypes )
+MissionInterfaceBuilder::MissionInterfaceBuilder( ActionController& controller, gui::ParametersLayer& layer
+                                                , const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter
+                                                , ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const ObjectTypes& objectTypes )
     : controller_              ( controller )
     , layer_                   ( layer )
     , converter_               ( converter )
@@ -93,7 +98,7 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( kernel::ActionController& cont
 
     builderFunctors_["maintenancepriorities"] = &MissionInterfaceBuilder::BuildMaintenancePriorities;
     builderFunctors_["medicalpriorities"]     = &MissionInterfaceBuilder::BuildMedicalPriorities;
-    builderFunctors_["enumeration"]           = 0;
+    builderFunctors_["enumeration"]           = &MissionInterfaceBuilder::BuildEnumeration;
 }
 
 // -----------------------------------------------------------------------------
@@ -109,34 +114,38 @@ MissionInterfaceBuilder::~MissionInterfaceBuilder()
 // Name: MissionInterfaceBuilder::Begin
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-void MissionInterfaceBuilder::Begin( MissionInterface_ABC& missionInterface, kernel::Entity_ABC& entity )
+void MissionInterfaceBuilder::Begin( MissionInterface_ABC& missionInterface, Entity_ABC& entity )
 {
     missionInterface_ = &missionInterface;
     entity_ = &entity;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterfaceBuilder::AddParameter
-// Created: SBO 2006-11-22
+// Name: MissionInterfaceBuilder::Build
+// Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-void MissionInterfaceBuilder::AddParameter( const QString& type, const QString& name, bool optional, const T_Values& values )
+void MissionInterfaceBuilder::Build( const OrderType& order )
 {
-    Param_ABC* parameter = 0;
-    CIT_BuilderFunctors it = builderFunctors_.find( type.lower() );
+    Iterator< const OrderParameter& > it = order.CreateIterator();
+    while( it.HasMoreElements() )
+        Build( it.NextElement() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterfaceBuilder::Build
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+void MissionInterfaceBuilder::Build( const OrderParameter& parameter )
+{
+    CIT_BuilderFunctors it = builderFunctors_.find( parameter.GetType().lower() );
     if( it != builderFunctors_.end() )
     {
-        if( values.empty() )
-        {
-            T_BuilderFunctor functor = it->second;
-            parameter = (this->*functor)( name );
-        }
-        else
-            parameter = BuildEnumeration( name, values );
+        T_BuilderFunctor functor = it->second;
+        if( Param_ABC* param = (this->*functor)( parameter ) )
+            missionInterface_->AddParameter( *param, parameter.IsOptional() );
     }
     else
-        throw std::runtime_error( tools::translate( "MissionInterfaceBuilder", "Unknown mission parameter: %1" ).arg( type ).ascii() );
-    if( parameter )
-        missionInterface_->AddParameter( *parameter, optional );
+        throw std::runtime_error( tools::translate( "MissionInterfaceBuilder", "Unknown mission parameter: %1" ).arg( parameter.GetType() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,12 +154,12 @@ void MissionInterfaceBuilder::AddParameter( const QString& type, const QString& 
 // -----------------------------------------------------------------------------
 void MissionInterfaceBuilder::AddOrderContext( bool optional )
 {
-    Param_ABC* parameter = BuildLimits( tools::translate( "MissionInterfaceBuilder", "Set limit 1" )
-                                      , tools::translate( "MissionInterfaceBuilder", "Set limit 2" ) );
+    Param_ABC* parameter = BuildLimits( tools::translate( "MissionInterfaceBuilder", "Limit 1" )
+                                      , tools::translate( "MissionInterfaceBuilder", "Limit 2" ) );
     missionInterface_->AddOrderContext( *parameter, optional );
-    parameter = BuildLimaList( tools::translate( "MissionInterfaceBuilder", "Add lima" ) );
+    parameter = BuildLimaList( tools::translate( "MissionInterfaceBuilder", "Limas" ) );
     missionInterface_->AddOrderContext( *parameter, true );
-    parameter = BuildDirection( tools::translate( "MissionInterfaceBuilder", "Dangerous direction" ) );
+    parameter = BuildDangerousDirection( tools::translate( "MissionInterfaceBuilder", "Dangerous direction" ) );
     missionInterface_->AddOrderContext( *parameter, false );
 }
 
@@ -167,243 +176,243 @@ void MissionInterfaceBuilder::End()
 // Name: MissionInterfaceBuilder::BuildAgent
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildAgent( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildAgent( const OrderParameter& parameter ) const
 {
-    return new ParamAgent( missionInterface_, name );
+    return new ParamAgent( missionInterface_, parameter.GetName() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildAgentList
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildAgentList( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildAgentList( const OrderParameter& parameter ) const
 {
-    return new ParamAgentList( missionInterface_, name );
+    return new ParamAgentList( missionInterface_, parameter.GetName() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildAutomat
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildAutomat( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildAutomat( const OrderParameter& parameter ) const
 {
-    return new ParamAutomat( missionInterface_, name );
+    return new ParamAutomat( missionInterface_, parameter.GetName() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildAutomatList
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildAutomatList( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildAutomatList( const OrderParameter& parameter ) const
 {
-    return new ParamAutomatList( missionInterface_, name );
+    return new ParamAutomatList( missionInterface_, parameter.GetName() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildAtlasNature
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildAtlasNature( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildAtlasNature( const OrderParameter& parameter ) const
 {
-    return new ParamAtlasNature( missionInterface_, name );
+    return new ParamAtlasNature( missionInterface_, parameter.GetName() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildDotation
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildDotation( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildDotation( const OrderParameter& parameter ) const
 {
-    return new ParamDotationDType( name, objectTypes_ );
+    return new ParamDotationDType( parameter.GetName(), objectTypes_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildBoolean
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildBoolean( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildBoolean( const OrderParameter& parameter ) const
 {
-    return new ParamBool( missionInterface_, name ); // $$$$ SBO 2007-03-14: default value?
+    return new ParamBool( missionInterface_, parameter.GetName() ); // $$$$ SBO 2007-03-14: default value?
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildDirection
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildDirection( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildDirection( const OrderParameter& parameter ) const
 {
-    return new ParamDirection( missionInterface_, name );
+    return new ParamDirection( missionInterface_, parameter.GetName() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildGDH
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildGDH( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildGDH( const OrderParameter& parameter ) const
 {
-    return new ParamGDH( missionInterface_, name );
+    return new ParamGDH( missionInterface_, parameter.GetName() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildNumeric
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildNumeric( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildNumeric( const OrderParameter& parameter ) const
 {
-    return new ParamNumericField( name, true );
+    return new ParamNumericField( parameter.GetName(), true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildAgentKnowledge
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildAgentKnowledge( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildAgentKnowledge( const OrderParameter& parameter ) const
 {
-    return new ParamAgentKnowledge( missionInterface_, name, knowledgeConverter_, *entity_  );
+    return new ParamAgentKnowledge( missionInterface_, parameter.GetName(), knowledgeConverter_, *entity_  );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildAgentKnowledgeList
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildAgentKnowledgeList( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildAgentKnowledgeList( const OrderParameter& parameter ) const
 {
-    return new ParamAgentKnowledgeList( missionInterface_, name, knowledgeConverter_, *entity_ );
+    return new ParamAgentKnowledgeList( missionInterface_, parameter.GetName(), knowledgeConverter_, *entity_ );
 }
  
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildObjectKnowledge
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildObjectKnowledge( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildObjectKnowledge( const OrderParameter& parameter ) const
 {
-    return new ParamObjectKnowledge( missionInterface_, name, objectKnowledgeConverter_, *entity_ );
+    return new ParamObjectKnowledge( missionInterface_, parameter.GetName(), objectKnowledgeConverter_, *entity_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildObjectKnowledgeList
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildObjectKnowledgeList( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildObjectKnowledgeList( const OrderParameter& parameter ) const
 {
-    return new ParamObjectKnowledgeList( missionInterface_, name, objectKnowledgeConverter_, *entity_ );
+    return new ParamObjectKnowledgeList( missionInterface_, parameter.GetName(), objectKnowledgeConverter_, *entity_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildPopulationKnowledge
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildPopulationKnowledge( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildPopulationKnowledge( const OrderParameter& parameter ) const
 {
-    return new ParamPopulationKnowledge( missionInterface_, name, knowledgeConverter_, *entity_ );
+    return new ParamPopulationKnowledge( missionInterface_, parameter.GetName(), knowledgeConverter_, *entity_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildPath
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildPath( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildPath( const OrderParameter& parameter ) const
 {
-    return new ParamPath( missionInterface_, name, layer_, converter_, *entity_ );
+    return new ParamPath( missionInterface_, parameter.GetName(), layer_, converter_, *entity_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildPathList
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildPathList( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildPathList( const OrderParameter& parameter ) const
 {
-    return new ParamPathList( missionInterface_, name, layer_, converter_, *entity_, controller_ );
+    return new ParamPathList( missionInterface_, parameter.GetName(), layer_, converter_, *entity_, controller_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildPoint
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildPoint( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildPoint( const OrderParameter& parameter ) const
 {
-    return new ParamPoint( missionInterface_, name, converter_ );
+    return new ParamPoint( missionInterface_, parameter.GetName(), converter_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildPointList
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildPointList( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildPointList( const OrderParameter& parameter ) const
 {
-    return new ParamPointList( missionInterface_, name, layer_, converter_ );
+    return new ParamPointList( missionInterface_, parameter.GetName(), layer_, converter_ );
 }
     
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildPolygon
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildPolygon( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildPolygon( const OrderParameter& parameter ) const
 {
-    return new ParamPolygon( name, layer_, converter_ );
+    return new ParamPolygon( parameter.GetName(), layer_, converter_ );
 }
     
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildPolygonList
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildPolygonList( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildPolygonList( const OrderParameter& parameter ) const
 {
-    return new ParamPolygonList( missionInterface_, name, layer_, converter_ );
+    return new ParamPolygonList( missionInterface_, parameter.GetName(), layer_, converter_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildLocation
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildLocation( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildLocation( const OrderParameter& parameter ) const
 {
-    return new ParamLocation( name, layer_, converter_ );
+    return new ParamLocation( parameter.GetName(), layer_, converter_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildLocationList
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildLocationList( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildLocationList( const OrderParameter& parameter ) const
 {
-    return new ParamLocationList( missionInterface_, name, layer_, converter_ );
+    return new ParamLocationList( missionInterface_, parameter.GetName(), layer_, converter_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildGenObject
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildGenObject( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildGenObject( const OrderParameter& parameter ) const
 {
-    return new ParamObstacle( missionInterface_, name, objectTypes_, layer_, converter_ );
+    return new ParamObstacle( missionInterface_, parameter.GetName(), objectTypes_, layer_, converter_ );
 }
     
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildObstacleList
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildGenObjectList( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildGenObjectList( const OrderParameter& parameter ) const
 {
-    return new ParamObstacleList( missionInterface_, name, objectTypes_, layer_, converter_, controller_ );
+    return new ParamObstacleList( missionInterface_, parameter.GetName(), objectTypes_, layer_, converter_, controller_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildMaintenancePriorities
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildMaintenancePriorities( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildMaintenancePriorities( const OrderParameter& parameter ) const
 {
-    return new ParamEquipmentList( missionInterface_, name, objectTypes_ );
+    return new ParamEquipmentList( missionInterface_, parameter.GetName(), objectTypes_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildMedicalPriorities
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildMedicalPriorities( const QString& name ) const
+Param_ABC* MissionInterfaceBuilder::BuildMedicalPriorities( const OrderParameter& parameter ) const
 {
-    return new ParamHumanWoundList( missionInterface_, name );
+    return new ParamHumanWoundList( missionInterface_, parameter.GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -425,13 +434,26 @@ Param_ABC* MissionInterfaceBuilder::BuildLimaList( const QString& name ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MissionInterfaceBuilder::BuildDangerousDirection
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+Param_ABC* MissionInterfaceBuilder::BuildDangerousDirection( const QString& name ) const
+{
+    return new ParamDirection( missionInterface_, name );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildEnumeration
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildEnumeration( const QString& name, const T_Values& values )
+Param_ABC* MissionInterfaceBuilder::BuildEnumeration( const OrderParameter& parameter ) const
 {
-    ParamComboBox< ASN1INT >& param = BuildVarList< ASN1INT >( name );
-    for( T_Values::const_iterator it = values.begin(); it != values.end(); ++it )
-        param.AddItem( it->second.c_str(), it->first );
+    ParamComboBox< ASN1INT >& param = BuildVarList< ASN1INT >( parameter.GetName() );
+    Iterator< const OrderParameterValue& > it = parameter.CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const OrderParameterValue& value = it.NextElement();
+        param.AddItem( value.GetName(), value.GetId() );
+    }
     return &param;
 }

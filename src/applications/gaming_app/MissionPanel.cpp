@@ -30,7 +30,6 @@
 #include "AutomateMissionInterface.h"
 #include "PopulationMissionInterface.h"
 #include "FragmentaryOrderInterface.h"
-#include "MissionInterfaceFactory.h"
 #include "MissionInterfaceBuilder.h"
 #include "gaming/AgentKnowledgeConverter.h"
 #include "gaming/ObjectKnowledgeConverter.h"
@@ -57,7 +56,6 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const St
     , knowledgeConverter_      ( new AgentKnowledgeConverter( controllers ) )
     , objectKnowledgeConverter_( new ObjectKnowledgeConverter( controllers ) )
     , pMissionInterface_       ( 0 )
-    , interfaceFactory_        ( new MissionInterfaceFactory( controllers ) )
     , interfaceBuilder_        ( new MissionInterfaceBuilder( controllers_.actions_, layer_, converter_, *knowledgeConverter_, *objectKnowledgeConverter_, static_.objectTypes_ ) ) 
     , selectedEntity_          ( controllers )
 {
@@ -76,7 +74,6 @@ MissionPanel::~MissionPanel()
 {
     controllers_.Remove( *this );
     delete interfaceBuilder_;
-    delete interfaceFactory_;
     delete knowledgeConverter_;
     delete objectKnowledgeConverter_;
 }
@@ -225,8 +222,8 @@ void MissionPanel::ActivateAgentMission( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    Mission& mission = ((Resolver_ABC< Mission >&)static_.types_).Get( id );
-    pMissionInterface_ = new UnitMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_, actionsModel_ );
+    MissionType& mission = ((Resolver_ABC< MissionType >&)static_.types_).Get( id );
+    pMissionInterface_ = new UnitMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, publisher_, *interfaceBuilder_, actionsModel_ );
     setWidget( pMissionInterface_ );
 
     // For some magic reason, the following line resizes the widget
@@ -243,11 +240,11 @@ void MissionPanel::ActivateAutomatMission( int id )
 {
     hide();
     delete pMissionInterface_;
-    Mission& mission = ((Resolver_ABC< Mission >&)static_.types_).Get( id );
+    MissionType& mission = ((Resolver_ABC< MissionType >&)static_.types_).Get( id );
     Entity_ABC* entity = selectedEntity_.ConstCast();
     if( !entity->Retrieve< AutomatDecisions >() )
         entity = const_cast< kernel::Entity_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() );
-    pMissionInterface_ = new AutomateMissionInterface( this, *entity, mission, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_, actionsModel_ );
+    pMissionInterface_ = new AutomateMissionInterface( this, *entity, mission, controllers_.actions_, publisher_, *interfaceBuilder_, actionsModel_ );
     setWidget( pMissionInterface_ );
     resize( 10, 10 );
     show();
@@ -262,8 +259,8 @@ void MissionPanel::ActivatePopulationMission( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    Mission& mission = ((Resolver_ABC< Mission >&)static_.types_).Get( id );
-    pMissionInterface_ = new PopulationMissionInterface( this, const_cast< Entity_ABC& >( *selectedEntity_ ), mission, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_, actionsModel_ );
+    MissionType& mission = ((Resolver_ABC< MissionType >&)static_.types_).Get( id );
+    pMissionInterface_ = new PopulationMissionInterface( this, const_cast< Entity_ABC& >( *selectedEntity_ ), mission, controllers_.actions_, publisher_, *interfaceBuilder_, actionsModel_ );
     setWidget( pMissionInterface_ );
     resize( 10, 10 );
     show();
@@ -278,8 +275,8 @@ void MissionPanel::ActivateFragOrder( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    FragOrder& order = ((Resolver_ABC< FragOrder >&)static_.types_).Get( id );
-    pMissionInterface_ = new FragmentaryOrderInterface( this, *selectedEntity_.ConstCast(), order, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_, actionsModel_ );
+    FragOrderType& order = ((Resolver_ABC< FragOrderType >&)static_.types_).Get( id );
+    pMissionInterface_ = new FragmentaryOrderInterface( this, *selectedEntity_.ConstCast(), order, controllers_.actions_, publisher_, *interfaceBuilder_, actionsModel_ );
     if( pMissionInterface_->IsEmpty() )
         pMissionInterface_->OnOk();
     else

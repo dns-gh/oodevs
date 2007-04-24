@@ -120,7 +120,6 @@ private:
     AgentKnowledgeConverter_ABC* knowledgeConverter_;
     ObjectKnowledgeConverter_ABC* objectKnowledgeConverter_;
     MissionInterface_ABC* pMissionInterface_;
-    MissionInterfaceFactory* interfaceFactory_;
     MissionInterfaceBuilder* interfaceBuilder_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     //@}

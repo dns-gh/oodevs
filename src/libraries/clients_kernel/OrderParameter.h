@@ -3,49 +3,52 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __MissionParameter_h_
-#define __MissionParameter_h_
+#ifndef __OrderParameter_h_
+#define __OrderParameter_h_
 
-#include "game_asn/Asn.h"
+#include "Resolver.h"
 
 namespace xml
 {
     class xistream;
 }
 
-class MissionInterfaceBuilder;
+namespace kernel
+{
+    class OrderParameterValue;
 
 // =============================================================================
-/** @class  MissionParameter
-    @brief  Mission parameter
+/** @class  OrderParameter
+    @brief  OrderParameter
 */
-// Created: SBO 2006-11-22
+// Created: SBO 2007-04-23
 // =============================================================================
-class MissionParameter
+class OrderParameter : public Resolver< OrderParameterValue >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MissionParameter( xml::xistream& xis );
-    virtual ~MissionParameter();
+    explicit OrderParameter( xml::xistream& xis );
+    virtual ~OrderParameter();
     //@}
 
     //! @name Operations
     //@{
     QString GetName() const;
-    void BuildInterface( MissionInterfaceBuilder& builder ) const;
+    QString GetType() const;
+    bool IsOptional() const;
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
-    MissionParameter( const MissionParameter& );            //!< Copy constructor
-    MissionParameter& operator=( const MissionParameter& ); //!< Assignement operator
+    OrderParameter( const OrderParameter& );            //!< Copy constructor
+    OrderParameter& operator=( const OrderParameter& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -53,20 +56,15 @@ private:
     void ReadValue( xml::xistream& xis );
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::vector< std::pair< int, std::string > > T_Values;
-    //@}
-
 private:
     //! @name Member data
     //@{
     QString name_;
-    QString diaName_;
     QString type_;
     bool optional_;
-    T_Values values_;
     //@}
 };
 
-#endif // __MissionParameter_h_
+}
+
+#endif // __OrderParameter_h_

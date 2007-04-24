@@ -9,12 +9,11 @@
 
 #include "gaming_app_pch.h"
 #include "PopulationMissionInterface.h"
-#include "MissionInterfaceFactory.h"
 #include "MissionInterfaceBuilder.h"
 #include "gaming/ASN_Messages.h"
 #include "gaming/ActionsModel.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Mission.h"
+#include "clients_kernel/MissionType.h"
 
 using namespace kernel;
 
@@ -22,8 +21,8 @@ using namespace kernel;
 // Name: PopulationMissionInterface constructor
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Entity_ABC& entity, const Mission& mission, ActionController& controller
-                                                      , Publisher_ABC& publisher, MissionInterfaceFactory& factory, MissionInterfaceBuilder& builder, ActionsModel& model )
+PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Entity_ABC& entity, const MissionType& mission, ActionController& controller
+                                                      , Publisher_ABC& publisher, MissionInterfaceBuilder& builder, ActionsModel& model )
     : MissionInterface_ABC( parent, entity, controller )
     , model_              ( model )
     , publisher_          ( publisher )
@@ -31,7 +30,7 @@ PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Entity_
 {
     CreateTitle( mission.GetName() );
     builder.Begin( *this, entity );
-    factory.CreatePopulationMissionInterface( builder, mission.GetId() );
+    builder.Build( mission );
     builder.End();
     CreateOkCancelButtons();
 }

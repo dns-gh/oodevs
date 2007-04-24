@@ -7,52 +7,56 @@
 //
 // *****************************************************************************
 
-#ifndef __ActionMission_h_
-#define __ActionMission_h_
+#ifndef __FragOrderType_h_
+#define __FragOrderType_h_
 
-#include "Action_ABC.h"
+#include "OrderType.h"
 
 namespace kernel
 {
-    class MissionType;
-    class Controller;
-}
 
 // =============================================================================
-/** @class  ActionMission
-    @brief  ActionMission
+/** @class  FragOrderType
+    @brief  FragOrderType
 */
-// Created: SBO 2007-03-12
+// Created: SBO 2007-04-23
 // =============================================================================
-class ActionMission : public Action_ABC
+class FragOrderType : public OrderType
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionMission( const kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::Controller& controller, bool registered = true );
-    virtual ~ActionMission();
+    explicit FragOrderType( xml::xistream& xis );
+    virtual ~FragOrderType();
     //@}
 
     //! @name Operations
     //@{
-    virtual const kernel::Entity_ABC& GetEntity() const;
+    bool IsDefaultOrder   () const;
+    bool IsMissionRequired() const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ActionMission( const ActionMission& );            //!< Copy constructor
-    ActionMission& operator=( const ActionMission& ); //!< Assignment operator
+    FragOrderType( const FragOrderType& );            //!< Copy constructor
+    FragOrderType& operator=( const FragOrderType& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadParameter( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    const kernel::Entity_ABC& entity_;
-    bool registered_;
+    bool isDefaultOrder_;
+    bool isWithoutMission_;
     //@}
 };
 
-#endif // __ActionMission_h_
+}
+
+#endif // __FragOrderType_h_

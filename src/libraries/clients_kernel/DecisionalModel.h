@@ -19,6 +19,7 @@ namespace kernel
     class Mission;
     class MissionFactory;
     class FragOrder;
+    class FragOrderType;
 
 // =============================================================================
 /** @class  DecisionalModel
@@ -37,7 +38,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DecisionalModel( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver, const Resolver_ABC< FragOrder >& fragOrders );
+             DecisionalModel( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver, const Resolver_ABC< FragOrderType >& fragOrders );
     virtual ~DecisionalModel();
     //@}
 
@@ -57,8 +58,8 @@ private:
     //@{
     void ReadMission( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver );
     void ReadFragOrder( xml::xistream& xis, Mission& mission, MissionFactory& factory );
-    void RegisterDefaultFragOrders( MissionFactory& factory, const Resolver_ABC< FragOrder >& fragOrders );
-    void RegisterFragOrder( MissionFactory& factory, const std::string& order );
+    void RegisterDefaultFragOrders( MissionFactory& factory, const Resolver_ABC< FragOrderType >& fragOrders );
+    void RegisterFragOrder( MissionFactory& factory, const FragOrderType& type );
     //@}
 
 private:

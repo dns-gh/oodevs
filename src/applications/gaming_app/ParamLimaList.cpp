@@ -213,7 +213,7 @@ void ParamLimaList::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, k
             int nId = limaMenu->insertItem( tools::ToString( (E_FuncLimaType)n ), this, SLOT( MenuItemValidated( int ) ) ); 
             limaMenu->setItemParameter( nId, n );
         }
-        menu.InsertItem( "Parameter", GetName(), limaMenu );
+        menu.InsertItem( "Parameter", tr( "Add %1" ).arg( GetName() ), limaMenu );
     }
 }
 

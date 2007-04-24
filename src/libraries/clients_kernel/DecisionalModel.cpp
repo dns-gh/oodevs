@@ -11,6 +11,7 @@
 #include "DecisionalModel.h"
 #include "Mission.h"
 #include "FragOrder.h"
+#include "FragOrderType.h"
 #include "MissionFactory.h"
 #include "xeumeuleu/xml.h"
 
@@ -21,7 +22,7 @@ using namespace xml;
 // Name: DecisionalModel constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-DecisionalModel::DecisionalModel( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver, const Resolver_ABC< FragOrder >& fragOrders )
+DecisionalModel::DecisionalModel( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver, const Resolver_ABC< FragOrderType >& fragOrders )
 {
     std::string name;
     xis >> attribute( "nom", name )
@@ -88,14 +89,14 @@ QString DecisionalModel::GetName() const
 // Name: DecisionalModel::RegisterDefaultFragOrders
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-void DecisionalModel::RegisterDefaultFragOrders( MissionFactory& factory, const Resolver_ABC< FragOrder >& fragOrders )
+void DecisionalModel::RegisterDefaultFragOrders( MissionFactory& factory, const Resolver_ABC< FragOrderType >& fragOrders )
 {
-    Iterator< const FragOrder& > it = fragOrders.CreateIterator();
+    Iterator< const FragOrderType& > it = fragOrders.CreateIterator();
     while( it.HasMoreElements() )
     {
-        const FragOrder& order = it.NextElement();
-        if( order.IsDefaultOrder() )
-            RegisterFragOrder( factory, order.GetName().ascii() );
+        const FragOrderType& type = it.NextElement();
+        if( type.IsDefaultOrder() )
+            RegisterFragOrder( factory, type );
     }
 }
 
@@ -103,9 +104,9 @@ void DecisionalModel::RegisterDefaultFragOrders( MissionFactory& factory, const 
 // Name: DecisionalModel::RegisterFragOrder
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-void DecisionalModel::RegisterFragOrder( MissionFactory& factory, const std::string& name )
+void DecisionalModel::RegisterFragOrder( MissionFactory& factory, const FragOrderType& type )
 {
-    FragOrder* order = factory.CreateFragOrder( name );
+    FragOrder* order = factory.CreateFragOrder( type.GetName().ascii() );
     Resolver< FragOrder >::Register( order->GetId(), *order );
 }
 

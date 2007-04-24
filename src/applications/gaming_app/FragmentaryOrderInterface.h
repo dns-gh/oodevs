@@ -14,12 +14,11 @@
 
 namespace kernel
 {
-    class FragOrder;
+    class FragOrderType;
 }
 
 class ASN_MsgFragOrder;
 class Publisher_ABC;
-class MissionInterfaceFactory;
 class MissionInterfaceBuilder;
 class ActionsModel;
 
@@ -34,8 +33,8 @@ class FragmentaryOrderInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FragmentaryOrderInterface( QWidget* parent, kernel::Entity_ABC& entity, const kernel::FragOrder& fragOrder, kernel::ActionController& controller
-                                      , Publisher_ABC& publisher, MissionInterfaceFactory& factory, MissionInterfaceBuilder& builder, ActionsModel& model );
+             FragmentaryOrderInterface( QWidget* parent, kernel::Entity_ABC& entity, const kernel::FragOrderType& fragOrder, kernel::ActionController& controller
+                                      , Publisher_ABC& publisher, MissionInterfaceBuilder& builder, ActionsModel& model );
     virtual ~FragmentaryOrderInterface();
     //@}
 
@@ -56,7 +55,7 @@ private:
     //@{
     ActionsModel& model_;
     Publisher_ABC& publisher_;
-    const kernel::FragOrder& fragOrder_;
+    const kernel::FragOrderType& fragOrder_;
     //@}
 };
 

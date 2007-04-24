@@ -14,12 +14,11 @@
 
 namespace kernel
 {
-    class Mission;
+    class MissionType;
 }
 
 class ASN_MsgPopulationOrder;
 class Publisher_ABC;
-class MissionInterfaceFactory;
 class MissionInterfaceBuilder;
 class ActionsModel;
 
@@ -34,8 +33,8 @@ class PopulationMissionInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationMissionInterface( QWidget* parent, kernel::Entity_ABC& entity, const kernel::Mission& mission, kernel::ActionController& controller
-                                       , Publisher_ABC& publisher, MissionInterfaceFactory& factory, MissionInterfaceBuilder& builder, ActionsModel& model );
+             PopulationMissionInterface( QWidget* parent, kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::ActionController& controller
+                                       , Publisher_ABC& publisher, MissionInterfaceBuilder& builder, ActionsModel& model );
     virtual ~PopulationMissionInterface();
     //@}
    
@@ -56,7 +55,7 @@ private:
     //@{
     ActionsModel& model_;
     Publisher_ABC& publisher_;
-    const kernel::Mission& mission_;
+    const kernel::MissionType& mission_;
     //@}
 };
 

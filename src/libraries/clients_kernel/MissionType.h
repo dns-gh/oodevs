@@ -3,54 +3,58 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __FragOrder_h_
-#define __FragOrder_h_
+#ifndef __MissionType_h_
+#define __MissionType_h_
+
+#include "OrderType.h"
 
 namespace kernel
 {
-    class FragOrderType;
 
 // =============================================================================
-/** @class  FragOrder
-    @brief  FragOrder
+/** @class  MissionType
+    @brief  MissionType
 */
-// Created: AGE 2006-03-14
+// Created: SBO 2007-04-23
 // =============================================================================
-class FragOrder
+class MissionType : public OrderType
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FragOrder( const FragOrderType& type );
-    virtual ~FragOrder();
+    explicit MissionType( xml::xistream& xis );
+    virtual ~MissionType();
     //@}
 
     //! @name Operations
     //@{
-    unsigned int GetId() const;
-    QString GetName() const;
-    const FragOrderType& GetType() const;
+    bool IsAutomat() const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    FragOrder( const FragOrder& );            //!< Copy constructor
-    FragOrder& operator=( const FragOrder& ); //!< Assignment operator
+    MissionType( const MissionType& );            //!< Copy constructor
+    MissionType& operator=( const MissionType& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadParameter( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const FragOrderType& type_;
+    bool automat_;
     //@}
 };
 
 }
 
-#endif // __FragOrder_h_
+#endif // __MissionType_h_

@@ -12,15 +12,10 @@
 
 #include "Resolver.h"
 
-namespace xml
-{
-    class xistream;
-}
-
 namespace kernel
 {
     class FragOrder;
-    class MissionParameter;
+    class MissionType;
 
 // =============================================================================
 /** @class  Mission
@@ -29,36 +24,33 @@ namespace kernel
 // Created: AGE 2006-03-14
 // =============================================================================
 class Mission : public Resolver< FragOrder >
-              , public Resolver< MissionParameter >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Mission( xml::xistream& xis );
-    explicit Mission( const Mission& mission );
+    explicit Mission( const MissionType& type );
     virtual ~Mission();
     //@}
 
-    //! @name Accessors
+    //! @name Operations
     //@{
-    unsigned long GetId() const;
+    unsigned int GetId() const;
     QString GetName() const;
-    bool IsAutomat() const;
+    const MissionType& GetType() const;
     //@}
 
 private:
-    //! @name Helpers
+    //! @name Copy/Assignment
     //@{
-    void ReadParameter( xml::xistream& xis );
+    Mission( const Mission& );            //!< Copy constructor
+    Mission& operator=( const Mission& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    QString name_;
-    unsigned int id_;
-    bool automat_;
+    const MissionType& type_;
     //@}
 };
 

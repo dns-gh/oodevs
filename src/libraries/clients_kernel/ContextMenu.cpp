@@ -64,6 +64,15 @@ void ContextMenu::SetItemEnabled( int id, bool enable )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ContextMenu::SetChecked
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+void ContextMenu::SetChecked( int id, bool checked )
+{
+    menu_->setItemChecked( id, checked );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ContextMenu::SetItemParameter
 // Created: AGE 2006-08-04
 // -----------------------------------------------------------------------------

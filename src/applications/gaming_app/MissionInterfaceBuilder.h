@@ -19,6 +19,8 @@ namespace kernel
     class Entity_ABC;
     class CoordinateConverter_ABC;
     class ObjectTypes;
+    class OrderType;
+    class OrderParameter;
 }
 
 namespace gui
@@ -57,9 +59,10 @@ public:
     //! @name Operations
     //@{
     void Begin( MissionInterface_ABC& missionInterface, kernel::Entity_ABC& entity );
+    void Build( const kernel::OrderType& order );
+    void Build( const kernel::OrderParameter& parameter );
     void End();
 
-    void AddParameter( const QString& type, const QString& name, bool optional, const T_Values& values );
     void AddOrderContext( bool optional );
     //@}
 
@@ -72,41 +75,42 @@ private:
 
     //! @name Helpers
     //@{
-    Param_ABC* BuildAgent                ( const QString& name ) const;
-    Param_ABC* BuildAgentList            ( const QString& name ) const;
-    Param_ABC* BuildAutomat              ( const QString& name ) const;
-    Param_ABC* BuildAutomatList          ( const QString& name ) const;
-    Param_ABC* BuildDotation             ( const QString& name ) const;
-    Param_ABC* BuildAtlasNature          ( const QString& name ) const;
-    Param_ABC* BuildBoolean              ( const QString& name ) const;
-    Param_ABC* BuildDirection            ( const QString& name ) const;
-    Param_ABC* BuildGDH                  ( const QString& name ) const;
-    Param_ABC* BuildNumeric              ( const QString& name ) const;
-    Param_ABC* BuildAgentKnowledge       ( const QString& name ) const;
-    Param_ABC* BuildAgentKnowledgeList   ( const QString& name ) const;
-    Param_ABC* BuildObjectKnowledge      ( const QString& name ) const;
-    Param_ABC* BuildObjectKnowledgeList  ( const QString& name ) const;
-    Param_ABC* BuildPopulationKnowledge  ( const QString& name ) const;
-    Param_ABC* BuildPath                 ( const QString& name ) const;
-    Param_ABC* BuildPathList             ( const QString& name ) const;
-    Param_ABC* BuildPoint                ( const QString& name ) const;
-    Param_ABC* BuildPointList            ( const QString& name ) const;
-    Param_ABC* BuildPolygon              ( const QString& name ) const;
-    Param_ABC* BuildPolygonList          ( const QString& name ) const;
-    Param_ABC* BuildLocation             ( const QString& name ) const;
-    Param_ABC* BuildLocationList         ( const QString& name ) const;
-    Param_ABC* BuildGenObject            ( const QString& name ) const;
-    Param_ABC* BuildGenObjectList        ( const QString& name ) const;
-    Param_ABC* BuildMaintenancePriorities( const QString& name ) const;
-    Param_ABC* BuildMedicalPriorities    ( const QString& name ) const;
+    Param_ABC* BuildAgent                ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildAgentList            ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildAutomat              ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildAutomatList          ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildDotation             ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildAtlasNature          ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildBoolean              ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildDirection            ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildGDH                  ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildNumeric              ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildAgentKnowledge       ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildAgentKnowledgeList   ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildObjectKnowledge      ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildObjectKnowledgeList  ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildPopulationKnowledge  ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildPath                 ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildPathList             ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildPoint                ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildPointList            ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildPolygon              ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildPolygonList          ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildLocation             ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildLocationList         ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildGenObject            ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildGenObjectList        ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildMaintenancePriorities( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildMedicalPriorities    ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildEnumeration          ( const kernel::OrderParameter& parameter ) const;
 
-    Param_ABC* BuildLimits             ( const QString& name1, const QString& name2 ) const;
-    Param_ABC* BuildLimaList           ( const QString& name ) const;
-    Param_ABC* BuildEnumeration        ( const QString& name, const T_Values& values );
+    Param_ABC* BuildLimits               ( const QString& name1, const QString& name2 ) const;
+    Param_ABC* BuildLimaList             ( const QString& name ) const;
+    Param_ABC* BuildDangerousDirection   ( const QString& name ) const;
 
 
     template < class T >
-    ParamComboBox<T>& BuildVarList( const QString& name )
+    ParamComboBox<T>& BuildVarList( const QString& name ) const
     {
         return *new ParamComboBox<T>( name );
     }
@@ -114,7 +118,7 @@ private:
 
     //! @name Types
     //@{
-    typedef Param_ABC* (MissionInterfaceBuilder::*T_BuilderFunctor)( const QString& ) const;
+    typedef Param_ABC* (MissionInterfaceBuilder::*T_BuilderFunctor)( const kernel::OrderParameter& ) const;
     typedef std::map< QString, T_BuilderFunctor > T_BuilderFunctors;
     typedef T_BuilderFunctors::const_iterator   CIT_BuilderFunctors;
     //@}

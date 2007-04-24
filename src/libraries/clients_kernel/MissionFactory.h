@@ -16,6 +16,8 @@ namespace kernel
 {
     class Mission;
     class FragOrder;
+    class MissionType;
+    class FragOrderType;
 
 // =============================================================================
 /** @class  MissionFactory
@@ -29,8 +31,8 @@ class MissionFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionFactory( const Resolver_ABC< Mission, QString >& unitMissions, const Resolver_ABC< Mission, QString >& automatMissions
-                           , const Resolver_ABC< Mission, QString >& populationMissions, const Resolver_ABC< FragOrder, QString >& fragOrders );
+             MissionFactory( const Resolver_ABC< MissionType, QString >& unitMissions, const Resolver_ABC< MissionType, QString >& automatMissions
+                           , const Resolver_ABC< MissionType, QString >& populationMissions, const Resolver_ABC< FragOrderType, QString >& fragOrders );
     virtual ~MissionFactory();
     //@}
 
@@ -57,10 +59,10 @@ private:
 private:
     //! @name Member data
     //@{
-    const Resolver_ABC< Mission, QString >& unitMissions_;
-    const Resolver_ABC< Mission, QString >& automatMissions_;
-    const Resolver_ABC< Mission, QString >& populationMissions_;
-    const Resolver_ABC< FragOrder, QString >& fragOrders_;
+    const Resolver_ABC< MissionType, QString >& unitMissions_;
+    const Resolver_ABC< MissionType, QString >& automatMissions_;
+    const Resolver_ABC< MissionType, QString >& populationMissions_;
+    const Resolver_ABC< FragOrderType, QString >& fragOrders_;
     //@}
 };
 

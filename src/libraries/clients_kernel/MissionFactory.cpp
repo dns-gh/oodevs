@@ -11,6 +11,8 @@
 #include "MissionFactory.h"
 #include "Mission.h"
 #include "FragOrder.h"
+#include "MissionType.h"
+#include "FragOrderType.h"
 
 using namespace kernel;
 
@@ -18,8 +20,8 @@ using namespace kernel;
 // Name: MissionFactory constructor
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-MissionFactory::MissionFactory( const Resolver_ABC< Mission, QString >& unitMissions, const Resolver_ABC< Mission, QString >& automatMissions
-                              , const Resolver_ABC< Mission, QString >& populationMissions, const Resolver_ABC< FragOrder, QString >& fragOrders )
+MissionFactory::MissionFactory( const Resolver_ABC< MissionType, QString >& unitMissions, const Resolver_ABC< MissionType, QString >& automatMissions
+                              , const Resolver_ABC< MissionType, QString >& populationMissions, const Resolver_ABC< FragOrderType, QString >& fragOrders )
     : unitMissions_( unitMissions )
     , automatMissions_( automatMissions )
     , populationMissions_( populationMissions )
@@ -43,10 +45,10 @@ MissionFactory::~MissionFactory()
 // -----------------------------------------------------------------------------
 Mission* MissionFactory::CreateAgentMission( const std::string& name )
 {
-    Mission* mission = unitMissions_.Find( name.c_str() );
-    if( !mission )
+    MissionType* type = unitMissions_.Find( name.c_str() );
+    if( !type )
         throw std::runtime_error( "unknown agent mission '" + name + "'" );
-    return AddFragOrders( new Mission( *mission ) );
+    return AddFragOrders( new Mission( *type ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,10 +57,10 @@ Mission* MissionFactory::CreateAgentMission( const std::string& name )
 // -----------------------------------------------------------------------------
 Mission* MissionFactory::CreateAutomatMission( const std::string& name )
 {
-    Mission* mission = automatMissions_.Find( name.c_str() );
-    if( !mission )
+    MissionType* type = automatMissions_.Find( name.c_str() );
+    if( !type )
         throw std::runtime_error( "unknown automat mission '" + name + "'" );
-    return AddFragOrders( new Mission( *mission ) );
+    return AddFragOrders( new Mission( *type ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,10 +69,10 @@ Mission* MissionFactory::CreateAutomatMission( const std::string& name )
 // -----------------------------------------------------------------------------
 Mission* MissionFactory::CreatePopulationMission( const std::string& name )
 {
-    Mission* mission = populationMissions_.Find( name.c_str() );
-    if( !mission )
+    MissionType* type = populationMissions_.Find( name.c_str() );
+    if( !type )
         throw std::runtime_error( "unknown population mission '" + name + "'" );
-    return new Mission( *mission );
+    return new Mission( *type );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,10 +81,10 @@ Mission* MissionFactory::CreatePopulationMission( const std::string& name )
 // -----------------------------------------------------------------------------
 FragOrder* MissionFactory::CreateFragOrder( const std::string& name )
 {
-    FragOrder* order = fragOrders_.Find( name.c_str() );
-    if( !order )
+    FragOrderType* type = fragOrders_.Find( name.c_str() );
+    if( !type )
         throw std::runtime_error( "unknown frag order '" + name + "'" );
-    return new FragOrder( *order );
+    return new FragOrder( *type );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,13 +93,13 @@ FragOrder* MissionFactory::CreateFragOrder( const std::string& name )
 // -----------------------------------------------------------------------------
 Mission* MissionFactory::AddFragOrders( Mission* mission )
 {
-    Iterator< const FragOrder& > it = fragOrders_.CreateIterator();
+    Iterator< const FragOrderType& > it = fragOrders_.CreateIterator();
     while( it.HasMoreElements() )
     {
-        const FragOrder& order = it.NextElement();
-        if( !order.IsMissionRequired() )
+        const FragOrderType& type = it.NextElement();
+        if( !type.IsMissionRequired() )
         {
-            FragOrder* newOrder = CreateFragOrder( order.GetName().ascii() );
+            FragOrder* newOrder = CreateFragOrder( type.GetName().ascii() );
             static_cast< Resolver< FragOrder >* >( mission )->Register( newOrder->GetId(), *newOrder );
         }
     }
