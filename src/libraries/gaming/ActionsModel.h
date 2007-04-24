@@ -50,6 +50,9 @@ public:
     void Purge();
     void Load( const std::string& filename );
     void Save( const std::string& filename ) const;
+
+    bool IsRecording() const;
+    void ToggleRecording();
     //@}
 
 private:
@@ -67,6 +70,7 @@ private:
     //! @name Member data
     //@{
     ActionFactory_ABC& factory_;
+    bool isRecording_;
     //@}
 };
 

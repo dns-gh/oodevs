@@ -56,7 +56,7 @@ public:
     virtual void Clean( ASN1T_MissionParameter& ) const {};
     virtual void CommitTo( ASN1T_OrderContext& ) const {};
     virtual void Clean( ASN1T_OrderContext& ) const {};
-    virtual void CommitTo( Action_ABC& ) const {};
+    virtual void CommitTo( Action_ABC&, bool ) const {};
     //@}
 
     //! @name Accessors

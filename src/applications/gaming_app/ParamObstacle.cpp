@@ -186,9 +186,9 @@ void ParamObstacle::Clean( ASN1T_MissionParameter& asn ) const
 // Name: ParamObstacle::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamObstacle::CommitTo( Action_ABC& action ) const
+void ParamObstacle::CommitTo( Action_ABC& action, bool context ) const
 {
-    std::auto_ptr< ActionParameter< QString > > param( new ActionParameter< QString >( GetName() ) );
+    std::auto_ptr< ActionParameter< QString > > param( new ActionParameter< QString >( GetName(), context ) );
     param->SetValue( typeCombo_->GetValue()->GetName() ); // $$$$ SBO 2007-03-19: create Object displayer
     action.AddParameter( *param.release() );
 }

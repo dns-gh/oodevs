@@ -119,7 +119,7 @@ void ParamObstacleList::Clean( ASN1T_MissionParameter& asn ) const
 // Name: ParamObstacleList::CommitTo
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-void ParamObstacleList::CommitTo( Action_ABC& action ) const
+void ParamObstacleList::CommitTo( Action_ABC& action, bool context ) const
 {
 
 }

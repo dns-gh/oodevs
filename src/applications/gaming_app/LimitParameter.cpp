@@ -11,7 +11,7 @@
 #include "LimitParameter.h"
 #include "moc_LimitParameter.cpp"
 #include "gaming/Limit.h"
-#include "gaming/ActionParameter.h"
+#include "gaming/ActionParameterLimit.h"
 #include "gaming/Action_ABC.h"
 #include "clients_gui/RichLabel.h"
 
@@ -91,12 +91,7 @@ void LimitParameter::CommitTo( ASN1T_Line& asn ) const
             return;
         throw std::runtime_error( "Limit not set!" );
     }
-    selected_->CopyTo( asn ); // $$$$ SBO 2007-03-14: use a serializer or something...
-//    asn.type = EnumTypeLocalisation::line;
-//    asn.vecteur_point.n = result_.vecteur_point.n;
-//    asn.vecteur_point.elem = new ASN1T_CoordUTM[asn.vecteur_point.n];
-//    for( unsigned int i = 0; i < result_.vecteur_point.n; ++i )
-//        asn.vecteur_point.elem[i] = result_.vecteur_point.elem[i];
+    selected_->CopyTo( asn );
 }
 
 // -----------------------------------------------------------------------------
@@ -174,12 +169,13 @@ void LimitParameter::Draw( const geometry::Point2f& point, const kernel::Viewpor
 // Name: LimitParameter::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void LimitParameter::CommitTo( Action_ABC& action ) const
+void LimitParameter::CommitTo( Action_ABC& action, bool context ) const
 {
     if( !selected_ )
         return;
-    // $$$$ SBO 2007-03-19: limit displayer somehow
-    std::auto_ptr< ActionParameter< QString > > param( new ActionParameter< QString >( GetName() ) );
+    T_PointVector points;
+    selected_->CopyTo( points );
+    std::auto_ptr< ActionParameterLimit > param( new ActionParameterLimit( GetName(), points ) );
     param->SetValue( selected_->GetName() );
-    action.AddParameter( *param.release() ); // $$$$ SBO 2007-03-19: order context
+    action.AddParameter( *param.release() );
 }

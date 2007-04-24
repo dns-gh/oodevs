@@ -122,9 +122,9 @@ void ParamLimaList::Clean( ASN1T_OrderContext& asn ) const
 // Name: ParamLimaList::CommitTo
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-void ParamLimaList::CommitTo( Action_ABC& action ) const
+void ParamLimaList::CommitTo( Action_ABC& action, bool context ) const
 {
-    std::auto_ptr< ActionParameterLimaList > param( new ActionParameterLimaList( GetName() ) );
+    std::auto_ptr< ActionParameterLimaList > param( new ActionParameterLimaList( GetName(), context ) );
     ValuedListItem* item = (ValuedListItem*)( list_->firstChild() );
     QStringList functions;
     while( item )

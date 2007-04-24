@@ -22,7 +22,6 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions )
     , actions_( actions )
     , pixRecord_( MAKE_PIXMAP( recrec ) )
     , pixStop_( MAKE_PIXMAP( recstop ) )
-    , isRecording_( false )
 {
     setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
     setBackgroundMode( Qt::PaletteButton );
@@ -58,24 +57,16 @@ ActionsToolbar::~ActionsToolbar()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsToolbar::IsRecording
-// Created: SBO 2007-04-24
-// -----------------------------------------------------------------------------
-bool ActionsToolbar::IsRecording() const
-{
-    return isRecording_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ActionsToolbar::Record
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
 void ActionsToolbar::Record()
 {
-    isRecording_ = !isRecording_;
-    recordBtn_->setPixmap( isRecording_ ? pixStop_ : pixRecord_ );
-    playBtn_->setDisabled( isRecording_ );
-    saveBtn_->setDisabled( isRecording_ );
+    actions_.ToggleRecording();
+    const bool isRecording = actions_.IsRecording();
+    recordBtn_->setPixmap( isRecording ? pixStop_ : pixRecord_ );
+    playBtn_->setDisabled( isRecording );
+    saveBtn_->setDisabled( isRecording );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,8 +87,6 @@ void ActionsToolbar::Play()
 // -----------------------------------------------------------------------------
 void ActionsToolbar::Save()
 {
-    if( isRecording_ )
-        return;
     QString filename = QFileDialog::getSaveFileName( QString::null, tr( "Order files (*.ord)" ), topLevelWidget(), 0, tr( "Save" ) );
     if( filename == QString::null )
         return;

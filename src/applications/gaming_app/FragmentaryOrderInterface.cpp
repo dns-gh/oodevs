@@ -50,8 +50,11 @@ FragmentaryOrderInterface::~FragmentaryOrderInterface()
 // -----------------------------------------------------------------------------
 void FragmentaryOrderInterface::Publish()
 {
-    Action_ABC* action = model_.CreateAction( GetEntity(), fragOrder_ );
-    CommitTo( *action );
+    if( model_.IsRecording() )
+    {
+        Action_ABC* action = model_.CreateAction( GetEntity(), fragOrder_ );
+        CommitTo( *action );
+    }
 
     ASN_MsgFragOrder asn;
     asn().oid_unite_executante = GetEntity().GetId();

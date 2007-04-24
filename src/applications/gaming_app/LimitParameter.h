@@ -56,7 +56,7 @@ public:
     void CommitTo( ASN1T_Line& asn ) const;
     void Clean( ASN1T_Line& asn ) const;
     bool IsSet() const;
-    virtual void CommitTo( Action_ABC& action ) const;
+    virtual void CommitTo( Action_ABC& action, bool context ) const;
     //@}
 
 private slots:

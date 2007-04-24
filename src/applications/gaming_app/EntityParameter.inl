@@ -75,11 +75,11 @@ void EntityParameter< ConcreteEntity >::CommitTo( ASN1T_OID& asn ) const
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityParameter< ConcreteEntity >::CommitTo( Action_ABC& action ) const
+void EntityParameter< ConcreteEntity >::CommitTo( Action_ABC& action, bool context ) const
 {
     if( !selected_ )
         return;
-    std::auto_ptr< ActionParameter< const ConcreteEntity* > > param( new ActionParameter< const ConcreteEntity* >( GetName() ) );
+    std::auto_ptr< ActionParameter< const ConcreteEntity* > > param( new ActionParameter< const ConcreteEntity* >( GetName(), context ) );
     param->SetValue( selected_ );
     action.AddParameter( *param.release() );
 }

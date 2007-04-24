@@ -86,11 +86,11 @@ void ParamGDH::Clean( ASN1T_MissionParameter& asn ) const
 // Name: ParamGDH::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamGDH::CommitTo( Action_ABC& action ) const
+void ParamGDH::CommitTo( Action_ABC& action, bool context ) const
 {
     if( !valueSet_ )
         return;
-    std::auto_ptr< ActionParameter< QDateTime > > param( new ActionParameter< QDateTime >( GetName() ) );
+    std::auto_ptr< ActionParameter< QDateTime > > param( new ActionParameter< QDateTime >( GetName(), context ) );
     param->SetValue( datetime_ );
     action.AddParameter( *param.release() );
 }

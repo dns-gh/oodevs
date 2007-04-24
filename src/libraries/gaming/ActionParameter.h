@@ -27,8 +27,8 @@ class ActionParameter : public ActionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionParameter( const QString& name );
-             ActionParameter( const QString& name, const T& value );
+             ActionParameter( const QString& name, bool context );
+             ActionParameter( const QString& name, const T& value, bool context );
     virtual ~ActionParameter();
     //@}
 
@@ -58,8 +58,8 @@ private:
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
 template< typename T >
-ActionParameter< T >::ActionParameter( const QString& name )
-    : ActionParameter_ABC( name )
+ActionParameter< T >::ActionParameter( const QString& name, bool context )
+    : ActionParameter_ABC( name, context )
 {
     // NOTHING
 }
@@ -69,8 +69,8 @@ ActionParameter< T >::ActionParameter( const QString& name )
 // Created: SBO 2007-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-ActionParameter< T >::ActionParameter( const QString& name, const T& value )
-    : ActionParameter_ABC( name )
+ActionParameter< T >::ActionParameter( const QString& name, const T& value, bool context )
+    : ActionParameter_ABC( name, context )
 {
     SetValue( value );
 }

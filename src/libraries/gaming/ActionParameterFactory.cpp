@@ -56,17 +56,17 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const QString& nam
     switch( parameter.value.t )
     {
     case T_MissionParameter_value_aBool:
-        return new ActionParameter< bool >( name, parameter.value.u.aBool );
+        return new ActionParameter< bool >( name, parameter.value.u.aBool, false );
     case T_MissionParameter_value_aCharStr:
-        return new ActionParameter< QString >( name, parameter.value.u.aCharStr );
+        return new ActionParameter< QString >( name, parameter.value.u.aCharStr, false );
     case T_MissionParameter_value_agent:
-        return new ActionParameter< const kernel::Agent_ABC* >( name, &model_.agents_.GetAgent( parameter.value.u.agent ) );
+        return new ActionParameter< const kernel::Agent_ABC* >( name, &model_.agents_.GetAgent( parameter.value.u.agent ), false );
     case T_MissionParameter_value_aReal:
-        return new ActionParameter< float >( name, parameter.value.u.aReal );
+        return new ActionParameter< float >( name, parameter.value.u.aReal, false );
     case T_MissionParameter_value_automate:
-        return new ActionParameter< const kernel::Automat_ABC* >( name, &model_.agents_.GetAutomat( parameter.value.u.automate ) );
+        return new ActionParameter< const kernel::Automat_ABC* >( name, &model_.agents_.GetAutomat( parameter.value.u.automate ), false );
     case T_MissionParameter_value_direction:
-        return new ActionParameter< float >( name, parameter.value.u.direction );
+        return new ActionParameter< float >( name, parameter.value.u.direction, false );
     case T_MissionParameter_value_enumeration:
     case T_MissionParameter_value_gDH:
         break;
@@ -127,7 +127,7 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const QString& nam
 // -----------------------------------------------------------------------------
 ActionParameter_ABC* ActionParameterFactory::CreateParameter( const QString& name, const ASN1T_LimasOrder& parameter ) const
 {
-    return new ActionParameterLimaList( name, converter_, parameter );
+    return new ActionParameterLimaList( name, converter_, parameter, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,5 +136,5 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const QString& nam
 // -----------------------------------------------------------------------------
 ActionParameter_ABC* ActionParameterFactory::CreateParameter( const QString& name, const ASN1T_Direction& parameter ) const
 {
-    return new ActionParameterDirection( name, parameter );
+    return new ActionParameterDirection( name, parameter, true );
 }

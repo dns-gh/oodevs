@@ -51,8 +51,11 @@ UnitMissionInterface::~UnitMissionInterface()
 // -----------------------------------------------------------------------------
 void UnitMissionInterface::Publish()
 {
-    Action_ABC* action = model_.CreateAction( GetEntity(), mission_ );
-    CommitTo( *action );
+    if( model_.IsRecording() )
+    {
+        Action_ABC* action = model_.CreateAction( GetEntity(), mission_ );
+        CommitTo( *action );
+    }
 
     ASN_MsgPionOrder asn;
     asn().oid_unite_executante = GetEntity().GetId();

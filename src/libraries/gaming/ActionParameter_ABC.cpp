@@ -19,9 +19,10 @@ unsigned long ActionParameter_ABC::idManager_ = 0; // $$$$ SBO 2007-03-12: real 
 // Name: ActionParameter_ABC constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionParameter_ABC::ActionParameter_ABC( const QString& name )
+ActionParameter_ABC::ActionParameter_ABC( const QString& name, bool context /* = false */ )
     : id_( idManager_++ )
     , name_( name )
+    , context_( context )
 {
     // NOTHING
 }
@@ -64,15 +65,42 @@ void ActionParameter_ABC::Draw( const geometry::Point2f& where, const kernel::Vi
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionParameter_ABC::SerializeParameter
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+void ActionParameter_ABC::SerializeParameter( xml::xostream& xos ) const
+{
+    if( !context_ ) // $$$$ SBO 2007-04-24: ...
+    {
+        xos << start( "parameter" )
+                << attribute( "name", name_ )
+                << attribute( "type", name_ ); // $$$$ SBO 2007-04-24: get from OrderParameter
+        Serialize( xos );
+        xos << end();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter_ABC::SerializeContext
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+void ActionParameter_ABC::SerializeContext( xml::xostream& xos ) const
+{
+    if( context_ ) // $$$$ SBO 2007-04-24: ...
+    {
+        xos << start( "parameter" )
+                << attribute( "name", name_ )
+                << attribute( "type", name_ ); // $$$$ SBO 2007-04-24: get from OrderParameter
+        Serialize( xos );
+        xos << end();
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionParameter_ABC::Serialize
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
 void ActionParameter_ABC::Serialize( xml::xostream& xos ) const
 {
-    // $$$$ SBO 2007-04-24: distinguish order context/parameters
-    xos << start( "parameter" )
-            << attribute( "name", name_ )
-            << attribute( "type", name_ ) // $$$$ SBO 2007-04-24: get from OrderParameter
-            // $$$$ SBO 2007-04-24: value
-        << end();
+    // NOTHING
 }

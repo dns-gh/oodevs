@@ -52,7 +52,7 @@ private:
 // -----------------------------------------------------------------------------
 template< typename List >
 ActionParameterLocationList< List >::ActionParameterLocationList( const QString& name, const kernel::CoordinateConverter_ABC& converter, const List& asn )
-    : ActionParameter< QString >( name )
+    : ActionParameter< QString >( name, false )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
         Register( i, *new ActionParameterLocation( "", converter, asn.elem[i] ) );
@@ -64,7 +64,7 @@ ActionParameterLocationList< List >::ActionParameterLocationList( const QString&
 // -----------------------------------------------------------------------------
 template< typename List >
 ActionParameterLocationList< List >::ActionParameterLocationList( const QString& name, const kernel::CoordinateConverter_ABC& converter, const List& asn, const kernel::Entity_ABC& entity )
-    : ActionParameter< QString >( name )
+    : ActionParameter< QString >( name, false )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
         Register( i, *new ActionParameterLocation( "", converter, asn.elem[i], entity ) );

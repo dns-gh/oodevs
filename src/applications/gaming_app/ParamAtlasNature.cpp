@@ -90,9 +90,9 @@ void ParamAtlasNature::Clean( ASN1T_MissionParameter& asn ) const
 // Name: ParamAtlasNature::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamAtlasNature::CommitTo( Action_ABC& action ) const
+void ParamAtlasNature::CommitTo( Action_ABC& action, bool context ) const
 {
-//    std::auto_ptr< ActionParameter< E_NatureAtlasType > > param( new ActionParameter< E_NatureAtlasType >( GetName() ) );
+//    std::auto_ptr< ActionParameter< E_NatureAtlasType > > param( new ActionParameter< E_NatureAtlasType >( GetName(), context ) );
 //    param->SetValue( (E_NatureAtlasType)0 ); // $$$$ SBO 2007-03-19: std::vector< E_NatureAtlasType > or create a specific class
 //    action.AddParameter( *param.release() );
 }

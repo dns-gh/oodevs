@@ -73,9 +73,9 @@ void ParamDirection::CommitTo( ASN1T_OrderContext& asn ) const
 // Name: ParamDirection::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamDirection::CommitTo( Action_ABC& action ) const
+void ParamDirection::CommitTo( Action_ABC& action, bool context ) const
 {
-    std::auto_ptr< ActionParameter< float > > param( new ActionParameter< float >( GetName() ) );
+    std::auto_ptr< ActionParameter< float > > param( new ActionParameter< float >( GetName(), context ) );
     param->SetValue( value_ );
     action.AddParameter( *param.release() );
 }

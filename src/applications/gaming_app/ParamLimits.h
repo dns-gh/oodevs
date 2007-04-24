@@ -40,7 +40,7 @@ public:
     virtual void BuildInterface( QWidget* parent );
     virtual void CommitTo( ASN1T_OrderContext& asn ) const;
     virtual void Clean( ASN1T_OrderContext& asn ) const;
-    virtual void CommitTo( Action_ABC& action ) const;
+    virtual void CommitTo( Action_ABC& action, bool context ) const;
     //@}
 
 private:

@@ -60,7 +60,7 @@ public:
     void CommitTo( ASN1T_MissionGenObject& object ) const;
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void BuildInterface( QWidget* parent );
-    virtual void CommitTo( Action_ABC& action ) const;
+    virtual void CommitTo( Action_ABC& action, bool context ) const;
     //@}
 
 private slots:

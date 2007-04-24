@@ -115,7 +115,14 @@ void Action_ABC::Display( kernel::Displayer_ABC& displayer ) const
 void Action_ABC::Serialize( xml::xostream& xos ) const
 {
     xos << attribute( "id", type_.GetId() )
+        << attribute( "name", type_.GetName() ) // $$$$ SBO 2007-04-24: not required
         << attribute( "target", target_.GetId() );
+    xos << start( "parameters" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->Serialize( xos );
+        it->second->SerializeParameter( xos );
+    xos << end();
+    xos << start( "context" );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->SerializeContext( xos );
+    xos << end();
 }

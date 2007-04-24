@@ -36,7 +36,7 @@ class ActionsListView : public gui::ListView< ActionsListView >
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const ActionsToolbar& recorder );
+             ActionsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~ActionsListView();
     //@}
 
@@ -66,8 +66,6 @@ private:
     kernel::Controllers& controllers_;
     gui::ItemFactory_ABC& factory_;
     gui::ListItemDisplayer* sub_;
-
-    const ActionsToolbar& recorder_;
     QPixmap mission_;
     QPixmap parameter_;
     //@}

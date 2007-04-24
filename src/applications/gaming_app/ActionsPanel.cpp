@@ -25,8 +25,8 @@ ActionsPanel::ActionsPanel( QMainWindow* parent, kernel::Controllers& controller
 
     QVBox* box = new QVBox( this );
     setWidget( box );
-    ActionsToolbar* bar = new ActionsToolbar( box, actions );
-    new ActionsListView( box, controllers, factory, *bar );
+    new ActionsToolbar( box, actions );
+    new ActionsListView( box, controllers, factory );
 }
 
 // -----------------------------------------------------------------------------

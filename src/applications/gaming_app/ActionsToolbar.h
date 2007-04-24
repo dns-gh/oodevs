@@ -29,11 +29,6 @@ public:
     virtual ~ActionsToolbar();
     //@}
 
-    //! @name Accessors
-    //@{
-    bool IsRecording() const;
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
@@ -57,8 +52,6 @@ private:
     QToolButton*  recordBtn_;
     QToolButton*  saveBtn_;
     QPixmap       pixRecord_, pixStop_;
-
-    bool isRecording_;
     //@}
 };
 

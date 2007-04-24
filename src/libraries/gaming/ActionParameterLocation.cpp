@@ -20,7 +20,7 @@
 // Created: SBO 2007-04-19
 // -----------------------------------------------------------------------------
 ActionParameterLocation::ActionParameterLocation( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn )
-    : ActionParameter< QString >( name )
+    : ActionParameter< QString >( name, false )
     , LocationPositions( converter )
 {
     Update( asn );
@@ -32,7 +32,7 @@ ActionParameterLocation::ActionParameterLocation( const QString& name, const ker
 // Created: SBO 2007-04-20
 // -----------------------------------------------------------------------------
 ActionParameterLocation::ActionParameterLocation( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn, const kernel::Entity_ABC& entity )
-    : ActionParameter< QString >( name )
+    : ActionParameter< QString >( name, false )
     , LocationPositions( converter )
 {
     Update( asn, entity.Get< kernel::Positions >().GetPosition() );

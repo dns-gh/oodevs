@@ -125,8 +125,8 @@ void ParamLimits::Clean( ASN1T_OrderContext& asn ) const
 // Name: ParamLimits::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamLimits::CommitTo( Action_ABC& action ) const
+void ParamLimits::CommitTo( Action_ABC& action, bool context ) const
 {
-    limit1_->CommitTo( action );
-    limit2_->CommitTo( action );
+    limit1_->CommitTo( action, context );
+    limit2_->CommitTo( action, context );
 }

@@ -31,6 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ActionParameterLimit( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Line& line );
+             ActionParameterLimit( const QString& name, const T_PointVector& points );
     virtual ~ActionParameterLimit();
     //@}
 
@@ -48,6 +49,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:

@@ -51,8 +51,11 @@ AutomateMissionInterface::~AutomateMissionInterface()
 // -----------------------------------------------------------------------------
 void AutomateMissionInterface::Publish()
 {
-    Action_ABC* action = model_.CreateAction( GetEntity(), mission_ );
-    CommitTo( *action );
+    if( model_.IsRecording() )
+    {
+        Action_ABC* action = model_.CreateAction( GetEntity(), mission_ );
+        CommitTo( *action );
+    }
 
     ASN_MsgAutomateOrder asn;
     asn().oid_unite_executante = GetEntity().GetId();

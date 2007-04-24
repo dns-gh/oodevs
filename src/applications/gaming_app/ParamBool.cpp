@@ -61,9 +61,9 @@ void ParamBool::CommitTo( ASN1T_MissionParameter& asn ) const
 // Name: ParamBool::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamBool::CommitTo( Action_ABC& action ) const
+void ParamBool::CommitTo( Action_ABC& action, bool context ) const
 {
-    std::auto_ptr< ActionParameter< bool > > param( new ActionParameter< bool >( GetName() ) );
+    std::auto_ptr< ActionParameter< bool > > param( new ActionParameter< bool >( GetName(), context ) );
     param->SetValue( value_ );
     action.AddParameter( *param.release() );
 }

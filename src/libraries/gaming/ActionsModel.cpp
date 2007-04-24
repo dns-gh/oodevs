@@ -21,6 +21,7 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 ActionsModel::ActionsModel( ActionFactory_ABC& factory )
     : factory_( factory )
+    , isRecording_( false )
 {
     // NOTHING
 }
@@ -86,4 +87,22 @@ void ActionsModel::Save( const std::string& filename ) const
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Serialize( xos );
     xos << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::IsRecording
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+bool ActionsModel::IsRecording() const
+{
+    return isRecording_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::ToggleRecording
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+void ActionsModel::ToggleRecording()
+{
+    isRecording_ = !isRecording_;
 }

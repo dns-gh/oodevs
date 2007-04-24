@@ -104,9 +104,9 @@ void ParamNumericField::CommitTo( ASN1REAL& asn ) const
 // Name: ParamNumericField::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamNumericField::CommitTo( Action_ABC& action ) const
+void ParamNumericField::CommitTo( Action_ABC& action, bool context ) const
 {
-    std::auto_ptr< ActionParameter< float > > param( new ActionParameter< float >( GetName() ) );
+    std::auto_ptr< ActionParameter< float > > param( new ActionParameter< float >( GetName(), context ) );
     param->SetValue( pEdit_->text().toFloat() );
     action.AddParameter( *param.release() );
 }
