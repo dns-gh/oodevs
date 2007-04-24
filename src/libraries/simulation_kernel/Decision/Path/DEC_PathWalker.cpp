@@ -276,6 +276,7 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
 // -----------------------------------------------------------------------------
 bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, MT_Float& rTimeRemaining, bool bFirstMove )
 {
+    static int nDistanceBeforeBlockingObject = -10;
     CIT_ObjectSet itObject;
 
     // Prise en compte des objets ponctuels se trouvant sur le 'move step'
@@ -287,12 +288,11 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
    
         if( !bFirstMove ) //// $$$$$ !bFirstMove A REVOIR - PERMET DE SORTIR D'UN OBSTACLE PONCTUEL
         {
-            movingEntity_.NotifyMovingInsideObject( object );
-            
-            if( rSpeedWithinObject == 0. ) 
+            movingEntity_.NotifyMovingInsideObject( object );            
+            if( rSpeedWithinObject == 0. )
             {
                 rSpeedWithinObject = 0;
-                vNewPos_           = itCurMoveStep->vPos_;
+                vNewPos_           = ( itCurMoveStep->vPos_ + ( vNewDir_ * nDistanceBeforeBlockingObject ) );
                 return false;
             }
         }
@@ -309,7 +309,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
         if( rMaxSpeedForStep == 0. )
         {
             rCurrentSpeed_ = 0;
-            vNewPos_       = itCurMoveStep->vPos_;
+            vNewPos_       = ( itCurMoveStep->vPos_ + ( vNewDir_ * nDistanceBeforeBlockingObject ) );
             return false;
         }    
     }
@@ -326,13 +326,13 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
     if ( vNewPos_.SquareDistance( vNewPosTmp ) >= vNewPos_.SquareDistance( itNextMoveStep->vPos_ )  )
     {
         rTimeRemaining -= ( itNextMoveStep->vPos_ - vNewPos_ ).Magnitude() / rCurrentSpeed_;
-        vNewPos_ = itNextMoveStep->vPos_;
+        vNewPos_        = itNextMoveStep->vPos_;
         return true;
     }
     else
     {
         rTimeRemaining -= ( vNewPosTmp - vNewPos_ ).Magnitude() / rCurrentSpeed_;
-        vNewPos_ = vNewPosTmp;
+        vNewPos_        = vNewPosTmp;
         return false;
     }
 }
@@ -349,7 +349,7 @@ bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D&
 
     assert( rCurrentSpeed_ > 0. );
 //    bool bFirstMove = ( vNewPos_.Distance( (*path.GetResult().begin())->GetPos() ) <= 10. );    
-    bool bFirstMove = ( vNewPos_ == (*path.GetResult().begin())->GetPos() );
+    bool bFirstMove = ( (float)vNewPos_.rX_ == (float)(*path.GetResult().begin())->GetPos().rX_ && (float)vNewPos_.rY_ == (float)(*path.GetResult().begin())->GetPos().rY_ );
 
 	sMoveStepCmp  cmp( vNewPos_ );
     T_MoveStepSet moveStepSet( cmp ); 
