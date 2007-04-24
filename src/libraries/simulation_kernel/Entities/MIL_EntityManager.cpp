@@ -1084,7 +1084,7 @@ void MIL_EntityManager::OnReceiveMsgPionChangeSuperior( ASN1T_MsgPionChangeSuper
 void MIL_EntityManager::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& asnMsg, uint nCtx )
 {
     NET_ASN_MsgLogRavitaillementChangeQuotasAck ack;
-    ack() = MsgLogRavitaillementChangeQuotasAck::error_invalid_receveur;
+    ack() = MsgLogRavitaillementChangeQuotasAck::no_error;
 
     try
     {
@@ -1107,7 +1107,7 @@ void MIL_EntityManager::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaill
 void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementPousserFlux&  asnMsg, uint nCtx )
 {
     NET_ASN_MsgLogRavitaillementPousserFluxAck ack;
-    ack() = MsgLogRavitaillementPousserFluxAck::error_invalid_receveur;
+    ack() = MsgLogRavitaillementPousserFluxAck::no_error;
 
     try
     {
