@@ -28,16 +28,25 @@ Replayer::Replayer( const Config& config )
     : config_( config )
 {
     std::string profiles;
-
-    xml::xifstream xisMain( config.GetExerciseFile() );
-    xisMain >> xml::start( "exercise" )
+    {
+        xml::xifstream xis( config.GetExerciseFile() );
+        xis >> xml::start( "exercise" )
                 >> xml::start( "profiles" )
                     >> xml::attribute( "file", profiles );
+    }
+    std::string directory;
+    {
+        xml::xifstream xis( config.GetGameFile() );
+        xis >> xml::start( "config" )
+                >> xml::start( "dispatcher" )
+                    >> xml::start( "recorder" )
+                        >> xml::attribute( "directory", directory );
+    }
 
     pModel_            = new Model              ();
     pClientsNetworker_ = new ClientsNetworker   ( *this, config.GetGameFile() );
     simulation_        = new SimulationDispatcher( *pClientsNetworker_, *pModel_ );
-    loader_            = new LoaderFacade( *pClientsNetworker_, *simulation_, "test" ); // $$$$ AGE 2007-04-24: 
+    loader_            = new LoaderFacade( *pClientsNetworker_, *simulation_, directory );
     profiles_          = new ProfileManager( *pModel_, *pClientsNetworker_, config.BuildExerciseChildFile( profiles ) );
 
     profiles_->Reset();
