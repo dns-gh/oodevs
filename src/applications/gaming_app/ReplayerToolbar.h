@@ -64,6 +64,7 @@ private:
     Publisher_ABC& network_;
     QSlider* slider_;
     unsigned previousTickCount_;
+    bool userMove_;
     //@}
 };
 

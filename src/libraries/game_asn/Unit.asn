@@ -205,6 +205,8 @@ MsgUnitAttributes ::= SEQUENCE
     refugie-pris-en-compte        BOOLEAN                           OPTIONAL
 }
 
+MsgPionDestruction ::= OID
+
 -- Actions magiques
 
 MagicActionRecupererTransporteurs   ::= NULL

@@ -11,6 +11,7 @@
 
 #include "LogSupplyConsign.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "LogisticConsigns.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -27,9 +28,10 @@ using namespace kernel;
 // Name: LogSupplyConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogSupplyConsign::LogSupplyConsign( Controller& controller, const Resolver_ABC< Automat_ABC >& resolver, const Resolver_ABC< DotationType >& dotationResolver, const ASN1T_MsgLogRavitaillementTraitementCreation& message )
+LogSupplyConsign::LogSupplyConsign( Controller& controller, const Resolver_ABC< Automat_ABC >& resolver, const Resolver_ABC< Agent_ABC >& agentResolver, const Resolver_ABC< DotationType >& dotationResolver, const ASN1T_MsgLogRavitaillementTraitementCreation& message )
     : controller_           ( controller )
     , resolver_             ( resolver )
+    , agentResolver_        ( agentResolver )
     , dotationResolver_     ( dotationResolver )
     , nID_                  ( message.oid_consigne )
     , pion_                 ( resolver.Get( message.oid_automate ) )
@@ -80,7 +82,7 @@ void LogSupplyConsign::Update( const ASN1T_MsgLogRavitaillementTraitementUpdate&
     {
         if( pPionLogConvoying_ )
             pPionLogConvoying_->Get< LogSupplyConsigns >().TerminateConsign( *this );
-        pPionLogConvoying_ = resolver_.Find(message.oid_pion_convoyant );
+        pPionLogConvoying_ = agentResolver_.Find( message.oid_pion_convoyant );
         if( message.oid_pion_convoyant )
             pPionLogConvoying_->Get< LogSupplyConsigns >().HandleConsign( *this );
     }

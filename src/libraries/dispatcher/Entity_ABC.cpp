@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "Entity_ABC.h"
 #include "ModelVisitor_ABC.h"
-#include "Model.h"
+#include "Synchroniser.h"
 
 using namespace dispatcher;
 
@@ -19,9 +19,10 @@ using namespace dispatcher;
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
 Entity_ABC::Entity_ABC()
-    : publisher_( 0 )
-    , updated_  ( false )
-    , create_   ( false )
+    : synching_( false )
+    , updated_ ( false )
+    , created_ ( false )
+    , special_ ( false )
 {
     // NOTHING
 }
@@ -39,48 +40,57 @@ Entity_ABC::~Entity_ABC()
 // Name: Entity_ABC::StartSynchronisation
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Entity_ABC::StartSynchronisation( Publisher_ABC& publisher, bool create )
+void Entity_ABC::StartSynchronisation( bool create )
 {
-    publisher_ = &publisher;
-    updated_ = create_ = create;
+    synching_ = true;
+    special_  = false;
+    updated_ = created_ = create;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Entity_ABC::EndSynchronisation
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Entity_ABC::EndSynchronisation( Model& model )
+void Entity_ABC::EndSynchronisation( Synchroniser& synch )
 {
-    if( ! publisher_ )
-        throw std::runtime_error( typeid( *this ).name() + std::string( "::EndSynchronisation" ) );
+    assert( synching_ );
+    if( created_ )
+        synch.FlagForCreation( *this );
     if( updated_ )
-    {
-        if( create_ )
-            SendCreation( *publisher_ );
-        SendFullUpdate( *publisher_ );
-        publisher_ = 0;
-    }
-    else
-        model.FlagForDestruction( *this );
+        synch.FlagForUpdate( *this );
+    if( special_ )
+        synch.FlagForSpecialUpdate( *this );
+    if( ! updated_ )
+        synch.FlagForDestruction( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Entity_ABC::FlagUpdate
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-bool Entity_ABC::FlagUpdate()
+bool Entity_ABC::FlagUpdate( bool special /*= false */)
 {
     updated_ = true;
-    return publisher_ != 0;
+    special_ = special;
+    return synching_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Entity_ABC::CommitDestruction
-// Created: AGE 2007-04-12
+// Name: Entity_ABC::SendDestruction
+// Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Entity_ABC::CommitDestruction()
+void Entity_ABC::SendDestruction( Publisher_ABC& ) const
 {
-    throw std::runtime_error( typeid( *this ).name() + std::string( "::CommitDestruction" ) );
+    throw std::runtime_error( typeid( *this ).name() + std::string( "::SendDestruction" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Entity_ABC::SendSpecialUpdate
+// Created: AGE 2007-04-25
+// -----------------------------------------------------------------------------
+void Entity_ABC::SendSpecialUpdate( Publisher_ABC& ) const
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -89,8 +99,8 @@ void Entity_ABC::CommitDestruction()
 // -----------------------------------------------------------------------------
 void Entity_ABC::StartSynchronisation( Entity_ABC& next, bool create )
 {
-    if( publisher_ )
-        next.StartSynchronisation( *publisher_, create );
+    if( synching_ )
+        next.StartSynchronisation( create );
 }
 
 // -----------------------------------------------------------------------------

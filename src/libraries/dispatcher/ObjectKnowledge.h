@@ -44,9 +44,9 @@ public:
     //@{
     void Update        ( const ASN1T_MsgObjectKnowledgeCreation& asnMsg );
     void Update        ( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg );
-    void SendCreation  ( Publisher_ABC& publisher ) const;
-    void SendFullUpdate( Publisher_ABC& publisher ) const;
-    void CommitDestruction();
+    virtual void SendCreation   ( Publisher_ABC& publisher ) const;
+    virtual void SendFullUpdate ( Publisher_ABC& publisher ) const;
+    virtual void SendDestruction( Publisher_ABC& publisher ) const;
     //@}
 
 private:

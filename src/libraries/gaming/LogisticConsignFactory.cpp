@@ -57,7 +57,7 @@ LogMaintenanceConsign* LogisticConsignFactory::CreateMaintenanceConsign( const A
 // -----------------------------------------------------------------------------
 LogSupplyConsign* LogisticConsignFactory::CreateSupplyConsign( const ASN1T_MsgLogRavitaillementTraitementCreation& message )
 {
-    return new LogSupplyConsign( controllers_.controller_, model_.agents_, static_.objectTypes_, message );
+    return new LogSupplyConsign( controllers_.controller_, model_.agents_, model_.agents_, static_.objectTypes_, message );
 }
     
 // -----------------------------------------------------------------------------

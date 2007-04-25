@@ -44,9 +44,9 @@ public:
     //@{
     void Update        ( const ASN1T_MsgPopulationConcentrationCreation& msg );
     void Update        ( const ASN1T_MsgPopulationConcentrationUpdate& msg );
-    void SendCreation  ( Publisher_ABC& publisher ) const;
-    virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
-    virtual void CommitDestruction();
+    virtual void SendCreation   ( Publisher_ABC& publisher ) const;
+    virtual void SendFullUpdate ( Publisher_ABC& publisher ) const;
+    virtual void SendDestruction( Publisher_ABC& publisher ) const;
     //@}
 
 private:

@@ -83,15 +83,15 @@ void Fire::SendCreation( Publisher_ABC& publisher ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Fire::CommitDestruction
-// Created: AGE 2007-04-18
+// Name: Fire::SendDestruction
+// Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Fire::CommitDestruction()
+void Fire::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientStopPionFire asn;
     asn().oid_tir = oid_tir;
     asn().degats_pions.n    = asn().degats_populations.n    = 0;
     asn().degats_pions.elem = 0;
     asn().degats_populations.elem = 0;
-    Send( asn );
+    asn.Send( publisher );
 }

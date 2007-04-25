@@ -229,12 +229,12 @@ void Object::SendFullUpdate( Publisher_ABC& publisher ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object::CommitDestruction
-// Created: AGE 2007-04-12
+// Name: Object::SendDestruction
+// Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Object::CommitDestruction()
+void Object::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientObjectDestruction destruction;
     destruction() = nID_;
-    Send( destruction );
+    destruction.Send( publisher );
 }

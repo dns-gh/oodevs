@@ -348,6 +348,15 @@ void AgentServerMsgMgr::OnReceiveMsgPionCreation( const ASN1T_MsgPionCreation& m
     GetModel().agents_.CreateAgent( message );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgPionDestruction
+// Created: AGE 2007-04-24
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgPionDestruction( const ASN1T_MsgPionDestruction& message )
+{
+    GetModel().agents_.DestroyAgent( message );
+}
+
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgProfilingValues
 // Created: NLD 2002-10-14
@@ -1793,6 +1802,7 @@ void AgentServerMsgMgr::_OnReceiveMsgSimToClient( DIN_Input& input )
         case T_MsgsSimToClient_msg_msg_pion_creation:                        OnReceiveMsgPionCreation              ( *message.msg.u.msg_pion_creation                       ); break;
         case T_MsgsSimToClient_msg_msg_automate_creation:                    OnReceiveMsgAutomateCreation          ( *message.msg.u.msg_automate_creation                   ); break;
         case T_MsgsSimToClient_msg_msg_change_diplomatie:                    OnReceiveMsgChangeDiplomatie          ( *message.msg.u.msg_change_diplomatie                   ); break;
+        case T_MsgsSimToClient_msg_msg_pion_destruction:                     OnReceiveMsgPionDestruction           (  message.msg.u.msg_pion_destruction                    ); break;
 
         case T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_creation:    OnReceiveMsgLogMaintenanceTraitementEquipementCreation   ( *message.msg.u.msg_log_maintenance_traitement_equipement_creation ); break;
         case T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_destruction: OnReceiveMsgLogMaintenanceTraitementEquipementDestruction( *message.msg.u.msg_log_maintenance_traitement_equipement_destruction ); break;

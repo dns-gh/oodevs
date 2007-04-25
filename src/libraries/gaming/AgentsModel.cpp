@@ -110,6 +110,16 @@ Agent_ABC* AgentsModel::FindAgent( unsigned long id ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentsModel::DestroyAgent
+// Created: AGE 2007-04-24
+// -----------------------------------------------------------------------------
+void AgentsModel::DestroyAgent( const ASN1T_MsgPionDestruction& id )
+{
+    delete Resolver< Agent_ABC >::Find( id );
+    Resolver< Agent_ABC >::Remove( id );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentsModel::FindAllAgent
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------

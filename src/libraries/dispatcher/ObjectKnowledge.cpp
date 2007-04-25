@@ -259,13 +259,13 @@ void ObjectKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::CommitDestruction
-// Created: AGE 2007-04-13
+// Name: ObjectKnowledge::SendDestruction
+// Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::CommitDestruction()
+void ObjectKnowledge::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientObjectKnowledgeDestruction asn;
     asn().oid_connaissance    = nID_;
     asn().oid_camp_possesseur = side_.GetID();
-    Send( asn );
+    asn.Send( publisher );
 }

@@ -19,6 +19,7 @@ class DotationRequest;
 
 namespace kernel
 {
+    class Agent_ABC;
     class Automat_ABC;
     class Controller;
     class Displayer_ABC;
@@ -36,7 +37,9 @@ class LogSupplyConsign : public kernel::Resolver< DotationRequest >
 public:
     //! @name Constructor / Destructor
     //@{
-             LogSupplyConsign( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver, const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver, const ASN1T_MsgLogRavitaillementTraitementCreation& asn );
+             LogSupplyConsign( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver, 
+                               const kernel::Resolver_ABC< kernel::Agent_ABC >&   agentResolver,
+                               const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver, const ASN1T_MsgLogRavitaillementTraitementCreation& asn );
     virtual ~LogSupplyConsign();
     //@}
 
@@ -63,12 +66,13 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver_;
+    const kernel::Resolver_ABC< kernel::Agent_ABC >&   agentResolver_;
     const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver_;
 
     uint   nID_;
     kernel::Automat_ABC& pion_;
     kernel::Automat_ABC* pAutomateLogHandling_;
-    kernel::Automat_ABC* pPionLogConvoying_;
+    kernel::Agent_ABC*   pPionLogConvoying_;
     kernel::Automat_ABC* pAutomateLogProvidingConvoyResources_;
     E_LogRavitaillementTraitementEtat nState_;
     //@}

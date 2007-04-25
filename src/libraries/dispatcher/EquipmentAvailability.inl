@@ -23,6 +23,7 @@ EquipmentAvailability< T >::EquipmentAvailability( Model& /*model*/, const T& as
     , nNbrLent_      ( asn.nbr_pretes       )
     , nNbrResting_   ( asn.m.nbr_au_reposPresent ? asn.nbr_au_repos : std::numeric_limits< unsigned int >::max() )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -32,6 +33,7 @@ EquipmentAvailability< T >::EquipmentAvailability( Model& /*model*/, const T& as
 template< typename T > inline
 EquipmentAvailability< T >::~EquipmentAvailability()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -136,6 +136,7 @@ private:
     void OnReceiveMsgCtrlEndTick              ( const ASN1T_MsgCtrlEndTick& asnMsg );
     void OnReceiveMsgAutomateCreation         ( const ASN1T_MsgAutomateCreation& asnMsg );
     void OnReceiveMsgPionCreation             ( const ASN1T_MsgPionCreation& asnMsg );
+    void OnReceiveMsgPionDestruction          ( const ASN1T_MsgPionDestruction& asnMsg );
     void OnReceiveMsgChangeDiplomatie         ( const ASN1T_MsgChangeDiplomatie& asnMsg );
     void OnReceiveMsgAuthenticationResponse   ( const ASN1T_MsgAuthenticationResponse& asnMsg );
 

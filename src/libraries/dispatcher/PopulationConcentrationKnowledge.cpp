@@ -175,14 +175,14 @@ void PopulationConcentrationKnowledge::SendFullUpdate( Publisher_ABC& publisher 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationConcentrationKnowledge::CommitDestruction
-// Created: AGE 2007-04-13
+// Name: PopulationConcentrationKnowledge::SendDestruction
+// Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void PopulationConcentrationKnowledge::CommitDestruction()
+void PopulationConcentrationKnowledge::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationConcentrationKnowledgeDestruction asn;
     asn().oid_connaissance_concentration = nID_;
     asn().oid_connaissance_population    = populationKnowledge_.GetID();
     asn().oid_groupe_possesseur          = populationKnowledge_.GetKnowledgeGroup().GetID();
-    Send( asn );
+    asn.Send( publisher );
 }

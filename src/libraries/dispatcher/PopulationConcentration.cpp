@@ -107,13 +107,14 @@ void PopulationConcentration::SendFullUpdate( Publisher_ABC& publisher ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationConcentration::CommitDestruction
-// Created: AGE 2007-04-12
+// Name: PopulationConcentration::SendDestruction
+// Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void PopulationConcentration::CommitDestruction()
+void PopulationConcentration::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationConcentrationDestruction destruction;
     destruction().oid_population    = population_.GetID();
     destruction().oid_concentration = nID_;
-    Send( destruction );
+    destruction.Send( publisher );
 }
+

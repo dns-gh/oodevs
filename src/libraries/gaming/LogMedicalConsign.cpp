@@ -92,8 +92,7 @@ void LogMedicalConsign::Update( const ASN1T_MsgLogSanteTraitementHumainUpdate& m
 // -----------------------------------------------------------------------------
 void LogMedicalConsign::Display( Displayer_ABC& displayer, Displayer_ABC& itemDisplayer ) const
 {
-    displayer.Display( tools::translate( "Logistic", "Logistic requests" ), pion_ )
-             .Display( "", nState_ );
+    displayer.Display( pion_ ).Display( nState_ );
 
     itemDisplayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ )
                  .Display( tools::translate( "Logistic", "Consumer:" ), pion_ )

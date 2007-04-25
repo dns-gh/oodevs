@@ -132,13 +132,13 @@ void LogConsignMedical::SendFullUpdate( Publisher_ABC& publisher ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogConsignMedical::CommitDestruction
-// Created: AGE 2007-04-16
+// Name: LogConsignMedical::SendDestruction
+// Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void LogConsignMedical::CommitDestruction()
+void LogConsignMedical::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientLogSanteTraitementHumainDestruction asn;
     asn().oid_consigne = nID_;
     asn().oid_pion     = agent_.GetID();
-    Send( asn );
+    asn.Send( publisher );
 }

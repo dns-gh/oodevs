@@ -25,6 +25,7 @@ ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& con
     , network_( network )
     , slider_( 0 )
     , previousTickCount_( unsigned( -2 ) )
+    , userMove_( true )
 {
     controllers_.Register( *this );
 }
@@ -54,10 +55,13 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
         if( ! slider_ )
         {
             previousTickCount_ = simulation.GetTickCount();
-            slider_ = new QSlider( 0, simulation.GetTickCount(), 1, simulation.GetCurrentTick(), Qt::Horizontal, this );
+            slider_ = new QSlider( 0, simulation.GetTickCount() - 1, 1, simulation.GetCurrentTick(), Qt::Horizontal, this );
             slider_->setTracking( false );
             connect( slider_, SIGNAL( valueChanged( int ) ), SLOT( OnSliderMove( int ) ) );
         }
+        userMove_ = false;
+        slider_->setValue( simulation.GetCurrentTick() );
+        userMove_ = true;
         if( ! isVisible() )
             show();
     }
@@ -71,7 +75,10 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::OnSliderMove( int frame )
 {
-    ASN_MsgCtrlSkipToTick skip;
-    skip() = frame;
-    skip.Send( network_ );
+    if( userMove_ )
+    {
+        ASN_MsgCtrlSkipToTick skip;
+        skip() = frame;
+        skip.Send( network_ );
+    }
 }

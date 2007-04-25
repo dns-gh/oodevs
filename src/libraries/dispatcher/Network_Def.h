@@ -126,6 +126,7 @@ GENERATE_ASN_MSG_SENDER         ( SimToClient, AutomateAttributes               
 GENERATE_ASN_MSG_SENDER         ( SimToClient, PionCreation                                  , pion_creation                                     );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, UnitAttributes                                , unit_attributes                                   );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, UnitPathFind                                  , unit_pathfind                                     );
+GENERATE_NOPTR_ASN_MSG_SENDER   ( SimToClient, PionDestruction                               , pion_destruction                                  );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, ChangeDiplomatie                              , change_diplomatie                                 );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, UnitKnowledgeCreation                         , unit_knowledge_creation                           );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, UnitKnowledgeUpdate                           , unit_knowledge_update                             );

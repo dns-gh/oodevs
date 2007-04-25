@@ -36,9 +36,9 @@ public:
     //! @name Operations
     //@{
     void Update( const ASN1T_MsgStartPopulationFire& msg );
-    virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
-    virtual void SendCreation  ( Publisher_ABC& publisher ) const;
-    virtual void CommitDestruction();
+    virtual void SendFullUpdate ( Publisher_ABC& publisher ) const;
+    virtual void SendCreation   ( Publisher_ABC& publisher ) const;
+    virtual void SendDestruction( Publisher_ABC& publisher ) const;
     //@}
 
 private:

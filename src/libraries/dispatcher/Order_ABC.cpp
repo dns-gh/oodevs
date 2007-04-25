@@ -77,11 +77,8 @@ void Order_ABC::Send( ASN1T_OrderContext& asn ) const
 // -----------------------------------------------------------------------------
 void Order_ABC::Send( ASN1T_MissionParameters& asn ) const
 {
-    if( parameters_.empty() )
-        return;
-    
     asn.n    = parameters_.size();
-    asn.elem = new ASN1T_MissionParameter[ parameters_.size() ];
+    asn.elem = asn.n ? new ASN1T_MissionParameter[ parameters_.size() ] : 0;
     unsigned i = 0;
     for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
         (**it).Send( asn.elem[i++] );
@@ -102,9 +99,6 @@ void Order_ABC::AsnDelete( ASN1T_OrderContext& asn ) const
 // -----------------------------------------------------------------------------
 void Order_ABC::AsnDelete( ASN1T_MissionParameters& asn ) const
 {
-    if( parameters_.empty() )
-        return;
-
     unsigned i = 0;
     for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
         (**it).AsnDelete( asn.elem[i++] );

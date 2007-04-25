@@ -52,5 +52,5 @@ void PopulationOrder::Send( Publisher_ABC& publisher )
 
     asn.Send( publisher );
 
-    Order_ABC::AsnDelete( asn().parametres );    
+    AsnDelete( asn().parametres );    
 }

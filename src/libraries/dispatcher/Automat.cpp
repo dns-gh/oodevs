@@ -72,14 +72,13 @@ Automat::~Automat()
 // -----------------------------------------------------------------------------
 void Automat::Update( const ASN1T_MsgAutomateCreation& msg )
 {
-    if( FlagUpdate() && pKnowledgeGroup_->GetID() != msg.oid_groupe_connaissance )
+    const bool kgChanged = pKnowledgeGroup_->GetID() != msg.oid_groupe_connaissance;
+    FlagUpdate( kgChanged );
+    if( kgChanged )
     {
-        AsnMsgSimToClientAutomateChangeGroupeConnaissanceAck ack;
-        ack().error_code = EnumChangeHierarchyErrorCode::no_error;
-        ack().oid_automate = msg.oid_automate;
-        ack().oid_camp = msg.oid_camp;
-        ack().oid_groupe_connaissance = msg.oid_groupe_connaissance;
-        Send( ack );
+        pKnowledgeGroup_->GetAutomats().Unregister( *this );
+        pKnowledgeGroup_ = &model_.GetKnowledgeGroups().Get( msg.oid_groupe_connaissance );
+        pKnowledgeGroup_->GetAutomats().Register( *this );
     }
 }
 
@@ -249,3 +248,17 @@ void Automat::Accept( ModelVisitor_ABC& visitor )
     agents_.Apply( std::mem_fun_ref( &Agent::Accept ), visitor );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: Automat::SendSpecialUpdate
+// Created: AGE 2007-04-25
+// -----------------------------------------------------------------------------
+void Automat::SendSpecialUpdate( Publisher_ABC& publisher ) const
+{
+    AsnMsgSimToClientAutomateChangeGroupeConnaissanceAck ack;
+    ack().error_code = EnumChangeHierarchyErrorCode::no_error;
+    ack().oid_automate = nID_;
+    ack().oid_camp = side_.GetID();
+    ack().oid_groupe_connaissance = pKnowledgeGroup_->GetID();
+    ack.Send( publisher );
+}

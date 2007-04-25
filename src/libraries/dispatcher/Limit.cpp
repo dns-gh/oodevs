@@ -78,12 +78,12 @@ void Limit::SendFullUpdate( Publisher_ABC& ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Limit::CommitDestruction
-// Created: AGE 2007-04-13
+// Name: Limit::SendDestruction
+// Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Limit::CommitDestruction()
+void Limit::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientLimitDestruction asn;
     asn() = GetID();
-    Entity_ABC::Send( asn );
+    asn.Send( publisher );
 }

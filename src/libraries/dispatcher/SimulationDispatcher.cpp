@@ -9,8 +9,8 @@
 
 #include "dispatcher_pch.h"
 #include "SimulationDispatcher.h"
-//#include "Publisher_ABC.h"
 #include "Model.h"
+#include "Publisher_ABC.h"
 
 using namespace dispatcher;
 
@@ -53,9 +53,9 @@ bool SimulationDispatcher::IsNotDestruction( const ASN1T_MsgsSimToClient& asnMsg
         case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:
         case T_MsgsSimToClient_msg_msg_object_destruction:
         case T_MsgsSimToClient_msg_msg_object_knowledge_destruction:
-    //    case T_MsgsSimToClient_msg_msg_log_sante_traitement_humain_destruction:
-    //    case T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_destruction:
-    //    case T_MsgsSimToClient_msg_msg_log_ravitaillement_traitement_destruction:
+        case T_MsgsSimToClient_msg_msg_log_sante_traitement_humain_destruction:
+        case T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_destruction:
+        case T_MsgsSimToClient_msg_msg_log_ravitaillement_traitement_destruction:
         case T_MsgsSimToClient_msg_msg_population_concentration_destruction:
         case T_MsgsSimToClient_msg_msg_population_flux_destruction:
         case T_MsgsSimToClient_msg_msg_population_knowledge_destruction:
@@ -74,20 +74,11 @@ bool SimulationDispatcher::IsNotDestruction( const ASN1T_MsgsSimToClient& asnMsg
 void SimulationDispatcher::OnReceive( const ASN1T_MsgsSimToClient& asnMsg )
 {
     model_.Update( asnMsg );
+
     if( synching_ && IsNotDestruction( asnMsg ) )
         return;
 
     clientsPublisher_.Send( asnMsg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimulationDispatcher::Send
-// Created: AGE 2007-04-12
-// -----------------------------------------------------------------------------
-void SimulationDispatcher::Send( const ASN1T_MsgsSimToClient& msg )
-{
-    clientsPublisher_.Send( msg );
-    model_.Update( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +88,7 @@ void SimulationDispatcher::Send( const ASN1T_MsgsSimToClient& msg )
 void SimulationDispatcher::StartSynchronisation()
 {
     synching_ = true;
-    model_.StartSynchronisation( *this );
+    model_.StartSynchronisation();
 }
 
 // -----------------------------------------------------------------------------
@@ -106,6 +97,6 @@ void SimulationDispatcher::StartSynchronisation()
 // -----------------------------------------------------------------------------
 void SimulationDispatcher::EndSynchronisation()
 {
-    model_.EndSynchronisation();
+    model_.EndSynchronisation( clientsPublisher_ );
     synching_ = false;
 }

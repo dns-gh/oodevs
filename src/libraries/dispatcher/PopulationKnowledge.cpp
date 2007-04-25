@@ -36,6 +36,7 @@ PopulationKnowledge::PopulationKnowledge( Model& model, const ASN1T_MsgPopulatio
     , concentrations_  ()
     , flows_           ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -179,13 +180,13 @@ void PopulationKnowledge::Accept( ModelVisitor_ABC& visitor )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::CommitDestruction
-// Created: AGE 2007-04-13
+// Name: PopulationKnowledge::SendDestruction
+// Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::CommitDestruction()
+void PopulationKnowledge::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationKnowledgeDestruction asn;
     asn().oid_connaissance = nID_;
     asn().oid_groupe_possesseur = knowledgeGroup_.GetID();
-    Send( asn );
+    asn.Send( publisher );
 }

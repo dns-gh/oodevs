@@ -58,6 +58,7 @@ void SupplyConsignsWidget::Display( const LogSupplyConsign* consign, kernel::Dis
     {
         child = factory_.CreateItem( item, last );
         child->setText( 0, tr( "Dotations requested/granted/convoyed" ) );
+        child->setText( 1, "" );
     }
 
     // $$$$ AGE 2006-07-04: 

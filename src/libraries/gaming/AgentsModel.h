@@ -56,6 +56,7 @@ public:
     void CreateAgent( const ASN1T_MsgPionCreation& asnMsg );
     kernel::Agent_ABC& GetAgent( unsigned long id ) const;
     kernel::Agent_ABC* FindAgent( unsigned long id ) const;
+    void DestroyAgent( const ASN1T_MsgPionDestruction& asnMsg );
 
     kernel::Entity_ABC* FindAllAgent( unsigned long id ) const;
 

@@ -54,6 +54,6 @@ void AutomatOrder::Send( Publisher_ABC& publisher )
 
     asn.Send( publisher );
 
-    Order_ABC::AsnDelete( asn().order_context );
-    Order_ABC::AsnDelete( asn().parametres );    
+    AsnDelete( asn().order_context );
+    AsnDelete( asn().parametres );    
 }

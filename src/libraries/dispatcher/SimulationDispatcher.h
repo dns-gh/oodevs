@@ -12,20 +12,18 @@
 
 #include "game_asn/Asn.h"
 
-#include "Publisher_ABC.h"
-
 namespace dispatcher
 {
     class Model;
-//    class Publisher_ABC;
+    class Publisher_ABC;
 
 // =============================================================================
 /** @class  SimulationDispatcher
-    @brief  SimulationDispatcher
+    @brief  Simulation dispatcher
 */
 // Created: AGE 2007-04-10
 // =============================================================================
-class SimulationDispatcher : private Publisher_ABC //$$$
+class SimulationDispatcher
 {
 
 public:
@@ -41,12 +39,6 @@ public:
 
     void StartSynchronisation();
     void EndSynchronisation();
-    //@}
-
-private:
-    //! @name Operations
-    //@{
-    virtual void Send( const ASN1T_MsgsSimToClient& msg );//$$$
     //@}
 
 private:

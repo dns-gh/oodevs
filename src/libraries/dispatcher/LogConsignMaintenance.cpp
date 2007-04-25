@@ -112,13 +112,14 @@ void LogConsignMaintenance::SendFullUpdate( Publisher_ABC& publisher ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogConsignMaintenance::CommitDestruction
-// Created: AGE 2007-04-16
+// Name: LogConsignMaintenance::SendDestruction
+// Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void LogConsignMaintenance::CommitDestruction()
+void LogConsignMaintenance::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientLogMaintenanceTraitementEquipementDestruction asn;
     asn().oid_consigne = nID_;
     asn().oid_pion     = agent_.GetID();
-    Send( asn );
+    asn.Send( publisher );
 }
+

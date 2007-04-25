@@ -52,29 +52,19 @@ void CreationVisitor::Visit( Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: StartSynchVisitor::StartSynchVisitor
-// Created: AGE 2007-04-12
-// -----------------------------------------------------------------------------
-StartSynchVisitor::StartSynchVisitor( Publisher_ABC& publisher )
-    : publisher_( &publisher )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: StartSynchVisitor::Visit
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
 void StartSynchVisitor::Visit( Entity_ABC& entity )
 {
-    entity.StartSynchronisation( *publisher_, false );
+    entity.StartSynchronisation( false );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EndSynchVisitor::EndSynchVisitor
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-EndSynchVisitor::EndSynchVisitor( Model& model )
+EndSynchVisitor::EndSynchVisitor( Synchroniser& model )
     : model_( &model )
 {
     // NOTHING

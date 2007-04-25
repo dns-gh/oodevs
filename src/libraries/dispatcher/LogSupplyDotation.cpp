@@ -51,6 +51,7 @@ void LogSupplyDotation::Update( const ASN1T_DemandeDotation& asn )
 // -----------------------------------------------------------------------------
 void LogSupplyDotation::Send( ASN1T_DemandeDotation& asn ) const
 {
+    asn.ressource_id        = nDotationType_;
     asn.quantite_demandee   = nNbrRequested_;
     asn.quantite_accordee   = nNbrGranted_;
     asn.quantite_en_transit = nNbrConvoyed_;

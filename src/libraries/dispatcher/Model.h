@@ -72,10 +72,16 @@ public:
     //! @name Operations
     //@{
     void Accept( ModelVisitor_ABC& visitor ) const;
-    void StartSynchronisation( Publisher_ABC& publisher );
-    void EndSynchronisation();
+    void StartSynchronisation();
+    void EndSynchronisation( Publisher_ABC& publisher );
+    //@}
 
-    void FlagForDestruction( Entity_ABC& synch );
+    //! @name Synchro
+    //@{
+    void FlagForCreation     ( Entity_ABC& synch );
+    void FlagForUpdate       ( Entity_ABC& synch );
+    void FlagForSpecialUpdate( Entity_ABC& synch );
+    void FlagForDestruction  ( Entity_ABC& synch );
     //@}
 
     //! @name Accessors
@@ -127,8 +133,7 @@ private:
     ModelsContainer< PopulationFire         > populationFires_;
     ModelsContainer< FireEffect             > fireEffects_;
 
-    std::vector< Entity_ABC* > toFlush_;
-    Publisher_ABC* synchroniser_;
+    bool synching_;
 };
 
 }

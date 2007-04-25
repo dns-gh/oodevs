@@ -57,8 +57,10 @@ public:
     void Update        ( const ASN1T_MsgPionChangeSuperior&    asnMsg );
     void Update        ( const ASN1T_MsgPionChangeSuperiorAck& asnMsg );
     void Update        ( const ASN1T_MsgPionOrder&             asnMsg );
-    void SendCreation  ( Publisher_ABC& publisher ) const;
-    virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
+    virtual void SendCreation   ( Publisher_ABC& publisher ) const;
+    virtual void SendFullUpdate ( Publisher_ABC& publisher ) const;
+    virtual void SendSpecialUpdate( Publisher_ABC& publisher ) const;
+    virtual void SendDestruction( Publisher_ABC& publisher ) const;
     //@}
 
     //! @name Accessors

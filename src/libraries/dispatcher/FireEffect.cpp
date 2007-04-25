@@ -67,12 +67,12 @@ void FireEffect::SendCreation( Publisher_ABC& publisher ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: FireEffect::CommitDestruction
-// Created: AGE 2007-04-18
+// Name: FireEffect::SendDestruction
+// Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void FireEffect::CommitDestruction()
+void FireEffect::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientStopFireEffect asn;
     asn() = id_;
-    Send( asn );
+    asn.Send( publisher );
 }

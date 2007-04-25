@@ -57,7 +57,8 @@ public:
     void Update        ( const ASN1T_MsgAutomateChangeLiensLogistiques&      msg );
     void Update        ( const ASN1T_MsgAutomateChangeGroupeConnaissanceAck& msg );
     void Update        ( const ASN1T_MsgAutomateOrder&                       msg );
-    void SendCreation  ( Publisher_ABC& publisher ) const;
+    virtual void SendCreation  ( Publisher_ABC& publisher ) const;
+    virtual void SendSpecialUpdate( Publisher_ABC& publisher ) const;
     virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
 
     void Accept( ModelVisitor_ABC& visitor );

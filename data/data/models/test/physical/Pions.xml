@@ -1894,6 +1894,8 @@
     </Nature>
     <Equipements>
       <Equipement equipage="1" majeur="true" nom="CompTest">1</Equipement>
+      <Equipement convoyeur="true" equipage="1" nom="Camion transport solide">25</Equipement>
+      <Equipement convoyeur="true" equipage="1" nom="Camion transport liquide">25</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>

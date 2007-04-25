@@ -24,7 +24,7 @@ Lima::Lima( const Model& model, const ASN1T_MsgLimaCreation& message )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Lima destructor
 // Created: NLD 2006-11-17
@@ -76,14 +76,14 @@ void Lima::SendFullUpdate( Publisher_ABC& ) const
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
-// Name: Lima::CommitDestruction
-// Created: AGE 2007-04-13
+// Name: Lima::SendDestruction
+// Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Lima::CommitDestruction()
+void Lima::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientLimaDestruction asn;
     asn() = GetID();
-    Entity_ABC::Send( asn );
+    asn.Send( publisher );
 }

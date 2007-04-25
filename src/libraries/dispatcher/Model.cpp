@@ -32,6 +32,7 @@
 #include "Fire.h"
 #include "PopulationFire.h"
 #include "FireEffect.h"
+#include "Synchroniser.h"
 
 #include "SimulationModel.h"
 
@@ -44,7 +45,7 @@ using namespace DIN;
 // -----------------------------------------------------------------------------
 Model::Model()
     : pSimulationModel_( new SimulationModel() )
-    , synchroniser_( 0 )
+    , synching_( false )
 {
     // NOTHING
 }
@@ -150,11 +151,12 @@ void Model::Update( const ASN1T_MsgsSimToClient& asnMsg )
         case T_MsgsSimToClient_msg_msg_knowledge_group_creation:             CreateUpdate( knowledgeGroups_, asnMsg.msg.u.msg_knowledge_group_creation->oid, *asnMsg.msg.u.msg_knowledge_group_creation ); break;
         case T_MsgsSimToClient_msg_msg_formation_creation:                   CreateUpdate( formations_     , asnMsg.msg.u.msg_formation_creation->oid, *asnMsg.msg.u.msg_formation_creation ); break;
         case T_MsgsSimToClient_msg_msg_pion_creation:                        CreateUpdate( agents_         , asnMsg.msg.u.msg_pion_creation    ->oid_pion    , *asnMsg.msg.u.msg_pion_creation     ); break;
+        case T_MsgsSimToClient_msg_msg_pion_destruction:                     agents_.Destroy( asnMsg.msg.u.msg_pion_destruction ); break;
         case T_MsgsSimToClient_msg_msg_automate_creation:                    CreateUpdate( automats_       , asnMsg.msg.u.msg_automate_creation->oid_automate, *asnMsg.msg.u.msg_automate_creation ); break;
         case T_MsgsSimToClient_msg_msg_unit_attributes:                      agents_.Get( asnMsg.msg.u.msg_unit_attributes->oid_pion ).Update( *asnMsg.msg.u.msg_unit_attributes ); break;
         case T_MsgsSimToClient_msg_msg_automate_attributes:                  automats_.Get( asnMsg.msg.u.msg_automate_attributes->oid_automate ).Update( *asnMsg.msg.u.msg_automate_attributes  ); break;
         case T_MsgsSimToClient_msg_msg_unit_pathfind:
-            break; // $$$$ AGE 2007-04-18: 
+            break; // $$$$ AGE 2007-04-18:
         case T_MsgsSimToClient_msg_msg_start_pion_fire:                      CreateUpdate( fires_, asnMsg.msg.u.msg_start_pion_fire->oid_tir, *asnMsg.msg.u.msg_start_pion_fire ); break;
         case T_MsgsSimToClient_msg_msg_stop_pion_fire:                       fires_.Destroy( asnMsg.msg.u.msg_stop_pion_fire->oid_tir ); break;
         case T_MsgsSimToClient_msg_msg_start_population_fire:                CreateUpdate( populationFires_, asnMsg.msg.u.msg_start_population_fire->oid_tir, *asnMsg.msg.u.msg_start_population_fire ); break;
@@ -168,7 +170,7 @@ void Model::Update( const ASN1T_MsgsSimToClient& asnMsg )
         case T_MsgsSimToClient_msg_msg_pion_order:                           agents_     .Get( asnMsg.msg.u.msg_pion_order                 ->oid_unite_executante ).Update( *asnMsg.msg.u.msg_pion_order                  ); break;
         case T_MsgsSimToClient_msg_msg_automate_order:                       automats_   .Get( asnMsg.msg.u.msg_automate_order             ->oid_unite_executante ).Update( *asnMsg.msg.u.msg_automate_order              ); break;
         case T_MsgsSimToClient_msg_msg_population_order:                     populations_.Get( asnMsg.msg.u.msg_population_order           ->oid_unite_executante ).Update( *asnMsg.msg.u.msg_population_order            ); break;
-        
+
         case T_MsgsSimToClient_msg_msg_pion_order_management:                
         case T_MsgsSimToClient_msg_msg_automate_order_management:            
         case T_MsgsSimToClient_msg_msg_population_order_management:          
@@ -230,8 +232,8 @@ void Model::CreateUpdate( ModelsContainer< T >& container, unsigned id, const P&
 {
     bool create = ! container.Find( id );
     T& object = container.Create( *this, id, parameter );
-    if( synchroniser_ )
-        object.StartSynchronisation( *synchroniser_, create );
+    if( synching_ )
+        object.StartSynchronisation( create );
     object.Update( parameter );
 }
 
@@ -309,11 +311,10 @@ void Model::Accept( ModelVisitor_ABC& visitor ) const
 // Name: Model::StartSynchronisation
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Model::StartSynchronisation( Publisher_ABC& publisher )
+void Model::StartSynchronisation()
 {
-    synchroniser_ = &publisher;
-    toFlush_.clear();
-    StartSynchVisitor visitor( publisher );
+    synching_ = true;
+    StartSynchVisitor visitor;
     Accept( visitor );
 }
 
@@ -321,24 +322,15 @@ void Model::StartSynchronisation( Publisher_ABC& publisher )
 // Name: Model::EndSynchronisation
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Model::EndSynchronisation()
+void Model::EndSynchronisation( Publisher_ABC& publisher )
 {
-    toFlush_.clear();
-    EndSynchVisitor visitor( *this );
+    Synchroniser synch;
+    EndSynchVisitor visitor( synch );
     Accept( visitor );
+    synch.Commit( publisher, *this );
+    synching_ = false;
 
-    for( std::vector< Entity_ABC* >::reverse_iterator it = toFlush_.rbegin(); it != toFlush_.rend(); ++it )
-        (*it)->CommitDestruction();
-
-    toFlush_.clear();
-    synchroniser_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Model::FlagForDestruction
-// Created: AGE 2007-04-12
-// -----------------------------------------------------------------------------
-void Model::FlagForDestruction( Entity_ABC& synch )
-{
-    toFlush_.push_back( &synch );
+    // $$$$ AGE 2007-04-24: Le commit va Update le Model et donc supprimer l'entité en question
+    // $$$$ AGE 2007-04-24: c'est crado. Séparer l'envoi au client (dans le CommitDestruction() )
+    // $$$$ AGE 2007-04-24: et la destruction (depuis la liste, séparément.
 }

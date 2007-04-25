@@ -203,14 +203,15 @@ void PopulationFlowKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationFlowKnowledge::CommitDestruction
-// Created: AGE 2007-04-13
+// Name: PopulationFlowKnowledge::SendDestruction
+// Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::CommitDestruction()
+void PopulationFlowKnowledge::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationFluxKnowledgeDestruction asn;
     asn().oid_connaissance_flux       = nID_;
     asn().oid_connaissance_population = populationKnowledge_.GetID();
     asn().oid_groupe_possesseur       = populationKnowledge_.GetKnowledgeGroup().GetID();
-    Send( asn );
+    asn.Send( publisher );
 }
+

@@ -208,13 +208,13 @@ void AgentKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledge::CommitDestruction
-// Created: AGE 2007-04-13
+// Name: AgentKnowledge::SendDestruction
+// Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void AgentKnowledge::CommitDestruction()
+void AgentKnowledge::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientUnitKnowledgeDestruction asn;
     asn().oid_connaissance      = nID_;
     asn().oid_groupe_possesseur = knowledgeGroup_.GetID();
-    Send( asn );
+    asn.Send( publisher );
 }

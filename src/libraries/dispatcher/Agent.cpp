@@ -105,13 +105,13 @@ Agent::~Agent()
 // -----------------------------------------------------------------------------
 void Agent::Update( const ASN1T_MsgPionCreation& asnMsg )
 {
-    if( FlagUpdate() && pAutomat_->GetID() != asnMsg.oid_automate )
+    const bool superiorChanged = pAutomat_->GetID() != asnMsg.oid_automate;
+    FlagUpdate( superiorChanged );
+    if( superiorChanged )
     {
-        AsnMsgSimToClientPionChangeSuperiorAck ack;
-        ack().error_code   = EnumChangeHierarchyErrorCode::no_error;
-        ack().oid_automate = asnMsg.oid_automate;
-        ack().oid_pion     = asnMsg.oid_pion;
-        Send( ack );
+        pAutomat_->GetAgents().Unregister( *this );
+        pAutomat_ = &model_.GetAutomats().Get( asnMsg.oid_automate );
+        pAutomat_->GetAgents().Register( *this );
     }
 }
 
@@ -466,4 +466,28 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
 
     if( pOrder_ )
         pOrder_->Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::SendDestruction
+// Created: AGE 2007-04-24
+// -----------------------------------------------------------------------------
+void Agent::SendDestruction( Publisher_ABC& publisher ) const
+{
+    AsnMsgSimToClientPionDestruction asn;
+    asn() = nID_;
+    asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::SendSpecialUpdate
+// Created: AGE 2007-04-25
+// -----------------------------------------------------------------------------
+void Agent::SendSpecialUpdate( Publisher_ABC& publisher ) const
+{   
+    AsnMsgSimToClientPionChangeSuperiorAck ack;
+    ack().error_code   = EnumChangeHierarchyErrorCode::no_error;
+    ack().oid_automate = pAutomat_->GetID();
+    ack().oid_pion     = nID_;
+    ack.Send( publisher );
 }

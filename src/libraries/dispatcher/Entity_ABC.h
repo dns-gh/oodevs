@@ -14,6 +14,7 @@ namespace dispatcher
 {
     class Publisher_ABC;
     class ModelVisitor_ABC;
+    class Synchroniser;
     class Model;
 
 // =============================================================================
@@ -34,21 +35,20 @@ public:
 
     //! @name Operations
     //@{
-    void StartSynchronisation( Publisher_ABC& publisher, bool create );
-    void EndSynchronisation  ( Model& model );
+    void StartSynchronisation( bool create );
+    void EndSynchronisation  ( Synchroniser& synch );
 
-    virtual void SendFullUpdate( Publisher_ABC& publisher ) const = 0;
-    virtual void SendCreation  ( Publisher_ABC& publisher ) const = 0;
-    virtual void CommitDestruction();
-    virtual void Accept( ModelVisitor_ABC& visitor );
+    virtual void SendFullUpdate   ( Publisher_ABC& publisher ) const = 0;
+    virtual void SendCreation     ( Publisher_ABC& publisher ) const = 0;
+    virtual void SendDestruction  ( Publisher_ABC& publisher ) const;
+    virtual void SendSpecialUpdate( Publisher_ABC& publisher ) const;
+    virtual void Accept           ( ModelVisitor_ABC& visitor );
     //@}
 
 protected:
     //! @name Operations
     //@{
-    bool FlagUpdate();
-    template< typename T >
-    void Send( T& message );
+    bool FlagUpdate( bool special = false );
     void StartSynchronisation( Entity_ABC& next, bool create );
     //@}
 
@@ -62,23 +62,12 @@ private:
 private:
     //! @name Member data
     //@{
-    Publisher_ABC* publisher_;
-    bool updated_;
-    bool create_;
+    bool synching_ : 1;
+    bool updated_  : 1;
+    bool created_  : 1;
+    bool special_  : 1;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: Entity_ABC::Send
-// Created: AGE 2007-04-12
-// -----------------------------------------------------------------------------
-template< typename T >
-void Entity_ABC::Send( T& message )
-{
-    if( ! publisher_ )
-        throw std::runtime_error( typeid( *this ).name() + std::string( "::Send" ) );
-    message.Send( *publisher_ );
-}
 
 }
 

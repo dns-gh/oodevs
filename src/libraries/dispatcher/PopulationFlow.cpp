@@ -127,17 +127,17 @@ void PopulationFlow::SendFullUpdate( Publisher_ABC& publisher ) const
 
     Localisation::AsnDelete( asn().itineraire );
     Localisation::AsnDelete( asn().flux       );
-
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationFlow::CommitDestruction
-// Created: AGE 2007-04-12
+// Name: PopulationFlow::SendDestruction
+// Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void PopulationFlow::CommitDestruction()
+void PopulationFlow::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationFluxDestruction destruction;
     destruction().oid_flux = nID_;
     destruction().oid_population = population_.GetID();
-    Send( destruction );
+    destruction.Send( publisher );
 }
+

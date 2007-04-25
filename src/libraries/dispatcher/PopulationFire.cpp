@@ -62,14 +62,15 @@ void PopulationFire::SendCreation( Publisher_ABC& publisher ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationFire::CommitDestruction
-// Created: AGE 2007-04-18
+// Name: PopulationFire::SendDestruction
+// Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void PopulationFire::CommitDestruction()
+void PopulationFire::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientStopPopulationFire asn;
     asn().oid_tir = msg_.oid_tir;
     asn().degats_pions.n    = 0;
     asn().degats_pions.elem = 0;
-    Send( asn );
+    asn.Send( publisher );
 }
+

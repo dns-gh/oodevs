@@ -47,9 +47,9 @@ public:
     //@{
     void Update        ( const ASN1T_MsgLogRavitaillementTraitementCreation& msg );
     void Update        ( const ASN1T_MsgLogRavitaillementTraitementUpdate& msg );
-    void SendCreation  ( Publisher_ABC& publisher ) const;
-    void SendFullUpdate( Publisher_ABC& publisher ) const;
-    void CommitDestruction();
+    virtual void SendCreation   ( Publisher_ABC& publisher ) const;
+    virtual void SendFullUpdate ( Publisher_ABC& publisher ) const;
+    virtual void SendDestruction( Publisher_ABC& publisher ) const;
     //@}
 
 private:

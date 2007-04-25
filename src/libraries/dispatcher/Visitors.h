@@ -15,7 +15,7 @@
 namespace dispatcher
 {
     class Publisher_ABC;
-    class Model;
+    class Synchroniser;
 
     class FullUpdateVisitor : public ModelVisitor_ABC
     {
@@ -38,19 +38,16 @@ namespace dispatcher
     class StartSynchVisitor : public ModelVisitor_ABC
     {
     public:
-        StartSynchVisitor( Publisher_ABC& publisher );
         virtual void Visit( Entity_ABC& entity );
-    private:
-        Publisher_ABC* publisher_;
     };
 
     class EndSynchVisitor : public ModelVisitor_ABC
     {
     public:
-        EndSynchVisitor( Model& model );
+        EndSynchVisitor( Synchroniser& model );
         virtual void Visit( Entity_ABC& entity );
     private:
-        Model* model_;
+        Synchroniser* model_;
     };
 }
 
