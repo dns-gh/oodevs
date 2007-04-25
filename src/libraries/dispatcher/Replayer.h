@@ -42,9 +42,9 @@ public:
 
     //! @name Accessors
     //@{
-    Model& GetModel() const;
+    Model&          GetModel   () const;
     ProfileManager& GetProfiles() const;
-    LoaderFacade& GetLoader() const;
+    LoaderFacade&   GetLoader  () const;
     //@}
 
 private:
@@ -57,8 +57,6 @@ private:
 private:
     //! @name Member data
     //@{
-    const Config& config_;
-
     Model*                pModel_;
     ClientsNetworker*     pClientsNetworker_;
     SimulationDispatcher* simulation_;

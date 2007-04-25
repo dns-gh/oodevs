@@ -132,7 +132,7 @@ void AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeCreation& )
 // -----------------------------------------------------------------------------
 void AgentKnowledge::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientUnitKnowledgeCreation asn;
+    AsnMsgSimToClientUnitKnowledgeCreation asn;
 
     asn().oid_connaissance      = nID_;
     asn().oid_groupe_possesseur = knowledgeGroup_.GetID();
@@ -155,7 +155,7 @@ void AgentKnowledge::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void AgentKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientUnitKnowledgeUpdate asn;
+    AsnMsgSimToClientUnitKnowledgeUpdate asn;
 
     asn().oid_connaissance      = nID_;
     asn().oid_groupe_possesseur = knowledgeGroup_.GetID();
@@ -213,7 +213,7 @@ void AgentKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void AgentKnowledge::CommitDestruction()
 {
-    AsnMsgInClientUnitKnowledgeDestruction asn;
+    AsnMsgSimToClientUnitKnowledgeDestruction asn;
     asn().oid_connaissance      = nID_;
     asn().oid_groupe_possesseur = knowledgeGroup_.GetID();
     Send( asn );

@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    void Save( ASN1T_MsgsOutSim& asnMsg );
+    void Save( const ASN1T_MsgsSimToClient& asnMsg );
     //@}
 
 private:
@@ -48,9 +48,9 @@ private:
 
     //! @name Helpers
     //@{
-    void SaveUpdate( ASN1T_MsgsOutSim& asnMsg );
-    void StartFrame( ASN1T_MsgsOutSim& asnMsg );
-    void EndFrame( ASN1T_MsgsOutSim& asnMsg );
+    void SaveUpdate( ASN1T_MsgsSimToClient& asnMsg );
+    void StartFrame( ASN1T_MsgsSimToClient& asnMsg );
+    void EndFrame  ( ASN1T_MsgsSimToClient& asnMsg );
     //@}
 
 private:

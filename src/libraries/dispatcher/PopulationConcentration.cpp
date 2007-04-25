@@ -76,7 +76,7 @@ void PopulationConcentration::Update( const ASN1T_MsgPopulationConcentrationUpda
 // -----------------------------------------------------------------------------
 void PopulationConcentration::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientPopulationConcentrationCreation asn;
+    AsnMsgSimToClientPopulationConcentrationCreation asn;
 
     asn().oid_concentration = nID_;
     asn().oid_population    = population_.GetID();
@@ -91,7 +91,7 @@ void PopulationConcentration::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PopulationConcentration::SendFullUpdate( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientPopulationConcentrationUpdate asn;
+    AsnMsgSimToClientPopulationConcentrationUpdate asn;
 
     asn().m.attitudePresent           = 1;
     asn().m.nb_humains_mortsPresent   = 1;
@@ -112,7 +112,7 @@ void PopulationConcentration::SendFullUpdate( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PopulationConcentration::CommitDestruction()
 {
-    AsnMsgInClientPopulationConcentrationDestruction destruction;
+    AsnMsgSimToClientPopulationConcentrationDestruction destruction;
     destruction().oid_population    = population_.GetID();
     destruction().oid_concentration = nID_;
     Send( destruction );

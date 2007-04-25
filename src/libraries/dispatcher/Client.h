@@ -43,10 +43,13 @@ public:
 
     //! @name Messages
     //@{
-            void OnReceive( const ASN1T_MsgsOutClient& asnMsg );
+            void OnReceive( const ASN1T_MsgsClientToSim& asnMsg );
+            void OnReceive( const ASN1T_MsgsClientToMiddle& asnMsg );
             void OnReceive( unsigned int nMsgID, DIN::DIN_Input& dinMsg );
-    virtual void Send     ( const ASN1T_MsgsInClient& asnMsg );
-            void Send     ( const ASN1T_MsgsInClient& asnMsg, const DIN::DIN_BufferedMessage& dinMsg );    
+    virtual void Send     ( const ASN1T_MsgsMiddleToClient& asnMsg );
+            void Send     ( const ASN1T_MsgsMiddleToClient& asnMsg, const DIN::DIN_BufferedMessage& dinMsg );    
+    virtual void Send     ( const ASN1T_MsgsSimToClient&    asnMsg );
+            void Send     ( const ASN1T_MsgsSimToClient&    asnMsg, const DIN::DIN_BufferedMessage& dinMsg );    
             void Send     ( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg );
     //@}
 
@@ -64,8 +67,8 @@ private:
 
     //! @name Rights management
     //@{
-    bool CheckRights( const ASN1T_MsgsOutClient& asnMsg ) const;
-    bool CheckRights( const ASN1T_MsgsInClient&  asnMsg ) const;
+    bool CheckRights( const ASN1T_MsgsClientToSim&    asnMsg ) const;
+    bool CheckRights( const ASN1T_MsgsClientToMiddle& asnMsg ) const;
     //@}
 
     //! @name Messages
@@ -76,14 +79,13 @@ private:
 private:
     //! @name Member data
     //@{
-    const Model& model_;
+    const Model&    model_;
     ProfileManager& profiles_;
-    Profile*    pProfile_;
+    Profile*        pProfile_;
 
-    LoaderFacade* loader_;
+    LoaderFacade*        loader_;
     SimulationNetworker* simulation_;
-    //@}
-    
+    //@}   
 };
 
 }

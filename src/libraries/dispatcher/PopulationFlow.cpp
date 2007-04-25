@@ -88,7 +88,7 @@ void PopulationFlow::Update( const ASN1T_MsgPopulationFluxUpdate& msg )
 // -----------------------------------------------------------------------------
 void PopulationFlow::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientPopulationFluxCreation asn;
+    AsnMsgSimToClientPopulationFluxCreation asn;
 
     asn().oid_flux       = nID_;
     asn().oid_population = population_.GetID();
@@ -102,7 +102,7 @@ void PopulationFlow::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PopulationFlow::SendFullUpdate( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientPopulationFluxUpdate asn;
+    AsnMsgSimToClientPopulationFluxUpdate asn;
 
     asn().m.itinerairePresent         = 1;
     asn().m.fluxPresent               = 1;
@@ -136,7 +136,7 @@ void PopulationFlow::SendFullUpdate( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PopulationFlow::CommitDestruction()
 {
-    AsnMsgInClientPopulationFluxDestruction destruction;
+    AsnMsgSimToClientPopulationFluxDestruction destruction;
     destruction().oid_flux = nID_;
     destruction().oid_population = population_.GetID();
     Send( destruction );

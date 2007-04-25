@@ -31,8 +31,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send( const ASN1T_MsgsInSim&    msg );
-    virtual void Send( const ASN1T_MsgsInClient& msg );
+    virtual void Send( const ASN1T_MsgsSimToClient&    msg );
+    virtual void Send( const ASN1T_MsgsClientToSim&    msg );
+    virtual void Send( const ASN1T_MsgsMiddleToClient& msg );
+    virtual void Send( const ASN1T_MsgsMiddleToSim&    msg );
     //@}
 };
 

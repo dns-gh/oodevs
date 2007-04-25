@@ -140,7 +140,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeDestruct
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientPopulationKnowledgeCreation asn;
+    AsnMsgSimToClientPopulationKnowledgeCreation asn;
 
     asn().oid_connaissance = nID_;
     asn().oid_groupe_possesseur = knowledgeGroup_.GetID();
@@ -156,7 +156,7 @@ void PopulationKnowledge::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientPopulationKnowledgeUpdate asn;
+    AsnMsgSimToClientPopulationKnowledgeUpdate asn;
 
     asn().m.etat_dominationPresent = 1;
 
@@ -184,7 +184,7 @@ void PopulationKnowledge::Accept( ModelVisitor_ABC& visitor )
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::CommitDestruction()
 {
-    AsnMsgInClientPopulationKnowledgeDestruction asn;
+    AsnMsgSimToClientPopulationKnowledgeDestruction asn;
     asn().oid_connaissance = nID_;
     asn().oid_groupe_possesseur = knowledgeGroup_.GetID();
     Send( asn );

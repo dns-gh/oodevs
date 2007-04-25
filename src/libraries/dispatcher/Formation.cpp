@@ -71,7 +71,7 @@ void Formation::Update( const ASN1T_MsgFormationCreation& )
 // -----------------------------------------------------------------------------
 void Formation::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientFormationCreation asn;
+    AsnMsgSimToClientFormationCreation asn;
 
     asn().oid      = nID_;
     asn().oid_camp = side_.GetID();

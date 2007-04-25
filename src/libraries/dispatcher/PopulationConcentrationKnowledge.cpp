@@ -115,7 +115,7 @@ void PopulationConcentrationKnowledge::Update( const ASN1T_MsgPopulationConcentr
 // -----------------------------------------------------------------------------
 void PopulationConcentrationKnowledge::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientPopulationConcentrationKnowledgeCreation asn;
+    AsnMsgSimToClientPopulationConcentrationKnowledgeCreation asn;
 
     asn().oid_connaissance_concentration = nID_;
     asn().oid_connaissance_population    = populationKnowledge_.GetID();
@@ -132,7 +132,7 @@ void PopulationConcentrationKnowledge::SendCreation( Publisher_ABC& publisher ) 
 // -----------------------------------------------------------------------------
 void PopulationConcentrationKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientPopulationConcentrationKnowledgeUpdate asn;
+    AsnMsgSimToClientPopulationConcentrationKnowledgeUpdate asn;
 
     asn().oid_connaissance_concentration = nID_;
     asn().oid_connaissance_population    = populationKnowledge_.GetID();
@@ -180,7 +180,7 @@ void PopulationConcentrationKnowledge::SendFullUpdate( Publisher_ABC& publisher 
 // -----------------------------------------------------------------------------
 void PopulationConcentrationKnowledge::CommitDestruction()
 {
-    AsnMsgInClientPopulationConcentrationKnowledgeDestruction asn;
+    AsnMsgSimToClientPopulationConcentrationKnowledgeDestruction asn;
     asn().oid_connaissance_concentration = nID_;
     asn().oid_connaissance_population    = populationKnowledge_.GetID();
     asn().oid_groupe_possesseur          = populationKnowledge_.GetKnowledgeGroup().GetID();

@@ -137,7 +137,7 @@ void Object::Update( const ASN1T_MsgObjectUpdate& msg )
 // -----------------------------------------------------------------------------
 void Object::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientObjectCreation asn;
+    AsnMsgSimToClientObjectCreation asn;
 
     asn().oid  = nID_;
     asn().type = nType_;
@@ -177,7 +177,7 @@ void Object::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Object::SendFullUpdate( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientObjectUpdate asn;
+    AsnMsgSimToClientObjectUpdate asn;
 
     asn().oid = nID_;
 
@@ -234,7 +234,7 @@ void Object::SendFullUpdate( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Object::CommitDestruction()
 {
-    AsnMsgInClientObjectDestruction destruction;
+    AsnMsgSimToClientObjectDestruction destruction;
     destruction() = nID_;
     Send( destruction );
 }

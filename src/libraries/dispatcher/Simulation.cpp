@@ -35,10 +35,9 @@ using namespace DIN;
 Simulation::Simulation( Dispatcher& dispatcher, DIN_MessageService_ABC& messageService, DIN_Link& link, const std::string& configFile )
     : Server_ABC ( messageService, link )
     , dispatcher_( dispatcher )
-    , saver_( 0 )
+    , saver_     ( 0 )
 {
-    AsnMsgInSimCtrlClientAnnouncement asnMsg;
-    asnMsg.Send( *this );
+    AsnMsgMiddleToSimCtrlClientAnnouncement().Send( *this );
 
     CreateSaver( configFile );
     simDispatch_ = new SimulationDispatcher( dispatcher.GetClientsNetworker(), dispatcher.GetModel() );
@@ -58,30 +57,40 @@ Simulation::~Simulation()
 // Name: Simulation::OnReceive
 // Created: NLD 2006-09-22
 // -----------------------------------------------------------------------------
-void Simulation::OnReceive( const ASN1T_MsgsOutSim& asnInMsg )
+void Simulation::OnReceive( const ASN1T_MsgsSimToClient& asnMsg )
 {
-    simDispatch_->OnReceive( asnInMsg );
+    simDispatch_->OnReceive( asnMsg );
 
-    switch( asnInMsg.msg.t )
+    switch( asnMsg.msg.t )
     {
-    case T_MsgsOutSim_msg_msg_ctrl_send_current_state_begin:
-    {
-        dispatcher_.GetClientsNetworker().DenyConnections();
-        dispatcher_.GetModel           ().Reset();
-        MT_LOG_INFO_MSG( "Dispatcher - Initializing model" );
-        break;
-    }
-    case T_MsgsOutSim_msg_msg_ctrl_send_current_state_end:  
-    {
-        MT_LOG_INFO_MSG( "Dispatcher - Model initialized" );
-        dispatcher_.GetProfileManager  ().Reset(); // Profiles initialization
-        dispatcher_.GetClientsNetworker().AllowConnections();
-        break;
-    }
+        case T_MsgsSimToClient_msg_msg_ctrl_send_current_state_begin:
+        {
+            dispatcher_.GetClientsNetworker().DenyConnections();
+            dispatcher_.GetModel           ().Reset();
+            MT_LOG_INFO_MSG( "Dispatcher - Initializing model" );
+            break;
+        }
+        case T_MsgsSimToClient_msg_msg_ctrl_send_current_state_end:  
+        {
+            MT_LOG_INFO_MSG( "Dispatcher - Model initialized" );
+            dispatcher_.GetProfileManager  ().Reset(); // Profiles initialization
+            dispatcher_.GetClientsNetworker().AllowConnections();
+            break;
+        }
     };
     
     if( saver_ )
-        saver_->Save( const_cast< ASN1T_MsgsOutSim& >( asnInMsg ) );
+        saver_->Save( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::OnReceive
+// Created: NLD 2007-04-24
+// -----------------------------------------------------------------------------
+void Simulation::OnReceive( const ASN1T_MsgsSimToMiddle& asnMsg )
+{
+    // NOTHING
+    assert( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,21 +105,40 @@ void Simulation::OnReceive( unsigned int nMsgID, DIN::DIN_Input& dinMsg )
 
 // -----------------------------------------------------------------------------
 // Name: Simulation::Send
+// Created: NLD 2007-04-24
+// -----------------------------------------------------------------------------
+void Simulation::Send( const ASN1T_MsgsMiddleToSim& asnMsg )
+{
+    AsnMessageEncoder< ASN1T_MsgsMiddleToSim, ASN1C_MsgsMiddleToSim > asnEncoder( messageService_, asnMsg );
+    messageService_.Send( link_, eMsgMiddleToSim, asnEncoder.GetDinMsg() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::Send
+// Created: NLD 2007-04-24
+// -----------------------------------------------------------------------------
+void Simulation::Send( const ASN1T_MsgsMiddleToSim& asnMsg, const DIN::DIN_BufferedMessage& dinMsg )
+{
+    messageService_.Send( link_, eMsgMiddleToSim, dinMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void Simulation::Send( const ASN1T_MsgsInSim& asnMsg )
+void Simulation::Send( const ASN1T_MsgsClientToSim& asnMsg )
 {
-    AsnMessageEncoder< ASN1T_MsgsInSim, ASN1C_MsgsInSim > asnEncoder( messageService_, asnMsg );
-    messageService_.Send( link_, eMsgInSim, asnEncoder.GetDinMsg() );
+    AsnMessageEncoder< ASN1T_MsgsClientToSim, ASN1C_MsgsClientToSim > asnEncoder( messageService_, asnMsg );
+    messageService_.Send( link_, eMsgClientToSim, asnEncoder.GetDinMsg() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Simulation::Send
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-void Simulation::Send( const ASN1T_MsgsInSim& /*asnMsg*/, const DIN_BufferedMessage& dinMsg )
+void Simulation::Send( const ASN1T_MsgsClientToSim& /*asnMsg*/, const DIN_BufferedMessage& dinMsg )
 {
-    messageService_.Send( link_, eMsgInSim, dinMsg );
+    messageService_.Send( link_, eMsgClientToSim, dinMsg );
 }
 
 // -----------------------------------------------------------------------------

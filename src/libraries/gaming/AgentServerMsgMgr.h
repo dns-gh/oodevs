@@ -69,16 +69,15 @@ public:
     void Flush();
     void Disconnect();
 
-    virtual void Send( ASN1T_MsgsOutClient& message );
+    virtual void Send( ASN1T_MsgsClientToSim& message );
+    virtual void Send( ASN1T_MsgsClientToMiddle& message );
     virtual void SendMagicDestruction( const kernel::Entity_ABC& agent );
 
     DIN::DIN_BufferedMessage BuildMessage();
-    void SendMsgOutClient           ( ASN1OCTET* pMsg, int nMsgLength );
+    void SendMsgClientToSim ( ASN1OCTET* pMsg, int nMsgLength );
     void SendMsgUnitMagicActionDestroyComposante( const kernel::Agent_ABC& agent );
 
     void SetModel( Model& model );
-
-    void SendReplayerMessage( DIN::DIN_BufferedMessage& message );
     //@}
 
 private:
@@ -103,7 +102,8 @@ private:
     void OnReceiveMsgDebugDrawPoints                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     // ASN
-    void OnReceiveMsgInClient           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgSimToClient   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgMiddleToClient( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     void _OnReceiveMsgProfilingValues                       ( DIN::DIN_Input& input );
     void _OnReceiveMsgUnitVisionCones                       ( DIN::DIN_Input& input );
@@ -114,7 +114,8 @@ private:
     void _OnReceiveMsgPopulationFlowInterVisibility         ( DIN::DIN_Input& input );
     void _OnReceiveMsgKnowledgeGroup                        ( DIN::DIN_Input& input );
     void _OnReceiveMsgDebugDrawPoints                       ( DIN::DIN_Input& input );
-    void _OnReceiveMsgInClient                              ( DIN::DIN_Input& input );    
+    void _OnReceiveMsgSimToClient                           ( DIN::DIN_Input& input );    
+    void _OnReceiveMsgMiddleToClient                        ( DIN::DIN_Input& input );    
 
     // Control
     void OnReceiveMsgCtrlPauseAck             ( const ASN1T_MsgCtrlPauseAck&  asnMsg );

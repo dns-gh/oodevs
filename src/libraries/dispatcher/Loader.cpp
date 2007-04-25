@@ -24,7 +24,7 @@ using namespace dispatcher;
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
 Loader::Loader( SimulationDispatcher& simulation, const std::string& directory )
-    : simulation_( simulation )
+    : simulation_  ( simulation )
     , currentFrame_( 0 )
 {
     const bfs::path dir( directory, bfs::native );
@@ -124,7 +124,7 @@ void Loader::LoadKeyFrame( unsigned frame )
 
     tools::InputBinaryWrapper input( keys_ );
     while( keys_.tellg() < keyFrame.offset_ + keyFrame.size_ )
-        LoadInClientMessage( input ); 
+        LoadSimToClientMessage( input ); 
 
     currentFrame_ = keyFrame.frameNumber_;
 }
@@ -142,62 +142,40 @@ bool Loader::Tick()
     if( current.count_ )
     {
         updates_.seekg( current.offset_ );
-        LoadOutSimMessage( updates_, current.count_ );
+        LoadSimToClientMessage( updates_, current.count_ );
     }
     return true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Loader::LoadOutSimMessage
+// Name: Loader::LoadSimToClientMessage
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-void Loader::LoadOutSimMessage( std::ifstream& inputStream, unsigned count )
+void Loader::LoadSimToClientMessage( std::ifstream& inputStream, unsigned count )
 {
     tools::InputBinaryWrapper input( inputStream );
     while( count-- )
-        LoadOutSimMessage( input );
+        LoadSimToClientMessage( input );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Loader::LoadOutSimMessage
+// Name: Loader::LoadSimToClientMessage
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-void Loader::LoadOutSimMessage( tools::InputBinaryWrapper& input )
+void Loader::LoadSimToClientMessage( tools::InputBinaryWrapper& input )
 {
     unsigned size;
     input >> size;
     input.Read( (char*)buffer_, size );
 
-    ASN1T_MsgsOutSim message;
+    ASN1T_MsgsSimToClient message;
     ASN1PERDecodeBuffer decoder( buffer_, sizeof( buffer_ ), TRUE );
-    ASN1C_MsgsOutSim ctrl( decoder, message );
+    ASN1C_MsgsSimToClient ctrl( decoder, message );
     if( ctrl.Decode() != ASN_OK )
     {
         decoder.PrintErrorInfo();
         throw std::runtime_error( "ASN fussé" );
     }
-    simulation_.OnReceive( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Loader::LoadInClientMessage
-// Created: AGE 2007-04-11
-// -----------------------------------------------------------------------------
-void Loader::LoadInClientMessage( tools::InputBinaryWrapper& input )
-{
-    unsigned size;
-    input >> size;
-    input.Read( (char*)buffer_, size );
-
-    ASN1T_MsgsInClient message;
-    ASN1PERDecodeBuffer decoder( buffer_, sizeof( buffer_ ), TRUE );
-    ASN1C_MsgsInClient ctrl( decoder, message );
-    if( ctrl.Decode() != ASN_OK )
-    {
-        decoder.PrintErrorInfo();
-        throw std::runtime_error( "ASN fussé" );
-    }
-
     simulation_.OnReceive( message );
 }
 

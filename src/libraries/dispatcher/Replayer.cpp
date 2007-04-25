@@ -25,7 +25,6 @@ using namespace dispatcher;
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
 Replayer::Replayer( const Config& config )
-    : config_( config )
 {
     std::string profiles;
     {
@@ -43,11 +42,11 @@ Replayer::Replayer( const Config& config )
                         >> xml::attribute( "directory", directory );
     }
 
-    pModel_            = new Model              ();
-    pClientsNetworker_ = new ClientsNetworker   ( *this, config.GetGameFile() );
+    pModel_            = new Model               ();
+    pClientsNetworker_ = new ClientsNetworker    ( *this, config.GetGameFile() );
     simulation_        = new SimulationDispatcher( *pClientsNetworker_, *pModel_ );
-    loader_            = new LoaderFacade( *pClientsNetworker_, *simulation_, directory );
-    profiles_          = new ProfileManager( *pModel_, *pClientsNetworker_, config.BuildExerciseChildFile( profiles ) );
+    loader_            = new LoaderFacade        ( *pClientsNetworker_, *simulation_, directory );
+    profiles_          = new ProfileManager      ( *pModel_, *pClientsNetworker_, config.BuildExerciseChildFile( profiles ) );
 
     profiles_->Reset();
     pClientsNetworker_->AllowConnections();

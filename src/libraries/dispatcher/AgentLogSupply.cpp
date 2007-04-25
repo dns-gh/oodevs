@@ -80,7 +80,7 @@ void AgentLogSupply::Update( const ASN1T_MsgLogRavitaillementEtat& asnMsg )
 // -----------------------------------------------------------------------------
 void AgentLogSupply::Send( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientLogRavitaillementEtat asn;
+    AsnMsgSimToClientLogRavitaillementEtat asn;
 
     asn().oid_pion = agent_.GetID();
 

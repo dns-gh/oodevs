@@ -74,7 +74,7 @@ void Automat::Update( const ASN1T_MsgAutomateCreation& msg )
 {
     if( FlagUpdate() && pKnowledgeGroup_->GetID() != msg.oid_groupe_connaissance )
     {
-        AsnMsgInClientAutomateChangeGroupeConnaissanceAck ack;
+        AsnMsgSimToClientAutomateChangeGroupeConnaissanceAck ack;
         ack().error_code = EnumChangeHierarchyErrorCode::no_error;
         ack().oid_automate = msg.oid_automate;
         ack().oid_camp = msg.oid_camp;
@@ -171,7 +171,7 @@ void Automat::Update( const ASN1T_MsgAutomateOrder& asnMsg )
 // -----------------------------------------------------------------------------
 void Automat::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientAutomateCreation asn;
+    AsnMsgSimToClientAutomateCreation asn;
     asn().oid_automate            = nID_;
     asn().type_automate           = nType_;
     asn().nom                     = strName_.c_str(); // !! pointeur sur const char*
@@ -180,7 +180,7 @@ void Automat::SendCreation( Publisher_ABC& publisher ) const
     asn().oid_formation           = formation_.GetID();
     asn.Send( publisher );
 
-    AsnMsgInClientLogRavitaillementQuotas asnQuotas;
+    AsnMsgSimToClientLogRavitaillementQuotas asnQuotas;
     asnQuotas().oid_automate = nID_;
     quotas_.Send< ASN1T__SeqOfDotationQuota, ASN1T_DotationQuota >( asnQuotas().quotas );
     asnQuotas.Send( publisher );
@@ -195,7 +195,7 @@ void Automat::SendCreation( Publisher_ABC& publisher ) const
 void Automat::SendFullUpdate( Publisher_ABC& publisher ) const
 {
     {
-        AsnMsgInClientAutomateAttributes asn;
+        AsnMsgSimToClientAutomateAttributes asn;
         asn().m.etat_automatePresent = 1;
         asn().m.rapport_de_forcePresent = 1;
         asn().m.combat_de_rencontrePresent = 1;
@@ -211,7 +211,7 @@ void Automat::SendFullUpdate( Publisher_ABC& publisher ) const
     }
 
     {
-        AsnMsgInClientAutomateChangeLiensLogistiques asn;
+        AsnMsgSimToClientAutomateChangeLiensLogistiques asn;
         asn().oid_automate = nID_;
         if( pTC2_ )
         {

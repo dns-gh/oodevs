@@ -23,205 +23,205 @@
 // ASN ENCODER WRAPPER MACROS
 //=============================================================================
 
-// ASN Message which isn't a pointer and doesn't take any context
-#define NET_GENERATE_SEND_ASN_MSG_NOPTR( ASNMSG, ASNVAR )                   \
-class NET_ASN_Msg##ASNMSG                                                   \
-{                                                                           \
-public:                                                                     \
-    void Send( uint nCtx = 0 )                                  \
-    {                                                                       \
-        ASN1T_MsgsOutSim    globalAsnMsg;                                   \
-                                                                            \
-        globalAsnMsg.context             = nCtx;                            \
-        globalAsnMsg.msg.t               = T_MsgsOutSim_msg_msg_##ASNVAR;   \
-        globalAsnMsg.msg.u.msg_##ASNVAR  = asnMsg_;                         \
-        MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().SendMsgOutSim( globalAsnMsg ); \
-    }                                                                       \
-                                                                            \
-    ASN1T_Msg##ASNMSG& operator()() { return asnMsg_; }                     \
-                                                                            \
-private:                                                                    \
-    ASN1T_Msg##ASNMSG asnMsg_;                                              \
-}; 
-
-
-// ASN Message which is a pointer and doesn't take any context
-#define NET_GENERATE_SEND_ASN_MSG_PTR( ASNMSG, ASNVAR )                     \
-class NET_ASN_Msg##ASNMSG                                                   \
-{                                                                           \
-public:                                                                     \
-    void Send( uint nCtx = 0 )                                  \
-    {                                                                       \
-        ASN1T_MsgsOutSim    globalAsnMsg;                                   \
-                                                                            \
-        globalAsnMsg.context             = nCtx;                            \
-        globalAsnMsg.msg.t               = T_MsgsOutSim_msg_msg_##ASNVAR;   \
-        globalAsnMsg.msg.u.msg_##ASNVAR  = &asnMsg_;                        \
-        MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().SendMsgOutSim( globalAsnMsg ); \
-    }                                                                       \
-                                                                            \
-    ASN1T_Msg##ASNMSG& operator()() { return asnMsg_; }                     \
-                                                                            \
-private:                                                                    \
-    ASN1T_Msg##ASNMSG asnMsg_;                                              \
+#define GENERATE_EMPTY_ASN_MSG_SENDER( TARGET, ASNMSG, ASNVAR )  \
+class NET_ASN_Msg##ASNMSG                                     \
+{                                                                \
+public:                                                          \
+    NET_ASN_Msg##ASNMSG() {}                                  \
+                                                                 \
+    void Send( int context = 0 )       \
+    {                                                            \
+        ASN1T_Msgs##TARGET asnMsg;                               \
+        asnMsg.context = context;                                \
+        asnMsg.msg.t   = T_Msgs##TARGET##_msg_msg_##ASNVAR;      \
+        MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().Send( asnMsg ); \
+    }                                                            \
 };
-// ASN Message which is a pointer and take any context
-#define NET_GENERATE_SEND_ASN_MSG_NOMSG( ASNMSG, ASNVAR )                           \
-class NET_ASN_Msg##ASNMSG                                                           \
-{                                                                                   \
-public:                                                                             \
-    void Send( uint nCtx = 0 )                                          \
-    {                                                                               \
-        ASN1T_MsgsOutSim    globalAsnMsg;                                           \
-                                                                                    \
-        globalAsnMsg.context          = nCtx;                                       \
-        globalAsnMsg.msg.t            = T_MsgsOutSim_msg_msg_##ASNVAR;              \
-        MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().SendMsgOutSim( globalAsnMsg ); \
-    }                                                                               \
-}; 
+
+#define GENERATE_NOPTR_ASN_MSG_SENDER( TARGET, ASNMSG, ASNVAR )           \
+class NET_ASN_Msg##ASNMSG                                              \
+{                                                                         \
+public:                                                                   \
+    NET_ASN_Msg##ASNMSG() {}                                           \
+                                                                          \
+    void Send( int context = 0 )                \
+    {                                                                     \
+        ASN1T_Msgs##TARGET asnMsg;                                        \
+        asnMsg.context            = context;                              \
+        asnMsg.msg.t              = T_Msgs##TARGET##_msg_msg_##ASNVAR;    \
+        asnMsg.msg.u.msg_##ASNVAR = asnTmp;                               \
+        MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().Send( asnMsg ); \
+    }                                                                     \
+                                                                          \
+    ASN1T_Msg##ASNMSG& operator()() { return asnTmp; }                    \
+private:                                                                  \
+    ASN1T_Msg##ASNMSG asnTmp;                                             \
+                                                                          \
+};
+
+#define GENERATE_ASN_MSG_SENDER( TARGET, ASNMSG, ASNVAR )                 \
+class NET_ASN_Msg##ASNMSG                                              \
+{                                                                         \
+public:                                                                   \
+    NET_ASN_Msg##ASNMSG() {}                                           \
+                                                                          \
+    void Send( int context = 0 )                \
+    {                                                                     \
+        ASN1T_Msgs##TARGET asnMsg;                                        \
+        asnMsg.context            = context;                              \
+        asnMsg.msg.t              = T_Msgs##TARGET##_msg_msg_##ASNVAR;    \
+        asnMsg.msg.u.msg_##ASNVAR = &asnTmp;                              \
+        MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().Send( asnMsg ); \
+    }                                                                     \
+                                                                          \
+    ASN1T_Msg##ASNMSG& operator()() { return asnTmp; }                    \
+private:                                                                  \
+    ASN1T_Msg##ASNMSG asnTmp;                                             \
+                                                                          \
+};
 
 //=============================================================================
 // GENERATE ASN MESSAGES
 //=============================================================================
 
 // Control
-NET_GENERATE_SEND_ASN_MSG_NOPTR( CtrlBeginTick                , ctrl_begin_tick                   )
-NET_GENERATE_SEND_ASN_MSG_PTR  ( CtrlEndTick                  , ctrl_end_tick                     )
-NET_GENERATE_SEND_ASN_MSG_NOPTR( CtrlStopAck                  , ctrl_stop_ack                     )
-NET_GENERATE_SEND_ASN_MSG_NOPTR( CtrlResumeAck                , ctrl_resume_ack                   )
-NET_GENERATE_SEND_ASN_MSG_NOPTR( CtrlPauseAck                 , ctrl_pause_ack                    )
-NET_GENERATE_SEND_ASN_MSG_PTR  ( CtrlChangeTimeFactorAck      , ctrl_change_time_factor_ack       )
-NET_GENERATE_SEND_ASN_MSG_PTR  ( CtrlInfo                     , ctrl_info                         )
-NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlMeteoGlobaleAck          , ctrl_meteo_globale_ack            )
-NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlMeteoLocaleAck           , ctrl_meteo_locale_ack             )
-NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlCheckPointSaveBegin      , ctrl_checkpoint_save_begin        )
-NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlCheckPointSaveEnd        , ctrl_checkpoint_save_end          )
-NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlCheckPointSetFrequencyAck, ctrl_checkpoint_set_frequency_ack )
-NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlCheckPointSaveNowAck     , ctrl_checkpoint_save_now_ack      )
-NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlSendCurrentStateBegin    , ctrl_send_current_state_begin     )
-NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlSendCurrentStateEnd      , ctrl_send_current_state_end       )
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, CtrlBeginTick                , ctrl_begin_tick                   )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, CtrlEndTick                  , ctrl_end_tick                     )
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, CtrlStopAck                  , ctrl_stop_ack                     )
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, CtrlResumeAck                , ctrl_resume_ack                   )
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, CtrlPauseAck                 , ctrl_pause_ack                    )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, CtrlChangeTimeFactorAck      , ctrl_change_time_factor_ack       )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, CtrlInfo                     , ctrl_info                         )
+GENERATE_EMPTY_ASN_MSG_SENDER( SimToClient, CtrlMeteoGlobaleAck          , ctrl_meteo_globale_ack            )
+GENERATE_EMPTY_ASN_MSG_SENDER( SimToClient, CtrlMeteoLocaleAck           , ctrl_meteo_locale_ack             )
+GENERATE_EMPTY_ASN_MSG_SENDER( SimToClient, CtrlCheckPointSaveBegin      , ctrl_checkpoint_save_begin        )
+GENERATE_EMPTY_ASN_MSG_SENDER( SimToClient, CtrlCheckPointSaveEnd        , ctrl_checkpoint_save_end          )
+GENERATE_EMPTY_ASN_MSG_SENDER( SimToClient, CtrlCheckPointSetFrequencyAck, ctrl_checkpoint_set_frequency_ack )
+GENERATE_EMPTY_ASN_MSG_SENDER( SimToClient, CtrlCheckPointSaveNowAck     , ctrl_checkpoint_save_now_ack      )
+GENERATE_EMPTY_ASN_MSG_SENDER( SimToClient, CtrlSendCurrentStateBegin    , ctrl_send_current_state_begin     )
+GENERATE_EMPTY_ASN_MSG_SENDER( SimToClient, CtrlSendCurrentStateEnd      , ctrl_send_current_state_end       )
                                                                                             
 // Unit
-NET_GENERATE_SEND_ASN_MSG_PTR( PionCreation       , pion_creation         )
-NET_GENERATE_SEND_ASN_MSG_PTR( UnitAttributes     , unit_attributes       )
-NET_GENERATE_SEND_ASN_MSG_PTR( UnitMagicActionAck , unit_magic_action_ack )
-NET_GENERATE_SEND_ASN_MSG_PTR( UnitPathFind       , unit_pathfind         )
+GENERATE_ASN_MSG_SENDER( SimToClient, PionCreation       , pion_creation         )
+GENERATE_ASN_MSG_SENDER( SimToClient, UnitAttributes     , unit_attributes       )
+GENERATE_ASN_MSG_SENDER( SimToClient, UnitMagicActionAck , unit_magic_action_ack )
+GENERATE_ASN_MSG_SENDER( SimToClient, UnitPathFind       , unit_pathfind         )
 
 // Automate
-NET_GENERATE_SEND_ASN_MSG_PTR( AutomateCreation   , automate_creation   )
-NET_GENERATE_SEND_ASN_MSG_PTR( AutomateAttributes , automate_attributes )
+GENERATE_ASN_MSG_SENDER( SimToClient, AutomateCreation   , automate_creation   )
+GENERATE_ASN_MSG_SENDER( SimToClient, AutomateAttributes , automate_attributes )
 
 // Army / formation / knowledge groups
-NET_GENERATE_SEND_ASN_MSG_PTR( FormationCreation     , formation_creation       )
-NET_GENERATE_SEND_ASN_MSG_PTR( KnowledgeGroupCreation, knowledge_group_creation )
-NET_GENERATE_SEND_ASN_MSG_PTR( SideCreation          , side_creation            )
+GENERATE_ASN_MSG_SENDER( SimToClient, FormationCreation     , formation_creation       )
+GENERATE_ASN_MSG_SENDER( SimToClient, KnowledgeGroupCreation, knowledge_group_creation )
+GENERATE_ASN_MSG_SENDER( SimToClient, SideCreation          , side_creation            )
 
 // Hierarchie update
-NET_GENERATE_SEND_ASN_MSG_PTR( ChangeDiplomatieAck                , change_diplomatie_ack                   )
-NET_GENERATE_SEND_ASN_MSG_PTR( AutomateChangeGroupeConnaissanceAck, automate_change_groupe_connaissance_ack )
-NET_GENERATE_SEND_ASN_MSG_PTR( AutomateChangeLiensLogistiquesAck  , automate_change_liens_logistiques_ack   )
-NET_GENERATE_SEND_ASN_MSG_PTR( AutomateChangeLiensLogistiques     , automate_change_liens_logistiques       )
-NET_GENERATE_SEND_ASN_MSG_PTR( PionChangeSuperior                 , pion_change_superior                    )
-NET_GENERATE_SEND_ASN_MSG_PTR( PionChangeSuperiorAck              , pion_change_superior_ack                )
-NET_GENERATE_SEND_ASN_MSG_PTR( ChangeDiplomatie                   , change_diplomatie                       )
+GENERATE_ASN_MSG_SENDER( SimToClient, ChangeDiplomatieAck                , change_diplomatie_ack                   )
+GENERATE_ASN_MSG_SENDER( SimToClient, AutomateChangeGroupeConnaissanceAck, automate_change_groupe_connaissance_ack )
+GENERATE_ASN_MSG_SENDER( SimToClient, AutomateChangeLiensLogistiquesAck  , automate_change_liens_logistiques_ack   )
+GENERATE_ASN_MSG_SENDER( SimToClient, AutomateChangeLiensLogistiques     , automate_change_liens_logistiques       )
+GENERATE_ASN_MSG_SENDER( SimToClient, PionChangeSuperior                 , pion_change_superior                    )
+GENERATE_ASN_MSG_SENDER( SimToClient, PionChangeSuperiorAck              , pion_change_superior_ack                )
+GENERATE_ASN_MSG_SENDER( SimToClient, ChangeDiplomatie                   , change_diplomatie                       )
 
 // Logistic
-NET_GENERATE_SEND_ASN_MSG_PTR( LogMaintenanceTraitementEquipementCreation   , log_maintenance_traitement_equipement_creation    )
-NET_GENERATE_SEND_ASN_MSG_PTR( LogMaintenanceTraitementEquipementUpdate     , log_maintenance_traitement_equipement_update      )
-NET_GENERATE_SEND_ASN_MSG_PTR( LogMaintenanceTraitementEquipementDestruction, log_maintenance_traitement_equipement_destruction )
-NET_GENERATE_SEND_ASN_MSG_PTR( LogMaintenanceEtat                           , log_maintenance_etat                              )
-NET_GENERATE_SEND_ASN_MSG_PTR( LogSanteTraitementHumainCreation             , log_sante_traitement_humain_creation              )
-NET_GENERATE_SEND_ASN_MSG_PTR( LogSanteTraitementHumainUpdate               , log_sante_traitement_humain_update                )
-NET_GENERATE_SEND_ASN_MSG_PTR( LogSanteTraitementHumainDestruction          , log_sante_traitement_humain_destruction           )
-NET_GENERATE_SEND_ASN_MSG_PTR( LogSanteEtat                                 , log_sante_etat                                    )
-NET_GENERATE_SEND_ASN_MSG_PTR( LogRavitaillementTraitementCreation          , log_ravitaillement_traitement_creation            )
-NET_GENERATE_SEND_ASN_MSG_PTR( LogRavitaillementTraitementUpdate            , log_ravitaillement_traitement_update              )
-NET_GENERATE_SEND_ASN_MSG_PTR( LogRavitaillementTraitementDestruction       , log_ravitaillement_traitement_destruction         )
-NET_GENERATE_SEND_ASN_MSG_PTR( LogRavitaillementEtat                        , log_ravitaillement_etat                           )
-NET_GENERATE_SEND_ASN_MSG_PTR( LogRavitaillementQuotas                      , log_ravitaillement_quotas                         )
+GENERATE_ASN_MSG_SENDER( SimToClient, LogMaintenanceTraitementEquipementCreation   , log_maintenance_traitement_equipement_creation    )
+GENERATE_ASN_MSG_SENDER( SimToClient, LogMaintenanceTraitementEquipementUpdate     , log_maintenance_traitement_equipement_update      )
+GENERATE_ASN_MSG_SENDER( SimToClient, LogMaintenanceTraitementEquipementDestruction, log_maintenance_traitement_equipement_destruction )
+GENERATE_ASN_MSG_SENDER( SimToClient, LogMaintenanceEtat                           , log_maintenance_etat                              )
+GENERATE_ASN_MSG_SENDER( SimToClient, LogSanteTraitementHumainCreation             , log_sante_traitement_humain_creation              )
+GENERATE_ASN_MSG_SENDER( SimToClient, LogSanteTraitementHumainUpdate               , log_sante_traitement_humain_update                )
+GENERATE_ASN_MSG_SENDER( SimToClient, LogSanteTraitementHumainDestruction          , log_sante_traitement_humain_destruction           )
+GENERATE_ASN_MSG_SENDER( SimToClient, LogSanteEtat                                 , log_sante_etat                                    )
+GENERATE_ASN_MSG_SENDER( SimToClient, LogRavitaillementTraitementCreation          , log_ravitaillement_traitement_creation            )
+GENERATE_ASN_MSG_SENDER( SimToClient, LogRavitaillementTraitementUpdate            , log_ravitaillement_traitement_update              )
+GENERATE_ASN_MSG_SENDER( SimToClient, LogRavitaillementTraitementDestruction       , log_ravitaillement_traitement_destruction         )
+GENERATE_ASN_MSG_SENDER( SimToClient, LogRavitaillementEtat                        , log_ravitaillement_etat                           )
+GENERATE_ASN_MSG_SENDER( SimToClient, LogRavitaillementQuotas                      , log_ravitaillement_quotas                         )
 
 // Context infos
-NET_GENERATE_SEND_ASN_MSG_NOPTR( LimitCreationRequestAck   , limit_creation_request_ack    )
-NET_GENERATE_SEND_ASN_MSG_NOPTR( LimitDestructionRequestAck, limit_destruction_request_ack ) 
-NET_GENERATE_SEND_ASN_MSG_NOPTR( LimitUpdateRequestAck     , limit_update_request_ack      ) 
-NET_GENERATE_SEND_ASN_MSG_NOPTR( LimaCreationRequestAck    , lima_creation_request_ack     ) 
-NET_GENERATE_SEND_ASN_MSG_NOPTR( LimaDestructionRequestAck , lima_destruction_request_ack  )
-NET_GENERATE_SEND_ASN_MSG_NOPTR( LimaUpdateRequestAck      , lima_update_request_ack       )
-NET_GENERATE_SEND_ASN_MSG_PTR  ( LimitCreation             , limit_creation                )
-NET_GENERATE_SEND_ASN_MSG_PTR  ( LimitUpdate               , limit_update                  )
-NET_GENERATE_SEND_ASN_MSG_NOPTR( LimitDestruction          , limit_destruction             )
-NET_GENERATE_SEND_ASN_MSG_PTR  ( LimaCreation              , lima_creation                 )
-NET_GENERATE_SEND_ASN_MSG_PTR  ( LimaUpdate                , lima_update                   )
-NET_GENERATE_SEND_ASN_MSG_NOPTR( LimaDestruction           , lima_destruction              )
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, LimitCreationRequestAck   , limit_creation_request_ack    )
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, LimitDestructionRequestAck, limit_destruction_request_ack ) 
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, LimitUpdateRequestAck     , limit_update_request_ack      ) 
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, LimaCreationRequestAck    , lima_creation_request_ack     ) 
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, LimaDestructionRequestAck , lima_destruction_request_ack  )
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, LimaUpdateRequestAck      , lima_update_request_ack       )
+GENERATE_ASN_MSG_SENDER  ( SimToClient, LimitCreation             , limit_creation                )
+GENERATE_ASN_MSG_SENDER  ( SimToClient, LimitUpdate               , limit_update                  )
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, LimitDestruction          , limit_destruction             )
+GENERATE_ASN_MSG_SENDER  ( SimToClient, LimaCreation              , lima_creation                 )
+GENERATE_ASN_MSG_SENDER  ( SimToClient, LimaUpdate                , lima_update                   )
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, LimaDestruction           , lima_destruction              )
 
 // Fire
-NET_GENERATE_SEND_ASN_MSG_PTR  ( StartPionFire      , start_pion_fire       )
-NET_GENERATE_SEND_ASN_MSG_PTR  ( StartPopulationFire, start_population_fire )
-NET_GENERATE_SEND_ASN_MSG_PTR  ( StopPionFire       , stop_pion_fire        )
-NET_GENERATE_SEND_ASN_MSG_PTR  ( StopPopulationFire , stop_population_fire  )
-NET_GENERATE_SEND_ASN_MSG_PTR  ( Explosion          , explosion             )
-NET_GENERATE_SEND_ASN_MSG_PTR  ( StartFireEffect    , start_fire_effect     )
-NET_GENERATE_SEND_ASN_MSG_NOPTR( StopFireEffect     , stop_fire_effect      )
+GENERATE_ASN_MSG_SENDER  ( SimToClient, StartPionFire      , start_pion_fire       )
+GENERATE_ASN_MSG_SENDER  ( SimToClient, StartPopulationFire, start_population_fire )
+GENERATE_ASN_MSG_SENDER  ( SimToClient, StopPionFire       , stop_pion_fire        )
+GENERATE_ASN_MSG_SENDER  ( SimToClient, StopPopulationFire , stop_population_fire  )
+GENERATE_ASN_MSG_SENDER  ( SimToClient, Explosion          , explosion             )
+GENERATE_ASN_MSG_SENDER  ( SimToClient, StartFireEffect    , start_fire_effect     )
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, StopFireEffect     , stop_fire_effect      )
 
 // Unit knowledge
-NET_GENERATE_SEND_ASN_MSG_PTR ( UnitKnowledgeCreation   , unit_knowledge_creation    )
-NET_GENERATE_SEND_ASN_MSG_PTR ( UnitKnowledgeUpdate     , unit_knowledge_update      )
-NET_GENERATE_SEND_ASN_MSG_PTR ( UnitKnowledgeDestruction, unit_knowledge_destruction )
+GENERATE_ASN_MSG_SENDER ( SimToClient, UnitKnowledgeCreation   , unit_knowledge_creation    )
+GENERATE_ASN_MSG_SENDER ( SimToClient, UnitKnowledgeUpdate     , unit_knowledge_update      )
+GENERATE_ASN_MSG_SENDER ( SimToClient, UnitKnowledgeDestruction, unit_knowledge_destruction )
 
 // Orders
-NET_GENERATE_SEND_ASN_MSG_PTR( PionOrderManagement      , pion_order_management       )
-NET_GENERATE_SEND_ASN_MSG_PTR( AutomateOrderManagement  , automate_order_management   )
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationOrderManagement, population_order_management )
-NET_GENERATE_SEND_ASN_MSG_PTR( PionOrder                , pion_order                  )
-NET_GENERATE_SEND_ASN_MSG_PTR( PionOrderAck             , pion_order_ack              )
-NET_GENERATE_SEND_ASN_MSG_PTR( AutomateOrder            , automate_order              )
-NET_GENERATE_SEND_ASN_MSG_PTR( AutomateOrderAck         , automate_order_ack          )
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationOrder          , population_order            )
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationOrderAck       , population_order_ack        )
-NET_GENERATE_SEND_ASN_MSG_PTR( FragOrderAck             , frag_order_ack              )
+GENERATE_ASN_MSG_SENDER( SimToClient, PionOrderManagement      , pion_order_management       )
+GENERATE_ASN_MSG_SENDER( SimToClient, AutomateOrderManagement  , automate_order_management   )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationOrderManagement, population_order_management )
+GENERATE_ASN_MSG_SENDER( SimToClient, PionOrder                , pion_order                  )
+GENERATE_ASN_MSG_SENDER( SimToClient, PionOrderAck             , pion_order_ack              )
+GENERATE_ASN_MSG_SENDER( SimToClient, AutomateOrder            , automate_order              )
+GENERATE_ASN_MSG_SENDER( SimToClient, AutomateOrderAck         , automate_order_ack          )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationOrder          , population_order            )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationOrderAck       , population_order_ack        )
+GENERATE_ASN_MSG_SENDER( SimToClient, FragOrderAck             , frag_order_ack              )
 
 // Misc
-NET_GENERATE_SEND_ASN_MSG_PTR( SetAutomateModeAck       , set_automate_mode_ack       )
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationMagicActionAck , population_magic_action_ack )
+GENERATE_ASN_MSG_SENDER( SimToClient, SetAutomateModeAck       , set_automate_mode_ack       )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationMagicActionAck , population_magic_action_ack )
 
 // CR
-NET_GENERATE_SEND_ASN_MSG_PTR( CR, cr )
+GENERATE_ASN_MSG_SENDER( SimToClient, CR, cr )
 
 // Objects
-NET_GENERATE_SEND_ASN_MSG_PTR  ( ObjectCreation       , object_creation         )
-NET_GENERATE_SEND_ASN_MSG_NOPTR( ObjectDestruction    , object_destruction      )
-NET_GENERATE_SEND_ASN_MSG_PTR  ( ObjectUpdate         , object_update           )
-NET_GENERATE_SEND_ASN_MSG_PTR  ( ObjectMagicActionAck , object_magic_action_ack )
+GENERATE_ASN_MSG_SENDER  ( SimToClient, ObjectCreation       , object_creation         )
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, ObjectDestruction    , object_destruction      )
+GENERATE_ASN_MSG_SENDER  ( SimToClient, ObjectUpdate         , object_update           )
+GENERATE_ASN_MSG_SENDER  ( SimToClient, ObjectMagicActionAck , object_magic_action_ack )
 
 // Object knowledge
-NET_GENERATE_SEND_ASN_MSG_PTR( ObjectKnowledgeCreation   , object_knowledge_creation    )
-NET_GENERATE_SEND_ASN_MSG_PTR( ObjectKnowledgeUpdate     , object_knowledge_update      )
-NET_GENERATE_SEND_ASN_MSG_PTR( ObjectKnowledgeDestruction, object_knowledge_destruction )
+GENERATE_ASN_MSG_SENDER( SimToClient, ObjectKnowledgeCreation   , object_knowledge_creation    )
+GENERATE_ASN_MSG_SENDER( SimToClient, ObjectKnowledgeUpdate     , object_knowledge_update      )
+GENERATE_ASN_MSG_SENDER( SimToClient, ObjectKnowledgeDestruction, object_knowledge_destruction )
 
 // Logistique - Rav
-NET_GENERATE_SEND_ASN_MSG_NOPTR( LogRavitaillementChangeQuotasAck, log_ravitaillement_change_quotas_ack )
-NET_GENERATE_SEND_ASN_MSG_NOPTR( LogRavitaillementPousserFluxAck , log_ravitaillement_pousser_flux_ack  )
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, LogRavitaillementChangeQuotasAck, log_ravitaillement_change_quotas_ack )
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, LogRavitaillementPousserFluxAck , log_ravitaillement_pousser_flux_ack  )
 
 // Population
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationCreation                , population_creation                  )
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationUpdate                  , population_update                    )
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationConcentrationCreation   , population_concentration_creation    )
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationConcentrationDestruction, population_concentration_destruction )
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationConcentrationUpdate     , population_concentration_update      )
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationFluxCreation            , population_flux_creation             )
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationFluxDestruction         , population_flux_destruction          )
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationFluxUpdate              , population_flux_update               )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationCreation                , population_creation                  )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationUpdate                  , population_update                    )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationConcentrationCreation   , population_concentration_creation    )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationConcentrationDestruction, population_concentration_destruction )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationConcentrationUpdate     , population_concentration_update      )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationFluxCreation            , population_flux_creation             )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationFluxDestruction         , population_flux_destruction          )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationFluxUpdate              , population_flux_update               )
 
 // Population knowledge
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationKnowledgeCreation                , population_knowledge_creation                  )
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationKnowledgeUpdate                  , population_knowledge_update                    )
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationKnowledgeDestruction             , population_knowledge_destruction               )
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationConcentrationKnowledgeCreation   , population_concentration_knowledge_creation    )
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationConcentrationKnowledgeDestruction, population_concentration_knowledge_destruction )
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationConcentrationKnowledgeUpdate     , population_concentration_knowledge_update      )
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationFluxKnowledgeCreation            , population_flux_knowledge_creation             )
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationFluxKnowledgeDestruction         , population_flux_knowledge_destruction          )
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationFluxKnowledgeUpdate              , population_flux_knowledge_update               )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationKnowledgeCreation                , population_knowledge_creation                  )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationKnowledgeUpdate                  , population_knowledge_update                    )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationKnowledgeDestruction             , population_knowledge_destruction               )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationConcentrationKnowledgeCreation   , population_concentration_knowledge_creation    )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationConcentrationKnowledgeDestruction, population_concentration_knowledge_destruction )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationConcentrationKnowledgeUpdate     , population_concentration_knowledge_update      )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationFluxKnowledgeCreation            , population_flux_knowledge_creation             )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationFluxKnowledgeDestruction         , population_flux_knowledge_destruction          )
+GENERATE_ASN_MSG_SENDER( SimToClient, PopulationFluxKnowledgeUpdate              , population_flux_knowledge_update               )
 
 #endif // __NET_ASN_Messages_h_
 

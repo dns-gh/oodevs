@@ -149,7 +149,7 @@ void Population::Update( const ASN1T_MsgPopulationOrder& msg )
 // -----------------------------------------------------------------------------
 void Population::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientPopulationCreation asn;
+    AsnMsgSimToClientPopulationCreation asn;
 
     asn().oid_population  = nID_;
     asn().oid_camp        = side_.GetID();
@@ -166,7 +166,7 @@ void Population::SendCreation( Publisher_ABC& publisher ) const
 void Population::SendFullUpdate( Publisher_ABC& publisher ) const
 {
     {
-        AsnMsgInClientPopulationUpdate asn;
+        AsnMsgSimToClientPopulationUpdate asn;
 
         asn().m.etat_dominationPresent = 1;
 

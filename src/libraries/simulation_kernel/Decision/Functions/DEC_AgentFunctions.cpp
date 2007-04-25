@@ -236,10 +236,10 @@ void DEC_AgentFunctions::IsPC( DIA_Call_ABC& call, const MIL_AgentPion& callerAg
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::IsAutomateEmbraye
+// Name: DEC_AgentFunctions::IsAutomateEngaged
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::IsAutomateEmbraye( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+void DEC_AgentFunctions::IsAutomateEngaged( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     call.GetResult().SetValue( callerAgent.GetAutomate().IsEngaged() );
 }

@@ -44,7 +44,7 @@ AgentOrder::~AgentOrder()
 // -----------------------------------------------------------------------------
 void AgentOrder::Send( Publisher_ABC& publisher )
 {
-    AsnMsgInClientPionOrder asn;
+    AsnMsgSimToClientPionOrder asn;
     asn().oid_unite_executante = agent_.GetID();
     asn().mission              = missionID_;
     Order_ABC::Send( asn().order_context );

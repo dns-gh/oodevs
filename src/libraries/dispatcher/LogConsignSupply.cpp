@@ -95,7 +95,7 @@ void LogConsignSupply::Update( const ASN1T_MsgLogRavitaillementTraitementUpdate&
 // -----------------------------------------------------------------------------
 void LogConsignSupply::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientLogRavitaillementTraitementCreation asn;
+    AsnMsgSimToClientLogRavitaillementTraitementCreation asn;
 
     asn().oid_consigne  = nID_;
     asn().oid_automate  = automat_.GetID();
@@ -115,7 +115,7 @@ void LogConsignSupply::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void LogConsignSupply::SendFullUpdate( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientLogRavitaillementTraitementUpdate asn;
+    AsnMsgSimToClientLogRavitaillementTraitementUpdate asn;
 
     asn().oid_consigne = nID_;
     asn().oid_automate = automat_.GetID();
@@ -144,7 +144,7 @@ void LogConsignSupply::SendFullUpdate( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void LogConsignSupply::CommitDestruction()
 {
-    AsnMsgInClientLogRavitaillementTraitementDestruction asn;
+    AsnMsgSimToClientLogRavitaillementTraitementDestruction asn;
     asn().oid_consigne = nID_;
     asn().oid_automate = automat_.GetID();
     Send( asn );

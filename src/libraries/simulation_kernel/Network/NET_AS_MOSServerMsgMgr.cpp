@@ -31,11 +31,14 @@ using namespace DIN;
 //@{
 static enum  
 {
-    eMsgOutSim                                 = 0,
-    eMsgInSim                                  = 1,
+    eMsgSimToClient                            = 0,
+    eMsgClientToSim                            = 1,
 
-    eMsgOutClient                              = 2,
-    eMsgInClient                               = 3,
+    eMsgSimToMiddle                            = 2,
+    eMsgMiddleToSim                            = 3,
+
+    eMsgClientToMiddle                         = 4,
+    eMsgMiddleToClient                         = 5,
 
     eMsgEnableUnitVisionCones                  = 1000,
     eMsgDisableUnitVisionCones                 = 1001,
@@ -50,7 +53,7 @@ static enum
     eMsgPopulationConcentrationInterVisibility = 1011,
     eMsgPopulationFlowInterVisibility          = 1012,
     eMsgDebugDrawPoints                        = 1015,
-    eMsgEnvironmentType                        = 1016
+    eMsgEnvironmentType                        = 1016,
 };
 //@}
 
@@ -62,7 +65,8 @@ NET_AS_MOSServerMsgMgr::NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer )
     : NET_AS_MOSServerMgr_ABC( agentServer )
     , messageService_        ( *this, agentServer.GetDINEngine(), DIN_ConnectorHost() )
 {
-    messageService_.RegisterReceivedMessage( eMsgInSim                 , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgInSim                  );
+    messageService_.RegisterReceivedMessage( eMsgClientToSim           , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgClientToSim            );
+    messageService_.RegisterReceivedMessage( eMsgMiddleToSim           , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgMiddleToSim            );
     messageService_.RegisterReceivedMessage( eMsgEnableUnitVisionCones , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgEnableUnitVisionCones  );
     messageService_.RegisterReceivedMessage( eMsgDisableUnitVisionCones, *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgDisableUnitVisionCones );
     messageService_.RegisterReceivedMessage( eMsgEnableProfiling       , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgEnableProfiling        );
@@ -129,11 +133,19 @@ void NET_AS_MOSServerMsgMgr::DeleteMessagesFrom( DIN_Link& dinLink )
 {
     {
         MT_CriticalSectionLocker lockerList( ctlListCriticalSection_ );
-        for( T_MessageControllerVector::iterator it = messageControllerList_.begin(); it != messageControllerList_.end(); )
+        for( T_MessageClientToSimControllerVector::iterator it = messageClientToSimControllerList_.begin(); it != messageClientToSimControllerList_.end(); )
             if( (**it).GetLink() == &dinLink )
             {
                 delete *it;
-                it = messageControllerList_.erase( it );
+                it = messageClientToSimControllerList_.erase( it );
+            }
+            else
+                ++it;
+        for( T_MessageMiddleToSimControllerVector::iterator it = messageMiddleToSimControllerList_.begin(); it != messageMiddleToSimControllerList_.end(); )
+            if( (**it).GetLink() == &dinLink )
+            {
+                delete *it;
+                it = messageMiddleToSimControllerList_.erase( it );
             }
             else
                 ++it;
@@ -265,13 +277,13 @@ void NET_AS_MOSServerMsgMgr::SendMsgEnvironmentType( DIN::DIN_BufferedMessage& m
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgOutSim
+// Name: NET_AS_MOSServerMsgMgr::Send
 // Created: NLD 2003-02-24
 //-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::SendMsgOutSim( ASN1T_MsgsOutSim& asnMsg )
+void NET_AS_MOSServerMsgMgr::Send( ASN1T_MsgsSimToClient& asnMsg )
 {
     ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
-    ASN1C_MsgsOutSim asnMsgCtrl( asnPEREncodeBuffer, asnMsg );
+    ASN1C_MsgsSimToClient asnMsgCtrl( asnPEREncodeBuffer, asnMsg );
     if( asnMsgCtrl.Encode() != ASN_OK )
     {
         asnPEREncodeBuffer.PrintErrorInfo();
@@ -282,7 +294,7 @@ void NET_AS_MOSServerMsgMgr::SendMsgOutSim( ASN1T_MsgsOutSim& asnMsg )
     DIN_BufferedMessage dinMsg = BuildMessage();
     dinMsg.GetOutput().Append( asnPEREncodeBuffer.GetMsgPtr(), asnPEREncodeBuffer.GetMsgLen() );
 
-    SendMsgToAll( eMsgOutSim, dinMsg );
+    SendMsgToAll( eMsgSimToClient, dinMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -379,16 +391,16 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlChangeTimeFactor( const ASN1T_MsgCt
 }
 
 //-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::OnReceiveMsgInSim
+// Name: NET_AS_MOSServerMsgMgr::OnReceiveMsgClientToSim
 // Created: NLD 2003-02-26
 //-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveMsgInSim( DIN_Link& linkFrom, DIN_Input& input )
+void NET_AS_MOSServerMsgMgr::OnReceiveMsgClientToSim( DIN_Link& linkFrom, DIN_Input& input )
 {
     uint nAsnMsgSize = input.GetAvailable();
     assert( nAsnMsgSize <= sizeof(aASNDecodeBuffer_) );
 
     // Get a MessageController
-    NET_ASN_MsgsInSimController& msgCtrl = *new NET_ASN_MsgsInSimController( aASNDecodeBuffer_, sizeof( aASNDecodeBuffer_ ) );
+    NET_ASN_MsgsClientToSimController& msgCtrl = *new NET_ASN_MsgsClientToSimController( aASNDecodeBuffer_, sizeof( aASNDecodeBuffer_ ) );
     msgCtrl.SetLink( linkFrom );
     // Fill the asn buffer array
     memcpy( aASNDecodeBuffer_, input.GetBuffer(nAsnMsgSize), nAsnMsgSize);
@@ -411,7 +423,43 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgInSim( DIN_Link& linkFrom, DIN_Input& i
 
     // Mutex Lock
     MT_CriticalSectionLocker locker( ctlListCriticalSection_ );
-    messageControllerList_.push_back( &msgCtrl );
+    messageClientToSimControllerList_.push_back( &msgCtrl );
+}
+
+//-----------------------------------------------------------------------------
+// Name: NET_AS_MOSServerMsgMgr::OnReceiveMsgMiddleToSim
+// Created: NLD 2003-02-26
+//-----------------------------------------------------------------------------
+void NET_AS_MOSServerMsgMgr::OnReceiveMsgMiddleToSim( DIN_Link& linkFrom, DIN_Input& input )
+{
+    uint nAsnMsgSize = input.GetAvailable();
+    assert( nAsnMsgSize <= sizeof(aASNDecodeBuffer_) );
+
+    // Get a MessageController
+    NET_ASN_MsgsMiddleToSimController& msgCtrl = *new NET_ASN_MsgsMiddleToSimController( aASNDecodeBuffer_, sizeof( aASNDecodeBuffer_ ) );
+    msgCtrl.SetLink( linkFrom );
+    // Fill the asn buffer array
+    memcpy( aASNDecodeBuffer_, input.GetBuffer(nAsnMsgSize), nAsnMsgSize);
+
+    // Decode
+    if( msgCtrl.Decode() != ASN_OK )
+    {
+        msgCtrl.PrintErrorInfo();
+        delete &msgCtrl;
+        assert( false ); //$$$ TMP
+        return;
+    }
+
+#ifdef _DEBUG
+    std::cout << "BEGIN MSG DUMP =>" << std::endl;
+    msgCtrl.SetTrace( true );
+    msgCtrl.Print( "Receiving MsgsInSim" );
+    std::cout << "END MSG DUMP =>" << std::endl;
+#endif
+
+    // Mutex Lock
+    MT_CriticalSectionLocker locker( ctlListCriticalSection_ );
+    messageMiddleToSimControllerList_.push_back( &msgCtrl );
 }
 
 // -----------------------------------------------------------------------------
@@ -420,61 +468,94 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgInSim( DIN_Link& linkFrom, DIN_Input& i
 // -----------------------------------------------------------------------------
 void NET_AS_MOSServerMsgMgr::DoUpdate()
 {
-    T_MessageControllerVector noContextMessages;
     {
-        MT_CriticalSectionLocker locker( ctlListCriticalSection_ );
-        noContextMessages = messageControllerList_;
-        messageControllerList_.clear();
+        T_MessageClientToSimControllerVector messages;
+        {
+            MT_CriticalSectionLocker locker( ctlListCriticalSection_ );
+            messages = messageClientToSimControllerList_;
+            messageClientToSimControllerList_.clear();
+        }
+        DoUpdate( messages );
     }
-    DoUpdate( noContextMessages );
+    {
+        T_MessageMiddleToSimControllerVector messages;
+        {
+            MT_CriticalSectionLocker locker( ctlListCriticalSection_ );
+            messages = messageMiddleToSimControllerList_;
+            messageMiddleToSimControllerList_.clear();
+        }
+        DoUpdate( messages );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerMsgMgr::DoUpdate
 // Created: AGE 2004-02-03
 // -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::DoUpdate( const T_MessageControllerVector& messages )
+void NET_AS_MOSServerMsgMgr::DoUpdate( const T_MessageClientToSimControllerVector& messages )
 {
     MIL_AgentServer& workspace = MIL_AgentServer::GetWorkspace();
-    for( CIT_MessageControllerVector it = messages.begin(); it != messages.end(); ++it )
+    for( CIT_MessageClientToSimControllerVector it = messages.begin(); it != messages.end(); ++it )
     {
         assert( *it );
-        NET_ASN_MsgsInSimController& msgCtrl = **it;
-        ASN1T_MsgsInSim& asnMsg = msgCtrl.GetMessage();
+        NET_ASN_MsgsClientToSimController& msgCtrl = **it;
+        ASN1T_MsgsClientToSim& asnMsg = msgCtrl.GetMessage();
 
         uint nCtx = asnMsg.context;
         switch( asnMsg.msg.t )
         {
-            case T_MsgsInSim_msg_msg_ctrl_client_announcement           : OnReceiveMsgCtrlClientAnnouncement( *msgCtrl.GetLink() ); break;
-            case T_MsgsInSim_msg_msg_ctrl_stop                          : OnReceiveMsgCtrlStop              (); break;
-            case T_MsgsInSim_msg_msg_ctrl_pause                         : OnReceiveMsgCtrlPause             (); break;
-            case T_MsgsInSim_msg_msg_ctrl_resume                        : OnReceiveMsgCtrlResume            (); break;
-            case T_MsgsInSim_msg_msg_ctrl_change_time_factor            : OnReceiveMsgCtrlChangeTimeFactor  ( asnMsg.msg.u.msg_ctrl_change_time_factor ); break;
-            case T_MsgsInSim_msg_msg_ctrl_meteo_globale                 : workspace.GetMeteoDataManager     ().OnReceiveMsgGlobalMeteo                 ( *asnMsg.msg.u.msg_ctrl_meteo_globale                          ); break;
-            case T_MsgsInSim_msg_msg_ctrl_meteo_locale                  : workspace.GetMeteoDataManager     ().OnReceiveMsgLocalMeteo                  ( *asnMsg.msg.u.msg_ctrl_meteo_locale                         ); break;
-            case T_MsgsInSim_msg_msg_ctrl_checkpoint_save_now           : workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSaveNow           ( *asnMsg.msg.u.msg_ctrl_checkpoint_save_now                  ); break;
-            case T_MsgsInSim_msg_msg_ctrl_checkpoint_set_frequency      : workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSetFrequency      (  asnMsg.msg.u.msg_ctrl_checkpoint_set_frequency             ); break;
-            case T_MsgsInSim_msg_msg_limit_creation_request             : workspace.GetTacticalLineManager  ().OnReceiveMsgLimitCreationRequest        ( *asnMsg.msg.u.msg_limit_creation_request             , nCtx ); break;
-            case T_MsgsInSim_msg_msg_limit_destruction_request          : workspace.GetTacticalLineManager  ().OnReceiveMsgLimitDestructionRequest     (  asnMsg.msg.u.msg_limit_destruction_request          , nCtx ); break;
-            case T_MsgsInSim_msg_msg_limit_update_request               : workspace.GetTacticalLineManager  ().OnReceiveMsgLimitUpdateRequest          ( *asnMsg.msg.u.msg_limit_update_request               , nCtx ); break;
-            case T_MsgsInSim_msg_msg_lima_creation_request              : workspace.GetTacticalLineManager  ().OnReceiveMsgLimaCreationRequest         ( *asnMsg.msg.u.msg_lima_creation_request              , nCtx ); break;
-            case T_MsgsInSim_msg_msg_lima_destruction_request           : workspace.GetTacticalLineManager  ().OnReceiveMsgLimaDestructionRequest      (  asnMsg.msg.u.msg_lima_destruction_request           , nCtx ); break;
-            case T_MsgsInSim_msg_msg_lima_update_request                : workspace.GetTacticalLineManager  ().OnReceiveMsgLimaUpdateRequest           ( *asnMsg.msg.u.msg_lima_update_request                , nCtx ); break;            
-            case T_MsgsInSim_msg_msg_pion_order                         : workspace.GetEntityManager        ().OnReceiveMsgPionOrder                   ( *asnMsg.msg.u.msg_pion_order                         , nCtx ); break;         
-            case T_MsgsInSim_msg_msg_automate_order                     : workspace.GetEntityManager        ().OnReceiveMsgAutomateOrder               ( *asnMsg.msg.u.msg_automate_order                     , nCtx ); break;
-            case T_MsgsInSim_msg_msg_population_order                   : workspace.GetEntityManager        ().OnReceiveMsgPopulationOrder             ( *asnMsg.msg.u.msg_population_order                   , nCtx ); break;
-            case T_MsgsInSim_msg_msg_frag_order                         : workspace.GetEntityManager        ().OnReceiveMsgFragOrder                   ( *asnMsg.msg.u.msg_frag_order                         , nCtx ); break;
-            case T_MsgsInSim_msg_msg_population_magic_action            : workspace.GetEntityManager        ().OnReceiveMsgPopulationMagicAction       ( *asnMsg.msg.u.msg_population_magic_action            , nCtx ); break;
-            case T_MsgsInSim_msg_msg_set_automate_mode                  : workspace.GetEntityManager        ().OnReceiveMsgSetAutomateMode             ( *asnMsg.msg.u.msg_set_automate_mode                  , nCtx ); break;
-            case T_MsgsInSim_msg_msg_unit_magic_action                  : workspace.GetEntityManager        ().OnReceiveMsgUnitMagicAction             ( *asnMsg.msg.u.msg_unit_magic_action                  , nCtx ); break;
-            case T_MsgsInSim_msg_msg_object_magic_action                : workspace.GetEntityManager        ().OnReceiveMsgObjectMagicAction           ( *asnMsg.msg.u.msg_object_magic_action                , nCtx ); break;
-            case T_MsgsInSim_msg_msg_change_diplomatie                  : workspace.GetEntityManager        ().OnReceiveMsgChangeDiplomacy             ( *asnMsg.msg.u.msg_change_diplomatie                  , nCtx ); break;
-            case T_MsgsInSim_msg_msg_automate_change_groupe_connaissance: workspace.GetEntityManager        ().OnReceiveMsgAutomateChangeKnowledgeGroup( *asnMsg.msg.u.msg_automate_change_groupe_connaissance, nCtx ); break;
-            case T_MsgsInSim_msg_msg_automate_change_liens_logistiques  : workspace.GetEntityManager        ().OnReceiveMsgAutomateChangeLogisticLinks ( *asnMsg.msg.u.msg_automate_change_liens_logistiques  , nCtx ); break;
-            case T_MsgsInSim_msg_msg_pion_change_superior               : workspace.GetEntityManager        ().OnReceiveMsgPionChangeSuperior          ( *asnMsg.msg.u.msg_pion_change_superior               , nCtx ); break;
-            case T_MsgsInSim_msg_msg_log_ravitaillement_change_quotas   : workspace.GetEntityManager        ().OnReceiveMsgLogSupplyChangeQuotas       ( *asnMsg.msg.u.msg_log_ravitaillement_change_quotas   , nCtx ); break;
-            case T_MsgsInSim_msg_msg_log_ravitaillement_pousser_flux    : workspace.GetEntityManager        ().OnReceiveMsgLogSupplyPushFlow           ( *asnMsg.msg.u.msg_log_ravitaillement_pousser_flux    , nCtx ); break;
+            case T_MsgsClientToSim_msg_msg_ctrl_stop                          : OnReceiveMsgCtrlStop              (); break;
+            case T_MsgsClientToSim_msg_msg_ctrl_pause                         : OnReceiveMsgCtrlPause             (); break;
+            case T_MsgsClientToSim_msg_msg_ctrl_resume                        : OnReceiveMsgCtrlResume            (); break;
+            case T_MsgsClientToSim_msg_msg_ctrl_change_time_factor            : OnReceiveMsgCtrlChangeTimeFactor  ( asnMsg.msg.u.msg_ctrl_change_time_factor ); break;
+            case T_MsgsClientToSim_msg_msg_ctrl_meteo_globale                 : workspace.GetMeteoDataManager     ().OnReceiveMsgGlobalMeteo                 ( *asnMsg.msg.u.msg_ctrl_meteo_globale                          ); break;
+            case T_MsgsClientToSim_msg_msg_ctrl_meteo_locale                  : workspace.GetMeteoDataManager     ().OnReceiveMsgLocalMeteo                  ( *asnMsg.msg.u.msg_ctrl_meteo_locale                         ); break;
+            case T_MsgsClientToSim_msg_msg_ctrl_checkpoint_save_now           : workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSaveNow           ( *asnMsg.msg.u.msg_ctrl_checkpoint_save_now                  ); break;
+            case T_MsgsClientToSim_msg_msg_ctrl_checkpoint_set_frequency      : workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSetFrequency      (  asnMsg.msg.u.msg_ctrl_checkpoint_set_frequency             ); break;
+            case T_MsgsClientToSim_msg_msg_limit_creation_request             : workspace.GetTacticalLineManager  ().OnReceiveMsgLimitCreationRequest        ( *asnMsg.msg.u.msg_limit_creation_request             , nCtx ); break;
+            case T_MsgsClientToSim_msg_msg_limit_destruction_request          : workspace.GetTacticalLineManager  ().OnReceiveMsgLimitDestructionRequest     (  asnMsg.msg.u.msg_limit_destruction_request          , nCtx ); break;
+            case T_MsgsClientToSim_msg_msg_limit_update_request               : workspace.GetTacticalLineManager  ().OnReceiveMsgLimitUpdateRequest          ( *asnMsg.msg.u.msg_limit_update_request               , nCtx ); break;
+            case T_MsgsClientToSim_msg_msg_lima_creation_request              : workspace.GetTacticalLineManager  ().OnReceiveMsgLimaCreationRequest         ( *asnMsg.msg.u.msg_lima_creation_request              , nCtx ); break;
+            case T_MsgsClientToSim_msg_msg_lima_destruction_request           : workspace.GetTacticalLineManager  ().OnReceiveMsgLimaDestructionRequest      (  asnMsg.msg.u.msg_lima_destruction_request           , nCtx ); break;
+            case T_MsgsClientToSim_msg_msg_lima_update_request                : workspace.GetTacticalLineManager  ().OnReceiveMsgLimaUpdateRequest           ( *asnMsg.msg.u.msg_lima_update_request                , nCtx ); break;            
+            case T_MsgsClientToSim_msg_msg_pion_order                         : workspace.GetEntityManager        ().OnReceiveMsgPionOrder                   ( *asnMsg.msg.u.msg_pion_order                         , nCtx ); break;         
+            case T_MsgsClientToSim_msg_msg_automate_order                     : workspace.GetEntityManager        ().OnReceiveMsgAutomateOrder               ( *asnMsg.msg.u.msg_automate_order                     , nCtx ); break;
+            case T_MsgsClientToSim_msg_msg_population_order                   : workspace.GetEntityManager        ().OnReceiveMsgPopulationOrder             ( *asnMsg.msg.u.msg_population_order                   , nCtx ); break;
+            case T_MsgsClientToSim_msg_msg_frag_order                         : workspace.GetEntityManager        ().OnReceiveMsgFragOrder                   ( *asnMsg.msg.u.msg_frag_order                         , nCtx ); break;
+            case T_MsgsClientToSim_msg_msg_population_magic_action            : workspace.GetEntityManager        ().OnReceiveMsgPopulationMagicAction       ( *asnMsg.msg.u.msg_population_magic_action            , nCtx ); break;
+            case T_MsgsClientToSim_msg_msg_set_automate_mode                  : workspace.GetEntityManager        ().OnReceiveMsgSetAutomateMode             ( *asnMsg.msg.u.msg_set_automate_mode                  , nCtx ); break;
+            case T_MsgsClientToSim_msg_msg_unit_magic_action                  : workspace.GetEntityManager        ().OnReceiveMsgUnitMagicAction             ( *asnMsg.msg.u.msg_unit_magic_action                  , nCtx ); break;
+            case T_MsgsClientToSim_msg_msg_object_magic_action                : workspace.GetEntityManager        ().OnReceiveMsgObjectMagicAction           ( *asnMsg.msg.u.msg_object_magic_action                , nCtx ); break;
+            case T_MsgsClientToSim_msg_msg_change_diplomatie                  : workspace.GetEntityManager        ().OnReceiveMsgChangeDiplomacy             ( *asnMsg.msg.u.msg_change_diplomatie                  , nCtx ); break;
+            case T_MsgsClientToSim_msg_msg_automate_change_groupe_connaissance: workspace.GetEntityManager        ().OnReceiveMsgAutomateChangeKnowledgeGroup( *asnMsg.msg.u.msg_automate_change_groupe_connaissance, nCtx ); break;
+            case T_MsgsClientToSim_msg_msg_automate_change_liens_logistiques  : workspace.GetEntityManager        ().OnReceiveMsgAutomateChangeLogisticLinks ( *asnMsg.msg.u.msg_automate_change_liens_logistiques  , nCtx ); break;
+            case T_MsgsClientToSim_msg_msg_pion_change_superior               : workspace.GetEntityManager        ().OnReceiveMsgPionChangeSuperior          ( *asnMsg.msg.u.msg_pion_change_superior               , nCtx ); break;
+            case T_MsgsClientToSim_msg_msg_log_ravitaillement_change_quotas   : workspace.GetEntityManager        ().OnReceiveMsgLogSupplyChangeQuotas       ( *asnMsg.msg.u.msg_log_ravitaillement_change_quotas   , nCtx ); break;
+            case T_MsgsClientToSim_msg_msg_log_ravitaillement_pousser_flux    : workspace.GetEntityManager        ().OnReceiveMsgLogSupplyPushFlow           ( *asnMsg.msg.u.msg_log_ravitaillement_pousser_flux    , nCtx ); break;
 
+            default:
+                assert( false );
+        }
+        delete &msgCtrl;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_AS_MOSServerMsgMgr::DoUpdate
+// Created: AGE 2004-02-03
+// -----------------------------------------------------------------------------
+void NET_AS_MOSServerMsgMgr::DoUpdate( const T_MessageMiddleToSimControllerVector& messages )
+{
+    for( CIT_MessageMiddleToSimControllerVector it = messages.begin(); it != messages.end(); ++it )
+    {
+        assert( *it );
+        NET_ASN_MsgsMiddleToSimController& msgCtrl = **it;
+        ASN1T_MsgsMiddleToSim& asnMsg = msgCtrl.GetMessage();
+
+        uint nCtx = asnMsg.context;
+        switch( asnMsg.msg.t )
+        {
+            case T_MsgsMiddleToSim_msg_msg_ctrl_client_announcement : OnReceiveMsgCtrlClientAnnouncement( *msgCtrl.GetLink() ); break;
             default:
                 assert( false );
         }

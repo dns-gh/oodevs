@@ -34,10 +34,10 @@ public:
 
     //! @name Operations
     //@{
-    void StartFrame( const Savable_ABC& message );
+    void StartFrame         ( const Savable_ABC& message );
     void SaveUpdateMessage  ( const Savable_ABC& message );
-    void EndFrame( const Savable_ABC& message );
-    void SaveKeyFrame( const Savable_ABC& message );
+    void EndFrame           ( const Savable_ABC& message );
+    void SaveKeyFrame       ( const Savable_ABC& message );
     //@}
 
 private:

@@ -11,12 +11,13 @@
 #define __SimulationDispatcher_h_
 
 #include "game_asn/Asn.h"
+
 #include "Publisher_ABC.h"
 
 namespace dispatcher
 {
-    class ClientsNetworker;
     class Model;
+//    class Publisher_ABC;
 
 // =============================================================================
 /** @class  SimulationDispatcher
@@ -24,20 +25,19 @@ namespace dispatcher
 */
 // Created: AGE 2007-04-10
 // =============================================================================
-class SimulationDispatcher : private Publisher_ABC
+class SimulationDispatcher : private Publisher_ABC //$$$
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             SimulationDispatcher( ClientsNetworker& clients, Model& model );
+             SimulationDispatcher( Publisher_ABC& clientsPublisher, Model& model );
     virtual ~SimulationDispatcher();
     //@}
 
     //! @name Operations
     //@{
-    void OnReceive( const ASN1T_MsgsOutSim& asnMsg );
-    void OnReceive( const ASN1T_MsgsInClient& asnMsg );
+    void OnReceive( const ASN1T_MsgsSimToClient& asnMsg );
 
     void StartSynchronisation();
     void EndSynchronisation();
@@ -46,7 +46,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void Send( const ASN1T_MsgsInClient& msg );
+    virtual void Send( const ASN1T_MsgsSimToClient& msg );//$$$
     //@}
 
 private:
@@ -58,15 +58,15 @@ private:
 
     //! @name Helpers
     //@{
-    bool IsNotDestruction( const ASN1T_MsgsOutSim& asnMsg ) const;
+    bool IsNotDestruction( const ASN1T_MsgsSimToClient& asnMsg ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    ClientsNetworker& clients_;
-    Model& model_;
-    bool synching_;
+    Publisher_ABC& clientsPublisher_;
+    Model&         model_;
+    bool           synching_;
     //@}
 };
 

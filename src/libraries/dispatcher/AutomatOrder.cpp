@@ -45,7 +45,7 @@ AutomatOrder::~AutomatOrder()
 // -----------------------------------------------------------------------------
 void AutomatOrder::Send( Publisher_ABC& publisher )
 {
-    AsnMsgInClientAutomateOrder asn;
+    AsnMsgSimToClientAutomateOrder asn;
     asn().oid_unite_executante = automat_.GetID();
     asn().mission              = missionID_;
     asn().formation            = formation_;       

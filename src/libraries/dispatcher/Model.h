@@ -63,8 +63,7 @@ public:
     //@{
     void Reset();
 
-    void Update( const ASN1T_MsgsOutSim& asnMsg );
-    void Update( const ASN1T_MsgsInClient& asnMsg );
+    void Update( const ASN1T_MsgsSimToClient& asnMsg );
     void Update( uint nMsgID, DIN::DIN_Input& input );
 
     void Send  ( Publisher_ABC& publisher ) const;

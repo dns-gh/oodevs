@@ -107,7 +107,7 @@ void Agent::Update( const ASN1T_MsgPionCreation& asnMsg )
 {
     if( FlagUpdate() && pAutomat_->GetID() != asnMsg.oid_automate )
     {
-        AsnMsgInClientPionChangeSuperiorAck ack;
+        AsnMsgSimToClientPionChangeSuperiorAck ack;
         ack().error_code   = EnumChangeHierarchyErrorCode::no_error;
         ack().oid_automate = asnMsg.oid_automate;
         ack().oid_pion     = asnMsg.oid_pion;
@@ -321,7 +321,7 @@ void Agent::Update( const ASN1T_MsgPionOrder& asnMsg )
 // -----------------------------------------------------------------------------
 void Agent::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientPionCreation asn;
+    AsnMsgSimToClientPionCreation asn;
     asn().oid_pion      = nID_;
     asn().type_pion     = nType_;
     asn().nom           = strName_.c_str(); // !! pointeur sur const char*
@@ -337,7 +337,7 @@ void Agent::SendCreation( Publisher_ABC& publisher ) const
 void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
 {
     { // Attributes $$$
-        AsnMsgInClientUnitAttributes asn;
+        AsnMsgSimToClientUnitAttributes asn;
 
         asn().oid_pion = nID_;     
 

@@ -99,7 +99,7 @@ void AgentLogMedical::Update( const ASN1T_MsgLogSanteEtat& asnMsg )
 // -----------------------------------------------------------------------------
 void AgentLogMedical::Send( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientLogSanteEtat asn;
+    AsnMsgSimToClientLogSanteEtat asn;
 
     asn().oid_pion = agent_.GetID();
 

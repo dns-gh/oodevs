@@ -49,7 +49,8 @@ public:
     virtual void DenyConnections ();
     virtual void AllowConnections();
 
-    virtual void Send( const ASN1T_MsgsInClient& asnMsg );
+    virtual void Send( const ASN1T_MsgsSimToClient&    asnMsg );
+    virtual void Send( const ASN1T_MsgsMiddleToClient& asnMsg );
             void Send( unsigned int nMsgID, const DIN::DIN_Input& dinMsg );
     //@}
 
@@ -68,7 +69,8 @@ private:
 
     //! @name Messages callbacks
     //@{
-    void OnReceiveMsgOutClient             ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgClientToSim           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgClientToMiddle        ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     
     void OnReceiveMsgEnableUnitVisionCones ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgDisableUnitVisionCones( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );

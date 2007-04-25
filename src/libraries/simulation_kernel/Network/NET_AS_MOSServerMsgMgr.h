@@ -17,7 +17,8 @@
 #include "NET_ASN_MessageController.h"
 #include "game_asn/Asn.h"
 
-NET_ASN_GENERATE_MESSAGE_CONTROLLER( MsgsInSim )
+NET_ASN_GENERATE_MESSAGE_CONTROLLER( MsgsClientToSim )
+NET_ASN_GENERATE_MESSAGE_CONTROLLER( MsgsMiddleToSim )
 class MIL_Agent_ABC;
 
 //=============================================================================
@@ -60,7 +61,7 @@ public:
     void SendMsgEnvironmentType                       ( DIN::DIN_BufferedMessage& msg );
     
     // ASN
-    void SendMsgOutSim( ASN1T_MsgsOutSim& asnMsg );
+    void Send( ASN1T_MsgsSimToClient& asnMsg );
     //@}
 
     //! @name Callback Handling
@@ -88,7 +89,8 @@ private:
     void OnReceiveMsgDisableUnitVisionCones( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgUnitMagicAction       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     
-    void OnReceiveMsgInSim                 ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgClientToSim           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgMiddleToSim           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     void OnReceiveMsgCtrlClientAnnouncement( DIN::DIN_Link& linkFrom );
     void OnReceiveMsgCtrlStop              ();
@@ -99,13 +101,17 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< NET_ASN_MsgsInSimController* > T_MessageControllerVector;
-    typedef T_MessageControllerVector::const_iterator   CIT_MessageControllerVector;
+    typedef std::vector< NET_ASN_MsgsClientToSimController* >     T_MessageClientToSimControllerVector;
+    typedef T_MessageClientToSimControllerVector::const_iterator  CIT_MessageClientToSimControllerVector;
+
+    typedef std::vector< NET_ASN_MsgsMiddleToSimController* >     T_MessageMiddleToSimControllerVector;
+    typedef T_MessageMiddleToSimControllerVector::const_iterator  CIT_MessageMiddleToSimControllerVector;
     //@}
 
     //! @name Helpers
     //@{
-    void DoUpdate( const T_MessageControllerVector& messages );
+    void DoUpdate( const T_MessageClientToSimControllerVector& messages );
+    void DoUpdate( const T_MessageMiddleToSimControllerVector& messages );
     //@}
     
 private:
@@ -115,8 +121,9 @@ private:
     ASN1OCTET aASNEncodeBuffer_[100000];
     ASN1OCTET aASNDecodeBuffer_[100000];
     
-    MT_CriticalSection        ctlListCriticalSection_;
-    T_MessageControllerVector messageControllerList_;
+    MT_CriticalSection                   ctlListCriticalSection_;
+    T_MessageMiddleToSimControllerVector messageMiddleToSimControllerList_;
+    T_MessageClientToSimControllerVector messageClientToSimControllerList_;
 };
 
 #include "NET_AS_MOSServerMsgMgr.inl"

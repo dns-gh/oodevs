@@ -42,24 +42,36 @@ LoaderFacade::~LoaderFacade()
 
 // -----------------------------------------------------------------------------
 // Name: LoaderFacade::OnReceive
-// Created: AGE 2007-04-11
+// Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-void LoaderFacade::OnReceive( const ASN1T_MsgsOutClient& asnInMsg )
+void LoaderFacade::OnReceive( const ASN1T_MsgsClientToSim& asnMsg )
 {
-    switch( asnInMsg.msg.t )
+    switch( asnMsg.msg.t )
     {
-    case T_MsgsOutClient_msg_msg_ctrl_pause:
-        TogglePause( true );
-        break;
-    case T_MsgsOutClient_msg_msg_ctrl_resume:
-        TogglePause( false );
-        break;
-    case T_MsgsOutClient_msg_msg_ctrl_change_time_factor:
-        ChangeTimeFactor( asnInMsg.msg.u.msg_ctrl_change_time_factor );
-        break;
-    case T_MsgsOutClient_msg_msg_ctrl_skip_to_tick:
-        skipToFrame_ = asnInMsg.msg.u.msg_ctrl_skip_to_tick;
-        break;
+        case T_MsgsClientToSim_msg_msg_ctrl_pause:
+            TogglePause( true );
+            break;
+        case T_MsgsClientToSim_msg_msg_ctrl_resume:
+            TogglePause( false );
+            break;
+        case T_MsgsClientToSim_msg_msg_ctrl_change_time_factor:
+            ChangeTimeFactor( asnMsg.msg.u.msg_ctrl_change_time_factor );
+            break;
+    };
+    // $$$$ NLD 2007-04-24: Messages devraient être ClientToMiddle
+}
+
+// -----------------------------------------------------------------------------
+// Name: LoaderFacade::OnReceive
+// Created: NLD 2007-04-24
+// -----------------------------------------------------------------------------
+void LoaderFacade::OnReceive( const ASN1T_MsgsClientToMiddle& asnMsg )
+{
+    switch( asnMsg.msg.t )
+    {      
+        case T_MsgsClientToMiddle_msg_msg_ctrl_skip_to_tick:
+            skipToFrame_ = asnMsg.msg.u.msg_ctrl_skip_to_tick;
+            break;
     };
 }
 
@@ -69,23 +81,20 @@ void LoaderFacade::OnReceive( const ASN1T_MsgsOutClient& asnInMsg )
 // -----------------------------------------------------------------------------
 void LoaderFacade::ChangeTimeFactor( unsigned factor )
 {
-    ASN1T_MsgsInClient message;
-    message.context = 0;
-    message.msg.t = T_MsgsInClient_msg_msg_ctrl_change_time_factor_ack;
-    ASN1T_MsgCtrlChangeTimeFactorAck ack;
+    // $$$$ NLD 2007-04-24: A CHANGER => MiddleToClient
+    AsnMsgSimToClientCtrlChangeTimeFactorAck asn;
 
     if( factor )
     {
         factor_ = factor;
         MT_Timer_ABC::Start( MT_TimeSpan( (int)( 10000 / factor ) ) );
-
-        ack.error_code = EnumCtrlErrorCode::no_error;
-        message.msg.u.msg_ctrl_change_time_factor_ack = &ack;
+        asn().error_code = EnumCtrlErrorCode::no_error;
     }
     else
-        ack.error_code = EnumCtrlErrorCode::error_invalid_time_factor;
-    ack.time_factor = factor_;
-    clients_.Send( message );
+        asn().error_code = EnumCtrlErrorCode::error_invalid_time_factor;
+
+    asn().time_factor = factor_;
+    asn.Send( clients_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,22 +103,19 @@ void LoaderFacade::ChangeTimeFactor( unsigned factor )
 // -----------------------------------------------------------------------------
 void LoaderFacade::TogglePause( bool pause )
 {
-    ASN1T_MsgsInClient message;
-    message.context = 0;
     if( pause )
     {
-        message.msg.t = T_MsgsInClient_msg_msg_ctrl_pause_ack;
-        message.msg.u.msg_ctrl_pause_ack = running_ ? EnumCtrlErrorCode::no_error
-                                                    : EnumCtrlErrorCode::error_already_paused;
+        AsnMsgSimToClientCtrlPauseAck asn;
+        asn() = running_ ? EnumCtrlErrorCode::no_error : EnumCtrlErrorCode::error_already_paused;
+        asn.Send( clients_ );
     }
     else
     {
-        message.msg.t = T_MsgsInClient_msg_msg_ctrl_resume_ack;
-        message.msg.u.msg_ctrl_resume_ack = running_ ? EnumCtrlErrorCode::error_not_paused
-                                                    :  EnumCtrlErrorCode::no_error;
+        AsnMsgSimToClientCtrlResumeAck asn;
+        asn() = running_ ? EnumCtrlErrorCode::error_not_paused :  EnumCtrlErrorCode::no_error;
+        asn.Send( clients_ );
     }
     running_ = !pause;
-    clients_.Send( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,22 +124,18 @@ void LoaderFacade::TogglePause( bool pause )
 // -----------------------------------------------------------------------------
 void LoaderFacade::SkipToFrame( unsigned frame )
 {
-    ASN1T_MsgsInClient message;
-    message.context = 0;
-    message.msg.t = T_MsgsInClient_msg_msg_ctrl_skip_to_tick_ack;
-    ASN1T_MsgCtrlSkipToTickAck ack;
-    message.msg.u.msg_ctrl_skip_to_tick_ack = &ack;
+    AsnMsgMiddleToClientCtrlSkipToTickAck asn;
 
-    ack.tick = loader_->GetCurrentTick();
+    asn().tick = loader_->GetCurrentTick();
     if( frame < loader_->GetTickNumber() )
     {
-        ack.tick = frame;    
-        ack.error_code = EnumCtrlErrorCode::no_error;
+        asn().tick = frame;    
+        asn().error_code = EnumCtrlErrorCode::no_error;
         MT_LOG_INFO_MSG( "Skipping to frame " << frame );
     }
     else
-        ack.error_code = EnumCtrlErrorCode::error_invalid_time_factor;
-    clients_.Send( message );
+        asn().error_code = EnumCtrlErrorCode::error_invalid_time_factor;
+    asn.Send( clients_ );
     if( frame < loader_->GetTickNumber() )
         loader_->SkipToFrame( frame );
 }
@@ -144,14 +146,14 @@ void LoaderFacade::SkipToFrame( unsigned frame )
 // -----------------------------------------------------------------------------
 void LoaderFacade::Send( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientCtrlReplayInfo message;
-    message().current_tick  = loader_->GetCurrentTick();
-    message().tick_duration = 10; // $$$$ AGE 2007-04-11: 
-    message().time_factor = factor_;
-    message().etat = running_ ? EnumEtatSim::running : EnumEtatSim::paused;
-    message().tick_count = loader_->GetTickNumber();
+    AsnMsgMiddleToClientCtrlReplayInfo asn;
+    asn().current_tick  = loader_->GetCurrentTick();
+    asn().tick_duration = 10; // $$$$ AGE 2007-04-11: 
+    asn().time_factor = factor_;
+    asn().etat = running_ ? EnumEtatSim::running : EnumEtatSim::paused;
+    asn().tick_count = loader_->GetTickNumber();
 
-    message.Send( publisher );
+    asn.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------

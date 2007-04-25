@@ -43,7 +43,8 @@ public:
 
     //! @name Dispatching
     //@{
-    virtual void Send( const ASN1T_MsgsInSim& asnMsg );
+    virtual void Send( const ASN1T_MsgsClientToSim& asnMsg );
+    virtual void Send( const ASN1T_MsgsMiddleToSim& asnMsg );
             void Send( unsigned int nMsgID, const DIN::DIN_Input& dinMsg );
     //@}
 
@@ -63,7 +64,8 @@ private:
 
     //! @name Messages callbacks
     //@{
-    void OnReceiveMsgOutSim                                ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );    
+    void OnReceiveMsgSimToClient                           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );    
+    void OnReceiveMsgSimToMiddle                           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );        
 
     void OnReceiveMsgProfilingValues                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgTrace                                 ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );

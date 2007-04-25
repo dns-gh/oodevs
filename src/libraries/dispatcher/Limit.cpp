@@ -59,7 +59,7 @@ void Limit::Update( const ASN1T_MsgLimitUpdate& message )
 // -----------------------------------------------------------------------------
 void Limit::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientLimitCreation asn;
+    AsnMsgSimToClientLimitCreation asn;
 
     asn().oid = GetID();
     TacticalLine_ABC::Send( asn().tactical_line );
@@ -83,7 +83,7 @@ void Limit::SendFullUpdate( Publisher_ABC& ) const
 // -----------------------------------------------------------------------------
 void Limit::CommitDestruction()
 {
-    AsnMsgInClientLimitDestruction asn;
+    AsnMsgSimToClientLimitDestruction asn;
     asn() = GetID();
     Entity_ABC::Send( asn );
 }

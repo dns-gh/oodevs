@@ -56,7 +56,7 @@ void PopulationFire::SendFullUpdate( Publisher_ABC& ) const
 // -----------------------------------------------------------------------------
 void PopulationFire::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientStartPopulationFire asn;
+    AsnMsgSimToClientStartPopulationFire asn;
     asn() = msg_;
     asn.Send( publisher );
 }
@@ -67,7 +67,7 @@ void PopulationFire::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PopulationFire::CommitDestruction()
 {
-    AsnMsgInClientStopPopulationFire asn;
+    AsnMsgSimToClientStopPopulationFire asn;
     asn().oid_tir = msg_.oid_tir;
     asn().degats_pions.n    = 0;
     asn().degats_pions.elem = 0;

@@ -144,7 +144,7 @@ void SimulationModel::Update( const ASN1T_MsgCtrlEndTick& msg )
 // -----------------------------------------------------------------------------
 void SimulationModel::Send( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientCtrlInfo asn;
+    AsnMsgSimToClientCtrlInfo asn;
     asn().current_tick           = nCurrentTick_;
     asn().tick_duration          = nTickDuration_;
     asn().time_factor            = nTimeFactor_;

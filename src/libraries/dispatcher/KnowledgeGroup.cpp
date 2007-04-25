@@ -58,7 +58,7 @@ void KnowledgeGroup::Update( const ASN1T_MsgKnowledgeGroupCreation& )
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientKnowledgeGroupCreation asn;
+    AsnMsgSimToClientKnowledgeGroupCreation asn;
     
     asn().oid      = nID_;
     asn().oid_camp = side_.GetID();

@@ -50,7 +50,8 @@ ClientsNetworker::ClientsNetworker( Dispatcher& dispatcher, const std::string& c
     , dispatcher_        ( &dispatcher )
     , replayer_          ( 0 )
 {
-    GetMessageService().RegisterReceivedMessage( eMsgOutClient             , *this, &ClientsNetworker::OnReceiveMsgOutClient              );
+    GetMessageService().RegisterReceivedMessage( eMsgClientToSim           , *this, &ClientsNetworker::OnReceiveMsgClientToSim            );
+    GetMessageService().RegisterReceivedMessage( eMsgClientToMiddle        , *this, &ClientsNetworker::OnReceiveMsgClientToMiddle         );
     GetMessageService().RegisterReceivedMessage( eMsgEnableUnitVisionCones , *this, &ClientsNetworker::OnReceiveMsgEnableUnitVisionCones  );
     GetMessageService().RegisterReceivedMessage( eMsgDisableUnitVisionCones, *this, &ClientsNetworker::OnReceiveMsgDisableUnitVisionCones );
     GetMessageService().RegisterReceivedMessage( eMsgEnableProfiling       , *this, &ClientsNetworker::OnReceiveMsgEnableProfiling        );
@@ -68,7 +69,8 @@ ClientsNetworker::ClientsNetworker( Replayer& replayer, const std::string& confi
     , dispatcher_        ( 0 )
     , replayer_          ( &replayer )
 {
-    GetMessageService().RegisterReceivedMessage( eMsgOutClient             , *this, &ClientsNetworker::OnReceiveMsgOutClient              );
+    GetMessageService().RegisterReceivedMessage( eMsgClientToSim           , *this, &ClientsNetworker::OnReceiveMsgClientToSim            );
+    GetMessageService().RegisterReceivedMessage( eMsgClientToMiddle        , *this, &ClientsNetworker::OnReceiveMsgClientToMiddle         );
     GetMessageService().RegisterReceivedMessage( eMsgEnableUnitVisionCones , *this, &ClientsNetworker::OnReceiveMsgEnableUnitVisionCones  );
     GetMessageService().RegisterReceivedMessage( eMsgDisableUnitVisionCones, *this, &ClientsNetworker::OnReceiveMsgDisableUnitVisionCones );
     GetMessageService().RegisterReceivedMessage( eMsgEnableProfiling       , *this, &ClientsNetworker::OnReceiveMsgEnableProfiling        );
@@ -162,14 +164,31 @@ DECLARE_DIN_CALLBACK( UnitMagicAction        )
 DECLARE_DIN_CALLBACK( DebugDrawPoints        )
 
 // -----------------------------------------------------------------------------
-// Name: ClientsNetworker::OnReceiveMsgOutClient
+// Name: ClientsNetworker::OnReceiveMsgClientToSim
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void ClientsNetworker::OnReceiveMsgOutClient( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input )
+void ClientsNetworker::OnReceiveMsgClientToSim( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input )
 {
     try
     {
-        AsnMessageDecoder< ASN1T_MsgsOutClient, ASN1C_MsgsOutClient > asnDecoder( input );
+        AsnMessageDecoder< ASN1T_MsgsClientToSim, ASN1C_MsgsClientToSim > asnDecoder( input );
+        Client::GetClientFromLink( linkFrom ).OnReceive( asnDecoder.GetAsnMsg() );
+    }
+    catch( std::runtime_error& exception )
+    {
+        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::OnReceiveMsgClientToMiddle
+// Created: NLD 2006-09-21
+// -----------------------------------------------------------------------------
+void ClientsNetworker::OnReceiveMsgClientToMiddle( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input )
+{
+    try
+    {
+        AsnMessageDecoder< ASN1T_MsgsClientToMiddle, ASN1C_MsgsClientToMiddle > asnDecoder( input );
         Client::GetClientFromLink( linkFrom ).OnReceive( asnDecoder.GetAsnMsg() );
     }
     catch( std::runtime_error& exception )
@@ -186,11 +205,29 @@ void ClientsNetworker::OnReceiveMsgOutClient( DIN::DIN_Link& linkFrom, DIN::DIN_
 // Name: ClientsNetworker::Send
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const ASN1T_MsgsInClient& asnMsg )
+void ClientsNetworker::Send( const ASN1T_MsgsSimToClient& asnMsg )
 {
     try
     {
-        AsnMessageEncoder< ASN1T_MsgsInClient, ASN1C_MsgsInClient > asnEncoder( GetMessageService(), asnMsg );
+        AsnMessageEncoder< ASN1T_MsgsSimToClient, ASN1C_MsgsSimToClient > asnEncoder( GetMessageService(), asnMsg );
+        for( CIT_ClientSet it = clients_.begin(); it != clients_.end(); ++it )
+            (**it).Send( asnMsg, asnEncoder.GetDinMsg() );
+    }
+    catch( std::runtime_error& exception )
+    {
+        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::Send
+// Created: NLD 2007-04-24
+// -----------------------------------------------------------------------------
+void ClientsNetworker::Send( const ASN1T_MsgsMiddleToClient& asnMsg )
+{
+    try
+    {
+        AsnMessageEncoder< ASN1T_MsgsMiddleToClient, ASN1C_MsgsMiddleToClient > asnEncoder( GetMessageService(), asnMsg );
         for( CIT_ClientSet it = clients_.begin(); it != clients_.end(); ++it )
             (**it).Send( asnMsg, asnEncoder.GetDinMsg() );
     }

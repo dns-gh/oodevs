@@ -58,7 +58,7 @@ void FireEffect::SendFullUpdate( Publisher_ABC& ) const
 // -----------------------------------------------------------------------------
 void FireEffect::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientStartFireEffect asn;
+    AsnMsgSimToClientStartFireEffect asn;
     asn().oid_effet = id_;
     localisation_.Send( asn().localisation );
     asn().type = type_;
@@ -72,7 +72,7 @@ void FireEffect::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void FireEffect::CommitDestruction()
 {
-    AsnMsgInClientStopFireEffect asn;
+    AsnMsgSimToClientStopFireEffect asn;
     asn() = id_;
     Send( asn );
 }

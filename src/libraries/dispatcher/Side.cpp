@@ -90,7 +90,7 @@ void Side::Update( const ASN1T_MsgChangeDiplomatieAck& asnMsg )
 // -----------------------------------------------------------------------------
 void Side::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientSideCreation asn;
+    AsnMsgSimToClientSideCreation asn;
     asn().oid  = nID_;
     asn().nom  = strName_.c_str();
     asn().type = nType_;
@@ -105,7 +105,7 @@ void Side::SendFullUpdate( Publisher_ABC& publisher ) const
 {
     for( CIT_DiplomacyMap it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
-        AsnMsgInClientChangeDiplomatie asn;
+        AsnMsgSimToClientChangeDiplomatie asn;
         asn().oid_camp1  = nID_;
         asn().oid_camp2  = it->first->GetID();
         asn().diplomatie = it->second;

@@ -14,7 +14,7 @@
 
 namespace dispatcher
 {
-    class SimulationNetworker;
+    class Publisher_ABC;
 
 // =============================================================================
 /** @class  ClientDispatcher
@@ -28,13 +28,13 @@ class ClientDispatcher
 public:
     //! @name Constructors/Destructor
     //@{
-             ClientDispatcher( SimulationNetworker& simu );
+             ClientDispatcher( Publisher_ABC& simulationPublisher );
     virtual ~ClientDispatcher();
     //@}
 
     //! @name Operations
     //@{
-    void OnReceive( const ASN1T_MsgsOutClient& asnMsg );
+    void OnReceive( const ASN1T_MsgsClientToSim& asnMsg );
     //@}
 
 private:
@@ -44,14 +44,10 @@ private:
     ClientDispatcher& operator=( const ClientDispatcher& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
-    SimulationNetworker& simu_;
+    Publisher_ABC& simulationPublisher_;
     //@}
 };
 

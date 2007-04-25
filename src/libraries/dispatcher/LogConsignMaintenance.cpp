@@ -78,7 +78,7 @@ void LogConsignMaintenance::Update( const ASN1T_MsgLogMaintenanceTraitementEquip
 // -----------------------------------------------------------------------------
 void LogConsignMaintenance::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientLogMaintenanceTraitementEquipementCreation asn;
+    AsnMsgSimToClientLogMaintenanceTraitementEquipementCreation asn;
     
     asn().oid_consigne  = nID_;
     asn().oid_pion      = agent_.GetID();
@@ -96,7 +96,7 @@ void LogConsignMaintenance::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void LogConsignMaintenance::SendFullUpdate( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientLogMaintenanceTraitementEquipementUpdate asn;
+    AsnMsgSimToClientLogMaintenanceTraitementEquipementUpdate asn;
 
     asn().oid_consigne = nID_;
     asn().oid_pion     = agent_.GetID();
@@ -117,7 +117,7 @@ void LogConsignMaintenance::SendFullUpdate( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void LogConsignMaintenance::CommitDestruction()
 {
-    AsnMsgInClientLogMaintenanceTraitementEquipementDestruction asn;
+    AsnMsgSimToClientLogMaintenanceTraitementEquipementDestruction asn;
     asn().oid_consigne = nID_;
     asn().oid_pion     = agent_.GetID();
     Send( asn );

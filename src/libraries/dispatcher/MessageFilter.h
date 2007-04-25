@@ -33,8 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    bool IsRelevant( const ASN1T_MsgsOutSim& message );
-    bool IsRelevant( const ASN1T_MsgsInClient& message );
+    bool IsRelevant( const ASN1T_MsgsSimToClient& message );
     //@}
 
 private:

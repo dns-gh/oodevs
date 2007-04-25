@@ -34,10 +34,10 @@ using namespace DIN;
 // -----------------------------------------------------------------------------
 Client::Client( const Model& model, ProfileManager& profiles, LoaderFacade& loader, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link )
     : Client_ABC ( messageService, link )
-    , model_( model )
-    , profiles_( profiles )
+    , model_     ( model )
+    , profiles_  ( profiles )
     , pProfile_  ( 0 )
-    , loader_( &loader )
+    , loader_    ( &loader )
     , simulation_( 0 )
 {
     // NOTHING
@@ -49,10 +49,10 @@ Client::Client( const Model& model, ProfileManager& profiles, LoaderFacade& load
 // -----------------------------------------------------------------------------
 Client::Client( const Model& model, ProfileManager& profiles, SimulationNetworker& simulation, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link )
     : Client_ABC ( messageService, link )
-    , model_( model )
-    , profiles_( profiles )
+    , model_     ( model )
+    , profiles_  ( profiles )
     , pProfile_  ( 0 )
-    , loader_( 0 )
+    , loader_    ( 0 )
     , simulation_( &simulation )
 {
     // NOTHING
@@ -73,33 +73,29 @@ Client::~Client()
 
 // -----------------------------------------------------------------------------
 // Name: Client::CheckRights
-// Created: NLD 2006-09-21
+// Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-bool Client::CheckRights( const ASN1T_MsgsOutClient& asnMsg ) const
+bool Client::CheckRights( const ASN1T_MsgsClientToSim& asnMsg ) const
 {
-    if( asnMsg.msg.t == T_MsgsOutClient_msg_msg_authentication_request )
+    if( !pProfile_ )
+        return false;
+
+    return pProfile_->CheckRights( asnMsg );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Client::CheckRights
+// Created: NLD 2007-04-24
+// -----------------------------------------------------------------------------
+bool Client::CheckRights( const ASN1T_MsgsClientToMiddle& asnMsg ) const
+{
+    if( asnMsg.msg.t == T_MsgsClientToMiddle_msg_msg_authentication_request )
         return true;
 
     if( !pProfile_ )
         return false;
 
     return pProfile_->CheckRights( asnMsg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::CheckRights
-// Created: NLD 2006-09-21
-// -----------------------------------------------------------------------------
-bool Client::CheckRights( const ASN1T_MsgsInClient& asnMsg ) const
-{
-    //$$$$ TMP
-    if( asnMsg.msg.t == T_MsgsInClient_msg_msg_authentication_response )
-        return true;
-
-    if( !pProfile_ )
-        return false;
-
-    return true;
 }
 
 // =============================================================================
@@ -122,21 +118,21 @@ void Client::OnReceiveMsgAuthenticationRequest( const ASN1T_MsgAuthenticationReq
     pProfile_ = profiles_.Authenticate( msg.login, msg.password );
     if( !pProfile_ )
     {
-        AsnMsgInClientAuthenticationResponse ack;
+        AsnMsgMiddleToClientAuthenticationResponse ack;
         ack().error_code = MsgAuthenticationResponse_error_code::invalid_login;
         ack.Send( *this );
         return; 
     }
 
     // Ack message
-    AsnMsgInClientAuthenticationResponse ack;
-    ack().error_code      = MsgAuthenticationResponse_error_code::success;
+    AsnMsgMiddleToClientAuthenticationResponse ack;
+    ack().error_code       = MsgAuthenticationResponse_error_code::success;
     ack().m.profilePresent = 1;
     pProfile_->Send( ack().profile );
     ack.Send( *this );
     Profile::AsnDelete( ack().profile );
 
-    model_.Send( *this );
+    model_   .Send( *this );
     profiles_.Send( *this );
     if( loader_ )
         loader_->Send( *this );
@@ -144,29 +140,43 @@ void Client::OnReceiveMsgAuthenticationRequest( const ASN1T_MsgAuthenticationReq
 
 // -----------------------------------------------------------------------------
 // Name: Client::OnReceive
-// Created: NLD 2006-09-22
+// Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-void Client::OnReceive( const ASN1T_MsgsOutClient& asnInMsg )
+void Client::OnReceive( const ASN1T_MsgsClientToSim& asnMsg )
 {
-    if( !CheckRights( asnInMsg ) )
+    if( !CheckRights( asnMsg ) )
     {
         Disconnect();
         return;
     }
-
-    if( asnInMsg.msg.t == T_MsgsOutClient_msg_msg_authentication_request )
-        OnReceiveMsgAuthenticationRequest( *asnInMsg.msg.u.msg_authentication_request ); 
-    
-    ProfilesDispatcher dispatcher( profiles_, *this );
-    dispatcher.OnReceive( asnInMsg );
-
     if( simulation_ )
     {
         ClientDispatcher dispatcher( *simulation_ );
-        dispatcher.OnReceive( asnInMsg );
+        dispatcher.OnReceive( asnMsg );
     }
     if( loader_ )
-        loader_->OnReceive( asnInMsg );
+        loader_->OnReceive( asnMsg ); // $$$$ NLD 2007-04-24: A GICLER devrait être que MsgsClientToMiddle
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::OnReceive
+// Created: NLD 2007-04-24
+// -----------------------------------------------------------------------------
+void Client::OnReceive( const ASN1T_MsgsClientToMiddle& asnMsg )
+{
+    if( !CheckRights( asnMsg ) )
+    {
+        Disconnect();
+        return;
+    }
+    if( asnMsg.msg.t == T_MsgsClientToMiddle_msg_msg_authentication_request )
+        OnReceiveMsgAuthenticationRequest( *asnMsg.msg.u.msg_authentication_request ); 
+    
+    ProfilesDispatcher dispatcher( profiles_, *this );
+    dispatcher.OnReceive( asnMsg );
+
+    if( loader_ )
+        loader_->OnReceive( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,25 +195,46 @@ void Client::OnReceive( unsigned int nMsgID, DIN::DIN_Input& dinMsg )
 // Name: Client::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void Client::Send( const ASN1T_MsgsInClient& asnMsg )
+void Client::Send( const ASN1T_MsgsMiddleToClient& asnMsg )
 {
-    if( !CheckRights( asnMsg ) )
+    if( !pProfile_ && asnMsg.msg.t != T_MsgsMiddleToClient_msg_msg_authentication_response )
         return;
-
-    AsnMessageEncoder< ASN1T_MsgsInClient, ASN1C_MsgsInClient > asnEncoder( messageService_, asnMsg );
-    messageService_.Send( link_, eMsgInClient, asnEncoder.GetDinMsg() );
+    AsnMessageEncoder< ASN1T_MsgsMiddleToClient, ASN1C_MsgsMiddleToClient > asnEncoder( messageService_, asnMsg );
+    messageService_.Send( link_, eMsgMiddleToClient, asnEncoder.GetDinMsg() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Client::Send
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-void Client::Send( const ASN1T_MsgsInClient& asnMsg, const DIN_BufferedMessage& dinMsg )
+void Client::Send( const ASN1T_MsgsMiddleToClient& asnMsg, const DIN_BufferedMessage& dinMsg )
 {
-    if( !CheckRights( asnMsg ) )
+    if( !pProfile_ && asnMsg.msg.t != T_MsgsMiddleToClient_msg_msg_authentication_response )
         return;
+    messageService_.Send( link_, eMsgMiddleToClient, dinMsg );
+}
 
-    messageService_.Send( link_, eMsgInClient, dinMsg );
+// -----------------------------------------------------------------------------
+// Name: Client::Send
+// Created: NLD 2006-09-27
+// -----------------------------------------------------------------------------
+void Client::Send( const ASN1T_MsgsSimToClient& asnMsg )
+{
+    if( !pProfile_ )
+        return;
+    AsnMessageEncoder< ASN1T_MsgsSimToClient, ASN1C_MsgsSimToClient > asnEncoder( messageService_, asnMsg );
+    messageService_.Send( link_, eMsgSimToClient, asnEncoder.GetDinMsg() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::Send
+// Created: NLD 2006-09-25
+// -----------------------------------------------------------------------------
+void Client::Send( const ASN1T_MsgsSimToClient& asnMsg, const DIN_BufferedMessage& dinMsg )
+{
+    if( !pProfile_ )
+        return;
+    messageService_.Send( link_, eMsgSimToClient, dinMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -215,7 +246,6 @@ void Client::Send( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg )
     // $$$ TMP
     if( !pProfile_ )
         return;
-
     messageService_.Send( link_, nMsgID, dinMsg );
 }
 

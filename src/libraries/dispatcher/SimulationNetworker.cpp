@@ -50,7 +50,8 @@ SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, const std::str
     , pSimulation_       ( 0 )
     , configFile_        ( configFile )
 {
-    GetMessageService().RegisterReceivedMessage( eMsgOutSim                                , *this, &SimulationNetworker::OnReceiveMsgOutSim                                 );
+    GetMessageService().RegisterReceivedMessage( eMsgSimToClient                           , *this, &SimulationNetworker::OnReceiveMsgSimToClient                            );
+    GetMessageService().RegisterReceivedMessage( eMsgSimToMiddle                           , *this, &SimulationNetworker::OnReceiveMsgSimToMiddle                            );
     GetMessageService().RegisterReceivedMessage( eMsgProfilingValues                       , *this, &SimulationNetworker::OnReceiveMsgProfilingValues                        );
     GetMessageService().RegisterReceivedMessage( eMsgTrace                                 , *this, &SimulationNetworker::OnReceiveMsgTrace                                  );
     GetMessageService().RegisterReceivedMessage( eMsgUnitVisionCones                       , *this, &SimulationNetworker::OnReceiveMsgUnitVisionCones                        );
@@ -136,17 +137,37 @@ DECLARE_DIN_CALLBACK( PopulationFlowInterVisibility          )
 DECLARE_DIN_CALLBACK( DebugDrawPoints                        )
 DECLARE_DIN_CALLBACK( EnvironmentType                        )
 
+
 // -----------------------------------------------------------------------------
-// Name: SimulationNetworker::OnReceiveMsgOutSim
+// Name: SimulationNetworker::OnReceiveMsgSimToClient
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void SimulationNetworker::OnReceiveMsgOutSim( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input )
+void SimulationNetworker::OnReceiveMsgSimToClient( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input )
 {
     assert( pSimulation_ && pSimulation_ == &Simulation::GetSimulationFromLink( linkFrom ) );
 
     try
     {
-        AsnMessageDecoder< ASN1T_MsgsOutSim, ASN1C_MsgsOutSim > asnDecoder( input );
+        AsnMessageDecoder< ASN1T_MsgsSimToClient, ASN1C_MsgsSimToClient > asnDecoder( input );
+        pSimulation_->OnReceive( asnDecoder.GetAsnMsg() );
+    }
+    catch( std::runtime_error& exception )
+    {
+        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationNetworker::OnReceiveMsgSimToMiddle
+// Created: NLD 2006-09-21
+// -----------------------------------------------------------------------------
+void SimulationNetworker::OnReceiveMsgSimToMiddle( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input )
+{
+    assert( pSimulation_ && pSimulation_ == &Simulation::GetSimulationFromLink( linkFrom ) );
+
+    try
+    {
+        AsnMessageDecoder< ASN1T_MsgsSimToMiddle, ASN1C_MsgsSimToMiddle > asnDecoder( input );
         pSimulation_->OnReceive( asnDecoder.GetAsnMsg() );
     }
     catch( std::runtime_error& exception )
@@ -163,12 +184,30 @@ void SimulationNetworker::OnReceiveMsgOutSim( DIN::DIN_Link& linkFrom, DIN::DIN_
 // Name: SimulationNetworker::Send
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void SimulationNetworker::Send( const ASN1T_MsgsInSim& asnMsg )
+void SimulationNetworker::Send( const ASN1T_MsgsClientToSim& asnMsg )
 {
     assert( pSimulation_ );
     try
     {
-        AsnMessageEncoder< ASN1T_MsgsInSim, ASN1C_MsgsInSim > asnEncoder( GetMessageService(), asnMsg );
+        AsnMessageEncoder< ASN1T_MsgsClientToSim, ASN1C_MsgsClientToSim > asnEncoder( GetMessageService(), asnMsg );
+        pSimulation_->Send( asnMsg, asnEncoder.GetDinMsg() );
+    }
+    catch( std::runtime_error& exception )
+    {
+        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationNetworker::Send
+// Created: NLD 2007-04-24
+// -----------------------------------------------------------------------------
+void SimulationNetworker::Send( const ASN1T_MsgsMiddleToSim& asnMsg )
+{
+    assert( pSimulation_ );
+    try
+    {
+        AsnMessageEncoder< ASN1T_MsgsMiddleToSim, ASN1C_MsgsMiddleToSim > asnEncoder( GetMessageService(), asnMsg );
         pSimulation_->Send( asnMsg, asnEncoder.GetDinMsg() );
     }
     catch( std::runtime_error& exception )

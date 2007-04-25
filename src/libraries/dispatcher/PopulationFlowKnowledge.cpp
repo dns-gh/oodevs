@@ -133,7 +133,7 @@ void PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpda
 // -----------------------------------------------------------------------------
 void PopulationFlowKnowledge::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientPopulationFluxKnowledgeCreation asn;
+    AsnMsgSimToClientPopulationFluxKnowledgeCreation asn;
 
     asn().oid_connaissance_flux       = nID_;
     asn().oid_connaissance_population = populationKnowledge_.GetID();
@@ -149,7 +149,7 @@ void PopulationFlowKnowledge::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PopulationFlowKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientPopulationFluxKnowledgeUpdate asn;
+    AsnMsgSimToClientPopulationFluxKnowledgeUpdate asn;
 
     asn().oid_connaissance_flux       = nID_;
     asn().oid_connaissance_population = populationKnowledge_.GetID();
@@ -208,7 +208,7 @@ void PopulationFlowKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PopulationFlowKnowledge::CommitDestruction()
 {
-    AsnMsgInClientPopulationFluxKnowledgeDestruction asn;
+    AsnMsgSimToClientPopulationFluxKnowledgeDestruction asn;
     asn().oid_connaissance_flux       = nID_;
     asn().oid_connaissance_population = populationKnowledge_.GetID();
     asn().oid_groupe_possesseur       = populationKnowledge_.GetKnowledgeGroup().GetID();

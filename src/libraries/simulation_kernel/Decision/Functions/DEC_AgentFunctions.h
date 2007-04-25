@@ -32,7 +32,7 @@ public:
     static void IsDead                    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsSurrendered             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsPrisoner                ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void IsAutomateEmbraye         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void IsAutomateEngaged         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsMoving                  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsTransported             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsNeutralized             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );            

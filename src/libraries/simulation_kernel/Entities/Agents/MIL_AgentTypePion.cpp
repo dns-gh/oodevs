@@ -380,7 +380,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::EnableDiscreteMode      , "DEC_Agent_ActiverModeDiscret"               );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::DisableDiscreteMode     , "DEC_Agent_DesactiverModeDiscret"            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsNeutralized           , "DEC_Agent_EstNeutralise"                    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsAutomateEmbraye       , "DEC_Agent_AutomateEstEmbraye"               );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsAutomateEngaged       , "DEC_Agent_AutomateEstEmbraye"               );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetPosition             , "DEC_Agent_Position"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetDirection            , "DEC_Agent_Direction"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsSurrendered           , "DEC_Agent_SEstRendu"                        );

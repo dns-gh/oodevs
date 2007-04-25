@@ -43,8 +43,8 @@ public:
     //! @name Main
     //@{
     bool CheckPassword( const std::string& strPassword ) const;
-    bool CheckRights  ( const ASN1T_MsgsOutClient& msg ) const;
-    bool CheckRights  () const;
+    bool CheckRights  ( const ASN1T_MsgsClientToSim&    msg ) const;
+    bool CheckRights  ( const ASN1T_MsgsClientToMiddle& msg ) const;
     //@}
 
     //! @name Network

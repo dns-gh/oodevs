@@ -41,7 +41,8 @@ public:
     //@{
     void Update();
 
-    void OnReceive( const ASN1T_MsgsOutClient& asnInMsg );
+    void OnReceive( const ASN1T_MsgsClientToSim&    asnInMsg );
+    void OnReceive( const ASN1T_MsgsClientToMiddle& asnInMsg );
     void Send( Publisher_ABC& publisher ) const;
     //@}
 

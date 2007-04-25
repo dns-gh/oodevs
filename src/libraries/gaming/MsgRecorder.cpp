@@ -74,7 +74,7 @@ Message::~Message()
 // -----------------------------------------------------------------------------
 void Message::Send( AgentServerMsgMgr& msgManager )
 {
-    msgManager.SendMsgOutClient( pMsg_, nMsgLength_ );
+    msgManager.SendMsgClientToSim( pMsg_, nMsgLength_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,10 +121,10 @@ void MsgRecorder::OnNewMsg( int nType, ASN1PEREncodeBuffer& asnPEREncodeBuffer )
     if( ! recording_ )
         return;
 
-    if( nType != T_MsgsOutClient_msg_msg_pion_order
-        && nType != T_MsgsOutClient_msg_msg_frag_order
-        && nType != T_MsgsOutClient_msg_msg_automate_order
-        && nType != T_MsgsOutClient_msg_msg_population_order )
+    if( nType != T_MsgsClientToSim_msg_msg_pion_order
+        && nType != T_MsgsClientToSim_msg_msg_frag_order
+        && nType != T_MsgsClientToSim_msg_msg_automate_order
+        && nType != T_MsgsClientToSim_msg_msg_population_order )
         return;
     Message* message = new Message( asnPEREncodeBuffer );
 

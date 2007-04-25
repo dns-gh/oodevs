@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    void OnReceive( const ASN1T_MsgsOutClient& asnMsg );
+    void OnReceive( const ASN1T_MsgsClientToMiddle& asnMsg );
     //@}
 
 private:

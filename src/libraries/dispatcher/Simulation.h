@@ -43,10 +43,14 @@ public:
 
     //! @name Messages
     //@{
-            void OnReceive( const ASN1T_MsgsOutSim& asnMsg );
+            void OnReceive( const ASN1T_MsgsSimToClient& asnMsg );
+            void OnReceive( const ASN1T_MsgsSimToMiddle& asnMsg );
             void OnReceive( unsigned int nMsgID, DIN::DIN_Input& dinMsg );
-    virtual void Send     ( const ASN1T_MsgsInSim& asnMsg );
-            void Send     ( const ASN1T_MsgsInSim& asnMsg, const DIN::DIN_BufferedMessage& dinMsg );
+
+    virtual void Send     ( const ASN1T_MsgsMiddleToSim& asnMsg );
+            void Send     ( const ASN1T_MsgsMiddleToSim& asnMsg, const DIN::DIN_BufferedMessage& dinMsg );    
+    virtual void Send     ( const ASN1T_MsgsClientToSim& asnMsg );
+            void Send     ( const ASN1T_MsgsClientToSim& asnMsg, const DIN::DIN_BufferedMessage& dinMsg );
             void Send     ( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg );
     //@}
 
@@ -68,8 +72,8 @@ private:
     //@}
 
 private:
-    Dispatcher& dispatcher_;
-    SaverFacade* saver_;
+    Dispatcher&           dispatcher_;
+    SaverFacade*          saver_;
     SimulationDispatcher* simDispatch_;
 };
 

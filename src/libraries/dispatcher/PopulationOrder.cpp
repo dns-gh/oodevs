@@ -44,7 +44,7 @@ PopulationOrder::~PopulationOrder()
 // -----------------------------------------------------------------------------
 void PopulationOrder::Send( Publisher_ABC& publisher )
 {
-    AsnMsgInClientPopulationOrder asn;
+    AsnMsgSimToClientPopulationOrder asn;
     asn().oid_unite_executante = population_.GetID();
     asn().mission              = missionID_;
     

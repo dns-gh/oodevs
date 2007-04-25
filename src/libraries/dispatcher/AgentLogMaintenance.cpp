@@ -91,7 +91,7 @@ void AgentLogMaintenance::Update( const ASN1T_MsgLogMaintenanceEtat& asnMsg )
 // -----------------------------------------------------------------------------
 void AgentLogMaintenance::Send( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientLogMaintenanceEtat asn;
+    AsnMsgSimToClientLogMaintenanceEtat asn;
 
     asn().oid_pion = agent_.GetID();
 

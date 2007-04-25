@@ -90,7 +90,7 @@ void LogConsignMedical::Update( const ASN1T_MsgLogSanteTraitementHumainUpdate& m
 // -----------------------------------------------------------------------------
 void LogConsignMedical::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientLogSanteTraitementHumainCreation asn;
+    AsnMsgSimToClientLogSanteTraitementHumainCreation asn;
 
     asn().oid_consigne  = nID_;
     asn().oid_pion      = agent_.GetID();
@@ -109,7 +109,7 @@ void LogConsignMedical::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void LogConsignMedical::SendFullUpdate( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientLogSanteTraitementHumainUpdate asn;
+    AsnMsgSimToClientLogSanteTraitementHumainUpdate asn;
 
     asn().oid_consigne = nID_;
     asn().oid_pion     = agent_.GetID();
@@ -137,7 +137,7 @@ void LogConsignMedical::SendFullUpdate( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void LogConsignMedical::CommitDestruction()
 {
-    AsnMsgInClientLogSanteTraitementHumainDestruction asn;
+    AsnMsgSimToClientLogSanteTraitementHumainDestruction asn;
     asn().oid_consigne = nID_;
     asn().oid_pion     = agent_.GetID();
     Send( asn );

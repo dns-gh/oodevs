@@ -177,7 +177,7 @@ void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientObjectKnowledgeCreation asn;
+    AsnMsgSimToClientObjectKnowledgeCreation asn;
 
     asn().oid_connaissance    = nID_;
     asn().oid_camp_possesseur = side_.GetID();
@@ -212,7 +212,7 @@ void ObjectKnowledge::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientObjectKnowledgeUpdate asn;
+    AsnMsgSimToClientObjectKnowledgeUpdate asn;
 
     asn().oid_connaissance      = nID_;
     asn().oid_camp_possesseur   = side_.GetID();
@@ -264,7 +264,7 @@ void ObjectKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::CommitDestruction()
 {
-    AsnMsgInClientObjectKnowledgeDestruction asn;
+    AsnMsgSimToClientObjectKnowledgeDestruction asn;
     asn().oid_connaissance    = nID_;
     asn().oid_camp_possesseur = side_.GetID();
     Send( asn );

@@ -53,11 +53,14 @@ using namespace kernel;
 //@{
 static enum  
 {
-    eMsgOutSim                                 = 0,
-    eMsgInSim                                  = 1,
+    eMsgSimToClient                            = 0,
+    eMsgClientToSim                            = 1,
 
-    eMsgOutClient                              = 2,
-    eMsgInClient                               = 3,
+    eMsgSimToMiddle                            = 2,
+    eMsgMiddleToSim                            = 3,
+
+    eMsgClientToMiddle                         = 4,
+    eMsgMiddleToClient                         = 5,
 
     eMsgEnableUnitVisionCones                  = 1000,
     eMsgDisableUnitVisionCones                 = 1001,
@@ -73,7 +76,6 @@ static enum
     eMsgPopulationFlowInterVisibility          = 1012,
     eMsgDebugDrawPoints                        = 1015,
     eMsgEnvironmentType                        = 1016,
-    eMsgReplay                                 = 1017
 };
 //@}
 
@@ -102,7 +104,8 @@ AgentServerMsgMgr::AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine&
     pMessageService_->RegisterReceivedMessage( eMsgPopulationConcentrationInterVisibility, *this, & AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility );
     pMessageService_->RegisterReceivedMessage( eMsgPopulationFlowInterVisibility         , *this, & AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility );
     pMessageService_->RegisterReceivedMessage( eMsgDebugDrawPoints                       , *this, & AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints       );
-    pMessageService_->RegisterReceivedMessage( eMsgInClient                              , *this, & AgentServerMsgMgr::OnReceiveMsgInClient            );
+    pMessageService_->RegisterReceivedMessage( eMsgSimToClient                           , *this, & AgentServerMsgMgr::OnReceiveMsgSimToClient );
+    pMessageService_->RegisterReceivedMessage( eMsgMiddleToClient                        , *this, & AgentServerMsgMgr::OnReceiveMsgMiddleToClient );
 //eMsgEnvironmentType // $$$$ AGE 2006-05-03:
     pMessageService_->SetCbkOnError( & AgentServerMsgMgr::OnError );
 
@@ -296,15 +299,6 @@ void AgentServerMsgMgr::SendMagicDestruction( const Entity_ABC& agent )
     dinMsg << (uint8)eUnitMagicActionDestroyComposante;
 
     Send( eMsgUnitMagicAction, dinMsg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::SendReplayerMessage
-// Created: AGE 2007-04-11
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::SendReplayerMessage( DIN::DIN_BufferedMessage& message )
-{
-    Send( eMsgReplay, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -520,13 +514,13 @@ void AgentServerMsgMgr::_OnReceiveMsgObjectInterVisibility( DIN::DIN_Input& inpu
 // Name: AgentServerMsgMgr::Send
 // Created: SBO 2006-07-06
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::Send( ASN1T_MsgsOutClient& message )
+void AgentServerMsgMgr::Send( ASN1T_MsgsClientToSim& message )
 {
     if( ! session_ )
         return;
     ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
 
-    ASN1C_MsgsOutClient asnMsgCtrl( asnPEREncodeBuffer, message );
+    ASN1C_MsgsClientToSim asnMsgCtrl( asnPEREncodeBuffer, message );
 
     if( asnMsgCtrl.Encode() != ASN_OK )
     {
@@ -537,21 +531,48 @@ void AgentServerMsgMgr::Send( ASN1T_MsgsOutClient& message )
     DIN_BufferedMessage dinMsg = BuildMessage();
     dinMsg.GetOutput().Append( asnPEREncodeBuffer.GetMsgPtr(), asnPEREncodeBuffer.GetMsgLen() );
 
-    Send( eMsgOutClient, dinMsg );
+    Send( eMsgClientToSim, dinMsg );
 
     if( msgRecorder_ )
         msgRecorder_->OnNewMsg( message.msg.t, asnPEREncodeBuffer );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::SendMsgOutClient
+// Name: AgentServerMsgMgr::Send
+// Created: SBO 2006-07-06
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::Send( ASN1T_MsgsClientToMiddle& message )
+{
+    if( ! session_ )
+        return;
+    ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
+
+    ASN1C_MsgsClientToMiddle asnMsgCtrl( asnPEREncodeBuffer, message );
+
+    if( asnMsgCtrl.Encode() != ASN_OK )
+    {
+        asnPEREncodeBuffer.PrintErrorInfo();
+        return;
+    }
+
+    DIN_BufferedMessage dinMsg = BuildMessage();
+    dinMsg.GetOutput().Append( asnPEREncodeBuffer.GetMsgPtr(), asnPEREncodeBuffer.GetMsgLen() );
+
+    Send( eMsgClientToMiddle, dinMsg );
+
+//    if( msgRecorder_ )
+//        msgRecorder_->OnNewMsg( message.msg.t, asnPEREncodeBuffer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::SendMsgClientToSim
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::SendMsgOutClient( ASN1OCTET* pMsg, int nMsgLength )
+void AgentServerMsgMgr::SendMsgClientToSim( ASN1OCTET* pMsg, int nMsgLength )
 {
     DIN_BufferedMessage dinMsg = BuildMessage();
     dinMsg.GetOutput().Append( pMsg, nMsgLength );
-    Send( eMsgOutClient, dinMsg );
+    Send( eMsgClientToSim, dinMsg );
 }
 
 //-----------------------------------------------------------------------------
@@ -1634,9 +1655,19 @@ void AgentServerMsgMgr::OnReceiveMsgAuthenticationResponse( const ASN1T_MsgAuthe
 // Name: AgentServerMsgMgr constructor
 // Created: NLD 2003-02-26
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgInClient( DIN_Link& /*linkFrom*/, DIN_Input& input )
+void AgentServerMsgMgr::OnReceiveMsgSimToClient( DIN_Link& /*linkFrom*/, DIN_Input& input )
 {
-    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgInClient );
+    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgSimToClient );
+}
+
+
+//-----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr constructor
+// Created: NLD 2003-02-26
+//-----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgMiddleToClient( DIN_Link& /*linkFrom*/, DIN_Input& input )
+{
+    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgMiddleToClient );
 }
 
 namespace
@@ -1653,7 +1684,7 @@ namespace
 // Name: AgentServerMsgMgr constructor
 // Created: NLD 2003-02-26
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
+void AgentServerMsgMgr::_OnReceiveMsgSimToClient( DIN_Input& input )
 {
     uint nAsnMsgSize = input.GetAvailable();
 
@@ -1666,8 +1697,8 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
     ASN1PERDecodeBuffer asnPERDecodeBuffer( aASNDecodeBuffer_, nAsnMsgSize, TRUE );
 
     // Decode the message
-    ASN1T_MsgsInClient message;
-    ASN1C_MsgsInClient asnMsgCtrl( asnPERDecodeBuffer, message );
+    ASN1T_MsgsSimToClient message;
+    ASN1C_MsgsSimToClient asnMsgCtrl( asnPERDecodeBuffer, message );
     if( asnMsgCtrl.Decode() != ASN_OK )
     {
         asnPERDecodeBuffer.PrintErrorInfo();
@@ -1676,138 +1707,169 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
 
     switch( message.msg.t )
     {
-        case T_MsgsInClient_msg_msg_limit_creation_request_ack:             OnReceiveMsgLimitCreationRequestAck            ( message.msg.u.msg_limit_creation_request_ack               , message.context ); break;
-        case T_MsgsInClient_msg_msg_limit_update_request_ack:               OnReceiveMsgLimitUpdateRequestAck              ( message.msg.u.msg_limit_update_request_ack                 , message.context ); break;
-        case T_MsgsInClient_msg_msg_limit_destruction_request_ack:          OnReceiveMsgLimitDestructionRequestAck         ( message.msg.u.msg_limit_destruction_request_ack            , message.context ); break;
-        case T_MsgsInClient_msg_msg_lima_creation_request_ack:              OnReceiveMsgLimaCreationRequestAck             ( message.msg.u.msg_lima_creation_request_ack                , message.context ); break;
-        case T_MsgsInClient_msg_msg_lima_update_request_ack:                OnReceiveMsgLimaUpdateRequestAck               ( message.msg.u.msg_lima_update_request_ack                  , message.context ); break;
-        case T_MsgsInClient_msg_msg_lima_destruction_request_ack:           OnReceiveMsgLimaDestructionRequestAck          ( message.msg.u.msg_lima_destruction_request_ack             , message.context ); break;
-        case T_MsgsInClient_msg_msg_automate_order_ack:                     OnReceiveMsgAutomateOrderAck                   ( *message.msg.u.msg_automate_order_ack                      , message.context ); break;
-        case T_MsgsInClient_msg_msg_pion_order_ack:                         OnReceiveMsgPionOrderAck                       ( *message.msg.u.msg_pion_order_ack                          , message.context ); break;
-        case T_MsgsInClient_msg_msg_frag_order_ack:                         OnReceiveMsgFragOrderAck                       ( *message.msg.u.msg_frag_order_ack                          , message.context ); break;
-        case T_MsgsInClient_msg_msg_unit_magic_action_ack:                  OnReceiveMsgUnitMagicActionAck                 ( *message.msg.u.msg_unit_magic_action_ack                   , message.context ); break;
-        case T_MsgsInClient_msg_msg_set_automate_mode_ack:                  OnReceiveMsgSetAutomateModeAck                 ( *message.msg.u.msg_set_automate_mode_ack                   , message.context ); break;
-        case T_MsgsInClient_msg_msg_pion_change_superior_ack:               OnReceiveMsgPionChangeSuperiorAck              ( *message.msg.u.msg_pion_change_superior_ack                , message.context ); break;
-        case T_MsgsInClient_msg_msg_change_diplomatie_ack:                  OnReceiveMsgChangeDiplomacyAck                 ( *message.msg.u.msg_change_diplomatie_ack                   , message.context ); break;
-        case T_MsgsInClient_msg_msg_automate_change_groupe_connaissance_ack:OnReceiveMsgAutomateChangeGroupeConnaissanceAck( *message.msg.u.msg_automate_change_groupe_connaissance_ack , message.context ); break;
-        case T_MsgsInClient_msg_msg_object_magic_action_ack:                OnReceiveMsgObjectMagicActionAck               ( *message.msg.u.msg_object_magic_action_ack                 , message.context ); break;
-        case T_MsgsInClient_msg_msg_automate_change_liens_logistiques_ack:  OnReceiveMsgAutomateChangeLiensLogistiquesAck  ( *message.msg.u.msg_automate_change_liens_logistiques_ack   , message.context ); break;
-        case T_MsgsInClient_msg_msg_automate_change_liens_logistiques:      OnReceiveMsgAutomateChangeLiensLogistiques     ( *message.msg.u.msg_automate_change_liens_logistiques                         ); break;
-        case T_MsgsInClient_msg_msg_log_ravitaillement_pousser_flux_ack:    OnReceiveMsgLogRavitaillementPousserFluxAck    (  message.msg.u.msg_log_ravitaillement_pousser_flux_ack     , message.context ); break;
-        case T_MsgsInClient_msg_msg_log_ravitaillement_change_quotas_ack:   OnReceiveMsgLogRavitaillementChangeQuotaAck    (  message.msg.u.msg_log_ravitaillement_change_quotas_ack    , message.context ); break;
-        case T_MsgsInClient_msg_msg_population_magic_action_ack:            OnReceiveMsgPopulationMagicActionAck           ( *message.msg.u.msg_population_magic_action_ack             , message.context ); break;
-        case T_MsgsInClient_msg_msg_population_order_ack:                   OnReceiveMsgPopulationOrderAck                 ( *message.msg.u.msg_population_order_ack                    , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_limit_creation_request_ack:             OnReceiveMsgLimitCreationRequestAck            ( message.msg.u.msg_limit_creation_request_ack               , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_limit_update_request_ack:               OnReceiveMsgLimitUpdateRequestAck              ( message.msg.u.msg_limit_update_request_ack                 , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_limit_destruction_request_ack:          OnReceiveMsgLimitDestructionRequestAck         ( message.msg.u.msg_limit_destruction_request_ack            , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_lima_creation_request_ack:              OnReceiveMsgLimaCreationRequestAck             ( message.msg.u.msg_lima_creation_request_ack                , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_lima_update_request_ack:                OnReceiveMsgLimaUpdateRequestAck               ( message.msg.u.msg_lima_update_request_ack                  , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_lima_destruction_request_ack:           OnReceiveMsgLimaDestructionRequestAck          ( message.msg.u.msg_lima_destruction_request_ack             , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_automate_order_ack:                     OnReceiveMsgAutomateOrderAck                   ( *message.msg.u.msg_automate_order_ack                      , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_pion_order_ack:                         OnReceiveMsgPionOrderAck                       ( *message.msg.u.msg_pion_order_ack                          , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_frag_order_ack:                         OnReceiveMsgFragOrderAck                       ( *message.msg.u.msg_frag_order_ack                          , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_unit_magic_action_ack:                  OnReceiveMsgUnitMagicActionAck                 ( *message.msg.u.msg_unit_magic_action_ack                   , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_set_automate_mode_ack:                  OnReceiveMsgSetAutomateModeAck                 ( *message.msg.u.msg_set_automate_mode_ack                   , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_pion_change_superior_ack:               OnReceiveMsgPionChangeSuperiorAck              ( *message.msg.u.msg_pion_change_superior_ack                , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_change_diplomatie_ack:                  OnReceiveMsgChangeDiplomacyAck                 ( *message.msg.u.msg_change_diplomatie_ack                   , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_automate_change_groupe_connaissance_ack:OnReceiveMsgAutomateChangeGroupeConnaissanceAck( *message.msg.u.msg_automate_change_groupe_connaissance_ack , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_object_magic_action_ack:                OnReceiveMsgObjectMagicActionAck               ( *message.msg.u.msg_object_magic_action_ack                 , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_automate_change_liens_logistiques_ack:  OnReceiveMsgAutomateChangeLiensLogistiquesAck  ( *message.msg.u.msg_automate_change_liens_logistiques_ack   , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_automate_change_liens_logistiques:      OnReceiveMsgAutomateChangeLiensLogistiques     ( *message.msg.u.msg_automate_change_liens_logistiques                         ); break;
+        case T_MsgsSimToClient_msg_msg_log_ravitaillement_pousser_flux_ack:    OnReceiveMsgLogRavitaillementPousserFluxAck    (  message.msg.u.msg_log_ravitaillement_pousser_flux_ack     , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_log_ravitaillement_change_quotas_ack:   OnReceiveMsgLogRavitaillementChangeQuotaAck    (  message.msg.u.msg_log_ravitaillement_change_quotas_ack    , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_population_magic_action_ack:            OnReceiveMsgPopulationMagicActionAck           ( *message.msg.u.msg_population_magic_action_ack             , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_population_order_ack:                   OnReceiveMsgPopulationOrderAck                 ( *message.msg.u.msg_population_order_ack                    , message.context ); break;
 
-        case T_MsgsInClient_msg_msg_ctrl_info:                            OnReceiveMsgCtrlInfo                  ( *message.msg.u.msg_ctrl_info                           ); break;
-        case T_MsgsInClient_msg_msg_ctrl_replay_info:                     OnReceiveMsgCtrReplayInfo             ( *message.msg.u.msg_ctrl_replay_info                    ); break;
-        case T_MsgsInClient_msg_msg_ctrl_begin_tick:                      OnReceiveMsgCtrlBeginTick             (  message.msg.u.msg_ctrl_begin_tick                     ); break;
-        case T_MsgsInClient_msg_msg_ctrl_end_tick:                        OnReceiveMsgCtrlEndTick               ( *message.msg.u.msg_ctrl_end_tick                       ); break;
-        case T_MsgsInClient_msg_msg_ctrl_stop_ack:                        break;
-        case T_MsgsInClient_msg_msg_ctrl_pause_ack:                       OnReceiveMsgCtrlPauseAck              ( message.msg.u.msg_ctrl_pause_ack                       ); break;
-        case T_MsgsInClient_msg_msg_ctrl_resume_ack:                      OnReceiveMsgCtrlResumeAck             ( message.msg.u.msg_ctrl_resume_ack                      ); break;
-        case T_MsgsInClient_msg_msg_ctrl_change_time_factor_ack:          OnReceiveMsgCtrlChangeTimeFactorAck   ( *message.msg.u.msg_ctrl_change_time_factor_ack         ); break;
-        case T_MsgsInClient_msg_msg_ctrl_skip_to_tick_ack:                OnReceiveMsgCtrlSkipToTickAck         ( *message.msg.u.msg_ctrl_skip_to_tick_ack               ); break;
-        case T_MsgsInClient_msg_msg_ctrl_meteo_globale_ack:               OnReceiveMsgCtrlMeteoGlobalAck        (); break;
-        case T_MsgsInClient_msg_msg_ctrl_meteo_locale_ack:                OnReceiveMsgCtrlMeteoLocalAck         (); break;
-        case T_MsgsInClient_msg_msg_ctrl_checkpoint_save_begin:           OnReceiveMsgCheckPointSaveBegin       (); break;
-        case T_MsgsInClient_msg_msg_ctrl_checkpoint_save_end:             OnReceiveMsgCheckPointSaveEnd         (); break;
-        case T_MsgsInClient_msg_msg_ctrl_checkpoint_set_frequency_ack:    OnReceiveMsgCheckPointSetFrequencyAck (); break;
-        case T_MsgsInClient_msg_msg_ctrl_checkpoint_save_now_ack:         OnReceiveMsgCheckPointSaveNowAck      (); break;
-        case T_MsgsInClient_msg_msg_ctrl_send_current_state_begin:        OnReceiveMsgCtrlSendCurrentStateBegin (); break;
-        case T_MsgsInClient_msg_msg_ctrl_send_current_state_end:          OnReceiveMsgCtrlSendCurrentStateEnd   (); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_info:                            OnReceiveMsgCtrlInfo                  ( *message.msg.u.msg_ctrl_info                           ); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_begin_tick:                      OnReceiveMsgCtrlBeginTick             (  message.msg.u.msg_ctrl_begin_tick                     ); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_end_tick:                        OnReceiveMsgCtrlEndTick               ( *message.msg.u.msg_ctrl_end_tick                       ); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_stop_ack:                        break;
+        case T_MsgsSimToClient_msg_msg_ctrl_pause_ack:                       OnReceiveMsgCtrlPauseAck              ( message.msg.u.msg_ctrl_pause_ack                       ); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_resume_ack:                      OnReceiveMsgCtrlResumeAck             ( message.msg.u.msg_ctrl_resume_ack                      ); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_change_time_factor_ack:          OnReceiveMsgCtrlChangeTimeFactorAck   ( *message.msg.u.msg_ctrl_change_time_factor_ack         ); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_meteo_globale_ack:               OnReceiveMsgCtrlMeteoGlobalAck        (); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_meteo_locale_ack:                OnReceiveMsgCtrlMeteoLocalAck         (); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_checkpoint_save_begin:           OnReceiveMsgCheckPointSaveBegin       (); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_checkpoint_save_end:             OnReceiveMsgCheckPointSaveEnd         (); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_checkpoint_set_frequency_ack:    OnReceiveMsgCheckPointSetFrequencyAck (); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_checkpoint_save_now_ack:         OnReceiveMsgCheckPointSaveNowAck      (); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_send_current_state_begin:        OnReceiveMsgCtrlSendCurrentStateBegin (); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_send_current_state_end:          OnReceiveMsgCtrlSendCurrentStateEnd   (); break;
 
-        case T_MsgsInClient_msg_msg_authentication_response:              OnReceiveMsgAuthenticationResponse      ( *message.msg.u.msg_authentication_response ); break;
-        case T_MsgsInClient_msg_msg_profile_creation:                     OnReceiveMsgProfileCreation             ( *message.msg.u.msg_profile_creation ); break;
-        case T_MsgsInClient_msg_msg_profile_creation_request_ack:         OnReceiveMsgProfileCreationRequestAck   ( *message.msg.u.msg_profile_creation_request_ack ); break;
-        case T_MsgsInClient_msg_msg_profile_update:                       OnReceiveMsgProfileUpdate               ( *message.msg.u.msg_profile_update ); break;
-        case T_MsgsInClient_msg_msg_profile_update_request_ack:           OnReceiveMsgProfileUpdateRequestAck     ( *message.msg.u.msg_profile_update_request_ack ); break;
-        case T_MsgsInClient_msg_msg_profile_destruction:                  OnReceiveMsgProfileDestruction          ( message.msg.u.msg_profile_destruction ); break;
-        case T_MsgsInClient_msg_msg_profile_destruction_request_ack:      OnReceiveMsgProfileDestructionRequestAck( *message.msg.u.msg_profile_destruction_request_ack ); break;
+        case T_MsgsSimToClient_msg_msg_limit_creation:                       OnReceiveMsgLimitCreation             ( *message.msg.u.msg_limit_creation                      ); break;
+        case T_MsgsSimToClient_msg_msg_limit_update:                         OnReceiveMsgLimitUpdate               ( *message.msg.u.msg_limit_update                        ); break;
+        case T_MsgsSimToClient_msg_msg_limit_destruction:                    OnReceiveMsgLimitDestruction          ( message.msg.u.msg_limit_destruction                    ); break;
+        case T_MsgsSimToClient_msg_msg_lima_creation:                        OnReceiveMsgLimaCreation              ( *message.msg.u.msg_lima_creation                       ); break;
+        case T_MsgsSimToClient_msg_msg_lima_update:                          OnReceiveMsgLimaUpdate                ( *message.msg.u.msg_lima_update                         ); break;
+        case T_MsgsSimToClient_msg_msg_lima_destruction:                     OnReceiveMsgLimaDestruction           ( message.msg.u.msg_lima_destruction                     ); break;
 
-        case T_MsgsInClient_msg_msg_limit_creation:                       OnReceiveMsgLimitCreation             ( *message.msg.u.msg_limit_creation                      ); break;
-        case T_MsgsInClient_msg_msg_limit_update:                         OnReceiveMsgLimitUpdate               ( *message.msg.u.msg_limit_update                        ); break;
-        case T_MsgsInClient_msg_msg_limit_destruction:                    OnReceiveMsgLimitDestruction          ( message.msg.u.msg_limit_destruction                    ); break;
-        case T_MsgsInClient_msg_msg_lima_creation:                        OnReceiveMsgLimaCreation              ( *message.msg.u.msg_lima_creation                       ); break;
-        case T_MsgsInClient_msg_msg_lima_update:                          OnReceiveMsgLimaUpdate                ( *message.msg.u.msg_lima_update                         ); break;
-        case T_MsgsInClient_msg_msg_lima_destruction:                     OnReceiveMsgLimaDestruction           ( message.msg.u.msg_lima_destruction                     ); break;
+        case T_MsgsSimToClient_msg_msg_knowledge_group_creation:             OnReveiveMsgKnowledgeGroupCreation    ( *message.msg.u.msg_knowledge_group_creation            ); break;
+        case T_MsgsSimToClient_msg_msg_side_creation:                        OnReveiveMsgSideCreation              ( *message.msg.u.msg_side_creation                       ); break;
+        case T_MsgsSimToClient_msg_msg_formation_creation:                   OnReveiveMsgFormationCreation         ( *message.msg.u.msg_formation_creation                  ); break;
 
-        case T_MsgsInClient_msg_msg_knowledge_group_creation:             OnReveiveMsgKnowledgeGroupCreation    ( *message.msg.u.msg_knowledge_group_creation            ); break;
-        case T_MsgsInClient_msg_msg_side_creation:                        OnReveiveMsgSideCreation              ( *message.msg.u.msg_side_creation                       ); break;
-        case T_MsgsInClient_msg_msg_formation_creation:                   OnReveiveMsgFormationCreation         ( *message.msg.u.msg_formation_creation                  ); break;
+        case T_MsgsSimToClient_msg_msg_unit_knowledge_creation:              OnReceiveMsgUnitKnowledgeCreation     ( *message.msg.u.msg_unit_knowledge_creation             ); break;
+        case T_MsgsSimToClient_msg_msg_unit_knowledge_update:                OnReceiveMsgUnitKnowledgeUpdate       ( *message.msg.u.msg_unit_knowledge_update               ); break;
+        case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:           OnReceiveMsgUnitKnowledgeDestruction  ( *message.msg.u.msg_unit_knowledge_destruction          ); break;
 
-        case T_MsgsInClient_msg_msg_unit_knowledge_creation:              OnReceiveMsgUnitKnowledgeCreation     ( *message.msg.u.msg_unit_knowledge_creation             ); break;
-        case T_MsgsInClient_msg_msg_unit_knowledge_update:                OnReceiveMsgUnitKnowledgeUpdate       ( *message.msg.u.msg_unit_knowledge_update               ); break;
-        case T_MsgsInClient_msg_msg_unit_knowledge_destruction:           OnReceiveMsgUnitKnowledgeDestruction  ( *message.msg.u.msg_unit_knowledge_destruction          ); break;
+        case T_MsgsSimToClient_msg_msg_unit_attributes:                      OnReceiveMsgUnitAttributes            ( *message.msg.u.msg_unit_attributes                     ); break;
+        case T_MsgsSimToClient_msg_msg_unit_pathfind:                        OnReceiveMsgUnitPathFind              ( *message.msg.u.msg_unit_pathfind                       ); break;
+        case T_MsgsSimToClient_msg_msg_automate_attributes:                  OnReceiveMsgAutomateAttributes        ( *message.msg.u.msg_automate_attributes                 ); break;              
 
-        case T_MsgsInClient_msg_msg_unit_attributes:                      OnReceiveMsgUnitAttributes            ( *message.msg.u.msg_unit_attributes                     ); break;
-        case T_MsgsInClient_msg_msg_unit_pathfind:                        OnReceiveMsgUnitPathFind              ( *message.msg.u.msg_unit_pathfind                       ); break;
-        case T_MsgsInClient_msg_msg_automate_attributes:                  OnReceiveMsgAutomateAttributes        ( *message.msg.u.msg_automate_attributes                 ); break;              
+        case T_MsgsSimToClient_msg_msg_start_pion_fire:                      OnReceiveMsgStartPionFire             ( *message.msg.u.msg_start_pion_fire                     ); break;
+        case T_MsgsSimToClient_msg_msg_stop_pion_fire:                       OnReceiveMsgStopPionFire              ( *message.msg.u.msg_stop_pion_fire                      ); break;
+        case T_MsgsSimToClient_msg_msg_start_population_fire:                OnReceiveMsgStartPopulationFire       ( *message.msg.u.msg_start_population_fire               ); break;
+        case T_MsgsSimToClient_msg_msg_stop_population_fire:                 OnReceiveMsgStopPopulationFire        ( *message.msg.u.msg_stop_population_fire                ); break;
 
-        case T_MsgsInClient_msg_msg_start_pion_fire:                      OnReceiveMsgStartPionFire             ( *message.msg.u.msg_start_pion_fire                     ); break;
-        case T_MsgsInClient_msg_msg_stop_pion_fire:                       OnReceiveMsgStopPionFire              ( *message.msg.u.msg_stop_pion_fire                      ); break;
-        case T_MsgsInClient_msg_msg_start_population_fire:                OnReceiveMsgStartPopulationFire       ( *message.msg.u.msg_start_population_fire               ); break;
-        case T_MsgsInClient_msg_msg_stop_population_fire:                 OnReceiveMsgStopPopulationFire        ( *message.msg.u.msg_stop_population_fire                ); break;
+        case T_MsgsSimToClient_msg_msg_explosion:                            OnReceiveMsgExplosion                 ( *message.msg.u.msg_explosion                           ); break;
+        case T_MsgsSimToClient_msg_msg_cr:                                   OnReceiveMsgCR                        ( *message.msg.u.msg_cr                                  ); break;
+        case T_MsgsSimToClient_msg_msg_start_fire_effect:                    OnReceiveMsgStartFireEffect           ( *message.msg.u.msg_start_fire_effect ); break;
+        case T_MsgsSimToClient_msg_msg_stop_fire_effect:                     OnReceiveMsgStopFireEffect            ( message.msg.u.msg_stop_fire_effect ); break;
 
-        case T_MsgsInClient_msg_msg_explosion:                            OnReceiveMsgExplosion                 ( *message.msg.u.msg_explosion                           ); break;
-        case T_MsgsInClient_msg_msg_cr:                                   OnReceiveMsgCR                        ( *message.msg.u.msg_cr                                  ); break;
-        case T_MsgsInClient_msg_msg_start_fire_effect:                    OnReceiveMsgStartFireEffect           ( *message.msg.u.msg_start_fire_effect ); break;
-        case T_MsgsInClient_msg_msg_stop_fire_effect:                     OnReceiveMsgStopFireEffect            ( message.msg.u.msg_stop_fire_effect ); break;
+        case T_MsgsSimToClient_msg_msg_pion_order_management:                OnReceiveMsgPionOrderManagement       ( *message.msg.u.msg_pion_order_management               ); break;
+        case T_MsgsSimToClient_msg_msg_automate_order_management:            OnReceiveMsgAutomateOrderManagement   ( *message.msg.u.msg_automate_order_management           ); break;
+        case T_MsgsSimToClient_msg_msg_population_order_management:          OnReceiveMsgPopulationOrderManagement ( *message.msg.u.msg_population_order_management         ); break;
+        case T_MsgsSimToClient_msg_msg_pion_order:                           OnReceiveMsgPionOrder                 ( *message.msg.u.msg_pion_order ); break;
+        case T_MsgsSimToClient_msg_msg_automate_order:                       OnReceiveMsgAutomateOrder             ( *message.msg.u.msg_automate_order ); break;
+        case T_MsgsSimToClient_msg_msg_population_order:                     OnReceiveMsgPopulationOrder           ( *message.msg.u.msg_population_order ); break;
 
-        case T_MsgsInClient_msg_msg_pion_order_management:                OnReceiveMsgPionOrderManagement       ( *message.msg.u.msg_pion_order_management               ); break;
-        case T_MsgsInClient_msg_msg_automate_order_management:            OnReceiveMsgAutomateOrderManagement   ( *message.msg.u.msg_automate_order_management           ); break;
-        case T_MsgsInClient_msg_msg_population_order_management:          OnReceiveMsgPopulationOrderManagement ( *message.msg.u.msg_population_order_management         ); break;
-        case T_MsgsInClient_msg_msg_pion_order:                           OnReceiveMsgPionOrder                 ( *message.msg.u.msg_pion_order ); break;
-        case T_MsgsInClient_msg_msg_automate_order:                       OnReceiveMsgAutomateOrder             ( *message.msg.u.msg_automate_order ); break;
-        case T_MsgsInClient_msg_msg_population_order:                     OnReceiveMsgPopulationOrder           ( *message.msg.u.msg_population_order ); break;
+        case T_MsgsSimToClient_msg_msg_object_creation:                      OnReceiveMsgObjectCreation            ( *message.msg.u.msg_object_creation                     ); break;
+        case T_MsgsSimToClient_msg_msg_object_update:                        OnReceiveMsgObjectUpdate              ( *message.msg.u.msg_object_update                       ); break;
+        case T_MsgsSimToClient_msg_msg_object_destruction:                   OnReceiveMsgObjectDestruction         ( message.msg.u.msg_object_destruction                   ); break;
+        case T_MsgsSimToClient_msg_msg_object_knowledge_creation:            OnReceiveMsgObjectKnowledgeCreation   ( *message.msg.u.msg_object_knowledge_creation           ); break;
+        case T_MsgsSimToClient_msg_msg_object_knowledge_update:              OnReceiveMsgObjectKnowledgeUpdate     ( *message.msg.u.msg_object_knowledge_update             ); break;
+        case T_MsgsSimToClient_msg_msg_object_knowledge_destruction:         OnReceiveMsgObjectKnowledgeDestruction( *message.msg.u.msg_object_knowledge_destruction        ); break;
 
-        case T_MsgsInClient_msg_msg_object_creation:                      OnReceiveMsgObjectCreation            ( *message.msg.u.msg_object_creation                     ); break;
-        case T_MsgsInClient_msg_msg_object_update:                        OnReceiveMsgObjectUpdate              ( *message.msg.u.msg_object_update                       ); break;
-        case T_MsgsInClient_msg_msg_object_destruction:                   OnReceiveMsgObjectDestruction         ( message.msg.u.msg_object_destruction                   ); break;
-        case T_MsgsInClient_msg_msg_object_knowledge_creation:            OnReceiveMsgObjectKnowledgeCreation   ( *message.msg.u.msg_object_knowledge_creation           ); break;
-        case T_MsgsInClient_msg_msg_object_knowledge_update:              OnReceiveMsgObjectKnowledgeUpdate     ( *message.msg.u.msg_object_knowledge_update             ); break;
-        case T_MsgsInClient_msg_msg_object_knowledge_destruction:         OnReceiveMsgObjectKnowledgeDestruction( *message.msg.u.msg_object_knowledge_destruction        ); break;
+        case T_MsgsSimToClient_msg_msg_pion_change_superior:                 OnReceiveMsgPionChangeSuperior        ( *message.msg.u.msg_pion_change_superior ); break;
 
-        case T_MsgsInClient_msg_msg_pion_change_superior:                 OnReceiveMsgPionChangeSuperior        ( *message.msg.u.msg_pion_change_superior ); break;
+        case T_MsgsSimToClient_msg_msg_pion_creation:                        OnReceiveMsgPionCreation              ( *message.msg.u.msg_pion_creation                       ); break;
+        case T_MsgsSimToClient_msg_msg_automate_creation:                    OnReceiveMsgAutomateCreation          ( *message.msg.u.msg_automate_creation                   ); break;
+        case T_MsgsSimToClient_msg_msg_change_diplomatie:                    OnReceiveMsgChangeDiplomatie          ( *message.msg.u.msg_change_diplomatie                   ); break;
 
-        case T_MsgsInClient_msg_msg_pion_creation:                        OnReceiveMsgPionCreation              ( *message.msg.u.msg_pion_creation                       ); break;
-        case T_MsgsInClient_msg_msg_automate_creation:                    OnReceiveMsgAutomateCreation          ( *message.msg.u.msg_automate_creation                   ); break;
-        case T_MsgsInClient_msg_msg_change_diplomatie:                    OnReceiveMsgChangeDiplomatie          ( *message.msg.u.msg_change_diplomatie                   ); break;
+        case T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_creation:    OnReceiveMsgLogMaintenanceTraitementEquipementCreation   ( *message.msg.u.msg_log_maintenance_traitement_equipement_creation ); break;
+        case T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_destruction: OnReceiveMsgLogMaintenanceTraitementEquipementDestruction( *message.msg.u.msg_log_maintenance_traitement_equipement_destruction ); break;
+        case T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_update:      OnReceiveMsgLogMaintenanceTraitementEquipementUpdate     ( *message.msg.u.msg_log_maintenance_traitement_equipement_update ); break;
+        case T_MsgsSimToClient_msg_msg_log_maintenance_etat:                              OnReceiveMsgLogMaintenanceEtat( *message.msg.u.msg_log_maintenance_etat ); break;
 
-        case T_MsgsInClient_msg_msg_log_maintenance_traitement_equipement_creation:    OnReceiveMsgLogMaintenanceTraitementEquipementCreation   ( *message.msg.u.msg_log_maintenance_traitement_equipement_creation ); break;
-        case T_MsgsInClient_msg_msg_log_maintenance_traitement_equipement_destruction: OnReceiveMsgLogMaintenanceTraitementEquipementDestruction( *message.msg.u.msg_log_maintenance_traitement_equipement_destruction ); break;
-        case T_MsgsInClient_msg_msg_log_maintenance_traitement_equipement_update:      OnReceiveMsgLogMaintenanceTraitementEquipementUpdate     ( *message.msg.u.msg_log_maintenance_traitement_equipement_update ); break;
-        case T_MsgsInClient_msg_msg_log_maintenance_etat:                              OnReceiveMsgLogMaintenanceEtat( *message.msg.u.msg_log_maintenance_etat ); break;
-
-        case T_MsgsInClient_msg_msg_log_ravitaillement_traitement_creation:    OnReceiveMsgLogRavitaillementTraitementCreation   ( *message.msg.u.msg_log_ravitaillement_traitement_creation ); break;
-        case T_MsgsInClient_msg_msg_log_ravitaillement_traitement_destruction: OnReceiveMsgLogRavitaillementTraitementDestruction( *message.msg.u.msg_log_ravitaillement_traitement_destruction ); break;
-        case T_MsgsInClient_msg_msg_log_ravitaillement_traitement_update:      OnReceiveMsgLogRavitaillementTraitementUpdate     ( *message.msg.u.msg_log_ravitaillement_traitement_update ); break;
-        case T_MsgsInClient_msg_msg_log_ravitaillement_etat:                   OnReceiveMsgLogRavitaillementEtat( *message.msg.u.msg_log_ravitaillement_etat ); break;
-        case T_MsgsInClient_msg_msg_log_ravitaillement_quotas:                 OnReceiveMsgLogRavitaillementQuotas               (  *message.msg.u.msg_log_ravitaillement_quotas ); break;
+        case T_MsgsSimToClient_msg_msg_log_ravitaillement_traitement_creation:    OnReceiveMsgLogRavitaillementTraitementCreation   ( *message.msg.u.msg_log_ravitaillement_traitement_creation ); break;
+        case T_MsgsSimToClient_msg_msg_log_ravitaillement_traitement_destruction: OnReceiveMsgLogRavitaillementTraitementDestruction( *message.msg.u.msg_log_ravitaillement_traitement_destruction ); break;
+        case T_MsgsSimToClient_msg_msg_log_ravitaillement_traitement_update:      OnReceiveMsgLogRavitaillementTraitementUpdate     ( *message.msg.u.msg_log_ravitaillement_traitement_update ); break;
+        case T_MsgsSimToClient_msg_msg_log_ravitaillement_etat:                   OnReceiveMsgLogRavitaillementEtat( *message.msg.u.msg_log_ravitaillement_etat ); break;
+        case T_MsgsSimToClient_msg_msg_log_ravitaillement_quotas:                 OnReceiveMsgLogRavitaillementQuotas               (  *message.msg.u.msg_log_ravitaillement_quotas ); break;
 
 
-        case T_MsgsInClient_msg_msg_log_sante_traitement_humain_creation:    OnReceiveMsgLogSanteTraitementHumainCreation   ( *message.msg.u.msg_log_sante_traitement_humain_creation ); break;
-        case T_MsgsInClient_msg_msg_log_sante_traitement_humain_destruction: OnReceiveMsgLogSanteTraitementHumainDestruction( *message.msg.u.msg_log_sante_traitement_humain_destruction ); break;
-        case T_MsgsInClient_msg_msg_log_sante_traitement_humain_update:      OnReceiveMsgLogSanteTraitementHumainUpdate     ( *message.msg.u.msg_log_sante_traitement_humain_update ); break;
-        case T_MsgsInClient_msg_msg_log_sante_etat:                          OnReceiveMsgLogSanteEtat( *message.msg.u.msg_log_sante_etat ); break;
+        case T_MsgsSimToClient_msg_msg_log_sante_traitement_humain_creation:    OnReceiveMsgLogSanteTraitementHumainCreation   ( *message.msg.u.msg_log_sante_traitement_humain_creation ); break;
+        case T_MsgsSimToClient_msg_msg_log_sante_traitement_humain_destruction: OnReceiveMsgLogSanteTraitementHumainDestruction( *message.msg.u.msg_log_sante_traitement_humain_destruction ); break;
+        case T_MsgsSimToClient_msg_msg_log_sante_traitement_humain_update:      OnReceiveMsgLogSanteTraitementHumainUpdate     ( *message.msg.u.msg_log_sante_traitement_humain_update ); break;
+        case T_MsgsSimToClient_msg_msg_log_sante_etat:                          OnReceiveMsgLogSanteEtat( *message.msg.u.msg_log_sante_etat ); break;
 
-        case T_MsgsInClient_msg_msg_population_creation                       : OnMsgPopulationCreation                ( *message.msg.u.msg_population_creation ); break;
-        case T_MsgsInClient_msg_msg_population_update                         : OnMsgPopulationUpdate                  ( *message.msg.u.msg_population_update ); break;
-        case T_MsgsInClient_msg_msg_population_concentration_creation         : OnMsgPopulationConcentrationCreation   ( *message.msg.u.msg_population_concentration_creation ); break;
-        case T_MsgsInClient_msg_msg_population_concentration_destruction      : OnMsgPopulationConcentrationDestruction( *message.msg.u.msg_population_concentration_destruction ); break;
-        case T_MsgsInClient_msg_msg_population_concentration_update           : OnMsgPopulationConcentrationUpdate     ( *message.msg.u.msg_population_concentration_update ); break;
-        case T_MsgsInClient_msg_msg_population_flux_creation                  : OnMsgPopulationFluxCreation            ( *message.msg.u.msg_population_flux_creation ); break;
-        case T_MsgsInClient_msg_msg_population_flux_destruction               : OnMsgPopulationFluxDestruction         ( *message.msg.u.msg_population_flux_destruction ); break;
-        case T_MsgsInClient_msg_msg_population_flux_update                    : OnMsgPopulationFluxUpdate              ( *message.msg.u.msg_population_flux_update ); break;
+        case T_MsgsSimToClient_msg_msg_population_creation                       : OnMsgPopulationCreation                ( *message.msg.u.msg_population_creation ); break;
+        case T_MsgsSimToClient_msg_msg_population_update                         : OnMsgPopulationUpdate                  ( *message.msg.u.msg_population_update ); break;
+        case T_MsgsSimToClient_msg_msg_population_concentration_creation         : OnMsgPopulationConcentrationCreation   ( *message.msg.u.msg_population_concentration_creation ); break;
+        case T_MsgsSimToClient_msg_msg_population_concentration_destruction      : OnMsgPopulationConcentrationDestruction( *message.msg.u.msg_population_concentration_destruction ); break;
+        case T_MsgsSimToClient_msg_msg_population_concentration_update           : OnMsgPopulationConcentrationUpdate     ( *message.msg.u.msg_population_concentration_update ); break;
+        case T_MsgsSimToClient_msg_msg_population_flux_creation                  : OnMsgPopulationFluxCreation            ( *message.msg.u.msg_population_flux_creation ); break;
+        case T_MsgsSimToClient_msg_msg_population_flux_destruction               : OnMsgPopulationFluxDestruction         ( *message.msg.u.msg_population_flux_destruction ); break;
+        case T_MsgsSimToClient_msg_msg_population_flux_update                    : OnMsgPopulationFluxUpdate              ( *message.msg.u.msg_population_flux_update ); break;
 
-        case T_MsgsInClient_msg_msg_population_knowledge_creation                  : OnReceiveMsgPopulationKnowledgeCreation                ( *message.msg.u.msg_population_knowledge_creation                  ); break;
-        case T_MsgsInClient_msg_msg_population_knowledge_update                    : OnReceiveMsgPopulationKnowledgeUpdate                  ( *message.msg.u.msg_population_knowledge_update                    ); break;
-        case T_MsgsInClient_msg_msg_population_knowledge_destruction               : OnReceiveMsgPopulationKnowledgeDestruction             ( *message.msg.u.msg_population_knowledge_destruction               ); break;
-        case T_MsgsInClient_msg_msg_population_concentration_knowledge_creation    : OnReceiveMsgPopulationConcentrationKnowledgeCreation   ( *message.msg.u.msg_population_concentration_knowledge_creation    ); break;
-        case T_MsgsInClient_msg_msg_population_concentration_knowledge_update      : OnReceiveMsgPopulationConcentrationKnowledgeUpdate     ( *message.msg.u.msg_population_concentration_knowledge_update      ); break;
-        case T_MsgsInClient_msg_msg_population_concentration_knowledge_destruction : OnReceiveMsgPopulationConcentrationKnowledgeDestruction( *message.msg.u.msg_population_concentration_knowledge_destruction ); break;
-        case T_MsgsInClient_msg_msg_population_flux_knowledge_creation             : OnReceiveMsgPopulationFlowKnowledgeCreation            ( *message.msg.u.msg_population_flux_knowledge_creation             ); break;
-        case T_MsgsInClient_msg_msg_population_flux_knowledge_update               : OnReceiveMsgPopulationFlowKnowledgeUpdate              ( *message.msg.u.msg_population_flux_knowledge_update               ); break;
-        case T_MsgsInClient_msg_msg_population_flux_knowledge_destruction          : OnReceiveMsgPopulationFlowKnowledgeDestruction         ( *message.msg.u.msg_population_flux_knowledge_destruction          ); break;
+        case T_MsgsSimToClient_msg_msg_population_knowledge_creation                  : OnReceiveMsgPopulationKnowledgeCreation                ( *message.msg.u.msg_population_knowledge_creation                  ); break;
+        case T_MsgsSimToClient_msg_msg_population_knowledge_update                    : OnReceiveMsgPopulationKnowledgeUpdate                  ( *message.msg.u.msg_population_knowledge_update                    ); break;
+        case T_MsgsSimToClient_msg_msg_population_knowledge_destruction               : OnReceiveMsgPopulationKnowledgeDestruction             ( *message.msg.u.msg_population_knowledge_destruction               ); break;
+        case T_MsgsSimToClient_msg_msg_population_concentration_knowledge_creation    : OnReceiveMsgPopulationConcentrationKnowledgeCreation   ( *message.msg.u.msg_population_concentration_knowledge_creation    ); break;
+        case T_MsgsSimToClient_msg_msg_population_concentration_knowledge_update      : OnReceiveMsgPopulationConcentrationKnowledgeUpdate     ( *message.msg.u.msg_population_concentration_knowledge_update      ); break;
+        case T_MsgsSimToClient_msg_msg_population_concentration_knowledge_destruction : OnReceiveMsgPopulationConcentrationKnowledgeDestruction( *message.msg.u.msg_population_concentration_knowledge_destruction ); break;
+        case T_MsgsSimToClient_msg_msg_population_flux_knowledge_creation             : OnReceiveMsgPopulationFlowKnowledgeCreation            ( *message.msg.u.msg_population_flux_knowledge_creation             ); break;
+        case T_MsgsSimToClient_msg_msg_population_flux_knowledge_update               : OnReceiveMsgPopulationFlowKnowledgeUpdate              ( *message.msg.u.msg_population_flux_knowledge_update               ); break;
+        case T_MsgsSimToClient_msg_msg_population_flux_knowledge_destruction          : OnReceiveMsgPopulationFlowKnowledgeDestruction         ( *message.msg.u.msg_population_flux_knowledge_destruction          ); break;
+        default:
+            UnhandledMessage( message.msg.t );
+    }
+}
+
+//-----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr constructor
+// Created: NLD 2003-02-26
+//-----------------------------------------------------------------------------
+void AgentServerMsgMgr::_OnReceiveMsgMiddleToClient( DIN_Input& input )
+{
+    uint nAsnMsgSize = input.GetAvailable();
+
+    assert( nAsnMsgSize <= sizeof(aASNDecodeBuffer_) );
+
+    // Fill the asn buffer array
+    memcpy( aASNDecodeBuffer_, input.GetBuffer(nAsnMsgSize), nAsnMsgSize );
+
+    // Create the asn msg buffer
+    ASN1PERDecodeBuffer asnPERDecodeBuffer( aASNDecodeBuffer_, nAsnMsgSize, TRUE );
+
+    // Decode the message
+    ASN1T_MsgsMiddleToClient message;
+    ASN1C_MsgsMiddleToClient asnMsgCtrl( asnPERDecodeBuffer, message );
+    if( asnMsgCtrl.Decode() != ASN_OK )
+    {
+        asnPERDecodeBuffer.PrintErrorInfo();
+        throw std::runtime_error( "ASN fussé" );
+    }
+
+    switch( message.msg.t )
+    {
+        case T_MsgsMiddleToClient_msg_msg_ctrl_replay_info:                     OnReceiveMsgCtrReplayInfo             ( *message.msg.u.msg_ctrl_replay_info                    ); break;
+        case T_MsgsMiddleToClient_msg_msg_ctrl_skip_to_tick_ack:                OnReceiveMsgCtrlSkipToTickAck         ( *message.msg.u.msg_ctrl_skip_to_tick_ack               ); break;
+        case T_MsgsMiddleToClient_msg_msg_authentication_response:              OnReceiveMsgAuthenticationResponse      ( *message.msg.u.msg_authentication_response ); break;
+        case T_MsgsMiddleToClient_msg_msg_profile_creation:                     OnReceiveMsgProfileCreation             ( *message.msg.u.msg_profile_creation ); break;
+        case T_MsgsMiddleToClient_msg_msg_profile_creation_request_ack:         OnReceiveMsgProfileCreationRequestAck   ( *message.msg.u.msg_profile_creation_request_ack ); break;
+        case T_MsgsMiddleToClient_msg_msg_profile_update:                       OnReceiveMsgProfileUpdate               ( *message.msg.u.msg_profile_update ); break;
+        case T_MsgsMiddleToClient_msg_msg_profile_update_request_ack:           OnReceiveMsgProfileUpdateRequestAck     ( *message.msg.u.msg_profile_update_request_ack ); break;
+        case T_MsgsMiddleToClient_msg_msg_profile_destruction:                  OnReceiveMsgProfileDestruction          ( message.msg.u.msg_profile_destruction ); break;
+        case T_MsgsMiddleToClient_msg_msg_profile_destruction_request_ack:      OnReceiveMsgProfileDestructionRequestAck( *message.msg.u.msg_profile_destruction_request_ack ); break;
         default:
             UnhandledMessage( message.msg.t );
     }

@@ -64,7 +64,7 @@ void Fire::SendFullUpdate( Publisher_ABC& ) const
 // -----------------------------------------------------------------------------
 void Fire::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientStartPionFire asn;
+    AsnMsgSimToClientStartPionFire asn;
     asn().oid_tir = oid_tir;
     asn().tireur  = tireur;
     asn().type    = type;
@@ -88,7 +88,7 @@ void Fire::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Fire::CommitDestruction()
 {
-    AsnMsgInClientStopPionFire asn;
+    AsnMsgSimToClientStopPionFire asn;
     asn().oid_tir = oid_tir;
     asn().degats_pions.n    = asn().degats_populations.n    = 0;
     asn().degats_pions.elem = 0;

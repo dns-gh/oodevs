@@ -59,7 +59,7 @@ void Lima::Update( const ASN1T_MsgLimaUpdate& message )
 // -----------------------------------------------------------------------------
 void Lima::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientLimaCreation asn;
+    AsnMsgSimToClientLimaCreation asn;
 
     asn().oid = GetID();
     TacticalLine_ABC::Send( asn().tactical_line );
@@ -83,7 +83,7 @@ void Lima::SendFullUpdate( Publisher_ABC& ) const
 // -----------------------------------------------------------------------------
 void Lima::CommitDestruction()
 {
-    AsnMsgInClientLimaDestruction asn;
+    AsnMsgSimToClientLimaDestruction asn;
     asn() = GetID();
     Entity_ABC::Send( asn );
 }

@@ -72,7 +72,7 @@ Profile::Profile( Model& model, ClientsNetworker& clients, const ASN1T_MsgProfil
 // -----------------------------------------------------------------------------
 Profile::~Profile()
 {
-    AsnMsgInClientProfileDestruction asn;
+    AsnMsgMiddleToClientProfileDestruction asn;
     asn() = strLogin_.c_str();
     asn.Send( clients_ );
 }
@@ -198,45 +198,40 @@ bool Profile::CheckPassword( const std::string& strPassword ) const
 
 // -----------------------------------------------------------------------------
 // Name: Profile::CheckRights
-// Created: NLD 2006-10-06
+// Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-bool Profile::CheckRights( const ASN1T_MsgsOutClient& msg ) const
+bool Profile::CheckRights( const ASN1T_MsgsClientToSim& msg ) const
 {
     switch( msg.msg.t )
     {
-        case T_MsgsOutClient_msg_msg_ctrl_stop                          : return bSupervision_;
-        case T_MsgsOutClient_msg_msg_ctrl_pause                         : return bSupervision_;
-        case T_MsgsOutClient_msg_msg_ctrl_resume                        : return bSupervision_; 
-        case T_MsgsOutClient_msg_msg_ctrl_change_time_factor            : return bSupervision_;
-        case T_MsgsOutClient_msg_msg_ctrl_skip_to_tick                  : return bSupervision_;
-        case T_MsgsOutClient_msg_msg_ctrl_meteo_globale                 : return bSupervision_;
-        case T_MsgsOutClient_msg_msg_ctrl_meteo_locale                  : return bSupervision_;
-        case T_MsgsOutClient_msg_msg_ctrl_checkpoint_save_now           : return bSupervision_;
-        case T_MsgsOutClient_msg_msg_ctrl_checkpoint_set_frequency      : return bSupervision_;
-        case T_MsgsOutClient_msg_msg_authentication_request             : return true;
-        case T_MsgsOutClient_msg_msg_profile_creation_request           : return bSupervision_; //$$$ Administration
-        case T_MsgsOutClient_msg_msg_profile_update_request             : return bSupervision_; //$$$ Administration
-        case T_MsgsOutClient_msg_msg_profile_destruction_request        : return bSupervision_; //$$$ Administration
-        case T_MsgsOutClient_msg_msg_limit_creation_request             : return true;
-        case T_MsgsOutClient_msg_msg_limit_destruction_request          : return true;
-        case T_MsgsOutClient_msg_msg_limit_update_request               : return true;
-        case T_MsgsOutClient_msg_msg_lima_creation_request              : return true;
-        case T_MsgsOutClient_msg_msg_lima_destruction_request           : return true;
-        case T_MsgsOutClient_msg_msg_lima_update_request                : return true;
-        case T_MsgsOutClient_msg_msg_pion_order                         : return true;
-        case T_MsgsOutClient_msg_msg_automate_order                     : return true;
-        case T_MsgsOutClient_msg_msg_population_order                   : return true;
-        case T_MsgsOutClient_msg_msg_frag_order                         : return true;
-        case T_MsgsOutClient_msg_msg_set_automate_mode                  : return true;
-        case T_MsgsOutClient_msg_msg_unit_magic_action                  : return true;
-        case T_MsgsOutClient_msg_msg_object_magic_action                : return true;
-        case T_MsgsOutClient_msg_msg_population_magic_action            : return true;
-        case T_MsgsOutClient_msg_msg_change_diplomatie                  : return true;
-        case T_MsgsOutClient_msg_msg_automate_change_groupe_connaissance: return true;
-        case T_MsgsOutClient_msg_msg_automate_change_liens_logistiques  : return true;
-        case T_MsgsOutClient_msg_msg_pion_change_superior               : return true;
-        case T_MsgsOutClient_msg_msg_log_ravitaillement_pousser_flux    : return true;
-        case T_MsgsOutClient_msg_msg_log_ravitaillement_change_quotas   : return true;
+        case T_MsgsClientToSim_msg_msg_ctrl_stop                          : return bSupervision_;
+        case T_MsgsClientToSim_msg_msg_ctrl_pause                         : return bSupervision_;
+        case T_MsgsClientToSim_msg_msg_ctrl_resume                        : return bSupervision_; 
+        case T_MsgsClientToSim_msg_msg_ctrl_change_time_factor            : return bSupervision_;
+        case T_MsgsClientToSim_msg_msg_ctrl_meteo_globale                 : return bSupervision_;
+        case T_MsgsClientToSim_msg_msg_ctrl_meteo_locale                  : return bSupervision_;
+        case T_MsgsClientToSim_msg_msg_ctrl_checkpoint_save_now           : return bSupervision_;
+        case T_MsgsClientToSim_msg_msg_ctrl_checkpoint_set_frequency      : return bSupervision_;
+        case T_MsgsClientToSim_msg_msg_limit_creation_request             : return true;
+        case T_MsgsClientToSim_msg_msg_limit_destruction_request          : return true;
+        case T_MsgsClientToSim_msg_msg_limit_update_request               : return true;
+        case T_MsgsClientToSim_msg_msg_lima_creation_request              : return true;
+        case T_MsgsClientToSim_msg_msg_lima_destruction_request           : return true;
+        case T_MsgsClientToSim_msg_msg_lima_update_request                : return true;
+        case T_MsgsClientToSim_msg_msg_pion_order                         : return true;
+        case T_MsgsClientToSim_msg_msg_automate_order                     : return true;
+        case T_MsgsClientToSim_msg_msg_population_order                   : return true;
+        case T_MsgsClientToSim_msg_msg_frag_order                         : return true;
+        case T_MsgsClientToSim_msg_msg_set_automate_mode                  : return true;
+        case T_MsgsClientToSim_msg_msg_unit_magic_action                  : return true;
+        case T_MsgsClientToSim_msg_msg_object_magic_action                : return true;
+        case T_MsgsClientToSim_msg_msg_population_magic_action            : return true;
+        case T_MsgsClientToSim_msg_msg_change_diplomatie                  : return true;
+        case T_MsgsClientToSim_msg_msg_automate_change_groupe_connaissance: return true;
+        case T_MsgsClientToSim_msg_msg_automate_change_liens_logistiques  : return true;
+        case T_MsgsClientToSim_msg_msg_pion_change_superior               : return true;
+        case T_MsgsClientToSim_msg_msg_log_ravitaillement_pousser_flux    : return true;
+        case T_MsgsClientToSim_msg_msg_log_ravitaillement_change_quotas   : return true;
         default:
             return false;
     }
@@ -244,11 +239,20 @@ bool Profile::CheckRights( const ASN1T_MsgsOutClient& msg ) const
 
 // -----------------------------------------------------------------------------
 // Name: Profile::CheckRights
-// Created: AGE 2007-04-11
+// Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-bool Profile::CheckRights() const
+bool Profile::CheckRights( const ASN1T_MsgsClientToMiddle& msg ) const
 {
-    return bSupervision_;
+    switch( msg.msg.t )
+    {
+        case T_MsgsClientToMiddle_msg_msg_ctrl_skip_to_tick                  : return bSupervision_;
+        case T_MsgsClientToMiddle_msg_msg_authentication_request             : return true;
+        case T_MsgsClientToMiddle_msg_msg_profile_creation_request           : return bSupervision_; //$$$ Administration
+        case T_MsgsClientToMiddle_msg_msg_profile_update_request             : return bSupervision_; //$$$ Administration
+        case T_MsgsClientToMiddle_msg_msg_profile_destruction_request        : return bSupervision_; //$$$ Administration
+        default:
+            return false;
+    }
 }
 
 // =============================================================================
@@ -320,7 +324,7 @@ void Profile::AsnDelete( ASN1T_Profile& asn )
 // -----------------------------------------------------------------------------
 void Profile::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgInClientProfileCreation asn;
+    AsnMsgMiddleToClientProfileCreation asn;
     Send( asn() );
     asn().m.passwordPresent = 1;
     asn().password = strPassword_.c_str();
@@ -340,7 +344,7 @@ void Profile::Update( const ASN1T_MsgProfileUpdateRequest& message )
     bSupervision_ = message.profile.superviseur;
     ReadRights( message.profile );
 
-    AsnMsgInClientProfileUpdate asn;
+    AsnMsgMiddleToClientProfileUpdate asn;
     asn().login = message.login;
     asn().profile.m.passwordPresent = message.profile.m.passwordPresent;
     if( asn().profile.m.passwordPresent )
