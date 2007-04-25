@@ -36,23 +36,13 @@ namespace
         throw std::exception( "Pure virtual call" );
     }
 
-    void Run( QApplication& app )
+    void Run( int argc, char** argv )
     {
-        try
-        {
-            app.exec();
-        }
-        catch( std::exception& e )
-        {
-            QMessageBox::critical( 0, APP_NAME, e.what() );
-        };
-    }
+        QApplication* app = 0;
 
-    QApplication& InstanciateApp( int argc, char** argv )
-    {
         try
         {
-            QApplication& app = *new Application( argc, argv );
+            app = new Application( argc, argv );
             AddTranslator( "qt_" );
             AddTranslator( "ENT" );
             AddTranslator( "clients_kernel" );
@@ -60,11 +50,20 @@ namespace
             AddTranslator( "gaming" );
             AddTranslator( "gaming_app" );
             ENT_Tr::InitTranslations();
-            return app;
         }
         catch( ... )
         {
             std::exit( EXIT_FAILURE );
+        }
+
+        try
+        {
+            app->exec();
+            delete app;
+        }
+        catch( std::exception& e )
+        {
+            QMessageBox::critical( 0, APP_NAME, e.what() );
         }
     }
 
@@ -82,7 +81,7 @@ int main( int argc, char** argv )
 
     __try
     {
-        Run( InstanciateApp( argc, argv ) );
+        Run( argc, argv );
     }
     __except( StackWalkerProxy::ContinueSearch( GetExceptionInformation(), GetLog() ) )
     {

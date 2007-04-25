@@ -36,7 +36,7 @@ namespace
 // -----------------------------------------------------------------------------
 Application::Application( int argc, char** argv )
     : QApplication( argc, argv )
-    , mainWindow_( 0 )
+    , mainWindow_ ( 0 )
 {
     try
     {
@@ -60,6 +60,8 @@ Application::Application( int argc, char** argv )
 // -----------------------------------------------------------------------------
 Application::~Application()
 {
+    delete network_;
+    delete workers_;
     delete config_;
 }
 
