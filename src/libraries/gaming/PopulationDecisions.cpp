@@ -43,6 +43,10 @@ PopulationDecisions::~PopulationDecisions()
 // -----------------------------------------------------------------------------
 void PopulationDecisions::DoUpdate( const ASN1T_MsgPopulationOrder& message )
 {
+    // $$$$ NLD 2007-04-25: NLD TMP A VIRER
+    if( message.mission == 0 )
+        return;
+
     const Resolver_ABC< Mission >& resolver = GetDecisionalModel();
     current_ = & resolver.Get( message.mission );
     controller_.Update( *this );

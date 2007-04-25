@@ -60,6 +60,10 @@ bool Decisions::IsEmbraye() const
 // -----------------------------------------------------------------------------
 void Decisions::DoUpdate( const ASN1T_MsgPionOrder& message )
 {
+    // $$$$ NLD 2007-04-25: NLD TMP A VIRER
+    if( message.mission == 0 )
+        return; 
+
     const Resolver_ABC< Mission >& resolver = GetDecisionalModel();
     current_ = & resolver.Get( message.mission );
     controller_.Update( *this );

@@ -1148,15 +1148,6 @@ void AgentServerMsgMgr::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrd
         GetModel().agents_.GetAutomat( message.oid_unite_executante ).Update( message );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgAutomateOrderManagement
-// Created: SBO 2006-11-20
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAutomateOrderManagement( const ASN1T_MsgAutomateOrderManagement& asnMsg )
-{
-    GetModel().agents_.GetAutomat( asnMsg.oid_unite_executante ).Update( asnMsg );
-}
-
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgPionOrderAck
 // Created: NLD 2002-08-07
@@ -1174,15 +1165,6 @@ void AgentServerMsgMgr::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& m
 void AgentServerMsgMgr::OnReceiveMsgPionOrder( const ASN1T_MsgPionOrder& message )
 {
     GetModel().agents_.FindAllAgent( message.oid_unite_executante )->Update( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPionOrderManagement
-// Created: SBO 2006-11-20
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPionOrderManagement( const ASN1T_MsgPionOrderManagement& asnMsg )
-{
-    GetModel().agents_.GetAgent( asnMsg.oid_unite_executante ).Update( asnMsg );
 }
 
 //-----------------------------------------------------------------------------
@@ -1638,15 +1620,6 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationOrder( const ASN1T_MsgPopulationOr
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationOrderManagement
-// Created: SBO 2006-11-20
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationOrderManagement( const ASN1T_MsgPopulationOrderManagement& message )
-{
-    GetModel().agents_.GetPopulation( message.oid_unite_executante ).Update( message );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgAuthenticationResponse
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
@@ -1783,9 +1756,6 @@ void AgentServerMsgMgr::_OnReceiveMsgSimToClient( DIN_Input& input )
         case T_MsgsSimToClient_msg_msg_start_fire_effect:                    OnReceiveMsgStartFireEffect           ( *message.msg.u.msg_start_fire_effect ); break;
         case T_MsgsSimToClient_msg_msg_stop_fire_effect:                     OnReceiveMsgStopFireEffect            ( message.msg.u.msg_stop_fire_effect ); break;
 
-        case T_MsgsSimToClient_msg_msg_pion_order_management:                OnReceiveMsgPionOrderManagement       ( *message.msg.u.msg_pion_order_management               ); break;
-        case T_MsgsSimToClient_msg_msg_automate_order_management:            OnReceiveMsgAutomateOrderManagement   ( *message.msg.u.msg_automate_order_management           ); break;
-        case T_MsgsSimToClient_msg_msg_population_order_management:          OnReceiveMsgPopulationOrderManagement ( *message.msg.u.msg_population_order_management         ); break;
         case T_MsgsSimToClient_msg_msg_pion_order:                           OnReceiveMsgPionOrder                 ( *message.msg.u.msg_pion_order ); break;
         case T_MsgsSimToClient_msg_msg_automate_order:                       OnReceiveMsgAutomateOrder             ( *message.msg.u.msg_automate_order ); break;
         case T_MsgsSimToClient_msg_msg_population_order:                     OnReceiveMsgPopulationOrder           ( *message.msg.u.msg_population_order ); break;

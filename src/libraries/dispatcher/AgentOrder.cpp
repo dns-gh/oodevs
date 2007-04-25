@@ -55,3 +55,19 @@ void AgentOrder::Send( Publisher_ABC& publisher )
     AsnDelete( asn().order_context );
     AsnDelete( asn().parametres );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentOrder::SendNoMission
+// Created: NLD 2007-04-25
+// -----------------------------------------------------------------------------
+void AgentOrder::SendNoMission( const Agent& agent, Publisher_ABC& publisher )
+{
+    AsnMsgSimToClientPionOrder asn;
+
+    asn().oid_unite_executante               = agent.GetID();
+    asn().mission                            = 0;
+    asn().parametres.n                       = 0;
+    asn().order_context.direction_dangereuse = 0;
+    asn().order_context.limas.n              = 0;
+    asn.Send( publisher );
+}

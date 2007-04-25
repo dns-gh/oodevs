@@ -171,11 +171,6 @@ void Model::Update( const ASN1T_MsgsSimToClient& asnMsg )
         case T_MsgsSimToClient_msg_msg_automate_order:                       automats_   .Get( asnMsg.msg.u.msg_automate_order             ->oid_unite_executante ).Update( *asnMsg.msg.u.msg_automate_order              ); break;
         case T_MsgsSimToClient_msg_msg_population_order:                     populations_.Get( asnMsg.msg.u.msg_population_order           ->oid_unite_executante ).Update( *asnMsg.msg.u.msg_population_order            ); break;
 
-        case T_MsgsSimToClient_msg_msg_pion_order_management:                
-        case T_MsgsSimToClient_msg_msg_automate_order_management:            
-        case T_MsgsSimToClient_msg_msg_population_order_management:          
-            break;  // $$$$ NLD 2007-04-20: NOTHING : messages pourris et inutiles ... à virer
-
         case T_MsgsSimToClient_msg_msg_object_creation:                      CreateUpdate( objects_, asnMsg.msg.u.msg_object_creation->oid, *asnMsg.msg.u.msg_object_creation ); break;
         case T_MsgsSimToClient_msg_msg_object_update:                        objects_.Get( asnMsg.msg.u.msg_object_update->oid ).Update( *asnMsg.msg.u.msg_object_update ); break;
         case T_MsgsSimToClient_msg_msg_object_destruction:                   objects_.Destroy( asnMsg.msg.u.msg_object_destruction ); break;

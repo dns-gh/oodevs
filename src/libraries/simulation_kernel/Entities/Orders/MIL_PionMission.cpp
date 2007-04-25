@@ -132,7 +132,6 @@ void MIL_PionMission::Start()
     pion_.GetDecision().StartMissionBehavior( *this );
     bDIABehaviorActivated_ = true;
     Send();
-    SendMsgOrderManagement( EnumOrderState::started );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,14 +143,31 @@ void MIL_PionMission::Stop()
     if( bDIABehaviorActivated_ )
     {
         pion_.GetDecision().StopMissionBehavior( *this );
-        SendMsgOrderManagement( EnumOrderState::stopped );
         bDIABehaviorActivated_ = false;
     }
+    SendNoMission( pion_ );
 }
 
 // =============================================================================
 // NETWORK
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PionMission::SendNoMission
+// Created: NLD 2007-04-25
+// -----------------------------------------------------------------------------
+// static
+void MIL_PionMission::SendNoMission( const MIL_AgentPion& pion )
+{
+    NET_ASN_MsgPionOrder asn;
+
+    asn().oid_unite_executante               = pion.GetID();
+    asn().mission                            = 0;
+    asn().parametres.n                       = 0;
+    asn().order_context.direction_dangereuse = 0;
+    asn().order_context.limas.n              = 0;
+    asn.Send();
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PionMission::Send
@@ -171,16 +187,4 @@ void MIL_PionMission::Send() const
 
     MIL_Mission_ABC::CleanAfterSerialization( asn().parametres    );
     MIL_Mission_ABC::CleanAfterSerialization( asn().order_context );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PionMission::SendMsgOrderManagement
-// Created: NLD 2006-11-21
-// -----------------------------------------------------------------------------
-void MIL_PionMission::SendMsgOrderManagement( ASN1T_EnumOrderState nState ) const
-{
-    NET_ASN_MsgPionOrderManagement asnMsg;
-    asnMsg().oid_unite_executante = pion_.GetID();
-    asnMsg().etat                 = nState;
-    asnMsg.Send();
 }

@@ -136,7 +136,9 @@ void Population::Update( const ASN1T_MsgPopulationFluxDestruction& msg )
 void Population::Update( const ASN1T_MsgPopulationOrder& msg )
 {
     delete pOrder_;
-    pOrder_ = new PopulationOrder( model_, *this, msg );
+    pOrder_ = 0;
+    if( msg.mission != 0 )
+        pOrder_ = new PopulationOrder( model_, *this, msg );
 }
 
 // =============================================================================
@@ -178,6 +180,8 @@ void Population::SendFullUpdate( Publisher_ABC& publisher ) const
 
     if( pOrder_ )
         pOrder_->Send( publisher );
+    else
+        PopulationOrder::SendNoMission( *this, publisher );
 }
 
 // -----------------------------------------------------------------------------

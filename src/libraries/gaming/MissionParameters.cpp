@@ -41,6 +41,10 @@ MissionParameters::~MissionParameters()
 // -----------------------------------------------------------------------------
 void MissionParameters::DoUpdate( const ASN1T_MsgPionOrder& message )
 {
+     // $$$$ NLD 2007-04-25: NLD TMP A VIRER
+    if( message.mission == 0 )
+        return;
+
     Action_ABC* action = factory_.CreateAction( message );
     Register( action->GetId(), *action );
     controller_.Update( *this );
@@ -52,31 +56,13 @@ void MissionParameters::DoUpdate( const ASN1T_MsgPionOrder& message )
 // -----------------------------------------------------------------------------
 void MissionParameters::DoUpdate( const ASN1T_MsgAutomateOrder& message )
 {
+     // $$$$ NLD 2007-04-25: NLD TMP A VIRER
+    if( message.mission == 0 )
+        return;
+
     Action_ABC* action = factory_.CreateAction( message );
     Register( action->GetId(), *action );
     controller_.Update( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameters::DoUpdate
-// Created: SBO 2006-11-20
-// -----------------------------------------------------------------------------
-void MissionParameters::DoUpdate( const ASN1T_MsgPionOrderManagement& message )
-{
-//    if( message.etat == EnumOrderState::stopped )
-//        mission_.reset();
-//    controller_.Update( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameters::DoUpdate
-// Created: SBO 2006-11-20
-// -----------------------------------------------------------------------------
-void MissionParameters::DoUpdate( const ASN1T_MsgAutomateOrderManagement& message )
-{
-//    if( message.etat == EnumOrderState::stopped )
-//        mission_.reset();
-//    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

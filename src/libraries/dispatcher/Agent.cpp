@@ -312,7 +312,9 @@ void Agent::Update( const ASN1T_MsgPionChangeSuperiorAck& asnMsg )
 void Agent::Update( const ASN1T_MsgPionOrder& asnMsg )
 {
     delete pOrder_;
-    pOrder_ = new AgentOrder( model_, *this, asnMsg );
+    pOrder_ = 0;
+    if( asnMsg.mission != 0 )
+        pOrder_ = new AgentOrder( model_, *this, asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -466,6 +468,8 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
 
     if( pOrder_ )
         pOrder_->Send( publisher );
+    else
+        AgentOrder::SendNoMission( *this, publisher );
 }
 
 // -----------------------------------------------------------------------------

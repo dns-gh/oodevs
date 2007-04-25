@@ -161,7 +161,9 @@ void Automat::Update( const ASN1T_MsgLogRavitaillementQuotas& msg )
 void Automat::Update( const ASN1T_MsgAutomateOrder& asnMsg )
 {
     delete pOrder_;
-    pOrder_ = new AutomatOrder( model_, *this, asnMsg );
+    pOrder_ = 0;
+    if( asnMsg.mission != 0 )
+        pOrder_ = new AutomatOrder( model_, *this, asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -236,6 +238,8 @@ void Automat::SendFullUpdate( Publisher_ABC& publisher ) const
     }
     if( pOrder_ )
         pOrder_->Send( publisher );
+    else
+        AutomatOrder::SendNoMission( *this, publisher );
 }
 
 // -----------------------------------------------------------------------------

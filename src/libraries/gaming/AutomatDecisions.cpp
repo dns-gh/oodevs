@@ -61,6 +61,10 @@ void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateAttributes& message )
 // -----------------------------------------------------------------------------
 void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateOrder& message )
 {
+    // $$$$ NLD 2007-04-25: NLD TMP A VIRER
+    if( message.mission == 0 )
+        return;
+
     const Resolver_ABC< Mission >& resolver = model_;
     current_ = & resolver.Get( message.mission );
     controller_.Update( *this );

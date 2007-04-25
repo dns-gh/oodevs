@@ -54,3 +54,18 @@ void PopulationOrder::Send( Publisher_ABC& publisher )
 
     AsnDelete( asn().parametres );    
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationOrder::SendNoMission
+// Created: NLD 2007-04-25
+// -----------------------------------------------------------------------------
+// static
+void PopulationOrder::SendNoMission( const Population& population, Publisher_ABC& publisher )
+{
+    AsnMsgSimToClientPopulationOrder asn;
+
+    asn().oid_unite_executante = population.GetID();
+    asn().mission              = 0;
+    asn().parametres.n         = 0;
+    asn.Send( publisher );
+}

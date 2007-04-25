@@ -32,9 +32,7 @@ class ActionFactory_ABC;
 // =============================================================================
 class MissionParameters : public kernel::Extension_ABC
                         , public kernel::Updatable_ABC< ASN1T_MsgPionOrder >
-                        , public kernel::Updatable_ABC< ASN1T_MsgPionOrderManagement >
                         , public kernel::Updatable_ABC< ASN1T_MsgAutomateOrder >
-                        , public kernel::Updatable_ABC< ASN1T_MsgAutomateOrderManagement >
                         , public kernel::Resolver< Action_ABC >
                         , public kernel::Drawable_ABC
 {
@@ -62,9 +60,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgPionOrder& message );
-    virtual void DoUpdate( const ASN1T_MsgPionOrderManagement& message );
     virtual void DoUpdate( const ASN1T_MsgAutomateOrder& message );
-    virtual void DoUpdate( const ASN1T_MsgAutomateOrderManagement& message );
     //@}
 
 private:

@@ -37,7 +37,8 @@ public:
 
     //! @name Operations
     //@{
-    void Send( Publisher_ABC& publisher );
+           void Send         ( Publisher_ABC& publisher );  
+    static void SendNoMission( const Population& population, Publisher_ABC& publisher );
     //@}
 
 private:

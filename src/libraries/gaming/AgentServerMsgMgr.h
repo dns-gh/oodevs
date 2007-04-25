@@ -224,10 +224,8 @@ private:
     // Orders
     void OnReceiveMsgAutomateOrder          ( const ASN1T_MsgAutomateOrder& asnMsg ); 
     void OnReceiveMsgAutomateOrderAck       ( const ASN1T_MsgAutomateOrderAck& asnMsg, unsigned long nCtx ); 
-    void OnReceiveMsgAutomateOrderManagement( const ASN1T_MsgAutomateOrderManagement& asnMsg );
     void OnReceiveMsgPionOrder              ( const ASN1T_MsgPionOrder& asnMsg ); 
     void OnReceiveMsgPionOrderAck           ( const ASN1T_MsgPionOrderAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgPionOrderManagement    ( const ASN1T_MsgPionOrderManagement& asnMsg );
     void OnReceiveMsgFragOrderAck           ( const ASN1T_MsgFragOrderAck& asnMsg, unsigned long nCtx ); 
 
     // Automate mode
@@ -263,7 +261,6 @@ private:
 	void OnMsgPopulationFluxDestruction			( const ASN1T_MsgPopulationFluxDestruction& asnMsg ); 
 	void OnMsgPopulationFluxUpdate				( const ASN1T_MsgPopulationFluxUpdate& asnMsg ); 
     void OnReceiveMsgPopulationMagicActionAck   ( const ASN1T_MsgPopulationMagicActionAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgPopulationOrderManagement  ( const ASN1T_MsgPopulationOrderManagement& asnMsg );
     void OnReceiveMsgPopulationOrderAck         ( const ASN1T_MsgPopulationOrderAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgPopulationOrder            ( const ASN1T_MsgPopulationOrder& asnMsg ); 
     //@}

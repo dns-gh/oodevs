@@ -33,12 +33,6 @@ EnumOrderErrorCode ::= ENUMERATED
     error-invalid-lima-function             (12)
 }
 
-EnumOrderState ::= ENUMERATED
-{
-    started(0),
-    stopped(1)
-}
-
 OrderContext ::= SEQUENCE
 {
     limite-gauche           Line OPTIONAL,
@@ -118,11 +112,6 @@ MsgPionOrderAck ::= SEQUENCE
     oid-unite-executante    Agent,
     error-code				EnumOrderErrorCode
 }
-MsgPionOrderManagement ::= SEQUENCE
-{
-    oid-unite-executante    Agent,
-    etat                    EnumOrderState
-}
 
 --
 -- Automate
@@ -143,12 +132,7 @@ MsgAutomateOrder ::= SEQUENCE
 MsgAutomateOrderAck ::= SEQUENCE
 {
     oid-unite-executante    Agent,
-    error-code		    EnumOrderErrorCode
-}
-MsgAutomateOrderManagement ::= SEQUENCE
-{
-    oid-unite-executante    Automate,
-    etat                    EnumOrderState
+    error-code		        EnumOrderErrorCode
 }
 
 --
@@ -164,11 +148,6 @@ MsgPopulationOrderAck ::= SEQUENCE
 {
     oid-unite-executante Population,
     error-code		     EnumOrderErrorCode
-}
-MsgPopulationOrderManagement ::= SEQUENCE
-{
-    oid-unite-executante    Population,
-    etat                    EnumOrderState
 }
 
 --

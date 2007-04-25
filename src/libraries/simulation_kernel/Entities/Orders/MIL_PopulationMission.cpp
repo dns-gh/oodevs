@@ -79,7 +79,6 @@ void MIL_PopulationMission::Start()
     population_.GetDecision().StartMissionBehavior( *this );
     bDIABehaviorActivated_ = true;
     Send();
-    SendMsgOrderManagement( EnumOrderState::started );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,13 +91,28 @@ void MIL_PopulationMission::Stop()
     {
         population_.GetDecision().StopMissionBehavior( *this );
         bDIABehaviorActivated_ = false;
-        SendMsgOrderManagement( EnumOrderState::stopped );
     }    
+    SendNoMission( population_ );
 }
 
 // =============================================================================
 // NETWORK
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationMission::SendNoMission
+// Created: NLD 2007-04-25
+// -----------------------------------------------------------------------------
+// static
+void MIL_PopulationMission::SendNoMission( const MIL_Population& population )
+{
+    NET_ASN_MsgPopulationOrder asn;
+
+    asn().oid_unite_executante = population.GetID();
+    asn().mission              = 0;
+    asn().parametres.n         = 0;
+    asn.Send();
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationMission::Send
@@ -111,21 +125,10 @@ void MIL_PopulationMission::Send() const
     asn().oid_unite_executante = population_.GetID();
     asn().mission              = type_.GetID();
 
-    MIL_Mission_ABC::Serialize( asn().parametres    );
+    MIL_Mission_ABC::Serialize( asn().parametres );
 
     asn.Send();
 
     MIL_Mission_ABC::CleanAfterSerialization( asn().parametres    );
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationMission::SendMsgOrderManagement
-// Created: NLD 2006-11-21
-// -----------------------------------------------------------------------------
-void MIL_PopulationMission::SendMsgOrderManagement( ASN1T_EnumOrderState nState ) const
-{
-    NET_ASN_MsgPopulationOrderManagement asnMsg;
-    asnMsg().oid_unite_executante = population_.GetID();
-    asnMsg().etat                 = nState;
-    asnMsg.Send();
-}

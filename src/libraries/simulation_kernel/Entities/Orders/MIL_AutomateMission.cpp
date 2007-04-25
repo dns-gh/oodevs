@@ -127,7 +127,6 @@ void MIL_AutomateMission::Start()
     automate_.GetDecision().StartMissionMrtBehavior( *this );
     bDIAMrtBehaviorActivated_ = true;
     Send();
-    SendMsgOrderManagement( EnumOrderState::started );
 }
 
 // -----------------------------------------------------------------------------
@@ -141,9 +140,8 @@ void MIL_AutomateMission::Stop()
     if( bDIACdtBehaviorActivated_ )
         automate_.GetDecision().StopMissionConduiteBehavior( *this );
 
-    if( bDIACdtBehaviorActivated_ || bDIAMrtBehaviorActivated_ )
-        SendMsgOrderManagement( EnumOrderState::stopped );
-
+    SendNoMission( automate_ );
+    
     bDIACdtBehaviorActivated_ = false;
     bDIAMrtBehaviorActivated_ = false;    
 }
@@ -169,6 +167,24 @@ void MIL_AutomateMission::GoToCdt()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AutomateMission::SendNoMission
+// Created: NLD 2007-04-25
+// -----------------------------------------------------------------------------
+// static
+void MIL_AutomateMission::SendNoMission( const MIL_Automate& automate )
+{
+    NET_ASN_MsgAutomateOrder asn;
+
+    asn().oid_unite_executante               = automate.GetID();
+    asn().mission                            = 0;
+    asn().formation                          = EnumAutomateOrderFormation::un_echelon;
+    asn().parametres.n                       = 0;
+    asn().order_context.direction_dangereuse = 0;
+    asn().order_context.limas.n              = 0;
+    asn.Send();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AutomateMission::Send
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
@@ -190,14 +206,3 @@ void MIL_AutomateMission::Send() const
     MIL_Mission_ABC::CleanAfterSerialization( asn().order_context );
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateMission::SendMsgOrderManagement
-// Created: NLD 2006-11-21
-// -----------------------------------------------------------------------------
-void MIL_AutomateMission::SendMsgOrderManagement( ASN1T_EnumOrderState nState ) const
-{
-    NET_ASN_MsgAutomateOrderManagement asnMsg;
-    asnMsg().oid_unite_executante = automate_.GetID();
-    asnMsg().etat                 = nState;
-    asnMsg.Send();
-}

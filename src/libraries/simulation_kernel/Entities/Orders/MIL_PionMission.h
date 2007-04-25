@@ -67,8 +67,8 @@ private:
 
     //! @name Network
     //@{
-    void Send                  () const;
-    void SendMsgOrderManagement( ASN1T_EnumOrderState nState ) const;
+           void Send         () const;
+    static void SendNoMission( const MIL_AgentPion& pion );
     //@}
 
 private:

@@ -123,9 +123,6 @@ MsgsSimToClient ::= SEQUENCE
 
         msg-cr                                                  MsgCR,
 
-        msg-pion-order-management                               MsgPionOrderManagement,
-        msg-automate-order-management                           MsgAutomateOrderManagement,
-        msg-population-order-management                         MsgPopulationOrderManagement,
         msg-pion-order                                          MsgPionOrder,        
         msg-automate-order                                      MsgAutomateOrder,
         msg-population-order                                    MsgPopulationOrder,

@@ -169,9 +169,6 @@ GENERATE_ASN_MSG_SENDER ( SimToClient, UnitKnowledgeUpdate     , unit_knowledge_
 GENERATE_ASN_MSG_SENDER ( SimToClient, UnitKnowledgeDestruction, unit_knowledge_destruction )
 
 // Orders
-GENERATE_ASN_MSG_SENDER( SimToClient, PionOrderManagement      , pion_order_management       )
-GENERATE_ASN_MSG_SENDER( SimToClient, AutomateOrderManagement  , automate_order_management   )
-GENERATE_ASN_MSG_SENDER( SimToClient, PopulationOrderManagement, population_order_management )
 GENERATE_ASN_MSG_SENDER( SimToClient, PionOrder                , pion_order                  )
 GENERATE_ASN_MSG_SENDER( SimToClient, PionOrderAck             , pion_order_ack              )
 GENERATE_ASN_MSG_SENDER( SimToClient, AutomateOrder            , automate_order              )

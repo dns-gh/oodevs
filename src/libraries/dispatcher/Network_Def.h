@@ -139,9 +139,6 @@ GENERATE_ASN_MSG_SENDER         ( SimToClient, Explosion                        
 GENERATE_ASN_MSG_SENDER         ( SimToClient, StartFireEffect                               , start_fire_effect                                 );
 GENERATE_NOPTR_ASN_MSG_SENDER   ( SimToClient, StopFireEffect                                , stop_fire_effect                                  );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, CR                                            , cr                                                );
-GENERATE_ASN_MSG_SENDER         ( SimToClient, PionOrderManagement                           , pion_order_management                             );
-GENERATE_ASN_MSG_SENDER         ( SimToClient, AutomateOrderManagement                       , automate_order_management                         );
-GENERATE_ASN_MSG_SENDER         ( SimToClient, PopulationOrderManagement                     , population_order_management                       );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, PionOrder                                     , pion_order                                        );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, AutomateOrder                                 , automate_order                                    );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, PopulationOrder                               , population_order                                  );

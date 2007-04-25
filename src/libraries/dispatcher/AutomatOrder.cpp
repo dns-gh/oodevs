@@ -57,3 +57,21 @@ void AutomatOrder::Send( Publisher_ABC& publisher )
     AsnDelete( asn().order_context );
     AsnDelete( asn().parametres );    
 }
+
+// -----------------------------------------------------------------------------
+// Name: AutomatOrder::SendNoMission
+// Created: NLD 2007-04-25
+// -----------------------------------------------------------------------------
+// static
+void AutomatOrder::SendNoMission( const Automat& automat, Publisher_ABC& publisher )
+{
+    AsnMsgSimToClientAutomateOrder asn;
+
+    asn().oid_unite_executante               = automat.GetID();
+    asn().mission                            = 0;
+    asn().formation                          = EnumAutomateOrderFormation::un_echelon;
+    asn().parametres.n                       = 0;
+    asn().order_context.direction_dangereuse = 0;
+    asn().order_context.limas.n              = 0;
+    asn.Send( publisher );
+}

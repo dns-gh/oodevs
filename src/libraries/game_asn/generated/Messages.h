@@ -145,48 +145,45 @@ EXTERN void asn1Print_MessagesExports (ASN1ConstCharPtr name);
 #define T_MsgsSimToClient_msg_msg_start_fire_effect 62
 #define T_MsgsSimToClient_msg_msg_stop_fire_effect 63
 #define T_MsgsSimToClient_msg_msg_cr    64
-#define T_MsgsSimToClient_msg_msg_pion_order_management 65
-#define T_MsgsSimToClient_msg_msg_automate_order_management 66
-#define T_MsgsSimToClient_msg_msg_population_order_management 67
-#define T_MsgsSimToClient_msg_msg_pion_order 68
-#define T_MsgsSimToClient_msg_msg_automate_order 69
-#define T_MsgsSimToClient_msg_msg_population_order 70
-#define T_MsgsSimToClient_msg_msg_object_creation 71
-#define T_MsgsSimToClient_msg_msg_object_destruction 72
-#define T_MsgsSimToClient_msg_msg_object_update 73
-#define T_MsgsSimToClient_msg_msg_object_knowledge_creation 74
-#define T_MsgsSimToClient_msg_msg_object_knowledge_update 75
-#define T_MsgsSimToClient_msg_msg_object_knowledge_destruction 76
-#define T_MsgsSimToClient_msg_msg_log_sante_traitement_humain_creation 77
-#define T_MsgsSimToClient_msg_msg_log_sante_traitement_humain_update 78
-#define T_MsgsSimToClient_msg_msg_log_sante_traitement_humain_destruction 79
-#define T_MsgsSimToClient_msg_msg_log_sante_etat 80
-#define T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_creation 81
-#define T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_update 82
-#define T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_destruction 83
-#define T_MsgsSimToClient_msg_msg_log_maintenance_etat 84
-#define T_MsgsSimToClient_msg_msg_log_ravitaillement_traitement_creation 85
-#define T_MsgsSimToClient_msg_msg_log_ravitaillement_traitement_update 86
-#define T_MsgsSimToClient_msg_msg_log_ravitaillement_traitement_destruction 87
-#define T_MsgsSimToClient_msg_msg_log_ravitaillement_etat 88
-#define T_MsgsSimToClient_msg_msg_log_ravitaillement_quotas 89
-#define T_MsgsSimToClient_msg_msg_population_creation 90
-#define T_MsgsSimToClient_msg_msg_population_update 91
-#define T_MsgsSimToClient_msg_msg_population_concentration_creation 92
-#define T_MsgsSimToClient_msg_msg_population_concentration_destruction 93
-#define T_MsgsSimToClient_msg_msg_population_concentration_update 94
-#define T_MsgsSimToClient_msg_msg_population_flux_creation 95
-#define T_MsgsSimToClient_msg_msg_population_flux_destruction 96
-#define T_MsgsSimToClient_msg_msg_population_flux_update 97
-#define T_MsgsSimToClient_msg_msg_population_knowledge_creation 98
-#define T_MsgsSimToClient_msg_msg_population_knowledge_update 99
-#define T_MsgsSimToClient_msg_msg_population_knowledge_destruction 100
-#define T_MsgsSimToClient_msg_msg_population_concentration_knowledge_creation 101
-#define T_MsgsSimToClient_msg_msg_population_concentration_knowledge_destruction 102
-#define T_MsgsSimToClient_msg_msg_population_concentration_knowledge_update 103
-#define T_MsgsSimToClient_msg_msg_population_flux_knowledge_creation 104
-#define T_MsgsSimToClient_msg_msg_population_flux_knowledge_destruction 105
-#define T_MsgsSimToClient_msg_msg_population_flux_knowledge_update 106
+#define T_MsgsSimToClient_msg_msg_pion_order 65
+#define T_MsgsSimToClient_msg_msg_automate_order 66
+#define T_MsgsSimToClient_msg_msg_population_order 67
+#define T_MsgsSimToClient_msg_msg_object_creation 68
+#define T_MsgsSimToClient_msg_msg_object_destruction 69
+#define T_MsgsSimToClient_msg_msg_object_update 70
+#define T_MsgsSimToClient_msg_msg_object_knowledge_creation 71
+#define T_MsgsSimToClient_msg_msg_object_knowledge_update 72
+#define T_MsgsSimToClient_msg_msg_object_knowledge_destruction 73
+#define T_MsgsSimToClient_msg_msg_log_sante_traitement_humain_creation 74
+#define T_MsgsSimToClient_msg_msg_log_sante_traitement_humain_update 75
+#define T_MsgsSimToClient_msg_msg_log_sante_traitement_humain_destruction 76
+#define T_MsgsSimToClient_msg_msg_log_sante_etat 77
+#define T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_creation 78
+#define T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_update 79
+#define T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_destruction 80
+#define T_MsgsSimToClient_msg_msg_log_maintenance_etat 81
+#define T_MsgsSimToClient_msg_msg_log_ravitaillement_traitement_creation 82
+#define T_MsgsSimToClient_msg_msg_log_ravitaillement_traitement_update 83
+#define T_MsgsSimToClient_msg_msg_log_ravitaillement_traitement_destruction 84
+#define T_MsgsSimToClient_msg_msg_log_ravitaillement_etat 85
+#define T_MsgsSimToClient_msg_msg_log_ravitaillement_quotas 86
+#define T_MsgsSimToClient_msg_msg_population_creation 87
+#define T_MsgsSimToClient_msg_msg_population_update 88
+#define T_MsgsSimToClient_msg_msg_population_concentration_creation 89
+#define T_MsgsSimToClient_msg_msg_population_concentration_destruction 90
+#define T_MsgsSimToClient_msg_msg_population_concentration_update 91
+#define T_MsgsSimToClient_msg_msg_population_flux_creation 92
+#define T_MsgsSimToClient_msg_msg_population_flux_destruction 93
+#define T_MsgsSimToClient_msg_msg_population_flux_update 94
+#define T_MsgsSimToClient_msg_msg_population_knowledge_creation 95
+#define T_MsgsSimToClient_msg_msg_population_knowledge_update 96
+#define T_MsgsSimToClient_msg_msg_population_knowledge_destruction 97
+#define T_MsgsSimToClient_msg_msg_population_concentration_knowledge_creation 98
+#define T_MsgsSimToClient_msg_msg_population_concentration_knowledge_destruction 99
+#define T_MsgsSimToClient_msg_msg_population_concentration_knowledge_update 100
+#define T_MsgsSimToClient_msg_msg_population_flux_knowledge_creation 101
+#define T_MsgsSimToClient_msg_msg_population_flux_knowledge_destruction 102
+#define T_MsgsSimToClient_msg_msg_population_flux_knowledge_update 103
 
 typedef struct EXTERN ASN1T_MsgsSimToClient_msg {
    int t;
@@ -312,88 +309,82 @@ typedef struct EXTERN ASN1T_MsgsSimToClient_msg {
       /* t = 64 */
       ASN1T_MsgCR *msg_cr;
       /* t = 65 */
-      ASN1T_MsgPionOrderManagement *msg_pion_order_management;
-      /* t = 66 */
-      ASN1T_MsgAutomateOrderManagement *msg_automate_order_management;
-      /* t = 67 */
-      ASN1T_MsgPopulationOrderManagement *msg_population_order_management;
-      /* t = 68 */
       ASN1T_MsgPionOrder *msg_pion_order;
-      /* t = 69 */
+      /* t = 66 */
       ASN1T_MsgAutomateOrder *msg_automate_order;
-      /* t = 70 */
+      /* t = 67 */
       ASN1T_MsgPopulationOrder *msg_population_order;
-      /* t = 71 */
+      /* t = 68 */
       ASN1T_MsgObjectCreation *msg_object_creation;
-      /* t = 72 */
+      /* t = 69 */
       ASN1T_MsgObjectDestruction  msg_object_destruction;
-      /* t = 73 */
+      /* t = 70 */
       ASN1T_MsgObjectUpdate *msg_object_update;
-      /* t = 74 */
+      /* t = 71 */
       ASN1T_MsgObjectKnowledgeCreation *msg_object_knowledge_creation;
-      /* t = 75 */
+      /* t = 72 */
       ASN1T_MsgObjectKnowledgeUpdate *msg_object_knowledge_update;
-      /* t = 76 */
+      /* t = 73 */
       ASN1T_MsgObjectKnowledgeDestruction *msg_object_knowledge_destruction;
-      /* t = 77 */
+      /* t = 74 */
       ASN1T_MsgLogSanteTraitementHumainCreation *msg_log_sante_traitement_humain_creation;
-      /* t = 78 */
+      /* t = 75 */
       ASN1T_MsgLogSanteTraitementHumainUpdate *msg_log_sante_traitement_humain_update;
-      /* t = 79 */
+      /* t = 76 */
       ASN1T_MsgLogSanteTraitementHumainDestruction *msg_log_sante_traitement_humain_destruction;
-      /* t = 80 */
+      /* t = 77 */
       ASN1T_MsgLogSanteEtat *msg_log_sante_etat;
-      /* t = 81 */
+      /* t = 78 */
       ASN1T_MsgLogMaintenanceTraitementEquipementCreation *msg_log_maintenance_traitement_equipement_creation;
-      /* t = 82 */
+      /* t = 79 */
       ASN1T_MsgLogMaintenanceTraitementEquipementUpdate *msg_log_maintenance_traitement_equipement_update;
-      /* t = 83 */
+      /* t = 80 */
       ASN1T_MsgLogMaintenanceTraitementEquipementDestruction *msg_log_maintenance_traitement_equipement_destruction;
-      /* t = 84 */
+      /* t = 81 */
       ASN1T_MsgLogMaintenanceEtat *msg_log_maintenance_etat;
-      /* t = 85 */
+      /* t = 82 */
       ASN1T_MsgLogRavitaillementTraitementCreation *msg_log_ravitaillement_traitement_creation;
-      /* t = 86 */
+      /* t = 83 */
       ASN1T_MsgLogRavitaillementTraitementUpdate *msg_log_ravitaillement_traitement_update;
-      /* t = 87 */
+      /* t = 84 */
       ASN1T_MsgLogRavitaillementTraitementDestruction *msg_log_ravitaillement_traitement_destruction;
-      /* t = 88 */
+      /* t = 85 */
       ASN1T_MsgLogRavitaillementEtat *msg_log_ravitaillement_etat;
-      /* t = 89 */
+      /* t = 86 */
       ASN1T_MsgLogRavitaillementQuotas *msg_log_ravitaillement_quotas;
-      /* t = 90 */
+      /* t = 87 */
       ASN1T_MsgPopulationCreation *msg_population_creation;
-      /* t = 91 */
+      /* t = 88 */
       ASN1T_MsgPopulationUpdate *msg_population_update;
-      /* t = 92 */
+      /* t = 89 */
       ASN1T_MsgPopulationConcentrationCreation *msg_population_concentration_creation;
-      /* t = 93 */
+      /* t = 90 */
       ASN1T_MsgPopulationConcentrationDestruction *msg_population_concentration_destruction;
-      /* t = 94 */
+      /* t = 91 */
       ASN1T_MsgPopulationConcentrationUpdate *msg_population_concentration_update;
-      /* t = 95 */
+      /* t = 92 */
       ASN1T_MsgPopulationFluxCreation *msg_population_flux_creation;
-      /* t = 96 */
+      /* t = 93 */
       ASN1T_MsgPopulationFluxDestruction *msg_population_flux_destruction;
-      /* t = 97 */
+      /* t = 94 */
       ASN1T_MsgPopulationFluxUpdate *msg_population_flux_update;
-      /* t = 98 */
+      /* t = 95 */
       ASN1T_MsgPopulationKnowledgeCreation *msg_population_knowledge_creation;
-      /* t = 99 */
+      /* t = 96 */
       ASN1T_MsgPopulationKnowledgeUpdate *msg_population_knowledge_update;
-      /* t = 100 */
+      /* t = 97 */
       ASN1T_MsgPopulationKnowledgeDestruction *msg_population_knowledge_destruction;
-      /* t = 101 */
+      /* t = 98 */
       ASN1T_MsgPopulationConcentrationKnowledgeCreation *msg_population_concentration_knowledge_creation;
-      /* t = 102 */
+      /* t = 99 */
       ASN1T_MsgPopulationConcentrationKnowledgeDestruction *msg_population_concentration_knowledge_destruction;
-      /* t = 103 */
+      /* t = 100 */
       ASN1T_MsgPopulationConcentrationKnowledgeUpdate *msg_population_concentration_knowledge_update;
-      /* t = 104 */
+      /* t = 101 */
       ASN1T_MsgPopulationFluxKnowledgeCreation *msg_population_flux_knowledge_creation;
-      /* t = 105 */
+      /* t = 102 */
       ASN1T_MsgPopulationFluxKnowledgeDestruction *msg_population_flux_knowledge_destruction;
-      /* t = 106 */
+      /* t = 103 */
       ASN1T_MsgPopulationFluxKnowledgeUpdate *msg_population_flux_knowledge_update;
    } u;
 } ASN1T_MsgsSimToClient_msg;
