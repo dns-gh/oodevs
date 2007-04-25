@@ -29,10 +29,7 @@ UnitMissionInterface::UnitMissionInterface( QWidget* parent, Entity_ABC& entity,
     , mission_            ( mission )
 {
     CreateTitle( mission.GetName() );
-    builder.Begin( *this, entity );
-    builder.Build( mission );
-    builder.AddOrderContext( true );
-    builder.End();
+    builder.Build( *this, entity, mission );
     CreateOkCancelButtons();
 }
 

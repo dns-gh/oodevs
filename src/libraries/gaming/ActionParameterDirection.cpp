@@ -16,8 +16,8 @@
 // Name: ActionParameterDirection constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-ActionParameterDirection::ActionParameterDirection( const QString& name, const ASN1T_Direction& asn, bool context )
-    : ActionParameter< float >( name, context )
+ActionParameterDirection::ActionParameterDirection( const kernel::OrderParameter& parameter, const ASN1T_Direction& asn )
+    : ActionParameter< float >( parameter )
     , direction_()
 {
     const float angle = asn * 3.14f / 180.f;

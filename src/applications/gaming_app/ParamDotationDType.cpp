@@ -18,8 +18,8 @@ using namespace kernel;
 // Name: ParamDotationDType constructor
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-ParamDotationDType::ParamDotationDType( const QString& name, const Resolver_ABC< DotationType >& resolver )
-    : ParamComboBox< ASN1T_TypeDotationTrancheD >( name )
+ParamDotationDType::ParamDotationDType( const kernel::OrderParameter& parameter, const Resolver_ABC< DotationType >& resolver )
+    : ParamComboBox< ASN1T_TypeDotationTrancheD >( parameter )
     , resolver_( resolver )
 {
     // NOTHING

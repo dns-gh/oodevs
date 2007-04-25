@@ -15,6 +15,7 @@
 #include "gaming/ActionParameterLimaList.h"
 #include "gaming/Action_ABC.h"
 #include "clients_gui/ValuedListItem.h"
+#include "clients_kernel/OrderParameter.h"
 #include "game_asn/Asn.h"
 
 using namespace gui;
@@ -23,9 +24,10 @@ using namespace gui;
 // Name: ParamLimaList constructor
 // Created: SBO 2006-11-14
 // ----------------------------------------------------------------------------
-ParamLimaList::ParamLimaList( QObject* parent, const QString& name )
+ParamLimaList::ParamLimaList( QObject* parent, const kernel::OrderParameter& parameter )
     : QObject    ( parent )
-    , Param_ABC  ( name )
+    , Param_ABC  ( parameter.GetName() )
+    , parameter_ ( parameter )
     , list_      ( 0 )
     , potential_ ( 0 )
 {
@@ -47,7 +49,7 @@ ParamLimaList::~ParamLimaList()
 // -----------------------------------------------------------------------------
 bool ParamLimaList::CheckValidity()
 {
-    if( !IsOptional() && list_->childCount() == 0 )
+    if( !parameter_.IsOptional() && list_->childCount() == 0 )
     {
         list_->header()->setPaletteForegroundColor( Qt::red );
         QTimer::singleShot( 3000, this, SLOT( TurnHeaderBlack() ) );
@@ -122,9 +124,9 @@ void ParamLimaList::Clean( ASN1T_OrderContext& asn ) const
 // Name: ParamLimaList::CommitTo
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-void ParamLimaList::CommitTo( Action_ABC& action, bool context ) const
+void ParamLimaList::CommitTo( Action_ABC& action ) const
 {
-    std::auto_ptr< ActionParameterLimaList > param( new ActionParameterLimaList( GetName(), context ) );
+    std::auto_ptr< ActionParameterLimaList > param( new ActionParameterLimaList( parameter_ ) );
     ValuedListItem* item = (ValuedListItem*)( list_->firstChild() );
     QStringList functions;
     while( item )

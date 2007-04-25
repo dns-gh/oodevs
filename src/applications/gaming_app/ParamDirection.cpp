@@ -12,14 +12,16 @@
 #include "moc_ParamDirection.cpp"
 #include "gaming/ActionParameter.h"
 #include "gaming/Action_ABC.h"
+#include "clients_kernel/OrderParameter.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamDirection constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamDirection::ParamDirection( QObject* parent, const QString& name )
+ParamDirection::ParamDirection( QObject* parent, const kernel::OrderParameter& parameter )
     : QObject( parent )
-    , Param_ABC( name )
+    , Param_ABC( parameter.GetName() )
+    , parameter_( parameter )
     , value_( 180 )
 {
     // NOTHING
@@ -73,9 +75,9 @@ void ParamDirection::CommitTo( ASN1T_OrderContext& asn ) const
 // Name: ParamDirection::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamDirection::CommitTo( Action_ABC& action, bool context ) const
+void ParamDirection::CommitTo( Action_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter< float > > param( new ActionParameter< float >( GetName(), context ) );
+    std::auto_ptr< ActionParameter< float > > param( new ActionParameter< float >( parameter_ ) );
     param->SetValue( value_ );
     action.AddParameter( *param.release() );
 }

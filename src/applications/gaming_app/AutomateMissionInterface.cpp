@@ -29,10 +29,7 @@ AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Entity_ABC&
     , mission_            ( mission )
 {
     CreateTitle( mission.GetName() );
-    builder.Begin( *this, entity );
-    builder.Build( mission );
-    builder.AddOrderContext( false );
-    builder.End();
+    builder.Build( *this, entity, mission );
     CreateOkCancelButtons();
 }
 

@@ -15,8 +15,8 @@
 // Name: ActionParameterObstacle constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-ActionParameterObstacle::ActionParameterObstacle( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const ASN1T_MissionGenObject& asn )
-    : ActionParameter< QString >( name.isEmpty() ? types.Get( asn.type ).GetName() : name, false )
+ActionParameterObstacle::ActionParameterObstacle( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const ASN1T_MissionGenObject& asn )
+    : ActionParameter< QString >( parameter )
     , LocationPositions( converter )
     , type_( types.Get( asn.type ) )
 {

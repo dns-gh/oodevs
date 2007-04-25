@@ -28,9 +28,10 @@ using namespace gui;
 // Name: ParamObstacle constructor
 // Created: APE 2004-05-18
 // -----------------------------------------------------------------------------
-ParamObstacle::ParamObstacle( QObject* parent, const QString& name, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+ParamObstacle::ParamObstacle( QObject* parent, const kernel::OrderParameter& parameter, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : QObject( parent )
-    , Param_ABC( name )
+    , Param_ABC( parameter.GetName() )
+    , parameter_( &parameter )
     , objectTypes_( objectTypes )
     , layer_( layer )
     , converter_( converter )
@@ -38,11 +39,30 @@ ParamObstacle::ParamObstacle( QObject* parent, const QString& name, const Object
     , typeCombo_( 0 )
     , density_( 0 )
     , tc2_( 0 )
-
+    , optional_( parameter.IsOptional() )
 {
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle constructor
+// Created: SBO 2007-04-25
+// -----------------------------------------------------------------------------
+ParamObstacle::ParamObstacle( QObject* parent, const QString& name, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, bool optional )
+    : QObject( parent )
+    , Param_ABC( name )
+    , parameter_( 0 )
+    , objectTypes_( objectTypes )
+    , layer_( layer )
+    , converter_( converter )
+    , location_( 0 )
+    , typeCombo_( 0 )
+    , density_( 0 )
+    , tc2_( 0 )
+    , optional_( optional )
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: ParamObstacle destructor
@@ -83,9 +103,9 @@ void ParamObstacle::BuildInterface( QWidget* parent )
     density_ = new ParamNumericField( tr( "Density" ), true );
     density_->BuildInterface( group );
     density_->SetLimits( 0.f, 5.f );
-    tc2_     = new EntityParameter< kernel::Automat_ABC >( this, tr( "TC2" ) );
+    tc2_     = new EntityParameter< kernel::Automat_ABC >( this, tr( "TC2" ), false ); // $$$$ SBO 2007-04-25: ParamAutomat ?
     tc2_->BuildInterface( group );
-    location_ = new ParamLocation( tr( "Location" ), layer_, converter_ );
+    location_ = new ParamLocation( tr( "Location" ), layer_, converter_, false );
     location_->BuildInterface( group );
 
     connect( typeCombo_, SIGNAL( activated( int ) ), SLOT( OnTypeChanged() ) );
@@ -118,6 +138,7 @@ void ParamObstacle::RegisterIn( ActionController& controller )
 // -----------------------------------------------------------------------------
 bool ParamObstacle::CheckValidity()
 {
+    // $$$$ SBO 2007-04-25: check optional
     if( !typeCombo_->count() )
         return false;
     bool bOk = true;
@@ -186,9 +207,11 @@ void ParamObstacle::Clean( ASN1T_MissionParameter& asn ) const
 // Name: ParamObstacle::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamObstacle::CommitTo( Action_ABC& action, bool context ) const
+void ParamObstacle::CommitTo( Action_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter< QString > > param( new ActionParameter< QString >( GetName(), context ) );
+    if( ! parameter_ )
+        throw std::runtime_error( "OrderParameter not defined" ); // $$$$ SBO 2007-04-25: 
+    std::auto_ptr< ActionParameter< QString > > param( new ActionParameter< QString >( *parameter_ ) );
     param->SetValue( typeCombo_->GetValue()->GetName() ); // $$$$ SBO 2007-03-19: create Object displayer
     action.AddParameter( *param.release() );
 }

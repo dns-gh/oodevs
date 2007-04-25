@@ -12,6 +12,11 @@
 
 #include "Param_ABC.h"
 
+namespace kernel
+{
+    class OrderParameter;
+}
+
 // =============================================================================
 /** @class  ParamGDH
     @brief  ParamGDH
@@ -25,7 +30,7 @@ class ParamGDH : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamGDH( QObject* parent, const QString& name );
+             ParamGDH( QObject* parent, const kernel::OrderParameter& parameter );
     virtual ~ParamGDH();
     //@}
 
@@ -34,7 +39,7 @@ public:
     virtual void BuildInterface( QWidget* parent );
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
-    virtual void CommitTo( Action_ABC& action, bool context ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private slots:
@@ -54,6 +59,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter& parameter_;
     QDateTime datetime_;
     bool valueSet_;
     //@}

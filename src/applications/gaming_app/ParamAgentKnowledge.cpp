@@ -19,8 +19,8 @@ using namespace kernel;
 // Name: ParamAgentKnowledge constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamAgentKnowledge::ParamAgentKnowledge( QWidget* pParent, const QString& name, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
-    : EntityParameter< AgentKnowledge_ABC >( pParent, name )
+ParamAgentKnowledge::ParamAgentKnowledge( QWidget* pParent, const OrderParameter& parameter, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
+    : EntityParameter< AgentKnowledge_ABC >( pParent, parameter )
     , converter_( converter )
     , agent_    ( agent )
 {

@@ -83,7 +83,8 @@ class EntityParameter : public EntityParameterBase
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityParameter( QObject* parent, const QString& name );
+             EntityParameter( QObject* parent, const kernel::OrderParameter& parameter );
+             EntityParameter( QObject* parent, const QString& name, bool optional );
     virtual ~EntityParameter();
     //@}
 
@@ -91,7 +92,7 @@ public:
     //@{
     virtual bool CheckValidity();
     void CommitTo( ASN1T_OID& asn ) const;
-    virtual void CommitTo( Action_ABC& action, bool context ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private:
@@ -113,8 +114,10 @@ protected:
 private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter* parameter_;
     const ConcreteEntity* potential_;
     const ConcreteEntity* selected_;
+    bool optional_;
     //@}
 };
 

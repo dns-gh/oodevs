@@ -12,6 +12,11 @@
 
 #include "Param_ABC.h"
 
+namespace kernel
+{
+    class OrderParameter;
+}
+
 class LimitParameter;
 
 // =============================================================================
@@ -26,21 +31,20 @@ class ParamLimits : public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLimits( QObject* parent, const QString& name1, const QString& name2 );
+             ParamLimits( QObject* parent, const kernel::OrderParameter& parameter );
     virtual ~ParamLimits();
     //@}
 
     //! @name Operations
     //@{
     virtual void RemoveFromController();
-    virtual void SetOptional( bool optional );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
     virtual void RegisterIn( kernel::ActionController& controller );
     virtual bool CheckValidity();
     virtual void BuildInterface( QWidget* parent );
     virtual void CommitTo( ASN1T_OrderContext& asn ) const;
     virtual void Clean( ASN1T_OrderContext& asn ) const;
-    virtual void CommitTo( Action_ABC& action, bool context ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private:
@@ -53,6 +57,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter& parameter_;
     LimitParameter* limit1_;
     LimitParameter* limit2_;
     //@}

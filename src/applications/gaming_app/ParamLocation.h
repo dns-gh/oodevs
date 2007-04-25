@@ -18,6 +18,7 @@
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class OrderParameter;
 }
 
 namespace gui
@@ -38,7 +39,8 @@ class ParamLocation : public Param_ABC, private gui::ShapeHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLocation( const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamLocation( const kernel::OrderParameter& parameter, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamLocation( const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, bool optional );
     virtual ~ParamLocation();
     //@}
 
@@ -53,6 +55,7 @@ public:
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
     void CommitTo( ASN1T_Localisation& asn ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
 
     virtual void BuildInterface( QWidget* parent );
     //@}
@@ -68,12 +71,14 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
+    const kernel::OrderParameter* parameter_;
     gui::ParametersLayer& layer_;
     gui::LocationCreator* creator_;
     gui::RichLabel* pLabel_;
     QLabel* pShapeLabel_;
     kernel::Location_ABC* location_;
     kernel::ActionController* controller_; // $$$$ AGE 2006-04-03: sucks
+    bool optional_;
     //@}
 };
 

@@ -16,6 +16,7 @@
 namespace kernel
 {
     class EquipmentType;
+    class OrderParameter;
 }
 
 class QTable;
@@ -33,7 +34,7 @@ class ParamEquipmentList : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamEquipmentList( QObject* parent, const QString& name, const kernel::Resolver< kernel::EquipmentType >& resolver );
+             ParamEquipmentList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Resolver< kernel::EquipmentType >& resolver );
     virtual ~ParamEquipmentList();
     //@}
 
@@ -60,6 +61,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter& parameter_;
     const kernel::Resolver< kernel::EquipmentType >& resolver_;
     QTable*                     table_;
     QStringList                 equipmentList_;

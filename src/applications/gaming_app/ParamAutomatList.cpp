@@ -17,8 +17,8 @@ using namespace kernel;
 // Name: ParamAutomatList constructor
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-ParamAutomatList::ParamAutomatList( QObject* parent, const QString& name )
-    : EntityListParameter< Automat_ABC >( parent, name )
+ParamAutomatList::ParamAutomatList( QObject* parent, const kernel::OrderParameter& parameter )
+    : EntityListParameter< Automat_ABC >( parent, parameter )
 {
     // NOTHING
 }

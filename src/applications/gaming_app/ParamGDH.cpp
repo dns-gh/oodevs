@@ -13,14 +13,16 @@
 #include "game_asn/Asn.h"
 #include "gaming/ActionParameter.h"
 #include "gaming/Action_ABC.h"
+#include "clients_kernel/OrderParameter.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamGDH constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamGDH::ParamGDH( QObject* parent, const QString& name )
+ParamGDH::ParamGDH( QObject* parent, const kernel::OrderParameter& parameter )
     : QObject( parent )
-    , Param_ABC( name )
+    , Param_ABC( parameter.GetName() )
+    , parameter_( parameter )
     , datetime_( QDateTime::currentDateTime() )
     , valueSet_( false )
 {
@@ -86,11 +88,11 @@ void ParamGDH::Clean( ASN1T_MissionParameter& asn ) const
 // Name: ParamGDH::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamGDH::CommitTo( Action_ABC& action, bool context ) const
+void ParamGDH::CommitTo( Action_ABC& action ) const
 {
     if( !valueSet_ )
         return;
-    std::auto_ptr< ActionParameter< QDateTime > > param( new ActionParameter< QDateTime >( GetName(), context ) );
+    std::auto_ptr< ActionParameter< QDateTime > > param( new ActionParameter< QDateTime >( parameter_ ) );
     param->SetValue( datetime_ );
     action.AddParameter( *param.release() );
 }

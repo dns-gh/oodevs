@@ -27,7 +27,7 @@ class MissionType : public OrderType
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MissionType( xml::xistream& xis );
+             MissionType( xml::xistream& xis, bool context );
     virtual ~MissionType();
     //@}
 
@@ -46,6 +46,7 @@ private:
     //! @name Helpers
     //@{
     void ReadParameter( xml::xistream& xis );
+    void AddContextParameters();
     //@}
 
 private:

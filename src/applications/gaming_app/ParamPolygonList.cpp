@@ -10,12 +10,14 @@
 #include "gaming_app_pch.h"
 #include "ParamPolygonList.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ParamPolygonList constructor
 // Created: SBO 2007-03-15
 // -----------------------------------------------------------------------------
-ParamPolygonList::ParamPolygonList( QObject* parent, const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter )
-    : ParamLocationList( parent, name, layer, converter )
+ParamPolygonList::ParamPolygonList( QObject* parent, const OrderParameter& parameter, gui::ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+    : ParamLocationList( parent, parameter, layer, converter )
 {
     SetShapeFilter( false, false, true, false );
 }

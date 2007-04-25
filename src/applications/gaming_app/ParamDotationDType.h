@@ -17,6 +17,7 @@
 namespace kernel
 {
     class DotationType;
+    class OrderParameter;
 }
 
 // =============================================================================
@@ -32,7 +33,7 @@ class ParamDotationDType : public ParamComboBox< ASN1T_TypeDotationTrancheD >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamDotationDType( const QString& name, const kernel::Resolver_ABC< kernel::DotationType >& resolver );
+             ParamDotationDType( const kernel::OrderParameter& parameter, const kernel::Resolver_ABC< kernel::DotationType >& resolver );
     virtual ~ParamDotationDType();
     //@}
 

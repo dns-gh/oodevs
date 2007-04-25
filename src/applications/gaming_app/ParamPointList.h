@@ -24,7 +24,7 @@ class ParamPointList : public ParamLocationList
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPointList( QObject* parent, const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamPointList( QObject* parent, const kernel::OrderParameter& parameter, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ParamPointList();
     //@}
 

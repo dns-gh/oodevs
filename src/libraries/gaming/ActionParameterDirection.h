@@ -25,7 +25,7 @@ class ActionParameterDirection : public ActionParameter< float >
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterDirection( const QString& name, const ASN1T_Direction& asn, bool context );
+             ActionParameterDirection( const kernel::OrderParameter& parameter, const ASN1T_Direction& asn );
     virtual ~ActionParameterDirection();
     //@}
 

@@ -24,7 +24,7 @@ class ParamPolygon : public ParamLocation
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPolygon( const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamPolygon( const kernel::OrderParameter& parameter, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ParamPolygon();
     //@}
 

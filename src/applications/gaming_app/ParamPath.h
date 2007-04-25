@@ -23,6 +23,7 @@ namespace kernel
     class Location_ABC;
     class Positions;
     struct Nothing;
+    class OrderParameter;
 }
 
 namespace gui
@@ -46,7 +47,8 @@ class ParamPath : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPath( QObject* parent, const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamPath( QObject* parent, const kernel::OrderParameter& parameter, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamPath( QObject* parent, const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent, bool optional );
     virtual ~ParamPath();
     //@}
 
@@ -62,6 +64,7 @@ public:
     virtual void NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& );
     virtual void Handle( kernel::Location_ABC& location );
     void CommitTo( ASN1T_Itineraire& destination ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private slots:
@@ -80,12 +83,14 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter* parameter_;
     const kernel::CoordinateConverter_ABC& converter_;
     gui::ParametersLayer& layer_;
     const kernel::Positions& positions_;
     gui::RichLabel*       pLabel_;
     QLabel*               pPosLabel_;
     kernel::Location_ABC* location_;
+    bool optional_;
     //@}
 };
 

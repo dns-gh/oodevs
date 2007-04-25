@@ -13,14 +13,16 @@
 #include "game_asn/Asn.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionParameter.h"
+#include "clients_kernel/OrderParameter.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamBool constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamBool::ParamBool( QObject* parent, const QString& name, bool defaultValue /*= false*/ )
+ParamBool::ParamBool( QObject* parent, const kernel::OrderParameter& parameter, bool defaultValue /*= false*/ )
     : QObject( parent )
-    , Param_ABC( name )
+    , Param_ABC( parameter.GetName() )
+    , parameter_( parameter )
     , value_( defaultValue )
 {
     // NOTHING
@@ -61,9 +63,9 @@ void ParamBool::CommitTo( ASN1T_MissionParameter& asn ) const
 // Name: ParamBool::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamBool::CommitTo( Action_ABC& action, bool context ) const
+void ParamBool::CommitTo( Action_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter< bool > > param( new ActionParameter< bool >( GetName(), context ) );
+    std::auto_ptr< ActionParameter< bool > > param( new ActionParameter< bool >( parameter_ ) );
     param->SetValue( value_ );
     action.AddParameter( *param.release() );
 }

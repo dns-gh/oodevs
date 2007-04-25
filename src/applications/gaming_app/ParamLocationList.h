@@ -17,6 +17,7 @@
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class OrderParameter;
 }
 
 namespace gui
@@ -36,7 +37,7 @@ class ParamLocationList : public ParamListView, private gui::ShapeHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLocationList( QObject* pParent, const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamLocationList( QObject* pParent, const kernel::OrderParameter& parameter, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ParamLocationList();
 
     //! @name Operations
@@ -47,6 +48,7 @@ public:
     virtual bool CheckValidity();
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
     //@}
 
@@ -80,6 +82,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter& parameter_;
     const kernel::CoordinateConverter_ABC& converter_;
     gui::LocationCreator* creator_;
     T_Locations locations_;

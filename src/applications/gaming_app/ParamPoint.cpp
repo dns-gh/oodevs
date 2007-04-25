@@ -14,6 +14,10 @@
 #include "clients_gui/RichLabel.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/OrderParameter.h"
+#include "clients_kernel/Point.h"
+#include "gaming/Action_ABC.h"
+#include "gaming/ActionParameterLocation.h"
 
 using namespace kernel;
 using namespace gui;
@@ -22,9 +26,10 @@ using namespace gui;
 // Name: ParamPoint constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamPoint::ParamPoint( QObject* parent, const QString& name, const CoordinateConverter_ABC& converter )
+ParamPoint::ParamPoint( QObject* parent, const OrderParameter& parameter, const CoordinateConverter_ABC& converter )
     : QObject   ( parent )
-    , Param_ABC ( name )
+    , Param_ABC ( parameter.GetName() )
+    , parameter_( parameter )
     , converter_( converter )
     , pLabel_   ( 0 )
 {
@@ -61,7 +66,7 @@ void ParamPoint::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 bool ParamPoint::CheckValidity()
 {
-    if( !IsOptional() && pPosLabel_->text() == "---" )
+    if( !parameter_.IsOptional() && pPosLabel_->text() == "---" )
     {
         pLabel_->Warn( 3000 );
         return false;
@@ -107,6 +112,19 @@ void ParamPoint::Clean( ASN1T_MissionParameter& asn ) const
     if( asn.value.u.point )
         delete[] asn.value.u.point->vecteur_point.elem;
     delete asn.value.u.point;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPoint::CommitTo
+// Created: SBO 2007-04-25
+// -----------------------------------------------------------------------------
+void ParamPoint::CommitTo( Action_ABC& action ) const
+{
+    kernel::Point point;
+    point.AddPoint( paramPoint_ );
+    std::auto_ptr< ActionParameterLocation > param( new ActionParameterLocation( parameter_, converter_, point ) );
+//    param->SetValue( converter_.ConvertToMgrs( paramPoint_ ).c_str() );
+    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

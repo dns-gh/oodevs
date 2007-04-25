@@ -18,8 +18,8 @@
 // Name: ActionParameterLimaList constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-ActionParameterLimaList::ActionParameterLimaList( const QString& name, bool context )
-    : ActionParameter< QString >( name, context )
+ActionParameterLimaList::ActionParameterLimaList( const kernel::OrderParameter& parameter )
+    : ActionParameter< QString >( parameter )
 {
     // NOTHING
 }
@@ -28,8 +28,8 @@ ActionParameterLimaList::ActionParameterLimaList( const QString& name, bool cont
 // Name: ActionParameterLimaList constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-ActionParameterLimaList::ActionParameterLimaList( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_LimasOrder& limas, bool context )
-    : ActionParameter< QString >( name, context ) 
+ActionParameterLimaList::ActionParameterLimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_LimasOrder& limas )
+    : ActionParameter< QString >( parameter )
 {
     limas_.reserve( limas.n );
     for( unsigned int i = 0; i < limas.n; ++i )

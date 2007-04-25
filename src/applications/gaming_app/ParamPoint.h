@@ -17,6 +17,7 @@
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class OrderParameter;
 }
 
 namespace gui
@@ -38,7 +39,7 @@ class ParamPoint : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPoint( QObject* parent, const QString& name, const kernel::CoordinateConverter_ABC& converter );
+             ParamPoint( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ParamPoint();
     //@}
 
@@ -48,6 +49,7 @@ public:
     virtual bool CheckValidity();
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
     virtual void BuildInterface( QWidget* parent );
     //@}
@@ -68,6 +70,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter& parameter_;
     const kernel::CoordinateConverter_ABC& converter_;
     gui::RichLabel*   pLabel_;
     QLabel*           pPosLabel_;

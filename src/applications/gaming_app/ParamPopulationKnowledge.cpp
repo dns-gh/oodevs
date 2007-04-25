@@ -20,8 +20,8 @@ using namespace kernel;
 // Name: ParamPopulationKnowledge constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamPopulationKnowledge::ParamPopulationKnowledge( QObject* parent, const QString& name, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
-    : EntityParameter< PopulationKnowledge_ABC >( parent, name )
+ParamPopulationKnowledge::ParamPopulationKnowledge( QObject* parent, const OrderParameter& parameter, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
+    : EntityParameter< PopulationKnowledge_ABC >( parent, parameter )
     , converter_( converter )
     , agent_( agent )
 {

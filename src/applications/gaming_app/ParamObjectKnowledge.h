@@ -34,7 +34,7 @@ class ParamObjectKnowledge : public EntityParameter< ObjectKnowledge_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObjectKnowledge( QObject* parent, const QString& name, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamObjectKnowledge( QObject* parent, const kernel::OrderParameter& parameter, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
     virtual ~ParamObjectKnowledge();
     //@}
 

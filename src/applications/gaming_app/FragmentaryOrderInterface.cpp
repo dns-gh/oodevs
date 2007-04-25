@@ -29,9 +29,7 @@ FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Entity_AB
     , fragOrder_          ( fragOrder )
 {
     CreateTitle( fragOrder.GetName() );
-    builder.Begin( *this, entity );
-    builder.Build( fragOrder );
-    builder.End();
+    builder.Build( *this, entity, fragOrder );
     CreateOkCancelButtons();
 }
 

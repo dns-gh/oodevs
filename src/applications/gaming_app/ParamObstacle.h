@@ -44,7 +44,8 @@ class ParamObstacle : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObstacle( QObject* parent, const QString& name, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamObstacle( QObject* parent, const kernel::OrderParameter& parameter, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamObstacle( QObject* parent, const QString& name, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, bool optional );
     virtual ~ParamObstacle();
     //@}
 
@@ -60,7 +61,7 @@ public:
     void CommitTo( ASN1T_MissionGenObject& object ) const;
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void BuildInterface( QWidget* parent );
-    virtual void CommitTo( Action_ABC& action, bool context ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private slots:
@@ -80,6 +81,7 @@ private:
     //! @name Member data
     //@{
     const kernel::ObjectTypes& objectTypes_;
+    const kernel::OrderParameter* parameter_;
     gui::ParametersLayer& layer_;
     const kernel::CoordinateConverter_ABC& converter_;
     ParamLocation* location_;
@@ -88,6 +90,7 @@ private:
     QComboBox* preliminaryCombo_;
     ParamNumericField* density_;
     EntityParameter< kernel::Automat_ABC >* tc2_;
+    bool optional_;
     //@}
 };
 

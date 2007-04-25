@@ -12,7 +12,9 @@
 
 #include "ActionParameter_ABC.h"
 #include "clients_gui/Tools.h"
+#include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "xeumeuleu/xml.h"
 
 // =============================================================================
 /** @class  ActionParameter
@@ -27,13 +29,14 @@ class ActionParameter : public ActionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameter( const QString& name, bool context );
-             ActionParameter( const QString& name, const T& value, bool context );
+    explicit ActionParameter( const kernel::OrderParameter& parameter );
+             ActionParameter( const kernel::OrderParameter& parameter, const T& value );
     virtual ~ActionParameter();
     //@}
 
     //! @name Operations
     //@{
+    virtual bool IsContext() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     void SetValue( const T& value );
     const T& GetValue() const;
@@ -46,9 +49,15 @@ private:
     ActionParameter& operator=( const ActionParameter& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void Serialize( xml::xostream& xos ) const;
+    //@}
+
 private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter& parameter_;
     T value_;
     //@}
 };
@@ -58,8 +67,9 @@ private:
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
 template< typename T >
-ActionParameter< T >::ActionParameter( const QString& name, bool context )
-    : ActionParameter_ABC( name, context )
+ActionParameter< T >::ActionParameter( const kernel::OrderParameter& parameter )
+    : ActionParameter_ABC( parameter.GetName() )
+    , parameter_( parameter )
 {
     // NOTHING
 }
@@ -69,8 +79,9 @@ ActionParameter< T >::ActionParameter( const QString& name, bool context )
 // Created: SBO 2007-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-ActionParameter< T >::ActionParameter( const QString& name, const T& value, bool context )
-    : ActionParameter_ABC( name, context )
+ActionParameter< T >::ActionParameter( const kernel::OrderParameter& parameter, const T& value )
+    : ActionParameter_ABC( parameter.GetName() )
+    , parameter_( parameter )
 {
     SetValue( value );
 }
@@ -83,6 +94,16 @@ template< typename T >
 ActionParameter< T >::~ActionParameter()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter::IsContext
+// Created: SBO 2007-04-25
+// -----------------------------------------------------------------------------
+template< typename T >
+bool ActionParameter< T >::IsContext() const
+{
+    return parameter_.IsContext();
 }
 
 // -----------------------------------------------------------------------------
@@ -114,6 +135,17 @@ void ActionParameter< T >::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Item( tools::translate( "ActionParameter", "Action" ) ).Display( GetName() )
              .Item( tools::translate( "ActionParameter", "Value" ) ).Display( value_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter::Serialize
+// Created: SBO 2007-04-25
+// -----------------------------------------------------------------------------
+template< typename T >
+void ActionParameter< T >::Serialize( xml::xostream& xos ) const
+{
+    ActionParameter_ABC::Serialize( xos );
+    xos << xml::attribute( "type", parameter_.GetType() );
 }
 
 #endif // __ActionParameter_h_

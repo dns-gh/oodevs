@@ -14,6 +14,7 @@
 #include "clients_gui/ValuedComboBox.h"
 #include "gaming/ActionParameter.h"
 #include "gaming/Action_ABC.h"
+#include "clients_kernel/OrderParameter.h"
 
 // =============================================================================
 /** @class  ParamComboBox
@@ -28,7 +29,7 @@ class ParamComboBox : public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ParamComboBox( const QString& name );
+    explicit ParamComboBox( const kernel::OrderParameter& parameter );
     virtual ~ParamComboBox();
     //@}
 
@@ -37,7 +38,7 @@ public:
     virtual void BuildInterface( QWidget* parent );
     void AddItem( const QString& name, T value );
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void CommitTo( Action_ABC& action, bool context ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 protected:
@@ -61,6 +62,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter& parameter_;
     T_Values values_;
     gui::ValuedComboBox<T>* comboBox_;
     //@}
@@ -71,8 +73,9 @@ private:
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 template< typename T >
-ParamComboBox<T>::ParamComboBox( const QString& name )
-    : Param_ABC( name )
+ParamComboBox<T>::ParamComboBox( const kernel::OrderParameter& parameter )
+    : Param_ABC( parameter.GetName() )
+    , parameter_( parameter )
     , comboBox_( 0 )
 {
     // NOTHING
@@ -145,9 +148,9 @@ void ParamComboBox<T>::CommitTo( ASN1T_OID& asn ) const
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
 template< typename T >
-void ParamComboBox<T>::CommitTo( Action_ABC& action, bool context ) const
+void ParamComboBox<T>::CommitTo( Action_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter< T > > param( new ActionParameter< T >( GetName(), context ) );
+    std::auto_ptr< ActionParameter< T > > param( new ActionParameter< T >( parameter_ ) );
     param->SetValue( comboBox_->count() ? comboBox_->GetValue() : 0 );
     action.AddParameter( *param.release() );
 }

@@ -44,8 +44,6 @@ public:
     //@{
     virtual void RemoveFromController();
     virtual void RegisterIn( kernel::ActionController& controller );
-    virtual void SetOptional( bool optional );
-
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void BuildInterface( QWidget* parent ) = 0;
     virtual bool CheckValidity();
@@ -56,13 +54,12 @@ public:
     virtual void Clean( ASN1T_MissionParameter& ) const {};
     virtual void CommitTo( ASN1T_OrderContext& ) const {};
     virtual void Clean( ASN1T_OrderContext& ) const {};
-    virtual void CommitTo( Action_ABC&, bool ) const {};
+    virtual void CommitTo( Action_ABC& ) const {};
     //@}
 
     //! @name Accessors
     //@{
     virtual QString GetName() const;
-    bool IsOptional() const;
     //@}
 
 protected:
@@ -82,7 +79,6 @@ private:
     //! @name Member data
     //@{
     QString name_;
-    bool optional_;
     kernel::ActionController* controller_;
     //@}
 };

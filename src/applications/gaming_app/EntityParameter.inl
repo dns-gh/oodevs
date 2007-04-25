@@ -12,10 +12,27 @@
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const QString& label )
-    : EntityParameterBase( parent, label )
+EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const kernel::OrderParameter& parameter )
+    : EntityParameterBase( parent, parameter.GetName() )
+    , parameter_         ( &parameter )
     , potential_         ( 0 )
     , selected_          ( 0 )
+    , optional_          ( parameter.IsOptional() )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityParameter constructor
+// Created: SBO 2007-04-25
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const QString& name, bool optional )
+    : EntityParameterBase( parent, name )
+    , parameter_         ( 0 )
+    , potential_         ( 0 )
+    , selected_          ( 0 )
+    , optional_          ( optional )
 {
     // NOTHING
 }
@@ -48,7 +65,7 @@ void EntityParameter< ConcreteEntity >::NotifyContextMenu( const ConcreteEntity&
 template< typename ConcreteEntity >
 bool EntityParameter< ConcreteEntity >::CheckValidity()
 {
-    if( ! IsOptional() && ! selected_ )
+    if( ! optional_ && ! selected_ )
         return Invalid();
     return true;
 }
@@ -63,7 +80,7 @@ void EntityParameter< ConcreteEntity >::CommitTo( ASN1T_OID& asn ) const
     asn = 0;
     if( ! selected_ )
     {
-        if( IsOptional() )
+        if( optional_ )
             return;
         throw std::runtime_error( "Entity not set!" );
     }
@@ -75,11 +92,13 @@ void EntityParameter< ConcreteEntity >::CommitTo( ASN1T_OID& asn ) const
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityParameter< ConcreteEntity >::CommitTo( Action_ABC& action, bool context ) const
+void EntityParameter< ConcreteEntity >::CommitTo( Action_ABC& action ) const
 {
     if( !selected_ )
         return;
-    std::auto_ptr< ActionParameter< const ConcreteEntity* > > param( new ActionParameter< const ConcreteEntity* >( GetName(), context ) );
+    if( !parameter_ )
+        throw std::runtime_error( "OrderParameter not set" ); // $$$$ SBO 2007-04-25: 
+    std::auto_ptr< ActionParameter< const ConcreteEntity* > > param( new ActionParameter< const ConcreteEntity* >( *parameter_ ) );
     param->SetValue( selected_ );
     action.AddParameter( *param.release() );
 }

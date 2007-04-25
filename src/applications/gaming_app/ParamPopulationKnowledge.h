@@ -34,7 +34,7 @@ class ParamPopulationKnowledge : public EntityParameter< PopulationKnowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPopulationKnowledge( QObject* parent, const QString& name, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamPopulationKnowledge( QObject* parent, const kernel::OrderParameter& parameter, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
     virtual ~ParamPopulationKnowledge();
     //@}
 

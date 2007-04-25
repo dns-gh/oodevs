@@ -34,7 +34,7 @@ class ActionParameter_ABC : public kernel::Resolver< ActionParameter_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionParameter_ABC( const QString& name, bool context = false );
+    explicit ActionParameter_ABC( const QString& name );
     virtual ~ActionParameter_ABC();
     //@}
 
@@ -42,10 +42,11 @@ public:
     //@{
     unsigned long GetId() const;
     QString GetName() const;
+    virtual bool IsContext() const = 0;
     virtual void Display( kernel::Displayer_ABC& displayer ) const = 0;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual void SerializeParameter( xml::xostream& xos ) const;
-    virtual void SerializeContext( xml::xostream& xos ) const;
+    virtual void Serialize( xml::xostream& xos ) const;
+    void AddParameter( ActionParameter_ABC& parameter );
     //@}
 
 private:
@@ -55,18 +56,12 @@ private:
     ActionParameter_ABC& operator=( const ActionParameter_ABC& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    virtual void Serialize( xml::xostream& xos ) const;
-    //@}
-
 private:
     //! @name Member data
     //@{
     static unsigned long idManager_;
     unsigned long id_;
     QString name_;
-    bool context_;
     //@}
 };
 

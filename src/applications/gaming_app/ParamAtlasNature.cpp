@@ -11,16 +11,18 @@
 #include "ParamAtlasNature.h"
 #include "moc_ParamAtlasNature.cpp"
 #include "game_asn/Asn.h"
-#include "clients_gui/Tools.h"
 #include "gaming/ActionParameter.h"
+#include "clients_kernel/OrderParameter.h"
+#include "clients_gui/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamAtlasNature constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamAtlasNature::ParamAtlasNature( QObject* parent, const QString& name )
+ParamAtlasNature::ParamAtlasNature( QObject* parent, const kernel::OrderParameter& parameter )
     : QObject( parent )
-    , Param_ABC( name )
+    , Param_ABC( parameter.GetName() )
+    , parameter_( parameter )
     , bits_( 0 )
 {
     AddField( tools::translate( "AtlasNature", "Armored" )        , BytXblinde          , BitMblinde );
@@ -90,9 +92,9 @@ void ParamAtlasNature::Clean( ASN1T_MissionParameter& asn ) const
 // Name: ParamAtlasNature::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamAtlasNature::CommitTo( Action_ABC& action, bool context ) const
+void ParamAtlasNature::CommitTo( Action_ABC& action ) const
 {
-//    std::auto_ptr< ActionParameter< E_NatureAtlasType > > param( new ActionParameter< E_NatureAtlasType >( GetName(), context ) );
+//    std::auto_ptr< ActionParameter< E_NatureAtlasType > > param( new ActionParameter< E_NatureAtlasType >( parameter_ ) );
 //    param->SetValue( (E_NatureAtlasType)0 ); // $$$$ SBO 2007-03-19: std::vector< E_NatureAtlasType > or create a specific class
 //    action.AddParameter( *param.release() );
 }

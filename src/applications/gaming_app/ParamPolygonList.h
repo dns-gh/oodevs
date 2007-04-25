@@ -24,7 +24,7 @@ class ParamPolygonList : public ParamLocationList
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPolygonList( QObject* parent, const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamPolygonList( QObject* parent, const kernel::OrderParameter& parameter, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ParamPolygonList();
     //@}
 

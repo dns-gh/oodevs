@@ -18,8 +18,23 @@
 // Name: ParamNumericField constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
+ParamNumericField::ParamNumericField( const kernel::OrderParameter& parameter, bool isReal )
+    : Param_ABC( parameter.GetName() )
+    , parameter_( &parameter )
+    , isReal_( isReal )
+    , pLabel_( 0 )
+    , pEdit_ ( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamNumericField constructor
+// Created: SBO 2007-04-25
+// -----------------------------------------------------------------------------
 ParamNumericField::ParamNumericField( const QString& name, bool isReal )
     : Param_ABC( name )
+    , parameter_( 0 )
     , isReal_( isReal )
     , pLabel_( 0 )
     , pEdit_ ( 0 )
@@ -104,9 +119,11 @@ void ParamNumericField::CommitTo( ASN1REAL& asn ) const
 // Name: ParamNumericField::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamNumericField::CommitTo( Action_ABC& action, bool context ) const
+void ParamNumericField::CommitTo( Action_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter< float > > param( new ActionParameter< float >( GetName(), context ) );
+    if( !parameter_ )
+        throw std::runtime_error( "OrderParameter not defined" ); // $$$$ SBO 2007-04-25: 
+    std::auto_ptr< ActionParameter< float > > param( new ActionParameter< float >( *parameter_ ) );
     param->SetValue( pEdit_->text().toFloat() );
     action.AddParameter( *param.release() );
 }

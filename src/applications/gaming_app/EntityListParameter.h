@@ -14,6 +14,7 @@
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/OrderParameter.h"
 #include "clients_gui/ValuedListItem.h"
 
 // =============================================================================
@@ -87,7 +88,7 @@ class EntityListParameter : public EntityListParameterBase
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityListParameter( QObject* pParent, const QString& name );
+             EntityListParameter( QObject* pParent, const kernel::OrderParameter& parameter );
     virtual ~EntityListParameter();
     //@}
 

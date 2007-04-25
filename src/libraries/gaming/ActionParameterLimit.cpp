@@ -13,6 +13,7 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "xeumeuleu/xml.h"
+#include "Tools.h"
 
 using namespace xml;
 
@@ -21,7 +22,7 @@ using namespace xml;
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
 ActionParameterLimit::ActionParameterLimit( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Line& line )
-    : ActionParameter< QString >( name, true )
+    : ActionParameter_ABC( name )
 {
     points_.reserve( line.vecteur_point.n );
     for( unsigned int i = 0; i < line.vecteur_point.n; ++i )
@@ -37,7 +38,7 @@ ActionParameterLimit::ActionParameterLimit( const QString& name, const kernel::C
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
 ActionParameterLimit::ActionParameterLimit( const QString& name, const T_PointVector& points )
-    : ActionParameter< QString >( name, true )
+    : ActionParameter_ABC( name )
     , points_( points )
 {
     for( unsigned int i = 0; i < points_.size(); ++i )
@@ -51,6 +52,16 @@ ActionParameterLimit::ActionParameterLimit( const QString& name, const T_PointVe
 ActionParameterLimit::~ActionParameterLimit()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLimit::Display
+// Created: SBO 2007-04-25
+// -----------------------------------------------------------------------------
+void ActionParameterLimit::Display( kernel::Displayer_ABC& displayer ) const
+{
+    displayer.Item( tools::translate( "ActionParameter", "Action" ) ).Display( GetName() )
+             .Item( tools::translate( "ActionParameter", "Value" ) ).Display( "" );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,9 +85,22 @@ void ActionParameterLimit::Draw( const geometry::Point2f&, const kernel::Viewpor
 // -----------------------------------------------------------------------------
 void ActionParameterLimit::Serialize( xml::xostream& xos ) const
 {
+    xos << start( "parameter" );
+    ActionParameter_ABC::Serialize( xos );
+    xos << attribute( "type", "limit" );
     for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
         xos << start( "point" )
                 << attribute( "x", it->X() )
                 << attribute( "y", it->Y() )
             << end();
+    xos << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLimit::IsContext
+// Created: SBO 2007-04-25
+// -----------------------------------------------------------------------------
+bool ActionParameterLimit::IsContext() const
+{
+    return true;
 }

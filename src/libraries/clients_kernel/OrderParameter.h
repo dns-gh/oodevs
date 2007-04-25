@@ -34,6 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit OrderParameter( xml::xistream& xis );
+             OrderParameter( const QString& name, const QString& type, bool optional );
     virtual ~OrderParameter();
     //@}
 
@@ -42,6 +43,7 @@ public:
     QString GetName() const;
     QString GetType() const;
     bool IsOptional() const;
+    bool IsContext() const;
     //@}
 
 private:
@@ -62,6 +64,7 @@ private:
     QString name_;
     QString type_;
     bool optional_;
+    bool context_;
     //@}
 };
 

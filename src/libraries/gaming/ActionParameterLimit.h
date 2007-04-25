@@ -11,7 +11,7 @@
 #define __ActionParameterLimit_h_
 
 #include "game_asn/Asn.h"
-#include "ActionParameter.h"
+#include "ActionParameter_ABC.h"
 
 namespace kernel
 {
@@ -24,7 +24,7 @@ namespace kernel
 */
 // Created: SBO 2007-04-13
 // =============================================================================
-class ActionParameterLimit : public ActionParameter< QString >
+class ActionParameterLimit : public ActionParameter_ABC
 {
 
 public:
@@ -37,6 +37,8 @@ public:
 
     //! @name Operations
     //@{
+    virtual bool IsContext() const;
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 

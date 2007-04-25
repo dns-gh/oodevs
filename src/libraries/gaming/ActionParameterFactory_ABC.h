@@ -15,6 +15,7 @@
 namespace kernel
 {
     class Entity_ABC;
+    class OrderParameter;
 }
 
 class ActionParameter_ABC;
@@ -37,10 +38,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual ActionParameter_ABC* CreateParameter( const QString& name, const ASN1T_MissionParameter& parameter, const kernel::Entity_ABC& entity ) const = 0;
-    virtual ActionParameter_ABC* CreateParameter( const QString& name, const ASN1T_Line& parameter ) const = 0;
-    virtual ActionParameter_ABC* CreateParameter( const QString& name, const ASN1T_LimasOrder& parameter ) const = 0;
-    virtual ActionParameter_ABC* CreateParameter( const QString& name, const ASN1T_Direction& parameter ) const = 0;
+    virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_MissionParameter& asn, const kernel::Entity_ABC& entity ) const = 0;
+    virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_Line& line1, const ASN1T_Line& line2 ) const = 0;
+    virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_LimasOrder& asn ) const = 0;
+    virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_Direction& asn ) const = 0;
     //@}
 };
 

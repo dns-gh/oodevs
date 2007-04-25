@@ -19,12 +19,13 @@
 // Name: LimitParameter constructor
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-LimitParameter::LimitParameter( QObject* parent, const QString& name )
+LimitParameter::LimitParameter( QObject* parent, const QString& name, bool optional )
     : QObject   ( parent )
     , Param_ABC ( name )
     , pLabel_   ( 0 )
     , potential_( 0 )
     , selected_ ( 0 )
+    , optional_ ( optional )
 {
     // NOTHING
 }
@@ -58,7 +59,7 @@ void LimitParameter::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 bool LimitParameter::CheckValidity()
 {
-    if( ! IsOptional() && ! selected_ )
+    if( ! optional_ && ! selected_ )
     {
         pLabel_->Warn( 3000 );
         return false;
@@ -87,7 +88,7 @@ void LimitParameter::CommitTo( ASN1T_Line& asn ) const
     asn.vecteur_point.elem = 0;
     if( ! selected_ )
     {
-        if( IsOptional() )
+        if( optional_ )
             return;
         throw std::runtime_error( "Limit not set!" );
     }
@@ -167,15 +168,14 @@ void LimitParameter::Draw( const geometry::Point2f& point, const kernel::Viewpor
 
 // -----------------------------------------------------------------------------
 // Name: LimitParameter::CommitTo
-// Created: SBO 2007-03-19
+// Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-void LimitParameter::CommitTo( Action_ABC& action, bool context ) const
+void LimitParameter::CommitTo( ActionParameter_ABC& parameter ) const
 {
     if( !selected_ )
         return;
     T_PointVector points;
     selected_->CopyTo( points );
     std::auto_ptr< ActionParameterLimit > param( new ActionParameterLimit( GetName(), points ) );
-    param->SetValue( selected_->GetName() );
-    action.AddParameter( *param.release() );
+    parameter.AddParameter( *param.release() );
 }

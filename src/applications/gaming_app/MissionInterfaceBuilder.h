@@ -58,12 +58,7 @@ public:
 
     //! @name Operations
     //@{
-    void Begin( MissionInterface_ABC& missionInterface, kernel::Entity_ABC& entity );
-    void Build( const kernel::OrderType& order );
-    void Build( const kernel::OrderParameter& parameter );
-    void End();
-
-    void AddOrderContext( bool optional );
+    void Build( MissionInterface_ABC& missionInterface, kernel::Entity_ABC& entity, const kernel::OrderType& order );
     //@}
 
 private:
@@ -75,6 +70,8 @@ private:
 
     //! @name Helpers
     //@{
+    void Build( const kernel::OrderParameter& parameter );
+
     Param_ABC* BuildAgent                ( const kernel::OrderParameter& parameter ) const;
     Param_ABC* BuildAgentList            ( const kernel::OrderParameter& parameter ) const;
     Param_ABC* BuildAutomat              ( const kernel::OrderParameter& parameter ) const;
@@ -104,15 +101,14 @@ private:
     Param_ABC* BuildMedicalPriorities    ( const kernel::OrderParameter& parameter ) const;
     Param_ABC* BuildEnumeration          ( const kernel::OrderParameter& parameter ) const;
 
-    Param_ABC* BuildLimits               ( const QString& name1, const QString& name2 ) const;
-    Param_ABC* BuildLimaList             ( const QString& name ) const;
-    Param_ABC* BuildDangerousDirection   ( const QString& name ) const;
-
+    Param_ABC* BuildLimits               ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildLimaList             ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildDangerousDirection   ( const kernel::OrderParameter& parameter ) const;
 
     template < class T >
-    ParamComboBox<T>& BuildVarList( const QString& name ) const
+    ParamComboBox<T>& BuildVarList( const kernel::OrderParameter& parameter ) const
     {
-        return *new ParamComboBox<T>( name );
+        return *new ParamComboBox<T>( parameter );
     }
     //@}
 

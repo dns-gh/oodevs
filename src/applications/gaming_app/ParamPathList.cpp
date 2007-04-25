@@ -16,6 +16,7 @@
 #include "ParamPath.h"
 #include "clients_gui/ValuedListItem.h"
 #include "clients_kernel/ActionController.h"
+#include "clients_kernel/OrderParameter.h"
 
 using namespace kernel;
 using namespace gui;
@@ -24,15 +25,16 @@ using namespace gui;
 // Name: ParamPathList constructor
 // Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-ParamPathList::ParamPathList( QObject* parent, const QString& name, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent, ActionController& controller )
+ParamPathList::ParamPathList( QObject* parent, const OrderParameter& parameter, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent, ActionController& controller )
     : QObject( parent )
-    , Param_ABC( name )
+    , Param_ABC( parameter.GetName() )
+    , parameter_( parameter )
     , layer_( layer )
     , converter_( converter )
     , controller_( controller )
     , agent_( agent )
     , box_( 0 )
-    , list_( new ParamListView( this, GetName() ) )
+    , list_( new ParamListView( this, parameter.GetName() ) )
     , selected_( 0 )
 {
     // NOTHING
@@ -185,7 +187,7 @@ void ParamPathList::NewPath()
 
     ValuedListItem* item = new ValuedListItem( list_->ListView() );
     item->setText( 0, tr( "Route" ) );
-    ParamPath* param = new ParamPath( box_, tr( "Route" ), layer_, converter_, agent_ );
+    ParamPath* param = new ParamPath( box_, tr( "Route" ), layer_, converter_, agent_, false );
     param->BuildInterface( box_ );
     item->SetValue( param );
     param->Show();

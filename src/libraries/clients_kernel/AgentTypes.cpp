@@ -138,13 +138,13 @@ void AgentTypes::ReadOrderTypes( const std::string& missions )
     xifstream xis( missions );
     xis >> start( "missions" )
             >> start( "units" )
-                >> list( "mission", *this, &AgentTypes::ReadMissionType, unitMissions_ )
+                >> list( "mission", *this, &AgentTypes::ReadMissionType, unitMissions_, (const bool&)true )
             >> end()
             >> start( "automats" )
-                >> list( "mission", *this, &AgentTypes::ReadMissionType, automatMissions_ )
+                >> list( "mission", *this, &AgentTypes::ReadMissionType, automatMissions_, (const bool&)true )
             >> end()
             >> start( "populations" )
-                >> list( "mission", *this, &AgentTypes::ReadMissionType, populationMissions_ )
+                >> list( "mission", *this, &AgentTypes::ReadMissionType, populationMissions_, (const bool&)false )
             >> end()
             >> start( "fragorders" )
                 >> list( "fragorder", *this, &AgentTypes::ReadFragOrderType )
@@ -155,9 +155,9 @@ void AgentTypes::ReadOrderTypes( const std::string& missions )
 // Name: AgentTypes::ReadMissionType
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void AgentTypes::ReadMissionType( xml::xistream& xis, T_MissionResolver& missions )
+void AgentTypes::ReadMissionType( xml::xistream& xis, T_MissionResolver& missions, const bool& addContext )
 {
-    MissionType* mission = new MissionType( xis );
+    MissionType* mission = new MissionType( xis, addContext );
     Resolver< MissionType >::Register( mission->GetId(), *mission );
     missions.Register( mission->GetName(), *mission );
 }

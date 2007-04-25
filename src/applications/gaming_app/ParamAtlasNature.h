@@ -12,6 +12,11 @@
 
 #include "Param_ABC.h"
 
+namespace kernel
+{
+    class OrderParameter;
+}
+
 // =============================================================================
 /** @class  ParamAtlasNature
     @brief  ParamAtlasNature
@@ -26,7 +31,7 @@ class ParamAtlasNature : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAtlasNature( QObject* parent, const QString& name );
+             ParamAtlasNature( QObject* parent, const kernel::OrderParameter& parameter );
     virtual ~ParamAtlasNature();
     //@}
 
@@ -35,7 +40,7 @@ public:
     virtual void BuildInterface( QWidget* parent );
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
-    virtual void CommitTo( Action_ABC& action, bool context ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private slots:
@@ -64,6 +69,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter& parameter_;
     T_AtlasFields fields_;
     unsigned short bits_;
     //@}

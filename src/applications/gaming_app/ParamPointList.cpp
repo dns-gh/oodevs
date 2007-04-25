@@ -10,12 +10,14 @@
 #include "gaming_app_pch.h"
 #include "ParamPointList.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ParamPointList constructor
 // Created: SBO 2007-03-15
 // -----------------------------------------------------------------------------
-ParamPointList::ParamPointList( QObject* parent, const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter )
-    : ParamLocationList( parent, name, layer, converter )
+ParamPointList::ParamPointList( QObject* parent, const OrderParameter& parameter, gui::ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+    : ParamLocationList( parent, parameter, layer, converter )
 {
     SetShapeFilter( true, false, false, false );
 }

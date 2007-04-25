@@ -15,11 +15,11 @@
 // Name: ActionParameterObstacleList constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-ActionParameterObstacleList::ActionParameterObstacleList( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const ASN1T_ListMissionGenObject& asn )
-    : ActionParameter< QString >( name, false )
+ActionParameterObstacleList::ActionParameterObstacleList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const ASN1T_ListMissionGenObject& asn )
+    : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        Register( i, *new ActionParameterObstacle( "", converter, types, asn.elem[i] ) );
+        Register( i, *new ActionParameterObstacle( parameter, converter, types, asn.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------

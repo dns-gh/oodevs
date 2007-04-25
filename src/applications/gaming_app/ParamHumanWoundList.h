@@ -12,6 +12,11 @@
 
 #include "Param_ABC.h"
 
+namespace kernel
+{
+    class OrderParameter;
+}
+
 // =============================================================================
 /** @class  ParamHumanWoundList
     @brief  ParamHumanWoundList
@@ -25,7 +30,7 @@ class ParamHumanWoundList : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamHumanWoundList( QObject* parent, const QString& name );
+             ParamHumanWoundList( QObject* parent, const kernel::OrderParameter& parameter );
     virtual ~ParamHumanWoundList();
     //@}
 
@@ -45,6 +50,7 @@ private slots:
 private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter& parameter_;
     QTable*     table_;
     QStringList humanWoundsList_;
     //@}

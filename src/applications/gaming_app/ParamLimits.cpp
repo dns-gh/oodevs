@@ -11,6 +11,9 @@
 #include "ParamLimits.h"
 #include "LimitParameter.h"
 #include "game_asn/Asn.h"
+#include "clients_kernel/OrderParameter.h"
+#include "gaming/Action_ABC.h"
+#include "gaming/ActionParameterLimits.h"
 
 using namespace kernel;
 
@@ -18,10 +21,11 @@ using namespace kernel;
 // Name: ParamLimits constructor
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-ParamLimits::ParamLimits( QObject* parent, const QString& name1, const QString& name2 )
-    : Param_ABC( parent->tr( "Limits" ) )
-    , limit1_( new LimitParameter( parent, name1 ) )
-    , limit2_( new LimitParameter( parent, name2 ) )
+ParamLimits::ParamLimits( QObject* parent, const kernel::OrderParameter& parameter )
+    : Param_ABC( parameter.GetName() )
+    , parameter_( parameter )
+    , limit1_( new LimitParameter( parent, parent->tr( "Limit 1" ), parameter.IsOptional() ) )
+    , limit2_( new LimitParameter( parent, parent->tr( "Limit 2" ), parameter.IsOptional() ) )
 {
     // NOTHING
 }
@@ -66,17 +70,6 @@ void ParamLimits::RegisterIn( ActionController& controller )
     Param_ABC::RegisterIn( controller );
     limit1_->RegisterIn( controller );
     limit2_->RegisterIn( controller );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLimits::SetOptional
-// Created: AGE 2006-03-31
-// -----------------------------------------------------------------------------
-void ParamLimits::SetOptional( bool optional )
-{
-    Param_ABC::SetOptional( optional );
-    limit1_->SetOptional( optional );
-    limit2_->SetOptional( optional );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,8 +118,10 @@ void ParamLimits::Clean( ASN1T_OrderContext& asn ) const
 // Name: ParamLimits::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamLimits::CommitTo( Action_ABC& action, bool context ) const
+void ParamLimits::CommitTo( Action_ABC& action ) const
 {
-    limit1_->CommitTo( action, context );
-    limit2_->CommitTo( action, context );
+    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterLimits( parameter_ ) );
+    limit1_->CommitTo( *param );
+    limit2_->CommitTo( *param );
+    action.AddParameter( *param.release() );
 }

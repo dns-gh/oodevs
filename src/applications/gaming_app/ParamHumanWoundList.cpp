@@ -11,6 +11,7 @@
 #include "ParamHumanWoundList.h"
 #include "moc_ParamHumanWoundList.cpp"
 #include "clients_gui/ExclusiveComboTableItem.h"
+#include "clients_kernel/OrderParameter.h"
 #include "game_asn/Asn.h"
 
 #include "ENT/ENT_Tr.h"
@@ -21,9 +22,10 @@ using namespace gui;
 // Name: ParamHumanWoundList constructor
 // Created: SBO 2005-09-27
 // -----------------------------------------------------------------------------
-ParamHumanWoundList::ParamHumanWoundList( QObject* parent, const QString& name )
+ParamHumanWoundList::ParamHumanWoundList( QObject* parent, const kernel::OrderParameter& parameter )
     : QObject( parent )
-    , Param_ABC( name )
+    , Param_ABC( parameter.GetName() )
+    , parameter_( parameter )
     , table_( 0 )
 {
     // NOTHING

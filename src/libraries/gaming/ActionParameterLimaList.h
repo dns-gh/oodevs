@@ -30,8 +30,8 @@ class ActionParameterLimaList : public ActionParameter< QString >
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterLimaList( const QString& name, bool context );
-             ActionParameterLimaList( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_LimasOrder& limas, bool context );
+    explicit ActionParameterLimaList( const kernel::OrderParameter& parameter );
+             ActionParameterLimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_LimasOrder& limas );
     virtual ~ActionParameterLimaList();
     //@}
 

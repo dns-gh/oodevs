@@ -99,6 +99,10 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( ActionController& controller, 
     builderFunctors_["maintenancepriorities"] = &MissionInterfaceBuilder::BuildMaintenancePriorities;
     builderFunctors_["medicalpriorities"]     = &MissionInterfaceBuilder::BuildMedicalPriorities;
     builderFunctors_["enumeration"]           = &MissionInterfaceBuilder::BuildEnumeration;
+
+    builderFunctors_["limits"]                = &MissionInterfaceBuilder::BuildLimits;
+    builderFunctors_["limalist"]              = &MissionInterfaceBuilder::BuildLimaList;
+    builderFunctors_["dangerousdirection"]    = &MissionInterfaceBuilder::BuildDangerousDirection;
 }
 
 // -----------------------------------------------------------------------------
@@ -111,21 +115,13 @@ MissionInterfaceBuilder::~MissionInterfaceBuilder()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterfaceBuilder::Begin
+// Name: MissionInterfaceBuilder::Build
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-void MissionInterfaceBuilder::Begin( MissionInterface_ABC& missionInterface, Entity_ABC& entity )
+void MissionInterfaceBuilder::Build( MissionInterface_ABC& missionInterface, Entity_ABC& entity, const OrderType& order )
 {
     missionInterface_ = &missionInterface;
     entity_ = &entity;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterfaceBuilder::Build
-// Created: SBO 2007-04-24
-// -----------------------------------------------------------------------------
-void MissionInterfaceBuilder::Build( const OrderType& order )
-{
     Iterator< const OrderParameter& > it = order.CreateIterator();
     while( it.HasMoreElements() )
         Build( it.NextElement() );
@@ -142,34 +138,13 @@ void MissionInterfaceBuilder::Build( const OrderParameter& parameter )
     {
         T_BuilderFunctor functor = it->second;
         if( Param_ABC* param = (this->*functor)( parameter ) )
-            missionInterface_->AddParameter( *param, parameter.IsOptional() );
+            if( parameter.IsContext() )
+                missionInterface_->AddOrderContext( *param );
+            else
+                missionInterface_->AddParameter( *param );
     }
     else
         throw std::runtime_error( tools::translate( "MissionInterfaceBuilder", "Unknown mission parameter: %1" ).arg( parameter.GetType() ).ascii() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterfaceBuilder::AddOrderContext
-// Created: SBO 2006-11-23
-// -----------------------------------------------------------------------------
-void MissionInterfaceBuilder::AddOrderContext( bool optional )
-{
-    Param_ABC* parameter = BuildLimits( tools::translate( "MissionInterfaceBuilder", "Limit 1" )
-                                      , tools::translate( "MissionInterfaceBuilder", "Limit 2" ) );
-    missionInterface_->AddOrderContext( *parameter, optional );
-    parameter = BuildLimaList( tools::translate( "MissionInterfaceBuilder", "Limas" ) );
-    missionInterface_->AddOrderContext( *parameter, true );
-    parameter = BuildDangerousDirection( tools::translate( "MissionInterfaceBuilder", "Dangerous direction" ) );
-    missionInterface_->AddOrderContext( *parameter, false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterfaceBuilder::End
-// Created: SBO 2006-11-23
-// -----------------------------------------------------------------------------
-void MissionInterfaceBuilder::End()
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +153,7 @@ void MissionInterfaceBuilder::End()
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAgent( const OrderParameter& parameter ) const
 {
-    return new ParamAgent( missionInterface_, parameter.GetName() );
+    return new ParamAgent( missionInterface_, parameter );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,7 +162,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAgent( const OrderParameter& parameter 
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAgentList( const OrderParameter& parameter ) const
 {
-    return new ParamAgentList( missionInterface_, parameter.GetName() );
+    return new ParamAgentList( missionInterface_, parameter );
 }
 
 // -----------------------------------------------------------------------------
@@ -196,7 +171,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAgentList( const OrderParameter& parame
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAutomat( const OrderParameter& parameter ) const
 {
-    return new ParamAutomat( missionInterface_, parameter.GetName() );
+    return new ParamAutomat( missionInterface_, parameter );
 }
 
 // -----------------------------------------------------------------------------
@@ -205,7 +180,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAutomat( const OrderParameter& paramete
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAutomatList( const OrderParameter& parameter ) const
 {
-    return new ParamAutomatList( missionInterface_, parameter.GetName() );
+    return new ParamAutomatList( missionInterface_, parameter );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,7 +189,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAutomatList( const OrderParameter& para
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAtlasNature( const OrderParameter& parameter ) const
 {
-    return new ParamAtlasNature( missionInterface_, parameter.GetName() );
+    return new ParamAtlasNature( missionInterface_, parameter );
 }
 
 // -----------------------------------------------------------------------------
@@ -223,7 +198,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAtlasNature( const OrderParameter& para
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildDotation( const OrderParameter& parameter ) const
 {
-    return new ParamDotationDType( parameter.GetName(), objectTypes_ );
+    return new ParamDotationDType( parameter, objectTypes_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +207,7 @@ Param_ABC* MissionInterfaceBuilder::BuildDotation( const OrderParameter& paramet
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildBoolean( const OrderParameter& parameter ) const
 {
-    return new ParamBool( missionInterface_, parameter.GetName() ); // $$$$ SBO 2007-03-14: default value?
+    return new ParamBool( missionInterface_, parameter ); // $$$$ SBO 2007-03-14: default value?
 }
 
 // -----------------------------------------------------------------------------
@@ -241,7 +216,7 @@ Param_ABC* MissionInterfaceBuilder::BuildBoolean( const OrderParameter& paramete
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildDirection( const OrderParameter& parameter ) const
 {
-    return new ParamDirection( missionInterface_, parameter.GetName() );
+    return new ParamDirection( missionInterface_, parameter );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,7 +225,7 @@ Param_ABC* MissionInterfaceBuilder::BuildDirection( const OrderParameter& parame
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildGDH( const OrderParameter& parameter ) const
 {
-    return new ParamGDH( missionInterface_, parameter.GetName() );
+    return new ParamGDH( missionInterface_, parameter );
 }
 
 // -----------------------------------------------------------------------------
@@ -259,7 +234,7 @@ Param_ABC* MissionInterfaceBuilder::BuildGDH( const OrderParameter& parameter ) 
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildNumeric( const OrderParameter& parameter ) const
 {
-    return new ParamNumericField( parameter.GetName(), true );
+    return new ParamNumericField( parameter, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -268,7 +243,7 @@ Param_ABC* MissionInterfaceBuilder::BuildNumeric( const OrderParameter& paramete
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAgentKnowledge( const OrderParameter& parameter ) const
 {
-    return new ParamAgentKnowledge( missionInterface_, parameter.GetName(), knowledgeConverter_, *entity_  );
+    return new ParamAgentKnowledge( missionInterface_, parameter, knowledgeConverter_, *entity_  );
 }
 
 // -----------------------------------------------------------------------------
@@ -277,7 +252,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAgentKnowledge( const OrderParameter& p
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAgentKnowledgeList( const OrderParameter& parameter ) const
 {
-    return new ParamAgentKnowledgeList( missionInterface_, parameter.GetName(), knowledgeConverter_, *entity_ );
+    return new ParamAgentKnowledgeList( missionInterface_, parameter, knowledgeConverter_, *entity_ );
 }
  
 // -----------------------------------------------------------------------------
@@ -286,7 +261,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAgentKnowledgeList( const OrderParamete
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildObjectKnowledge( const OrderParameter& parameter ) const
 {
-    return new ParamObjectKnowledge( missionInterface_, parameter.GetName(), objectKnowledgeConverter_, *entity_ );
+    return new ParamObjectKnowledge( missionInterface_, parameter, objectKnowledgeConverter_, *entity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -295,7 +270,7 @@ Param_ABC* MissionInterfaceBuilder::BuildObjectKnowledge( const OrderParameter& 
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildObjectKnowledgeList( const OrderParameter& parameter ) const
 {
-    return new ParamObjectKnowledgeList( missionInterface_, parameter.GetName(), objectKnowledgeConverter_, *entity_ );
+    return new ParamObjectKnowledgeList( missionInterface_, parameter, objectKnowledgeConverter_, *entity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -304,7 +279,7 @@ Param_ABC* MissionInterfaceBuilder::BuildObjectKnowledgeList( const OrderParamet
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildPopulationKnowledge( const OrderParameter& parameter ) const
 {
-    return new ParamPopulationKnowledge( missionInterface_, parameter.GetName(), knowledgeConverter_, *entity_ );
+    return new ParamPopulationKnowledge( missionInterface_, parameter, knowledgeConverter_, *entity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -313,7 +288,7 @@ Param_ABC* MissionInterfaceBuilder::BuildPopulationKnowledge( const OrderParamet
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildPath( const OrderParameter& parameter ) const
 {
-    return new ParamPath( missionInterface_, parameter.GetName(), layer_, converter_, *entity_ );
+    return new ParamPath( missionInterface_, parameter, layer_, converter_, *entity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -322,7 +297,7 @@ Param_ABC* MissionInterfaceBuilder::BuildPath( const OrderParameter& parameter )
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildPathList( const OrderParameter& parameter ) const
 {
-    return new ParamPathList( missionInterface_, parameter.GetName(), layer_, converter_, *entity_, controller_ );
+    return new ParamPathList( missionInterface_, parameter, layer_, converter_, *entity_, controller_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -331,7 +306,7 @@ Param_ABC* MissionInterfaceBuilder::BuildPathList( const OrderParameter& paramet
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildPoint( const OrderParameter& parameter ) const
 {
-    return new ParamPoint( missionInterface_, parameter.GetName(), converter_ );
+    return new ParamPoint( missionInterface_, parameter, converter_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -340,7 +315,7 @@ Param_ABC* MissionInterfaceBuilder::BuildPoint( const OrderParameter& parameter 
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildPointList( const OrderParameter& parameter ) const
 {
-    return new ParamPointList( missionInterface_, parameter.GetName(), layer_, converter_ );
+    return new ParamPointList( missionInterface_, parameter, layer_, converter_ );
 }
     
 // -----------------------------------------------------------------------------
@@ -349,7 +324,7 @@ Param_ABC* MissionInterfaceBuilder::BuildPointList( const OrderParameter& parame
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildPolygon( const OrderParameter& parameter ) const
 {
-    return new ParamPolygon( parameter.GetName(), layer_, converter_ );
+    return new ParamPolygon( parameter, layer_, converter_ );
 }
     
 // -----------------------------------------------------------------------------
@@ -358,7 +333,7 @@ Param_ABC* MissionInterfaceBuilder::BuildPolygon( const OrderParameter& paramete
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildPolygonList( const OrderParameter& parameter ) const
 {
-    return new ParamPolygonList( missionInterface_, parameter.GetName(), layer_, converter_ );
+    return new ParamPolygonList( missionInterface_, parameter, layer_, converter_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -367,7 +342,7 @@ Param_ABC* MissionInterfaceBuilder::BuildPolygonList( const OrderParameter& para
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildLocation( const OrderParameter& parameter ) const
 {
-    return new ParamLocation( parameter.GetName(), layer_, converter_ );
+    return new ParamLocation( parameter, layer_, converter_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -376,7 +351,7 @@ Param_ABC* MissionInterfaceBuilder::BuildLocation( const OrderParameter& paramet
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildLocationList( const OrderParameter& parameter ) const
 {
-    return new ParamLocationList( missionInterface_, parameter.GetName(), layer_, converter_ );
+    return new ParamLocationList( missionInterface_, parameter, layer_, converter_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -385,7 +360,7 @@ Param_ABC* MissionInterfaceBuilder::BuildLocationList( const OrderParameter& par
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildGenObject( const OrderParameter& parameter ) const
 {
-    return new ParamObstacle( missionInterface_, parameter.GetName(), objectTypes_, layer_, converter_ );
+    return new ParamObstacle( missionInterface_, parameter, objectTypes_, layer_, converter_ );
 }
     
 // -----------------------------------------------------------------------------
@@ -394,7 +369,7 @@ Param_ABC* MissionInterfaceBuilder::BuildGenObject( const OrderParameter& parame
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildGenObjectList( const OrderParameter& parameter ) const
 {
-    return new ParamObstacleList( missionInterface_, parameter.GetName(), objectTypes_, layer_, converter_, controller_ );
+    return new ParamObstacleList( missionInterface_, parameter, objectTypes_, layer_, converter_, controller_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -403,7 +378,7 @@ Param_ABC* MissionInterfaceBuilder::BuildGenObjectList( const OrderParameter& pa
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildMaintenancePriorities( const OrderParameter& parameter ) const
 {
-    return new ParamEquipmentList( missionInterface_, parameter.GetName(), objectTypes_ );
+    return new ParamEquipmentList( missionInterface_, parameter, objectTypes_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -412,34 +387,7 @@ Param_ABC* MissionInterfaceBuilder::BuildMaintenancePriorities( const OrderParam
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildMedicalPriorities( const OrderParameter& parameter ) const
 {
-    return new ParamHumanWoundList( missionInterface_, parameter.GetName() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterfaceBuilder::BuildLimit
-// Created: SBO 2006-11-23
-// -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildLimits( const QString& name1, const QString& name2 ) const
-{
-    return new ParamLimits( missionInterface_, name1, name2 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterfaceBuilder::BuildLimaList
-// Created: SBO 2006-11-23
-// -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildLimaList( const QString& name ) const
-{
-    return new ParamLimaList( missionInterface_, name );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterfaceBuilder::BuildDangerousDirection
-// Created: SBO 2007-04-24
-// -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildDangerousDirection( const QString& name ) const
-{
-    return new ParamDirection( missionInterface_, name );
+    return new ParamHumanWoundList( missionInterface_, parameter );
 }
 
 // -----------------------------------------------------------------------------
@@ -448,7 +396,7 @@ Param_ABC* MissionInterfaceBuilder::BuildDangerousDirection( const QString& name
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildEnumeration( const OrderParameter& parameter ) const
 {
-    ParamComboBox< ASN1INT >& param = BuildVarList< ASN1INT >( parameter.GetName() );
+    ParamComboBox< ASN1INT >& param = BuildVarList< ASN1INT >( parameter );
     Iterator< const OrderParameterValue& > it = parameter.CreateIterator();
     while( it.HasMoreElements() )
     {
@@ -456,4 +404,31 @@ Param_ABC* MissionInterfaceBuilder::BuildEnumeration( const OrderParameter& para
         param.AddItem( value.GetName(), value.GetId() );
     }
     return &param;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterfaceBuilder::BuildLimit
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+Param_ABC* MissionInterfaceBuilder::BuildLimits( const OrderParameter& parameter ) const
+{
+    return new ParamLimits( missionInterface_, parameter );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterfaceBuilder::BuildLimaList
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+Param_ABC* MissionInterfaceBuilder::BuildLimaList( const OrderParameter& parameter ) const
+{
+    return new ParamLimaList( missionInterface_, parameter );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterfaceBuilder::BuildDangerousDirection
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+Param_ABC* MissionInterfaceBuilder::BuildDangerousDirection( const OrderParameter& parameter ) const
+{
+    return new ParamDirection( missionInterface_, parameter );
 }

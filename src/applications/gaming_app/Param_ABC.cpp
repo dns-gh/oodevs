@@ -16,11 +16,10 @@ using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: Param_ABC constructor
-// Created: AGE 2006-03-14
+// Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
 Param_ABC::Param_ABC( const QString& name )
     : name_( name )
-    , optional_( false )
     , controller_( 0 )
 {
     // NOTHING
@@ -56,15 +55,6 @@ void Param_ABC::RegisterIn( ActionController& controller )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Param_ABC::SetOptional
-// Created: AGE 2006-03-14
-// -----------------------------------------------------------------------------
-void Param_ABC::SetOptional( bool optional )
-{
-    optional_ = optional;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Param_ABC::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
@@ -80,15 +70,6 @@ void Param_ABC::Draw( const geometry::Point2f&, const Viewport_ABC&, const GlToo
 bool Param_ABC::CheckValidity()
 {
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Param_ABC::IsOptional
-// Created: SBO 2005-11-08
-// -----------------------------------------------------------------------------
-bool Param_ABC::IsOptional() const
-{
-    return optional_;
 }
 
 // -----------------------------------------------------------------------------

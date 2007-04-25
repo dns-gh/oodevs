@@ -11,6 +11,7 @@
 #include "MissionType.h"
 #include "OrderParameter.h"
 #include "xeumeuleu/xml.h"
+#include "Tools.h"
 
 using namespace xml;
 using namespace kernel;
@@ -19,13 +20,15 @@ using namespace kernel;
 // Name: MissionType constructor
 // Created: SBO 2007-04-23
 // -----------------------------------------------------------------------------
-MissionType::MissionType( xml::xistream& xis )
+MissionType::MissionType( xml::xistream& xis, bool context )
     : OrderType( xis )
 {
     std::string mrt;
     xis >> optional() >> attribute( "mrt-dia-behavior", mrt )
         >> list( "parameter", *this, &MissionType::ReadParameter );
     automat_ = !mrt.empty();
+    if( context )
+        AddContextParameters();
 }
 
 // -----------------------------------------------------------------------------
@@ -54,4 +57,15 @@ void MissionType::ReadParameter( xml::xistream& xis )
 {
     OrderParameter* param = new OrderParameter( xis );
     Register( Count(), *param );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionType::AddContextParameters
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+void MissionType::AddContextParameters()
+{
+    Register( Count(), *new OrderParameter( tools::translate( "MissionType", "Limits" ), "limits", !automat_ ) );
+    Register( Count(), *new OrderParameter( tools::translate( "MissionType", "Limas" ) , "limalist", true ) );
+    Register( Count(), *new OrderParameter( tools::translate( "MissionType", "Dangerous Direction" ), "dangerousdirection", !automat_ ) );
 }

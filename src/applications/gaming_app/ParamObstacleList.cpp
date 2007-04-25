@@ -14,6 +14,7 @@
 #include "ParamObstacle.h"
 #include "clients_gui/ValuedListItem.h"
 #include "clients_kernel/ActionController.h"
+#include "clients_kernel/OrderParameter.h"
 
 using namespace kernel;
 using namespace gui;
@@ -22,15 +23,15 @@ using namespace gui;
 // Name: ParamObstacleList constructor
 // Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-ParamObstacleList::ParamObstacleList( QObject* parent, const QString& name, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter, ActionController& controller )
+ParamObstacleList::ParamObstacleList( QObject* parent, const kernel::OrderParameter& parameter, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter, ActionController& controller )
     : QObject( parent )
-    , Param_ABC( name )
+    , Param_ABC( parameter.GetName() )
     , converter_( converter )
     , controller_( controller )
     , objectTypes_( objectTypes )
     , layer_( layer )
     , box_( 0 )
-    , list_( new ParamListView( this, GetName() ) )
+    , list_( new ParamListView( this, parameter.GetName() ) )
     , selected_( 0 )
 {
     // NOTHING
@@ -119,7 +120,7 @@ void ParamObstacleList::Clean( ASN1T_MissionParameter& asn ) const
 // Name: ParamObstacleList::CommitTo
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-void ParamObstacleList::CommitTo( Action_ABC& action, bool context ) const
+void ParamObstacleList::CommitTo( Action_ABC& action ) const
 {
 
 }
@@ -188,7 +189,7 @@ void ParamObstacleList::NewObstacle()
 
     ValuedListItem* item = new ValuedListItem( list_->ListView() );
     item->setText( 0, tr( "Obstacle" ) );
-    ParamObstacle* param = new ParamObstacle( box_, tr( "Obstacle" ), objectTypes_, layer_, converter_ );
+    ParamObstacle* param = new ParamObstacle( box_, tr( "Obstacle" ), objectTypes_, layer_, converter_, false );
     param->BuildInterface( box_ ); // $$$$ SBO 2007-03-14: 
     item->SetValue( param );
     list_->ListView()->setSelected( item, true );

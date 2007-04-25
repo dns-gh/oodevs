@@ -14,6 +14,10 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/OrderParameter.h"
+#include "gaming/Action_ABC.h"
+#include "gaming/ActionParameterLocation.h"
+#include "gaming/ActionParameterLocationList.h"
 #include "LocationSerializer.h"
 
 using namespace kernel;
@@ -23,10 +27,11 @@ using namespace gui;
 // Name: ParamLocationList constructor
 // Created: AGE 2006-04-03
 // -----------------------------------------------------------------------------
-ParamLocationList::ParamLocationList( QObject* parent, const QString& name, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
-    : ParamListView( parent, name )
+ParamLocationList::ParamLocationList( QObject* parent, const OrderParameter& parameter, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+    : ParamListView( parent, parameter.GetName() )
+    , parameter_( parameter )
     , converter_( converter )
-    , creator_( new LocationCreator( this, name, layer, *this ) )
+    , creator_( new LocationCreator( this, parameter.GetName(), layer, *this ) )
     , controller_( 0 )
 {
     // NOTHING
@@ -78,7 +83,7 @@ void ParamLocationList::RegisterIn( ActionController& controller )
 // -----------------------------------------------------------------------------
 bool ParamLocationList::CheckValidity()
 {
-    if( locations_.empty() && ! IsOptional() )
+    if( locations_.empty() && ! parameter_.IsOptional() )
         return Invalid();
     return true;
 }
@@ -114,13 +119,25 @@ void ParamLocationList::CommitTo( ASN1T_ListLocalisation*& asn ) const
 
     asn = new ASN1T_ListLocalisation();
     asn->n = locations_.size();
-    if( asn->n == 0 && IsOptional() )
+    if( asn->n == 0 && parameter_.IsOptional() )
         return;
 
     asn->elem = new ASN1T_Localisation[ asn->n ];
     LocationSerializer serializer( converter_ );
     for( unsigned i = 0; i < locations_.size(); ++i )
         serializer.Serialize( *locations_.at( i ), asn->elem[i] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationList::CommitTo
+// Created: SBO 2007-04-25
+// -----------------------------------------------------------------------------
+void ParamLocationList::CommitTo( Action_ABC& action ) const
+{
+    std::auto_ptr< ActionParameterLocationList > param( new ActionParameterLocationList( parameter_ ) );
+    for( unsigned i = 0; i < locations_.size(); ++i )
+        param->AddParameter( *new ActionParameterLocation( tr( "Location %1" ).arg( i ), converter_, *locations_[i] ) );
+    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

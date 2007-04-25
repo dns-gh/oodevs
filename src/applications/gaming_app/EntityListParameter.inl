@@ -12,8 +12,8 @@
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-EntityListParameter< ConcreteEntity >::EntityListParameter( QObject* parent, const QString& name )
-    : EntityListParameterBase( parent, name )
+EntityListParameter< ConcreteEntity >::EntityListParameter( QObject* parent, const kernel::OrderParameter& parameter )
+    : EntityListParameterBase( parent, parameter.GetName() )
     , potential_             ( 0 )
 {
     // NOTHING

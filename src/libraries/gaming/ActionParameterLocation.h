@@ -10,12 +10,13 @@
 #ifndef __ActionParameterLocation_h_
 #define __ActionParameterLocation_h_
 
-#include "ActionParameter.h"
-#include "LocationPositions.h"
+#include "ActionParameter_ABC.h"
+#include "Location.h"
 
 namespace kernel
 {
     class Entity_ABC;
+    class OrderParameter;
 }
 
 // =============================================================================
@@ -24,20 +25,24 @@ namespace kernel
 */
 // Created: SBO 2007-04-19
 // =============================================================================
-class ActionParameterLocation : public ActionParameter< QString >
-                              , public LocationPositions
+class ActionParameterLocation : public ActionParameter_ABC
+                              , public Location
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterLocation( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn );
-             ActionParameterLocation( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn, const kernel::Entity_ABC& entity );
+             ActionParameterLocation( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
+             ActionParameterLocation( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
+             ActionParameterLocation( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn );
+             ActionParameterLocation( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn, const kernel::Entity_ABC& entity );
     virtual ~ActionParameterLocation();
     //@}
 
     //! @name Operations
     //@{
+    virtual bool IsContext() const;
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
@@ -46,6 +51,17 @@ private:
     //@{
     ActionParameterLocation( const ActionParameterLocation& );            //!< Copy constructor
     ActionParameterLocation& operator=( const ActionParameterLocation& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual void Serialize( xml::xostream& xos ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const kernel::OrderParameter* parameter_;
     //@}
 };
 

@@ -29,9 +29,7 @@ PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Entity_
     , mission_            ( mission )
 {
     CreateTitle( mission.GetName() );
-    builder.Begin( *this, entity );
-    builder.Build( mission );
-    builder.End();
+    builder.Build( *this, entity, mission );
     CreateOkCancelButtons();
 }
 

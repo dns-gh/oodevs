@@ -18,7 +18,8 @@ namespace kernel
 {
     class CoordinateConverter_ABC;
     class Entity_ABC;
-    class ActionController;    
+    class ActionController;
+    class OrderParameter;
 }
 
 namespace gui
@@ -40,7 +41,7 @@ class ParamPathList : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPathList( QObject* parent, const QString& label, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent, kernel::ActionController& controller );
+             ParamPathList( QObject* parent, const kernel::OrderParameter& parameter, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent, kernel::ActionController& controller );
     virtual ~ParamPathList();
     //@}
 
@@ -73,12 +74,11 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter& parameter_;
     gui::ParametersLayer& layer_;
     const kernel::CoordinateConverter_ABC& converter_;
     kernel::ActionController& controller_;
     const kernel::Entity_ABC& agent_;
-    ASN1T_ListItineraire* asn_;
-    ASN1T_Itineraire* paths_;
 
     QVBox* box_;
     ParamListView* list_;

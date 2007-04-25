@@ -10,12 +10,14 @@
 #include "gaming_app_pch.h"
 #include "ParamPolygon.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ParamPolygon constructor
 // Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
-ParamPolygon::ParamPolygon( const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter )
-    : ParamLocation( name, layer, converter )
+ParamPolygon::ParamPolygon( const OrderParameter& parameter, gui::ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+    : ParamLocation( parameter, layer, converter )
 {
     // NOTHING
 }

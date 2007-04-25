@@ -11,6 +11,7 @@
 #include "ParamEquipmentList.h"
 #include "moc_ParamEquipmentList.cpp"
 #include "clients_kernel/EquipmentType.h"
+#include "clients_kernel/OrderParameter.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 #include "game_asn/Asn.h"
 
@@ -21,9 +22,10 @@ using namespace gui;
 // Name: ParamEquipmentList constructor
 // Created: SBO 2005-09-27
 // -----------------------------------------------------------------------------
-ParamEquipmentList::ParamEquipmentList( QObject* parent, const QString& name, const Resolver< EquipmentType >& resolver )
+ParamEquipmentList::ParamEquipmentList( QObject* parent, const kernel::OrderParameter& parameter, const Resolver< EquipmentType >& resolver )
     : QObject( parent )
-    , Param_ABC( name )
+    , Param_ABC( parameter.GetName() )
+    , parameter_( parameter )
     , resolver_( resolver )
     , table_( 0 )
 {

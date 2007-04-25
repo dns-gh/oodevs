@@ -26,6 +26,7 @@ namespace gui
 }
 
 class Limit;
+class ActionParameter_ABC;
 
 // =============================================================================
 /** @class  LimitParameter
@@ -44,7 +45,7 @@ class LimitParameter : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitParameter( QObject* pParent, const QString& name );
+             LimitParameter( QObject* pParent, const QString& name, bool optional );
     virtual ~LimitParameter();
     //@}
 
@@ -56,7 +57,7 @@ public:
     void CommitTo( ASN1T_Line& asn ) const;
     void Clean( ASN1T_Line& asn ) const;
     bool IsSet() const;
-    virtual void CommitTo( Action_ABC& action, bool context ) const;
+    void CommitTo( ActionParameter_ABC& parameter ) const;
     //@}
 
 private slots:
@@ -87,6 +88,7 @@ private:
     QLabel*         entityLabel_; // $$$$ AGE 2006-03-14: LabelDisplayer ?
     const Limit*    potential_;
     const Limit*    selected_;
+    bool            optional_;
     //@}
 };
 

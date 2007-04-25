@@ -13,6 +13,11 @@
 #include "game_asn/Asn.h"
 #include "Param_ABC.h"
 
+namespace kernel
+{
+    class OrderParameter;
+}
+
 // =============================================================================
 /** @class  ParamDirection
     @brief  ParamDirection
@@ -26,7 +31,7 @@ class ParamDirection : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamDirection( QObject* parent, const QString& name );
+             ParamDirection( QObject* parent, const kernel::OrderParameter& parameter );
     virtual ~ParamDirection();
     //@}
 
@@ -35,7 +40,7 @@ public:
     virtual void BuildInterface( QWidget* parent );
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void CommitTo( ASN1T_OrderContext& asn ) const;
-    virtual void CommitTo( Action_ABC& action, bool context ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private slots:
@@ -54,6 +59,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter& parameter_;
     int value_;
     //@}
 };

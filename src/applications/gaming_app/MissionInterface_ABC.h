@@ -42,8 +42,8 @@ public:
     //@{
     void Draw( const kernel::GlTools_ABC& tools, kernel::Viewport_ABC& extent ) const;
     bool IsEmpty() const;
-    void AddParameter( Param_ABC& parameter, bool optional );
-    void AddOrderContext( Param_ABC& parameter, bool optional );
+    void AddParameter( Param_ABC& parameter );
+    void AddOrderContext( Param_ABC& parameter );
     //@}
 
 public slots:

@@ -17,6 +17,9 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/OrderParameter.h"
+#include "gaming/Action_ABC.h"
+#include "gaming/ActionParameterLocation.h"
 
 using namespace kernel;
 using namespace gui;
@@ -25,14 +28,34 @@ using namespace gui;
 // Name: ParamPath constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamPath::ParamPath( QObject* parent, const QString& name, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent )
+ParamPath::ParamPath( QObject* parent, const OrderParameter& parameter, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent )
     : QObject( parent )
-    , Param_ABC( name )
+    , Param_ABC( parameter.GetName() )
+    , parameter_( &parameter )
     , converter_( converter )
     , layer_( layer )
     , positions_( agent.Get< Positions >() )
     , pLabel_( 0 )
     , location_( 0 )
+    , optional_( parameter.IsOptional() )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPath constructor
+// Created: SBO 2007-04-25
+// -----------------------------------------------------------------------------
+ParamPath::ParamPath( QObject* parent, const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent, bool optional )
+    : QObject( parent )
+    , Param_ABC( name )
+    , parameter_( 0 )
+    , converter_( converter )
+    , layer_( layer )
+    , positions_( agent.Get< Positions >() )
+    , pLabel_( 0 )
+    , location_( 0 )
+    , optional_( optional )
 {
     // NOTHING
 }
@@ -77,7 +100,7 @@ void ParamPath::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& , c
 // -----------------------------------------------------------------------------
 bool ParamPath::CheckValidity()
 {
-    if( ! location_ || !location_->IsValid() )
+    if( ! optional_ && ( ! location_ || !location_->IsValid() ) )
     {
         pLabel_->Warn( 3000 );
         return false;
@@ -121,6 +144,18 @@ void ParamPath::CommitTo( ASN1T_Itineraire& destination ) const
         LocationSerializer serializer( converter_ );
         serializer.Serialize( *location_, destination );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPath::CommitTo
+// Created: SBO 2007-04-25
+// -----------------------------------------------------------------------------
+void ParamPath::CommitTo( Action_ABC& action ) const
+{
+    if( !parameter_ )
+        throw std::runtime_error( "OrderParameter not defined" );
+    std::auto_ptr< ActionParameterLocation > param( new ActionParameterLocation( *parameter_, converter_, *location_ ) );
+    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

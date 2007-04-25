@@ -17,6 +17,9 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/OrderParameter.h"
+#include "gaming/Action_ABC.h"
+#include "gaming/ActionParameterLocation.h"
 
 using namespace kernel;
 using namespace gui;
@@ -25,13 +28,32 @@ using namespace gui;
 // Name: ParamLocation constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamLocation::ParamLocation( const QString& name, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
-    : Param_ABC  ( name )
+ParamLocation::ParamLocation( const OrderParameter& parameter, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+    : Param_ABC  ( parameter.GetName() )
+    , parameter_ ( &parameter )
     , converter_ ( converter )
     , layer_     ( layer )
     , controller_( 0 )
     , pLabel_    ( 0 )
     , location_  ( 0 )
+    , optional_  ( parameter.IsOptional() )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocation constructor
+// Created: SBO 2007-04-25
+// -----------------------------------------------------------------------------
+ParamLocation::ParamLocation( const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, bool optional )
+    : Param_ABC  ( name )
+    , parameter_ ( 0 )
+    , converter_ ( converter )
+    , layer_     ( layer )
+    , controller_( 0 )
+    , pLabel_    ( 0 )
+    , location_  ( 0 )
+    , optional_  ( optional )
 {
     // NOTHING
 }
@@ -89,7 +111,7 @@ void ParamLocation::RegisterIn( ActionController& controller )
 // -----------------------------------------------------------------------------
 bool ParamLocation::CheckValidity()
 {
-    if( ! IsOptional() && !location_ )
+    if( !optional_ && !location_ )
     {
         pLabel_->Warn( 3000 );
         return false;
@@ -133,6 +155,18 @@ void ParamLocation::CommitTo( ASN1T_Localisation& asn ) const
         LocationSerializer serializer( converter_ );
         serializer.Serialize( *location_, asn );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocation::CommitTo
+// Created: SBO 2007-04-25
+// -----------------------------------------------------------------------------
+void ParamLocation::CommitTo( Action_ABC& action ) const
+{
+    if( !parameter_ )
+        throw std::runtime_error( "OrderParameter not defined" );
+    std::auto_ptr< ActionParameterLocation > param( new ActionParameterLocation( *parameter_, converter_, *location_ ) );
+    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

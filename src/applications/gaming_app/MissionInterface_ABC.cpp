@@ -111,10 +111,9 @@ void MissionInterface_ABC::CreateOkCancelButtons()
 // Name: MissionInterface_ABC::AddParameter
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::AddParameter( Param_ABC& parameter, bool optional )
+void MissionInterface_ABC::AddParameter( Param_ABC& parameter )
 {
     parameters_.push_back( &parameter );
-    parameter.SetOptional( optional );
     parameter.BuildInterface( this );
     parameter.RegisterIn( controller_ );
 }
@@ -123,10 +122,9 @@ void MissionInterface_ABC::AddParameter( Param_ABC& parameter, bool optional )
 // Name: MissionInterface_ABC::AddOrderContext
 // Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::AddOrderContext( Param_ABC& parameter, bool optional )
+void MissionInterface_ABC::AddOrderContext( Param_ABC& parameter )
 {
     orderContext_.push_back( &parameter );
-    parameter.SetOptional( optional );
     parameter.BuildInterface( this );
     parameter.RegisterIn( controller_ );
 }
@@ -183,9 +181,9 @@ void MissionInterface_ABC::Clean( ASN1T_OrderContext& asn ) const
 void MissionInterface_ABC::CommitTo( Action_ABC& action ) const
 {
     for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
-        (*it)->CommitTo( action, false );
+        (*it)->CommitTo( action );
     for( CIT_Parameters it = orderContext_.begin(); it != orderContext_.end(); ++it )
-        (*it)->CommitTo( action, true );
+        (*it)->CommitTo( action );
 }
 
 // -----------------------------------------------------------------------------

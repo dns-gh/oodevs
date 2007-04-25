@@ -17,6 +17,7 @@
 namespace kernel
 {
     class TacticalLine_ABC;
+    class OrderParameter;
 }
 
 class Lima;
@@ -37,7 +38,7 @@ class ParamLimaList : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLimaList( QObject* parent, const QString& name );
+             ParamLimaList( QObject* parent, const kernel::OrderParameter& parameter );
     virtual ~ParamLimaList();
     //@}
 
@@ -48,7 +49,7 @@ public:
     virtual void BuildInterface( QWidget* parent );
     virtual void CommitTo( ASN1T_OrderContext& asn ) const;
     virtual void Clean( ASN1T_OrderContext& asn ) const;
-    virtual void CommitTo( Action_ABC& action, bool context ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private slots:
@@ -78,6 +79,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter& parameter_;
     QListView* list_;
     QPopupMenu* pPopupMenu_;
     const Lima* potential_;

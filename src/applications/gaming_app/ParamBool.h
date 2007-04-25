@@ -12,6 +12,11 @@
 
 #include "Param_ABC.h"
 
+namespace kernel
+{
+    class OrderParameter;
+}
+
 // =============================================================================
 /** @class  ParamBool
     @brief  ParamBool
@@ -25,7 +30,7 @@ class ParamBool : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamBool( QObject* parent, const QString& name, bool defaultValue = false );
+             ParamBool( QObject* parent, const kernel::OrderParameter& parameter, bool defaultValue = false );
     virtual ~ParamBool();
     //@}
 
@@ -33,7 +38,7 @@ public:
     //@{
     virtual void BuildInterface( QWidget* parent );
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void CommitTo( Action_ABC& action, bool context ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private slots:
@@ -52,6 +57,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter& parameter_;
     bool value_;
     //@}
 };

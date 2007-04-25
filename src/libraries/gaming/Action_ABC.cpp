@@ -119,10 +119,20 @@ void Action_ABC::Serialize( xml::xostream& xos ) const
         << attribute( "target", target_.GetId() );
     xos << start( "parameters" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->SerializeParameter( xos );
+        if( !it->second->IsContext() )
+        {
+            xos << start( "parameter" );
+            it->second->Serialize( xos );
+            xos << end();
+        }
     xos << end();
     xos << start( "context" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->SerializeContext( xos );
+        if( it->second->IsContext() )
+        {
+            xos << start( "parameter" );
+            it->second->Serialize( xos );
+            xos << end();
+        }
     xos << end();
 }

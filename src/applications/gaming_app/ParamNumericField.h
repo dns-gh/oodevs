@@ -13,6 +13,11 @@
 #include "game_asn/Asn.h"
 #include "Param_ABC.h"
 
+namespace kernel
+{
+    class OrderParameter;
+}
+
 namespace gui
 {
     class RichLabel;
@@ -30,20 +35,22 @@ class ParamNumericField : public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
+             ParamNumericField( const kernel::OrderParameter& parameter, bool isReal );
              ParamNumericField( const QString& name, bool isReal );
     virtual ~ParamNumericField();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool CheckValidity();
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    void CommitTo( ASN1REAL& asn ) const;
     virtual void Show();
     virtual void Hide();
     virtual void BuildInterface( QWidget* parent );
+
+    virtual bool CheckValidity();
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    void CommitTo( ASN1REAL& asn ) const;
     void SetLimits( float min, float max );
-    virtual void CommitTo( Action_ABC& action, bool context ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private:
@@ -56,6 +63,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter* parameter_;
     bool isReal_;
     gui::RichLabel* pLabel_;
     QLineEdit* pEdit_;

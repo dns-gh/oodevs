@@ -30,7 +30,7 @@ class ParamAgentList : public EntityListParameter< kernel::Agent_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAgentList( QObject* parent, const QString& name );
+             ParamAgentList( QObject* parent, const kernel::OrderParameter& parameter );
     virtual ~ParamAgentList();
     //@}
 
