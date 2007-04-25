@@ -13,7 +13,7 @@
 #include "Layer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
-class ElevationTextureSet;
+class TextureSet;
 class ElevationShader;
 
 namespace kernel
@@ -66,6 +66,8 @@ private:
 
     //! @name Helpers
     //@{
+    void CreateShader();
+    void CreateTextures();
     void SetGradient();
     void SetShader();
     void Cleanup();
@@ -79,7 +81,7 @@ private:
     const kernel::DetectionMap& elevation_;
     std::auto_ptr< ElevationExtrema >    extrema_;
     std::auto_ptr< ElevationShader >     shader_;
-    std::auto_ptr< ElevationTextureSet > layer_;
+    std::auto_ptr< TextureSet >          layer_;
     bool modelLoaded_;
     bool ignore_;
 

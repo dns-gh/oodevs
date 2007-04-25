@@ -13,6 +13,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DetectionMap.h"
 #include "graphics/ElevationTextureSet.h"
+#include "graphics/FixedElevationTextureSet.h"
 #include "graphics/ElevationShader.h"
 #include "graphics/extensions.h"
 #include "graphics/Visitor2d.h"
@@ -115,10 +116,8 @@ void Elevation2dLayer::Paint( const geometry::Rectangle2f& viewport )
         return;
     gl::Initialize();
     if( !layer_.get() && modelLoaded_ )
-    {
-        extrema_.reset( new ElevationExtrema( elevation_.GetMap() ) );
-        layer_.reset( new ElevationTextureSet( elevation_.GetMap() ) );
-    }
+        CreateTextures();
+
     if( layer_.get() )
     {
         SetGradient();
@@ -201,18 +200,7 @@ void Elevation2dLayer::SetGradient()
 // -----------------------------------------------------------------------------
 void Elevation2dLayer::SetShader()
 {
-    if( ! shader_.get() && ! ignore_ )
-    {
-        try
-        {
-            shader_.reset( new ElevationShader() );
-            SetElevations( 0, elevation_.MaximumElevation() );
-        }
-        catch( ... )
-        {
-            ignore_ = true;
-        }
-    }
+    CreateShader();
     if( shader_.get() )
         shader_->Use();
 }
@@ -232,4 +220,38 @@ void Elevation2dLayer::Reset()
     gradient_ = 0;
     updateGradient_ = true;
     lastViewport_ = geometry::Rectangle2f();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Elevation2dLayer::CreateShader
+// Created: AGE 2007-04-25
+// -----------------------------------------------------------------------------
+void Elevation2dLayer::CreateShader()
+{
+    if( ! shader_.get() && ! ignore_ )
+    {
+        try
+        {
+            shader_.reset( new ElevationShader() );
+            SetElevations( 0, elevation_.MaximumElevation() );
+        }
+        catch( ... )
+        {
+            ignore_ = true;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Elevation2dLayer::CreateTextures
+// Created: AGE 2007-04-25
+// -----------------------------------------------------------------------------
+void Elevation2dLayer::CreateTextures()
+{
+    extrema_.reset( new ElevationExtrema( elevation_.GetMap() ) );
+    CreateShader();
+    if( !ignore_ )
+        layer_.reset( new ElevationTextureSet( elevation_.GetMap() ) );
+    else
+        layer_.reset( new FixedElevationTextureSet( elevation_.GetMap() ) );
 }

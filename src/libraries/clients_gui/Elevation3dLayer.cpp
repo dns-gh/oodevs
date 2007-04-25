@@ -167,9 +167,11 @@ void Elevation3dLayer::CreateTextures()
     {
         textures_.reset( new MultiTextureLayer() );
         usrp_.   reset( new TextureSet( graphicsDirectory_ + "/usrp.texture" ) );
-        normals_.reset( new TextureSet( graphicsDirectory_ + "/normals.texture" ) );
+        if( ! ignoreShader_ )
+            normals_.reset( new TextureSet( graphicsDirectory_ + "/normals.texture" ) );
         textures_->SetLayer( 0, *usrp_ );
-        textures_->SetLayer( 1, *normals_ );
+        if( ! ignoreShader_ )
+            textures_->SetLayer( 1, *normals_ );
     }
     catch( ... )
     {
