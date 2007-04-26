@@ -21,7 +21,7 @@ namespace kernel
 
 namespace gui
 {
-    class Layer2d_ABC;
+    class Layer_ABC;
 
 // =============================================================================
 /** @class  LayersPanel
@@ -44,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    void AddLayer( const QString& name, Layer2d_ABC& layer );
+    void AddLayer( const QString& name, Layer_ABC& layer );
 
     virtual void Commit();
     virtual void Reset();
@@ -70,10 +70,10 @@ private:
 
     //! @name Types
     //@{
-    typedef std::pair< Layer2d_ABC*, QSlider* > T_Layer;
-    typedef std::vector< T_Layer >              T_Layers;
-    typedef std::vector< float >                T_Alphas;
-    typedef std::vector< std::string >          T_Names;
+    typedef std::pair< Layer_ABC*, QSlider* > T_Layer;
+    typedef std::vector< T_Layer >            T_Layers;
+    typedef std::vector< float >              T_Alphas;
+    typedef std::vector< std::string >        T_Names;
     //@}
 
 private:

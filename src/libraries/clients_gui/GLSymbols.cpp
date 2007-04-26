@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "GLSymbols.h"
 #include "svgl/svgl.h"
+#include "svgl/Opacity.h"
 #include "zipstream/zipstream.h"
 #include "clients_kernel/PathTools.h"
 #include "xeumeuleu/xml.h"
@@ -25,6 +26,7 @@ using namespace svg;
 GLSymbols::GLSymbols()
     : zipFile_( new zip::izipfile( kernel::path_tools::BuildWorkingDirectoryPath( "symbols.pak" ).c_str() ) )
     , current_( new Color( "black" ) )
+    , opacity_( new Opacity() )
     , renderer_( new TextRenderer() )
     , references_( new References() )
     , renderingContext_( new RenderingContext() )
@@ -47,12 +49,13 @@ GLSymbols::~GLSymbols()
 
 namespace
 {
-    void SetCurrentColor( Color& col )
+    void SetCurrentColor( Color& col, Opacity& o )
     {
         // $$$$ AGE 2006-10-25: pas terrible
         float color[4];
         glGetFloatv( GL_CURRENT_COLOR, color );
         col.Set( color[0], color[1], color[2] );
+        o.Set( color[3] );
     }
 }
 
@@ -97,10 +100,12 @@ void GLSymbols::PrintApp6( const std::string& symbol, const geometry::Rectangle2
     {
         glEnableClientState( GL_VERTEX_ARRAY );
         const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
-        SetCurrentColor( *current_ ); // $$$$ AGE 2006-10-25: 
+        SetCurrentColor( *current_, *opacity_ );
         renderingContext_->SetViewport( box, vWidth, vHeight );
-        renderingContext_->PushProperty( RenderingContext::color, *current_ );
+        renderingContext_->PushProperty( RenderingContext::color,       *current_ );
+        renderingContext_->PushProperty( RenderingContext::fillOpacity, *opacity_ );
         renderNode->Draw( *renderingContext_, *references_ );
+        renderingContext_->PopProperty( RenderingContext::fillOpacity );
         renderingContext_->PopProperty( RenderingContext::color );
     }
 }

@@ -51,6 +51,15 @@ public:
 
     virtual void Reset2d();
     virtual void Reset3d();
+    
+    virtual void SetAlpha( float alpha );
+    float GetAlpha() const;
+    //@}
+    
+private:
+    //! @name Member data
+    //@{
+    float alpha_;
     //@}
 };
 
@@ -66,7 +75,7 @@ class Layer2d_ABC : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Layer2d_ABC() : alpha_( 1 ) {};
+             Layer2d_ABC() {};
     virtual ~Layer2d_ABC() {};
     //@}
 
@@ -75,17 +84,8 @@ public:
     virtual void Paint( const ViewFrustum& ) {}
     virtual void RegisterIn( Gl3dWidget& )   {}
 
-    virtual void SetAlpha( float alpha );
-    float GetAlpha() const;
-
     virtual void Reset2d();
     virtual void Reset();
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    float alpha_;
     //@}
 };
 

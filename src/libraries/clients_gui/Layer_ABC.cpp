@@ -22,6 +22,7 @@ using namespace gui;
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
 Layer_ABC::Layer_ABC()
+    : alpha_( 1 )
 {
     // NOTHING
 }
@@ -101,19 +102,19 @@ void Layer_ABC::Reset3d()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer2d_ABC::SetAlpha
+// Name: Layer_ABC::SetAlpha
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void Layer2d_ABC::SetAlpha( float alpha )
+void Layer_ABC::SetAlpha( float alpha )
 {
     alpha_ = alpha;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer2d_ABC::GetAlpha
+// Name: Layer_ABC::GetAlpha
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-float Layer2d_ABC::GetAlpha() const
+float Layer_ABC::GetAlpha() const
 {
     return alpha_;
 }

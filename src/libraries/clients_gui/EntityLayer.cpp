@@ -27,9 +27,10 @@ using namespace gui;
 // Name: EntityLayerBase::EntityLayerBase
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, View_ABC& view, const Profile_ABC& profile )
+EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile )
     : controllers_( controllers )
     , tools_      ( tools )
+    , strategy_   ( strategy )
     , view_       ( view )
     , profile_    ( profile )
     , tooltiped_  ( std::numeric_limits< unsigned >::max() ) 
@@ -54,6 +55,7 @@ EntityLayerBase::~EntityLayerBase()
 // -----------------------------------------------------------------------------
 void EntityLayerBase::Paint( kernel::Viewport_ABC& viewport )
 {
+    strategy_.SetAlpha( GetAlpha() );
     for( unsigned i = 0; i < entities_.size(); ++i )
         if( i != selected_ )
             Draw( *entities_[ i ], viewport );

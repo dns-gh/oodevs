@@ -42,6 +42,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void SetAlpha( float alpha ) = 0;
     virtual void SelectColor( const kernel::Agent_ABC& agent ) = 0;
     virtual void SelectColor( const kernel::Automat_ABC& automat ) = 0;
     virtual void SelectColor( const kernel::Object_ABC& object ) = 0;

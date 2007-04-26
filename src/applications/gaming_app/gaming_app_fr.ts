@@ -903,6 +903,14 @@
         <source>Logo</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automats</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

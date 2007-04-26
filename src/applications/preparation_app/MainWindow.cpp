@@ -227,12 +227,11 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // -----------------------------------------------------------------------------
 void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, LocationsLayer& locations, WeatherLayer& weather, ::AgentsLayer& agents, DrawerLayer& drawer, GraphicPreferences& setup, PreferencesDialog& preferences, const Profile_ABC& profile )
 {
-    // $$$$ AGE 2007-03-09: preferences !
     Layer_ABC& automats            = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, agents );
     Layer_ABC& objectCreationLayer = *new MiscLayer< ObjectCreationPanel >( objects );
     Elevation2dLayer& elevation2d  = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
-    Layer2d_ABC& raster            = *new RasterLayer( controllers_.controller_ );
-    Layer2d_ABC& terrain           = *new TerrainLayer( controllers_, *glProxy_, setup );
+    Layer_ABC& raster              = *new RasterLayer( controllers_.controller_ );
+    Layer_ABC& terrain             = *new TerrainLayer( controllers_, *glProxy_, setup );
     Layer_ABC& elevation3d         = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     Layer_ABC& grid                = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics             = *new MetricsLayer( *glProxy_ );
@@ -244,6 +243,10 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     preferences.AddLayer( tr( "Terrain" ), terrain );
     preferences.AddLayer( tr( "Raster" ), raster );
     preferences.AddLayer( tr( "Elevation" ), elevation2d );
+    preferences.AddLayer( tr( "Units" ), agents );
+    preferences.AddLayer( tr( "Automats" ), automats );
+    preferences.AddLayer( tr( "Objects" ), objectsLayer );
+    preferences.AddLayer( tr( "Populations" ), populations );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );

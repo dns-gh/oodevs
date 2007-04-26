@@ -24,7 +24,7 @@ namespace gui
     class GraphicsPanel;
     class PreferencesList;
     class PreferencePanel_ABC;
-    class Layer2d_ABC;
+    class Layer_ABC;
     class LayersPanel;
     class Elevation2dLayer;
 
@@ -50,7 +50,7 @@ public:
     virtual QSize sizeHint () const;
     GraphicPreferences& GetPreferences() const; // $$$$ SBO 2006-05-04: 
 
-    void AddLayer( const QString& name, gui::Layer2d_ABC& layer );
+    void AddLayer( const QString& name, gui::Layer_ABC& layer );
     void AddLayer( const QString& name, gui::Elevation2dLayer& layer ); // $$$$ AGE 2007-01-17: 
     //@}
 

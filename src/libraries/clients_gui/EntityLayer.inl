@@ -24,7 +24,7 @@ namespace gui
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
 EntityLayer< ConcreteEntity >::EntityLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayerBase( controllers, tools, view, profile )
+    : EntityLayerBase( controllers, tools, strategy, view, profile )
     , controllers_( controllers )
     , strategy_( strategy )
 {

@@ -17,6 +17,7 @@ namespace svg
     class TextRenderer;
     class RenderingContext;
     class Color;
+    class Opacity;
 }
 
 namespace zip
@@ -72,6 +73,7 @@ private:
     //@{
     std::auto_ptr< zip::izipfile >         zipFile_;
     std::auto_ptr< svg::Color >            current_;
+    std::auto_ptr< svg::Opacity >          opacity_;
     std::auto_ptr< svg::TextRenderer >     renderer_;
     std::auto_ptr< svg::References >       references_;
     std::auto_ptr< svg::RenderingContext > renderingContext_;

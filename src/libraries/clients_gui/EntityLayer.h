@@ -46,7 +46,7 @@ class EntityLayerBase : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{    
-             EntityLayerBase( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, View_ABC& view, const kernel::Profile_ABC& profile );
+             EntityLayerBase( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~EntityLayerBase();
     //@}    
 
@@ -109,6 +109,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::GlTools_ABC& tools_;
+    ColorStrategy_ABC& strategy_;
     View_ABC& view_;
     T_Entities entities_;
     unsigned tooltiped_;

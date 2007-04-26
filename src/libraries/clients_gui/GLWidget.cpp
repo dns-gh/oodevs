@@ -552,6 +552,7 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, 
     const float scaleRatio = expectedWidth / svgWidth;
 
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+    glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.0f );
         glScalef( scaleRatio, -scaleRatio, 1 );

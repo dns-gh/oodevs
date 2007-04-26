@@ -57,6 +57,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void SetAlpha( float alpha );
     virtual void SelectColor( const kernel::Agent_ABC& agent );
     virtual void SelectColor( const kernel::Automat_ABC& automat );
     virtual void SelectColor( const kernel::Object_ABC& object );
@@ -122,6 +123,7 @@ private:
     T_Colors     friendlyAvailable_;
     T_Colors     enemyAvailable_;
     T_Colors     neutralAvailable_;
+    float        alpha_;
     //@}
 };
 

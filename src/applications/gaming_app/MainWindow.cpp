@@ -313,8 +313,8 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     Layer_ABC& missionsLayer        = *new MiscLayer< MissionPanel >( missions );
     Layer_ABC& objectCreationLayer  = *new MiscLayer< ObjectCreationPanel >( objects );
     Elevation2dLayer& elevation2d   = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
-    Layer2d_ABC& raster             = *new RasterLayer( controllers_.controller_ );
-    Layer2d_ABC& terrain            = *new TerrainLayer( controllers_, *glProxy_, preferences.GetPreferences() );
+    Layer_ABC& raster               = *new RasterLayer( controllers_.controller_ );
+    Layer_ABC& terrain              = *new TerrainLayer( controllers_, *glProxy_, preferences.GetPreferences() );
     Layer_ABC& elevation3d          = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics              = *new MetricsLayer( *glProxy_ );
@@ -326,11 +326,15 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     Layer_ABC& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& meteo                = *new MeteoLayer( controllers_, *glProxy_ );
     Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
-    Layer2d_ABC& logoLayer          = *new LogoLayer( *glProxy_, QImage( "logo.png" ), 0.7f );
+    Layer_ABC& logoLayer            = *new LogoLayer( *glProxy_, QImage( "logo.png" ), 0.7f );
 
     preferences.AddLayer( tr( "Terrain" ), terrain );
     preferences.AddLayer( tr( "Raster" ), raster );
     preferences.AddLayer( tr( "Elevation" ), elevation2d );
+    preferences.AddLayer( tr( "Units" ), agents );
+    preferences.AddLayer( tr( "Automats" ), automats );
+    preferences.AddLayer( tr( "Objects" ), objectsLayer );
+    preferences.AddLayer( tr( "Populations" ), populations );
     preferences.AddLayer( tr( "Logo" ), logoLayer );
 
     // ordre de dessin

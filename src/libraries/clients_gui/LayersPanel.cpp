@@ -42,9 +42,12 @@ LayersPanel::~LayersPanel()
 // Name: LayersPanel::AddLayer
 // Created: AGE 2007-01-04
 // -----------------------------------------------------------------------------
-void LayersPanel::AddLayer( const QString& name, Layer2d_ABC& layer )
+void LayersPanel::AddLayer( const QString& name, Layer_ABC& layer )
 {
-    QGroupBox* alphaBox = new QGroupBox( 1, Qt::Vertical, name, this );
+    QHBox* alphaBox = new QHBox( this );
+    QLabel* label = new QLabel( name, alphaBox );
+    label->setMinimumWidth( 100 );
+    label->setMaximumWidth( 100 );
     QSlider* slider = new QSlider( 0, 100, 1, 100, Qt::Horizontal, alphaBox );
     connect( slider, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged() ) );
     layers_.push_back( T_Layer( &layer, slider ) );

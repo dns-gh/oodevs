@@ -39,6 +39,7 @@ ColorStrategy::ColorStrategy( Controllers& controllers, GlTools_ABC& tools )
     , selectedPopulation_( controllers )
     , selectedLine_      ( controllers )
     , selectedKnowledge_ ( controllers )
+    , alpha_             ( 1 )
 {
     InitializeColors();
     controllers_.Register( *this );
@@ -125,6 +126,15 @@ void ColorStrategy::Select( const kernel::Knowledge_ABC& element )
 void ColorStrategy::AfterSelection()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::SetAlpha
+// Created: AGE 2007-04-26
+// -----------------------------------------------------------------------------
+void ColorStrategy::SetAlpha( float alpha )
+{
+    alpha_ = alpha;
 }
 
 // -----------------------------------------------------------------------------
@@ -277,9 +287,10 @@ QColor ColorStrategy::KnowledgeColor( const QColor& base ) const
 // -----------------------------------------------------------------------------
 void ColorStrategy::ApplyColor( const QColor& color ) const
 {
-    glColor3f( color.red()   / 255.f,
+    glColor4f( color.red()   / 255.f,
                color.green() / 255.f,
-               color.blue()  / 255.f );
+               color.blue()  / 255.f,
+               alpha_ );
 }
 
 namespace 
