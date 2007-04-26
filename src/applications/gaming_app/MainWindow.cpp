@@ -27,6 +27,7 @@
 #include "AgentKnowledgesLayer.h"
 #include "PopulationKnowledgesLayer.h"
 #include "MeteoLayer.h"
+#include "ObjectsLayer.h"
 #include "ObjectKnowledgesLayer.h"
 #include "LimitsLayer.h"
 #include "StatusBar.h"
@@ -83,7 +84,6 @@
 #include "clients_gui/RasterLayer.h"
 #include "clients_gui/MetricsLayer.h"
 #include "clients_gui/GridLayer.h"
-#include "clients_gui/ObjectsLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
 #include "clients_gui/ExclusiveEventStrategy.h"
 #include "clients_gui/DefaultLayer.h"
@@ -287,7 +287,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new Menu( this, controllers, *prefDialog, *profileDialog, *recorderToolbar, *factory );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
-    CreateLayers( *pMissionPanel_, *objectCreationPanel, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *drawer, *prefDialog, profile );
+    CreateLayers( *pMissionPanel_, *objectCreationPanel, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *drawer, *prefDialog, profile, publisher );
 
     ::StatusBar* pStatus = new ::StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_, controllers_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
@@ -308,7 +308,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, ParametersLayer& parameters, LocationsLayer& locationsLayer, gui::AgentsLayer& agents, gui::AutomatsLayer& automats, DrawerLayer& drawer, PreferencesDialog& preferences, const Profile_ABC& profile )
+void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, ParametersLayer& parameters, LocationsLayer& locationsLayer, gui::AgentsLayer& agents, gui::AutomatsLayer& automats, DrawerLayer& drawer, PreferencesDialog& preferences, const Profile_ABC& profile, Publisher_ABC& publisher )
 {
     Layer_ABC& missionsLayer        = *new MiscLayer< MissionPanel >( missions );
     Layer_ABC& objectCreationLayer  = *new MiscLayer< ObjectCreationPanel >( objects );
@@ -319,7 +319,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics              = *new MetricsLayer( *glProxy_ );
     Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.tacticalLineFactory_, *glProxy_, profile );
-    Layer_ABC& objectsLayer         = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, publisher );
     Layer_ABC& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& agentKnowledges      = *new AgentKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& populationKnowledges = *new PopulationKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
