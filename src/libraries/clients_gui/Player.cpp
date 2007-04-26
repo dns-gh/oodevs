@@ -18,10 +18,13 @@
 Player::Player()
 {
     if( IsValid() )
-        Start();
-    Melody base;
-    base.SetLights( 1, 1, 1, 4 );
-    Handle( base );
+    {
+        Melody base;
+        base.SetLights( 1, 1, 1, 4 );
+        Handle( base );
+    }
+    else
+        Terminate();
 }
 
 // -----------------------------------------------------------------------------

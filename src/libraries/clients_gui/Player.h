@@ -14,7 +14,6 @@
 #include "tools/win32/XPSLights.h"
 #include "Melody.h"
 
-
 // =============================================================================
 /** @class  Player
     @brief  Player
