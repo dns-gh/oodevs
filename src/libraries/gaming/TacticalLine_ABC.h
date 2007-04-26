@@ -19,6 +19,7 @@
 namespace kernel
 {
     class GlTools_ABC;
+    class Location_ABC;
 }
 
 namespace xml
@@ -78,7 +79,7 @@ protected:
     //! @name Helpers
     //@{
     void WriteGeometry( ASN1T_Line& line ) const;
-    void WriteGeometry( T_PointVector& points ) const;
+    void WriteGeometry( kernel::Location_ABC& location ) const;
     void WriteDiffusion( ASN1T_TacticalLinesDiffusion& diffusion ) const;
     virtual void UpdateToSim( E_State state ) = 0;
     template< typename Message >

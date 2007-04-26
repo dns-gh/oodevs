@@ -18,6 +18,7 @@ namespace kernel
 {
     class TacticalLine_ABC;
     class OrderParameter;
+    class CoordinateConverter_ABC;
 }
 
 class Lima;
@@ -38,7 +39,7 @@ class ParamLimaList : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLimaList( QObject* parent, const kernel::OrderParameter& parameter );
+             ParamLimaList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ParamLimaList();
     //@}
 
@@ -79,6 +80,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::CoordinateConverter_ABC& converter_;
     const kernel::OrderParameter& parameter_;
     QListView* list_;
     QPopupMenu* pPopupMenu_;

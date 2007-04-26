@@ -147,9 +147,9 @@ void Limit::CopyTo( ASN1T_Line& destination ) const
 
 // -----------------------------------------------------------------------------
 // Name: Limit::CopyTo
-// Created: SBO 2007-04-16
+// Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-void Limit::CopyTo( T_PointVector& points ) const
+void Limit::CopyTo( kernel::Location_ABC& location ) const
 {
-    WriteGeometry( points );
+    WriteGeometry( location );
 }

@@ -21,11 +21,11 @@ using namespace kernel;
 // Name: ParamLimits constructor
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-ParamLimits::ParamLimits( QObject* parent, const kernel::OrderParameter& parameter )
+ParamLimits::ParamLimits( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter )
     : Param_ABC( parameter.GetName() )
     , parameter_( parameter )
-    , limit1_( new LimitParameter( parent, parent->tr( "Limit 1" ), parameter.IsOptional() ) )
-    , limit2_( new LimitParameter( parent, parent->tr( "Limit 2" ), parameter.IsOptional() ) )
+    , limit1_( new LimitParameter( parent, parent->tr( "Limit 1" ), converter, parameter.IsOptional() ) )
+    , limit2_( new LimitParameter( parent, parent->tr( "Limit 2" ), converter, parameter.IsOptional() ) )
 {
     // NOTHING
 }

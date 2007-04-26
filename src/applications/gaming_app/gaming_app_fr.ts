@@ -1273,6 +1273,10 @@
         <source>Add %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Lima %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ParamListView</name>

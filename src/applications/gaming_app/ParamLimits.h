@@ -15,6 +15,7 @@
 namespace kernel
 {
     class OrderParameter;
+    class CoordinateConverter_ABC;
 }
 
 class LimitParameter;
@@ -31,7 +32,7 @@ class ParamLimits : public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLimits( QObject* parent, const kernel::OrderParameter& parameter );
+             ParamLimits( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ParamLimits();
     //@}
 

@@ -19,6 +19,7 @@
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class Location_ABC;
 }
 
 class TacticalLine_ABC;
@@ -56,7 +57,7 @@ public:
     virtual void SerializeAttributes( xml::xostream& ) const;
 
     void WriteGeometry( ASN1T_Line& line ) const; // $$$$ SBO 2006-11-06: void Accept( PositionVisitor_ABC& ) or something...
-    void WriteGeometry( T_PointVector& points ) const;
+    void WriteGeometry( kernel::Location_ABC& location ) const;
     //@}
 
 private:

@@ -7,33 +7,33 @@
 //
 // *****************************************************************************
 
-#ifndef __ActionParameterLimit_h_
-#define __ActionParameterLimit_h_
+#ifndef __ActionParameterLima_h_
+#define __ActionParameterLima_h_
 
+#include "ActionParameter.h"
 #include "game_asn/Asn.h"
-#include "ActionParameter_ABC.h"
 
 namespace kernel
 {
-    class CoordinateConverter_ABC;
     class Location_ABC;
+    class CoordinateConverter_ABC;
 }
 
 // =============================================================================
-/** @class  ActionParameterLimit
-    @brief  ActionParameterLimit
+/** @class  ActionParameterLima
+    @brief  ActionParameterLima
 */
-// Created: SBO 2007-04-13
+// Created: SBO 2007-04-26
 // =============================================================================
-class ActionParameterLimit : public ActionParameter_ABC
+class ActionParameterLima : public ActionParameter< QString >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterLimit( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Line& line );
-             ActionParameterLimit( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
-    virtual ~ActionParameterLimit();
+             ActionParameterLima( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, const QString& functions );
+             ActionParameterLima( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_LimaOrder& asn );
+    virtual ~ActionParameterLima();
     //@}
 
     //! @name Operations
@@ -44,8 +44,8 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    ActionParameterLimit( const ActionParameterLimit& );            //!< Copy constructor
-    ActionParameterLimit& operator=( const ActionParameterLimit& ); //!< Assignment operator
+    ActionParameterLima( const ActionParameterLima& );            //!< Copy constructor
+    ActionParameterLima& operator=( const ActionParameterLima& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -54,4 +54,4 @@ private:
     //@}
 };
 
-#endif // __ActionParameterLimit_h_
+#endif // __ActionParameterLima_h_

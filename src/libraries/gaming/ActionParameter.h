@@ -40,6 +40,7 @@ public:
     //@{
     virtual bool IsContext() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void Serialize( xml::xostream& xos ) const;
     void SetValue( const T& value );
     const T& GetValue() const;
     //@}
@@ -49,11 +50,6 @@ private:
     //@{
     ActionParameter( const ActionParameter& );            //!< Copy constructor
     ActionParameter& operator=( const ActionParameter& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:

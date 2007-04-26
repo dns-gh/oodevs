@@ -85,12 +85,12 @@ void TacticalLine_ABC::WriteGeometry( ASN1T_Line& line ) const
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC::WriteGeometry
-// Created: SBO 2007-04-16
+// Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::WriteGeometry( T_PointVector& points ) const
+void TacticalLine_ABC::WriteGeometry( kernel::Location_ABC& location ) const
 {
     // $$$$ SBO 2006-11-06: visitor or something
-    static_cast< const TacticalLinePositions& >( Get< kernel::Positions >() ).WriteGeometry( points );
+    static_cast< const TacticalLinePositions& >( Get< kernel::Positions >() ).WriteGeometry( location );
 }
 
 // -----------------------------------------------------------------------------

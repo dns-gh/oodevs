@@ -35,30 +35,11 @@ public:
     virtual ~ActionParameterLimaList();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    void AddLima( const T_PointVector& points, const QString& function );
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
     ActionParameterLimaList( const ActionParameterLimaList& );            //!< Copy constructor
     ActionParameterLimaList& operator=( const ActionParameterLimaList& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    typedef std::pair< T_PointVector, QString > T_Lima;
-    typedef std::vector< T_Lima > T_Limas;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    T_Limas limas_;
-    geometry::Rectangle2f boundingBox_;
     //@}
 };
 

@@ -13,9 +13,11 @@
 #include "gaming/Lima.h"
 #include "gaming/Tools.h"
 #include "gaming/ActionParameterLimaList.h"
+#include "gaming/ActionParameterLima.h"
 #include "gaming/Action_ABC.h"
 #include "clients_gui/ValuedListItem.h"
 #include "clients_kernel/OrderParameter.h"
+#include "clients_kernel/Lines.h"
 #include "game_asn/Asn.h"
 
 using namespace gui;
@@ -24,9 +26,10 @@ using namespace gui;
 // Name: ParamLimaList constructor
 // Created: SBO 2006-11-14
 // ----------------------------------------------------------------------------
-ParamLimaList::ParamLimaList( QObject* parent, const kernel::OrderParameter& parameter )
+ParamLimaList::ParamLimaList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter )
     : QObject    ( parent )
     , Param_ABC  ( parameter.GetName() )
+    , converter_ ( converter )
     , parameter_ ( parameter )
     , list_      ( 0 )
     , potential_ ( 0 )
@@ -129,16 +132,17 @@ void ParamLimaList::CommitTo( Action_ABC& action ) const
     std::auto_ptr< ActionParameterLimaList > param( new ActionParameterLimaList( parameter_ ) );
     ValuedListItem* item = (ValuedListItem*)( list_->firstChild() );
     QStringList functions;
+    unsigned int i = 0;
     while( item )
     {
         const Lima* lima = item->GetValue< const Lima >();
-        T_PointVector points;
-        lima->CopyTo( points );
-        param->AddLima( points, item->text( 1 ) );
-        functions.append( item->text( 1 ) );
+        if( !lima )
+            throw std::runtime_error( "Invalid lima" );
+        kernel::Lines lines;
+        lima->CopyTo( lines );
+        param->AddParameter( *new ActionParameterLima( tr( "Lima %1" ).arg( ++i ), converter_, lines, item->text( 1 ) ) );
         item = (ValuedListItem*)( item->nextSibling() );
     }
-    param->SetValue( functions.join( "," ) );
     action.AddParameter( *param.release() );
 }
 

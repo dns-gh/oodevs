@@ -12,6 +12,7 @@
 #include "TacticalLine_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Location_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -170,11 +171,12 @@ void TacticalLinePositions::WriteGeometry( ASN1T_Line& line ) const
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLinePositions::WriteGeometry
-// Created: SBO 2007-04-16
+// Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-void TacticalLinePositions::WriteGeometry( T_PointVector& points ) const
+void TacticalLinePositions::WriteGeometry( kernel::Location_ABC& location ) const
 {
-    points = pointList_;
+    for( CIT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
+        location.AddPoint( *it );
 }
 
 // -----------------------------------------------------------------------------

@@ -138,11 +138,11 @@ void Lima::CopyTo( ASN1T_Line& destination ) const
 
 // -----------------------------------------------------------------------------
 // Name: Lima::CopyTo
-// Created: SBO 2007-04-16
+// Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-void Lima::CopyTo( T_PointVector& points ) const
+void Lima::CopyTo( kernel::Location_ABC& location ) const
 {
-    WriteGeometry( points );
+    WriteGeometry( location );
 }
 
 // -----------------------------------------------------------------------------

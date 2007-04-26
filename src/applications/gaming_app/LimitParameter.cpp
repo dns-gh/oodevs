@@ -14,14 +14,16 @@
 #include "gaming/ActionParameterLimit.h"
 #include "gaming/Action_ABC.h"
 #include "clients_gui/RichLabel.h"
+#include "clients_kernel/Lines.h"
 
 // -----------------------------------------------------------------------------
 // Name: LimitParameter constructor
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-LimitParameter::LimitParameter( QObject* parent, const QString& name, bool optional )
+LimitParameter::LimitParameter( QObject* parent, const QString& name, const kernel::CoordinateConverter_ABC& converter, bool optional )
     : QObject   ( parent )
     , Param_ABC ( name )
+    , converter_( converter )
     , pLabel_   ( 0 )
     , potential_( 0 )
     , selected_ ( 0 )
@@ -174,8 +176,8 @@ void LimitParameter::CommitTo( ActionParameter_ABC& parameter ) const
 {
     if( !selected_ )
         return;
-    T_PointVector points;
-    selected_->CopyTo( points );
-    std::auto_ptr< ActionParameterLimit > param( new ActionParameterLimit( GetName(), points ) );
+    kernel::Lines lines;
+    selected_->CopyTo( lines );
+    std::auto_ptr< ActionParameterLimit > param( new ActionParameterLimit(GetName(), converter_, lines ) );
     parameter.AddParameter( *param.release() );
 }

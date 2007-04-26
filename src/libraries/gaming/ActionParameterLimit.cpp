@@ -9,9 +9,7 @@
 
 #include "gaming_pch.h"
 #include "ActionParameterLimit.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
+#include "ActionParameterLocation.h"
 #include "xeumeuleu/xml.h"
 #include "Tools.h"
 
@@ -24,25 +22,17 @@ using namespace xml;
 ActionParameterLimit::ActionParameterLimit( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Line& line )
     : ActionParameter_ABC( name )
 {
-    points_.reserve( line.vecteur_point.n );
-    for( unsigned int i = 0; i < line.vecteur_point.n; ++i )
-    {
-        const geometry::Point2f point = converter.ConvertToXY( line.vecteur_point.elem[i] );
-        points_.push_back( point );
-        boundingBox_.Incorporate( point );
-    }
+    AddParameter( *new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, (const ASN1T_Localisation&)line ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterLimit constructor
-// Created: SBO 2007-04-24
+// Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-ActionParameterLimit::ActionParameterLimit( const QString& name, const T_PointVector& points )
+ActionParameterLimit::ActionParameterLimit( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location )
     : ActionParameter_ABC( name )
-    , points_( points )
 {
-    for( unsigned int i = 0; i < points_.size(); ++i )
-        boundingBox_.Incorporate( points_[i] );
+    AddParameter( *new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, location ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,21 +45,6 @@ ActionParameterLimit::~ActionParameterLimit()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionParameterLimit::Draw
-// Created: SBO 2007-04-13
-// -----------------------------------------------------------------------------
-void ActionParameterLimit::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
-{
-    if( viewport.IsVisible( boundingBox_ ) && !points_.empty() )
-    {
-        glPushAttrib( GL_LINE_BIT );
-        glLineWidth( 3.f );
-        tools.DrawLines( points_ );
-        glPopAttrib();
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: ActionParameterLimit::Serialize
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
@@ -77,11 +52,6 @@ void ActionParameterLimit::Serialize( xml::xostream& xos ) const
 {
     ActionParameter_ABC::Serialize( xos );
     xos << attribute( "type", "limit" );
-    for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
-        xos << start( "point" )
-                << attribute( "x", it->X() )
-                << attribute( "y", it->Y() )
-            << end();
 }
 
 // -----------------------------------------------------------------------------

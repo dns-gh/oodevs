@@ -18,6 +18,7 @@
 namespace kernel
 {
     class TacticalLine_ABC;
+    class CoordinateConverter_ABC;
 }
 
 namespace gui
@@ -45,7 +46,7 @@ class LimitParameter : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitParameter( QObject* pParent, const QString& name, bool optional );
+             LimitParameter( QObject* pParent, const QString& name, const kernel::CoordinateConverter_ABC& converter, bool optional );
     virtual ~LimitParameter();
     //@}
 
@@ -84,6 +85,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::CoordinateConverter_ABC& converter_;
     gui::RichLabel* pLabel_;
     QLabel*         entityLabel_; // $$$$ AGE 2006-03-14: LabelDisplayer ?
     const Limit*    potential_;
