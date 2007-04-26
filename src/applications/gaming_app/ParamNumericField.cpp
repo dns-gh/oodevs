@@ -123,9 +123,18 @@ void ParamNumericField::CommitTo( Action_ABC& action ) const
 {
     if( !parameter_ )
         throw std::runtime_error( "OrderParameter not defined" ); // $$$$ SBO 2007-04-25: 
-    std::auto_ptr< ActionParameter< float > > param( new ActionParameter< float >( *parameter_ ) );
-    param->SetValue( pEdit_->text().toFloat() );
+    std::auto_ptr< ActionParameter< float > > param( new ActionParameter< float >( *parameter_, pEdit_->text().toFloat() ) );
     action.AddParameter( *param.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamNumericField::CommitTo
+// Created: SBO 2007-04-26
+// -----------------------------------------------------------------------------
+void ParamNumericField::CommitTo( ActionParameter_ABC& parameter ) const
+{
+    std::auto_ptr< ActionParameter< float > > param( new ActionParameter< float >( GetName(), pEdit_->text().toFloat() ) );
+    parameter.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

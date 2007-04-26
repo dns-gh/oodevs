@@ -30,22 +30,8 @@ Location::Location( const kernel::CoordinateConverter_ABC& converter, const ASN1
     {
         points_.reserve( asn.vecteur_point.n );
         for( unsigned int i = 0; i < asn.vecteur_point.n; ++i )
-            AddPoint( converter_.ConvertToXY( asn.vecteur_point.elem[i] ) );
+            PushBack( converter_.ConvertToXY( asn.vecteur_point.elem[i] ) );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Location constructor
-// Created: SBO 2007-04-25
-// -----------------------------------------------------------------------------
-Location::Location( const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn, const geometry::Point2f& start )
-    : converter_( converter )
-    , type_( asn.type )
-{
-    points_.reserve( asn.vecteur_point.n + 1 );
-    AddPoint( start );
-    for( unsigned int i = 0; i < asn.vecteur_point.n; ++i )
-        AddPoint( converter_.ConvertToXY( asn.vecteur_point.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +61,7 @@ void Location::VisitLines( const T_PointVector& points )
 {
     type_ = EnumTypeLocalisation::line;
     for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
-        AddPoint( *it );
+        PushBack( *it );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +72,7 @@ void Location::VisitPolygon( const T_PointVector& points )
 {
     type_ = EnumTypeLocalisation::polygon;
     for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
-        AddPoint( *it );
+        PushBack( *it );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,8 +82,8 @@ void Location::VisitPolygon( const T_PointVector& points )
 void Location::VisitCircle( const geometry::Point2f& center, float radius )
 {
     type_ = EnumTypeLocalisation::circle;
-    AddPoint( center );
-    AddPoint( geometry::Point2f( center.X(), center.Y() + radius ) );
+    PushBack( center );
+    PushBack( geometry::Point2f( center.X(), center.Y() + radius ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,14 +93,24 @@ void Location::VisitCircle( const geometry::Point2f& center, float radius )
 void Location::VisitPoint( const geometry::Point2f& point )
 {
     type_ = EnumTypeLocalisation::point;
-    AddPoint( point );
+    PushBack( point );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Location::AddPoint
+// Name: Location::PushFront
+// Created: SBO 2007-04-26
+// -----------------------------------------------------------------------------
+void Location::PushFront( const geometry::Point2f& point )
+{
+    points_.insert( points_.begin(), point );
+    boundingBox_.Incorporate( point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Location::PushBack
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-void Location::AddPoint( const geometry::Point2f& point )
+void Location::PushBack( const geometry::Point2f& point )
 {
     points_.push_back( point );
     boundingBox_.Incorporate( point );
@@ -155,11 +151,13 @@ void Location::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC&
 
     const bool selected = tools.Select( false );
     tools.Select( selected );
+    GLfloat color[4];
+    glGetFloatv( GL_CURRENT_COLOR, color );
     glPushAttrib( GL_LINE_BIT );
     if( selected )
     {
         glPushAttrib( GL_CURRENT_BIT );
-        glColor4f( 0, 0, 0, 0.5f );
+        glColor4f( 0, 0, 0, color[3] * 0.5f );
         glLineWidth( 6.f );
         Draw( tools );
         glPopAttrib();

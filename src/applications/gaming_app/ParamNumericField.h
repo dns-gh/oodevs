@@ -23,6 +23,8 @@ namespace gui
     class RichLabel;
 }
 
+class ActionParameter_ABC;
+
 // =============================================================================
 /** @class  ParamNumericField
     @brief  ParamNumericField
@@ -48,9 +50,11 @@ public:
 
     virtual bool CheckValidity();
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    void CommitTo( ASN1REAL& asn ) const;
-    void SetLimits( float min, float max );
     virtual void CommitTo( Action_ABC& action ) const;
+    void CommitTo( ASN1REAL& asn ) const;
+    void CommitTo( ActionParameter_ABC& parameter ) const;
+
+    void SetLimits( float min, float max );
     //@}
 
 private:

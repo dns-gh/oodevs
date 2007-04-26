@@ -13,6 +13,16 @@
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterObstacleList constructor
+// Created: SBO 2007-04-26
+// -----------------------------------------------------------------------------
+ActionParameterObstacleList::ActionParameterObstacleList( const kernel::OrderParameter& parameter )
+    : ActionParameter< QString >( parameter )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterObstacleList constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
 ActionParameterObstacleList::ActionParameterObstacleList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const ASN1T_ListMissionGenObject& asn )

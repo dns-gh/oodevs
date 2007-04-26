@@ -16,6 +16,7 @@
 #include "ActionParameterDirection.h"
 #include "ActionParameterLocation.h"
 #include "ActionParameterLocationList.h"
+#include "ActionParameterPath.h"
 #include "Model.h"
 #include "StaticModel.h"
 #include "AgentsModel.h"
@@ -71,7 +72,7 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::Orde
     case T_MissionParameter_value_gDH:
         break;
     case T_MissionParameter_value_itineraire:
-        return new ActionParameterLocation( parameter, converter_, *asn.value.u.itineraire, entity );
+        return new ActionParameterPath( parameter, converter_, *asn.value.u.itineraire, entity );
     case T_MissionParameter_value_knowledgeAgent:
     case T_MissionParameter_value_knowledgeObject:
     case T_MissionParameter_value_knowledgePopulation:

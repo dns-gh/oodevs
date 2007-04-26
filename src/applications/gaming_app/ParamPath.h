@@ -32,6 +32,8 @@ namespace gui
     class RichLabel;
 }
 
+class ActionParameter_ABC;
+
 // =============================================================================
 /** @class  ParamPath
     @brief  ParamPath
@@ -65,6 +67,7 @@ public:
     virtual void Handle( kernel::Location_ABC& location );
     void CommitTo( ASN1T_Itineraire& destination ) const;
     virtual void CommitTo( Action_ABC& action ) const;
+    virtual void CommitTo( ActionParameter_ABC& parameter ) const;
     //@}
 
 private slots:
@@ -86,7 +89,7 @@ private:
     const kernel::OrderParameter* parameter_;
     const kernel::CoordinateConverter_ABC& converter_;
     gui::ParametersLayer& layer_;
-    const kernel::Positions& positions_;
+    const kernel::Entity_ABC& entity_;
     gui::RichLabel*       pLabel_;
     QLabel*               pPosLabel_;
     kernel::Location_ABC* location_;

@@ -10,18 +10,16 @@
 #include "gaming_pch.h"
 #include "ActionParameter_ABC.h"
 #include "xeumeuleu/xml.h"
+#include "Tools.h"
 
 using namespace xml;
-
-unsigned long ActionParameter_ABC::idManager_ = 0; // $$$$ SBO 2007-03-12: real id manager maybe
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameter_ABC constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
 ActionParameter_ABC::ActionParameter_ABC( const QString& name )
-    : id_( idManager_++ )
-    , name_( name )
+    : name_( name )
 {
     // NOTHING
 }
@@ -33,15 +31,6 @@ ActionParameter_ABC::ActionParameter_ABC( const QString& name )
 ActionParameter_ABC::~ActionParameter_ABC()
 {
     DeleteAll();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameter_ABC::GetId
-// Created: SBO 2007-03-12
-// -----------------------------------------------------------------------------
-unsigned long ActionParameter_ABC::GetId() const
-{
-    return id_;
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +60,11 @@ void ActionParameter_ABC::Serialize( xml::xostream& xos ) const
 {
     xos << attribute( "name", name_ );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    {
+        xos << start( "parameter" );
         it->second->Serialize( xos );
+        xos << end();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -81,4 +74,23 @@ void ActionParameter_ABC::Serialize( xml::xostream& xos ) const
 void ActionParameter_ABC::AddParameter( ActionParameter_ABC& parameter )
 {
     Register( Count(), parameter );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter_ABC::IsContext
+// Created: SBO 2007-04-26
+// -----------------------------------------------------------------------------
+bool ActionParameter_ABC::IsContext() const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter_ABC::Display
+// Created: SBO 2007-04-26
+// -----------------------------------------------------------------------------
+void ActionParameter_ABC::Display( kernel::Displayer_ABC& displayer ) const
+{
+    displayer.Item( tools::translate( "ActionParameter", "Action" ) ).Display( GetName() )
+             .Item( tools::translate( "ActionParameter", "Value" ) ).Display( "" );
 }

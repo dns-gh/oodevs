@@ -98,9 +98,19 @@ void EntityParameter< ConcreteEntity >::CommitTo( Action_ABC& action ) const
         return;
     if( !parameter_ )
         throw std::runtime_error( "OrderParameter not set" ); // $$$$ SBO 2007-04-25: 
-    std::auto_ptr< ActionParameter< const ConcreteEntity* > > param( new ActionParameter< const ConcreteEntity* >( *parameter_ ) );
-    param->SetValue( selected_ );
-    action.AddParameter( *param.release() );
+    action.AddParameter( *new ActionParameter< const ConcreteEntity* >( *parameter_, selected_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityParameter::CommitTo
+// Created: SBO 2007-04-26
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void EntityParameter< ConcreteEntity >::CommitTo( ActionParameter_ABC& parameter ) const
+{
+    if( !selected_ )
+        return;
+    parameter.AddParameter( *new ActionParameter< const ConcreteEntity* >( GetName(), selected_ ) );
 }
 
 // -----------------------------------------------------------------------------

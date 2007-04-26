@@ -170,6 +170,16 @@ void ParamLocation::CommitTo( Action_ABC& action ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParamLocation::CommitTo
+// Created: SBO 2007-04-26
+// -----------------------------------------------------------------------------
+void ParamLocation::CommitTo( ActionParameter_ABC& parameter ) const
+{
+    std::auto_ptr< ActionParameterLocation > param( new ActionParameterLocation( GetName(), converter_, *location_ ) );
+    parameter.AddParameter( *param.release() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParamLocation::Handle
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------

@@ -10,13 +10,16 @@
 #include "gaming_app_pch.h"
 #include "ParamPathList.h"
 #include "moc_ParamPathList.cpp"
+#include "ParamPath.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "ParamPath.h"
 #include "clients_gui/ValuedListItem.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/OrderParameter.h"
+#include "gaming/Action_ABC.h"
+#include "gaming/ActionParameterPath.h"
+#include "gaming/ActionParameterLocationList.h"
 
 using namespace kernel;
 using namespace gui;
@@ -121,6 +124,22 @@ void ParamPathList::Clean( ASN1T_MissionParameter& asn ) const
         delete[] asn.value.u.listItineraire->elem;
     }
     delete asn.value.u.listItineraire;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPathList::CommitTo
+// Created: SBO 2007-04-26
+// -----------------------------------------------------------------------------
+void ParamPathList::CommitTo( Action_ABC& action ) const
+{
+    std::auto_ptr< ActionParameterLocationList > param( new ActionParameterLocationList( parameter_ ) );
+    QListViewItemIterator it( list_->ListView() );
+    for( unsigned int i = 0; it.current(); ++it, ++i )
+    {
+        ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
+        item->GetValue< ParamPath >()->CommitTo( *param );
+    }
+    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

@@ -18,6 +18,8 @@
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Resolver.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "gaming/Action_ABC.h"
+#include "gaming/ActionParameterObstacle.h"
 
 #include "ENT/ENT_Tr.h"
 
@@ -211,9 +213,48 @@ void ParamObstacle::CommitTo( Action_ABC& action ) const
 {
     if( ! parameter_ )
         throw std::runtime_error( "OrderParameter not defined" ); // $$$$ SBO 2007-04-25: 
-    std::auto_ptr< ActionParameter< QString > > param( new ActionParameter< QString >( *parameter_ ) );
-    param->SetValue( typeCombo_->GetValue()->GetName() ); // $$$$ SBO 2007-03-19: create Object displayer
+    const kernel::ObjectType* type = typeCombo_->GetValue();
+    if( !type ) // $$$$ SBO 2007-04-26: 
+        return;
+    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterObstacle( *parameter_, *type ) );
+    location_->CommitTo( *param );
+    switch( type->id_ )
+    {
+    case EnumObjectType::zone_minee_lineaire:
+    case EnumObjectType::zone_minee_par_dispersion:
+        density_->CommitTo( *param );
+        break;
+    case EnumObjectType::camp_prisonniers:
+    case EnumObjectType::camp_refugies:
+        tc2_->CommitTo( *param );
+        break;
+    };
     action.AddParameter( *param.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::CommitTo
+// Created: SBO 2007-04-26
+// -----------------------------------------------------------------------------
+void ParamObstacle::CommitTo( ActionParameter_ABC& parameter ) const
+{
+    const kernel::ObjectType* type = typeCombo_->GetValue();
+    if( !type ) // $$$$ SBO 2007-04-26: 
+        return;
+    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterObstacle( GetName(), *type ) );
+    location_->CommitTo( *param );
+    switch( type->id_ )
+    {
+    case EnumObjectType::zone_minee_lineaire:
+    case EnumObjectType::zone_minee_par_dispersion:
+        density_->CommitTo( *param );
+        break;
+    case EnumObjectType::camp_prisonniers:
+    case EnumObjectType::camp_refugies:
+        tc2_->CommitTo( *param );
+        break;
+    };
+    parameter.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

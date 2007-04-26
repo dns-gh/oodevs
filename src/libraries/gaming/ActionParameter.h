@@ -29,6 +29,8 @@ class ActionParameter : public ActionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
+    explicit ActionParameter( const QString& name );
+             ActionParameter( const QString& name, const T& value );
     explicit ActionParameter( const kernel::OrderParameter& parameter );
              ActionParameter( const kernel::OrderParameter& parameter, const T& value );
     virtual ~ActionParameter();
@@ -57,10 +59,34 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::OrderParameter& parameter_;
+    const kernel::OrderParameter* parameter_;
     T value_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter constructor
+// Created: SBO 2007-04-26
+// -----------------------------------------------------------------------------
+template< typename T >
+ActionParameter< T >::ActionParameter( const QString& name )
+    : ActionParameter_ABC( name )
+    , parameter_( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter constructor
+// Created: SBO 2007-04-26
+// -----------------------------------------------------------------------------
+template< typename T >
+ActionParameter< T >::ActionParameter( const QString& name, const T& value )
+    : ActionParameter_ABC( name )
+    , parameter_( 0 )
+{
+    SetValue( value );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameter constructor
@@ -69,7 +95,7 @@ private:
 template< typename T >
 ActionParameter< T >::ActionParameter( const kernel::OrderParameter& parameter )
     : ActionParameter_ABC( parameter.GetName() )
-    , parameter_( parameter )
+    , parameter_( &parameter )
 {
     // NOTHING
 }
@@ -81,7 +107,7 @@ ActionParameter< T >::ActionParameter( const kernel::OrderParameter& parameter )
 template< typename T >
 ActionParameter< T >::ActionParameter( const kernel::OrderParameter& parameter, const T& value )
     : ActionParameter_ABC( parameter.GetName() )
-    , parameter_( parameter )
+    , parameter_( &parameter )
 {
     SetValue( value );
 }
@@ -103,7 +129,7 @@ ActionParameter< T >::~ActionParameter()
 template< typename T >
 bool ActionParameter< T >::IsContext() const
 {
-    return parameter_.IsContext();
+    return parameter_ ? parameter_->IsContext() : false;
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +159,8 @@ const T& ActionParameter< T >::GetValue() const
 template< typename T >
 void ActionParameter< T >::Display( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Item( tools::translate( "ActionParameter", "Action" ) ).Display( GetName() )
+    const QString name = GetName() + ( parameter_ ? QString( " [%1] " ).arg( parameter_->GetType() ) : "" );
+    displayer.Item( tools::translate( "ActionParameter", "Action" ) ).Display( name )
              .Item( tools::translate( "ActionParameter", "Value" ) ).Display( value_ );
 }
 
@@ -145,7 +172,8 @@ template< typename T >
 void ActionParameter< T >::Serialize( xml::xostream& xos ) const
 {
     ActionParameter_ABC::Serialize( xos );
-    xos << xml::attribute( "type", parameter_.GetType() );
+    if( parameter_ )
+        xos << xml::attribute( "type", parameter_->GetType() );
 }
 
 #endif // __ActionParameter_h_

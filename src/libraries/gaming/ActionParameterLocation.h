@@ -15,7 +15,6 @@
 
 namespace kernel
 {
-    class Entity_ABC;
     class OrderParameter;
 }
 
@@ -34,15 +33,14 @@ public:
     //@{
              ActionParameterLocation( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              ActionParameterLocation( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
+             ActionParameterLocation( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn );
              ActionParameterLocation( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn );
-             ActionParameterLocation( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn, const kernel::Entity_ABC& entity );
     virtual ~ActionParameterLocation();
     //@}
 
     //! @name Operations
     //@{
     virtual bool IsContext() const;
-    virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 

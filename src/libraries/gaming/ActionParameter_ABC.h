@@ -40,10 +40,9 @@ public:
 
     //! @name Operations
     //@{
-    unsigned long GetId() const;
     QString GetName() const;
-    virtual bool IsContext() const = 0;
-    virtual void Display( kernel::Displayer_ABC& displayer ) const = 0;
+    virtual bool IsContext() const;
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void Serialize( xml::xostream& xos ) const;
     void AddParameter( ActionParameter_ABC& parameter );
@@ -59,8 +58,6 @@ private:
 private:
     //! @name Member data
     //@{
-    static unsigned long idManager_;
-    unsigned long id_;
     QString name_;
     //@}
 };

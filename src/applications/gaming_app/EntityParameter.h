@@ -91,8 +91,9 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckValidity();
-    void CommitTo( ASN1T_OID& asn ) const;
     virtual void CommitTo( Action_ABC& action ) const;
+    void CommitTo( ASN1T_OID& asn ) const;
+    void CommitTo( ActionParameter_ABC& parameter ) const;
     //@}
 
 private:

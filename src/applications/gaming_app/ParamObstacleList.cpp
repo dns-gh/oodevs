@@ -9,12 +9,12 @@
 #include "gaming_app_pch.h"
 #include "ParamObstacleList.h"
 #include "moc_ParamObstacleList.cpp"
-
 #include "ParamListView.h"
 #include "ParamObstacle.h"
 #include "clients_gui/ValuedListItem.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/OrderParameter.h"
+#include "gaming/ActionParameterObstacleList.h"
 
 using namespace kernel;
 using namespace gui;
@@ -26,6 +26,7 @@ using namespace gui;
 ParamObstacleList::ParamObstacleList( QObject* parent, const kernel::OrderParameter& parameter, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter, ActionController& controller )
     : QObject( parent )
     , Param_ABC( parameter.GetName() )
+    , parameter_( parameter )
     , converter_( converter )
     , controller_( controller )
     , objectTypes_( objectTypes )
@@ -122,7 +123,14 @@ void ParamObstacleList::Clean( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamObstacleList::CommitTo( Action_ABC& action ) const
 {
-
+    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterObstacleList( parameter_ ) );
+    QListViewItemIterator it( list_->ListView() );
+    for( unsigned int i = 0; it.current(); ++it, ++i )
+    {
+        ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
+        item->GetValue< ParamObstacle >()->CommitTo( *param );
+    }
+    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

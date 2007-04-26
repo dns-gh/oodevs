@@ -10,17 +10,42 @@
 #include "gaming_pch.h"
 #include "ActionParameterObstacle.h"
 #include "clients_kernel/ObjectType.h"
+#include "ActionParameterLocation.h"
+#include "Tools.h"
+
+using namespace kernel;
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterObstacle constructor
+// Created: SBO 2007-04-26
+// -----------------------------------------------------------------------------
+ActionParameterObstacle::ActionParameterObstacle( const QString& name, const kernel::ObjectType& type )
+    : ActionParameter< QString >( name, type.GetName() )
+    , type_( type )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterObstacle constructor
+// Created: SBO 2007-04-26
+// -----------------------------------------------------------------------------
+ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& parameter, const ObjectType& type )
+    : ActionParameter< QString >( parameter, type.GetName() )
+    , type_( type )
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterObstacle constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-ActionParameterObstacle::ActionParameterObstacle( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const ASN1T_MissionGenObject& asn )
+ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const ASN1T_MissionGenObject& asn )
     : ActionParameter< QString >( parameter )
-    , LocationPositions( converter )
     , type_( types.Get( asn.type ) )
 {
-    Update( asn.position );
+    AddParameter( *new ActionParameterLocation( tools::translate( "ActionParmater", "Location" ), converter, asn.position ) );
     SetValue( type_.GetName() );
 //    SetParameters( asn );
 }
@@ -38,10 +63,10 @@ ActionParameterObstacle::~ActionParameterObstacle()
 // Name: ActionParameterObstacle::Draw
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-void ActionParameterObstacle::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void ActionParameterObstacle::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    LocationPositions::Draw( where, viewport, tools );
-    type_.Draw( GetPosition(), viewport, tools );
+    ActionParameter< QString >::Draw( where, viewport, tools );
+//    type_.Draw( GetPosition(), viewport, tools ); // $$$$ SBO 2007-04-26: 
 }
 
 // -----------------------------------------------------------------------------

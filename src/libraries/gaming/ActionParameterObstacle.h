@@ -12,7 +12,6 @@
 
 #include "game_asn/Asn.h"
 #include "ActionParameter.h"
-#include "LocationPositions.h"
 #include "clients_kernel/Resolver_ABC.h"
 
 namespace kernel
@@ -28,12 +27,13 @@ namespace kernel
 // Created: SBO 2007-04-16
 // =============================================================================
 class ActionParameterObstacle : public ActionParameter< QString >
-                              , public LocationPositions
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
+             ActionParameterObstacle( const QString& name, const kernel::ObjectType& type );
+             ActionParameterObstacle( const kernel::OrderParameter& parameter, const kernel::ObjectType& type );
              ActionParameterObstacle( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const ASN1T_MissionGenObject& asn );
     virtual ~ActionParameterObstacle();
     //@}
@@ -58,7 +58,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::ObjectType& type_;
+    const kernel::ObjectType& type_;
     //@}
 };
 

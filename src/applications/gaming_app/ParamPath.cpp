@@ -19,7 +19,7 @@
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "gaming/Action_ABC.h"
-#include "gaming/ActionParameterLocation.h"
+#include "gaming/ActionParameterPath.h"
 
 using namespace kernel;
 using namespace gui;
@@ -28,13 +28,13 @@ using namespace gui;
 // Name: ParamPath constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamPath::ParamPath( QObject* parent, const OrderParameter& parameter, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent )
+ParamPath::ParamPath( QObject* parent, const OrderParameter& parameter, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& entity )
     : QObject( parent )
     , Param_ABC( parameter.GetName() )
     , parameter_( &parameter )
     , converter_( converter )
     , layer_( layer )
-    , positions_( agent.Get< Positions >() )
+    , entity_( entity )
     , pLabel_( 0 )
     , location_( 0 )
     , optional_( parameter.IsOptional() )
@@ -46,13 +46,13 @@ ParamPath::ParamPath( QObject* parent, const OrderParameter& parameter, Paramete
 // Name: ParamPath constructor
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-ParamPath::ParamPath( QObject* parent, const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent, bool optional )
+ParamPath::ParamPath( QObject* parent, const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& entity, bool optional )
     : QObject( parent )
     , Param_ABC( name )
     , parameter_( 0 )
     , converter_( converter )
     , layer_( layer )
-    , positions_( agent.Get< Positions >() )
+    , entity_( entity )
     , pLabel_( 0 )
     , location_( 0 )
     , optional_( optional )
@@ -154,8 +154,17 @@ void ParamPath::CommitTo( Action_ABC& action ) const
 {
     if( !parameter_ )
         throw std::runtime_error( "OrderParameter not defined" );
-    std::auto_ptr< ActionParameterLocation > param( new ActionParameterLocation( *parameter_, converter_, *location_ ) );
+    std::auto_ptr< ActionParameterPath > param( new ActionParameterPath( *parameter_, converter_, *location_, entity_ ) );
     action.AddParameter( *param.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPath::CommitTo
+// Created: SBO 2007-04-26
+// -----------------------------------------------------------------------------
+void ParamPath::CommitTo( ActionParameter_ABC& parameter ) const
+{
+    parameter.AddParameter( *new ActionParameterPath( GetName(), converter_, *location_, entity_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,7 +182,7 @@ void ParamPath::NotifyContextMenu( const kernel::Nothing&, ContextMenu& menu )
 // -----------------------------------------------------------------------------
 void ParamPath::StartPath()
 {
-    layer_.StartPath( *this, positions_ );
+    layer_.StartPath( *this, entity_.Get< Positions >() );
 }
 
 // -----------------------------------------------------------------------------

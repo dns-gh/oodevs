@@ -30,7 +30,7 @@ namespace gui
 
 class ParamLocation;
 class ParamNumericField;
-class ParamAgent;
+class ActionParameter;
 
 // =============================================================================
 /** @class  ParamObstacle
@@ -62,6 +62,7 @@ public:
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void BuildInterface( QWidget* parent );
     virtual void CommitTo( Action_ABC& action ) const;
+    void CommitTo( ActionParameter_ABC& parameter ) const;
     //@}
 
 private slots:

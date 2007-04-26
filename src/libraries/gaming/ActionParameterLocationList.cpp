@@ -10,6 +10,8 @@
 #include "gaming_pch.h"
 #include "ActionParameterLocationList.h"
 #include "ActionParameterLocation.h"
+#include "ActionParameterPath.h"
+#include "Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterLocationList constructor
@@ -29,7 +31,7 @@ ActionParameterLocationList::ActionParameterLocationList( const kernel::OrderPar
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new ActionParameterLocation( parameter, converter, asn.elem[i] ) );
+        AddParameter( *new ActionParameterLocation( tools::translate( "ActionParameter", "Location %1" ).arg( i ), converter, asn.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,7 +42,7 @@ ActionParameterLocationList::ActionParameterLocationList( const kernel::OrderPar
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new ActionParameterLocation( parameter, converter, asn.elem[i], entity ) );
+        AddParameter( *new ActionParameterPath( tools::translate( "ActionParameter", "Route %1" ).arg( i ), converter, asn.elem[i], entity ) );
 }
 
 // -----------------------------------------------------------------------------

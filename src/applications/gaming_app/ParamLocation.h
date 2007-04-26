@@ -28,6 +28,8 @@ namespace gui
     class LocationCreator;
 }
 
+class ActionParameter_ABC;
+
 // =============================================================================
 /** @class  ParamLocation
     @brief  ParamLocation
@@ -49,15 +51,15 @@ public:
     virtual void RemoveFromController();
     virtual void RegisterIn( kernel::ActionController& controller );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
+    virtual void BuildInterface( QWidget* parent );
     virtual bool CheckValidity();
     virtual void Handle( kernel::Location_ABC& location );
 
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
-    void CommitTo( ASN1T_Localisation& asn ) const;
     virtual void CommitTo( Action_ABC& action ) const;
-
-    virtual void BuildInterface( QWidget* parent );
+    void CommitTo( ASN1T_Localisation& asn ) const;
+    void CommitTo( ActionParameter_ABC& parameter ) const;
     //@}
 
 private:

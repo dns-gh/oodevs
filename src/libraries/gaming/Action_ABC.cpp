@@ -84,7 +84,7 @@ const kernel::Entity_ABC& Action_ABC::GetEntity() const
 // -----------------------------------------------------------------------------
 void Action_ABC::AddParameter( ActionParameter_ABC& parameter )
 {
-    Register( parameter.GetId(), parameter );
+    Register( Count(), parameter );
     controller_.Update( *this );
 }
 

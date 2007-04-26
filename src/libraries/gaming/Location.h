@@ -33,7 +33,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              Location( const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn );
-             Location( const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn, const geometry::Point2f& start );
              Location( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
     virtual ~Location();
     //@}
@@ -43,6 +42,13 @@ public:
     void Serialize( xml::xostream& xos ) const;
     geometry::Point2f GetPosition() const;
     void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    void PushFront( const geometry::Point2f& point );
+    void PushBack( const geometry::Point2f& point );
     //@}
 
 private:
@@ -58,8 +64,6 @@ private:
     virtual void VisitPolygon( const T_PointVector& points );
     virtual void VisitCircle ( const geometry::Point2f& center, float radius );
     virtual void VisitPoint  ( const geometry::Point2f& point );
-    void Clear();
-    void AddPoint( const geometry::Point2f& point );
     void Draw( const kernel::GlTools_ABC& tools ) const;
     //@}
 
