@@ -53,7 +53,7 @@ bool FragOrderType::IsDefaultOrder() const
 // -----------------------------------------------------------------------------
 bool FragOrderType::IsMissionRequired() const
 {
-    return isWithoutMission_;
+    return !isWithoutMission_;
 }
 
 // -----------------------------------------------------------------------------
