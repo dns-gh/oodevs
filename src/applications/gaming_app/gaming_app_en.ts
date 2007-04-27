@@ -1330,19 +1330,7 @@
 <context>
     <name>ParamPathList</name>
     <message>
-        <source>New route</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Route</source>
+        <source>Route %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

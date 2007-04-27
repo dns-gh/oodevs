@@ -11,8 +11,7 @@
 #define __ParamPathList_h_
 
 #include "game_asn/Asn.h"
-#include "Param_ABC.h"
-#include "ParamListView.h"
+#include "ListParameter.h"
 
 namespace kernel
 {
@@ -25,7 +24,6 @@ namespace kernel
 namespace gui
 {
     class ParametersLayer;
-    class ValuedListItem;
 }
 
 // =============================================================================
@@ -34,9 +32,8 @@ namespace gui
 */
 // Created: SBO 2006-06-28
 // =============================================================================
-class ParamPathList : public QObject, public Param_ABC
+class ParamPathList : public ListParameter
 {
-    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -47,44 +44,31 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool CheckValidity();
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
-    virtual void BuildInterface( QWidget* parent );
-    virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
-private slots:
-    //! @name Slots
+private:
+    //! @name Copy/Assignment
     //@{
-    void OnSelectionChanged( QListViewItem* pItem );
-    void OnRequestPopup( QListViewItem* pItem, const QPoint& pos, int col );
-    void NewPath();
-    void DeleteSelected();
-    void ClearList();
+    ParamPathList( const ParamPathList& );            //!< Copy constructor
+    ParamPathList& operator=( const ParamPathList& ); //!< Assignment operator
     //@}
 
-private:
     //! @name Helpers
     //@{
-    void DeleteItem( QListViewItem& item );
-    bool ChangeSelection();
+    virtual Param_ABC* CreateElement();
     //@}
 
 private:
     //! @name Member data
     //@{
+    const kernel::CoordinateConverter_ABC& converter_;
     const kernel::OrderParameter& parameter_;
     gui::ParametersLayer& layer_;
-    const kernel::CoordinateConverter_ABC& converter_;
-    kernel::ActionController& controller_;
-    const kernel::Entity_ABC& agent_;
-
-    QVBox* box_;
-    ParamListView* list_;
-    gui::ValuedListItem* selected_;
-    QPopupMenu* popup_;
+    const kernel::Entity_ABC& entity_;
+    unsigned int count_;
     //@}
 };
 

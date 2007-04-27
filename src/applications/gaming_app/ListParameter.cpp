@@ -47,10 +47,10 @@ ListParameter::~ListParameter()
 bool ListParameter::CheckValidity()
 {
     if( !list_ || ( !optional_ && !list_->childCount() ) )
-        return false;
+        return Invalid();
     if( selected_ )
         if( Param_ABC* param = static_cast< const ValuedListItem* >( selected_ )->GetValue< Param_ABC >() )
-            return param->CheckValidity();
+            return param->CheckValidity() ? true : Invalid();
     return true;
 }
 
@@ -226,4 +226,26 @@ void ListParameter::Accept( ParamVisitor_ABC& visitor ) const
         ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
         visitor.Visit( *item->GetValue< Param_ABC >() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::Invalid
+// Created: SBO 2007-04-27
+// -----------------------------------------------------------------------------
+bool ListParameter::Invalid()
+{
+    if( list_ )
+        list_->header()->setPaletteForegroundColor( Qt::red );
+    QTimer::singleShot( 3000, this, SLOT( TurnHeaderBlack() ) );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::TurnHeaderBlack
+// Created: SBO 2007-04-27
+// -----------------------------------------------------------------------------
+void ListParameter::TurnHeaderBlack()
+{
+    if( list_ )
+        list_->header()->setPaletteForegroundColor( Qt::black );
 }

@@ -54,6 +54,7 @@ private slots:
     void OnClear();
     void OnRequestPopup( QListViewItem* item, const QPoint& pos );
     void OnSelectionChanged( QListViewItem* item );
+    void TurnHeaderBlack();
     //@}
 
 private:
@@ -68,6 +69,7 @@ private:
     virtual Param_ABC* CreateElement() = 0;
     void DeleteItem( QListViewItem* item );
     void Clear();
+    bool Invalid();
     //@}
 
     //! @name Types
