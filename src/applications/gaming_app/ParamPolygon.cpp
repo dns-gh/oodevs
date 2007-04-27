@@ -19,7 +19,7 @@ using namespace kernel;
 ParamPolygon::ParamPolygon( const OrderParameter& parameter, gui::ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : ParamLocation( parameter, layer, converter )
 {
-    // NOTHING
+    SetShapeFilter( false, false, true, false );
 }
 
 // -----------------------------------------------------------------------------

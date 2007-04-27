@@ -198,21 +198,3 @@ void ParamPath::Handle( Location_ABC& location )
         pPosLabel_->setText( location.GetName() );
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: ParamPath::Show
-// Created: SBO 2007-03-13
-// -----------------------------------------------------------------------------
-void ParamPath::Show()
-{
-    pLabel_->parentWidget()->show();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamPath::Hide
-// Created: SBO 2007-03-13
-// -----------------------------------------------------------------------------
-void ParamPath::Hide()
-{
-    pLabel_->parentWidget()->hide();
-}

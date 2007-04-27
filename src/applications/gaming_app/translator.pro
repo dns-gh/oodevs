@@ -30,7 +30,6 @@ SOURCES         =   AboutDialog.cpp \
                     ParamEquipmentList.cpp \
                     ParamHumanWoundList.cpp \
                     ParamLimaList.cpp \
-                    ParamListView.cpp \
                     ParamLocation.cpp \
                     ParamObstacle.cpp \
                     ParamObstacleList.cpp \

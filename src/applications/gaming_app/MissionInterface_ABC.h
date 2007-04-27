@@ -34,7 +34,7 @@ class MissionInterface_ABC : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionInterface_ABC( QWidget* parent, kernel::Entity_ABC& entity, kernel::ActionController& controller );
+             MissionInterface_ABC( QWidget* parent, const QString& title, kernel::Entity_ABC& entity, kernel::ActionController& controller );
     virtual ~MissionInterface_ABC();
     //@}
 
@@ -93,6 +93,7 @@ private:
     kernel::Entity_ABC& entity_;
     T_Parameters parameters_;
     T_Parameters orderContext_;
+    QVBox* mainWidget_;
     //@}
 };
 

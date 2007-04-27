@@ -9,16 +9,12 @@
 
 #include "gaming_app_pch.h"
 #include "ParamLocationList.h"
-#include "clients_gui/LocationCreator.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/ActionController.h"
-#include "clients_gui/Tools.h"
-#include "clients_kernel/Location_ABC.h"
+#include "ParamLocation.h"
+#include "ParamVisitor_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionParameterLocation.h"
 #include "gaming/ActionParameterLocationList.h"
-#include "LocationSerializer.h"
 
 using namespace kernel;
 using namespace gui;
@@ -27,12 +23,12 @@ using namespace gui;
 // Name: ParamLocationList constructor
 // Created: AGE 2006-04-03
 // -----------------------------------------------------------------------------
-ParamLocationList::ParamLocationList( QObject* parent, const OrderParameter& parameter, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
-    : ParamListView( parent, parameter.GetName() )
-    , parameter_( parameter )
+ParamLocationList::ParamLocationList( QObject* parent, const OrderParameter& parameter, ParametersLayer& layer, const CoordinateConverter_ABC& converter, ActionController& controller )
+    : ListParameter( parent, parameter.GetName(), controller, parameter.IsOptional() )
     , converter_( converter )
-    , creator_( new LocationCreator( this, parameter.GetName(), layer, *this ) )
-    , controller_( 0 )
+    , parameter_( parameter )
+    , layer_( layer )
+    , count_( 0 )
 {
     // NOTHING
 }
@@ -46,46 +42,26 @@ ParamLocationList::~ParamLocationList()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: ParamLocationList::SetShapeFilter
-// Created: SBO 2007-03-15
-// -----------------------------------------------------------------------------
-void ParamLocationList::SetShapeFilter( bool point, bool line, bool polygon, bool circle )
+namespace
 {
-    creator_->Allow( point, line, polygon, circle );
-}
+    class AsnSerializer : public ParamVisitor_ABC
+    {
+    public:
+        AsnSerializer( ASN1T_ListLocalisation& list )
+            : list_( list )
+            , index_( 0 )
+        {}
 
-// -----------------------------------------------------------------------------
-// Name: ParamLocationList::RemoveFromController
-// Created: AGE 2006-04-03
-// -----------------------------------------------------------------------------
-void ParamLocationList::RemoveFromController()
-{
-    if( controller_ )
-        controller_->Remove( *creator_ );
-    Param_ABC::RemoveFromController();
-}
+        virtual void Visit( const Param_ABC& param )
+        {
+            if( index_ < list_.n )
+                static_cast< const ParamLocation& >( param ).CommitTo( list_.elem[index_++] );
+        }
 
-// -----------------------------------------------------------------------------
-// Name: ParamLocationList::RegisterIn
-// Created: AGE 2006-04-03
-// -----------------------------------------------------------------------------
-void ParamLocationList::RegisterIn( ActionController& controller )
-{
-    controller_ = & controller;
-    controller_->Register( *creator_ );
-    Param_ABC::RegisterIn( controller );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLocationList::CheckValidity
-// Created: AGE 2006-04-03
-// -----------------------------------------------------------------------------
-bool ParamLocationList::CheckValidity()
-{
-    if( locations_.empty() && ! parameter_.IsOptional() )
-        return Invalid();
-    return true;
+    private:
+        ASN1T_ListLocalisation& list_;
+        unsigned int index_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -94,9 +70,15 @@ bool ParamLocationList::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamLocationList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    ASN1T_ListLocalisation*& list = asn.value.u.listLocalisation = new ASN1T_ListLocalisation();
     asn.value.t = T_MissionParameter_value_listLocalisation;
-    CommitTo( asn.value.u.listLocalisation );
-    asn.null_value = asn.value.u.listLocalisation->n ? 0 : 1;
+    list->n = Count();
+    asn.null_value = list->n ? 0 : 1;
+    if( asn.null_value )
+        return;
+    list->elem = new ASN1T_Localisation[ list->n ];
+    AsnSerializer serializer( *list );
+    Accept( serializer );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,27 +87,32 @@ void ParamLocationList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamLocationList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    Clean( asn.value.u.listLocalisation );
+    if( asn.value.u.listLocalisation )
+    {
+        for( unsigned int i = 0; i < asn.value.u.listLocalisation->n; ++i )
+            delete[] asn.value.u.listLocalisation->elem[i].vecteur_point.elem;
+        delete[] asn.value.u.listLocalisation->elem;
+    }
+    delete asn.value.u.listLocalisation;
 }
 
-// -----------------------------------------------------------------------------
-// Name: ParamLocationList::CommitTo
-// Created: SBO 2007-03-15
-// -----------------------------------------------------------------------------
-void ParamLocationList::CommitTo( ASN1T_ListLocalisation*& asn ) const
+namespace
 {
-    if( !ListView() )
-        InterfaceNotInitialized();
+    class ActionSerializer : public ParamVisitor_ABC
+    {
+    public:
+        ActionSerializer( ActionParameter_ABC& parent )
+            : parent_( parent )
+        {}
 
-    asn = new ASN1T_ListLocalisation();
-    asn->n = locations_.size();
-    if( asn->n == 0 && parameter_.IsOptional() )
-        return;
+        virtual void Visit( const Param_ABC& param )
+        {
+            static_cast< const ParamLocation& >( param ).CommitTo( parent_ );
+        }
 
-    asn->elem = new ASN1T_Localisation[ asn->n ];
-    LocationSerializer serializer( converter_ );
-    for( unsigned i = 0; i < locations_.size(); ++i )
-        serializer.Serialize( *locations_.at( i ), asn->elem[i] );
+    private:
+        ActionParameter_ABC& parent_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -134,74 +121,17 @@ void ParamLocationList::CommitTo( ASN1T_ListLocalisation*& asn ) const
 // -----------------------------------------------------------------------------
 void ParamLocationList::CommitTo( Action_ABC& action ) const
 {
-    std::auto_ptr< ActionParameterLocationList > param( new ActionParameterLocationList( parameter_ ) );
-    for( unsigned i = 0; i < locations_.size(); ++i )
-        param->AddParameter( *new ActionParameterLocation( tr( "Location %1" ).arg( i ), converter_, *locations_[i] ) );
+    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterLocationList( parameter_ ) );
+    ActionSerializer serializer( *param );
+    Accept( serializer );
     action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamLocationList::Clean
-// Created: SBO 2007-03-15
+// Name: ParamLocationList::CreateElement
+// Created: SBO 2007-04-27
 // -----------------------------------------------------------------------------
-void ParamLocationList::Clean( ASN1T_ListLocalisation*& asn ) const
+Param_ABC* ParamLocationList::CreateElement()
 {
-    if( asn )
-    {
-        for( unsigned int i = 0; i < asn->n; ++i )
-            delete[] asn->elem[i].vecteur_point.elem;
-        delete[] asn->elem;
-    }
-    delete asn;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLocationList::Handle
-// Created: AGE 2006-04-03
-// -----------------------------------------------------------------------------
-void ParamLocationList::Handle( Location_ABC& location )
-{
-    locations_.push_back( &location );
-    new QListViewItem( ListView(), location.GetName() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLocationList::OnDeleteSelectedItem
-// Created: AGE 2006-04-03
-// -----------------------------------------------------------------------------
-void ParamLocationList::OnDeleteSelectedItem()
-{
-    QListViewItem* selected = ListView()->selectedItem();
-    unsigned index = 0;
-    QListViewItem* item = ListView()->firstChild();
-    while( item && item != selected )
-    {
-        ++index;
-        item = item->nextSibling();
-    }
-    if( item == selected && index < locations_.size() )
-    {
-        delete *(locations_.begin() + index);
-        locations_.erase( locations_.begin() + index );
-    }
-    ParamListView::OnDeleteSelectedItem();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLocationList::OnClearList
-// Created: AGE 2006-04-03
-// -----------------------------------------------------------------------------
-void ParamLocationList::OnClearList()
-{
-    ParamListView::OnClearList();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLocationList::Draw
-// Created: SBO 2007-04-24
-// -----------------------------------------------------------------------------
-void ParamLocationList::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const
-{
-    for( T_Locations::const_iterator it = locations_.begin(); it != locations_.end(); ++it )
-        (*it)->Draw( tools );
+    return new ParamLocation( tr( "Location %1" ).arg( ++count_ ), layer_, converter_, false );
 }

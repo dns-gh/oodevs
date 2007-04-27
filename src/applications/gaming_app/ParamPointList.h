@@ -24,7 +24,7 @@ class ParamPointList : public ParamLocationList
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPointList( QObject* parent, const kernel::OrderParameter& parameter, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamPointList( QObject* parent, const kernel::OrderParameter& parameter, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& controller );
     virtual ~ParamPointList();
     //@}
 
@@ -32,6 +32,18 @@ public:
     //@{
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    ParamPointList( const ParamPointList& );            //!< Copy constructor
+    ParamPointList& operator=( const ParamPointList& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual Param_ABC* CreateElement();
     //@}
 };
 

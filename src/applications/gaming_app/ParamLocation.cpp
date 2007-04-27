@@ -33,10 +33,12 @@ ParamLocation::ParamLocation( const OrderParameter& parameter, ParametersLayer& 
     , parameter_ ( &parameter )
     , converter_ ( converter )
     , layer_     ( layer )
+    , creator_   ( 0 )
     , controller_( 0 )
     , pLabel_    ( 0 )
     , location_  ( 0 )
     , optional_  ( parameter.IsOptional() )
+    , filter_    ( true, true, true, true )
 {
     // NOTHING
 }
@@ -50,10 +52,12 @@ ParamLocation::ParamLocation( const QString& name, gui::ParametersLayer& layer, 
     , parameter_ ( 0 )
     , converter_ ( converter )
     , layer_     ( layer )
+    , creator_   ( 0 )
     , controller_( 0 )
     , pLabel_    ( 0 )
     , location_  ( 0 )
     , optional_  ( optional )
+    , filter_    ( true, true, true, true )
 {
     // NOTHING
 }
@@ -81,6 +85,7 @@ void ParamLocation::BuildInterface( QWidget* parent )
     pShapeLabel_->setAlignment( Qt::AlignCenter );
     pShapeLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
     creator_ = new LocationCreator( box, GetName(), layer_, *this );
+    SetShapeFilter( filter_.point_, filter_.line_, filter_.polygon_, filter_.circle_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -191,6 +196,17 @@ void ParamLocation::Handle( Location_ABC& location )
         pShapeLabel_->setText( location.GetName() );
     else
         pShapeLabel_->setText( "---" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocation::SetShapeFilter
+// Created: SBO 2007-04-27
+// -----------------------------------------------------------------------------
+void ParamLocation::SetShapeFilter( bool point, bool line, bool polygon, bool circle )
+{
+    filter_ = ShapeFilter( point, line, polygon, circle );
+    if( creator_ )
+        creator_->Allow( point, line, polygon, circle );
 }
 
 // -----------------------------------------------------------------------------

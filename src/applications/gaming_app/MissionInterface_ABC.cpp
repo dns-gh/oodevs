@@ -14,6 +14,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "icons.h"
 
 using namespace kernel;
 
@@ -21,13 +22,21 @@ using namespace kernel;
 // Name: MissionInterface_ABC constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, Entity_ABC& entity, ActionController& controller )
+MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const QString& title, Entity_ABC& entity, ActionController& controller )
     : QVBox      ( parent )
     , controller_( controller )
     , entity_    ( entity )
 {
-    setMargin( 5 );
-    setSpacing( 4 );
+    setMinimumSize( 250, 250 ); // $$$$ SBO 2007-04-27: 
+    CreateTitle( title );
+    QScrollView* sc = new QScrollView( this );
+    sc->setVScrollBarMode( QScrollView::AlwaysOn );
+    sc->setResizePolicy( QScrollView::AutoOneFit );
+    mainWidget_ = new QVBox( sc->viewport() );
+    mainWidget_->setMargin( 5 );
+    mainWidget_->setSpacing( 5 );
+    sc->addChild( mainWidget_ );
+    CreateOkCancelButtons();
 }
 
 // -----------------------------------------------------------------------------
@@ -84,12 +93,17 @@ const kernel::Entity_ABC& MissionInterface_ABC::GetEntity() const
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateTitle( const QString& title )
 {
-    QLabel* label = new QLabel( title, this );
-    label->setFrameStyle( QFrame::Box | QFrame::Sunken );
-    label->setAlignment( Qt::AlignCenter );
+    QHBox* box = new QHBox( this );
+    box->setPaletteBackgroundColor( Qt::white );
+    box->setFixedHeight( 32 );
+    QLabel* label = new QLabel( " " + title, box );
     QFont font = label->font();
     font.setBold( true );
+    font.setPixelSize( 16 );
     label->setFont( font );
+    label = new QLabel( box );
+    label->setPixmap( MAKE_PIXMAP( mission_title ) );
+    label->setAlignment( Qt::AlignRight );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,13 +112,17 @@ void MissionInterface_ABC::CreateTitle( const QString& title )
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateOkCancelButtons()
 {
-    QHBox* pBox = new QHBox( this );
-    QPushButton* pOk = new QPushButton( tr( "Ok" ), pBox );
-    QPushButton* pCancel = new QPushButton( tr( "Cancel" ), pBox );
-    pOk->setDefault( true );
+    QHBox* box = new QHBox( this );
+    box->setMargin( 5 );
+    box->setSpacing( 5 );
+    box->layout()->setAlignment( Qt::AlignRight );
+    QPushButton* ok = new QPushButton( tr( "Ok" ), box );
+    QPushButton* cancel = new QPushButton( tr( "Cancel" ), box );
+    ok->setDefault( true );
+    ok->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
 
-    connect( pOk, SIGNAL( clicked() ), this, SLOT( OnOk() ) );
-    connect( pCancel, SIGNAL( clicked() ), parent(), SLOT( hide() ) );
+    connect( ok, SIGNAL( clicked() ), SLOT( OnOk() ) );
+    connect( cancel, SIGNAL( clicked() ), parent(), SLOT( hide() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,7 +132,7 @@ void MissionInterface_ABC::CreateOkCancelButtons()
 void MissionInterface_ABC::AddParameter( Param_ABC& parameter )
 {
     parameters_.push_back( &parameter );
-    parameter.BuildInterface( this );
+    parameter.BuildInterface( mainWidget_ );
     parameter.RegisterIn( controller_ );
 }
 
@@ -125,7 +143,7 @@ void MissionInterface_ABC::AddParameter( Param_ABC& parameter )
 void MissionInterface_ABC::AddOrderContext( Param_ABC& parameter )
 {
     orderContext_.push_back( &parameter );
-    parameter.BuildInterface( this );
+    parameter.BuildInterface( mainWidget_ );
     parameter.RegisterIn( controller_ );
 }
 

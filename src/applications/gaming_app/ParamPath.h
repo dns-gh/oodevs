@@ -61,8 +61,6 @@ public:
     virtual bool CheckValidity();
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
-    virtual void Show();
-    virtual void Hide();
     virtual void NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& );
     virtual void Handle( kernel::Location_ABC& location );
     void CommitTo( ASN1T_Itineraire& destination ) const;

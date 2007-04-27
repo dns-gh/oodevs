@@ -10,6 +10,8 @@
 #ifndef __statusicons_h_
 #define __statusicons_h_
 
+// $$$$ SBO 2007-03-09: non status... rename file
+
 #define DECLARE_ICON( name )   extern const char *xpm_##name[]
 
 DECLARE_ICON( radars_on );
@@ -47,9 +49,8 @@ DECLARE_ICON( stance_engineered );
 DECLARE_ICON( stance_arrow );
 DECLARE_ICON( parent );
 DECLARE_ICON( mission );
+DECLARE_ICON( mission_title );
 DECLARE_ICON( parameter );
-
-// $$$$ SBO 2007-03-09: non status... rename file
 DECLARE_ICON( checkpoint1 );
 DECLARE_ICON( checkpoint2 );
 DECLARE_ICON( checkpoint3 );

@@ -315,7 +315,7 @@ Param_ABC* MissionInterfaceBuilder::BuildPoint( const OrderParameter& parameter 
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildPointList( const OrderParameter& parameter ) const
 {
-    return new ParamPointList( missionInterface_, parameter, layer_, converter_ );
+    return new ParamPointList( missionInterface_, parameter, layer_, converter_, controller_ );
 }
     
 // -----------------------------------------------------------------------------
@@ -333,7 +333,7 @@ Param_ABC* MissionInterfaceBuilder::BuildPolygon( const OrderParameter& paramete
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildPolygonList( const OrderParameter& parameter ) const
 {
-    return new ParamPolygonList( missionInterface_, parameter, layer_, converter_ );
+    return new ParamPolygonList( missionInterface_, parameter, layer_, converter_, controller_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -351,7 +351,7 @@ Param_ABC* MissionInterfaceBuilder::BuildLocation( const OrderParameter& paramet
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildLocationList( const OrderParameter& parameter ) const
 {
-    return new ParamLocationList( missionInterface_, parameter, layer_, converter_ );
+    return new ParamLocationList( missionInterface_, parameter, layer_, converter_, controller_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -24,7 +24,7 @@ class ParamPolygonList : public ParamLocationList
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPolygonList( QObject* parent, const kernel::OrderParameter& parameter, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamPolygonList( QObject* parent, const kernel::OrderParameter& parameter, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& controller );
     virtual ~ParamPolygonList();
     //@}
 
@@ -32,6 +32,18 @@ public:
     //@{
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    ParamPolygonList( const ParamPolygonList& );            //!< Copy constructor
+    ParamPolygonList& operator=( const ParamPolygonList& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual Param_ABC* CreateElement();
     //@}
 };
 

@@ -23,14 +23,12 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 UnitMissionInterface::UnitMissionInterface( QWidget* parent, Entity_ABC& entity, const MissionType& mission, ActionController& controller
                                           , Publisher_ABC& publisher, MissionInterfaceBuilder& builder, ActionsModel& model )
-    : MissionInterface_ABC( parent, entity, controller )
+    : MissionInterface_ABC( parent, mission.GetName(), entity, controller )
     , model_              ( model )
     , publisher_          ( publisher )
     , mission_            ( mission )
 {
-    CreateTitle( mission.GetName() );
     builder.Build( *this, entity, mission );
-    CreateOkCancelButtons();
 }
 
 // -----------------------------------------------------------------------------

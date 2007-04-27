@@ -54,6 +54,7 @@ public:
     virtual void BuildInterface( QWidget* parent );
     virtual bool CheckValidity();
     virtual void Handle( kernel::Location_ABC& location );
+    void SetShapeFilter( bool point, bool line, bool polygon, bool circle );
 
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
@@ -69,6 +70,16 @@ private:
     ParamLocation& operator=( const ParamLocation& );
     //@}
 
+    //! @name Types
+    //@{
+    struct ShapeFilter
+    {
+        ShapeFilter( bool point, bool line, bool polygon, bool circle )
+            : point_( point ), line_( line ), polygon_( polygon ), circle_( circle ) {}
+        bool point_, line_, polygon_, circle_;
+    };
+    //@}
+
 private:
     //! @name Member data
     //@{
@@ -81,6 +92,7 @@ private:
     kernel::Location_ABC* location_;
     kernel::ActionController* controller_; // $$$$ AGE 2006-04-03: sucks
     bool optional_;
+    ShapeFilter filter_;
     //@}
 };
 

@@ -1288,14 +1288,6 @@
 </context>
 <context>
     <name>ParamListView</name>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear list</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ParamObstacle</name>

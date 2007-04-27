@@ -23,14 +23,12 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Entity_ABC& entity, const FragOrderType& fragOrder, ActionController& controller
                                                     , Publisher_ABC& publisher, MissionInterfaceBuilder& builder, ActionsModel& model )
-    : MissionInterface_ABC( parent, entity, controller )
+    : MissionInterface_ABC( parent, fragOrder.GetName(), entity, controller )
     , model_              ( model )
     , publisher_          ( publisher )
     , fragOrder_          ( fragOrder )
 {
-    CreateTitle( fragOrder.GetName() );
     builder.Build( *this, entity, fragOrder );
-    CreateOkCancelButtons();
 }
 
 // -----------------------------------------------------------------------------

@@ -9,6 +9,8 @@
 
 #include "gaming_app_pch.h"
 #include "ParamPolygonList.h"
+#include "ParamLocation.h"
+#include "ParamVisitor_ABC.h"
 
 using namespace kernel;
 
@@ -16,10 +18,10 @@ using namespace kernel;
 // Name: ParamPolygonList constructor
 // Created: SBO 2007-03-15
 // -----------------------------------------------------------------------------
-ParamPolygonList::ParamPolygonList( QObject* parent, const OrderParameter& parameter, gui::ParametersLayer& layer, const CoordinateConverter_ABC& converter )
-    : ParamLocationList( parent, parameter, layer, converter )
+ParamPolygonList::ParamPolygonList( QObject* parent, const OrderParameter& parameter, gui::ParametersLayer& layer, const CoordinateConverter_ABC& converter, ActionController& controller )
+    : ParamLocationList( parent, parameter, layer, converter, controller )
 {
-    SetShapeFilter( false, false, true, false );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,15 +33,43 @@ ParamPolygonList::~ParamPolygonList()
     // NOTHING
 }
 
+namespace
+{
+    class AsnSerializer : public ParamVisitor_ABC
+    {
+    public:
+        AsnSerializer( ASN1T_ListPolygon& list )
+            : list_( list )
+            , index_( 0 )
+        {}
+
+        virtual void Visit( const Param_ABC& param )
+        {
+            if( index_ < list_.n )
+                static_cast< const ParamLocation& >( param ).CommitTo( list_.elem[index_++] );
+        }
+
+    private:
+        ASN1T_ListPolygon& list_;
+        unsigned int index_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: ParamPolygonList::CommitTo
 // Created: SBO 2007-03-15
 // -----------------------------------------------------------------------------
 void ParamPolygonList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    ASN1T_ListPolygon*& list = asn.value.u.listPolygon = new ASN1T_ListPolygon();
     asn.value.t = T_MissionParameter_value_listPolygon;
-    ParamLocationList::CommitTo( (ASN1T_ListLocalisation*&)asn.value.u.listPolygon );
-    asn.null_value = asn.value.u.listPolygon->n ? 0 : 1;
+    list->n = Count();
+    asn.null_value = list->n ? 0 : 1;
+    if( asn.null_value )
+        return;
+    list->elem = new ASN1T_Polygon[ list->n ];
+    AsnSerializer serializer( *list );
+    Accept( serializer );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,5 +78,22 @@ void ParamPolygonList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamPolygonList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    ParamLocationList::Clean( (ASN1T_ListLocalisation*&)asn.value.u.listPolygon );
+    if( asn.value.u.listPolygon )
+    {
+        for( unsigned int i = 0; i < asn.value.u.listPolygon->n; ++i )
+            delete[] asn.value.u.listPolygon->elem[i].vecteur_point.elem;
+        delete[] asn.value.u.listPolygon->elem;
+    }
+    delete asn.value.u.listPolygon;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPolygonList::CreateElement
+// Created: SBO 2007-04-27
+// -----------------------------------------------------------------------------
+Param_ABC* ParamPolygonList::CreateElement()
+{
+    Param_ABC* param = ParamLocationList::CreateElement();
+    static_cast< ParamLocation* >( param )->SetShapeFilter( false, false, true, false );
+    return param;
 }

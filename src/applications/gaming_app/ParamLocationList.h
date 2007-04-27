@@ -11,18 +11,17 @@
 #define __ParamLocationList_h_
 
 #include "game_asn/Asn.h"
-#include "clients_gui/ShapeHandler_ABC.h"
-#include "ParamListView.h"
+#include "ListParameter.h"
 
 namespace kernel
 {
+    class ActionController;
     class CoordinateConverter_ABC;
     class OrderParameter;
 }
 
 namespace gui
 {
-    class LocationCreator;
     class ParametersLayer;
 }
 
@@ -32,39 +31,19 @@ namespace gui
 */
 // Created: AGE 2006-04-03
 // =============================================================================
-class ParamLocationList : public ParamListView, private gui::ShapeHandler_ABC
+class ParamLocationList : public ListParameter
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLocationList( QObject* pParent, const kernel::OrderParameter& parameter, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamLocationList( QObject* parent, const kernel::OrderParameter& parameter, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& controller );
     virtual ~ParamLocationList();
 
     //! @name Operations
     //@{
-    virtual void RemoveFromController();
-    virtual void RegisterIn( kernel::ActionController& controller );
-    virtual void Handle( kernel::Location_ABC& location );
-    virtual bool CheckValidity();
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
     virtual void CommitTo( Action_ABC& action ) const;
-    virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
-    //@}
-
-public:
-    //! @name Slots
-    //@{
-    virtual void OnDeleteSelectedItem();
-    virtual void OnClearList();
-    //@}
-
-protected:
-    //! @name Helpers
-    //@{
-    void CommitTo( ASN1T_ListLocalisation*& asn ) const;
-    void Clean( ASN1T_ListLocalisation*& asn ) const;
-    void SetShapeFilter( bool point, bool line, bool polygon, bool circle );
     //@}
 
 private:
@@ -74,19 +53,19 @@ private:
     ParamLocationList& operator=( const ParamLocationList& ); //!< Assignement operator
     //@}
 
+protected:
     //! @name Types
     //@{
-    typedef std::vector< kernel::Location_ABC* > T_Locations;
+    virtual Param_ABC* CreateElement();
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::OrderParameter& parameter_;
     const kernel::CoordinateConverter_ABC& converter_;
-    gui::LocationCreator* creator_;
-    T_Locations locations_;
-    kernel::ActionController* controller_;
+    const kernel::OrderParameter& parameter_;
+    gui::ParametersLayer& layer_;
+    unsigned int count_;
     //@}
 };
 
