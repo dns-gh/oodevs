@@ -1323,19 +1323,7 @@
 <context>
     <name>ParamObstacleList</name>
     <message>
-        <source>New obstacle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Obstacle</source>
+        <source>Obstacle %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

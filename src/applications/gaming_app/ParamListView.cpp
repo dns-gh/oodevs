@@ -19,7 +19,6 @@ ParamListView::ParamListView( QObject* parent, const QString& name )
     : QObject    ( parent )
     , Param_ABC  ( name )
     , list_      ( 0 )
-    , pPopupMenu_( 0 )
 {
     // NOTHING
 }
@@ -40,7 +39,6 @@ ParamListView::~ParamListView()
 void ParamListView::BuildInterface( QWidget* parent )
 {
     list_ = new QListView( parent );
-    pPopupMenu_ = new QPopupMenu( list_ );
     list_->addColumn( GetName() );
     list_->setResizeMode( QListView::LastColumn );
     connect( list_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
@@ -62,13 +60,13 @@ bool ParamListView::Invalid()
 // Name: ParamListView::OnRequestPopup
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
-void ParamListView::OnRequestPopup( QListViewItem* pItem, const QPoint& pos )
+void ParamListView::OnRequestPopup( QListViewItem* item, const QPoint& pos )
 {
-    pPopupMenu_->clear();
-    if( pItem != 0 )
-        pPopupMenu_->insertItem( tr( "Remove" ), this, SLOT( OnDeleteSelectedItem() ) );
-    pPopupMenu_->insertItem( tr( "Clear list" ), this, SLOT( OnClearList() ) );
-    pPopupMenu_->popup( pos );
+    QPopupMenu* menu = new QPopupMenu( list_ );
+    if( item )
+        menu->insertItem( tr( "Remove" ), this, SLOT( OnDeleteSelectedItem() ) );
+    menu->insertItem( tr( "Clear list" ), this, SLOT( OnClearList() ) );
+    menu->popup( pos );
 }
 
 // -----------------------------------------------------------------------------

@@ -57,7 +57,6 @@ private:
     //! @name Member data
     //@{
     QListView* list_;
-    QPopupMenu* pPopupMenu_;
     //@}
 };
 

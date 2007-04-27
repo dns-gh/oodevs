@@ -29,7 +29,7 @@ ActionParameterObstacleList::ActionParameterObstacleList( const kernel::OrderPar
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        Register( i, *new ActionParameterObstacle( parameter, converter, types, asn.elem[i] ) );
+        AddParameter( *new ActionParameterObstacle( tools::translate( "ActionParameter", "Obstacle %1" ).arg( i + 1 ), converter, types, asn.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -53,15 +53,14 @@ public:
     //@{
     virtual void RemoveFromController();
     virtual void RegisterIn( kernel::ActionController& controller );
+    virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void BuildInterface( QWidget* parent );
     virtual bool CheckValidity();
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
-    virtual void Show();
-    virtual void Hide();
-    void CommitTo( ASN1T_MissionGenObject& object ) const;
-    virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual void BuildInterface( QWidget* parent );
     virtual void CommitTo( Action_ABC& action ) const;
+
+    void CommitTo( ASN1T_MissionGenObject& object ) const;
     void CommitTo( ActionParameter_ABC& parameter ) const;
     //@}
 

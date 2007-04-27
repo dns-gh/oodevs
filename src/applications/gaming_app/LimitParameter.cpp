@@ -170,6 +170,15 @@ void LimitParameter::Draw( const geometry::Point2f& point, const kernel::Viewpor
 
 // -----------------------------------------------------------------------------
 // Name: LimitParameter::CommitTo
+// Created: SBO 2007-04-26
+// -----------------------------------------------------------------------------
+void LimitParameter::CommitTo( Action_ABC& ) const
+{
+    throw std::runtime_error( "Limit parameter not allowed outside order context" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitParameter::CommitTo
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
 void LimitParameter::CommitTo( ActionParameter_ABC& parameter ) const

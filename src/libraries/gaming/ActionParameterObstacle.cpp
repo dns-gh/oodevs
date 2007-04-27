@@ -39,6 +39,19 @@ ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& paramete
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterObstacle constructor
+// Created: SBO 2007-04-27
+// -----------------------------------------------------------------------------
+ActionParameterObstacle::ActionParameterObstacle( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const ASN1T_MissionGenObject& asn )
+    : ActionParameter< QString >( name )
+    , type_( types.Get( asn.type ) )
+{
+    AddParameter( *new ActionParameterLocation( tools::translate( "ActionParmater", "Location" ), converter, asn.position ) );
+    SetValue( type_.GetName() );
+//    SetParameters( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterObstacle constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
 ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const ASN1T_MissionGenObject& asn )

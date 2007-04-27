@@ -179,9 +179,12 @@ void ParamObstacle::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamObstacle::CommitTo( ASN1T_MissionGenObject& object ) const
 {
-    object.type          = (ASN1T_EnumObjectType)typeCombo_->GetValue()->id_;
+    const kernel::ObjectType* type = typeCombo_->GetValue();
+    if( !type ) // $$$$ SBO 2007-04-26: 
+        return;
+    object.type          = (ASN1T_EnumObjectType)type->id_;
     object.preliminaire  = (ASN1T_EnumMissionGenSousTypeObstacle)preliminaryCombo_->currentItem();
-    switch( typeCombo_->GetValue()->id_ )
+    switch( type->id_ )
     {
     case EnumObjectType::zone_minee_lineaire:
     case EnumObjectType::zone_minee_par_dispersion:
@@ -266,24 +269,6 @@ void ParamObstacle::Draw( const geometry::Point2f& point, const kernel::Viewport
     location_->Draw( point, viewport, tools );
 //    if( const ObjectType* type = typeCombo_->GetValue() )
 //        type->Draw( location_->GetPosition(), viewport, tools );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamObstacle::Show
-// Created: SBO 2007-03-13
-// -----------------------------------------------------------------------------
-void ParamObstacle::Show()
-{
-    typeCombo_->parentWidget()->parentWidget()->show(); // $$$$ SBO 2007-04-13: ahah
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamObstacle::Hide
-// Created: SBO 2007-03-13
-// -----------------------------------------------------------------------------
-void ParamObstacle::Hide()
-{
-    typeCombo_->parentWidget()->parentWidget()->hide(); // $$$$ SBO 2007-04-13: ohoh
 }
 
 // -----------------------------------------------------------------------------

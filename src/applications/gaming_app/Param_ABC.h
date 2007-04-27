@@ -47,13 +47,11 @@ public:
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void BuildInterface( QWidget* parent ) = 0;
     virtual bool CheckValidity();
-    virtual void Show() {}
-    virtual void Hide() {}
 
     virtual void CommitTo( ASN1T_MissionParameter& ) const {};
-    virtual void Clean( ASN1T_MissionParameter& ) const {};
+    virtual void Clean   ( ASN1T_MissionParameter& ) const {};
     virtual void CommitTo( ASN1T_OrderContext& ) const {};
-    virtual void Clean( ASN1T_OrderContext& ) const {};
+    virtual void Clean   ( ASN1T_OrderContext& ) const {};
     virtual void CommitTo( Action_ABC& ) const {};
     //@}
 
