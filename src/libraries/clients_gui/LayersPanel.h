@@ -90,6 +90,8 @@ private:
     QListView* layersList_;
     QSlider* transparency_;
     int currentLayer_;
+    T_Layers currentLayers_;
+    T_Layers newLayers_;
     //@}
 };
 

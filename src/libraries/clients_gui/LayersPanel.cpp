@@ -75,10 +75,12 @@ void LayersPanel::AddLayer( const QString& name, Layer_ABC& layer )
     item->SetValue( &layer );
     item->setText( 0, name );
 
-    layers_.push_back( &layer );
+    layers_       .push_back( &layer );
+    currentLayers_.push_back( &layer );
+    newLayers_    .push_back( &layer );
     current_.push_back( 1 );
     new_    .push_back( 1 );
-    names_  .push_back( "Layers/" + std::string( name.ascii() ) + "/Alpha" );
+    names_  .push_back( name.ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,10 +90,9 @@ void LayersPanel::AddLayer( const QString& name, Layer_ABC& layer )
 void LayersPanel::Commit()
 {
     for( unsigned i = 0; i < layers_.size(); ++i )
-    {
-        current_[ i ] = new_[ i ];
-        options_.Change( names_[ i ], current_[ i ] );
-    }
+        options_.Change( "Layers/" + names_[ i ] + "/Alpha", current_[ i ] );
+    current_       = new_;
+    currentLayers_ = newLayers_;
 }
 
 // -----------------------------------------------------------------------------
@@ -100,10 +101,20 @@ void LayersPanel::Commit()
 // -----------------------------------------------------------------------------
 void LayersPanel::Reset()
 {
+    new_       = current_;
+    newLayers_ = currentLayers_;
     for( unsigned i = 0; i < layers_.size(); ++i )
-    {
-        new_   [ i ] = current_[ i ];
         layers_[ i ]->SetAlpha( new_[ i ] );
+    layersList_->clear();
+    for( T_Layers::const_iterator it = newLayers_.begin(); it != newLayers_.end(); ++it )
+    {
+        if( it != newLayers_.end() - 1 )
+            (*it)->MoveBelow( **(it+1) );
+        ValuedListItem* item = new ValuedListItem( layersList_ );
+        item->SetValue( *it );
+        T_Layers::const_iterator lit = std::find( layers_.begin(), layers_.end(), *it );
+        if( lit != layers_.end() )
+            item->setText( 0, names_[ lit - layers_.begin() ].c_str() );
     }
 }
 
