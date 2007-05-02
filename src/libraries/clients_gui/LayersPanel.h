@@ -54,6 +54,9 @@ private slots:
     //! @name Slots
     //@{
     void OnValueChanged();
+    void OnSelectionChanged( QListViewItem* );
+    void OnUp();
+    void OnDown();
     //@}
 
 private:
@@ -70,8 +73,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::pair< Layer_ABC*, QSlider* > T_Layer;
-    typedef std::vector< T_Layer >            T_Layers;
+    typedef std::vector< Layer_ABC* >         T_Layers;
     typedef std::vector< float >              T_Alphas;
     typedef std::vector< std::string >        T_Names;
     //@}
@@ -85,6 +87,9 @@ private:
     T_Alphas current_;
     T_Alphas new_;
     T_Names  names_;
+    QListView* layersList_;
+    QSlider* transparency_;
+    int currentLayer_;
     //@}
 };
 

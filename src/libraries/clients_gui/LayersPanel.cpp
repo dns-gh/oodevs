@@ -14,6 +14,8 @@
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
+#include "ValuedListItem.h"
+#include "resources.h"
 
 using namespace gui;
 
@@ -23,9 +25,34 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers )
     : PreferencePanel_ABC( parent )
-    , controllers_( controllers )
-    , options_( controllers.options_ )
+    , controllers_       ( controllers )
+    , options_           ( controllers.options_ )
+    , currentLayer_      ( -1 )
 {
+    {
+        QHBox* box = new QHBox( this );
+        box->setSpacing( 5 );
+        layersList_ = new QListView( box );
+        layersList_->addColumn( tr( "Layer" ) );
+        layersList_->setResizeMode( QListView::LastColumn );
+        layersList_->header()->hide();
+        layersList_->setSorting( -1 );
+        connect( layersList_, SIGNAL( selectionChanged( QListViewItem * ) ), SLOT( OnSelectionChanged( QListViewItem * ) ) );
+
+        QVBox* buttonBox = new QVBox( box );
+        buttonBox->layout()->setAlignment( Qt::AlignVCenter );
+        QPushButton* up   = new QPushButton( MAKE_PIXMAP( arrow_up ), QString::null, buttonBox );
+        up->setFixedSize( 32, 32 );
+        connect( up, SIGNAL( clicked() ), SLOT( OnUp() ) );
+        QPushButton* down = new QPushButton( MAKE_PIXMAP( arrow_down ), QString::null, buttonBox );
+        down->setFixedSize( 32, 32 );
+        connect( down, SIGNAL( clicked() ), SLOT( OnDown() ) );
+    }
+    {
+        QGroupBox* group = new QGroupBox( 1, Qt::Vertical, tr( "Transparency" ), this );
+        transparency_ = new QSlider( 0, 100, 1, 100, Qt::Horizontal, group );
+        connect( transparency_, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged() ) );
+    }
     controllers_.Register( *this );
 }
 
@@ -44,13 +71,11 @@ LayersPanel::~LayersPanel()
 // -----------------------------------------------------------------------------
 void LayersPanel::AddLayer( const QString& name, Layer_ABC& layer )
 {
-    QHBox* alphaBox = new QHBox( this );
-    QLabel* label = new QLabel( name, alphaBox );
-    label->setMinimumWidth( 100 );
-    label->setMaximumWidth( 100 );
-    QSlider* slider = new QSlider( 0, 100, 1, 100, Qt::Horizontal, alphaBox );
-    connect( slider, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged() ) );
-    layers_.push_back( T_Layer( &layer, slider ) );
+    ValuedListItem* item = new ValuedListItem( layersList_ );
+    item->SetValue( &layer );
+    item->setText( 0, name );
+
+    layers_.push_back( &layer );
     current_.push_back( 1 );
     new_    .push_back( 1 );
     names_  .push_back( "Layers/" + std::string( name.ascii() ) + "/Alpha" );
@@ -77,9 +102,8 @@ void LayersPanel::Reset()
 {
     for( unsigned i = 0; i < layers_.size(); ++i )
     {
-        new_[ i ] = current_[ i ];
-        layers_[ i ].first->SetAlpha( new_[ i ] );
-        layers_[ i ].second->setValue( new_[ i ] * 100 );
+        new_   [ i ] = current_[ i ];
+        layers_[ i ]->SetAlpha( new_[ i ] );
     }
 }
 
@@ -89,10 +113,69 @@ void LayersPanel::Reset()
 // -----------------------------------------------------------------------------
 void LayersPanel::OnValueChanged()
 {
-    for( unsigned i = 0; i < layers_.size(); ++i )
+    if( currentLayer_ != -1 && currentLayer_ < layers_.size() )
     {
-        new_[ i ] = layers_[ i ].second->value() * 0.01f;
-        layers_[ i ].first->SetAlpha( new_[ i ] );
+        new_   [ currentLayer_ ] = transparency_->value() * 0.01f;
+        layers_[ currentLayer_ ]->SetAlpha( new_[ currentLayer_ ] );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LayersPanel::OnSelectionChanged
+// Created: AGE 2007-04-27
+// -----------------------------------------------------------------------------
+void LayersPanel::OnSelectionChanged( QListViewItem* i )
+{
+    currentLayer_ = -1;
+    ValuedListItem* item = static_cast< ValuedListItem* >( i );
+    T_Layers::const_iterator it = std::find( layers_.begin(), layers_.end(), item->GetValue< Layer_ABC >() );
+    if( it != layers_.end() )
+    {
+        currentLayer_ = it - layers_.begin();
+        transparency_->setValue( new_[ currentLayer_ ] * 100 );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LayersPanel::OnUp
+// Created: AGE 2007-04-27
+// -----------------------------------------------------------------------------
+void LayersPanel::OnUp()
+{
+    if( currentLayer_ != -1 && currentLayer_ < layers_.size() )
+    {
+        Layer_ABC* layer = layers_[ currentLayer_ ];
+        if( ValuedListItem* item = FindItem( layer, layersList_->firstChild() ) )
+        {
+            ValuedListItem* previous = static_cast< ValuedListItem* >( item->itemAbove() );
+            if( previous )
+            {
+                layer->MoveAbove( *previous->GetValue< Layer_ABC >() );
+                previous->moveItem( item );
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LayersPanel::OnDown
+// Created: AGE 2007-04-27
+// -----------------------------------------------------------------------------
+void LayersPanel::OnDown()
+{
+    if( currentLayer_ != -1 && currentLayer_ < layers_.size() )
+    {
+        Layer_ABC* layer = layers_[ currentLayer_ ];
+        ValuedListItem* item = FindItem( layer, layersList_->firstChild() );
+        if( item )
+        {
+            ValuedListItem* next = static_cast< ValuedListItem* >( item->nextSibling() );
+            if( next )
+            {
+                layer->MoveBelow( *next->GetValue< Layer_ABC >() );
+                item->moveItem( next );
+            }
+        }
     }
 }
 
@@ -110,8 +193,7 @@ void LayersPanel::OptionChanged( const std::string& name, const kernel::OptionVa
         {
             const float alpha = value.To< float >();
             new_[ i ] = current_[ i ] = alpha;
-            layers_[ i ].second->setValue( alpha * 100 );
-            layers_[ i ].first->SetAlpha( new_[ i ] );
+            layers_[ i ]->SetAlpha( new_[ i ] );
             return;
         }
 }

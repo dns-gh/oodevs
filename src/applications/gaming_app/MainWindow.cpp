@@ -328,20 +328,11 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
     Layer_ABC& logoLayer            = *new LogoLayer( *glProxy_, QImage( "logo.png" ), 0.7f );
 
-    preferences.AddLayer( tr( "Terrain" ), terrain );
-    preferences.AddLayer( tr( "Raster" ), raster );
-    preferences.AddLayer( tr( "Elevation" ), elevation2d );
-    preferences.AddLayer( tr( "Units" ), agents );
-    preferences.AddLayer( tr( "Automats" ), automats );
-    preferences.AddLayer( tr( "Objects" ), objectsLayer );
-    preferences.AddLayer( tr( "Populations" ), populations );
-    preferences.AddLayer( tr( "Logo" ), logoLayer );
-
     // ordre de dessin
     glProxy_->Register( defaultLayer );
-    glProxy_->Register( elevation2d );
-    glProxy_->Register( raster );
-    glProxy_->Register( terrain );
+    glProxy_->Register( elevation2d );              preferences.AddLayer( tr( "Elevation" ), elevation2d );
+    glProxy_->Register( raster );                   preferences.AddLayer( tr( "Raster" ), raster );
+    glProxy_->Register( terrain );                  preferences.AddLayer( tr( "Terrain" ), terrain );
     glProxy_->Register( elevation3d );
     glProxy_->Register( grid );
     glProxy_->Register( meteo );
@@ -349,17 +340,17 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     glProxy_->Register( objectKnowledges );
     glProxy_->Register( populationKnowledges );
     glProxy_->Register( agentKnowledges );
-    glProxy_->Register( objectsLayer );
-    glProxy_->Register( populations );
-    glProxy_->Register( agents );
-    glProxy_->Register( automats );
+    glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );
+    glProxy_->Register( populations );              preferences.AddLayer( tr( "Populations" ), populations );
+    glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );
+    glProxy_->Register( automats );                 preferences.AddLayer( tr( "Automats" ), automats );
     glProxy_->Register( missionsLayer );
     glProxy_->Register( objectCreationLayer );
     glProxy_->Register( parameters );
     glProxy_->Register( metrics );
     glProxy_->Register( locationsLayer );
     glProxy_->Register( drawer );
-    glProxy_->Register( logoLayer );
+    glProxy_->Register( logoLayer );                preferences.AddLayer( tr( "Logo" ), logoLayer );
     
     // ordre des evenements
     forward_->Register( parameters );

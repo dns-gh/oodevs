@@ -54,11 +54,16 @@ public:
     
     virtual void SetAlpha( float alpha );
     float GetAlpha() const;
+
+    void MoveAbove( Layer_ABC& layer );
+    void MoveBelow( Layer_ABC& layer );
     //@}
     
 private:
     //! @name Member data
     //@{
+    GlWidget*     currentWidget_;
+    MapLayer_ABC* currentProxy_;
     float alpha_;
     //@}
 };

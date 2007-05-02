@@ -22,7 +22,9 @@ using namespace gui;
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
 Layer_ABC::Layer_ABC()
-    : alpha_( 1 )
+    : alpha_        ( 1 )
+    , currentWidget_( 0 )
+    , currentProxy_ ( 0 )
 {
     // NOTHING
 }
@@ -80,8 +82,10 @@ void Layer_ABC::RegisterIn( Gl3dWidget& widget )
 // -----------------------------------------------------------------------------
 void Layer_ABC::RegisterIn( GlWidget& widget )
 {
-    widget.Register( *new MapLayerProxy( *this ) );
-}   
+    currentWidget_ = &widget;
+    currentProxy_  = new MapLayerProxy( *this );
+    widget.Register( *currentProxy_ );
+}
 
 // -----------------------------------------------------------------------------
 // Name: Layer_ABC::Reset2d
@@ -89,9 +93,10 @@ void Layer_ABC::RegisterIn( GlWidget& widget )
 // -----------------------------------------------------------------------------
 void Layer_ABC::Reset2d()
 {
-    // NOTHING
+    currentWidget_ = 0;
+    currentProxy_   = 0;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Layer_ABC::Reset3d
 // Created: AGE 2007-01-19
@@ -120,11 +125,32 @@ float Layer_ABC::GetAlpha() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Layer_ABC::MoveAbove
+// Created: AGE 2007-04-27
+// -----------------------------------------------------------------------------
+void Layer_ABC::MoveAbove( Layer_ABC& layer )
+{
+    if( currentWidget_ && currentProxy_ && layer.currentProxy_ )
+        currentWidget_->MoveAbove( *currentProxy_, *layer.currentProxy_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer_ABC::MoveBelow
+// Created: AGE 2007-04-27
+// -----------------------------------------------------------------------------
+void Layer_ABC::MoveBelow( Layer_ABC& layer )
+{
+    if( currentWidget_ && currentProxy_ && layer.currentProxy_ )
+        currentWidget_->MoveBelow( *currentProxy_, *layer.currentProxy_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Layer2d_ABC::Reset2d
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
 void Layer2d_ABC::Reset2d()
 {
+    Layer_ABC::Reset2d();
     Reset();
 }
 

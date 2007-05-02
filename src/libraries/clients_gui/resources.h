@@ -95,5 +95,7 @@ DECLARE_ICON( goto );
 DECLARE_ICON( add_point );
 DECLARE_ICON( special_point );
 DECLARE_ICON( drawings );
+DECLARE_ICON( arrow_up );
+DECLARE_ICON( arrow_down );
 
 #endif // __demo_resources_h_
