@@ -786,79 +786,79 @@
     <name>ENT_Tr</name>
     <message>
         <source>circle</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>line</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>polygon</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>point</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>sector</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>at</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>after</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>as of</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>before</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>cleared</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>due</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>end</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>off</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>on</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>since</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>start</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>until</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>wef</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>identifiee</source>
@@ -922,7 +922,7 @@
     </message>
     <message>
         <source>none</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>reparation</source>
@@ -962,47 +962,47 @@
     </message>
     <message>
         <source>o</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>oo</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>ooo</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>i</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>ii</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>iii</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>x</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>xx</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>xxx</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>xxxx</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>xxxxx</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>officier</source>
@@ -1046,59 +1046,59 @@
     </message>
     <message>
         <source>no error</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>error invalid unit</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>error invalid limit</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>error invalid lima</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>error invalid mission</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>error invalid mission parameters</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>error unit cannot receive order</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>error invalid order conduite</source>
-        <translation type="unfinished"></translation>
+        <translation>error invalid frag order</translation>
     </message>
     <message>
         <source>error invalid order mission</source>
-        <translation type="unfinished"></translation>
+        <translation>error invalid mission</translation>
     </message>
     <message>
         <source>error invalid order initial</source>
-        <translation type="unfinished"></translation>
+        <translation>error invalid initial order</translation>
     </message>
     <message>
         <source>error invalid order conduite parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>error invalid frag order parameters</translation>
     </message>
     <message>
         <source>error unit surrendered</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>started</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>stopped</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>bouchon mines</source>
@@ -1266,27 +1266,27 @@
     </message>
     <message>
         <source>error invalid object</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>error invalid id</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>error invalid camp</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>error invalid localisation</source>
-        <translation type="unfinished"></translation>
+        <translation>error invalid location</translation>
     </message>
     <message>
         <source>error missing specific attributes</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>error invalid specific attributes</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>normal</source>
@@ -1394,31 +1394,31 @@
     </message>
     <message>
         <source>error already started</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>error not started</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>error not paused</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>error already paused</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>error invalid time factor</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>running</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>paused</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>pas de precipitation</source>
@@ -1482,15 +1482,15 @@
     </message>
     <message>
         <source>ligne identification accueil</source>
-        <translation type="unfinished"></translation>
+        <translation>recognition and reception line</translation>
     </message>
     <message>
         <source>error invalid geometry</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>error invalid lima function</source>
-        <translation type="unfinished"></translation>
+        <translation>error invalid phase line function</translation>
     </message>
     <message>
         <source>calme</source>
@@ -1510,11 +1510,11 @@
     </message>
     <message>
         <source>error invalid attribute</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>message</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>operationel</source>
@@ -1526,7 +1526,7 @@
     </message>
     <message>
         <source>warning</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>fumigene</source>
@@ -1550,95 +1550,95 @@
     </message>
     <message>
         <source>regime 1</source>
-        <translation type="unfinished"></translation>
+        <translation>system 1</translation>
     </message>
     <message>
         <source>regime 2</source>
-        <translation type="unfinished"></translation>
+        <translation>system 2</translation>
     </message>
     <message>
         <source>regime 3</source>
-        <translation type="unfinished"></translation>
+        <translation>system 3</translation>
     </message>
     <message>
         <source>regime 4</source>
-        <translation type="unfinished"></translation>
+        <translation>system 4</translation>
     </message>
     <message>
         <source>deplacement vers chaine</source>
-        <translation type="unfinished"></translation>
+        <translation>moving toward logistic system</translation>
     </message>
     <message>
         <source>attente disponibilite remorqueur</source>
-        <translation type="unfinished"></translation>
+        <translation>waiting for available tow-truck</translation>
     </message>
     <message>
         <source>remorqueur deplacement aller</source>
-        <translation type="unfinished"></translation>
+        <translation>tow-truck moving to target</translation>
     </message>
     <message>
         <source>remorqueur chargement</source>
-        <translation type="unfinished"></translation>
+        <translation>tow-truck loading</translation>
     </message>
     <message>
         <source>remorqueur deplacement retour</source>
-        <translation type="unfinished"></translation>
+        <translation>tow-truck moving from target</translation>
     </message>
     <message>
         <source>remorqueur dechargement</source>
-        <translation type="unfinished"></translation>
+        <translation>tow-truck unloading</translation>
     </message>
     <message>
         <source>attente prise en charge par niveau superieur</source>
-        <translation type="unfinished"></translation>
+        <translation>waiting to be handled by higher level</translation>
     </message>
     <message>
         <source>attente disponibilite pieces</source>
-        <translation type="unfinished"></translation>
+        <translation>waiting for available parts</translation>
     </message>
     <message>
         <source>attente disponibilite reparateur</source>
-        <translation type="unfinished"></translation>
+        <translation>waiting for available repairer</translation>
     </message>
     <message>
         <source>retour pion</source>
-        <translation type="unfinished"></translation>
+        <translation>unit returning</translation>
     </message>
     <message>
         <source>convoi en attente camions</source>
-        <translation type="unfinished"></translation>
+        <translation>convoy waiting for trucks</translation>
     </message>
     <message>
         <source>convoi constitution</source>
-        <translation type="unfinished"></translation>
+        <translation>convoy setting up</translation>
     </message>
     <message>
         <source>convoi deplacement vers point chargement</source>
-        <translation type="unfinished"></translation>
+        <translation>convoy moving to loading point</translation>
     </message>
     <message>
         <source>convoi chargement</source>
-        <translation type="unfinished"></translation>
+        <translation>convoy loading</translation>
     </message>
     <message>
         <source>convoi deplacement vers point dechargement</source>
-        <translation type="unfinished"></translation>
+        <translation>convoy moving to unloading point</translation>
     </message>
     <message>
         <source>convoi dechargement</source>
-        <translation type="unfinished"></translation>
+        <translation>convoy unloading</translation>
     </message>
     <message>
         <source>convoi deplacement retour</source>
-        <translation type="unfinished"></translation>
+        <translation>convoy moving back</translation>
     </message>
     <message>
         <source>error invalid donneur</source>
-        <translation type="unfinished"></translation>
+        <translation>error invalid supplier</translation>
     </message>
     <message>
         <source>error invalid receveur</source>
-        <translation type="unfinished"></translation>
+        <translation>error invalid receiver</translation>
     </message>
     <message>
         <source>embraye</source>
@@ -1778,19 +1778,19 @@
     </message>
     <message>
         <source>error unit not automate</source>
-        <translation type="unfinished"></translation>
+        <translation>error non-automat unit </translation>
     </message>
     <message>
         <source>error already embraye</source>
-        <translation type="unfinished"></translation>
+        <translation>error already engaged</translation>
     </message>
     <message>
         <source>error already debraye</source>
-        <translation type="unfinished"></translation>
+        <translation>error already disengaged</translation>
     </message>
     <message>
         <source>error automate embraye</source>
-        <translation type="unfinished"></translation>
+        <translation>error automat engaged</translation>
     </message>
     <message>
         <source>surete</source>
@@ -1802,7 +1802,7 @@
     </message>
     <message>
         <source>error invalid diffusion</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 </TS>
