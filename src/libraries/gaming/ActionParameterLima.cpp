@@ -17,6 +17,16 @@ using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterLima constructor
+// Created: SBO 2007-05-02
+// -----------------------------------------------------------------------------
+ActionParameterLima::ActionParameterLima( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location )
+    : ActionParameter< QString >( name )
+{
+    AddParameter( *new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, location ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLima constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
 ActionParameterLima::ActionParameterLima( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, const QString& functions )
@@ -55,6 +65,17 @@ ActionParameterLima::~ActionParameterLima()
 bool ActionParameterLima::IsContext() const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLima::AddFunction
+// Created: SBO 2007-05-02
+// -----------------------------------------------------------------------------
+void ActionParameterLima::AddFunction( unsigned int i )
+{
+    QStringList functions = QStringList::split( ", ", GetValue() );
+    functions.append( tools::ToString( (E_FuncLimaType)i ) );
+    SetValue( functions.join( ", " ) );
 }
 
 // -----------------------------------------------------------------------------

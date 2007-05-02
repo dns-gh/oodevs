@@ -20,12 +20,13 @@ using namespace gui;
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
 ListParameter::ListParameter( QObject* parent, const QString& name, kernel::ActionController& controller, bool optional )
-    : QObject    ( parent )
-    , Param_ABC  ( name )
-    , controller_( controller )
-    , list_      ( 0 )
-    , selected_  ( 0 )
-    , optional_  ( optional )
+    : QObject       ( parent )
+    , Param_ABC     ( name )
+    , controller_   ( controller )
+    , list_         ( 0 )
+    , selected_     ( 0 )
+    , optional_     ( optional )
+    , createEnabled_( true )
 {
     // NOTHING
 }
@@ -75,11 +76,21 @@ void ListParameter::BuildInterface( QWidget* parent )
 void ListParameter::OnRequestPopup( QListViewItem* item, const QPoint& pos )
 {
     QPopupMenu* menu = new QPopupMenu( list_ );
-    menu->insertItem( tr( "Create" ), this, SLOT( OnCreate() ) );
+    if( createEnabled_ )
+        menu->insertItem( tr( "Create" ), this, SLOT( OnCreate() ) );
     if( item )
         menu->insertItem( tr( "Remove" ), this, SLOT( OnDeleteSelectedItem() ) );
     menu->insertItem( tr( "Clear list" ), this, SLOT( OnClear() ) );
     menu->popup( pos );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::EnableCreation
+// Created: SBO 2007-05-02
+// -----------------------------------------------------------------------------
+void ListParameter::EnableCreation( bool enabled )
+{
+    createEnabled_ = enabled;
 }
 
 // -----------------------------------------------------------------------------
@@ -169,11 +180,18 @@ void ListParameter::DeleteItem( QListViewItem* item )
         selected_ = 0;
     }
     if( Param_ABC* param = static_cast< ValuedListItem* >( item )->GetValue< Param_ABC >() )
-    {
-        widgets_.erase( param );
-        delete param;
-    }
+        DeleteElement( *param );
     delete item;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::DeleteElement
+// Created: SBO 2007-05-02
+// -----------------------------------------------------------------------------
+void ListParameter::DeleteElement( Param_ABC& param )
+{
+    widgets_.erase( &param );
+    delete &param;
 }
 
 // -----------------------------------------------------------------------------
@@ -226,6 +244,17 @@ void ListParameter::Accept( ParamVisitor_ABC& visitor ) const
         ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
         visitor.Visit( *item->GetValue< Param_ABC >() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::Select
+// Created: SBO 2007-05-02
+// -----------------------------------------------------------------------------
+void ListParameter::Select( const Param_ABC& param )
+{
+    ValuedListItem* item = FindItem( &param, list_->firstChild() );
+    if( item )
+        list_->setSelected( item, true );
 }
 
 // -----------------------------------------------------------------------------

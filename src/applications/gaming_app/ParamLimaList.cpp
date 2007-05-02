@@ -10,29 +10,27 @@
 #include "gaming_app_pch.h"
 #include "ParamLimaList.h"
 #include "moc_ParamLimaList.cpp"
+#include "ParamVisitor_ABC.h"
+#include "LimaParameter.h"
 #include "gaming/Lima.h"
 #include "gaming/Tools.h"
 #include "gaming/ActionParameterLimaList.h"
-#include "gaming/ActionParameterLima.h"
 #include "gaming/Action_ABC.h"
-#include "clients_gui/ValuedListItem.h"
 #include "clients_kernel/OrderParameter.h"
-#include "clients_kernel/Lines.h"
 #include "game_asn/Asn.h"
 
-using namespace gui;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ParamLimaList constructor
 // Created: SBO 2006-11-14
 // ----------------------------------------------------------------------------
-ParamLimaList::ParamLimaList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter )
-    : QObject    ( parent )
-    , Param_ABC  ( parameter.GetName() )
-    , converter_ ( converter )
-    , parameter_ ( parameter )
-    , list_      ( 0 )
-    , potential_ ( 0 )
+ParamLimaList::ParamLimaList( QObject* parent, const OrderParameter& parameter, const CoordinateConverter_ABC& converter, ActionController& controller )
+    : ListParameter( parent, parameter.GetName(), controller, parameter.IsOptional() )
+    , parameter_( parameter )
+    , converter_( converter )
+    , count_( 0 )
+    , potential_( 0 )
 {
     // NOTHING
 }
@@ -47,33 +45,35 @@ ParamLimaList::~ParamLimaList()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamLimaList::CheckValidity
-// Created: SBO 2006-11-14
-// -----------------------------------------------------------------------------
-bool ParamLimaList::CheckValidity()
-{
-    if( !parameter_.IsOptional() && list_->childCount() == 0 )
-    {
-        list_->header()->setPaletteForegroundColor( Qt::red );
-        QTimer::singleShot( 3000, this, SLOT( TurnHeaderBlack() ) );
-        return false;
-    }
-    return true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ParamLimaList::BuildInterface
-// Created: SBO 2007-03-13
+// Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
 void ParamLimaList::BuildInterface( QWidget* parent )
 {
-    list_ = new QListView( parent );
-    pPopupMenu_ = new QPopupMenu( list_ );
-    
-    list_->addColumn( GetName() );
-    list_->addColumn( tr( "Function" ) );
-    list_->setResizeMode( QListView::LastColumn );
-    connect( list_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
+    EnableCreation( false );
+    ListParameter::BuildInterface( parent );
+}
+
+namespace
+{
+    class AsnSerializer : public ParamVisitor_ABC
+    {
+    public:
+        AsnSerializer( ASN1T_LimasOrder& list )
+            : list_( list )
+            , index_( 0 )
+        {}
+
+        virtual void Visit( const Param_ABC& param )
+        {
+            if( index_ < list_.n )
+                static_cast< const LimaParameter& >( param ).CommitTo( list_.elem[index_++] );
+        }
+
+    private:
+        ASN1T_LimasOrder& list_;
+        unsigned int index_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -82,34 +82,35 @@ void ParamLimaList::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 void ParamLimaList::CommitTo( ASN1T_OrderContext& asn ) const
 {
-    if( !list_ )
-        InterfaceNotInitialized();
-    asn.limas.n = 0;
+    asn.limas.n = Count();
     asn.limas.elem = 0;
-    if( ! list_->childCount() )
+    if( !asn.limas.n )
         return;
+    asn.limas.elem = new ASN1T_LimaOrder[asn.limas.n];
+    AsnSerializer serializer( asn.limas );
+    Accept( serializer );
+}
 
-    ASN1T_LimasOrder& list = asn.limas;
-    list.n = list_->childCount();
-    list.elem = new ASN1T_LimaOrder[list.n];
-
-    ValuedListItem* item = (ValuedListItem*)( list_->firstChild() );
-    unsigned int i = 0;
-    while( item )
+namespace
+{
+    class AsnCleaner : public ParamVisitor_ABC
     {
-        QStringList functions = QStringList::split( ',', item->text( 1 ) );
-        list.elem[i].fonctions.n = functions.count();
-        if( list.elem[i].fonctions.n > 0 )
+    public:
+        AsnCleaner( ASN1T_LimasOrder& list )
+            : list_( list )
+            , index_( 0 )
+        {}
+
+        virtual void Visit( const Param_ABC& param )
         {
-            list.elem[i].fonctions.elem = new ASN1T_EnumTypeLima[list.elem[i].fonctions.n];
-            for( unsigned int j = 0; j < list.elem[i].fonctions.n; ++j )
-                list.elem[i].fonctions.elem[j] = (ASN1T_EnumTypeLima)tools::FromString( functions[j] );
+            if( index_ < list_.n )
+                static_cast< const LimaParameter& >( param ).Clean( list_.elem[index_++] );
         }
-        const Lima* lima = item->GetValue< const Lima >();
-        lima->CopyTo( list.elem[i].lima );
-        item = (ValuedListItem*)( item->nextSibling() );
-        ++i;
-    }
+
+    private:
+        ASN1T_LimasOrder& list_;
+        unsigned int index_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -118,9 +119,28 @@ void ParamLimaList::CommitTo( ASN1T_OrderContext& asn ) const
 // -----------------------------------------------------------------------------
 void ParamLimaList::Clean( ASN1T_OrderContext& asn ) const
 {
-    for( unsigned int i = 0; i < asn.limas.n; ++i )
-        delete[] asn.limas.elem[i].fonctions.elem;
+    AsnCleaner serializer( asn.limas );
+    Accept( serializer );
     delete[] asn.limas.elem;
+}
+
+namespace
+{
+    class ActionSerializer : public ParamVisitor_ABC
+    {
+    public:
+        ActionSerializer( ActionParameter_ABC& parent )
+            : parent_( parent )
+        {}
+
+        virtual void Visit( const Param_ABC& param )
+        {
+            static_cast< const LimaParameter& >( param ).CommitTo( parent_ );
+        }
+
+    private:
+        ActionParameter_ABC& parent_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -129,127 +149,90 @@ void ParamLimaList::Clean( ASN1T_OrderContext& asn ) const
 // -----------------------------------------------------------------------------
 void ParamLimaList::CommitTo( Action_ABC& action ) const
 {
-    std::auto_ptr< ActionParameterLimaList > param( new ActionParameterLimaList( parameter_ ) );
-    ValuedListItem* item = (ValuedListItem*)( list_->firstChild() );
-    QStringList functions;
-    unsigned int i = 0;
-    while( item )
-    {
-        const Lima* lima = item->GetValue< const Lima >();
-        if( !lima )
-            throw std::runtime_error( "Invalid lima" );
-        kernel::Lines lines;
-        lima->CopyTo( lines );
-        param->AddParameter( *new ActionParameterLima( tr( "Lima %1" ).arg( ++i ), converter_, lines, item->text( 1 ) ) );
-        item = (ValuedListItem*)( item->nextSibling() );
-    }
+    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterLimaList( parameter_ ) );
+    ActionSerializer serializer( *param );
+    Accept( serializer );
     action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamLimaList::OnRequestPopup
-// Created: SBO 2006-11-14
+// Name: ParamLimaList::CreateElement
+// Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-void ParamLimaList::OnRequestPopup( QListViewItem* pItem, const QPoint& pos )
-{
-    pPopupMenu_->clear();
-    if( pItem != 0 )
-        pPopupMenu_->insertItem( tr( "Remove" ), this, SLOT( OnDeleteSelectedItem() ) );
-    pPopupMenu_->insertItem( tr( "Clear list" ), this, SLOT( OnClearList() ) );
-    pPopupMenu_->popup( pos );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLimaList::OnDeleteSelectedItem
-// Created: SBO 2006-11-14
-// -----------------------------------------------------------------------------
-void ParamLimaList::OnDeleteSelectedItem()
-{
-    delete list_->currentItem();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLimaList::OnClearList
-// Created: SBO 2006-11-14
-// -----------------------------------------------------------------------------
-void ParamLimaList::OnClearList()
-{
-    list_->clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLimaList::TurnHeaderBlack
-// Created: SBO 2006-11-14
-// -----------------------------------------------------------------------------
-void ParamLimaList::TurnHeaderBlack()
-{
-    list_->header()->setPaletteForegroundColor( Qt::black );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLimaList::MenuItemValidated
-// Created: SBO 2006-11-14
-// -----------------------------------------------------------------------------
-void ParamLimaList::MenuItemValidated( int function )
+Param_ABC* ParamLimaList::CreateElement()
 {
     if( potential_ )
     {
-        gui::ValuedListItem* item = gui::FindItem( potential_, list_->firstChild() );
-        if( !item )
-            item = new gui::ValuedListItem( list_ );
-        QStringList functions = QStringList::split( ',', item->text( 1 ) );
-        if( !functions.contains( tools::ToString( (E_FuncLimaType)function ) ) )
-            functions.append( tools::ToString( (E_FuncLimaType)function ) );
-        item->Set( potential_, potential_->GetName(), functions.join( "," ) );
+        LimaParameter* lima = new LimaParameter( this, tr( "Lima %1" ).arg( ++count_ ), converter_, *potential_ );
+        limas_[potential_] = lima;
+        return lima;
     }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLimaList::DeleteElement
+// Created: SBO 2007-05-02
+// -----------------------------------------------------------------------------
+void ParamLimaList::DeleteElement( Param_ABC& param )
+{
+    for( T_Limas::iterator it = limas_.begin(); it != limas_.end(); ++it )
+        if( it->second == &param )
+        {
+            limas_.erase( it );
+            break;
+        }
+    ListParameter::DeleteElement( param );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ParamLimaList::NotifyContextMenu
-// Created: SBO 2006-11-14
+// Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
 void ParamLimaList::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu )
 {
-    if( !entity.IsLimit() )
+    if( entity.IsLimit() )
+        return;
+    CIT_Limas it = limas_.find( &entity );
+    if( it != limas_.end() )
+        Select( *it->second );
+    else
     {
         potential_ = static_cast< const Lima* >( &entity );
         QPopupMenu* limaMenu = new QPopupMenu( menu );
-        for( int n = 0; n < eLimaFuncNbr; ++n )
+        for( unsigned int i = 0; i < eLimaFuncNbr; ++i )
         {
-            int nId = limaMenu->insertItem( tools::ToString( (E_FuncLimaType)n ), this, SLOT( MenuItemValidated( int ) ) ); 
-            limaMenu->setItemParameter( nId, n );
+            int id = limaMenu->insertItem( tools::ToString( (E_FuncLimaType)i ), this, SLOT( MenuItemValidated( int ) ) );
+            limaMenu->setItemParameter( id, i );
         }
-        menu.InsertItem( "Parameter", tr( "Add %1" ).arg( GetName() ), limaMenu );
+        menu.InsertItem( "Parameter", tr( "Add '%1' as" ).arg( entity.GetName() ), limaMenu );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamLimaList::NotifyDeleted
-// Created: SBO 2006-11-14
+// Name: ParamLimaList::MenuItemValidated
+// Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
-void ParamLimaList::NotifyDeleted( const Lima& entity )
+void ParamLimaList::MenuItemValidated( int index )
 {
-    delete gui::FindItem( &entity, list_->firstChild() );
-    if( &entity == potential_ )
-        potential_ = 0;
+    OnCreate();
+    CIT_Limas it = limas_.find( potential_ );
+    if( it != limas_.end() )
+        it->second->MenuItemValidated( index );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamLimaList::Draw
-// Created: SBO 2006-11-20
+// Name: ParamLimaList::NotifyDeleted
+// Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
-void ParamLimaList::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void ParamLimaList::NotifyDeleted( const kernel::TacticalLine_ABC& entity )
 {
-    ValuedListItem* item = (ValuedListItem*)( list_->firstChild() );
-    while( item )
+    if( entity.IsLimit() )
+        return;
+    CIT_Limas it = limas_.find( &entity );
+    if( it != limas_.end() )
     {
-        if( const Lima* lima = item->GetValue< const Lima >() )
-        {
-            glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-                glColor4f( 1, 0, 0, 0.5f );
-                lima->Interface().Apply( &kernel::Drawable_ABC::Draw, point, viewport, tools );
-            glPopAttrib();
-        }
-        item = (ValuedListItem*)( item->nextSibling() );
+        Select( *it->second );
+        OnDeleteSelectedItem();
     }
 }

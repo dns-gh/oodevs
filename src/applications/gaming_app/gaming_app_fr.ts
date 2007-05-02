@@ -907,6 +907,10 @@
         <source>Raster</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>
@@ -1262,23 +1266,11 @@
 <context>
     <name>ParamLimaList</name>
     <message>
-        <source>Function</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Lima %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add &apos;%1&apos; as</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

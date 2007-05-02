@@ -1,0 +1,151 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#include "gaming_app_pch.h"
+#include "LimaParameter.h"
+#include "moc_LimaParameter.cpp"
+#include "gaming/Lima.h"
+#include "gaming/Tools.h"
+#include "gaming/ActionParameterLima.h"
+#include "clients_kernel/Lines.h"
+
+using namespace kernel;
+
+// -----------------------------------------------------------------------------
+// Name: LimaParameter constructor
+// Created: SBO 2007-05-02
+// -----------------------------------------------------------------------------
+LimaParameter::LimaParameter( QObject* parent, const QString& name, const kernel::CoordinateConverter_ABC& converter, const Lima& lima )
+    : QObject( parent )
+    , Param_ABC( name )
+    , converter_( converter )
+    , lima_( &lima )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimaParameter destructor
+// Created: SBO 2007-05-02
+// -----------------------------------------------------------------------------
+LimaParameter::~LimaParameter()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimaParameter::CheckValidity
+// Created: SBO 2007-05-02
+// -----------------------------------------------------------------------------
+bool LimaParameter::CheckValidity()
+{
+    return lima_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimaParameter::BuildInterface
+// Created: SBO 2007-05-02
+// -----------------------------------------------------------------------------
+void LimaParameter::BuildInterface( QWidget* parent )
+{
+    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, GetName(), parent );
+    new QLabel( tr( "Line" ), group );
+    entityLabel_ = new QLabel( "---", group );
+    entityLabel_->setMinimumWidth( 100 );
+    entityLabel_->setAlignment( Qt::AlignCenter );
+    entityLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    new QLabel( tr( "Functions" ), group );
+    functions_ = new QListBox( group );
+    functions_->setSelectionMode( QListBox::Multi );
+    for( unsigned int i = 0; i < eLimaFuncNbr; ++i )
+        functions_->insertItem( tools::ToString( (E_FuncLimaType)i ), i );
+    functions_->setRowMode( QListBox::FitToHeight );
+    functions_->setFixedSize( 150, functions_->itemHeight( 0 ) * 4 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimaParameter::Draw
+// Created: SBO 2007-05-02
+// -----------------------------------------------------------------------------
+void LimaParameter::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+{
+    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+        glColor4f( 1, 0, 0, 0.5f );
+        lima_->Interface().Apply( &kernel::Drawable_ABC::Draw, point, viewport, tools ); // $$$$ SBO 2007-05-02:
+    glPopAttrib();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimaParameter::MenuItemValidated
+// Created: SBO 2007-05-02
+// -----------------------------------------------------------------------------
+void LimaParameter::MenuItemValidated( int index )
+{
+    entityLabel_->setText( lima_->GetName() );
+    functions_->setSelected( index, !functions_->isSelected( index ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimaParameter::NotifyContextMenu
+// Created: SBO 2007-05-02
+// -----------------------------------------------------------------------------
+void LimaParameter::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu )
+{
+    if( entity.IsLimit() || !lima_ || lima_ != &entity )
+        return;
+    QPopupMenu* limaMenu = new QPopupMenu( menu );
+    for( unsigned int i = 0; i < eLimaFuncNbr; ++i )
+    {
+        int id = limaMenu->insertItem( tools::ToString( (E_FuncLimaType)i ), this, SLOT( MenuItemValidated( int ) ) );
+        limaMenu->setItemParameter( id, i );
+        limaMenu->setItemChecked( id, functions_->isSelected( i ) );
+    }
+    menu.InsertItem( "Parameter", tr( "Set function for '%1'" ).arg( GetName() ), limaMenu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimaParameter::CommitTo
+// Created: SBO 2007-05-02
+// -----------------------------------------------------------------------------
+void LimaParameter::CommitTo( ASN1T_LimaOrder& asn ) const
+{
+    int count = 0;
+    for( unsigned int i = 0; i < functions_->count(); ++i )
+        count += functions_->isSelected( i ) ? 1 : 0;
+    asn.fonctions.n = count;
+    asn.fonctions.elem = new ASN1T_EnumTypeLima[asn.fonctions.n];
+    for( unsigned int i = 0, j = 0; i < functions_->count(); ++i )
+        if( functions_->isSelected( i ) )
+            asn.fonctions.elem[j++] = ASN1T_EnumTypeLima( i );
+    lima_->CopyTo( asn.lima );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimaParameter::Clean
+// Created: SBO 2007-05-02
+// -----------------------------------------------------------------------------
+void LimaParameter::Clean( ASN1T_LimaOrder& asn ) const
+{
+    delete[] asn.fonctions.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimaParameter::CommitTo
+// Created: SBO 2007-05-02
+// -----------------------------------------------------------------------------
+void LimaParameter::CommitTo( ActionParameter_ABC& parameter ) const
+{
+    kernel::Lines lines;
+    lima_->CopyTo( lines );
+    std::auto_ptr< ActionParameterLima > param( new ActionParameterLima( GetName(), converter_, lines ) );
+    for( unsigned int i = 0; i < functions_->count(); ++i )
+        if( functions_->isSelected( i ) )
+            param->AddFunction( i );
+    parameter.AddParameter( *param.release() );
+}

@@ -10,18 +10,20 @@
 #ifndef __ParamLimaList_h_
 #define __ParamLimaList_h_
 
-#include "Param_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "ListParameter.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
 
 namespace kernel
 {
-    class TacticalLine_ABC;
+    class ActionController;
     class OrderParameter;
     class CoordinateConverter_ABC;
+    class TacticalLine_ABC;
 }
 
 class Lima;
+class LimaParameter;
 
 // =============================================================================
 /** @class  ParamLimaList
@@ -29,9 +31,8 @@ class Lima;
 */
 // Created: SBO 2006-11-14
 // =============================================================================
-class ParamLimaList : public QObject
-                    , public Param_ABC
-                    , public kernel::ElementObserver_ABC< Lima >
+class ParamLimaList : public ListParameter
+                    , public kernel::ElementObserver_ABC< kernel::TacticalLine_ABC >
                     , public kernel::ContextMenuObserver_ABC< kernel::TacticalLine_ABC >
 {
     Q_OBJECT;
@@ -39,14 +40,12 @@ class ParamLimaList : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLimaList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
+             ParamLimaList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& controller );
     virtual ~ParamLimaList();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool CheckValidity();
-    virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void BuildInterface( QWidget* parent );
     virtual void CommitTo( ASN1T_OrderContext& asn ) const;
     virtual void Clean( ASN1T_OrderContext& asn ) const;
@@ -56,11 +55,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    virtual void OnRequestPopup( QListViewItem* pItem, const QPoint& pos );
-    void OnDeleteSelectedItem();
-    void OnClearList();
-    void TurnHeaderBlack();
-    void MenuItemValidated( int function );
+    void MenuItemValidated( int index );
     //@}
 
 private:
@@ -72,9 +67,17 @@ private:
 
     //! @name Helpers
     //@{
+    virtual Param_ABC* CreateElement();
+    virtual void DeleteElement( Param_ABC& param );
+
     virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu );
-    virtual void NotifyUpdated( const Lima& ) {};
-    virtual void NotifyDeleted( const Lima& entity );
+    virtual void NotifyDeleted( const kernel::TacticalLine_ABC& entity );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< const kernel::TacticalLine_ABC*, LimaParameter* > T_Limas;
+    typedef T_Limas::const_iterator                                   CIT_Limas;
     //@}
 
 private:
@@ -82,8 +85,8 @@ private:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::OrderParameter& parameter_;
-    QListView* list_;
-    QPopupMenu* pPopupMenu_;
+    unsigned int count_;
+    T_Limas limas_;
     const Lima* potential_;
     //@}
 };

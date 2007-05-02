@@ -421,7 +421,7 @@ Param_ABC* MissionInterfaceBuilder::BuildLimits( const OrderParameter& parameter
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildLimaList( const OrderParameter& parameter ) const
 {
-    return new ParamLimaList( missionInterface_, parameter, converter_ );
+    return new ParamLimaList( missionInterface_, parameter, converter_, controller_ );
 }
 
 // -----------------------------------------------------------------------------

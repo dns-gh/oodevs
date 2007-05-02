@@ -44,9 +44,12 @@ protected:
     //@{
     unsigned int Count() const;
     void Accept( ParamVisitor_ABC& visitor ) const;
+    void Select( const Param_ABC& param );
+    virtual void DeleteElement( Param_ABC& param );
+    void EnableCreation( bool enabled );
     //@}
 
-private slots:
+protected slots:
     //! @name slots
     //@{
     void OnCreate();
@@ -85,6 +88,7 @@ private:
     QListViewItem* selected_;
     bool optional_;
     T_Widgets widgets_;
+    bool createEnabled_;
     //@}
 };
 
