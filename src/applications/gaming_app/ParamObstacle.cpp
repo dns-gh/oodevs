@@ -100,7 +100,7 @@ void ParamObstacle::BuildInterface( QWidget* parent )
     new QLabel( tr( "Sub-type:" ), box );
     preliminaryCombo_ = new QComboBox( box );
     for( int i = 0; i < eNbrMissionGenSousTypeObstacle; ++i )
-        preliminaryCombo_->insertItem( ENT_Tr::ConvertFromMissionGenSousTypeObstacle( ( E_MissionGenSousTypeObstacle )i ).c_str(), i );
+        preliminaryCombo_->insertItem( ENT_Tr::ConvertFromMissionGenSousTypeObstacle( ( E_MissionGenSousTypeObstacle )i, ENT_Tr::eToTr ).c_str(), i );
 
     density_ = new ParamNumericField( tr( "Density" ), true );
     density_->BuildInterface( group );

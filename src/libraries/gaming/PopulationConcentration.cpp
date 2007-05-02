@@ -116,7 +116,7 @@ unsigned int PopulationConcentration::GetDensity() const
 // -----------------------------------------------------------------------------
 std::string PopulationConcentration::GetAttitude() const
 {
-    return ENT_Tr::ConvertFromPopulationAttitude( attitude_ );
+    return ENT_Tr::ConvertFromPopulationAttitude( attitude_, ENT_Tr::eToTr );
 }
 
 // -----------------------------------------------------------------------------

@@ -29,7 +29,7 @@ struct Enum_##name : public Enum_ABC< E_##name > { \
     Enum_##name( int value ) : Enum_ABC< E_##name >( (E_##name)value ) {}\
     Enum_##name( const E_##name& value ) : Enum_ABC< E_##name >( value ) {}\
     Enum_##name( const QString& name ) : Enum_ABC< E_##name >( ENT_Tr::ConvertTo##name( name.ascii() ) ) {}\
-    virtual QString ToString() const { return ENT_Tr::ConvertFrom##name( value_ ).c_str(); } \
+    virtual QString ToString() const { return ENT_Tr::ConvertFrom##name( value_, ENT_Tr::eToTr ).c_str(); } \
     static int max() { return int( eNbr##name ); } \
 };
 

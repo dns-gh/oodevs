@@ -34,7 +34,7 @@ namespace
         combo.Clear();
         for( unsigned int i = 0; i < (unsigned int)size; ++i )
         {
-            const std::string& value = converter( (Enum)i, ENT_Tr_ABC::eToSim );
+            const std::string& value = converter( (Enum)i, ENT_Tr_ABC::eToTr );
             combo.AddItem( value.c_str(), (Enum)i );
         }
     }

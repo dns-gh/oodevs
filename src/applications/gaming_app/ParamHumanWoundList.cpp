@@ -55,7 +55,7 @@ void ParamHumanWoundList::BuildInterface( QWidget* parent )
 
     humanWoundsList_.append( "" );
     for( unsigned int i = eHumanWound_BlesseUrgence1; i < eNbrHumanWound; ++i )
-        humanWoundsList_.append( ENT_Tr::ConvertFromHumanWound( ( E_HumanWound )i ).c_str() );
+        humanWoundsList_.append( ENT_Tr::ConvertFromHumanWound( ( E_HumanWound )i, ENT_Tr::eToTr ).c_str() );
 
     table_->setNumRows( 0 );
     table_->insertRows( 0, 1 );

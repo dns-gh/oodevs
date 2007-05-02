@@ -43,6 +43,11 @@ public:
     virtual ~Application();
     //@}
 
+    //! @name 
+    //@{
+    void Initialize();
+    //@}
+
 private slots:
     //! @name Slots
     //@{

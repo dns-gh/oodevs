@@ -141,7 +141,7 @@ unsigned int PopulationFlow::GetDeadHumans() const
 // -----------------------------------------------------------------------------
 std::string PopulationFlow::GetAttitude() const
 {
-    return ENT_Tr::ConvertFromPopulationAttitude( attitude_ );
+    return ENT_Tr::ConvertFromPopulationAttitude( attitude_, ENT_Tr::eToTr );
 }
     
 // -----------------------------------------------------------------------------

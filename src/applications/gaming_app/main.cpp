@@ -38,7 +38,7 @@ namespace
 
     void Run( int argc, char** argv )
     {
-        QApplication* app = 0;
+        Application* app = 0;
 
         try
         {
@@ -50,6 +50,7 @@ namespace
             AddTranslator( "gaming" );
             AddTranslator( "gaming_app" );
             ENT_Tr::InitTranslations();
+            app->Initialize();
         }
         catch( ... )
         {

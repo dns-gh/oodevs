@@ -134,11 +134,11 @@ void InfoStatusBar::SetHumanFactors( const HumanFactors& humans )
 {
     show();
     mood_->setPixmap( moodIcons_.at( humans.GetMorale() ) );
-    QToolTip::add( mood_, tr( "Morale: " ) + ENT_Tr::ConvertFromUnitMoral( humans.GetMorale() ).c_str() );
+    QToolTip::add( mood_, tr( "Morale: " ) + ENT_Tr::ConvertFromUnitMoral( humans.GetMorale(), ENT_Tr::eToTr ).c_str() );
     experience_->setPixmap( experienceIcons_.at( humans.GetExperience() ) );
-    QToolTip::add( experience_, tr( "Experience: " ) + ENT_Tr::ConvertFromUnitExperience( humans.GetExperience() ).c_str() );
+    QToolTip::add( experience_, tr( "Experience: " ) + ENT_Tr::ConvertFromUnitExperience( humans.GetExperience(), ENT_Tr::eToTr ).c_str() );
     tiredness_->setPixmap( tirednessIcons_.at( humans.GetTiredness() ) );
-    QToolTip::add( tiredness_, tr( "Tiredness: " ) + ENT_Tr::ConvertFromUnitFatigue( humans.GetTiredness() ).c_str() );
+    QToolTip::add( tiredness_, tr( "Tiredness: " ) + ENT_Tr::ConvertFromUnitFatigue( humans.GetTiredness(), ENT_Tr::eToTr ).c_str() );
 }
 
 // -----------------------------------------------------------------------------

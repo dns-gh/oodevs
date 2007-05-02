@@ -38,20 +38,7 @@ Application::Application( int argc, char** argv )
     : QApplication( argc, argv )
     , mainWindow_ ( 0 )
 {
-    try
-    {
-        Initialize( argc, argv );
-    }
-    catch( std::exception& e )
-    {
-        QMessageBox::critical( 0, APP_NAME, e.what() );
-        throw CatchMeIfYouCan();
-    }
-    catch( ... )
-    {
-        QMessageBox::critical( 0, APP_NAME, "Whooops. CSword has crashed" );
-        throw CatchMeIfYouCan();
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -63,6 +50,28 @@ Application::~Application()
     delete network_;
     delete workers_;
     delete config_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::Initialize
+// Created: SBO 2006-07-05
+// -----------------------------------------------------------------------------
+void Application::Initialize()
+{
+    try
+    {
+        Initialize( argc(), argv() );
+    }
+    catch( std::exception& e )
+    {
+        QMessageBox::critical( 0, APP_NAME, e.what() );
+        throw CatchMeIfYouCan();
+    }
+    catch( ... )
+    {
+        QMessageBox::critical( 0, APP_NAME, "Whooops. CSword has crashed" );
+        throw CatchMeIfYouCan();
+    }
 }
 
 // -----------------------------------------------------------------------------

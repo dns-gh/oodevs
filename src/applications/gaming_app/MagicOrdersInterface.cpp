@@ -157,7 +157,7 @@ void MagicOrdersInterface::NotifyContextMenu( const kernel::Population_ABC& enti
 
     QPopupMenu* choiceMenu = new QPopupMenu( magicMenu );
     for( unsigned int i = 0; i < (unsigned int)eNbrPopulationAttitude; ++i )
-        choiceMenu->insertItem( ENT_Tr::ConvertFromPopulationAttitude( (E_PopulationAttitude)i ).c_str(), this, SLOT( ChangePopulationAttitude( int ) ), 0, i );
+        choiceMenu->insertItem( ENT_Tr::ConvertFromPopulationAttitude( (E_PopulationAttitude)i, ENT_Tr::eToTr ).c_str(), this, SLOT( ChangePopulationAttitude( int ) ), 0, i );
     magicMenu->insertItem( tr( "Change population attitude" ), choiceMenu );
 }
 

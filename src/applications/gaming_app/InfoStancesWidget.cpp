@@ -59,12 +59,12 @@ void InfoStancesWidget::Update( const Attributes& attributes )
 {
     show();
     previous_->setPixmap( pixmaps_.at( attributes.nOldPosture_ ) );
-    QToolTip::add( previous_, tr( "Stance: previous was: '%1'" ).arg( ENT_Tr::ConvertFromUnitPosture( (E_UnitPosture)attributes.nOldPosture_ ).c_str() ) );
+    QToolTip::add( previous_, tr( "Stance: previous was: '%1'" ).arg( ENT_Tr::ConvertFromUnitPosture( (E_UnitPosture)attributes.nOldPosture_, ENT_Tr::eToTr ).c_str() ) );
     next_->setPixmap( pixmaps_.at( attributes.nCurrentPosture_ ) );
     if( attributes.nPostureCompletionPourcentage_ < 100 )
-        QToolTip::add( next_, tr( "Stance: next is: '%1'" ).arg( ENT_Tr::ConvertFromUnitPosture( (E_UnitPosture)attributes.nCurrentPosture_ ).c_str() ) );
+        QToolTip::add( next_, tr( "Stance: next is: '%1'" ).arg( ENT_Tr::ConvertFromUnitPosture( (E_UnitPosture)attributes.nCurrentPosture_, ENT_Tr::eToTr ).c_str() ) );
     else
-        QToolTip::add( next_, tr( "Stance: current is: '%1'" ).arg( ENT_Tr::ConvertFromUnitPosture( (E_UnitPosture)attributes.nCurrentPosture_ ).c_str() ) );
+        QToolTip::add( next_, tr( "Stance: current is: '%1'" ).arg( ENT_Tr::ConvertFromUnitPosture( (E_UnitPosture)attributes.nCurrentPosture_, ENT_Tr::eToTr ).c_str() ) );
     progress_->setText( QString::number( attributes.nPostureCompletionPourcentage_ ) + Units::percentage );
 }
 
