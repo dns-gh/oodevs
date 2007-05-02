@@ -73,9 +73,9 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< Layer_ABC* >         T_Layers;
-    typedef std::vector< float >              T_Alphas;
-    typedef std::vector< std::string >        T_Names;
+    typedef std::vector< Layer_ABC* >     T_Layers;
+    typedef std::vector< float >          T_Alphas;
+    typedef std::vector< QString >        T_Names;
     //@}
 
 private:

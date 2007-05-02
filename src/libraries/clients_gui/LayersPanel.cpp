@@ -89,10 +89,15 @@ void LayersPanel::AddLayer( const QString& name, Layer_ABC& layer )
 // -----------------------------------------------------------------------------
 void LayersPanel::Commit()
 {
-    for( unsigned i = 0; i < layers_.size(); ++i )
-        options_.Change( "Layers/" + names_[ i ] + "/Alpha", current_[ i ] );
     current_       = new_;
     currentLayers_ = newLayers_;
+    for( unsigned i = 0; i < layers_.size(); ++i )
+    {
+        options_.Change( std::string( "Layers/" ) + names_[ i ].ascii() + "/Alpha", current_[ i ] );
+        T_Layers::const_iterator it = std::find( currentLayers_.begin(), currentLayers_.end(), layers_[i] );
+        if( it != currentLayers_.end() )
+            options_.Change( std::string( "Layers/" ) + names_[ i ].ascii() + "/Position", it - currentLayers_.begin() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -114,7 +119,7 @@ void LayersPanel::Reset()
         item->SetValue( *it );
         T_Layers::const_iterator lit = std::find( layers_.begin(), layers_.end(), *it );
         if( lit != layers_.end() )
-            item->setText( 0, names_[ lit - layers_.begin() ].c_str() );
+            item->setText( 0, names_[ lit - layers_.begin() ] );
     }
 }
 
@@ -163,6 +168,9 @@ void LayersPanel::OnUp()
             {
                 layer->MoveAbove( *previous->GetValue< Layer_ABC >() );
                 previous->moveItem( item );
+                T_Layers::iterator it = std::find( newLayers_.begin(), newLayers_.end(), layer );
+                if( it < newLayers_.end() - 1 )
+                    std::swap( *it, *(it+1) );
             }
         }
     }
@@ -185,6 +193,9 @@ void LayersPanel::OnDown()
             {
                 layer->MoveBelow( *next->GetValue< Layer_ABC >() );
                 item->moveItem( next );
+                T_Layers::iterator it = std::find( newLayers_.begin(), newLayers_.end(), layer );
+                if( it != newLayers_.begin() && it != newLayers_.end() )
+                    std::swap( *it, *(it-1) );
             }
         }
     }
@@ -196,15 +207,30 @@ void LayersPanel::OnDown()
 // -----------------------------------------------------------------------------
 void LayersPanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    const QString option( name.c_str() );
+    QString option( name.c_str() );
     if( !option.startsWith( "Layers/" ) )
         return;
+    option.remove( "Layers/" );
     for( unsigned i = 0; i < layers_.size(); ++i )
-        if( names_[i] == name )
+    {
+        if( names_[i] + "/Alpha" == option )
         {
             const float alpha = value.To< float >();
             new_[ i ] = current_[ i ] = alpha;
             layers_[ i ]->SetAlpha( new_[ i ] );
             return;
         }
+        if( names_[i] + "/Position" == option )
+        {
+            T_Layers::iterator oldPosition = std::find( currentLayers_.begin(), currentLayers_.end(), layers_[i] );
+            const int newIndex = value.To< int >();
+            if( oldPosition != currentLayers_.end() && newIndex < currentLayers_.size() )
+            {
+                T_Layers::iterator newPosition = currentLayers_.begin() + newIndex;
+                std::swap( *oldPosition, *newPosition );
+                Reset();
+                return;
+            }
+        }
+    }
 }
