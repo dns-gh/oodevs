@@ -1287,9 +1287,6 @@
     </message>
 </context>
 <context>
-    <name>ParamListView</name>
-</context>
-<context>
     <name>ParamObstacle</name>
     <message>
         <source>Type:</source>

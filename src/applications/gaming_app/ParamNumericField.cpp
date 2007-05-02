@@ -59,7 +59,7 @@ void ParamNumericField::BuildInterface( QWidget* parent )
 {
     QHBox* box = new QHBox( parent );
     box->setSpacing( 5 );
-    QLabel* pLabel_ = new gui::RichLabel( GetName(), box );
+    pLabel_ = new gui::RichLabel( GetName(), box );
     pLabel_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     pEdit_ = new QLineEdit( "0", box );
     SetLimits( 0.f, 99999.f );
