@@ -29,16 +29,6 @@ ActionParameterLima::ActionParameterLima( const QString& name, const kernel::Coo
 // Name: ActionParameterLima constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-ActionParameterLima::ActionParameterLima( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, const QString& functions )
-    : ActionParameter< QString >( name, functions )
-{
-    AddParameter( *new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, location ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterLima constructor
-// Created: SBO 2007-04-26
-// -----------------------------------------------------------------------------
 ActionParameterLima::ActionParameterLima( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_LimaOrder& asn )
     : ActionParameter< QString >( name )
 {

@@ -124,7 +124,7 @@ void ActionFactory::AddOrderContext( Action_ABC& action, const OrderType& order,
             continue;
         if( param.GetType() == "limits" && asn.m.limite_droitePresent && asn.m.limite_gauchePresent )
             action.AddParameter( *factory_.CreateParameter( param, asn.limite_gauche, asn.limite_droite ) );
-        else if( param.GetType() == "limas" )
+        else if( param.GetType() == "limalist" )
             action.AddParameter( *factory_.CreateParameter( param, asn.limas ) );
         else if( param.GetType() == "dangerousdirection" )
             action.AddParameter( *factory_.CreateParameter( param, asn.direction_dangereuse ) );

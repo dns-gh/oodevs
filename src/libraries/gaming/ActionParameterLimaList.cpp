@@ -30,7 +30,7 @@ ActionParameterLimaList::ActionParameterLimaList( const kernel::OrderParameter& 
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < limas.n; ++i )
-        AddParameter( *new ActionParameterLima( tools::translate( "ActionParameter", "Lima" ), converter, limas.elem[i] ) );
+        AddParameter( *new ActionParameterLima( tools::translate( "ActionParameter", "Lima %1" ).arg( i ), converter, limas.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------

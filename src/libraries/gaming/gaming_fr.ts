@@ -25,10 +25,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Lima</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Location %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -38,6 +34,10 @@
     </message>
     <message>
         <source>Obstacle %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lima %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

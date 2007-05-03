@@ -32,7 +32,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              ActionParameterLima( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
-             ActionParameterLima( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, const QString& functions );
              ActionParameterLima( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_LimaOrder& asn );
     virtual ~ActionParameterLima();
     //@}
