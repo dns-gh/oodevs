@@ -1,28 +1,39 @@
-SOURCES         =   Agent.cpp \
-                    Automat.cpp \
-                    CampAttributes.cpp \
-                    CrossingSiteAttributes.cpp \
-                    Diplomacy.cpp \
-                    Dotations.cpp \
-                    Formation.cpp \
-                    KnowledgeGroup.cpp \
-                    Lima.cpp \
-                    Limit.cpp \
-                    LogisticHierarchies_ABC.inl
-                    LogisticRouteAttributes.cpp \
-                    MaintenanceStates.cpp \
-                    MedicalStates.cpp \
-                    NBCAttributes.cpp \
-                    Object.cpp \
-                    Population.cpp \
-                    RotaAttributes.cpp \
-                    SupplyStates.cpp \
-                    TacticalLine_ABC.cpp \
-                    Tc2States.cpp \
-                    Team.cpp \
-                    TeamKarmas.cpp \
-                    TeamsModel.cpp \
-                    Tools.cpp
+SOURCES = Agent.cpp \
+AgentsModelChecker.cpp \
+Automat.cpp \
+AutomatHierarchies.cpp \
+CampAttributes.cpp \
+CrossingSiteAttributes.cpp \
+Diplomacies.cpp \
+Diplomacy.cpp \
+Dotation.cpp \
+Dotations.cpp \
+EnumTypes.h \
+Formation.cpp \
+KnowledgeGroup.cpp \
+Lima.cpp \
+Limit.cpp \
+LocalWeather.cpp \
+LocationSerializer.cpp \
+LogisticRouteAttributes.cpp \
+MaintenanceStates.cpp \
+MedicalStates.cpp \
+MineAttributes.cpp \
+Model.cpp \
+NBCAttributes.cpp \
+Object.cpp \
+Population.cpp \
+ProfileFactory.cpp \
+RotaAttributes.cpp \
+Stocks.cpp \
+SupplyStates.cpp \
+TacticalLine_ABC.cpp \
+Tc2States.cpp \
+Team.cpp \
+TeamsModel.cpp \
+Tools.cpp \
+UserProfile.cpp \
+Weather.cpp \
+WeatherModel.cpp \
 
-TRANSLATIONS    = preparation_fr.ts \
-                  preparation_en.ts
+TRANSLATIONS = preparation_fr.ts preparation_en.ts

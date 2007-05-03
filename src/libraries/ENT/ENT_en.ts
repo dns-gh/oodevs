@@ -785,236 +785,112 @@
 <context>
     <name>ENT_Tr</name>
     <message>
-        <source>circle</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>ellipse</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>line</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>polygon</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>point</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>sector</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>at</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>after</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>as of</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>before</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>cleared</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>due</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>end</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>off</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>on</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>since</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>start</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>until</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>wef</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>identifiee</source>
-        <translation>identified</translation>
+        <translation type="obsolete">identified</translation>
     </message>
     <message>
         <source>reconnue</source>
-        <translation>recognized</translation>
+        <translation type="obsolete">recognized</translation>
     </message>
     <message>
         <source>detectee</source>
-        <translation>detected</translation>
+        <translation type="obsolete">detected</translation>
     </message>
     <message>
         <source>signale</source>
-        <translation>reported</translation>
+        <translation type="obsolete">reported</translation>
     </message>
     <message>
         <source>munition</source>
-        <translation>ammunition</translation>
+        <translation type="obsolete">ammunition</translation>
     </message>
     <message>
         <source>carburant</source>
-        <translation>fuel</translation>
+        <translation type="obsolete">fuel</translation>
     </message>
     <message>
         <source>explosif</source>
-        <translation>explosive</translation>
+        <translation type="obsolete">explosive</translation>
     </message>
     <message>
         <source>mine</source>
-        <translation>mine</translation>
+        <translation type="obsolete">mine</translation>
     </message>
     <message>
         <source>barbele</source>
-        <translation>barbed wire</translation>
+        <translation type="obsolete">barbed wire</translation>
     </message>
     <message>
         <source>piece</source>
-        <translation>patch</translation>
+        <translation type="obsolete">patch</translation>
     </message>
     <message>
         <source>ration</source>
-        <translation>daily food ration</translation>
+        <translation type="obsolete">daily food ration</translation>
     </message>
     <message>
         <source>obus</source>
-        <translation>shell</translation>
+        <translation type="obsolete">shell</translation>
     </message>
     <message>
         <source>missile air</source>
-        <translation>air missile</translation>
+        <translation type="obsolete">air missile</translation>
     </message>
     <message>
         <source>missile sol</source>
-        <translation>ground missile</translation>
+        <translation type="obsolete">ground missile</translation>
     </message>
     <message>
         <source>mitraille</source>
-        <translation>hail of bullets</translation>
-    </message>
-    <message>
-        <source>none</source>
-        <translation></translation>
+        <translation type="obsolete">hail of bullets</translation>
     </message>
     <message>
         <source>reparation</source>
-        <translation>repair work</translation>
+        <translation type="obsolete">repair work</translation>
     </message>
     <message>
         <source>moyen</source>
-        <translation>so so</translation>
+        <translation type="obsolete">so so</translation>
     </message>
     <message>
         <source>inconnu</source>
-        <translation>unknown</translation>
+        <translation type="obsolete">unknown</translation>
     </message>
     <message>
         <source>non blesse</source>
-        <translation>uninjured</translation>
+        <translation type="obsolete">uninjured</translation>
     </message>
     <message>
         <source>mort</source>
-        <translation>dead</translation>
+        <translation type="obsolete">dead</translation>
     </message>
     <message>
         <source>blesse urgence 1</source>
-        <translation>wounded (1)</translation>
+        <translation type="obsolete">wounded (1)</translation>
     </message>
     <message>
         <source>blesse urgence 2</source>
-        <translation>wounded (2)</translation>
+        <translation type="obsolete">wounded (2)</translation>
     </message>
     <message>
         <source>blesse urgence 3</source>
-        <translation>wounded (3)</translation>
+        <translation type="obsolete">wounded (3)</translation>
     </message>
     <message>
         <source>blesse urgence extreme</source>
-        <translation>seriously wounded</translation>
-    </message>
-    <message>
-        <source>o</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>oo</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>ooo</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>i</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>ii</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>iii</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>x</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>xx</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>xxx</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>xxxx</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>xxxxx</source>
-        <translation></translation>
+        <translation type="obsolete">seriously wounded</translation>
     </message>
     <message>
         <source>officier</source>
-        <translation>officer</translation>
+        <translation type="obsolete">officer</translation>
     </message>
     <message>
         <source>sous officer</source>
-        <translation>under officer</translation>
+        <translation type="obsolete">under officer</translation>
     </message>
     <message>
         <source>mdr</source>
-        <translation>private</translation>
+        <translation type="obsolete">private</translation>
     </message>
     <message>
         <source>courte portee</source>
@@ -1045,252 +921,192 @@
         <translation type="obsolete">polyvalent</translation>
     </message>
     <message>
-        <source>no error</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>error invalid unit</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>error invalid limit</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>error invalid lima</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>error invalid mission</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>error invalid mission parameters</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>error unit cannot receive order</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>error invalid order conduite</source>
-        <translation>error invalid frag order</translation>
+        <translation type="obsolete">error invalid frag order</translation>
     </message>
     <message>
         <source>error invalid order mission</source>
-        <translation>error invalid mission</translation>
+        <translation type="obsolete">error invalid mission</translation>
     </message>
     <message>
         <source>error invalid order initial</source>
-        <translation>error invalid initial order</translation>
+        <translation type="obsolete">error invalid initial order</translation>
     </message>
     <message>
         <source>error invalid order conduite parameters</source>
-        <translation>error invalid frag order parameters</translation>
-    </message>
-    <message>
-        <source>error unit surrendered</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>started</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>stopped</source>
-        <translation></translation>
+        <translation type="obsolete">error invalid frag order parameters</translation>
     </message>
     <message>
         <source>bouchon mines</source>
-        <translation>mines</translation>
+        <translation type="obsolete">mines</translation>
     </message>
     <message>
         <source>zone minee lineaire</source>
-        <translation>mined area</translation>
+        <translation type="obsolete">mined area</translation>
     </message>
     <message>
         <source>zone minee par dispersion</source>
-        <translation>mined area (scattered)</translation>
+        <translation type="obsolete">mined area (scattered)</translation>
     </message>
     <message>
         <source>fosse anti char</source>
-        <translation>anti tank obstacle</translation>
+        <translation type="obsolete">anti tank obstacle</translation>
     </message>
     <message>
         <source>abattis</source>
-        <translation>abatis</translation>
+        <translation type="obsolete">abatis</translation>
     </message>
     <message>
         <source>barricade</source>
-        <translation>barricade</translation>
+        <translation type="obsolete">barricade</translation>
     </message>
     <message>
         <source>eboulement</source>
-        <translation>collapse</translation>
+        <translation type="obsolete">collapse</translation>
     </message>
     <message>
         <source>destruction route</source>
-        <translation>road destruction</translation>
+        <translation type="obsolete">road destruction</translation>
     </message>
     <message>
         <source>destruction pont</source>
-        <translation>bridge destruction</translation>
+        <translation type="obsolete">bridge destruction</translation>
     </message>
     <message>
         <source>pont flottant continu</source>
-        <translation>Eng bridge</translation>
+        <translation type="obsolete">Eng bridge</translation>
     </message>
     <message>
         <source>poste tir</source>
-        <translation>firing post</translation>
+        <translation type="obsolete">firing post</translation>
     </message>
     <message>
         <source>zone protegee</source>
-        <translation>protected area</translation>
+        <translation type="obsolete">protected area</translation>
     </message>
     <message>
         <source>zone implantation canon</source>
-        <translation>gun artillery deployment area</translation>
+        <translation type="obsolete">gun artillery deployment area</translation>
     </message>
     <message>
         <source>zone implantation cobra</source>
-        <translation>counter battery radar deployment area</translation>
+        <translation type="obsolete">counter battery radar deployment area</translation>
     </message>
     <message>
         <source>zone implantation lrm</source>
-        <translation>mlrs deployment area</translation>
+        <translation type="obsolete">mlrs deployment area</translation>
     </message>
     <message>
         <source>site franchissement</source>
-        <translation>crossing site</translation>
+        <translation type="obsolete">crossing site</translation>
     </message>
     <message>
         <source>nuage nbc</source>
-        <translation>NBC cloud</translation>
+        <translation type="obsolete">NBC cloud</translation>
     </message>
     <message>
         <source>plot ravitaillement</source>
-        <translation>FARP</translation>
+        <translation type="obsolete">FARP</translation>
     </message>
     <message>
         <source>site decontamination</source>
-        <translation>decontamination site</translation>
+        <translation type="obsolete">decontamination site</translation>
     </message>
     <message>
         <source>zone brouillage brod</source>
-        <translation>jamming area</translation>
+        <translation type="obsolete">jamming area</translation>
     </message>
     <message>
         <source>rota</source>
-        <translation>ROTA zone</translation>
+        <translation type="obsolete">ROTA zone</translation>
     </message>
     <message>
         <source>zone nbc</source>
-        <translation>NBC zone</translation>
+        <translation type="obsolete">NBC zone</translation>
     </message>
     <message>
         <source>zone brouillage bromure</source>
-        <translation>jamming area (type 2)</translation>
+        <translation type="obsolete">jamming area (type 2)</translation>
     </message>
     <message>
         <source>aire poser</source>
-        <translation>landing area</translation>
+        <translation type="obsolete">landing area</translation>
     </message>
     <message>
         <source>piste</source>
-        <translation>slope</translation>
+        <translation type="obsolete">slope</translation>
     </message>
     <message>
         <source>plateforme</source>
-        <translation>platform</translation>
+        <translation type="obsolete">platform</translation>
     </message>
     <message>
         <source>zone mobilite amelioree</source>
-        <translation>mobility enhanced area</translation>
+        <translation type="obsolete">mobility enhanced area</translation>
     </message>
     <message>
         <source>zone poser helicoptere</source>
-        <translation>landing area (helicopters)</translation>
+        <translation type="obsolete">landing area (helicopters)</translation>
     </message>
     <message>
         <source>aire logistique</source>
-        <translation>logistics support area</translation>
+        <translation type="obsolete">logistics support area</translation>
     </message>
     <message>
         <source>itineraire logistique</source>
-        <translation>logistics support route</translation>
+        <translation type="obsolete">logistics support route</translation>
     </message>
     <message>
         <source>camp prisonniers</source>
-        <translation>prisoners camp</translation>
+        <translation type="obsolete">prisoners camp</translation>
     </message>
     <message>
         <source>camp refugies</source>
-        <translation>refugees camp</translation>
+        <translation type="obsolete">refugees camp</translation>
     </message>
     <message>
         <source>poste controle</source>
-        <translation>checkpoint</translation>
+        <translation type="obsolete">checkpoint</translation>
     </message>
     <message>
         <source>terrain largage</source>
-        <translation>dropping zone</translation>
+        <translation type="obsolete">dropping zone</translation>
     </message>
     <message>
         <source>zone interdite mouvement</source>
-        <translation>keep out zone</translation>
+        <translation type="obsolete">keep out zone</translation>
     </message>
     <message>
         <source>zone interdite tir</source>
-        <translation>fire forbidden zone</translation>
+        <translation type="obsolete">fire forbidden zone</translation>
     </message>
     <message>
         <source>zone implantation mortier</source>
-        <translation>mortar deployment area</translation>
+        <translation type="obsolete">mortar deployment area</translation>
     </message>
     <message>
         <source>pont flottant discontinu</source>
-        <translation>Eng bridge (type2)</translation>
+        <translation type="obsolete">Eng bridge (type2)</translation>
     </message>
     <message>
         <source>installation</source>
-        <translation>facility</translation>
+        <translation type="obsolete">facility</translation>
     </message>
     <message>
         <source>preliminaire</source>
-        <translation>small sized</translation>
+        <translation type="obsolete">small sized</translation>
     </message>
     <message>
         <source>de manoeuvre</source>
-        <translation>reserved</translation>
-    </message>
-    <message>
-        <source>error invalid object</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>error invalid id</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>error invalid camp</source>
-        <translation></translation>
+        <translation type="obsolete">reserved</translation>
     </message>
     <message>
         <source>error invalid localisation</source>
-        <translation>error invalid location</translation>
-    </message>
-    <message>
-        <source>error missing specific attributes</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>error invalid specific attributes</source>
-        <translation></translation>
+        <translation type="obsolete">error invalid location</translation>
     </message>
     <message>
         <source>normal</source>
-        <translation>regular</translation>
+        <translation type="obsolete">regular</translation>
     </message>
     <message>
         <source>elements terrain</source>
@@ -1302,495 +1118,451 @@
     </message>
     <message>
         <source>attente disponibilite ambulance releve</source>
-        <translation>waiting for evacuation ambulance</translation>
+        <translation type="obsolete">waiting for evacuation ambulance</translation>
     </message>
     <message>
         <source>ambulance releve deplacement aller</source>
-        <translation>evacuation ambulance coming</translation>
+        <translation type="obsolete">evacuation ambulance coming</translation>
     </message>
     <message>
         <source>ambulance releve chargement</source>
-        <translation>evacuation ambulance loading</translation>
+        <translation type="obsolete">evacuation ambulance loading</translation>
     </message>
     <message>
         <source>attente chargement complet ambulance releve</source>
-        <translation>waiting for evacuation ambulance loading</translation>
+        <translation type="obsolete">waiting for evacuation ambulance loading</translation>
     </message>
     <message>
         <source>ambulance releve deplacement retour</source>
-        <translation>evacuation ambulance going back</translation>
+        <translation type="obsolete">evacuation ambulance going back</translation>
     </message>
     <message>
         <source>ambulance releve dechargement</source>
-        <translation>evacuation ambulance unloading</translation>
+        <translation type="obsolete">evacuation ambulance unloading</translation>
     </message>
     <message>
         <source>attente disponibilite medecin pour diagnostique</source>
-        <translation>waiting for doctor</translation>
+        <translation type="obsolete">waiting for doctor</translation>
     </message>
     <message>
         <source>diagnostique</source>
-        <translation>diagnostic</translation>
+        <translation type="obsolete">diagnostic</translation>
     </message>
     <message>
         <source>recherche secteur tri</source>
-        <translation>looking for sorting area</translation>
+        <translation type="obsolete">looking for sorting area</translation>
     </message>
     <message>
         <source>attente disponibilite medecin pour tri</source>
-        <translation>waiting for sorting doctor</translation>
+        <translation type="obsolete">waiting for sorting doctor</translation>
     </message>
     <message>
         <source>tri</source>
-        <translation>sorting</translation>
+        <translation type="obsolete">sorting</translation>
     </message>
     <message>
         <source>recherche secteur soin</source>
-        <translation>looking for treatment area</translation>
+        <translation type="obsolete">looking for treatment area</translation>
     </message>
     <message>
         <source>attente disponibilite medecin pour soin</source>
-        <translation>waiting for doctor (treatment)</translation>
+        <translation type="obsolete">waiting for doctor (treatment)</translation>
     </message>
     <message>
         <source>soin</source>
-        <translation>treatment</translation>
+        <translation type="obsolete">treatment</translation>
     </message>
     <message>
         <source>hospitalisation</source>
-        <translation>hospitalization</translation>
+        <translation type="obsolete">hospitalization</translation>
     </message>
     <message>
         <source>attente disponibilite ambulance ramassage</source>
-        <translation>waiting for collection ambulance</translation>
+        <translation type="obsolete">waiting for collection ambulance</translation>
     </message>
     <message>
         <source>ambulance ramassage chargement</source>
-        <translation>collection ambulance loading</translation>
+        <translation type="obsolete">collection ambulance loading</translation>
     </message>
     <message>
         <source>attente chargement complet ambulance ramassage</source>
-        <translation>waiting for collection ambulance loading</translation>
+        <translation type="obsolete">waiting for collection ambulance loading</translation>
     </message>
     <message>
         <source>ambulance ramassage deplacement aller</source>
-        <translation>collection ambulance coming</translation>
+        <translation type="obsolete">collection ambulance coming</translation>
     </message>
     <message>
         <source>ambulance ramassage dechargement</source>
-        <translation>collection ambulance unloading</translation>
+        <translation type="obsolete">collection ambulance unloading</translation>
     </message>
     <message>
         <source>termine</source>
-        <translation>finished</translation>
+        <translation type="obsolete">finished</translation>
     </message>
     <message>
         <source>un echelon</source>
-        <translation>1 echelon formation</translation>
+        <translation type="obsolete">1 echelon formation</translation>
     </message>
     <message>
         <source>deux echelons</source>
-        <translation>2 echelons formation</translation>
-    </message>
-    <message>
-        <source>error already started</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>error not started</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>error not paused</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>error already paused</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>error invalid time factor</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>running</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>paused</source>
-        <translation></translation>
+        <translation type="obsolete">2 echelons formation</translation>
     </message>
     <message>
         <source>pas de precipitation</source>
-        <translation>no rainfall</translation>
+        <translation type="obsolete">no rainfall</translation>
     </message>
     <message>
         <source>tempete sable</source>
-        <translation>sand storm</translation>
+        <translation type="obsolete">sand storm</translation>
     </message>
     <message>
         <source>brouillard</source>
-        <translation>fog</translation>
+        <translation type="obsolete">fog</translation>
     </message>
     <message>
         <source>crachin</source>
-        <translation>drizzle</translation>
+        <translation type="obsolete">drizzle</translation>
     </message>
     <message>
         <source>pluie</source>
-        <translation>rain</translation>
+        <translation type="obsolete">rain</translation>
     </message>
     <message>
         <source>neige</source>
-        <translation>snowfall</translation>
+        <translation type="obsolete">snowfall</translation>
     </message>
     <message>
         <source>ligne debouche</source>
-        <translation>line of departure</translation>
+        <translation type="obsolete">line of departure</translation>
     </message>
     <message>
         <source>ligne changement attitude</source>
-        <translation>posture switching line</translation>
+        <translation type="obsolete">posture switching line</translation>
     </message>
     <message>
         <source>ligne coordination</source>
-        <translation>coordination line</translation>
+        <translation type="obsolete">coordination line</translation>
     </message>
     <message>
         <source>ligne interdire</source>
-        <translation>deny line</translation>
+        <translation type="obsolete">deny line</translation>
     </message>
     <message>
         <source>ligne objectif</source>
-        <translation>line of objectives</translation>
+        <translation type="obsolete">line of objectives</translation>
     </message>
     <message>
         <source>ligne coup arret</source>
-        <translation>block line</translation>
+        <translation type="obsolete">block line</translation>
     </message>
     <message>
         <source>ligne recueil</source>
-        <translation>rearward line</translation>
+        <translation type="obsolete">rearward line</translation>
     </message>
     <message>
         <source>ligne debut mission</source>
-        <translation>starting line</translation>
+        <translation type="obsolete">starting line</translation>
     </message>
     <message>
         <source>ligne fin mission</source>
-        <translation>finish line</translation>
+        <translation type="obsolete">finish line</translation>
     </message>
     <message>
         <source>ligne identification accueil</source>
-        <translation>recognition and reception line</translation>
-    </message>
-    <message>
-        <source>error invalid geometry</source>
-        <translation></translation>
+        <translation type="obsolete">recognition and reception line</translation>
     </message>
     <message>
         <source>error invalid lima function</source>
-        <translation>error invalid phase line function</translation>
+        <translation type="obsolete">error invalid phase line function</translation>
     </message>
     <message>
         <source>calme</source>
-        <translation>quiet</translation>
+        <translation type="obsolete">quiet</translation>
     </message>
     <message>
         <source>agitee</source>
-        <translation>agitated</translation>
+        <translation type="obsolete">agitated</translation>
     </message>
     <message>
         <source>excitee</source>
-        <translation>nervous</translation>
+        <translation type="obsolete">nervous</translation>
     </message>
     <message>
         <source>agressive</source>
-        <translation>agressive</translation>
-    </message>
-    <message>
-        <source>error invalid attribute</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>message</source>
-        <translation></translation>
+        <translation type="obsolete">agressive</translation>
     </message>
     <message>
         <source>operationel</source>
-        <translation>operational</translation>
+        <translation type="obsolete">operational</translation>
     </message>
     <message>
         <source>evenement exceptionnel</source>
-        <translation>special event</translation>
-    </message>
-    <message>
-        <source>warning</source>
-        <translation></translation>
+        <translation type="obsolete">special event</translation>
     </message>
     <message>
         <source>fumigene</source>
-        <translation>smoke</translation>
+        <translation type="obsolete">smoke</translation>
     </message>
     <message>
         <source>eclairant</source>
-        <translation>illumination shell</translation>
+        <translation type="obsolete">illumination shell</translation>
     </message>
     <message>
         <source>ami</source>
-        <translation>friendly</translation>
+        <translation type="obsolete">friendly</translation>
     </message>
     <message>
         <source>ennemi</source>
-        <translation>enemy</translation>
+        <translation type="obsolete">enemy</translation>
     </message>
     <message>
         <source>neutre</source>
-        <translation>neutral</translation>
+        <translation type="obsolete">neutral</translation>
     </message>
     <message>
         <source>regime 1</source>
-        <translation>system 1</translation>
+        <translation type="obsolete">system 1</translation>
     </message>
     <message>
         <source>regime 2</source>
-        <translation>system 2</translation>
+        <translation type="obsolete">system 2</translation>
     </message>
     <message>
         <source>regime 3</source>
-        <translation>system 3</translation>
+        <translation type="obsolete">system 3</translation>
     </message>
     <message>
         <source>regime 4</source>
-        <translation>system 4</translation>
+        <translation type="obsolete">system 4</translation>
     </message>
     <message>
         <source>deplacement vers chaine</source>
-        <translation>moving toward logistic system</translation>
+        <translation type="obsolete">moving toward logistic system</translation>
     </message>
     <message>
         <source>attente disponibilite remorqueur</source>
-        <translation>waiting for available tow-truck</translation>
+        <translation type="obsolete">waiting for available tow-truck</translation>
     </message>
     <message>
         <source>remorqueur deplacement aller</source>
-        <translation>tow-truck moving to target</translation>
+        <translation type="obsolete">tow-truck moving to target</translation>
     </message>
     <message>
         <source>remorqueur chargement</source>
-        <translation>tow-truck loading</translation>
+        <translation type="obsolete">tow-truck loading</translation>
     </message>
     <message>
         <source>remorqueur deplacement retour</source>
-        <translation>tow-truck moving from target</translation>
+        <translation type="obsolete">tow-truck moving from target</translation>
     </message>
     <message>
         <source>remorqueur dechargement</source>
-        <translation>tow-truck unloading</translation>
+        <translation type="obsolete">tow-truck unloading</translation>
     </message>
     <message>
         <source>attente prise en charge par niveau superieur</source>
-        <translation>waiting to be handled by higher level</translation>
+        <translation type="obsolete">waiting to be handled by higher level</translation>
     </message>
     <message>
         <source>attente disponibilite pieces</source>
-        <translation>waiting for available parts</translation>
+        <translation type="obsolete">waiting for available parts</translation>
     </message>
     <message>
         <source>attente disponibilite reparateur</source>
-        <translation>waiting for available repairer</translation>
+        <translation type="obsolete">waiting for available repairer</translation>
     </message>
     <message>
         <source>retour pion</source>
-        <translation>unit returning</translation>
+        <translation type="obsolete">unit returning</translation>
     </message>
     <message>
         <source>convoi en attente camions</source>
-        <translation>convoy waiting for trucks</translation>
+        <translation type="obsolete">convoy waiting for trucks</translation>
     </message>
     <message>
         <source>convoi constitution</source>
-        <translation>convoy setting up</translation>
+        <translation type="obsolete">convoy setting up</translation>
     </message>
     <message>
         <source>convoi deplacement vers point chargement</source>
-        <translation>convoy moving to loading point</translation>
+        <translation type="obsolete">convoy moving to loading point</translation>
     </message>
     <message>
         <source>convoi chargement</source>
-        <translation>convoy loading</translation>
+        <translation type="obsolete">convoy loading</translation>
     </message>
     <message>
         <source>convoi deplacement vers point dechargement</source>
-        <translation>convoy moving to unloading point</translation>
+        <translation type="obsolete">convoy moving to unloading point</translation>
     </message>
     <message>
         <source>convoi dechargement</source>
-        <translation>convoy unloading</translation>
+        <translation type="obsolete">convoy unloading</translation>
     </message>
     <message>
         <source>convoi deplacement retour</source>
-        <translation>convoy moving back</translation>
+        <translation type="obsolete">convoy moving back</translation>
     </message>
     <message>
         <source>error invalid donneur</source>
-        <translation>error invalid supplier</translation>
+        <translation type="obsolete">error invalid supplier</translation>
     </message>
     <message>
         <source>error invalid receveur</source>
-        <translation>error invalid receiver</translation>
+        <translation type="obsolete">error invalid receiver</translation>
     </message>
     <message>
         <source>embraye</source>
-        <translation>engaged</translation>
+        <translation type="obsolete">engaged</translation>
     </message>
     <message>
         <source>debraye</source>
-        <translation>disengaged</translation>
+        <translation type="obsolete">disengaged</translation>
     </message>
     <message>
         <source>posture mouvement</source>
-        <translation>standard posture</translation>
+        <translation type="obsolete">standard posture</translation>
     </message>
     <message>
         <source>posture mouvement discret</source>
-        <translation>infiltration posture</translation>
+        <translation type="obsolete">infiltration posture</translation>
     </message>
     <message>
         <source>posture arret</source>
-        <translation>stopping posture</translation>
+        <translation type="obsolete">stopping posture</translation>
     </message>
     <message>
         <source>posture poste reflexe</source>
-        <translation>short stopping posture</translation>
+        <translation type="obsolete">short stopping posture</translation>
     </message>
     <message>
         <source>posture poste</source>
-        <translation>parking posture</translation>
+        <translation type="obsolete">parking posture</translation>
     </message>
     <message>
         <source>posture poste amenage</source>
-        <translation>prepared parking posture</translation>
+        <translation type="obsolete">prepared parking posture</translation>
     </message>
     <message>
         <source>posture poste prepare genie</source>
-        <translation>Eng prepared parking posture</translation>
+        <translation type="obsolete">Eng prepared parking posture</translation>
     </message>
     <message>
         <source>favorable</source>
-        <translation>high</translation>
+        <translation type="obsolete">high</translation>
     </message>
     <message>
         <source>defavorable</source>
-        <translation>low</translation>
+        <translation type="obsolete">low</translation>
     </message>
     <message>
         <source>etat esquive</source>
-        <translation>withdrawing</translation>
+        <translation type="obsolete">withdrawing</translation>
     </message>
     <message>
         <source>etat fixe</source>
-        <translation>fixing</translation>
+        <translation type="obsolete">fixing</translation>
     </message>
     <message>
         <source>etat poursuite mission</source>
-        <translation>NTR</translation>
+        <translation type="obsolete">NTR</translation>
     </message>
     <message>
         <source>detruit totalement</source>
-        <translation>destroyed</translation>
+        <translation type="obsolete">destroyed</translation>
     </message>
     <message>
         <source>detruit tactiquement</source>
-        <translation>non operational</translation>
+        <translation type="obsolete">non operational</translation>
     </message>
     <message>
         <source>operationnel</source>
-        <translation>operational</translation>
+        <translation type="obsolete">operational</translation>
     </message>
     <message>
         <source>pret au tir</source>
-        <translation>ready to fire</translation>
+        <translation type="obsolete">ready to fire</translation>
     </message>
     <message>
         <source>indisponible</source>
-        <translation>unavailable</translation>
+        <translation type="obsolete">unavailable</translation>
     </message>
     <message>
         <source>tir libre</source>
-        <translation>free fire</translation>
+        <translation type="obsolete">free fire</translation>
     </message>
     <message>
         <source>tir sur riposte</source>
-        <translation>fire back only</translation>
+        <translation type="obsolete">fire back only</translation>
     </message>
     <message>
         <source>tir interdit</source>
-        <translation>fire not allowed</translation>
+        <translation type="obsolete">fire not allowed</translation>
     </message>
     <message>
         <source>emploi force interdit</source>
-        <translation>force shall not be used</translation>
+        <translation type="obsolete">force shall not be used</translation>
     </message>
     <message>
         <source>maintien a distance par moyens non letaux</source>
-        <translation>non letal weapons use allowed</translation>
+        <translation type="obsolete">non letal weapons use allowed</translation>
     </message>
     <message>
         <source>dispersion par moyens de defense actifs</source>
-        <translation>active defense allowed</translation>
+        <translation type="obsolete">active defense allowed</translation>
     </message>
     <message>
         <source>armes letales autorisees</source>
-        <translation>letal weapon use allowed</translation>
+        <translation type="obsolete">letal weapon use allowed</translation>
     </message>
     <message>
         <source>fatigue</source>
-        <translation>tired</translation>
+        <translation type="obsolete">tired</translation>
     </message>
     <message>
         <source>epuise</source>
-        <translation>exhausted</translation>
+        <translation type="obsolete">exhausted</translation>
     </message>
     <message>
         <source>fanatique</source>
-        <translation>fanatic</translation>
+        <translation type="obsolete">fanatic</translation>
     </message>
     <message>
         <source>bon</source>
-        <translation>good</translation>
+        <translation type="obsolete">good</translation>
     </message>
     <message>
         <source>mauvais</source>
-        <translation>bad</translation>
+        <translation type="obsolete">bad</translation>
     </message>
     <message>
         <source>veteran</source>
-        <translation>veteran</translation>
+        <translation type="obsolete">veteran</translation>
     </message>
     <message>
         <source>experimente</source>
-        <translation>experienced</translation>
+        <translation type="obsolete">experienced</translation>
     </message>
     <message>
         <source>conscrit</source>
-        <translation>conscript</translation>
+        <translation type="obsolete">conscript</translation>
     </message>
     <message>
         <source>error unit not automate</source>
-        <translation>error non-automat unit </translation>
+        <translation type="obsolete">error non-automat unit </translation>
     </message>
     <message>
         <source>error already embraye</source>
-        <translation>error already engaged</translation>
+        <translation type="obsolete">error already engaged</translation>
     </message>
     <message>
         <source>error already debraye</source>
-        <translation>error already disengaged</translation>
+        <translation type="obsolete">error already disengaged</translation>
     </message>
     <message>
         <source>error automate embraye</source>
-        <translation>error automat engaged</translation>
+        <translation type="obsolete">error automat engaged</translation>
     </message>
     <message>
         <source>surete</source>
@@ -1799,10 +1571,6 @@
     <message>
         <source>vitesse</source>
         <translation type="obsolete">maximum speed posture</translation>
-    </message>
-    <message>
-        <source>error invalid diffusion</source>
-        <translation></translation>
     </message>
 </context>
 </TS>

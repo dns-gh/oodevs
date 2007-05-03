@@ -26,11 +26,10 @@ RecorderToolbar::RecorderToolbar( QMainWindow* pParent, Network& network )
     , msgRecorder_( *new MsgRecorder( network ) )
 {
     setCaption( tr("Order recorder") );
-    pPlayButton_ = new QToolButton( QPixmap( xpm_recplay ), tr( "Replay order file" ), "", this, SLOT( Play() ),   this );
-    pStopButton_ = new QToolButton( QPixmap( xpm_recstop ), tr( "Stop" ),              "", this, SLOT( Stop() ), this );
-    pRecButton_ =  new QToolButton( QPixmap( xpm_recrec ),  tr( "Start recording" ),   "", this, SLOT( Record() ),   this );
-
-    pStopButton_->setEnabled( false );
+    playButton_ = new QToolButton( QPixmap( xpm_recplay ), tr( "Replay order file" ), "", this, SLOT( Play() ), this );
+    recButton_  = new QToolButton( QPixmap( xpm_recrec ) , tr( "Start recording" ),   "", this, SLOT( ToggleRecord() ), this );
+    saveButton_ = new QToolButton( QPixmap( xpm_save )   , tr( "Save" ),              "", this, SLOT( Save() ), this );
+    saveButton_->setEnabled( false );
 }
 
 
@@ -49,43 +48,46 @@ RecorderToolbar::~RecorderToolbar()
 // -----------------------------------------------------------------------------
 void RecorderToolbar::Play()
 {
-    QString strFileName = QFileDialog::getOpenFileName( QString::null, tr( "Order files (*.ord)" ), topLevelWidget(), 0, tr( "Open" ) );
-    if( strFileName == QString::null )
+    QString filename = QFileDialog::getOpenFileName( QString::null, tr( "Order files (*.ord)" ), topLevelWidget(), 0, tr( "Open" ) );
+    if( filename == QString::null )
         return;
-
-    msgRecorder_.Play( strFileName.ascii() );
+    msgRecorder_.Play( filename.ascii() );
+    saveButton_->setEnabled( false );
 }
 
 // -----------------------------------------------------------------------------
-// Name: RecorderToolbar::Stop
+// Name: RecorderToolbar::ToggleRecord
 // Created: APE 2004-10-21
 // -----------------------------------------------------------------------------
-void RecorderToolbar::Stop()
+void RecorderToolbar::ToggleRecord()
 {
-    if( msgRecorder_.Stop() )
+    const bool wasRecording = msgRecorder_.Stop();
+    saveButton_->setEnabled( wasRecording );
+    playButton_->setEnabled( wasRecording );
+    if( wasRecording )
     {
-        pPlayButton_->setEnabled( true );
-        pRecButton_->setEnabled( true );
-        pStopButton_->setEnabled( false );
-        QString strFileName = QFileDialog::getSaveFileName( QString::null, tr( "Order files (*.ord)" ), topLevelWidget(), 0, tr( "Save" ) );
-        if( strFileName == QString::null )
-            return;
-        if( strFileName.right( 4 ) != ".ord" )
-            strFileName += ".ord";
-        msgRecorder_.Write( strFileName.ascii() );
+        recButton_->setPixmap( QPixmap( xpm_recrec ) );
+        recButton_->setTextLabel( tr( "Start recording" ) );
+    }
+    else
+    {
+        msgRecorder_.Record();
+        recButton_->setPixmap( QPixmap( xpm_recstop ) );
+        recButton_->setTextLabel( tr( "Stop recording" ) );
     }
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: RecorderToolbar::Record
-// Created: APE 2004-10-21
+// Name: RecorderToolbar::Save
+// Created: SBO 2007-05-03
 // -----------------------------------------------------------------------------
-void RecorderToolbar::Record()
+void RecorderToolbar::Save()
 {
-    msgRecorder_.Record();
-    pPlayButton_->setEnabled( false );
-    pRecButton_->setEnabled( false );
-    pStopButton_->setEnabled( true );
+    QString filename = QFileDialog::getSaveFileName( QString::null, tr( "Order files (*.ord)" ), topLevelWidget(), 0, tr( "Save" ) );
+    if( filename == QString::null )
+        return;
+    if( filename.right( 4 ) != ".ord" )
+        filename += ".ord";
+    msgRecorder_.Write( filename.ascii() );
+    saveButton_->setEnabled( false );
 }
-

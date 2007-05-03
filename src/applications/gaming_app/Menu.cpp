@@ -50,8 +50,8 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     menu->insertItem( MAKE_ICON( open ), tr( "&Open exercice..." ), parent(), SLOT( Open() ), CTRL + Key_O );
     menu->insertItem( tr( "Close" ), parent(), SLOT( Close() ) );
     menu->insertSeparator();
-    menu->insertItem( MAKE_ICON( open ), tr( "Open orders..." ), &recorderToolBar, SLOT( Play() ) );
-    menu->insertItem( MAKE_ICON( save ), tr( "Save orders..." ), &recorderToolBar, SLOT( Stop() ) );
+    menu->insertItem( MAKE_ICON( open ), tr( "Open orders..." ), &recorderToolBar, SLOT( Play() ) ); // $$$$ SBO 2007-05-03: 
+    menu->insertItem( MAKE_ICON( save ), tr( "Save orders..." ), &recorderToolBar, SLOT( Save() ) ); // $$$$ SBO 2007-05-03: 
     menu->insertSeparator();
     menu->insertItem( tr( "&Quit" ), pParent, SLOT( close() ), CTRL + Key_Q );
     insertItem( tr( "&File" ), menu );

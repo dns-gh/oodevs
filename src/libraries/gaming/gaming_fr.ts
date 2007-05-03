@@ -1,5 +1,72 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>Action</name>
+    <message>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ActionParameter</name>
+    <message>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lima</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Route %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ActionParameterFactory</name>
+    <message>
+        <source>not set</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ActionParameterLimits</name>
+    <message>
+        <source>Limit 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limit 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ActionParmater</name>
+    <message>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Agent</name>
     <message>
         <source>Info/Identifier</source>
@@ -363,6 +430,17 @@
     </message>
 </context>
 <context>
+    <name>Formation</name>
+    <message>
+        <source>Info/Identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Human factors</name>
     <message>
         <source>Human factors/Experience</source>
@@ -390,6 +468,13 @@
     </message>
     <message>
         <source>Tiredness:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>KnowledgeGroup</name>
+    <message>
+        <source>Group %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -804,6 +889,18 @@
         <source>Prepared:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Mine parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activity time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Density:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Population</name>
@@ -901,6 +998,13 @@
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>login</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Reinforcements</name>
     <message>
         <source>Reinforcements/Reinforcing</source>
@@ -935,6 +1039,13 @@
     </message>
 </context>
 <context>
+    <name>ReportFactory</name>
+    <message>
+        <source>Unhandled report parameter type: &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SupplyStates</name>
     <message>
         <source>Supply system/System enabled</source>
@@ -958,6 +1069,21 @@
     </message>
 </context>
 <context>
+    <name>Team</name>
+    <message>
+        <source>Army %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Transports</name>
     <message>
         <source>Transports/Tow trucks</source>
@@ -969,6 +1095,20 @@
     </message>
     <message>
         <source>Towed units</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserProfileFactory</name>
+    <message>
+        <source>New profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserProfilesModel</name>
+    <message>
+        <source>Profile &apos;%1&apos; does not exist.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

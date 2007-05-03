@@ -144,6 +144,25 @@
     </message>
 </context>
 <context>
+    <name>Karma</name>
+    <message>
+        <source>Friend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enemy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Neutral</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Localisation</name>
     <message>
         <source>Point</source>
@@ -163,6 +182,21 @@
     </message>
     <message>
         <source>Polygon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MissionType</name>
+    <message>
+        <source>Limits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dangerous Direction</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

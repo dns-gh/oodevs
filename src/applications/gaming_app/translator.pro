@@ -1,49 +1,100 @@
-SOURCES         =   AboutDialog.cpp \
-                    AgentKnowledgePanel.cpp \
-                    AgentMaintenancePanel.cpp \
-                    AgentMedicalPanel.cpp \
-                    AgentResourcesPanel.cpp \
-                    AgentStatePanel.cpp \
-                    AgentSupplyPanel.cpp \
-                    AttributeView.cpp \
-                    ChangeDiplomacyDialog.cpp \
-                    ChangeHumanFactorsDialog.cpp \
-                    ChangeLogisticLinksDialog.cpp \
-                    ConnectDialog.cpp \
-                    DisconnectDialog.cpp \
-                    EntityListParameter.cpp \
-                    EventToolbar.cpp \
-                    FireResultListView.cpp \
-                    LoginDialog.cpp \
-                    LogisticSupplyChangeQuotasDialog.cpp \
-                    LogisticSupplyPushFlowDialog.cpp \
-                    LogisticSupplyRecompletionDialog.cpp \
-                    MagicOrdersInterface.cpp \
-                    MainWindow.cpp \
-                    Menu.cpp \
-                    MissionInterface_ABC.cpp \
-                    MissionPanel.cpp \
-                    ObjectCreationPanel.cpp \
-                    ObjectKnowledgePanel.cpp \
-                    ObjectPanel.cpp \
-                    ParamAtlasNature.cpp \
-                    ParamEquipmentList.cpp \
-                    ParamHumanWoundList.cpp \
-                    ParamLimaList.cpp \
-                    ParamLocation.cpp \
-                    ParamObstacle.cpp \
-                    ParamObstacleList.cpp \
-                    ParamPathList.cpp \
-                    PopulationKnowledgePanel.cpp \
-                    Properties.cpp \
-                    RecorderToolbar.cpp \
-                    ReportFilterOptions.cpp \
-                    ReportListView.cpp \
-                    ReportPanel.cpp \
-                    SIMControlToolbar.cpp \
-                    Spy.cpp \
-                    TacticalLinesSaver.cpp
+SOURCES = AboutDialog.cpp \
+ActionsListView.cpp \
+ActionsPanel.cpp \
+ActionsToolbar.cpp \
+AgentKnowledgePanel.cpp \
+AgentMaintenancePanel.cpp \
+AgentMedicalPanel.cpp \
+AgentResourcesPanel.cpp \
+AgentStatePanel.cpp \
+AgentSupplyPanel.cpp \
+AttributeView.cpp \
+BorrowingsListView.cpp \
+ChangeDiplomacyDialog.cpp \
+ChangeHumanFactorsDialog.cpp \
+ChangeLogisticLinksDialog.cpp \
+ClockDock.cpp \
+ClockWidget.cpp \
+ConnectDialog.cpp \
+DisconnectDialog.cpp \
+DotationsListView.cpp \
+EntityListParameter.cpp \
+EquipmentsListView.cpp \
+EventToolbar.cpp \
+FireResultListView.cpp \
+GQ_PlotData.cpp \
+GQ_PlotToolTip.cpp \
+HumansListView.cpp \
+InfoCompositionDialog.cpp \
+InfoDock.cpp \
+InfoDotationsDialog.cpp \
+InfoEventsWidget.cpp \
+InfoLendingsDialog.cpp \
+InfoMaintenanceDialog.cpp \
+InfoMedicalDialog.cpp \
+InfoMissionsTab.cpp \
+InfoStancesWidget.cpp \
+InfoStatusBar.cpp \
+InfoStatusWidget.cpp \
+InfoSupplyDialog.cpp \
+InfoWidget.cpp \
+LendingsListView.cpp \
+LimaParameter.cpp \
+LimitParameter.cpp \
+ListParameter.cpp \
+LocationSerializer.cpp \
+LoginDialog.cpp \
+LogisticConsignsWidget_ABC.h \
+LogisticStatusWidgets.cpp \
+LogisticSupplyChangeQuotasDialog.cpp \
+LogisticSupplyPushFlowDialog.cpp \
+LogisticSupplyRecompletionDialog.cpp \
+MagicOrdersInterface.cpp \
+MainWindow.cpp \
+MaintenanceConsignsWidget.cpp \
+MaintenanceHaulersListView.cpp \
+MaintenanceRepairersListView.cpp \
+MedicalCollectAmbulancesListView.cpp \
+MedicalConsignsWidget.cpp \
+MedicalDoctorsListView.cpp \
+MedicalReliefAmbulancesListView.cpp \
+Menu.cpp \
+MissionInterfaceBuilder.cpp \
+MissionInterface_ABC.cpp \
+MissionPanel.cpp \
+ObjectCreationPanel.cpp \
+ObjectKnowledgePanel.cpp \
+ObjectPanel.cpp \
+OrbatToolbar.cpp \
+ParamAtlasNature.cpp \
+ParamHumanWoundList.cpp \
+ParamLimaList.cpp \
+ParamLimits.cpp \
+ParamLocationList.cpp \
+ParamObstacle.cpp \
+ParamObstacleList.cpp \
+ParamPathList.cpp \
+ParamPoint.cpp \
+Param_ABC.cpp \
+PopulationKnowledgePanel.cpp \
+ProfilingPanel.cpp \
+Properties.cpp \
+RecorderToolbar.cpp \
+ReportFilterOptions.cpp \
+ReportListView.cpp \
+ReportPanel.cpp \
+SIMControlToolbar.cpp \
+Spy.cpp \
+StatisticsWidget.cpp \
+StatusBar.cpp \
+SupplyConsignsWidget.cpp \
+SupplyQuotasListView.cpp \
+SupplyStocksListView.cpp \
+SupplyTransportersListView.cpp \
+TacticalLinesSaver.cpp \
+UserProfileDialog.cpp \
+UserProfileList.cpp \
+UserProfileRights_ABC.cpp \
+UserProfileWidget.cpp \
 
-
-TRANSLATIONS    = gaming_app_fr.ts \
-                  gaming_app_en.ts
+TRANSLATIONS = gaming_app_fr.ts gaming_app_en.ts

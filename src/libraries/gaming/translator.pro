@@ -1,42 +1,63 @@
-SOURCES         =   Agent.cpp \
-                    AgentKnowledge.cpp \
-                    Attributes.cpp \
-                    Automat.cpp \
-                    AutomatDecisions.cpp \
-                    AutomatHierarchies.cpp \
-                    CampAttributes.cpp \
-                    Contaminations.cpp \
-                    CrossingSiteAttributes.cpp \
-                    Decisions.cpp \
-                    Dotations.cpp \
-                    Equipments.cpp \
-                    HumanFactors.cpp \
-                    Limit.cpp \
-                    LogMaintenanceConsign.cpp \
-                    LogMedicalConsign.cpp \
-                    LogSupplyConsign.cpp \
-                    LogisticLinks.cpp \
-                    LogisticRouteAttributes.cpp \
-                    MaintenanceStates.cpp \
-                    MedicalStates.cpp \
-                    NBCAttributes.cpp \
-                    Network.cpp \
-                    Reinforcements.cpp \
-                    Report.cpp \
-                    Agent.cpp \
-                    SupplyStates.cpp \
-                    Transports.cpp \
-                    Object.cpp \
-                    ObjectKnowledge.cpp \
-                    Population.cpp \
-                    PopulationConcentrationKnowledge.cpp \
-                    PopulationFlowKnowledge.cpp \
-                    PopulationKnowledge.cpp \
-                    Reinforcements.cpp \
-                    RotaAttributes.cpp \
-                    SupplyStates.cpp \
-                    Tools.cpp \
-                    Transports.cpp
+SOURCES = ActionParameter.h \
+ActionParameterFactory.cpp \
+ActionParameterLima.cpp \
+ActionParameterLimaList.cpp \
+ActionParameterLimit.cpp \
+ActionParameterLimits.cpp \
+ActionParameterLocationList.cpp \
+ActionParameterObstacle.cpp \
+ActionParameterObstacleList.cpp \
+ActionParameter_ABC.cpp \
+Action_ABC.cpp \
+Agent.cpp \
+AgentKnowledge.cpp \
+AgentServerMsgMgr.cpp \
+Attributes.cpp \
+Automat.cpp \
+AutomatDecisions.cpp \
+AutomatHierarchies.cpp \
+AutomatTacticalHierarchies.cpp \
+CampAttributes.cpp \
+Contaminations.cpp \
+CrossingSiteAttributes.cpp \
+Decisions.cpp \
+Dotations.cpp \
+Equipments.cpp \
+Formation.cpp \
+HumanFactors.cpp \
+KnowledgeGroup.cpp \
+Limit.cpp \
+LogMaintenanceConsign.cpp \
+LogMedicalConsign.cpp \
+LogSupplyConsign.cpp \
+LogisticLinks.cpp \
+LogisticRouteAttributes.cpp \
+MaintenanceStates.cpp \
+MedicalStates.cpp \
+MineAttributes.cpp \
+MsgRecorder.cpp \
+NBCAttributes.cpp \
+Network.cpp \
+Object.cpp \
+ObjectKnowledge.cpp \
+Population.cpp \
+PopulationConcentrationKnowledge.cpp \
+PopulationFlowKnowledge.cpp \
+PopulationKnowledge.cpp \
+Profile.cpp \
+Reinforcements.cpp \
+Report.cpp \
+ReportFactory.cpp \
+ReportTemplate.cpp \
+RotaAttributes.cpp \
+SupplyStates.cpp \
+Surface.cpp \
+TacticalLinePositions.cpp \
+Team.cpp \
+Tools.cpp \
+Trace.cpp \
+Transports.cpp \
+UserProfileFactory.cpp \
+UserProfilesModel.cpp \
 
-TRANSLATIONS    = gaming_fr.ts \
-                  gaming_en.ts
+TRANSLATIONS = gaming_fr.ts gaming_en.ts

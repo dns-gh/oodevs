@@ -15,6 +15,35 @@
     </message>
 </context>
 <context>
+    <name>ActionsListView</name>
+    <message>
+        <source>Target: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ActionsPanel</name>
+    <message>
+        <source>Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ActionsToolbar</name>
+    <message>
+        <source>Order files (*.ord)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AgentKnowledgePanel</name>
     <message>
         <source>Nature:</source>
@@ -375,6 +404,21 @@
     </message>
 </context>
 <context>
+    <name>BorrowingsListView</name>
+    <message>
+        <source>Lender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChangeDiplomacyDialog</name>
     <message>
         <source>Diplomacy</source>
@@ -488,6 +532,24 @@
     </message>
 </context>
 <context>
+    <name>ClockDock</name>
+    <message>
+        <source>Clock</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ClockWidget</name>
+    <message>
+        <source>Day 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Day %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConnectDialog</name>
     <message>
         <source>Port</source>
@@ -526,6 +588,17 @@
     </message>
 </context>
 <context>
+    <name>DotationsListView</name>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EntityListParameterBase</name>
     <message>
         <source>Remove</source>
@@ -533,6 +606,33 @@
     </message>
     <message>
         <source>Clear list</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EquipmentsListView</name>
+    <message>
+        <source>Equipment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unavailable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repairable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>In maintenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prisoner</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -552,6 +652,33 @@
     </message>
     <message>
         <source>Conflicts</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Extension</name>
+    <message>
+        <source>Logistic requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Processing consigns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consign:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Instruction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consumer:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Handler:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -583,6 +710,261 @@
     </message>
     <message>
         <source> (officer, warrant-off., private)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>HumansListView</name>
+    <message>
+        <source>Rank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Officer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warrant-officer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Private</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InfoCompositionDialog</name>
+    <message>
+        <source>Composition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Humans</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InfoDock</name>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InfoDotationsDialog</name>
+    <message>
+        <source>Dotations</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InfoEventsWidget</name>
+    <message>
+        <source>Communication: jammed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Communication: radio silence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Communication: radar enabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Communication: stealth mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC: suit on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refugees handled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC: contamination of type &apos;%1&apos; level &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InfoLendingsDialog</name>
+    <message>
+        <source>Lendings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lent equipment(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Borrowed equipment(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InfoMaintenanceDialog</name>
+    <message>
+        <source>Maintenance system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consigns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment availabilities</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InfoMedicalDialog</name>
+    <message>
+        <source>Medical system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consigns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment availabilities</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InfoStancesWidget</name>
+    <message>
+        <source>Stance: previous was: &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stance: next is: &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stance: current is: &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InfoStatusBar</name>
+    <message>
+        <source>Morale: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Experience: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tiredness: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reinforcing unit &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reinforced by: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InfoStatusWidget</name>
+    <message>
+        <source>Goto parent unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InfoSupplyDialog</name>
+    <message>
+        <source>Supply system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consigns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stocks &amp;&amp; Quotas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transporters</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InfoWidget</name>
+    <message>
+        <source>Reports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conflicts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missions</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LendingsListView</name>
+    <message>
+        <source>Borrower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LimaParameter</name>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Functions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set function for &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LimitParameter</name>
+    <message>
+        <source>Set %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ListParameter</name>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear list</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -913,6 +1295,197 @@
     </message>
 </context>
 <context>
+    <name>MaintenanceConsignsWidget</name>
+    <message>
+        <source>Equipment:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breakdown:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MaintenanceHaulersListView</name>
+    <message>
+        <source>Tow trucks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Working</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resting</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MaintenanceRepairersListView</name>
+    <message>
+        <source>Repairers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Working</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resting</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MaintenanceStatusWidget</name>
+    <message>
+        <source>Maintenance system state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>System status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Working scheme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Priorities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactical priorities</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MedicalCollectAmbulancesListView</name>
+    <message>
+        <source>Collect ambulances</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Working</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resting</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MedicalConsignsWidget</name>
+    <message>
+        <source>Injury:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mentally injured:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC contaminated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MedicalDoctorsListView</name>
+    <message>
+        <source>Doctors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Working</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resting</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MedicalReliefAmbulancesListView</name>
+    <message>
+        <source>Relief ambulances</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Working</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resting</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MedicalStatusWidget</name>
+    <message>
+        <source>Medical system state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>System status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Priorities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactical priorities</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Menu</name>
     <message>
         <source>On</source>
@@ -1072,6 +1645,13 @@
     </message>
     <message>
         <source>Profi&amp;les</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MissionInterfaceBuilder</name>
+    <message>
+        <source>Unknown mission parameter: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1264,6 +1844,25 @@
     </message>
 </context>
 <context>
+    <name>OrbatToolbar</name>
+    <message>
+        <source>Aggregate all automats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disaggregate all automats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter view</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ParamLimaList</name>
     <message>
         <source>Lima %1</source>
@@ -1271,6 +1870,24 @@
     </message>
     <message>
         <source>Add &apos;%1&apos; as</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ParamLimits</name>
+    <message>
+        <source>Limit 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limit 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ParamLocationList</name>
+    <message>
+        <source>Location %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1308,6 +1925,13 @@
     <name>ParamPathList</name>
     <message>
         <source>Route %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Param_ABC</name>
+    <message>
+        <source>&apos;%1&apos; parameter interface not initialized</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1391,6 +2015,17 @@
     </message>
 </context>
 <context>
+    <name>ProfilingPanel</name>
+    <message>
+        <source>Incoming: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outgoing: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Properties</name>
     <message>
         <source>Properties</source>
@@ -1408,10 +2043,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Stop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Start recording</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1425,6 +2056,10 @@
     </message>
     <message>
         <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop recording</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1544,6 +2179,99 @@
     </message>
 </context>
 <context>
+    <name>StatisticsWidget</name>
+    <message>
+        <source>Rate (B)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time (Tick)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>StatusBar</name>
+    <message>
+        <source>Saving checkpoint...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SupplyConsignsWidget</name>
+    <message>
+        <source>Supplier:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convoyer:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dotations requested/granted/convoyed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SupplyQuotasListView</name>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quota</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SupplyStatusWidget</name>
+    <message>
+        <source>Supply system state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>System status</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SupplyStocksListView</name>
+    <message>
+        <source>Stock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SupplyTransportersListView</name>
+    <message>
+        <source>Transporters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Working</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resting</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TacticalLinesSaver</name>
     <message>
         <source>TacticalLines.xml</source>
@@ -1562,6 +2290,90 @@
         <source>Tactical-lines description file (TacticalLines.xml) cannot be written.
 Please check for write protection then retry.
 Message : </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserProfileDialog</name>
+    <message>
+        <source>User profiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserProfileList</name>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserProfileRights</name>
+    <message>
+        <source>Read</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Write</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserProfileWidget</name>
+    <message>
+        <source>Profile information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Login:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Access rights</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supervisor actions:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rights</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile edition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile has changed, commit modifications?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1697,6 +2509,14 @@ Message : </source>
     </message>
     <message>
         <source>Prepared:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

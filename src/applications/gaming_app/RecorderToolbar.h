@@ -34,8 +34,8 @@ private slots:
     //! @name Slots
     //@{
     void Play();
-    void Stop();
-    void Record();
+    void ToggleRecord();
+    void Save();
     //@}
 
 private:
@@ -49,9 +49,9 @@ private:
     //! @name Member data
     //@{
     MsgRecorder& msgRecorder_;
-    QToolButton* pPlayButton_;
-    QToolButton* pStopButton_;
-    QToolButton* pRecButton_;
+    QToolButton* playButton_;
+    QToolButton* recButton_;
+    QToolButton* saveButton_;
     //@}
 };
 

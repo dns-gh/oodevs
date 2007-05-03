@@ -7,6 +7,17 @@
     </message>
 </context>
 <context>
+    <name>AutomatsLayer</name>
+    <message>
+        <source>Aggregate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disaggregate</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CampPrototype_ABC</name>
     <message>
         <source>TC2:</source>
@@ -45,6 +56,49 @@
     </message>
 </context>
 <context>
+    <name>DisplayToolbar</name>
+    <message>
+        <source>Display toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3D</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DrawerPanel</name>
+    <message>
+        <source>Load drawings file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save drawings to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawings (*.xml)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is not a valid drawings file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to save drawings to file &apos;%1&apos;. 
+Please check access rights or write protection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DrawerToolbar</name>
     <message>
         <source>Drawing</source>
@@ -75,6 +129,44 @@
     </message>
 </context>
 <context>
+    <name>ElevationPanel</name>
+    <message>
+        <source>Elevation colors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Highest heights color: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lowest heights color: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fit color gradient to viewport</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FixedLightWidget</name>
+    <message>
+        <source>Light direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Light colors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ambient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Diffuse</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GraphicPreferences</name>
     <message>
         <source>Colors</source>
@@ -82,9 +174,78 @@
     </message>
 </context>
 <context>
+    <name>Graphics3dPanel</name>
+    <message>
+        <source>Display type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>USRP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Elevation map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lowest heights color: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Highest heights color: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HierarchyListView_ABC</name>
     <message>
         <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LayersPanel</name>
+    <message>
+        <source>Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transparency</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LightingPanel</name>
+    <message>
+        <source>Lighting type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fixed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ambient color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Diffuse color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -115,6 +276,53 @@
     </message>
     <message>
         <source>Circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LocationEditorToolbar</name>
+    <message>
+        <source>Location editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter UTM coordinate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center on location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add point to current location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set special point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear bookmarks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No bookmark defined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location is not valid UTM coordinates.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bookmark location</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -157,6 +365,21 @@
     </message>
     <message>
         <source>Equipped:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MinePrototype_ABC</name>
+    <message>
+        <source>Mine parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activity time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Density:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -367,6 +590,13 @@
     </message>
     <message>
         <source>2D/Elevation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PreferencesList</name>
+    <message>
+        <source>Category</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

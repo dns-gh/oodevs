@@ -1,13 +1,40 @@
-SOURCES         = Tools.cpp \
-                  Units.cpp \
-                  Circle.cpp \
-                  Lines.cpp \
-                  Path.cpp \
-                  Point.cpp \
-                  Polygon.cpp \
-                  TristateOption.cpp \
-                  Formatter.cpp \
-                  EntityHierarchies.inl
+SOURCES = AgentType.cpp \
+AgentTypes.cpp \
+App6Symbol.cpp \
+AutomatComposition.cpp \
+AutomatType.cpp \
+BreakdownType.cpp \
+Circle.cpp \
+ComponentType.cpp \
+DecisionalModel.cpp \
+DotationType.cpp \
+Drawer.cpp \
+EntityHierarchies.inl \
+EquipmentType.cpp \
+Formatter.cpp \
+Karma.cpp \
+KnowledgeGroupType.cpp \
+Lines.cpp \
+MissionFactory.cpp \
+MissionType.cpp \
+NBCAgent.cpp \
+ObjectType.cpp \
+ObjectTypes.cpp \
+Options.cpp \
+OrderParameter.cpp \
+OrderParameterValue.cpp \
+OrderType.cpp \
+Path.cpp \
+PathTools.cpp \
+Point.cpp \
+Polygon.cpp \
+PopulationType.cpp \
+Resolver.h \
+Resolver2.h \
+SensorType.cpp \
+SymbolRule.cpp \
+Tools.cpp \
+TristateOption.cpp \
+Units.cpp \
 
-TRANSLATIONS    = clients_kernel_fr.ts \
-                  clients_kernel_en.ts
+TRANSLATIONS = clients_kernel_fr.ts clients_kernel_en.ts

@@ -1,4 +1,3 @@
-SOURCES         = ENT_Tr_Gen.cpp
+SOURCES = ENT_Tr_ABC.h \
 
-TRANSLATIONS    = ENT_fr.ts \
-                  ENT_en.ts
+TRANSLATIONS = ENT_fr.ts ENT_en.ts
