@@ -15,6 +15,7 @@ template< typename ConcreteEntity >
 EntityListParameter< ConcreteEntity >::EntityListParameter( QObject* parent, const kernel::OrderParameter& parameter )
     : EntityListParameterBase( parent, parameter.GetName() )
     , potential_             ( 0 )
+    , parameter_             ( parameter )
 {
     // NOTHING
 }
@@ -77,4 +78,21 @@ template< typename ConcreteEntity >
 unsigned long EntityListParameter< ConcreteEntity >::GetId( gui::ValuedListItem* item ) const
 {
     return item->GetValue< const ConcreteEntity >()->GetId();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityListParameter::CommitTo
+// Created: SBO 2007-05-03
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void EntityListParameter< ConcreteEntity >::CommitTo( Action_ABC& action ) const
+{
+    std::auto_ptr< ActionParameter< QString > > param( new ActionParameter< QString >( parameter_ ) );
+    gui::ValuedListItem* item = (gui::ValuedListItem*)( listView_->firstChild() );
+    while( item )
+    {
+        param->AddParameter( *new ActionParameter< const ConcreteEntity* >( "entity", item->GetValue< const ConcreteEntity >() ) ); // $$$$ SBO 2007-05-03: 
+        item = (gui::ValuedListItem*)( item->nextSibling() );
+    }
+    action.AddParameter( *param.release() );
 }

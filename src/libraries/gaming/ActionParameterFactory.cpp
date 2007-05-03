@@ -17,6 +17,7 @@
 #include "ActionParameterLocation.h"
 #include "ActionParameterLocationList.h"
 #include "ActionParameterPath.h"
+#include "ActionParameterEntityList.h"
 #include "Model.h"
 #include "StaticModel.h"
 #include "AgentsModel.h"
@@ -76,9 +77,11 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::Orde
     case T_MissionParameter_value_knowledgeAgent:
     case T_MissionParameter_value_knowledgeObject:
     case T_MissionParameter_value_knowledgePopulation:
-    case T_MissionParameter_value_listAgent:
-    case T_MissionParameter_value_listAutomate:
         break;
+    case T_MissionParameter_value_listAgent:
+        return new ActionParameterEntityList( parameter, *asn.value.u.listAgent, model_.agents_ );
+    case T_MissionParameter_value_listAutomate:
+        return new ActionParameterEntityList( parameter, *asn.value.u.listAutomate, model_.agents_ );
     case T_MissionParameter_value_listItineraire:
         return new ActionParameterLocationList( parameter, converter_, (ASN1T_ListLocalisation&)*asn.value.u.listItineraire, entity );
     case T_MissionParameter_value_listKnowledgeAgent:

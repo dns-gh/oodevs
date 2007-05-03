@@ -16,6 +16,8 @@
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/ValuedListItem.h"
+#include "gaming/ActionParameter.h"
+#include "gaming/Action_ABC.h"
 
 // =============================================================================
 /** @class  EntityListParameterBase
@@ -92,6 +94,12 @@ public:
     virtual ~EntityListParameter();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void CommitTo( Action_ABC& action ) const;
+    using EntityListParameterBase::CommitTo;
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{
@@ -113,6 +121,7 @@ private:
     //! @name Member data
     //@{
     const ConcreteEntity* potential_;
+    const kernel::OrderParameter& parameter_;
     //@}
 };
 

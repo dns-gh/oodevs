@@ -86,7 +86,7 @@ void ParamHumanWoundList::CommitTo( ASN1T_MissionParameter& asn ) const
     {
         QComboTableItem* comboItem  = static_cast< QComboTableItem* >( table_->item( i, 0 ) );
         if( comboItem )
-            list->elem[i] = ( ASN1T_EnumHumanWound )ENT_Tr::ConvertToHumanWound( comboItem->currentText().ascii() );
+            list->elem[i] = ASN1T_EnumHumanWound( comboItem->currentItem() - 1 + int( eHumanWound_BlesseUrgence1 ) ); // $$$$ SBO 2007-05-03: 
     }
 }
 
