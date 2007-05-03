@@ -1400,7 +1400,7 @@ bool NET_ASN_Tools::CopyMaintenancePriorities( const ASN1T_MaintenancePriorites&
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::CopyMaintenancePriorities( const DIA_Variable_ABC& dia, ASN1T_MaintenancePriorites& asn )
 {
-    assert( DEC_Tools::CheckTypeSantePriorites( dia ) );
+    assert( DEC_Tools::CheckTypeMaintenancePriorites( dia ) );
 
     T_MaintenancePriorityVector* pData = dia.ToUserPtr( pData );
     if( !pData )
@@ -1445,7 +1445,7 @@ bool NET_ASN_Tools::CopyMedicalPriorities( const ASN1T_SantePriorites& asn, DIA_
         const PHY_HumanWound* pWound = PHY_HumanWound::Find( nWoundID );
         if( !pWound )
         {
-            dia.SetValue( 0, &DEC_Tools::GetTypeMaintenancePriorites() );
+            dia.SetValue( 0, &DEC_Tools::GetTypeSantePriorites() );
             delete pData;
             return false;
         }
