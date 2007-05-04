@@ -146,11 +146,9 @@ void Object::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport,
     type_.Draw( where, viewport, tools );
     if( viewport.IsVisible( where ) )
     {
-        const bool selected = tools.Select( false );
         glPushAttrib( GL_CURRENT_BIT );
-        glColor3f( 1, 1, 1 );
-        tools.DrawIcon( bPrepared_ ? xpm_tickon: xpm_tickoff, where + geometry::Vector2f( 300.f, -250.f ), 150.f ); // $$$$ SBO 2007-05-04: hard coded icon position
+            glColor3f( 1, 1, 1 );
+            tools.DrawIcon( bPrepared_ ? xpm_tickon: xpm_tickoff, where + geometry::Vector2f( 300.f, -250.f ), 150.f ); // $$$$ SBO 2007-05-04: hard coded icon position
         glPopAttrib();
-        tools.Select( selected );
     }
 }
