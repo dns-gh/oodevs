@@ -87,11 +87,12 @@ unsigned long EntityListParameter< ConcreteEntity >::GetId( gui::ValuedListItem*
 template< typename ConcreteEntity >
 void EntityListParameter< ConcreteEntity >::CommitTo( Action_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter< QString > > param( new ActionParameter< QString >( parameter_ ) );
+    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterEntityList( parameter_ ) );
     gui::ValuedListItem* item = (gui::ValuedListItem*)( listView_->firstChild() );
+    unsigned int i = 0;
     while( item )
     {
-        param->AddParameter( *new ActionParameter< const ConcreteEntity* >( "entity", item->GetValue< const ConcreteEntity >() ) ); // $$$$ SBO 2007-05-03: 
+        param->AddParameter( *new ActionParameterEntity< ConcreteEntity >( tools::translate( "EntityListParameter", "Entity %1" ).arg( ++i ), item->GetValue< const ConcreteEntity >() ) ); // $$$$ SBO 2007-05-03: 
         item = (gui::ValuedListItem*)( item->nextSibling() );
     }
     action.AddParameter( *param.release() );

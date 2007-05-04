@@ -16,7 +16,8 @@
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/ValuedListItem.h"
-#include "gaming/ActionParameter.h"
+#include "gaming/ActionParameterEntityList.h"
+#include "gaming/ActionParameterEntity.h"
 #include "gaming/Action_ABC.h"
 
 // =============================================================================

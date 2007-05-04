@@ -43,6 +43,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:

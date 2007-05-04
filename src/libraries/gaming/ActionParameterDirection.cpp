@@ -48,3 +48,13 @@ void ActionParameterDirection::Draw( const geometry::Point2f& where, const kerne
         glPopAttrib();
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterDirection::Serialize
+// Created: SBO 2007-05-04
+// -----------------------------------------------------------------------------
+void ActionParameterDirection::Serialize( xml::xostream& xos ) const
+{
+    ActionParameter< float >::Serialize( xos );
+    xos << xml::attribute( "value", GetValue() );
+}

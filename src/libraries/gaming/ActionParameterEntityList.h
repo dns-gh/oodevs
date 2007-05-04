@@ -32,6 +32,7 @@ class ActionParameterEntityList : public ActionParameter< QString >
 public:
     //! @name Constructors/Destructor
     //@{
+    explicit ActionParameterEntityList( const kernel::OrderParameter& parameter );
              ActionParameterEntityList( const kernel::OrderParameter& parameter, const ASN1T_ListAgent& asn, const kernel::Resolver_ABC< kernel::Agent_ABC >& agents );
              ActionParameterEntityList( const kernel::OrderParameter& parameter, const ASN1T_ListAutomate& asn, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats );
     virtual ~ActionParameterEntityList();
