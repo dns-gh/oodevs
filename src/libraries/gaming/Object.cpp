@@ -18,6 +18,9 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Styles.h"
+#include "clients_gui/resources.h"
+#include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 
 using namespace kernel;
 
@@ -138,7 +141,16 @@ void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 // Name: Object::Draw
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void Object::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void Object::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     type_.Draw( where, viewport, tools );
+    if( viewport.IsVisible( where ) )
+    {
+        const bool selected = tools.Select( false );
+        glPushAttrib( GL_CURRENT_BIT );
+        glColor3f( 1, 1, 1 );
+        tools.DrawIcon( bPrepared_ ? xpm_tickon: xpm_tickoff, where + geometry::Vector2f( 300.f, -250.f ), 150.f ); // $$$$ SBO 2007-05-04: hard coded icon position
+        glPopAttrib();
+        tools.Select( selected );
+    }
 }
