@@ -113,7 +113,7 @@ void Object::Display( Displayer_ABC& displayer ) const
              .Display( tools::translate( "Object", "Type:" ), type_ )
              .Display( tools::translate( "Object", "Location:" ), converter_.ConvertToMgrs( Get< Positions >().GetPosition() ) ) // $$$$ AGE 2006-03-22: 
              .Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage )
-             .Display( tools::translate( "Object", "Development:" ), rValorizationPercentage_ * Units::percentage )
+             .Display( tools::translate( "Object", "Mining:" ), rValorizationPercentage_ * Units::percentage )
              .Display( tools::translate( "Object", "Bypass:" ), rBypassConstructionPercentage_ * Units::percentage )
              .Display( tools::translate( "Object", "Prepared:" ), bPrepared_ )
              .Item( tools::translate( "Object", "Construction dotation:" ) )
@@ -132,9 +132,11 @@ void Object::Display( Displayer_ABC& displayer ) const
 void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Item( "" ).Start( Styles::bold ).Add( *(Object_ABC*)this ).End();
-    displayer.Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage )
-             .Display( tools::translate( "Object", "Development:" ),  rValorizationPercentage_ * Units::percentage )
-             .Display( tools::translate( "Object", "Bypass:" ),       rBypassConstructionPercentage_ * Units::percentage );
+    displayer.Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage );
+    if( type_.CanBeValorized() )
+        displayer.Display( tools::translate( "Object", "Mining:" ), rValorizationPercentage_ * Units::percentage );
+    if( type_.CanBeBypassed() )
+        displayer.Display( tools::translate( "Object", "Bypass:" ), rBypassConstructionPercentage_ * Units::percentage );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,4 +156,13 @@ void Object::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport,
                 tools.DrawLife( where - geometry::Vector2f( 0.f, 250.f ), rConstructionPercentage_ / 100.f );
         glPopAttrib();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::IsPrepared
+// Created: SBO 2007-05-04
+// -----------------------------------------------------------------------------
+bool Object::IsPrepared() const
+{
+    return bPrepared_.IsSet() && bPrepared_;
 }

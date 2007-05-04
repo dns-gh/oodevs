@@ -38,7 +38,7 @@ using namespace kernel;
                 .AddLabel( tr( "Type:" ) )
                 .AddLabel( tr( "Location:" ) )
                 .AddSpinBox( tr( "Construction:" ), 0, 100, 1 )
-                .AddSpinBox( tr( "Development:" ), 0, 100, 1 )
+                .AddSpinBox( tr( "Mining:" ), 0, 100, 1 )
                 .AddSpinBox( tr( "Bypass:" ), 0, 100, 1 )
                 .AddCheckBox( tr( "Prepared:" ) );
 
@@ -75,7 +75,7 @@ using namespace kernel;
 
     Displayer_ABC& infos = GetBuilder().Group( tr( "Information" ) );
     construction_  = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Construction:" ) ) );
-    valorisation_  = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Development:" ) ) );
+    valorisation_  = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Mining:" ) ) );
     contournement_ = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Bypass:" ) ) );
     prepared_      = dynamic_cast< CheckBoxDisplayer* >( & infos.Item( tr( "Prepared:" ) ) );
 

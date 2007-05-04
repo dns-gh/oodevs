@@ -61,6 +61,7 @@ public:
     //@{
     virtual kernel::ObjectType& GetType() const;
     virtual QString GetTypeName() const;
+    bool IsPrepared() const;
     //@}
     
 private:

@@ -25,12 +25,14 @@
 #include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/ObjectType.h"
 
 #include "gaming/StaticModel.h"
 #include "gaming/MagicOrders.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/ASN_Messages.h"
 #include "gaming/Attributes.h"
+#include "gaming/Object.h"
 #include "ENT/ENT_Tr.h"
 
 using namespace kernel;
@@ -185,6 +187,33 @@ void MagicOrdersInterface::NotifyContextMenu( const kernel::Team_ABC& entity, ke
     selectedEntity_ = &entity;
     QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     FillCommonOrders( magicMenu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::NotifyContextMenu
+// Created: SBO 2007-05-04
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
+{
+    if( !profile_.CanDoMagic( entity ) )
+        return;
+    selectedEntity_ = &entity;
+    QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+    AddMagic( tr( "Build" ), SLOT( BuildObject() ), magicMenu );
+    AddMagic( tr( "Destroy" ), SLOT( DestroyObject() ), magicMenu );
+    if( entity.GetType().CanBeValorized() )
+    {
+        AddMagic( tr( "Mine" ), SLOT( MineObject() ), magicMenu );
+        AddMagic( tr( "Sweep mines" ), SLOT( SweepMineObject() ), magicMenu );
+    }
+    if( entity.GetType().CanBePrepared() )
+    {
+        const Object& obj = static_cast< const Object& >( entity );
+        if( obj.IsPrepared() )
+            AddMagic( tr( "Set demolition reserved" ), SLOT( SetDemolitionReservedObject() ), magicMenu );
+        else
+            AddMagic( tr( "Set preliminary" ), SLOT( SetPreliminaryObject() ), magicMenu );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -525,4 +554,89 @@ void MagicOrdersInterface::NotifyDeleted( const kernel::Team_ABC& team )
         std::swap( *it, teams_.back() );
         teams_.pop_back();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::SendObjectMagic
+// Created: SBO 2007-05-04
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::SendObjectMagic( ASN1T_MagicActionUpdateObject& asn )
+{
+    asn.oid_objet = selectedEntity_->GetId();
+    ASN_MsgObjectMagicAction asnMsg;
+    asnMsg().action.t               = T_MsgObjectMagicAction_action_update_object;
+    asnMsg().action.u.update_object = &asn;
+    asnMsg.Send( publisher_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::BuildObject
+// Created: SBO 2007-05-04
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::BuildObject()
+{
+    ASN1T_MagicActionUpdateObject asn;
+    asn.m.pourcentage_constructionPresent = 1;
+    asn.pourcentage_construction          = 100;
+    SendObjectMagic( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::DestroyObject
+// Created: SBO 2007-05-04
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::DestroyObject()
+{
+    ASN1T_MagicActionUpdateObject asn;
+    asn.m.pourcentage_constructionPresent  = 1;
+    asn.pourcentage_construction           = 0;
+    SendObjectMagic( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::MineObject
+// Created: SBO 2007-05-04
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::MineObject()
+{
+    ASN1T_MagicActionUpdateObject asn;
+    asn.m.pourcentage_valorisationPresent  = 1;
+    asn.pourcentage_valorisation           = 100;
+    SendObjectMagic( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::SweepMineObject
+// Created: SBO 2007-05-04
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::SweepMineObject()
+{
+    ASN1T_MagicActionUpdateObject asn;
+    asn.m.pourcentage_valorisationPresent  = 1;
+    asn.pourcentage_valorisation           = 0;
+    SendObjectMagic( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::SetDemolitionReservedObject
+// Created: SBO 2007-05-04
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::SetDemolitionReservedObject()
+{
+    ASN1T_MagicActionUpdateObject asn;
+    asn.m.en_preparationPresent = 1;
+    asn.en_preparation          = 0;
+    SendObjectMagic( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::SetPreliminaryObject
+// Created: SBO 2007-05-04
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::SetPreliminaryObject()
+{
+    ASN1T_MagicActionUpdateObject asn;
+    asn.m.en_preparationPresent = 1;
+    asn.en_preparation          = 1;
+    SendObjectMagic( asn );
 }

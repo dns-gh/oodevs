@@ -43,7 +43,7 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
                 .AddLabel( tr( "Location:" ) )
                 .AddLabel( tr( "Type:" ) )
                 .AddLabel( tr( "Construction:" ) )
-                .AddLabel( tr( "Development:" ) )
+                .AddLabel( tr( "Mining:" ) )
                 .AddLabel( tr( "Bypass:" ) )
                 .AddLabel( tr( "Prepared:" ) )
                 .AddLabel( tr( "Perceived:" ) )

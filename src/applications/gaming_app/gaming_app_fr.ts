@@ -1214,6 +1214,30 @@
         <source>Cancel surrender</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Build</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destroy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set demolition reserved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set preliminary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sweep mines</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -1739,10 +1763,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Development:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Bypass:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1840,6 +1860,10 @@
     </message>
     <message>
         <source>Prepared:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mining:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2404,10 +2428,6 @@ Message : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Development:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Bypass:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2517,6 +2537,10 @@ Message : </source>
     </message>
     <message>
         <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mining:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

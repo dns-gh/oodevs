@@ -842,10 +842,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Development:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Bypass:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -899,6 +895,10 @@
     </message>
     <message>
         <source>Density:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mining:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

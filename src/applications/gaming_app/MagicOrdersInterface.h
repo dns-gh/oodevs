@@ -10,6 +10,7 @@
 #ifndef __MagicOrdersInterface_h_
 #define __MagicOrdersInterface_h_
 
+#include "game_asn/Asn.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_gui/ShapeHandler_ABC.h"
@@ -26,6 +27,7 @@ namespace kernel
     class Population_ABC;
     class Team_ABC;
     class Formation_ABC;
+    class Object_ABC;
 }
 
 namespace gui
@@ -40,6 +42,7 @@ class Publisher_ABC;
 // =============================================================================
 /** @class  MagicOrdersInterface
     @brief  MagicOrdersInterface
+    // $$$$ SBO 2007-05-04: split into unit/popu/object magic interfaces
 */
 // Created: AGE 2006-04-28
 // =============================================================================
@@ -50,6 +53,7 @@ class MagicOrdersInterface : public QObject
                            , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
                            , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                            , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
+                           , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
                            , public kernel::ElementObserver_ABC< kernel::Team_ABC >
                            , public gui::ShapeHandler_ABC
                            , private kernel::LocationVisitor_ABC
@@ -70,6 +74,7 @@ public:
     virtual void NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
     virtual void Handle( kernel::Location_ABC& location );
     //@}
 
@@ -86,6 +91,13 @@ private slots:
     void KillSomePopulation();
     void ResurectSomePopulation();
     void ChangePopulationAttitude( int index );
+
+    void BuildObject();
+    void DestroyObject();
+    void MineObject();
+    void SweepMineObject();
+    void SetDemolitionReservedObject();
+    void SetPreliminaryObject();
     //@}
 
 private:
@@ -113,6 +125,7 @@ private:
     void AddSurrenderMenu( QPopupMenu* parent, const kernel::Entity_ABC& entity );
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
+    void SendObjectMagic( ASN1T_MagicActionUpdateObject& asn );
     //@}
 
     //! @name Types
