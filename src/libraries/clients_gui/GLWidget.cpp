@@ -494,13 +494,30 @@ void GlWidget::DrawLife( const Point2f& where, float h, float factor /*= 1.f*/ )
 
     const float y = where.Y() - deltaHeight;
     const float x = where.X();
+    const float ydelta = factor * 20.f; // $$$$ SBO 2007-05-04: hard coded again
     const float xdelta = h * halfWidth;
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-        glLineWidth( 3 );
+        glLineWidth( 1 );
+        glColor3f( 0.8f, 0.8f, 0.8f );
+        glBegin( GL_QUADS );
+            glVertex2f( x - halfWidth, y - ydelta );
+            glVertex2f( x + halfWidth, y - ydelta );
+            glVertex2f( x + halfWidth, y + ydelta );
+            glVertex2f( x - halfWidth, y + ydelta );
+        glEnd();
         glColor3f( 1 - h, h, 0.1f ); // $$$$ AGE 2006-09-11: 
-        glBegin( GL_LINES );
-            glVertex2f( x - xdelta, y );
-            glVertex2f( x + xdelta, y );
+        glBegin( GL_QUADS );
+            glVertex2f( x - xdelta, y - ydelta );
+            glVertex2f( x + xdelta, y - ydelta );
+            glVertex2f( x + xdelta, y + ydelta );
+            glVertex2f( x - xdelta, y + ydelta );
+        glEnd();
+        glColor3f( 0, 0, 0 );
+        glBegin( GL_LINE_LOOP );
+            glVertex2f( x - halfWidth, y - ydelta );
+            glVertex2f( x + halfWidth, y - ydelta );
+            glVertex2f( x + halfWidth, y + ydelta );
+            glVertex2f( x - halfWidth, y + ydelta );
         glEnd();
     glPopAttrib();
 }
