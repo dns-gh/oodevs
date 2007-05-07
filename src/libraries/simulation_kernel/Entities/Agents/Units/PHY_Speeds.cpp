@@ -215,11 +215,16 @@ MT_Float PHY_Speeds::GetMaxSpeed( const TerrainData& data ) const
 // -----------------------------------------------------------------------------
 bool PHY_Speeds::IsPassable( const TerrainData& data ) const
 {
-    return  ( ( data.Linear() & nLinearPassabilityMask_ )
-           || ( data.Area()   & nAreaPassabilityMask_ ) )
-         || ( !( data.Area()   & nAreaImpassabilityMask_ )
-           && !( data.Border() & nBorderImpassabilityMask_ )
-           && !( data.Linear() & nLinearImpassabilityMask_ ) );
+    if( ( data.Linear() & nLinearPassabilityMask_ )
+     || ( data.Area()   & nAreaPassabilityMask_   ) )
+        return true;
+    if( ( data.Linear() & nLinearImpassabilityMask_ )
+     || ( data.Border() & nBorderImpassabilityMask_ ) )
+        return false;
+    if( ( data.Area() & nAreaImpassabilityMask_ )                   // je suis en surface impassable
+      & ~( data.Border() & ~nBorderImpassabilityMask_ ) )           // et je ne suis pas sur un bord passable de meme type
+        return false;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
