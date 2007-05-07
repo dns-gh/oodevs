@@ -209,7 +209,8 @@ protected:
 
     //! @name Events
     //@{
-    virtual void ProcessAgentInside( MIL_Agent_ABC& agent );
+    virtual void ProcessAgentInside      ( MIL_Agent_ABC& agent );
+    virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent );
     //@}
 
 private:

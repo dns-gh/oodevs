@@ -966,6 +966,16 @@ void MIL_RealObject_ABC::ProcessAgentInside( MIL_Agent_ABC& agent )
     agent.GetRole< PHY_RoleInterface_Location >().NotifyObjectCollision( *this ); 
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::ProcessAgentMovingInside
+// Created: NLD 2004-04-29
+// -----------------------------------------------------------------------------
+void MIL_RealObject_ABC::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
+{
+    MIL_Object_ABC::ProcessAgentMovingInside( agent );
+    agent.GetRole< PHY_RoleInterface_Location >().NotifyObjectCollision( *this ); 
+}
+
 // =============================================================================
 // KNOWLEDGE
 // =============================================================================

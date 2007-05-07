@@ -27,6 +27,8 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "MIL_AgentServer.h"
 
+//$$$ Refactorer gestion collisions objets
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PathWalker constructor
 // Created: NLD 2005-09-30
@@ -293,6 +295,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
             {
                 rSpeedWithinObject = 0;
                 vNewPos_           = ( itCurMoveStep->vPos_ + ( vNewDir_ * nDistanceBeforeBlockingObject ) );
+                movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07: 
                 return false;
             }
         }
@@ -310,6 +313,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
         {
             rCurrentSpeed_ = 0;
             vNewPos_       = ( itCurMoveStep->vPos_ + ( vNewDir_ * nDistanceBeforeBlockingObject ) );
+            movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07: FOIREUX
             return false;
         }    
     }
@@ -520,4 +524,5 @@ bool DEC_PathWalker::SerializeCurrentPath( ASN1T_Itineraire& asn ) const
     pCurrentPath_->Serialize( asn );
     return true;
 }
+
 
