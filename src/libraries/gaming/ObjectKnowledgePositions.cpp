@@ -53,6 +53,5 @@ void ObjectKnowledgePositions::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& m
 // -----------------------------------------------------------------------------
 void ObjectKnowledgePositions::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( ! perceived_ || ! realObjectKnown_ )
-        LocationPositions::Draw( where, viewport, tools );
+    LocationPositions::Draw( where, viewport, tools );
 }

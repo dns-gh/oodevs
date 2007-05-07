@@ -167,10 +167,6 @@ const kernel::Team_ABC& ObjectKnowledge::GetOwner() const
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( bIsPerceived_ && pRealObject_ )
-    {
-        const bool backupState = tools.Select( false );
-        pRealObject_->Entity_ABC::Draw( where, viewport, tools );
-        tools.Select( backupState );
-    }
+    if( type_ )
+        type_->Draw( where, viewport, tools );
 }
