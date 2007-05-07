@@ -446,10 +446,13 @@ bool TER_Localisation::Reset( const T_PointVector& pointVector )
     if( pointVector_.size() == 1 )
         nType_ = ePoint;
 
-    if( pointVector_.size() > 2 && ( *pointVector.begin() == pointVector[ pointVector.size() - 1 ] ) )
-        nType_ = ePolygon;
-    else
-        nType_ = eLine;
+    else if( pointVector_.size() > 2 )
+    {
+        if( ( *pointVector.begin() == pointVector[ pointVector.size() - 1 ] ) )
+            nType_ = ePolygon;
+        else
+            nType_ = eLine;
+    }
 
     return Initialize();
 }
@@ -914,6 +917,20 @@ void TER_Localisation::Split( uint nNbrParts, T_LocalisationPtrVector& locVector
     }
     else
         assert( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_Localisation::Convexify
+// Created: NLD 2007-05-07
+// -----------------------------------------------------------------------------
+void TER_Localisation::Convexify()
+{
+    if( nType_ == ePolygon )
+    {
+        polygon_.Reset( pointVector_, true ); // 'true' is for generate 'convex hull'
+        pointVector_ = polygon_.GetBorderPoints();
+        InitializeBoundingBox( pointVector_ );
+    }
 }
 
 // -----------------------------------------------------------------------------

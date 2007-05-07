@@ -109,8 +109,9 @@ public:
     void GetPointsClippedBetweenTwoLines( const MT_Droite& leftDroite, const MT_Droite& rightDroite, const MT_Vector2D& vDroitesIntersection, T_PointVector& clippedPointVector ) const;
     void GetPointsClippedBetweenTwoLines( const MT_Droite& leftDroite, const MT_Droite& rightDroite, T_PointVector& clippedPointVector ) const;
 
-    void Split( uint nNbrParts, T_LocalisationPtrVector& locVector ) const;
-    void Scale( MT_Float rDist );
+    void Split    ( uint nNbrParts, T_LocalisationPtrVector& locVector ) const;
+    void Scale    ( MT_Float rDist );
+    void Convexify();
 
     MT_Vector2D ComputeBarycenter() const;
     //@}

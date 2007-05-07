@@ -391,13 +391,20 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectCollision& collisio
     UpdateMaxPerceptionLevel    ( PHY_PerceptionLevel::identified_ );
     UpdateStates                ();
  
-    //$$$ TMP
+    //$$$ TMP BULLSHIT
     if( !(localisation_ == pObjectKnown_->GetLocalisation() ) )
     {
-        if(     localisation_.GetType() != TER_Localisation::ePoint
-            ||  localisation_.GetPoints()[ 0 ] != collision.GetPosition() )
+        if( std::find( localisation_.GetPoints().begin(), localisation_.GetPoints().end(), collision.GetPosition() ) == localisation_.GetPoints().end() )
         {
-            localisation_.Reset( collision.GetPosition() );
+            T_PointVector points = localisation_.GetPoints();
+            while( points.size() > 10 )  // $$$$ NLD 2007-05-07: 10 : why not ...
+                points.erase( points.begin() );
+            points.push_back( collision.GetPosition() );
+            if( points.size() > 2 )
+                points.push_back( points.front() );
+            localisation_.Reset( points );
+            localisation_.Convexify();
+
             NotifyAttributeUpdated( eAttr_Localisation );
         }
     }
