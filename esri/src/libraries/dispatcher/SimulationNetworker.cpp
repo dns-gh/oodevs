@@ -15,6 +15,7 @@
 #include "Model.h"
 #include "ClientsNetworker.h"
 #include "Network_Def.h"
+#include "Config.h"
 #include "tools/AsnMessageDecoder.h"
 #include "tools/AsnMessageEncoder.h"
 #include "xeumeuleu/xml.h"
@@ -44,11 +45,12 @@ static const unsigned int magicCookie_ = 1;
 // Name: SimulationNetworker constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, const std::string& configFile )
-    : ClientNetworker_ABC( magicCookie_, ReadHost( configFile ) )
+SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, Config& config )
+    : ClientNetworker_ABC( magicCookie_, ReadHost( config.GetGameFile() ) )
     , dispatcher_        ( dispatcher )
-    , pSimulation_       ( 0 )
-    , configFile_        ( configFile )
+    , pSimulation_       ( 0 )    
+    , configFile_        ( config.GetGameFile() )
+    , config_            ( config )
 {
     GetMessageService().RegisterReceivedMessage( eMsgSimToClient                           , *this, &SimulationNetworker::OnReceiveMsgSimToClient                            );
     GetMessageService().RegisterReceivedMessage( eMsgSimToMiddle                           , *this, &SimulationNetworker::OnReceiveMsgSimToMiddle                            );
@@ -85,7 +87,7 @@ void SimulationNetworker::OnConnected( DIN_Link& link )
     ClientNetworker_ABC::OnConnected( link );
 
     assert( !pSimulation_ );
-    pSimulation_ = new Simulation( dispatcher_, GetMessageService(), link, configFile_ );
+    pSimulation_ = new Simulation( dispatcher_, GetMessageService(), link, configFile_, config_ );
 }
 
 // -----------------------------------------------------------------------------

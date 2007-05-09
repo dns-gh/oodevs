@@ -23,7 +23,13 @@ namespace dispatcher
 {
     class Dispatcher;
     class SaverFacade;
-    class SimulationDispatcher;
+    class SimulationDispatcher;    
+
+namespace esri 
+{
+    class Config;
+    class ConnectorFacade;
+}
 
 // =============================================================================
 /** @class  Simulation
@@ -37,7 +43,7 @@ class Simulation : public tools::Server_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Simulation( Dispatcher& dispatcher, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link, const std::string& configFile );
+            Simulation( Dispatcher& dispatcher, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link, const std::string& configFile, esri::Config& config );
     virtual ~Simulation();
     //@}
 
@@ -69,11 +75,13 @@ private:
     //! @name Helpers
     //@{
     void CreateSaver( const std::string& configFile );
+    void CreateEsriConnector( esri::Config& config, const std::string& configFile );
     //@}
 
 private:
     Dispatcher&           dispatcher_;
     SaverFacade*          saver_;
+    esri::ConnectorFacade*  esriConnector_;
     SimulationDispatcher* simDispatch_;
 };
 

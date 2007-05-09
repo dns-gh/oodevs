@@ -38,7 +38,7 @@ Dispatcher::Dispatcher( Config& config )
                     >> xml::attribute( "file", profiles );
 
     pModel_               = new Model              ();
-    pSimulationNetworker_ = new SimulationNetworker( *this, config.GetGameFile() );
+    pSimulationNetworker_ = new SimulationNetworker( *this, config );
     pClientsNetworker_    = new ClientsNetworker   ( *this, config.GetGameFile() );
     pProfileManager_      = new ProfileManager     ( *pModel_, *pClientsNetworker_, config.BuildExerciseChildFile( profiles ) );
 }
@@ -71,4 +71,5 @@ void Dispatcher::Update()
     pClientsNetworker_   ->Update();
     pSimulationNetworker_->Update();
 }
+
 

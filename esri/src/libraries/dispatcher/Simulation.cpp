@@ -18,10 +18,12 @@
 #include "ClientsNetworker.h"
 #include "ProfileManager.h"
 #include "SaverFacade.h"
+#include "esri/ESRI_ConnectorFacade.h"
 #include "SimulationDispatcher.h"
 #include "tools/AsnMessageEncoder.h"
 #include "DIN/MessageService/DIN_MessageService_ABC.h"
 #include "DIN/DIN_Link.h"
+#include "esri/ESRI_Config.h"
 #include "xeumeuleu/xml.h"
 
 using namespace dispatcher;
@@ -32,14 +34,16 @@ using namespace DIN;
 // Name: Simulation constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-Simulation::Simulation( Dispatcher& dispatcher, DIN_MessageService_ABC& messageService, DIN_Link& link, const std::string& configFile )
+Simulation::Simulation( Dispatcher& dispatcher, DIN_MessageService_ABC& messageService, DIN_Link& link, const std::string& configFile, esri::Config& config )
     : Server_ABC ( messageService, link )
     , dispatcher_( dispatcher )
-    , saver_     ( 0 )
+    , saver_         ( 0 )
+    , esriConnector_ ( 0 )    
 {
     AsnMsgMiddleToSimCtrlClientAnnouncement().Send( *this );
 
     CreateSaver( configFile );
+    CreateEsriConnector( config, configFile );
     simDispatch_ = new SimulationDispatcher( dispatcher.GetClientsNetworker(), dispatcher.GetModel() );
 }
 
@@ -49,7 +53,10 @@ Simulation::Simulation( Dispatcher& dispatcher, DIN_MessageService_ABC& messageS
 //-----------------------------------------------------------------------------
 Simulation::~Simulation()
 {
-    delete saver_;
+    if ( saver_ )
+        delete saver_;
+    if ( esriConnector_ )
+        delete esriConnector_;
     delete simDispatch_;
 }
 
@@ -74,7 +81,9 @@ void Simulation::OnReceive( const ASN1T_MsgsSimToClient& asnMsg )
         {
             MT_LOG_INFO_MSG( "Dispatcher - Model initialized" );
             dispatcher_.GetProfileManager  ().Reset(); // Profiles initialization
-            dispatcher_.GetClientsNetworker().AllowConnections();
+            dispatcher_.GetClientsNetworker().AllowConnections();            
+            if ( esriConnector_ )
+                esriConnector_->Update();
             break;
         }
     };
@@ -176,4 +185,23 @@ void Simulation::CreateSaver( const std::string& configFile )
                     >> xml::optional() >> xml::attribute( "directory", directory );
     if( enable )
         saver_ = new SaverFacade( dispatcher_.GetModel(), directory );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::CreateEsriConnector
+// Created: JCR 2007-04-30
+// -----------------------------------------------------------------------------
+void Simulation::CreateEsriConnector( esri::Config& config, const std::string& configFile )
+{
+    xml::xifstream xis( configFile );
+    bool enable = false; 
+    std::string geodatabase;    
+    xis >> xml::start( "config" )
+            >> xml::start( "dispatcher" )
+                >> xml::start( "esri-service" )
+                    >> xml::attribute( "enabled", enable )
+                    >> xml::optional() >> xml::attribute( "geodatabase", geodatabase );
+    config.UpdateGeodatabase( geodatabase );
+    if( enable )
+        esriConnector_ = new esri::ConnectorFacade( dispatcher_.GetModel(), config );
 }

@@ -26,6 +26,11 @@ class SimulationNetworker;
 class ClientsNetworker;
 class ProfileManager;
 
+namespace esri
+{
+    class Connector;
+}
+
 // =============================================================================
 /** @class  Dispatcher
     @brief  Dispatcher
@@ -66,6 +71,7 @@ private:
     SimulationNetworker* pSimulationNetworker_;
     ClientsNetworker*    pClientsNetworker_;
     ProfileManager*      pProfileManager_;
+    esri::Connector*     pEsriFacade_;    
 };
 
 }
