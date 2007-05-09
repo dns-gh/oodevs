@@ -18,6 +18,10 @@ namespace kernel
     class Controllers;
 }
 
+class AlarmsWidget;
+class Publisher_ABC;
+class Profile;
+
 // =============================================================================
 /** @class  ClockWidget
     @brief  ClockWidget
@@ -32,12 +36,8 @@ class ClockWidget : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ClockWidget( QWidget* parent, kernel::Controllers& controllers );
+             ClockWidget( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation );
     virtual ~ClockWidget();
-    //@}
-
-    //! @name Operations
-    //@{
     //@}
 
 private:
@@ -50,6 +50,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );
+    virtual void mouseDoubleClickEvent( QMouseEvent * e );
     //@}
 
 private:
@@ -58,6 +59,7 @@ private:
     kernel::Controllers& controllers_;
     QLabel* time_;
     QLabel* day_;
+    AlarmsWidget* alarms_;
     //@}
 };
 

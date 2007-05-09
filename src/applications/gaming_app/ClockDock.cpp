@@ -15,11 +15,11 @@
 // Name: ClockDock constructor
 // Created: SBO 2007-04-17
 // -----------------------------------------------------------------------------
-ClockDock::ClockDock( QWidget* parent, kernel::Controllers& controllers )
+ClockDock::ClockDock( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation )
     : QDockWindow( parent )
 {
     setOrientation( Qt::Horizontal );
-    setWidget( new ClockWidget( this, controllers ) );
+    setWidget( new ClockWidget( this, controllers, simulation ) );
     setResizeEnabled( true );
     setCloseMode( QDockWindow::Always );
     setCaption( tr( "Clock" ) );

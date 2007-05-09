@@ -15,6 +15,8 @@ namespace kernel
     class Controllers;
 }
 
+class Simulation;
+
 // =============================================================================
 /** @class  ClockDock
     @brief  ClockDock
@@ -27,7 +29,7 @@ class ClockDock : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             ClockDock( QWidget* parent, kernel::Controllers& controllers );
+             ClockDock( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation );
     virtual ~ClockDock();
     //@}
 

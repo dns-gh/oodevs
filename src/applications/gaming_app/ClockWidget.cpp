@@ -9,13 +9,14 @@
 
 #include "gaming_app_pch.h"
 #include "ClockWidget.h"
+#include "AlarmsWidget.h"
 #include "clients_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: ClockWidget constructor
 // Created: SBO 2007-04-17
 // -----------------------------------------------------------------------------
-ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers )
+ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation )
     : QVBox( parent )
     , controllers_( controllers )
 {
@@ -41,6 +42,8 @@ ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers )
     day_->setText( tr( "Day 1" ) );
     day_->setAlignment( Qt::AlignCenter );
     controllers_.Register( *this );
+
+    alarms_ = new AlarmsWidget( this, controllers, simulation );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,9 +61,15 @@ ClockWidget::~ClockWidget()
 // -----------------------------------------------------------------------------
 void ClockWidget::NotifyUpdated( const Simulation& simulation )
 {
-    unsigned long seconds = simulation.IsConnected() ? simulation.GetTime() : 0;
-    time_->setText( QString( "%1:%2:%3" ).arg( QString::number( ( seconds / 3600 ) % 24 ).rightJustify( 2, '0' ) )
-                                         .arg( QString::number( ( seconds / 60   ) % 60 ).rightJustify( 2, '0' ) )
-                                         .arg( QString::number( ( seconds % 60   )      ).rightJustify( 2, '0' ) ) );
-    day_->setText( tr( "Day %1" ).arg( 1 + seconds / ( 3600 * 24 ) ) );
+    time_->setText( simulation.GetTimeAsString() );
+    day_ ->setText( tr( "Day %1" ).arg( simulation.GetDay() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClockWidget::mouseDoubleClickEvent
+// Created: AGE 2007-05-09
+// -----------------------------------------------------------------------------
+void ClockWidget::mouseDoubleClickEvent( QMouseEvent* )
+{
+    alarms_->show();
 }

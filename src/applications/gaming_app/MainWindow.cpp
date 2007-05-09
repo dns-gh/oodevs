@@ -114,7 +114,7 @@ using namespace gui;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, Network& network, const kernel::Profile_ABC& p, kernel::ExerciseConfig& config )
+MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation, Network& network, const kernel::Profile_ABC& p, kernel::ExerciseConfig& config )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_  ( controllers )
     , staticModel_  ( staticModel )
@@ -248,7 +248,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setDockEnabled( infoWnd, Qt::DockTop, false );
 
     // Clock
-    QDockWindow* clockWnd = new ClockDock( this, controllers_ );
+    QDockWindow* clockWnd = new ClockDock( this, controllers_, simulation );
     moveDockWindow( clockWnd, Qt::DockRight );
     setDockEnabled( clockWnd, Qt::DockTop, false );
 

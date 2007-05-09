@@ -1145,9 +1145,6 @@
     </message>
 </context>
 <context>
-    <name>MagicOrdersInterface</name>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <source> - Not connected</source>

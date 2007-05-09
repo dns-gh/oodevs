@@ -61,6 +61,7 @@ void Simulation::Disconnect()
 {
     if( !connected_ )
         return;
+    time_ = 0;
     profiling_.Clear();
     connected_ = false;
     connection_.connected_ = connected_;
@@ -239,4 +240,24 @@ const std::string& Simulation::GetSimulationHost() const
 float Simulation::GetEffectiveSpeed() const
 {
     return std::floor( ( profiling_.EffectiveSpeed() + 0.5f ) * tickDuration_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetDay
+// Created: AGE 2007-05-09
+// -----------------------------------------------------------------------------
+int Simulation::GetDay() const
+{
+    return 1 + time_ / ( 3600 * 24 );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetTimeAsString
+// Created: AGE 2007-05-09
+// -----------------------------------------------------------------------------
+QString Simulation::GetTimeAsString() const
+{
+    return QString( "%1:%2:%3" ).arg( QString::number( ( time_ / 3600 ) % 24 ).rightJustify( 2, '0' ) )
+                                .arg( QString::number( ( time_ / 60   ) % 60 ).rightJustify( 2, '0' ) )
+                                .arg( QString::number( ( time_ % 60   )      ).rightJustify( 2, '0' ) );
 }

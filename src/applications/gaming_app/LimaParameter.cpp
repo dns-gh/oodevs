@@ -78,6 +78,7 @@ void LimaParameter::Draw( const geometry::Point2f& point, const kernel::Viewport
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glColor4f( 1, 0, 0, 0.5f );
         lima_->Interface().Apply( &kernel::Drawable_ABC::Draw, point, viewport, tools ); // $$$$ SBO 2007-05-02:
+        // $$$$ AGE 2007-05-09: pourquoi pas juste Draw ??
     glPopAttrib();
 }
 

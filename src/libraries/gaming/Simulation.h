@@ -54,18 +54,22 @@ public:
 
     void BeginCheckPoint();
     void EndCheckPoint();
-
-    const std::string& GetSimulationHost() const;
-    int GetTime() const;
-    bool IsPaused() const;
-    bool IsConnected() const;
-    int GetSpeed() const;
-    unsigned GetCurrentTick() const;
-    unsigned GetTickCount() const;
-
-    float GetEffectiveSpeed() const;
     //@}
 
+    //! @name Accessors
+    //@{
+    const std::string& GetSimulationHost() const;
+    int  GetTime() const;                    //!< seconds since simulation start
+    unsigned GetCurrentTick() const;         //!< tick since simulation start
+    unsigned GetTickCount() const;           //!< total tick count (replayer)
+    int GetDay() const; 
+    QString GetTimeAsString() const; 
+    bool IsPaused() const;
+    bool IsConnected() const;
+    int  GetSpeed() const;
+    float GetEffectiveSpeed() const;         //!< average speed on last ten updates
+    //@}
+    
 private:
     //! @name Copy/Assignement
     //@{

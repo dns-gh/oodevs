@@ -90,7 +90,7 @@ void Application::Initialize( int argc, char** argv )
     staticModel_ = new StaticModel( *controllers_, *rcResolver );
     model_       = new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *rcResolver );
     network_->GetMessageMgr().SetModel( *model_ );
-    mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *network_, *profile_, *config_ );
+    mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *network_, *profile_, *config_ );
     mainWindow_->show();
 
     // Make sure the application exits when the main window is closed.
