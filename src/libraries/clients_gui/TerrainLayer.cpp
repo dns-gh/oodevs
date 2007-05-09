@@ -125,6 +125,8 @@ void TerrainLayer::SetAlpha( float alpha )
 // -----------------------------------------------------------------------------
 void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
 {
+    if( GetAlpha() == 0 )
+        return;
     if( shapes_.empty() && !parameters_.graphicsDirectory_.empty() )
     {
         world_.Set( 0, 0, parameters_.width_, parameters_.height_ );
