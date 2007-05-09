@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<Meteo>
+  <Ephemeride>
+    <HeureLeverSoleil>7h0m0s</HeureLeverSoleil>
+    <HeureCoucherSoleil>21h17m0s</HeureCoucherSoleil>
+    <Lune>NuitTroisQuartDeLune</Lune>
+  </Ephemeride>
+  <MeteoGlobale>
+    <Temperature>20</Temperature>
+    <GradianTemperature>5</GradianTemperature>
+    <VitesseVent>0</VitesseVent>
+    <DirectionVent>0</DirectionVent>
+    <PlancherCouvertureNuageuse>500</PlancherCouvertureNuageuse>
+    <PlafondCouvertureNuageuse>10000</PlafondCouvertureNuageuse>
+    <DensiteMoyenneCouvertureNuageuse>0</DensiteMoyenneCouvertureNuageuse>
+    <Precipitation>PasDePrecipitation</Precipitation>
+  </MeteoGlobale>
+  <PatchsLocaux/>
+</Meteo>

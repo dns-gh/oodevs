@@ -1,0 +1,95 @@
+--
+-- file name : AutomatetAttr.asn
+--
+-- Messages de gestion des attributs d'une unité
+--
+
+Automate DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS BaseExports FROM Base
+        UnitExports FROM Unit;
+AutomateIncludes ::= SEQUENCE { BaseExports, UnitExports }
+AutomateExports  ::= NULL
+-- END includes
+
+EnumAutomateState ::= ENUMERATED
+{
+    embraye,
+    debraye
+}
+
+MsgAutomateCreation ::= SEQUENCE
+{
+    oid-automate             Automate,
+    type-automate            TypeAutomate,
+    nom                      VisibleString,
+    oid-formation            Formation,
+    oid-camp                 Camp,
+    oid-groupe-connaissance  OID
+}
+
+MsgAutomateAttributes ::= SEQUENCE
+{
+    oid-automate                  Automate,    
+    etat-automate                 EnumAutomateState       OPTIONAL,   
+    rapport-de-force              EnumEtatRapFor          OPTIONAL,
+    combat-de-rencontre           EnumEtatCombatRencontre OPTIONAL,
+    etat-operationnel             EnumEtatOperationnel    OPTIONAL,
+    roe                           EnumRoe                 OPTIONAL
+}
+
+-- Misc
+EnumSetAutomateModeErrorCode ::= ENUMERATED
+{
+    no-error          (0),
+    error-invalid-unit(1),
+    error-not-allowed (2)
+}
+MsgSetAutomateMode ::= SEQUENCE
+{
+    unit-id Agent,
+    mode    EnumAutomateState
+}
+MsgSetAutomateModeAck ::= SEQUENCE
+{
+    unit-id     Agent,
+    error-code  EnumSetAutomateModeErrorCode
+}
+
+-- Changement hierarchie
+MsgAutomateChangeGroupeConnaissance ::= SEQUENCE
+{
+    oid-automate             Automate,
+    oid-camp                 Camp,
+    oid-groupe-connaissance  KnowledgeGroup 
+}
+
+MsgAutomateChangeGroupeConnaissanceAck ::= SEQUENCE
+{
+    oid-automate             Automate,
+    oid-camp                 Camp,
+    oid-groupe-connaissance  KnowledgeGroup,
+    error-code               EnumChangeHierarchyErrorCode
+}
+   
+MsgAutomateChangeLiensLogistiques ::= SEQUENCE
+{
+    oid-automate       Automate,
+    oid-tc2            Automate OPTIONAL,
+    oid-maintenance    Automate OPTIONAL,
+    oid-sante          Automate OPTIONAL,
+    oid-ravitaillement Automate OPTIONAL
+}
+
+MsgAutomateChangeLiensLogistiquesAck ::= SEQUENCE
+{
+    oid-automate       Automate,
+    oid-tc2            Automate OPTIONAL,
+    oid-maintenance    Automate OPTIONAL,
+    oid-sante          Automate OPTIONAL,
+    oid-ravitaillement Automate OPTIONAL,
+    error-code         EnumChangeHierarchyErrorCode   
+}
+
+END -- Automate

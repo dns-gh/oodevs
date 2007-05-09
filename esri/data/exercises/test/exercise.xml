@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<exercise>
+    <profiles file="profiles.xml"/>
+    <orbat file="orbat.xml"/>
+    <weather file="weather.xml"/>
+    
+    <terrain name="test"/>
+    <model dataset="test" physical=""/>
+    
+</exercise >

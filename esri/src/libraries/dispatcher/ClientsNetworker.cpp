@@ -1,0 +1,251 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#include "dispatcher_pch.h"
+
+#include "ClientsNetworker.h"
+
+#include "Network_Def.h"
+#include "Dispatcher.h"
+#include "Client.h"
+#include "Replayer.h"
+#include "Loader.h"
+#include "tools/AsnMessageDecoder.h"
+#include "tools/AsnMessageEncoder.h"
+#include "xeumeuleu/xml.h"
+#include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
+
+using namespace dispatcher;
+using namespace tools;
+using namespace DIN;
+
+namespace 
+{
+    unsigned short ReadPort( const std::string& configFile )
+    {
+        unsigned short port;
+        xml::xifstream xis( configFile );
+        xis >> xml::start( "config" )
+                >> xml::start( "dispatcher" )
+                    >> xml::start( "network" )
+                        >> xml::attribute( "server", port );
+        return port;
+    }
+}
+
+static const unsigned int magicCookie_ = 10;
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworkerc constructor
+// Created: NLD 2006-09-20
+// -----------------------------------------------------------------------------
+ClientsNetworker::ClientsNetworker( Dispatcher& dispatcher, const std::string& configFile )
+    : ServerNetworker_ABC( magicCookie_, ReadPort( configFile ) )
+    , dispatcher_        ( &dispatcher )
+    , replayer_          ( 0 )
+{
+    GetMessageService().RegisterReceivedMessage( eMsgClientToSim           , *this, &ClientsNetworker::OnReceiveMsgClientToSim            );
+    GetMessageService().RegisterReceivedMessage( eMsgClientToMiddle        , *this, &ClientsNetworker::OnReceiveMsgClientToMiddle         );
+    GetMessageService().RegisterReceivedMessage( eMsgEnableUnitVisionCones , *this, &ClientsNetworker::OnReceiveMsgEnableUnitVisionCones  );
+    GetMessageService().RegisterReceivedMessage( eMsgDisableUnitVisionCones, *this, &ClientsNetworker::OnReceiveMsgDisableUnitVisionCones );
+    GetMessageService().RegisterReceivedMessage( eMsgEnableProfiling       , *this, &ClientsNetworker::OnReceiveMsgEnableProfiling        );
+    GetMessageService().RegisterReceivedMessage( eMsgDisableProfiling      , *this, &ClientsNetworker::OnReceiveMsgDisableProfiling       );
+    GetMessageService().RegisterReceivedMessage( eMsgUnitMagicAction       , *this, &ClientsNetworker::OnReceiveMsgUnitMagicAction        );
+    GetMessageService().RegisterReceivedMessage( eMsgDebugDrawPoints       , *this, &ClientsNetworker::OnReceiveMsgDebugDrawPoints        );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker constructor
+// Created: AGE 2007-04-10
+// -----------------------------------------------------------------------------
+ClientsNetworker::ClientsNetworker( Replayer& replayer, const std::string& configFile )
+    : ServerNetworker_ABC( magicCookie_, ReadPort( configFile ) )
+    , dispatcher_        ( 0 )
+    , replayer_          ( &replayer )
+{
+    GetMessageService().RegisterReceivedMessage( eMsgClientToSim           , *this, &ClientsNetworker::OnReceiveMsgClientToSim            );
+    GetMessageService().RegisterReceivedMessage( eMsgClientToMiddle        , *this, &ClientsNetworker::OnReceiveMsgClientToMiddle         );
+    GetMessageService().RegisterReceivedMessage( eMsgEnableUnitVisionCones , *this, &ClientsNetworker::OnReceiveMsgEnableUnitVisionCones  );
+    GetMessageService().RegisterReceivedMessage( eMsgDisableUnitVisionCones, *this, &ClientsNetworker::OnReceiveMsgDisableUnitVisionCones );
+    GetMessageService().RegisterReceivedMessage( eMsgEnableProfiling       , *this, &ClientsNetworker::OnReceiveMsgEnableProfiling        );
+    GetMessageService().RegisterReceivedMessage( eMsgDisableProfiling      , *this, &ClientsNetworker::OnReceiveMsgDisableProfiling       );
+    GetMessageService().RegisterReceivedMessage( eMsgUnitMagicAction       , *this, &ClientsNetworker::OnReceiveMsgUnitMagicAction        );
+    GetMessageService().RegisterReceivedMessage( eMsgDebugDrawPoints       , *this, &ClientsNetworker::OnReceiveMsgDebugDrawPoints        );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker destructor
+// Created: NLD 2006-09-20
+// -----------------------------------------------------------------------------
+ClientsNetworker::~ClientsNetworker()
+{
+    // NOTHING
+}
+
+// =============================================================================
+// MAIN
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::DenyConnections
+// Created: NLD 2006-10-05
+// -----------------------------------------------------------------------------
+void ClientsNetworker::DenyConnections()
+{
+    ServerNetworker_ABC::DenyConnections();
+
+    for( CIT_ClientSet it = clients_.begin(); it != clients_.end(); ++it )
+        (**it).Disconnect();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::AllowConnections
+// Created: NLD 2006-10-05
+// -----------------------------------------------------------------------------
+void ClientsNetworker::AllowConnections()
+{
+    ServerNetworker_ABC::AllowConnections();
+}
+
+// =============================================================================
+// CONNECTION CALLBACKS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::OnConnectionReceived
+// Created: NLD 2002-07-12
+// -----------------------------------------------------------------------------
+void ClientsNetworker::OnConnectionReceived( DIN_Server& server, DIN_Link& link )
+{
+    ServerNetworker_ABC::OnConnectionReceived( server, link );
+
+    Client* pClient = 0;
+    if( dispatcher_ )
+        pClient = new Client( dispatcher_->GetModel(), dispatcher_->GetProfileManager(), dispatcher_->GetSimulationNetworker(), GetMessageService(), link );
+    else
+        pClient = new Client( replayer_->GetModel(), replayer_->GetProfiles(), replayer_->GetLoader(), GetMessageService(), link );
+    clients_.insert( pClient );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::OnConnectionLost
+// Created: NLD 2002-07-12
+// -----------------------------------------------------------------------------
+void ClientsNetworker::OnConnectionLost( DIN_Server& server, DIN_Link& link, const DIN_ErrorDescription& reason )
+{
+    ServerNetworker_ABC::OnConnectionLost( server, link, reason );
+
+    Client& client = Client::GetClientFromLink( link );
+    clients_.erase( &client );
+    delete &client;
+}
+
+// =============================================================================
+// RECEIVED MESSAGES
+// =============================================================================
+
+#define DECLARE_DIN_CALLBACK( MSG )                                                           \
+    void ClientsNetworker::OnReceiveMsg##MSG( DIN::DIN_Link& linkFrom, DIN::DIN_Input& msg )  \
+    {                                                                                         \
+        Client::GetClientFromLink( linkFrom ).OnReceive( eMsg##MSG, msg );                    \
+    }
+
+DECLARE_DIN_CALLBACK( EnableUnitVisionCones  )
+DECLARE_DIN_CALLBACK( DisableUnitVisionCones )
+DECLARE_DIN_CALLBACK( EnableProfiling        )
+DECLARE_DIN_CALLBACK( DisableProfiling       )
+DECLARE_DIN_CALLBACK( UnitMagicAction        )
+DECLARE_DIN_CALLBACK( DebugDrawPoints        )
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::OnReceiveMsgClientToSim
+// Created: NLD 2006-09-21
+// -----------------------------------------------------------------------------
+void ClientsNetworker::OnReceiveMsgClientToSim( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input )
+{
+    try
+    {
+        AsnMessageDecoder< ASN1T_MsgsClientToSim, ASN1C_MsgsClientToSim > asnDecoder( input );
+        Client::GetClientFromLink( linkFrom ).OnReceive( asnDecoder.GetAsnMsg() );
+    }
+    catch( std::runtime_error& exception )
+    {
+        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::OnReceiveMsgClientToMiddle
+// Created: NLD 2006-09-21
+// -----------------------------------------------------------------------------
+void ClientsNetworker::OnReceiveMsgClientToMiddle( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input )
+{
+    try
+    {
+        AsnMessageDecoder< ASN1T_MsgsClientToMiddle, ASN1C_MsgsClientToMiddle > asnDecoder( input );
+        Client::GetClientFromLink( linkFrom ).OnReceive( asnDecoder.GetAsnMsg() );
+    }
+    catch( std::runtime_error& exception )
+    {
+        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
+    }
+}
+
+// =============================================================================
+// SENT MESSAGES
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::Send
+// Created: NLD 2006-09-21
+// -----------------------------------------------------------------------------
+void ClientsNetworker::Send( const ASN1T_MsgsSimToClient& asnMsg )
+{
+    try
+    {
+        AsnMessageEncoder< ASN1T_MsgsSimToClient, ASN1C_MsgsSimToClient > asnEncoder( GetMessageService(), asnMsg );
+        for( CIT_ClientSet it = clients_.begin(); it != clients_.end(); ++it )
+            (**it).Send( asnMsg, asnEncoder.GetDinMsg() );
+    }
+    catch( std::runtime_error& exception )
+    {
+        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::Send
+// Created: NLD 2007-04-24
+// -----------------------------------------------------------------------------
+void ClientsNetworker::Send( const ASN1T_MsgsMiddleToClient& asnMsg )
+{
+    try
+    {
+        AsnMessageEncoder< ASN1T_MsgsMiddleToClient, ASN1C_MsgsMiddleToClient > asnEncoder( GetMessageService(), asnMsg );
+        for( CIT_ClientSet it = clients_.begin(); it != clients_.end(); ++it )
+            (**it).Send( asnMsg, asnEncoder.GetDinMsg() );
+    }
+    catch( std::runtime_error& exception )
+    {
+        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::Send
+// Created: NLD 2006-09-25
+// -----------------------------------------------------------------------------
+void ClientsNetworker::Send( unsigned int nMsgID, const DIN::DIN_Input& dinMsg )
+{
+    DIN_BufferedMessage copiedMsg( GetMessageService() );
+    copiedMsg.GetOutput().Append( dinMsg.GetBuffer( 0 ), dinMsg.GetAvailable() );
+
+    for( CIT_ClientSet it = clients_.begin(); it != clients_.end(); ++it )
+        (**it).Send( nMsgID, copiedMsg );
+}

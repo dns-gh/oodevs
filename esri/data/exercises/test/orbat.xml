@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<orbat>
+  <sides>
+    <side id="1" name="rouge" type="enemy">
+      <objects>
+        <object id="622" name="test" prepared="false" type="bouchon mines">
+          <shape type="point">
+            <points>
+              <point>31TBN7728449218</point>
+            </points>
+          </shape>
+          <specific-attributes>
+            <activity-time>2</activity-time>
+            <density>1</density>
+          </specific-attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="17" level="x" name="Formation [17]">
+          <automat engaged="true" id="108" knowledge-group="2" name="Automate 108" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="109" name="Section Combat GEN" position="30TYT1920270317" type="Section Combat GEN"/>
+            <unit command-post="false" id="110" name="Section Combat GEN" position="30TYT1972269837" type="Section Combat GEN"/>
+            <unit command-post="false" id="111" name="Section Combat GEN" position="30TYT1924169319" type="Section Combat GEN"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="2" name="Knowledge group [2]" type="Standard"/>
+      </communication>
+      <populations/>
+      <logistic/>
+    </side>
+    <side id="3" name="bleu" type="friend">
+      <objects>
+        <object id="623" name="bouchon mines [623]" prepared="true" type="bouchon mines">
+          <shape type="point">
+            <points>
+              <point>30TYT1637356603</point>
+            </points>
+          </shape>
+          <specific-attributes>
+            <activity-time>0</activity-time>
+            <density>1</density>
+          </specific-attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="5" level="xxx" name="Formation [5]">
+          <formation id="6" level="iii" name="Formation [6]">
+            <formation id="7" level="oo" name="Formation [7]">
+              <automat engaged="true" id="9" knowledge-group="22" name="automate pas nommé" type="Compagnie GEN Lourde">
+                <unit command-post="true" id="10" name="Section Combat GEN" position="30TYT1896868099" type="Section Combat GEN"/>
+                <unit command-post="false" id="11" name="Section Combat GEN" position="30TYT1948867619" type="Section Combat GEN"/>
+                <unit command-post="false" id="12" name="Section Combat GEN" position="30TYT1900667101" type="Section Combat GEN"/>
+              </automat>
+              <automat engaged="true" id="624" knowledge-group="22" name="TC2 [624]" type="TC2">
+                <unit command-post="true" id="625" name="PC TC2" position="31TBN8648765575" type="PC TC2">
+                  <dotations>
+                    <dotation name="Balle Classique 12,7" quantity="2"/>
+                  </dotations>
+                  <stocks>
+                    <dotation name="Fusse a ailettes 50mm" quantity="2"/>
+                  </stocks>
+                </unit>
+              </automat>
+              <automat engaged="true" id="626" knowledge-group="22" name="BLD Ravitaillement [626]" type="BLD Ravitaillement">
+                <unit command-post="true" id="627" name="PC BLD Ravitaillement" position="31TBN8504963846" type="PC BLD Ravitaillement">
+                  <stocks>
+                    <dotation name="Fusse a ailettes 50mm" quantity="546"/>
+                  </stocks>
+                </unit>
+              </automat>
+              <automat engaged="true" id="628" knowledge-group="22" name="BLD Maintenance [628]" type="BLD Maintenance">
+                <unit command-post="true" id="629" name="PC BLD Maintenance" position="31TBN8614464352" type="PC BLD Maintenance"/>
+              </automat>
+              <automat engaged="true" id="630" knowledge-group="22" name="BLD Sante [630]" type="BLD Sante">
+                <unit command-post="true" id="631" name="PC BLD Sante" position="31TBN8797864580" type="PC BLD Sante"/>
+              </automat>
+              <automat engaged="true" id="632" knowledge-group="22" name="BLT Sante [632]" type="BLT Sante">
+                <unit command-post="true" id="633" name="PC BLT Sante" position="31TBN8825962537" type="PC BLT Sante"/>
+              </automat>
+              <automat engaged="true" id="634" knowledge-group="22" name="BLT Maintenance [634]" type="BLT Maintenance">
+                <unit command-post="true" id="635" name="PC BLT Maintenance" position="31TBN8660562874" type="PC BLT Maintenance"/>
+              </automat>
+              <automat engaged="true" id="636" knowledge-group="22" name="BLD Ravitaillement [636]" type="BLD Ravitaillement">
+                <unit command-post="true" id="637" name="PC BLD Ravitaillement" position="31TBN8514462288" type="PC BLD Ravitaillement"/>
+              </automat>
+            </formation>
+          </formation>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="22" name="Knowledge group [22]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" humans="10000" id="620" name="Population standard [620]" position="30TYT1943469385" type="test1"/>
+        <population attitude="calme" humans="20000" id="621" name="Population standard [621]" position="30TYT1947368386" type="test1"/>
+      </populations>
+      <logistic>
+        <automat id="624">
+          <subordinate id="624" link="tc2"/>
+        </automat>
+        <automat id="626">
+          <subordinate id="624" link="supply">
+            <quotas>
+              <dotation name="Balle Classique 12,7" quantity="123465"/>
+            </quotas>
+          </subordinate>
+        </automat>
+        <automat id="628">
+          <subordinate id="624" link="maintenance"/>
+        </automat>
+        <automat id="630">
+          <subordinate id="624" link="medical"/>
+        </automat>
+        <automat id="632"/>
+        <automat id="634"/>
+        <automat id="636"/>
+      </logistic>
+    </side>
+  </sides>
+  <diplomacies>
+    <side id="1">
+      <relationship diplomacy="neutral" side="3"/>
+    </side>
+    <side id="3">
+      <relationship diplomacy="enemy" side="1"/>
+    </side>
+  </diplomacies>
+</orbat>
