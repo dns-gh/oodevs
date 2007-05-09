@@ -26,6 +26,7 @@ namespace gui
     class AutomatsLayer;
 }
 
+class Simulation;
 class ProfileFilter;
 
 // =============================================================================
@@ -38,6 +39,7 @@ class OrbatToolbar : public QHBox
                    , public kernel::Observer_ABC
                    , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
+                   , public kernel::ElementObserver_ABC< Simulation >
 {
     Q_OBJECT;
 
@@ -71,6 +73,7 @@ private:
     virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyCreated( const kernel::Automat_ABC& );
     virtual void NotifyDeleted( const kernel::Automat_ABC& );
+    virtual void NotifyUpdated( const Simulation& simu );
     //@}
 
     //! @name Types

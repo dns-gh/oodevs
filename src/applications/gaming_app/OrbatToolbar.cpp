@@ -16,6 +16,7 @@
 #include "clients_gui/resources.h"
 #include "clients_gui/AutomatsLayer.h"
 #include "gaming/ProfileFilter.h"
+#include "gaming/Simulation.h"
 
 // -----------------------------------------------------------------------------
 // Name: OrbatToolbar constructor
@@ -128,6 +129,16 @@ void OrbatToolbar::NotifyDeleted( const kernel::Automat_ABC& entity )
         std::swap( *it, automats_.back() );
         automats_.pop_back();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrbatToolbar::NotifyUpdated
+// Created: AGE 2007-05-09
+// -----------------------------------------------------------------------------
+void OrbatToolbar::NotifyUpdated( const Simulation& simu )
+{
+    if( ! simu.IsConnected() )
+        OnClearFilter();
 }
 
 // -----------------------------------------------------------------------------

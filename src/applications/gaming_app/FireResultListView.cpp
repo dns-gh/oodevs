@@ -35,7 +35,7 @@ FireResultListView::FireResultListView( QWidget* parent, kernel::Controllers& co
     setMargin( 2 );
     AddColumn( tr( "Target" ) );
     AddColumn( tr( "Attrition" ) );
-    
+
     subDisplayer_ = new SubItemDisplayer( tr( "Target" ), factory );
     subDisplayer_->AddChild( tr( "Equipments" ) );
     subDisplayer_->AddChild( tr( "Troops" ) );
@@ -89,12 +89,12 @@ void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC&,
     displayer.Display( tr( "Troops" ), tr( " (officer, warrant-off., private)" ) );
 
     QListViewItem* equipments = item->firstChild();
-    DeleteTail( 
+    DeleteTail(
         DisplayList( result->CreateIterator(), equipments )
     );
 
     QListViewItem* humans = equipments->nextSibling();
-    DeleteTail( 
+    DeleteTail(
         DisplayList( &* result->casualties_, result->casualties_ + eNbrHumanWound, humans )
     );
 }
@@ -133,8 +133,8 @@ void FireResultListView::NotifySelected( const kernel::Entity_ABC* element )
     {
         selected_ = element;
         if( !selected_ )
-            return;
-        if( const Explosions* results = selected_->Retrieve< Explosions >() )
+            clear();
+        else if( const Explosions* results = selected_->Retrieve< Explosions >() )
             NotifyUpdated( *results );
     }
 }
