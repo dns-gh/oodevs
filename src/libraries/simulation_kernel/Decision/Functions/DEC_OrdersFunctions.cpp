@@ -130,3 +130,53 @@ void DEC_OrdersFunctions::CDT_GivePionMission( DIA_Call_ABC& call, MIL_Automate&
 
     callerAutomate.GetOrderManager().CDT_GivePionMission( *pPionMission );
 }
+// =============================================================================
+// LIMAS
+// =============================================================================
+
+namespace 
+{
+    class FlagMissionLima
+    {   
+    public:
+        FlagMissionLima( uint nLimaID, bool bValue ) : nLimaID_( nLimaID ), bValue_( bValue ) {}
+
+        template< typename T >
+        void operator() ( T& entity )
+        {
+            MIL_LimaOrder* pLima = entity.FindLima( nLimaID_ );
+            if( pLima )
+                pLima->Flag( bValue_ );
+        }
+    private:
+        const uint nLimaID_;
+        const bool bValue_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::PionSetMissionLimaFlag
+// Created: NLD 2007-05-08
+// -----------------------------------------------------------------------------
+void DEC_OrdersFunctions::PionSetMissionLimaFlag( DIA_Call_ABC& call, MIL_AgentPion& caller )
+{
+    assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
+
+    FlagMissionLima functor( (uint)call.GetParameter( 0 ).ToPtr(), call.GetParameter( 1 ).ToBool() );
+    if( !caller.GetAutomate().IsEngaged() )
+        functor( caller );
+    else
+        caller.GetAutomate().ApplyOnHierarchy( functor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::AutomateSetMissionLimaFlag
+// Created: NLD 2007-05-08
+// -----------------------------------------------------------------------------
+void DEC_OrdersFunctions::AutomateSetMissionLimaFlag( DIA_Call_ABC& call, MIL_Automate& caller )
+{
+    assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
+
+    FlagMissionLima functor( (uint)call.GetParameter( 0 ).ToPtr(), call.GetParameter( 1 ).ToBool() );
+    caller.ApplyOnHierarchy( functor );
+}

@@ -232,3 +232,17 @@ MIL_LimaOrder* MIL_Automate::FindLima( uint nID ) const
 {
     return orderManager_.FindLima( nID );
 }
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > MIL_Automate::ApplyOnHierarchy
+// Created: NLD 2007-05-09
+// -----------------------------------------------------------------------------
+template< typename T > 
+void MIL_Automate::ApplyOnHierarchy( T& functor )
+{
+    functor( *this );
+
+    T_PionVector& pions = pions_;
+    for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
+        functor( **it );
+}

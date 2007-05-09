@@ -115,6 +115,8 @@ public:
     virtual void UpdateNetwork   () const;
     virtual void UpdateState     ();
     virtual void Clean           ();
+    
+    template< typename T > void ApplyOnHierarchy( T& functor );
 
     bool IsPerceived ( const DEC_Knowledge_Agent&  knowledge ) const;
     bool IsPerceived ( const DEC_Knowledge_Object& knowledge ) const;

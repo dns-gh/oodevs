@@ -525,11 +525,9 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::IsNewMissionStarted       < MIL_AgentPion >, "DEC_NouvelleMission"             );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::FinishMission             < MIL_AgentPion >, "DEC_FinMission"                  );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::SetMissionLimaFlag        < MIL_AgentPion >, "DEC_SetMissionLimaFlag"          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::PionSetMissionLimaFlag                     , "DEC_SetMissionLimaFlag"          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetMissionLimaFlag        < MIL_AgentPion >, "DEC_GetMissionLimaFlag"          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetLima                   < MIL_AgentPion >, "DEC_GetLima"                     );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::AutomateSetMissionLimaFlag                 , "DEC_Automate_SetMissionLimaFlag" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::AutomateGetMissionLimaFlag                 , "DEC_Automate_GetMissionLimaFlag" );
 
     // Etat décisionnel
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyForceRatioStateChanged                 , "DEC_Agent_ChangeEtatRapportDeForce"         );

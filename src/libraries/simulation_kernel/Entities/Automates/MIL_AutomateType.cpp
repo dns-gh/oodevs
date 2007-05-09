@@ -435,11 +435,11 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeBackestAgent                    < MIL_Automate >         , "DEC_Geometrie_PionDerriere"                                          );
 
     // Orders
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::IsNewMissionStarted< MIL_Automate >, "DEC_NouvelleMission"    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::FinishMission      < MIL_Automate >, "DEC_FinMission"         );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::SetMissionLimaFlag < MIL_Automate >, "DEC_SetMissionLimaFlag" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetMissionLimaFlag < MIL_Automate >, "DEC_GetMissionLimaFlag" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetLima            < MIL_Automate >, "DEC_GetLima"            );    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::IsNewMissionStarted       < MIL_Automate >, "DEC_NouvelleMission"    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::FinishMission             < MIL_Automate >, "DEC_FinMission"         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetMissionLimaFlag        < MIL_Automate >, "DEC_GetMissionLimaFlag" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::AutomateSetMissionLimaFlag                , "DEC_SetMissionLimaFlag" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetLima                   < MIL_Automate >, "DEC_GetLima"            );    
 
     // MRT
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::MRT_CreatePionMission, "DEC_MRT_CreerMissionPion" );

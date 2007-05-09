@@ -21,7 +21,7 @@
 // static
 void MIL_FragOrder::InitializeDIA()
 {
-    const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( "Rep_OrdreConduite" );
+    /*const DIA_TypeDef& diaType = */DEC_Tools::GetDIAType( "Rep_OrdreConduite" );
 //    nDIATypeIdx_ = DEC_Tools::InitializeDIAField( "eOrdre_", diaType );
 //    nDIAHintIdx_ = DEC_Tools::InitializeDIAField( "szHint_", diaType );
 }
