@@ -129,4 +129,12 @@ bool DEC_Agent_Path::NeedRefine() const
     return bRefine_;
 }
 
-
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::UseStrictClosest
+// Created: AGE 2007-05-09
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Agent_Path::UseStrictClosest() const
+{
+    return ! automateFuseau_.IsNull();
+}

@@ -62,6 +62,7 @@ public:
     virtual void Execute              ( TerrainPathfinder& pathfind );
     virtual void CleanAfterComputation();
     virtual bool NeedRefine           () const;
+    virtual bool UseStrictClosest     () const;
     //@}
     
     //! @name Accessors 

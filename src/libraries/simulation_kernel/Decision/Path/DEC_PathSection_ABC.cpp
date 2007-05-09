@@ -52,6 +52,8 @@ bool DEC_PathSection_ABC::Execute( TerrainPathfinder& pathfind, uint nComputatio
     nComputationEndTime_ = nComputationEndTime;
     if( path_.NeedRefine() )
         pathfind.SetPathfindConfiguration( 1, 3 ); // $$$$ AGE 2005-03-30: whatever
+    pathfind.SetChoiceRatio( path_.UseStrictClosest() ? 0 : 1 );
+        
     pathfind.SetCallback( this );
     const bool bResult = pathfind.ComputePath( from, to, GetRule(), *this );
     pathfind.SetPathfindConfiguration( 0, 0 );

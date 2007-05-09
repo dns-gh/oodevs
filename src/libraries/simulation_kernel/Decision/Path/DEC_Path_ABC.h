@@ -49,6 +49,7 @@ public:
 
             MT_Float GetLength     () const;
     virtual bool     NeedRefine    () const = 0;
+    virtual bool     UseStrictClosest() const = 0;
     virtual void     AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint ) = 0;
     //@}
 

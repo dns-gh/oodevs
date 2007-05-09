@@ -38,3 +38,13 @@ bool DEC_Population_Path::NeedRefine() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Population_Path::UseStrictClosest
+// Created: AGE 2007-05-09
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Population_Path::UseStrictClosest() const
+{
+    return false;
+}
