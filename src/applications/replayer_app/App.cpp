@@ -11,7 +11,7 @@
 #include "dispatcher/Replayer.h"
 #include "MT/MT_Logger/MT_Logger_Lib.h"
 
-//#include <windows.h> //$$$ A VIRER
+#include <windows.h> //$$$ A VIRER
 
 using namespace dispatcher;
 
