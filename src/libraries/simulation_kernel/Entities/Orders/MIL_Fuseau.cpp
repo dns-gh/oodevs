@@ -32,7 +32,7 @@ uint MIL_Fuseau::nNbrMeterPerSample_ = 400; //$$$ A GICLER
 // Name: MIL_Fuseau constructor
 // Created: NLD 2004-05-21
 // -----------------------------------------------------------------------------
-MIL_Fuseau::MIL_Fuseau( const MT_Vector2D& vOrientationRefPos, bool bReorientFuseau, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima )
+MIL_Fuseau::MIL_Fuseau( const MT_Vector2D& vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima )
     : TER_Polygon           ()
     , pLeftLimit_           ( 0 )
     , pRightLimit_          ( 0 )
@@ -42,7 +42,7 @@ MIL_Fuseau::MIL_Fuseau( const MT_Vector2D& vOrientationRefPos, bool bReorientFus
     , vEndGlobalDirection_  ()
     , globalDirectionLine_  ( vStartGlobalDirection_, vEndGlobalDirection_ )
 {
-    Reset( vOrientationRefPos, bReorientFuseau, leftLimit, rightLimit, pBeginMissionLima, pEndMissionLima );
+    Reset( vOrientationRefPos, leftLimit, rightLimit, pBeginMissionLima, pEndMissionLima );
 }
    
 //-----------------------------------------------------------------------------
@@ -381,7 +381,7 @@ void MIL_Fuseau::InitializeMiddleLimit()
 // Name: MIL_Fuseau::Reset
 // Created: NLD 2003-01-14
 //-----------------------------------------------------------------------------
-void MIL_Fuseau::Reset( const MT_Vector2D& vOrientationRefPos, bool bReorientFuseau, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima )
+void MIL_Fuseau::Reset( const MT_Vector2D& vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima )
 {
     assert( !leftLimit .empty() );
     assert( !rightLimit.empty() );
@@ -395,8 +395,7 @@ void MIL_Fuseau::Reset( const MT_Vector2D& vOrientationRefPos, bool bReorientFus
     T_PointVector leftLimitTmp  = leftLimit;
     T_PointVector rightLimitTmp = rightLimit;
 
-    if( bReorientFuseau )
-        TruncateAndReorientLimits( leftLimitTmp, rightLimitTmp, pBeginMissionLima, pEndMissionLima  );
+    TruncateAndReorientLimits( leftLimitTmp, rightLimitTmp, pBeginMissionLima, pEndMissionLima  );
 
     pLeftLimit_  = &MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLimitData( leftLimitTmp  );
     pRightLimit_ = &MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLimitData( rightLimitTmp );
@@ -605,11 +604,11 @@ bool MIL_Fuseau::SplitIntoSubFuseaux( uint nNbrSubFuseau, T_FuseauPtrList& conta
     for( CIT_PointVectorVector it = intermediateLimits.begin(); it != intermediateLimits.end(); ++it )
     {
         const T_PointVector* pCurLimit = &*it;
-        MIL_Fuseau* pNewSubFuseau = new MIL_Fuseau( vOrientationRefPos_, false, *pPrevLimit, *pCurLimit );
+        MIL_Fuseau* pNewSubFuseau = new MIL_Fuseau( vOrientationRefPos_, *pPrevLimit, *pCurLimit );
         container.push_back( pNewSubFuseau );
         pPrevLimit = pCurLimit;
     }
-    MIL_Fuseau* pNewSubFuseau = new MIL_Fuseau( vOrientationRefPos_, false, *pPrevLimit, pRightLimit_->GetPoints() );
+    MIL_Fuseau* pNewSubFuseau = new MIL_Fuseau( vOrientationRefPos_, *pPrevLimit, pRightLimit_->GetPoints() );
     container.push_back( pNewSubFuseau );
 
     assert( container.size() == nNbrSubFuseau );

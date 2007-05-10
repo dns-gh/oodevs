@@ -64,7 +64,7 @@ MIL_OrderContext::MIL_OrderContext( const ASN1T_OrderContext& asn, const MT_Vect
     if( leftLimitData.empty() || rightLimitData.empty() )
         fuseau_.Reset();
     else
-        fuseau_.Reset( vOrientationRefPos, true, leftLimitData, rightLimitData, FindLima( MIL_LimaFunction::LDM_ ), FindLima( MIL_LimaFunction::LFM_ ) );
+        fuseau_.Reset( vOrientationRefPos, leftLimitData, rightLimitData, FindLima( MIL_LimaFunction::LDM_ ), FindLima( MIL_LimaFunction::LFM_ ) );
 }
 
 // -----------------------------------------------------------------------------
