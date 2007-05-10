@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "MyFirstApplication.h"
+#include "App.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT/MT_Logger/MT_Logger_Lib.h"
 #include <windows.h>
@@ -20,7 +20,7 @@ int Run( int argc, char* argv[] )
     int nResult = EXIT_SUCCESS;
     try
     {
-        MyFirstApplication app( argc, argv );
+        App  app( argc, argv );
         app.Execute();
     }
     catch( std::exception& e )
