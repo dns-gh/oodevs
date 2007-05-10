@@ -11,17 +11,12 @@
 #define __TerrainLayer_h_
 
 #include "Layer_ABC.h"
-#include "graphics/GraphicManager_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/TristateOption.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/WorldParameters.h"
-#include "pathfind/TerrainData.h"
-#include "pathfind/SpatialContainer.h"
-#include "terrain/TesselatedShape.h"
 
-class GraphicShape;
-
+class RawShapeLayer;
 namespace kernel
 {
     class Controllers;
@@ -40,7 +35,6 @@ namespace gui
 // Created: AGE 2006-03-15
 // =============================================================================
 class TerrainLayer : public Layer2d_ABC
-                   , private GraphicManager_ABC
                    , public kernel::Observer_ABC
                    , public kernel::OptionsObserver_ABC
                    , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
@@ -68,41 +62,15 @@ private:
     TerrainLayer& operator=( const TerrainLayer& ); //!< Assignement operator
     //@}
 
-    //! @name Types
-    //@{
-    struct ShapeTraits {
-        int CompareOnX( float rValue, TesselatedShape*const& shape ) const;
-        int CompareOnY( float rValue, TesselatedShape*const& shape ) const;
-    };
-    typedef pathfind::SpatialContainer< TesselatedShape*, ShapeTraits >   T_ShapeContainer;
-    typedef std::map< TerrainData, T_ShapeContainer* >                    T_Shapes;
-    typedef T_Shapes::const_iterator                                    CIT_Shapes;
-    //@}
-
     //! @name Helpers
     //@{
-    virtual void AddShape( GraphicShape& shape );
-    virtual void AddShape( TesselatedShape& shape );
-    virtual bool ShouldLoad( const std::string& filename );
-    void Purge();
-
-    void DrawInnerShapes  ( const geometry::Rectangle2f& viewport ) const;
-    void DrawShapesBorders( const geometry::Rectangle2f& viewport ) const;
-    void DrawLinearShapes ( const geometry::Rectangle2f& viewport ) const;
-    void DrawNames        ( const geometry::Rectangle2f& viewport ) const;
-
-    virtual void SetupLineGraphics  ( const TerrainData& d ) const;
-    virtual void SetupBorderGraphics( const TerrainData& d ) const;
-    virtual void SetupAreaGraphics  ( const TerrainData& d ) const;
-
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    void LoadGraphics();
+    //@}
 
-    template< typename Functor >
-    void Apply( const T_ShapeContainer& container, const geometry::Rectangle2f& viewport, const Functor& functor ) const;
-
-    bool ShouldDisplayArea( const TerrainData& data, const geometry::Rectangle2f& viewport ) const;
-    bool ShouldDisplayBorder( const TerrainData& data, const geometry::Rectangle2f& viewport ) const;
-    bool ShouldDisplayLinear( const TerrainData& data, const geometry::Rectangle2f& viewport ) const;
+    //! @name Types
+    //@{
+    class MyLayer;
     //@}
 
 private:
@@ -114,11 +82,11 @@ private:
 
     const std::string dataDirectory_;
     geometry::Rectangle2f world_;
-    T_Shapes shapes_;
     kernel::TristateOption smallNames_;
     kernel::TristateOption bigNames_;
-
     kernel::WorldParameters parameters_;
+
+    std::auto_ptr< RawShapeLayer > layer_;
     //@}
 };
 
