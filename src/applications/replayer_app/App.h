@@ -46,6 +46,11 @@ private:
     App& operator=( const App& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void CreateReplayer();
+    //@}
+
 private:
     //! @name Member data
     //@{
