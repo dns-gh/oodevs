@@ -16,6 +16,7 @@
 #include "Client.h"
 #include "Replayer.h"
 #include "Loader.h"
+#include "Config.h"
 #include "tools/AsnMessageDecoder.h"
 #include "tools/AsnMessageEncoder.h"
 #include "xeumeuleu/xml.h"
@@ -25,28 +26,14 @@ using namespace dispatcher;
 using namespace tools;
 using namespace DIN;
 
-namespace 
-{
-    unsigned short ReadPort( const std::string& configFile )
-    {
-        unsigned short port;
-        xml::xifstream xis( configFile );
-        xis >> xml::start( "config" )
-                >> xml::start( "dispatcher" )
-                    >> xml::start( "network" )
-                        >> xml::attribute( "server", port );
-        return port;
-    }
-}
-
 static const unsigned int magicCookie_ = 10;
 
 // -----------------------------------------------------------------------------
 // Name: ClientsNetworkerc constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-ClientsNetworker::ClientsNetworker( Dispatcher& dispatcher, const std::string& configFile )
-    : ServerNetworker_ABC( magicCookie_, ReadPort( configFile ) )
+ClientsNetworker::ClientsNetworker( Dispatcher& dispatcher, const Config& config )
+    : ServerNetworker_ABC( magicCookie_, config.GetNetworkClientsParameters() )
     , dispatcher_        ( &dispatcher )
     , replayer_          ( 0 )
 {
@@ -64,8 +51,8 @@ ClientsNetworker::ClientsNetworker( Dispatcher& dispatcher, const std::string& c
 // Name: ClientsNetworker constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-ClientsNetworker::ClientsNetworker( Replayer& replayer, const std::string& configFile )
-    : ServerNetworker_ABC( magicCookie_, ReadPort( configFile ) )
+ClientsNetworker::ClientsNetworker( Replayer& replayer, const Config& config )
+    : ServerNetworker_ABC( magicCookie_, config.GetNetworkClientsParameters() )
     , dispatcher_        ( 0 )
     , replayer_          ( &replayer )
 {

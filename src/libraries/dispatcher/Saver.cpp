@@ -10,8 +10,14 @@
 #include "dispatcher_pch.h"
 #include "Saver.h"
 #include "Savable_ABC.h"
+#include "Config.H"
 #include "tools/OutputBinaryWrapper.h"
-#include "boost/filesystem/operations.hpp"
+
+#pragma warning( push )
+#pragma warning( disable: 4127 )
+#include <boost/filesystem/convenience.hpp>
+#pragma warning( pop )
+
 namespace bfs = boost::filesystem;
 
 using namespace dispatcher;
@@ -20,16 +26,19 @@ using namespace dispatcher;
 // Name: Saver constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-Saver::Saver( const std::string& directory )
+Saver::Saver( const Config& config )
     : frameCount_( 0 )
 {
-    const bfs::path dir( directory, bfs::native );
-    bfs::create_directory( dir );
+    const bfs::path recorderDirectory( config.GenerateRecorderDirectory(), bfs::native );
 
-    index_   .open( ( dir / "index"    ).string().c_str(), std::ios_base::binary | std::ios_base::out );
-    keyIndex_.open( ( dir / "keyindex" ).string().c_str(), std::ios_base::binary | std::ios_base::out );
-    key_     .open( ( dir / "key"      ).string().c_str(), std::ios_base::binary | std::ios_base::out );
-    update_  .open( ( dir / "update"   ).string().c_str(), std::ios_base::binary | std::ios_base::out );
+    MT_LOG_INFO_MSG( "Recorder enabled - data stored in " << recorderDirectory.native_file_string() );
+
+    bfs::create_directories( recorderDirectory );
+
+    index_   .open( ( recorderDirectory / "index"    ).string().c_str(), std::ios_base::binary | std::ios_base::out );
+    keyIndex_.open( ( recorderDirectory / "keyindex" ).string().c_str(), std::ios_base::binary | std::ios_base::out );
+    key_     .open( ( recorderDirectory / "key"      ).string().c_str(), std::ios_base::binary | std::ios_base::out );
+    update_  .open( ( recorderDirectory / "update"   ).string().c_str(), std::ios_base::binary | std::ios_base::out );
 }
 
 // -----------------------------------------------------------------------------

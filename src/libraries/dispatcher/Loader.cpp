@@ -11,9 +11,10 @@
 #include "Loader.h"
 #include "SimulationDispatcher.h"
 #include "Publisher_ABC.h"
+#include "Config.h"
 #include "tools/InputBinaryStream.h"
-#include "boost/filesystem/operations.hpp"
 #include "tools/AsnMessageDecoder.h"
+#include "boost/filesystem/operations.hpp"
 
 namespace bfs = boost::filesystem;
 
@@ -23,11 +24,12 @@ using namespace dispatcher;
 // Name: Loader constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-Loader::Loader( SimulationDispatcher& simulation, const std::string& directory )
+Loader::Loader( SimulationDispatcher& simulation, const Config& config, const std::string& records )
     : simulation_  ( simulation )
     , currentFrame_( 0 )
 {
-    const bfs::path dir( directory, bfs::native );
+    const bfs::path dir( config.GetRecorderDirectory( records ), bfs::native );
+
     LoadIndex   ( ( dir / "index" ).string() );
     LoadKeyIndex( ( dir / "keyindex" ).string() );
     updates_  .open( ( dir / "update" ).string().c_str(), std::ios_base::binary | std::ios_base::in );

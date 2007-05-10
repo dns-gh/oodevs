@@ -14,6 +14,7 @@
 #include "Simulation.h"
 #include "Model.h"
 #include "ClientsNetworker.h"
+#include "Config.h"
 #include "Network_Def.h"
 #include "tools/AsnMessageDecoder.h"
 #include "tools/AsnMessageEncoder.h"
@@ -24,31 +25,17 @@ using namespace tools;
 using namespace dispatcher;
 using namespace DIN;
 
-namespace 
-{
-    std::string ReadHost( const std::string& configFile )
-    {
-        std::string host;
-        xml::xifstream xis( configFile );
-        xis >> xml::start( "config" )
-                >> xml::start( "dispatcher" )
-                    >> xml::start( "network" )
-                        >> xml::attribute( "client", host );
-        return host;
-    }
-}
-
 static const unsigned int magicCookie_ = 1;
 
 // -----------------------------------------------------------------------------
 // Name: SimulationNetworker constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, const std::string& configFile )
-    : ClientNetworker_ABC( magicCookie_, ReadHost( configFile ) )
+SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, const Config& config )
+    : ClientNetworker_ABC( magicCookie_, config.GetNetworkSimulationParameters() )
+    , config_            ( config ) 
     , dispatcher_        ( dispatcher )
     , pSimulation_       ( 0 )
-    , configFile_        ( configFile )
 {
     GetMessageService().RegisterReceivedMessage( eMsgSimToClient                           , *this, &SimulationNetworker::OnReceiveMsgSimToClient                            );
     GetMessageService().RegisterReceivedMessage( eMsgSimToMiddle                           , *this, &SimulationNetworker::OnReceiveMsgSimToMiddle                            );
@@ -85,7 +72,7 @@ void SimulationNetworker::OnConnected( DIN_Link& link )
     ClientNetworker_ABC::OnConnected( link );
 
     assert( !pSimulation_ );
-    pSimulation_ = new Simulation( dispatcher_, GetMessageService(), link, configFile_ );
+    pSimulation_ = new Simulation( dispatcher_, GetMessageService(), link, config_ );
 }
 
 // -----------------------------------------------------------------------------

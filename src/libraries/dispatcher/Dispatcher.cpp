@@ -25,22 +25,16 @@ using namespace dispatcher;
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
 Dispatcher::Dispatcher( Config& config )
-    : pModel_              ( 0 )
+    : config_              ( config )
+    , pModel_              ( 0 )
     , pSimulationNetworker_( 0 )
     , pClientsNetworker_   ( 0 )
     , pProfileManager_     ( 0 )
 {
-    std::string profiles;
-
-    xml::xifstream xisMain( config.GetExerciseFile() );
-    xisMain >> xml::start( "exercise" )
-                >> xml::start( "profiles" )
-                    >> xml::attribute( "file", profiles );
-
     pModel_               = new Model              ();
-    pSimulationNetworker_ = new SimulationNetworker( *this, config.GetGameFile() );
-    pClientsNetworker_    = new ClientsNetworker   ( *this, config.GetGameFile() );
-    pProfileManager_      = new ProfileManager     ( *pModel_, *pClientsNetworker_, config.BuildExerciseChildFile( profiles ) );
+    pSimulationNetworker_ = new SimulationNetworker( *this, config_  );
+    pClientsNetworker_    = new ClientsNetworker   ( *this, config_ );
+    pProfileManager_      = new ProfileManager     ( *pModel_, *pClientsNetworker_, config_ );
 }
 
 // -----------------------------------------------------------------------------

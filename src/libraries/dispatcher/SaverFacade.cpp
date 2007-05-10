@@ -24,9 +24,9 @@ using namespace dispatcher;
 // Name: SaverFacade constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-SaverFacade::SaverFacade( Model& model, const std::string& directory )
-    : model_( model )
-    , saver_( new Saver( directory ) )
+SaverFacade::SaverFacade( Model& model, const Config& config )
+    : model_     ( model )
+    , saver_     ( new Saver( config ) )
     , frameCount_( 0 )
 {
     // NOTHING

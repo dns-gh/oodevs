@@ -21,6 +21,7 @@ namespace DIN
 
 namespace dispatcher
 {
+    class Config;
     class Dispatcher;
     class SaverFacade;
     class SimulationDispatcher;
@@ -37,7 +38,7 @@ class Simulation : public tools::Server_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Simulation( Dispatcher& dispatcher, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link, const std::string& configFile );
+             Simulation( Dispatcher& dispatcher, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link, const Config& config );
     virtual ~Simulation();
     //@}
 
@@ -66,15 +67,10 @@ private:
     Simulation& operator=( const Simulation& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    void CreateSaver( const std::string& configFile );
-    //@}
-
 private:
     Dispatcher&           dispatcher_;
     SaverFacade*          saver_;
-    SimulationDispatcher* simDispatch_;
+    SimulationDispatcher* simulationDispatcher_;
 };
 
 }

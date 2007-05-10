@@ -24,29 +24,14 @@ using namespace dispatcher;
 // Name: Replayer constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-Replayer::Replayer( const Config& config )
+Replayer::Replayer( const Config& config, const std::string& records )
+    : config_( config )
 {
-    std::string profiles;
-    {
-        xml::xifstream xis( config.GetExerciseFile() );
-        xis >> xml::start( "exercise" )
-                >> xml::start( "profiles" )
-                    >> xml::attribute( "file", profiles );
-    }
-    std::string directory;
-    {
-        xml::xifstream xis( config.GetGameFile() );
-        xis >> xml::start( "config" )
-                >> xml::start( "dispatcher" )
-                    >> xml::start( "recorder" )
-                        >> xml::attribute( "directory", directory );
-    }
-
     pModel_            = new Model               ();
-    pClientsNetworker_ = new ClientsNetworker    ( *this, config.GetGameFile() );
+    pClientsNetworker_ = new ClientsNetworker    ( *this, config_ );
     simulation_        = new SimulationDispatcher( *pClientsNetworker_, *pModel_ );
-    loader_            = new LoaderFacade        ( *pClientsNetworker_, *simulation_, directory );
-    profiles_          = new ProfileManager      ( *pModel_, *pClientsNetworker_, config.BuildExerciseChildFile( profiles ) );
+    loader_            = new LoaderFacade        ( *pClientsNetworker_, *simulation_, config_, records );
+    profiles_          = new ProfileManager      ( *pModel_, *pClientsNetworker_, config_ );
 
     profiles_->Reset();
     pClientsNetworker_->AllowConnections();

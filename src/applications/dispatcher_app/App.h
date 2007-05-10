@@ -11,6 +11,7 @@
 #define __App_h_
 
 #include <string>
+#include "dispatcher/Config.h"
 
 namespace dispatcher
 {
@@ -48,6 +49,7 @@ private:
 private:
     //! @name Member data
     //@{
+    dispatcher::Config      config_;
     dispatcher::Dispatcher* pDispatcher_;
     //@}
 };

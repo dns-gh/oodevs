@@ -15,6 +15,7 @@
 namespace dispatcher
 {
     class Savable_ABC;
+    class Config;
 
 // =============================================================================
 /** @class  Saver
@@ -28,7 +29,7 @@ class Saver
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Saver( const std::string& directory );
+    explicit Saver( const Config& config );
     virtual ~Saver();
     //@}
 

@@ -30,6 +30,28 @@ public:
              Config();
     virtual ~Config();
     //@}
+
+    //! @name Operations
+    //@{
+    virtual void Parse( int argc, char** argv );
+    //@}
+
+    //! @name Accessors
+    //@{
+          std::string    GetProfilesFile               () const;
+    const std::string&   GetNetworkSimulationParameters() const;
+          unsigned short GetNetworkClientsParameters   () const;
+          bool           RecorderEnabled               () const;
+
+          std::string    GetRecorderDirectory          ( const std::string& records ) const;
+          std::string    GenerateRecorderDirectory     () const;
+    //@}
+
+private:
+    std::string    profiles_;
+    std::string    networkSimulationParameters_;
+    unsigned short networkClientsParameters_;
+    bool           bRecorderEnabled_;
 };
 
 }

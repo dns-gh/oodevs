@@ -26,6 +26,7 @@ namespace dispatcher
 class Dispatcher;
 class Replayer;
 class Client;
+class Config;
 
 // =============================================================================
 /** @class  ClientsNetworker
@@ -39,8 +40,8 @@ class ClientsNetworker : public tools::ServerNetworker_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ClientsNetworker( Dispatcher& dispatcher, const std::string& configFile );
-             ClientsNetworker( Replayer& replayer, const std::string& configFile );
+             ClientsNetworker( Dispatcher& dispatcher, const Config& config );
+             ClientsNetworker( Replayer&   replayer  , const Config& config );
     virtual ~ClientsNetworker();
     //@}
 

@@ -16,7 +16,7 @@ namespace xml{ class xistream; };
 
 namespace dispatcher
 {
-
+class Config;
 class Profile;
 class Publisher_ABC;
 class Model;
@@ -33,7 +33,7 @@ class ProfileManager
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileManager( Model& model, ClientsNetworker& clients, const std::string& strFile );
+             ProfileManager( Model& model, ClientsNetworker& clients, const Config& config );
     virtual ~ProfileManager();
     //@}
 
@@ -70,11 +70,10 @@ private:
     //@}
 
 private:
-    Model& model_;
-    ClientsNetworker& clients_;
-
-    const std::string strFile_;
-    T_ProfileMap profiles_;
+    const Config&           config_;
+          Model&            model_;
+          ClientsNetworker& clients_;
+          T_ProfileMap      profiles_;
 };
 
 }

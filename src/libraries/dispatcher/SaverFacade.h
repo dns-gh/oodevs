@@ -15,6 +15,7 @@
 
 namespace dispatcher
 {
+    class Config;
     class Model;
     class Saver;
 
@@ -30,7 +31,7 @@ class SaverFacade
 public:
     //! @name Constructors/Destructor
     //@{
-             SaverFacade( Model& model, const std::string& directory );
+             SaverFacade( Model& model, const Config& config );
     virtual ~SaverFacade();
     //@}
 

@@ -16,6 +16,7 @@
 
 namespace dispatcher
 {
+    class Config;
     class SimulationDispatcher;
     class ClientsNetworker;
     class Loader;
@@ -33,7 +34,7 @@ class LoaderFacade : private MT_Timer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LoaderFacade( ClientsNetworker& clients, SimulationDispatcher& simulation, const std::string& directory );
+             LoaderFacade( ClientsNetworker& clients, SimulationDispatcher& simulation, const Config& config, const std::string& records );
     virtual ~LoaderFacade();
     //@}
 
@@ -43,7 +44,7 @@ public:
 
     void OnReceive( const ASN1T_MsgsClientToSim&    asnInMsg );
     void OnReceive( const ASN1T_MsgsClientToMiddle& asnInMsg );
-    void Send( Publisher_ABC& publisher ) const;
+    void Send     ( Publisher_ABC& publisher ) const;
     //@}
 
 protected:

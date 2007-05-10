@@ -11,6 +11,7 @@
 
 #include "ProfileManager.h"
 #include "Profile.h"
+#include "Config.h"
 #include "xeumeuleu/xml.h"
 
 using namespace dispatcher;
@@ -19,10 +20,11 @@ using namespace dispatcher;
 // Name: ProfileManager constructor
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-ProfileManager::ProfileManager( Model& model, ClientsNetworker& clients, const std::string& strFile )
-    : model_  ( model )
-    , clients_( clients )
-    , strFile_( strFile )
+ProfileManager::ProfileManager( Model& model, ClientsNetworker& clients, const Config& config )
+    : model_   ( model )
+    , clients_ ( clients )
+    , config_  ( config )
+    , profiles_()
 {
     // NOTHING
 }
@@ -74,7 +76,7 @@ void ProfileManager::Reset()
 
     try
     {
-        xml::xifstream xis( strFile_ );
+        xml::xifstream xis( config_.GetProfilesFile() );
         xis >> xml::start( "profiles" )
                 >> xml::list( "profile", *this, & ProfileManager::ReadProfile )
             >> xml::end();

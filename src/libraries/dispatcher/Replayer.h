@@ -31,7 +31,7 @@ class Replayer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Replayer( const Config& config );
+    explicit Replayer( const Config& config, const std::string& records );
     virtual ~Replayer();
     //@}
 
@@ -57,12 +57,12 @@ private:
 private:
     //! @name Member data
     //@{
-    Model*                pModel_;
-    ClientsNetworker*     pClientsNetworker_;
-    SimulationDispatcher* simulation_;
-    LoaderFacade*         loader_;
-
-    ProfileManager*       profiles_;
+    const Config&               config_;
+          Model*                pModel_;
+          ClientsNetworker*     pClientsNetworker_;
+          SimulationDispatcher* simulation_;
+          LoaderFacade*         loader_;
+          ProfileManager*       profiles_;
     //@}
 };
 

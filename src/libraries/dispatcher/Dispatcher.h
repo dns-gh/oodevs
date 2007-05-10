@@ -62,10 +62,11 @@ private:
     //@}
 
 private:
-    Model*               pModel_;
-    SimulationNetworker* pSimulationNetworker_;
-    ClientsNetworker*    pClientsNetworker_;
-    ProfileManager*      pProfileManager_;
+    const Config&              config_;
+          Model*               pModel_;
+          SimulationNetworker* pSimulationNetworker_;
+          ClientsNetworker*    pClientsNetworker_;
+          ProfileManager*      pProfileManager_;
 };
 
 }

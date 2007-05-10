@@ -24,6 +24,7 @@ namespace dispatcher
 {
 class Dispatcher;
 class Simulation;
+class Config;
 
 // =============================================================================
 /** @class  SimulationNetworker
@@ -37,7 +38,7 @@ class SimulationNetworker : public tools::ClientNetworker_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SimulationNetworker( Dispatcher& dispatcher, const std::string& configFile );
+             SimulationNetworker( Dispatcher& dispatcher, const Config& config );
     virtual ~SimulationNetworker();
     //@}
 
@@ -79,9 +80,9 @@ private:
     //@}
 
 private:
-    Dispatcher& dispatcher_;    
-    Simulation* pSimulation_;
-    std::string configFile_;
+    const Config&     config_;
+          Dispatcher& dispatcher_;    
+          Simulation* pSimulation_;
 };
 
 }

@@ -11,7 +11,6 @@
 
 #include <cassert>
 #include "dispatcher/Dispatcher.h"
-#include "dispatcher/Config.h"
 #include "MT/MT_Logger/MT_Logger_Lib.h"
 
 #pragma warning( push )
@@ -30,15 +29,15 @@ namespace po = boost::program_options;
 // -----------------------------------------------------------------------------
 App::App( int argc, char** argv )
     : pDispatcher_ ( 0 )
+    , config_      ()
 {
     std::string strMsg = "CSword(tm) Dispatcher";
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_STARTUP_MESSAGE( strMsg.c_str() );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
 
-    Config config;
-    config.Parse( argc, argv );
-    pDispatcher_ = new Dispatcher( config );
+    config_.Parse( argc, argv );
+    pDispatcher_ = new Dispatcher( config_ );
 }
 
 // -----------------------------------------------------------------------------

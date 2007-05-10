@@ -14,6 +14,7 @@
 #include "Network_Def.h"
 #include "game_asn/Asn.h"
 #include "Dispatcher.h"
+#include "Config.h"
 #include "Model.h"
 #include "ClientsNetworker.h"
 #include "ProfileManager.h"
@@ -32,15 +33,15 @@ using namespace DIN;
 // Name: Simulation constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-Simulation::Simulation( Dispatcher& dispatcher, DIN_MessageService_ABC& messageService, DIN_Link& link, const std::string& configFile )
+Simulation::Simulation( Dispatcher& dispatcher, DIN_MessageService_ABC& messageService, DIN_Link& link, const Config& config )
     : Server_ABC ( messageService, link )
     , dispatcher_( dispatcher )
     , saver_     ( 0 )
 {
     AsnMsgMiddleToSimCtrlClientAnnouncement().Send( *this );
-
-    CreateSaver( configFile );
-    simDispatch_ = new SimulationDispatcher( dispatcher.GetClientsNetworker(), dispatcher.GetModel() );
+    if( config.RecorderEnabled() )
+        saver_ = new SaverFacade( dispatcher_.GetModel(), config );
+    simulationDispatcher_ = new SimulationDispatcher( dispatcher.GetClientsNetworker(), dispatcher.GetModel() );
 }
 
 //-----------------------------------------------------------------------------
@@ -50,7 +51,7 @@ Simulation::Simulation( Dispatcher& dispatcher, DIN_MessageService_ABC& messageS
 Simulation::~Simulation()
 {
     delete saver_;
-    delete simDispatch_;
+    delete simulationDispatcher_;
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +60,7 @@ Simulation::~Simulation()
 // -----------------------------------------------------------------------------
 void Simulation::OnReceive( const ASN1T_MsgsSimToClient& asnMsg )
 {
-    simDispatch_->OnReceive( asnMsg );
+    simulationDispatcher_->OnReceive( asnMsg );
 
     switch( asnMsg.msg.t )
     {
@@ -159,21 +160,4 @@ Simulation& Simulation::GetSimulationFromLink( const DIN::DIN_Link& link )
     DIN::DIN_UserData_ABC* pTmp = link.GetUserData();
     assert( pTmp );
     return *static_cast< Simulation* >( pTmp );    
-}
-
-// -----------------------------------------------------------------------------
-// Name: Simulation::CreateSaver
-// Created: AGE 2007-04-24
-// -----------------------------------------------------------------------------
-void Simulation::CreateSaver( const std::string& configFile )
-{
-    xml::xifstream xis( configFile );
-    bool enable = false; std::string directory;
-    xis >> xml::start( "config" )
-            >> xml::start( "dispatcher" )
-                >> xml::start( "recorder" )
-                    >> xml::attribute( "enabled", enable )
-                    >> xml::optional() >> xml::attribute( "directory", directory );
-    if( enable )
-        saver_ = new SaverFacade( dispatcher_.GetModel(), directory );
 }

@@ -7,45 +7,43 @@
 //
 // *****************************************************************************
 
-#include "MyFirstApplication.h"
-#include <string> // $$$$ AGE 2007-04-10: 
-#include "dispatcher/Config.h"
+#include "App.h"
 #include "dispatcher/Replayer.h"
 #include "MT/MT_Logger/MT_Logger_Lib.h"
 
-#include <windows.h> //$$$ A VIRER
+//#include <windows.h> //$$$ A VIRER
 
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
-// Name: MyFirstApplication constructor
+// Name: App constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-MyFirstApplication::MyFirstApplication( int argc, char** argv )
+App::App( int argc, char** argv )
+    : config_()
 {
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_STARTUP_MESSAGE( "CSword(tm) Replayer" );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
 
-    Config config;
-    config.Parse( argc, argv );
-    replayer_ = new Replayer( config );
+    config_.Parse( argc, argv );
+    replayer_ = new Replayer( config_, "20070510T103553" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MyFirstApplication destructor
+// Name: App destructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-MyFirstApplication::~MyFirstApplication()
+App::~App()
 {
     delete replayer_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MyFirstApplication::Execute
+// Name: App::Execute
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-void MyFirstApplication::Execute()
+void App::Execute()
 {
     try
     {

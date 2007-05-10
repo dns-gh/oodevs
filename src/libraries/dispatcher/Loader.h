@@ -20,6 +20,7 @@ namespace tools
 
 namespace dispatcher
 {
+    class Config;
     class SimulationDispatcher;
 
 // =============================================================================
@@ -34,7 +35,7 @@ class Loader
 public:
     //! @name Constructors/Destructor
     //@{
-             Loader( SimulationDispatcher& simulation, const std::string& directory );
+             Loader( SimulationDispatcher& simulation, const Config& config, const std::string& records );
     virtual ~Loader();
     //@}
 

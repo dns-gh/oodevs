@@ -7,8 +7,11 @@
 //
 // *****************************************************************************
 
-#ifndef __MyFirstApplication_h_
-#define __MyFirstApplication_h_
+#ifndef __App_h_
+#define __App_h_
+
+#include <string>
+#include "dispatcher/Config.h"
 
 namespace dispatcher
 {
@@ -16,19 +19,19 @@ namespace dispatcher
 }
 
 // =============================================================================
-/** @class  MyFirstApplication
+/** @class  App
     @brief  My first application
 */
 // Created: AGE 2007-04-10
 // =============================================================================
-class MyFirstApplication
+class App
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MyFirstApplication( int argc, char** argv );
-    virtual ~MyFirstApplication();
+             App( int argc, char** argv );
+    virtual ~App();
     //@}
 
     //! @name Operations
@@ -39,15 +42,16 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    MyFirstApplication( const MyFirstApplication& );            //!< Copy constructor
-    MyFirstApplication& operator=( const MyFirstApplication& ); //!< Assignement operator
+    App( const App& );            //!< Copy constructor
+    App& operator=( const App& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
+    dispatcher::Config    config_;
     dispatcher::Replayer* replayer_;
     //@}
 };
 
-#endif // __MyFirstApplication_h_
+#endif // __App_h_

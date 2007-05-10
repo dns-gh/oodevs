@@ -20,11 +20,11 @@ using namespace dispatcher;
 // Name: LoaderFacade constructor
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-LoaderFacade::LoaderFacade( ClientsNetworker& clients, SimulationDispatcher& simulation, const std::string& directory )
-    : clients_( clients )
-    , loader_( new Loader( simulation, directory ) )
-    , factor_( 1 )
-    , running_( false )
+LoaderFacade::LoaderFacade( ClientsNetworker& clients, SimulationDispatcher& simulation, const Config& config, const std::string& records )
+    : clients_    ( clients )
+    , loader_     ( new Loader( simulation, config, records ) )
+    , factor_     ( 1 )
+    , running_    ( false )
     , skipToFrame_( -1 )
 {
     ChangeTimeFactor( factor_ );
