@@ -16,7 +16,9 @@
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/OptionVariant.h"
 #include "graphics/RawShapeLayer.h"
+#include "graphics/NoVBOShapeLayer.h"
 #include "graphics/ShapeCollector.h"
+#include "graphics/extensions.h"
 
 #include <boost/filesystem/operations.hpp>
 namespace bfs = boost::filesystem;
@@ -73,16 +75,19 @@ void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
     if( GetAlpha() == 0 )
         return;
 
-    if( !layer_.get() && !parameters_.graphicsDirectory_.empty() )
+    if( !layer_.get() && !noVBOlayer_.get() && !parameters_.graphicsDirectory_.empty() )
         LoadGraphics();
 
-    if( layer_.get() )
+    if( layer_.get() || noVBOlayer_.get() )
     {
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_STENCIL_BUFFER_BIT );
             glBindTexture( GL_TEXTURE_2D, 0 );
             glDisable(GL_TEXTURE_GEN_S);
             glDisable(GL_TEXTURE_GEN_T);
-            layer_->Paint( viewport );
+            if( layer_.get() )
+                layer_->Paint( viewport );
+            else 
+                noVBOlayer_->Paint( viewport );
         glPopAttrib();
     }
 }
@@ -106,17 +111,19 @@ void TerrainLayer::OptionChanged( const std::string& name, const OptionVariant& 
 void TerrainLayer::Reset()
 {
     layer_.reset();
+    noVBOlayer_.reset();
 }
 
 // -----------------------------------------------------------------------------
 // Name: TerrainLayer::MyLayer
 // Created: AGE 2007-05-10
 // -----------------------------------------------------------------------------
-class TerrainLayer::MyLayer : public RawShapeLayer
+template< typename Base >
+class TerrainLayer::MyLayer : public Base
 {
 public:
     MyLayer( TerrainLayer& parent, const std::string& filename )
-        : RawShapeLayer( parent.setup_, filename )
+        : Base( parent.setup_, filename )
         , parent_( parent ) {}
 
     virtual bool ShouldDisplay( const TerrainData& data, const geometry::Rectangle2f& viewport )
@@ -184,8 +191,16 @@ void TerrainLayer::LoadGraphics()
         }
         if( bfs::exists( aggregated ) )
         {
-            layer_.reset( new MyLayer( *this, aggregated.native_file_string() ) );
-            layer_->Initialize( world_ );
+            if( gl::HasVBO() )
+            {
+                layer_     .reset( new MyLayer< RawShapeLayer >  ( *this, aggregated.native_file_string() ) );
+                layer_->Initialize( world_ );
+            }
+            else
+            {
+                noVBOlayer_.reset( new MyLayer< NoVBOShapeLayer >( *this, aggregated.native_file_string() ) );
+                noVBOlayer_->Initialize( world_ );
+            }
         }
     }
     catch( ... )

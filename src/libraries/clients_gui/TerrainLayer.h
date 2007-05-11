@@ -17,6 +17,7 @@
 #include "clients_kernel/WorldParameters.h"
 
 class RawShapeLayer;
+class NoVBOShapeLayer;
 namespace kernel
 {
     class Controllers;
@@ -70,6 +71,7 @@ private:
 
     //! @name Types
     //@{
+    template< typename Base >
     class MyLayer;
     //@}
 
@@ -86,7 +88,8 @@ private:
     kernel::TristateOption bigNames_;
     kernel::WorldParameters parameters_;
 
-    std::auto_ptr< RawShapeLayer > layer_;
+    std::auto_ptr< RawShapeLayer >        layer_;
+    std::auto_ptr< NoVBOShapeLayer > noVBOlayer_;
     //@}
 };
 

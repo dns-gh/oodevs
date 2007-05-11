@@ -48,7 +48,13 @@ RecorderToolbar::~RecorderToolbar()
 // -----------------------------------------------------------------------------
 void RecorderToolbar::Play()
 {
-    QString filename = QFileDialog::getOpenFileName( QString::null, tr( "Order files (*.ord)" ), topLevelWidget(), 0, tr( "Open" ) );
+    QString filename = QFileDialog::getOpenFileName( QString::null, tr( "Order files (*.ord)" ),
+                                                     0, // parent topLevelWidget()
+                                                     0,                // name
+                                                     tr( "Open" ) );   // caption
+    // Note that on Windows the dialog will spin a blocking modal event loop 
+    // that will not dispatch any QTimers and if parent is not 0 then it will position
+    // the dialog just under the parent's titlebar
     if( filename == QString::null )
         return;
     msgRecorder_.Play( filename.ascii() );

@@ -146,6 +146,7 @@ void MsgRecorder::Play( const std::string& filename )
         Message message( input );
         message.Send( msgManager_ );
     }
+    MT_LOG_INFO_MSG( "Read order file " << filename );
 }
 
 // -----------------------------------------------------------------------------

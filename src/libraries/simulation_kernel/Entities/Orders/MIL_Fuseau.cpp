@@ -955,7 +955,7 @@ MT_Float MIL_Fuseau::GetCost( const MT_Vector2D&, const MT_Vector2D& to, MT_Floa
     const bool     bInside      = IsInsidish( to );
     const MT_Float rMinDistance = Distance( to, true );
 
-    if( bInside )
+    if( bInside || rMinDistance < 0.1 )
     {
         if( rMinDistance > rComfortDistanceIn )
             return 0;
