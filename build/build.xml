@@ -307,7 +307,7 @@
       tests
     ============================================================================
     -->
-    <target name="test" depends="generate-license,test-test-scripts,test-main-scripts-france,test-adaptation" description="run all tests"/>
+    <target name="test" depends="generate-license,test-test-scripts,test-main-scripts-france,test-main-scripts-worldwide,test-adaptation" description="run all tests"/>
 
     <target name="generate-license" description="generate license file in run directory">
         <exec executable="${bin.dir}/hostid_light.exe" failonerror="true" outputproperty="hostid"/>
@@ -341,7 +341,7 @@
     </target>
 
     <target name="test-adaptation" description="load and save adaptation main data, check that output==input">
-        <property name="adaptation_test.dir1" value="${data.dir}/data/models/main/physical/worldwide"/>
+        <property name="adaptation_test.dir1" value="${data.dir}/data/models/main/physical/france"/>
         <property name="adaptation_test.dir2" value="${run.dir}/adaptation_test/main"/>
         <delete dir="${adaptation_test.dir2}"/>
         <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
