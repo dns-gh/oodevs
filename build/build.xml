@@ -307,7 +307,7 @@
       tests
     ============================================================================
     -->
-    <target name="test" depends="generate-license,test-test-scripts,test-main-scripts-worldwide,test-main-scripts-france,test-adaptation" description="run all tests"/>
+    <target name="test" depends="generate-license,test-test-scripts,test-main-scripts-france,test-adaptation" description="run all tests"/>
 
     <target name="generate-license" description="generate license file in run directory">
         <exec executable="${bin.dir}/hostid_light.exe" failonerror="true" outputproperty="hostid"/>
@@ -325,11 +325,11 @@
     </target>
 
     <target name="test-main-scripts-worldwide" description="run all tests">
-        <!--<exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
+        <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
             <arg value="--root-dir=../../data"/>
             <arg value="--exercise=empty-worldwide"/>
             <arg value="--test"/>
-        </exec>-->
+        </exec>
     </target>
 
     <target name="test-test-scripts" description="run all tests">
