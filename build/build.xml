@@ -325,11 +325,11 @@
     </target>
 
     <target name="test-main-scripts-worldwide" description="run all tests">
-        <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
+        <!--<exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
             <arg value="--root-dir=../../data"/>
             <arg value="--exercise=empty-worldwide"/>
             <arg value="--test"/>
-        </exec>
+        </exec>-->
     </target>
 
     <target name="test-test-scripts" description="run all tests">
