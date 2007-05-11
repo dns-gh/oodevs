@@ -327,5 +327,5 @@ void Model::EndSynchronisation( Publisher_ABC& publisher )
 
     // $$$$ AGE 2007-04-24: Le commit va Update le Model et donc supprimer l'entité en question
     // $$$$ AGE 2007-04-24: c'est crado. Séparer l'envoi au client (dans le CommitDestruction() )
-    // $$$$ AGE 2007-04-24: et la destruction (depuis la liste, séparément.
+    // $$$$ AGE 2007-04-24: et la destruction (depuis la liste, séparément).
 }

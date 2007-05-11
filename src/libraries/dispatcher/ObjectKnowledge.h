@@ -47,6 +47,7 @@ public:
     virtual void SendCreation   ( Publisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( Publisher_ABC& publisher ) const;
     virtual void SendDestruction( Publisher_ABC& publisher ) const;
+    virtual void SendSpecialUpdate( Publisher_ABC& publisher ) const;
     //@}
 
 private:
@@ -56,7 +57,6 @@ private:
     //$$$ bullshit
     struct T_Optionals 
     {
-        unsigned oid_objet_reelPresent : 1;
         unsigned pertinencePresent : 1;
         unsigned localisationPresent : 1;
         unsigned pourcentage_constructionPresent : 1;

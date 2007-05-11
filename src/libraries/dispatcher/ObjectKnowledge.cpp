@@ -51,8 +51,7 @@ ObjectKnowledge::ObjectKnowledge( Model& model, const ASN1T_MsgObjectKnowledgeCr
     , nNbrDotationForConstruction_  ( std::numeric_limits< unsigned int >::max() )
     , nNbrDotationForMining_        ( std::numeric_limits< unsigned int >::max() )
 {
-    //$$ BULLSHIT
-    optionals_.oid_objet_reelPresent            = 0;
+    //$$ BULLSHIT // $$$$ AGE 2007-05-11: Clair !
     optionals_.pertinencePresent                = 0;
     optionals_.localisationPresent              = 0;
     optionals_.pourcentage_constructionPresent  = 0;
@@ -79,9 +78,14 @@ ObjectKnowledge::~ObjectKnowledge()
 // Name: ObjectKnowledge::Update
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeCreation& )
+void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeCreation& message )
 {
-    FlagUpdate();
+    bool realObjectChanged = ( message.oid_objet_reel && ! pObject_ )
+                          || ( pObject_ && pObject_->GetID() != message.oid_objet_reel );
+
+    FlagUpdate( realObjectChanged );
+    if( realObjectChanged )
+        pObject_ = model_.GetObjects().Find( message.oid_objet_reel );
 }
 
 // =============================================================================
@@ -156,10 +160,7 @@ void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
     }
 
     if( asnMsg.m.oid_objet_reelPresent )
-    {
-        optionals_.oid_objet_reelPresent = 1;
         pObject_ = model_.GetObjects().Find( asnMsg.oid_objet_reel );
-    }
 
     UPDATE_ASN_ATTRIBUTE( pertinence               , nRelevance_                   ); 
     UPDATE_ASN_ATTRIBUTE( pourcentage_construction , nConstructionPercentage_      );
@@ -216,8 +217,9 @@ void ObjectKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 
     asn().oid_connaissance      = nID_;
     asn().oid_camp_possesseur   = side_.GetID();
-    asn().oid_objet_reel        = pObject_ ? pObject_->GetID() : 0;
 
+    asn().m.oid_objet_reelPresent = 1;
+    asn().oid_objet_reel          = pObject_ ? pObject_->GetID() : 0;
 
     if( optionals_.attributs_specifiquesPresent && pAttributes_ )
     {
@@ -267,5 +269,20 @@ void ObjectKnowledge::SendDestruction( Publisher_ABC& publisher ) const
     AsnMsgSimToClientObjectKnowledgeDestruction asn;
     asn().oid_connaissance    = nID_;
     asn().oid_camp_possesseur = side_.GetID();
+    asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::SendSpecialUpdate
+// Created: AGE 2007-05-11
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::SendSpecialUpdate( Publisher_ABC& publisher ) const
+{
+    AsnMsgSimToClientObjectKnowledgeUpdate asn;
+
+    asn().oid_connaissance      = nID_;
+    asn().oid_camp_possesseur   = side_.GetID();
+    asn().m.oid_objet_reelPresent = 1;
+    asn().oid_objet_reel          = pObject_ ? pObject_->GetID() : 0;
     asn.Send( publisher );
 }
