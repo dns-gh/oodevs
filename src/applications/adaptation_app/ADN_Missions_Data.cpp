@@ -116,9 +116,10 @@ std::string ADN_Missions_Data::MissionParameter::GetItemName()
 ADN_Missions_Data::MissionParameter* ADN_Missions_Data::MissionParameter::CreateCopy()
 {
     MissionParameter* newParam = new MissionParameter();
-    newParam->strName_ = strName_.GetData();
-    newParam->type_    = type_.GetData();
+    newParam->strName_    = strName_.GetData();
+    newParam->type_       = type_.GetData();
     newParam->isOptional_ = isOptional_.GetData();
+    newParam->diaName_    = diaName_.GetData();
     newParam->values_.reserve( values_.size() );
     for( IT_MissionParameterValue_Vector it = values_.begin(); it != values_.end(); ++it )
     {
@@ -138,6 +139,7 @@ void ADN_Missions_Data::MissionParameter::ReadArchive( ADN_XmlInput_Helper& inpu
     input.ReadAttribute( "name", strName_ );
     input.ReadAttribute( "type", type );
     input.ReadAttribute( "optional", isOptional_, ADN_XmlInput_Helper::eNothing );
+    input.ReadAttribute( "dia-name", diaName_ );
     type_ = ADN_Tr::ConvertToMissionParameterType( type );
     while( input.NextListElement() )
     {
@@ -169,7 +171,10 @@ void ADN_Missions_Data::MissionParameter::WriteArchive( MT_OutputArchive_ABC& ou
     output.WriteAttribute( "name", strName_.GetData() );
     output.WriteAttribute( "type", ADN_Tr::ConvertFromMissionParameterType( type_.GetData() ) );
     output.WriteAttribute( "optional", isOptional_.GetData() );
-    output.WriteAttribute( "dia-name", GetFussedDiaName( strName_.GetData().c_str() ).ascii() );
+    if( diaName_.GetData().empty() )
+        output.WriteAttribute( "dia-name", GetFussedDiaName( strName_.GetData().c_str() ).ascii() );
+    else
+        output.WriteAttribute( "dia-name", diaName_.GetData() );
     
     for( unsigned int i = 0; i < values_.size(); ++i )
     {
@@ -217,8 +222,12 @@ std::string ADN_Missions_Data::Mission::GetItemName()
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::Mission* ADN_Missions_Data::Mission::CreateCopy()
 {
-    Mission* newMission = new Mission( isAutomat_.GetData() );
-    newMission->strName_ = strName_.GetData();
+    Mission* newMission         = new Mission( isAutomat_.GetData() );
+    newMission->strName_        = strName_.GetData();
+    newMission->diaType_        = diaType_.GetData();
+    newMission->diaBehavior_    = diaBehavior_.GetData();
+    newMission->cdtDiaBehavior_ = cdtDiaBehavior_.GetData();
+    newMission->mrtDiaBehavior_ = mrtDiaBehavior_.GetData();
     newMission->parameters_.reserve( parameters_.size() );
     for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
     {
@@ -235,6 +244,10 @@ ADN_Missions_Data::Mission* ADN_Missions_Data::Mission::CreateCopy()
 void ADN_Missions_Data::Mission::ReadArchive( ADN_XmlInput_Helper& input )
 {
     input.ReadAttribute( "name", strName_ );
+    input.ReadAttribute( "dia-type", diaType_ );
+    input.ReadAttribute( "dia-behavior"    , diaBehavior_   , ADN_XmlInput_Helper::eNothing );
+    input.ReadAttribute( "cdt-dia-behavior", cdtDiaBehavior_, ADN_XmlInput_Helper::eNothing );
+    input.ReadAttribute( "mrt-dia-behavior", mrtDiaBehavior_, ADN_XmlInput_Helper::eNothing );
     while( input.NextListElement() )
     {
         input.BeginList( "parameter" );
@@ -264,15 +277,25 @@ namespace
 void ADN_Missions_Data::Mission::WriteArchive( MT_OutputArchive_ABC& output, const std::string& type )
 {
     output.WriteAttribute( "name", strName_.GetData() );
-    QString typeName = type == "units" ? "Pion" : (type == "automats" ? "Automate" : "Population");
-    QString diaName  = BuildDiaMissionType( strName_.GetData().c_str() );
-    output.WriteAttribute( "dia-type", QString( "T_Mission_%1_%2" ).arg( typeName ).arg( diaName ).ascii() );
+    const QString typeName = type == "units" ? "Pion" : (type == "automats" ? "Automate" : "Population");
+    const QString diaName  = BuildDiaMissionType( strName_.GetData().c_str() );
+    if( diaType_.GetData().empty() )
+        diaType_ = QString( "T_Mission_%1_%2" ).arg( typeName ).arg( diaName ).ascii();
+    output.WriteAttribute( "dia-type", diaType_.GetData() );
     if( !isAutomat_.GetData() )
-        output.WriteAttribute( "dia-behavior", QString( "MIS_%1_%2" ).arg( typeName ).arg( diaName ).ascii() );
+    {
+        if( diaBehavior_.GetData().empty() )
+            diaBehavior_ = QString( "MIS_%1_%2" ).arg( typeName ).arg( diaName ).ascii();
+        output.WriteAttribute( "dia-behavior", diaBehavior_.GetData() );
+    }
     else
     {
-        output.WriteAttribute( "mrt-dia-behavior", QString( "MIS_%1_MRT_%2" ).arg( typeName ).arg( diaName ).ascii() );
-        output.WriteAttribute( "cdt-dia-behavior", QString( "MIS_%1_CDT_%2" ).arg( typeName ).arg( diaName ).ascii() );
+        if( cdtDiaBehavior_.GetData().empty() )
+            cdtDiaBehavior_ = QString( "MIS_%1_CDT_%2" ).arg( typeName ).arg( diaName ).ascii();
+        if( mrtDiaBehavior_.GetData().empty() )
+            mrtDiaBehavior_ = QString( "MIS_%1_MRT_%2" ).arg( typeName ).arg( diaName ).ascii();
+        output.WriteAttribute( "mrt-dia-behavior", mrtDiaBehavior_.GetData() );
+        output.WriteAttribute( "cdt-dia-behavior", cdtDiaBehavior_.GetData() );
     }
 
     for( unsigned int i = 0; i < parameters_.size(); ++i )
@@ -331,6 +354,7 @@ ADN_Missions_Data::FragOrder* ADN_Missions_Data::FragOrder::CreateCopy()
 {
     FragOrder* newFragOrder = new FragOrder();
     newFragOrder->strName_ = strName_.GetData();
+    newFragOrder->diaType_ = diaType_.GetData();
     newFragOrder->parameters_.reserve( parameters_.size() );
     for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
     {
@@ -347,6 +371,7 @@ ADN_Missions_Data::FragOrder* ADN_Missions_Data::FragOrder::CreateCopy()
 void ADN_Missions_Data::FragOrder::ReadArchive( ADN_XmlInput_Helper& input )
 {
     input.ReadAttribute( "name", strName_ );
+    input.ReadAttribute( "dia-type", diaType_ );
     input.ReadAttribute( "available-for-all-mission", isAvailableForAllMissions_, ADN_XmlInput_Helper::eNothing );
     input.ReadAttribute( "available-without-mission", isAvailableWithoutMission_, ADN_XmlInput_Helper::eNothing );
     while( input.NextListElement() )
@@ -382,7 +407,9 @@ void ADN_Missions_Data::FragOrder::WriteArchive( MT_OutputArchive_ABC& output )
     output.WriteAttribute( "name", strName_.GetData() );
     output.WriteAttribute( "available-for-all-mission", isAvailableForAllMissions_.GetData() );
     output.WriteAttribute( "available-without-mission", isAvailableWithoutMission_.GetData() );
-    output.WriteAttribute( "dia-type", BuildDiaFragOrderType( strName_.GetData().c_str() ).ascii() );
+    if( diaType_.GetData().empty() )
+        diaType_ = BuildDiaFragOrderType( strName_.GetData().c_str() ).ascii();
+    output.WriteAttribute( "dia-type", diaType_.GetData() );
     for( unsigned int i = 0; i < parameters_.size(); ++i )
         if( parameters_[i]->values_.empty() )
         {

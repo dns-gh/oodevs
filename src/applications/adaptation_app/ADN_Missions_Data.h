@@ -72,6 +72,8 @@ public:
         ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType > type_;
         ADN_Type_Bool                                                     isOptional_;
         T_MissionParameterValue_Vector                                    values_;
+
+        ADN_Type_String                                                   diaName_;
     };
 
     typedef ADN_Type_Vector_ABC<MissionParameter>  T_MissionParameter_Vector;
@@ -99,6 +101,11 @@ public:
         ADN_Type_String           strName_;
         ADN_Type_Bool             isAutomat_;
         T_MissionParameter_Vector parameters_;
+
+        ADN_Type_String           diaType_;
+        ADN_Type_String           diaBehavior_;
+        ADN_Type_String           cdtDiaBehavior_;
+        ADN_Type_String           mrtDiaBehavior_;
     };
 
     typedef ADN_Type_Vector_ABC<Mission>  T_Mission_Vector;
@@ -125,6 +132,7 @@ public:
     public:
         ADN_Type_String           strName_;
         T_MissionParameter_Vector parameters_;
+        ADN_Type_String           diaType_;
         ADN_Type_Bool             isAvailableForAllMissions_;
         ADN_Type_Bool             isAvailableWithoutMission_;
     };
