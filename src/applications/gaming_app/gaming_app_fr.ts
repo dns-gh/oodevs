@@ -1976,14 +1976,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Order files (*.ord)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>

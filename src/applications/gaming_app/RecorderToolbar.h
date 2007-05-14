@@ -26,16 +26,16 @@ class RecorderToolbar : public QToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             RecorderToolbar( QMainWindow* pParent, Network& network );
+             RecorderToolbar( QMainWindow* pParent, Network& network, QObject* browser );
     virtual ~RecorderToolbar();
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void Play();
     void ToggleRecord();
-    void Save();
+    void Play( const QString& file );
+    void Save( const QString& file );
     //@}
 
 private:

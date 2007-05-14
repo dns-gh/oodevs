@@ -21,17 +21,19 @@
 // Name: RecorderToolbar constructor
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
-RecorderToolbar::RecorderToolbar( QMainWindow* pParent, Network& network )
+RecorderToolbar::RecorderToolbar( QMainWindow* pParent, Network& network, QObject* browser )
     : QToolBar    ( pParent )
     , msgRecorder_( *new MsgRecorder( network ) )
 {
     setCaption( tr("Order recorder") );
-    playButton_ = new QToolButton( QPixmap( xpm_recplay ), tr( "Replay order file" ), "", this, SLOT( Play() ), this );
+    playButton_ = new QToolButton( QPixmap( xpm_recplay ), tr( "Replay order file" ), "", browser, SLOT( Load() ), this );
+    saveButton_ = new QToolButton( QPixmap( xpm_save )   , tr( "Save" ),              "", browser, SLOT( Save() ), this );
     recButton_  = new QToolButton( QPixmap( xpm_recrec ) , tr( "Start recording" ),   "", this, SLOT( ToggleRecord() ), this );
-    saveButton_ = new QToolButton( QPixmap( xpm_save )   , tr( "Save" ),              "", this, SLOT( Save() ), this );
     saveButton_->setEnabled( false );
-}
 
+    connect( browser, SIGNAL( OrderOpened( const QString& ) ), SLOT( Play( const QString& ) ) );
+    connect( browser, SIGNAL( OrderSaved ( const QString& ) ), SLOT( Save( const QString& ) ) );
+}
 
 // -----------------------------------------------------------------------------
 // Name: RecorderToolbar destructor
@@ -46,16 +48,9 @@ RecorderToolbar::~RecorderToolbar()
 // Name: RecorderToolbar::Play
 // Created: APE 2004-10-21
 // -----------------------------------------------------------------------------
-void RecorderToolbar::Play()
+void RecorderToolbar::Play( const QString& filename )
 {
-    QString filename = QFileDialog::getOpenFileName( QString::null, tr( "Order files (*.ord)" ),
-                                                     0, // parent topLevelWidget()
-                                                     0,                // name
-                                                     tr( "Open" ) );   // caption
-    // Note that on Windows the dialog will spin a blocking modal event loop 
-    // that will not dispatch any QTimers and if parent is not 0 then it will position
-    // the dialog just under the parent's titlebar
-    if( filename == QString::null )
+    if( filename.isEmpty() )
         return;
     msgRecorder_.Play( filename.ascii() );
     saveButton_->setEnabled( false );
@@ -87,13 +82,10 @@ void RecorderToolbar::ToggleRecord()
 // Name: RecorderToolbar::Save
 // Created: SBO 2007-05-03
 // -----------------------------------------------------------------------------
-void RecorderToolbar::Save()
+void RecorderToolbar::Save( const QString& filename )
 {
-    QString filename = QFileDialog::getSaveFileName( QString::null, tr( "Order files (*.ord)" ), topLevelWidget(), 0, tr( "Save" ) );
-    if( filename == QString::null )
+    if( filename.isEmpty() )
         return;
-    if( filename.right( 4 ) != ".ord" )
-        filename += ".ord";
     msgRecorder_.Write( filename.ascii() );
     saveButton_->setEnabled( false );
 }

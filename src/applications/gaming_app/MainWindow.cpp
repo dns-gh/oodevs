@@ -20,6 +20,7 @@
 #include "MissionPanel.h"
 #include "ObjectCreationPanel.h"
 #include "RecorderToolbar.h"
+#include "OrderBrowser.h"
 #include "SIMControlToolbar.h"
 #include "LinkInterpreter.h"
 #include "AgentsLayer.h"
@@ -278,13 +279,16 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new ReplayerToolbar( this, controllers, publisher );
     new DisplayToolbar( this, controllers );
     new EventToolbar( this, controllers, profile );
-    RecorderToolbar* recorderToolbar = new RecorderToolbar( this, network );
 
+    // $$$$ AGE 2007-05-14: mettre un GetOrdersDirectory
+    OrderBrowser* browser = new OrderBrowser( this, config.BuildExerciseChildFile( "orders" ).c_str() );
+    RecorderToolbar* recorderToolbar = new RecorderToolbar( this, network, browser );
+    
     // Drawer
     DrawerLayer* drawer = new DrawerLayer( *glProxy_ );
     new DrawerToolbar( this, *eventStrategy_, *drawer, *glProxy_, controllers_ );
 
-    new Menu( this, controllers, *prefDialog, *profileDialog, *recorderToolbar, *factory );
+    new Menu( this, controllers, *prefDialog, *profileDialog, *browser, *factory );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
     CreateLayers( *pMissionPanel_, *objectCreationPanel, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *drawer, *prefDialog, profile, publisher );
