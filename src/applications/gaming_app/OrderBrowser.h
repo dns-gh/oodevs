@@ -48,7 +48,7 @@ private slots:
     void OnCancel();
     void OnSelectionChanged( QListViewItem* item );
     void OnDoubleClicked   ( QListViewItem* item );
-    void OnTextChanged();
+    void OnTextChanged( const QString& text );
     //@}
 
 private:
@@ -70,8 +70,9 @@ private:
     //@{
     QString      directory_;
     QListView*   files_;
-    QTextEdit*   fileLabel_;
+    QComboBox*   fileLabel_;
     QPushButton* ok_;
+    QPixmap      pixmap_;
 
     bool saving_;
     //@}

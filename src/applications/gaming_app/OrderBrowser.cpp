@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "OrderBrowser.h"
 #include "moc_OrderBrowser.cpp"
+#include "icons.h"
 
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
@@ -24,28 +25,52 @@ OrderBrowser::OrderBrowser( QMainWindow* parent, const QString& directory )
     : QDockWindow( parent )
     , directory_( directory )
     , saving_   ( false )
+    , pixmap_   ( MAKE_PIXMAP( mission ) )
 {
     bfs::create_directories( bfs::path( directory.ascii(), bfs::native ) );
     QVBox* box = new QVBox( this );
     box->setFrameStyle( QVBox::Panel + QVBox::Sunken );
 
+    {
+        QHBox* titleBox = new QHBox( box );
+        titleBox->setPaletteBackgroundColor( Qt::white );
+        titleBox->setFixedHeight( 32 );
+        QLabel* label = new QLabel( tr( " Orders" ), titleBox );
+        QFont font = label->font();
+        font.setBold( true );
+        font.setPixelSize( 16 );
+        label->setFont( font );
+        label = new QLabel( titleBox );
+        label->setPixmap( MAKE_PIXMAP( mission_title ) );
+        label->setAlignment( Qt::AlignRight );
+    }
+
     files_ = new QListView( box );
-    files_->setMinimumHeight( 240 );
+    files_->setMargin( 5 );
+    files_->setFrameStyle( QFrame::Plain );
+    files_->setMinimumSize( 300, 200 );
     files_->addColumn( tr( "Orders" ) );
+    files_->setResizeMode( QListView::LastColumn );
+    files_->header()->hide();
     connect( files_, SIGNAL( doubleClicked   ( QListViewItem* , const QPoint&, int ) ), SLOT( OnDoubleClicked   ( QListViewItem* ) ) );
     connect( files_, SIGNAL( selectionChanged( QListViewItem* ) ),                      SLOT( OnSelectionChanged( QListViewItem* ) ) );
 
-    QHBox* fileBox = new QHBox( box );
-    fileLabel_ = new QTextEdit( fileBox ); fileBox->setStretchFactor( fileLabel_, 42 );
-    connect( fileLabel_, SIGNAL( textChanged() ), SLOT( OnTextChanged() ) );
-    QVBox* buttons = new QVBox( fileBox ); fileBox->setStretchFactor( buttons,     1 );
-    
-    ok_ = new QPushButton( tr( "Ok" ), buttons );
+    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, "", box );
+    group->setFlat( true );
+    group->setInsideMargin( 3 );
+    group->setInsideSpacing( 2 );
+    QHBox* fileBox = new QHBox( group );
+    QLabel* fileLabel = new QLabel( tr( "File name: " ), fileBox );
+    fileBox->setStretchFactor( fileLabel, 1 );
+    fileLabel_ = new QComboBox( true, fileBox );
+    fileLabel_->setAutoCompletion( true );
+    fileBox->setStretchFactor( fileLabel_, 42 );
+    connect( fileLabel_, SIGNAL( textChanged( const QString& ) ), SLOT( OnTextChanged( const QString& ) ) );
+    ok_ = new QPushButton( tr( "Ok" ), group );
+    group->addSpace( 0 ); 
     connect( ok_, SIGNAL( clicked() ), SLOT( OnOk() ) );
-
-    QPushButton* cancel = new QPushButton( tr( "Cancel" ), buttons );
+    QPushButton* cancel = new QPushButton( tr( "Cancel" ), group );
     connect( cancel, SIGNAL( clicked() ), SLOT( OnCancel() ) );
-    fileBox->setMaximumHeight( 2 * ok_->height() + 5 );
 
     setWidget( box );
     setResizeEnabled( true );
@@ -53,6 +78,7 @@ OrderBrowser::OrderBrowser( QMainWindow* parent, const QString& directory )
     setCaption( tr( "Order files" ) );
     parent->moveDockWindow( this, Qt::DockTornOff );
     parent->setAppropriate( this, false );
+    setMaximumSize( 400, 300 );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +99,7 @@ void OrderBrowser::Save()
     setCaption( tr( "Save order file" ) );
     RefreshFileList();
     saving_ = true;
-    fileLabel_->clear();
+    fileLabel_->clearEdit();
     ok_->setDisabled( true );
     show();
 }
@@ -87,7 +113,7 @@ void OrderBrowser::Load()
     setCaption( tr( "Load order file" ) );
     RefreshFileList();
     saving_ = false;
-    fileLabel_->clear();
+    fileLabel_->clearEdit();
     ok_->setDisabled( false );
     show();
 }
@@ -98,7 +124,7 @@ void OrderBrowser::Load()
 // -----------------------------------------------------------------------------
 void OrderBrowser::OnOk()
 {
-    EmitAndClose( Translate( fileLabel_->text() ) );
+    EmitAndClose( Translate( fileLabel_->currentText() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +142,7 @@ void OrderBrowser::OnCancel()
 // -----------------------------------------------------------------------------
 void OrderBrowser::OnSelectionChanged( QListViewItem* item )
 {
-    fileLabel_->setText( item ? item->text( 0 ) : "" );
+    fileLabel_->setEditText( item ? item->text( 0 ) : "" );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,10 +181,10 @@ namespace
 // Name: OrderBrowser::OnTextChanged
 // Created: ZEBRE 2007-05-11
 // -----------------------------------------------------------------------------
-void OrderBrowser::OnTextChanged()
+void OrderBrowser::OnTextChanged( const QString& text )
 {
     if( saving_ )
-        ok_->setDisabled( !IsValidNewOrder( fileLabel_->text() ) );
+        ok_->setDisabled( !IsValidNewOrder( text ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,6 +193,7 @@ void OrderBrowser::OnTextChanged()
 // -----------------------------------------------------------------------------
 void OrderBrowser::RefreshFileList()
 {
+    fileLabel_->clear();
     files_->clear();
     bfs::path directory( directory_.ascii(), bfs::native );
 
@@ -178,7 +205,9 @@ void OrderBrowser::RefreshFileList()
         {
             std::string orderName = child.leaf();
             orderName = orderName.substr( 0, orderName.size() - 4 );
-            new QListViewItem( files_, orderName.c_str() );
+            QListViewItem* item = new QListViewItem( files_, orderName.c_str() );
+            item->setPixmap( 0, pixmap_ );
+            fileLabel_->insertItem( orderName.c_str() );
         }
     }
 }

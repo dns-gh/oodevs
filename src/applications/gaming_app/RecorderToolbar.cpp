@@ -52,8 +52,15 @@ void RecorderToolbar::Play( const QString& filename )
 {
     if( filename.isEmpty() )
         return;
-    msgRecorder_.Play( filename.ascii() );
-    saveButton_->setEnabled( false );
+    try
+    {
+        msgRecorder_.Play( filename.ascii() );
+        saveButton_->setEnabled( false );
+    }
+    catch( ... )
+    {
+        QMessageBox::critical( this, tr( "Order file" ), tr( "File is not a valid order file." ), QMessageBox::Ok, QMessageBox::NoButton );
+    }
 }
 
 // -----------------------------------------------------------------------------

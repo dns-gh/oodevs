@@ -1817,9 +1817,6 @@
     </message>
 </context>
 <context>
-    <name>ParamLimits</name>
-</context>
-<context>
     <name>ParamLocationList</name>
     <message>
         <source>Location %1</source>
@@ -1983,6 +1980,14 @@
     </message>
     <message>
         <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File is not a valid order file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
