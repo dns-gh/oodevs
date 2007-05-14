@@ -418,6 +418,7 @@
                 <include name="librtiInternalIntercept.dll"/>
                 <include name="msvcp71.dll"/>
                 <include name="msvcr71.dll"/>
+                <include name="dbghelp.dll"/>
                 <include name="qt-*.dll"/>
                 <include name="userDdm.dll"/>
                 <include name="xerces-c_2_7.dll"/>
@@ -463,6 +464,7 @@
         <update name="svgl"/>
         <update name="zipstream"/>
         <update name="zlib"/>
+        <update name="system"/>
         <update name="terrain" package="generation_app"/>
         <update name="DIA" package="DIA_Tool_DebugGUI_${platform}"/>
     </target>
