@@ -48,7 +48,7 @@ QString ObjectKnowledge_ABC::GetTypeName() const
 // -----------------------------------------------------------------------------
 void ObjectKnowledge_ABC::Select( ActionController& controller ) const
 {
-    controller.Select( *this );
+    controller.Select( *this, *(const Knowledge_ABC*)this, *(const Entity_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ void ObjectKnowledge_ABC::Select( ActionController& controller ) const
 // -----------------------------------------------------------------------------
 void ObjectKnowledge_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
-    controller.ContextMenu( *this, where );
+    controller.ContextMenu( *this, *(const Knowledge_ABC*)this, *(const Entity_ABC*)this, where );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,5 +66,5 @@ void ObjectKnowledge_ABC::ContextMenu( ActionController& controller, const QPoin
 // -----------------------------------------------------------------------------
 void ObjectKnowledge_ABC::Activate( ActionController& controller ) const
 {
-    controller.Activate( *this );
+    controller.Activate( *this, *(const Knowledge_ABC*)this );
 }

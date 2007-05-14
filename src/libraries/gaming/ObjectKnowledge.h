@@ -17,6 +17,7 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 
 namespace kernel
@@ -38,6 +39,7 @@ class ObjectKnowledge : public kernel::EntityImplementation< ObjectKnowledge_ABC
                       , public kernel::Extension_ABC
                       , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
                       , public kernel::Drawable_ABC
+                      , public kernel::Displayable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -57,8 +59,9 @@ public:
     virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
     virtual const kernel::Team_ABC&   GetOwner() const;
 
-    void Display( kernel::Displayer_ABC& displayer ) const;
-    void DisplayInList( kernel::Displayer_ABC& displayer ) const;
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 

@@ -177,6 +177,15 @@ void PopulationKnowledge::Display( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::DisplayInSummary
+// Created: SBO 2007-05-14
+// -----------------------------------------------------------------------------
+void PopulationKnowledge::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+{
+    displayer.Display( tools::translate( "Population", "Side:" ), popu_.Get< TacticalHierarchies >().GetTop() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::GetEntity
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------

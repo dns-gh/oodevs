@@ -48,7 +48,7 @@ QString AgentKnowledge_ABC::GetTypeName() const
 // -----------------------------------------------------------------------------
 void AgentKnowledge_ABC::Select( ActionController& controller ) const
 {
-    controller.Select( *this, *( const Knowledge_ABC*)this );
+    controller.Select( *this, *( const Knowledge_ABC*)this, *( const Entity_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ void AgentKnowledge_ABC::Select( ActionController& controller ) const
 // -----------------------------------------------------------------------------
 void AgentKnowledge_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
-    controller.ContextMenu( *this, *( const Knowledge_ABC*)this, where );
+    controller.ContextMenu( *this, *( const Knowledge_ABC*)this, *( const Entity_ABC*)this, where );
 }   
 
 // -----------------------------------------------------------------------------

@@ -117,6 +117,16 @@ void ObjectKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::DisplayInSummary
+// Created: SBO 2007-05-14
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+{
+    displayer.Display( tools::translate( "Object", "Type:" ), type_ )
+             .Display( tools::translate( "Object", "Relevance:" ), nRelevance_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectKnowledge::GetName
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------

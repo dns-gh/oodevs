@@ -15,6 +15,7 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
+#include "clients_kernel/Displayable_ABC.h"
 #include "PopulationKnowledge_ABC.h"
 
 namespace kernel
@@ -41,6 +42,7 @@ class PopulationKnowledge : public kernel::EntityImplementation< PopulationKnowl
                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeCreation >
                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeUpdate >
                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeDestruction >
+                          , public kernel::Displayable_ABC
 {
 
 public:
@@ -58,8 +60,9 @@ public:
     virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
     virtual const kernel::KnowledgeGroup_ABC& GetOwner() const;
 
-    void Display( kernel::Displayer_ABC& displayer ) const;
-    void DisplayInList( kernel::Displayer_ABC& displayer ) const;
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
 
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}

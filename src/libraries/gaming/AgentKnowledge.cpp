@@ -189,6 +189,15 @@ void AgentKnowledge::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentKnowledge::DisplayInSummary
+// Created: SBO 2007-05-14
+// -----------------------------------------------------------------------------
+void AgentKnowledge::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+{
+    DisplayInTooltip( displayer );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentKnowledge::Draw
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
