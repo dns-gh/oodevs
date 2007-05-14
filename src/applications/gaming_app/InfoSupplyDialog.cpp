@@ -53,5 +53,5 @@ bool InfoSupplyDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
     const Quotas* quotas = element.Retrieve< Quotas >();
     return ( consigns && consigns->IsRelevant() ) 
         || ( quotas && quotas->IsRelevant() ) 
-        || element.Retrieve< MedicalStates >();
+        || element.Retrieve< SupplyStates >();
 }
