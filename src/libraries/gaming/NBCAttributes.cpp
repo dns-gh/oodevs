@@ -94,3 +94,12 @@ void NBCAttributes::Display( Displayer_ABC& displayer ) const
     displayer.Group( tools::translate( "NBC", "NBC cloud/zone" ) )
         .Display( tools::translate( "NBC", "NBC agent:" ), nbc_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: NBCAttributes::DisplayInSummary
+// Created: SBO 2007-05-14
+// -----------------------------------------------------------------------------
+void NBCAttributes::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+{
+    Display( displayer );
+}

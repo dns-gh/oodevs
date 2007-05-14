@@ -42,10 +42,22 @@ MineAttributes::~MineAttributes()
 // -----------------------------------------------------------------------------
 void MineAttributes::Display( kernel::Displayer_ABC& displayer ) const
 {
+    if( !activityTime_ && !minefield_ )
+        return;
     Displayer_ABC& group = displayer.Group( tools::translate( "Object", "Mine parameters" ) );
-    group.Display( tools::translate( "Object", "Activity time:" ), activityTime_ * Units::hours );
+    if( activityTime_ )
+        group.Display( tools::translate( "Object", "Activity time:" ), activityTime_ * Units::hours );
     if( minefield_ )
         group.Display( tools::translate( "Object", "Density:" ), density_ * Units::minesPerMeter );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MineAttributes::DisplayInSummary
+// Created: SBO 2007-05-14
+// -----------------------------------------------------------------------------
+void MineAttributes::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+{
+    Display( displayer );
 }
 
 // -----------------------------------------------------------------------------

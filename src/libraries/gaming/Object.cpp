@@ -166,3 +166,16 @@ bool Object::IsPrepared() const
 {
     return bPrepared_.IsSet() && bPrepared_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Object::DisplayInSummary
+// Created: SBO 2007-05-14
+// -----------------------------------------------------------------------------
+void Object::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+{
+    displayer.Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage );
+    if( type_.CanBeValorized() )
+        displayer.Display( tools::translate( "Object", "Mining:" ), rValorizationPercentage_ * Units::percentage );
+    if( type_.CanBeBypassed() )
+        displayer.Display( tools::translate( "Object", "Bypass:" ), rBypassConstructionPercentage_ * Units::percentage );
+}

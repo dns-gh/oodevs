@@ -83,6 +83,7 @@ Object_ABC* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
     case EnumObjectType::site_franchissement:
         result->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes( controllers_.controller_ ) );
         result->Update( message );
+        break;
     case EnumObjectType::bouchon_mines:
     case EnumObjectType::zone_minee_lineaire:
     case EnumObjectType::zone_minee_par_dispersion:

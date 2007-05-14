@@ -94,3 +94,12 @@ void LogisticRouteAttributes::Display( Displayer_ABC& displayer ) const
                 .Display( tools::translate( "Object", "Length:" ), nLogRouteLength_ * Units::meters )
                 .Display( tools::translate( "Object", "Maximum weight:" ), nLogRouteMaxWeight_ * Units::tons );
 }
+
+// -----------------------------------------------------------------------------
+// Name: LogisticRouteAttributes::DisplayInSummary
+// Created: SBO 2007-05-14
+// -----------------------------------------------------------------------------
+void LogisticRouteAttributes::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+{
+    Display( displayer );
+}

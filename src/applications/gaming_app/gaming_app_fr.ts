@@ -947,6 +947,20 @@
     </message>
 </context>
 <context>
+    <name>Limit 1</name>
+    <message>
+        <source>ParamLimits</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Limit 2</name>
+    <message>
+        <source>ParamLimits</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LimitParameter</name>
     <message>
         <source>Set %1</source>
@@ -1804,14 +1818,6 @@
 </context>
 <context>
     <name>ParamLimits</name>
-    <message>
-        <source>Limit 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Limit 2</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ParamLocationList</name>

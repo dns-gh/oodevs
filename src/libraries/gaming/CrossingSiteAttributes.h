@@ -44,6 +44,7 @@ public:
     //! @name Operations
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     //@}
 
 private:

@@ -90,3 +90,12 @@ void RotaAttributes::Display( Displayer_ABC& displayer ) const
                 .Display( tools::translate( "NBC", "Danger level:" ), danger_ )
                 .Display( tools::translate( "NBC", "NBC agent(s):" ), agents_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: RotaAttributes::DisplayInSummary
+// Created: SBO 2007-05-14
+// -----------------------------------------------------------------------------
+void RotaAttributes::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+{
+    Display( displayer );
+}

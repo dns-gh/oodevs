@@ -93,3 +93,12 @@ void CampAttributes::Display( Displayer_ABC& displayer ) const
     displayer.Group( tools::translate( "Object", "Camp" ) )
                 .Display( tools::translate( "Object", "TC2:" ), tc2_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: CampAttributes::DisplayInSummary
+// Created: SBO 2007-05-14
+// -----------------------------------------------------------------------------
+void CampAttributes::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+{
+    Display( displayer );
+}

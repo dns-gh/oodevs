@@ -92,3 +92,12 @@ void CrossingSiteAttributes::Display( Displayer_ABC& displayer ) const
                 .Display( tools::translate( "Object", "Stream speed:" ), speed_ * Units::metersPerSecond )
                 .Display( tools::translate( "Object", "Build river banks:" ), needsConstruction_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: CrossingSiteAttributes::DisplayInSummary
+// Created: SBO 2007-05-14
+// -----------------------------------------------------------------------------
+void CrossingSiteAttributes::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+{
+    Display( displayer );
+}
