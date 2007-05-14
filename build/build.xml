@@ -159,7 +159,7 @@
                          lib${ant.project.name}_MT_Tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
                          lib${ant.project.name}_dispatcher-${platform}-mt">
-            <syslibset libs="dbghelp,psapi,iphlpapi"/>
+            <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
             <includepath path="${include.dir}/ASN"/>
         </build-app>
     </target>
