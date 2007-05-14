@@ -36,6 +36,7 @@ class EventToolbar : public QToolBar
                    , public kernel::ElementObserver_ABC< Report >
                    , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
                    , public kernel::ElementObserver_ABC< Simulation >
+                   , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT;
 
@@ -64,6 +65,7 @@ private:
     //! @name Types
     //@{
     typedef std::deque< const kernel::Entity_ABC* > T_Agents;
+    typedef T_Agents::iterator                     IT_Agents;
     typedef T_Agents::const_iterator              CIT_Agents;
     //@}
 
@@ -72,6 +74,7 @@ private:
     virtual void NotifyCreated( const Report& report );
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
     virtual void NotifyUpdated( const Simulation& simulation );
+    virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
     void UpdateMessageButton();
     //@}
 

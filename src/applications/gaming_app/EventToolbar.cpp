@@ -124,6 +124,17 @@ void EventToolbar::NotifyUpdated( const Simulation& simulation )
 }
 
 // -----------------------------------------------------------------------------
+// Name: EventToolbar::NotifyDeleted
+// Created: SBO 2007-05-14
+// -----------------------------------------------------------------------------
+void EventToolbar::NotifyDeleted( const kernel::Entity_ABC& entity )
+{
+    IT_Agents it = std::find( messageAgents_.begin(), messageAgents_.end(), &entity );
+    if( it != messageAgents_.end() )
+        messageAgents_.erase( it );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EventToolbar::UpdateMessageButton
 // Created: AGE 2006-10-26
 // -----------------------------------------------------------------------------
