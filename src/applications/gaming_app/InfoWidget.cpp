@@ -45,9 +45,12 @@ InfoWidget::InfoWidget( QWidget* parent, kernel::Controllers& controllers, const
 
     QTabWidget* tabs = new QTabWidget( this );
     tabs->setTabShape( QTabWidget::Triangular );
-    tabs->addTab( new InfoReportsTab( this, controllers, itemFactory ), MAKE_PIXMAP( msg ), tr( "Reports" ) );
-    tabs->addTab( new InfoConflictsTab( this, controllers, itemFactory ), MAKE_PIXMAP( conflict ), tr( "Conflicts" ) );
-    tabs->addTab( new InfoMissionsTab( this, controllers, itemFactory ), MAKE_PIXMAP( mission ), tr( "Missions" ) );
+    tabs->addTab( new InfoReportsTab( tabs, controllers, itemFactory ), MAKE_PIXMAP( msg ), tr( "Reports" ) );
+    tabs->addTab( new InfoConflictsTab( tabs, controllers, itemFactory ), MAKE_PIXMAP( conflict ), tr( "Conflicts" ) );
+    tabs->addTab( new InfoMissionsTab( tabs, controllers, itemFactory ), MAKE_PIXMAP( mission ), tr( "Missions" ) );
+    for( unsigned int i = 0; i < 3; ++i )
+        tabs->setTabEnabled( tabs->page( i ), false );
+    
 }
 
 // -----------------------------------------------------------------------------

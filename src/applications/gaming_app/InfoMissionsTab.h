@@ -39,7 +39,7 @@ class InfoMissionsTab : public gui::ListDisplayer< InfoMissionsTab >
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoMissionsTab( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             InfoMissionsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~InfoMissionsTab();
     //@}
 
@@ -71,6 +71,7 @@ private:
     kernel::Controllers& controllers_;
     gui::ListItemDisplayer* sub_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
+    QTabWidget* parent_;
     //@}
 };
 

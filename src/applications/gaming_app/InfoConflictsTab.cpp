@@ -10,17 +10,21 @@
 #include "gaming_app_pch.h"
 #include "InfoConflictsTab.h"
 #include "FireResultListView.h"
+#include "gaming/Fires.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoConflictsTab constructor
 // Created: SBO 2007-02-15
 // -----------------------------------------------------------------------------
-InfoConflictsTab::InfoConflictsTab( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
+InfoConflictsTab::InfoConflictsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : QVBox( parent )
+    , controllers_( controllers )
+    , parent_( parent )
 {
     setMargin( 0 );
     FireResultListView* conflicts = new FireResultListView( this, controllers, factory );
     conflicts->header()->hide();
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -29,5 +33,14 @@ InfoConflictsTab::InfoConflictsTab( QWidget* parent, kernel::Controllers& contro
 // -----------------------------------------------------------------------------
 InfoConflictsTab::~InfoConflictsTab()
 {
-    // NOTHING
+    controllers_.Remove( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoConflictsTab::NotifySelected
+// Created: SBO 2007-05-14
+// -----------------------------------------------------------------------------
+void InfoConflictsTab::NotifySelected( const kernel::Entity_ABC* entity )
+{
+    parent_->setTabEnabled( this, entity && entity->Retrieve< Fires >() );
 }

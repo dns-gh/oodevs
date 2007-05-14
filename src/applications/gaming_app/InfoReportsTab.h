@@ -10,9 +10,12 @@
 #ifndef __InfoReportsTab_h_
 #define __InfoReportsTab_h_
 
+#include "clients_kernel/SelectionObserver_ABC.h"
+
 namespace kernel
 {
     class Controllers;
+    class Entity_ABC;
 }
 
 namespace gui
@@ -27,13 +30,34 @@ namespace gui
 // Created: SBO 2007-02-06
 // =============================================================================
 class InfoReportsTab : public QVBox
+                     , public kernel::Observer_ABC
+                     , public kernel::SelectionObserver< kernel::Entity_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoReportsTab( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             InfoReportsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~InfoReportsTab();
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    InfoReportsTab( const InfoReportsTab& );            //!< Copy constructor
+    InfoReportsTab& operator=( const InfoReportsTab& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual void NotifySelected( const kernel::Entity_ABC* entity );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    kernel::Controllers& controllers_;
+    QTabWidget* parent_;
     //@}
 };
 

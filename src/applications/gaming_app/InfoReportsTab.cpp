@@ -11,13 +11,16 @@
 #include "InfoReportsTab.h"
 #include "ReportListView.h"
 #include "ReportFilterOptions.h"
+#include "gaming/Reports.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoReportsTab constructor
 // Created: SBO 2007-02-06
 // -----------------------------------------------------------------------------
-InfoReportsTab::InfoReportsTab( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
+InfoReportsTab::InfoReportsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : QVBox( parent )
+    , controllers_( controllers )
+    , parent_( parent )
 {
     setMargin( 0 );
     ReportFilterOptions* filter  = new ReportFilterOptions( this );
@@ -25,6 +28,7 @@ InfoReportsTab::InfoReportsTab( QWidget* parent, kernel::Controllers& controller
     filter->hide();
     reports->header()->hide();
     connect( filter, SIGNAL( OptionsChanged() ), reports, SLOT( OnOptionsChanged() ) );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,5 +37,14 @@ InfoReportsTab::InfoReportsTab( QWidget* parent, kernel::Controllers& controller
 // -----------------------------------------------------------------------------
 InfoReportsTab::~InfoReportsTab()
 {
-    // NOTHING
+    controllers_.Remove( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoReportsTab::NotifySelected
+// Created: SBO 2007-05-14
+// -----------------------------------------------------------------------------
+void InfoReportsTab::NotifySelected( const kernel::Entity_ABC* entity )
+{
+    parent_->setTabEnabled( this, entity && entity->Retrieve< Reports >() );
 }

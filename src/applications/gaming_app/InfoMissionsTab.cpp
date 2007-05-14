@@ -20,11 +20,12 @@
 // Name: InfoMissionsTab constructor
 // Created: SBO 2007-04-18
 // -----------------------------------------------------------------------------
-InfoMissionsTab::InfoMissionsTab( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
+InfoMissionsTab::InfoMissionsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : gui::ListDisplayer< InfoMissionsTab >( parent, *this, factory )
     , controllers_( controllers )
     , sub_ ( new GamingListItemDisplayer() )
     , selected_( controllers )
+    , parent_( parent )
 {
     setMargin( 2 );
     setFrameStyle( QFrame::Plain );
@@ -86,9 +87,14 @@ void InfoMissionsTab::NotifySelected( const kernel::Entity_ABC* entity )
     {
         selected_ = entity;
         if( !selected_ )
+        {
+            parent_->setTabEnabled( this, false );
             return;
-        if( const MissionParameters* extension = selected_->Retrieve< MissionParameters >() )
+        }
+        const MissionParameters* extension = selected_->Retrieve< MissionParameters >();
+        if( extension )
             NotifyUpdated( *extension );
+        parent_->setTabEnabled( this, extension );
     }
 }
 
