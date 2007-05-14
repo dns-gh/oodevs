@@ -30,7 +30,6 @@ namespace gui
 
 class ParamLocation;
 class ParamNumericField;
-class ActionParameter;
 
 // =============================================================================
 /** @class  ParamObstacle

@@ -45,7 +45,7 @@ ActionParameterObstacle::ActionParameterObstacle( const QString& name, const ker
     : ActionParameter< QString >( name )
     , type_( types.Get( asn.type ) )
 {
-    AddParameter( *new ActionParameterLocation( tools::translate( "ActionParmater", "Location" ), converter, asn.position ) );
+    AddParameter( *new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, asn.position ) );
     SetValue( type_.GetName() );
 //    SetParameters( asn );
 }
@@ -58,7 +58,7 @@ ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& paramete
     : ActionParameter< QString >( parameter )
     , type_( types.Get( asn.type ) )
 {
-    AddParameter( *new ActionParameterLocation( tools::translate( "ActionParmater", "Location" ), converter, asn.position ) );
+    AddParameter( *new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, asn.position ) );
     SetValue( type_.GetName() );
 //    SetParameters( asn );
 }

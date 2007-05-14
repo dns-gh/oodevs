@@ -127,7 +127,7 @@ void TacticalLinePositions::Draw( const geometry::Point2f&, const kernel::Viewpo
         if( owner_.IsLimit() )
             glColor3f( 0.1f, 0.1f, 0.1f );
         else
-            glColor4f( 0.55f, 0.3f, 0.1f, 1.0f );
+            glColor3f( 0.55f, 0.3f, 0.1f );
         tools.DrawLines( pointList_ );
     glPopAttrib();
 }
