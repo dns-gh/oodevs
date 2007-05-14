@@ -148,6 +148,7 @@ void SimplerRichText::setDefaultFont( const QFont& font )
 void SimplerRichText::setText( const QString& text )
 {
     Parse( text );
+    UpdateOffset();
 }
 
 // -----------------------------------------------------------------------------
