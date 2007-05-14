@@ -19,10 +19,10 @@
 //-----------------------------------------------------------------------------
 int Run( int argc, char** argv )
 {
+#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
+    ParanoiaFacade::CheckLicense( "sword" );
+#endif
 
-//#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-//    ParanoiaFacade::CheckLicense( "dispatcher" );
-//#endif
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
 

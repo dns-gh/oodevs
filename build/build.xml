@@ -186,12 +186,12 @@
     
     <target name="application.replayer_app" description="build CSword replayer executable" depends="library.dispatcher">
         <build-app name="replayer_app" subsystem="console" depends="mt,din,dia3,terrain,boost,xeumeuleu"
-                   libs="tools,asn1per
+                   libs="tools,asn1per,paranoia
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
                          lib${ant.project.name}_dispatcher-${platform}-mt" >
-            <syslibset libs="dbghelp,psapi"/>
+            <syslibset libs="dbghelp,psapi,iphlpapi"/>
             <includepath path="${include.dir}/ASN"/>
         </build-app>
     </target>

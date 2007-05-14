@@ -10,10 +10,15 @@
 #include "App.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT/MT_Logger/MT_Logger_Lib.h"
+#include "paranoia/ParanoiaFacade.h"
 #include <windows.h>
 
 int Run( int argc, char* argv[] )
 {
+#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
+    ParanoiaFacade::CheckLicense( "sword" );
+#endif
+
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
 
