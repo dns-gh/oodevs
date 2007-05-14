@@ -24,8 +24,8 @@ using namespace kernel;
 ParamLimits::ParamLimits( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter )
     : Param_ABC( parameter.GetName() )
     , parameter_( parameter )
-    , limit1_( new LimitParameter( parent, tools::translate( "Limit 1", "ParamLimits" ), converter, parameter.IsOptional() ) )
-    , limit2_( new LimitParameter( parent, tools::translate( "Limit 2", "ParamLimits" ), converter, parameter.IsOptional() ) )
+    , limit1_( new LimitParameter( parent, tools::translate( "ParamLimits", "Limit 1" ), converter, parameter.IsOptional() ) )
+    , limit2_( new LimitParameter( parent, tools::translate( "ParamLimits", "Limit 2" ), converter, parameter.IsOptional() ) )
 {
     // NOTHING
 }
