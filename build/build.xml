@@ -339,7 +339,7 @@
     </target>
 
     <target name="test-adaptation" description="load and save adaptation main data, check that output==input">
-        <property name="adaptation_test.dir1" value="${data.dir}/data/models/main/physical/france"/>
+        <property name="adaptation_test.dir1" value="${data.dir}/data/models/main/physical/worldwide"/>
         <property name="adaptation_test.dir2" value="${run.dir}/adaptation_test/main"/>
         <delete dir="${adaptation_test.dir2}"/>
         <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
