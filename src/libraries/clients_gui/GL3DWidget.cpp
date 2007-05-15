@@ -347,10 +347,10 @@ void Gl3dWidget::DrawLife( const Point2f& center, float h, float factor /*= 1.f*
 // Name: Gl3dWidget::Print
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::Print( const std::string& message, const Point2f& where ) const
+void Gl3dWidget::Print( const std::string& message, const Point2f& where, const QFont& font /*= QFont()*/ ) const
 {
     QGLWidget* that = const_cast< Gl3dWidget* >( this );
-    that->renderText( where.X(), where.Y(), ElevationAt( where ), message.c_str() );
+    that->renderText( where.X(), where.Y(), ElevationAt( where ), message.c_str(), font );
 }
 
 // -----------------------------------------------------------------------------

@@ -54,7 +54,6 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const ExerciseCo
     , viewport_( 0, 0, width_, height_ )
     , frame_( 0 )
     , iconLayout_( iconLayout )
-    , listBase_( 0 )
 {
     setAcceptDrops( true );
     Register( *new SpyLayer( viewport_, frame_ ) );
@@ -69,6 +68,8 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const ExerciseCo
 GlWidget::~GlWidget()
 {
     glDeleteLists( circle_, 1 );
+    for( CIT_Fonts it = fonts_.begin(); it != fonts_.end(); ++it )
+        glDeleteLists( it->second, 256 );
 }
 
 // -----------------------------------------------------------------------------
@@ -524,11 +525,11 @@ void GlWidget::DrawLife( const Point2f& where, float h, float factor /*= 1.f*/ )
 
 namespace
 {
-    int GenerateList()
+    int GenerateList( const QFont& font )
     {
         int result = glGenLists( 256 );
         HDC glHdc = qt_display_dc();
-        SelectObject( glHdc, QFont().handle() );
+        SelectObject( glHdc, font.handle() );
         if( !wglUseFontBitmaps( glHdc, 0, 256, result ) )
             return 0;
         return result;
@@ -539,17 +540,21 @@ namespace
 // Name: GlWidget::Print
 // Created: AGE 2006-03-20
 // -----------------------------------------------------------------------------
-void GlWidget::Print( const std::string& message, const Point2f& where ) const
+void GlWidget::Print( const std::string& message, const Point2f& where, const QFont& font /*= QFont()*/ ) const
 {
     glRasterPos2fv( (const float*)&where );
-
-    if( ! listBase_ )
+    int listBase = 0;
+    CIT_Fonts it = fonts_.find( font );
+    if( it == fonts_.end() )
     {
-        const_cast< GlWidget* >( this )->listBase_ = GenerateList();
-        if( !listBase_ ) // GenerateList can fail
+        listBase = GenerateList( font );
+        if( !listBase ) // GenerateList can fail
             return;
+        const_cast< GlWidget* >( this )->fonts_[ font ] = listBase;
     }
-    glListBase( listBase_ );
+    else
+        listBase = it->second;
+    glListBase( listBase );
     glCallLists( message.length(), GL_UNSIGNED_BYTE, message.c_str() );
 }
 
