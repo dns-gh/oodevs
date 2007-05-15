@@ -12,7 +12,7 @@
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "gaming/Dotation.h"
+#include "clients_kernel/Resolver_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
 
 namespace kernel
@@ -23,7 +23,6 @@ namespace kernel
     class Profile_ABC;
 }
 
-class Model;
 class Dotation;
 class Publisher_ABC;
 
@@ -43,7 +42,7 @@ class LogisticSupplyPushFlowDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticSupplyPushFlowDialog( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const Model& model, const kernel::Profile_ABC& profile );
+             LogisticSupplyPushFlowDialog( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, const kernel::Profile_ABC& profile );
     virtual ~LogisticSupplyPushFlowDialog();
     //@}
 
@@ -85,7 +84,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
-    const Model& model_;
+    const kernel::Resolver_ABC< kernel::Automat_ABC >& automats_;
     const kernel::Profile_ABC& profile_;
 
     gui::ValuedComboBox< const kernel::Automat_ABC* >* targetCombo_;

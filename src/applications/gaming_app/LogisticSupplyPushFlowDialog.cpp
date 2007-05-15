@@ -10,19 +10,15 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyPushFlowDialog.h"
 #include "moc_LogisticSupplyPushFlowDialog.cpp"
-#include "gaming/AgentsModel.h"
 #include "gaming/ASN_Messages.h"
 #include "gaming/Dotation.h"
-#include "gaming/LogisticLinks.h"
-#include "gaming/Model.h"
 #include "gaming/SupplyStates.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DotationType.h"
-#include "clients_kernel/CommunicationHierarchies.h"
-#include "clients_kernel/Iterator.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 
 using namespace kernel;
@@ -32,11 +28,11 @@ using namespace gui;
 // Name: LogisticSupplyPushFlowDialog constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model, const Profile_ABC& profile )
+LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Resolver_ABC< Automat_ABC >& automats, const Profile_ABC& profile )
     : QDialog( parent, tr( "Push supply flow" ) )
     , controllers_( controllers )
     , publisher_( publisher )
-    , model_( model )
+    , automats_( automats )
     , profile_( profile )
     , selected_( controllers )
 {
@@ -113,14 +109,17 @@ void LogisticSupplyPushFlowDialog::Show()
         return;
 
     targetCombo_->Clear();
-    Iterator< const Automat_ABC& > it = model_.agents_.Resolver< Automat_ABC >::CreateIterator();
+    Iterator< const Automat_ABC& > it = automats_.CreateIterator();
+    const kernel::Entity_ABC& team = selected_->Get< kernel::TacticalHierarchies >().GetTop();
     while( it.HasMoreElements() )
     {
-        const Automat_ABC& agent = it.NextElement();
-        // $$$$ AGE 2006-08-24: 
-        const LogisticLinks* log = static_cast< const LogisticLinks* >( agent.Retrieve< LogisticLinks_ABC >() );
-        if( log && log->GetSupply() == selected_ )
-            targetCombo_->AddItem( agent.GetName(), &agent );
+        const Automat_ABC& automat = it.NextElement();
+        if( &automat != selected_ )
+        {
+            const AutomatType& type = automat.GetType();
+            if( type.IsLogisticSupply() && &automat.Get< kernel::TacticalHierarchies >().GetTop() == &team )
+                targetCombo_->AddItem( automat.GetName(), &automat );
+        }
     }
     OnSelectionChanged();
     show();
@@ -185,16 +184,8 @@ void LogisticSupplyPushFlowDialog::OnSelectionChanged()
     supplies_.clear();
     dotationTypes_.clear();
     dotationTypes_.append( "" );
-    const Automat_ABC* agent = targetCombo_->count() ? targetCombo_->GetValue() : 0;
-    if( agent )
-    {
-        // $$$$ AGE 2006-10-06: use LogisticHierarchies ?
-        const CommunicationHierarchies& hierarchies = agent->Get< CommunicationHierarchies >();
-        Iterator< const Entity_ABC& > children = hierarchies.CreateSubordinateIterator();
-        
-        while( children.HasMoreElements() )
-            AddDotation( children.NextElement() );
-    }
+    if( selected_ )
+        AddDotation( *selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -215,13 +206,16 @@ void LogisticSupplyPushFlowDialog::AddDotation( const kernel::Entity_ABC& entity
             if( ! supply.type_ )
             {
                 dotationTypes_.append( type );
-                supply.type_      = dotation.type_;
+                supply.type_ = dotation.type_;
             }
             supply.quantity_ += dotation.quantity_;
         }
         table_->setNumRows( 0 );
         AddItem();
-    };
+    }
+    Iterator< const Entity_ABC& > it( entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator() );
+    while( it.HasMoreElements() )
+        AddDotation( it.NextElement() );
 }
 
 // -----------------------------------------------------------------------------

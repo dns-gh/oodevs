@@ -60,13 +60,6 @@
     </message>
 </context>
 <context>
-    <name>ActionParmater</name>
-    <message>
-        <source>Location</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Agent</name>
     <message>
         <source>Info/Identifier</source>

@@ -15,6 +15,8 @@
 #include "LogisticSupplyPushFlowDialog.h"
 #include "LogisticSupplyRecompletionDialog.h"
 #include "ChangeHumanFactorsDialog.h"
+#include "gaming/Model.h"
+#include "gaming/AgentsModel.h"
 
 using namespace kernel;
 
@@ -28,7 +30,7 @@ Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model,
     new ChangeDiplomacyDialog( parent, controllers, publisher, profile );
     new ChangeLogisticLinksDialog( parent, controllers, publisher, profile  );
     new LogisticSupplyChangeQuotasDialog( parent, controllers, publisher, model, profile  );
-    new LogisticSupplyPushFlowDialog( parent, controllers, publisher, model, profile  );
+    new LogisticSupplyPushFlowDialog( parent, controllers, publisher, model.agents_, profile  );
     new LogisticSupplyRecompletionDialog( parent, controllers, publisher, staticModel, profile );
     new ChangeHumanFactorsDialog( parent, controllers, publisher, profile );
 }
