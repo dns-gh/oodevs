@@ -77,3 +77,13 @@ void ActionParameterLima::Serialize( xml::xostream& xos ) const
     ActionParameter< QString >::Serialize( xos );
     xos << attribute( "type", "lima" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLima::DisplayInToolTip
+// Created: SBO 2007-05-15
+// -----------------------------------------------------------------------------
+void ActionParameterLima::DisplayInToolTip( kernel::Displayer_ABC& displayer ) const
+{
+    displayer.Display( "", GetValue() );
+    ActionParameter< QString >::DisplayInToolTip( displayer );
+}

@@ -12,6 +12,7 @@
 
 #include "NoLinkDisplayer.h"
 #include "clients_kernel/Styles.h"
+#include <qimage.h>
 
 namespace kernel {
     class GlTools_ABC;

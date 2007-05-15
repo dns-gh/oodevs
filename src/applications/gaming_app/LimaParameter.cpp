@@ -14,6 +14,8 @@
 #include "gaming/Tools.h"
 #include "gaming/ActionParameterLima.h"
 #include "clients_kernel/Lines.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Positions.h"
 
 using namespace kernel;
 
@@ -75,10 +77,18 @@ void LimaParameter::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 void LimaParameter::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+    glPushAttrib( GL_CURRENT_BIT );
         glColor4f( 1, 0, 0, 0.5f );
         lima_->Interface().Apply( &kernel::Drawable_ABC::Draw, point, viewport, tools ); // $$$$ SBO 2007-05-02:
         // $$$$ AGE 2007-05-09: pourquoi pas juste Draw ??
+        glColor3f( 0.7f, 0, 0 );
+        QStringList functions;
+        for( unsigned int i = 0; i < functions_->count(); ++i )
+            if( functions_->isSelected( i ) )
+                functions.append( tools::ToString( (E_FuncLimaType)i ) );
+        const geometry::Point2f position = lima_->Get< kernel::Positions >().GetPosition();
+        const geometry::Vector2f lineFeed = geometry::Vector2f( 0, -18.f * tools.Pixels() ); // $$$$ SBO 2007-05-15: hard coded \n
+        tools.Print( functions.join( ", " ).ascii(), position + lineFeed, QFont( "Arial", 12, QFont::Bold ) ); // $$$$ SBO 2007-05-15: gather fonts somewhere
     glPopAttrib();
 }
 

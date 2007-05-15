@@ -22,6 +22,11 @@ namespace xml
     class xostream;
 }
 
+namespace gui
+{
+    class GlTooltip;
+}
+
 // =============================================================================
 /** @class  ActionParameter_ABC
     @brief  ActionParameter_ABC
@@ -43,9 +48,16 @@ public:
     QString GetName() const;
     virtual bool IsContext() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void Serialize( xml::xostream& xos ) const;
     void AddParameter( ActionParameter_ABC& parameter );
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    virtual geometry::Point2f GetPosition() const;
     //@}
 
 private:
@@ -59,6 +71,8 @@ private:
     //! @name Member data
     //@{
     QString name_;
+    geometry::Point2f position_;
+    gui::GlTooltip* toolTip_;
     //@}
 };
 

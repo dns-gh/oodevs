@@ -53,6 +53,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual geometry::Point2f GetPosition() const;
     virtual void Serialize( xml::xostream& xos ) const;
     //@}
 

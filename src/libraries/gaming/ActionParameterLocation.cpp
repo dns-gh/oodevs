@@ -86,9 +86,18 @@ void ActionParameterLocation::Draw( const geometry::Point2f& where, const kernel
     {
         glPushAttrib( GL_CURRENT_BIT );
             glColor3f( 0, 0, 0 );
-            tools.Print( GetName().ascii(), GetPosition() );
+            tools.Print( GetName().ascii(), Location::GetPosition() );
         glPopAttrib();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLocation::GetPosition
+// Created: SBO 2007-05-15
+// -----------------------------------------------------------------------------
+geometry::Point2f ActionParameterLocation::GetPosition() const
+{
+    return Location::GetPosition();
 }
 
 // -----------------------------------------------------------------------------
