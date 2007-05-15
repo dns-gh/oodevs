@@ -35,6 +35,7 @@ public:
 
     //! @name Operations
     //@{
+    using LogisticHierarchies_ABC< I >::Load;
     void Load( xml::xistream& xis, const kernel::Automat_ABC* superior );
     //@}
 

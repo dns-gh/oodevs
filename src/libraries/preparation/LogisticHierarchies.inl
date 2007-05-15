@@ -37,7 +37,7 @@ template< typename Superior, typename I >
 void LogisticHierarchies< Superior, I >::Load( xml::xistream& xis, const kernel::Automat_ABC* superior )
 {
     SetSuperior( superior );
-    LogisticHierarchies_ABC< I >::Load( xis );
+    Load( xis );
 }
 
 // -----------------------------------------------------------------------------
