@@ -32,9 +32,27 @@ Application::Application( int argc, char** argv )
     : QApplication  ( argc, argv )
     , mainWindow_( 0 )
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application destructor
+// Created: SBO 2006-07-05
+// -----------------------------------------------------------------------------
+Application::~Application()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::Initialize
+// Created: SBO 2007-05-15
+// -----------------------------------------------------------------------------
+void Application::Initialize()
+{
     try
     {
-        Initialize( argc, argv );
+        Initialize( argc(), argv() );
     }
     catch( std::exception& e )
     {
@@ -46,15 +64,6 @@ Application::Application( int argc, char** argv )
         QMessageBox::critical( 0, APP_NAME, "Whooops. CSword has crashed" );
         throw CatchMeIfYouCan();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Application destructor
-// Created: SBO 2006-07-05
-// -----------------------------------------------------------------------------
-Application::~Application()
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

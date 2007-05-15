@@ -10,6 +10,8 @@
 #include "preparation_app_pch.h"
 #include "Application.h"
 
+#include "ENT/ENT_Tr.h"
+
 #include "tools/Win32/StackWalkerProxy.h"
 #include <qapplication.h>
 #include <qmessagebox.h>
@@ -17,32 +19,52 @@
 
 namespace
 {
+    ////
+    static const QString locale = "_en";
+    ////
+
+    void AddTranslator( const char* t )
+    {
+        QTranslator* trans = new QTranslator( qApp );
+        trans->load( t + locale, "." );
+        qApp->installTranslator( trans );
+    }
+
+
     void PureHandler()
     {
         throw std::exception( "Pure virtual call" );
     }
 
-    void Run( QApplication& app )
+    void Run( int argc, char** argv )
     {
-        try
-        {
-            app.exec();
-        }
-        catch( std::exception& e )
-        {
-            QMessageBox::critical( 0, APP_NAME, e.what() );
-        };
-    }
+        Application* app = 0;
 
-    QApplication& InstanciateApp( int argc, char** argv )
-    {
         try
         {
-            return *new Application( argc, argv );
+            app = new Application( argc, argv );
+            AddTranslator( "qt_" );
+            AddTranslator( "ENT" );
+            AddTranslator( "clients_kernel" );
+            AddTranslator( "clients_gui" );
+            AddTranslator( "preparation" );
+            AddTranslator( "preparation_app" );
+            ENT_Tr::InitTranslations();
+            app->Initialize();
         }
         catch( ... )
         {
             std::exit( EXIT_FAILURE );
+        }
+
+        try
+        {
+            app->exec();
+            delete app;
+        }
+        catch( std::exception& e )
+        {
+            QMessageBox::critical( 0, APP_NAME, e.what() );
         }
     }
 
@@ -60,7 +82,7 @@ int main( int argc, char** argv )
 
     __try
     {
-        Run( InstanciateApp( argc, argv ) );
+        Run( argc, argv );
     }
     __except( StackWalkerProxy::ContinueSearch( GetExceptionInformation(), GetLog() ) )
     {

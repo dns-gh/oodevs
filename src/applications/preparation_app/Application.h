@@ -39,6 +39,11 @@ public:
     virtual ~Application();
     //@}
 
+    //! @name Operations
+    //@{
+    void Initialize();
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{

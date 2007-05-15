@@ -121,5 +121,5 @@ void Population::SerializeAttributes( xml::xostream& xos ) const
         << attribute( "name", name_.ascii() )
         << attribute( "type", type_.GetName().ascii() )
         << attribute( "humans", long( livingHumans_ ) )
-        << attribute( "attitude", attitude_.ToString() );
+        << attribute( "attitude", attitude_.ToString( ENT_Tr::eToSim ) );
 }
