@@ -144,9 +144,10 @@ geometry::Point2f Location::GetPosition() const
 // Name: Location::Draw
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-void Location::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void Location::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() )
+    const bool isPoint = !points_.empty() && boundingBox_.IsEmpty();
+    if( points_.empty() || ( ! viewport.IsVisible( boundingBox_ ) && !isPoint ) )
         return;
 
     const bool selected = tools.Select( false );
@@ -173,7 +174,7 @@ void Location::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC&
 // -----------------------------------------------------------------------------
 void Location::Draw( const kernel::GlTools_ABC& tools ) const
 {
-    if( points_.size() >= 2 )
+    if( points_.size() > 1 )
         tools.DrawLines( points_ );
     else
         tools.DrawCross( points_.front(), GL_CROSSSIZE );

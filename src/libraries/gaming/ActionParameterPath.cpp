@@ -9,48 +9,58 @@
 
 #include "gaming_pch.h"
 #include "ActionParameterPath.h"
+#include "ActionParameterPathPoint.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/Point.h"
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterPath constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-ActionParameterPath::ActionParameterPath( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, const kernel::Entity_ABC& entity )
-    : ActionParameterLocation( name, converter, location )
+ActionParameterPath::ActionParameterPath( const QString& name, const CoordinateConverter_ABC& converter, const Location_ABC& location, const Entity_ABC& entity )
+    : ActionParameter< QString >( name )
+    , converter_( converter )
 {
-    PushFront( entity.Get< kernel::Positions >().GetPosition() );
+    // $$$$ SBO 2007-05-16: entity ?
+    location.Accept( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterPath constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-ActionParameterPath::ActionParameterPath( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn, const kernel::Entity_ABC& entity )
-    : ActionParameterLocation( name, converter, asn )
+ActionParameterPath::ActionParameterPath( const QString& name, const CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn, const Entity_ABC& entity )
+    : ActionParameter< QString >( name )
+    , converter_( converter )
 {
-    PushFront( entity.Get< kernel::Positions >().GetPosition() );
+    AddPoints( asn, entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterPath constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-ActionParameterPath::ActionParameterPath( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, const kernel::Entity_ABC& entity )
-    : ActionParameterLocation( parameter, converter, location )
+ActionParameterPath::ActionParameterPath( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Location_ABC& location, const Entity_ABC& entity )
+    : ActionParameter< QString >( parameter )
+    , converter_( converter )
 {
-    PushFront( entity.Get< kernel::Positions >().GetPosition() );
+    // $$$$ SBO 2007-05-16: entity ?
+    location.Accept( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterPath constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-ActionParameterPath::ActionParameterPath( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn, const kernel::Entity_ABC& entity )
-    : ActionParameterLocation( parameter, converter, asn )
+ActionParameterPath::ActionParameterPath( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn, const Entity_ABC& entity )
+    : ActionParameter< QString >( parameter )
+    , converter_( converter )
 {
-    PushFront( entity.Get< kernel::Positions >().GetPosition() );
+    AddPoints( asn, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,13 +73,44 @@ ActionParameterPath::~ActionParameterPath()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionParameterPath::Draw
-// Created: SBO 2007-04-26
+// Name: ActionParameterPath::AddPoints
+// Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-void ActionParameterPath::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void ActionParameterPath::AddPoints( const ASN1T_Localisation& asn, const Entity_ABC& entity )
 {
-    glEnable( GL_LINE_STIPPLE );
-    glLineStipple( 1, tools.StipplePattern() );
-        ActionParameterLocation::Draw( where, viewport, tools );
-    glDisable( GL_LINE_STIPPLE );
+    // $$$$ SBO 2007-05-16: entity
+//    Point pt;
+//    pt.AddPoint( entity.Get< Positions >().GetPosition() );
+//    AddParameter( *new ActionParameterPathPoint( tools::translate( "ActionParameter", "Start" ), converter_, pt ) );
+    for( unsigned int i = 0; i < asn.vecteur_point.n; ++i )
+    {
+        Point pt;
+        pt.AddPoint( converter_.ConvertToXY( asn.vecteur_point.elem[i] ) );
+        QString label;
+        if( i + 1 == asn.vecteur_point.n )
+            label = tools::translate( "ActionParameter", "Destination" );
+        else
+            label = tools::translate( "ActionParameter", "Way point %1" ).arg( i + 1 );
+        AddParameter( *new ActionParameterPathPoint( label, converter_, pt ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterPath::VisitLines
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+void ActionParameterPath::VisitLines( const T_PointVector& points )
+{
+    unsigned int i = 0;
+    for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+    {
+        Point pt;
+        pt.AddPoint( *it );
+        QString label;
+        if( ++i == points.size() )
+            label = tools::translate( "ActionParameter", "Destination" );
+        else
+            label = tools::translate( "ActionParameter", "Way point %1" ).arg( i );
+        AddParameter( *new ActionParameterPathPoint( label, converter_, pt ) );
+    }
 }

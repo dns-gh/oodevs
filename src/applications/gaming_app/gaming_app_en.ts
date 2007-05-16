@@ -942,7 +942,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Set function for &apos;%1&apos;</source>
+        <source>Set &apos;%1&apos; function</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1798,7 +1798,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add &apos;%1&apos; as</source>
+        <source>Add line as</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

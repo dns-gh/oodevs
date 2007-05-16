@@ -13,6 +13,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -26,7 +27,8 @@ TacticalLinePositions::TacticalLinePositions( const T_PointVector& pointList, co
     , owner_    ( owner )
     , pointList_( pointList )
 {
-    // NOTHING
+    for( CIT_PointVector it = pointList.begin(); it != pointList.end(); ++it )
+        boundingBox_.Incorporate( *it );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,9 +119,10 @@ geometry::Rectangle2f TacticalLinePositions::GetBoundingBox() const
 // Name: TacticalLinePositions::Draw
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-void TacticalLinePositions::Draw( const geometry::Point2f&, const kernel::Viewport_ABC&, const kernel::GlTools_ABC& tools ) const
+void TacticalLinePositions::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    // $$$$ SBO 2006-11-07: viewport
+    if( pointList_.empty() || !viewport.IsVisible( boundingBox_ ) )
+        return;
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glLineWidth( 5.f );
         tools.DrawLines( pointList_ );
@@ -205,6 +208,10 @@ void TacticalLinePositions::Update( const ASN1T_TacticalLine& message )
 {
     pointList_.clear();
     pointList_.reserve( message.geometrie.vecteur_point.n );
+    boundingBox_ = geometry::Rectangle2f();
     for( unsigned int i = 0; i < message.geometrie.vecteur_point.n; ++i )
+    {
         pointList_.push_back( converter_.ConvertToXY( message.geometrie.vecteur_point.elem[i] ) );
+        boundingBox_.Incorporate( pointList_.back() );
+    }
 }

@@ -216,7 +216,7 @@ QPixmap GlTooltip::CreatePixmap()
         w = std::max( w, bounds.width() );
         h += bounds.height() + 2;
     }
-    return QPixmap( w + 8, h, 32 );
+    return QPixmap( w + 8, h + 4, 32 );
 }
 
 // -----------------------------------------------------------------------------

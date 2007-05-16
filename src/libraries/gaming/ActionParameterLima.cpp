@@ -84,6 +84,8 @@ void ActionParameterLima::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void ActionParameterLima::DisplayInToolTip( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Display( "", GetValue() );
     ActionParameter< QString >::DisplayInToolTip( displayer );
+    displayer.Display( "", GetValue() );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->DisplayInToolTip( displayer );
 }

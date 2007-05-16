@@ -10,12 +10,16 @@
 #ifndef __ActionParameterPath_h_
 #define __ActionParameterPath_h_
 
-#include "ActionParameterLocation.h"
+#include "game_asn/Asn.h"
+#include "ActionParameter.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
 
 namespace kernel
 {
     class Entity_ABC;
     class OrderParameter;
+    class CoordinateConverter_ABC;
+    class Location_ABC;
 }
 
 // =============================================================================
@@ -24,7 +28,8 @@ namespace kernel
 */
 // Created: SBO 2007-04-26
 // =============================================================================
-class ActionParameterPath : public ActionParameterLocation
+class ActionParameterPath : public ActionParameter< QString >
+                          , public kernel::LocationVisitor_ABC
 {
 
 public:
@@ -37,16 +42,26 @@ public:
     virtual ~ActionParameterPath();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
     ActionParameterPath( const ActionParameterPath& );            //!< Copy constructor
     ActionParameterPath& operator=( const ActionParameterPath& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual void VisitLines  ( const T_PointVector& points );
+    virtual void VisitPolygon( const T_PointVector& ) {}
+    virtual void VisitCircle ( const geometry::Point2f&, float ) {}
+    virtual void VisitPoint  ( const geometry::Point2f& ) {}
+    void AddPoints( const ASN1T_Localisation& asn, const kernel::Entity_ABC& entity );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const kernel::CoordinateConverter_ABC& converter_;
     //@}
 };
 

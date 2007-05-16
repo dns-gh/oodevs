@@ -82,12 +82,19 @@ ActionParameterLocation::~ActionParameterLocation()
 void ActionParameterLocation::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     Location::Draw( where, viewport, tools );
-    if( viewport.IsVisible( GetPosition() ) )
+    ActionParameter_ABC::Draw( where, viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLocation::DisplayInToolTip
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+void ActionParameterLocation::DisplayInToolTip( kernel::Displayer_ABC& displayer ) const
+{
+    if( parameter_ )
     {
-        glPushAttrib( GL_CURRENT_BIT );
-            glColor3f( 0, 0, 0 );
-            tools.Print( GetName().ascii(), Location::GetPosition() );
-        glPopAttrib();
+        displayer.Display( "", GetName() );
+        ActionParameter_ABC::DisplayInToolTip( displayer );
     }
 }
 

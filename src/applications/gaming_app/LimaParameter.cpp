@@ -117,7 +117,7 @@ void LimaParameter::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, k
         limaMenu->setItemParameter( id, i );
         limaMenu->setItemChecked( id, functions_->isSelected( i ) );
     }
-    menu.InsertItem( "Parameter", tr( "Set function for '%1'" ).arg( GetName() ), limaMenu );
+    menu.InsertItem( "Parameter", tr( "Set '%1' function" ).arg( GetName() ), limaMenu );
 }
 
 // -----------------------------------------------------------------------------

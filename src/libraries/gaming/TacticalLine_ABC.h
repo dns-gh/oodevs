@@ -37,7 +37,6 @@ class Publisher_ABC;
 // =============================================================================
 class TacticalLine_ABC : public kernel::TacticalLine_ABC
                        , public kernel::Extension_ABC
-                       , public kernel::Drawable_ABC
                        , public kernel::Updatable_ABC< ASN1T_MsgLimaUpdate >
                        , public kernel::Updatable_ABC< ASN1T_MsgLimitUpdate >
 {
@@ -55,7 +54,6 @@ public:
     void Create();
 
     virtual void Serialize( xml::xostream& xos ) const;
-    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
     //! @name Accessors
@@ -69,10 +67,10 @@ protected:
     //@{
     enum E_State
     {   
-        eStateOk            = 0x00,
-        eStateCreated       = 0x01,
-        eStateModified      = 0x02,
-        eStateDeleted       = 0x04
+        eStateOk       = 0x00,
+        eStateCreated  = 0x01,
+        eStateModified = 0x02,
+        eStateDeleted  = 0x04
     };
     //@}
 

@@ -104,19 +104,6 @@ void TacticalLine_ABC::WriteDiffusion( ASN1T_TacticalLinesDiffusion& diffusion )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::Draw
-// Created: SBO 2006-11-07
-// -----------------------------------------------------------------------------
-void TacticalLine_ABC::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& , const kernel::GlTools_ABC& tools ) const
-{
-//    if( ! pointList_.empty() ) // $$$$ SBO 2006-11-07: Get< kernel::Positions >().IsSet()
-    glPushAttrib( GL_CURRENT_BIT );
-        glColor3f( 0.f, 0.f, 0.f );
-        tools.Print( name_.ascii(), Get< kernel::Positions >().GetPosition() );
-    glPopAttrib();
-}
-
-// -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC::Serialize
 // Created: AGE 2006-09-06
 // -----------------------------------------------------------------------------

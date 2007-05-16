@@ -58,8 +58,8 @@ void ActionParameter_ABC::Draw( const geometry::Point2f& where, const kernel::Vi
     {
         const geometry::Point2f point = GetPosition();
         it->second->Draw( point.IsZero() ? where : point, viewport, tools );
-        it->second->DisplayInToolTip( *toolTip_ );
     }
+    DisplayInToolTip( *toolTip_ );
     toolTip_->Draw( GetPosition() );
 }
 
@@ -114,8 +114,7 @@ void ActionParameter_ABC::Display( kernel::Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void ActionParameter_ABC::DisplayInToolTip( kernel::Displayer_ABC& displayer ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->DisplayInToolTip( displayer );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
