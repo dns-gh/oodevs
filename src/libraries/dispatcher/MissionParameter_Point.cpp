@@ -44,7 +44,7 @@ MissionParameter_Point::~MissionParameter_Point()
 void MissionParameter_Point::Send( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value    = bNullValue_;
-    asn.value.t       = T_MissionParameter_value_tirIndirect;
+    asn.value.t       = T_MissionParameter_value_point;
     asn.value.u.point = new ASN1T_Localisation();
     point_.Send( *asn.value.u.point );
 }
