@@ -74,6 +74,20 @@ Action_ABC* ActionsModel::CreateAction( const kernel::Entity_ABC& target, const 
 void ActionsModel::Load( const std::string& filename )
 {
     Purge();
+    xml::xifstream xis( filename );
+    xis >> start( "actions" )
+            >> list( "mission", *this, &ActionsModel::ReadMission )
+        >> end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::ReadMission
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+void ActionsModel::ReadMission( xml::xistream& xis )
+{
+    Action_ABC* action = factory_.CreateAction( xis );
+    Register( action->GetId(), *action );
 }
 
 // -----------------------------------------------------------------------------

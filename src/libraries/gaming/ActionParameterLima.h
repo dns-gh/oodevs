@@ -33,6 +33,7 @@ public:
     //@{
              ActionParameterLima( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              ActionParameterLima( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_LimaOrder& asn );
+             ActionParameterLima( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~ActionParameterLima();
     //@}
 

@@ -9,6 +9,9 @@
 
 #include "gaming_pch.h"
 #include "ActionParameterPathPoint.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterPathPoint constructor
@@ -26,6 +29,16 @@ ActionParameterPathPoint::ActionParameterPathPoint( const QString& name, const k
 // -----------------------------------------------------------------------------
 ActionParameterPathPoint::ActionParameterPathPoint( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location )
     : ActionParameterLocation( parameter, converter, location )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterPathPoint constructor
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+ActionParameterPathPoint::ActionParameterPathPoint( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
+    : ActionParameterLocation( converter, xis )
 {
     // NOTHING
 }

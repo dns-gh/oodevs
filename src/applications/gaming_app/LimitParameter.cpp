@@ -187,6 +187,6 @@ void LimitParameter::CommitTo( ActionParameter_ABC& parameter ) const
         return;
     kernel::Lines lines;
     selected_->CopyTo( lines );
-    std::auto_ptr< ActionParameterLimit > param( new ActionParameterLimit(GetName(), converter_, lines ) );
+    std::auto_ptr< ActionParameterLimit > param( new ActionParameterLimit( GetName(), converter_, lines ) );
     parameter.AddParameter( *param.release() );
 }

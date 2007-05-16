@@ -34,10 +34,29 @@ ActionParameterLimaList::ActionParameterLimaList( const kernel::OrderParameter& 
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionParameterLimaList constructor
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+ActionParameterLimaList::ActionParameterLimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
+    : ActionParameter< QString >( parameter )
+{
+    xis >> list( "parameter", *this, &ActionParameterLimaList::ReadLima, converter );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionParameterLimaList destructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
 ActionParameterLimaList::~ActionParameterLimaList()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLimaList::ReadLima
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+void ActionParameterLimaList::ReadLima( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
+{
+    AddParameter( *new ActionParameterLima( converter, xis ) );
 }

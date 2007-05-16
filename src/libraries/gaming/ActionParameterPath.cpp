@@ -64,6 +64,17 @@ ActionParameterPath::ActionParameterPath( const OrderParameter& parameter, const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionParameterPath constructor
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+ActionParameterPath::ActionParameterPath( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
+    : ActionParameter< QString >( parameter )
+    , converter_( converter )
+{
+    xis >> list( "parameter", *this, &ActionParameterPath::ReadPoint );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionParameterPath destructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
@@ -113,4 +124,13 @@ void ActionParameterPath::VisitLines( const T_PointVector& points )
             label = tools::translate( "ActionParameter", "Way point %1" ).arg( i );
         AddParameter( *new ActionParameterPathPoint( label, converter_, pt ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterPath::ReadPoint
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+void ActionParameterPath::ReadPoint( xml::xistream& xis )
+{
+    AddParameter( *new ActionParameterPathPoint( xis, converter_ ) );
 }

@@ -35,6 +35,28 @@ ActionParameterLimit::ActionParameterLimit( const QString& name, const kernel::C
     AddParameter( *new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, location ) );
 }
 
+namespace
+{
+    QString ReadName( xml::xistream& xis )
+    {
+        std::string name;
+        xis >> xml::attribute( "name", name );
+        return name.c_str();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLimit constructor
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+ActionParameterLimit::ActionParameterLimit( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
+    : ActionParameter_ABC( ReadName( xis ) )
+{
+    xis >> start( "parameter" );
+    AddParameter( *new ActionParameterLocation( converter, xis ) );
+    xis >> end();
+}
+
 // -----------------------------------------------------------------------------
 // Name: ActionParameterLimit destructor
 // Created: SBO 2007-04-13

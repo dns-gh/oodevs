@@ -11,18 +11,38 @@
 #include "ActionParameterDirection.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "xeumeuleu/xml.h"
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterDirection constructor
-// Created: SBO 2007-04-16
+// Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-ActionParameterDirection::ActionParameterDirection( const kernel::OrderParameter& parameter, const ASN1T_Direction& asn )
-    : ActionParameter< float >( parameter )
-    , direction_()
+ActionParameterDirection::ActionParameterDirection( const kernel::OrderParameter& parameter, float value )
+    : ActionParameter< float >( parameter, value )
 {
-    const float angle = asn * 3.14f / 180.f;
+    const float angle = GetValue() * 3.14f / 180.f;
     direction_ = geometry::Vector2f( sin( angle ), cos( angle ) );
-    SetValue( asn );
+}
+
+namespace
+{
+    float ReadValue( xml::xistream& xis )
+    {
+        float value;
+        xis >> xml::attribute( "value", value );
+        return value;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterDirection constructor
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+ActionParameterDirection::ActionParameterDirection( const kernel::OrderParameter& parameter, xml::xistream& xis )
+    : ActionParameter< float >( parameter, ReadValue( xis ) )
+{
+    const float angle = GetValue() * 3.14f / 180.f;
+    direction_ = geometry::Vector2f( sin( angle ), cos( angle ) );
 }
 
 // -----------------------------------------------------------------------------

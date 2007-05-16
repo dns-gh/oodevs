@@ -26,6 +26,16 @@ const QString limas[] =
     tools::translate( "E_FuncLimaType", "LIA" ),
 };
 
+const QString localisations[] = 
+{
+    tools::translate( "Localisation", "Circle" ),
+    tools::translate( "Localisation", "Ellipse" ),
+    tools::translate( "Localisation", "Line" ),
+    tools::translate( "Localisation", "Polygon" ),
+    tools::translate( "Localisation", "Point" ),
+    tools::translate( "Localisation", "Sector" ),
+};
+
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
 // Created: AGE 2006-08-08
@@ -55,16 +65,19 @@ E_FuncLimaType tools::FromString( const QString& type )
 // -----------------------------------------------------------------------------
 QString tools::ToString( ASN1T_EnumTypeLocalisation nType )
 {
-    static const QString localisations[] = 
-    {
-        tools::translate( "Localisation", "Circle" ),
-        tools::translate( "Localisation", "Ellipse" ),
-        tools::translate( "Localisation", "Line" ),
-        tools::translate( "Localisation", "Polygon" ),
-        tools::translate( "Localisation", "Point" ),
-        tools::translate( "Localisation", "Sector" ),
-    };
     if( nType >= 0 && nType < 6 )
         return localisations[ nType ];
     return Unknown();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Tools::LocationFromString
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+E_TypeLocalisation tools::LocationFromString( const QString& type )
+{
+    for( int i = 0; i < 6; ++i )
+        if( type == localisations[i] )
+            return (E_TypeLocalisation)i;
+    return (E_TypeLocalisation)-1;
 }

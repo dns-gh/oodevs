@@ -16,6 +16,13 @@ namespace kernel
 {
     class MissionType;
     class Controller;
+    class Agent_ABC;
+    class Automat_ABC;
+}
+
+namespace xml
+{
+    class xistream;
 }
 
 // =============================================================================
@@ -31,6 +38,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              ActionMission( const kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::Controller& controller, bool registered = true );
+             ActionMission( xml::xistream& xis, kernel::Controller& controller, const kernel::Resolver_ABC< kernel::MissionType >& missions
+                          , const kernel::Resolver_ABC< kernel::Agent_ABC >& agents, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats );
     virtual ~ActionMission();
     //@}
 

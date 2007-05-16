@@ -45,12 +45,38 @@ Location::Location( const kernel::CoordinateConverter_ABC& converter, const kern
 }
 
 // -----------------------------------------------------------------------------
+// Name: Location constructor
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+Location::Location( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
+    : converter_( converter )
+{
+    std::string type;
+    xis >> start( "location" )
+            >> attribute( "type", type )
+            >> list( "point", *this, &Location::ReadPoint )
+        >> end();
+    type_ = ASN1T_EnumTypeLocalisation( tools::LocationFromString( type.c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Location destructor
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
 Location::~Location()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Location::ReadPoint
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+void Location::ReadPoint( xml::xistream& xis )
+{
+    float x, y;
+    xis >> attribute( "x", x ) >> attribute( "y", y );
+    PushBack( geometry::Point2f( x, y ) );
 }
 
 // -----------------------------------------------------------------------------

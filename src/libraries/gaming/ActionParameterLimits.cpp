@@ -33,10 +33,29 @@ ActionParameterLimits::ActionParameterLimits( const kernel::OrderParameter& para
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionParameterLimits constructor
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+ActionParameterLimits::ActionParameterLimits( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
+    : ActionParameter< QString >( parameter )
+{
+    xis >> list( "parameter", *this, &ActionParameterLimits::ReadLimit, converter );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionParameterLimits destructor
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
 ActionParameterLimits::~ActionParameterLimits()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLimits::ReadLimit
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+void ActionParameterLimits::ReadLimit( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
+{
+    AddParameter( *new ActionParameterLimit( converter, xis ) );
 }

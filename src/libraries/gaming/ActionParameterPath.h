@@ -39,6 +39,7 @@ public:
              ActionParameterPath( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn, const kernel::Entity_ABC& entity );
              ActionParameterPath( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, const kernel::Entity_ABC& entity );
              ActionParameterPath( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn, const kernel::Entity_ABC& entity );
+             ActionParameterPath( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~ActionParameterPath();
     //@}
 
@@ -56,6 +57,7 @@ private:
     virtual void VisitCircle ( const geometry::Point2f&, float ) {}
     virtual void VisitPoint  ( const geometry::Point2f& ) {}
     void AddPoints( const ASN1T_Localisation& asn, const kernel::Entity_ABC& entity );
+    void ReadPoint( xml::xistream& xis );
     //@}
 
 private:

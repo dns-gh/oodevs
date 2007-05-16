@@ -10,7 +10,6 @@
 #ifndef __ActionParameterDirection_h_
 #define __ActionParameterDirection_h_
 
-#include "game_asn/Asn.h"
 #include "ActionParameter.h"
 
 // =============================================================================
@@ -25,7 +24,8 @@ class ActionParameterDirection : public ActionParameter< float >
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterDirection( const kernel::OrderParameter& parameter, const ASN1T_Direction& asn );
+             ActionParameterDirection( const kernel::OrderParameter& parameter, float value );
+             ActionParameterDirection( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~ActionParameterDirection();
     //@}
 

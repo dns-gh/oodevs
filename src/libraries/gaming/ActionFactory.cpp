@@ -20,8 +20,10 @@
 #include "clients_kernel/OrderParameter.h"
 #include "ActionParameterFactory_ABC.h"
 #include "Tools.h"
+#include "xeumeuleu/xml.h"
 
 using namespace kernel;
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ActionFactory constructor
@@ -129,4 +131,33 @@ void ActionFactory::AddOrderContext( Action_ABC& action, const OrderType& order,
         else if( param.GetType() == "dangerousdirection" )
             action.AddParameter( *factory_.CreateParameter( param, asn.direction_dangereuse ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateAction
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateAction( xml::xistream& xis ) const
+{
+    std::auto_ptr< ActionMission > action( new ActionMission( xis, controllers_.controller_, missions_, model_.agents_, model_.agents_ ) );
+    Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
+    xis >> start( "parameters" )
+            >> list( "parameter", *this, ReadParameter, *action, it )
+        >> end()
+        >> start( "context" )
+            >> list( "parameter", *this, ReadParameter, *action, it )
+        >> end();
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::ReadParameter
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+void ActionFactory::ReadParameter( xml::xistream& xis, Action_ABC& action, Iterator< const OrderParameter& >& it ) const
+{
+    if( !it.HasMoreElements() ) // $$$$ SBO 2007-05-16: invalid order, too much parameters...
+        return;
+    if( ActionParameter_ABC* param = factory_.CreateParameter( it.NextElement(), xis ) )
+        action.AddParameter( *param );
 }

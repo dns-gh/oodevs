@@ -66,6 +66,40 @@ ActionParameterLocation::ActionParameterLocation( const kernel::OrderParameter& 
     // NOTHING
 }
 
+namespace
+{
+    QString ReadName( xml::xistream& xis )
+    {
+        std::string name;
+        xis >> attribute( "name", name );
+        return name.c_str();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLocation constructor
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+ActionParameterLocation::ActionParameterLocation( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
+    : ActionParameter_ABC( ReadName( xis ) )
+    , Location( converter, xis )
+    , parameter_( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLocation constructor
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+ActionParameterLocation::ActionParameterLocation( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
+    : ActionParameter_ABC( parameter.GetName() )
+    , Location( converter, xis )
+    , parameter_( &parameter )
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: ActionParameterLocation destructor
 // Created: SBO 2007-04-19

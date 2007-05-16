@@ -19,6 +19,11 @@ namespace kernel
     class FragOrderType;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 class Action_ABC;
 
 // =============================================================================
@@ -44,6 +49,8 @@ public:
 
     virtual Action_ABC* CreateAction( const ASN1T_MsgPionOrder& message ) const = 0;
     virtual Action_ABC* CreateAction( const ASN1T_MsgAutomateOrder& message ) const = 0;
+
+    virtual Action_ABC* CreateAction( xml::xistream& xis ) const = 0;
     //@}
 };
 

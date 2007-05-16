@@ -32,6 +32,7 @@ public:
     //@{
     explicit ActionParameterLimaList( const kernel::OrderParameter& parameter );
              ActionParameterLimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_LimasOrder& limas );
+             ActionParameterLimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~ActionParameterLimaList();
     //@}
 
@@ -40,6 +41,11 @@ private:
     //@{
     ActionParameterLimaList( const ActionParameterLimaList& );            //!< Copy constructor
     ActionParameterLimaList& operator=( const ActionParameterLimaList& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadLima( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
     //@}
 };
 

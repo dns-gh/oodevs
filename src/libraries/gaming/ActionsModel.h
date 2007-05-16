@@ -22,6 +22,7 @@ namespace kernel
 namespace xml
 {
     class xostream;
+    class xistream;
 }
 
 class Action_ABC;
@@ -64,6 +65,7 @@ private:
 
     //! @name Helpers
     //@{
+    void ReadMission( xml::xistream& xis );
     //@}
 
 private:

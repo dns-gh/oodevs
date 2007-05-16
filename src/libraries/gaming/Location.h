@@ -19,6 +19,12 @@ namespace kernel
     class Location_ABC;
 }
 
+namespace xml
+{
+    class xostream;
+    class xistream;
+}
+
 // =============================================================================
 /** @class  Location
     @brief  Location
@@ -34,6 +40,7 @@ public:
     //@{
              Location( const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn );
              Location( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
+             Location( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~Location();
     //@}
 
@@ -60,6 +67,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void ReadPoint( xml::xistream& xis );
     virtual void VisitLines  ( const T_PointVector& points );
     virtual void VisitPolygon( const T_PointVector& points );
     virtual void VisitCircle ( const geometry::Point2f& center, float radius );

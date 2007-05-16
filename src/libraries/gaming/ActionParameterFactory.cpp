@@ -25,6 +25,9 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "Tools.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterFactory constructor
@@ -142,3 +145,66 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::Orde
 {
     return new ActionParameterDirection( parameter, asn );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterFactory::CreateParameter
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis ) const
+{
+    std::string type;
+    xis >> attribute( "type", type );
+    type = QString( type.c_str() ).lower().ascii();
+    if( type != parameter.GetType().lower().ascii() )
+        return new ActionParameter< QString >( parameter, QString( "Invalid: '%1' expecting '%2'" ).arg( type.c_str() ).arg( parameter.GetType() ) );
+
+    if( type == "path" )
+        return new ActionParameterPath( parameter, converter_, xis );
+    else if( type == "point" || type == "pointlist" || type == "polygon" || type == "location" )
+        return new ActionParameterLocation( parameter, converter_, xis );
+    else if( type == "direction" || type == "dangerousdirection" )
+        return new ActionParameterDirection( parameter, xis );
+    else if( type == "limalist" )
+        return new ActionParameterLimaList( parameter, converter_, xis );
+    else if( type == "limits" )
+        return new ActionParameterLimits( parameter, converter_, xis );
+
+    return new ActionParameter< QString >( parameter ); // $$$$ SBO 2007-05-16: default not yet implemented parameters...
+}
+
+//"agent"
+//"agentlist"
+//"automate"
+//"automatelist"
+//"genobject"
+//"genobjectlist"
+//"dotationtype"
+//"natureatlas"
+//
+//"bool"
+//"direction"
+//"gdh"
+//"numeric"
+//
+//"agentknowledge"
+//"agentknowledgelist"
+//"objectknowledge"
+//"objectknowledgelist"
+//"populationknowledge"
+//
+//"path"
+//"pathlist"
+//"point"
+//"pointlist"
+//"polygon"
+//"polygonlist"
+//"location"
+//"locationlist"
+//
+//"maintenancepriorities"
+//"medicalpriorities"
+//"enumeration"
+//
+//"limits"
+//"limalist"
+//"dangerousdirection"

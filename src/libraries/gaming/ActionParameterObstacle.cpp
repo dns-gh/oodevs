@@ -79,7 +79,7 @@ ActionParameterObstacle::~ActionParameterObstacle()
 void ActionParameterObstacle::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     ActionParameter< QString >::Draw( where, viewport, tools );
-    type_.Draw( GetPosition(), viewport, tools ); // $$$$ SBO 2007-04-26: 
+    type_.Draw( GetPosition(), viewport, tools );
 }
 
 // -----------------------------------------------------------------------------

@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ParamDirection.h"
 #include "moc_ParamDirection.cpp"
-#include "gaming/ActionParameter.h"
+#include "gaming/ActionParameterDirection.h"
 #include "gaming/Action_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 
@@ -77,9 +77,7 @@ void ParamDirection::CommitTo( ASN1T_OrderContext& asn ) const
 // -----------------------------------------------------------------------------
 void ParamDirection::CommitTo( Action_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter< float > > param( new ActionParameter< float >( parameter_ ) );
-    param->SetValue( value_ );
-    action.AddParameter( *param.release() );
+    action.AddParameter( *new ActionParameterDirection( parameter_, value_ ) );
 }
 
 // -----------------------------------------------------------------------------

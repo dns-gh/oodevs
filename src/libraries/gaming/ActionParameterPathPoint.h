@@ -26,6 +26,7 @@ public:
     //@{
              ActionParameterPathPoint( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              ActionParameterPathPoint( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
+             ActionParameterPathPoint( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ActionParameterPathPoint();
     //@}
 

@@ -17,6 +17,7 @@ namespace kernel
 {
     class Controllers;
     class OrderType;
+    class OrderParameter;
 }
 
 class Model;
@@ -46,6 +47,8 @@ public:
 
     virtual Action_ABC* CreateAction( const ASN1T_MsgPionOrder& message ) const;
     virtual Action_ABC* CreateAction( const ASN1T_MsgAutomateOrder& message ) const;
+
+    virtual Action_ABC* CreateAction( xml::xistream& xis ) const;
     //@}
 
 private:
@@ -59,6 +62,7 @@ private:
     //@{
     void AddParameters  ( Action_ABC& action, const kernel::OrderType& order, const ASN1T_MissionParameters& asn ) const;
     void AddOrderContext( Action_ABC& action, const kernel::OrderType& order, const ASN1T_OrderContext& asn ) const;
+    void ReadParameter  ( xml::xistream& xis, Action_ABC& action, kernel::Iterator< const kernel::OrderParameter& >& it ) const;
     //@}
 
 private:

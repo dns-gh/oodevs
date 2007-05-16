@@ -32,6 +32,7 @@ public:
     //@{
     explicit ActionParameterLimits( const kernel::OrderParameter& parameter );
              ActionParameterLimits( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Line& line1, const ASN1T_Line& line2 );
+             ActionParameterLimits( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~ActionParameterLimits();
     //@}
 
@@ -40,6 +41,11 @@ private:
     //@{
     ActionParameterLimits( const ActionParameterLimits& );            //!< Copy constructor
     ActionParameterLimits& operator=( const ActionParameterLimits& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadLimit( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
     //@}
 };
 

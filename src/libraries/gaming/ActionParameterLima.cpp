@@ -39,6 +39,31 @@ ActionParameterLima::ActionParameterLima( const QString& name, const kernel::Coo
     AddParameter( *new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, asn.lima ) );
 }
 
+namespace
+{
+    QString ReadName( xml::xistream& xis )
+    {
+        std::string name;
+        xis >> xml::attribute( "name", name );
+        return name.c_str();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLima constructor
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+ActionParameterLima::ActionParameterLima( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
+    : ActionParameter< QString >( ReadName( xis ) )
+{
+    std::string value;
+    xis >> attribute( "value", value )
+        >> start( "parameter" );
+    AddParameter( *new ActionParameterLocation( converter, xis ) );
+    xis >> end();
+    SetValue( value.c_str() );
+}
+
 // -----------------------------------------------------------------------------
 // Name: ActionParameterLima destructor
 // Created: SBO 2007-04-26
@@ -75,7 +100,8 @@ void ActionParameterLima::AddFunction( unsigned int i )
 void ActionParameterLima::Serialize( xml::xostream& xos ) const
 {
     ActionParameter< QString >::Serialize( xos );
-    xos << attribute( "type", "lima" );
+    xos << attribute( "type", "lima" )
+        << attribute( "value", GetValue() );
 }
 
 // -----------------------------------------------------------------------------

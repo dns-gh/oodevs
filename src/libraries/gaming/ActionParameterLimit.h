@@ -19,6 +19,11 @@ namespace kernel
     class Location_ABC;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  ActionParameterLimit
     @brief  ActionParameterLimit
@@ -33,6 +38,7 @@ public:
     //@{
              ActionParameterLimit( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Line& line );
              ActionParameterLimit( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
+             ActionParameterLimit( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~ActionParameterLimit();
     //@}
 
