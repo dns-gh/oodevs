@@ -43,7 +43,7 @@ MIL_ParameterType_AgentList::~MIL_ParameterType_AgentList()
 void MIL_ParameterType_AgentList::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_listAgent ) 
+    if( from.value.t != T_MissionParameter_value_listAgent ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest

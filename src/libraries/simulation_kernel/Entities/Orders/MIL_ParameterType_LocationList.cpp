@@ -39,7 +39,7 @@ MIL_ParameterType_LocationList::~MIL_ParameterType_LocationList()
 void MIL_ParameterType_LocationList::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_listLocalisation ) 
+    if( from.value.t != T_MissionParameter_value_listLocalisation ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest

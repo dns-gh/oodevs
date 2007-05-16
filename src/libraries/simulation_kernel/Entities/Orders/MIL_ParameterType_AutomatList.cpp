@@ -43,7 +43,7 @@ MIL_ParameterType_AutomatList::~MIL_ParameterType_AutomatList()
 void MIL_ParameterType_AutomatList::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_listAutomate ) 
+    if( from.value.t != T_MissionParameter_value_listAutomate ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest

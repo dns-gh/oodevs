@@ -39,7 +39,7 @@ MIL_ParameterType_PolygonList::~MIL_ParameterType_PolygonList()
 void MIL_ParameterType_PolygonList::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_listPolygon ) 
+    if( from.value.t != T_MissionParameter_value_listPolygon ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
