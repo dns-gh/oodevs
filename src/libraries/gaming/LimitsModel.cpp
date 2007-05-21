@@ -11,7 +11,6 @@
 #include "LimitsModel.h"
 #include "TacticalLine_ABC.h"
 #include "TacticalLineFactory.h"
-#include "xeumeuleu/xml.h"
 
 // -----------------------------------------------------------------------------
 // Name: LimitsModel constructor
@@ -81,20 +80,4 @@ void LimitsModel::DeleteLima( unsigned long id )
     TacticalLine_ABC* line = Find( id );
     Remove( id );
     delete line;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsModel::Save
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void LimitsModel::Save( const std::string& tacticalLines ) const
-{
-    xml::xofstream xos( tacticalLines );
-    xos << xml::start( "lines" );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-    {
-        TacticalLine_ABC& line = *it->second;
-        line.Serialize( xos );
-    }
-    xos << xml::end();
 }

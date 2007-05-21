@@ -14,8 +14,10 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Point.h"
+#include "xeumeuleu/xml.h"
 
 using namespace kernel;
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterPath constructor
@@ -69,6 +71,27 @@ ActionParameterPath::ActionParameterPath( const OrderParameter& parameter, const
 // -----------------------------------------------------------------------------
 ActionParameterPath::ActionParameterPath( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
     : ActionParameter< QString >( parameter )
+    , converter_( converter )
+{
+    xis >> list( "parameter", *this, &ActionParameterPath::ReadPoint );
+}
+
+namespace
+{
+    QString ReadName( xml::xistream& xis )
+    {
+        std::string name;
+        xis >> attribute( "name", name );
+        return name.c_str();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterPath constructor
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+ActionParameterPath::ActionParameterPath( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
+    : ActionParameter< QString >( ReadName( xis ) )
     , converter_( converter )
 {
     xis >> list( "parameter", *this, &ActionParameterPath::ReadPoint );

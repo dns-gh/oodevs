@@ -12,7 +12,7 @@
 #include "moc_ParamBool.cpp"
 #include "game_asn/Asn.h"
 #include "gaming/Action_ABC.h"
-#include "gaming/ActionParameter.h"
+#include "gaming/ActionParameterBool.h"
 #include "clients_kernel/OrderParameter.h"
 
 // -----------------------------------------------------------------------------
@@ -65,9 +65,7 @@ void ParamBool::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamBool::CommitTo( Action_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter< bool > > param( new ActionParameter< bool >( parameter_ ) );
-    param->SetValue( value_ );
-    action.AddParameter( *param.release() );
+    action.AddParameter( *new ActionParameterBool( parameter_, value_ ) );
 }
 
 // -----------------------------------------------------------------------------

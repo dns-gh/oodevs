@@ -14,9 +14,6 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include "xeumeuleu/xml.h"
-
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLinePositions constructor
@@ -133,19 +130,6 @@ void TacticalLinePositions::Draw( const geometry::Point2f&, const kernel::Viewpo
             glColor3f( 0.55f, 0.3f, 0.1f );
         tools.DrawLines( pointList_ );
     glPopAttrib();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLinePositions::SerializeAttributes
-// Created: SBO 2006-11-06
-// -----------------------------------------------------------------------------
-void TacticalLinePositions::SerializeAttributes( xml::xostream& xos ) const
-{
-    for ( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
-        xos << start( "point" )
-                << attribute( "x", itPoint->X() )
-                << attribute( "y", itPoint->Y() )
-            << end();
 }
 
 // -----------------------------------------------------------------------------

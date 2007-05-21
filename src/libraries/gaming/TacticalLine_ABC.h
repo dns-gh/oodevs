@@ -12,7 +12,6 @@
 
 #include "clients_kernel/Types.h"
 #include "clients_kernel/TacticalLine_ABC.h"
-#include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "game_asn/Asn.h"
 
@@ -20,11 +19,6 @@ namespace kernel
 {
     class GlTools_ABC;
     class Location_ABC;
-}
-
-namespace xml
-{
-    class xostream;
 }
 
 class Publisher_ABC;
@@ -52,8 +46,6 @@ public:
     //@{
     void Delete();
     void Create();
-
-    virtual void Serialize( xml::xostream& xos ) const;
     //@}
 
     //! @name Accessors

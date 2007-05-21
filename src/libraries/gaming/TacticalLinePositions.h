@@ -12,7 +12,6 @@
 
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "game_asn/Asn.h"
 
@@ -31,7 +30,6 @@ class TacticalLine_ABC;
 // Created: SBO 2006-11-06
 // =============================================================================
 class TacticalLinePositions : public kernel::Positions
-                            , public kernel::Serializable_ABC
                             , public kernel::Drawable_ABC
                             , public kernel::Updatable_ABC< ASN1T_MsgLimaUpdate >
                             , public kernel::Updatable_ABC< ASN1T_MsgLimitUpdate >
@@ -54,7 +52,6 @@ public:
     virtual geometry::Rectangle2f GetBoundingBox() const;
 
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual void SerializeAttributes( xml::xostream& ) const;
 
     void WriteGeometry( ASN1T_Line& line ) const; // $$$$ SBO 2006-11-06: void Accept( PositionVisitor_ABC& ) or something...
     void WriteGeometry( kernel::Location_ABC& location ) const;

@@ -2201,28 +2201,6 @@
     </message>
 </context>
 <context>
-    <name>TacticalLinesSaver</name>
-    <message>
-        <source>TacticalLines.xml</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>There are unsaved changes on tactical-lines:
- save modifications to TacticalLines.xml ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error saving file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tactical-lines description file (TacticalLines.xml) cannot be written.
-Please check for write protection then retry.
-Message : </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>UserProfileDialog</name>
     <message>
         <source>User profiles</source>

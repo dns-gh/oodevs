@@ -16,7 +16,6 @@
 namespace kernel
 {
     class CoordinateConverter_ABC;
-    class Entity_ABC;
 }
 
 // =============================================================================
@@ -33,7 +32,7 @@ public:
     //@{
     explicit ActionParameterLocationList( const kernel::OrderParameter& parameter );
              ActionParameterLocationList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_ListLocalisation& asn );
-             ActionParameterLocationList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_ListLocalisation& asn, const kernel::Entity_ABC& entity );
+             ActionParameterLocationList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~ActionParameterLocationList();
     //@}
 
@@ -42,6 +41,11 @@ private:
     //@{
     ActionParameterLocationList( const ActionParameterLocationList& );            //!< Copy constructor
     ActionParameterLocationList& operator=( const ActionParameterLocationList& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadLocation( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
     //@}
 };
 

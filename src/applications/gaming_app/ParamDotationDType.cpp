@@ -11,6 +11,7 @@
 #include "ParamDotationDType.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Iterator.h"
+#include "gaming/ActionParameterDotationType.h"
 
 using namespace kernel;
 
@@ -21,6 +22,7 @@ using namespace kernel;
 ParamDotationDType::ParamDotationDType( const kernel::OrderParameter& parameter, const Resolver_ABC< DotationType >& resolver )
     : ParamComboBox< ASN1T_TypeDotationTrancheD >( parameter )
     , resolver_( resolver )
+    , parameter_( parameter )
 {
     // NOTHING
 }
@@ -58,5 +60,14 @@ void ParamDotationDType::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value = 0;
     asn.value.t = T_MissionParameter_value_typeDotation;
-    ParamComboBox< ASN1T_TypeDotationTrancheD >::CommitTo( (ASN1T_OID&)asn.value.u.typeDotation );
+    asn.value.u.typeDotation = GetValue();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamDotationDType::CommitTo
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void ParamDotationDType::CommitTo( Action_ABC& action ) const
+{
+    action.AddParameter( *new ActionParameterDotationType( parameter_, GetValue(), resolver_ ) );
 }

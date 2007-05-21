@@ -14,8 +14,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "gaming/Action_ABC.h"
-#include "gaming/ActionParameterPath.h"
-#include "gaming/ActionParameterLocationList.h"
+#include "gaming/ActionParameterPathList.h"
 
 using namespace kernel;
 using namespace gui;
@@ -123,7 +122,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ParamPathList::CommitTo( Action_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterLocationList( parameter_ ) );
+    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterPathList( parameter_ ) );
     ActionSerializer serializer( *param );
     Accept( serializer );
     action.AddParameter( *param.release() );

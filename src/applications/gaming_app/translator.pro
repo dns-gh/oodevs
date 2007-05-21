@@ -91,7 +91,6 @@ SupplyConsignsWidget.cpp \
 SupplyQuotasListView.cpp \
 SupplyStocksListView.cpp \
 SupplyTransportersListView.cpp \
-TacticalLinesSaver.cpp \
 UserProfileDialog.cpp \
 UserProfileList.cpp \
 UserProfileRights_ABC.cpp \

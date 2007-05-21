@@ -8,55 +8,58 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "ActionParameterLocationList.h"
-#include "ActionParameterLocation.h"
+#include "ActionParameterPathList.h"
+#include "ActionParameterPath.h"
 #include "Tools.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
-// Name: ActionParameterLocationList constructor
-// Created: SBO 2007-04-25
+// Name: ActionParameterPathList constructor
+// Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-ActionParameterLocationList::ActionParameterLocationList( const kernel::OrderParameter& parameter )
+ActionParameterPathList::ActionParameterPathList( const kernel::OrderParameter& parameter )
     : ActionParameter< QString >( parameter )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionParameterLocationList constructor
+// Name: ActionParameterPathList constructor
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-ActionParameterLocationList::ActionParameterLocationList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_ListLocalisation& asn )
+ActionParameterPathList::ActionParameterPathList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_ListItineraire& asn, const kernel::Entity_ABC& entity )
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new ActionParameterLocation( tools::translate( "ActionParameter", "Location %1" ).arg( i ), converter, asn.elem[i] ) );
+        AddParameter( *new ActionParameterPath( tools::translate( "ActionParameter", "Route %1" ).arg( i ), converter, asn.elem[i], entity ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionParameterLocationList constructor
+// Name: ActionParameterPathList constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-ActionParameterLocationList::ActionParameterLocationList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
+ActionParameterPathList::ActionParameterPathList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
     : ActionParameter< QString >( parameter )
 {
-    xis >> list( "parameter", *this, &ActionParameterLocationList::ReadLocation, converter );
+    xis >> list( "parameter", *this, &ActionParameterPathList::ReadPath, converter );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionParameterLocationList destructor
-// Created: SBO 2007-04-25
+// Name: ActionParameterPathList destructor
+// Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-ActionParameterLocationList::~ActionParameterLocationList()
+ActionParameterPathList::~ActionParameterPathList()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionParameterLocationList::ReadLocation
+// Name: ActionParameterPathList::ReadPath
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void ActionParameterLocationList::ReadLocation( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
+void ActionParameterPathList::ReadPath( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
 {
-    AddParameter( *new ActionParameterLocation( converter, xis ) );
+    AddParameter( *new ActionParameterPath( converter, xis ) );
 }

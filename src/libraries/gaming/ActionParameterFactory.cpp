@@ -16,12 +16,20 @@
 #include "ActionParameterDirection.h"
 #include "ActionParameterLocation.h"
 #include "ActionParameterLocationList.h"
+#include "ActionParameterPathList.h"
 #include "ActionParameterPath.h"
+#include "ActionParameterEntity.h"
 #include "ActionParameterEntityList.h"
+#include "ActionParameterEnumeration.h"
+#include "ActionParameterBool.h"
+#include "ActionParameterNumeric.h"
+#include "ActionParameterDotationType.h"
 #include "Model.h"
 #include "StaticModel.h"
 #include "AgentsModel.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "Tools.h"
@@ -61,18 +69,19 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::Orde
     switch( asn.value.t )
     {
     case T_MissionParameter_value_aBool:
-        return new ActionParameter< bool >( parameter, asn.value.u.aBool );
+        return new ActionParameterBool( parameter, asn.value.u.aBool );
     case T_MissionParameter_value_aCharStr:
         return new ActionParameter< QString >( parameter, asn.value.u.aCharStr );
     case T_MissionParameter_value_agent:
-        return new ActionParameter< const kernel::Agent_ABC* >( parameter, &model_.agents_.GetAgent( asn.value.u.agent ) );
+        return new ActionParameterEntity< kernel::Agent_ABC >( parameter, asn.value.u.agent, model_.agents_ );
     case T_MissionParameter_value_aReal:
-        return new ActionParameter< float >( parameter, asn.value.u.aReal );
+        return new ActionParameterNumeric( parameter, asn.value.u.aReal );
     case T_MissionParameter_value_automate:
-        return new ActionParameter< const kernel::Automat_ABC* >( parameter, &model_.agents_.GetAutomat( asn.value.u.automate ) );
+        return new ActionParameterEntity< kernel::Automat_ABC >( parameter, asn.value.u.automate, model_.agents_ );
     case T_MissionParameter_value_direction:
         return new ActionParameter< float >( parameter, asn.value.u.direction );
     case T_MissionParameter_value_enumeration:
+        return new ActionParameterEnumeration( parameter, asn.value.u.enumeration );
     case T_MissionParameter_value_gDH:
         break;
     case T_MissionParameter_value_itineraire:
@@ -86,7 +95,7 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::Orde
     case T_MissionParameter_value_listAutomate:
         return new ActionParameterEntityList( parameter, *asn.value.u.listAutomate, model_.agents_ );
     case T_MissionParameter_value_listItineraire:
-        return new ActionParameterLocationList( parameter, converter_, (ASN1T_ListLocalisation&)*asn.value.u.listItineraire, entity );
+        return new ActionParameterPathList( parameter, converter_, *asn.value.u.listItineraire, entity );
     case T_MissionParameter_value_listKnowledgeAgent:
     case T_MissionParameter_value_listKnowledgeObject:
         break;
@@ -111,8 +120,11 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::Orde
     case T_MissionParameter_value_polygon:
         return new ActionParameterLocation( parameter, converter_, *asn.value.u.polygon );
     case T_MissionParameter_value_santePriorites:
-    case T_MissionParameter_value_tirIndirect:
+        break;
+    case T_MissionParameter_value_tirIndirect: // $$$$ SBO 2007-05-21: no longer used? => boolean
+        break;
     case T_MissionParameter_value_typeDotation:
+        return new ActionParameterDotationType( parameter, asn.value.u.typeDotation, staticModel_.objectTypes_ );
     case T_MissionParameter_value_typeEquipement:
         break;
     }
@@ -158,31 +170,43 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::Orde
     if( type != parameter.GetType().lower().ascii() )
         return new ActionParameter< QString >( parameter, QString( "Invalid: '%1' expecting '%2'" ).arg( type.c_str() ).arg( parameter.GetType() ) );
 
-    if( type == "path" )
+    if( type == "bool" )
+        return new ActionParameterBool( parameter, xis );
+    else if( type == "numeric" )
+        return new ActionParameterNumeric( parameter, xis );
+    else if( type == "path" )
         return new ActionParameterPath( parameter, converter_, xis );
     else if( type == "point" || type == "pointlist" || type == "polygon" || type == "location" )
         return new ActionParameterLocation( parameter, converter_, xis );
+    else if( type == "pathlist" )
+        return new ActionParameterPathList( parameter, converter_, xis );
+    else if( type == "polygonlist" || type == "locationlist" )
+        return new ActionParameterLocationList( parameter, converter_, xis );
     else if( type == "direction" || type == "dangerousdirection" )
         return new ActionParameterDirection( parameter, xis );
     else if( type == "limalist" )
         return new ActionParameterLimaList( parameter, converter_, xis );
     else if( type == "limits" )
         return new ActionParameterLimits( parameter, converter_, xis );
+    else if( type == "enumeration" )
+        return new ActionParameterEnumeration( parameter, xis );
+    else if( type == "agent" )
+        return new ActionParameterEntity< kernel::Agent_ABC >( parameter, xis, model_.agents_ );
+    else if( type == "automate" )
+        return new ActionParameterEntity< kernel::Automat_ABC >( parameter, xis, model_.agents_ );
+    else if( type == "dotationtype" )
+        return new ActionParameterDotationType( parameter, xis, staticModel_.objectTypes_ );
 
     return new ActionParameter< QString >( parameter ); // $$$$ SBO 2007-05-16: default not yet implemented parameters...
 }
 
-//"agent"
 //"agentlist"
-//"automate"
 //"automatelist"
 //"genobject"
 //"genobjectlist"
-//"dotationtype"
 //"natureatlas"
 //
 //"bool"
-//"direction"
 //"gdh"
 //"numeric"
 //
@@ -192,19 +216,6 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::Orde
 //"objectknowledgelist"
 //"populationknowledge"
 //
-//"path"
-//"pathlist"
-//"point"
-//"pointlist"
-//"polygon"
-//"polygonlist"
-//"location"
-//"locationlist"
-//
 //"maintenancepriorities"
 //"medicalpriorities"
-//"enumeration"
-//
-//"limits"
-//"limalist"
-//"dangerousdirection"
+

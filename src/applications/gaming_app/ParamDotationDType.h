@@ -41,6 +41,7 @@ public:
     //@{
     virtual void BuildInterface( QWidget* parent );
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private:
@@ -53,6 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter& parameter_;
     const kernel::Resolver_ABC< kernel::DotationType >& resolver_;
     //@}
 };

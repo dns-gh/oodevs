@@ -116,18 +116,6 @@ void Lima::Activate( ActionController& actions ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Lima::Serialize
-// Created: SBO 2006-11-06
-// -----------------------------------------------------------------------------
-void Lima::Serialize( xml::xostream& xos ) const
-{
-    xos << start( "lima" );
-    TacticalLine_ABC::Serialize( xos );
-    Interface().Apply( &Serializable_ABC::SerializeAttributes, xos );
-    xos << end();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Lima::CopyTo
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------

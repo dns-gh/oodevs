@@ -29,10 +29,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Route %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Obstacle %1</source>
         <translation type="unfinished"></translation>
     </message>

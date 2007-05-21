@@ -12,7 +12,7 @@
 
 #include "Param_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
-#include "gaming/ActionParameter.h"
+#include "gaming/ActionParameterEnumeration.h"
 #include "gaming/Action_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 
@@ -39,12 +39,7 @@ public:
     void AddItem( const QString& name, T value );
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void CommitTo( Action_ABC& action ) const;
-    //@}
-
-protected:
-    //! @name Operations
-    //@{
-    virtual void CommitTo( ASN1T_OID& asn ) const;
+    T GetValue() const;
     //@}
 
 private:
@@ -132,27 +127,22 @@ void ParamComboBox<T>::CommitTo( ASN1T_MissionParameter& asn ) const
 
 // -----------------------------------------------------------------------------
 // Name: ParamComboBox::CommitTo
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-template< typename T >
-void ParamComboBox<T>::CommitTo( ASN1T_OID& asn ) const
-{
-    if( !comboBox_ )
-        InterfaceNotInitialized();
-    if( comboBox_->count() )
-        asn = comboBox_->GetValue();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamComboBox::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
 template< typename T >
 void ParamComboBox<T>::CommitTo( Action_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter< T > > param( new ActionParameter< T >( parameter_ ) );
-    param->SetValue( comboBox_->count() ? comboBox_->GetValue() : 0 );
-    action.AddParameter( *param.release() );
+    action.AddParameter( *new ActionParameterEnumeration( parameter_, GetValue() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamComboBox::GetValue
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+template< typename T >
+T ParamComboBox<T>::GetValue() const
+{
+    return ( comboBox_ && comboBox_->count() ) ? comboBox_->GetValue() : 0;
 }
 
 #endif // __ParamComboBox_h_

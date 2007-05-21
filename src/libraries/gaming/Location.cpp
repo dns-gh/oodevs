@@ -74,9 +74,9 @@ Location::~Location()
 // -----------------------------------------------------------------------------
 void Location::ReadPoint( xml::xistream& xis )
 {
-    float x, y;
-    xis >> attribute( "x", x ) >> attribute( "y", y );
-    PushBack( geometry::Point2f( x, y ) );
+    std::string mgrs;
+    xis >> attribute( "coordinates", mgrs );
+    PushBack( converter_.ConvertToXY( mgrs ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +151,7 @@ void Location::Serialize( xml::xostream& xos ) const
     xos << start( "location" )
         << attribute( "type", tools::ToString( type_ ) );
     for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
-        xos << start( "point" ) << attribute( "x", it->X() ) << attribute( "y", it->Y() ) << end();
+        xos << start( "point" ) << attribute( "coordinates", converter_.ConvertToMgrs( *it ) ) << end();
     xos << end();
 }
 

@@ -40,7 +40,6 @@ public:
     virtual void ContextMenu( kernel::ActionController& actions, const QPoint& point ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
 
-    virtual void Serialize( xml::xostream& xos ) const;
     void CopyTo( ASN1T_Line& destination ) const;
     void CopyTo( kernel::Location_ABC& location ) const;
     virtual bool IsLimit() const;

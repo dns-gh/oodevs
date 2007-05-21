@@ -14,7 +14,7 @@
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "gaming/ActionParameter.h"
+#include "gaming/ActionParameterEntity.h"
 #include "gaming/Action_ABC.h"
 
 namespace gui

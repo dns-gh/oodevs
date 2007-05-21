@@ -40,6 +40,7 @@ public:
              ActionParameterPath( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, const kernel::Entity_ABC& entity );
              ActionParameterPath( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn, const kernel::Entity_ABC& entity );
              ActionParameterPath( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
+             ActionParameterPath( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~ActionParameterPath();
     //@}
 

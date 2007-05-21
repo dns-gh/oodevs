@@ -39,8 +39,6 @@ public:
 
     void DeleteLimit( unsigned long id );
     void DeleteLima( unsigned long id );
-
-    void Save( const std::string& tacticalLines ) const;
     void Purge();
     //@}
 

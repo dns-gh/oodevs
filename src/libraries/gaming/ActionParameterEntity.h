@@ -11,6 +11,8 @@
 #define __ActionParameterEntity_h_
 
 #include "ActionParameter.h"
+#include "clients_kernel/Resolver_ABC.h"
+#include "xeumeuleu/xml.h"
 
 // =============================================================================
 /** @class  ActionParameterEntity
@@ -26,6 +28,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              ActionParameterEntity( const QString& name, const ConcreteEntity* entity );
+             ActionParameterEntity( const kernel::OrderParameter& parameter, const ConcreteEntity* entity );
+             ActionParameterEntity( const kernel::OrderParameter& parameter, unsigned long id, const kernel::Resolver_ABC< ConcreteEntity >& resolver );
+             ActionParameterEntity( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< ConcreteEntity >& resolver );
     virtual ~ActionParameterEntity();
     //@}
 
@@ -49,6 +54,49 @@ private:
 template< typename ConcreteEntity >
 ActionParameterEntity< ConcreteEntity >::ActionParameterEntity( const QString& name, const ConcreteEntity* entity )
     : ActionParameter< const ConcreteEntity* >( name, entity )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterEntity constructor
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+ActionParameterEntity< ConcreteEntity >::ActionParameterEntity( const kernel::OrderParameter& parameter, const ConcreteEntity* entity )
+    : ActionParameter< const ConcreteEntity* >( parameter, entity )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterEntity constructor
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+ActionParameterEntity< ConcreteEntity >::ActionParameterEntity( const kernel::OrderParameter& parameter, unsigned long id, const kernel::Resolver_ABC< ConcreteEntity >& resolver )
+    : ActionParameter< const ConcreteEntity* >( parameter, &resolver.Get( id ) )
+{
+    // NOTHING
+}
+
+namespace
+{
+    unsigned long ReadId( xml::xistream& xis )
+    {
+        unsigned long id;
+        xis >> xml::attribute( "value", id );
+        return id;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterEntity constructor
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+ActionParameterEntity< ConcreteEntity >::ActionParameterEntity( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< ConcreteEntity >& resolver )
+    : ActionParameter< const ConcreteEntity* >( parameter, &resolver.Get( ReadId( xis ) ) )
 {
     // NOTHING
 }

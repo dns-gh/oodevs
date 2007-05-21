@@ -10,14 +10,11 @@
 #include "gaming_pch.h"
 #include "Limit.h"
 #include "ASN_Messages.h"
-#include "TacticalLinePositions.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
 #include "Tools.h"
-#include "xeumeuleu/xml.h"
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: Limit constructor
@@ -113,18 +110,6 @@ void Limit::ContextMenu( ActionController& actions, const QPoint& point ) const
 void Limit::Activate( ActionController& actions ) const
 {
     actions.Activate( *this, *(kernel::TacticalLine_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Limit::Serialize
-// Created: AGE 2006-09-06
-// -----------------------------------------------------------------------------
-void Limit::Serialize( xml::xostream& xos ) const
-{
-    xos << start( "limit" );
-    TacticalLine_ABC::Serialize( xos );
-    Interface().Apply( &Serializable_ABC::SerializeAttributes, xos );
-    xos << end();
 }
 
 // -----------------------------------------------------------------------------

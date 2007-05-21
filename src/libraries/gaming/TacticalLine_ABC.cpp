@@ -12,9 +12,6 @@
 #include "TacticalLinePositions.h"
 #include "TacticalLineHierarchies.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "xeumeuleu/xml.h"
-
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC constructor
@@ -101,16 +98,6 @@ void TacticalLine_ABC::WriteDiffusion( ASN1T_TacticalLinesDiffusion& diffusion )
 {
     // $$$$ SBO 2006-11-06: visitor or something
     static_cast< const TacticalLineHierarchies& >( Get< kernel::TacticalHierarchies >() ).WriteTo( diffusion );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::Serialize
-// Created: AGE 2006-09-06
-// -----------------------------------------------------------------------------
-void TacticalLine_ABC::Serialize( xml::xostream& xos ) const
-{
-    xos << attribute( "name", std::string( name_.ascii() ) )
-        << attribute( "id", int( id_ ) );
 }
 
 // -----------------------------------------------------------------------------
