@@ -36,6 +36,8 @@ public:
              ActionParameterObstacle( const kernel::OrderParameter& parameter, const kernel::ObjectType& type );
              ActionParameterObstacle( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const ASN1T_MissionGenObject& asn );
              ActionParameterObstacle( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const ASN1T_MissionGenObject& asn );
+             ActionParameterObstacle( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, xml::xistream& xis );
+             ActionParameterObstacle( const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, xml::xistream& xis );
     virtual ~ActionParameterObstacle();
     //@}
 
@@ -53,6 +55,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void Serialize( xml::xostream& xos ) const;
     void SetParameters( const ASN1T_MissionGenObject& asn );
     //@}
 

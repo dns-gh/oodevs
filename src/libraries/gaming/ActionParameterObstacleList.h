@@ -33,7 +33,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ActionParameterObstacleList( const kernel::OrderParameter& parameter );
-             ActionParameterObstacleList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const ASN1T_ListMissionGenObject& asn );
+             ActionParameterObstacleList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver, const ASN1T_ListMissionGenObject& asn );
+             ActionParameterObstacleList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver, xml::xistream& xis );
     virtual ~ActionParameterObstacleList();
     //@}
 
@@ -42,6 +43,11 @@ private:
     //@{
     ActionParameterObstacleList( const ActionParameterObstacleList& );            //!< Copy constructor
     ActionParameterObstacleList& operator=( const ActionParameterObstacleList& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadObstacle( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver );
     //@}
 };
 

@@ -12,14 +12,16 @@
 #include "clients_kernel/ObjectType.h"
 #include "ActionParameterLocation.h"
 #include "Tools.h"
+#include "xeumeuleu/xml.h"
 
 using namespace kernel;
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterObstacle constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-ActionParameterObstacle::ActionParameterObstacle( const QString& name, const kernel::ObjectType& type )
+ActionParameterObstacle::ActionParameterObstacle( const QString& name, const ObjectType& type )
     : ActionParameter< QString >( name, type.GetName() )
     , type_( type )
 {
@@ -41,7 +43,7 @@ ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& paramete
 // Name: ActionParameterObstacle constructor
 // Created: SBO 2007-04-27
 // -----------------------------------------------------------------------------
-ActionParameterObstacle::ActionParameterObstacle( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const ASN1T_MissionGenObject& asn )
+ActionParameterObstacle::ActionParameterObstacle( const QString& name, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const ASN1T_MissionGenObject& asn )
     : ActionParameter< QString >( name )
     , type_( types.Get( asn.type ) )
 {
@@ -63,6 +65,51 @@ ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& paramete
 //    SetParameters( asn );
 }
 
+namespace
+{
+    unsigned int ReadType( xml::xistream& xis )
+    {
+        unsigned int type;
+        xis >> attribute( "value", type );
+        return type;
+    }
+
+    QString ReadName( xml::xistream& xis )
+    {
+        std::string name;
+        xis >> attribute( "name", name );
+        return name.c_str();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterObstacle constructor
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, xml::xistream& xis )
+    : ActionParameter< QString >( parameter )
+    , type_( types.Get( ReadType( xis ) ) )
+{
+    xis >> start( "parameter" );
+    AddParameter( *new ActionParameterLocation( converter, xis ) );
+    xis >> end();
+    SetValue( type_.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterObstacle constructor
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+ActionParameterObstacle::ActionParameterObstacle( const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, xml::xistream& xis )
+    : ActionParameter< QString >( ReadName( xis ) )
+    , type_( types.Get( ReadType( xis ) ) )
+{
+    xis >> start( "parameter" );
+    AddParameter( *new ActionParameterLocation( converter, xis ) );
+    xis >> end();
+    SetValue( type_.GetName() );
+}
+
 // -----------------------------------------------------------------------------
 // Name: ActionParameterObstacle destructor
 // Created: SBO 2007-04-16
@@ -80,6 +127,17 @@ void ActionParameterObstacle::Draw( const geometry::Point2f& where, const Viewpo
 {
     ActionParameter< QString >::Draw( where, viewport, tools );
     type_.Draw( GetPosition(), viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterObstacle::Serialize
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void ActionParameterObstacle::Serialize( xml::xostream& xos ) const
+{
+    ActionParameter< QString >::Serialize( xos );
+    xos << attribute( "value", type_.id_ ); // $$$$ SBO 2007-05-21:
+    // $$$$ SBO 2007-05-21: Serialize additionnal parameters
 }
 
 // -----------------------------------------------------------------------------

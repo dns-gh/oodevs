@@ -31,6 +31,7 @@ public:
              ActionParameterEntity( const kernel::OrderParameter& parameter, const ConcreteEntity* entity );
              ActionParameterEntity( const kernel::OrderParameter& parameter, unsigned long id, const kernel::Resolver_ABC< ConcreteEntity >& resolver );
              ActionParameterEntity( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< ConcreteEntity >& resolver );
+             ActionParameterEntity( xml::xistream& xis, const kernel::Resolver_ABC< ConcreteEntity >& resolver );
     virtual ~ActionParameterEntity();
     //@}
 
@@ -88,6 +89,13 @@ namespace
         xis >> xml::attribute( "value", id );
         return id;
     }
+
+    QString ReadName( xml::xistream& xis )
+    {
+        std::string name;
+        xis >> xml::attribute( "name", name );
+        return name.c_str();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -97,6 +105,17 @@ namespace
 template< typename ConcreteEntity >
 ActionParameterEntity< ConcreteEntity >::ActionParameterEntity( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< ConcreteEntity >& resolver )
     : ActionParameter< const ConcreteEntity* >( parameter, &resolver.Get( ReadId( xis ) ) )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterEntity constructor
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+ActionParameterEntity< ConcreteEntity >::ActionParameterEntity( xml::xistream& xis, const kernel::Resolver_ABC< ConcreteEntity >& resolver )
+    : ActionParameter< const ConcreteEntity* >( ReadName( xis ), &resolver.Get( ReadId( xis ) ) )
 {
     // NOTHING
 }

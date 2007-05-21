@@ -36,12 +36,13 @@
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterFactory constructor
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-ActionParameterFactory::ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const Model& model, const StaticModel& staticModel )
+ActionParameterFactory::ActionParameterFactory( const CoordinateConverter_ABC& converter, const Model& model, const StaticModel& staticModel )
     : converter_( converter )
     , model_( model )
     , staticModel_( staticModel )
@@ -62,7 +63,7 @@ ActionParameterFactory::~ActionParameterFactory()
 // Name: ActionParameterFactory::CreateParameter
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_MissionParameter& asn, const kernel::Entity_ABC& entity ) const
+ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, const ASN1T_MissionParameter& asn, const Entity_ABC& entity ) const
 {
     if( asn.null_value )
         return new ActionParameter< QString >( parameter, tools::translate( "ActionParameterFactory", "not set" ) );
@@ -73,11 +74,11 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::Orde
     case T_MissionParameter_value_aCharStr:
         return new ActionParameter< QString >( parameter, asn.value.u.aCharStr );
     case T_MissionParameter_value_agent:
-        return new ActionParameterEntity< kernel::Agent_ABC >( parameter, asn.value.u.agent, model_.agents_ );
+        return new ActionParameterEntity< Agent_ABC >( parameter, asn.value.u.agent, model_.agents_ );
     case T_MissionParameter_value_aReal:
         return new ActionParameterNumeric( parameter, asn.value.u.aReal );
     case T_MissionParameter_value_automate:
-        return new ActionParameterEntity< kernel::Automat_ABC >( parameter, asn.value.u.automate, model_.agents_ );
+        return new ActionParameterEntity< Automat_ABC >( parameter, asn.value.u.automate, model_.agents_ );
     case T_MissionParameter_value_direction:
         return new ActionParameter< float >( parameter, asn.value.u.direction );
     case T_MissionParameter_value_enumeration:
@@ -135,7 +136,7 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::Orde
 // Name: ActionParameterFactory::CreateParameter
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_Line& line1, const ASN1T_Line& line2 ) const
+ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, const ASN1T_Line& line1, const ASN1T_Line& line2 ) const
 {
     return new ActionParameterLimits( parameter, converter_, line1, line2 );
 }
@@ -144,7 +145,7 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::Orde
 // Name: ActionParameterFactory::CreateParameter
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_LimasOrder& asn ) const
+ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, const ASN1T_LimasOrder& asn ) const
 {
     return new ActionParameterLimaList( parameter, converter_, asn );
 }
@@ -153,7 +154,7 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::Orde
 // Name: ActionParameterFactory::CreateParameter
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_Direction& asn ) const
+ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, const ASN1T_Direction& asn ) const
 {
     return new ActionParameterDirection( parameter, asn );
 }
@@ -162,7 +163,7 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::Orde
 // Name: ActionParameterFactory::CreateParameter
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis ) const
+ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, xml::xistream& xis ) const
 {
     std::string type;
     xis >> attribute( "type", type );
@@ -191,24 +192,26 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::Orde
     else if( type == "enumeration" )
         return new ActionParameterEnumeration( parameter, xis );
     else if( type == "agent" )
-        return new ActionParameterEntity< kernel::Agent_ABC >( parameter, xis, model_.agents_ );
+        return new ActionParameterEntity< Agent_ABC >( parameter, xis, model_.agents_ );
     else if( type == "automate" )
-        return new ActionParameterEntity< kernel::Automat_ABC >( parameter, xis, model_.agents_ );
+        return new ActionParameterEntity< Automat_ABC >( parameter, xis, model_.agents_ );
+    else if( type == "agentlist" )
+        return new ActionParameterEntityList( parameter, xis, static_cast< const Resolver_ABC< Agent_ABC >& >( model_.agents_ ) );
+    else if( type == "automatelist" )
+        return new ActionParameterEntityList( parameter, xis, static_cast< const Resolver_ABC< Automat_ABC >& >( model_.agents_ ) );
     else if( type == "dotationtype" )
         return new ActionParameterDotationType( parameter, xis, staticModel_.objectTypes_ );
+    else if( type == "genobject" )
+        return new ActionParameterObstacle( parameter, converter_, staticModel_.objectTypes_, xis );
+    else if( type == "genobjectlist" )
+        return new ActionParameterObstacleList( parameter, converter_, staticModel_.objectTypes_, xis );
 
     return new ActionParameter< QString >( parameter ); // $$$$ SBO 2007-05-16: default not yet implemented parameters...
 }
 
-//"agentlist"
-//"automatelist"
-//"genobject"
-//"genobjectlist"
 //"natureatlas"
 //
-//"bool"
 //"gdh"
-//"numeric"
 //
 //"agentknowledge"
 //"agentknowledgelist"

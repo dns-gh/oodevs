@@ -11,7 +11,7 @@
 #include "ParamNumericField.h"
 #include "clients_gui/RichLabel.h"
 #include "gaming/Action_ABC.h"
-#include "gaming/ActionParameter.h"
+#include "gaming/ActionParameterNumeric.h"
 #include <qvalidator.h>
 
 // -----------------------------------------------------------------------------
@@ -121,10 +121,7 @@ void ParamNumericField::CommitTo( ASN1REAL& asn ) const
 // -----------------------------------------------------------------------------
 void ParamNumericField::CommitTo( Action_ABC& action ) const
 {
-    if( !parameter_ )
-        throw std::runtime_error( "OrderParameter not defined" ); // $$$$ SBO 2007-04-25: 
-    std::auto_ptr< ActionParameter< float > > param( new ActionParameter< float >( *parameter_, pEdit_->text().toFloat() ) );
-    action.AddParameter( *param.release() );
+    action.AddParameter( *new ActionParameterNumeric( *parameter_, pEdit_->text().toFloat() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,8 +130,7 @@ void ParamNumericField::CommitTo( Action_ABC& action ) const
 // -----------------------------------------------------------------------------
 void ParamNumericField::CommitTo( ActionParameter_ABC& parameter ) const
 {
-    std::auto_ptr< ActionParameter< float > > param( new ActionParameter< float >( GetName(), pEdit_->text().toFloat() ) );
-    parameter.AddParameter( *param.release() );
+    parameter.AddParameter( *new ActionParameterNumeric( GetName(), pEdit_->text().toFloat() ) );
 }
 
 // -----------------------------------------------------------------------------
