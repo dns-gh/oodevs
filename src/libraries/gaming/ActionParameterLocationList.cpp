@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "ActionParameterLocationList.h"
 #include "ActionParameterLocation.h"
+#include "ActionParameterVisitor_ABC.h"
 #include "Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -59,4 +60,87 @@ ActionParameterLocationList::~ActionParameterLocationList()
 void ActionParameterLocationList::ReadLocation( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
 {
     AddParameter( *new ActionParameterLocation( converter, xis ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLocationList::CommitTo
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterLocationList::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.value.t = T_MissionParameter_value_listLocalisation;
+    ASN1T_ListLocalisation*& list = asn.value.u.listLocalisation = new ASN1T_ListLocalisation();
+    list->n = Count();
+    asn.null_value = list->n ? 0 : 1;
+    if( asn.null_value )
+        return;
+    list->elem = new ASN1T_Localisation[list->n];
+    CommitTo( *list );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLocationList::Clean
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterLocationList::Clean( ASN1T_MissionParameter& asn ) const
+{
+    if( asn.value.u.listLocalisation )
+        Clean( *asn.value.u.listLocalisation );
+    delete asn.value.u.listLocalisation;
+}
+
+namespace
+{
+    struct AsnSerializer : public ActionParameterVisitor_ABC
+    {
+        explicit AsnSerializer( ASN1T_ListLocalisation& asn ) : asn_( &asn ), current_( 0 ) {}
+        virtual void Visit( const ActionParameterLocation& param )
+        {
+            if( current_ < asn_->n )
+                param.CommitTo( asn_->elem[current_++] );
+        }
+
+        ASN1T_ListLocalisation* asn_;
+        unsigned int current_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLocationList::CommitTo
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterLocationList::CommitTo( ASN1T_ListLocalisation& asn ) const
+{
+    AsnSerializer serializer( asn );
+    Accept( serializer );
+}
+
+namespace
+{
+    struct AsnCleaner : public ActionParameterVisitor_ABC
+    {
+        explicit AsnCleaner( ASN1T_ListLocalisation& asn ) : asn_( &asn ), current_( 0 ) {}
+        virtual void Visit( const ActionParameterLocation& param )
+        {
+            if( current_ < asn_->n )
+                param.Clean( asn_->elem[current_++] );
+        }
+
+        ASN1T_ListLocalisation* asn_;
+        unsigned int current_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLocationList::Clean
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterLocationList::Clean( ASN1T_ListLocalisation& asn ) const
+{
+    if( asn.n )
+    {
+        AsnCleaner cleaner( asn );
+        Accept( cleaner );
+        delete[] asn.elem;
+    }
 }

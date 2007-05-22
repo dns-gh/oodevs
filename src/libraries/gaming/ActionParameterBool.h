@@ -29,6 +29,11 @@ public:
     virtual ~ActionParameterBool();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{

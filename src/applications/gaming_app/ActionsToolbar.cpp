@@ -11,15 +11,17 @@
 #include "ActionsToolbar.h"
 #include "moc_ActionsToolbar.cpp"
 #include "gaming/ActionsModel.h"
+#include "gaming/Action_ABC.h"
 #include "clients_gui/resources.h"
 
 // -----------------------------------------------------------------------------
 // Name: ActionsToolbar constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions )
+ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, Publisher_ABC& publisher )
     : QHBox( parent )
     , actions_( actions )
+    , publisher_( publisher )
     , pixRecord_( MAKE_PIXMAP( recrec ) )
     , pixStop_( MAKE_PIXMAP( recstop ) )
 {
@@ -28,6 +30,16 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions )
     setFrameStyle( QFrame::ToolBarPanel | QFrame::Raised );
 
     setMaximumHeight( 32 );
+    loadBtn_ = new QToolButton( this );
+    loadBtn_->setAutoRaise( true );
+    loadBtn_->setPixmap( MAKE_PIXMAP( open ) );
+    loadBtn_->setDisabled( false );
+    
+    saveBtn_ = new QToolButton( this );
+    saveBtn_->setAutoRaise( true );
+    saveBtn_->setPixmap( MAKE_PIXMAP( save ) );
+    saveBtn_->setDisabled( true );
+
     playBtn_ = new QToolButton( this );
     playBtn_->setAutoRaise( true );
     playBtn_->setPixmap( MAKE_PIXMAP( recplay ) );
@@ -37,14 +49,10 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions )
     recordBtn_->setAutoRaise( true );
     recordBtn_->setPixmap( pixRecord_ );
     
-    saveBtn_ = new QToolButton( this );
-    saveBtn_->setAutoRaise( true );
-    saveBtn_->setPixmap( MAKE_PIXMAP( save ) );
-    saveBtn_->setDisabled( true );
-
-    connect( recordBtn_, SIGNAL( clicked() ), SLOT( Record() ) );
-    connect( playBtn_  , SIGNAL( clicked() ), SLOT( Play()   ) );
+    connect( loadBtn_  , SIGNAL( clicked() ), SLOT( Load()   ) );
     connect( saveBtn_  , SIGNAL( clicked() ), SLOT( Save()   ) );
+    connect( playBtn_  , SIGNAL( clicked() ), SLOT( Play()   ) );
+    connect( recordBtn_, SIGNAL( clicked() ), SLOT( Record() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,10 +83,25 @@ void ActionsToolbar::Record()
 // -----------------------------------------------------------------------------
 void ActionsToolbar::Play()
 {
+    kernel::Iterator< const Action_ABC& > it( actions_.CreateIterator() );
+    while( it.HasMoreElements() )
+    {
+        const Action_ABC& action = it.NextElement();
+        action.Publish( publisher_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsToolbar::Load
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void ActionsToolbar::Load()
+{
     const QString filename = QFileDialog::getOpenFileName( QString::null, tr( "Order files (*.ord)" ), topLevelWidget(), 0, tr( "Load" ) );
     if( filename == QString::null )
         return;
     actions_.Load( filename.ascii() );
+    playBtn_->setDisabled( false );
 }
 
 // -----------------------------------------------------------------------------

@@ -71,3 +71,14 @@ void ActionParameterNumeric::Serialize( xml::xostream& xos ) const
     ActionParameter< float >::Serialize( xos );
     xos << attribute( "value", GetValue() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterNumeric::CommitTo
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterNumeric::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.null_value = 0;
+    asn.value.t = T_MissionParameter_value_aReal;
+    asn.value.u.aReal = GetValue();
+}

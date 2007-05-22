@@ -11,6 +11,7 @@
 #include "ActionParameterObstacle.h"
 #include "clients_kernel/ObjectType.h"
 #include "ActionParameterLocation.h"
+#include "ActionParameterVisitor_ABC.h"
 #include "Tools.h"
 #include "xeumeuleu/xml.h"
 
@@ -120,6 +121,16 @@ ActionParameterObstacle::~ActionParameterObstacle()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionParameterObstacle::GetType
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+QString ActionParameterObstacle::GetType() const
+{
+    const QString& type = ActionParameter< QString >::GetType();
+    return type == "undefined" ? "obstacle" : type;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionParameterObstacle::Draw
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
@@ -166,4 +177,70 @@ void ActionParameterObstacle::SetParameters( const ASN1T_MissionGenObject& asn )
     default:
         ;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterObstacle::CommitTo
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterObstacle::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.null_value = 0;
+    asn.value.t = T_MissionParameter_value_missionGenObject;
+    asn.value.u.missionGenObject = new ASN1T_MissionGenObject();
+    CommitTo( *asn.value.u.missionGenObject );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterObstacle::Clean
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterObstacle::Clean( ASN1T_MissionParameter& asn ) const
+{
+    if( asn.value.u.missionGenObject )
+        Clean( *asn.value.u.missionGenObject );
+    delete asn.value.u.missionGenObject;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterObstacle::CommitTo
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterObstacle::CommitTo( ASN1T_MissionGenObject& asn ) const
+{
+    asn.type = ASN1T_EnumObjectType( type_.id_ );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    {
+        const QString& type = it->second->GetType();
+        if( type == "location" )
+            static_cast< ActionParameterLocation* >( it->second )->CommitTo( asn.position );
+//        else if( type == "numeric" )
+//            static_cast< ActionParameterNumeric* >( it->second )->CommitTo( asn.densite );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterObstacle::Clean
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterObstacle::Clean( ASN1T_MissionGenObject& asn ) const
+{
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    {
+        const QString& type = it->second->GetType();
+        if( type == "location" )
+            static_cast< ActionParameterLocation* >( it->second )->Clean( asn.position );
+//        else if( type == "numeric" )
+//            static_cast< ActionParameterNumeric* >( it->second )->Clean( asn.densite );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterObstacle::Accept
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterObstacle::Accept( ActionParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
+    ActionParameter< QString >::Accept( visitor );
 }

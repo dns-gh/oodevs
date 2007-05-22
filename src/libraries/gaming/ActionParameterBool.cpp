@@ -61,3 +61,14 @@ void ActionParameterBool::Serialize( xml::xostream& xos ) const
     ActionParameter< bool >::Serialize( xos );
     xos << attribute( "value", GetValue() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterBool::CommitTo
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterBool::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.null_value = 0;
+    asn.value.t = T_MissionParameter_value_aBool;
+    asn.value.u.aBool = GetValue();
+}

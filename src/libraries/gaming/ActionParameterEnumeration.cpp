@@ -66,3 +66,14 @@ void ActionParameterEnumeration::Serialize( xml::xostream& xos ) const
     ActionParameter< QString >::Serialize( xos );
     xos << attribute( "value", value_.GetId() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterEnumeration::CommitTo
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterEnumeration::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.null_value = 0;
+    asn.value.t = T_MissionParameter_value_enumeration;
+    asn.value.u.enumeration = value_.GetId();
+}

@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "ActionParameterLimaList.h"
 #include "ActionParameterLima.h"
+#include "ActionParameterVisitor_ABC.h"
 #include "Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -59,4 +60,60 @@ ActionParameterLimaList::~ActionParameterLimaList()
 void ActionParameterLimaList::ReadLima( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
 {
     AddParameter( *new ActionParameterLima( converter, xis ) );
+}
+
+namespace
+{
+    struct AsnSerializer : public ActionParameterVisitor_ABC
+    {
+        explicit AsnSerializer( ASN1T_LimasOrder& asn ) : asn_( &asn ), current_( 0 ) {}
+        virtual void Visit( const ActionParameterLima& param )
+        {
+            param.CommitTo( asn_->elem[current_++] );
+        }
+        ASN1T_LimasOrder* asn_;
+        unsigned int current_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLimaList::CommitTo
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void ActionParameterLimaList::CommitTo( ASN1T_OrderContext& asn ) const
+{
+    asn.limas.n = Count();;
+    if( !asn.limas.n )
+        return;
+    asn.limas.elem = new ASN1T_LimaOrder[asn.limas.n];
+    AsnSerializer serializer( asn.limas );
+    Accept( serializer );
+}
+
+namespace
+{
+    struct AsnCleaner : public ActionParameterVisitor_ABC
+    {
+        explicit AsnCleaner( ASN1T_LimasOrder& asn ) : asn_( &asn ), current_( 0 ) {}
+        virtual void Visit( const ActionParameterLima& param )
+        {
+            param.Clean( asn_->elem[current_++] );
+        }
+        ASN1T_LimasOrder* asn_;
+        unsigned int current_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLimaList::Clean
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void ActionParameterLimaList::Clean( ASN1T_OrderContext& asn ) const
+{
+    if( asn.limas.n )
+    {
+        AsnCleaner cleaner( asn.limas );
+        Accept( cleaner );
+        delete[] asn.limas.elem;
+    }
 }

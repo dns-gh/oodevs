@@ -16,7 +16,6 @@
 namespace kernel
 {
     class CoordinateConverter_ABC;
-    class Entity_ABC;
 }
 
 // =============================================================================
@@ -32,9 +31,15 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ActionParameterPathList( const kernel::OrderParameter& parameter );
-             ActionParameterPathList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_ListItineraire& asn, const kernel::Entity_ABC& entity );
+             ActionParameterPathList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_ListItineraire& asn );
              ActionParameterPathList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~ActionParameterPathList();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( ASN1T_MissionParameter& asn ) const;
     //@}
 
 private:

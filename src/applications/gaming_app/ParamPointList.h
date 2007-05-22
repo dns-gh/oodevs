@@ -32,6 +32,7 @@ public:
     //@{
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private:
@@ -44,6 +45,12 @@ private:
     //! @name Helpers
     //@{
     virtual Param_ABC* CreateElement();
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const kernel::OrderParameter& parameter_;
     //@}
 };
 

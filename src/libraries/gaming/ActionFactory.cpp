@@ -9,7 +9,8 @@
 
 #include "gaming_pch.h"
 #include "ActionFactory.h"
-#include "ActionMission.h"
+#include "ActionAgentMission.h"
+#include "ActionAutomatMission.h"
 #include "ActionFragOrder.h"
 #include "Model.h"
 #include "AgentsModel.h"
@@ -54,7 +55,11 @@ ActionFactory::~ActionFactory()
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const MissionType& mission ) const
 {
-    return new ActionMission( target, mission, controllers_.controller_, true );
+    if( model_.agents_.FindAgent( target.GetId() ) ) 
+        return new ActionAgentMission( target, mission, controllers_.controller_, true );
+    if( model_.agents_.FindAutomat( target.GetId() ) )
+        return new ActionAutomatMission( target, mission, controllers_.controller_, true );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +78,7 @@ Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const FragOrd
 Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgPionOrder& message ) const
 {
     const MissionType& mission = missions_.Get( message.mission );
-    std::auto_ptr< Action_ABC > action( new ActionMission( model_.agents_.GetAgent( message.oid_unite_executante ), mission, controllers_.controller_, false ) );
+    std::auto_ptr< Action_ABC > action( new ActionAgentMission( model_.agents_.GetAgent( message.oid_unite_executante ), mission, controllers_.controller_, false ) );
     AddParameters( *action, mission, message.parametres );
     AddOrderContext( *action, mission, message.order_context );
     return action.release();
@@ -86,7 +91,7 @@ Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgPionOrder& message ) con
 Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgAutomateOrder& message ) const
 {
     const MissionType& mission = missions_.Get( message.mission );
-    std::auto_ptr< Action_ABC > action( new ActionMission( model_.agents_.GetAutomat( message.oid_unite_executante ), mission, controllers_.controller_, false ) );
+    std::auto_ptr< Action_ABC > action( new ActionAutomatMission( model_.agents_.GetAutomat( message.oid_unite_executante ), mission, controllers_.controller_, false ) );
     AddParameters( *action, mission, message.parametres );
     AddOrderContext( *action, mission, message.order_context );
     return action.release();
@@ -139,7 +144,16 @@ void ActionFactory::AddOrderContext( Action_ABC& action, const OrderType& order,
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateAction( xml::xistream& xis ) const
 {
-    std::auto_ptr< ActionMission > action( new ActionMission( xis, controllers_.controller_, missions_, model_.agents_, model_.agents_ ) );
+    unsigned long id;
+    xis >> attribute( "target", id );
+    std::auto_ptr< ActionMission > action;
+    const kernel::Entity_ABC* target = model_.agents_.FindAgent( id );
+    if( target )
+        action.reset( new ActionAgentMission( xis, controllers_.controller_, missions_, *target ) );
+    else if( target = model_.agents_.FindAutomat( id ) )
+        action.reset( new ActionAutomatMission( xis, controllers_.controller_, missions_, *target ) );
+    else
+        throw std::runtime_error( "Invalid entity for mission." );
     Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
     xis >> start( "parameters" )
             >> list( "parameter", *this, ReadParameter, *action, it )

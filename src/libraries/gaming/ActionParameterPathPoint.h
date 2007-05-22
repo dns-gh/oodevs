@@ -16,7 +16,7 @@
 /** @class  ActionParameterPathPoint
     @brief  ActionParameterPathPoint
 */
-// Created: SBO 2007-05-15
+// Created: SBO 2007-05-15 
 // =============================================================================
 class ActionParameterPathPoint : public ActionParameterLocation
 {
@@ -33,6 +33,8 @@ public:
     //! @name Operations
     //@{
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
+    void CommitTo( ASN1T_CoordUTM& asn ) const;
+    virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
     //@}
 
 private:
@@ -44,3 +46,4 @@ private:
 };
 
 #endif // __ActionParameterPathPoint_h_
+

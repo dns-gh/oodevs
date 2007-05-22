@@ -10,8 +10,9 @@
 #include "gaming_pch.h"
 #include "ActionParameterLimit.h"
 #include "ActionParameterLocation.h"
-#include "xeumeuleu/xml.h"
+#include "ActionParameterVisitor_ABC.h"
 #include "Tools.h"
+#include "xeumeuleu/xml.h"
 
 using namespace xml;
 
@@ -21,8 +22,9 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 ActionParameterLimit::ActionParameterLimit( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Line& line )
     : ActionParameter_ABC( name )
+    , location_( new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, (const ASN1T_Localisation&)line ) )
 {
-    AddParameter( *new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, (const ASN1T_Localisation&)line ) );
+    AddParameter( *location_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -31,8 +33,9 @@ ActionParameterLimit::ActionParameterLimit( const QString& name, const kernel::C
 // -----------------------------------------------------------------------------
 ActionParameterLimit::ActionParameterLimit( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location )
     : ActionParameter_ABC( name )
+    , location_( new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, location ) )
 {
-    AddParameter( *new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, location ) );
+    AddParameter( *location_ );
 }
 
 namespace
@@ -53,7 +56,8 @@ ActionParameterLimit::ActionParameterLimit( const kernel::CoordinateConverter_AB
     : ActionParameter_ABC( ReadName( xis ) )
 {
     xis >> start( "parameter" );
-    AddParameter( *new ActionParameterLocation( converter, xis ) );
+    location_ = new ActionParameterLocation( converter, xis );
+    AddParameter( *location_ );
     xis >> end();
 }
 
@@ -83,4 +87,31 @@ void ActionParameterLimit::Serialize( xml::xostream& xos ) const
 bool ActionParameterLimit::IsContext() const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLimit::CommitTo
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterLimit::CommitTo( ASN1T_Line& asn ) const
+{
+    location_->CommitTo( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLimit::Clean
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterLimit::Clean( ASN1T_Line& asn ) const
+{
+    location_->Clean( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLimit::Accept
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterLimit::Accept( ActionParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

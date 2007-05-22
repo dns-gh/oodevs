@@ -18,13 +18,13 @@
 */
 // Created: SBO 2007-04-16
 // =============================================================================
-class ActionParameterDirection : public ActionParameter< float >
+class ActionParameterDirection : public ActionParameter< int >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterDirection( const kernel::OrderParameter& parameter, float value );
+             ActionParameterDirection( const kernel::OrderParameter& parameter, int value );
              ActionParameterDirection( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~ActionParameterDirection();
     //@}
@@ -32,6 +32,8 @@ public:
     //! @name Operations
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( ASN1T_OrderContext& asn ) const;
     //@}
 
 private:

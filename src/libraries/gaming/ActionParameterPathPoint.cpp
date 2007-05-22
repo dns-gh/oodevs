@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "ActionParameterPathPoint.h"
+#include "ActionParameterVisitor_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -60,4 +61,25 @@ void ActionParameterPathPoint::DisplayInToolTip( kernel::Displayer_ABC& displaye
 {
     displayer.Display( "", GetName() );
     ActionParameterLocation::DisplayInToolTip( displayer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterPathPoint::CommitTo
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterPathPoint::CommitTo( ASN1T_CoordUTM& asn ) const
+{
+    ASN1T_Localisation loc; // $$$$ SBO 2007-05-22: ugly trick
+    ActionParameterLocation::CommitTo( loc );
+    asn = loc.vecteur_point.elem[0];
+    ActionParameterLocation::Clean( loc );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterPathPoint::Accept
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterPathPoint::Accept( ActionParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

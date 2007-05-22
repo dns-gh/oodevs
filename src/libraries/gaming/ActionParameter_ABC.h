@@ -11,6 +11,7 @@
 #define __ActionParameter_ABC_h_
 
 #include "clients_kernel/Resolver.h"
+#include "game_asn/Asn.h"
 
 namespace kernel
 {
@@ -26,6 +27,8 @@ namespace gui
 {
     class GlTooltip;
 }
+
+class ActionParameterVisitor_ABC;
 
 // =============================================================================
 /** @class  ActionParameter_ABC
@@ -46,12 +49,20 @@ public:
     //! @name Operations
     //@{
     QString GetName() const;
+    virtual QString GetType() const;
     virtual bool IsContext() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void Serialize( xml::xostream& xos ) const;
     void AddParameter( ActionParameter_ABC& parameter );
+
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( ASN1T_OrderContext& asn ) const;
+    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( ASN1T_OrderContext& asn ) const;
+
+    virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
     //@}
 
 protected:

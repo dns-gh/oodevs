@@ -19,6 +19,8 @@ namespace kernel
     class Entity_ABC;
     class Displayer_ABC;
     class OrderType;
+    class Viewport_ABC;
+    class GlTools_ABC;
 }
 
 namespace xml
@@ -27,6 +29,7 @@ namespace xml
 }
 
 class ActionParameter_ABC;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  Action_ABC
@@ -54,6 +57,16 @@ public:
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void Serialize( xml::xostream& xos ) const;
+    virtual void Publish( Publisher_ABC& publisher ) const = 0;
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    void CommitTo( ASN1T_MissionParameters& asn ) const;
+    void CommitTo( ASN1T_OrderContext& asn ) const;
+    void Clean( ASN1T_MissionParameters& asn ) const;
+    void Clean( ASN1T_OrderContext& asn ) const;
     //@}
 
 private:
@@ -61,10 +74,6 @@ private:
     //@{
     Action_ABC( const Action_ABC& );            //!< Copy constructor
     Action_ABC& operator=( const Action_ABC& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

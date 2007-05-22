@@ -43,7 +43,15 @@ public:
 
     //! @name Operations
     //@{
+    virtual QString GetType() const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    void CommitTo( ASN1T_MissionGenObject& asn ) const;
+    void Clean( ASN1T_MissionGenObject& asn ) const;
+
+    virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
     //@}
 
 private:

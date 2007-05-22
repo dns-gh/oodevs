@@ -15,6 +15,10 @@
 #include "ActionParameterObstacleList.h"
 #include "ActionParameterDirection.h"
 #include "ActionParameterLocation.h"
+#include "ActionParameterPoint.h"
+#include "ActionParameterPolygon.h"
+#include "ActionParameterPointList.h"
+#include "ActionParameterPolygonList.h"
 #include "ActionParameterLocationList.h"
 #include "ActionParameterPathList.h"
 #include "ActionParameterPath.h"
@@ -86,7 +90,7 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     case T_MissionParameter_value_gDH:
         break;
     case T_MissionParameter_value_itineraire:
-        return new ActionParameterPath( parameter, converter_, *asn.value.u.itineraire, entity );
+        return new ActionParameterPath( parameter, converter_, *asn.value.u.itineraire );
     case T_MissionParameter_value_knowledgeAgent:
     case T_MissionParameter_value_knowledgeObject:
     case T_MissionParameter_value_knowledgePopulation:
@@ -96,18 +100,18 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     case T_MissionParameter_value_listAutomate:
         return new ActionParameterEntityList( parameter, *asn.value.u.listAutomate, model_.agents_ );
     case T_MissionParameter_value_listItineraire:
-        return new ActionParameterPathList( parameter, converter_, *asn.value.u.listItineraire, entity );
+        return new ActionParameterPathList( parameter, converter_, *asn.value.u.listItineraire );
     case T_MissionParameter_value_listKnowledgeAgent:
     case T_MissionParameter_value_listKnowledgeObject:
         break;
     case T_MissionParameter_value_listLocalisation:
-        return new ActionParameterLocationList( parameter, converter_, (ASN1T_ListLocalisation&)*asn.value.u.listLocalisation );
+        return new ActionParameterLocationList( parameter, converter_, *asn.value.u.listLocalisation );
     case T_MissionParameter_value_listMissionGenObject:
         return new ActionParameterObstacleList( parameter, converter_, staticModel_.objectTypes_, *asn.value.u.listMissionGenObject );
     case T_MissionParameter_value_listPoint:
-        return new ActionParameterLocationList( parameter, converter_, (ASN1T_ListLocalisation&)*asn.value.u.listPoint );
+        return new ActionParameterPointList( parameter, converter_, *asn.value.u.listPoint );
     case T_MissionParameter_value_listPolygon:
-        return new ActionParameterLocationList( parameter, converter_, (ASN1T_ListLocalisation&)*asn.value.u.listPolygon );
+        return new ActionParameterPolygonList( parameter, converter_, *asn.value.u.listPolygon );
     case T_MissionParameter_value_localisation:
         return new ActionParameterLocation( parameter, converter_, *asn.value.u.localisation );
     case T_MissionParameter_value_maintenancePriorites:
@@ -117,12 +121,12 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     case T_MissionParameter_value_natureAtlas:
         break;
     case T_MissionParameter_value_point:
-        return new ActionParameterLocation( parameter, converter_, *asn.value.u.point );
+        return new ActionParameterPoint( parameter, converter_, *asn.value.u.point );
     case T_MissionParameter_value_polygon:
-        return new ActionParameterLocation( parameter, converter_, *asn.value.u.polygon );
+        return new ActionParameterPolygon( parameter, converter_, *asn.value.u.polygon );
     case T_MissionParameter_value_santePriorites:
         break;
-    case T_MissionParameter_value_tirIndirect: // $$$$ SBO 2007-05-21: no longer used? => boolean
+    case T_MissionParameter_value_tirIndirect: // $$$$ SBO 2007-05-21: reports only, not to be used!
         break;
     case T_MissionParameter_value_typeDotation:
         return new ActionParameterDotationType( parameter, asn.value.u.typeDotation, staticModel_.objectTypes_ );
@@ -177,11 +181,19 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
         return new ActionParameterNumeric( parameter, xis );
     else if( type == "path" )
         return new ActionParameterPath( parameter, converter_, xis );
-    else if( type == "point" || type == "pointlist" || type == "polygon" || type == "location" )
+    else if( type == "point" )
+        return new ActionParameterPoint( parameter, converter_, xis );
+    else if( type == "polygon" )
+        return new ActionParameterPolygon( parameter, converter_, xis );
+    else if( type == "location" )
         return new ActionParameterLocation( parameter, converter_, xis );
     else if( type == "pathlist" )
         return new ActionParameterPathList( parameter, converter_, xis );
-    else if( type == "polygonlist" || type == "locationlist" )
+    else if( type == "pointlist" )
+        return new ActionParameterPointList( parameter, converter_, xis );
+    else if( type == "polygonlist" )
+        return new ActionParameterPolygonList( parameter, converter_, xis );
+    else if( type == "locationlist" )
         return new ActionParameterLocationList( parameter, converter_, xis );
     else if( type == "direction" || type == "dangerousdirection" )
         return new ActionParameterDirection( parameter, xis );

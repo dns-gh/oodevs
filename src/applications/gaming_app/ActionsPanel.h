@@ -21,6 +21,7 @@ namespace gui
 }
 
 class ActionsModel;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  ActionsPanel
@@ -34,12 +35,8 @@ class ActionsPanel : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ActionsModel& actions );
+             ActionsPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ActionsModel& actions, Publisher_ABC& publisher );
     virtual ~ActionsPanel();
-    //@}
-
-    //! @name Operations
-    //@{
     //@}
 
 private:
@@ -47,15 +44,6 @@ private:
     //@{
     ActionsPanel( const ActionsPanel& );            //!< Copy constructor
     ActionsPanel& operator=( const ActionsPanel& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 

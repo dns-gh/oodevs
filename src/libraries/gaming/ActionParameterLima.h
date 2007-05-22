@@ -19,6 +19,8 @@ namespace kernel
     class CoordinateConverter_ABC;
 }
 
+class ActionParameterLocation;
+
 // =============================================================================
 /** @class  ActionParameterLima
     @brief  ActionParameterLima
@@ -42,6 +44,10 @@ public:
     virtual bool IsContext() const;
     void AddFunction( unsigned int i );
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
+
+    void CommitTo( ASN1T_LimaOrder& asn ) const;
+    void Clean( ASN1T_LimaOrder& asn ) const;
+    virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
     //@}
 
 private:
@@ -54,6 +60,12 @@ private:
     //! @name Helpers
     //@{
     virtual void Serialize( xml::xostream& xos ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    ActionParameterLocation* location_;
     //@}
 };
 

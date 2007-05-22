@@ -49,6 +49,9 @@ public:
     void Serialize( xml::xostream& xos ) const;
     geometry::Point2f GetPosition() const;
     void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+
+    void CommitTo( ASN1T_Localisation& asn ) const;
+    void Clean( ASN1T_Localisation& asn ) const;
     //@}
 
 protected:

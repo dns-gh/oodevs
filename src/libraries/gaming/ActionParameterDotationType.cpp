@@ -69,3 +69,14 @@ void ActionParameterDotationType::Serialize( xml::xostream& xos ) const
     ActionParameter< QString >::Serialize( xos );
     xos << attribute( "value", type_.GetId() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterDotationType::CommitTo
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterDotationType::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.null_value = 0;
+    asn.value.t = T_MissionParameter_value_typeDotation;
+    asn.value.u.typeDotation = type_.GetId();
+}

@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "ActionParameterLima.h"
 #include "ActionParameterLocation.h"
+#include "ActionParameterVisitor_ABC.h"
 #include "Tools.h"
 #include "xeumeuleu/xml.h"
 
@@ -21,8 +22,9 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 ActionParameterLima::ActionParameterLima( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location )
     : ActionParameter< QString >( name )
+    , location_( new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, location ) )
 {
-    AddParameter( *new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, location ) );
+    AddParameter( *location_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -31,12 +33,13 @@ ActionParameterLima::ActionParameterLima( const QString& name, const kernel::Coo
 // -----------------------------------------------------------------------------
 ActionParameterLima::ActionParameterLima( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_LimaOrder& asn )
     : ActionParameter< QString >( name )
+    , location_( new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, asn.lima ) )
 {
     QStringList functions;
     for( unsigned int i = 0; i < asn.fonctions.n; ++i )
         functions.append( tools::ToString( (E_FuncLimaType)asn.fonctions.elem[i] ) );
     SetValue( functions.join( ", " ) );
-    AddParameter( *new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, asn.lima ) );
+    AddParameter( *location_ );
 }
 
 namespace
@@ -59,7 +62,8 @@ ActionParameterLima::ActionParameterLima( const kernel::CoordinateConverter_ABC&
     std::string value;
     xis >> attribute( "value", value )
         >> start( "parameter" );
-    AddParameter( *new ActionParameterLocation( converter, xis ) );
+    location_ = new ActionParameterLocation( converter, xis );
+    AddParameter( *location_ );
     xis >> end();
     SetValue( value.c_str() );
 }
@@ -114,4 +118,37 @@ void ActionParameterLima::DisplayInToolTip( kernel::Displayer_ABC& displayer ) c
     displayer.Display( "", GetValue() );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->DisplayInToolTip( displayer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLima::CommitTo
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterLima::CommitTo( ASN1T_LimaOrder& asn ) const
+{
+    QStringList functions = QStringList::split( ", ", GetValue() );
+    asn.fonctions.n = functions.count();
+    asn.fonctions.elem = new ASN1T_EnumTypeLima[asn.fonctions.n];
+    for( unsigned int i = 0; i < asn.fonctions.n; ++i )
+        asn.fonctions.elem[i] = ASN1T_EnumTypeLima( tools::FromString( functions[i] ) );
+    location_->CommitTo( asn.lima );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLima::Clean
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterLima::Clean( ASN1T_LimaOrder& asn ) const
+{
+    delete[] asn.fonctions.elem;
+    location_->Clean( asn.lima );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLima::Accept
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterLima::Accept( ActionParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

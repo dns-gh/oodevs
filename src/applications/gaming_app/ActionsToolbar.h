@@ -11,6 +11,7 @@
 #define __ActionsToolbar_h_
 
 class ActionsModel;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  ActionsToolbar
@@ -25,7 +26,7 @@ class ActionsToolbar : public QHBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsToolbar( QWidget* parent, ActionsModel& actions );
+             ActionsToolbar( QWidget* parent, ActionsModel& actions, Publisher_ABC& publisher );
     virtual ~ActionsToolbar();
     //@}
 
@@ -39,17 +40,20 @@ private:
 private slots:
     //! @name Helpers
     //@{
-    void Record();
-    void Play();
+    void Load();
     void Save();
+    void Play();
+    void Record();
     //@}
 
 private:
     //! @name Member data
     //@{
     ActionsModel& actions_;
-    QToolButton*  playBtn_;
+    Publisher_ABC& publisher_;
+    QToolButton*  loadBtn_;
     QToolButton*  recordBtn_;
+    QToolButton*  playBtn_;
     QToolButton*  saveBtn_;
     QPixmap       pixRecord_, pixStop_;
     //@}

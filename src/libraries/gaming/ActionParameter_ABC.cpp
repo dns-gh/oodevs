@@ -47,6 +47,15 @@ QString ActionParameter_ABC::GetName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionParameter_ABC::GetType
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+QString ActionParameter_ABC::GetType() const
+{
+    return "undefined";
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionParameter_ABC::Draw
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
@@ -124,4 +133,54 @@ void ActionParameter_ABC::DisplayInToolTip( kernel::Displayer_ABC& displayer ) c
 geometry::Point2f ActionParameter_ABC::GetPosition() const
 {
     return position_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter_ABC::CommitTo
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void ActionParameter_ABC::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->CommitTo( asn );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter_ABC::CommitTo
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void ActionParameter_ABC::CommitTo( ASN1T_OrderContext& asn ) const
+{
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->CommitTo( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter_ABC::Clean
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void ActionParameter_ABC::Clean( ASN1T_MissionParameter& asn ) const
+{
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->Clean( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter_ABC::Clean
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void ActionParameter_ABC::Clean( ASN1T_OrderContext& asn ) const
+{
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->Clean( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter_ABC::Accept
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameter_ABC::Accept( ActionParameterVisitor_ABC& visitor ) const
+{
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->Accept( visitor );
 }

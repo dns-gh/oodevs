@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "ActionParameterLocation.h"
+#include "ActionParameterVisitor_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -162,4 +163,54 @@ bool ActionParameterLocation::IsContext() const
     if( parameter_ )
         return parameter_->IsContext();
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLocation::CommitTo
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void ActionParameterLocation::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.value.t = T_MissionParameter_value_localisation;
+    asn.null_value = 0; // $$$$ SBO 2007-05-22: 
+    asn.value.u.localisation = new ASN1T_Localisation();
+    Location::CommitTo( *asn.value.u.localisation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLocation::Clean
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void ActionParameterLocation::Clean( ASN1T_MissionParameter& asn ) const
+{
+    if( asn.value.u.localisation )
+        Location::Clean( *asn.value.u.localisation );
+    delete asn.value.u.localisation;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLocation::CommitTo
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void ActionParameterLocation::CommitTo( ASN1T_Localisation& asn ) const
+{
+    Location::CommitTo( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLocation::Clean
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void ActionParameterLocation::Clean( ASN1T_Localisation& asn ) const
+{
+    Location::Clean( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLocation::Accept
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterLocation::Accept( ActionParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

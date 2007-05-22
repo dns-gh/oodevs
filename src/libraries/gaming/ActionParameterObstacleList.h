@@ -38,6 +38,12 @@ public:
     virtual ~ActionParameterObstacleList();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{

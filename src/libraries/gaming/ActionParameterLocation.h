@@ -45,6 +45,13 @@ public:
     virtual bool IsContext() const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
+
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+
+    void CommitTo( ASN1T_Localisation& asn ) const;
+    void Clean( ASN1T_Localisation& asn ) const;
+    virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
     //@}
 
 private:

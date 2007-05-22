@@ -45,3 +45,12 @@ void ActionFragOrder::Serialize( xml::xostream& xos ) const
     Action_ABC::Serialize( xos );
     xos << end();
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionFragOrder::Publish
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void ActionFragOrder::Publish( Publisher_ABC& publisher ) const
+{
+    // $$$$ SBO 2007-05-21: TODO
+}

@@ -11,6 +11,8 @@
 #include "ParamPolygonList.h"
 #include "ParamLocation.h"
 #include "ParamVisitor_ABC.h"
+#include "gaming/Action_ABC.h"
+#include "gaming/ActionParameterPolygonList.h"
 
 using namespace kernel;
 
@@ -20,6 +22,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 ParamPolygonList::ParamPolygonList( QObject* parent, const OrderParameter& parameter, gui::ParametersLayer& layer, const CoordinateConverter_ABC& converter, ActionController& controller )
     : ParamLocationList( parent, parameter, layer, converter, controller )
+    , parameter_( parameter )
 {
     // NOTHING
 }
@@ -85,6 +88,37 @@ void ParamPolygonList::Clean( ASN1T_MissionParameter& asn ) const
         delete[] asn.value.u.listPolygon->elem;
     }
     delete asn.value.u.listPolygon;
+}
+
+namespace
+{
+    class ActionSerializer : public ParamVisitor_ABC
+    {
+    public:
+        ActionSerializer( ActionParameter_ABC& parent )
+            : parent_( parent )
+        {}
+
+        virtual void Visit( const Param_ABC& param )
+        {
+            static_cast< const ParamLocation& >( param ).CommitTo( parent_ );
+        }
+
+    private:
+        ActionParameter_ABC& parent_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPolygonList::CommitTo
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ParamPolygonList::CommitTo( Action_ABC& action ) const
+{
+    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterPolygonList( parameter_ ) );
+    ActionSerializer serializer( *param );
+    Accept( serializer );
+    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

@@ -10,18 +10,17 @@
 #include "gaming_pch.h"
 #include "ActionMission.h"
 #include "clients_kernel/MissionType.h"
-#include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "xeumeuleu/xml.h"
 
+using namespace kernel;
 using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ActionMission constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionMission::ActionMission( const kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::Controller& controller, bool registered /* = true */ )
+ActionMission::ActionMission( const Entity_ABC& entity, const MissionType& mission, Controller& controller, bool registered /* = true */ )
     : Action_ABC( controller, mission, entity )
     , controller_( controller )
     , registered_( registered )
@@ -32,20 +31,11 @@ ActionMission::ActionMission( const kernel::Entity_ABC& entity, const kernel::Mi
 
 namespace
 {
-    const kernel::MissionType& ReadMission( xml::xistream& xis, const kernel::Resolver_ABC< kernel::MissionType >& missions )
+    const MissionType& ReadMission( xml::xistream& xis, const Resolver_ABC< MissionType >& missions )
     {
         unsigned int id = 0;
         xis >> attribute( "id", id );
         return missions.Get( id );
-    }
-
-    const kernel::Entity_ABC& ReadTarget( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& agents, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats )
-    {
-        unsigned int id = 0;
-        xis >> attribute( "target", id );
-        if( const kernel::Entity_ABC* target = agents.Find( id ) )
-            return *target;
-        return automats.Get( id );        
     }
 }
 
@@ -53,9 +43,8 @@ namespace
 // Name: ActionMission constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-ActionMission::ActionMission( xml::xistream& xis, kernel::Controller& controller, const kernel::Resolver_ABC< kernel::MissionType >& missions
-                            , const kernel::Resolver_ABC< kernel::Agent_ABC >& agents, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats )
-    : Action_ABC( controller, ReadMission( xis, missions ), ReadTarget( xis, agents, automats ) )
+ActionMission::ActionMission( xml::xistream& xis, Controller& controller, const Resolver_ABC< MissionType >& missions, const Entity_ABC& entity )
+    : Action_ABC( controller, ReadMission( xis, missions ), entity )
     , controller_( controller )
     , registered_( true )
 {

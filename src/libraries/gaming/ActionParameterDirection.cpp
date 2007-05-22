@@ -17,8 +17,8 @@
 // Name: ActionParameterDirection constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-ActionParameterDirection::ActionParameterDirection( const kernel::OrderParameter& parameter, float value )
-    : ActionParameter< float >( parameter, value )
+ActionParameterDirection::ActionParameterDirection( const kernel::OrderParameter& parameter, int value )
+    : ActionParameter< int >( parameter, value )
 {
     const float angle = GetValue() * 3.14f / 180.f;
     direction_ = geometry::Vector2f( sin( angle ), cos( angle ) );
@@ -26,9 +26,9 @@ ActionParameterDirection::ActionParameterDirection( const kernel::OrderParameter
 
 namespace
 {
-    float ReadValue( xml::xistream& xis )
+    int ReadValue( xml::xistream& xis )
     {
-        float value;
+        int value;
         xis >> xml::attribute( "value", value );
         return value;
     }
@@ -39,7 +39,7 @@ namespace
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
 ActionParameterDirection::ActionParameterDirection( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : ActionParameter< float >( parameter, ReadValue( xis ) )
+    : ActionParameter< int >( parameter, ReadValue( xis ) )
 {
     const float angle = GetValue() * 3.14f / 180.f;
     direction_ = geometry::Vector2f( sin( angle ), cos( angle ) );
@@ -75,6 +75,26 @@ void ActionParameterDirection::Draw( const geometry::Point2f& where, const kerne
 // -----------------------------------------------------------------------------
 void ActionParameterDirection::Serialize( xml::xostream& xos ) const
 {
-    ActionParameter< float >::Serialize( xos );
+    ActionParameter< int >::Serialize( xos );
     xos << xml::attribute( "value", GetValue() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterDirection::CommitTo
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void ActionParameterDirection::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.null_value = 0;
+    asn.value.t = T_MissionParameter_value_direction;
+    asn.value.u.direction = GetValue();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterDirection::CommitTo
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void ActionParameterDirection::CommitTo( ASN1T_OrderContext& asn ) const
+{
+    asn.direction_dangereuse = GetValue();
 }

@@ -24,6 +24,8 @@ namespace xml
     class xistream;
 }
 
+class ActionParameterLocation;
+
 // =============================================================================
 /** @class  ActionParameterLimit
     @brief  ActionParameterLimit
@@ -45,6 +47,9 @@ public:
     //! @name Operations
     //@{
     virtual bool IsContext() const;
+    void CommitTo( ASN1T_Line& asn ) const;
+    void Clean( ASN1T_Line& asn ) const;
+    virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
     //@}
 
 private:
@@ -57,6 +62,12 @@ private:
     //! @name Helpers
     //@{
     virtual void Serialize( xml::xostream& xos ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    ActionParameterLocation* location_;
     //@}
 };
 

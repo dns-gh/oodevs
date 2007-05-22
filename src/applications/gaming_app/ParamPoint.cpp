@@ -17,7 +17,7 @@
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Point.h"
 #include "gaming/Action_ABC.h"
-#include "gaming/ActionParameterLocation.h"
+#include "gaming/ActionParameterPoint.h"
 
 using namespace kernel;
 using namespace gui;
@@ -122,9 +122,7 @@ void ParamPoint::CommitTo( Action_ABC& action ) const
 {
     kernel::Point point;
     point.AddPoint( paramPoint_ );
-    std::auto_ptr< ActionParameterLocation > param( new ActionParameterLocation( parameter_, converter_, point ) );
-//    param->SetValue( converter_.ConvertToMgrs( paramPoint_ ).c_str() );
-    action.AddParameter( *param.release() );
+    action.AddParameter( *new ActionParameterPoint( parameter_, converter_, point ) );
 }
 
 // -----------------------------------------------------------------------------

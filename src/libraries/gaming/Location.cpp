@@ -205,3 +205,28 @@ void Location::Draw( const kernel::GlTools_ABC& tools ) const
     else
         tools.DrawCross( points_.front(), GL_CROSSSIZE );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Location::CommitTo
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void Location::CommitTo( ASN1T_Localisation& asn ) const
+{
+    asn.type = type_;
+    asn.vecteur_point.n = points_.size();
+    if( points_.empty() )
+        return;
+    asn.vecteur_point.elem = new ASN1T_CoordUTM[asn.vecteur_point.n];
+    for( unsigned int i = 0; i < asn.vecteur_point.n; ++i )
+        asn.vecteur_point.elem[i] = converter_.ConvertToMgrs( points_[i] ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Location::Clean
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void Location::Clean( ASN1T_Localisation& asn ) const
+{
+    if( asn.vecteur_point.n )
+        delete[] asn.vecteur_point.elem;
+}

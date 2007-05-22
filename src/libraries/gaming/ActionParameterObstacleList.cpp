@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "ActionParameterObstacleList.h"
 #include "ActionParameterObstacle.h"
+#include "ActionParameterVisitor_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -62,4 +63,65 @@ ActionParameterObstacleList::~ActionParameterObstacleList()
 void ActionParameterObstacleList::ReadObstacle( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver )
 {
     AddParameter( *new ActionParameterObstacle( converter, resolver, xis ) );
+}
+
+namespace
+{
+    struct AsnSerializer : public ActionParameterVisitor_ABC
+    {
+        explicit AsnSerializer( ASN1T_ListMissionGenObject& asn ) : asn_( &asn ), current_( 0 ) {}
+        virtual void Visit( const ActionParameterObstacle& param )
+        {
+            param.CommitTo( asn_->elem[current_++] );
+        }
+
+        ASN1T_ListMissionGenObject* asn_;
+        unsigned int current_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterObstacleList::CommitTo
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterObstacleList::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    ASN1T_ListMissionGenObject*& list = asn.value.u.listMissionGenObject = new ASN1T_ListMissionGenObject();
+    asn.value.t = T_MissionParameter_value_listMissionGenObject;
+    asn.null_value = ( list->n = Count() ) ? 0 : 1;
+    if( asn.null_value )
+        return;
+    list->elem = new ASN1T_MissionGenObject[list->n];
+    AsnSerializer serializer( *list );
+    Accept( serializer );
+}
+
+namespace
+{
+    struct AsnCleaner : public ActionParameterVisitor_ABC
+    {
+        explicit AsnCleaner( ASN1T_ListMissionGenObject& asn ) : asn_( &asn ), current_( 0 ) {}
+        virtual void Visit( const ActionParameterObstacle& param )
+        {
+            param.Clean( asn_->elem[current_++] );
+        }
+   
+        ASN1T_ListMissionGenObject* asn_;
+        unsigned int current_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterObstacleList::Clean
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void ActionParameterObstacleList::Clean( ASN1T_MissionParameter& asn ) const
+{
+    if( asn.value.u.listMissionGenObject )
+    {
+        AsnCleaner cleaner( *asn.value.u.listMissionGenObject );
+        Accept( cleaner );
+        delete[] asn.value.u.listMissionGenObject->elem;
+    }
+    delete asn.value.u.listMissionGenObject;
 }

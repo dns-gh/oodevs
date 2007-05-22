@@ -36,6 +36,12 @@ public:
     virtual ~ActionParameterLimaList();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void CommitTo( ASN1T_OrderContext& asn ) const;
+    virtual void Clean( ASN1T_OrderContext& asn ) const;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{

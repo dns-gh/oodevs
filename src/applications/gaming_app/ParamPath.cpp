@@ -154,7 +154,7 @@ void ParamPath::CommitTo( Action_ABC& action ) const
 {
     if( !parameter_ )
         throw std::runtime_error( "OrderParameter not defined" );
-    std::auto_ptr< ActionParameterPath > param( new ActionParameterPath( *parameter_, converter_, *location_, entity_ ) );
+    std::auto_ptr< ActionParameterPath > param( new ActionParameterPath( *parameter_, converter_, *location_ ) );
     action.AddParameter( *param.release() );
 }
 
@@ -164,7 +164,7 @@ void ParamPath::CommitTo( Action_ABC& action ) const
 // -----------------------------------------------------------------------------
 void ParamPath::CommitTo( ActionParameter_ABC& parameter ) const
 {
-    parameter.AddParameter( *new ActionParameterPath( GetName(), converter_, *location_, entity_ ) );
+    parameter.AddParameter( *new ActionParameterPath( GetName(), converter_, *location_ ) );
 }
 
 // -----------------------------------------------------------------------------

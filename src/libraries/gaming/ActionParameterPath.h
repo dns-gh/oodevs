@@ -16,7 +16,6 @@
 
 namespace kernel
 {
-    class Entity_ABC;
     class OrderParameter;
     class CoordinateConverter_ABC;
     class Location_ABC;
@@ -35,13 +34,22 @@ class ActionParameterPath : public ActionParameter< QString >
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterPath( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, const kernel::Entity_ABC& entity );
-             ActionParameterPath( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn, const kernel::Entity_ABC& entity );
-             ActionParameterPath( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, const kernel::Entity_ABC& entity );
-             ActionParameterPath( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn, const kernel::Entity_ABC& entity );
+             ActionParameterPath( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
+             ActionParameterPath( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn );
+             ActionParameterPath( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
+             ActionParameterPath( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn );
              ActionParameterPath( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
              ActionParameterPath( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~ActionParameterPath();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    void CommitTo( ASN1T_Itineraire& asn ) const;
+    void Clean( ASN1T_Itineraire& asn ) const;
+    virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
     //@}
 
 private:
@@ -57,7 +65,7 @@ private:
     virtual void VisitPolygon( const T_PointVector& ) {}
     virtual void VisitCircle ( const geometry::Point2f&, float ) {}
     virtual void VisitPoint  ( const geometry::Point2f& ) {}
-    void AddPoints( const ASN1T_Localisation& asn, const kernel::Entity_ABC& entity );
+    void AddPoints( const ASN1T_Localisation& asn );
     void ReadPoint( xml::xistream& xis );
     //@}
 

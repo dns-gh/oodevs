@@ -136,3 +136,57 @@ void Action_ABC::Serialize( xml::xostream& xos ) const
         }
     xos << end();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Action_ABC::CommitTo
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void Action_ABC::CommitTo( ASN1T_MissionParameters& asn ) const
+{
+    // $$$$ SBO 2007-05-21: distinction between parameters and "context" parmaters sucks; find something better! (gather if possible)
+    asn.n = 0;
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        if( !it->second->IsContext() )
+            ++asn.n;
+    if( !asn.n )
+        return;
+    asn.elem = new ASN1T_MissionParameter[asn.n];
+    unsigned int i = 0;
+    for( CIT_Elements it = elements_.begin(); it != elements_.end() && i < asn.n; ++it )
+        if( !it->second->IsContext() )
+            it->second->CommitTo( asn.elem[i++] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Action_ABC::CommitTo
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void Action_ABC::CommitTo( ASN1T_OrderContext& asn ) const
+{
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        if( it->second->IsContext() )
+            it->second->CommitTo( asn ); // $$$$ SBO 2007-05-21: find a better way to handle context parameters
+}
+
+// -----------------------------------------------------------------------------
+// Name: Action_ABC::Clean
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void Action_ABC::Clean( ASN1T_MissionParameters& asn ) const
+{
+    unsigned int i = 0;
+    for( CIT_Elements it = elements_.begin(); it != elements_.end() && i < asn.n; ++it )
+        if( !it->second->IsContext() )
+            it->second->Clean( asn.elem[i++] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Action_ABC::Clean
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void Action_ABC::Clean( ASN1T_OrderContext& asn ) const
+{
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        if( it->second->IsContext() )
+            it->second->Clean( asn ); // $$$$ SBO 2007-05-21: 
+}
