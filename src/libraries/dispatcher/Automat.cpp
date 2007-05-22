@@ -252,7 +252,6 @@ void Automat::Accept( ModelVisitor_ABC& visitor )
     agents_.Apply( std::mem_fun_ref( &Agent::Accept ), visitor );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Automat::SendSpecialUpdate
 // Created: AGE 2007-04-25

@@ -77,7 +77,7 @@ private:
 
     //! @name Types 
     //@{
-    typedef std::vector< QColor >                         T_Colors;
+    typedef std::vector< QColor >                                                 T_Colors;
     typedef std::map< const kernel::Entity_ABC*, std::pair< QColor, T_Colors* > > T_TeamColors;
     //@}
 
