@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "SymbolFactory.h"
 #include "SymbolRule.h"
+#include "tools/GeneralConfig.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -19,8 +20,10 @@ using namespace xml;
 // Name: SymbolFactory constructor
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-SymbolFactory::SymbolFactory( xml::xistream& xis )
+SymbolFactory::SymbolFactory()
 {
+    xml::xifstream xis( tools::GeneralConfig::BuildWorkingDirectoryChildFile( "symbols.xml" ) );
+
     xis >> start( "app6" );
         symbolRule_    = ReadRule( xis, "symbols", symbolBase_ );
         levelRule_     = ReadRule( xis, "levels", levelBase_ );

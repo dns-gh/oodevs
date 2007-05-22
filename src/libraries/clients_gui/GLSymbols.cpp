@@ -9,10 +9,10 @@
 
 #include "clients_gui_pch.h"
 #include "GLSymbols.h"
+#include "tools/GeneralConfig.h"
 #include "svgl/svgl.h"
 #include "svgl/Opacity.h"
 #include "zipstream/zipstream.h"
-#include "clients_kernel/PathTools.h"
 #include "xeumeuleu/xml.h"
 
 using namespace geometry;
@@ -24,7 +24,7 @@ using namespace svg;
 // Created: SBO 2006-12-15
 // -----------------------------------------------------------------------------
 GLSymbols::GLSymbols()
-    : zipFile_( new zip::izipfile( kernel::path_tools::BuildWorkingDirectoryPath( "symbols.pak" ).c_str() ) )
+    : zipFile_( new zip::izipfile( tools::GeneralConfig::BuildWorkingDirectoryChildFile( "symbols.pak" ).c_str() ) )
     , current_( new Color( "black" ) )
     , opacity_( new Opacity() )
     , renderer_( new TextRenderer() )

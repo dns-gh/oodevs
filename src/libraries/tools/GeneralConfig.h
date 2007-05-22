@@ -32,6 +32,8 @@ public:
 
     //! @name Operations
     //@{
+    static std::string BuildWorkingDirectoryChildFile( const std::string& file );
+
     std::string GetExercisesDir() const;
     std::string GetExerciseFile() const;
     std::string GetExerciseFile( const std::string& exercise ) const;

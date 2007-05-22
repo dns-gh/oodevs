@@ -29,7 +29,7 @@ class SymbolFactory
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SymbolFactory( xml::xistream& xis );
+             SymbolFactory();
     virtual ~SymbolFactory();
     //@}
 

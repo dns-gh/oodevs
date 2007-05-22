@@ -13,7 +13,6 @@
 #include "LocalWeather.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/PathTools.h"
 #include "clients_kernel/Tools.h"
 #include "xeumeuleu/xml.h"
 #include <qregexp.h>

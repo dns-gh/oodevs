@@ -11,7 +11,6 @@
 #include "FormationLevels.h"
 #include "Level.h"
 #include "SymbolFactory.h"
-#include "PathTools.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -23,8 +22,7 @@ using namespace kernel;
 FormationLevels::FormationLevels()
     : root_( 0 )
 {
-    xml::xifstream xisSymbols( path_tools::BuildWorkingDirectoryPath( "symbols.xml" ) ); // $$$$ NLD 2007-01-12: 
-    SymbolFactory factory( xisSymbols );
+    SymbolFactory factory;
     Initialize( factory );
 }
     

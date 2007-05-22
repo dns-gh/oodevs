@@ -19,7 +19,6 @@
 #include "MissionFactory.h"
 #include "SymbolFactory.h"
 #include "KnowledgeGroupType.h"
-#include "PathTools.h"
 #include "MissionType.h"
 #include "FragOrderType.h"
 #include "ExerciseConfig.h"
@@ -45,8 +44,7 @@ void AgentTypes::Load( const ExerciseConfig& config )
 {
     Purge();
 
-    xml::xifstream xisSymbols( path_tools::BuildWorkingDirectoryPath( "symbols.xml" ) ); // $$$$ NLD 2007-01-12: 
-    symbolFactory_ = new SymbolFactory( xisSymbols );
+    symbolFactory_ = new SymbolFactory();
 
     xml::xifstream xis( config.GetPhysicalFile() );
     xis >> start( "physical" );

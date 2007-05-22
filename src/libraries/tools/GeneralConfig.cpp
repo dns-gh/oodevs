@@ -230,3 +230,13 @@ std::string GeneralConfig::GetModelsDir() const
 {
     return modelsDir_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::BuildWorkingDirectoryChildFile
+// Created: NLD 2007-05-21
+// -----------------------------------------------------------------------------
+// static
+std::string GeneralConfig::BuildWorkingDirectoryChildFile( const std::string& file )
+{
+    return BuildChildPath( ".", file );
+}
