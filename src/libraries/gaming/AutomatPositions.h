@@ -54,12 +54,18 @@ private:
 
     //! @name Helpers
     //@{
+    void UpdateChildrenPositions() const;
+    void ComputeHull() const;
     //@}
 
 private:
     //! @name Member data
     //@{
     const kernel::Entity_ABC& automat_;
+    mutable T_PointVector children_;
+    mutable T_PointVector hull_;
+    mutable geometry::Point2f leftMost_, rightMost_;
+    mutable geometry::Point2f position_;
     //@}
 };
 

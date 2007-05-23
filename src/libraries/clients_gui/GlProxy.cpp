@@ -168,6 +168,15 @@ void GlProxy::DrawLines( const T_PointVector& points ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlProxy::DrawConvexPolygon
+// Created: AGE 2007-05-23
+// -----------------------------------------------------------------------------
+void GlProxy::DrawConvexPolygon( const T_PointVector& points ) const
+{
+    tools_->DrawConvexPolygon( points );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlProxy::DrawArrow
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------

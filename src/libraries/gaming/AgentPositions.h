@@ -73,6 +73,7 @@ private:
     geometry::Point2f position_;
     float height_;
     bool aggregated_;
+    bool dead_;
     //@}
 };
 

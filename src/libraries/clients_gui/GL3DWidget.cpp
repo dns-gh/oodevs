@@ -181,6 +181,18 @@ void Gl3dWidget::DrawLines( const T_PointVector& points ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawConvexPolygon
+// Created: AGE 2007-05-23
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawConvexPolygon( const T_PointVector& points ) const
+{
+    if( points.size() <= 2 )
+        return;
+    DrawLines( points );
+    DrawLine( points.back(), points.front() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Gl3dWidget::DrawArrow
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------

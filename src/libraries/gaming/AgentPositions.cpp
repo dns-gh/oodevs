@@ -28,6 +28,7 @@ AgentPositions::AgentPositions( const Agent_ABC& agent, const CoordinateConverte
     , converter_( converter )
     , aggregated_( false )
     , height_( 0 )
+    , dead_( false )
 {
     // NOTHING
 }
@@ -73,6 +74,8 @@ void AgentPositions::DoUpdate( const ASN1T_MsgUnitAttributes& message )
         position_ = converter_.ConvertToXY( message.position );
     if( message.m.hauteurPresent )
         height_ = message.hauteur;
+    if( message.m.mortPresent )
+        dead_ = message.mort;
 }
 
 // -----------------------------------------------------------------------------

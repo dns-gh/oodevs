@@ -359,6 +359,27 @@ void GlWidget::DrawLines( const T_PointVector& points ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlWidget::DrawConvexPolygon
+// Created: AGE 2007-05-23
+// -----------------------------------------------------------------------------
+void GlWidget::DrawConvexPolygon( const T_PointVector& points ) const
+{
+    glPushAttrib( GL_CURRENT_BIT );
+        float color[4];
+        glGetFloatv( GL_CURRENT_COLOR, color );
+        color[3]*=0.5f;
+        glColor4fv( color );
+        glEnableClientState( GL_VERTEX_ARRAY );
+        glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
+        glDrawArrays( GL_POLYGON, 0, points.size() );    
+    glPopAttrib();
+
+    glEnableClientState( GL_VERTEX_ARRAY );
+    glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
+    glDrawArrays( GL_LINE_LOOP, 0, points.size() );    
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::DrawArrow
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
