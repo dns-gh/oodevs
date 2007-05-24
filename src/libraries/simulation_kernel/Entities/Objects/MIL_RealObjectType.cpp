@@ -209,7 +209,7 @@ MIL_RealObjectType::MIL_RealObjectType( const std::string& strName, E_ObjectType
     , nAsnID_                          ( nAsnID )
     , objectInstanciator_              ( objectInstanciator )
     , strName_                         ( strName )
-    , bCanBePrepared_                  ( false ) 
+    , bCanBeReservedObstacle_          ( false ) 
     , bCanBeMined_                     ( false )
     , bCanBeBypassed_                  ( false )
     , rAvoidanceDistance_              ( 0. )
@@ -411,9 +411,9 @@ void MIL_RealObjectType::Read( MIL_InputArchive& archive )
     if( !pDefaultConsumptionMode_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown consumption type", archive.GetContext() );
 
-    archive.ReadField( "PeutEtrePrepare"  , bCanBePrepared_ );
-    archive.ReadField( "PeutEtreValorise" , bCanBeMined_    );
-    archive.ReadField( "PeutEtreContourne", bCanBeBypassed_ );
+    archive.ReadField( "PeutEtreObstacleDeManoeuvre", bCanBeReservedObstacle_ );
+    archive.ReadField( "PeutEtreValorise"           , bCanBeMined_    );
+    archive.ReadField( "PeutEtreContourne"          , bCanBeBypassed_ );
     
     archive.ReadField( "HauteurMaxInteraction", rMaxInteractionHeight_ );
 

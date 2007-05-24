@@ -161,13 +161,13 @@ bool MIL_RealObjectType::CanBeMined() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_RealObjectType::CanBePrepared
+// Name: MIL_RealObjectType::CanBeReservedObstacle
 // Created: NLD 2004-09-01
 // -----------------------------------------------------------------------------
 inline
-bool MIL_RealObjectType::CanBePrepared() const
+bool MIL_RealObjectType::CanBeReservedObstacle() const
 {
-    return bCanBePrepared_;
+    return bCanBeReservedObstacle_;
 }
 
 // -----------------------------------------------------------------------------

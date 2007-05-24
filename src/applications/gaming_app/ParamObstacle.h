@@ -88,7 +88,7 @@ private:
     ParamLocation* location_;
 
     gui::ValuedComboBox< const kernel::ObjectType* >* typeCombo_;
-    QComboBox* preliminaryCombo_;
+    QComboBox* obstacleTypeCombo_;
     ParamNumericField* density_;
     ParamAutomat* tc2_;
     bool optional_;

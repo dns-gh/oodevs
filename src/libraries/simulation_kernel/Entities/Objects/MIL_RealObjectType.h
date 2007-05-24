@@ -105,7 +105,7 @@ public:
           MIL_MOSIDManager&     GetIDManager                      () const;
           MT_Float              GetAvoidanceDistance              () const;
           bool                  CanBeMined                        () const;
-          bool                  CanBePrepared                     () const;
+          bool                  CanBeReservedObstacle             () const;
           bool                  CanBeBypassed                     () const;
           MT_Float              GetMaxInteractionHeight           () const;
           MT_Float              GetDefaultSpeedWhenBypassed       () const;
@@ -227,7 +227,7 @@ private:
     const ASN1T_EnumObjectType  nAsnID_;
     const std::string           strName_;
     T_ObjectInstanciator        objectInstanciator_;
-    bool                        bCanBePrepared_;
+    bool                        bCanBeReservedObstacle_;
     bool                        bCanBeMined_;
     bool                        bCanBeBypassed_;
     MT_Float                    rAvoidanceDistance_;

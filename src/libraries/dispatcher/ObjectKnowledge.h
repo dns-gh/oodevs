@@ -53,32 +53,33 @@ public:
 private:
     //! @name Types
     //@{
-
     //$$$ bullshit
     struct T_Optionals 
     {
-        unsigned pertinencePresent : 1;
-        unsigned localisationPresent : 1;
-        unsigned pourcentage_constructionPresent : 1;
-        unsigned pourcentage_valorisationPresent : 1;
-        unsigned pourcentage_contournementPresent : 1;
-        unsigned en_preparationPresent : 1;
-        unsigned est_percuPresent : 1;
-        unsigned attributs_specifiquesPresent : 1;
-        unsigned perception_par_compagniePresent : 1;
-        unsigned nb_dotation_constructionPresent : 1;
-        unsigned nb_dotation_valorisationPresent : 1;
+        unsigned pertinencePresent                   : 1;
+        unsigned localisationPresent                 : 1;
+        unsigned pourcentage_constructionPresent     : 1;
+        unsigned pourcentage_valorisationPresent     : 1;
+        unsigned pourcentage_contournementPresent    : 1;
+        unsigned obstacle_de_manoeuvre_activePresent : 1;
+        unsigned type_obstaclePresent                : 1;
+        unsigned est_percuPresent                    : 1;
+        unsigned attributs_specifiquesPresent        : 1;
+        unsigned perception_par_compagniePresent     : 1;
+        unsigned nb_dotation_constructionPresent     : 1;
+        unsigned nb_dotation_valorisationPresent     : 1;
     };
     //@}
 
 private:
-          Model&                model_;
-    const unsigned int          nID_; 
-    const Side&                 side_;
-    const Object*               pObject_;        
-    const ASN1T_EnumObjectType  nType_;
-    const unsigned int          nTypeDotationForConstruction_;
-    const unsigned int          nTypeDotationForMining_;
+          Model&                 model_;
+    const unsigned int           nID_; 
+    const Side&                  side_;
+    const Object*                pObject_;        
+    const ASN1T_EnumObjectType   nType_;
+    const ASN1T_EnumTypeObstacle nObstacleType_;
+    const unsigned int           nTypeDotationForConstruction_;
+    const unsigned int           nTypeDotationForMining_;
 
     ObjectAttribute_ABC*           pAttributes_;
     unsigned int                   nRelevance_;
@@ -86,7 +87,7 @@ private:
     unsigned int                   nConstructionPercentage_;
     unsigned int                   nMiningPercentage_;
     unsigned int                   nBypassingPercentage_;
-    bool                           bPrepared_;
+    bool                           bReservedObstacleActivated_;
     bool                           bPerceived_;
     ModelRefsContainer< Automat >  automatPerceptions_;
     unsigned int                   nNbrDotationForConstruction_;

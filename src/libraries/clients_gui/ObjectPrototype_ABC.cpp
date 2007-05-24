@@ -34,10 +34,22 @@
 #include "RotaPrototype_ABC.h"
 #include "MinePrototype_ABC.h"
 
-#include "ENT/ENT_Tr.h"
-
 using namespace kernel;
 using namespace gui;
+
+namespace
+{
+    template< typename Enum, typename Combo, typename Converter >
+    void Populate( Enum size, Combo& combo, Converter converter )
+    {
+        combo.Clear();
+        for( unsigned int i = 0; i < (unsigned int)size; ++i )
+        {
+            const std::string& value = converter( (Enum)i, ENT_Tr_ABC::eToTr );
+            combo.AddItem( value.c_str(), (Enum)i );
+        }
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPrototype_ABC constructor
@@ -65,8 +77,11 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
     new QLabel( tr( "Type:" ), this );
     objectTypes_ = new ValuedComboBox< const ObjectType* >( this );
 
-    new QLabel( tr( "Prepared:" ), this );
-    prepared_ = new QCheckBox( this );
+    new QLabel( tr( "Obstacle type:" ), this );
+    obstacleTypes_ = new ValuedComboBox< E_TypeObstacle >( this );
+
+    new QLabel( tr( "Reserved obstacle activated:" ), this );
+    reservedObstacleActivated_ = new QCheckBox( this );
 
     position_ = new RichLabel( tr( "Location:" ), this );
     locationLabel_ = new QLabel( tr( "---" ), this );
@@ -89,6 +104,7 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::NotifyUpdated( const ModelLoaded& )
 {
+    Populate( eNbrTypeObstacle, *obstacleTypes_, &ENT_Tr::ConvertFromTypeObstacle );
     FillObjectTypes();
     OnTypeChanged();
 }
@@ -99,6 +115,7 @@ void ObjectPrototype_ABC::NotifyUpdated( const ModelLoaded& )
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::showEvent( QShowEvent* e )
 {
+    Populate( eNbrTypeObstacle, *obstacleTypes_, &ENT_Tr::ConvertFromTypeObstacle );
     FillObjectTypes();
     controllers_.Register( *locationCreator_ );
     QGroupBox::showEvent( e );
@@ -170,7 +187,7 @@ bool ObjectPrototype_ABC::CheckValidity() const
 void ObjectPrototype_ABC::Clean()
 {
     name_->setText( "" );
-    prepared_->setChecked( false );
+    reservedObstacleActivated_->setChecked( false );
     if( activeAttributes_ )
         activeAttributes_->Clean();
 }

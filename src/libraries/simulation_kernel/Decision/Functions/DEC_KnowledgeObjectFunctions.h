@@ -30,7 +30,8 @@ public:
     template< typename T > static void GetType							( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetLocalisation					( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void IsBypassed						( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsPrepared   					( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void IsReservedObstacleActivated      ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void IsReservedObstacle               ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void IsConstructed   					( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void IsKnowledgeValid					( DIA_Call_ABC& call, const T& caller );
 

@@ -47,6 +47,12 @@ Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, 
     
     if( message.m.type_dotation_valorisationPresent )
         valorization_ = & dotationResolver.Get( message.type_dotation_valorisation );
+
+    if( message.m.type_obstaclePresent )
+        obstacleType_ = (E_TypeObstacle)message.type_obstacle;
+    
+    if( message.m.obstacle_de_manoeuvre_activePresent )
+        reservedObstacleActivated_ = message.obstacle_de_manoeuvre_active;
 }
 
 // -----------------------------------------------------------------------------
@@ -82,9 +88,8 @@ QString Object::GetTypeName() const
 // -----------------------------------------------------------------------------
 void Object::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 {
-     // $$$$ AGE 2006-10-17: toooo bad. NLD sux !
-    if( type_.CanBePrepared() )
-        bPrepared_ = message.en_preparation;
+    if( message.m.obstacle_de_manoeuvre_activePresent )
+        reservedObstacleActivated_ = message.obstacle_de_manoeuvre_active;
 
     if( message.m.nb_dotation_constructionPresent )
         nDotationConstruction_ = message.nb_dotation_construction;
@@ -115,10 +120,14 @@ void Object::Display( Displayer_ABC& displayer ) const
              .Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage )
              .Display( tools::translate( "Object", "Mining:" ), rValorizationPercentage_ * Units::percentage )
              .Display( tools::translate( "Object", "Bypass:" ), rBypassConstructionPercentage_ * Units::percentage )
-             .Display( tools::translate( "Object", "Prepared:" ), bPrepared_ )
+             .Display( tools::translate( "Object", "Obstacle type:" ), obstacleType_ )
+             .Display( tools::translate( "Object", "Reserved obstacle activated:" ), reservedObstacleActivated_ );
+
+    displayer.Group( tools::translate( "Object", "Information" ) )
              .Item( tools::translate( "Object", "Construction dotation:" ) )
                 .Start( nDotationConstruction_ )
                 .Add( " " ).Add( construction_ ).End(); // $$$ AGE 2006-02-22: End devrait renvoyer le parent
+
     displayer.Group( tools::translate( "Object", "Information" ) )
              .Item( tools::translate( "Object", "Development dotation:" ) )
                 .Start( nDotationValorization_ )
@@ -133,10 +142,14 @@ void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Item( "" ).Start( Styles::bold ).Add( *(Object_ABC*)this ).End();
     displayer.Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage );
-    if( type_.CanBeValorized() )
+    if( rValorizationPercentage_.IsSet() )
         displayer.Display( tools::translate( "Object", "Mining:" ), rValorizationPercentage_ * Units::percentage );
-    if( type_.CanBeBypassed() )
+    if( rBypassConstructionPercentage_.IsSet() )
         displayer.Display( tools::translate( "Object", "Bypass:" ), rBypassConstructionPercentage_ * Units::percentage );
+    if( obstacleType_.IsSet() )
+        displayer.Display( tools::translate( "Object", "Obstacle type:" ), obstacleType_ );
+    if( reservedObstacleActivated_.IsSet() )
+        displayer.Display( tools::translate( "Object", "Reserved obstacle activated:" ), reservedObstacleActivated_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +164,8 @@ void Object::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport,
         // $$$$ SBO 2007-05-04: hard coded icon positions
         glPushAttrib( GL_CURRENT_BIT );
             glColor3f( 1, 1, 1 );
-            tools.DrawIcon( bPrepared_ ? xpm_tickon: xpm_tickoff, where + geometry::Vector2f( 250.f, 150.f ), 150.f );
+            if( reservedObstacleActivated_.IsSet() )
+                tools.DrawIcon( reservedObstacleActivated_ ? xpm_tickon: xpm_tickoff, where + geometry::Vector2f( 250.f, 150.f ), 150.f );
             if( rConstructionPercentage_.IsSet() )
                 tools.DrawLife( where - geometry::Vector2f( 0.f, 250.f ), rConstructionPercentage_ / 100.f );
         glPopAttrib();
@@ -159,13 +173,30 @@ void Object::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport,
 }
 
 // -----------------------------------------------------------------------------
+// Name: Object::IsReservedObstacle
+// Created: NLD 2007-05-23
+// -----------------------------------------------------------------------------
+bool Object::IsReservedObstacle() const
+{
+    return obstacleType_.IsSet() && obstacleType_ == eTypeObstacle_DeManoeuvre;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::IsReservedObstacleActivated
+// Created: NLD 2007-05-23
+// -----------------------------------------------------------------------------
+bool Object::IsReservedObstacleActivated() const
+{
+    return reservedObstacleActivated_.IsSet() && reservedObstacleActivated_;
+}
+// -----------------------------------------------------------------------------
 // Name: Object::IsPrepared
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-bool Object::IsPrepared() const
-{
-    return bPrepared_.IsSet() && bPrepared_;
-}
+//bool Object::IsPrepared() const
+//{
+//    return bPrepared_.IsSet() && bPrepared_;
+//}
 
 // -----------------------------------------------------------------------------
 // Name: Object::DisplayInSummary
@@ -174,8 +205,12 @@ bool Object::IsPrepared() const
 void Object::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage );
-    if( type_.CanBeValorized() )
+    if( rValorizationPercentage_.IsSet() )
         displayer.Display( tools::translate( "Object", "Mining:" ), rValorizationPercentage_ * Units::percentage );
-    if( type_.CanBeBypassed() )
+    if( rBypassConstructionPercentage_.IsSet() )
         displayer.Display( tools::translate( "Object", "Bypass:" ), rBypassConstructionPercentage_ * Units::percentage );
+    if( obstacleType_.IsSet() )
+        displayer.Display( tools::translate( "Object", "Obstacle type:" ), obstacleType_ );
+    if( reservedObstacleActivated_.IsSet() )
+        displayer.Display( tools::translate( "Object", "Reserved obstacle activated:" ), reservedObstacleActivated_ );
 }

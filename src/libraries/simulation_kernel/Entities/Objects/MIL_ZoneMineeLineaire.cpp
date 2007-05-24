@@ -89,9 +89,9 @@ void MIL_ZoneMineeLineaire::WriteSpecificAttributes( MT_XXmlOutputArchive& archi
 // Name: MIL_ZoneMineeLineaire::Initialize
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-bool MIL_ZoneMineeLineaire::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_ZoneMineeLineaire::Initialize( const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    if( !MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx ) )
+    if( !MIL_RealObject_ABC::Initialize( obstacleType, diaParameters, nCurrentParamIdx ) )
         return false;
 
     rMinesDensity_      = diaParameters[ nCurrentParamIdx++ ].ToFloat();

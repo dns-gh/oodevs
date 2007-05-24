@@ -270,6 +270,17 @@ void EditorFactory::Call( Enum_PopulationAttitude* const& value )
 // Name: EditorFactory::Call
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
+void EditorFactory::Call( Enum_TypeObstacle* const& value )
+{
+    EnumEditor< Enum_TypeObstacle >* editor= new EnumEditor< Enum_TypeObstacle >( parent_ );
+    editor->SetCurrentItem( *value );
+    result_ = editor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: SBO 2006-11-10
+// -----------------------------------------------------------------------------
 void EditorFactory::Call( DotationsItem** const& value )
 {
     DotationsEditor* editor = new DotationsEditor( parent_, staticModel_.objectTypes_, *value );

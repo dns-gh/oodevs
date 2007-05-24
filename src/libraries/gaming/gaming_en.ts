@@ -875,10 +875,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Prepared:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Mine parameters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -892,6 +888,14 @@
     </message>
     <message>
         <source>Mining:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reserved obstacle activated:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

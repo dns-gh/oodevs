@@ -1820,10 +1820,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sub-type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Density</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1833,6 +1829,10 @@
     </message>
     <message>
         <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle type:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2404,10 +2404,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Prepared:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2417,6 +2413,14 @@
     </message>
     <message>
         <source>Mining:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reserved obstacle activated:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

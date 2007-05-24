@@ -49,6 +49,7 @@ class EditorFactory : public gui::EditorFactory
                     , public kernel::Caller< kernel::NBCAgent** >
                     , public kernel::Caller< std::vector< kernel::NBCAgent* >* >
                     , public kernel::Caller< Enum_PopulationAttitude* >
+                    , public kernel::Caller< Enum_TypeObstacle* >
                     , public kernel::Caller< DotationsItem** >
 {
 
@@ -70,6 +71,7 @@ public:
     virtual void Call( kernel::NBCAgent** const& value );
     virtual void Call( std::vector< kernel::NBCAgent* >* const& value );
     virtual void Call( Enum_PopulationAttitude* const& value );
+    virtual void Call( Enum_TypeObstacle* const& value );
     virtual void Call( DotationsItem** const& value );
     //@}
 

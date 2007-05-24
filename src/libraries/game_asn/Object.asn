@@ -12,7 +12,7 @@ ObjectIncludes ::= SEQUENCE { BaseExports }
 ObjectExports  ::= NULL
 -- END includes
 
-EnumMissionGenSousTypeObstacle ::= ENUMERATED
+EnumTypeObstacle ::= ENUMERATED
 {
     preliminaire(0),
     de-manoeuvre(1)
@@ -156,14 +156,16 @@ AttrObjectSpecific ::= CHOICE
 
 MsgObjectCreation ::= SEQUENCE
 {
-    oid                         OID,
-    type                        EnumObjectType,
-    localisation                Localisation,
-    nom                         VisibleString,
-    camp                        Camp,
-    attributs-specifiques       AttrObjectSpecific OPTIONAL,
-    type-dotation-construction  TypeDotation       OPTIONAL,
-    type-dotation-valorisation  TypeDotation       OPTIONAL
+    oid                          OID,
+    type                         EnumObjectType,
+    type-obstacle                EnumTypeObstacle   OPTIONAL,
+    obstacle-de-manoeuvre-active BOOLEAN            OPTIONAL,    
+    localisation                 Localisation,
+    nom                          VisibleString,
+    camp                         Camp,
+    attributs-specifiques        AttrObjectSpecific OPTIONAL,
+    type-dotation-construction   TypeDotation       OPTIONAL,
+    type-dotation-valorisation   TypeDotation       OPTIONAL
 }
 
 MsgObjectUpdate ::= SEQUENCE
@@ -171,8 +173,8 @@ MsgObjectUpdate ::= SEQUENCE
     oid                                 OID,
     pourcentage-construction            INTEGER( 0..100 )  OPTIONAL, 
     pourcentage-valorisation            INTEGER( 0..100 )  OPTIONAL,
-    pourcentage-creation-contournement  INTEGER( 0..100 )  OPTIONAL,
-    en-preparation                      BOOLEAN            DEFAULT FALSE,
+    pourcentage-creation-contournement  INTEGER( 0..100 )  OPTIONAL,   
+    obstacle-de-manoeuvre-active        BOOLEAN            OPTIONAL,
     nb-dotation-construction            INTEGER            OPTIONAL,
     nb-dotation-valorisation            INTEGER            OPTIONAL,   
     localisation                        Localisation       OPTIONAL,
@@ -192,17 +194,18 @@ MagicActionUpdateObject ::= SEQUENCE
     pourcentage-construction            INTEGER( 0..100 ) OPTIONAL, 
     pourcentage-valorisation            INTEGER( 0..100 ) OPTIONAL,
     pourcentage-creation-contournement  INTEGER( 0..100 ) OPTIONAL,
-    en-preparation                      BOOLEAN           OPTIONAL
+    obstacle-de-manoeuvre-active        BOOLEAN           OPTIONAL
 }
 
 MagicActionCreateObject ::= SEQUENCE
 {
-    oid-camp                Camp, 
-    type                    EnumObjectType,
-    localisation            Localisation,
-    nom                     VisibleString      OPTIONAL,    
-    attributs-specifiques   AttrObjectSpecific OPTIONAL,
-    en-preparation          BOOLEAN
+    oid-camp                     Camp, 
+    type                         EnumObjectType,
+    type-obstacle                EnumTypeObstacle   OPTIONAL,
+    obstacle-de-manoeuvre-active BOOLEAN            OPTIONAL,
+    localisation                 Localisation,
+    nom                          VisibleString      OPTIONAL,    
+    attributs-specifiques        AttrObjectSpecific OPTIONAL
 }
 
 MagicActionDestroyObjet ::= OID -- oid-objet

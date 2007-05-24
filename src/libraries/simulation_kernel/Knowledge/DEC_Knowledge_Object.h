@@ -26,6 +26,7 @@ class DEC_Knowledge_ObjectPerception;
 class MIL_RealObjectType;
 class MIL_Automate;
 class MIL_AgentType_ABC;
+class MIL_ObstacleType;
 
 // =============================================================================
 /** @class  DEC_Knowledge_Object
@@ -79,17 +80,18 @@ public:
 
     //! @name Accessors
     //@{
-          bool                IsRecon                 () const;
-          bool                IsBypassed              () const;
-          bool                IsConstructed           () const;
-          bool                IsPrepared              () const;
-          uint                GetID                   () const;
-          MIL_RealObject_ABC* GetObjectKnown          () const;
-    const MIL_RealObjectType& GetType                 () const;
-    const TER_Localisation&   GetLocalisation         () const;
-    const TER_Localisation&   GetAvoidanceLocalisation() const;
-    const MIL_Army&           GetArmy                 () const;    
-          MT_Float            GetMaxInteractionHeight () const;
+          bool                IsRecon                    () const;
+          bool                IsBypassed                 () const;
+          bool                IsConstructed              () const;
+          bool                IsReservedObstacle         () const;
+          bool                IsReservedObstacleActivated() const;
+          uint                GetID                      () const;
+          MIL_RealObject_ABC* GetObjectKnown             () const;
+    const MIL_RealObjectType& GetType                    () const;
+    const TER_Localisation&   GetLocalisation            () const;
+    const TER_Localisation&   GetAvoidanceLocalisation   () const;
+    const MIL_Army&           GetArmy                    () const;    
+          MT_Float            GetMaxInteractionHeight    () const;
     //@}
     
 protected:
@@ -103,7 +105,7 @@ protected:
         eAttr_ConstructionPercentage         = 0x00000004,
         eAttr_MiningPercentage               = 0x00000008,
         eAttr_BypassPercentage               = 0x00000010,
-        eAttr_IsPrepared                     = 0x00000020,
+        eAttr_ReservedObstacleActivated      = 0x00000020,
         eAttr_RealObject                     = 0x00000040,
         eAttr_PerceptionSources              = 0x00000080,
         eAttr_Relevance                      = 0x00000100,
@@ -172,7 +174,8 @@ private:
           MIL_RealObject_ABC* pObjectKnown_; // Objet réel (peut ne plus exister...)
 
     const MIL_RealObjectType* pObjectType_;
-    const uint                nID_;
+    const uint                nID_;   
+    const MIL_ObstacleType*   pObstacleType_;
 
     int nAttributesUpdated_;
 
@@ -183,9 +186,9 @@ private:
     uint              nConstructionPercentage_;
     uint              nMiningPercentage_;
     uint              nBypassPercentage_;
-    bool              bIsPrepared_;
     uint              nNbrDotationForConstruction_;
     uint              nNbrDotationForMining_;            
+    bool              bReservedObstacleActivated_; 
 
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;

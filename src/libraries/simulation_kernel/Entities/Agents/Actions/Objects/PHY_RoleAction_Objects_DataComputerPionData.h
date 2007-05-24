@@ -35,7 +35,6 @@ public:
         eMine,
         eDemine,
         eBypass,
-        ePrepare
     };
     //@}
 

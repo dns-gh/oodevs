@@ -156,60 +156,6 @@ int PHY_RoleAction_Objects::Construct( MIL_RealObject_ABC* pObject, DEC_Knowledg
     return Construct( *pObject );
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Objects::Prepare
-// Created: NLD 2004-09-15
-// -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::Prepare( MIL_RealObject_ABC& object )
-{
-    assert( pPion_ );
-    if( !object.CanBePrepared() )
-        return eImpossible;
-
-    if( object.GetConstructionPercentage() == 1. )
-        return eFinished;
-
-    PHY_RoleAction_Objects_DataComputer dataComputer( *pPion_, PHY_RoleAction_Objects_DataComputerPionData::ePrepare, object );   
-
-    const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
-    if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
-        return eNoCapacity;
-
-    const uint                   nDotationNeeded  = object.GetDotationNeededForConstruction( rDeltaPercentage );
-    const PHY_DotationCategory* pDotationCategory = object.GetType().GetDotationCategoryForConstruction();
-    if( pDotationCategory && !dataComputer.HasDotations( *pDotationCategory, nDotationNeeded ) )
-        return eNoMoreDotation;
-
-    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
-
-    object.Prepare( rDeltaPercentage );
-    if( pDotationCategory )
-        dataComputer.ConsumeDotations( *pDotationCategory, nDotationNeeded );
-
-    if( object.GetConstructionPercentage() == 1. )
-        return eFinished;
-
-    return eRunning;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Objects::Prepare
-// Created: NLD 2004-09-15
-// -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::Prepare( MIL_RealObject_ABC* pObject, DEC_Knowledge_Object*& pKnowledge )
-{
-    if( !pObject )
-    {
-        pKnowledge = 0;
-        return eImpossible;
-    }
-
-    assert( pPion_ );
-    pKnowledge = pPion_->GetArmy().GetKnowledge().GetKnowledgeObject( *pObject );
-    return Prepare( *pObject );
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects::Destroy
 // Created: NLD 2004-09-16
@@ -377,12 +323,7 @@ int PHY_RoleAction_Objects::ResumeWork( uint nKnowledgeObjectID )
     }
 
     if( pObject->GetConstructionPercentage() != 1. )
-    {
-        if( pObject->IsPrepared() )
-            return Prepare( *pObject );
-        else
-            return Construct( *pObject );
-    }
+        return Construct( *pObject );
     else if( pObject->CanBeMined() && pObject->GetMiningPercentage() != 1. )
         return Mine( *pObject );
     return eFinished;

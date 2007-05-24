@@ -53,7 +53,7 @@ template< typename T >
 void DEC_ObjectFunctions::MagicCreateObject( DIA_Call_ABC& call, const T& caller )
 {
     //$$$ A réencapsuler
-    MIL_RealObject_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( caller.GetArmy(), call.GetParameters(), 0 );
+    MIL_RealObject_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( caller.GetArmy(), MIL_ObstacleType::initial_, call.GetParameters(), 0 );
     if( pObject )
     {
         pObject->Construct();

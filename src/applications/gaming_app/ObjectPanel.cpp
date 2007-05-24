@@ -40,7 +40,8 @@ using namespace kernel;
                 .AddSpinBox( tr( "Construction:" ), 0, 100, 1 )
                 .AddSpinBox( tr( "Mining:" ), 0, 100, 1 )
                 .AddSpinBox( tr( "Bypass:" ), 0, 100, 1 )
-                .AddCheckBox( tr( "Prepared:" ) );
+                .AddLabel( tr( "Obstacle type:" ) )
+                .AddCheckBox( tr( "Reserved obstacle activated:" ) );
 
     GetBuilder().Group( tr( "Information" ) )
                 .AddLabel( tr( "Construction dotation:" ) )
@@ -77,7 +78,7 @@ using namespace kernel;
     construction_  = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Construction:" ) ) );
     valorisation_  = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Mining:" ) ) );
     contournement_ = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Bypass:" ) ) );
-    prepared_      = dynamic_cast< CheckBoxDisplayer* >( & infos.Item( tr( "Prepared:" ) ) );
+//    prepared_      = dynamic_cast< CheckBoxDisplayer* >( & infos.Item( tr( "Prepared:" ) ) );
 
     QWidget* pSpacer = new QWidget( this );
     pSpacer->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Expanding );
@@ -114,13 +115,13 @@ void ::ObjectPanel::OnApply()
         asnAction.m.pourcentage_constructionPresent           = 1;
         asnAction.m.pourcentage_valorisationPresent           = 1;
         asnAction.m.pourcentage_creation_contournementPresent = 1;
-        asnAction.m.en_preparationPresent                     = 1;
+//        asnAction.m.en_preparationPresent                     = 1;
 
         asnAction.oid_objet                          = object->GetId();
         asnAction.pourcentage_construction           = construction_ ->GetValue();
         asnAction.pourcentage_valorisation           = valorisation_ ->GetValue();
         asnAction.pourcentage_creation_contournement = contournement_->GetValue();
-        asnAction.en_preparation                     = prepared_     ->IsChecked();
+//        asnAction.en_preparation                     = prepared_     ->IsChecked();
 
         ASN_MsgObjectMagicAction asnMsg;
         asnMsg().action.t                 = T_MsgObjectMagicAction_action_update_object;

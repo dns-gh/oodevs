@@ -55,6 +55,15 @@ void PropertiesTableDisplayer::Call( const Enum_PopulationAttitude& value )
 // Name: PropertiesTableDisplayer::Call
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
+void PropertiesTableDisplayer::Call( const Enum_TypeObstacle& value )
+{
+    AddToDisplay( value.ToString() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTableDisplayer::Call
+// Created: SBO 2006-11-10
+// -----------------------------------------------------------------------------
 void PropertiesTableDisplayer::Call( const DotationsItem& value )
 {
     AddToDisplay( tools::translate( "PropertiesTableDisplayer", "<Edit Property Group...>" ) );

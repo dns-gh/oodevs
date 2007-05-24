@@ -55,9 +55,9 @@ MIL_FloatingBridge_ABC::~MIL_FloatingBridge_ABC()
 // Name: MIL_FloatingBridge_ABC::Initialize
 // Created: JVT 02-10-22
 //-----------------------------------------------------------------------------
-bool MIL_FloatingBridge_ABC::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_FloatingBridge_ABC::Initialize( const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    if( !MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx ) )
+    if( !MIL_RealObject_ABC::Initialize( obstacleType, diaParameters, nCurrentParamIdx ) )
         return false;
 
 //    if( diaParameters.GetParameters().size() > nCurrentParamIdx )

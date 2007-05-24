@@ -104,11 +104,11 @@ public:
 
     //! @name Mission parameters tools : GEN specific
     //@{
-    static bool CopyGenObjectList( const ASN1T_ListMissionGenObject& asn, DIA_Variable_ABC& dia );
+    static void CopyGenObjectList( const ASN1T_ListMissionGenObject& asn, DIA_Variable_ABC& dia );
     static bool CopyGenObjectList( const DIA_Variable_ABC& dia, ASN1T_ListMissionGenObject& asn );
     static void CopyGenObjectList( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
 
-    static bool CopyGenObject( const ASN1T_MissionGenObject& asn, DIA_Variable_ABC& dia );
+    static void CopyGenObject( const ASN1T_MissionGenObject& asn, DIA_Variable_ABC& dia );
     static bool CopyGenObject( const DIA_Variable_ABC& dia, ASN1T_MissionGenObject& asn );
     static void CopyGenObject( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
     //@}
@@ -229,7 +229,6 @@ public:
     static bool ReadPointList ( const ASN1T_ListPoint&        asn, T_PointVector& pointVector );
     static bool ReadLocation  ( const ASN1T_Localisation&     asn, TER_Localisation& localisation );
     static void ReadDirection ( const ASN1T_Direction&        asn, MT_Vector2D& vDir );
-    static bool ReadGenObject ( const ASN1T_MissionGenObject& asn, DEC_Gen_Object& object );
     //@}
 
     //! @name Encoding tools

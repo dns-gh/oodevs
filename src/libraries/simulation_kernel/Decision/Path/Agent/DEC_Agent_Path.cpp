@@ -210,7 +210,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
         {
             const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
             //$$$ POURRI : Faire un DEC_Knowledge_Object::CanCollideWithXXX
-            if(        !knowledge.IsPrepared() 
+            if(      ( !knowledge.IsReservedObstacle() || knowledge.IsReservedObstacleActivated() )
                     && !knowledge.IsBypassed() 
                     && queryMaker_.GetRole< PHY_RolePion_Location >().GetHeight() <= knowledge.GetMaxInteractionHeight() 
                     && !IsObjectInsidePathPoint( knowledge, pathPoints ) ) //$$$ BOF

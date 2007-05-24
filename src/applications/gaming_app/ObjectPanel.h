@@ -62,7 +62,6 @@ private:
     gui::SpinBoxDisplayer*  construction_;
     gui::SpinBoxDisplayer*  valorisation_;     
     gui::SpinBoxDisplayer*  contournement_;
-    gui::CheckBoxDisplayer* prepared_;
     //@}
 }; 
 

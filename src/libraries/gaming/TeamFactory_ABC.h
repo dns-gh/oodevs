@@ -18,6 +18,7 @@ namespace kernel
     class Formation_ABC;
 }
 
+
 // =============================================================================
 /** @class  TeamFactory_ABC
     @brief  TeamFactory_ABC

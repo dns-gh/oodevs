@@ -55,8 +55,8 @@ private slots:
     void DestroyObject();
     void MineObject();
     void SweepMineObject();
-    void SetDemolitionReservedObject();
-    void SetPreliminaryObject();
+    void ActivateReservedObstacle();
+    void DeactivateReservedObstacle();
     //@}
 
 private:

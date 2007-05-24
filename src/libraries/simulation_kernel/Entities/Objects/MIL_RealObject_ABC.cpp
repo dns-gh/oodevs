@@ -50,6 +50,7 @@ MT_Random MIL_RealObject_ABC::random_;
 MIL_RealObject_ABC::MIL_RealObject_ABC( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
     : MIL_Object_ABC                     ( army )
     , pType_                             ( &type )
+    , pObstacleType_                     ( 0 )
     , rSizeCoef_                         ( 0. ) 
     , nFullNbrDotationForConstruction_   ( type.GetNbrDotationForConstruction() ) 
     , nFullNbrDotationForMining_         ( type.GetNbrDotationForMining      () )
@@ -65,7 +66,7 @@ MIL_RealObject_ABC::MIL_RealObject_ABC( const MIL_RealObjectType& type, uint nID
     , nLastValueConstructionPercentage_  ( 0 )
     , nLastValueMiningPercentage_        ( 0 )
     , nLastValueBypassPercentage_        ( 0 )
-    , bPrepared_                         ( false )
+    , bReservedObstacleActivated_        ( false )
     , avoidanceLocalisation_             ()
     , pPathfindData_                     ( 0 )
     , pOccupier_                         ( 0 )
@@ -82,6 +83,7 @@ MIL_RealObject_ABC::MIL_RealObject_ABC( const MIL_RealObjectType& type, uint nID
 MIL_RealObject_ABC::MIL_RealObject_ABC()
     : MIL_Object_ABC                     ()
     , pType_                             ( 0 )
+    , pObstacleType_                     ( 0 )
     , rSizeCoef_                         ( 0. ) 
     , nFullNbrDotationForConstruction_   ( 0 )
     , nFullNbrDotationForMining_         ( 0 )
@@ -97,7 +99,7 @@ MIL_RealObject_ABC::MIL_RealObject_ABC()
     , nLastValueConstructionPercentage_  ( 0 )
     , nLastValueMiningPercentage_        ( 0 )
     , nLastValueBypassPercentage_        ( 0 )
-    , bPrepared_                         ( false )
+    , bReservedObstacleActivated_        ( false )
     , avoidanceLocalisation_             ()
     , pPathfindData_                     ( 0 )
     , pOccupier_                         ( 0 )
@@ -155,6 +157,14 @@ void MIL_RealObject_ABC::load( MIL_CheckPointInArchive& file, const uint )
     pType_ = MIL_RealObjectType::Find( nTypeID );
     assert( pType_ );
 
+    uint nObstacleTypeID;
+    file >> nObstacleTypeID;
+    pObstacleType_ = 0;
+    if( nObstacleTypeID != (uint)-1 )
+    {
+        pObstacleType_ = MIL_ObstacleType::Find( nObstacleTypeID );
+        assert( pObstacleType_ );
+    }
     file >> strName_
          >> rConstructionPercentage_
          >> rMiningPercentage_
@@ -162,7 +172,7 @@ void MIL_RealObject_ABC::load( MIL_CheckPointInArchive& file, const uint )
          >> nLastValueConstructionPercentage_
          >> nLastValueMiningPercentage_
          >> nLastValueBypassPercentage_
-         >> bPrepared_
+         >> bReservedObstacleActivated_
          >> avoidanceLocalisation_
          >> pView_
          >> rExitingPopulationDensity_;
@@ -191,6 +201,7 @@ void MIL_RealObject_ABC::save( MIL_CheckPointOutArchive& file, const uint ) cons
          << xAttrToUpdateForHLA_
          << nID_
          << pType_->GetID()
+         << ( pObstacleType_ ? pObstacleType_->GetID() : (uint)-1 )
          << strName_
          << rConstructionPercentage_
          << rMiningPercentage_
@@ -198,7 +209,7 @@ void MIL_RealObject_ABC::save( MIL_CheckPointOutArchive& file, const uint ) cons
          << nLastValueConstructionPercentage_
          << nLastValueMiningPercentage_
          << nLastValueBypassPercentage_
-         << bPrepared_
+         << bReservedObstacleActivated_
          << avoidanceLocalisation_
          << pView_
          << rExitingPopulationDensity_;
@@ -221,7 +232,14 @@ void MIL_RealObject_ABC::WriteODB( MT_XXmlOutputArchive& archive ) const
     archive.WriteAttribute( "id"      , nID_ );
     archive.WriteAttribute( "name"    , strName_ );
     archive.WriteAttribute( "type"    , pType_  ->GetName() );
-    archive.WriteAttribute( "prepared", bPrepared_ );
+
+    if( pType_->CanBeReservedObstacle() )
+    {
+        assert( pObstacleType_ );
+        archive.WriteAttribute( "obstacle-type", pObstacleType_->GetName() );
+        if( pObstacleType_->CouldBeActivated() )
+            archive.WriteAttribute( "reserved-obstacle-activated", bReservedObstacleActivated_ );
+    }
     
     GetLocalisation().Write( archive );
 
@@ -229,7 +247,6 @@ void MIL_RealObject_ABC::WriteODB( MT_XXmlOutputArchive& archive ) const
 
     archive.EndSection(); // object
 }
-
 
 //=============================================================================
 // INIT
@@ -277,9 +294,18 @@ void MIL_RealObject_ABC::InitializeCommon( const TER_Localisation& localisation 
 void MIL_RealObject_ABC::Initialize( MIL_InputArchive& archive )
 {
     std::string strName;
-    archive.ReadAttribute( "name"    , strName_, MIL_InputArchive::eNothing );
-    archive.ReadAttribute( "prepared", bPrepared_ );
-    
+    archive.ReadAttribute( "name", strName_, MIL_InputArchive::eNothing );
+    if( pType_->CanBeReservedObstacle() )
+    {
+        std::string strObstacleTypeName;
+        archive.ReadAttribute( "obstacle-type", strObstacleTypeName );
+        pObstacleType_ = MIL_ObstacleType::Find( strObstacleTypeName );
+        if( !pObstacleType_ )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown obstacle type", archive.GetContext() ); 
+        if( pObstacleType_->CouldBeActivated() )
+            archive.ReadAttribute( "reserved-obstacle-activated", bReservedObstacleActivated_ );
+    }
+
     TER_Localisation localisation;
     localisation.Read( archive );
 
@@ -290,17 +316,30 @@ void MIL_RealObject_ABC::Initialize( MIL_InputArchive& archive )
 // Name: MIL_RealObject_ABC::Initialize
 // Created: NLD 2003-08-04
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject )
+ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::Initialize( const ASN1T_MagicActionCreateObject& asn )
 {
     assert( pType_ );    
     TER_Localisation localisation; 
-    if( !NET_ASN_Tools::ReadLocation( asnCreateObject.localisation, localisation ) )
-        return EnumObjectErrorCode::error_invalid_localisation;
+    if( !NET_ASN_Tools::ReadLocation( asn.localisation, localisation ) )
+        return EnumObjectErrorCode::error_invalid_specific_attributes;
 
-    if( asnCreateObject.m.nomPresent ) 
-        strName_ = asnCreateObject.nom;
+    if( asn.m.nomPresent ) 
+        strName_ = asn.nom;
 
-    bPrepared_ = asnCreateObject.en_preparation;
+    if( pType_->CanBeReservedObstacle() )
+    {
+        if( !asn.m.type_obstaclePresent )
+            return EnumObjectErrorCode::error_invalid_localisation;
+        pObstacleType_ = MIL_ObstacleType::Find( asn.type_obstacle );
+        if( !pObstacleType_ )
+            return EnumObjectErrorCode::error_invalid_specific_attributes;
+        if( pObstacleType_->CouldBeActivated() )
+        {
+            if( !asn.m.obstacle_de_manoeuvre_activePresent )
+                return EnumObjectErrorCode::error_invalid_specific_attributes;
+            bReservedObstacleActivated_ = asn.obstacle_de_manoeuvre_active;
+        }
+    }
     InitializeCommon( localisation );
     return EnumObjectErrorCode::no_error;
 }
@@ -309,8 +348,14 @@ ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::Initialize( const ASN1T_MagicActio
 // Name: MIL_RealObject_ABC::Initialize
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-bool MIL_RealObject_ABC::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_RealObject_ABC::Initialize( const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
+    if( pType_->CanBeReservedObstacle() )
+    {
+        pObstacleType_              = &obstacleType;
+        bReservedObstacleActivated_ = false;
+    }
+        
     assert( DEC_Tools::CheckTypeLocalisation( diaParameters[ nCurrentParamIdx ] ) );
 
     const TER_Localisation* pLocalisation = diaParameters[ nCurrentParamIdx++ ].ToUserPtr( pLocalisation );
@@ -325,15 +370,36 @@ bool MIL_RealObject_ABC::Initialize( DIA_Parameters& diaParameters, uint& nCurre
 // -----------------------------------------------------------------------------
 bool MIL_RealObject_ABC::Initialize( const TER_Localisation& localisation, const std::string& /*strOption*/, const std::string& /*strExtra*/, double rCompletion, double rMining, double rBypass )
 {
+    assert( false );  // $$$$ NLD 2007-05-22: Gerer pObstacleType_ et bReservedObstacleActivated_
+
+    if( pType_->CanBeReservedObstacle() )
+    {
+        pObstacleType_              = &MIL_ObstacleType::initial_;
+        bReservedObstacleActivated_ = false;
+    }
     InitializeCommon( localisation );
-    bPrepared_ = rCompletion > 100;
-    if( bPrepared_ )
-        rCompletion -= 100;
+//    bPrepared_ = rCompletion > 100;
+//    if( bPrepared_ )
+//        rCompletion -= 100;
     ChangeConstructionPercentage( rCompletion );
     ChangeMiningPercentage      ( rMining );
     rBypassPercentage_ = rBypass; //$$$ POURRI
     NotifyAttributeUpdated( eAttrUpdate_BypassPercentage );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::Initialize
+// Created: NLD 2007-05-22
+// -----------------------------------------------------------------------------
+void MIL_RealObject_ABC::Initialize( const TER_Localisation& localisation )
+{
+    if( pType_->CanBeReservedObstacle() )
+    {
+        pObstacleType_              = &MIL_ObstacleType::initial_;
+        bReservedObstacleActivated_ = false;
+    }
+    InitializeCommon( localisation );
 }
 
 //=============================================================================
@@ -349,35 +415,46 @@ void MIL_RealObject_ABC::SendCreation()
     if( pView_ && pView_->HideObject() )
         return;
 
-    NET_ASN_MsgObjectCreation asnMsg;
+    NET_ASN_MsgObjectCreation asn;
 
     assert( pType_ );
 
-    asnMsg().oid  = nID_;
-    asnMsg().nom  = strName_.c_str(); // !! pointeur sur const char*
-    asnMsg().type = pType_->GetAsnID();
-    asnMsg().camp = GetArmy().GetID();
+    asn().oid  = nID_;
+    asn().nom  = strName_.c_str(); // !! pointeur sur const char*
+    asn().type = pType_->GetAsnID();
+    asn().camp = GetArmy().GetID();
     
-    NET_ASN_Tools::WriteLocation( GetLocalisation(), asnMsg().localisation );
+    NET_ASN_Tools::WriteLocation( GetLocalisation(), asn().localisation );
+
+    if( pObstacleType_ )
+    {
+        asn().m.type_obstaclePresent = 1;
+        asn().type_obstacle          = pObstacleType_->GetAsnID();
+        if( pObstacleType_->CouldBeActivated() )
+        {
+            asn().m.obstacle_de_manoeuvre_activePresent = 1;
+            asn().obstacle_de_manoeuvre_active          = bReservedObstacleActivated_;
+        }
+    }
 
     if( pType_->GetDotationCategoryForConstruction() )
     {
-        asnMsg().m.type_dotation_constructionPresent = 1;
-        asnMsg().type_dotation_construction          = pType_->GetDotationCategoryForConstruction()->GetMosID();
+        asn().m.type_dotation_constructionPresent = 1;
+        asn().type_dotation_construction          = pType_->GetDotationCategoryForConstruction()->GetMosID();
     }
 
     if( pType_->GetDotationCategoryForMining() )
     {
-        asnMsg().m.type_dotation_valorisationPresent = 1;
-        asnMsg().type_dotation_valorisation          = pType_->GetDotationCategoryForMining()->GetMosID();
+        asn().m.type_dotation_valorisationPresent = 1;
+        asn().type_dotation_valorisation          = pType_->GetDotationCategoryForMining()->GetMosID();
     }
 
-    asnMsg().m.attributs_specifiquesPresent = 0;
-    WriteSpecificAttributes( asnMsg );
+    asn().m.attributs_specifiquesPresent = 0;
+    WriteSpecificAttributes( asn );
     
-    asnMsg.Send();
+    asn.Send();
 
-    NET_ASN_Tools::Delete( asnMsg().localisation );
+    NET_ASN_Tools::Delete( asn().localisation );
 }
 
 
@@ -389,9 +466,9 @@ void MIL_RealObject_ABC::SendDestruction()
 {
     if( pView_ && pView_->HideObject() )
         return;
-    NET_ASN_MsgObjectDestruction asnMsg;
-    asnMsg() = nID_;
-    asnMsg.Send();
+    NET_ASN_MsgObjectDestruction asn;
+    asn() = nID_;
+    asn.Send();
 }
 
 // -----------------------------------------------------------------------------
@@ -430,103 +507,94 @@ void MIL_RealObject_ABC::SendMsgUpdate()
 
     assert( nID_ != 0 );
 
-    bool bFlag = false;
-
-    NET_ASN_MsgObjectUpdate asnMsg;
-    
-    ASN1T_MsgObjectUpdate& asn = asnMsg();
-    asn.oid                    = nID_;
-    asn.en_preparation         = bPrepared_;
+    NET_ASN_MsgObjectUpdate asn;
+    asn().oid = nID_;
 
     if( IsAttributeUpdated( eAttrUpdate_ConstructionPercentage, rConstructionPercentage_, nLastValueConstructionPercentage_ ) )
     {
-        bFlag = true;
         nLastValueConstructionPercentage_     = (uint)( rConstructionPercentage_ * 100. );
-        asn.m.pourcentage_constructionPresent = 1;
-        asn.pourcentage_construction          = nLastValueConstructionPercentage_;
+        asn().m.pourcentage_constructionPresent = 1;
+        asn().pourcentage_construction          = nLastValueConstructionPercentage_;
         if( pType_->GetDotationCategoryForConstruction() )
         {
-            asn.m.nb_dotation_constructionPresent = 1;
-            asn.nb_dotation_construction          = nCurrentNbrDotationForConstruction_;
+            asn().m.nb_dotation_constructionPresent = 1;
+            asn().nb_dotation_construction          = nCurrentNbrDotationForConstruction_;
         }
     }
 
     if( IsAttributeUpdated( eAttrUpdate_MiningPercentage, rMiningPercentage_, nLastValueMiningPercentage_ ) )
     {
-        bFlag = true;
         nLastValueMiningPercentage_ = (uint)( rMiningPercentage_ * 100. );
-        asn.m.pourcentage_valorisationPresent = 1;
-        asn.pourcentage_valorisation          = nLastValueMiningPercentage_;
+        asn().m.pourcentage_valorisationPresent = 1;
+        asn().pourcentage_valorisation          = nLastValueMiningPercentage_;
         if( pType_->GetDotationCategoryForMining() )
         {
-            asn.m.nb_dotation_valorisationPresent = 1;
-            asn.nb_dotation_valorisation          = nCurrentNbrDotationForMining_;
+            asn().m.nb_dotation_valorisationPresent = 1;
+            asn().nb_dotation_valorisation          = nCurrentNbrDotationForMining_;
         }
     }
 
     if( IsAttributeUpdated( eAttrUpdate_BypassPercentage, rBypassPercentage_, nLastValueBypassPercentage_ ) )
     {
-        bFlag = true;
         nLastValueBypassPercentage_ = (uint)( rBypassPercentage_ * 100. );
-        asn.m.pourcentage_creation_contournementPresent = 1;
-        asn.pourcentage_creation_contournement  = nLastValueBypassPercentage_;
+        asn().m.pourcentage_creation_contournementPresent = 1;
+        asn().pourcentage_creation_contournement  = nLastValueBypassPercentage_;
     }
 
     if( xAttrToUpdate_ & eAttrUpdate_Localisation )
     {
-        bFlag = true;
-        asn.m.localisationPresent = 1;
-        NET_ASN_Tools::WriteLocation( GetLocalisation(), asnMsg().localisation );
+        asn().m.localisationPresent = 1;
+        NET_ASN_Tools::WriteLocation( GetLocalisation(), asn().localisation );
     }
 
     if( xAttrToUpdate_ & eAttrUpdate_SpecificAttributes )
-    {
-        bFlag = true;
-        WriteSpecificAttributes( asnMsg );
-    }
+        WriteSpecificAttributes( asn );
 
-    if( !bFlag && !( xAttrToUpdate_ & eAttrUpdate_Prepared ))
+    if( xAttrToUpdate_ & eAttrUpdate_ReservedObstacleActivated )
     {
-        xAttrToUpdate_ = 0;
-        return;
+        if( IsReservedObstacle() )
+        {
+            asn().m.obstacle_de_manoeuvre_activePresent = 1;
+            asn().obstacle_de_manoeuvre_active          = bReservedObstacleActivated_;
+        }
     }
 
     xAttrToUpdateForHLA_ = xAttrToUpdate_;
     xAttrToUpdate_ = 0;
-    asnMsg.Send();
+    asn.Send();
 
-    if( asnMsg().m.localisationPresent )
-        NET_ASN_Tools::Delete( asnMsg().localisation );
+    if( asn().m.localisationPresent )
+        NET_ASN_Tools::Delete( asn().localisation );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RealObject_ABC::OnReceiveMagicActionUpdate
 // Created: NLD 2003-08-04
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::OnReceiveMagicActionUpdate( const ASN1T_MagicActionUpdateObject& asnMsg )
+ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::OnReceiveMagicActionUpdate( const ASN1T_MagicActionUpdateObject& asn )
 {
-    if( asnMsg.m.pourcentage_constructionPresent )
+    if( asn.m.pourcentage_constructionPresent )
     {
-        ChangeConstructionPercentage( asnMsg.pourcentage_construction / 100. );
+        ChangeConstructionPercentage( asn.pourcentage_construction / 100. );
         NotifyAttributeUpdated( eAttrUpdate_ConstructionPercentage );
     }
 
-    if( asnMsg.m.pourcentage_valorisationPresent )
+    if( asn.m.pourcentage_valorisationPresent )
     {
-        ChangeMiningPercentage( asnMsg.pourcentage_valorisation / 100. );
+        ChangeMiningPercentage( asn.pourcentage_valorisation / 100. );
         NotifyAttributeUpdated( eAttrUpdate_MiningPercentage );
     }
         
-    if( asnMsg.m.pourcentage_creation_contournementPresent )
+    if( asn.m.pourcentage_creation_contournementPresent )
     {
-        rBypassPercentage_ = asnMsg.pourcentage_creation_contournement / 100.;
+        rBypassPercentage_ = asn.pourcentage_creation_contournement / 100.;
         NotifyAttributeUpdated( eAttrUpdate_BypassPercentage );
     }
 
-    if( asnMsg.m.en_preparationPresent )
+    if( asn.m.obstacle_de_manoeuvre_activePresent && IsReservedObstacle() )
     {
-        bPrepared_ = !!asnMsg.en_preparation;
-        NotifyAttributeUpdated( eAttrUpdate_Prepared );
+        bReservedObstacleActivated_ = asn.obstacle_de_manoeuvre_active;
+        NotifyAttributeUpdated( eAttrUpdate_ReservedObstacleActivated );
     }
 
     return EnumObjectErrorCode::no_error;
@@ -572,20 +640,20 @@ void MIL_RealObject_ABC::Deserialize( const AttributeIdentifier& attributeID, De
         if( rConstruction > 100 )
         {
             rConstruction -= 100;
-            if( ! bPrepared_ )
+           /* if( ! bPrepared_ )
             {
                 bPrepared_ = true;
                 NotifyAttributeUpdated( eAttrUpdate_Prepared );
-            }
+            }*/
             
         }
         else
         {
-            if( bPrepared_ )
+            /*if( bPrepared_ )
             {
                 bPrepared_ = false;
                 NotifyAttributeUpdated( eAttrUpdate_Prepared );
-            }
+            }*/
         }
         ChangeConstructionPercentage( rConstruction );
     }
@@ -609,9 +677,9 @@ void MIL_RealObject_ABC::Serialize( HLA_UpdateFunctor& functor ) const
     functor.Serialize( "type",  false, GetType().GetName() );
     functor.Serialize( "coordonnees",   ( xAttrToUpdateForHLA_ & eAttrUpdate_Localisation ) != 0,           GetLocalisation() );
     MT_Float rCompletion = rConstructionPercentage_;
-    if( bPrepared_ )
-        rCompletion += 100;
-    bool bUpdateCompletion = ( xAttrToUpdateForHLA_ & ( eAttrUpdate_ConstructionPercentage | eAttrUpdate_Prepared ) ) != 0;
+//    if( bPrepared_ )
+//        rCompletion += 100;
+    bool bUpdateCompletion = ( xAttrToUpdateForHLA_ & ( eAttrUpdate_ConstructionPercentage | eAttrUpdate_ReservedObstacleActivated ) ) != 0;
     functor.Serialize( "completion",    bUpdateCompletion, rCompletion );
     functor.Serialize( "valorisation",  ( xAttrToUpdateForHLA_ & eAttrUpdate_MiningPercentage ) != 0,       rMiningPercentage_ );
     functor.Serialize( "contournement", ( xAttrToUpdateForHLA_ & eAttrUpdate_BypassPercentage ) != 0,       rBypassPercentage_ );
@@ -628,7 +696,7 @@ void MIL_RealObject_ABC::Serialize( HLA_UpdateFunctor& functor ) const
 // -----------------------------------------------------------------------------
 bool MIL_RealObject_ABC::CanInteractWith( const MIL_Agent_ABC& agent ) const
 {
-    if( bPrepared_ || rConstructionPercentage_ == 0 )
+    if( rConstructionPercentage_ == 0 || ( IsReservedObstacle() && !bReservedObstacleActivated_ ) )
         return false;
 
     if( agent.GetRole< PHY_RoleInterface_Location >().GetHeight() > pType_->GetMaxInteractionHeight() )
@@ -643,20 +711,10 @@ bool MIL_RealObject_ABC::CanInteractWith( const MIL_Agent_ABC& agent ) const
 // -----------------------------------------------------------------------------
 bool MIL_RealObject_ABC::CanInteractWith( const MIL_Population& population ) const
 {
-    if( bPrepared_ || rConstructionPercentage_ == 0 )
+    if( rConstructionPercentage_ == 0 || ( IsReservedObstacle() && !bReservedObstacleActivated_ ) )
         return false;
 
     return MIL_Object_ABC::CanInteractWith( population ); // NB : Call MIL_Object_ABC::CanCollideWithEntity()
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_RealObject_ABC::CanBePrepared
-// Created: NLD 2004-09-16
-// -----------------------------------------------------------------------------
-bool MIL_RealObject_ABC::CanBePrepared() const
-{
-    assert( pType_ );    
-    return !IsMarkedForDestruction() && pType_->CanBePrepared();
 }
 
 // -----------------------------------------------------------------------------
@@ -754,7 +812,7 @@ void MIL_RealObject_ABC::ApplyAttrition( MIL_PopulationElement_ABC& target )
 // -----------------------------------------------------------------------------
 MT_Float MIL_RealObject_ABC::GetExitingPopulationDensity() const
 {   
-    if( bPrepared_ || rConstructionPercentage_ == 0 || IsMarkedForDestruction() )
+    if( IsMarkedForDestruction() || rConstructionPercentage_ == 0 || ( IsReservedObstacle() && !bReservedObstacleActivated_ ) )
         return std::numeric_limits< MT_Float >::max();
 
     return rExitingPopulationDensity_;
@@ -806,23 +864,6 @@ void MIL_RealObject_ABC::Construct( MT_Float rDeltaPercentage )
 void MIL_RealObject_ABC::Construct()
 {
     ChangeConstructionPercentage( 1. );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_RealObject_ABC::Prepare
-// Created: NLD 2004-09-16
-// -----------------------------------------------------------------------------
-void MIL_RealObject_ABC::Prepare( MT_Float rDeltaPercentage )
-{   
-    assert( !IsMarkedForDestruction() );
-    if( !bPrepared_ )
-    {
-        bPrepared_ = true;
-        NotifyAttributeUpdated( eAttrUpdate_Prepared );
-        if( pView_ )
-            pView_->Prepare();
-    }
-    Construct( rDeltaPercentage );
 }
 
 // -----------------------------------------------------------------------------
@@ -921,10 +962,9 @@ void MIL_RealObject_ABC::Bypass( MT_Float rDeltaPercentage )
 //-----------------------------------------------------------------------------
 void MIL_RealObject_ABC::Activate()
 {
-    assert( bPrepared_ );
-    assert( rConstructionPercentage_ > 0. );
-    bPrepared_ = false;
-    NotifyAttributeUpdated( eAttrUpdate_Prepared );
+    assert( CanBeActivated() );  // $$$$ NLD 2007-05-22: n'importe quoi les asserts
+    bReservedObstacleActivated_ = false;
+    NotifyAttributeUpdated( eAttrUpdate_ReservedObstacleActivated );
     if( pView_ )
         pView_->Activate();
 }

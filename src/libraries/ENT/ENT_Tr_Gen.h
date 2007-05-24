@@ -47,6 +47,7 @@ public:
     static const std::string& ConvertFromDiplomatie( E_Diplomatie, E_Conversion = eToSim );
     static const std::string& ConvertFromChangeDiplomatieErrorCode( E_ChangeDiplomatieErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromEtatRapFor( E_EtatRapFor, E_Conversion = eToSim );
+    static const std::string& ConvertFromTypeObstacle( E_TypeObstacle, E_Conversion = eToSim );
     static const std::string& ConvertFromEtatCombatRencontre( E_EtatCombatRencontre, E_Conversion = eToSim );
     static const std::string& ConvertFromEtatOperationnel( E_EtatOperationnel, E_Conversion = eToSim );
     static const std::string& ConvertFromRoe( E_Roe, E_Conversion = eToSim );
@@ -93,6 +94,7 @@ public:
     static E_Diplomatie ConvertToDiplomatie( const std::string& );
     static E_ChangeDiplomatieErrorCode ConvertToChangeDiplomatieErrorCode( const std::string& );
     static E_EtatRapFor ConvertToEtatRapFor( const std::string& );
+    static E_TypeObstacle ConvertToTypeObstacle( const std::string& );
     static E_EtatCombatRencontre ConvertToEtatCombatRencontre( const std::string& );
     static E_EtatOperationnel ConvertToEtatOperationnel( const std::string& );
     static E_Roe ConvertToRoe( const std::string& );
@@ -140,6 +142,7 @@ private:
     typedef ENT_Tr::converter<E_Diplomatie> T_ConverterDiplomatie;
     typedef ENT_Tr::converter<E_ChangeDiplomatieErrorCode> T_ConverterChangeDiplomatieErrorCode;
     typedef ENT_Tr::converter<E_EtatRapFor> T_ConverterEtatRapFor;
+    typedef ENT_Tr::converter<E_TypeObstacle> T_ConverterTypeObstacle;
     typedef ENT_Tr::converter<E_EtatCombatRencontre> T_ConverterEtatCombatRencontre;
     typedef ENT_Tr::converter<E_EtatOperationnel> T_ConverterEtatOperationnel;
     typedef ENT_Tr::converter<E_Roe> T_ConverterRoe;
@@ -186,6 +189,7 @@ private:
     static T_ConverterDiplomatie DiplomatieConverter_ [];
     static T_ConverterChangeDiplomatieErrorCode ChangeDiplomatieErrorCodeConverter_ [];
     static T_ConverterEtatRapFor EtatRapForConverter_ [];
+    static T_ConverterTypeObstacle TypeObstacleForConverter_ [];
     static T_ConverterEtatCombatRencontre EtatCombatRencontreConverter_ [];
     static T_ConverterEtatOperationnel EtatOperationnelConverter_ [];
     static T_ConverterRoe RoeConverter_ [];

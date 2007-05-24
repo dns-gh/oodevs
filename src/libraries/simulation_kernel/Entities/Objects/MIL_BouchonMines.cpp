@@ -85,9 +85,9 @@ void MIL_BouchonMines::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) 
 // Name: MIL_BouchonMines::Initialize
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-bool MIL_BouchonMines::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_BouchonMines::Initialize( const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    if( !MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx ) )
+    if( !MIL_RealObject_ABC::Initialize( obstacleType, diaParameters, nCurrentParamIdx ) )
         return false;
 
     nMinesActivityTime_ = (uint)diaParameters[ nCurrentParamIdx++ ].ToFloat();

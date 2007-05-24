@@ -62,7 +62,6 @@ public:
     int GetFinalReturnCode  () const;
 
     int  Construct           ( MIL_RealObject_ABC* pObject, DEC_Knowledge_Object*& pKnowledge );
-    int  Prepare             ( MIL_RealObject_ABC* pObject, DEC_Knowledge_Object*& pKnowledge );
     int  ResumeWork          ( uint nKnowledgeObjectID );
     int  Destroy             ( uint nKnowledgeObjectID ); 
     int  Mine                ( uint nKnowledgeObjectID ); 
@@ -75,7 +74,6 @@ public:
 
     void ResumeWorkSuspended();
     void ConstructSuspended ();
-    void PrepareSuspended   ();
     void DestroySuspended   ();
     void MineSuspended      ();
     void DemineSuspended    ();
@@ -109,7 +107,6 @@ private:
     MIL_RealObject_ABC* GetRealObject( uint nKnowledgeObjectID );
 
     int Construct( MIL_RealObject_ABC& object );
-    int Prepare  ( MIL_RealObject_ABC& object );
     int Mine     ( MIL_RealObject_ABC& object );
     //@}
 

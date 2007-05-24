@@ -33,6 +33,7 @@ class MIL_RealObject_ABC;
 class MIL_RealObjectType;
 class MIL_Population;
 class MIL_PopulationType;
+class MIL_ObstacleType;
 class MIL_AutomateType;
 class MIL_NbcAgentType;
 class MIL_ControlZone;
@@ -89,7 +90,7 @@ public:
     MIL_AgentPion&  CreatePion      ( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
 
     MIL_RealObject_ABC&         CreateObject                       ( const MIL_RealObjectType& type, uint nID, MIL_Army& army, MIL_InputArchive& archive ); 
-    MIL_RealObject_ABC*         CreateObject                       ( MIL_Army& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx );
+    MIL_RealObject_ABC*         CreateObject                       ( MIL_Army& army, const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint nCurrentParamIdx );
     MIL_RealObject_ABC*         CreateObject                       ( const MIL_RealObjectType& type, MIL_Army& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
     MIL_NuageNBC&               CreateObjectNuageNBC               ( MIL_Army& army, const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgentType );
     MIL_ZoneMineeParDispersion& CreateObjectZoneeMineeParDispersion( MIL_Army& army, const TER_Localisation& localisation, uint nNbrMines );

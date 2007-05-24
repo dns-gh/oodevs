@@ -91,9 +91,9 @@ void MIL_CampPrisonniers::WriteSpecificAttributes( MT_XXmlOutputArchive& archive
 // Name: MIL_CampPrisonniers::Initialize
 // Created: NLD 2005-02-24
 // -----------------------------------------------------------------------------
-bool MIL_CampPrisonniers::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_CampPrisonniers::Initialize( const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    if( !MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx ) )
+    if( !MIL_RealObject_ABC::Initialize( obstacleType, diaParameters, nCurrentParamIdx ) )
         return false;
 
     DEC_AutomateDecision* pDecTC2 = diaParameters[ nCurrentParamIdx ].ToUserObject( pDecTC2 );

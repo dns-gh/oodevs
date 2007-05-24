@@ -44,8 +44,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgObjectCreation& msg );
-    void Update        ( const ASN1T_MsgObjectUpdate& msg );
+            void Update         ( const ASN1T_MsgObjectCreation& msg );
+            void Update         ( const ASN1T_MsgObjectUpdate&   msg );
     virtual void SendCreation   ( Publisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( Publisher_ABC& publisher ) const;
     virtual void SendDestruction( Publisher_ABC& publisher ) const;
@@ -59,21 +59,35 @@ private:
     //@}
 
 private:
-    const unsigned long        nID_;
-    const ASN1T_EnumObjectType nType_; // XML reference - no resolved by dispatcher
-    const std::string          strName_;
-          Localisation         localisation_;
-          Side&                side_;
-    const unsigned int         nTypeDotationForConstruction_; // XML reference - no resolved by dispatcher
-    const unsigned int         nTypeDotationForMining_; // XML reference - no resolved by dispatcher
+    //! @name Types
+    //@{
+    //$$$ bullshit
+    struct T_Optionals 
+    {
+        unsigned obstacle_de_manoeuvre_activePresent : 1;
+        unsigned type_obstaclePresent                : 1;
+    };
+    //@}
+
+private:
+    const unsigned long          nID_;
+    const ASN1T_EnumObjectType   nType_; // XML reference - no resolved by dispatcher
+    const ASN1T_EnumTypeObstacle nObstacleType_;
+    const std::string            strName_;
+          Localisation           localisation_;
+          Side&                  side_;
+    const unsigned int           nTypeDotationForConstruction_; // XML reference - no resolved by dispatcher
+    const unsigned int           nTypeDotationForMining_; // XML reference - no resolved by dispatcher
 
     ObjectAttribute_ABC* pAttributes_;
     unsigned int         nPercentageConstruction_;
     unsigned int         nPercentageMining_;
     unsigned int         nPercentageBypassing_;
-    bool                 bPrepared_;
+    bool                 bReservedObstacleActivated_;
     unsigned int         nNbrDotationForConstruction_;
     unsigned int         nNbrDotationForMining_;
+
+    T_Optionals          optionals_;
 };
 
 }

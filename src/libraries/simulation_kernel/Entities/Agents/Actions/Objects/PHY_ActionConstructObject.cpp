@@ -16,6 +16,7 @@
 #include "PHY_RoleAction_Objects.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_ObstacleType.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Decision/DEC_Tools.h"
@@ -29,7 +30,7 @@ PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, DIA_C
     , role_              ( pion.GetRole< PHY_RoleAction_Objects >() )
     , diaReturnCode_     ( diaCall.GetParameter( 0 ) )
     , diaReturnKnowledge_( diaCall.GetParameter( 1 ) )
-    , pObject_           ( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), diaCall.GetParameters(), 2 ) )
+    , pObject_           ( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), MIL_ObstacleType::initial_, diaCall.GetParameters(), 2 ) )
 {    
     assert( DEC_Tools::CheckTypeConnaissanceObjet( diaCall.GetParameter( 1 ) ) );
     diaReturnCode_.SetValue( role_.GetInitialReturnCode() );

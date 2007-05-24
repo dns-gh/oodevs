@@ -111,9 +111,9 @@ void MIL_ZoneNBC::CreateCloud()
 // Name: MIL_ZoneNBC::Initialize
 // Created: JVT 02-10-22
 //-----------------------------------------------------------------------------
-bool MIL_ZoneNBC::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_ZoneNBC::Initialize( const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx );
+    MIL_RealObject_ABC::Initialize( obstacleType, diaParameters, nCurrentParamIdx );
     return false;
 }
 

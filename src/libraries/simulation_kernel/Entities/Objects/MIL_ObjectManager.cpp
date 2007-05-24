@@ -220,7 +220,7 @@ ASN1T_EnumObjectErrorCode MIL_ObjectManager::CreateObject( const ASN1T_MagicActi
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MIL_RealObject_ABC* MIL_ObjectManager::CreateObject( MIL_Army& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx )
+MIL_RealObject_ABC* MIL_ObjectManager::CreateObject( MIL_Army& army, const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint nCurrentParamIdx )
 {
     uint nObjectTypeID = diaParameters[ nCurrentParamIdx++ ].ToId();
     const MIL_RealObjectType* pType = MIL_RealObjectType::Find( nObjectTypeID );
@@ -228,7 +228,7 @@ MIL_RealObject_ABC* MIL_ObjectManager::CreateObject( MIL_Army& army, DIA_Paramet
         return 0;
 
     MIL_RealObject_ABC& object = pType->InstanciateObject( pType->GetIDManager().GetFreeSimID(), army );
-    if( !object.Initialize( diaParameters, nCurrentParamIdx ) )
+    if( !object.Initialize( obstacleType, diaParameters, nCurrentParamIdx ) )
     {
         object.MarkForDestruction(); //$$$ naze, mais nécessaire
         delete &object;

@@ -32,7 +32,7 @@ public:
 
     //! @name Init
     //@{
-    virtual bool                      Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
+    virtual bool                      Initialize( const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
     virtual void                      Initialize( MIL_InputArchive& archive );
     virtual ASN1T_EnumObjectErrorCode Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject );
     //@}

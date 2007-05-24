@@ -125,5 +125,9 @@ void  Formatter< E_LogMaintenanceTraitementEtat >::operator()( const E_LogMainte
     displayer.AddToDisplay( ENT_Tr::ConvertFromLogMaintenanceTraitementEtat( e, ENT_Tr::eToTr ) );
 }
 
+void  Formatter< E_TypeObstacle >::operator()( const E_TypeObstacle& e, Displayer_ABC& displayer ) const {
+    displayer.AddToDisplay( ENT_Tr::ConvertFromTypeObstacle( e, ENT_Tr::eToTr ) );
+}
+
 
 

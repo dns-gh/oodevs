@@ -46,8 +46,7 @@ void MIL_ParameterType_GenObjectList::Copy( const ASN1T_MissionParameter& from, 
     if( !DEC_Tools::CheckTypeListeGenObjets( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyGenObjectList( *from.value.u.listMissionGenObject, to ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
+    NET_ASN_Tools::CopyGenObjectList( *from.value.u.listMissionGenObject, to );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,10 +81,7 @@ bool MIL_ParameterType_GenObjectList::Copy( const DIA_Variable_ABC& from, ASN1T_
     to.value.t                      = T_MissionParameter_value_listMissionGenObject;
     to.value.u.listMissionGenObject = new ASN1T_ListMissionGenObject();
     
-    if( !NET_ASN_Tools::CopyGenObjectList( from, *to.value.u.listMissionGenObject ) )
-        return false;
-
-    return true;
+    return NET_ASN_Tools::CopyGenObjectList( from, *to.value.u.listMissionGenObject );
 }
 
 // -----------------------------------------------------------------------------

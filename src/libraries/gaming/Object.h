@@ -60,9 +60,11 @@ public:
 
     //! @name Accessors
     //@{
-    virtual kernel::ObjectType& GetType() const;
-    virtual QString GetTypeName() const;
-    bool IsPrepared() const;
+    virtual kernel::ObjectType& GetType           () const;
+    virtual QString             GetTypeName       () const;
+            bool                IsReservedObstacle() const;
+            bool                IsReservedObstacleActivated() const;
+
     //@}
     
 private:
@@ -84,11 +86,11 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     kernel::ObjectType&   type_;
 
-    kernel::OptionalValue< float > rConstructionPercentage_;
-    kernel::OptionalValue< float > rValorizationPercentage_;
-    kernel::OptionalValue< float > rBypassConstructionPercentage_;
-
-    kernel::OptionalValue< bool >  bPrepared_;
+    kernel::OptionalValue< float          > rConstructionPercentage_;
+    kernel::OptionalValue< float          > rValorizationPercentage_;
+    kernel::OptionalValue< float          > rBypassConstructionPercentage_;
+    kernel::OptionalValue< E_TypeObstacle > obstacleType_;
+    kernel::OptionalValue< bool           > reservedObstacleActivated_;
     //@}
 
 private:

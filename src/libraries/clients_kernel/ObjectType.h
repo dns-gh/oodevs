@@ -37,7 +37,7 @@ public:
     QString GetName() const;
     virtual void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const;
 
-    bool CanBePrepared() const;
+    bool CanBeReservedObstacle() const;
     bool CanBeValorized() const;
     bool CanBeBypassed() const;
     //@}
@@ -61,7 +61,7 @@ public:
     QString name_;
     const char** xpm_;
 
-    bool canBePrepared_;
+    bool canBeReservedObstacle_;
     bool canBeValorized_;
     bool canBeBypassed_;
     //@}

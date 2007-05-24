@@ -87,7 +87,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Objects_GUI::eHasToBuild]->Connect( &pInfos->bToBuild_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eHasToReinforce]->Connect( &pInfos->bToReinforce_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eHasAttritions]->Connect( &pInfos->bAttritions_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eCanBePrepared]->Connect( &pInfos->bCanBePrepared_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eCanBeReservedObstacle]->Connect( &pInfos->bCanBeReservedObstacle_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eCanBeValorized]->Connect( &pInfos->bCanBeValorized_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eDangerous]->Connect( &pInfos->bDangerous_, bConnect );
 }

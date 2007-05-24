@@ -150,15 +150,15 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
     pFuncTable->RegisterFunction( DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation , "DEC_AutoriserEvacuationAutomatiqueBlesses" );
 
     // Objets
-    pFuncTable->RegisterFunction( DEC_ObjectFunctions::CanObjectTypeBeBypassed, "DEC_TypeObjet_PeutEtreContourne" );
-    pFuncTable->RegisterFunction( DEC_ObjectFunctions::CanObjectTypeBeMined   , "DEC_TypeObjet_PeutEtreValorise"  );
-    pFuncTable->RegisterFunction( DEC_ObjectFunctions::CanObjectTypeBePrepared, "DEC_TypeObjet_PeutEtrePrepare"   );
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::CanObjectTypeBeBypassed        , "DEC_TypeObjet_PeutEtreContourne"   );
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::CanObjectTypeBeMined           , "DEC_TypeObjet_PeutEtreValorise"    );
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::CanObjectTypeBeReservedObstacle, "DEC_TypeObjet_PeutEtreDeManoeuvre" );
 
     // Gen objects
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectType             , "DEC_GenObject_Type"               );
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectLocalisation     , "DEC_GenObject_Localisation"       );
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectDensity          , "DEC_GenObject_Densite"            );
-    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectPreliminaire     , "DEC_GenObject_Preliminaire"       );
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectObstacleType     , "DEC_GenObject_TypeObstacle"       );
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectTC2              , "DEC_GenObject_TC2"                );
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectMinesActivityTime, "DEC_GenObject_DelaiActiviteMines" );
 

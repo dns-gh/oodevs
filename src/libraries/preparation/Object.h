@@ -16,6 +16,7 @@
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "EnumTypes.h"
 
 namespace kernel
 {
@@ -47,7 +48,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Object( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
-                     const kernel::ObjectType& type, const QString& name, bool prepare, IdManager& idManager );
+                     const kernel::ObjectType& type, const QString& name, const Enum_TypeObstacle& obstacleType, bool reservedObstacleActivated, IdManager& idManager );
              Object( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, 
                      const kernel::Resolver_ABC< kernel::ObjectType, QString >& types, IdManager& idManager );
     virtual ~Object();
@@ -76,10 +77,11 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );
-    static unsigned long             ReadId  ( xml::xistream& xis );
-    static QString                   ReadName( xml::xistream& xis );
-    static const kernel::ObjectType& ReadType( xml::xistream& xis, const kernel::Resolver_ABC< kernel::ObjectType, QString >& types );
-    static bool                      ReadPrepared( xml::xistream& xis );
+    unsigned long             ReadId                       ( xml::xistream& xis );
+    QString                   ReadName                     ( xml::xistream& xis );
+    const kernel::ObjectType& ReadType                     ( xml::xistream& xis, const kernel::Resolver_ABC< kernel::ObjectType, QString >& types );
+    Enum_TypeObstacle         ReadObstacleType             ( xml::xistream& xis );
+    bool                      ReadReservedObstacleActivated( xml::xistream& xis );
     //@}
 
 public:
@@ -91,7 +93,9 @@ public:
     float rConstructionPercentage_;
     float rValorizationPercentage_;
     float rBypassConstructionPercentage_;
-    bool bPrepared_;
+
+    Enum_TypeObstacle obstacleType_;
+    bool              reservedObstacleActivated_;
 
     kernel::DotationType* construction_;
     kernel::DotationType* valorization_;

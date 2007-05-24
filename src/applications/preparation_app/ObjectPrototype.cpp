@@ -21,6 +21,7 @@
 #include "NBCPrototype.h"
 #include "RotaPrototype.h"
 #include "MinePrototype.h"
+#include "preparation/EnumTypes.h"
 
 using namespace kernel;
 using namespace gui;
@@ -58,10 +59,12 @@ ObjectPrototype::~ObjectPrototype()
 void ObjectPrototype::Commit()
 {
     const QString name = name_->text();
-    const bool prepared = prepared_->isChecked();
     const kernel::Team_ABC* team = teams_->GetValue();
+    
+    const E_TypeObstacle obstacleType = obstacleTypes_->GetValue();
+    const bool reservedObstacleActivated = reservedObstacleActivated_->isChecked();
 
-    creation_ = teamsModel_.CreateObject( *team, const_cast< ObjectType& >( GetType() ), name, prepared, *location_ );
+    creation_ = teamsModel_.CreateObject( *team, const_cast< ObjectType& >( GetType() ), name, Enum_TypeObstacle( obstacleType ), reservedObstacleActivated, *location_ );
     if( creation_ && activeAttributes_ )
         activeAttributes_->Commit();
     creation_ = 0;

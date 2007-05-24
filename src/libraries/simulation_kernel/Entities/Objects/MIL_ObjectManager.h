@@ -22,6 +22,7 @@ class TER_Localisation;
 class MIL_VirtualObject_ABC;
 class MIL_RealObject_ABC;
 class MIL_NbcAgentType;
+class MIL_ObstacleType;
 
 class MIL_ControlZone;
 class MIL_NuageNBC;
@@ -53,7 +54,7 @@ public:
     void UpdateStates ();
 
     MIL_RealObject_ABC&         CreateObject                       ( const MIL_RealObjectType& type, uint nID, MIL_Army& army, MIL_InputArchive& archive ); 
-    MIL_RealObject_ABC*         CreateObject                       ( MIL_Army& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx );
+    MIL_RealObject_ABC*         CreateObject                       ( MIL_Army& army, const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint nCurrentParamIdx );
     MIL_RealObject_ABC*         CreateObject                       ( const MIL_RealObjectType& type, MIL_Army& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
     MIL_NuageNBC&               CreateObjectNuageNBC               ( MIL_Army& army, const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgentType );
     MIL_ControlZone&            CreateObjectControlZone            ( MIL_Army& army, const TER_Localisation& localisation, MT_Float rRadius );

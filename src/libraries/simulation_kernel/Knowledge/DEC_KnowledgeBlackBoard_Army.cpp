@@ -146,7 +146,7 @@ public:
 
     void operator() ( DEC_Knowledge_Object& knowledge )
     {
-        if( pFilter_->Test( knowledge.GetType() ) && !knowledge.IsPrepared() ) //$$ ??
+        if( pFilter_->Test( knowledge.GetType() ) && ( !knowledge.IsReservedObstacle() || knowledge.IsReservedObstacleActivated() ) ) //$$ ??
             pContainer_->push_back( &knowledge );
     }
 
@@ -180,7 +180,7 @@ public:
 
     void operator() ( DEC_Knowledge_Object& knowledge )
     {
-        if( pFilter_->Test( knowledge.GetType() ) && !knowledge.IsPrepared() && knowledge.GetLocalisation().ComputeBarycenter().Distance( *pCenter_ ) <= rRadius_ )
+        if( pFilter_->Test( knowledge.GetType() ) && ( !knowledge.IsReservedObstacle() || knowledge.IsReservedObstacleActivated() ) && knowledge.GetLocalisation().ComputeBarycenter().Distance( *pCenter_ ) <= rRadius_ )
             pContainer_->push_back( (void*)knowledge.GetID()  );
     }
 
@@ -216,7 +216,7 @@ public:
 
     void operator() ( DEC_Knowledge_Object& knowledge )
     {
-        if( pFilter_->Test( knowledge.GetType() ) && !knowledge.IsPrepared() && pZone_->IsInside( knowledge.GetLocalisation().ComputeBarycenter() ) )
+        if( pFilter_->Test( knowledge.GetType() ) && ( !knowledge.IsReservedObstacle() || knowledge.IsReservedObstacleActivated() ) && pZone_->IsInside( knowledge.GetLocalisation().ComputeBarycenter() ) )
             pContainer_->push_back( (void*)knowledge.GetID()  );
     }
 
@@ -290,7 +290,7 @@ public:
 
     void operator() ( DEC_Knowledge_Object& knowledge )
     {
-        if( !knowledge.IsPrepared() ) //$$ ??
+        if( ( !knowledge.IsReservedObstacle() || knowledge.IsReservedObstacleActivated() ) ) //$$ ??
             pContainer_->push_back( &knowledge );
     }
 

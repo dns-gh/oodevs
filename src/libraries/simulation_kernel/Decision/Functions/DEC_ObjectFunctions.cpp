@@ -19,7 +19,7 @@
 #include "Entities/Objects/MIL_CampRefugies.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Decision/DEC_Tools.h"
-#include "Decision/Genie/DEC_Gen_Object.h"
+#include "Decision/DEC_Gen_Object.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_ObjectFunctions::CanObjectTypeBeBypassed
@@ -50,15 +50,15 @@ void DEC_ObjectFunctions::CanObjectTypeBeMined( DIA_Call_ABC& call )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_ObjectFunctions::CanObjectTypeBePrepared
+// Name: DEC_ObjectFunctions::CanObjectTypeBeReservedObstacle
 // Created: NLD 2005-09-21
 // -----------------------------------------------------------------------------
-void DEC_ObjectFunctions::CanObjectTypeBePrepared( DIA_Call_ABC& call )
+void DEC_ObjectFunctions::CanObjectTypeBeReservedObstacle( DIA_Call_ABC& call )
 {
     const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 0 ).ToId() );
     assert( pObjectType );
     if( pObjectType )
-        call.GetResult().SetValue( pObjectType->CanBePrepared() );
+        call.GetResult().SetValue( pObjectType->CanBeReservedObstacle() );
     else
         call.GetResult().SetValue( false );
 }
@@ -101,14 +101,14 @@ void DEC_ObjectFunctions::GetGenObjectDensity( DIA_Call_ABC& call )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_ObjectFunctions::GetGenObjectPreliminaire
+// Name: DEC_ObjectFunctions::GetGenObjectObstacleType
 // Created: NLD 2006-10-26
 // -----------------------------------------------------------------------------
-void DEC_ObjectFunctions::GetGenObjectPreliminaire( DIA_Call_ABC& call )
+void DEC_ObjectFunctions::GetGenObjectObstacleType( DIA_Call_ABC& call )
 {
     assert( DEC_Tools::CheckTypeGenObjet( call.GetParameter( 0 ) ) );    
     DEC_Gen_Object* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );    
-    call.GetResult().SetValue( (int)pTmp->GetPreliminaire() );
+    call.GetResult().SetValue( (int)pTmp->GetObstacleType().GetID() );
 }
 
 // -----------------------------------------------------------------------------

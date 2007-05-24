@@ -128,9 +128,9 @@ void MIL_Rota::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
 // Name: MIL_Rota::Initialize
 // Created: JVT 02-10-22
 //-----------------------------------------------------------------------------
-bool MIL_Rota::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_Rota::Initialize( const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx );
+    MIL_RealObject_ABC::Initialize( obstacleType, diaParameters, nCurrentParamIdx );
     return false; // Creation des Rotas depuis les scripts interdite
 }
 

@@ -43,12 +43,12 @@ public:
 private:
     //! @name Member data
     //@{
-    ASN1T_EnumObjectType                    type_;
-    Localisation                            location_;
-    ASN1T_EnumMissionGenSousTypeObstacle    preliminaire_;
-    double                                  density_;
-    unsigned int                            tc2_;
-    unsigned int                            delaiActiviteMines_;
+    ASN1T_EnumObjectType      type_;
+    Localisation              location_;
+    ASN1T_EnumTypeObstacle    typeObstacle_;
+    double                    density_;
+    unsigned int              tc2_;
+    unsigned int              delaiActiviteMines_;
     //@}
 };
 

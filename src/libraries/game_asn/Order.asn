@@ -48,10 +48,10 @@ MissionGenObject ::= SEQUENCE
 {
     type                 EnumObjectType,
     position             Localisation,
-    preliminaire         EnumMissionGenSousTypeObstacle DEFAULT preliminaire,
-    densite              REAL(0..5) DEFAULT 0,
-    tc2                  Automate   DEFAULT 0,
-    delai-activite-mines INTEGER    DEFAULT 0
+    type-obstacle        EnumTypeObstacle DEFAULT preliminaire,
+    densite              REAL(0..5)       DEFAULT 0,
+    tc2                  Automate         DEFAULT 0,
+    delai-activite-mines INTEGER          DEFAULT 0
 }
 ListMissionGenObject ::= SEQUENCE OF MissionGenObject;
 

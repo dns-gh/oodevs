@@ -29,15 +29,16 @@ public:
     template< typename T > static void MagicDestroyObject( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void ActivateObject    ( DIA_Call_ABC& call, const T& caller );
     
-    static void CanObjectTypeBeBypassed( DIA_Call_ABC& call );
-    static void CanObjectTypeBeMined   ( DIA_Call_ABC& call );
-    static void CanObjectTypeBePrepared( DIA_Call_ABC& call );
+    static void CanObjectTypeBeBypassed        ( DIA_Call_ABC& call );
+    static void CanObjectTypeBeMined           ( DIA_Call_ABC& call );
+    static void CanObjectTypeBeReservedObstacle( DIA_Call_ABC& call );
 
     static void GetPrisonerCampPosition( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void GetRefugeeCampPosition ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
 
     // Gen object
     static void GetGenObjectType             ( DIA_Call_ABC& call );
+    static void GetGenObjectObstacleType     ( DIA_Call_ABC& call );
     static void GetGenObjectLocalisation     ( DIA_Call_ABC& call );
     static void GetGenObjectDensity          ( DIA_Call_ABC& call );
     static void GetGenObjectPreliminaire     ( DIA_Call_ABC& call );

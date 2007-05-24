@@ -137,12 +137,12 @@ void DEC_KnowledgeObjectFunctions::IsConstructed( DIA_Call_ABC& call, const T& c
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeObjectFunctions::IsPrepared
+// Name: DEC_KnowledgeObjectFunctions::IsReservedObstacle
 // Created: NLD 2004-04-09
 // Modified: JVT 2004-12-17
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_KnowledgeObjectFunctions::IsPrepared( DIA_Call_ABC& call, const T& caller )
+void DEC_KnowledgeObjectFunctions::IsReservedObstacle( DIA_Call_ABC& call, const T& caller )
 {
     DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
     if( !pKnowledge )
@@ -152,7 +152,26 @@ void DEC_KnowledgeObjectFunctions::IsPrepared( DIA_Call_ABC& call, const T& call
         return;
     }
     call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( pKnowledge->IsPrepared() );
+    call.GetResult().SetValue( pKnowledge->IsReservedObstacle() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated
+// Created: NLD 2004-04-09
+// Modified: JVT 2004-12-17
+// -----------------------------------------------------------------------------
+template< typename T >
+void DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated( DIA_Call_ABC& call, const T& caller )
+{
+    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
+    if( !pKnowledge )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
+        return;
+    }
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    call.GetResult().SetValue( pKnowledge->IsReservedObstacleActivated() );
 }
 
 // -----------------------------------------------------------------------------

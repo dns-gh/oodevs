@@ -57,7 +57,7 @@ public:
         eHasPopulationAttritions,
         ePopulationAttritionSurface,
         ePopulationAttritionPh,
-        eCanBePrepared,
+        eCanBeReservedObstacle,
         eCanBeValorized,
         eDangerous,
         eNbrGuiElements

@@ -33,10 +33,11 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( Model& model, const ASN1T_MsgObjectKnowledgeCreation& asnMsg )
     : model_                        ( model )
-    , nID_                          ( asnMsg.oid_connaissance ) 
+    , nID_                          ( asnMsg.oid_connaissance )
     , side_                         ( model.GetSides().Get( asnMsg.oid_camp_possesseur ) )
     , pObject_                      ( model.GetObjects().Find( asnMsg.oid_objet_reel ) )
     , nType_                        ( asnMsg.type )
+    , nObstacleType_                ( asnMsg.m.type_obstaclePresent ? asnMsg.type_obstacle : EnumTypeObstacle::preliminaire )
     , nTypeDotationForConstruction_ ( asnMsg.m.type_dotation_constructionPresent ? asnMsg.type_dotation_construction : std::numeric_limits< unsigned int >::max() )
     , nTypeDotationForMining_       ( asnMsg.m.type_dotation_valorisationPresent ? asnMsg.type_dotation_valorisation : std::numeric_limits< unsigned int >::max() )
     , pAttributes_                  ( 0 )
@@ -45,24 +46,25 @@ ObjectKnowledge::ObjectKnowledge( Model& model, const ASN1T_MsgObjectKnowledgeCr
     , nConstructionPercentage_      ( std::numeric_limits< unsigned int >::max() )
     , nMiningPercentage_            ( std::numeric_limits< unsigned int >::max() )
     , nBypassingPercentage_         ( std::numeric_limits< unsigned int >::max() )
-    , bPrepared_                    ( false )
+    , bReservedObstacleActivated_   ( asnMsg.m.obstacle_de_manoeuvre_activePresent ? asnMsg.obstacle_de_manoeuvre_active : false )
     , bPerceived_                   ( false )
     , automatPerceptions_           ()
     , nNbrDotationForConstruction_  ( std::numeric_limits< unsigned int >::max() )
     , nNbrDotationForMining_        ( std::numeric_limits< unsigned int >::max() )
 {
     //$$ BULLSHIT // $$$$ AGE 2007-05-11: Clair !
-    optionals_.pertinencePresent                = 0;
-    optionals_.localisationPresent              = 0;
-    optionals_.pourcentage_constructionPresent  = 0;
-    optionals_.pourcentage_valorisationPresent  = 0;
-    optionals_.pourcentage_contournementPresent = 0;
-    optionals_.en_preparationPresent            = 0;
-    optionals_.est_percuPresent                 = 0;
-    optionals_.attributs_specifiquesPresent     = 0;
-    optionals_.perception_par_compagniePresent  = 0;
-    optionals_.nb_dotation_constructionPresent  = 0;
-    optionals_.nb_dotation_valorisationPresent  = 0;
+    optionals_.pertinencePresent                   = 0;
+    optionals_.localisationPresent                 = 0;
+    optionals_.pourcentage_constructionPresent     = 0;
+    optionals_.pourcentage_valorisationPresent     = 0;
+    optionals_.pourcentage_contournementPresent    = 0;
+    optionals_.est_percuPresent                    = 0;
+    optionals_.attributs_specifiquesPresent        = 0;
+    optionals_.perception_par_compagniePresent     = 0;
+    optionals_.nb_dotation_constructionPresent     = 0;
+    optionals_.nb_dotation_valorisationPresent     = 0;
+    optionals_.type_obstaclePresent                = asnMsg.m.type_obstaclePresent;
+    optionals_.obstacle_de_manoeuvre_activePresent = asnMsg.m.obstacle_de_manoeuvre_activePresent;
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +146,7 @@ void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
         pAttributes_->Update( asnMsg.attributs_specifiques );
         optionals_.attributs_specifiquesPresent = 1;
     }
-    
+   
     if( asnMsg.m.localisationPresent )
     {
         localisation_.Update( asnMsg.localisation );
@@ -162,15 +164,22 @@ void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
     if( asnMsg.m.oid_objet_reelPresent )
         pObject_ = model_.GetObjects().Find( asnMsg.oid_objet_reel );
 
-    UPDATE_ASN_ATTRIBUTE( pertinence               , nRelevance_                   ); 
-    UPDATE_ASN_ATTRIBUTE( pourcentage_construction , nConstructionPercentage_      );
-    UPDATE_ASN_ATTRIBUTE( pourcentage_valorisation , nMiningPercentage_            );
-    UPDATE_ASN_ATTRIBUTE( pourcentage_contournement, nBypassingPercentage_         );
-    UPDATE_ASN_ATTRIBUTE( en_preparation           , bPrepared_                    );
-    UPDATE_ASN_ATTRIBUTE( est_percu                , bPerceived_                   );
-    UPDATE_ASN_ATTRIBUTE( nb_dotation_construction , nNbrDotationForConstruction_  );
-    UPDATE_ASN_ATTRIBUTE( nb_dotation_valorisation , nNbrDotationForMining_        );
+    UPDATE_ASN_ATTRIBUTE( pertinence                  , nRelevance_                   );
+    UPDATE_ASN_ATTRIBUTE( pourcentage_construction    , nConstructionPercentage_      );
+    UPDATE_ASN_ATTRIBUTE( pourcentage_valorisation    , nMiningPercentage_            );
+    UPDATE_ASN_ATTRIBUTE( pourcentage_contournement   , nBypassingPercentage_         );
+    UPDATE_ASN_ATTRIBUTE( est_percu                   , bPerceived_                   );
+    UPDATE_ASN_ATTRIBUTE( nb_dotation_construction    , nNbrDotationForConstruction_  );
+    UPDATE_ASN_ATTRIBUTE( nb_dotation_valorisation    , nNbrDotationForMining_        );
+    UPDATE_ASN_ATTRIBUTE( obstacle_de_manoeuvre_active, bReservedObstacleActivated_   );
 }
+
+#define SEND_ASN_ATTRIBUTE( ASN, CPP )  \
+    if( optionals_.##ASN##Present )     \
+    {                                   \
+        asn().m.##ASN##Present = 1;     \
+        asn().##ASN = CPP;              \
+    }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge::SendCreation
@@ -197,15 +206,11 @@ void ObjectKnowledge::SendCreation( Publisher_ABC& publisher ) const
         asn().type_dotation_valorisation = nTypeDotationForMining_;
     }
 
+    SEND_ASN_ATTRIBUTE( type_obstacle               , nObstacleType_              );
+    SEND_ASN_ATTRIBUTE( obstacle_de_manoeuvre_active, bReservedObstacleActivated_ );
+
     asn.Send( publisher );
 }
-
-#define SEND_ASN_ATTRIBUTE( ASN, CPP )  \
-    if( optionals_.##ASN##Present )     \
-    {                                   \
-        asn().m.##ASN##Present = 1;     \
-        asn().##ASN = CPP;              \
-    }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge::SendFullUpdate
@@ -239,14 +244,14 @@ void ObjectKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
         automatPerceptions_.Send< ASN1T_ListOID, ASN1T_OID >( asn().perception_par_compagnie );
     }
 
-    SEND_ASN_ATTRIBUTE( pertinence               , nRelevance_                   ); 
-    SEND_ASN_ATTRIBUTE( pourcentage_construction , nConstructionPercentage_      );
-    SEND_ASN_ATTRIBUTE( pourcentage_valorisation , nMiningPercentage_            );
-    SEND_ASN_ATTRIBUTE( pourcentage_contournement, nBypassingPercentage_         );
-    SEND_ASN_ATTRIBUTE( en_preparation           , bPrepared_                    );
-    SEND_ASN_ATTRIBUTE( est_percu                , bPerceived_                   );
-    SEND_ASN_ATTRIBUTE( nb_dotation_construction , nNbrDotationForConstruction_  );
-    SEND_ASN_ATTRIBUTE( nb_dotation_valorisation , nNbrDotationForMining_        );
+    SEND_ASN_ATTRIBUTE( pertinence                  , nRelevance_                   );
+    SEND_ASN_ATTRIBUTE( pourcentage_construction    , nConstructionPercentage_      );
+    SEND_ASN_ATTRIBUTE( pourcentage_valorisation    , nMiningPercentage_            );
+    SEND_ASN_ATTRIBUTE( pourcentage_contournement   , nBypassingPercentage_         );   
+    SEND_ASN_ATTRIBUTE( obstacle_de_manoeuvre_active, bReservedObstacleActivated_   );    
+    SEND_ASN_ATTRIBUTE( est_percu                   , bPerceived_                   );
+    SEND_ASN_ATTRIBUTE( nb_dotation_construction    , nNbrDotationForConstruction_  );
+    SEND_ASN_ATTRIBUTE( nb_dotation_valorisation    , nNbrDotationForMining_        );
 
     asn.Send( publisher );
 

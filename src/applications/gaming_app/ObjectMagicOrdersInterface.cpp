@@ -59,13 +59,19 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
         AddMagic( tr( "Mine" ), SLOT( MineObject() ), magicMenu );
         AddMagic( tr( "Sweep mines" ), SLOT( SweepMineObject() ), magicMenu );
     }
-    if( entity.GetType().CanBePrepared() )
+    
+    const Object& obj = static_cast< const Object& >( entity );
+    /*
+    bool Object::IsReservedObstacle() const
+    IsReservedObstacleActivated
+    */
+
+    if( obj.IsReservedObstacle() )
     {
-        const Object& obj = static_cast< const Object& >( entity );
-        if( obj.IsPrepared() )
-            AddMagic( tr( "Set demolition reserved" ), SLOT( SetDemolitionReservedObject() ), magicMenu );
+        if( obj.IsReservedObstacleActivated() ) 
+            AddMagic( tr( "Deactivate reserved obstacle" ), SLOT( DeactivateReservedObstacle() ), magicMenu );  
         else
-            AddMagic( tr( "Set preliminary" ), SLOT( SetPreliminaryObject() ), magicMenu );
+            AddMagic( tr( "Activate reserved obstacle" ), SLOT( ActivateReservedObstacle() ), magicMenu );
     }
 }
 
@@ -131,26 +137,26 @@ void ObjectMagicOrdersInterface::SweepMineObject()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectMagicOrdersInterface::SetDemolitionReservedObject
-// Created: SBO 2007-05-04
+// Name: ObjectMagicOrdersInterface::ActivateReservedObstacle
+// Created: NLD 2007-05-23
 // -----------------------------------------------------------------------------
-void ObjectMagicOrdersInterface::SetDemolitionReservedObject()
+void ObjectMagicOrdersInterface::ActivateReservedObstacle()
 {
     ASN1T_MagicActionUpdateObject asn;
-    asn.m.en_preparationPresent = 1;
-    asn.en_preparation          = 0;
+    asn.m.obstacle_de_manoeuvre_activePresent = 1;
+    asn.obstacle_de_manoeuvre_active = 1;
     SendObjectMagic( asn );
 }
-
+    
 // -----------------------------------------------------------------------------
-// Name: ObjectMagicOrdersInterface::SetPreliminaryObject
-// Created: SBO 2007-05-04
+// Name: ObjectMagicOrdersInterface::DeactivateReservedObstacle
+// Created: NLD 2007-05-23
 // -----------------------------------------------------------------------------
-void ObjectMagicOrdersInterface::SetPreliminaryObject()
+void ObjectMagicOrdersInterface::DeactivateReservedObstacle()
 {
     ASN1T_MagicActionUpdateObject asn;
-    asn.m.en_preparationPresent = 1;
-    asn.en_preparation          = 1;
+    asn.m.obstacle_de_manoeuvre_activePresent = 1;
+    asn.obstacle_de_manoeuvre_active = 0;
     SendObjectMagic( asn );
 }
 

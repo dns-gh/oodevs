@@ -63,9 +63,10 @@ void HLA_Activation::Execute() const
     {
         if( bActivate_ )
             pObject->Activate(); // $$$$ AGE 2004-12-06: Effect ?
-        else
-            pObject->Prepare( 0 ); // $$$$ AGE 2004-12-06: Effect ?. I also know the internal object mechanism
+//        else
+//            pObject->Prepare( 0 ); // $$$$ AGE 2004-12-06: Effect ?. I also know the internal object mechanism
     }
+    // $$$$ NLD 2007-05-23: A Refaire
 }
 
 // -----------------------------------------------------------------------------

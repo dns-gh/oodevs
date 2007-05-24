@@ -105,9 +105,9 @@ void MIL_NuageNBC::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) cons
 // Created: JVT 02-10-22
 // Modified: JVT 2004-10-28
 //-----------------------------------------------------------------------------
-bool MIL_NuageNBC::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_NuageNBC::Initialize( const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx );
+    MIL_RealObject_ABC::Initialize( obstacleType, diaParameters, nCurrentParamIdx );
     return false;
 }
 
@@ -117,7 +117,7 @@ bool MIL_NuageNBC::Initialize( DIA_Parameters& diaParameters, uint& nCurrentPara
 // -----------------------------------------------------------------------------
 void MIL_NuageNBC::Initialize( const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgentType )
 {
-    MIL_RealObject_ABC::InitializeCommon( localisation );
+    MIL_RealObject_ABC::Initialize( localisation );
 
     assert( localisation.WasACircle() );
     pNbcAgent_            = new MIL_NbcAgent( nbcAgentType, MIL_NbcAgent::eGas );

@@ -86,9 +86,9 @@ void MIL_ZoneMineeParDispersion::WriteSpecificAttributes( MT_XXmlOutputArchive& 
 // Name: MIL_ZoneMineeParDispersion::Initialize
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-bool MIL_ZoneMineeParDispersion::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_ZoneMineeParDispersion::Initialize( const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    if( !MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx ) )
+    if( !MIL_RealObject_ABC::Initialize( obstacleType, diaParameters, nCurrentParamIdx ) )
         return false;
 
     rMinesDensity_      = diaParameters[ nCurrentParamIdx++ ].ToFloat();
@@ -159,7 +159,7 @@ void MIL_ZoneMineeParDispersion::UpdateState()
 // -----------------------------------------------------------------------------
 void MIL_ZoneMineeParDispersion::Initialize( const TER_Localisation& localisation, uint nNbrMines )
 {
-    MIL_RealObject_ABC::InitializeCommon( localisation );
+    MIL_RealObject_ABC::Initialize( localisation );
     
     rSizeCoef_                       = MIL_Tools::ConvertSimToMeter( GetLocalisation().GetLength() ); // Coef      : tps construction/destruction au m
     nFullNbrDotationForConstruction_ = nNbrMines;

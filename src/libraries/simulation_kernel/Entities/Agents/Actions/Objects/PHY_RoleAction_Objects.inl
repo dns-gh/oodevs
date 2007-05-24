@@ -73,15 +73,6 @@ void PHY_RoleAction_Objects::ConstructSuspended()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Objects::PrepareSuspended
-// Created: NLD 2004-09-16
-// -----------------------------------------------------------------------------
-inline
-void PHY_RoleAction_Objects::PrepareSuspended()
-{
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects::DestroySuspended
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------

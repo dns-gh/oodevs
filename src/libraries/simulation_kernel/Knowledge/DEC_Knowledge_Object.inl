@@ -9,6 +9,8 @@
 //
 // *****************************************************************************
 
+#include "Entities/Objects/MIL_ObstacleType.h"
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::GetID
 // Created: NLD 2004-03-24
@@ -99,16 +101,6 @@ inline
 bool DEC_Knowledge_Object::IsConstructed() const
 {
     return nConstructionPercentage_ >= 100;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Object::IsPrepared
-// Created: NLD 2004-05-07
-// -----------------------------------------------------------------------------
-inline
-bool DEC_Knowledge_Object::IsPrepared() const
-{
-    return bIsPrepared_;    
 }
 
 // -----------------------------------------------------------------------------
@@ -210,4 +202,24 @@ const MIL_Army& DEC_Knowledge_Object::GetArmyKnowing() const
 {
     assert( pArmyKnowing_ );
     return *pArmyKnowing_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::IsReservedObstacle
+// Created: NLD 2007-05-22
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Knowledge_Object::IsReservedObstacle() const
+{
+    return pObstacleType_ && pObstacleType_->CouldBeActivated();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::IsReservedObstacleActivated
+// Created: NLD 2007-05-23
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Knowledge_Object::IsReservedObstacleActivated() const
+{
+    return bReservedObstacleActivated_;
 }

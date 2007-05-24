@@ -13,7 +13,7 @@
 #include "DEC_Tools.h"
 #include "Functions/DEC_FrontAndBackLinesComputer.h"
 #include "Decision/Path/Agent/DEC_Agent_Path.h"
-#include "Decision/Genie/DEC_Gen_Object.h"
+#include "Decision/DEC_Gen_Object.h"
 
 #include "DIA/DIA_Instance.h"
 #include "DIA/DIA_Tool_Script_Engine.h"
@@ -396,7 +396,7 @@ void DisplayDiaVariable( const DIA_Variable_ABC& variable, std::stringstream& st
         case eFloat     : stream << " [Float : " << variable.ToFloat()<< "]"; break;
         case eId        : stream << " [" << variable.GetType().GetName() << " : " << variable.ToId() << "]"; break;
         case eObject    : stream << " [Object(" << variable.GetType().GetName() << "): " << variable.ToObject() << "]"; break;
-        case eSelection : stream << " [" << variable.GetType().GetName() << " : size " << variable.ToSelection().size() << "]"; break;
+        case eSelection : stream << " [" << variable.GetType().GetName() << " : size " << static_cast< const DIA_Variable_ObjectList& >( variable ).GetContainer().size() << "]"; break;
         case eVoid      : stream << " [" << variable.GetType().GetName() << " : " << variable.ToPtr() << "]"; break;
         default:
             stream << " [??]"; break;

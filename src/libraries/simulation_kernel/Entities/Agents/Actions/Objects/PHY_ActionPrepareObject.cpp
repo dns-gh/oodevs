@@ -16,6 +16,7 @@
 #include "PHY_RoleAction_Objects.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_ObstacleType.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Decision/DEC_Tools.h"
@@ -29,7 +30,7 @@ PHY_ActionPrepareObject::PHY_ActionPrepareObject( MIL_AgentPion& pion, DIA_Call_
     , role_              ( pion.GetRole< PHY_RoleAction_Objects >() )
     , diaReturnCode_     ( diaCall.GetParameter( 0 ) )
     , diaReturnKnowledge_( diaCall.GetParameter( 1 ) )
-    , pObject_           ( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), diaCall.GetParameters(), 2 ) )
+    , pObject_           ( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), MIL_ObstacleType::reserved_, diaCall.GetParameters(), 2 ) )
 {    
     assert( DEC_Tools::CheckTypeConnaissanceObjet( diaCall.GetParameter( 1 ) ) );
     diaReturnCode_.SetValue( role_.GetInitialReturnCode() );
@@ -58,7 +59,7 @@ void PHY_ActionPrepareObject::Execute()
         pObject_ = 0;
 
     DEC_Knowledge_Object* pKnowledge = 0;
-    int nReturn = role_.Prepare( pObject_, pKnowledge );
+    int nReturn = role_.Construct( pObject_, pKnowledge );
     diaReturnCode_     .SetValue( nReturn );
     diaReturnKnowledge_.SetValue( (void*)( pKnowledge ? pKnowledge->GetID() : 0 ), &DEC_Tools::GetTypeConnaissanceObjet() );
 }
@@ -72,5 +73,5 @@ void PHY_ActionPrepareObject::ExecuteSuspended()
     if( pObject_ && pObject_->IsMarkedForDestruction() )
         pObject_ = 0;
 
-    role_.PrepareSuspended();
+    role_.ConstructSuspended();
 }

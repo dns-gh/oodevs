@@ -97,10 +97,11 @@ void ParamObstacle::BuildInterface( QWidget* parent )
 
     box = new QHBox( group );
     box->setSpacing( 5 );
-    new QLabel( tr( "Sub-type:" ), box );
-    preliminaryCombo_ = new QComboBox( box );
-    for( int i = 0; i < eNbrMissionGenSousTypeObstacle; ++i )
-        preliminaryCombo_->insertItem( ENT_Tr::ConvertFromMissionGenSousTypeObstacle( ( E_MissionGenSousTypeObstacle )i, ENT_Tr::eToTr ).c_str(), i );
+
+    new QLabel( tr( "Obstacle type:" ), box );
+    obstacleTypeCombo_ = new QComboBox( box );
+    for( int i = 0; i < eNbrTypeObstacle ; ++i )
+        obstacleTypeCombo_->insertItem( ENT_Tr::ConvertFromTypeObstacle( ( E_TypeObstacle)i, ENT_Tr::eToTr ).c_str(), i );
 
     density_ = new ParamNumericField( tr( "Density" ), true );
     density_->BuildInterface( group );
@@ -185,7 +186,7 @@ void ParamObstacle::CommitTo( ASN1T_MissionGenObject& object ) const
     if( !type ) // $$$$ SBO 2007-04-26: 
         return;
     object.type          = (ASN1T_EnumObjectType)type->id_;
-    object.preliminaire  = (ASN1T_EnumMissionGenSousTypeObstacle)preliminaryCombo_->currentItem();
+    object.type_obstacle = (ASN1T_EnumTypeObstacle)obstacleTypeCombo_->currentItem();
     switch( type->id_ )
     {
     case EnumObjectType::zone_minee_lineaire:

@@ -35,6 +35,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army& armyKnowing, MIL_Rea
     , pArmyKnowing_                     ( &armyKnowing )
     , pObjectKnown_                     ( &objectKnown )
     , pObjectType_                      ( &objectKnown.GetType() )
+    , pObstacleType_                    ( objectKnown.GetObstacleType() )
     , nID_                              ( pObjectType_->GetIDManager().GetFreeSimID() )
     , nAttributesUpdated_               ( eAttr_AllAttributes )
     , pOwnerArmy_                       ( &objectKnown.GetArmy() )    
@@ -43,7 +44,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army& armyKnowing, MIL_Rea
     , nConstructionPercentage_          ( 0 )
     , nMiningPercentage_                ( 0 )
     , nBypassPercentage_                ( 0 )
-    , bIsPrepared_                      ( objectKnown.IsPrepared() ) //$$$ A CHIER ....
+    , bReservedObstacleActivated_       ( objectKnown.IsReservedObstacleActivated() ) //$$$ A CHIER ....
     , nNbrDotationForConstruction_      ( 0 )
     , nNbrDotationForMining_            ( 0 )                
     , pCurrentPerceptionLevel_          ( &PHY_PerceptionLevel::notSeen_ )
@@ -63,9 +64,10 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army& armyKnowing, MIL_Rea
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Object::DEC_Knowledge_Object()
     : DEC_Knowledge_ABC                ()
-    , pObjectType_                     ( 0 )
     , pArmyKnowing_                    ( 0 )
     , pObjectKnown_                    ( 0 )
+    , pObjectType_                     ( 0 )
+    , pObstacleType_                   ( 0 )
     , nID_                             ( 0 )
     , nAttributesUpdated_              ( 0 )
     , pOwnerArmy_                      ( 0 )
@@ -74,7 +76,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
     , nConstructionPercentage_         ( 0 )
     , nMiningPercentage_               ( 0 )
     , nBypassPercentage_               ( 0 )
-    , bIsPrepared_                     ( false )
+    , bReservedObstacleActivated_      ( false )
     , nNbrDotationForConstruction_     ( 0 )
     , nNbrDotationForMining_           ( 0 )            
     , pCurrentPerceptionLevel_         ( 0 )
@@ -115,7 +117,16 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const uint )
     file >> nObjectTypeID;
     pObjectType_ = MIL_RealObjectType::Find( nObjectTypeID );
     assert( pObjectType_ );
-    
+
+    uint nObstacleTypeID;
+    file >> nObstacleTypeID;
+    pObstacleType_ = 0;
+    if( nObstacleTypeID != (uint)-1 )
+    {
+        pObstacleType_ = MIL_ObstacleType::Find( nObstacleTypeID );
+        assert( pObstacleType_ );
+    }
+
     file >> const_cast< MIL_Army*& >( pArmyKnowing_ )
          >> pObjectKnown_
          >> const_cast< uint& >( nID_ )
@@ -126,7 +137,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const uint )
          >> nConstructionPercentage_
          >> nMiningPercentage_
          >> nBypassPercentage_
-         >> bIsPrepared_
+         >> bReservedObstacleActivated_
          >> nNbrDotationForConstruction_
          >> nNbrDotationForMining_;
          
@@ -165,7 +176,8 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const uint ) co
     assert( pObjectType_ );
     
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         << pObjectType_->GetAsnID()
+         << pObjectType_->GetID()
+         << ( pObstacleType_ ? pObstacleType_->GetID() : (uint)-1 )
          << pArmyKnowing_
          << pObjectKnown_
          << nID_
@@ -176,7 +188,7 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const uint ) co
          << nConstructionPercentage_
          << nMiningPercentage_
          << nBypassPercentage_
-         << bIsPrepared_
+         << bReservedObstacleActivated_
          << nNbrDotationForConstruction_
          << nNbrDotationForMining_
          << pCurrentPerceptionLevel_->GetID()
@@ -267,10 +279,10 @@ void DEC_Knowledge_Object::UpdateStates()
         NotifyAttributeUpdated( eAttr_BypassPercentage );
     }
 
-    if( pObjectKnown_->IsPrepared() != bIsPrepared_ )
+    if( pObjectKnown_->IsReservedObstacleActivated() != bReservedObstacleActivated_ )
     {
-        bIsPrepared_ = pObjectKnown_->IsPrepared();
-        NotifyAttributeUpdated( eAttr_IsPrepared );
+        bReservedObstacleActivated_ = pObjectKnown_->IsReservedObstacleActivated();
+        NotifyAttributeUpdated( eAttr_ReservedObstacleActivated );
     }
 
     if( pObjectKnown_->GetNbrDotationForConstruction() != nNbrDotationForConstruction_ )
@@ -460,13 +472,13 @@ void DEC_Knowledge_Object::UpdateRelevance()
 // Name: DEC_Knowledge_Object::BuildMsgPerceptionSources
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::BuildMsgPerceptionSources( ASN1T_MsgObjectKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_Object::BuildMsgPerceptionSources( ASN1T_MsgObjectKnowledgeUpdate& asn ) const
 {
     if( !IsAttributeUpdated( eAttr_PerceptionSources ) )
         return;
 
-    asnMsg.m.perception_par_compagniePresent = 1;
-    asnMsg.perception_par_compagnie.n        = perceptionPerAutomateSet_.size();
+    asn.m.perception_par_compagniePresent = 1;
+    asn.perception_par_compagnie.n        = perceptionPerAutomateSet_.size();
 
     if( perceptionPerAutomateSet_.empty() )
         return;
@@ -478,53 +490,53 @@ void DEC_Knowledge_Object::BuildMsgPerceptionSources( ASN1T_MsgObjectKnowledgeUp
         pPerceptions[i] = (*it)->GetID();
         ++i;
     }
-    asnMsg.perception_par_compagnie.elem = pPerceptions;
+    asn.perception_par_compagnie.elem = pPerceptions;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::BuildMsgRelevance
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::BuildMsgRelevance( ASN1T_MsgObjectKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_Object::BuildMsgRelevance( ASN1T_MsgObjectKnowledgeUpdate& asn ) const
 {
     if( !IsAttributeUpdated( eAttr_Relevance ) )
         return;
 
-    asnMsg.m.pertinencePresent = 1;
-    asnMsg.pertinence = (uint)( rRelevance_ * 100. );    
+    asn.m.pertinencePresent = 1;
+    asn.pertinence = (uint)( rRelevance_ * 100. );    
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::BuildMsgLocalisations
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::BuildMsgLocalisations( ASN1T_MsgObjectKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_Object::BuildMsgLocalisations( ASN1T_MsgObjectKnowledgeUpdate& asn ) const
 {
     if( !IsAttributeUpdated( eAttr_Localisation ) )
         return;
 
-    asnMsg.m.localisationPresent = 1;
-    NET_ASN_Tools::WriteLocation( localisation_, asnMsg.localisation );
+    asn.m.localisationPresent = 1;
+    NET_ASN_Tools::WriteLocation( localisation_, asn.localisation );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::BuildMsgCurrentPerceptionLevel
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::BuildMsgCurrentPerceptionLevel( ASN1T_MsgObjectKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_Object::BuildMsgCurrentPerceptionLevel( ASN1T_MsgObjectKnowledgeUpdate& asn ) const
 {
     if( !IsAttributeUpdated( eAttr_CurrentPerceptionLevel ) )
         return;
 
-    asnMsg.m.est_percuPresent = 1;
-    asnMsg.est_percu = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
+    asn.m.est_percuPresent = 1;
+    asn.est_percu = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::BuildMsgStates
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::BuildMsgStates( ASN1T_MsgObjectKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_Object::BuildMsgStates( ASN1T_MsgObjectKnowledgeUpdate& asn ) const
 {
     assert( pObjectType_ );
     if( *pMaxPerceptionLevel_ == PHY_PerceptionLevel::notSeen_ )
@@ -532,39 +544,39 @@ void DEC_Knowledge_Object::BuildMsgStates( ASN1T_MsgObjectKnowledgeUpdate& asnMs
 
     if( IsAttributeUpdated( eAttr_ConstructionPercentage ) )
     {
-        asnMsg.m.pourcentage_constructionPresent = 1;
-        asnMsg.pourcentage_construction = nConstructionPercentage_;
+        asn.m.pourcentage_constructionPresent = 1;
+        asn.pourcentage_construction = nConstructionPercentage_;
     }
 
     if( IsAttributeUpdated( eAttr_MiningPercentage ) )
     {
-        asnMsg.m.pourcentage_valorisationPresent = 1;
-        asnMsg.pourcentage_valorisation = nMiningPercentage_;
+        asn.m.pourcentage_valorisationPresent = 1;
+        asn.pourcentage_valorisation = nMiningPercentage_;
     }
 
     if( IsAttributeUpdated( eAttr_BypassPercentage ) )
     {
-        asnMsg.m.pourcentage_contournementPresent = 1;
-        asnMsg.pourcentage_contournement = nBypassPercentage_;
+        asn.m.pourcentage_contournementPresent = 1;
+        asn.pourcentage_contournement = nBypassPercentage_;
     }
 
-    if( IsAttributeUpdated( eAttr_IsPrepared ) )
+    if( IsAttributeUpdated( eAttr_ReservedObstacleActivated ) && IsReservedObstacle() )
     {
-        asnMsg.m.en_preparationPresent = 1;
-        asnMsg.en_preparation = bIsPrepared_;
+        asn.m.obstacle_de_manoeuvre_activePresent = 1;
+        asn.obstacle_de_manoeuvre_active          = bReservedObstacleActivated_;
     }     
 
     if( IsAttributeUpdated( eAttr_Dotations ) )
     {
         if( pObjectType_->GetDotationCategoryForConstruction() )
         {
-            asnMsg.m.nb_dotation_constructionPresent = 1;
-            asnMsg.nb_dotation_construction          = nNbrDotationForConstruction_;
+            asn.m.nb_dotation_constructionPresent = 1;
+            asn.nb_dotation_construction          = nNbrDotationForConstruction_;
         }
         if( pObjectType_->GetDotationCategoryForMining() )
         {
-            asnMsg.m.nb_dotation_valorisationPresent = 1;
-            asnMsg.nb_dotation_valorisation          = nNbrDotationForMining_;
+            asn.m.nb_dotation_valorisationPresent = 1;
+            asn.nb_dotation_valorisation          = nNbrDotationForMining_;
         }
     }
 }
@@ -574,13 +586,13 @@ void DEC_Knowledge_Object::BuildMsgStates( ASN1T_MsgObjectKnowledgeUpdate& asnMs
 // Created: NLD 2004-03-26
 // -----------------------------------------------------------------------------
 inline
-void DEC_Knowledge_Object::BuildMsgRealObject( ASN1T_MsgObjectKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_Object::BuildMsgRealObject( ASN1T_MsgObjectKnowledgeUpdate& asn ) const
 {
     if( !IsAttributeUpdated( eAttr_RealObject ) )
         return;
 
-    asnMsg.m.oid_objet_reelPresent = 1;
-    asnMsg.oid_objet_reel = pObjectKnown_ ? pObjectKnown_->GetID() : 0;
+    asn.m.oid_objet_reelPresent = 1;
+    asn.oid_objet_reel = pObjectKnown_ ? pObjectKnown_->GetID() : 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -598,27 +610,27 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
     if( nAttributesUpdated_ == eAttr_Nothing )
         return;
 
-    NET_ASN_MsgObjectKnowledgeUpdate asnMsg;
-    asnMsg().oid_connaissance    = nID_;
+    NET_ASN_MsgObjectKnowledgeUpdate asn;
+    asn().oid_connaissance    = nID_;
     
     assert( pArmyKnowing_ );
-    asnMsg().oid_camp_possesseur = pArmyKnowing_->GetID();
+    asn().oid_camp_possesseur = pArmyKnowing_->GetID();
     
-    BuildMsgRealObject            ( asnMsg() );
-    BuildMsgPerceptionSources     ( asnMsg() );
-    BuildMsgRelevance             ( asnMsg() );
-    BuildMsgLocalisations         ( asnMsg() );
-    BuildMsgCurrentPerceptionLevel( asnMsg() );
-    BuildMsgSpecificAttributes    ( asnMsg() );
-    BuildMsgStates                ( asnMsg() );
+    BuildMsgRealObject            ( asn() );
+    BuildMsgPerceptionSources     ( asn() );
+    BuildMsgRelevance             ( asn() );
+    BuildMsgLocalisations         ( asn() );
+    BuildMsgCurrentPerceptionLevel( asn() );
+    BuildMsgSpecificAttributes    ( asn() );
+    BuildMsgStates                ( asn() );
     
-    asnMsg.Send();
+    asn.Send();
 
-    if( asnMsg().m.perception_par_compagniePresent && asnMsg().perception_par_compagnie.n > 0 )
-        delete [] asnMsg().perception_par_compagnie.elem; //$$$ RAM
+    if( asn().m.perception_par_compagniePresent && asn().perception_par_compagnie.n > 0 )
+        delete [] asn().perception_par_compagnie.elem; //$$$ RAM
 
-    if( asnMsg().m.localisationPresent )
-        NET_ASN_Tools::Delete( asnMsg().localisation );
+    if( asn().m.localisationPresent )
+        NET_ASN_Tools::Delete( asn().localisation );
 }
 
 // -----------------------------------------------------------------------------
@@ -627,32 +639,43 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::SendMsgCreation() const
 {
-    NET_ASN_MsgObjectKnowledgeCreation asnMsg;
-    asnMsg().oid_connaissance    = nID_;
+    NET_ASN_MsgObjectKnowledgeCreation asn;
+    asn().oid_connaissance    = nID_;
     
     assert( pArmyKnowing_ );
-    asnMsg().oid_camp_possesseur = pArmyKnowing_->GetID();
+    asn().oid_camp_possesseur = pArmyKnowing_->GetID();
     assert( pObjectType_ );
-    asnMsg().type                = pObjectType_->GetAsnID();
+    asn().type                = pObjectType_->GetAsnID();
 
-    if ( pObjectKnown_ )
-        asnMsg().oid_objet_reel = pObjectKnown_->GetID();
+    if( pObstacleType_ )
+    {
+        asn().m.type_obstaclePresent = 1;
+        asn().type_obstacle          = pObstacleType_->GetAsnID();
+        if( pObstacleType_->CouldBeActivated() )
+        {
+            asn().m.obstacle_de_manoeuvre_activePresent = 1;
+            asn().obstacle_de_manoeuvre_active          = bReservedObstacleActivated_;
+        }
+    }
+
+    if( pObjectKnown_ )
+        asn().oid_objet_reel = pObjectKnown_->GetID();
     else
-        asnMsg().oid_objet_reel = 0;
+        asn().oid_objet_reel = 0;
 
     if( pObjectType_->GetDotationCategoryForConstruction() )
     {
-        asnMsg().m.type_dotation_constructionPresent = 1;
-        asnMsg().type_dotation_construction          = pObjectType_->GetDotationCategoryForConstruction()->GetMosID();
+        asn().m.type_dotation_constructionPresent = 1;
+        asn().type_dotation_construction          = pObjectType_->GetDotationCategoryForConstruction()->GetMosID();
     }
 
     if( pObjectType_->GetDotationCategoryForMining() )
     {
-        asnMsg().m.type_dotation_valorisationPresent = 1;
-        asnMsg().type_dotation_valorisation          = pObjectType_->GetDotationCategoryForMining()->GetMosID();
+        asn().m.type_dotation_valorisationPresent = 1;
+        asn().type_dotation_valorisation          = pObjectType_->GetDotationCategoryForMining()->GetMosID();
     }
     
-    asnMsg.Send();
+    asn.Send();
 }
 
 // -----------------------------------------------------------------------------
@@ -661,12 +684,12 @@ void DEC_Knowledge_Object::SendMsgCreation() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::SendMsgDestruction() const
 {
-    NET_ASN_MsgObjectKnowledgeDestruction asnMsg;
-    asnMsg().oid_connaissance    = nID_;
+    NET_ASN_MsgObjectKnowledgeDestruction asn;
+    asn().oid_connaissance    = nID_;
     
     assert( pArmyKnowing_ );
-    asnMsg().oid_camp_possesseur = pArmyKnowing_->GetID();
-    asnMsg.Send();
+    asn().oid_camp_possesseur = pArmyKnowing_->GetID();
+    asn.Send();
 }
     
 

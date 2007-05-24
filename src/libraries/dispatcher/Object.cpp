@@ -32,6 +32,7 @@ using namespace dispatcher;
 Object::Object( Model& model, const ASN1T_MsgObjectCreation& msg )
     : nID_                         ( msg.oid  )
     , nType_                       ( msg.type )
+    , nObstacleType_               ( msg.m.type_obstaclePresent ? msg.type_obstacle : EnumTypeObstacle::preliminaire )
     , strName_                     ( msg.nom  )
     , localisation_                ( msg.localisation )
     , side_                        ( model.GetSides().Get( msg.camp ) )
@@ -40,11 +41,14 @@ Object::Object( Model& model, const ASN1T_MsgObjectCreation& msg )
     , nPercentageConstruction_     ( std::numeric_limits< unsigned int >::max() )
     , nPercentageMining_           ( std::numeric_limits< unsigned int >::max() )
     , nPercentageBypassing_        ( std::numeric_limits< unsigned int >::max() )
-    , bPrepared_                   ( false )
+    , bReservedObstacleActivated_  ( msg.m.obstacle_de_manoeuvre_activePresent ? msg.obstacle_de_manoeuvre_active : false )
     , nNbrDotationForConstruction_ ( std::numeric_limits< unsigned int >::max() )
     , nNbrDotationForMining_       ( std::numeric_limits< unsigned int >::max() )
     , pAttributes_                 ( 0 )
 {
+    optionals_.obstacle_de_manoeuvre_activePresent  = msg.m.obstacle_de_manoeuvre_activePresent;
+    optionals_.type_obstaclePresent                 = msg.m.type_obstaclePresent;
+
     if( msg.m.attributs_specifiquesPresent )
     {
         switch( nType_ )
@@ -116,9 +120,11 @@ void Object::Update( const ASN1T_MsgObjectUpdate& msg )
         nPercentageMining_ = msg.pourcentage_valorisation;
     if( msg.m.pourcentage_creation_contournementPresent )
         nPercentageBypassing_ = msg.pourcentage_creation_contournement;
-
-    bPrepared_ = msg.en_preparation;
-
+    if( msg.m.obstacle_de_manoeuvre_activePresent )
+    {
+        optionals_.obstacle_de_manoeuvre_activePresent = 1;
+        bReservedObstacleActivated_ = msg.obstacle_de_manoeuvre_active;
+    }
     if( msg.m.nb_dotation_constructionPresent )
         nNbrDotationForConstruction_ = msg.nb_dotation_construction;
     if( msg.m.nb_dotation_valorisationPresent )
@@ -130,6 +136,13 @@ void Object::Update( const ASN1T_MsgObjectUpdate& msg )
     if( pAttributes_ && msg.m.attributs_specifiquesPresent )
         pAttributes_->Update( msg.attributs_specifiques );
 }
+
+#define SEND_ASN_ATTRIBUTE( ASN, CPP )  \
+    if( optionals_.##ASN##Present )     \
+    {                                   \
+        asn().m.##ASN##Present = 1;     \
+        asn().##ASN = CPP;              \
+    }
 
 // -----------------------------------------------------------------------------
 // Name: Object::SendCreation
@@ -143,6 +156,9 @@ void Object::SendCreation( Publisher_ABC& publisher ) const
     asn().type = nType_;
     asn().nom  = strName_.c_str(); // !! pointeur sur const char*
     asn().camp = side_.GetID();
+
+    SEND_ASN_ATTRIBUTE( type_obstacle               , nObstacleType_              );
+    SEND_ASN_ATTRIBUTE( obstacle_de_manoeuvre_active, bReservedObstacleActivated_ );
 
     localisation_.Send( asn().localisation );
 
@@ -199,7 +215,7 @@ void Object::SendFullUpdate( Publisher_ABC& publisher ) const
         asn().pourcentage_creation_contournement          = nPercentageBypassing_;
     }
 
-    asn().en_preparation = bPrepared_;
+    SEND_ASN_ATTRIBUTE( obstacle_de_manoeuvre_active, bReservedObstacleActivated_ );
 
     if( nNbrDotationForConstruction_ != std::numeric_limits< unsigned int >::max() )
     {

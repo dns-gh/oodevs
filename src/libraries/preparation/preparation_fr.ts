@@ -352,10 +352,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Prepared:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Construction dotation:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -376,7 +372,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Info/Prepared</source>
+        <source>Obstacle type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reserved obstacle activated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Obstacle type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Reserved obstacle activated</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

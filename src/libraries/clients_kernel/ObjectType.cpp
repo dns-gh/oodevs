@@ -28,7 +28,7 @@ ObjectType::ObjectType( xistream& xis, unsigned long id )
     xpm_ = TypeIcon();
     std::string name;
     xis >> attribute( "type", name )
-        >> content( "PeutEtrePrepare", canBePrepared_ )
+        >> content( "PeutEtreObstacleDeManoeuvre", canBeReservedObstacle_ )
         >> content( "PeutEtreValorise", canBeValorized_ )
         >> content( "PeutEtreContourne", canBeBypassed_ );
     name_ = name.c_str();
@@ -53,12 +53,12 @@ QString ObjectType::GetName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectType::CanBePrepared
+// Name: ObjectType::CanBeReservedObstacle
 // Created: AGE 2006-10-17
 // -----------------------------------------------------------------------------
-bool ObjectType::CanBePrepared() const
+bool ObjectType::CanBeReservedObstacle() const
 {
-    return canBePrepared_;
+    return canBeReservedObstacle_;
 }
 
 // -----------------------------------------------------------------------------

@@ -50,8 +50,7 @@ void MIL_ParameterType_GenObject::Copy( const ASN1T_MissionParameter& from, DIA_
     if( !DEC_Tools::CheckTypeGenObjet( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyGenObject( *from.value.u.missionGenObject, to ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
+    NET_ASN_Tools::CopyGenObject( *from.value.u.missionGenObject, to );
 }
 
 //-----------------------------------------------------------------------------

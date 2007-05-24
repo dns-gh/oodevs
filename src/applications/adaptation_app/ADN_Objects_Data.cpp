@@ -162,7 +162,7 @@ ADN_Objects_Data::ObjectInfos::ObjectInfos( E_ObjectType nType )
 , strName_          ( nType == (E_ObjectType)-1 ? "" : ENT_Tr::ConvertFromObjectType( nType, ENT_Tr::eToTr ) )
 , bDangerous_       ( false )
 , bCanBeValorized_  ( false )
-, bCanBePrepared_   ( false )
+, bCanBeReservedObstacle_( false )
 , bCanBeBypassed_   ( false )
 , rAvoidDistance_   ( 0 )
 , rDefaultSpeed_    ( -1 )
@@ -187,8 +187,8 @@ ADN_Objects_Data::ObjectInfos::ObjectInfos( E_ObjectType nType )
     bDangerous_.SetParentNode( *this );
     bCanBeValorized_.SetDataName( "la capacité d'être valorisé" );
     bCanBeValorized_.SetParentNode( *this );
-    bCanBePrepared_.SetDataName( "la capacité d'être préparé" );
-    bCanBePrepared_.SetParentNode( *this );
+    bCanBeReservedObstacle_.SetDataName( "la capacité d'être un obstacle de manoeuvre" );
+    bCanBeReservedObstacle_.SetParentNode( *this );
     bCanBeBypassed_.SetDataName( "la capacité d'être contourné" );
     bCanBeBypassed_.SetParentNode( *this );
     rDefaultSpeed_.SetDataName( "la vitesse par défaut" );
@@ -250,7 +250,7 @@ void ADN_Objects_Data::ObjectInfos::ReadArchive( ADN_XmlInput_Helper& input )
     nDefaultConsumption_ = nConsumption;
 
     input.ReadField( "Dangereux" , bDangerous_ );
-    input.ReadField( "PeutEtrePrepare" , bCanBePrepared_ );
+    input.ReadField( "PeutEtreObstacleDeManoeuvre" , bCanBeReservedObstacle_ );
     input.ReadField( "PeutEtreValorise", bCanBeValorized_ );
     input.ReadField( "PeutEtreContourne", bCanBeBypassed_ );
     input.ReadField( "DistanceEvitement", rAvoidDistance_, ADN_XmlInput_Helper::eNothing );
@@ -399,7 +399,7 @@ void ADN_Objects_Data::ObjectInfos::WriteArchive( MT_OutputArchive_ABC& output )
 
     output.WriteField( "ModeConsommationParDefaut", ADN_Tr::ConvertFromConsumptionType( nDefaultConsumption_.GetData() ) );
     output.WriteField( "Dangereux", bDangerous_.GetData() );
-    output.WriteField( "PeutEtrePrepare" , bCanBePrepared_.GetData() );
+    output.WriteField( "PeutEtreObstacleDeManoeuvre" , bCanBeReservedObstacle_.GetData() );
     output.WriteField( "PeutEtreValorise", bCanBeValorized_.GetData() || bToReinforce_.GetData() );
     output.WriteField( "PeutEtreContourne", bCanBeBypassed_.GetData() );
 

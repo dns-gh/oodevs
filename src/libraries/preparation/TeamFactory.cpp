@@ -115,9 +115,9 @@ kernel::KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( xml::xistream& xi
 // Name: TeamFactory::CreateObject
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-kernel::Object_ABC* TeamFactory::CreateObject( const kernel::ObjectType& type, kernel::Team_ABC& team, const QString& name, bool prepare, const kernel::Location_ABC& location )
+kernel::Object_ABC* TeamFactory::CreateObject( const kernel::ObjectType& type, kernel::Team_ABC& team, const QString& name, const Enum_TypeObstacle& obstacleType, bool reservedObstacleActivated, const kernel::Location_ABC& location )
 {
-    Object* result = new Object( controllers_.controller_, staticModel_.coordinateConverter_, type, name, prepare, idManager_ );
+    Object* result = new Object( controllers_.controller_, staticModel_.coordinateConverter_, type, name, obstacleType, reservedObstacleActivated, idManager_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new ObjectPositions( staticModel_.coordinateConverter_, location ) );
     result->Attach< kernel::TacticalHierarchies >( *new ObjectHierarchies( *result, &team ) );

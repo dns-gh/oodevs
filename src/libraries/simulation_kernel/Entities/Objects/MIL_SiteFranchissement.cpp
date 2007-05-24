@@ -99,9 +99,9 @@ void MIL_SiteFranchissement::WriteSpecificAttributes( MT_XXmlOutputArchive& arch
 // Name: MIL_SiteFranchissement::Initialize
 // Created: JVT 02-10-22
 //-----------------------------------------------------------------------------
-bool MIL_SiteFranchissement::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_SiteFranchissement::Initialize( const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    return MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx );
+    return MIL_RealObject_ABC::Initialize( obstacleType, diaParameters, nCurrentParamIdx );
 }
 
 //-----------------------------------------------------------------------------

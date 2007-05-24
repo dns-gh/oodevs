@@ -71,15 +71,15 @@ signatures
     V                                   DEC_AutoriserEvacuationAutomatiqueBlesses( A /*T_Pion*/ );   
                                         
     // Objets                           
-    B                                   DEC_TypeObjet_PeutEtreContourne( I /*E_TypeObject*/ );
-    B                                   DEC_TypeObjet_PeutEtreValorise ( I /*E_TypeObject*/ );
-    B                                   DEC_TypeObjet_PeutEtrePrepare  ( I /*E_TypeObject*/ );
+    B                                   DEC_TypeObjet_PeutEtreContourne  ( I /*E_TypeObject*/ );
+    B                                   DEC_TypeObjet_PeutEtreValorise   ( I /*E_TypeObject*/ );
+    B                                   DEC_TypeObjet_PeutEtreDeManoeuvre( I /*E_TypeObject*/ );
                                         
     // GEN objets                       
     I /*E_TypeObject*/                  DEC_GenObject_Type              ( U /*T_GenObjet*/ );
     U /*T_Localisation*/                DEC_GenObject_Localisation      ( U /*T_GenObjet*/ );
     R                                   DEC_GenObject_Densite           ( U /*T_GenObjet*/ );
-    I /*E_MissionGenSousTypeObstacle*/  DEC_GenObject_Preliminaire      ( U /*T_GenObjet*/ );
+    I /*E_MissionGenSousTypeObstacle*/  DEC_GenObject_TypeObstacle      ( U /*T_GenObjet*/ );
     A /*T_Automate*/                    DEC_GenObject_TC2               ( U /*T_GenObjet*/ );
     R                                   DEC_GenObject_DelaiActiviteMines( U /*T_GenObjet*/ );
      

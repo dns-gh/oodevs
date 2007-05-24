@@ -24,6 +24,7 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
 #include "xeumeuleu/xml.h"
+#include "ENT/ENT_Tr.h"  // $$$$ NLD 2007-05-24:  E_ObstacleType
 
 using namespace kernel;
 using namespace xml;
@@ -31,15 +32,16 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 // Name: Object::Object
 // Created: SBO 2005-09-02
-// -----------------------------------------------------------------------------
-Object::Object( Controller& controller, const CoordinateConverter_ABC& converter, const kernel::ObjectType& type, const QString& name, bool prepare, IdManager& idManager )
+// -----------------------------------------------------------------------------    
+Object::Object( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type, const QString& name, const Enum_TypeObstacle& obstacleType, bool reservedObstacleActivated, IdManager& idManager )
     : EntityImplementation< Object_ABC >( controller, idManager.GetNextId(), "" )
     , converter_                     ( converter )
     , type_                          ( type )
     , rConstructionPercentage_       ( 0.0 )
     , rValorizationPercentage_       ( 0.0 )
     , rBypassConstructionPercentage_ ( 0.0 )
-    , bPrepared_                     ( prepare )
+    , obstacleType_                  ( obstacleType )
+    , reservedObstacleActivated_     ( reservedObstacleActivated  )
     , construction_                  ( 0 )
     , valorization_                  ( 0 )
     , nDotationConstruction_         ( 0 )
@@ -61,7 +63,8 @@ Object::Object( xml::xistream& xis, kernel::Controller& controller, const kernel
     , rConstructionPercentage_       ( 0.0 )
     , rValorizationPercentage_       ( 0.0 )
     , rBypassConstructionPercentage_ ( 0.0 )
-    , bPrepared_                     ( ReadPrepared( xis ) )
+    , obstacleType_                  ( ReadObstacleType( xis ) )
+    , reservedObstacleActivated_     ( ReadReservedObstacleActivated( xis ) )
     , construction_                  ( 0 )
     , valorization_                  ( 0 )
     , nDotationConstruction_         ( 0 )
@@ -117,14 +120,31 @@ const kernel::ObjectType& Object::ReadType( xml::xistream& xis, const Resolver_A
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object::ReadPrepared
+// Name: Object::ReadObstacleType
 // Created: SBO 2007-03-20
 // -----------------------------------------------------------------------------
-bool Object::ReadPrepared( xml::xistream& xis )
+Enum_TypeObstacle Object::ReadObstacleType( xml::xistream& xis )
 {
-    bool prepared = false;
-    xis >> attribute( "prepared", prepared );
-    return prepared;
+    if( !type_.CanBeReservedObstacle() )
+        return eTypeObstacle_Preliminaire;
+
+    std::string strType;
+    xis >> attribute( "obstacle-type", strType );
+    return Enum_TypeObstacle( strType.c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::ReadReservedObstacleActivated
+// Created: NLD 2007-05-24
+// -----------------------------------------------------------------------------
+bool Object::ReadReservedObstacleActivated( xml::xistream& xis )
+{
+    if( !type_.CanBeReservedObstacle() || obstacleType_.GetValue() != eTypeObstacle_DeManoeuvre )
+        return false;
+
+    bool bReservedObstacleActivated = false;
+    xis >> attribute( "reserved-obstacle-activated", bReservedObstacleActivated );
+    return bReservedObstacleActivated;
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +170,10 @@ void Object::Display( Displayer_ABC& displayer ) const
              .Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage )
              .Display( tools::translate( "Object", "Mining:" ), rValorizationPercentage_ * Units::percentage )
              .Display( tools::translate( "Object", "Bypass:" ), rBypassConstructionPercentage_ * Units::percentage )
-             .Display( tools::translate( "Object", "Prepared:" ), bPrepared_ )
+             .Display( tools::translate( "Object", "Obstacle type:" ), obstacleType_.GetValue() )
+             .Display( tools::translate( "Object", "Reserved obstacle activated:" ), reservedObstacleActivated_ );
+
+    displayer.Group( tools::translate( "Object", "Information" ) )
              .Item( tools::translate( "Object", "Construction dotation:" ) )
                 .Start( nDotationConstruction_ )
                 .Add( " " ).Add( construction_ ).End(); // $$$$ AGE 2006-02-22: End devrait renvoyer le parent
@@ -167,9 +190,19 @@ void Object::Display( Displayer_ABC& displayer ) const
 void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Item( "" ).Start( Styles::bold ).Add( *(Object_ABC*)this ).End();
-    displayer.Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage )
-             .Display( tools::translate( "Object", "Mining:" ), rValorizationPercentage_ * Units::percentage )
-             .Display( tools::translate( "Object", "Bypass:" ), rBypassConstructionPercentage_ * Units::percentage );
+    displayer.Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage );
+
+    if( type_.CanBeValorized() )
+        displayer.Display( tools::translate( "Object", "Mining:" ), rValorizationPercentage_ * Units::percentage );
+    if( type_.CanBeBypassed() )
+        displayer.Display( tools::translate( "Object", "Bypass:" ), rBypassConstructionPercentage_ * Units::percentage );
+    
+    if( type_.CanBeReservedObstacle() )
+    {
+        displayer.Display( tools::translate( "Object", "Obstacle type:" ), obstacleType_ );
+        if( obstacleType_.GetValue() == eTypeObstacle_DeManoeuvre )
+            displayer.Display( tools::translate( "Object", "Reserved obstacle activated:" ), reservedObstacleActivated_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -189,8 +222,14 @@ void Object::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
         << attribute( "type", type_.GetName().ascii() )
-        << attribute( "name", name_ )
-        << attribute( "prepared", bPrepared_ );
+        << attribute( "name", name_ );
+    
+    if( type_.CanBeReservedObstacle() )
+    {
+        xos << attribute( "obstacle-type", obstacleType_.ToString( ENT_Tr::eToSim ) );
+        if( obstacleType_.GetValue() == eTypeObstacle_DeManoeuvre )
+            xos << attribute( "reserved-obstacle-activated", reservedObstacleActivated_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -205,5 +244,9 @@ void Object::CreateDictionary( kernel::Controller& controller )
     dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Identifier" ), constSelf.id_ );
     dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Name" ), name_ );
     dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Type" ), constSelf.type_ );
-    dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Prepared" ), bPrepared_ );
+    if( type_.CanBeReservedObstacle() )
+    {
+        dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Obstacle type" ), obstacleType_ );
+        dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Reserved obstacle activated" ), reservedObstacleActivated_ );
+    }
 }

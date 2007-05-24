@@ -113,7 +113,7 @@ public:
         ADN_Type_String                              strName_;           // do not use directly !!!
         ADN_Type_Bool                                bDangerous_;
         ADN_Type_Bool                                bCanBeValorized_;
-        ADN_Type_Bool                                bCanBePrepared_;
+        ADN_Type_Bool                                bCanBeReservedObstacle_;
         ADN_Type_Bool                                bCanBeBypassed_;
         ADN_Type_Double                              rAvoidDistance_;
         ADN_Type_Double                              rDefaultSpeed_;

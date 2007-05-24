@@ -116,9 +116,9 @@ bool MIL_ItineraireLogistique::TransformLocalisation()
 // Name: MIL_ItineraireLogistique::Initialize
 // Created: JVT 02-10-22
 //-----------------------------------------------------------------------------
-bool MIL_ItineraireLogistique::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_ItineraireLogistique::Initialize( const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    if( !MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx ) )
+    if( !MIL_RealObject_ABC::Initialize( obstacleType, diaParameters, nCurrentParamIdx ) )
         return false;
     TransformLocalisation();
     return true;

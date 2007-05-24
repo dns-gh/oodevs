@@ -38,6 +38,11 @@ ObjectKnowledge::ObjectKnowledge( const Team_ABC& owner, const ASN1T_MsgObjectKn
 {
     RegisterSelf( *this );
     pRealObject_ = objectResolver_.Find( message.oid_objet_reel );
+
+    if( message.m.type_obstaclePresent )
+        obstacleType_ = (E_TypeObstacle)message.type_obstacle;   
+    if( message.m.obstacle_de_manoeuvre_activePresent )
+        reservedObstacleActivated_ = message.obstacle_de_manoeuvre_active;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,8 +78,8 @@ void ObjectKnowledge::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
     if( message.m.pourcentage_contournementPresent )
         nPourcentageContournement_ = message.pourcentage_contournement;
     
-    if( message.m.en_preparationPresent )
-        bEnPreparation_ = message.en_preparation;
+    if( message.m.obstacle_de_manoeuvre_activePresent )
+        reservedObstacleActivated_ = message.obstacle_de_manoeuvre_active;
     
     if( message.m.est_percuPresent )
         bIsPerceived_ = message.est_percu;
@@ -95,7 +100,8 @@ void ObjectKnowledge::Display( Displayer_ABC& displayer ) const
                 .Display( tools::translate( "Object", "Construction:" ), nPourcentageConstruction_ * Units::percentage )
                 .Display( tools::translate( "Object", "Mining:" ), nPourcentageValorisation_ * Units::percentage )
                 .Display( tools::translate( "Object", "Bypass:" ), nPourcentageContournement_* Units::percentage )
-                .Display( tools::translate( "Object", "Prepared:" ), bEnPreparation_ )
+                .Display( tools::translate( "Object", "Obstacle type:" ), obstacleType_ )
+                .Display( tools::translate( "Object", "Reserved obstacle activated:" ), reservedObstacleActivated_ )
                 .Display( tools::translate( "Object", "Perceived:" ), bIsPerceived_ )
                 .Display( tools::translate( "Object", "Relevance:" ), nRelevance_ );
     if( ! position_.empty() )
@@ -124,6 +130,7 @@ void ObjectKnowledge::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Object", "Type:" ), type_ )
              .Display( tools::translate( "Object", "Relevance:" ), nRelevance_ );
+     // $$$$ NLD 2007-05-23: Manque plein de trucs
 }
 
 // -----------------------------------------------------------------------------

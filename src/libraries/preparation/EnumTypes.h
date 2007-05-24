@@ -18,7 +18,7 @@ template< typename T >
 struct Enum_ABC
 {
     Enum_ABC( const T& value ) : value_( value ) {}
-    T GetValue() { return value_; }
+    const T GetValue() const { return value_; }
 
     virtual QString ToString( ENT_Tr::E_Conversion conversion = ENT_Tr::eToTr ) const = 0;
 
@@ -36,5 +36,6 @@ struct Enum_##name : public Enum_ABC< E_##name > { \
 };
 
 DECLARE_ENUMTYPE( PopulationAttitude )
+DECLARE_ENUMTYPE( TypeObstacle )
 
 #endif // __EnumTypes_h_

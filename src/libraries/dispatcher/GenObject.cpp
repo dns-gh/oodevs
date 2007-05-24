@@ -19,7 +19,7 @@ using namespace dispatcher;
 GenObject::GenObject( const ASN1T_MissionGenObject& asn )
     : type_              ( asn.type )
     , location_          ( asn.position )
-    , preliminaire_      ( asn.preliminaire )
+    , typeObstacle_      ( asn.type_obstacle )
     , density_           ( asn.densite )
     , tc2_               ( asn.tc2 )
     , delaiActiviteMines_( asn.delai_activite_mines )
@@ -34,7 +34,7 @@ GenObject::GenObject( const ASN1T_MissionGenObject& asn )
 GenObject::GenObject()
     : type_              ( EnumObjectType::abattis )
     , location_          ()
-    , preliminaire_      ( EnumMissionGenSousTypeObstacle::preliminaire )
+    , typeObstacle_      ( EnumTypeObstacle::preliminaire )
     , density_           ( 0. )
     , tc2_               ( 0 )
     , delaiActiviteMines_( 0 )
@@ -59,7 +59,7 @@ GenObject::~GenObject()
 void GenObject::Send( ASN1T_MissionGenObject& asn ) const
 {
     asn.type                 = type_;
-    asn.preliminaire         = preliminaire_;
+    asn.type_obstacle        = typeObstacle_;
     asn.densite              = density_;
     asn.tc2                  = tc2_;
     asn.delai_activite_mines = delaiActiviteMines_;

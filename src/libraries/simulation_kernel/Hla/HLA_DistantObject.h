@@ -49,7 +49,7 @@ public:
     virtual void Mine      ( double rDeltaPercentage );
     virtual void Demine    ( double rDeltaPercentage );
     virtual void Bypass    ( double rDeltaPercentage );
-    virtual void Prepare   ();
+//    virtual void Prepare   ();
     virtual void Activate  ();
 
     virtual void Deserialize( const AttributeIdentifier& attributeID, const Deserializer& deserializer );

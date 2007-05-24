@@ -29,13 +29,14 @@ const TER_Localisation& DEC_Gen_Object::GetLocalisation() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Gen_Object::GetPreliminaire
+// Name: DEC_Gen_Object::GetObstacleType
 // Created: NLD 2006-10-26
 // -----------------------------------------------------------------------------
 inline
-uint DEC_Gen_Object::GetPreliminaire() const
+const MIL_ObstacleType& DEC_Gen_Object::GetObstacleType() const
 {
-    return nPreliminaire_;
+    assert( pObstacleType_ );
+    return *pObstacleType_;
 }
 
 // -----------------------------------------------------------------------------

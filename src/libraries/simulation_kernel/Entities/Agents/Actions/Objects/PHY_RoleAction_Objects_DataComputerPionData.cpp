@@ -60,7 +60,6 @@ void PHY_RoleAction_Objects_DataComputerPionData::operator() ( const PHY_Composa
         case eMine     : rDeltaTime = composante.GetMiningTime      ( pObject_->GetType() ); break;
         case eDemine   : rDeltaTime = composante.GetDeminingTime    ( pObject_->GetType() ); break;
         case eBypass   : rDeltaTime = composante.GetBypassTime      ( pObject_->GetType(), pObject_->GetSizeCoef(), pObject_->IsMined() ); break;
-        case ePrepare  : rDeltaTime = composante.GetConstructionTime( pObject_->GetType(), pObject_->GetSizeCoef() ); break;
         default: assert( false );
     }
     assert( rDeltaTime >= 0. );

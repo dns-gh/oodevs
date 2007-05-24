@@ -107,10 +107,10 @@ void HLA_DistantObject::Bypass( double rDeltaPercentage )
 // Name: HLA_DistantObject::Prepare
 // Created: AGE 2004-12-06
 // -----------------------------------------------------------------------------
-void HLA_DistantObject::Prepare()
-{
-    interactionManager_.Send( HLA_Activation( *this, false ) );
-}
+//void HLA_DistantObject::Prepare()
+//{
+//    interactionManager_.Send( HLA_Activation( *this, false ) );
+//}
     
 // -----------------------------------------------------------------------------
 // Name: HLA_DistantObject::Activate
@@ -118,7 +118,8 @@ void HLA_DistantObject::Prepare()
 // -----------------------------------------------------------------------------
 void HLA_DistantObject::Activate()
 {
-    interactionManager_.Send( HLA_Activation( *this, true ) );
+assert( false );
+    //    interactionManager_.Send( HLA_Activation( *this, true ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -86,10 +86,10 @@ void HLA_Object_ABC::Bypass( double )
 // Name: HLA_Object_ABC::Prepare
 // Created: AGE 2004-12-06
 // -----------------------------------------------------------------------------
-void HLA_Object_ABC::Prepare()
-{
+//void HLA_Object_ABC::Prepare()
+//{
     // NOTHING
-}
+//}
 
 // -----------------------------------------------------------------------------
 // Name: HLA_Object_ABC::Activate

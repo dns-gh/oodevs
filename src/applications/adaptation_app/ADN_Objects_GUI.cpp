@@ -88,8 +88,8 @@ void ADN_Objects_GUI::Build()
     // Bypassed
     builder.AddField<ADN_CheckBox>( pParamGroup, tr( "Can be bypassed"), vInfosConnectors[eCanBeBypassed] );
 
-    // Prepared
-    builder.AddField<ADN_CheckBox>( pParamGroup, tr( "Can be prepared"), vInfosConnectors[eCanBePrepared] );
+    // Reserved obstacle
+    builder.AddField<ADN_CheckBox>( pParamGroup, tr( "Can be reserved obstacle"), vInfosConnectors[eCanBeReservedObstacle] );
 
     // Valorized
     builder.AddField<ADN_CheckBox>( pParamGroup, tr( "Can be mined"), vInfosConnectors[eCanBeValorized] );
@@ -123,7 +123,7 @@ void ADN_Objects_GUI::Build()
     // Users
     builder.AddField<ADN_EditLine_Int>( pParamGroup, tr( "Max nbr of animators"), vInfosConnectors[eMaxNbrUsers], 0, eGreaterEqualZero );
 
-    // Prepared
+    // Reserved obstacle
     ADN_GroupBox* pBuildGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Construction" ), pGroup );
     vInfosConnectors[eHasToBuild] = &pBuildGroup->GetConnector();
     builder.AddField<ADN_EquipementSelector>( pBuildGroup, tr( "uses"), vInfosConnectors[eToBuild] );

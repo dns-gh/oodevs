@@ -35,7 +35,6 @@ typedef UserType T_MaintenancePriorites;
 typedef UserType T_SantePriorites;
 typedef UserType T_GenObjet;
 
-
 typedef list<T_ConnaissanceObjet>            T_ListeConnaissancesObjet;
 typedef list<T_ConnaissanceAgent>            T_ListeConnaissancesAgent;
 typedef list<T_ConnaissancePopulation>       T_ListeConnaissancesPopulation;
@@ -45,7 +44,7 @@ typedef list<T_Localisation>                 T_ListeLocalisations;
 typedef list<T_ListePoints>                  T_ListeListesPoints;
 typedef list<T_Direction>                    T_ListeDirections;
 typedef list<T_GenObjet>                     T_ListeGenObjets;
- 
+
 include "Common/Moteur/Types_Enums.hal";
 include "Common/Moteur/Types_RC.hal";
 include "Common/Moteur/Types_Objets.hal";

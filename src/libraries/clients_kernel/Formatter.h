@@ -277,6 +277,12 @@ struct Formatter< E_LogMaintenanceTraitementEtat >
     void operator()( const E_LogMaintenanceTraitementEtat& e, Displayer_ABC& displayer ) const;
 };
 
+template< >
+struct Formatter< E_TypeObstacle >
+{
+    void operator()( const E_TypeObstacle& e, Displayer_ABC& displayer ) const;
+};
+
 // =============================================================================
 /** @class  Formatter
     @brief  Containers

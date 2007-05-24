@@ -65,7 +65,12 @@ void ObjectPrototype::Commit( Publisher_ABC& publisher )
         creation_.m.nomPresent = 1;
         creation_.nom = name_->text().ascii();
     }
-    creation_.en_preparation = prepared_->isChecked();
+
+    // $$$$ NLD 2007-05-24: Conditionnier les champs type_obstaclePresent et obstacle_de_manoeuvre_activePresent au type d'objet
+    creation_.m.type_obstaclePresent = 1;
+    creation_.m.obstacle_de_manoeuvre_activePresent = 1;
+    creation_.type_obstacle = (ASN1T_EnumTypeObstacle)obstacleTypes_->GetValue();
+    creation_.obstacle_de_manoeuvre_active = reservedObstacleActivated_->isChecked();
     creation_.oid_camp = teams_->GetValue()->GetId();
     creation_.type = (ASN1T_EnumObjectType)objectTypes_->GetValue()->id_;
     if( location_ )

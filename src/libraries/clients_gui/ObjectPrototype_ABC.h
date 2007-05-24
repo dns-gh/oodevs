@@ -16,6 +16,7 @@
 #include "clients_kernel/Resolver_ABC.h"
 #include "ShapeHandler_ABC.h"
 #include "ValuedComboBox.h"
+#include "ENT/ENT_Tr.h"
 
 namespace kernel
 {
@@ -100,7 +101,8 @@ protected:
     ValuedComboBox< const kernel::Team_ABC* >* teams_;
     ValuedComboBox< const kernel::ObjectType* >* objectTypes_;
     QLineEdit* name_;
-    QCheckBox* prepared_;
+    ValuedComboBox< E_TypeObstacle >* obstacleTypes_;
+    QCheckBox* reservedObstacleActivated_;
 
     LocationCreator* locationCreator_;
     kernel::Location_ABC* location_;

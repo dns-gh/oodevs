@@ -150,6 +150,12 @@ enum E_EtatRapFor
     eNbrEtatRapFor
 };
 
+enum E_TypeObstacle
+{
+    eTypeObstacle_Preliminaire,
+    eTypeObstacle_DeManoeuvre,
+    eNbrTypeObstacle
+};
 
 enum E_EtatCombatRencontre
 {

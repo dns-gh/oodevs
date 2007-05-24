@@ -9,6 +9,8 @@
 //
 //*****************************************************************************
 
+#include "MIL_ObstacleType.h"
+
 // -----------------------------------------------------------------------------
 // Name: MIL_RealObject_ABC::IsReal
 // Created: NLD 2004-10-26
@@ -67,17 +69,6 @@ inline
 MT_Float MIL_RealObject_ABC::GetBypassPercentage() const
 {
     return rBypassPercentage_;
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: MIL_RealObject_ABC::IsPrepared
-// Created: AGN 03-07-29
-//-----------------------------------------------------------------------------
-inline
-bool MIL_RealObject_ABC::IsPrepared() const
-{
-    return bPrepared_;
 }
 
 //-----------------------------------------------------------------------------
@@ -197,7 +188,7 @@ bool MIL_RealObject_ABC::CanBePerceived() const
 inline
 bool MIL_RealObject_ABC::CanBeActivated() const
 {
-    return bPrepared_ && rConstructionPercentage_ > 0.;
+    return IsReservedObstacle() && !bReservedObstacleActivated_ && rConstructionPercentage_ > 0.;
 }
 
 // -----------------------------------------------------------------------------
@@ -207,7 +198,7 @@ bool MIL_RealObject_ABC::CanBeActivated() const
 inline
 bool MIL_RealObject_ABC::CanBeConstructed() const
 {
-    return !IsMarkedForDestruction() && !bPrepared_;
+    return !IsMarkedForDestruction();
 }
 
 // -----------------------------------------------------------------------------
@@ -389,6 +380,34 @@ void MIL_RealObject_ABC::SetExitingPopulationDensity( MT_Float rDensity )
 {
     assert( rDensity >= 0. );
     rExitingPopulationDensity_ = rDensity;
-}
-    
+}   
 
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::IsReservedObstacle
+// Created: NLD 2007-05-22
+// -----------------------------------------------------------------------------
+inline
+bool MIL_RealObject_ABC::IsReservedObstacle() const
+{
+    return pObstacleType_ && pObstacleType_->CouldBeActivated();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::GetObstacleType
+// Created: NLD 2007-05-23
+// -----------------------------------------------------------------------------
+inline
+const MIL_ObstacleType* MIL_RealObject_ABC::GetObstacleType() const
+{
+    return pObstacleType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::IsReservedObstacleActivated
+// Created: NLD 2007-05-23
+// -----------------------------------------------------------------------------
+inline
+bool MIL_RealObject_ABC::IsReservedObstacleActivated() const
+{
+    return bReservedObstacleActivated_;
+}

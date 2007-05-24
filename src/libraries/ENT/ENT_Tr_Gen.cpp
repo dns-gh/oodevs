@@ -139,6 +139,13 @@ ENT_Tr::T_ConverterEtatRapFor ENT_Tr::EtatRapForConverter_[] =
     T_ConverterEtatRapFor( "", "", (E_EtatRapFor)-1 )
 };
 
+ENT_Tr::T_ConverterTypeObstacle ENT_Tr::TypeObstacleForConverter_[] =
+{
+    T_ConverterTypeObstacle( "initial", QT_TRANSLATE_NOOP( "ENT_Tr", "initial" ), eTypeObstacle_Preliminaire ),
+    T_ConverterTypeObstacle( "reserved", QT_TRANSLATE_NOOP( "ENT_Tr", "reserved" ), eTypeObstacle_DeManoeuvre ),
+    T_ConverterTypeObstacle( "", "", (E_TypeObstacle)-1 )
+};
+
 ENT_Tr::T_ConverterEtatCombatRencontre ENT_Tr::EtatCombatRencontreConverter_[] =
 {
     T_ConverterEtatCombatRencontre( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), eEtatCombatRencontre_None ),
@@ -530,6 +537,7 @@ void ENT_Tr::InitTranslations()
     InitTr( DiplomatieConverter_, "ENT_Tr" );
     InitTr( ChangeDiplomatieErrorCodeConverter_, "ENT_Tr" );
     InitTr( EtatRapForConverter_, "ENT_Tr" );
+    InitTr( TypeObstacleForConverter_, "ENT_Tr" );
     InitTr( EtatCombatRencontreConverter_, "ENT_Tr" );
     InitTr( EtatOperationnelConverter_, "ENT_Tr" );
     InitTr( RoeConverter_, "ENT_Tr" );
@@ -664,6 +672,16 @@ const std::string& ENT_Tr::ConvertFromEtatRapFor( E_EtatRapFor nValue, ENT_Tr_AB
 {
     return ENT_Tr::InverseFindInConverter( EtatRapForConverter_, nValue, nConverterType );
 }
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromTypeObstacle
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromTypeObstacle( E_TypeObstacle nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( TypeObstacleForConverter_, nValue, nConverterType );
+}
+
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromEtatCombatRencontre
@@ -1059,6 +1077,15 @@ E_ChangeDiplomatieErrorCode ENT_Tr::ConvertToChangeDiplomatieErrorCode( const st
 E_EtatRapFor ENT_Tr::ConvertToEtatRapFor( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( EtatRapForConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToTypeObstacle
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_TypeObstacle ENT_Tr::ConvertToTypeObstacle( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( TypeObstacleForConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------

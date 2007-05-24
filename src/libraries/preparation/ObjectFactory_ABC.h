@@ -23,6 +23,8 @@ namespace xml
     class xistream;
 }
 
+struct Enum_TypeObstacle;
+
 // =============================================================================
 /** @class  ObjectFactory_ABC
     @brief  Object factory definition
@@ -41,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Object_ABC* CreateObject( const kernel::ObjectType& type, kernel::Team_ABC& team, const QString& name, bool prepare, const kernel::Location_ABC& location ) = 0;
+    virtual kernel::Object_ABC* CreateObject( const kernel::ObjectType& type, kernel::Team_ABC& team, const QString& name, const Enum_TypeObstacle& obstacleType, bool reservedObstacleActivated, const kernel::Location_ABC& location ) = 0;
     virtual kernel::Object_ABC* CreateObject( xml::xistream& xis, kernel::Team_ABC& team ) = 0;
     //@}
 };

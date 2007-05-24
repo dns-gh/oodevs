@@ -71,7 +71,6 @@ void PHY_RoleAction_Objects_CapabilityComputer::operator() ( const PHY_Composant
         case eMine     : bHasCapability_ = composante.CanMine     ( objectType_ ); break;
         case eDemine   : bHasCapability_ = composante.CanDemine   ( objectType_ ); break;
         case eBypass   : bHasCapability_ = composante.CanBypass   ( objectType_, false ); break;
-        case ePrepare  : bHasCapability_ = composante.CanConstruct( objectType_ ); break;
         default: assert( false );
     }
 }

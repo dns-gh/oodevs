@@ -494,10 +494,10 @@ MIL_RealObject_ABC& MIL_EntityManager::CreateObject( const MIL_RealObjectType& t
 // Name: MIL_EntityManager::CreateObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-MIL_RealObject_ABC* MIL_EntityManager::CreateObject( MIL_Army& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx )
+MIL_RealObject_ABC* MIL_EntityManager::CreateObject( MIL_Army& army, const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint nCurrentParamIdx )
 {
     assert( pObjectManager_ );
-    return pObjectManager_->CreateObject( army, diaParameters, nCurrentParamIdx );
+    return pObjectManager_->CreateObject( army, obstacleType, diaParameters, nCurrentParamIdx );
 }
 
 // -----------------------------------------------------------------------------

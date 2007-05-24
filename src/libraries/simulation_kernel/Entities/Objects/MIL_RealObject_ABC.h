@@ -24,6 +24,7 @@ class MIL_RealObjectType;
 class MIL_Army;
 class MIL_Agent_ABC;
 class MIL_AgentPion;
+class MIL_ObstacleType;
 class DIA_Parameters;
 class PHY_DotationCategory;
 class DEC_Knowledge_Object;
@@ -59,7 +60,7 @@ public:
     //@{
     virtual void                      Initialize( MIL_InputArchive& archive );
     virtual ASN1T_EnumObjectErrorCode Initialize( const ASN1T_MagicActionCreateObject& asn );
-    virtual bool                      Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx ); 
+    virtual bool                      Initialize( const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint& nCurrentParamIdx ); 
     virtual bool                      Initialize( const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass ); // HLA
     //@}
 
@@ -81,7 +82,6 @@ public:
     //! @name Actions
     //@{
     void Construct ( MT_Float rDeltaPercentage );
-    void Prepare   ( MT_Float rDeltaPercentage );
     void Destroy   ( MT_Float rDeltaPercentage );
     void Mine      ( MT_Float rDeltaPercentage );
     void Demine    ( MT_Float rDeltaPercentage );
@@ -96,7 +96,7 @@ public:
     virtual bool CanInteractWith( const MIL_Population& population ) const;
 
     bool CanBePerceived                    () const;
-    bool CanBePrepared                     () const;
+    bool CanBeReservedObstacle             () const;
     bool CanBeConstructed                  () const;
     bool CanBeMined                        () const;
     bool CanBeDemined                      () const;
@@ -156,15 +156,16 @@ public:
     //! @name Accessors
     //@{
     const MIL_RealObjectType& GetType                    () const;
-    uint                      GetID                      () const;
-    MT_Float                  GetSizeCoef                () const;
-    MT_Float                  GetDefaultMaxSpeed         () const;
-    bool                      IsBypassed                 () const;
-    bool                      IsMined                    () const;
-    bool                      IsPrepared                 () const;
-    MT_Float                  GetConstructionPercentage  () const;
-    MT_Float                  GetMiningPercentage        () const;
-    MT_Float                  GetBypassPercentage        () const;
+    const MIL_ObstacleType*   GetObstacleType            () const;
+          uint                GetID                      () const;
+          MT_Float            GetSizeCoef                () const;
+          MT_Float            GetDefaultMaxSpeed         () const;
+          bool                IsBypassed                 () const;
+          bool                IsMined                    () const;
+          bool                IsReservedObstacleActivated() const;
+          MT_Float            GetConstructionPercentage  () const;
+          MT_Float            GetMiningPercentage        () const;
+          MT_Float            GetBypassPercentage        () const;
     const TER_Localisation&   GetAvoidanceLocalisation   () const;
     const MIL_AgentPion*      GetOccupier                () const;
     
@@ -181,22 +182,21 @@ protected:
     //@{
     enum E_AttributeUpdate
     {
-        eAttrUpdate_ConstructionPercentage  = 0x01,
-        eAttrUpdate_MiningPercentage        = 0x02,
-        eAttrUpdate_BypassPercentage        = 0x04,
-        eAttrUpdate_Prepared                = 0x08,
-        eAttrUpdate_Localisation            = 0x10,
-        eAttrUpdate_SpecificAttributes      = 0x20,
-        eAttrUpdate_All                     = 0xFF
+        eAttrUpdate_ConstructionPercentage    = 0x01,
+        eAttrUpdate_MiningPercentage          = 0x02,
+        eAttrUpdate_BypassPercentage          = 0x04,
+        eAttrUpdate_ReservedObstacleActivated = 0x08,
+        eAttrUpdate_Localisation              = 0x10,
+        eAttrUpdate_SpecificAttributes        = 0x20,
+        eAttrUpdate_All                       = 0xFF
     };
     //@}
   
     //! @name Tools
     //@{
             void ApplyAttrition    ( MIL_Agent_ABC&             target );    
-            void InitializeCommon  ( const TER_Localisation& localisation );
     virtual void UpdateLocalisation( const TER_Localisation& newLocalisation );
-
+            void Initialize        ( const TER_Localisation& localisation );  // $$$$ NLD 2007-05-22: pfff
     //@}
 
     //! @name Network
@@ -222,11 +222,13 @@ private:
     //! @name Tools
     //@{
     void InitializeAvoidanceLocalisation();
+    void InitializeCommon               ( const TER_Localisation& localisation );
 
     void ChangeConstructionPercentage   ( MT_Float rNewConstructionPercentage );
     void ChangeMiningPercentage         ( MT_Float rNewMiningPercentage       );
 
-    bool IsAttributeUpdated    ( E_AttributeUpdate nAttrToUpdate, MT_Float rValue, uint nLastValue );
+    bool IsAttributeUpdated( E_AttributeUpdate nAttrToUpdate, MT_Float rValue, uint nLastValue );
+    bool IsReservedObstacle() const;
     //@}
 
 protected:
@@ -241,9 +243,10 @@ protected:
     mutable uint8 xAttrToUpdateForHLA_;
 
 private:
-    const MIL_RealObjectType* pType_;
-    uint                      nID_;    
-    std::string               strName_;
+    const MIL_RealObjectType*    pType_;
+    const MIL_ObstacleType*      pObstacleType_;
+          uint                   nID_;    
+          std::string            strName_;
 
     // State
     MT_Float rConstructionPercentage_;
@@ -254,7 +257,7 @@ private:
     uint  nLastValueMiningPercentage_;
     uint  nLastValueBypassPercentage_;
 
-    bool bPrepared_;
+    bool bReservedObstacleActivated_; 
 
     uint nCurrentNbrDotationForConstruction_;
     uint nCurrentNbrDotationForMining_;            

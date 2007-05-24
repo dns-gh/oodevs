@@ -25,7 +25,6 @@ OrderParameter.cpp \
 OrderParameterValue.cpp \
 OrderType.cpp \
 Path.cpp \
-PathTools.cpp \
 Point.cpp \
 Polygon.cpp \
 PopulationType.cpp \

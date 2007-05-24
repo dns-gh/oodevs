@@ -79,7 +79,8 @@ signatures
     U /*T_Localisation*/             A::DEC_ConnaissanceObjet_Localisation                       ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );    
     B                                A::DEC_ConnaissanceObjet_EstReconnu                         ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );        
     B                                A::DEC_ConnaissanceObjet_EstContourne                       ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
-    B                                A::DEC_ConnaissanceObjet_EstPrepare                         ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
+    B                                A::DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif        ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
+    B                                A::DEC_ConnaissanceObjet_EstObstacleDeManoeuvre             ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
     B                                A::DEC_ConnaissanceObjet_EstConstruit                       ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
     I /*E_TypeObject*/               A::DEC_ConnaissanceObjet_Type                               ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
     R                                A::DEC_ConnaissanceObjet_LargeurSiteFranchissement          ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );

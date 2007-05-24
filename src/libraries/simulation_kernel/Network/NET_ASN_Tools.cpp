@@ -24,6 +24,10 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
+#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Automates/DEC_AutomateDecision.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/MIL_Army.h"
@@ -33,18 +37,14 @@
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
-#include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Automates/DEC_AutomateDecision.h"
-#include "Entities/Automates/MIL_Automate.h"
-
-#include "Decision/Genie/DEC_Gen_Object.h"
+#include "Decision/DEC_Gen_Object.h"
 #include "Decision/DEC_Tools.h"
+
+#include "Network/NET_AsnException.h"
 
 // Time for MOS ...
 #define MIL_NBR_DAYS_BETWEEN_1901_AND_1970  (uint)25202
 #define MIL_NBR_SEC_BETWEEN_1901_AND_1970  ( MIL_NBR_DAYS_BETWEEN_1901_AND_1970 * 86400 )
-
 
 typedef std::vector< DEC_Gen_Object* >    T_GenObjectVector;
 typedef T_GenObjectVector::iterator       IT_GenObjectVector;
@@ -53,15 +53,6 @@ typedef T_GenObjectVector::const_iterator CIT_GenObjectVector;
 //=============================================================================
 // PARAMETERS TOOLS
 //=============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::ReadGenObject
-// Created: NLD 2006-10-26
-// -----------------------------------------------------------------------------
-bool NET_ASN_Tools::ReadGenObject( const ASN1T_MissionGenObject& asn, DEC_Gen_Object& object )
-{
-    return object.Initialize( asn ) == EnumOrderErrorCode::no_error;
-}
 
 //-----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::ReadDirection
@@ -429,19 +420,6 @@ uint NET_ASN_Tools::ReadGDH( const ASN1T_GDH& asnGDH )
 //=============================================================================
 // ENCODING TOOLS
 //=============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::WriteGenObject
-// Created: NLD 2006-10-26
-// -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteGenObject( const DEC_Gen_Object& object, ASN1T_MissionGenObject& asn )
-{
-    asn.type         = object.GetType().GetAsnID();
-    asn.preliminaire = (ASN1T_EnumMissionGenSousTypeObstacle)object.GetPreliminaire();
-    asn.tc2          = object.GetTC2() ? object.GetTC2()->GetID() : 0;
-    asn.densite      = object.GetDensity();
-    NET_ASN_Tools::WriteLocation( object.GetLocalisation(), asn.position );
-}
 
 //-----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::WriteDirection
@@ -1500,16 +1478,10 @@ bool NET_ASN_Tools::CopyMedicalPriorities( const DIA_Variable_ABC& diaFrom, DIA_
 // Name: NET_ASN_Tools::CopyGenObject
 // Created: AGE 2004-09-21
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyGenObject( const ASN1T_MissionGenObject& asn, DIA_Variable_ABC& dia )
+void NET_ASN_Tools::CopyGenObject( const ASN1T_MissionGenObject& asn, DIA_Variable_ABC& dia )
 {
-    DEC_Gen_Object* pGenObject = new DEC_Gen_Object();
-    if( !ReadGenObject( asn, *pGenObject ) )
-    {
-        delete pGenObject;
-        pGenObject = 0;
-    }
+    DEC_Gen_Object* pGenObject = new DEC_Gen_Object( asn );
     dia.SetValue( pGenObject, &DEC_Tools::GetTypeGenObjet() );
-    return pGenObject != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -1525,7 +1497,7 @@ bool NET_ASN_Tools::CopyGenObject( const DIA_Variable_ABC& dia, ASN1T_MissionGen
         assert( false );
         return false;
     }
-    WriteGenObject( *pTmp, asn );
+    pTmp->Serialize( asn );
     return true;
 }
 
@@ -1548,26 +1520,26 @@ void NET_ASN_Tools::CopyGenObject( const DIA_Variable_ABC& diaFrom, DIA_Variable
 // Name: NET_ASN_Tools::CopyListGenObjects
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyGenObjectList( const ASN1T_ListMissionGenObject& asn, DIA_Variable_ABC& dia )
+void NET_ASN_Tools::CopyGenObjectList( const ASN1T_ListMissionGenObject& asn, DIA_Variable_ABC& dia )
 {
     T_GenObjectVector objects;
     objects.reserve( asn.n );
     for( uint i = 0; i < asn.n; ++i )
     {
-        DEC_Gen_Object* pGenObject = new DEC_Gen_Object();
-        if( !ReadGenObject( asn.elem[i], *pGenObject ) )
+        try
         {
-            delete pGenObject;
+            DEC_Gen_Object* pGenObject = new DEC_Gen_Object( asn.elem[i] );
+            objects.push_back( pGenObject );
+        }
+        catch( NET_AsnException< ASN1T_EnumOrderErrorCode >& )
+        {
             for( IT_GenObjectVector it = objects.begin(); it != objects.end(); ++it )
                 delete *it;
-            return false;
+            throw;
         }
-        objects.push_back( pGenObject );
     }
-
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( dia );
     diaObjectList.SetValueUserType( objects, DEC_Tools::GetTypeGenObjet() );
-    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -1587,7 +1559,7 @@ bool NET_ASN_Tools::CopyGenObjectList( const DIA_Variable_ABC& dia, ASN1T_ListMi
     {
         asn.elem = new ASN1T_MissionGenObject[ objects.size() ];
         for( CIT_GenObjectVector it = objects.begin(); it != objects.end(); ++it )
-            WriteGenObject( **it, asn.elem[ it - objects.begin() ] );        
+            (**it).Serialize( asn.elem[ it - objects.begin() ] );
     }
     return true;
 }
@@ -1782,13 +1754,13 @@ void NET_ASN_Tools::CopyPolygon( const DIA_Variable_ABC& diaFrom, DIA_Variable_A
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::CopyPolygonList( const ASN1T_ListPolygon& asn, DIA_Variable_ABC& dia )
 {
-    T_LocalisationPtrVector Polygons;
+    T_LocalisationPtrVector polygons;
 
-    if( !NET_ASN_Tools::ReadPolygonList( asn, Polygons ) )
+    if( !NET_ASN_Tools::ReadPolygonList( asn, polygons ) )
         return false;
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( dia );
-    diaObjectList.SetValueUserType( Polygons, DEC_Tools::GetTypeLocalisation() );
+    diaObjectList.SetValueUserType( polygons, DEC_Tools::GetTypeLocalisation() );
     return true;    
 }
 
