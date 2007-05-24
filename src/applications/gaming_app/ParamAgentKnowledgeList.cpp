@@ -11,6 +11,7 @@
 #include "ParamAgentKnowledgeList.h"
 #include "ParamAgentKnowledge.h"
 #include "ParamVisitor_ABC.h"
+#include "gaming/ActionParameterAgentKnowledgeList.h"
 #include "gaming/AgentKnowledge_ABC.h"
 #include "gaming/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -133,8 +134,8 @@ namespace
 // -----------------------------------------------------------------------------
 void ParamAgentKnowledgeList::CommitTo( Action_ABC& action ) const
 {
-//    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterAgentKnowledegList( parameter_ ) );
-//    ActionSerializer serializer( *param );
-//    Accept( serializer );
-//    action.AddParameter( *param.release() );
+    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterAgentKnowledgeList( parameter_ ) );
+    ActionSerializer serializer( *param );
+    Accept( serializer );
+    action.AddParameter( *param.release() );
 }

@@ -38,6 +38,8 @@ public:
 
     //! @name Operations
     //@{
+    virtual const AgentKnowledge_ABC*      FindAgent( unsigned long id, const kernel::Entity_ABC& owner ) = 0;
+    virtual const PopulationKnowledge_ABC* FindPopulation( unsigned long id, const kernel::Entity_ABC& owner ) = 0;
     virtual const AgentKnowledge_ABC*      Find( const AgentKnowledge_ABC& base, const kernel::Entity_ABC& owner ) = 0;
     virtual const AgentKnowledge_ABC*      Find( const kernel::Agent_ABC& base, const kernel::Entity_ABC& owner ) = 0;
     virtual const PopulationKnowledge_ABC* Find( const PopulationKnowledge_ABC& base, const kernel::Entity_ABC& owner ) = 0;

@@ -24,8 +24,10 @@ class LogisticsModel;
 class LimitsModel;
 class AgentFactory_ABC;
 class ObjectFactory_ABC;
-class ObjectKnowledgeFactory;
 class AgentKnowledgeFactory;
+class ObjectKnowledgeFactory;
+class AgentKnowledgeConverter_ABC;
+class ObjectKnowledgeConverter_ABC;
 class TeamFactory_ABC;
 class LogisticConsignFactory_ABC;
 class Simulation;
@@ -70,8 +72,10 @@ public:
     kernel::Controllers& controllers_;
     const StaticModel& static_;
 
-    ObjectKnowledgeFactory& objectKnowledgeFactory_; // $$$$ AGE 2006-02-15: ABC
     AgentKnowledgeFactory& agentsKnowledgeFactory_;
+    ObjectKnowledgeFactory& objectKnowledgeFactory_; // $$$$ AGE 2006-02-15: ABC
+    AgentKnowledgeConverter_ABC& agentKnowledgeConverter_;
+    ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
 
     TeamFactory_ABC&            teamFactory_;
     AgentFactory_ABC&           agentFactory_;

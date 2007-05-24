@@ -62,6 +62,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter* parameter_;
     AgentKnowledgeConverter_ABC& converter_;
     const kernel::Entity_ABC& agent_;
     //@}

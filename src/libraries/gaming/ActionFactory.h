@@ -62,7 +62,7 @@ private:
     //@{
     void AddParameters  ( Action_ABC& action, const kernel::OrderType& order, const ASN1T_MissionParameters& asn ) const;
     void AddOrderContext( Action_ABC& action, const kernel::OrderType& order, const ASN1T_OrderContext& asn ) const;
-    void ReadParameter  ( xml::xistream& xis, Action_ABC& action, kernel::Iterator< const kernel::OrderParameter& >& it ) const;
+    void ReadParameter  ( xml::xistream& xis, Action_ABC& action, kernel::Iterator< const kernel::OrderParameter& >& it, const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:

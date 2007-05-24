@@ -153,14 +153,16 @@ Action_ABC* ActionFactory::CreateAction( xml::xistream& xis ) const
     else if( target = model_.agents_.FindAutomat( id ) )
         action.reset( new ActionAutomatMission( xis, controllers_.controller_, missions_, *target ) );
     else
-        throw std::runtime_error( "Invalid entity for mission." );
+        throw std::runtime_error( tools::translate( "ActionFactory", "Mission's entity '%1' not found." ).arg( id ).ascii() );
     Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
     xis >> start( "parameters" )
-            >> list( "parameter", *this, ReadParameter, *action, it )
+            >> list( "parameter", *this, ReadParameter, *action, it, *target )
         >> end()
         >> start( "context" )
-            >> list( "parameter", *this, ReadParameter, *action, it )
+            >> list( "parameter", *this, ReadParameter, *action, it, *target )
         >> end();
+    if( it.HasMoreElements() )
+        throw std::runtime_error( tools::translate( "ActionFactory", "Parameter mismatch: too few parameters provided." ).ascii() );
     return action.release();
 }
 
@@ -168,10 +170,10 @@ Action_ABC* ActionFactory::CreateAction( xml::xistream& xis ) const
 // Name: ActionFactory::ReadParameter
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-void ActionFactory::ReadParameter( xml::xistream& xis, Action_ABC& action, Iterator< const OrderParameter& >& it ) const
+void ActionFactory::ReadParameter( xml::xistream& xis, Action_ABC& action, Iterator< const OrderParameter& >& it, const Entity_ABC& entity ) const
 {
-    if( !it.HasMoreElements() ) // $$$$ SBO 2007-05-16: invalid order, too much parameters...
-        return;
-    if( ActionParameter_ABC* param = factory_.CreateParameter( it.NextElement(), xis ) )
+    if( !it.HasMoreElements() )
+        throw std::runtime_error( tools::translate( "ActionFactory", "Parameter mismatch: too much parameters provided." ).ascii() );
+    if( ActionParameter_ABC* param = factory_.CreateParameter( it.NextElement(), xis, entity ) )
         action.AddParameter( *param );
 }

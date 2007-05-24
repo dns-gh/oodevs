@@ -47,7 +47,7 @@ public:
     virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_Line& line1, const ASN1T_Line& line2 ) const = 0;
     virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_LimasOrder& asn ) const = 0;
     virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_Direction& asn ) const = 0;
-    virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis ) const = 0;
+    virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity ) const = 0;
     //@}
 };
 

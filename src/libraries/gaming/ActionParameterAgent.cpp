@@ -14,6 +14,23 @@
 
 using namespace kernel;
 
+namespace
+{
+    unsigned long ReadId( xml::xistream& xis )
+    {
+        unsigned long id;
+        xis >> xml::attribute( "value", id );
+        return id;
+    }
+
+    QString ReadName( xml::xistream& xis )
+    {
+        std::string name;
+        xis >> xml::attribute( "name", name );
+        return name.c_str();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ActionParameterAgent constructor
 // Created: SBO 2007-05-23
@@ -39,7 +56,7 @@ ActionParameterAgent::ActionParameterAgent( const kernel::OrderParameter& parame
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
 ActionParameterAgent::ActionParameterAgent( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver )
-    : ActionParameterEntity< Agent_ABC >( parameter, xis, resolver )
+    : ActionParameterEntity< Agent_ABC >( parameter, &resolver.Get( ReadId( xis ) ) )
 {
     // NOTHING
 }
@@ -49,7 +66,7 @@ ActionParameterAgent::ActionParameterAgent( const OrderParameter& parameter, xml
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 ActionParameterAgent::ActionParameterAgent( const QString& name, unsigned int id, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver )
-    : ActionParameterEntity< Agent_ABC >( name, id, resolver )
+    : ActionParameterEntity< Agent_ABC >( name, &resolver.Get( id ) )
 {
     // NOTHING
 }
@@ -59,7 +76,7 @@ ActionParameterAgent::ActionParameterAgent( const QString& name, unsigned int id
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 ActionParameterAgent::ActionParameterAgent( const kernel::OrderParameter& parameter, unsigned int id, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver )
-    : ActionParameterEntity< Agent_ABC >( parameter, id, resolver )
+    : ActionParameterEntity< Agent_ABC >( parameter, &resolver.Get( id ) )
 {
     // NOTHING
 }
@@ -69,7 +86,7 @@ ActionParameterAgent::ActionParameterAgent( const kernel::OrderParameter& parame
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 ActionParameterAgent::ActionParameterAgent( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver )
-    : ActionParameterEntity< Agent_ABC >( xis, resolver )
+    : ActionParameterEntity< Agent_ABC >( ReadName( xis ), &resolver.Get( ReadId( xis ) ) )
 {
     // NOTHING
 }

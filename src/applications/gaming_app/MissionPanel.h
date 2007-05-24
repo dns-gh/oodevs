@@ -63,7 +63,8 @@ class MissionPanel : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionPanel( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const kernel::Profile_ABC& profile, ActionsModel& actionsModel );
+             MissionPanel( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const kernel::Profile_ABC& profile, ActionsModel& actionsModel
+                         , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter );
     virtual ~MissionPanel();
     //@}
 
@@ -117,8 +118,6 @@ private:
     const kernel::GlTools_ABC& tools_;
     const kernel::Profile_ABC& profile_;
 
-    AgentKnowledgeConverter_ABC* knowledgeConverter_;
-    ObjectKnowledgeConverter_ABC* objectKnowledgeConverter_;
     MissionInterface_ABC* pMissionInterface_;
     MissionInterfaceBuilder* interfaceBuilder_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;

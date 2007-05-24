@@ -35,6 +35,19 @@ ObjectKnowledgeConverter::~ObjectKnowledgeConverter()
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgeConverter::Find
+// Created: SBO 2007-05-24
+// -----------------------------------------------------------------------------
+const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( unsigned long id, const kernel::Team_ABC& owner )
+{
+    T_KnowledgeMap knowledges = knowledges_[ &owner ];
+    for( T_KnowledgeMap::const_iterator it = knowledges.begin(); it != knowledges.end(); ++it )
+        if( it->second->GetId() == id )
+            return it->second;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgeConverter::Find
 // Created: AGE 2006-09-15
 // -----------------------------------------------------------------------------
 const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const ObjectKnowledge_ABC& base, const Team_ABC& owner )

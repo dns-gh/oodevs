@@ -51,14 +51,15 @@ private:
     ParamPopulationKnowledge& operator=( const ParamPopulationKnowledge& ); //!< Assignement operator
     //@}
 
-private:
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
+private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter& parameter_;
     AgentKnowledgeConverter_ABC& converter_;
     const kernel::Entity_ABC& agent_;
     //@}

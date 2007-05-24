@@ -14,6 +14,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
+#include "gaming/ActionParameterObjectKnowledgeList.h"
 #include "gaming/ObjectKnowledge_ABC.h"
 #include "gaming/ObjectKnowledgeConverter_ABC.h"
 
@@ -136,8 +137,8 @@ namespace
 // -----------------------------------------------------------------------------
 void ParamObjectKnowledgeList::CommitTo( Action_ABC& action ) const
 {
-//    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterObjectKnowledegList( parameter_ ) );
-//    ActionSerializer serializer( *param );
-//    Accept( serializer );
-//    action.AddParameter( *param.release() );
+    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterObjectKnowledgeList( parameter_ ) );
+    ActionSerializer serializer( *param );
+    Accept( serializer );
+    action.AddParameter( *param.release() );
 }

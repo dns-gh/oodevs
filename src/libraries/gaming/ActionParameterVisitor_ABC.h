@@ -18,6 +18,9 @@ class ActionParameterPath;
 class ActionParameterPathPoint;
 class ActionParameterAgent;
 class ActionParameterAutomat;
+class ActionParameterAgentKnowledge;
+class ActionParameterObjectKnowledge;
+class ActionParameterPopulationKnowledge;
 
 // =============================================================================
 /** @class  ActionParameterVisitor_ABC
@@ -37,14 +40,17 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Visit( const ActionParameterObstacle&  ) {}
-    virtual void Visit( const ActionParameterLima&      ) {}
-    virtual void Visit( const ActionParameterLimit&     ) {}
-    virtual void Visit( const ActionParameterPath&      ) {}
-    virtual void Visit( const ActionParameterPathPoint& ) {}
-    virtual void Visit( const ActionParameterLocation&  ) {}
-    virtual void Visit( const ActionParameterAgent&     ) {}
-    virtual void Visit( const ActionParameterAutomat&   ) {}
+    virtual void Visit( const ActionParameterObstacle&            ) {}
+    virtual void Visit( const ActionParameterLima&                ) {}
+    virtual void Visit( const ActionParameterLimit&               ) {}
+    virtual void Visit( const ActionParameterPath&                ) {}
+    virtual void Visit( const ActionParameterPathPoint&           ) {}
+    virtual void Visit( const ActionParameterLocation&            ) {}
+    virtual void Visit( const ActionParameterAgent&               ) {}
+    virtual void Visit( const ActionParameterAutomat&             ) {}
+    virtual void Visit( const ActionParameterAgentKnowledge&      ) {}
+    virtual void Visit( const ActionParameterObjectKnowledge&     ) {}
+    virtual void Visit( const ActionParameterPopulationKnowledge& ) {}
     //@}
 };
 

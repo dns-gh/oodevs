@@ -11,6 +11,7 @@
 #include "ParamObjectKnowledge.h"
 #include "gaming/ObjectKnowledge_ABC.h"
 #include "gaming/ObjectKnowledgeConverter_ABC.h"
+#include "gaming/ActionParameterObjectKnowledge.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
@@ -23,6 +24,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 ParamObjectKnowledge::ParamObjectKnowledge( QObject* parent, const OrderParameter& parameter, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent )
     : EntityParameter< ObjectKnowledge_ABC >( parent, parameter )
+    , parameter_( &parameter )
     , converter_( converter )
     , agent_( agent )
 {
@@ -35,6 +37,7 @@ ParamObjectKnowledge::ParamObjectKnowledge( QObject* parent, const OrderParamete
 // -----------------------------------------------------------------------------
 ParamObjectKnowledge::ParamObjectKnowledge( QObject* parent, const QString& name, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, const ObjectKnowledge_ABC& potential )
     : EntityParameter< ObjectKnowledge_ABC >( parent, name, potential )
+    , parameter_( 0 )
     , converter_( converter )
     , agent_( agent )
 {
@@ -88,11 +91,11 @@ void ParamObjectKnowledge::CommitTo( ASN1T_KnowledgeObject& asn ) const
 // -----------------------------------------------------------------------------
 void ParamObjectKnowledge::CommitTo( Action_ABC& action ) const
 {
-//    if( !parameter_ )
-//        throw std::runtime_error( "OrderParameter not set" ); // $$$$ SBO 2007-04-25: 
-//    std::auto_ptr< ActionParameterEntity< ObjectKnowledge_ABC > > param( new ActionParameterObjectKnowledge( *parameter_ ) );
-//    EntityParameter< ObjectKnowledge_ABC >::CommitTo( *param );
-//    action.AddParameter( *param.release() );
+    if( !parameter_ )
+        throw std::runtime_error( "OrderParameter not set" ); // $$$$ SBO 2007-04-25: 
+    std::auto_ptr< ActionParameterEntity< ObjectKnowledge_ABC > > param( new ActionParameterObjectKnowledge( *parameter_ ) );
+    EntityParameter< ObjectKnowledge_ABC >::CommitTo( *param );
+    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +104,7 @@ void ParamObjectKnowledge::CommitTo( Action_ABC& action ) const
 // -----------------------------------------------------------------------------
 void ParamObjectKnowledge::CommitTo( ActionParameter_ABC& param ) const
 {
-//    std::auto_ptr< ActionParameterEntity< ObjectKnowledge_ABC > > parameter( new ActionParameterObjectKnowledge( GetName() ) );
-//    EntityParameter< ObjectKnowledge_ABC >::CommitTo( *parameter );
-//    param.AddParameter( *parameter.release() );
+    std::auto_ptr< ActionParameterEntity< ObjectKnowledge_ABC > > parameter( new ActionParameterObjectKnowledge( GetName() ) );
+    EntityParameter< ObjectKnowledge_ABC >::CommitTo( *parameter );
+    param.AddParameter( *parameter.release() );
 }

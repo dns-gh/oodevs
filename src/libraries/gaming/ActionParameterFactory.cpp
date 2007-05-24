@@ -26,6 +26,11 @@
 #include "ActionParameterAutomat.h"
 #include "ActionParameterAgentList.h"
 #include "ActionParameterAutomatList.h"
+#include "ActionParameterAgentKnowledge.h"
+#include "ActionParameterPopulationKnowledge.h"
+#include "ActionParameterObjectKnowledge.h"
+#include "ActionParameterAgentKnowledgeList.h"
+#include "ActionParameterObjectKnowledgeList.h"
 #include "ActionParameterEnumeration.h"
 #include "ActionParameterBool.h"
 #include "ActionParameterNumeric.h"
@@ -33,6 +38,7 @@
 #include "Model.h"
 #include "StaticModel.h"
 #include "AgentsModel.h"
+#include "ObjectsModel.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -48,10 +54,13 @@ using namespace kernel;
 // Name: ActionParameterFactory constructor
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-ActionParameterFactory::ActionParameterFactory( const CoordinateConverter_ABC& converter, const Model& model, const StaticModel& staticModel )
+ActionParameterFactory::ActionParameterFactory( const CoordinateConverter_ABC& converter, const Model& model, const StaticModel& staticModel
+                                              , AgentKnowledgeConverter_ABC& agentKnowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter )
     : converter_( converter )
     , model_( model )
     , staticModel_( staticModel )
+    , agentKnowledgeConverter_( agentKnowledgeConverter )
+    , objectKnowledgeConverter_( objectKnowledgeConverter )
 {
     // NOTHING
 }
@@ -94,9 +103,11 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     case T_MissionParameter_value_itineraire:
         return new ActionParameterPath( parameter, converter_, *asn.value.u.itineraire );
     case T_MissionParameter_value_knowledgeAgent:
+        return new ActionParameterAgentKnowledge( parameter, asn.value.u.knowledgeAgent, agentKnowledgeConverter_, entity );
     case T_MissionParameter_value_knowledgeObject:
+        return new ActionParameterObjectKnowledge( parameter, asn.value.u.knowledgeObject, objectKnowledgeConverter_, entity );
     case T_MissionParameter_value_knowledgePopulation:
-        break;
+        return new ActionParameterPopulationKnowledge( parameter, asn.value.u.knowledgePopulation, agentKnowledgeConverter_, entity );
     case T_MissionParameter_value_listAgent:
         return new ActionParameterAgentList( parameter, *asn.value.u.listAgent, model_.agents_ );
     case T_MissionParameter_value_listAutomate:
@@ -104,8 +115,9 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     case T_MissionParameter_value_listItineraire:
         return new ActionParameterPathList( parameter, converter_, *asn.value.u.listItineraire );
     case T_MissionParameter_value_listKnowledgeAgent:
+        return new ActionParameterAgentKnowledgeList( parameter, *asn.value.u.listKnowledgeAgent, agentKnowledgeConverter_, entity );
     case T_MissionParameter_value_listKnowledgeObject:
-        break;
+        return new ActionParameterObjectKnowledgeList( parameter, *asn.value.u.listKnowledgeObject, objectKnowledgeConverter_, entity );
     case T_MissionParameter_value_listLocalisation:
         return new ActionParameterLocationList( parameter, converter_, *asn.value.u.listLocalisation );
     case T_MissionParameter_value_listMissionGenObject:
@@ -169,7 +181,7 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
 // Name: ActionParameterFactory::CreateParameter
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, xml::xistream& xis ) const
+ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity ) const
 {
     std::string type;
     xis >> attribute( "type", type );
@@ -220,6 +232,16 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
         return new ActionParameterObstacle( parameter, converter_, staticModel_.objectTypes_, xis );
     else if( type == "genobjectlist" )
         return new ActionParameterObstacleList( parameter, converter_, staticModel_.objectTypes_, xis );
+    else if( type == "agentknowledge" )
+        return new ActionParameterAgentKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity );
+    else if( type == "populationknowledge" )
+        return new ActionParameterPopulationKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity );
+    else if( type == "objectknowledge" )
+        return new ActionParameterObjectKnowledge( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity );
+    else if( type == "agentknowledgelist" )
+        return new ActionParameterAgentKnowledgeList( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity );
+    else if( type == "objectknowledgelist" )
+        return new ActionParameterObjectKnowledgeList( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity );
 
     return new ActionParameter< QString >( parameter ); // $$$$ SBO 2007-05-16: default not yet implemented parameters...
 }
@@ -227,12 +249,6 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
 //"natureatlas"
 //
 //"gdh"
-//
-//"agentknowledge"
-//"agentknowledgelist"
-//"objectknowledge"
-//"objectknowledgelist"
-//"populationknowledge"
 //
 //"maintenancepriorities"
 //"medicalpriorities"

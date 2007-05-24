@@ -16,9 +16,11 @@
 #include "LimitsModel.h"
 #include "AgentFactory.h"
 #include "ObjectFactory.h"
-#include "ObjectKnowledgeFactory.h"
-#include "TeamFactory.h"
 #include "AgentKnowledgeFactory.h"
+#include "ObjectKnowledgeFactory.h"
+#include "AgentKnowledgeConverter.h"
+#include "ObjectKnowledgeConverter.h"
+#include "TeamFactory.h"
 #include "KnowledgeGroupsModel.h"
 #include "LogisticConsignFactory.h"
 #include "FireResultFactory.h"
@@ -43,8 +45,10 @@ using namespace kernel;
 Model::Model( Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, Workers& workers, Publisher_ABC& publisher, const RcEntityResolver_ABC& rcResolver )
     : controllers_( controllers )
     , static_( staticModel )
-    , objectKnowledgeFactory_( *new ObjectKnowledgeFactory( controllers, *this, staticModel ) )
     , agentsKnowledgeFactory_( *new AgentKnowledgeFactory( controllers, *this, staticModel.coordinateConverter_ ) )
+    , objectKnowledgeFactory_( *new ObjectKnowledgeFactory( controllers, *this, staticModel ) )
+    , agentKnowledgeConverter_( *new AgentKnowledgeConverter( controllers ) )
+    , objectKnowledgeConverter_( *new ObjectKnowledgeConverter( controllers ) )
     , teamFactory_( *new TeamFactory( controllers, *this ) )
     , agentFactory_( *new AgentFactory( controllers, *this, staticModel, publisher, simulation, workers, rcResolver ) )
     , objectFactory_( *new ObjectFactory( controllers, *this, staticModel ) )
@@ -53,7 +57,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , tacticalLineFactory_( *new TacticalLineFactory( controllers, staticModel.coordinateConverter_, *this, publisher ) )
     , fireResultsFactory_( *new FireResultFactory( *this ) )
     , userProfileFactory_( *new UserProfileFactory( *this, controllers, publisher ) )
-    , actionParameterFactory_( *new ActionParameterFactory( staticModel.coordinateConverter_, *this, staticModel ) )
+    , actionParameterFactory_( *new ActionParameterFactory( staticModel.coordinateConverter_, *this, staticModel, agentKnowledgeConverter_, objectKnowledgeConverter_ ) )
     , actionFactory_( *new ActionFactory( controllers, actionParameterFactory_, *this, staticModel.types_ ) )
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
@@ -95,8 +99,10 @@ Model::~Model()
     delete &objectFactory_;
     delete &agentFactory_;
     delete &teamFactory_;
-    delete &agentsKnowledgeFactory_;
+    delete &objectKnowledgeConverter_;
+    delete &agentKnowledgeConverter_;
     delete &objectKnowledgeFactory_;
+    delete &agentsKnowledgeFactory_;
 }
 
 // -----------------------------------------------------------------------------

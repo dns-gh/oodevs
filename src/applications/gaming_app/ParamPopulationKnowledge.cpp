@@ -9,9 +9,9 @@
 
 #include "gaming_app_pch.h"
 #include "ParamPopulationKnowledge.h"
-#include "gaming/PopulationKnowledge_ABC.h"
 #include "clients_kernel/Population_ABC.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "gaming/ActionParameterPopulationKnowledge.h"
+#include "gaming/PopulationKnowledge_ABC.h"
 #include "gaming/AgentKnowledgeConverter_ABC.h"
 
 using namespace kernel;
@@ -22,6 +22,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 ParamPopulationKnowledge::ParamPopulationKnowledge( QObject* parent, const OrderParameter& parameter, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
     : EntityParameter< PopulationKnowledge_ABC >( parent, parameter )
+    , parameter_( parameter )
     , converter_( converter )
     , agent_( agent )
 {
@@ -66,9 +67,7 @@ void ParamPopulationKnowledge::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamPopulationKnowledge::CommitTo( Action_ABC& action ) const
 {
-//    if( !parameter_ )
-//        throw std::runtime_error( "OrderParameter not set" ); // $$$$ SBO 2007-04-25: 
-//    std::auto_ptr< ActionParameterEntity< PopulationKnowledge_ABC > > param( new ActionParameterPopulationKnowledge( *parameter_ ) );
-//    EntityParameter< PopulationKnowledge_ABC >::CommitTo( *param );
-//    action.AddParameter( *param.release() );}
+    std::auto_ptr< ActionParameterEntity< PopulationKnowledge_ABC > > param( new ActionParameterPopulationKnowledge( parameter_ ) );
+    EntityParameter< PopulationKnowledge_ABC >::CommitTo( *param );
+    action.AddParameter( *param.release() );
 }

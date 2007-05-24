@@ -11,7 +11,6 @@
 #define __ObjectKnowledgeConverter_h_
 
 #include "ObjectKnowledgeConverter_ABC.h"
-#include "AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
 namespace kernel
@@ -39,6 +38,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual const ObjectKnowledge_ABC* Find( unsigned long id, const kernel::Team_ABC& owner );
     virtual const ObjectKnowledge_ABC* Find( const ObjectKnowledge_ABC& base, const kernel::Team_ABC& owner );
     virtual const ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base,  const kernel::Team_ABC& owner );
     //@}

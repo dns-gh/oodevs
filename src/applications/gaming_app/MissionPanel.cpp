@@ -31,8 +31,6 @@
 #include "PopulationMissionInterface.h"
 #include "FragmentaryOrderInterface.h"
 #include "MissionInterfaceBuilder.h"
-#include "gaming/AgentKnowledgeConverter.h"
-#include "gaming/ObjectKnowledgeConverter.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_gui/ParametersLayer.h"
 
@@ -43,7 +41,8 @@ using namespace gui;
 // Name: MissionPanel constructor
 // Created: APE 2004-03-19
 // -----------------------------------------------------------------------------
-MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, ParametersLayer& layer, const GlTools_ABC& tools, const kernel::Profile_ABC& profile, ActionsModel& actionsModel )
+MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, ParametersLayer& layer, const GlTools_ABC& tools, const kernel::Profile_ABC& profile, ActionsModel& actionsModel
+                          , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter )
     : QDockWindow              ( pParent )
     , controllers_             ( controllers )
     , static_                  ( model )
@@ -53,10 +52,8 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const St
     , converter_               ( static_.coordinateConverter_ )
     , tools_                   ( tools )
     , profile_                 ( profile )
-    , knowledgeConverter_      ( new AgentKnowledgeConverter( controllers ) )
-    , objectKnowledgeConverter_( new ObjectKnowledgeConverter( controllers ) )
     , pMissionInterface_       ( 0 )
-    , interfaceBuilder_        ( new MissionInterfaceBuilder( controllers_.actions_, layer_, converter_, *knowledgeConverter_, *objectKnowledgeConverter_, static_.objectTypes_ ) ) 
+    , interfaceBuilder_        ( new MissionInterfaceBuilder( controllers_.actions_, layer_, converter_, knowledgeConverter, objectKnowledgeConverter, static_.objectTypes_ ) ) 
     , selectedEntity_          ( controllers )
 {
     setResizeEnabled( true );
@@ -74,8 +71,6 @@ MissionPanel::~MissionPanel()
 {
     controllers_.Remove( *this );
     delete interfaceBuilder_;
-    delete knowledgeConverter_;
-    delete objectKnowledgeConverter_;
 }
 
 // -----------------------------------------------------------------------------

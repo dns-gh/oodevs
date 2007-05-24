@@ -19,6 +19,8 @@ namespace kernel
 
 class Model;
 class StaticModel;
+class AgentKnowledgeConverter_ABC;
+class ObjectKnowledgeConverter_ABC;
 
 // =============================================================================
 /** @class  ActionParameterFactory
@@ -32,7 +34,8 @@ class ActionParameterFactory : public ActionParameterFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const Model& model, const StaticModel& staticModel );
+             ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const Model& model, const StaticModel& staticModel
+                                   , AgentKnowledgeConverter_ABC& agentKnowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter );
     virtual ~ActionParameterFactory();
     //@}
 
@@ -42,7 +45,7 @@ public:
     virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_Line& line1, const ASN1T_Line& line2 ) const;
     virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_LimasOrder& asn ) const;
     virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_Direction& asn ) const;
-    virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis ) const;
+    virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:
@@ -62,6 +65,8 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     const Model& model_;
     const StaticModel& staticModel_;
+    AgentKnowledgeConverter_ABC& agentKnowledgeConverter_;
+    ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
     //@}
 };
 

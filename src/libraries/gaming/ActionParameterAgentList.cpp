@@ -35,7 +35,7 @@ ActionParameterAgentList::ActionParameterAgentList( const OrderParameter& parame
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new ActionParameterAgent( tools::translate( "ActionParameter", "Agent %1" ).arg( i ), asn.elem[i], resolver ) );
+        AddParameter( *new ActionParameterAgent( tools::translate( "ActionParameter", "Agent %1" ).arg( i + 1 ), asn.elem[i], resolver ) );
 }
 
 // -----------------------------------------------------------------------------

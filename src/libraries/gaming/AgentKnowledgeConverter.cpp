@@ -39,6 +39,32 @@ AgentKnowledgeConverter::~AgentKnowledgeConverter()
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentKnowledgeConverter::FindAgent
+// Created: SBO 2007-05-24
+// -----------------------------------------------------------------------------
+const AgentKnowledge_ABC* AgentKnowledgeConverter::FindAgent( unsigned long id, const kernel::Entity_ABC& owner )
+{
+    T_KnowledgeMap knowledges = agents_[ FindKnowledgeGroup( owner ) ];
+    for( T_KnowledgeMap::const_iterator it = knowledges.begin(); it != knowledges.end(); ++it )
+        if( it->second->GetId() == id )
+            return it->second;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgeConverter::FindPopulation
+// Created: SBO 2007-05-24
+// -----------------------------------------------------------------------------
+const PopulationKnowledge_ABC* AgentKnowledgeConverter::FindPopulation( unsigned long id, const kernel::Entity_ABC& owner )
+{
+    T_PopulationKnowledgeMap knowledges = populations_[ FindKnowledgeGroup( owner ) ];
+    for( T_PopulationKnowledgeMap::const_iterator it = knowledges.begin(); it != knowledges.end(); ++it )
+        if( it->second->GetId() == id )
+            return it->second;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentKnowledgeConverter::Find
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
