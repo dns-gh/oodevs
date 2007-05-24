@@ -22,8 +22,10 @@
 #include "ActionParameterLocationList.h"
 #include "ActionParameterPathList.h"
 #include "ActionParameterPath.h"
-#include "ActionParameterEntity.h"
-#include "ActionParameterEntityList.h"
+#include "ActionParameterAgent.h"
+#include "ActionParameterAutomat.h"
+#include "ActionParameterAgentList.h"
+#include "ActionParameterAutomatList.h"
 #include "ActionParameterEnumeration.h"
 #include "ActionParameterBool.h"
 #include "ActionParameterNumeric.h"
@@ -78,11 +80,11 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     case T_MissionParameter_value_aCharStr:
         return new ActionParameter< QString >( parameter, asn.value.u.aCharStr );
     case T_MissionParameter_value_agent:
-        return new ActionParameterEntity< Agent_ABC >( parameter, asn.value.u.agent, model_.agents_ );
+        return new ActionParameterAgent( parameter, asn.value.u.agent, model_.agents_ );
     case T_MissionParameter_value_aReal:
         return new ActionParameterNumeric( parameter, asn.value.u.aReal );
     case T_MissionParameter_value_automate:
-        return new ActionParameterEntity< Automat_ABC >( parameter, asn.value.u.automate, model_.agents_ );
+        return new ActionParameterAutomat( parameter, asn.value.u.automate, model_.agents_ );
     case T_MissionParameter_value_direction:
         return new ActionParameter< float >( parameter, asn.value.u.direction );
     case T_MissionParameter_value_enumeration:
@@ -96,9 +98,9 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     case T_MissionParameter_value_knowledgePopulation:
         break;
     case T_MissionParameter_value_listAgent:
-        return new ActionParameterEntityList( parameter, *asn.value.u.listAgent, model_.agents_ );
+        return new ActionParameterAgentList( parameter, *asn.value.u.listAgent, model_.agents_ );
     case T_MissionParameter_value_listAutomate:
-        return new ActionParameterEntityList( parameter, *asn.value.u.listAutomate, model_.agents_ );
+        return new ActionParameterAutomatList( parameter, *asn.value.u.listAutomate, model_.agents_ );
     case T_MissionParameter_value_listItineraire:
         return new ActionParameterPathList( parameter, converter_, *asn.value.u.listItineraire );
     case T_MissionParameter_value_listKnowledgeAgent:
@@ -173,7 +175,8 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     xis >> attribute( "type", type );
     type = QString( type.c_str() ).lower().ascii();
     if( type != parameter.GetType().lower().ascii() )
-        return new ActionParameter< QString >( parameter, QString( "Invalid: '%1' expecting '%2'" ).arg( type.c_str() ).arg( parameter.GetType() ) );
+        throw std::runtime_error( tools::translate( "ActionParameter", "Error loading mission parameters. Found type: '%1' expecting: '%2'." )
+                                .arg( type.c_str() ).arg( parameter.GetType() ).ascii() );
 
     if( type == "bool" )
         return new ActionParameterBool( parameter, xis );
@@ -204,13 +207,13 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     else if( type == "enumeration" )
         return new ActionParameterEnumeration( parameter, xis );
     else if( type == "agent" )
-        return new ActionParameterEntity< Agent_ABC >( parameter, xis, model_.agents_ );
+        return new ActionParameterAgent( parameter, xis, model_.agents_ );
     else if( type == "automate" )
-        return new ActionParameterEntity< Automat_ABC >( parameter, xis, model_.agents_ );
+        return new ActionParameterAutomat( parameter, xis, model_.agents_ );
     else if( type == "agentlist" )
-        return new ActionParameterEntityList( parameter, xis, static_cast< const Resolver_ABC< Agent_ABC >& >( model_.agents_ ) );
+        return new ActionParameterAgentList( parameter, xis, model_.agents_ );
     else if( type == "automatelist" )
-        return new ActionParameterEntityList( parameter, xis, static_cast< const Resolver_ABC< Automat_ABC >& >( model_.agents_ ) );
+        return new ActionParameterAutomatList( parameter, xis, model_.agents_ );
     else if( type == "dotationtype" )
         return new ActionParameterDotationType( parameter, xis, staticModel_.objectTypes_ );
     else if( type == "genobject" )

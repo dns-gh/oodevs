@@ -3,76 +3,64 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #ifndef __EntityListParameter_h_
 #define __EntityListParameter_h_
 
-#include "game_asn/Asn.h"
-#include "Param_ABC.h"
-#include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "ListParameter.h"
+#include "EntityParameter.h"
 #include "clients_kernel/OrderParameter.h"
-#include "clients_gui/ValuedListItem.h"
-#include "gaming/ActionParameterEntityList.h"
-#include "gaming/ActionParameterEntity.h"
-#include "gaming/Action_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
+
+namespace kernel
+{
+    class ContextMenu;
+}
 
 // =============================================================================
 /** @class  EntityListParameterBase
     @brief  EntityListParameterBase
 */
-// Created: AGE 2006-03-14
+// Created: SBO 2007-05-23
 // =============================================================================
-class EntityListParameterBase : public QObject
-                              , public Param_ABC
+class EntityListParameterBase : public ListParameter
 {
     Q_OBJECT;
+
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityListParameterBase( QObject* parent, const QString& name );
+             EntityListParameterBase( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& controller );
     virtual ~EntityListParameterBase();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool CheckValidity();
     virtual void BuildInterface( QWidget* parent );
-    //@}
-
-private slots:
-    //! @name slots
-    //@{
-    virtual void OnRequestPopup( QListViewItem* pItem, const QPoint& pos );
-    void OnDeleteSelectedItem();
-    void OnClearList();
-    void TurnHeaderBlack();
-    virtual void MenuItemValidated() = 0;
     //@}
 
 protected:
     //! @name Helpers
     //@{
-    void AddToMenu( kernel::ContextMenu& menu );
-    virtual bool Invalid();
-    virtual unsigned long GetId( gui::ValuedListItem* item ) const = 0;
-    virtual void CommitTo( ASN1T_ListOID*& asn ) const;
-    virtual void Clean( ASN1T_ListOID*& asn ) const;
+    virtual void AddToMenu( kernel::ContextMenu& menu ) = 0;
+    void MakeMenu( const QString& label, kernel::ContextMenu& menu );
     //@}
 
-protected:
-    //! @name Member data
+private slots:
+    //! @name Slots
     //@{
-    QListView* listView_;
+    virtual void MenuItemValidated() = 0;
     //@}
 
 private:
-    //! @name Member data
+    //! @name Copy/Assignment
     //@{
-    QPopupMenu* pPopupMenu_;
+    EntityListParameterBase( const EntityListParameterBase& );            //!< Copy constructor
+    EntityListParameterBase& operator=( const EntityListParameterBase& ); //!< Assignment operator
     //@}
 };
 
@@ -80,49 +68,54 @@ private:
 /** @class  EntityListParameter
     @brief  EntityListParameter
 */
-// Created: AGE 2006-03-14
+// Created: SBO 2007-05-23
 // =============================================================================
 template< typename ConcreteEntity >
 class EntityListParameter : public EntityListParameterBase
-                          , public kernel::ContextMenuObserver_ABC< ConcreteEntity >
                           , public kernel::ElementObserver_ABC< ConcreteEntity >
+                          , public kernel::ContextMenuObserver_ABC< ConcreteEntity >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityListParameter( QObject* pParent, const kernel::OrderParameter& parameter );
+             EntityListParameter( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& controller );
     virtual ~EntityListParameter();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void CommitTo( Action_ABC& action ) const;
-    using EntityListParameterBase::CommitTo;
-    //@}
-
-private:
-    //! @name Copy/Assignement
-    //@{
-    EntityListParameter( const EntityListParameter& );            //!< Copy constructor
-    EntityListParameter& operator=( const EntityListParameter& ); //!< Assignement operator
     //@}
 
 protected:
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const ConcreteEntity& entity, kernel::ContextMenu& menu );
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    EntityListParameter( const EntityListParameter& );            //!< Copy constructor
+    EntityListParameter& operator=( const EntityListParameter& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual Param_ABC* CreateElement();
+    virtual EntityParameter< ConcreteEntity >* CreateElement( const ConcreteEntity& potential ) = 0;
     virtual void MenuItemValidated();
-    virtual void NotifyUpdated( const ConcreteEntity& ) {};
+    virtual void DeleteElement( Param_ABC& param );
     virtual void NotifyDeleted( const ConcreteEntity& entity );
-    virtual unsigned long GetId( gui::ValuedListItem* item ) const;
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< const ConcreteEntity*, EntityParameter< ConcreteEntity >* > T_Entities;
+    typedef typename T_Entities::const_iterator                                 CIT_Entities;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const ConcreteEntity* potential_;
-    const kernel::OrderParameter& parameter_;
+    const ConcreteEntity* potential_; // $$$$ SBO 2007-05-23: safe pointer
+    T_Entities entities_;
     //@}
 };
 

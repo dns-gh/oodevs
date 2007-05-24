@@ -12,6 +12,7 @@
 #include "ParamVisitor_ABC.h"
 #include "clients_gui/ValuedListItem.h"
 #include "clients_kernel/OrderParameter.h"
+#include "gaming/Action_ABC.h"
 #include "gaming/ActionParameterObstacleList.h"
 
 using namespace kernel;

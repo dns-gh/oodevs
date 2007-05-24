@@ -3,26 +3,25 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
 // Name: EntityListParameter constructor
-// Created: AGE 2006-03-14
+// Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-EntityListParameter< ConcreteEntity >::EntityListParameter( QObject* parent, const kernel::OrderParameter& parameter )
-    : EntityListParameterBase( parent, parameter.GetName() )
-    , potential_             ( 0 )
-    , parameter_             ( parameter )
+EntityListParameter< ConcreteEntity >::EntityListParameter( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& controller )
+    : EntityListParameterBase( parent, parameter, controller )
+    , potential_( 0 )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityListParameter destructor
-// Created: AGE 2006-03-14
+// Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
 EntityListParameter< ConcreteEntity >::~EntityListParameter()
@@ -31,25 +30,59 @@ EntityListParameter< ConcreteEntity >::~EntityListParameter()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityListParameter::NotifyDeleted
-// Created: AGE 2006-03-14
+// Name: EntityListParameter::MenuItemValidated
+// Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityListParameter< ConcreteEntity >::NotifyDeleted( const ConcreteEntity& entity )
+void EntityListParameter< ConcreteEntity >::MenuItemValidated()
 {
-    delete gui::FindItem( &entity, listView_->firstChild() );
-    if( &entity == potential_ )
-        potential_ = 0;
+    OnCreate();
+    CIT_Entities it = entities_.find( potential_ );
+    if( it != entities_.end() )
+        it->second->MenuItemValidated();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityListParameter::CreateElement
+// Created: SBO 2007-05-23
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+Param_ABC* EntityListParameter< ConcreteEntity >::CreateElement()
+{
+    if( !potential_ )
+        return 0;
+    EntityParameter< ConcreteEntity >* param = CreateElement( *potential_ );
+    entities_[potential_] = param;
+    return param;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityListParameter::DeleteElement
+// Created: SBO 2007-05-23
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void EntityListParameter< ConcreteEntity >::DeleteElement( Param_ABC& param )
+{
+    for( T_Entities::iterator it = entities_.begin(); it != entities_.end(); ++it )
+        if( it->second == &param )
+        {
+            entities_.erase( it );
+            break;
+        }
+    EntityListParameterBase::DeleteElement( param );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityListParameter::NotifyContextMenu
-// Created: AGE 2006-03-14
+// Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
 void EntityListParameter< ConcreteEntity >::NotifyContextMenu( const ConcreteEntity& entity, kernel::ContextMenu& menu )
 {
-    if( ! gui::FindItem( &entity, listView_->firstChild() ) )
+    CIT_Entities it = entities_.find( &entity );
+    if( it != entities_.end() )
+        Select( *it->second );
+    else
     {
         potential_ = &entity;
         AddToMenu( menu );
@@ -57,43 +90,16 @@ void EntityListParameter< ConcreteEntity >::NotifyContextMenu( const ConcreteEnt
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityListParameter::MenuItemValidated
-// Created: AGE 2006-03-14
+// Name: EntityListParameter::NotifyDeleted
+// Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityListParameter< ConcreteEntity >::MenuItemValidated()
+void EntityListParameter< ConcreteEntity >::NotifyDeleted( const ConcreteEntity& entity )
 {
-    if( potential_ )
+    CIT_Entities it = entities_.find( &entity );
+    if( it != entities_.end() )
     {
-        gui::ValuedListItem* item = new gui::ValuedListItem( listView_ );
-        item->SetNamed( *potential_ );
+        Select( *it->second );
+        OnDeleteSelectedItem();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityListParameter::GetId
-// Created: AGE 2006-03-14
-// -----------------------------------------------------------------------------
-template< typename ConcreteEntity >
-unsigned long EntityListParameter< ConcreteEntity >::GetId( gui::ValuedListItem* item ) const
-{
-    return item->GetValue< const ConcreteEntity >()->GetId();
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityListParameter::CommitTo
-// Created: SBO 2007-05-03
-// -----------------------------------------------------------------------------
-template< typename ConcreteEntity >
-void EntityListParameter< ConcreteEntity >::CommitTo( Action_ABC& action ) const
-{
-    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterEntityList( parameter_ ) );
-    gui::ValuedListItem* item = (gui::ValuedListItem*)( listView_->firstChild() );
-    unsigned int i = 0;
-    while( item )
-    {
-        param->AddParameter( *new ActionParameterEntity< ConcreteEntity >( tools::translate( "EntityListParameter", "Entity %1" ).arg( ++i ), item->GetValue< const ConcreteEntity >() ) ); // $$$$ SBO 2007-05-03: 
-        item = (gui::ValuedListItem*)( item->nextSibling() );
-    }
-    action.AddParameter( *param.release() );
 }

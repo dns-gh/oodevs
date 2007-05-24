@@ -12,6 +12,7 @@
 #include "moc_ParamObstacle.cpp"
 #include "ParamLocation.h"
 #include "ParamNumericField.h"
+#include "ParamAutomat.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Resolver.h"
@@ -104,8 +105,10 @@ void ParamObstacle::BuildInterface( QWidget* parent )
     density_ = new ParamNumericField( tr( "Density" ), true );
     density_->BuildInterface( group );
     density_->SetLimits( 0.f, 5.f );
-    tc2_     = new EntityParameter< kernel::Automat_ABC >( this, tr( "TC2" ), false ); // $$$$ SBO 2007-04-25: ParamAutomat ?
+
+    tc2_ = new ParamAutomat( this, tr( "TC2" ), false );
     tc2_->BuildInterface( group );
+
     location_ = new ParamLocation( tr( "Location" ), layer_, converter_, false );
     location_->BuildInterface( group );
 
@@ -191,8 +194,7 @@ void ParamObstacle::CommitTo( ASN1T_MissionGenObject& object ) const
         break;
     case EnumObjectType::camp_prisonniers:
     case EnumObjectType::camp_refugies:
-        if( tc2_->CheckValidity() ) // $$$$ SBO 2006-11-08: ParamObstacleList commits before to CheckValidity => throw
-            tc2_->CommitTo( object.tc2 );
+        tc2_->CommitTo( object.tc2 );
         break;
     };
     location_->CommitTo( object.position );
@@ -219,7 +221,6 @@ void ParamObstacle::CommitTo( Action_ABC& action ) const
     if( !type ) // $$$$ SBO 2007-04-26: 
         return;
     std::auto_ptr< ActionParameter_ABC > param( new ActionParameterObstacle( *parameter_, *type ) );
-    location_->CommitTo( *param );
     switch( type->id_ )
     {
     case EnumObjectType::zone_minee_lineaire:
@@ -231,6 +232,7 @@ void ParamObstacle::CommitTo( Action_ABC& action ) const
         tc2_->CommitTo( *param );
         break;
     };
+    location_->CommitTo( *param );
     action.AddParameter( *param.release() );
 }
 

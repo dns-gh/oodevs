@@ -100,8 +100,15 @@ void ActionsToolbar::Load()
     const QString filename = QFileDialog::getOpenFileName( QString::null, tr( "Order files (*.ord)" ), topLevelWidget(), 0, tr( "Load" ) );
     if( filename == QString::null )
         return;
-    actions_.Load( filename.ascii() );
-    playBtn_->setDisabled( false );
+    try
+    {
+        actions_.Load( filename.ascii() );
+        playBtn_->setDisabled( false );
+    }
+    catch( std::exception& e )
+    {
+        QMessageBox::critical( this, tr( "Error loading order file" ), e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------

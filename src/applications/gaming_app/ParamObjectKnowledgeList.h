@@ -10,7 +10,6 @@
 #ifndef __ParamObjectKnowledgeList_h_
 #define __ParamObjectKnowledgeList_h_
 
-#include "game_asn/Asn.h"
 #include "EntityListParameter.h"
 
 namespace kernel
@@ -35,7 +34,7 @@ class ParamObjectKnowledgeList : public EntityListParameter< ObjectKnowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObjectKnowledgeList( QObject* parent, const kernel::OrderParameter& parameter, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamObjectKnowledgeList( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& controller, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
     virtual ~ParamObjectKnowledgeList();
     //@}
 
@@ -43,6 +42,7 @@ public:
     //@{
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private:
@@ -52,16 +52,20 @@ private:
     ParamObjectKnowledgeList& operator=( const ParamObjectKnowledgeList& ); //!< Assignement operator
     //@}
 
-private:
     //! @name Helpers
     //@{
+    virtual void AddToMenu( kernel::ContextMenu& menu );
+    virtual EntityParameter< ObjectKnowledge_ABC >* CreateElement( const ObjectKnowledge_ABC& potential );
     virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
     //@}
-    
+
+private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter& parameter_;
     ObjectKnowledgeConverter_ABC& converter_;
     const kernel::Entity_ABC& agent_;
+    unsigned int count_;
     //@}
 };
 

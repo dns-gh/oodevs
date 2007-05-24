@@ -19,8 +19,20 @@ using namespace kernel;
 // Name: ParamAgentKnowledge constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamAgentKnowledge::ParamAgentKnowledge( QWidget* pParent, const OrderParameter& parameter, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
+ParamAgentKnowledge::ParamAgentKnowledge( QObject* pParent, const OrderParameter& parameter, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
     : EntityParameter< AgentKnowledge_ABC >( pParent, parameter )
+    , converter_( converter )
+    , agent_    ( agent )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamAgentKnowledge constructor
+// Created: SBO 2007-05-23
+// -----------------------------------------------------------------------------
+ParamAgentKnowledge::ParamAgentKnowledge( QObject* pParent, const QString& name, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, const AgentKnowledge_ABC& potential )
+    : EntityParameter< AgentKnowledge_ABC >( pParent, name, potential )
     , converter_( converter )
     , agent_    ( agent )
 {
@@ -37,6 +49,17 @@ ParamAgentKnowledge::~ParamAgentKnowledge()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParamAgentKnowledge::NotifyContextMenu
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+void ParamAgentKnowledge::NotifyContextMenu( const Agent_ABC& entity, ContextMenu& menu )
+{
+    const AgentKnowledge_ABC* knowledge = converter_.Find( entity, agent_ );
+    if( knowledge )
+        EntityParameter< AgentKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParamAgentKnowledge::CommitTo
 // Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
@@ -48,12 +71,34 @@ void ParamAgentKnowledge::CommitTo( ASN1T_MissionParameter& asn ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamAgentKnowledge::NotifyContextMenu
-// Created: AGE 2006-03-14
+// Name: ParamAgentKnowledge::CommitTo
+// Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void ParamAgentKnowledge::NotifyContextMenu( const Agent_ABC& entity, ContextMenu& menu )
+void ParamAgentKnowledge::CommitTo( ASN1T_KnowledgeAgent& asn ) const
 {
-    const AgentKnowledge_ABC* knowledge = converter_.Find( entity, agent_ );
-    if( knowledge )
-        EntityParameter< AgentKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
+    EntityParameter< AgentKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamAgentKnowledge::CommitTo
+// Created: SBO 2007-05-23
+// -----------------------------------------------------------------------------
+void ParamAgentKnowledge::CommitTo( Action_ABC& action ) const
+{
+//    if( !parameter_ )
+//        throw std::runtime_error( "OrderParameter not set" ); // $$$$ SBO 2007-04-25: 
+//    std::auto_ptr< ActionParameterEntity< AgentKnowledge_ABC > > param( new ActionParameterAgentKnowledge( *parameter_ ) );
+//    EntityParameter< AgentKnowledge_ABC >::CommitTo( *param );
+//    action.AddParameter( *param.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamAgentKnowledge::CommitTo
+// Created: SBO 2007-05-23
+// -----------------------------------------------------------------------------
+void ParamAgentKnowledge::CommitTo( ActionParameter_ABC& param ) const
+{
+//    std::auto_ptr< ActionParameterEntity< AgentKnowledge_ABC > > parameter( new ActionParameterAgentKnowledge( GetName() ) );
+//    EntityParameter< AgentKnowledge_ABC >::CommitTo( *parameter );
+//    param.AddParameter( *parameter.release() );
 }

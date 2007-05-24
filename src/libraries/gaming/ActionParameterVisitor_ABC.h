@@ -16,6 +16,8 @@ class ActionParameterLimit;
 class ActionParameterLocation;
 class ActionParameterPath;
 class ActionParameterPathPoint;
+class ActionParameterAgent;
+class ActionParameterAutomat;
 
 // =============================================================================
 /** @class  ActionParameterVisitor_ABC
@@ -41,6 +43,8 @@ public:
     virtual void Visit( const ActionParameterPath&      ) {}
     virtual void Visit( const ActionParameterPathPoint& ) {}
     virtual void Visit( const ActionParameterLocation&  ) {}
+    virtual void Visit( const ActionParameterAgent&     ) {}
+    virtual void Visit( const ActionParameterAutomat&   ) {}
     //@}
 };
 

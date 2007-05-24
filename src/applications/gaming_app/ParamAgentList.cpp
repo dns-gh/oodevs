@@ -9,27 +9,67 @@
 
 #include "gaming_app_pch.h"
 #include "ParamAgentList.h"
+#include "ParamAgent.h"
+#include "ParamVisitor_ABC.h"
+#include "gaming/ActionParameterAgentList.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/OrderParameter.h"
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ParamAgentList constructor
-// Created: AGE 2006-03-14
+// Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-ParamAgentList::ParamAgentList( QObject* parent, const kernel::OrderParameter& parameter )
-    : EntityListParameter< Agent_ABC >( parent, parameter )
+ParamAgentList::ParamAgentList( QObject* parent, const OrderParameter& parameter, ActionController& controller )
+    : EntityListParameter< Agent_ABC >( parent, parameter, controller )
+    , parameter_( parameter )
+    , count_( 0 )
+{
+    // NOTHING
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ParamAgentList destructor
+// Created: AGE 2006-11-29
+// -----------------------------------------------------------------------------
+ParamAgentList::~ParamAgentList()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamAgentList destructor
-// Created: AGE 2006-03-14
+// Name: ParamAgentList::AddToMenu
+// Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-ParamAgentList::~ParamAgentList()
+void ParamAgentList::AddToMenu( kernel::ContextMenu& menu )
 {
-    // NOTHING
+    MakeMenu( tr( "Add agent" ), menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamAgentList::CreateElement
+// Created: SBO 2007-05-23
+// -----------------------------------------------------------------------------
+EntityParameter< kernel::Agent_ABC >* ParamAgentList::CreateElement( const kernel::Agent_ABC& potential )
+{
+    return new ParamAgent( this, tr( "Agent %1" ).arg( ++count_ ), potential );
+}
+
+namespace
+{
+    struct AsnSerializer : public ParamVisitor_ABC
+    {
+        explicit AsnSerializer( ASN1T_ListAgent& list ) : list_( list ), index_( 0 ) {}
+        virtual void Visit( const Param_ABC& param )
+        {
+            if( index_ < list_.n )
+                static_cast< const ParamAgent& >( param ).CommitTo( list_.elem[index_++] );
+        }
+
+        ASN1T_ListAgent& list_;
+        unsigned int index_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -38,9 +78,15 @@ ParamAgentList::~ParamAgentList()
 // -----------------------------------------------------------------------------
 void ParamAgentList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    ASN1T_ListAgent*& list = asn.value.u.listAgent = new ASN1T_ListAgent();
     asn.value.t = T_MissionParameter_value_listAgent;
-    EntityListParameter< Agent_ABC >::CommitTo( (ASN1T_ListOID*&)asn.value.u.listAgent );
-    asn.null_value = asn.value.u.listAgent->n ? 0 : 1;
+    list->n = Count();
+    asn.null_value = list->n ? 0 : 1;
+    if( asn.null_value )
+        return;
+    list->elem = new ASN1T_Agent[ list->n ];
+    AsnSerializer serializer( *list );
+    Accept( serializer );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,5 +95,33 @@ void ParamAgentList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamAgentList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    EntityListParameter< Agent_ABC >::Clean( (ASN1T_ListOID*&)asn.value.u.listAgent );
+    if( asn.value.u.listAgent )
+        delete[] asn.value.u.listAgent->elem;
+    delete asn.value.u.listAgent;
+}
+
+namespace
+{
+    struct ActionSerializer : public ParamVisitor_ABC
+    {
+        explicit ActionSerializer( ActionParameter_ABC& parent ) : parent_( parent ) {}
+        virtual void Visit( const Param_ABC& param )
+        {
+            static_cast< const ParamAgent& >( param ).CommitTo( parent_ );
+        }
+
+        ActionParameter_ABC& parent_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamAgentList::CommitTo
+// Created: SBO 2007-05-23
+// -----------------------------------------------------------------------------
+void ParamAgentList::CommitTo( Action_ABC& action ) const
+{
+    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterAgentList( parameter_ ) );
+    ActionSerializer serializer( *param );
+    Accept( serializer );
+    action.AddParameter( *param.release() );
 }

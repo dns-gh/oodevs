@@ -34,13 +34,17 @@ class ParamAgentKnowledge : public EntityParameter< AgentKnowledge_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAgentKnowledge( QWidget* pParent, const kernel::OrderParameter& parameter, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamAgentKnowledge( QObject* pParent, const kernel::OrderParameter& parameter, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamAgentKnowledge( QObject* pParent, const QString& name, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, const AgentKnowledge_ABC& potential );
     virtual ~ParamAgentKnowledge();
     //@}
 
     //! @name Operations
     //@{
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
+    void CommitTo( ASN1T_KnowledgeAgent& asn ) const;
+    void CommitTo( ActionParameter_ABC& param ) const;
     //@}
 
 private:
@@ -50,12 +54,12 @@ private:
     ParamAgentKnowledge& operator=( const ParamAgentKnowledge& ); //!< Assignement operator
     //@}
 
-private:
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
+private:
     //! @name Member data
     //@{
     AgentKnowledgeConverter_ABC& converter_;

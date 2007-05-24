@@ -9,7 +9,11 @@
 
 #include "gaming_app_pch.h"
 #include "ParamAutomatList.h"
+#include "ParamAutomat.h"
+#include "ParamVisitor_ABC.h"
+#include "gaming/ActionParameterAutomatList.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/OrderParameter.h"
 
 using namespace kernel;
 
@@ -17,8 +21,10 @@ using namespace kernel;
 // Name: ParamAutomatList constructor
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-ParamAutomatList::ParamAutomatList( QObject* parent, const kernel::OrderParameter& parameter )
-    : EntityListParameter< Automat_ABC >( parent, parameter )
+ParamAutomatList::ParamAutomatList( QObject* parent, const OrderParameter& parameter, ActionController& controller )
+    : EntityListParameter< Automat_ABC >( parent, parameter, controller )
+    , parameter_( parameter )
+    , count_( 0 )
 {
     // NOTHING
 }
@@ -33,14 +39,54 @@ ParamAutomatList::~ParamAutomatList()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParamAutomatList::AddToMenu
+// Created: SBO 2007-05-23
+// -----------------------------------------------------------------------------
+void ParamAutomatList::AddToMenu( kernel::ContextMenu& menu )
+{
+    MakeMenu( tr( "Add automat" ), menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamAutomatList::CreateElement
+// Created: SBO 2007-05-23
+// -----------------------------------------------------------------------------
+EntityParameter< kernel::Automat_ABC >* ParamAutomatList::CreateElement( const kernel::Automat_ABC& potential )
+{
+    return new ParamAutomat( this, tr( "Automat %1" ).arg( ++count_ ), potential );
+}
+
+namespace
+{
+    struct AsnSerializer : public ParamVisitor_ABC
+    {
+        explicit AsnSerializer( ASN1T_ListAutomate& list ) : list_( list ), index_( 0 ) {}
+        virtual void Visit( const Param_ABC& param )
+        {
+            if( index_ < list_.n )
+                static_cast< const ParamAutomat& >( param ).CommitTo( list_.elem[index_++] );
+        }
+
+        ASN1T_ListAutomate& list_;
+        unsigned int index_;
+    };
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParamAutomatList::CommitTo
 // Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
 void ParamAutomatList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    ASN1T_ListAutomate*& list = asn.value.u.listAutomate = new ASN1T_ListAutomate();
     asn.value.t = T_MissionParameter_value_listAutomate;
-    EntityListParameter< Automat_ABC >::CommitTo( (ASN1T_ListOID*&)asn.value.u.listAutomate );
-    asn.null_value = asn.value.u.listAutomate->n ? 0 : 1;
+    list->n = Count();
+    asn.null_value = list->n ? 0 : 1;
+    if( asn.null_value )
+        return;
+    list->elem = new ASN1T_Automate[ list->n ];
+    AsnSerializer serializer( *list );
+    Accept( serializer );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,5 +95,33 @@ void ParamAutomatList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamAutomatList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    EntityListParameter< Automat_ABC >::Clean( (ASN1T_ListOID*&)asn.value.u.listAutomate );
+    if( asn.value.u.listAutomate )
+        delete[] asn.value.u.listAutomate->elem;
+    delete asn.value.u.listAutomate;
+}
+
+namespace
+{
+    struct ActionSerializer : public ParamVisitor_ABC
+    {
+        explicit ActionSerializer( ActionParameter_ABC& parent ) : parent_( parent ) {}
+        virtual void Visit( const Param_ABC& param )
+        {
+            static_cast< const ParamAutomat& >( param ).CommitTo( parent_ );
+        }
+
+        ActionParameter_ABC& parent_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamAutomatList::CommitTo
+// Created: SBO 2007-05-23
+// -----------------------------------------------------------------------------
+void ParamAutomatList::CommitTo( Action_ABC& action ) const
+{
+    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterAutomatList( parameter_ ) );
+    ActionSerializer serializer( *param );
+    Accept( serializer );
+    action.AddParameter( *param.release() );
 }

@@ -85,15 +85,16 @@ public:
     //@{
              EntityParameter( QObject* parent, const kernel::OrderParameter& parameter );
              EntityParameter( QObject* parent, const QString& name, bool optional );
+             EntityParameter( QObject* parent, const QString& name, const ConcreteEntity& entity );
     virtual ~EntityParameter();
     //@}
 
     //! @name Operations
     //@{
     virtual bool CheckValidity();
-    virtual void CommitTo( Action_ABC& action ) const;
     void CommitTo( ASN1T_OID& asn ) const;
-    void CommitTo( ActionParameter_ABC& parameter ) const;
+    void CommitTo( ActionParameterEntity< ConcreteEntity >& parameter ) const;
+    virtual void MenuItemValidated();
     //@}
 
 private:
@@ -107,7 +108,6 @@ protected:
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const ConcreteEntity& entity, kernel::ContextMenu& menu );
-    virtual void MenuItemValidated();
     virtual void NotifyUpdated( const ConcreteEntity& ) {};
     virtual void NotifyDeleted( const ConcreteEntity& entity );
     //@}

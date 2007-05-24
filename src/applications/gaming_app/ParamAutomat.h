@@ -26,12 +26,30 @@ public:
     //! @name Constructors/Destructor
     //@{
              ParamAutomat( QObject* parent, const kernel::OrderParameter& parameter );
+             ParamAutomat( QObject* parent, const QString& name, const kernel::Automat_ABC& entity );
+             ParamAutomat( QObject* parent, const QString& name, bool optional );
     virtual ~ParamAutomat();
     //@}
 
     //! @name Operations
     //@{
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
+    void CommitTo( ASN1T_Automate& asn ) const;
+    void CommitTo( ActionParameter_ABC& param ) const;
+    //@}
+
+private:
+    //! @name Copy/Assignement
+    //@{
+    ParamAutomat( const ParamAutomat& );            //!< Copy constructor
+    ParamAutomat& operator=( const ParamAutomat& ); //!< Assignement operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const kernel::OrderParameter* parameter_;
     //@}
 };
 

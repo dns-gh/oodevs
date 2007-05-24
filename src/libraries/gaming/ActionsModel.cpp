@@ -74,10 +74,18 @@ Action_ABC* ActionsModel::CreateAction( const kernel::Entity_ABC& target, const 
 void ActionsModel::Load( const std::string& filename )
 {
     Purge();
-    xml::xifstream xis( filename );
-    xis >> start( "actions" )
-            >> list( "mission", *this, &ActionsModel::ReadMission )
-        >> end();
+    try
+    {
+        xml::xifstream xis( filename );
+        xis >> start( "actions" )
+                >> list( "mission", *this, &ActionsModel::ReadMission )
+            >> end();
+    }
+    catch( ... )
+    {
+        Purge();
+        throw;
+    }
 }
 
 // -----------------------------------------------------------------------------

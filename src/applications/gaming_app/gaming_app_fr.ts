@@ -42,6 +42,10 @@
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error loading order file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AgentKnowledgePanel</name>
@@ -595,17 +599,6 @@
     </message>
     <message>
         <source>Quantity</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>EntityListParameterBase</name>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear list</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -41,6 +41,7 @@ public:
     //! @name Operations
     //@{
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private:

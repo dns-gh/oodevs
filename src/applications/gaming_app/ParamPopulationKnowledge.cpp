@@ -38,6 +38,18 @@ ParamPopulationKnowledge::~ParamPopulationKnowledge()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParamPopulationKnowledge::NotifyContextMenu
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+void ParamPopulationKnowledge::NotifyContextMenu( const Population_ABC& entity, ContextMenu& menu )
+{
+    const PopulationKnowledge_ABC* knowledge = converter_.Find( entity, agent_ );
+    if( knowledge )
+        EntityParameter< PopulationKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
+
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParamPopulationKnowledge::CommitTo
 // Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
@@ -49,13 +61,14 @@ void ParamPopulationKnowledge::CommitTo( ASN1T_MissionParameter& asn ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamPopulationKnowledge::NotifyContextMenu
-// Created: AGE 2006-03-14
+// Name: ParamPopulationKnowledge::CommitTo
+// Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void ParamPopulationKnowledge::NotifyContextMenu( const Population_ABC& entity, ContextMenu& menu )
+void ParamPopulationKnowledge::CommitTo( Action_ABC& action ) const
 {
-    const PopulationKnowledge_ABC* knowledge = converter_.Find( entity, agent_ );
-    if( knowledge )
-        EntityParameter< PopulationKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
-
+//    if( !parameter_ )
+//        throw std::runtime_error( "OrderParameter not set" ); // $$$$ SBO 2007-04-25: 
+//    std::auto_ptr< ActionParameterEntity< PopulationKnowledge_ABC > > param( new ActionParameterPopulationKnowledge( *parameter_ ) );
+//    EntityParameter< PopulationKnowledge_ABC >::CommitTo( *param );
+//    action.AddParameter( *param.release() );}
 }

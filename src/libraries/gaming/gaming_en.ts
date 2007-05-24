@@ -36,6 +36,10 @@
         <source>Lima %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error loading mission parameters. Found type: &apos;%1&apos; expecting: &apos;%2&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActionParameterFactory</name>

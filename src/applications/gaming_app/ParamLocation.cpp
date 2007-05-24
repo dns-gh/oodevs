@@ -170,8 +170,7 @@ void ParamLocation::CommitTo( Action_ABC& action ) const
 {
     if( !parameter_ )
         throw std::runtime_error( "OrderParameter not defined" );
-    std::auto_ptr< ActionParameterLocation > param( new ActionParameterLocation( *parameter_, converter_, *location_ ) );
-    action.AddParameter( *param.release() );
+    action.AddParameter( *new ActionParameterLocation( *parameter_, converter_, *location_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -180,8 +179,7 @@ void ParamLocation::CommitTo( Action_ABC& action ) const
 // -----------------------------------------------------------------------------
 void ParamLocation::CommitTo( ActionParameter_ABC& parameter ) const
 {
-    std::auto_ptr< ActionParameterLocation > param( new ActionParameterLocation( GetName(), converter_, *location_ ) );
-    parameter.AddParameter( *param.release() );
+    parameter.AddParameter( *new ActionParameterLocation( GetName(), converter_, *location_ ) );
 }
 
 // -----------------------------------------------------------------------------

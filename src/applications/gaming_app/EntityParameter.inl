@@ -38,6 +38,21 @@ EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const QStri
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityParameter constructor
+// Created: SBO 2007-05-23
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const QString& name, const ConcreteEntity& entity )
+    : EntityParameterBase( parent, name )
+    , parameter_         ( 0 )
+    , potential_         ( &entity )
+    , selected_          ( 0 )
+    , optional_          ( false )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityParameter destructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
@@ -89,28 +104,12 @@ void EntityParameter< ConcreteEntity >::CommitTo( ASN1T_OID& asn ) const
 
 // -----------------------------------------------------------------------------
 // Name: EntityParameter::CommitTo
-// Created: SBO 2007-03-19
+// Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityParameter< ConcreteEntity >::CommitTo( Action_ABC& action ) const
+void EntityParameter< ConcreteEntity >::CommitTo( ActionParameterEntity< ConcreteEntity >& parameter ) const
 {
-    if( !selected_ )
-        return;
-    if( !parameter_ )
-        throw std::runtime_error( "OrderParameter not set" ); // $$$$ SBO 2007-04-25: 
-    action.AddParameter( *new ActionParameterEntity< ConcreteEntity >( *parameter_, selected_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityParameter::CommitTo
-// Created: SBO 2007-04-26
-// -----------------------------------------------------------------------------
-template< typename ConcreteEntity >
-void EntityParameter< ConcreteEntity >::CommitTo( ActionParameter_ABC& parameter ) const
-{
-    if( !selected_ )
-        return;
-    parameter.AddParameter( *new ActionParameterEntity< ConcreteEntity >( GetName(), selected_ ) );
+    parameter.SetValue( selected_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -27,12 +27,19 @@ class ActionParameterEntity : public ActionParameter< const ConcreteEntity* >
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterEntity( const QString& name, const ConcreteEntity* entity );
+    explicit ActionParameterEntity( const QString& name );
+    explicit ActionParameterEntity( const kernel::OrderParameter& parameter );
              ActionParameterEntity( const kernel::OrderParameter& parameter, const ConcreteEntity* entity );
+             ActionParameterEntity( const QString& name, unsigned long id, const kernel::Resolver_ABC< ConcreteEntity >& resolver );
              ActionParameterEntity( const kernel::OrderParameter& parameter, unsigned long id, const kernel::Resolver_ABC< ConcreteEntity >& resolver );
              ActionParameterEntity( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< ConcreteEntity >& resolver );
              ActionParameterEntity( xml::xistream& xis, const kernel::Resolver_ABC< ConcreteEntity >& resolver );
     virtual ~ActionParameterEntity();
+    //@}
+
+    //! @name Operations
+    //@{
+    void CommitTo( ASN1T_OID& oid ) const;
     //@}
 
 private:
@@ -50,11 +57,22 @@ private:
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterEntity constructor
-// Created: SBO 2007-05-04
+// Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-ActionParameterEntity< ConcreteEntity >::ActionParameterEntity( const QString& name, const ConcreteEntity* entity )
-    : ActionParameter< const ConcreteEntity* >( name, entity )
+ActionParameterEntity< ConcreteEntity >::ActionParameterEntity( const QString& name )
+    : ActionParameter< const ConcreteEntity* >( name )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterEntity constructor
+// Created: SBO 2007-05-23
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+ActionParameterEntity< ConcreteEntity >::ActionParameterEntity( const kernel::OrderParameter& parameter )
+    : ActionParameter< const ConcreteEntity* >( parameter )
 {
     // NOTHING
 }
@@ -66,6 +84,17 @@ ActionParameterEntity< ConcreteEntity >::ActionParameterEntity( const QString& n
 template< typename ConcreteEntity >
 ActionParameterEntity< ConcreteEntity >::ActionParameterEntity( const kernel::OrderParameter& parameter, const ConcreteEntity* entity )
     : ActionParameter< const ConcreteEntity* >( parameter, entity )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterEntity constructor
+// Created: SBO 2007-05-23
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+ActionParameterEntity< ConcreteEntity >::ActionParameterEntity( const QString& name, unsigned long id, const kernel::Resolver_ABC< ConcreteEntity >& resolver )
+    : ActionParameter< const ConcreteEntity* >( name, &resolver.Get( id ) )
 {
     // NOTHING
 }
@@ -128,6 +157,16 @@ template< typename ConcreteEntity >
 ActionParameterEntity< ConcreteEntity >::~ActionParameterEntity()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterEntity::CommitTo
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void ActionParameterEntity< ConcreteEntity >::CommitTo( ASN1T_OID& oid ) const
+{
+    oid = GetValue()->GetId();
 }
 
 // -----------------------------------------------------------------------------

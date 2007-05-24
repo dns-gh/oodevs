@@ -162,7 +162,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAgent( const OrderParameter& parameter 
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAgentList( const OrderParameter& parameter ) const
 {
-    return new ParamAgentList( missionInterface_, parameter );
+    return new ParamAgentList( missionInterface_, parameter, controller_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -180,7 +180,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAutomat( const OrderParameter& paramete
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAutomatList( const OrderParameter& parameter ) const
 {
-    return new ParamAutomatList( missionInterface_, parameter );
+    return new ParamAutomatList( missionInterface_, parameter, controller_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -252,7 +252,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAgentKnowledge( const OrderParameter& p
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAgentKnowledgeList( const OrderParameter& parameter ) const
 {
-    return new ParamAgentKnowledgeList( missionInterface_, parameter, knowledgeConverter_, *entity_ );
+    return new ParamAgentKnowledgeList( missionInterface_, parameter, controller_, knowledgeConverter_, *entity_ );
 }
  
 // -----------------------------------------------------------------------------
@@ -270,7 +270,7 @@ Param_ABC* MissionInterfaceBuilder::BuildObjectKnowledge( const OrderParameter& 
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildObjectKnowledgeList( const OrderParameter& parameter ) const
 {
-    return new ParamObjectKnowledgeList( missionInterface_, parameter, objectKnowledgeConverter_, *entity_ );
+    return new ParamObjectKnowledgeList( missionInterface_, parameter, controller_, objectKnowledgeConverter_, *entity_ );
 }
 
 // -----------------------------------------------------------------------------

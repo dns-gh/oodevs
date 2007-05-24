@@ -13,7 +13,6 @@
 #include "game_asn/Asn.h"
 #include "Param_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
-#include "EntityParameter.h"
 
 namespace kernel
 {
@@ -21,6 +20,7 @@ namespace kernel
     class ObjectTypes;
     class CoordinateConverter_ABC;
     class Automat_ABC;
+    class OrderParameter;
 }
 
 namespace gui
@@ -28,8 +28,10 @@ namespace gui
     class ParametersLayer;
 }
 
+class ActionParameter_ABC;
 class ParamLocation;
 class ParamNumericField;
+class ParamAutomat;
 
 // =============================================================================
 /** @class  ParamObstacle
@@ -88,7 +90,7 @@ private:
     gui::ValuedComboBox< const kernel::ObjectType* >* typeCombo_;
     QComboBox* preliminaryCombo_;
     ParamNumericField* density_;
-    EntityParameter< kernel::Automat_ABC >* tc2_;
+    ParamAutomat* tc2_;
     bool optional_;
     //@}
 };

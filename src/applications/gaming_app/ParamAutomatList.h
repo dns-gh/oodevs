@@ -10,14 +10,13 @@
 #ifndef __ParamAutomatList_h_
 #define __ParamAutomatList_h_
 
-#include "game_asn/Asn.h"
 #include "EntityListParameter.h"
 
 namespace kernel
 {
     class Automat_ABC;
+    class OrderParameter;
 }
-
 
 // =============================================================================
 /** @class  ParamAutomatList
@@ -31,7 +30,7 @@ class ParamAutomatList : public EntityListParameter< kernel::Automat_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAutomatList( QObject* parent, const kernel::OrderParameter& parameter );
+             ParamAutomatList( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& controller );
     virtual ~ParamAutomatList();
     //@}
 
@@ -39,6 +38,27 @@ public:
     //@{
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
+    //@}
+
+private:
+    //! @name Copy/Assignement
+    //@{
+    ParamAutomatList( const ParamAutomatList& );            //!< Copy constructor
+    ParamAutomatList& operator=( const ParamAutomatList& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual void AddToMenu( kernel::ContextMenu& menu );
+    virtual EntityParameter< kernel::Automat_ABC >* CreateElement( const kernel::Automat_ABC& potential );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const kernel::OrderParameter& parameter_;
+    unsigned int count_;
     //@}
 };
 
