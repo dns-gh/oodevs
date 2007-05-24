@@ -70,13 +70,13 @@ void ObjectKnowledge::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
         position_ = std::string( (const char*)( message.localisation.vecteur_point.elem[0].data ), 15 );
 
     if( message.m.pourcentage_constructionPresent )
-        nPourcentageConstruction_ = message.pourcentage_construction;
+        nConstructionPercentage_ = message.pourcentage_construction;
     
     if( message.m.pourcentage_valorisationPresent )
-        nPourcentageValorisation_ = message.pourcentage_valorisation;
+        nValorizationPercentage_ = message.pourcentage_valorisation;
     
     if( message.m.pourcentage_contournementPresent )
-        nPourcentageContournement_ = message.pourcentage_contournement;
+        nBypassConstructionPercentage_ = message.pourcentage_contournement;
     
     if( message.m.obstacle_de_manoeuvre_activePresent )
         reservedObstacleActivated_ = message.obstacle_de_manoeuvre_active;
@@ -97,9 +97,9 @@ void ObjectKnowledge::Display( Displayer_ABC& displayer ) const
                 .Display( tools::translate( "Object", "Identifier:" ), id_ )
                 .Display( tools::translate( "Object", "Associated object:" ), pRealObject_ )
                 .Display( tools::translate( "Object", "Type:" ), type_ )
-                .Display( tools::translate( "Object", "Construction:" ), nPourcentageConstruction_ * Units::percentage )
-                .Display( tools::translate( "Object", "Mining:" ), nPourcentageValorisation_ * Units::percentage )
-                .Display( tools::translate( "Object", "Bypass:" ), nPourcentageContournement_* Units::percentage )
+                .Display( tools::translate( "Object", "Construction:" ), nConstructionPercentage_ * Units::percentage )
+                .Display( tools::translate( "Object", "Mining:" ), nValorizationPercentage_ * Units::percentage )
+                .Display( tools::translate( "Object", "Bypass:" ), nBypassConstructionPercentage_* Units::percentage )
                 .Display( tools::translate( "Object", "Obstacle type:" ), obstacleType_ )
                 .Display( tools::translate( "Object", "Reserved obstacle activated:" ), reservedObstacleActivated_ )
                 .Display( tools::translate( "Object", "Perceived:" ), bIsPerceived_ )
@@ -129,8 +129,16 @@ void ObjectKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 void ObjectKnowledge::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Object", "Type:" ), type_ )
-             .Display( tools::translate( "Object", "Relevance:" ), nRelevance_ );
-     // $$$$ NLD 2007-05-23: Manque plein de trucs
+             .Display( tools::translate( "Object", "Relevance:" ), nRelevance_ )
+             .Display( tools::translate( "Object", "Construction:" ), nConstructionPercentage_ * Units::percentage );
+    if( nValorizationPercentage_.IsSet() )
+        displayer.Display( tools::translate( "Object", "Mining:" ), nValorizationPercentage_ * Units::percentage );
+    if( nBypassConstructionPercentage_.IsSet() )
+        displayer.Display( tools::translate( "Object", "Bypass:" ), nBypassConstructionPercentage_ * Units::percentage );
+    if( obstacleType_.IsSet() )
+        displayer.Display( tools::translate( "Object", "Obstacle type:" ), obstacleType_ );
+    if( reservedObstacleActivated_.IsSet() )
+        displayer.Display( tools::translate( "Object", "Reserved obstacle activated:" ), reservedObstacleActivated_ );
 }
 
 // -----------------------------------------------------------------------------

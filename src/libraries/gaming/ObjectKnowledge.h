@@ -89,9 +89,9 @@ private:
     std::string position_;
     kernel::Object_ABC* pRealObject_;
 
-    kernel::OptionalValue< unsigned int >   nPourcentageConstruction_;
-    kernel::OptionalValue< unsigned int >   nPourcentageValorisation_;
-    kernel::OptionalValue< unsigned int >   nPourcentageContournement_;
+    kernel::OptionalValue< unsigned int >   nConstructionPercentage_;
+    kernel::OptionalValue< unsigned int >   nValorizationPercentage_;
+    kernel::OptionalValue< unsigned int >   nBypassConstructionPercentage_;
     kernel::OptionalValue< bool >           bIsPerceived_;
     kernel::OptionalValue< E_TypeObstacle > obstacleType_;
     kernel::OptionalValue< bool           > reservedObstacleActivated_;

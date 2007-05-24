@@ -45,6 +45,8 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
                 .AddLabel( tr( "Construction:" ) )
                 .AddLabel( tr( "Mining:" ) )
                 .AddLabel( tr( "Bypass:" ) )
+                .AddLabel( tr( "Obstacle type:" ) )
+                .AddLabel( tr( "Reserved obstacle activated:" ) )
                 .AddLabel( tr( "Prepared:" ) )
                 .AddLabel( tr( "Perceived:" ) )
                 .AddLabel( tr( "Relevance:" ) );

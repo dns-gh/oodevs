@@ -1717,6 +1717,14 @@
         <source>Mining:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Obstacle type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reserved obstacle activated:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OrbatToolbar</name>
