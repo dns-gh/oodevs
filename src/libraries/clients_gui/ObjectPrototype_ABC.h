@@ -69,10 +69,18 @@ public:
     virtual void Handle( kernel::Location_ABC& location );
     //@}
 
+signals:
+    //! @name Signals
+    //@{
+    void ToggleReservable( bool );
+    void ToggleActivable( bool );
+    //@}
+
 private slots:
     //! @name Slots
     //@{
     void OnTypeChanged();
+    void OnObstacleTypeChanged();
     //@}
 
 private:

@@ -77,11 +77,19 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
     new QLabel( tr( "Type:" ), this );
     objectTypes_ = new ValuedComboBox< const ObjectType* >( this );
 
-    new QLabel( tr( "Obstacle type:" ), this );
-    obstacleTypes_ = new ValuedComboBox< E_TypeObstacle >( this );
+    {
+        QLabel* label = new QLabel( tr( "Obstacle type:" ), this );
+        obstacleTypes_ = new ValuedComboBox< E_TypeObstacle >( this );
+        connect( this, SIGNAL( ToggleReservable( bool ) ), label, SLOT( setShown( bool ) ) );
+        connect( this, SIGNAL( ToggleReservable( bool ) ), obstacleTypes_, SLOT( setShown( bool ) ) );
+    }
 
-    new QLabel( tr( "Reserved obstacle activated:" ), this );
-    reservedObstacleActivated_ = new QCheckBox( this );
+    {
+        QLabel* label = new QLabel( tr( "Reserved obstacle activated:" ), this );
+        reservedObstacleActivated_ = new QCheckBox( this );
+        connect( this, SIGNAL( ToggleActivable( bool ) ), label, SLOT( setShown( bool ) ) );
+        connect( this, SIGNAL( ToggleActivable( bool ) ), reservedObstacleActivated_, SLOT( setShown( bool ) ) );
+    }
 
     position_ = new RichLabel( tr( "Location:" ), this );
     locationLabel_ = new QLabel( tr( "---" ), this );
@@ -96,6 +104,7 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
     controllers.Register( *this );
 
     connect( objectTypes_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
+    connect( obstacleTypes_, SIGNAL( activated( int ) ), this, SLOT( OnObstacleTypeChanged() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -260,6 +269,20 @@ void ObjectPrototype_ABC::OnTypeChanged()
 
     if( activeAttributes_ && previous != activeAttributes_ )
         activeAttributes_->show();
+
+    emit ToggleReservable( type->CanBeReservedObstacle() );
+    OnObstacleTypeChanged();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPrototype_ABC::OnObstacleTypeChanged
+// Created: SBO 2007-05-24
+// -----------------------------------------------------------------------------
+void ObjectPrototype_ABC::OnObstacleTypeChanged()
+{
+    const ObjectType* type = objectTypes_->GetValue();
+    E_TypeObstacle obstacleType = obstacleTypes_->GetValue();
+    emit ToggleActivable( type && type->CanBeReservedObstacle() && obstacleType == eTypeObstacle_DeManoeuvre );
 }
 
 // -----------------------------------------------------------------------------
