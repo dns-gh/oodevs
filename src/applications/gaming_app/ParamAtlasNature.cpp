@@ -11,31 +11,25 @@
 #include "ParamAtlasNature.h"
 #include "moc_ParamAtlasNature.cpp"
 #include "game_asn/Asn.h"
-#include "gaming/ActionParameter.h"
+#include "gaming/Action_ABC.h"
+#include "gaming/ActionParameterAtlasNature.h"
+#include "gaming/AtlasNatures.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/Tools.h"
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ParamAtlasNature constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamAtlasNature::ParamAtlasNature( QObject* parent, const kernel::OrderParameter& parameter )
+ParamAtlasNature::ParamAtlasNature( QObject* parent, const OrderParameter& parameter, const AtlasNatures& natures )
     : QObject( parent )
     , Param_ABC( parameter.GetName() )
     , parameter_( parameter )
-    , bits_( 0 )
+    , natures_( natures )
 {
-    AddField( tools::translate( "AtlasNature", "Armored" )        , BytXblinde          , BitMblinde );
-    AddField( tools::translate( "AtlasNature", "SSA" )            , BytXass             , BitMass );
-    AddField( tools::translate( "AtlasNature", "Command post" )   , BytXpc              , BitMpc );
-    AddField( tools::translate( "AtlasNature", "Logistic" )       , BytXlog             , BitMlog );
-    AddField( tools::translate( "AtlasNature", "Mortar" )         , BytXmortier         , BitMmortier );
-    AddField( tools::translate( "AtlasNature", "Rocket launcher" ), BytXlance_roquette  , BitMlance_roquette );
-    AddField( tools::translate( "AtlasNature", "Vehicle" )        , BytXvehicule        , BitMvehicule );
-    AddField( tools::translate( "AtlasNature", "Footman")         , BytXpersonnel_a_pied, BitMpersonnel_a_pied );
-    AddField( tools::translate( "AtlasNature", "Helicopter" )     , BytXhelicoptere     , BitMhelicoptere );
-    AddField( tools::translate( "AtlasNature", "Undefined" )      , BytXindefini        , BitMindefini );
-    AddField( tools::translate( "AtlasNature", "None" )           , BytXnone            , BitMnone );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,23 +42,19 @@ ParamAtlasNature::~ParamAtlasNature()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamAtlasNature::AddField
-// Created: SBO 2007-03-16
-// -----------------------------------------------------------------------------
-void ParamAtlasNature::AddField( const QString& name, unsigned char byte, unsigned char mask )
-{
-    fields_.push_back( std::make_pair( name, byte ? mask : ( mask << 8 ) ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ParamAtlasNature::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
 void ParamAtlasNature::BuildInterface( QWidget* parent )
 {
     QButtonGroup* group = new QButtonGroup( 2, Qt::Horizontal, GetName(), parent );
-    for( T_AtlasFields::const_iterator it = fields_.begin(); it != fields_.end(); ++it )
-        new QCheckBox( it->first, group );
+    Iterator< const AtlasNature& > it( natures_.CreateIterator() );
+    while( it.HasMoreElements() )
+    {
+        const AtlasNature& nature = it.NextElement();
+        new QCheckBox( nature.GetName(), group );
+        fields_.push_back( &nature );
+    }
     connect( group, SIGNAL( clicked( int ) ), SLOT( OnClicked( int ) ) );
 }
 
@@ -76,7 +66,8 @@ void ParamAtlasNature::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value = 0;
     asn.value.t = T_MissionParameter_value_natureAtlas;
-    asn.value.u.natureAtlas = new ASN1T_NatureAtlas( 11, (unsigned char*)&bits_ );
+    asn.value.u.natureAtlas = new ASN1T_NatureAtlas();
+    nature_.CommitTo( *asn.value.u.natureAtlas );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,9 +85,7 @@ void ParamAtlasNature::Clean( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamAtlasNature::CommitTo( Action_ABC& action ) const
 {
-//    std::auto_ptr< ActionParameter< E_NatureAtlasType > > param( new ActionParameter< E_NatureAtlasType >( parameter_ ) );
-//    param->SetValue( (E_NatureAtlasType)0 ); // $$$$ SBO 2007-03-19: std::vector< E_NatureAtlasType > or create a specific class
-//    action.AddParameter( *param.release() );
+    action.AddParameter( *new ActionParameterAtlasNature( parameter_, nature_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,5 +94,5 @@ void ParamAtlasNature::CommitTo( Action_ABC& action ) const
 // -----------------------------------------------------------------------------
 void ParamAtlasNature::OnClicked( int id )
 {
-    bits_ ^= fields_.at( id ).second;
+    nature_.Toggle( *fields_[id] );
 }

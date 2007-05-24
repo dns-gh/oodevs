@@ -24,6 +24,7 @@ namespace kernel
 class SurfaceFactory;
 class ReportFactory;
 class RcEntityResolver_ABC;
+class AtlasNatures;
 
 // =============================================================================
 /** @class  StaticModel
@@ -58,6 +59,7 @@ public:
     kernel::FormationLevels&         levels_;
     SurfaceFactory&                  surfaceFactory_;
     ReportFactory&                   reportFactory_;
+    AtlasNatures&                    atlasNatures_;
     //@}
 
 private:

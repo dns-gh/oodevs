@@ -53,7 +53,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const St
     , tools_                   ( tools )
     , profile_                 ( profile )
     , pMissionInterface_       ( 0 )
-    , interfaceBuilder_        ( new MissionInterfaceBuilder( controllers_.actions_, layer_, converter_, knowledgeConverter, objectKnowledgeConverter, static_.objectTypes_ ) ) 
+    , interfaceBuilder_        ( new MissionInterfaceBuilder( controllers_.actions_, layer_, knowledgeConverter, objectKnowledgeConverter, static_ ) ) 
     , selectedEntity_          ( controllers )
 {
     setResizeEnabled( true );

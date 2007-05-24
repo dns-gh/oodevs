@@ -35,6 +35,7 @@
 #include "ActionParameterBool.h"
 #include "ActionParameterNumeric.h"
 #include "ActionParameterDotationType.h"
+#include "ActionParameterAtlasNature.h"
 #include "Model.h"
 #include "StaticModel.h"
 #include "AgentsModel.h"
@@ -98,8 +99,6 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
         return new ActionParameter< float >( parameter, asn.value.u.direction );
     case T_MissionParameter_value_enumeration:
         return new ActionParameterEnumeration( parameter, asn.value.u.enumeration );
-    case T_MissionParameter_value_gDH:
-        break;
     case T_MissionParameter_value_itineraire:
         return new ActionParameterPath( parameter, converter_, *asn.value.u.itineraire );
     case T_MissionParameter_value_knowledgeAgent:
@@ -128,23 +127,20 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
         return new ActionParameterPolygonList( parameter, converter_, *asn.value.u.listPolygon );
     case T_MissionParameter_value_localisation:
         return new ActionParameterLocation( parameter, converter_, *asn.value.u.localisation );
-    case T_MissionParameter_value_maintenancePriorites:
-        break;
     case T_MissionParameter_value_missionGenObject:
         return new ActionParameterObstacle( parameter, converter_, staticModel_.objectTypes_, *asn.value.u.missionGenObject );
     case T_MissionParameter_value_natureAtlas:
-        break;
+        return new ActionParameterAtlasNature( parameter, *asn.value.u.natureAtlas, staticModel_.atlasNatures_ );
     case T_MissionParameter_value_point:
         return new ActionParameterPoint( parameter, converter_, *asn.value.u.point );
     case T_MissionParameter_value_polygon:
         return new ActionParameterPolygon( parameter, converter_, *asn.value.u.polygon );
-    case T_MissionParameter_value_santePriorites:
-        break;
-    case T_MissionParameter_value_tirIndirect: // $$$$ SBO 2007-05-21: reports only, not to be used!
-        break;
     case T_MissionParameter_value_typeDotation:
         return new ActionParameterDotationType( parameter, asn.value.u.typeDotation, staticModel_.objectTypes_ );
     case T_MissionParameter_value_typeEquipement:
+    case T_MissionParameter_value_maintenancePriorites:
+    case T_MissionParameter_value_santePriorites:
+    case T_MissionParameter_value_tirIndirect: // $$$$ SBO 2007-05-21: reports only, not to be used!
         break;
     }
     return 0;
@@ -242,14 +238,8 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
         return new ActionParameterAgentKnowledgeList( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity );
     else if( type == "objectknowledgelist" )
         return new ActionParameterObjectKnowledgeList( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity );
+    else if( type == "atlasnature" )
+        return new ActionParameterAtlasNature( parameter, xis, staticModel_.atlasNatures_ );
 
     return new ActionParameter< QString >( parameter ); // $$$$ SBO 2007-05-16: default not yet implemented parameters...
 }
-
-//"natureatlas"
-//
-//"gdh"
-//
-//"maintenancepriorities"
-//"medicalpriorities"
-

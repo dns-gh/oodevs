@@ -18,7 +18,6 @@ namespace kernel
     class ActionController;
     class Entity_ABC;
     class CoordinateConverter_ABC;
-    class ObjectTypes;
     class OrderType;
     class OrderParameter;
 }
@@ -28,6 +27,7 @@ namespace gui
     class ParametersLayer;
 }
 
+class StaticModel;
 class MissionInterface_ABC;
 class AgentKnowledgeConverter_ABC;
 class ObjectKnowledgeConverter_ABC;
@@ -51,8 +51,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              MissionInterfaceBuilder( kernel::ActionController& controller, gui::ParametersLayer& layer
-                                    , const kernel::CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter
-                                    , ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const kernel::ObjectTypes& objectTypes );
+                                    , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
+                                    , const StaticModel& staticModel );
     virtual ~MissionInterfaceBuilder();
     //@}
 
@@ -80,7 +80,6 @@ private:
     Param_ABC* BuildAtlasNature          ( const kernel::OrderParameter& parameter ) const;
     Param_ABC* BuildBoolean              ( const kernel::OrderParameter& parameter ) const;
     Param_ABC* BuildDirection            ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildGDH                  ( const kernel::OrderParameter& parameter ) const;
     Param_ABC* BuildNumeric              ( const kernel::OrderParameter& parameter ) const;
     Param_ABC* BuildAgentKnowledge       ( const kernel::OrderParameter& parameter ) const;
     Param_ABC* BuildAgentKnowledgeList   ( const kernel::OrderParameter& parameter ) const;
@@ -127,7 +126,7 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     AgentKnowledgeConverter_ABC&           knowledgeConverter_;
     ObjectKnowledgeConverter_ABC&          objectKnowledgeConverter_;
-    const kernel::ObjectTypes&             objectTypes_;
+    const StaticModel&                     staticModel_;
     MissionInterface_ABC*                  missionInterface_;
     kernel::Entity_ABC*                    entity_;
     T_BuilderFunctors                      builderFunctors_;

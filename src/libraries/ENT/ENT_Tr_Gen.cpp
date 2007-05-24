@@ -51,24 +51,6 @@ ENT_Tr::T_ConverterFamilleMunition ENT_Tr::FamilleMunitionConverter_[] =
     T_ConverterFamilleMunition( "", "", (E_FamilleMunition)-1 )
 };
 
-ENT_Tr::T_ConverterGDH_Qualificatif ENT_Tr::GDH_QualificatifConverter_[] =
-{
-    T_ConverterGDH_Qualificatif( "at", QT_TRANSLATE_NOOP( "ENT_Tr", "at" ), eGDH_Qualificatif_At ),
-    T_ConverterGDH_Qualificatif( "after", QT_TRANSLATE_NOOP( "ENT_Tr", "after" ), eGDH_Qualificatif_After ),
-    T_ConverterGDH_Qualificatif( "as of", QT_TRANSLATE_NOOP( "ENT_Tr", "as of" ), eGDH_Qualificatif_AsOf ),
-    T_ConverterGDH_Qualificatif( "before", QT_TRANSLATE_NOOP( "ENT_Tr", "before" ), eGDH_Qualificatif_Before ),
-    T_ConverterGDH_Qualificatif( "cleared", QT_TRANSLATE_NOOP( "ENT_Tr", "cleared" ), eGDH_Qualificatif_Cleared ),
-    T_ConverterGDH_Qualificatif( "due", QT_TRANSLATE_NOOP( "ENT_Tr", "due" ), eGDH_Qualificatif_Due ),
-    T_ConverterGDH_Qualificatif( "end", QT_TRANSLATE_NOOP( "ENT_Tr", "end" ), eGDH_Qualificatif_End ),
-    T_ConverterGDH_Qualificatif( "off", QT_TRANSLATE_NOOP( "ENT_Tr", "off" ), eGDH_Qualificatif_Off ),
-    T_ConverterGDH_Qualificatif( "on", QT_TRANSLATE_NOOP( "ENT_Tr", "on" ), eGDH_Qualificatif_On ),
-    T_ConverterGDH_Qualificatif( "since", QT_TRANSLATE_NOOP( "ENT_Tr", "since" ), eGDH_Qualificatif_Since ),
-    T_ConverterGDH_Qualificatif( "start", QT_TRANSLATE_NOOP( "ENT_Tr", "start" ), eGDH_Qualificatif_Start ),
-    T_ConverterGDH_Qualificatif( "until", QT_TRANSLATE_NOOP( "ENT_Tr", "until" ), eGDH_Qualificatif_Until ),
-    T_ConverterGDH_Qualificatif( "wef", QT_TRANSLATE_NOOP( "ENT_Tr", "wef" ), eGDH_Qualificatif_Wef ),
-    T_ConverterGDH_Qualificatif( "", "", (E_GDH_Qualificatif)-1 )
-};
-
 ENT_Tr::T_ConverterUnitIdentificationLevel ENT_Tr::UnitIdentificationLevelConverter_[] =
 {
     T_ConverterUnitIdentificationLevel( "identifiee", QT_TRANSLATE_NOOP( "ENT_Tr", "identified" ), eUnitIdentificationLevel_Identifiee ),
@@ -529,7 +511,6 @@ void ENT_Tr::InitTranslations()
         InitTr( TypeLocalisationConverter_, "ENT_Tr" );
     InitTr( FamilleDotationConverter_, "ENT_Tr" );
     InitTr( FamilleMunitionConverter_, "ENT_Tr" );
-    InitTr( GDH_QualificatifConverter_, "ENT_Tr" );
     InitTr( UnitIdentificationLevelConverter_, "ENT_Tr" );
     InitTr( NatureLevelConverter_, "ENT_Tr" );
     InitTr( HumanWoundConverter_, "ENT_Tr" );
@@ -599,15 +580,6 @@ const std::string& ENT_Tr::ConvertFromFamilleDotation( E_FamilleDotation nValue,
 const std::string& ENT_Tr::ConvertFromFamilleMunition( E_FamilleMunition nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( FamilleMunitionConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromGDH_Qualificatif
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromGDH_Qualificatif( E_GDH_Qualificatif nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( GDH_QualificatifConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1005,15 +977,6 @@ E_FamilleDotation ENT_Tr::ConvertToFamilleDotation( const std::string& strName )
 E_FamilleMunition ENT_Tr::ConvertToFamilleMunition( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( FamilleMunitionConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToGDH_Qualificatif
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_GDH_Qualificatif ENT_Tr::ConvertToGDH_Qualificatif( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( GDH_QualificatifConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------

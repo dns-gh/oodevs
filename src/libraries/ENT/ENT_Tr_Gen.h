@@ -39,7 +39,6 @@ public:
     static const std::string& ConvertFromTypeLocalisation( E_TypeLocalisation, E_Conversion = eToSim );
     static const std::string& ConvertFromFamilleDotation( E_FamilleDotation, E_Conversion = eToSim );
     static const std::string& ConvertFromFamilleMunition( E_FamilleMunition, E_Conversion = eToSim );
-    static const std::string& ConvertFromGDH_Qualificatif( E_GDH_Qualificatif, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitIdentificationLevel( E_UnitIdentificationLevel, E_Conversion = eToSim );
     static const std::string& ConvertFromNatureLevel( E_NatureLevel, E_Conversion = eToSim );
     static const std::string& ConvertFromHumanWound( E_HumanWound, E_Conversion = eToSim );
@@ -86,7 +85,6 @@ public:
     static E_TypeLocalisation ConvertToTypeLocalisation( const std::string& );
     static E_FamilleDotation ConvertToFamilleDotation( const std::string& );
     static E_FamilleMunition ConvertToFamilleMunition( const std::string& );
-    static E_GDH_Qualificatif ConvertToGDH_Qualificatif( const std::string& );
     static E_UnitIdentificationLevel ConvertToUnitIdentificationLevel( const std::string& );
     static E_NatureLevel ConvertToNatureLevel( const std::string& );
     static E_HumanWound ConvertToHumanWound( const std::string& );
@@ -134,7 +132,6 @@ private:
     typedef ENT_Tr::converter<E_TypeLocalisation> T_ConverterTypeLocalisation;
     typedef ENT_Tr::converter<E_FamilleDotation> T_ConverterFamilleDotation;
     typedef ENT_Tr::converter<E_FamilleMunition> T_ConverterFamilleMunition;
-    typedef ENT_Tr::converter<E_GDH_Qualificatif> T_ConverterGDH_Qualificatif;
     typedef ENT_Tr::converter<E_UnitIdentificationLevel> T_ConverterUnitIdentificationLevel;
     typedef ENT_Tr::converter<E_NatureLevel> T_ConverterNatureLevel;
     typedef ENT_Tr::converter<E_HumanWound> T_ConverterHumanWound;
@@ -181,7 +178,6 @@ private:
     static T_ConverterTypeLocalisation TypeLocalisationConverter_ [];
     static T_ConverterFamilleDotation FamilleDotationConverter_ [];
     static T_ConverterFamilleMunition FamilleMunitionConverter_ [];
-    static T_ConverterGDH_Qualificatif GDH_QualificatifConverter_ [];
     static T_ConverterUnitIdentificationLevel UnitIdentificationLevelConverter_ [];
     static T_ConverterNatureLevel NatureLevelConverter_ [];
     static T_ConverterHumanWound HumanWoundConverter_ [];

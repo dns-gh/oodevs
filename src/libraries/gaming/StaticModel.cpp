@@ -19,6 +19,7 @@
 #include "clients_kernel/FormationLevels.h"
 #include "SurfaceFactory.h"
 #include "ReportFactory.h"
+#include "AtlasNatures.h"
 
 using namespace kernel;
 
@@ -35,6 +36,7 @@ StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& 
     , levels_             ( *new FormationLevels() )
     , surfaceFactory_     ( *new SurfaceFactory( detection_, types_ ) )
     , reportFactory_      ( *new ReportFactory( rcResolver, objectTypes_, objectTypes_ ) )
+    , atlasNatures_       ( *new AtlasNatures() )
 {
     // NOTHING
 }
@@ -45,6 +47,7 @@ StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& 
 // -----------------------------------------------------------------------------
 StaticModel::~StaticModel()
 {
+    delete &atlasNatures_;
     delete &reportFactory_;
     delete &surfaceFactory_;
     delete &levels_;

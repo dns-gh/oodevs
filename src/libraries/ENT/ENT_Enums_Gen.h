@@ -54,26 +54,6 @@ enum E_FamilleMunition
     eNbrFamilleMunition
 };
 
-
-enum E_GDH_Qualificatif
-{
-    eGDH_Qualificatif_At,
-    eGDH_Qualificatif_After,
-    eGDH_Qualificatif_AsOf,
-    eGDH_Qualificatif_Before,
-    eGDH_Qualificatif_Cleared,
-    eGDH_Qualificatif_Due,
-    eGDH_Qualificatif_End,
-    eGDH_Qualificatif_Off,
-    eGDH_Qualificatif_On,
-    eGDH_Qualificatif_Since,
-    eGDH_Qualificatif_Start,
-    eGDH_Qualificatif_Until,
-    eGDH_Qualificatif_Wef,
-    eNbrGDH_Qualificatif
-};
-
-
 enum E_UnitIdentificationLevel
 {
     eUnitIdentificationLevel_Identifiee,

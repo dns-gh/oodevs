@@ -11,11 +11,14 @@
 #define __ParamAtlasNature_h_
 
 #include "Param_ABC.h"
+#include "gaming/AtlasNature.h"
 
 namespace kernel
 {
     class OrderParameter;
 }
+
+class AtlasNatures;
 
 // =============================================================================
 /** @class  ParamAtlasNature
@@ -31,7 +34,7 @@ class ParamAtlasNature : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAtlasNature( QObject* parent, const kernel::OrderParameter& parameter );
+             ParamAtlasNature( QObject* parent, const kernel::OrderParameter& parameter, const AtlasNatures& natures );
     virtual ~ParamAtlasNature();
     //@}
 
@@ -63,15 +66,16 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< std::pair< QString, unsigned short > > T_AtlasFields;
+    typedef std::vector< const AtlasNature* > T_NatureFields;
     //@}
 
 private:
     //! @name Member data
     //@{
     const kernel::OrderParameter& parameter_;
-    T_AtlasFields fields_;
-    unsigned short bits_;
+    const AtlasNatures& natures_;
+    AtlasNature nature_;
+    T_NatureFields fields_;
     //@}
 };
 

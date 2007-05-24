@@ -19,7 +19,6 @@
 #include "ParamPathList.h"
 #include "ParamPoint.h"
 #include "ParamPolygon.h"
-#include "ParamGDH.h"
 #include "ParamBool.h"
 #include "ParamLocation.h"
 #include "ParamLocationList.h"
@@ -39,6 +38,7 @@
 #include "ParamDotationDType.h"
 #include "ParamLimits.h"
 #include "ParamLimaList.h"
+#include "gaming/StaticModel.h"
 #include "gaming/Tools.h"
 #include "gaming/AgentKnowledge_ABC.h"
 #include "gaming/ObjectKnowledge_ABC.h"
@@ -56,14 +56,14 @@ using namespace kernel;
 // Created: SBO 2006-11-22
 // -----------------------------------------------------------------------------
 MissionInterfaceBuilder::MissionInterfaceBuilder( ActionController& controller, gui::ParametersLayer& layer
-                                                , const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter
-                                                , ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const ObjectTypes& objectTypes )
+                                                , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
+                                                , const StaticModel& staticModel )
     : controller_              ( controller )
     , layer_                   ( layer )
-    , converter_               ( converter )
+    , converter_               ( staticModel.coordinateConverter_ )
     , knowledgeConverter_      ( knowledgeConverter )
     , objectKnowledgeConverter_( objectKnowledgeConverter )
-    , objectTypes_             ( objectTypes )
+    , staticModel_             ( staticModel )
     , missionInterface_        ( 0 )
     , entity_                  ( 0 )
 {
@@ -78,7 +78,6 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( ActionController& controller, 
 
     builderFunctors_["bool"]                = &MissionInterfaceBuilder::BuildBoolean;
     builderFunctors_["direction"]           = &MissionInterfaceBuilder::BuildDirection;
-    builderFunctors_["gdh"]                 = &MissionInterfaceBuilder::BuildGDH;
     builderFunctors_["numeric"]             = &MissionInterfaceBuilder::BuildNumeric;
 
     builderFunctors_["agentknowledge"]      = &MissionInterfaceBuilder::BuildAgentKnowledge;
@@ -189,7 +188,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAutomatList( const OrderParameter& para
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAtlasNature( const OrderParameter& parameter ) const
 {
-    return new ParamAtlasNature( missionInterface_, parameter );
+    return new ParamAtlasNature( missionInterface_, parameter, staticModel_.atlasNatures_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -198,7 +197,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAtlasNature( const OrderParameter& para
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildDotation( const OrderParameter& parameter ) const
 {
-    return new ParamDotationDType( parameter, objectTypes_ );
+    return new ParamDotationDType( parameter, staticModel_.objectTypes_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -217,15 +216,6 @@ Param_ABC* MissionInterfaceBuilder::BuildBoolean( const OrderParameter& paramete
 Param_ABC* MissionInterfaceBuilder::BuildDirection( const OrderParameter& parameter ) const
 {
     return new ParamDirection( missionInterface_, parameter );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterfaceBuilder::BuildGDH
-// Created: SBO 2006-12-01
-// -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildGDH( const OrderParameter& parameter ) const
-{
-    return new ParamGDH( missionInterface_, parameter );
 }
 
 // -----------------------------------------------------------------------------
@@ -360,7 +350,7 @@ Param_ABC* MissionInterfaceBuilder::BuildLocationList( const OrderParameter& par
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildGenObject( const OrderParameter& parameter ) const
 {
-    return new ParamObstacle( missionInterface_, parameter, objectTypes_, layer_, converter_ );
+    return new ParamObstacle( missionInterface_, parameter, staticModel_.objectTypes_, layer_, converter_ );
 }
     
 // -----------------------------------------------------------------------------
@@ -369,7 +359,7 @@ Param_ABC* MissionInterfaceBuilder::BuildGenObject( const OrderParameter& parame
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildGenObjectList( const OrderParameter& parameter ) const
 {
-    return new ParamObstacleList( missionInterface_, parameter, objectTypes_, layer_, converter_, controller_ );
+    return new ParamObstacleList( missionInterface_, parameter, staticModel_.objectTypes_, layer_, converter_, controller_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -378,7 +368,7 @@ Param_ABC* MissionInterfaceBuilder::BuildGenObjectList( const OrderParameter& pa
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildMaintenancePriorities( const OrderParameter& parameter ) const
 {
-    return new ParamEquipmentList( missionInterface_, parameter, objectTypes_ );
+    return new ParamEquipmentList( missionInterface_, parameter, staticModel_.objectTypes_ );
 }
 
 // -----------------------------------------------------------------------------
