@@ -83,6 +83,7 @@ void GlWidget::initializeGL()
     glDisable( GL_DEPTH_TEST );
     glShadeModel( GL_FLAT );
     circle_ = GenerateCircle();
+    glEnableClientState( GL_VERTEX_ARRAY );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,15 +113,14 @@ void GlWidget::updateGL()
 // -----------------------------------------------------------------------------
 void GlWidget::paintGL()
 {
-    RenderMiniViews();
-    RenderIcons();
-
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
 
     MapWidget::paintGL();
-
     Scale().Draw( 20, 20, *this );
+
+    RenderMiniViews();
+    RenderIcons();
 }
 
 // -----------------------------------------------------------------------------
@@ -259,7 +259,7 @@ void GlWidget::RenderIcon( const T_IconTask& task, const geometry::Rectangle2f& 
     QImage image( iconSide_, iconSide_, 32 );
     glColor3f( 1, 1, 1 );
     glRectf( viewport.Left() - 50, viewport.Bottom() - 50, viewport.Right() + 50, viewport.Top() + 50 );
-    glColor3f( task.color.red()/ 255.f, task.color.green()/255.f, task.color.blue()/255.f );
+    SetCurrentColor( task.color.red()/ 255.f, task.color.green()/255.f, task.color.blue()/255.f );
     windowWidth_ = windowHeight_ = viewport.Width() * 1.5f; // => trait svg de 2 px
     const Point2f center( 300, 100 );
     DrawApp6Symbol( task.name, center );
@@ -353,7 +353,6 @@ void GlWidget::DrawLine( const Point2f& from, const Point2f& to ) const
 // -----------------------------------------------------------------------------
 void GlWidget::DrawLines( const T_PointVector& points ) const
 {
-    glEnableClientState( GL_VERTEX_ARRAY );
     glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
     glDrawArrays( GL_LINE_STRIP, 0, points.size() );    
 }
@@ -369,12 +368,10 @@ void GlWidget::DrawConvexPolygon( const T_PointVector& points ) const
         glGetFloatv( GL_CURRENT_COLOR, color );
         color[3]*=0.5f;
         glColor4fv( color );
-        glEnableClientState( GL_VERTEX_ARRAY );
         glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
         glDrawArrays( GL_POLYGON, 0, points.size() );    
     glPopAttrib();
 
-    glEnableClientState( GL_VERTEX_ARRAY );
     glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
     glDrawArrays( GL_LINE_LOOP, 0, points.size() );    
 }
@@ -682,7 +679,6 @@ void GlWidget::DrawFlag( const geometry::Point2f& center ) const
     
     glPushAttrib( GL_CURRENT_BIT );
     glColor4f( 1, 1, 1, 0.7f );
-    glEnableClientState( GL_VERTEX_ARRAY );
     glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
     glDrawArrays( GL_TRIANGLE_FAN, 0, points.size() );    
 

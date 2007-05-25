@@ -287,10 +287,10 @@ QColor ColorStrategy::KnowledgeColor( const QColor& base ) const
 // -----------------------------------------------------------------------------
 void ColorStrategy::ApplyColor( const QColor& color ) const
 {
-    glColor4f( color.red()   / 255.f,
-               color.green() / 255.f,
-               color.blue()  / 255.f,
-               alpha_ );
+    tools_.SetCurrentColor( color.red()   / 255.f,
+                            color.green() / 255.f,
+                            color.blue()  / 255.f,
+                            alpha_ );
 }
 
 namespace 

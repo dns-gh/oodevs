@@ -71,6 +71,7 @@ void Gl3dWidget::initializeGL()
     {
         const Rectangle2f viewport( 0, 0, width_, height_ );
         Widget3D::initializeGL();
+        glEnableClientState( GL_VERTEX_ARRAY );
         for( CIT_Layers it = layers_.begin(); it != layers_.end(); ++it )
             (*it)->Initialize( viewport );
         isInitialized_ = true;
@@ -463,7 +464,6 @@ void Gl3dWidget::DrawFlag( const Point2f& center ) const
 
     glPushAttrib( GL_CURRENT_BIT );
     glColor4f( 1, 1, 1, 0.7f );
-    glEnableClientState( GL_VERTEX_ARRAY );
     glVertexPointer( 3, GL_FLOAT, 0, (const void*)(&points.front()) );
     glDrawArrays( GL_TRIANGLE_FAN, 0, points.size() );    
     glPopAttrib();

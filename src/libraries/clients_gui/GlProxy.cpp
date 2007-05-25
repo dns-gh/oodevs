@@ -141,6 +141,15 @@ unsigned short GlProxy::StipplePattern( int factor /*= 1*/ ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlProxy::SetCurrentColor
+// Created: AGE 2007-05-25
+// -----------------------------------------------------------------------------
+void GlProxy::SetCurrentColor( float r, float g, float b, float a /*= 1*/ )
+{
+    tools_->SetCurrentColor( r, g, b, a );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlProxy::DrawCross
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------

@@ -113,6 +113,16 @@ void GlToolsBase::BindIcon( const char** xpm )
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlToolsBase::SetCurrentColor
+// Created: AGE 2007-05-25
+// -----------------------------------------------------------------------------
+void GlToolsBase::SetCurrentColor( float r, float g, float b, float a /*= 1*/ )
+{
+    glColor4f( r, g, b, a );
+    symbols_->SetCurrentColor( r, g, b, a );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlToolsBase::PrintApp6
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
