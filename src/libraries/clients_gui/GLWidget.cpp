@@ -113,14 +113,14 @@ void GlWidget::updateGL()
 // -----------------------------------------------------------------------------
 void GlWidget::paintGL()
 {
+    RenderMiniViews();
+    RenderIcons();
+
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
 
     MapWidget::paintGL();
     Scale().Draw( 20, 20, *this );
-
-    RenderMiniViews();
-    RenderIcons();
 }
 
 // -----------------------------------------------------------------------------
