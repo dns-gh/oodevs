@@ -47,8 +47,9 @@ Function .onInit
 FunctionEnd
 
 ;--------------------------------
-Section "C-Sword"
+Section "!Basic"
     SectionIn RO
+    
     SetOutPath "$INSTDIR\applications"
     File "${OUTDIR}\release\applications\adaptation_app\*.exe"
     File "${OUTDIR}\release\applications\gaming_app\*.exe"
@@ -88,28 +89,67 @@ Section "C-Sword"
     File "${RUNDIR}\userDdm.dll"
     File "${RUNDIR}\xerces-c_2_7.dll"
     File "${RUNDIR}\zlib1.dll"
-    SetOutPath "$INSTDIR\data\models"
-    File /r /x ".svn" "${DATADIR}\data\models\main"
+    
     SetOutPath "$INSTDIR\data"
     File /r /x ".svn" "${DATADIR}\data\terrains"
-    SetOutPath "$INSTDIR\exercises"
-    File /r /x ".svn" "${DATADIR}\exercises\empty-france"
-    File /r /x ".svn" "${DATADIR}\exercises\empty-worldwide"
+    
+    SetOutPath "$INSTDIR\data\models\decisional"
+    File /r /x ".svn" "${DATADIR}\data\models\main\decisional\Binaires"
+    File /r /x ".svn" "${DATADIR}\data\models\main\decisional\*.xml"
+    
     SetOutPath "$INSTDIR\applications"
     WriteRegStr HKLM "Software\Masa\C-Sword" "Install_Dir" "$INSTDIR"
     CreateDirectory "$SMPROGRAMS\C-Sword"
+    CreateShortCut "$SMPROGRAMS\C-Sword\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe"
+SectionEnd
+
+;--------------------------------
+Section "DirectIA models sources"
+    SetOutPath "$INSTDIR\data\models\decisional"
+    File /r /x ".svn" "${DATADIR}\data\models\main\decisional\Sources"
+
+    SetOutPath "$INSTDIR\exercises"
+    File /r /x ".svn" "${DATADIR}\exercises\empty-france"
+SectionEnd
+
+;--------------------------------
+SectionGroup "Physical models"
+
+Section "France"
+    SetOutPath "$INSTDIR\data\models\physical"
+    File /r /x ".svn" "${DATADIR}\data\models\main\physical\france"
+
+    SetOutPath "$INSTDIR\exercises"
+    File /r /x ".svn" "${DATADIR}\exercises\empty-france"
+
+    SetOutPath "$INSTDIR\applications"
+    CreateDirectory "$SMPROGRAMS\C-Sword"
     CreateDirectory "$SMPROGRAMS\C-Sword\France"
-    CreateDirectory "$SMPROGRAMS\C-Sword\WorldWide"
     CreateShortCut "$SMPROGRAMS\C-Sword\France\Preparation.lnk" "$INSTDIR\applications\preparation_app.exe" "--exercise=empty-france"
     CreateShortCut "$SMPROGRAMS\C-Sword\France\Simulation.lnk" "$INSTDIR\applications\simulation_app.exe" "--exercise=empty-france"
     CreateShortCut "$SMPROGRAMS\C-Sword\France\Gaming.lnk" "$INSTDIR\applications\gaming_app.exe" "--exercise=empty-france"
     CreateShortCut "$SMPROGRAMS\C-Sword\France\Replayer.lnk" "$INSTDIR\applications\replayer_app.exe" "--exercise=empty-france"    
+SectionEnd
+
+;--------------------------------
+Section "Worldwide"
+    SetOutPath "$INSTDIR\data\models\physical"
+    File /r /x ".svn" "${DATADIR}\data\models\main\physical\worldwide"
+
+    SetOutPath "$INSTDIR\exercises"
+    File /r /x ".svn" "${DATADIR}\exercises\empty-worldwide"
+
+    SetOutPath "$INSTDIR\applications"
+    CreateDirectory "$SMPROGRAMS\C-Sword"
+    CreateDirectory "$SMPROGRAMS\C-Sword\WorldWide"
     CreateShortCut "$SMPROGRAMS\C-Sword\WorldWide\Preparation.lnk" "$INSTDIR\applications\preparation_app.exe" "--exercise=empty-worldwide"
     CreateShortCut "$SMPROGRAMS\C-Sword\WorldWide\Simulation.lnk" "$INSTDIR\applications\simulation_app.exe" "--exercise=empty-worldwide"
     CreateShortCut "$SMPROGRAMS\C-Sword\WorldWide\Gaming.lnk" "$INSTDIR\applications\gaming_app.exe" "--exercise=empty-worldwide"
     CreateShortCut "$SMPROGRAMS\C-Sword\WorldWide\Replayer.lnk" "$INSTDIR\applications\replayer_app.exe" "--exercise=worldwide"
-    CreateShortCut "$SMPROGRAMS\C-Sword\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe"
 SectionEnd
+
+SectionGroupEnd
+
 
 ;--------------------------------
 Section "Uninstaller files"
