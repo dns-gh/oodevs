@@ -58,7 +58,22 @@ void DebugPoints::DoUpdate( const DebugPointsMessage& message )
 void DebugPoints::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( tools.ShouldDisplay( "DebugPoints" ) )
+    {
+        GLfloat color[4];
+        glGetFloatv( GL_CURRENT_COLOR, color );
+        glPushAttrib( GL_LINE_BIT );
+        glLineWidth( 6.f );
         for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
             if( viewport.IsVisible( *it ) )
+            {
+                glColor4f( 0, 0, 0, color[3] * 0.5f );
+                glLineWidth( 8.f );
                 tools.DrawCross( *it, GL_CROSSSIZE );
+
+                glColor4f( 255, 255, 255, 1.0f );
+                glLineWidth( 4.f );
+                tools.DrawCross( *it, GL_CROSSSIZE );
+            }
+        glPopAttrib();
+    }
 }
