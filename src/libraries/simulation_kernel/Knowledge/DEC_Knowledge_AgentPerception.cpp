@@ -82,6 +82,9 @@ DEC_Knowledge_AgentPerception::~DEC_Knowledge_AgentPerception()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
+    unsigned current  = pCurrentPerceptionLevel_->GetID(),
+             previous = pPreviousPerceptionLevel_->GetID(),
+             max      = pMaxPerceptionLevel_->GetID();
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          << nCreationTimeStep_
          << dataDetection_
@@ -93,9 +96,9 @@ void DEC_Knowledge_AgentPerception::save( MIL_CheckPointOutArchive& file, const 
          << bPreviousRecordModeEnabled_
          << nRecordModeDisablingDelay_
          << bAttacker_
-         << pCurrentPerceptionLevel_->GetID()
-         << pPreviousPerceptionLevel_->GetID()
-         << pMaxPerceptionLevel_->GetID();
+         << current
+         << previous
+         << max;
 }
 
 // -----------------------------------------------------------------------------

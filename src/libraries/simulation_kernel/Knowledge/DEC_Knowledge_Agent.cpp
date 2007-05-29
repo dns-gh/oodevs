@@ -116,11 +116,13 @@ namespace boost
         template < typename Archive >
         void save( Archive& file, const DEC_Knowledge_Agent::T_PerceptionSourceMap& map, const uint )
         {
-            file << map.size();
+            unsigned size = map.size();
+            file << size;
             for ( DEC_Knowledge_Agent::CIT_PerceptionSourceMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first;
-                file << it->second->GetID();
+                unsigned id = it->second->GetID();
+                file << id;
             }
 
         }
@@ -187,6 +189,9 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Agent::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
+    unsigned current  = pCurrentPerceptionLevel_->GetID(),
+             previous = pPreviousPerceptionLevel_->GetID(),
+             max      = pMaxPerceptionLevel_->GetID();
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          << pKnowledgeGroup_
          << pAgentKnown_
@@ -195,9 +200,9 @@ void DEC_Knowledge_Agent::save( MIL_CheckPointOutArchive& file, const uint ) con
          << dataRecognition_
          << dataIdentification_
          << nTimeLastUpdate_
-         << pCurrentPerceptionLevel_->GetID()
-         << pPreviousPerceptionLevel_->GetID()
-         << pMaxPerceptionLevel_->GetID()
+         << current
+         << previous
+         << max
          << perceptionLevelPerAutomateMap_
          << previousPerceptionLevelPerAutomateMap_
          << rRelevance_
@@ -207,7 +212,6 @@ void DEC_Knowledge_Agent::save( MIL_CheckPointOutArchive& file, const uint ) con
          << bMaxPerceptionLevelUpdated_
          << nTimeExtrapolationEnd_;
 }
-
 
 // =============================================================================
 // INTERNAL UPDATERS

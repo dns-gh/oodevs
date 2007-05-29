@@ -63,7 +63,8 @@ void DEC_BlackBoard_CanContainKnowledgeObjectPerception::load( MIL_CheckPointInA
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObjectPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << knowledgeObjectPerceptionMap_.size();
+    const T_KnowledgeObjectPerceptionMap::size_type size = knowledgeObjectPerceptionMap_.size();
+    file << size;
     for ( CIT_KnowledgeObjectPerceptionMap it = knowledgeObjectPerceptionMap_.begin(); it != knowledgeObjectPerceptionMap_.end(); ++it )
     {
         file << it->first

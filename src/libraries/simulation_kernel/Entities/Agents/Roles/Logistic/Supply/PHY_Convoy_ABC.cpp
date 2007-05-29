@@ -206,43 +206,6 @@ PHY_Convoy_ABC::~PHY_Convoy_ABC()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
-namespace boost
-{
-    namespace serialization
-    {
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, PHY_Convoy_ABC::T_ConveyorMap& map, const uint nVersion )
-        {
-            split_free( file, map, nVersion );
-        }
-        
-        template< typename Archive >
-        void save( Archive& file, const PHY_Convoy_ABC::T_ConveyorMap& map, const uint )
-        {
-            file << map.size();
-            for ( PHY_Convoy_ABC::CIT_ConveyorMap it = map.begin(); it != map.end(); ++it )
-            {
-                file << it->first;
-                file << it->second;
-            }   
-        }
-        
-        template< typename Archive >
-        void load( Archive& file, PHY_Convoy_ABC::T_ConveyorMap& map, const uint )
-        {
-            uint nNbr;
-            file >> nNbr;
-            while ( nNbr-- )
-            {
-                PHY_ComposantePion* pComp;
-                
-                file >> pComp;
-                file >> map[ pComp ];
-            }
-        }
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Convoy_ABC::serialize

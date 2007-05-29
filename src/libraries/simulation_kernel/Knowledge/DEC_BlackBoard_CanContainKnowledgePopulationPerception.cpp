@@ -63,7 +63,8 @@ void DEC_BlackBoard_CanContainKnowledgePopulationPerception::load( MIL_CheckPoin
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulationPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << knowledgePopulationPerceptionMap_.size();
+    uint size = knowledgePopulationPerceptionMap_.size();
+    file << size;
     for ( CIT_KnowledgePopulationPerceptionMap it = knowledgePopulationPerceptionMap_.begin(); it != knowledgePopulationPerceptionMap_.end(); ++it )
     {
         file << it->first

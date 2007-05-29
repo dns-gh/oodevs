@@ -130,10 +130,12 @@ void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
+    unsigned current = pCurrentPosture_->GetID(),
+             last    = pLastPosture_->GetID();
     file << boost::serialization::base_object< PHY_RoleInterface_Posture >( *this )
          << pPion_
-         << pCurrentPosture_->GetID()
-         << pLastPosture_->GetID()
+         << current
+         << last
          << rPostureCompletionPercentage_
          << rElongationFactor_
          << bDiscreteModeEnabled_

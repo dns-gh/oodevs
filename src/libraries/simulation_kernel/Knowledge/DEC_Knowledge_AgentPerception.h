@@ -88,7 +88,7 @@ public:
     //@}
 
 private:
-    const uint                                            nCreationTimeStep_;
+          uint                                            nCreationTimeStep_;
 
           DEC_Knowledge_AgentPerceptionDataDetection      dataDetection_;
           DEC_Knowledge_AgentPerceptionDataRecognition    dataRecognition_;

@@ -70,10 +70,12 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const PHY_DotationGroup::T_DotationMap& map, const uint )
         {
-            file << map.size();
+            unsigned size = map.size();
+            file << size;
             for ( PHY_DotationGroup::CIT_DotationMap it = map.begin(); it != map.end(); ++it )
             {
-                file << it->first->GetMosID();
+                unsigned id = it->first->GetMosID();
+                file << id;
                 file << it->second;
             }
         }
@@ -112,7 +114,8 @@ void PHY_DotationGroup::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_DotationGroup::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << ( pType_ ? pType_->GetID() : (uint)-1 )
+    unsigned type = ( pType_ ? pType_->GetID() : (uint)-1 );
+    file << type
          << pGroupContainer_
          << dotations_;
 }

@@ -174,10 +174,15 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const uint )
 void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     assert( pObjectType_ );
+    unsigned objectType   = pObjectType_->GetID(),
+             obstacleType = ( pObstacleType_ ? pObstacleType_->GetID() : (uint)-1 ),
+             current      = pCurrentPerceptionLevel_->GetID(),
+             previous     = pPreviousPerceptionLevel_->GetID(),
+             max          = pMaxPerceptionLevel_->GetID();
     
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         << pObjectType_->GetID()
-         << ( pObstacleType_ ? pObstacleType_->GetID() : (uint)-1 )
+         << objectType
+         << obstacleType
          << pArmyKnowing_
          << pObjectKnown_
          << nID_
@@ -191,18 +196,22 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const uint ) co
          << bReservedObstacleActivated_
          << nNbrDotationForConstruction_
          << nNbrDotationForMining_
-         << pCurrentPerceptionLevel_->GetID()
-         << pPreviousPerceptionLevel_->GetID()
-         << pMaxPerceptionLevel_->GetID()
+         << current
+         << previous
+         << max
          << perceptionPerAutomateSet_
          << previousPerceptionPerAutomateSet_
          << nTimeLastUpdate_
          << rRelevance_;
     
     // On stocke les types selon leur nom
-    file << reconByAgentTypes_.size();
+    uint size = reconByAgentTypes_.size();
+    file << size;
     for ( CIT_AgentTypeSet it = reconByAgentTypes_.begin(); it != reconByAgentTypes_.end(); ++it )
-        file << (*it)->GetID();
+    {
+        uint id = (*it)->GetID();
+        file << id;
+    }
 }
 
 

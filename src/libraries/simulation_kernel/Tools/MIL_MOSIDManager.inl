@@ -62,7 +62,7 @@ bool MIL_MOSIDManager::IsSimIDValid( uint nID )
 // Created: NLD 2005-11-04
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void MIL_MOSIDManager::serialize( Archive& file )
+void MIL_MOSIDManager::serialize( Archive& file, uint )
 {
     file & nNextSimInstanceID_
          & nMOSClassID_;

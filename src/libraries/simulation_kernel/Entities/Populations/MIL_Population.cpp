@@ -144,12 +144,13 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
 void MIL_Population::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << boost::serialization::base_object< PHY_Actor >( *this );
-
-    file << pType_->GetID()
+    unsigned type     = pType_->GetID(),
+             attitude = pDefaultAttitude_->GetID();
+    file << type
          << nID_
          << pArmy_
          << strName_
-         << pDefaultAttitude_->GetID()
+         << attitude
          << rPeopleCount_
          << concentrations_
          << flows_

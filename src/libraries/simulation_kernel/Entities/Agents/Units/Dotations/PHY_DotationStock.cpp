@@ -81,8 +81,9 @@ void PHY_DotationStock::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_DotationStock::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
+    unsigned category = pCategory_->GetMosID();
     file << pStockContainer_
-         << pCategory_->GetMosID()
+         << category
          << rValue_
          << rCapacity_
          << rSupplyThreshold_;

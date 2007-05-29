@@ -100,10 +100,12 @@ namespace boost
         template < typename Archive >
         void save( Archive& file, const std::map< const PHY_DotationCategory*, MIL_AutomateLOG::sDotationQuota >& map, const uint )
         {
-            file << map.size();
+            unsigned size = map.size();
+            file << size;
             for ( std::map< const PHY_DotationCategory*, MIL_AutomateLOG::sDotationQuota >::const_iterator it = map.begin(); it != map.end(); ++it )
             {
-                file << it->first->GetMosID()
+                uint id = it->first->GetMosID();
+                file << id
                      << it->second.rQuota_
                      << it->second.rQuotaThreshold_;
             }

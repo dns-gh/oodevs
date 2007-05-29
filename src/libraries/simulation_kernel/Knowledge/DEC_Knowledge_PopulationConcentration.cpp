@@ -131,6 +131,7 @@ void DEC_Knowledge_PopulationConcentration::load( MIL_CheckPointInArchive& file,
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationConcentration::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
+    bool attitude = ( pAttitude_ != 0 );
     file << pPopulationKnowledge_
          << pConcentrationKnown_
          << nID_
@@ -139,14 +140,19 @@ void DEC_Knowledge_PopulationConcentration::save( MIL_CheckPointOutArchive& file
          << rNbrAliveHumans_
          << rNbrDeadHumans_
          << bReconAttributesValid_
-         << ( pAttitude_ != 0 );
+         << attitude;
 
-    if( pAttitude_ != 0 )
-        file << pAttitude_->GetID();
-
+    
+    if( pAttitude_ )
+    {
+        unsigned attitude = pAttitude_->GetID();
+        file << attitude;
+    }
+    unsigned current  = pCurrentPerceptionLevel_->GetID(),
+             previous = pPreviousPerceptionLevel_->GetID();
     file << rRelevance_
-         << pCurrentPerceptionLevel_->GetID()
-         << pPreviousPerceptionLevel_->GetID();
+         << current
+         << previous;
 }
 
 // =============================================================================

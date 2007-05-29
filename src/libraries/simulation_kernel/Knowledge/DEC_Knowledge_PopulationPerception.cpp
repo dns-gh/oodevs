@@ -80,7 +80,8 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const DEC_Knowledge_PopulationPerception::T_ConcentrationMap& map, const uint )
         {
-            file << map.size();
+            uint size = map.size();
+            file << size;
             for ( DEC_Knowledge_PopulationPerception::CIT_ConcentrationMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first
@@ -111,7 +112,8 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const DEC_Knowledge_PopulationPerception::T_FlowMap& map, const uint )
         {
-            file << map.size();
+            uint size = map.size();
+            file << size;
             for ( DEC_Knowledge_PopulationPerception::CIT_FlowMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first

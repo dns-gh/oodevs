@@ -6,85 +6,31 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2005-11-04 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
-
-
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-namespace boost
-{
-    namespace serialization
-    {
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, MIL_IDManager::T_IDManagerMap& map, const uint nVersion )
-        {
-            split_free( file, map, nVersion );
-        }
-        
-        template< typename Archive >
-        void save( Archive& file, const MIL_IDManager::T_IDManagerMap& map, const uint )
-        {
-            file << map.size();
-            for ( MIL_IDManager::CIT_IDManagerMap it = map.begin(); it != map.end(); ++it )
-            {
-                file << it->first;
-                it->second->serialize( file );
-            }
-        }
-        
-        template< typename Archive >
-        void load( Archive& file, MIL_IDManager::T_IDManagerMap& map, const uint )
-        {
-            uint nNbr;
-            file >> nNbr;
-            while ( nNbr-- )
-            {
-                uint nID;
-                file >> nID;
-
-                MIL_MOSIDManager* pIDManager = map[ nID ];
-                pIDManager->serialize( file );
-            }
-        }
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: template< typename Archive > void MIL_AgentServer::SerializeStatics
 // Created: NLD 2005-11-04
 // -----------------------------------------------------------------------------
-template< typename Archive > 
-void MIL_IDManager::serialize( Archive& file )
+template< typename Archive >
+void MIL_IDManager::serialize( Archive& file, uint /*version*/ )
 {
-    units_                              .serialize( file );
-    fireResultsPion_                    .serialize( file );
-    fireResultsPopulation_              .serialize( file );
-    limas_                              .serialize( file );
-    limits_                             .serialize( file );
-    knowledgesAgent_                    .serialize( file );
-    effectsWeather_                     .serialize( file );
-    maintenanceComposanteStates_        .serialize( file );
-    medicalHumanStates_                 .serialize( file );
-    supplyStates_                       .serialize( file );
-    populations_                        .serialize( file );
-    populationConcentrations_           .serialize( file );
-    populationFlows_                    .serialize( file );
-    knowledgePopulations_               .serialize( file );
-    knowledgePopulationConcentrations_  .serialize( file );
-    knowledgePopulationFlows_           .serialize( file );
-
-    file & objectClassIDToType_;
+    file & units_
+         & fireResultsPion_
+         & fireResultsPopulation_
+         & limas_
+         & limits_
+         & knowledgesAgent_
+         & effectsWeather_
+         & maintenanceComposanteStates_
+         & medicalHumanStates_
+         & supplyStates_
+         & populations_
+         & populationConcentrations_
+         & populationFlows_
+         & knowledgePopulations_
+         & knowledgePopulationConcentrations_
+         & knowledgePopulationFlows_
+         & objectClassIDToType_;
 }
 
 // -----------------------------------------------------------------------------

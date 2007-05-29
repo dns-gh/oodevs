@@ -91,12 +91,14 @@ void DEC_Knowledge_PopulationFlowPerception::load( MIL_CheckPointInArchive& file
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlowPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
+    unsigned current  = pCurrentPerceptionLevel_->GetID(),
+             previous = pPreviousPerceptionLevel_->GetID();
     file << pPopulationKnowledge_
          << pPopulationFlowPerceived_
          << shape_
          << previousShape_
-         << pCurrentPerceptionLevel_->GetID()
-         << pPreviousPerceptionLevel_->GetID();
+         << current
+         << previous;
 }
 
 // =============================================================================

@@ -65,8 +65,8 @@ PHY_RoleAction_Transport::sTransportData::sTransportData( MT_Float rTotalWeight,
 template< typename Archive >
 void PHY_RoleAction_Transport::sTransportData::serialize( Archive& file, const uint )
 {
-    file & bTransportOnlyLoadable_
-         & rTotalWeight_
+    file & const_cast< bool& >    ( bTransportOnlyLoadable_ )
+         & const_cast< MT_Float& >( rTotalWeight_ )
          & rRemainingWeight_
          & rTransportedWeight_;
 }

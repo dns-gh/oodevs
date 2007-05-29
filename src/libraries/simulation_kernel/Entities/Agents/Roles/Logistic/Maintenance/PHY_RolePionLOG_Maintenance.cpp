@@ -96,9 +96,13 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const T_MaintenancePriorityVector& vector, const uint )
         {
-            file << vector.size();
+            unsigned size = vector.size();
+            file << size;
             for ( CIT_MaintenancePriorityVector it = vector.begin(); it != vector.end(); ++it )
-                file << (*it)->GetMosID();
+            {
+                ASN1T_TypeEquipement id = (*it)->GetMosID();
+                file << id;
+            }
         }
         
         template< typename Archive >
@@ -128,7 +132,8 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const T_AutomateVector& vector, const uint )
         {
-            file << vector.size();
+            unsigned size = vector.size();
+            file << size;
             for ( CIT_AutomateVector it = vector.begin(); it != vector.end(); ++it )
                 file << *it;
         }
@@ -186,15 +191,18 @@ void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const uin
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
+    ASN1T_EnumLogMaintenanceRegimeTravail workRate = pWorkRate_->GetAsnID();
+
     file << boost::serialization::base_object< PHY_RolePion_Maintenance >( *this )
          << pPion_
          << bSystemEnabled_
          << priorities_
          << tacticalPriorities_
-         << pWorkRate_->GetAsnID()
+         << workRate
          << nWorkRateWarningRCTick_;
 
-    file << consigns_.size();
+    unsigned size = consigns_.size();
+    file << size;
     for ( CIT_MaintenanceConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
         file << it->first << it->second;
 

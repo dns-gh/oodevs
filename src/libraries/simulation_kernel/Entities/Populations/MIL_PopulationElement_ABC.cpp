@@ -282,11 +282,12 @@ void MIL_PopulationElement_ABC::load( MIL_CheckPointInArchive& file, const uint 
 // -----------------------------------------------------------------------------
 void MIL_PopulationElement_ABC::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
+    unsigned attitude = pAttitude_->GetID();
     file << pPopulation_
          << nID_
          << rNbrAliveHumans_
          << rNbrDeadHumans_
          << rDensity_
          << collidingAgents_
-         << pAttitude_->GetID();
+         << attitude;
 }

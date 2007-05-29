@@ -111,7 +111,8 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const DEC_Knowledge_PopulationFlow::T_FlowPartMap& map, const uint )
         {
-            file << map.size();
+            uint size = map.size();
+            file << size;
             for ( DEC_Knowledge_PopulationFlow::CIT_FlowPartMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first
@@ -170,6 +171,9 @@ void DEC_Knowledge_PopulationFlow::load( MIL_CheckPointInArchive& file, const ui
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlow::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
+    unsigned attitudeId = ( pAttitude_ ? pAttitude_->GetID() : 0 ),
+             previousId = pPreviousPerceptionLevel_->GetID(),
+             currentId = pCurrentPerceptionLevel_->GetID();
     file << pPopulationKnowledge_
          << pFlowKnown_
          << nID_
@@ -179,9 +183,9 @@ void DEC_Knowledge_PopulationFlow::save( MIL_CheckPointOutArchive& file, const u
          << rNbrAliveHumans_
          << rNbrDeadHumans_
          << bReconAttributesValid_
-         << ( pAttitude_ ? pAttitude_->GetID() : 0 ) // $$$$ SBO 2006-02-24: if popu not recognized, attitude is null (should be default "calme" ?)
-         << pPreviousPerceptionLevel_->GetID()
-         << pCurrentPerceptionLevel_->GetID();
+         << attitudeId
+         << previousId
+         << currentId;
 }
 
 // =============================================================================

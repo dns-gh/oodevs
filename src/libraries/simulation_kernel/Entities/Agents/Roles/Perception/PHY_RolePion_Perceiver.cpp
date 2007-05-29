@@ -152,8 +152,8 @@ namespace boost
         void save( Archive& file, const PHY_RolePion_Perceiver::T_SurfaceAgentKeyPair& pair, const uint )
         {
             assert( pair.first );
-            
-            file << pair.first->GetType().GetID()
+            unsigned id = pair.first->GetType().GetID();
+            file << id
                  << pair.second;
         }
         
@@ -183,8 +183,8 @@ namespace boost
         void save( Archive& file, const PHY_RolePion_Perceiver::T_SurfaceObjectKeyPair& pair, const uint )
         {
             assert( pair.first );
-            
-            file << pair.first->GetType().GetID()
+            unsigned id = pair.first->GetType().GetID();
+            file << id
                  << pair.second;
         }
         

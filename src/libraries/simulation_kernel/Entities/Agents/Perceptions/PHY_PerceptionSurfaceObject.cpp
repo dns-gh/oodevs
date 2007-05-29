@@ -68,8 +68,8 @@ void PHY_PerceptionSurfaceObject::load( MIL_CheckPointInArchive& file, const uin
 void PHY_PerceptionSurfaceObject::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     assert( pSensorType_ );
-    
-    file << pSensorType_->GetType().GetID()
+    unsigned type = pSensorType_->GetType().GetID();
+    file << type
          << vOrigin_
          << rHeight_;
 }

@@ -55,7 +55,8 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const DEC_BlackBoard_CanContainKnowledgeObjectCollision::T_KnowledgeObjectCollisionMap& map, const uint )
         {
-            file << map.size();
+            const DEC_BlackBoard_CanContainKnowledgeObjectCollision::T_KnowledgeObjectCollisionMap::size_type size = map.size();
+            file << size;
             for ( DEC_BlackBoard_CanContainKnowledgeObjectCollision::CIT_KnowledgeObjectCollisionMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first;

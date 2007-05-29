@@ -69,7 +69,7 @@ void PHY_Breakdown::load( MIL_CheckPointInArchive& file, const uint )
 void PHY_Breakdown::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     assert( pType_ );
-    
-    file << pType_->GetID();
+    unsigned type = pType_->GetID();
+    file << type;
     file << nRepairTime_;
 }

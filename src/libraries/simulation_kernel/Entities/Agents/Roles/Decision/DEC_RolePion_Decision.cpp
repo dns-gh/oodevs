@@ -205,7 +205,13 @@ void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
 void DEC_RolePion_Decision::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     DIA_Serializer diaSerializer( static_cast< DIA_Motivation_Part& >( *pMotivationTool_ ) );
-    
+    unsigned roe  = pRoePopulation_->GetID(),
+             type = pPion_->GetType().GetID();
+    // $$$$ JVT : Beark
+    const std::string diaName = const_cast< DEC_RolePion_Decision& >( *this ).GetVariable( nDIANameIdx_ ).ToString();
+    // $$$$ JVT : Beark Arrrg
+    DEC_AutomateDecision* const dec = static_cast< DEC_AutomateDecision* >( const_cast< DEC_RolePion_Decision& >( *this ).GetVariable( nDIAAutomateIdx_ ).ToObject() );
+
     file << boost::serialization::base_object< MT_Role_ABC >( *this )
          << pPion_
          << nForceRatioState_
@@ -213,12 +219,11 @@ void DEC_RolePion_Decision::save( MIL_CheckPointOutArchive& file, const uint ) c
          << nCloseCombatState_
          << nOperationalState_
          << nIndirectFireAvailability_
-         << pRoePopulation_->GetID()
-         << pPion_->GetType().GetID()
-         << const_cast< DEC_RolePion_Decision& >( *this ).GetVariable( nDIANameIdx_     ).ToString()  // $$$$ JVT : Beark
-         << static_cast< DEC_AutomateDecision* >( const_cast< DEC_RolePion_Decision& >( *this ).GetVariable( nDIAAutomateIdx_ ).ToObject() ) // $$$$ JVT : Beark Arrrg
+         << roe
+         << type
+         << diaName 
+         << dec 
          << diaSerializer;         
-         
 }
 
 // =============================================================================

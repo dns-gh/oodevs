@@ -91,11 +91,13 @@ void PHY_RolePion_HumanFactors::save( MIL_CheckPointOutArchive& file, const uint
     assert( pMorale_ );
     assert( pExperience_ );
     assert( pTiredness_ );
-    
+    unsigned morale     = pMorale_->GetID(),
+             experience = pExperience_->GetID(),
+             tiredness  = pTiredness_->GetID();
     file << boost::serialization::base_object< PHY_RoleInterface_HumanFactors >( *this )
-         << pMorale_->GetID()
-         << pExperience_->GetID()
-         << pTiredness_->GetID();
+         << morale
+         << experience
+         << tiredness;
 }
 
 // -----------------------------------------------------------------------------

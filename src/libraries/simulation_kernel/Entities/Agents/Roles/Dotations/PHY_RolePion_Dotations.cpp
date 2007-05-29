@@ -86,7 +86,8 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const PHY_RolePion_Dotations::T_DotationReservedMap& map, const uint )
         {
-            file << map.size();
+            unsigned size = map.size();
+            file << size;
             for ( PHY_RolePion_Dotations::CIT_DotationReservedMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first;
@@ -135,11 +136,13 @@ void PHY_RolePion_Dotations::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
+    unsigned current  = ( pCurrentConsumptionMode_  ? pCurrentConsumptionMode_->GetID()  : (uint)-1 ) ,
+             previous = ( pPreviousConsumptionMode_ ? pPreviousConsumptionMode_->GetID() : (uint)-1 );
     file << boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
          << pPion_
          << pDotations_
-         << ( pCurrentConsumptionMode_  ? pCurrentConsumptionMode_->GetID()  : (uint)-1 ) 
-         << ( pPreviousConsumptionMode_ ? pPreviousConsumptionMode_->GetID() : (uint)-1 )
+         << current
+         << previous
          << reservedConsumptions_;
 }
 

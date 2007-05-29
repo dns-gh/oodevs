@@ -74,12 +74,12 @@ void DEC_Knowledge_AgentComposante::load( MIL_CheckPointInArchive& file, const u
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentComposante::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << pType_->GetMosID()
+    ASN1T_TypeEquipement type = pType_->GetMosID();
+    file << type
          << bCanFire_
          << bCanFireWhenUnloaded_
          << nMajorScore_;
 }
-
 
 // =============================================================================
 // OPERATIONS

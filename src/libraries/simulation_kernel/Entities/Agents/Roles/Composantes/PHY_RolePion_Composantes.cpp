@@ -153,35 +153,6 @@ namespace boost
     {
         template< typename Archive >
         inline
-        void serialize( Archive& file, PHY_RolePion_Composantes::T_ComposantePionVector& vector, const uint nVersion )
-        {
-            split_free( file, vector, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const PHY_RolePion_Composantes::T_ComposantePionVector& vector, const uint )
-        {
-            file << vector.size();
-            for(  PHY_RolePion_Composantes::CIT_ComposantePionVector it = vector.begin(); it != vector.end(); ++it )
-                file << *it;
-        }
-
-        template< typename Archive >
-        void load( Archive& file, PHY_RolePion_Composantes::T_ComposantePionVector& vector, const uint )
-        {
-            uint nNbr;
-            file >> nNbr;
-            vector.reserve( nNbr );
-            while ( nNbr-- )
-            {
-                PHY_ComposantePion* pComp;
-                file >> pComp;
-                vector.push_back( pComp );
-            }
-        }
-
-        template< typename Archive >
-        inline
         void serialize( Archive& file, PHY_RolePion_Composantes::T_LoanMap& map, const uint nVersion )
         {
             split_free( file, map, nVersion );
@@ -190,7 +161,8 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const PHY_RolePion_Composantes::T_LoanMap& map, const uint )
         {
-            file << map.size();
+            unsigned size = map.size();
+            file << size;
             for(  PHY_RolePion_Composantes::CIT_LoanMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first;
@@ -221,10 +193,12 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const PHY_RolePion_Composantes::T_ComposanteTypeMap& map, const uint )
         {
-            file << map.size();
+            unsigned size = map.size();
+            file << size;
             for(  PHY_RolePion_Composantes::CIT_ComposanteTypeMap it = map.begin(); it != map.end(); ++it )
             {
-                file << it->first->GetMosID();
+                ASN1T_TypeEquipement id = it->first->GetMosID();
+                file << id;
                 file << it->second;
             }
         }

@@ -165,10 +165,12 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
+    unsigned state = pState_->GetID(),
+             type  = pType_->GetMosID();
     file << boost::serialization::base_object< PHY_Composante_ABC >( *this )
          << pRole_
-         << pState_->GetID()
-         << pType_->GetMosID()
+         << state
+         << type
          << bMajor_
          << bLoadable_
          << bCanBePartOfConvoy_
@@ -182,7 +184,8 @@ void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const uint ) cons
     if ( nRandomBreakdownNextTimeStep_ )
     {
         assert( pRandomBreakdownState_ );
-        file << pRandomBreakdownState_->GetID();
+        unsigned id = pRandomBreakdownState_->GetID();
+        file << id;
     }        
 }
 

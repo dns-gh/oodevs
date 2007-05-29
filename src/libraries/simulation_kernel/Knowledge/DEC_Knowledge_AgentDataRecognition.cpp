@@ -77,13 +77,14 @@ void DEC_Knowledge_AgentDataRecognition::load( MIL_CheckPointInArchive& file, co
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentDataRecognition::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
+    unsigned agentType = ( pAgentType_ ? pAgentType_->GetID() : (uint)-1 );
     file << nTimeLastUpdate_
          << rOperationalState_
          << rMajorOperationalState_
          << composantes_
          << pArmy_
          << bIsPC_
-         << ( pAgentType_ ? pAgentType_->GetID() : (uint)-1 )
+         << agentType
          << bOperationalStateChanged_
          << bAgentTypeUpdated_;
 }

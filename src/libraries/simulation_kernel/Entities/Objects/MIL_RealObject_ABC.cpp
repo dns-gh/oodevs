@@ -192,6 +192,8 @@ void MIL_RealObject_ABC::load( MIL_CheckPointInArchive& file, const uint )
 void MIL_RealObject_ABC::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << boost::serialization::base_object< MIL_Object_ABC >( *this );
+    unsigned type     = pType_->GetID(),
+             obstacle = ( pObstacleType_ ? pObstacleType_->GetID() : (uint)-1 );
     file << rSizeCoef_
          << nFullNbrDotationForConstruction_
          << nFullNbrDotationForMining_
@@ -200,8 +202,8 @@ void MIL_RealObject_ABC::save( MIL_CheckPointOutArchive& file, const uint ) cons
          << xAttrToUpdate_
          << xAttrToUpdateForHLA_
          << nID_
-         << pType_->GetID()
-         << ( pObstacleType_ ? pObstacleType_->GetID() : (uint)-1 )
+         << type
+         << obstacle
          << strName_
          << rConstructionPercentage_
          << rMiningPercentage_

@@ -60,11 +60,10 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const DEC_PopulationKnowledge::T_AgentSet& set, const uint )
         {
-            file << set.size();
+            unsigned size = set.size();
+            file << size;
             for ( DEC_PopulationKnowledge::CIT_AgentSet it = set.begin(); it != set.end(); ++it )
-            {
                 file << *it;
-            }
         }
         
         template< typename Archive >

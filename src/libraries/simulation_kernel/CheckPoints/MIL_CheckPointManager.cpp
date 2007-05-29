@@ -85,7 +85,7 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config )
 
     MIL_CheckPointInArchive* pArchive = new MIL_CheckPointInArchive( file );
     
-    MIL_IDManager  ::serialize( *pArchive );
+    MIL_IDManager  ::serialize( *pArchive, 0 ); // $$$$ AGE 2007-05-29: version
     MIL_AgentServer::GetWorkspace().load( *pArchive );
    
     file.close();
@@ -189,7 +189,7 @@ boost::crc_32_type::value_type MIL_CheckPointManager::CreateData( const std::str
 
     MIL_CheckPointOutArchive* pArchive = new MIL_CheckPointOutArchive( file );
     
-    MIL_IDManager  ::serialize( *pArchive );
+    MIL_IDManager  ::serialize( *pArchive, 0 ); // $$$$ AGE 2007-05-29: version
     MIL_AgentServer::GetWorkspace().save( *pArchive );
     file.close();
 

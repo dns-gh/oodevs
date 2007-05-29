@@ -49,7 +49,7 @@ public:
 
     //! @name Checkpoints
     //@{
-    template< typename Archive > static void serialize( Archive& );
+    template< typename Archive > static void serialize( Archive&, uint /*version*/ );
     //@}
 
 

@@ -170,6 +170,16 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
     { PHY_RoleAction_InterfaceFlying* pRole; file >> pRole; RegisterRole( pRole ); }    
 }
 
+namespace
+{
+    template< typename R >
+    void SaveRole( const MIL_AgentPion& pion, MIL_CheckPointOutArchive& file )
+    {
+        const R* const role = & pion.GetRole< R >();
+        file << role;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::save
 // Created: JVT 2005-03-24
@@ -180,39 +190,40 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
     
     file << boost::serialization::base_object< MIL_Agent_ABC >( *this );
     file << boost::serialization::base_object< PHY_Actor     >( *this );
-    file << pType_->GetID()
+    unsigned type = pType_->GetID();
+    file << type
          << bIsPC_
          << strName_
          << pAutomate_
       // << actions_ // actions non sauvegardées
          << pKnowledgeBlackBoard_;
          
-    file << &GetRole< NET_RolePion_Dotations         >();
-    file << &GetRole< PHY_RolePion_Reinforcement     >();
-    file << &GetRole< PHY_RolePion_Posture           >();
-    file << &GetRole< PHY_RolePion_Location          >();
-    file << &GetRole< PHY_RolePion_Dotations         >();
-    file << &GetRole< PHY_RolePion_Humans            >();
-    file << &GetRole< PHY_RolePion_Composantes       >();
-    file << &GetRole< PHY_RolePion_Perceiver         >();
-    file << &GetRole< PHY_RolePion_NBC               >();
-    file << &GetRole< PHY_RolePion_Communications    >();
-    file << &GetRole< PHY_RolePion_HumanFactors      >();
-    file << &GetRole< PHY_RolePion_Transported       >();
-    file << &GetRole< PHY_RolePion_Maintenance       >();
-    file << &GetRole< PHY_RolePion_Medical           >();
-    file << &GetRole< PHY_RolePion_Supply            >();
-    file << &GetRole< PHY_RolePion_Surrender         >();
-    file << &GetRole< PHY_RolePion_Refugee           >();
-    file << &GetRole< PHY_RolePion_Population        >();
-    file << &GetRole< PHY_RoleAction_Loading         >();
-    file << &GetRole< PHY_RoleAction_Transport       >();
-    file << &GetRole< PHY_RoleAction_Moving          >();
-    file << &GetRole< PHY_RoleAction_Objects         >();
-    file << &GetRole< PHY_RoleAction_DirectFiring    >();
-    file << &GetRole< PHY_RoleAction_IndirectFiring  >();
-    file << &GetRole< DEC_RolePion_Decision          >();
-    file << &GetRole< PHY_RoleAction_InterfaceFlying >();
+    SaveRole< NET_RolePion_Dotations         >( *this, file );
+    SaveRole< PHY_RolePion_Reinforcement     >( *this, file );
+    SaveRole< PHY_RolePion_Posture           >( *this, file );
+    SaveRole< PHY_RolePion_Location          >( *this, file );
+    SaveRole< PHY_RolePion_Dotations         >( *this, file );
+    SaveRole< PHY_RolePion_Humans            >( *this, file );
+    SaveRole< PHY_RolePion_Composantes       >( *this, file );
+    SaveRole< PHY_RolePion_Perceiver         >( *this, file );
+    SaveRole< PHY_RolePion_NBC               >( *this, file );
+    SaveRole< PHY_RolePion_Communications    >( *this, file );
+    SaveRole< PHY_RolePion_HumanFactors      >( *this, file );
+    SaveRole< PHY_RolePion_Transported       >( *this, file );
+    SaveRole< PHY_RolePion_Maintenance       >( *this, file );
+    SaveRole< PHY_RolePion_Medical           >( *this, file );
+    SaveRole< PHY_RolePion_Supply            >( *this, file );
+    SaveRole< PHY_RolePion_Surrender         >( *this, file );
+    SaveRole< PHY_RolePion_Refugee           >( *this, file );
+    SaveRole< PHY_RolePion_Population        >( *this, file );
+    SaveRole< PHY_RoleAction_Loading         >( *this, file );
+    SaveRole< PHY_RoleAction_Transport       >( *this, file );
+    SaveRole< PHY_RoleAction_Moving          >( *this, file );
+    SaveRole< PHY_RoleAction_Objects         >( *this, file );
+    SaveRole< PHY_RoleAction_DirectFiring    >( *this, file );
+    SaveRole< PHY_RoleAction_IndirectFiring  >( *this, file );
+    SaveRole< DEC_RolePion_Decision          >( *this, file );
+    SaveRole< PHY_RoleAction_InterfaceFlying >( *this, file );
 }
 
 // -----------------------------------------------------------------------------

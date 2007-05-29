@@ -91,7 +91,8 @@ void PHY_Dotation::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_Dotation::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << pCategory_->GetMosID()
+    unsigned category = pCategory_->GetMosID();
+    file << category
          << pGroup_
          << rValue_
          << rCapacity_

@@ -185,13 +185,13 @@ void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const uint )
 void DEC_AutomateDecision::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     assert( pAutomate_ );
-    
+    unsigned id = pAutomate_->GetType().GetID();
     file << pAutomate_
          << nForceRatioState_
          << nRulesOfEngagementState_
          << nCloseCombatState_
          << nOperationalState_
-         << pAutomate_->GetType().GetID();
+         << id;
 
     DIA_Serializer diaSerializer( static_cast< DIA_Motivation_Part& >( *pMotivationTool_ ) );
     file << diaSerializer;

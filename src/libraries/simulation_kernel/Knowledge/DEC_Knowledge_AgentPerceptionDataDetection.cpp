@@ -112,13 +112,18 @@ void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive&
          << rPostureCompletionPercentage_;
          
     // Serialisation des volumes par nom ( données "statiques" )
-    file << visionVolumes_.size();
+    unsigned size = visionVolumes_.size();
+    file << size;
     for ( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
-        file << (*it)->GetID();
+    {
+        unsigned id = (*it)->GetID();
+        file << id;
+    }
 
     // Serialisation des postures ( données statiques )
-    file << ( pLastPosture_    ? pLastPosture_->GetID()    : (uint)-1 );
-    file << ( pCurrentPosture_ ? pCurrentPosture_->GetID() : (uint)-1 );
+    unsigned last    = ( pLastPosture_    ? pLastPosture_->GetID()    : (uint)-1 ),
+             current = ( pCurrentPosture_ ? pCurrentPosture_->GetID() : (uint)-1 );
+    file << last << current;
 }
 
 

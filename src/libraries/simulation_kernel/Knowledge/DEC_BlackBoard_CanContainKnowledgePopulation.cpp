@@ -18,6 +18,7 @@
 #include "Entities/Populations/MIL_Population.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgePopulation, "DEC_BlackBoard_CanContainKnowledgePopulation" )
+BOOST_CLASS_TRACKING   ( DEC_BlackBoard_CanContainKnowledgePopulation, boost::serialization::track_never ) 
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgePopulation constructor
@@ -63,14 +64,14 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::load( MIL_CheckPointInArchive
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulation::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << knowledgePopulationMap_.size();
+    const T_KnowledgePopulationMap::size_type size = knowledgePopulationMap_.size();
+    file << size;
     for ( CIT_KnowledgePopulationMap it = knowledgePopulationMap_.begin(); it != knowledgePopulationMap_.end(); ++it )
     {
         file << it->first
              << it->second;
     }
 }
-
 
 // =============================================================================
 // OPERATIONS

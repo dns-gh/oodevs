@@ -118,9 +118,11 @@ void PHY_Human::save( MIL_CheckPointOutArchive& file, const uint ) const
     assert( pRank_ );
     assert( pWound_ );
 
+    unsigned rank  = pRank_->GetID(),
+             wound = pWound_->GetID();
     file << pComposante_
-         << pRank_->GetID()
-         << pWound_->GetID()
+         << rank
+         << wound
          << bMentalDiseased_
          << bContamined_
          << nLocation_

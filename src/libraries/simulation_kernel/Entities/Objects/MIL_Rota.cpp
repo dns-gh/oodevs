@@ -92,11 +92,15 @@ void MIL_Rota::load( MIL_CheckPointInArchive& file , const uint )
 void MIL_Rota::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << boost::serialization::base_object< MIL_RealObject_ABC >( *this );
-    file << nDanger_
-         << nbcAgents_.size();
+    file << nDanger_;
+    unsigned size = nbcAgents_.size();
+    file << size;
 
     for ( CIT_NbcAgentSet it = nbcAgents_.begin(); it != nbcAgents_.end(); ++it )
-        file << (*it)->GetID();
+    {
+        unsigned id = (*it)->GetID();
+        file << id;
+    }
 }
 
 // -----------------------------------------------------------------------------

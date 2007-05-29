@@ -147,7 +147,8 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const MIL_Automate::T_SupplyDotationStateMap& map, const uint )
         {
-            file << map.size();
+            unsigned size = map.size();
+            file << size;
             for ( MIL_Automate::CIT_SupplyDotationStateMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first;
@@ -210,11 +211,11 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
 void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     assert( pType_ );
-    
+    unsigned type = pType_->GetID();
     file << pTC2_
          << pNominalTC2_
-         << pType_->GetID()
-         << nID_
+         << type
+         << const_cast< uint& >( nID_ )
          << pFormation_
          << strName_
          << bEngaged_

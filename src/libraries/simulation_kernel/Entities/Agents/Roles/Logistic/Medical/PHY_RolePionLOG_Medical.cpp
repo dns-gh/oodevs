@@ -92,137 +92,147 @@ PHY_RolePionLOG_Medical::~PHY_RolePionLOG_Medical()
 // =============================================================================
 namespace boost
 {
-    // =============================================================================
-    // T_MedicalPriorityVector
-    // =============================================================================
-    template< typename Archive >
-    inline
-    void serialize( Archive& file, T_MedicalPriorityVector& vector, const uint nVersion )
+    namespace serialization
     {
-        split_free( file, vector, nVersion );
-    }
-
-    template< typename Archive >
-    void save( Archive& file, const T_MedicalPriorityVector& vector, const uint )
-    {
-        file << vector.size();
-        for ( CIT_MedicalPriorityVector it = vector.begin(); it != vector.end(); ++it )
-            file << (*it)->GetID();
-    }
-
-    template< typename Archive >
-    void load( Archive& file, T_MedicalPriorityVector& vector, const uint )
-    {
-        uint nNbr;
-        file >> nNbr;
-        vector.reserve( nNbr );
-        while ( nNbr-- )
+        // =============================================================================
+        // T_MedicalPriorityVector
+        // =============================================================================
+        template< typename Archive >
+        inline
+        void serialize( Archive& file, T_MedicalPriorityVector& vector, const uint nVersion )
         {
-            uint nID;
-            file >> nID;
-            vector.push_back( PHY_HumanWound::Find( nID ) );
+            split_free( file, vector, nVersion );
         }
-    }
 
-    // =============================================================================
-    // T_AutomateVector
-    // =============================================================================
-    template< typename Archive >
-    inline
-    void serialize( Archive& file, T_AutomateVector& vector, const uint nVersion )
-    {
-        split_free( file, vector, nVersion );
-    }
-    
-    template< typename Archive >
-    void save( Archive& file, const T_AutomateVector& vector, const uint )
-    {
-        file << vector.size();
-        for ( CIT_AutomateVector it = vector.begin(); it != vector.end(); ++it )
-            file << *it;
-    }
-    
-    template< typename Archive >
-    void load( Archive& file, T_AutomateVector& vector, const uint )
-    {
-        uint nNbr;
-        file >> nNbr;
-        vector.reserve( nNbr );
-        while ( nNbr-- )
+        template< typename Archive >
+        void save( Archive& file, const T_MedicalPriorityVector& vector, const uint )
         {
-            MIL_Automate* pAutomate;
-            file >> pAutomate;
-            vector.push_back( pAutomate );
+            unsigned size = vector.size();
+            file << size;
+            for ( CIT_MedicalPriorityVector it = vector.begin(); it != vector.end(); ++it )
+            {
+                unsigned id = (*it)->GetID();
+                file << id;
+            }
         }
-    }
-     
-    // =============================================================================
-    // T_EvacuationAmbulancesMMap
-    // =============================================================================
-    template< typename Archive >
-    inline
-    void serialize( Archive& file, PHY_RolePionLOG_Medical::T_EvacuationAmbulancesMMap& mmap, const uint nVersion )
-    {
-        split_free( file, mmap, nVersion );
-    }
-    
-    template< typename Archive >
-    void save( Archive& file, const PHY_RolePionLOG_Medical::T_EvacuationAmbulancesMMap& mmap, const uint )
-    {
-        file << mmap.size();
-        for ( PHY_RolePionLOG_Medical::CIT_EvacuationAmbulancesMMap it = mmap.begin(); it != mmap.end(); ++it )
-        {
-            file << it->first;
-            file << it->second;
-        }
-    }
-    
-    template< typename Archive >
-    void load( Archive& file, PHY_RolePionLOG_Medical::T_EvacuationAmbulancesMMap& mmap, const uint )
-    {
-        uint nNbr;
-        file >> nNbr;
-        while ( nNbr-- )
-        {
-            MIL_Automate*                   pAutomate;
-            PHY_MedicalEvacuationAmbulance* pAmbulance;
-            
-            file >> pAutomate;
-            file >> pAmbulance;
-            
-            mmap.insert( std::make_pair( pAutomate, pAmbulance ) );
-        }
-    }
 
-    // =============================================================================
-    // T_CollectionAmbulancesSet
-    // =============================================================================
-    template< typename Archive >
-    inline
-    void serialize( Archive& file, PHY_RolePionLOG_Medical::T_CollectionAmbulancesSet& set, const uint nVersion )
-    {
-        split_free( file, set, nVersion );
-    }
-    
-    template< typename Archive >
-    void save( Archive& file, const PHY_RolePionLOG_Medical::T_CollectionAmbulancesSet& set, const uint )
-    {
-        file << set.size();
-        for ( PHY_RolePionLOG_Medical::CIT_CollectionAmbulancesSet it = set.begin(); it != set.end(); ++it )
-            file << *it;
-    }
-    
-    template< typename Archive >
-    void load( Archive& file, PHY_RolePionLOG_Medical::T_CollectionAmbulancesSet& set, const uint )
-    {
-        uint nNbr;
-        file >> nNbr;
-        while ( nNbr-- )
+        template< typename Archive >
+        void load( Archive& file, T_MedicalPriorityVector& vector, const uint )
         {
-            PHY_MedicalCollectionAmbulance* pAmbulance;
-            
-            file >> pAmbulance;
-            set.insert( pAmbulance );
+            uint nNbr;
+            file >> nNbr;
+            vector.reserve( nNbr );
+            while ( nNbr-- )
+            {
+                uint nID;
+                file >> nID;
+                vector.push_back( PHY_HumanWound::Find( nID ) );
+            }
+        }
+
+        // =============================================================================
+        // T_AutomateVector
+        // =============================================================================
+        template< typename Archive >
+        inline
+        void serialize( Archive& file, T_AutomateVector& vector, const uint nVersion )
+        {
+            split_free( file, vector, nVersion );
+        }
+        
+        template< typename Archive >
+        void save( Archive& file, const T_AutomateVector& vector, const uint )
+        {
+            unsigned size = vector.size();
+            file << size;
+            for ( CIT_AutomateVector it = vector.begin(); it != vector.end(); ++it )
+                file << *it;
+        }
+        
+        template< typename Archive >
+        void load( Archive& file, T_AutomateVector& vector, const uint )
+        {
+            uint nNbr;
+            file >> nNbr;
+            vector.reserve( nNbr );
+            while ( nNbr-- )
+            {
+                MIL_Automate* pAutomate;
+                file >> pAutomate;
+                vector.push_back( pAutomate );
+            }
+        }
+         
+        // =============================================================================
+        // T_EvacuationAmbulancesMMap
+        // =============================================================================
+        template< typename Archive >
+        inline
+        void serialize( Archive& file, PHY_RolePionLOG_Medical::T_EvacuationAmbulancesMMap& mmap, const uint nVersion )
+        {
+            split_free( file, mmap, nVersion );
+        }
+        
+        template< typename Archive >
+        void save( Archive& file, const PHY_RolePionLOG_Medical::T_EvacuationAmbulancesMMap& mmap, const uint )
+        {
+            unsigned size = mmap.size();
+            file << size;
+            for ( PHY_RolePionLOG_Medical::CIT_EvacuationAmbulancesMMap it = mmap.begin(); it != mmap.end(); ++it )
+            {
+                file << it->first;
+                file << it->second;
+            }
+        }
+        
+        template< typename Archive >
+        void load( Archive& file, PHY_RolePionLOG_Medical::T_EvacuationAmbulancesMMap& mmap, const uint )
+        {
+            uint nNbr;
+            file >> nNbr;
+            while ( nNbr-- )
+            {
+                MIL_Automate*                   pAutomate;
+                PHY_MedicalEvacuationAmbulance* pAmbulance;
+                
+                file >> pAutomate;
+                file >> pAmbulance;
+                
+                mmap.insert( std::make_pair( pAutomate, pAmbulance ) );
+            }
+        }
+
+        // =============================================================================
+        // T_CollectionAmbulancesSet
+        // =============================================================================
+        template< typename Archive >
+        inline
+        void serialize( Archive& file, PHY_RolePionLOG_Medical::T_CollectionAmbulancesSet& set, const uint nVersion )
+        {
+            split_free( file, set, nVersion );
+        }
+        
+        template< typename Archive >
+        void save( Archive& file, const PHY_RolePionLOG_Medical::T_CollectionAmbulancesSet& set, const uint )
+        {
+            unsigned size = set.size();
+            file << size;
+            for ( PHY_RolePionLOG_Medical::CIT_CollectionAmbulancesSet it = set.begin(); it != set.end(); ++it )
+                file << *it;
+        }
+        
+        template< typename Archive >
+        void load( Archive& file, PHY_RolePionLOG_Medical::T_CollectionAmbulancesSet& set, const uint )
+        {
+            uint nNbr;
+            file >> nNbr;
+            while ( nNbr-- )
+            {
+                PHY_MedicalCollectionAmbulance* pAmbulance;
+                
+                file >> pAmbulance;
+                set.insert( pAmbulance );
+            }
         }
     }
 }
@@ -276,7 +286,8 @@ void PHY_RolePionLOG_Medical::save( MIL_CheckPointOutArchive& file, const uint )
          << collectionAmbulances_
          << reservations_;
          
-    file << consigns_.size();
+    unsigned size = consigns_.size();
+    file << size;
     for ( CIT_MedicalConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
         file << it->first << it->second;
 }

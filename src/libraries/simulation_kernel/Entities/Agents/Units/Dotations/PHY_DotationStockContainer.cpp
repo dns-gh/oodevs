@@ -76,10 +76,12 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const PHY_DotationStockContainer::T_StockMap& map, const uint )
         {
-            file << map.size();
+            unsigned size = map.size();
+            file << size;
             for ( PHY_DotationStockContainer::CIT_StockMap it = map.begin(); it != map.end(); ++it )
             {
-                file << it->first->GetMosID();
+                unsigned id = it->first->GetMosID();
+                file << id;
                 file << it->second;
             }
         }
@@ -112,7 +114,8 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const PHY_DotationStockContainer::T_StockSet& set, const uint )
         {
-            file << set.size();
+            unsigned size= set.size();
+            file << size;
             for ( PHY_DotationStockContainer::CIT_StockSet it = set.begin(); it != set.end(); ++it )
                 file << *it;
         }

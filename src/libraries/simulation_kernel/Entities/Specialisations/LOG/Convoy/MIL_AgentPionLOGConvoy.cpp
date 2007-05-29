@@ -75,7 +75,8 @@ void MIL_AgentPionLOGConvoy::load( MIL_CheckPointInArchive& file, const uint )
 void MIL_AgentPionLOGConvoy::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << boost::serialization::base_object< MIL_AgentPionLOG_ABC >( *this );
-    file << &GetRole< PHY_RolePionLOGConvoy_Supply >();
+    const PHY_RolePionLOGConvoy_Supply* const role = &GetRole< PHY_RolePionLOGConvoy_Supply >();
+    file << role;
 }
 
 // -----------------------------------------------------------------------------

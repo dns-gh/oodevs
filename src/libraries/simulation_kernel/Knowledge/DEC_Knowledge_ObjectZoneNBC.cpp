@@ -73,8 +73,9 @@ void DEC_Knowledge_ObjectZoneNBC::load( MIL_CheckPointInArchive& file, const uin
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectZoneNBC::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
+    unsigned nbc = ( pNbcAgentType_ ? pNbcAgentType_->GetID() : (uint)-1 );
     file << boost::serialization::base_object< DEC_Knowledge_Object >( *this )
-         << ( pNbcAgentType_ ? pNbcAgentType_->GetID() : (uint)-1 )
+         << nbc
          << bSpecificAttributesValid_;
 }
 

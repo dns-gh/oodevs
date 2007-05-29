@@ -75,7 +75,8 @@ void PHY_PerceptionSurfaceAgent::save( MIL_CheckPointOutArchive& file, const uin
 {
     assert( pSensorType_ );
 
-    file << pSensorType_->GetType().GetID()
+    unsigned type = pSensorType_->GetType().GetID();
+    file << type
          << vOrigin_
          << rHeight_
          << sectors_;

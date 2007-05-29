@@ -120,12 +120,18 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
          << bRefugeeManaged_
          << bDead_;
     
-    file << visionVolumes_.size();
+    unsigned size = visionVolumes_.size();
+    file << size;
     for ( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
-        file << (*it)->GetID();
+    {
+        unsigned id = (*it)->GetID();
+        file << id;
+    }
     
-    file << pLastPosture_->GetID()
-         << pCurrentPosture_->GetID()
+    unsigned last    = pLastPosture_->GetID(),
+             current = pCurrentPosture_->GetID();
+    file << last
+         << current
          << rPostureCompletionPercentage_
          << bDirectionUpdated_
          << bSpeedUpdated_

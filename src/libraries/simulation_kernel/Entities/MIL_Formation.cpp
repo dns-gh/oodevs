@@ -161,10 +161,11 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const uint )
 void MIL_Formation::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     assert( pLevel_ );
+    unsigned level = pLevel_->GetID();
     file << nID_
          << pArmy_
          << pParent_
-         << pLevel_->GetID()
+         << level
          << strName_
          << formations_
          << automates_;

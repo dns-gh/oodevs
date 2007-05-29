@@ -78,11 +78,13 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const DEC_KS_Perception::T_AgentPerceptionMap& map, const uint )
         {
-            file << map.size();
+            uint size = map.size();
+            file << size;
             for ( DEC_KS_Perception::CIT_AgentPerceptionMap it = map.begin(); it != map.end(); ++it )
             {
+                unsigned id = it->second->GetID();
                 file << it->first
-                     << it->second->GetID();
+                     << id;
             }
         }
         

@@ -90,11 +90,11 @@ private:
     //@}
     
 private:
-    const uint                 nMaxCheckPointNbr_;
-          uint                 nCheckPointsFrequency_; 
-          uint                 nLastCheckPointTick_;
-          uint                 nNextCheckPointTick_;
-          T_CheckPointsQueue   currentCheckPoints_;
+    uint                 nMaxCheckPointNbr_;
+    uint                 nCheckPointsFrequency_; 
+    uint                 nLastCheckPointTick_;
+    uint                 nNextCheckPointTick_;
+    T_CheckPointsQueue   currentCheckPoints_;
 };
 
 #include "MIL_CheckPointManager.inl"

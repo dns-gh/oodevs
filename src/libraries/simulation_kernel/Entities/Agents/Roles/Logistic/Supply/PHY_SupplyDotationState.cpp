@@ -89,10 +89,12 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const PHY_SupplyDotationState::T_RequestMap& map, const uint )
         {
-            file << map.size();
+            unsigned size = map.size();
+            file << size;
             for ( PHY_SupplyDotationState::CIT_RequestMap it = map.begin(); it != map.end(); ++it )
             {
-                file << it->first->GetMosID();
+                unsigned id = it->first->GetMosID();
+                file << id;
                 file << it->second;
             }   
         }

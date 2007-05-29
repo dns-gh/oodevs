@@ -9,11 +9,13 @@
 //
 // *****************************************************************************
 
+BOOST_CLASS_TRACKING( DIA_Serializer, boost::serialization::track_never )
+
 // -----------------------------------------------------------------------------
 // Name: template< typename Archive > void DIA_Serializer::load
 // Created: JVT 2005-04-06
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DIA_Serializer::load( Archive& file, const uint )
 {
     uint nNbr;
@@ -22,20 +24,20 @@ void DIA_Serializer::load( Archive& file, const uint )
     {
         std::string strName;
         file >> strName;
-        
+
         DIA_Stimulus* pStimulus = motivationPart_.FindStimulus( strName.c_str() );
         assert( pStimulus );
-        file >> pStimulus->rValue_;        
+        file >> pStimulus->rValue_;
     }
-    
+
     file >> nNbr;
     while( nNbr-- )
     {
         std::string strName;
         file >> strName;
-        
+
         DIA_Emotion* pEmotion = motivationPart_.FindEmotion( strName.c_str() );
-        assert( pEmotion );      
+        assert( pEmotion );
         file >> pEmotion->rCurrentValue_
              >> pEmotion->rCurrentAmpStimulusValue_
              >> pEmotion->rCurrentSurpriseValue_
@@ -44,29 +46,29 @@ void DIA_Serializer::load( Archive& file, const uint )
              >> pEmotion->rCurrentCrudeEmotionValue_
              >> pEmotion->rOldValue_;
     }
-    
+
     file >> nNbr;
     while( nNbr-- )
     {
         std::string strName;
         file >> strName;
-        
+
         DIA_StateVariable* pStateVar = motivationPart_.FindStateVariable( strName.c_str() );
         assert( pStateVar );
         file >> pStateVar->rValue_
              >> pStateVar->rOutputValue_
              >> pStateVar->rExternalEffects_;
     }
-    
+
     file >> nNbr;
     while( nNbr-- )
     {
         std::string strName;
         file >> strName;
-        
+
         DIA_Motivation* pMotivation = motivationPart_.FindMotivation( strName.c_str() );
         assert( pMotivation );
-        file >> pMotivation->rValue_;        
+        file >> pMotivation->rValue_;
     }
 }
 
@@ -74,22 +76,26 @@ void DIA_Serializer::load( Archive& file, const uint )
 // Name: template< typename Archive > void DIA_Serializer::save
 // Created: JVT 2005-04-06
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DIA_Serializer::save( Archive& file, const uint ) const
 {
-    file << motivationPart_.stimulusList_.size();    
+    unsigned partSize = motivationPart_.stimulusList_.size();
+    file << partSize;
     for( CIT_StimulusVector itStimulus = motivationPart_.stimulusList_.begin(); itStimulus != motivationPart_.stimulusList_.end(); ++itStimulus )
     {
         const DIA_Stimulus& stimulus = **itStimulus;
-        file << std::string( stimulus.GetName() )
+        const std::string name = stimulus.GetName();
+        file << name
              << stimulus.rValue_;
     }
 
-    file << motivationPart_.emotionList_.size();    
+    unsigned emotionSize = motivationPart_.emotionList_.size();
+    file << emotionSize;
     for( CIT_EmotionVector itEmotion = motivationPart_.emotionList_.begin(); itEmotion != motivationPart_.emotionList_.end(); ++itEmotion )
     {
         const DIA_Emotion& emotion = **itEmotion;
-        file << std::string( emotion.GetName() )
+        const std::string name = emotion.GetName();
+        file << name
              << emotion.rCurrentValue_
              << emotion.rCurrentAmpStimulusValue_
              << emotion.rCurrentSurpriseValue_
@@ -100,22 +106,26 @@ void DIA_Serializer::save( Archive& file, const uint ) const
     }
 
 
-    file << motivationPart_.stateVariableList_.size();    
+    unsigned stateSize = motivationPart_.stateVariableList_.size();
+    file << stateSize;
     for( CIT_StateVariableVector itStateVar = motivationPart_.stateVariableList_.begin(); itStateVar != motivationPart_.stateVariableList_.end(); ++itStateVar )
     {
         const DIA_StateVariable& stateVar = **itStateVar;
-        file << std::string( stateVar.GetName() )
+        const std::string name = stateVar.GetName();
+        file << name
              << stateVar.rValue_
              << stateVar.rOutputValue_
              << stateVar.rExternalEffects_;
     }
 
 
-    file << motivationPart_.motivationList_.size();    
+    unsigned motivationSize = motivationPart_.motivationList_.size();
+    file <<motivationSize;
     for( CIT_MotivationVector itMotivation = motivationPart_.motivationList_.begin(); itMotivation != motivationPart_.motivationList_.end(); ++itMotivation )
     {
         const DIA_Motivation& motivation = **itMotivation;
-        file << std::string( motivation.GetName() )
+        std::string name = motivation.GetName();
+        file << name
              << motivation.rValue_;
-    }    
+    }
 }

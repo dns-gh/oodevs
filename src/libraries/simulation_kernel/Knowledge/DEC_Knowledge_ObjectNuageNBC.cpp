@@ -76,8 +76,9 @@ void DEC_Knowledge_ObjectNuageNBC::load( MIL_CheckPointInArchive& file, const ui
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectNuageNBC::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
+    uint nbc = ( pNbcAgentType_ ? pNbcAgentType_->GetID() : (uint)-1 );
     file << boost::serialization::base_object< DEC_Knowledge_Object >( *this )
-         << ( pNbcAgentType_ ? pNbcAgentType_->GetID() : (uint)-1 )
+         << nbc
          << bSpecificAttributesValid_;
 }
 

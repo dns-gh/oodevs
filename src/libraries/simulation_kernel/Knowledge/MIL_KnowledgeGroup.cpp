@@ -96,7 +96,8 @@ void MIL_KnowledgeGroup::load( MIL_CheckPointInArchive& file, const uint )
 void MIL_KnowledgeGroup::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     assert( pType_ );
-    file << pType_->GetID()
+    unsigned type = pType_->GetID();
+    file << type
          << nID_
          << pArmy_
          << pKnowledgeBlackBoard_

@@ -30,7 +30,7 @@ public:
 
     //! @name Checkpoints
     //@{
-    template< typename Archive > void serialize( Archive& );
+    template< typename Archive > void serialize( Archive&, uint );
     //@}
 
     //-------------------------------------------------------------------------

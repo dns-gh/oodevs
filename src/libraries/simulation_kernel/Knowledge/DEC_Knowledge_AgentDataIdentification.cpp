@@ -64,8 +64,9 @@ void DEC_Knowledge_AgentDataIdentification::load( MIL_CheckPointInArchive& file,
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentDataIdentification::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
+    unsigned agentType = ( pAgentType_ ? pAgentType_->GetID() : (uint)-1 );
     file << nTimeLastUpdate_
-         << ( pAgentType_ ? pAgentType_->GetID() : (uint)-1 )
+         << agentType
          << bAgentTypeUpdated_;
 }
 

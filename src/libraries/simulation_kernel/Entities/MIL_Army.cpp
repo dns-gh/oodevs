@@ -127,7 +127,8 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const MIL_Army::T_DiplomacyMap& map, const uint )
         {
-            file << map.size();
+            unsigned size = map.size();
+            file << size;
             for ( MIL_Army::CIT_DiplomacyMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first

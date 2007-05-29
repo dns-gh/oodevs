@@ -54,7 +54,7 @@ void MIL_NbcAgent::load( MIL_CheckPointInArchive& file, const uint )
 {
     uint nTypeID;
     file >> nTypeID;
-    file >> nForm_;
+    file >> const_cast< E_Form& >( nForm_ );
 
     pType_ = MIL_NbcAgentType::Find( nTypeID );
     assert( pType_ );
@@ -67,7 +67,8 @@ void MIL_NbcAgent::load( MIL_CheckPointInArchive& file, const uint )
 void MIL_NbcAgent::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     assert( pType_ );
-    file << pType_->GetID()
+    unsigned id = pType_->GetID();
+    file << id
          << nForm_;
 }
 
