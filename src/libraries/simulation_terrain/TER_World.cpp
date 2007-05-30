@@ -76,7 +76,7 @@ TER_World::TER_World( const std::string& rootFile )
     MT_InputArchive_Logger< MT_XXmlInputArchive > archive;
     archive.Open( rootFile );
     archive.Section( "Terrain" );
-    std::string strGeoid, strWorld, strPathfind;
+    std::string strWorld, strPathfind;
     archive.ReadField( "World", strWorld );
     archive.ReadField( "Pathfind", strPathfind );
     archive.EndSection(); // Terrain
