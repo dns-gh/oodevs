@@ -53,15 +53,12 @@ WorldParameters::~WorldParameters()
 void WorldParameters::Load( const ExerciseConfig& config )
 {
     xifstream xis( config.GetTerrainFile() );
-    std::string world, geoid, graphics, detection;
+    std::string world, graphics, detection;
     xis >> start( "Terrain" )
-            >> content( "Geoid", geoid )
             >> content( "World", world )
             >> content( "RawVision", detection )
             >> content( "Graphics", graphics );
-
     detection_ = config.BuildTerrainChildFile( detection + "/detection.dat" );
-    geoid_ = config.BuildTerrainChildFile( geoid );
     graphicsDirectory_ = config.BuildTerrainChildFile( graphics );
     ReadWorld( config.BuildTerrainChildFile( world ) );
 }

@@ -30,8 +30,6 @@ CoordinateConverter::CoordinateConverter()
 void CoordinateConverter::Load( const ExerciseConfig& config )
 {
     world_.Load( config );
-    geocoord::Geoid::Instance().Initialize( world_.geoid_ );
-
     extent_ = geometry::Rectangle2f( 0, 0, world_.width_, world_.height_ );
     translation_ = geometry::Vector2f( world_.width_ * 0.5f, world_.height_ * 0.5f );
     const double rPiOver180 = std::acos( -1. ) / 180.;
