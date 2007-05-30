@@ -52,3 +52,5 @@
 #include "res/checkpoint1.xpm"
 #include "res/checkpoint2.xpm"
 #include "res/checkpoint3.xpm"
+#include "res/activated.xpm"
+#include "res/not_activated.xpm"

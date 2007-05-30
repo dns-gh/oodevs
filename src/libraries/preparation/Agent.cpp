@@ -18,7 +18,7 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/App6Symbol.h"
-#include "clients_gui/Tools.h"
+#include "Tools.h"
 #include "xeumeuleu/xml.h"
 #include "IdManager.h"
 #include "Team.h"

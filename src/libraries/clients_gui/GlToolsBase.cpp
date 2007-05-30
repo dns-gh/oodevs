@@ -13,6 +13,7 @@
 #include "clients_kernel/Options.h"
 #include "clients_kernel/TristateOption.h"
 #include "GLSymbols.h"
+#include "GlTooltip.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -174,4 +175,13 @@ void GlToolsBase::OptionChanged( const std::string& name, const kernel::OptionVa
     IT_Options it = options_.find( name );
     if( it != options_.end() )
         it->second = value.To< TristateOption >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlToolsBase::CreateTooltip
+// Created: AGE 2007-05-30
+// -----------------------------------------------------------------------------
+std::auto_ptr< GlTooltip_ABC > GlToolsBase::CreateTooltip() const
+{
+    throw std::runtime_error( __FUNCTION__ );
 }

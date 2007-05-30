@@ -12,6 +12,7 @@
 #include "Gl3dWidget.h"
 #include "GlWidget.h"
 #include "Layer_ABC.h"
+#include "GlTooltip.h"
 
 using namespace kernel;
 using namespace gui;
@@ -311,4 +312,13 @@ void GlProxy::Reset3d()
 {
     for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
         (*it)->Reset3d();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::CreateTooltip
+// Created: AGE 2007-05-30
+// -----------------------------------------------------------------------------
+std::auto_ptr< kernel::GlTooltip_ABC > GlProxy::CreateTooltip() const
+{
+    return std::auto_ptr< kernel::GlTooltip_ABC >( new GlTooltip( *this ) );
 }

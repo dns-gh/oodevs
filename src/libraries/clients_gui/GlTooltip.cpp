@@ -229,3 +229,11 @@ void GlTooltip::Hide()
     image_ = QImage();
 }
 
+// -----------------------------------------------------------------------------
+// Name: GlTooltip::operator kernel::Displayer_ABC&
+// Created: AGE 2007-05-30
+// -----------------------------------------------------------------------------
+GlTooltip::operator kernel::Displayer_ABC&()
+{
+    return *this;
+}

@@ -16,6 +16,7 @@ namespace kernel
 {
     class MissionType;
     class Controller;
+    class GlTooltip_ABC;
 }
 
 namespace xml
@@ -43,6 +44,7 @@ public:
     //! @name Operations
     //@{
     virtual void Serialize( xml::xostream& xos ) const;
+    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -57,6 +59,7 @@ private:
     //@{
     kernel::Controller& controller_;
     bool registered_;
+    mutable std::auto_ptr< kernel::GlTooltip_ABC > tooltip_;
     //@}
 };
 

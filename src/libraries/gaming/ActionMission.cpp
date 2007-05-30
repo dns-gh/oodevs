@@ -11,6 +11,8 @@
 #include "ActionMission.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/GlTooltip_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -70,4 +72,21 @@ void ActionMission::Serialize( xml::xostream& xos ) const
     xos << start( "mission" );
     Action_ABC::Serialize( xos );
     xos << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionMission::Draw
+// Created: AGE 2007-05-30
+// -----------------------------------------------------------------------------
+void ActionMission::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+{
+    if( !tooltip_.get() )
+    {
+        std::auto_ptr< kernel::GlTooltip_ABC > tooltip = tools.CreateTooltip();
+        tooltip_ = tooltip;
+        kernel::Displayer_ABC& displayer = *tooltip_;
+        displayer.Display( "", GetName() );
+    }
+    tooltip_->Draw( where );
+    Action_ABC::Draw( where, viewport, tools );
 }

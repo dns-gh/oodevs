@@ -18,6 +18,7 @@ class QImage;
 namespace kernel
 {
     class Controllers;
+    class GlTooltip_ABC;
 
 // =============================================================================
 /** @class  GlTools_ABC
@@ -62,6 +63,8 @@ public:
 
     //! @name Operations
     //@{
+    virtual std::auto_ptr< GlTooltip_ABC > CreateTooltip() const = 0;
+
     virtual void SetCurrentColor  ( float r, float g, float b, float a = 1 ) = 0;
 
     virtual void DrawCross        ( const geometry::Point2f& at, float size = -1.f, E_Unit unit = meters ) const = 0;

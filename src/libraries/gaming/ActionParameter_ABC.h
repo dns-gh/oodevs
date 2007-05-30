@@ -16,16 +16,12 @@
 namespace kernel
 {
     class Displayer_ABC;
+    class GlTooltip_ABC;
 }
 
 namespace xml
 {
     class xostream;
-}
-
-namespace gui
-{
-    class GlTooltip;
 }
 
 class ActionParameterVisitor_ABC;
@@ -83,7 +79,7 @@ private:
     //@{
     QString name_;
     geometry::Point2f position_;
-    gui::GlTooltip* toolTip_;
+    std::auto_ptr< kernel::GlTooltip_ABC > toolTip_;
     //@}
 };
 

@@ -12,6 +12,7 @@
 
 #include "NoLinkDisplayer.h"
 #include "clients_kernel/Styles.h"
+#include "clients_kernel/GlTooltip_ABC.h"
 #include <qimage.h>
 
 namespace kernel {
@@ -27,7 +28,8 @@ namespace gui
 */
 // Created: AGE 2006-06-29
 // =============================================================================
-class GlTooltip : public NoLinkDisplayer
+class GlTooltip : public kernel::GlTooltip_ABC
+                , public NoLinkDisplayer
                 , public kernel::Caller< QColor >
                 , public kernel::Caller< kernel::Styles::Style >
                 , public kernel::Caller< E_EtatOperationnel >
@@ -44,6 +46,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual operator kernel::Displayer_ABC& ();
     void Draw( const geometry::Point2f& position );
     virtual void Hide();
     //@}

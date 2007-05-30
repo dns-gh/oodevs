@@ -54,5 +54,7 @@ DECLARE_ICON( parameter );
 DECLARE_ICON( checkpoint1 );
 DECLARE_ICON( checkpoint2 );
 DECLARE_ICON( checkpoint3 );
+DECLARE_ICON( activated );
+DECLARE_ICON( not_activated );
 
 #endif // __statusicons_h_

@@ -12,7 +12,7 @@
 #include "IdManager.h"
 #include "ObjectHierarchies.h"
 #include "Team.h"
-#include "clients_gui/Tools.h"
+#include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Units.h"

@@ -13,7 +13,7 @@
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_gui/Tools.h"
+#include "Tools.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;

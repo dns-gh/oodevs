@@ -11,7 +11,7 @@
 #include "Limit.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
-#include "clients_gui/Tools.h"
+#include "Tools.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;

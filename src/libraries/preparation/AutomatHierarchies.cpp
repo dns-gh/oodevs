@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "AutomatHierarchies.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_gui/Tools.h"
+#include "Tools.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;

@@ -11,7 +11,8 @@
 #include "ActionParameter_ABC.h"
 #include "xeumeuleu/xml.h"
 #include "Tools.h"
-#include "clients_gui/GlTooltip.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/GlTooltip_ABC.h"
 
 using namespace xml;
 
@@ -22,7 +23,6 @@ using namespace xml;
 ActionParameter_ABC::ActionParameter_ABC( const QString& name )
     : name_( name )
     , position_()
-    , toolTip_( 0 )
 {
     // NOTHING
 }
@@ -34,7 +34,6 @@ ActionParameter_ABC::ActionParameter_ABC( const QString& name )
 ActionParameter_ABC::~ActionParameter_ABC()
 {
     DeleteAll();
-    delete toolTip_;
 }
 
 // -----------------------------------------------------------------------------
@@ -61,8 +60,11 @@ QString ActionParameter_ABC::GetType() const
 // -----------------------------------------------------------------------------
 void ActionParameter_ABC::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    if( !toolTip_ )
-        const_cast< ActionParameter_ABC* >( this )->toolTip_ = new gui::GlTooltip( tools );
+    if( !toolTip_.get() )
+    {
+        std::auto_ptr< kernel::GlTooltip_ABC > tooltip( tools.CreateTooltip() );
+        const_cast< ActionParameter_ABC* >( this )->toolTip_ = tooltip;
+    }
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         const geometry::Point2f point = GetPosition();
@@ -121,7 +123,7 @@ void ActionParameter_ABC::Display( kernel::Displayer_ABC& displayer ) const
 // Name: ActionParameter_ABC::DisplayInToolTip
 // Created: SBO 2007-05-15
 // -----------------------------------------------------------------------------
-void ActionParameter_ABC::DisplayInToolTip( kernel::Displayer_ABC& displayer ) const
+void ActionParameter_ABC::DisplayInToolTip( kernel::Displayer_ABC& ) const
 {
     // NOTHING
 }

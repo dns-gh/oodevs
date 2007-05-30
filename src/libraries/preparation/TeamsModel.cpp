@@ -16,7 +16,7 @@
 #include "AgentsModel.h"
 #include "Diplomacies.h"
 #include "Exceptions.h"
-#include "clients_gui/Tools.h"
+#include "Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"

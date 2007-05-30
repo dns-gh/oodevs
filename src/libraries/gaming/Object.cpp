@@ -18,9 +18,9 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Styles.h"
-#include "clients_gui/resources.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "statusicons.h"
 
 using namespace kernel;
 
@@ -165,7 +165,7 @@ void Object::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport,
         glPushAttrib( GL_CURRENT_BIT );
             glColor3f( 1, 1, 1 );
             if( reservedObstacleActivated_.IsSet() )
-                tools.DrawIcon( reservedObstacleActivated_ ? xpm_tickon: xpm_tickoff, where + geometry::Vector2f( 250.f, 150.f ), 150.f );
+                tools.DrawIcon( reservedObstacleActivated_ ? xpm_activated : xpm_not_activated, where + geometry::Vector2f( 250.f, 150.f ), 150.f );
             if( rConstructionPercentage_.IsSet() )
                 tools.DrawLife( where - geometry::Vector2f( 0.f, 250.f ), rConstructionPercentage_ / 100.f );
         glPopAttrib();

@@ -11,7 +11,7 @@
 #include "CrossingSiteAttributes.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_gui/Tools.h"
+#include "Tools.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;

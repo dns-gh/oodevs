@@ -42,6 +42,7 @@ public:
     virtual bool ShouldDisplay( const std::string& name ) const;
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
     virtual void SetCurrentColor  ( float r, float g, float b, float a = 1 );
+    virtual std::auto_ptr< kernel::GlTooltip_ABC > CreateTooltip() const;
 
     GlToolsBase& Base() const;
     void BindIcon( const char** xpm );

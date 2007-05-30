@@ -9,7 +9,7 @@
 
 #include "preparation_pch.h"
 #include "Diplomacy.h"
-#include "clients_gui/Tools.h"
+#include "Tools.h"
 
 Diplomacy Diplomacy::friend_ ( "friend" , tools::translate( "Preparation", "friend"     ) );
 Diplomacy Diplomacy::enemy_  ( "enemy"  , tools::translate( "Preparation", "enemy"  ) );

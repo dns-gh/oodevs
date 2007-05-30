@@ -14,7 +14,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_gui/Tools.h"
+#include "Tools.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;

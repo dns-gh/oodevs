@@ -11,7 +11,7 @@
 #define __ActionParameter_h_
 
 #include "ActionParameter_ABC.h"
-#include "clients_gui/Tools.h"
+#include "Tools.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "xeumeuleu/xml.h"
