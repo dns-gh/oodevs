@@ -77,12 +77,9 @@ TER_World::TER_World( const std::string& rootFile )
     archive.Open( rootFile );
     archive.Section( "Terrain" );
     std::string strGeoid, strWorld, strPathfind;
-    archive.ReadField( "Geoid", strGeoid );
     archive.ReadField( "World", strWorld );
     archive.ReadField( "Pathfind", strPathfind );
     archive.EndSection(); // Terrain
-
-    geocoord::Geoid::Instance().Initialize( BuildChildFile( rootFile, strGeoid ) );
 
     float rMiddleLatitude, rMiddleLongitude;
     MT_Rect extent;
