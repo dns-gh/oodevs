@@ -199,7 +199,7 @@ void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
     
     if( type_.CanBeReservedObstacle() )
     {
-        displayer.Display( tools::translate( "Object", "Obstacle type:" ), obstacleType_ );
+        displayer.Display( tools::translate( "Object", "Obstacle type:" ), obstacleType_.GetValue() );
         if( obstacleType_.GetValue() == eTypeObstacle_DeManoeuvre )
             displayer.Display( tools::translate( "Object", "Reserved obstacle activated:" ), reservedObstacleActivated_ );
     }

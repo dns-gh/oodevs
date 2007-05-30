@@ -18,6 +18,7 @@
 #include "Tc2States.h"
 #include "LimitsModel.h"
 #include "AgentsModelChecker.h"
+#include "DiamondFormation.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
@@ -61,54 +62,15 @@ void AgentsModel::Purge()
     Resolver< Population_ABC >::DeleteAll();
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::CreateAutomat
+// Created: AGE 2007-05-29
+// -----------------------------------------------------------------------------
+kernel::Automat_ABC& AgentsModel::CreateAutomat( kernel::Formation_ABC& parent, const kernel::AutomatType& type )
 {
-    geometry::Point2f CartesianFromPolar( double radius, double angle )
-    {
-        static const double pi = 3.1415926539 / 180.0;
-        const double radianAngle = pi * angle;
-        return geometry::Point2f( radius * std::sin( radianAngle ), radius * std::cos( radianAngle ) );
-    }
-
-    class DiamondFormation
-    {
-    public:
-        explicit DiamondFormation( const geometry::Point2f& center )
-            : center_( geometry::Vector2f( center.X(), center.Y() ) )
-            , radius_( 1 )
-            , angle_ ( 0 )
-            , onLevel_( 0 )
-            , totalOnLevel_( 4 )
-        {}
-
-        geometry::Point2f NextPosition()
-        {
-            static const double spacing = 500.;
-            geometry::Point2f position = CartesianFromPolar( radius_ * spacing, angle_ ) + center_;
-            ++onLevel_;
-
-            // if level is full, start a new one
-            if( onLevel_ == totalOnLevel_ )
-            {
-                radius_ *= 1.414; // sqrt(2)
-                angle_  = 45.;
-                totalOnLevel_ += 4;
-                onLevel_ = 0;
-            }
-            else
-                angle_ += 360.0 / totalOnLevel_;
-            return position;
-        }
-
-    private:
-        DiamondFormation( const DiamondFormation& );
-        DiamondFormation& operator=( const DiamondFormation& );
-
-    private:
-        const geometry::Vector2f center_;
-        double angle_, radius_;
-        unsigned int onLevel_, totalOnLevel_;
-    };
+    Automat_ABC* agent = agentFactory_.Create( parent, type );
+    Resolver< Automat_ABC >::Register( agent->GetId(), *agent );
+    return *agent;
 }
 
 // -----------------------------------------------------------------------------
@@ -117,17 +79,15 @@ namespace
 // -----------------------------------------------------------------------------
 void AgentsModel::CreateAutomat( kernel::Formation_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position )
 {
-    Automat_ABC* agent = agentFactory_.Create( parent, type, position );
-    Resolver< Automat_ABC >::Register( agent->GetId(), *agent );
-
+    kernel::Automat_ABC& automat = CreateAutomat( parent, type );
     DiamondFormation formation( position );
-    CreateAgent( *agent, *type.GetTypePC(), formation.NextPosition(), true );
+    CreateAgent( automat, *type.GetTypePC(), parameters_.Clip( formation.NextPosition() ), true );
     Iterator< const AutomatComposition& > it = type.CreateIterator();
     while( it.HasMoreElements() )
     {
         const AutomatComposition& composition = it.NextElement();
         for( unsigned toAdd = composition.GetSensibleNumber(); toAdd > 0; --toAdd )
-            CreateAgent( *agent, composition.GetType(), formation.NextPosition() );
+            CreateAgent( automat, composition.GetType(), formation.NextPosition() );
     }
 }
     
@@ -166,10 +126,11 @@ kernel::Automat_ABC* AgentsModel::FindAutomat( unsigned long id )
 // Name: AgentsModel::CreateAgent
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAgent( Automat_ABC& parent, const AgentType& type, const geometry::Point2f& position, bool commandPost )
+kernel::Agent_ABC& AgentsModel::CreateAgent( Automat_ABC& parent, const AgentType& type, const geometry::Point2f& position, bool commandPost )
 {
-    Agent_ABC* agent = agentFactory_.Create( parent, type, position, commandPost );
+    Agent_ABC* agent = agentFactory_.Create( parent, type, parameters_.Clip( position ), commandPost );
     Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
+    return *agent;
 }
 
 // -----------------------------------------------------------------------------
@@ -220,7 +181,7 @@ Entity_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
 // -----------------------------------------------------------------------------
 void AgentsModel::CreatePopulation( Team_ABC& parent, const PopulationType& type, const geometry::Point2f& position )
 {
-    Population_ABC* popu = agentFactory_.Create( parent, type, position );
+    Population_ABC* popu = agentFactory_.Create( parent, type, parameters_.Clip( position ) );
     Resolver< Population_ABC >::Register( popu->GetId(), *popu );
 }
 
@@ -330,4 +291,13 @@ void AgentsModel::CheckValidity() const
 {
     AgentsModelChecker checker;
     checker.Check( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::NotifyUpdated
+// Created: AGE 2007-05-30
+// -----------------------------------------------------------------------------
+void AgentsModel::NotifyUpdated( const kernel::ModelLoaded& model )
+{
+    parameters_.Load( model.config_ );
 }

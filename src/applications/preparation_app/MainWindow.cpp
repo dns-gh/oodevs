@@ -30,6 +30,7 @@
 #include "WeatherPanel.h"
 #include "FileToolbar.h"
 #include "ProfileDialog.h"
+#include "TemplatesPanel.h"
 
 #include "preparation/Exceptions.h"
 #include "preparation/Model.h"
@@ -190,6 +191,9 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     WeatherLayer* weatherLayer = new WeatherLayer( *glProxy_, *eventStrategy_ );
     WeatherPanel* weatherPanel = new WeatherPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_.coordinateConverter_, *weatherLayer );
     pCreationPanel->AddPanel( weatherPanel );
+
+    TemplatesPanel* templates = new TemplatesPanel( pCreationDockWnd, *pCreationPanel, controllers, model.agents_, model.formations_, staticModel.types_ );
+    pCreationPanel->AddPanel( templates );
 
     new FileToolbar( this );
     new DisplayToolbar( this, controllers );

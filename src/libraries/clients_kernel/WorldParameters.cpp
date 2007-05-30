@@ -79,3 +79,13 @@ void WorldParameters::ReadWorld( const std::string& world )
             >> content( "Width", width_ )
             >> content( "Height", height_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: WorldParameters::Clip
+// Created: AGE 2007-05-30
+// -----------------------------------------------------------------------------
+geometry::Point2f WorldParameters::Clip( const geometry::Point2f& point ) const
+{
+    return geometry::Point2f( std::min( std::max( point.X(), 0.f ), width_ )
+                            , std::min( std::max( point.Y(), 0.f ), height_ ) );
+}

@@ -50,9 +50,9 @@ UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& con
     combo_ = BuildNatureFieldsCombo( box );
     list_ = new UnitListView( this, controllers_, types, factory );
 
-    connect( openAll , SIGNAL( clicked() ), this, SLOT( OpenList() ) );
-    connect( closeAll, SIGNAL( clicked() ), this, SLOT( CloseList() ) );
-    connect( combo_  , SIGNAL( activated( int ) ), this, SLOT( Sort() ) );
+    connect( openAll , SIGNAL( clicked() ), SLOT( OpenList() ) );
+    connect( closeAll, SIGNAL( clicked() ), SLOT( CloseList() ) );
+    connect( combo_  , SIGNAL( activated( int ) ), SLOT( Sort() ) );
     controllers_.Register( *this );
 }
 

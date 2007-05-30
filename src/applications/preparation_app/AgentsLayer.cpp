@@ -13,7 +13,9 @@
 #include "preparation/Model.h"
 #include "preparation/AgentsModel.h"
 #include "preparation/AgentPositions.h"
+#include "preparation/HierarchyTemplate.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 
 using namespace kernel;
 
@@ -22,12 +24,13 @@ using namespace kernel;
 // Created: SBO 2006-08-31
 // -----------------------------------------------------------------------------
 AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, ModelBuilder& modelBuilder, const Profile_ABC& profile )
-    : gui::AgentsLayer( controllers, tools, strategy, view, profile )
-    , model_( model )
-    , modelBuilder_( modelBuilder )
-    , selectedAgent_( controllers )
-    , selectedAutomat_( controllers )
+    : gui::AgentsLayer  ( controllers, tools, strategy, view, profile )
+    , model_            ( model )
+    , modelBuilder_     ( modelBuilder )
+    , selectedAgent_    ( controllers )
+    , selectedAutomat_  ( controllers )
     , selectedFormation_( controllers )
+    , selectedTeam_     ( controllers )
 {
     // NOTHING
 }
@@ -50,6 +53,7 @@ void AgentsLayer::BeforeSelection()
     selectedAgent_ = 0;
     selectedAutomat_ = 0;
     selectedFormation_ = 0;
+    selectedTeam_ = 0;
 }
     
 // -----------------------------------------------------------------------------
@@ -89,13 +93,41 @@ void AgentsLayer::Select( const kernel::Formation_ABC& element )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentsLayer::Select
+// Created: AGE 2007-05-30
+// -----------------------------------------------------------------------------
+void AgentsLayer::Select( const kernel::Team_ABC& element )
+{
+    selectedTeam_ = &element;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentsLayer::HandleEnterDragEvent
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
 bool AgentsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& )
 {
     // $$$$ SBO 2006-09-29: Unify mime-types
-    return event->provides( "Agent" ) || event->provides( "csword/AgentType" ) || event->provides( "csword/AutomatType" );
+    return ( event->provides( "Agent" )                    && selectedAgent_     )
+        || ( event->provides( "csword/AgentType" )         && selectedAutomat_   )
+        || ( event->provides( "csword/AutomatType" )       && selectedFormation_ )
+        || ( event->provides( "csword/HierarchyTemplate" ) && IsValidTemplate( event ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::IsValidTemplate
+// Created: AGE 2007-05-30
+// -----------------------------------------------------------------------------
+bool AgentsLayer::IsValidTemplate( QDragEnterEvent* event ) const
+{
+    if( !selectedFormation_ && !selectedTeam_ )
+        return false;
+    QByteArray tmp = event->encodedData( "csword/HierarchyTemplate" );
+    const HierarchyTemplate* droppedItem = *reinterpret_cast< const HierarchyTemplate** >( tmp.data() );
+    if( ! droppedItem )
+        return false;
+    return selectedTeam_ ? droppedItem->IsCompatible( *selectedTeam_ )
+                         : droppedItem->IsCompatible( *selectedFormation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,6 +167,19 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         if( droppedItem )
         {
             model_.agents_.CreateAutomat( *selectedFormation_.ConstCast(), *droppedItem, point );
+            return true;
+        }
+    }
+    else if( event->provides( "csword/HierarchyTemplate" ) )
+    {
+         // $$$$ AGE 2007-05-30: test selectedParent !
+        if( !selectedFormation_ )
+            return false;
+        QByteArray tmp = event->encodedData( "csword/HierarchyTemplate" );
+        const HierarchyTemplate* droppedItem = *reinterpret_cast< const HierarchyTemplate** >( tmp.data() );
+        if( droppedItem )
+        {
+            droppedItem->Instanciate( *selectedFormation_.ConstCast(), point );
             return true;
         }
     }

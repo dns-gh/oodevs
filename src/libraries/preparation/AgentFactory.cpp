@@ -97,7 +97,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
 // Name: AgentFactory::Create
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
-kernel::Automat_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatType& type, const geometry::Point2f& )
+kernel::Automat_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatType& type )
 {
     Automat* result = new Automat( type, controllers_.controller_, idManager_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();

@@ -51,7 +51,7 @@ public:
 
     //! @name Operations
     //@{
-    void Create( kernel::Entity_ABC& parent, unsigned int levelId );
+    kernel::Formation_ABC* Create( kernel::Entity_ABC& parent, unsigned int levelId );
     void Create( xml::xistream& xis, kernel::Entity_ABC& parent, Model& model );
     void Purge();
     //@}

@@ -48,13 +48,14 @@ FormationModel::~FormationModel()
 // Name: FormationModel::Create
 // Created: SBO 2006-09-22
 // -----------------------------------------------------------------------------
-void FormationModel::Create( kernel::Entity_ABC& parent, unsigned int levelId )
+kernel::Formation_ABC* FormationModel::Create( kernel::Entity_ABC& parent, unsigned int levelId )
 {
     const HierarchyLevel_ABC* level = levels_.Resolve( levelId );
     if( !level )
-        return;
+        return 0;
     Formation_ABC* formation = factory_.Create( parent, *level );
     Register( formation->GetId(), *formation );
+    return formation;
 }
 
 // -----------------------------------------------------------------------------

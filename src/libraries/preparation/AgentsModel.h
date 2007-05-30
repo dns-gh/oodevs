@@ -12,6 +12,8 @@
 
 #include "clients_kernel/Resolver.h"
 #include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/WorldParameters.h"
+#include "clients_kernel/ModelLoaded.h"
 
 namespace kernel
 {
@@ -48,6 +50,7 @@ class AgentsModel : public kernel::Resolver< kernel::Agent_ABC >
                   , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
                   , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
                   , public kernel::ElementObserver_ABC< kernel::Population_ABC >
+                  , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 {
 
 public:
@@ -59,12 +62,13 @@ public:
 
     //! @name Operations
     //@{
+    kernel::Automat_ABC& CreateAutomat( kernel::Formation_ABC& parent, const kernel::AutomatType& type );
     void CreateAutomat( kernel::Formation_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
     void CreateAutomat( xml::xistream& xis, kernel::Formation_ABC& parent, LimitsModel& limits );
     kernel::Automat_ABC& GetAutomat( unsigned long id );
     kernel::Automat_ABC* FindAutomat( unsigned long id );
 
-    void CreateAgent( kernel::Automat_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position, bool commandPost = false );
+    kernel::Agent_ABC& CreateAgent( kernel::Automat_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position, bool commandPost = false );
     void CreateAgent( xml::xistream& xis, kernel::Automat_ABC& parent );
     kernel::Agent_ABC& GetAgent( unsigned long id ) const;
     kernel::Agent_ABC* FindAgent( unsigned long id ) const;
@@ -99,6 +103,7 @@ private:
     virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
     virtual void NotifyDeleted( const kernel::Automat_ABC& agent );
     virtual void NotifyDeleted( const kernel::Population_ABC& agent );
+    virtual void NotifyUpdated( const kernel::ModelLoaded& model );
 
     void ReadLogisticLink( xml::xistream& xis, kernel::Automat_ABC& automat );
     //@}
@@ -108,6 +113,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     AgentFactory_ABC& agentFactory_;
+    kernel::WorldParameters parameters_;
     //@}
 };
 

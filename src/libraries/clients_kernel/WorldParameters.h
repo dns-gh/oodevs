@@ -34,6 +34,8 @@ public:
     //! @name Operations
     //@{
     void Load( const ExerciseConfig& config );
+
+    geometry::Point2f Clip( const geometry::Point2f& point ) const;
     //@}
 
 private:
