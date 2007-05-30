@@ -42,6 +42,7 @@ public:
     void Instanciate( kernel::Entity_ABC& superior, const geometry::Point2f& center ) const;
     bool IsCompatible( const kernel::Entity_ABC& superior ) const;
     QString GetName() const;
+    void Rename( const QString& name );
     //@}
 
 private:
@@ -71,6 +72,7 @@ private:
     T_Templates subTemplates_;
     std::auto_ptr< TemplateElement_ABC > element_;
     geometry::Point2f referencePosition_;
+    QString name_;
     //@}
 };
 

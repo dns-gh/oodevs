@@ -29,6 +29,8 @@ using namespace kernel;
 HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const kernel::Entity_ABC& base, bool root /*=true*/ )
 {
     element_.reset( CreateElement( agents, formations, base ) );
+    if( element_.get() )
+        name_ = element_->GetName();
     if( const TacticalHierarchies* hierarchies = base.Retrieve< TacticalHierarchies >() )
     {
         Iterator< const Entity_ABC& > children = hierarchies->CreateSubordinateIterator();
@@ -86,7 +88,8 @@ void HierarchyTemplate::Serialize( xml::xostream& output ) const
     {
         output << xml::start( "element" )
                << xml::attribute( "x", referencePosition_.X() )
-               << xml::attribute( "y", referencePosition_.Y() );
+               << xml::attribute( "y", referencePosition_.Y() )
+               << xml::attribute( "name", name_.ascii() );
         element_->Serialize( output );
         output << xml::end();
     }
@@ -136,13 +139,16 @@ TemplateElement_ABC* HierarchyTemplate::CreateElement( AgentsModel& agents, Form
 // -----------------------------------------------------------------------------
 TemplateElement_ABC* HierarchyTemplate::CreateElement( AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, xml::xistream& input )
 {
-    std::string type;
+    std::string type, name;
     float x = 0, y = 0;
     input >> xml::optional() 
           >> xml::start( "element" )
              >> xml::attribute( "type", type )
              >> xml::attribute( "x", x )
-             >> xml::attribute( "y", y );
+             >> xml::attribute( "y", y )
+             >> xml::attribute( "name", name );
+    name_ = name.c_str();
+
     referencePosition_.Set( x, y );
     TemplateElement_ABC* result = 0;
     if( type == "formation" )
@@ -162,6 +168,15 @@ TemplateElement_ABC* HierarchyTemplate::CreateElement( AgentsModel& agents, Form
 bool HierarchyTemplate::IsCompatible( const kernel::Entity_ABC& superior ) const
 {
     return element_.get() && element_->IsCompatible( superior );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyTemplate::Rename
+// Created: AGE 2007-05-30
+// -----------------------------------------------------------------------------
+void HierarchyTemplate::Rename( const QString& name )
+{
+    name_ = name;
 }
 
 // -----------------------------------------------------------------------------
@@ -185,3 +200,4 @@ void HierarchyTemplate::SetBasePosition( geometry::Point2f center )
                             referencePosition_.Y() - center.Y() );
     
 }
+

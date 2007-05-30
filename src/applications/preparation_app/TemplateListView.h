@@ -25,6 +25,7 @@ class FormationModel;
 // =============================================================================
 class TemplateListView : public QListView
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -40,6 +41,12 @@ public:
     void CreateTemplate( const kernel::Entity_ABC& entity );
     //@}
 
+private slots:
+    //! @name Slots
+    //@{
+    void OnRename( QListViewItem*, int, const QString& );
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -50,6 +57,7 @@ private:
     //! @name Types
     //@{
     typedef std::vector< HierarchyTemplate* > T_Templates;
+    typedef T_Templates::iterator            IT_Templates;
     typedef T_Templates::const_iterator     CIT_Templates;
     //@}
 
@@ -58,6 +66,8 @@ private:
     virtual QDragObject* dragObject();
     void Clear();
     void ReadTemplate( xml::xistream& input );
+    void CreateItem( HierarchyTemplate& t );
+    virtual void keyPressEvent( QKeyEvent* event );
     //@}
 
 private:

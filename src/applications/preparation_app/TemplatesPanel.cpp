@@ -35,6 +35,14 @@ TemplatesPanel::TemplatesPanel( QWidget* parent, gui::PanelStack_ABC& panel, ker
 // -----------------------------------------------------------------------------
 TemplatesPanel::~TemplatesPanel()
 {
+    try
+    {
+        if( ! templateFile_.empty() )
+            list_->SaveTemplates( templateFile_ );
+    }
+    catch( ... )
+    {
+    }
     controllers_.Remove( *this );
 }
 

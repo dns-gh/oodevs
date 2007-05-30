@@ -44,12 +44,8 @@ class TemplatesPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    TemplatesPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types );
+             TemplatesPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types );
     virtual ~TemplatesPanel();
-    //@}
-
-    //! @name Operations
-    //@{
     //@}
 
 private slots:

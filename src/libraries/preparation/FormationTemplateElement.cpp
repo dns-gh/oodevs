@@ -34,8 +34,7 @@ FormationTemplateElement::FormationTemplateElement( FormationModel& formations, 
     : formations_( formations )
 {
     std::string name;
-    input >> xml::attribute( "level", levelId_ )
-          >> xml::attribute( "name", name );
+    input >> xml::attribute( "level", levelId_ );
     name_ = name.c_str();
 }
 
@@ -64,8 +63,7 @@ kernel::Entity_ABC* FormationTemplateElement::Instanciate( kernel::Entity_ABC& s
 void FormationTemplateElement::Serialize( xml::xostream& output )
 {
     output << xml::attribute( "type", "formation" )
-           << xml::attribute( "level", levelId_ )
-           << xml::attribute( "name", name_.ascii() );
+           << xml::attribute( "level", levelId_ );
 }
 
 // -----------------------------------------------------------------------------
