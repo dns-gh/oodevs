@@ -411,7 +411,6 @@
                 <include name="TAO_Svc_Utils.dll"/>
                 <include name="ace.dll"/>
                 <include name="asn1per.dll"/>
-                <include name="boost_thread-vc71-mt-1_32.dll"/>
                 <include name="dbghelp.dll"/>
                 <include name="libFedTime.dll"/>
                 <include name="libRTI-NG.dll"/>
