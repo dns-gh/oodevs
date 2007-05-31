@@ -22,6 +22,7 @@ using namespace kernel;
 DecisionalStates::DecisionalStates()
     : drawSauvegarde_( false )
     , draw1stEchelon_( false )
+    , drawEclairage_ ( false )
     , drawEtatOps_   ( false )
     , ratio_         ( 1.f )
 {
@@ -43,15 +44,22 @@ DecisionalStates::~DecisionalStates()
 // -----------------------------------------------------------------------------
 void DecisionalStates::DoUpdate( const ASN1T_MsgDecisionalState& message )
 {
-    static const std::string contact( "Contact" ); static const std::string sauvegarde( "eEtatDec_Sauvegarde" );
-    static const std::string echelon( "Echelon" ); static const std::string first     ( "eEtatEchelon_Premier" );
-    static const std::string etat   ( "EtatOps" ); static const std::string none      ( "eEtatDestruction_None" );
+    static const std::string contact( "Contact" ); 
+    static const std::string sauvegarde( "eEtatDec_Sauvegarde" );
+    static const std::string echelon( "Echelon" ); 
+    static const std::string first     ( "eEtatEchelon_Premier" );
+    static const std::string eclairage ( "eEtatEchelon_Eclairage" );
+    static const std::string etat   ( "EtatOps" ); 
+    static const std::string none      ( "eEtatDestruction_None" );
 
     // $$$$ AGE 2007-05-31: 
     if( message.key == contact )
         drawSauvegarde_ = message.value == sauvegarde;
     else if( message.key == echelon )
+    {
         draw1stEchelon_ = message.value == first;
+        drawEclairage_  = message.value == eclairage;
+    }
     else if( message.key == etat )
         drawEtatOps_    = message.value != none;
     else
@@ -68,6 +76,8 @@ void DecisionalStates::Draw( const geometry::Point2f& where, const Viewport_ABC&
     {
         if( drawSauvegarde_ )
             tools.DrawSvg( "sauvegarde.svg", where, ratio_ );
+        if( drawEclairage_ )
+            tools.DrawSvg( "eclairage.svg", where, ratio_ );
         if( draw1stEchelon_ )
             tools.DrawSvg( "1stechelon.svg", where, ratio_ );
         if( drawEtatOps_ )

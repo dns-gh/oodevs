@@ -68,6 +68,7 @@ private:
     T_Values values_;
     bool drawSauvegarde_;
     bool draw1stEchelon_;
+    bool drawEclairage_;
     bool drawEtatOps_;
     float ratio_;
     //@}
