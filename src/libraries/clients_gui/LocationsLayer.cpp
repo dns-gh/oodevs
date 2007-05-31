@@ -43,7 +43,10 @@ void LocationsLayer::Paint( kernel::Viewport_ABC& viewport )
     glColor4f( 0, 0, 0, 1 ); // $$$$ SBO 2007-03-28: hard coded, put color in preferences
     for( CIT_Locations it = locations_.begin(); it != locations_.end(); ++it )
         if( viewport.IsVisible( *it ) )
-            tools_.DrawFlag( *it );
+        {
+            tools_.DrawCross( *it );
+            tools_.DrawSvg( "flag.svg", *it );
+        }
     glPopAttrib();
 }
 

@@ -445,33 +445,16 @@ void Gl3dWidget::DrawCell( const Point2f& center ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gl3dWidget::DrawFlag
-// Created: SBO 2007-03-28
+// Name: Gl3dWidget::DrawSvg
+// Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawFlag( const Point2f& center ) const
+void Gl3dWidget::DrawSvg( const std::string& svg, const geometry::Point2f& center ) const
 {
-    DrawCross( center );
     glPushMatrix();
     glTranslatef( center.X(), center.Y(), ElevationAt( center ) );
     UndoRotations();
-
-    // $$$$ SBO 2007-03-28: hard coded shape
-    std::vector< Point3f > points;
-    points.push_back( Point3f(   0.f, 600.f, 0.f ) );
-    points.push_back( Point3f( 300.f, 450.f, 0.f ) );
-    points.push_back( Point3f(   0.f, 300.f, 0.f ) );
-    points.push_back( Point3f(   0.f,   0.f, 0.f ) );
-
-    glPushAttrib( GL_CURRENT_BIT );
-    glColor4f( 1, 1, 1, 0.7f );
-    glVertexPointer( 3, GL_FLOAT, 0, (const void*)(&points.front()) );
-    glDrawArrays( GL_TRIANGLE_FAN, 0, points.size() );    
-    glPopAttrib();
-
-    glPushAttrib( GL_LINE_BIT );
-    glLineWidth( 2.f );
-    glDrawArrays( GL_LINE_LOOP, 0, points.size() );    
-    glPopAttrib();
+    const Rectangle2f bbox( -10000,-10000,10000,10000 ); // $$$$ AGE 2006-09-11: 
+    Base().DrawSvg( svg, bbox );
     glPopMatrix();
 }
 

@@ -650,41 +650,15 @@ void GlWidget::DrawCell( const geometry::Point2f& center ) const
     glVertex2fv( (const float*)&center );
 }
 
-namespace
-{
-    std::vector< geometry::Point2f >& CreateFlagPoints()
-    {
-        // $$$$ SBO 2007-03-28: hard coded shape
-        static std::vector< geometry::Point2f > points;
-        points.push_back( geometry::Point2f(    0, 600.f ) );
-        points.push_back( geometry::Point2f( 300.f, 450.f ) );
-        points.push_back( geometry::Point2f(    0, 300.f ) );
-        points.push_back( geometry::Point2f(    0, 0 ) );
-        return points;
-    }
-}
-
 // -----------------------------------------------------------------------------
-// Name: GlWidget::DrawFlag
-// Created: SBO 2007-03-28
+// Name: GlWidget::DrawSvg
+// Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void GlWidget::DrawFlag( const geometry::Point2f& center ) const
+void GlWidget::DrawSvg( const std::string& svg, const geometry::Point2f& center ) const
 {
-    static std::vector< geometry::Point2f >& points = CreateFlagPoints();
-
-    DrawCross( center );
     glPushMatrix();
     glTranslatef( center.X(), center.Y(), 0 );
-//    glScalef( Pixels(), Pixels(), 1 );
-    
-    glPushAttrib( GL_CURRENT_BIT );
-    glColor4f( 1, 1, 1, 0.7f );
-    glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
-    glDrawArrays( GL_TRIANGLE_FAN, 0, points.size() );    
-
-    glLineWidth( 2.f );
-    glDrawArrays( GL_LINE_LOOP, 0, points.size() );    
-    glPopAttrib();
+    Base().DrawSvg( svg, viewport_, windowWidth_, windowHeight_ );
     glPopMatrix();
 }
 

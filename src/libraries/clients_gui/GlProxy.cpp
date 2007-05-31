@@ -286,12 +286,12 @@ void GlProxy::DrawCell( const geometry::Point2f& center ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlProxy::DrawFlag
-// Created: SBO 2007-03-28
+// Name: GlProxy::DrawSvg
+// Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void GlProxy::DrawFlag( const geometry::Point2f& center ) const
+void GlProxy::DrawSvg( const std::string& svg, const geometry::Point2f& center ) const
 {
-    tools_->DrawFlag( center );
+    tools_->DrawSvg( svg, center );
 }
 
 // -----------------------------------------------------------------------------

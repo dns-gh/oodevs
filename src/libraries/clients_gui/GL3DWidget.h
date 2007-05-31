@@ -72,7 +72,7 @@ public:
     virtual void DrawIcon         ( const char** xpm, const geometry::Point2f& where, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawImage        ( const QImage& image, const geometry::Point2f& where ) const;
     virtual void DrawCell         ( const geometry::Point2f& center ) const;
-    virtual void DrawFlag         ( const geometry::Point2f& center ) const;
+    virtual void DrawSvg          ( const std::string& svg, const geometry::Point2f& center ) const;
 
     virtual void CenterOn( const geometry::Point2f& point );
     virtual void CenterView();
