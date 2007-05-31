@@ -360,6 +360,7 @@ void MIL_AutomateType::InitializeDiaFunctions()
     
     // Debug
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::Trace          , "DEC_Trace"              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::DecisionalState, "DEC_DecisionalState"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::Debug          , "DEC_Debug"              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::DebugDrawPoint , "DEC_DebugAffichePoint"  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::DebugDrawPoints, "DEC_DebugAffichePoints" );

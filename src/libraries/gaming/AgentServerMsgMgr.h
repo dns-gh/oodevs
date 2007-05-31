@@ -93,7 +93,6 @@ private:
 
     // Debug
     void OnReceiveMsgUnitVisionCones                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgTrace                                 ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgUnitInterVisibility                   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgObjectInterVisibility                 ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
@@ -107,7 +106,6 @@ private:
 
     void _OnReceiveMsgProfilingValues                       ( DIN::DIN_Input& input );
     void _OnReceiveMsgUnitVisionCones                       ( DIN::DIN_Input& input );
-    void _OnReceiveMsgTrace                                 ( DIN::DIN_Input& input );
     void _OnReceiveMsgUnitInterVisibility                   ( DIN::DIN_Input& input );
     void _OnReceiveMsgObjectInterVisibility                 ( DIN::DIN_Input& input );
     void _OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Input& input );
@@ -240,7 +238,9 @@ private:
     void OnReceiveMsgAutomateChangeLiensLogistiquesAck  ( const ASN1T_MsgAutomateChangeLiensLogistiquesAck& asnMsg, unsigned long nCtx );
 
     // RC
-    void OnReceiveMsgCR( const ASN1T_MsgCR& asnMsg );
+    void OnReceiveMsgCR             ( const ASN1T_MsgCR& asnMsg );
+    void OnReceiveMsgTrace          ( const ASN1T_MsgTrace& asnMsg );
+    void OnReceiveMsgDecisionalState( const ASN1T_MsgDecisionalState& asnMsg );
 
     // Tirs
     void OnReceiveMsgStartPionFire         ( const ASN1T_MsgStartPionFire&       asnMsg );

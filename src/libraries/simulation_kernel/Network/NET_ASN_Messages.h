@@ -183,6 +183,8 @@ GENERATE_ASN_MSG_SENDER( SimToClient, PopulationMagicActionAck , population_magi
 
 // CR
 GENERATE_ASN_MSG_SENDER( SimToClient, CR, cr )
+GENERATE_ASN_MSG_SENDER( SimToClient, Trace, trace )
+GENERATE_ASN_MSG_SENDER( SimToClient, DecisionalState, decisional_state )
 
 // Objects
 GENERATE_ASN_MSG_SENDER  ( SimToClient, ObjectCreation       , object_creation         )

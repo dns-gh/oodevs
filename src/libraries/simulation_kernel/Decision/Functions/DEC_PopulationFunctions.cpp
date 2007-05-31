@@ -21,6 +21,7 @@
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Entities/Objects/MIL_RealObjectTypeFilter.h"
 #include "Network/NET_AS_MOSServerMsgMgr.h"
+#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AgentServer.h"
 #include "Tools/MIL_Tools.h"
 #include "Decision/DEC_Tools.h"
@@ -46,15 +47,27 @@ void DEC_PopulationFunctions::Debug( DIA_Call_ABC& call, const MIL_Population& c
 //-----------------------------------------------------------------------------
 void DEC_PopulationFunctions::Trace( DIA_Call_ABC& call, const MIL_Population& callerPopulation )
 {
-    std::string msg( call.GetParameter( 0 ).ToString() );
+    std::string message( call.GetParameter( 0 ).ToString() );
+    NET_ASN_MsgTrace msg;
+    msg().unit_id = callerPopulation.GetID();
+    msg().message = message.c_str();
+    msg.Send();
+}
 
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
-    DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
-    
-    dinMsg << (uint32)callerPopulation.GetID();
-    dinMsg << msg;
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::DecisionalState
+// Created: AGE 2007-05-31
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::DecisionalState( DIA_Call_ABC& call, const MIL_Population& callerPopulation )
+{
+    std::string key  ( call.GetParameter( 0 ).ToString() );
+    std::string value( call.GetParameter( 1 ).ToString() );
 
-    msgMgr.SendMsgTrace( dinMsg );
+    NET_ASN_MsgDecisionalState msg;
+    msg().unit_id = callerPopulation.GetID();
+    msg().key     = key.c_str();
+    msg().value   = value.c_str();
+    msg.Send();
 }
 
 // -----------------------------------------------------------------------------

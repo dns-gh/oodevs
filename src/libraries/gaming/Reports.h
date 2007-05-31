@@ -35,7 +35,7 @@ class ReportFactory;
 // =============================================================================
 class Reports : public kernel::Extension_ABC
               , public kernel::Updatable_ABC< ASN1T_MsgCR >
-              , public kernel::Updatable_ABC< TraceMessage >
+              , public kernel::Updatable_ABC< ASN1T_MsgTrace >
               , public kernel::Displayable_ABC
 {
 
@@ -73,7 +73,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgCR& message );
-    virtual void DoUpdate( const TraceMessage& msg );
+    virtual void DoUpdate( const ASN1T_MsgTrace& msg );
     //@}
 
 private:

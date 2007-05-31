@@ -65,6 +65,9 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     subMenu->insertSeparator();
     AddSubMenu( subMenu, tr( "Routes" )        , MAKE_ICON( path )          , controllers.options_, "Paths" );
     AddSubMenu( subMenu, tr( "Covered routes" ), MAKE_ICON( oldpath )       , controllers.options_, "OldPaths" );
+    subMenu->insertSeparator();
+    // $$$$ AGE 2007-05-30: 
+    AddSubMenu( subMenu, tr( "Convex hulls" ), MAKE_ICON( oldpath )       , controllers.options_, "ConvexHulls" );
     menu->insertItem( tr( "Units..." ), subMenu );
 
     subMenu = new QPopupMenu( menu );

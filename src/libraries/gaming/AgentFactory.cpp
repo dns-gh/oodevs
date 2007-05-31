@@ -73,6 +73,9 @@
 #include "AutomatTacticalHierarchies.h"
 #include "PopulationHierarchies.h"
 #include "PcAttributes.h"
+#include "ConvexHulls.h"
+#include "AgentConvexHulls.h"
+#include "DecisionalStates.h"
 
 #include "Quotas.h"
 
@@ -130,6 +133,8 @@ Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_ ) );
     result->Attach( *new DebugPoints() );
+    result->Attach( *new ConvexHulls( *result ) );
+    result->Attach( *new DecisionalStates() );
 
     result->Update( asnMsg );
     result->Polish();
@@ -172,6 +177,8 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     result->Attach( *new Transports( controllers_.controller_, model_.agents_, dico ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Contaminations( controllers_.controller_, static_.objectTypes_, dico ) );
+    result->Attach< ConvexHulls >( *new AgentConvexHulls( *result, static_.coordinateConverter_ ) );
+    result->Attach( *new DecisionalStates() );
     AttachExtensions( *result );
 
     result->Update( asnMsg );
@@ -191,6 +198,7 @@ Population_ABC* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg 
     result->Attach< Positions >( *new PopulationPositions( *result ) );
     result->Attach< TacticalHierarchies >( *new PopulationHierarchies( *result, model_.teams_.GetTeam( asnMsg.oid_camp ) ) );
     result->Attach( *new PopulationDecisions( controllers_.controller_, *result ) );
+    result->Attach( *new DecisionalStates() );
     AttachExtensions( *result );
     result->Polish();
     return result;

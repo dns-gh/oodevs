@@ -12,7 +12,6 @@
 
 #include "DinMessageWrapper.h"
 
-DECLARE_MESSAGE_WRAPPER( TraceMessage );
 DECLARE_MESSAGE_WRAPPER( DebugPointsMessage );
 DECLARE_MESSAGE_WRAPPER( VisionConesMessage );
 DECLARE_MESSAGE_WRAPPER( DetectionMessage );

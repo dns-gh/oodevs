@@ -122,6 +122,8 @@ MsgsSimToClient ::= SEQUENCE
         msg-stop-fire-effect                                    MsgStopFireEffect,
 
         msg-cr                                                  MsgCR,
+        msg-trace                                               MsgTrace,
+        msg-decisional-state                                    MsgDecisionalState,
 
         msg-pion-order                                          MsgPionOrder,        
         msg-automate-order                                      MsgAutomateOrder,

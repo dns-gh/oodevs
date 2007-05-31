@@ -40,7 +40,6 @@ SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, const Config& 
     GetMessageService().RegisterReceivedMessage( eMsgSimToClient                           , *this, &SimulationNetworker::OnReceiveMsgSimToClient                            );
     GetMessageService().RegisterReceivedMessage( eMsgSimToMiddle                           , *this, &SimulationNetworker::OnReceiveMsgSimToMiddle                            );
     GetMessageService().RegisterReceivedMessage( eMsgProfilingValues                       , *this, &SimulationNetworker::OnReceiveMsgProfilingValues                        );
-    GetMessageService().RegisterReceivedMessage( eMsgTrace                                 , *this, &SimulationNetworker::OnReceiveMsgTrace                                  );
     GetMessageService().RegisterReceivedMessage( eMsgUnitVisionCones                       , *this, &SimulationNetworker::OnReceiveMsgUnitVisionCones                        );
     GetMessageService().RegisterReceivedMessage( eMsgUnitInterVisibility                   , *this, &SimulationNetworker::OnReceiveMsgUnitInterVisibility                    );
     GetMessageService().RegisterReceivedMessage( eMsgObjectInterVisibility                 , *this, &SimulationNetworker::OnReceiveMsgObjectInterVisibility                  );
@@ -115,7 +114,6 @@ void SimulationNetworker::OnConnectionLost( DIN_Link& link, const DIN_ErrorDescr
     }
 
 DECLARE_DIN_CALLBACK( ProfilingValues                        )
-DECLARE_DIN_CALLBACK( Trace                                  )
 DECLARE_DIN_CALLBACK( UnitVisionCones                        )
 DECLARE_DIN_CALLBACK( UnitInterVisibility                    )
 DECLARE_DIN_CALLBACK( ObjectInterVisibility                  )

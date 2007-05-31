@@ -106,7 +106,7 @@ Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const Simu
 // Name: ReportFactory::CreateTrace
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-Report* ReportFactory::CreateTrace( const kernel::Entity_ABC& agent, const Simulation& simulation, const TraceMessage& message ) const
+Report* ReportFactory::CreateTrace( const kernel::Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgTrace& message ) const
 {
     return new Trace( agent, simulation, message );
 }

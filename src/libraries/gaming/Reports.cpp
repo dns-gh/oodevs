@@ -56,7 +56,7 @@ void Reports::DoUpdate( const ASN1T_MsgCR& message )
 // Name: Reports::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Reports::DoUpdate( const TraceMessage& message )
+void Reports::DoUpdate( const ASN1T_MsgTrace& message )
 {
     // $$$$ AGE 2007-04-20: limiter le nombre de reports ?
     Report* trace = reportFactory_.CreateTrace( agent_, simulation_, message );

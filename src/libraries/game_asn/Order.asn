@@ -183,4 +183,17 @@ MsgCR ::= SEQUENCE
     parametres MissionParameters
 }
 
+MsgTrace ::= SEQUENCE
+{
+    unit-id    OID, -- Automate, pion ou population 
+    message    VisibleString
+}
+
+MsgDecisionalState ::= SEQUENCE
+{
+    unit-id    OID, -- Automate, pion ou population 
+    key        VisibleString,
+    value      VisibleString
+}
+
 END -- Order

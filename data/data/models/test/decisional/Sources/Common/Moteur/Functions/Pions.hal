@@ -367,5 +367,6 @@ signatures
     V                                       A::DEC_DebugAffichePoints( U /*T_ListePoints*/ );    
     V                                       A::DEC_Debug             ( X );
     V                                       A::DEC_Trace             ( X );
+    V                                       A::DEC_DecisionalState   ( X, X );
 }
 

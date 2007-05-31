@@ -163,6 +163,8 @@ void Model::Update( const ASN1T_MsgsSimToClient& asnMsg )
         case T_MsgsSimToClient_msg_msg_stop_population_fire:                 populationFires_.Destroy( asnMsg.msg.u.msg_stop_population_fire->oid_tir ); break;
         case T_MsgsSimToClient_msg_msg_explosion:
         case T_MsgsSimToClient_msg_msg_cr:
+        case T_MsgsSimToClient_msg_msg_trace:
+        case T_MsgsSimToClient_msg_msg_decisional_state:
             break;  // $$$$ AGE 2007-04-18: Evenements, modèle client => rien, ou remanier
         case T_MsgsSimToClient_msg_msg_start_fire_effect:                    CreateUpdate( fireEffects_, asnMsg.msg.u.msg_start_fire_effect->oid_effet, *asnMsg.msg.u.msg_start_fire_effect ); break;
         case T_MsgsSimToClient_msg_msg_stop_fire_effect:                     fireEffects_.Destroy( asnMsg.msg.u.msg_stop_fire_effect ); break;
@@ -247,7 +249,6 @@ void Model::Update( uint nMsgID, DIN::DIN_Input& msg )
 //        case eMsgEnableProfiling                        : break;
 //        case eMsgDisableProfiling                       : break;
 //        case eMsgUnitVisionCones                        : break;
-//        case eMsgTrace                                  : break;
 //        case eMsgProfilingValues                        : break;
 //        case eMsgUnitInterVisibility                    : break;
 //        case eMsgObjectInterVisibility                  : break;

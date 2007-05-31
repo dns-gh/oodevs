@@ -51,7 +51,6 @@ public:
     void SendMsgProfilingValues( DIN::DIN_BufferedMessage& msg );
 
     // Debug
-    void SendMsgTrace                                 ( DIN::DIN_BufferedMessage& msg );
     void SendMsgUnitVisionCones                       ( DIN::DIN_BufferedMessage& msg );
     void SendMsgUnitInterVisibility                   ( DIN::DIN_BufferedMessage& msg );
     void SendMsgObjectInterVisibility                 ( DIN::DIN_BufferedMessage& msg );

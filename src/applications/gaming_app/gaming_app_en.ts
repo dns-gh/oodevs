@@ -1522,6 +1522,10 @@
         <source>Profi&amp;les</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Convex hulls</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MissionInterfaceBuilder</name>

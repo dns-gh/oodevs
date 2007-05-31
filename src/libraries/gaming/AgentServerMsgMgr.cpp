@@ -68,7 +68,6 @@ static enum
     eMsgEnableProfiling                        = 1003,
     eMsgDisableProfiling                       = 1004,
     eMsgUnitVisionCones                        = 1005,
-    eMsgTrace                                  = 1006,
     eMsgProfilingValues                        = 1008,
     eMsgUnitInterVisibility                    = 1009,
     eMsgObjectInterVisibility                  = 1010,
@@ -97,7 +96,6 @@ AgentServerMsgMgr::AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine&
 
     pMessageService_->RegisterReceivedMessage( eMsgProfilingValues                       , *this, & AgentServerMsgMgr::OnReceiveMsgProfilingValues     );
 
-    pMessageService_->RegisterReceivedMessage( eMsgTrace                                 , *this, & AgentServerMsgMgr::OnReceiveMsgTrace                );
     pMessageService_->RegisterReceivedMessage( eMsgUnitVisionCones                       , *this, & AgentServerMsgMgr::OnReceiveMsgUnitVisionCones     );
     pMessageService_->RegisterReceivedMessage( eMsgUnitInterVisibility                   , *this, & AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility );
     pMessageService_->RegisterReceivedMessage( eMsgObjectInterVisibility                 , *this, & AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility );
@@ -373,26 +371,6 @@ void AgentServerMsgMgr::OnReceiveMsgProfilingValues( DIN_Link& /*linkFrom*/, DIN
 void AgentServerMsgMgr::_OnReceiveMsgProfilingValues( DIN_Input& input )
 {
     simulation_.Update( ProfilingValuesMessage( input ) );
-}
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgTrace
-// Created: NLD 2003-01-29
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgTrace( DIN_Link& /*linkFrom*/, DIN_Input& input )
-{
-    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgTrace );
-}
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgTrace
-// Created: NLD 2003-01-29
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::_OnReceiveMsgTrace( DIN_Input& input )
-{
-    unsigned long nAgentID;
-    input >> nAgentID;
-    GetModel().agents_.FindAllAgent( nAgentID )->Update( TraceMessage( input ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1185,6 +1163,24 @@ void AgentServerMsgMgr::OnReceiveMsgCR( const ASN1T_MsgCR& message )
     GetModel().agents_.FindAllAgent( message.unit_id )->Update( message );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgTrace
+// Created: AGE 2007-05-31
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgTrace( const ASN1T_MsgTrace& message )
+{
+    GetModel().agents_.FindAllAgent( message.unit_id )->Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgDecisionalState
+// Created: AGE 2007-05-31
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgDecisionalState( const ASN1T_MsgDecisionalState& message )
+{
+    GetModel().agents_.FindAllAgent( message.unit_id )->Update( message );
+}
+
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgSetAutomateModeAck
 // Created: NLD 2003-04-11
@@ -1753,6 +1749,8 @@ void AgentServerMsgMgr::_OnReceiveMsgSimToClient( DIN_Input& input )
 
         case T_MsgsSimToClient_msg_msg_explosion:                            OnReceiveMsgExplosion                 ( *message.msg.u.msg_explosion                           ); break;
         case T_MsgsSimToClient_msg_msg_cr:                                   OnReceiveMsgCR                        ( *message.msg.u.msg_cr                                  ); break;
+        case T_MsgsSimToClient_msg_msg_trace:                                OnReceiveMsgTrace                     ( *message.msg.u.msg_trace                               ); break;
+        case T_MsgsSimToClient_msg_msg_decisional_state:                     OnReceiveMsgDecisionalState           ( *message.msg.u.msg_decisional_state                    ); break;
         case T_MsgsSimToClient_msg_msg_start_fire_effect:                    OnReceiveMsgStartFireEffect           ( *message.msg.u.msg_start_fire_effect ); break;
         case T_MsgsSimToClient_msg_msg_stop_fire_effect:                     OnReceiveMsgStopFireEffect            ( message.msg.u.msg_stop_fire_effect ); break;
 

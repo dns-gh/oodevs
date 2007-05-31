@@ -47,6 +47,7 @@ public:
     // Test / debug
     static void Debug          ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     static void Trace          ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+    static void DecisionalState( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     static void DebugDrawPoints( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     static void DebugDrawPoint ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
 

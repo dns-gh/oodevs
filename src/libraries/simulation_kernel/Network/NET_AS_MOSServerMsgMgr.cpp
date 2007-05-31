@@ -46,7 +46,6 @@ static enum
     eMsgEnableProfiling                        = 1003,
     eMsgDisableProfiling                       = 1004,
     eMsgUnitVisionCones                        = 1005,
-    eMsgTrace                                  = 1006,
     eMsgProfilingValues                        = 1008,
     eMsgUnitInterVisibility                    = 1009,
     eMsgObjectInterVisibility                  = 1010,
@@ -198,15 +197,6 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgDebugDrawPoints( DIN_Link& /*linkFrom*/
 
     }
     SendMsgDebugDrawPoints( dinMsg );
-}
-
-//-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgTrace
-// Created: NLD 2003-01-29
-//-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::SendMsgTrace( DIN_BufferedMessage& msg )
-{
-    SendMsgToAll( eMsgTrace, msg );
 }
 
 //-----------------------------------------------------------------------------

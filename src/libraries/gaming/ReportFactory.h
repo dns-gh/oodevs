@@ -56,7 +56,7 @@ public:
     void Purge();
 
     Report* CreateReport( const kernel::Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgCR&  asnMsg ) const;
-    Report* CreateTrace ( const kernel::Entity_ABC& agent, const Simulation& simulation, const TraceMessage& asnMsg ) const;
+    Report* CreateTrace ( const kernel::Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgTrace& asnMsg ) const;
     //@}
 
 private:

@@ -40,6 +40,7 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Network/NET_AS_MOSServerMsgMgr.h"
 #include "Network/NET_AgentServer.h"
+#include "Network/NET_ASN_Messages.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Decision/DEC_Tools.h"
 #include "Tools/MIL_Tools.h"
@@ -356,7 +357,6 @@ void DEC_AgentFunctions::EnableDiscreteMode( DIA_Call_ABC& /*call*/, MIL_AgentPi
     callerAgent.GetRole< PHY_RolePion_Posture >().EnableDiscreteMode();
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::DisableDiscreteMode
 // Created: JVT 04-05-17
@@ -372,15 +372,27 @@ void DEC_AgentFunctions::DisableDiscreteMode( DIA_Call_ABC& /*call*/, MIL_AgentP
 //-----------------------------------------------------------------------------
 void DEC_AgentFunctions::Trace( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    std::string msg( call.GetParameter( 0 ).ToString() );
+    std::string message( call.GetParameter( 0 ).ToString() );
+    NET_ASN_MsgTrace msg;
+    msg().unit_id = callerAgent.GetID();
+    msg().message = message.c_str();
+    msg.Send();
+}
 
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
-    DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
-    
-    dinMsg << (uint32)callerAgent.GetID();
-    dinMsg << msg;
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::DecisionalState
+// Created: AGE 2007-05-31
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::DecisionalState( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    std::string key  ( call.GetParameter( 0 ).ToString() );
+    std::string value( call.GetParameter( 1 ).ToString() );
 
-    msgMgr.SendMsgTrace( dinMsg );
+    NET_ASN_MsgDecisionalState msg;
+    msg().unit_id = callerAgent.GetID();
+    msg().key     = key.c_str();
+    msg().value   = value.c_str();
+    msg.Send();
 }
 
 //-----------------------------------------------------------------------------

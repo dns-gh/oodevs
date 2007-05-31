@@ -11,7 +11,7 @@
 #define __Trace_h_
 
 #include "Report.h"
-#include "DIN_Types.h"
+#include "ASN_Messages.h"
 
 class Simulation;
 
@@ -26,7 +26,7 @@ class Trace : public Report
 public:
     //! @name Constructor/Destructor
     //@{
-             Trace( const kernel::Entity_ABC& agent, const Simulation& simulation, const TraceMessage& input );
+             Trace( const kernel::Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgTrace& input );
     virtual ~Trace();
     //@}
 

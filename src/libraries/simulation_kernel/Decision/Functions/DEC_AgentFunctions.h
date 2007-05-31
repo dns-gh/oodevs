@@ -120,6 +120,7 @@ public:
     static void SetPosture     ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
     static void Debug          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void Trace          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void DecisionalState( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void DebugDrawPoints( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void DebugDrawPoint ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     

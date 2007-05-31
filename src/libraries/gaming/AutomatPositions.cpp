@@ -14,7 +14,6 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include <numeric>
 
 using namespace kernel;
 using namespace geometry;
@@ -44,58 +43,17 @@ AutomatPositions::~AutomatPositions()
 // -----------------------------------------------------------------------------
 Point2f AutomatPositions::GetPosition() const
 {
-    UpdateChildrenPositions();
-    return position_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatPositions::UpdateChildrenPositions
-// Created: AGE 2007-05-23
-// -----------------------------------------------------------------------------
-void AutomatPositions::UpdateChildrenPositions() const
-{
-    Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    Point2f aggregatedPosition;
     unsigned count = 0;
-    geometry::Point2f current;
-    bool dirty = false;
+    Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
-        const AgentPositions& childPositions = (const AgentPositions&)children.NextElement().Get< Positions >();
-        current = childPositions.position_;
-        if( ! childPositions.dead_ )
-        {
-            if( dirty || children_.size() <= count )
-            {
-                dirty = true;
-                children_.resize( count + 1 );
-            }
-            dirty = dirty || children_[ count ] != current;
-            children_[ count ] = current;
-            ++count;
-        }
+        const Positions& childPositions = children.NextElement().Get< Positions >();
+        const Point2f childPosition = ((const AgentPositions&)( childPositions )).position_;
+        aggregatedPosition.Set( aggregatedPosition.X() + childPosition.X(), aggregatedPosition.Y() + childPosition.Y() );
+        ++count;
     }
-    dirty = dirty || children_.size() > count;
-    children_.resize( count );
-    
-    if( dirty )
-    {
-        position_ .Set( 0, 0 );
-        leftMost_ .Set( std::numeric_limits< float >::infinity(), std::numeric_limits< float >::infinity() );
-        rightMost_.Set(-std::numeric_limits< float >::infinity(),-std::numeric_limits< float >::infinity() );
-        for( CIT_PointVector it = children_.begin(); it != children_.end(); ++it )
-        {
-            if( it->X() < leftMost_.X() )
-                leftMost_ = *it;
-            if( it->X() > rightMost_.X() )
-                rightMost_ = *it;
-            position_.Set( position_.X() + it->X(), position_.Y() + it->Y() );
-        }
-        if( children_.size() )
-            position_.Set( position_.X() / count, position_.Y() / count );
-        else
-            position_ = current;
-        ComputeHull();
-    }
+    return count ? Point2f( aggregatedPosition.X() / count, aggregatedPosition.Y() / count ) : aggregatedPosition;
 }
 
 // -----------------------------------------------------------------------------
@@ -151,9 +109,8 @@ Rectangle2f AutomatPositions::GetBoundingBox() const
     Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
-        const AgentPositions& childPositions = (const AgentPositions&)children.NextElement().Get< Positions >();
-        if( !childPositions.dead_ )
-            result.Incorporate( childPositions.position_ );
+        const Positions& childPositions = children.NextElement().Get< Positions >();
+        result.Incorporate( ((const AgentPositions&)( childPositions )).position_ );
     }
     return result;
 }
@@ -165,60 +122,5 @@ Rectangle2f AutomatPositions::GetBoundingBox() const
 void AutomatPositions::Draw( const Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() )
-    {
-        tools.DrawCross( where, GL_CROSSSIZE );
-        tools.DrawConvexPolygon( hull_ );
-    }
+        tools.DrawCross( where, GL_CROSSSIZE );   
 }
-
-
-namespace
-{
-    bool FindOuterPoint( const T_PointVector& points, const Point2f& from, const Vector2f& direction, Point2f& worst )
-    {
-        bool bFound = false;
-        float rMaxProjection = 0;
-        for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
-        {
-            const Vector2f v( from, *it );
-            const float rProjection = direction.CrossProduct( v );
-            if( rProjection < -1 ) // epsilon
-            {
-                bFound = true;
-                if( rMaxProjection > rProjection )
-                {
-                    rMaxProjection = rProjection;
-                    worst = *it;
-                }
-            }
-        }
-        return bFound;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatPositions::ComputeHull
-// Created: AGE 2007-05-23
-// -----------------------------------------------------------------------------
-void AutomatPositions::ComputeHull() const
-{
-    hull_.resize( 0 );
-    hull_.push_back( leftMost_ );
-    hull_.push_back( rightMost_ );
-    unsigned int nPoint = 0;
-    while( nPoint != hull_.size() )
-    {
-        unsigned int nFollowingPoint = ( nPoint + 1 ) % hull_.size();
-        Vector2f direction( hull_[ nPoint ], hull_[ nFollowingPoint ] );
-        direction.Normalize();
-        Point2f worst;
-        if( FindOuterPoint( children_, hull_[ nPoint ], direction, worst ) )
-        {
-            hull_.insert( hull_.begin() + nFollowingPoint, worst );
-            nPoint = 0;
-        }
-        else
-            ++nPoint;
-    }
-}
-

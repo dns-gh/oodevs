@@ -357,6 +357,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::DebugDrawPoints, "DEC_DebugAffichePoints" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::Debug          , "DEC_Debug"              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::Trace          , "DEC_Trace"              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::DecisionalState, "DEC_DecisionalState"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::SetPosture     , "DEC_PostureForTest"     ); //$$ Used for test only
 
     // Installation

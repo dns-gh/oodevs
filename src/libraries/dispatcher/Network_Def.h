@@ -33,7 +33,6 @@ static enum
     eMsgEnableProfiling                        = 1003,
     eMsgDisableProfiling                       = 1004,
     eMsgUnitVisionCones                        = 1005,
-    eMsgTrace                                  = 1006,
     eMsgProfilingValues                        = 1008,
     eMsgUnitInterVisibility                    = 1009,
     eMsgObjectInterVisibility                  = 1010,
