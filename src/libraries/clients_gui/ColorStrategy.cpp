@@ -13,6 +13,7 @@
 
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -36,6 +37,7 @@ ColorStrategy::ColorStrategy( Controllers& controllers, GlTools_ABC& tools )
     , selectedObject_    ( controllers )
     , selectedAgent_     ( controllers )
     , selectedAutomat_   ( controllers )
+    , selectedFormation_ ( controllers )
     , selectedPopulation_( controllers )
     , selectedLine_      ( controllers )
     , selectedKnowledge_ ( controllers )
@@ -60,7 +62,8 @@ ColorStrategy::~ColorStrategy()
 // -----------------------------------------------------------------------------
 void ColorStrategy::BeforeSelection()
 {
-    selectedObject_ = 0; selectedAgent_ = 0; selectedAutomat_ = 0;
+    selectedObject_ = 0; selectedAgent_ = 0; 
+    selectedAutomat_ = 0; selectedFormation_ = 0;
     selectedPopulation_ = 0; selectedLine_ = 0;
     selectedKnowledge_ = 0;
 }
@@ -81,6 +84,15 @@ void ColorStrategy::Select( const Agent_ABC& element )
 void ColorStrategy::Select( const Automat_ABC& element )
 {
     selectedAutomat_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::Select
+// Created: AGE 2007-05-31
+// -----------------------------------------------------------------------------
+void ColorStrategy::Select( const kernel::Formation_ABC& element )
+{
+    selectedFormation_ = &element;
 }
 
 // -----------------------------------------------------------------------------
@@ -175,6 +187,19 @@ void ColorStrategy::SelectColor( const kernel::Automat_ABC& automat )
     if( selectedAutomat_ == &automat )
         color = SelectedColor( color );
     tools_.Select( selectedAutomat_ == &automat );
+    ApplyColor( color );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::SelectColor
+// Created: AGE 2007-05-31
+// -----------------------------------------------------------------------------
+void ColorStrategy::SelectColor( const kernel::Formation_ABC& formation )
+{
+    QColor color = FindColor( formation );
+    if( selectedFormation_ == &formation )
+        color = SelectedColor( color );
+    tools_.Select( selectedFormation_ == &formation );
     ApplyColor( color );
 }
 

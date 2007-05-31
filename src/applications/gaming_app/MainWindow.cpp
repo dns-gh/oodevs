@@ -45,6 +45,7 @@
 #include "ReplayerToolbar.h"
 #include "icons.h"
 #include "ClockDock.h"
+#include "AutomatsLayer.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -96,7 +97,8 @@
 #include "clients_gui/LightingProxy.h"
 #include "clients_gui/LocationEditorToolbar.h"
 #include "clients_gui/LocationsLayer.h"
-#include "AutomatsLayer.h"
+#include "clients_gui/FormationLayer.h"
+
 
 #include "xeumeuleu/xml.h"
 
@@ -331,6 +333,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     Layer_ABC& meteo                = *new MeteoLayer( controllers_, *glProxy_ );
     Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
     Layer_ABC& logoLayer            = *new LogoLayer( *glProxy_, QImage( "logo.png" ), 0.7f );
+    Layer_ABC& formationLayer       = *new FormationLayer( controllers_, *glProxy_, *strategy_ );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );
@@ -344,6 +347,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     glProxy_->Register( objectKnowledges );
     glProxy_->Register( populationKnowledges );
     glProxy_->Register( agentKnowledges );
+    glProxy_->Register( formationLayer );
     glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );
     glProxy_->Register( populations );              preferences.AddLayer( tr( "Populations" ), populations );
     glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );

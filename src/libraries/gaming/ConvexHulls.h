@@ -57,11 +57,8 @@ private:
     //! @name Helpers
     //@{
     bool IsDead() const;
-    bool IsDirty() const;
     void Update() const;
-    void Accumulate    ( T_PointVector& points, geometry::Point2f& leftMost, geometry::Point2f& rightMost ) const;
     void Update        ( T_PointVector& points, geometry::Point2f& leftMost, geometry::Point2f& rightMost ) const;
-    void AccumulateHull( T_PointVector& points, geometry::Point2f& leftMost, geometry::Point2f& rightMost ) const;
     void ComputeHull   ( CIT_PointVector from, CIT_PointVector to ) const;
     //@}
 
@@ -69,8 +66,7 @@ private:
     //! @name Member data
     //@{
     const kernel::Entity_ABC& holder_;
-    bool dead_;
-    mutable bool dirty_;
+    mutable bool dead_;
     mutable T_PointVector hull_;
     mutable geometry::Point2f position_, leftMost_, rightMost_;
     //@}

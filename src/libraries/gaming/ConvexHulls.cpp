@@ -25,7 +25,6 @@ using namespace geometry;
 ConvexHulls::ConvexHulls( const kernel::Entity_ABC& holder )
     : holder_( holder )
     , dead_  ( false )
-    , dirty_ ( true )
 {
     // NOTHING
 }
@@ -53,43 +52,14 @@ void ConvexHulls::Draw( const Point2f& , const Viewport_ABC& , const GlTools_ABC
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConvexHulls::IsDirty
-// Created: AGE 2007-05-30
-// -----------------------------------------------------------------------------
-bool ConvexHulls::IsDirty() const
-{
-    if( ! dirty_ )
-    {
-        Iterator< const Entity_ABC& > children = holder_.Get< TacticalHierarchies >().CreateSubordinateIterator();
-        while( ! dirty_ && children.HasMoreElements() )
-            if( const ConvexHulls* childHulls = children.NextElement().Retrieve< ConvexHulls >() )
-                dirty_ = childHulls->IsDirty();
-    }
-    return dirty_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ConvexHulls::Update
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
 void ConvexHulls::Update() const
 {
-    dirty_ = true;
     T_PointVector children;
     Point2f leftMost, rightMost;
-    Accumulate( children, leftMost, rightMost );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConvexHulls::Accumulate
-// Created: AGE 2007-05-30
-// -----------------------------------------------------------------------------
-void ConvexHulls::Accumulate( T_PointVector& points, Point2f& leftMost, Point2f& rightMost ) const
-{
-    if( IsDirty() )
-        Update( points, leftMost, rightMost );
-    else
-        AccumulateHull( points, leftMost, rightMost );
+    Update( children, leftMost, rightMost );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,14 +74,11 @@ void ConvexHulls::Update( T_PointVector& points, Point2f& leftMost, Point2f& rig
     bool hasChild = false;
     Iterator< const Entity_ABC& > children = holder_.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
-        if( const ConvexHulls* childHulls = children.NextElement().Retrieve< ConvexHulls >() )
         {
-            if( ! childHulls->IsDead() )
-            {
-                childHulls->Accumulate( points, leftMost_, rightMost_ );
-                hasChild = true;
-            }
-            position_ = childHulls->position_;
+            const ConvexHulls& childHulls = children.NextElement().Get< ConvexHulls >();
+            childHulls.Update( points, leftMost_, rightMost_ );
+            hasChild = true;
+            position_ = childHulls.position_;
         }
 
     if( !hasChild )
@@ -126,26 +93,7 @@ void ConvexHulls::Update( T_PointVector& points, Point2f& leftMost, Point2f& rig
         rightMost = rightMost_;
 
     ComputeHull( points.begin() + currentSize, points.end() );
-    dirty_ = false;
 }
-
-// -----------------------------------------------------------------------------
-// Name: ConvexHulls::AccumulateHull
-// Created: AGE 2007-05-30
-// -----------------------------------------------------------------------------
-void ConvexHulls::AccumulateHull( T_PointVector& points, Point2f& leftMost, Point2f& rightMost ) const
-{
-    for( CIT_PointVector it = hull_.begin(); it != hull_.end(); ++it )
-    {
-        const Point2f& position = *it;
-        points.push_back( position );
-        if( leftMost.X() > position.X() )
-            leftMost = position;
-        if( rightMost.X() < position.X() )
-            rightMost = position;
-    }
-}
-
 
 namespace
 {
@@ -203,7 +151,6 @@ void ConvexHulls::ComputeHull( CIT_PointVector from, CIT_PointVector to ) const
 // -----------------------------------------------------------------------------
 void ConvexHulls::SetDead( bool dead )
 {
-    dirty_ = dead_ != dead;
     dead_ = dead;
 }
 
@@ -222,9 +169,5 @@ bool ConvexHulls::IsDead() const
 // -----------------------------------------------------------------------------
 void ConvexHulls::SetPosition( const geometry::Point2f& point )
 {
-    if( position_ != point )
-    {
-        position_ = point;
-        dirty_ = true;
-    }
+    position_ = point;
 }

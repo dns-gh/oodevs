@@ -15,6 +15,7 @@ namespace kernel
     class Entity_ABC;
     class Agent_ABC;
     class Automat_ABC;
+    class Formation_ABC;
     class Object_ABC;
     class Population_ABC;
     class Knowledge_ABC;
@@ -45,6 +46,7 @@ public:
     virtual void SetAlpha( float alpha ) = 0;
     virtual void SelectColor( const kernel::Agent_ABC& agent ) = 0;
     virtual void SelectColor( const kernel::Automat_ABC& automat ) = 0;
+    virtual void SelectColor( const kernel::Formation_ABC& formation ) = 0;
     virtual void SelectColor( const kernel::Object_ABC& object ) = 0;
     virtual void SelectColor( const kernel::Population_ABC& population ) = 0;
     virtual void SelectColor( const kernel::Knowledge_ABC& knowledge ) = 0;
