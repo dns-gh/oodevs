@@ -61,6 +61,7 @@ private:
     T_Values values_;
     bool drawSauvegarde_;
     bool draw1stEchelon_;
+    bool drawEtatOps_;
     //@}
 };
 
