@@ -10,6 +10,8 @@
 #include "gaming_pch.h"
 #include "DecisionalStates.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 
 using namespace kernel;
 
@@ -18,6 +20,8 @@ using namespace kernel;
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
 DecisionalStates::DecisionalStates()
+    : drawSauvegarde_( false )
+    , draw1stEchelon_( false )
 {
     // NOTHING
 }
@@ -38,6 +42,10 @@ DecisionalStates::~DecisionalStates()
 void DecisionalStates::DoUpdate( const ASN1T_MsgDecisionalState& message )
 {
     values_[ message.key ] = message.value;
+    drawSauvegarde_ = ( message.key   == std::string( "Contact" ) )
+                   && ( message.value == std::string( "eEtatDec_Sauvegarde" ) );
+    draw1stEchelon_ = ( message.key   == std::string( "Echelon" ) )
+                   && ( message.value == std::string( "eEtatEchelon_Premier" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +54,13 @@ void DecisionalStates::DoUpdate( const ASN1T_MsgDecisionalState& message )
 // -----------------------------------------------------------------------------
 void DecisionalStates::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    // $$$$ AGE 2007-05-31: 
+    if( viewport.IsHotpointVisible() )
+    {
+        if( drawSauvegarde_ )
+            tools.DrawSvg( "sauvegarde.svg", where );
+        if( draw1stEchelon_ )
+            tools.DrawSvg( "1stechelon.svg", where );
+    }
 }
 
 // -----------------------------------------------------------------------------

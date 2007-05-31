@@ -59,6 +59,8 @@ private:
     //! @name Member data
     //@{
     T_Values values_;
+    bool drawSauvegarde_;
+    bool draw1stEchelon_;
     //@}
 };
 

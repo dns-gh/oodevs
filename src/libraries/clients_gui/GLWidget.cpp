@@ -582,8 +582,6 @@ void GlWidget::Print( const std::string& message, const Point2f& where, const QF
 // -----------------------------------------------------------------------------
 void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /*= 1.f*/ ) const
 {
-//    if( Pixels() < 2 )
-//        factor *= Pixels() / 2;
     const float svgDeltaX = -20;
     const float svgDeltaY = -80;
     const float svgWidth = 360;
