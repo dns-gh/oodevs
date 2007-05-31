@@ -71,6 +71,6 @@ void MissionParameters::DoUpdate( const ASN1T_MsgAutomateOrder& message )
 // -----------------------------------------------------------------------------
 void MissionParameters::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    if( tools.ShouldDisplay( "MissionParameters" ) && !elements_.empty() )
+    if( !elements_.empty() && tools.ShouldDisplay( "MissionParameters" ) )
         ( --elements_.end() )->second->Draw( where, viewport, tools );
 }

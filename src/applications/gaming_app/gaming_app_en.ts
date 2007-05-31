@@ -1526,6 +1526,14 @@
         <source>Convex hulls</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Current Mission</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decisional State</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MissionInterfaceBuilder</name>

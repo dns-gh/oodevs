@@ -64,7 +64,7 @@ void DecisionalStates::DoUpdate( const ASN1T_MsgDecisionalState& message )
 // -----------------------------------------------------------------------------
 void DecisionalStates::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( viewport.IsHotpointVisible() )
+    if( viewport.IsHotpointVisible() && tools.ShouldDisplay( "DecisionalState" ) )
     {
         if( drawSauvegarde_ )
             tools.DrawSvg( "sauvegarde.svg", where, ratio_ );

@@ -81,8 +81,10 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     AddSubMenu4( subMenu, tr( "Routes" )        , MAKE_ICON( path )          , controllers.options_, "Paths" );
     AddSubMenu4( subMenu, tr( "Covered routes" ), MAKE_ICON( oldpath )       , controllers.options_, "OldPaths" );
     subMenu->insertSeparator();
-    // $$$$ AGE 2007-05-30: icon
-    AddSubMenu4( subMenu, tr( "Convex hulls" ), MAKE_ICON( oldpath )       , controllers.options_, "ConvexHulls" );
+    // $$$$ AGE 2007-05-30: icons
+    AddSubMenu4( subMenu, tr( "Convex hulls" ),     MAKE_ICON( oldpath )       , controllers.options_, "ConvexHulls" );
+    AddSubMenu4( subMenu, tr( "Current Mission" ),  MAKE_ICON( oldpath )       , controllers.options_, "MissionParameters" );
+    AddSubMenu4( subMenu, tr( "Decisional State" ), MAKE_ICON( oldpath )       , controllers.options_, "DecisionalState" );
     menu->insertItem( tr( "Units..." ), subMenu );
 
     subMenu = new QPopupMenu( menu );

@@ -59,7 +59,7 @@ Point2f AutomatPositions::GetPosition() const
             ++count;
         }
     }
-    return count ? Point2f( aggregatedPosition.X() / count, aggregatedPosition.Y() / count ) : aggregatedPosition;
+    return count ? Point2f( aggregatedPosition.X() / count, aggregatedPosition.Y() / count ) : fallback;
 }
 
 // -----------------------------------------------------------------------------
