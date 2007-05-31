@@ -23,6 +23,7 @@ DecisionalStates::DecisionalStates()
     : drawSauvegarde_( false )
     , draw1stEchelon_( false )
     , drawEtatOps_   ( false )
+    , ratio_         ( 1.f )
 {
     // NOTHING
 }
@@ -66,11 +67,11 @@ void DecisionalStates::Draw( const geometry::Point2f& where, const Viewport_ABC&
     if( viewport.IsHotpointVisible() )
     {
         if( drawSauvegarde_ )
-            tools.DrawSvg( "sauvegarde.svg", where );
+            tools.DrawSvg( "sauvegarde.svg", where, ratio_ );
         if( draw1stEchelon_ )
-            tools.DrawSvg( "1stechelon.svg", where );
+            tools.DrawSvg( "1stechelon.svg", where, ratio_ );
         if( drawEtatOps_ )
-            tools.DrawSvg( "opstatehs.svg", where );
+            tools.DrawSvg( "opstatehs.svg", where, ratio_ );
     }
 }
 
@@ -82,4 +83,13 @@ void DecisionalStates::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     for( CIT_Values it = values_.begin(); it != values_.end(); ++it )
         displayer.Display( it->first, it->second );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DecisionalStates::Aggregate
+// Created: AGE 2007-05-31
+// -----------------------------------------------------------------------------
+void DecisionalStates::Aggregate( const bool& agg )
+{
+    ratio_ = agg ? 2.0 : 1.0;
 }

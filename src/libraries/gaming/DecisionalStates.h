@@ -15,6 +15,7 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
+#include "clients_kernel/Aggregatable_ABC.h"
 
 // =============================================================================
 /** @class  DecisionalStates
@@ -26,6 +27,7 @@ class DecisionalStates : public kernel::Extension_ABC
                        , public kernel::Updatable_ABC< ASN1T_MsgDecisionalState >
                        , public kernel::Drawable_ABC
                        , public kernel::Displayable_ABC
+                       , public kernel::Aggregatable_ABC
 {
 
 public:
@@ -55,6 +57,11 @@ private:
     typedef T_Values::const_iterator   CIT_Values;
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void Aggregate( const bool& );
+    //@}
+
 private:
     //! @name Member data
     //@{
@@ -62,6 +69,7 @@ private:
     bool drawSauvegarde_;
     bool draw1stEchelon_;
     bool drawEtatOps_;
+    float ratio_;
     //@}
 };
 

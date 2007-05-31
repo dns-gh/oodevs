@@ -652,10 +652,12 @@ void GlWidget::DrawCell( const geometry::Point2f& center ) const
 // Name: GlWidget::DrawSvg
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void GlWidget::DrawSvg( const std::string& svg, const geometry::Point2f& center ) const
+void GlWidget::DrawSvg( const std::string& svg, const geometry::Point2f& center, float ratio /*= 1.f*/ ) const
 {
     glPushMatrix();
     glTranslatef( center.X(), center.Y(), 0 );
+    if( ratio != 1 )
+        glScalef( ratio, ratio, ratio );
     Base().DrawSvg( svg, viewport_, windowWidth_, windowHeight_ );
     glPopMatrix();
 }

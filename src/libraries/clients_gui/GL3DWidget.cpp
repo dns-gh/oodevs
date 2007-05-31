@@ -448,11 +448,13 @@ void Gl3dWidget::DrawCell( const Point2f& center ) const
 // Name: Gl3dWidget::DrawSvg
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawSvg( const std::string& svg, const geometry::Point2f& center ) const
+void Gl3dWidget::DrawSvg( const std::string& svg, const geometry::Point2f& center, float ratio /*= 1.f*/ ) const
 {
     glPushMatrix();
     glTranslatef( center.X(), center.Y(), ElevationAt( center ) );
     UndoRotations();
+    if( ratio != 1.f )
+        glScalef( ratio, ratio, ratio );
     const Rectangle2f bbox( -10000,-10000,10000,10000 ); // $$$$ AGE 2006-09-11: 
     Base().DrawSvg( svg, bbox );
     glPopMatrix();
