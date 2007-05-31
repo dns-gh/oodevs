@@ -34,13 +34,7 @@ using namespace gui;
 ColorStrategy::ColorStrategy( Controllers& controllers, GlTools_ABC& tools )
     : controllers_       ( controllers )
     , tools_             ( tools )
-    , selectedObject_    ( controllers )
-    , selectedAgent_     ( controllers )
-    , selectedAutomat_   ( controllers )
-    , selectedFormation_ ( controllers )
-    , selectedPopulation_( controllers )
-    , selectedLine_      ( controllers )
-    , selectedKnowledge_ ( controllers )
+    , selectedEntity_    ( controllers )
     , alpha_             ( 1 )
 {
     InitializeColors();
@@ -62,73 +56,16 @@ ColorStrategy::~ColorStrategy()
 // -----------------------------------------------------------------------------
 void ColorStrategy::BeforeSelection()
 {
-    selectedObject_ = 0; selectedAgent_ = 0; 
-    selectedAutomat_ = 0; selectedFormation_ = 0;
-    selectedPopulation_ = 0; selectedLine_ = 0;
-    selectedKnowledge_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorStrategy::Select
-// Created: AGE 2006-03-23
-// -----------------------------------------------------------------------------
-void ColorStrategy::Select( const Agent_ABC& element )
-{
-    selectedAgent_   = &element;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorStrategy::Select
-// Created: SBO 2007-04-13
-// -----------------------------------------------------------------------------
-void ColorStrategy::Select( const Automat_ABC& element )
-{
-    selectedAutomat_ = &element;
+    selectedEntity_ = 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy::Select
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void ColorStrategy::Select( const kernel::Formation_ABC& element )
+void ColorStrategy::Select( const kernel::Entity_ABC& element )
 {
-    selectedFormation_ = &element;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorStrategy::Select
-// Created: AGE 2006-03-23
-// -----------------------------------------------------------------------------
-void ColorStrategy::Select( const Object_ABC& element )
-{
-    selectedObject_ = &element;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorStrategy::Select
-// Created: AGE 2006-03-23
-// -----------------------------------------------------------------------------
-void ColorStrategy::Select( const Population_ABC& element )
-{
-    selectedPopulation_ = &element;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorStrategy::Select
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void ColorStrategy::Select( const kernel::TacticalLine_ABC& element )
-{
-    selectedLine_ = &element;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorStrategy::Select
-// Created: AGE 2006-10-26
-// -----------------------------------------------------------------------------
-void ColorStrategy::Select( const kernel::Knowledge_ABC& element )
-{
-    selectedKnowledge_ = &element;
+    selectedEntity_ = &element;
 }
 
 // -----------------------------------------------------------------------------
@@ -150,31 +87,37 @@ void ColorStrategy::SetAlpha( float alpha )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ColorStrategy::ApplySelectionStatus
+// Created: AGE 2007-05-31
+// -----------------------------------------------------------------------------
+QColor ColorStrategy::ApplySelectionStatus( const kernel::Entity_ABC& entity, const QColor& base )
+{
+    bool selected         = selectedEntity_ == &entity;
+    bool superiorSelected = selectedEntity_ && entity.Get< TacticalHierarchies >().IsSubordinateOf( *selectedEntity_ );
+    tools_.Select( selected, superiorSelected );
+    if( selected )
+        return SelectedColor( base );
+    if( superiorSelected )
+        return SuperiorSelectedColor( base );
+    return base;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::Process
+// Created: AGE 2007-05-31
+// -----------------------------------------------------------------------------
+void ColorStrategy::Process( const kernel::Entity_ABC& entity )
+{
+    ApplyColor( ApplySelectionStatus( entity, FindColor( entity ) ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ColorStrategy::SelectColor
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Agent_ABC& agent )
 {
-    QColor color = FindColor( agent );
-    if( selectedAgent_ == &agent )
-    {
-        tools_.Select( true );
-        color = SelectedColor( color );
-    }
-    else
-    {
-        const kernel::Entity_ABC* superior = agent.Get< CommunicationHierarchies >().GetSuperior();
-        if(    ( superior && superior == selectedAutomat_ )
-            || ( selectedAgent_ && selectedAgent_->Get< CommunicationHierarchies >().GetSuperior() == superior ) )
-        {
-            tools_.Select( false );
-            color = SuperiorSelectedColor( color );
-        }
-        else
-            tools_.Select( false );
-    }
-        
-    ApplyColor( color );
+    Process( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -183,11 +126,7 @@ void ColorStrategy::SelectColor( const Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const kernel::Automat_ABC& automat )
 {
-    QColor color = FindColor( automat );
-    if( selectedAutomat_ == &automat )
-        color = SelectedColor( color );
-    tools_.Select( selectedAutomat_ == &automat );
-    ApplyColor( color );
+    Process( automat );
 }
 
 // -----------------------------------------------------------------------------
@@ -196,11 +135,7 @@ void ColorStrategy::SelectColor( const kernel::Automat_ABC& automat )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const kernel::Formation_ABC& formation )
 {
-    QColor color = FindColor( formation );
-    if( selectedFormation_ == &formation )
-        color = SelectedColor( color );
-    tools_.Select( selectedFormation_ == &formation );
-    ApplyColor( color );
+    Process( formation );
 }
 
 // -----------------------------------------------------------------------------
@@ -233,11 +168,7 @@ QColor ColorStrategy::FindColor( const kernel::Knowledge_ABC& knowledge )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Object_ABC& object )
 {
-    QColor color = FindColor( object );
-    if( selectedObject_ == &object )
-        color = SelectedColor( color );
-    tools_.Select( selectedObject_ == &object );
-    ApplyColor( color );
+    Process( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -246,11 +177,7 @@ void ColorStrategy::SelectColor( const Object_ABC& object )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Population_ABC& population )
 {
-    QColor color = FindColor( population );
-    if( selectedPopulation_ == &population )
-        color = SelectedColor( color );
-    tools_.Select( selectedPopulation_ == &population );
-    ApplyColor( color );
+    Process( population );
 }
 
 // -----------------------------------------------------------------------------
@@ -260,7 +187,7 @@ void ColorStrategy::SelectColor( const Population_ABC& population )
 void ColorStrategy::SelectColor( const Knowledge_ABC& knowledge )
 {
     QColor color( FindColor( knowledge ) );
-    if( selectedKnowledge_ == &knowledge )
+    if( selectedEntity_ == &knowledge )
         color = SelectedColor( color );
     color = KnowledgeColor( color );
     ApplyColor( color );
@@ -273,9 +200,9 @@ void ColorStrategy::SelectColor( const Knowledge_ABC& knowledge )
 void ColorStrategy::SelectColor( const kernel::TacticalLine_ABC& line )
 {
     QColor color = FindColor( line );
-    if( selectedLine_ == &line )
+    if( selectedEntity_ == &line )
         color = SelectedColor( color );
-    tools_.Select( selectedLine_ == &line );
+    tools_.Select( selectedEntity_ == &line, false );
     ApplyColor( color );
 }
 

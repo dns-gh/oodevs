@@ -11,7 +11,7 @@
 #include "GlToolsBase.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
-#include "clients_kernel/TristateOption.h"
+#include "clients_kernel/FourStateOption.h"
 #include "GLSymbols.h"
 #include "SvglRenderer.h"
 #include "GlTooltip.h"
@@ -49,14 +49,24 @@ GlToolsBase::~GlToolsBase()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlToolsBase::Select
-// Created: AGE 2006-04-07
+// Name: GlToolsBase::UnSelect
+// Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-bool GlToolsBase::Select( bool bDenis ) const
+std::pair< bool, bool > GlToolsBase::UnSelect() const
 {
-    bool result = selected_;
-    selected_ = bDenis;
+    std::pair< bool, bool > result( selected_, superiorSelected_ );
+    selected_ = superiorSelected_ = false;
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlToolsBase::Select
+// Created: AGE 2007-05-31
+// -----------------------------------------------------------------------------
+void GlToolsBase::Select( bool b1, bool b2 ) const
+{
+    selected_ = b1;
+    superiorSelected_ = b2;
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +75,7 @@ bool GlToolsBase::Select( bool bDenis ) const
 // -----------------------------------------------------------------------------
 bool GlToolsBase::ShouldDisplay( const std::string& name ) const
 {
-    return ShouldDisplay( name, selected_ );
+    return ShouldDisplay( name, selected_, superiorSelected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,13 +84,22 @@ bool GlToolsBase::ShouldDisplay( const std::string& name ) const
 // -----------------------------------------------------------------------------
 bool GlToolsBase::ShouldDisplay( const std::string& name, bool autoCondition ) const
 {
+    return ShouldDisplay( name, autoCondition, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlToolsBase::ShouldDisplay
+// Created: AGE 2007-05-31
+// -----------------------------------------------------------------------------
+bool GlToolsBase::ShouldDisplay( const std::string& name, bool b1, bool b2 ) const
+{
     IT_Options it = options_.find( name );
     if( it == options_.end() )
     {
-        const TristateOption& option = controllers_.options_.GetOption( name, TristateOption::Auto() ).To< TristateOption >();
+        const FourStateOption& option = controllers_.options_.GetOption( name, FourStateOption::Selected() ).To< FourStateOption >();
         it = options_.insert( std::make_pair( name, option ) ).first;
     }
-    return it->second.IsSet( autoCondition );
+    return it->second.IsSet( b1, b2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -186,7 +205,7 @@ void GlToolsBase::OptionChanged( const std::string& name, const kernel::OptionVa
 {
     IT_Options it = options_.find( name );
     if( it != options_.end() )
-        it->second = value.To< TristateOption >();
+        it->second = value.To< FourStateOption >();
 }
 
 // -----------------------------------------------------------------------------

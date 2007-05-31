@@ -137,9 +137,9 @@ void TacticalLinePositions::Draw( const geometry::Point2f&, const kernel::Viewpo
         else
             glColor4f( 0.55f, 0.3f, 0.1f, 1.0f );
         tools.DrawLines( pointList_ );
-        bool selected = tools.Select( false ); // $$$$ SBO 2006-12-19: huhuhu
-        tools.Select( selected );
-        if( selected )
+        std::pair< bool,bool> selected = tools.UnSelect(); // $$$$ SBO 2006-12-19: huhuhu
+        tools.Select( selected.first, selected.second );
+        if( selected.first )
             for( CIT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
                 tools.DrawDisc( *it, 5.f, kernel::GlTools_ABC::pixels );
     glPopAttrib();

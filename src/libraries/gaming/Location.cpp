@@ -176,12 +176,13 @@ void Location::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& viewp
     if( points_.empty() || ( ! viewport.IsVisible( boundingBox_ ) && !isPoint ) )
         return;
 
-    const bool selected = tools.Select( false );
-    tools.Select( selected );
+    // $$$$ AGE 2007-05-31: 
+    const std::pair< bool, bool > selected = tools.UnSelect();
+    tools.Select( selected.first, selected.second );
     GLfloat color[4];
     glGetFloatv( GL_CURRENT_COLOR, color );
     glPushAttrib( GL_LINE_BIT );
-    if( selected )
+    if( selected.first )
     {
         glPushAttrib( GL_CURRENT_BIT );
         glColor4f( 0, 0, 0, color[3] * 0.5f );

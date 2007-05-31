@@ -129,7 +129,7 @@ void TacticalLinesLayer::Handle( kernel::Location_ABC& location )
 // -----------------------------------------------------------------------------
 bool TacticalLinesLayer::ShouldDisplay( const kernel::Entity_ABC& )
 {
-    return drawLines_.IsSet( true );
+    return drawLines_.IsSet( true, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +139,7 @@ bool TacticalLinesLayer::ShouldDisplay( const kernel::Entity_ABC& )
 void TacticalLinesLayer::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
     if( name == "TacticalLines" )
-        drawLines_ = value.To< TristateOption >();
+        drawLines_ = value.To< FourStateOption >();
 }
 
 // -----------------------------------------------------------------------------

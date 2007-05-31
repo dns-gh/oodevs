@@ -15,6 +15,7 @@
 namespace kernel
 {
     class TristateOption;
+    class FourStateOption;
 
 // =============================================================================
 /** @class  Settings_ABC
@@ -28,11 +29,12 @@ class Settings_ABC
 public:
     //! @name Constants
     //@{
-    static const char intPrefix      = 'I';
-    static const char boolPrefix     = 'B';
-    static const char floatPrefix    = 'F';
-    static const char tristatePrefix = 'T';
-    static const char stringPrefix   = 'S';
+    static const char intPrefix       = 'I';
+    static const char boolPrefix      = 'B';
+    static const char floatPrefix     = 'F';
+    static const char tristatePrefix  = 'T';
+    static const char fourstatePrefix = '4';
+    static const char stringPrefix    = 'S';
     //@}
 
 public:
@@ -51,6 +53,7 @@ public:
     virtual void Save( const std::string& name, bool value ) = 0;
     virtual void Save( const std::string& name, float value ) = 0;
     virtual void Save( const std::string& name, const TristateOption& value ) = 0;
+    virtual void Save( const std::string& name, const FourStateOption& value ) = 0;
     virtual void Save( const std::string& name, const QString& value ) = 0;
 
     template< typename T >
@@ -62,6 +65,7 @@ public:
     virtual bool           Load( const std::string& name, bool defaultValue ) = 0;
     virtual float          Load( const std::string& name, float defaultValue ) = 0;
     virtual TristateOption Load( const std::string& name, const TristateOption& defaultValue ) = 0;
+    virtual FourStateOption Load( const std::string& name, const FourStateOption& defaultValue ) = 0;
     virtual QString        Load( const std::string& name, const QString& defaultValue ) = 0;
 
     template< typename T >

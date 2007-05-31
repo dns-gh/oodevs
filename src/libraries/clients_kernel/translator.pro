@@ -34,6 +34,7 @@ SensorType.cpp \
 SymbolRule.cpp \
 Tools.cpp \
 TristateOption.cpp \
+FourStateOption.cpp \
 Units.cpp \
 
 TRANSLATIONS = clients_kernel_fr.ts clients_kernel_en.ts

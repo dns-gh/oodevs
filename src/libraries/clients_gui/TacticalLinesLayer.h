@@ -14,7 +14,7 @@
 #include "ShapeHandler_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
-#include "clients_kernel/TristateOption.h"
+#include "clients_kernel/FourStateOption.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/SafePointer.h"
@@ -105,7 +105,7 @@ private:
     gui::ColorStrategy_ABC& strategy_;
     gui::ParametersLayer& parameters_;
 
-    kernel::TristateOption drawLines_;
+    kernel::FourStateOption drawLines_;
     bool isLimit_;
     kernel::SafePointer< kernel::TacticalLine_ABC > selected_;
     //@}

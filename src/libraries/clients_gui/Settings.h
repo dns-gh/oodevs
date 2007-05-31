@@ -20,6 +20,7 @@ class QWidget;
 namespace kernel
 {
     class TristateOption;
+    class FourStateOption;
 }
 
 namespace gui
@@ -48,12 +49,15 @@ public:
     virtual void Save( const std::string& name, bool value );
     virtual void Save( const std::string& name, float value );
     virtual void Save( const std::string& name, const kernel::TristateOption& value );
+    virtual void Save( const std::string& name, const kernel::FourStateOption& value );
     virtual void Save( const std::string& name, const QString& value );
 
     virtual int Load( const std::string& name, int defaultValue );
     virtual bool Load( const std::string& name, bool defaultValue );
     virtual float Load( const std::string& name, float defaultValue );
     virtual kernel::TristateOption Load( const std::string& name, const kernel::TristateOption& defaultValue );
+    virtual kernel::FourStateOption Load( const std::string& name, const kernel::FourStateOption& defaultValue );
+
     virtual QString Load( const std::string& name, const QString& defaultValue );
 
     template< typename T >

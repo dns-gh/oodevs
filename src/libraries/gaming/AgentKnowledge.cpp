@@ -205,14 +205,14 @@ void AgentKnowledge::Draw( const geometry::Point2f& where, const kernel::Viewpor
 {
     if( viewport.IsVisible( where ) )
     {
-        const bool backupState = tools.Select( false );
+        const std::pair< bool, bool > backupState = tools.UnSelect();
         tools.DrawApp6Symbol( currentSymbol_, where );
         if( nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
         {
             const bool bPc = bIsPC_.IsSet() ? bIsPC_ : false;
             realAgent_.GetType().Draw( where, viewport, tools, bPc );
         }
-        tools.Select( backupState );
+        tools.Select( backupState.first, backupState.second );
     }
 }
 

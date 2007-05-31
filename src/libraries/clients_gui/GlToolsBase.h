@@ -11,7 +11,7 @@
 #define __GlToolsBase_h_
 
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/TristateOption.h"
+#include "clients_kernel/FourStateOption.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace gui
@@ -40,9 +40,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Select( bool ) const;
+    virtual std::pair< bool, bool > UnSelect() const; 
+    virtual void Select( bool, bool ) const;
+
     virtual bool ShouldDisplay( const std::string& name ) const;
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
+    virtual bool ShouldDisplay( const std::string& name, bool b1, bool b2 ) const;
     virtual void SetCurrentColor  ( float r, float g, float b, float a = 1 );
     virtual std::auto_ptr< kernel::GlTooltip_ABC > CreateTooltip() const;
 
@@ -71,7 +74,7 @@ private:
     typedef std::map< const char**, unsigned >            T_Icons;
     typedef T_Icons::const_iterator                     CIT_Icons;
 
-    typedef std::map< std::string, kernel::TristateOption >  T_Options;
+    typedef std::map< std::string, kernel::FourStateOption > T_Options;
     typedef T_Options::iterator                             IT_Options;
     typedef T_Options::const_iterator                      CIT_Options;
     //@}
@@ -81,6 +84,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     mutable bool selected_;
+    mutable bool superiorSelected_;
 
     T_Icons         icons_;
     std::auto_ptr< SvglRenderer > renderer_;

@@ -13,6 +13,7 @@
 #include "Observer_ABC.h"
 #include "OptionVariant.h"
 #include "TristateOption.h"
+#include "FourStateOption.h"
 #include "Settings_ABC.h"
 #include <algorithm>
 #include <qstringlist.h>
@@ -120,6 +121,8 @@ void Options::Load( Settings_ABC& settings, const std::string& path /* = "" */)
                 Load( settings, name, 1.f );
             else if( type == Settings_ABC::tristatePrefix )
                 Load( settings, name, TristateOption::Auto() );
+            else if( type == Settings_ABC::fourstatePrefix )
+                Load( settings, name, FourStateOption::Selected() );
             else if( type == Settings_ABC::stringPrefix )
                 Load( settings, name, QString( "" ) );
         }

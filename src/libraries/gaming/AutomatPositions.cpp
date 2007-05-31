@@ -45,13 +45,19 @@ Point2f AutomatPositions::GetPosition() const
 {
     Point2f aggregatedPosition;
     unsigned count = 0;
+    geometry::Point2f fallback;
     Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
-        const Positions& childPositions = children.NextElement().Get< Positions >();
-        const Point2f childPosition = ((const AgentPositions&)( childPositions )).position_;
-        aggregatedPosition.Set( aggregatedPosition.X() + childPosition.X(), aggregatedPosition.Y() + childPosition.Y() );
-        ++count;
+        const Positions& childPositions          = children.NextElement().Get< Positions >();
+        const AgentPositions& realChildPositions = (const AgentPositions&)( childPositions );
+        fallback = realChildPositions.position_;
+        if( ! realChildPositions.dead_ )
+        {
+            const Point2f childPosition = realChildPositions.position_;
+            aggregatedPosition.Set( aggregatedPosition.X() + childPosition.X(), aggregatedPosition.Y() + childPosition.Y() );
+            ++count;
+        }
     }
     return count ? Point2f( aggregatedPosition.X() / count, aggregatedPosition.Y() / count ) : aggregatedPosition;
 }

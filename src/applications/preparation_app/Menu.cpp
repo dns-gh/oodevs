@@ -12,6 +12,7 @@
 //#include "AboutDialog.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/TristateOption.h"
+#include "clients_kernel/FourStateOption.h"
 #include "clients_gui/OptionMenu.h"
 #include "clients_gui/resources.h"
 
@@ -20,16 +21,31 @@ using namespace gui;
 
 namespace
 {
+    // $$$$ AGE 2007-05-31: ^c^v
     void Populate( OptionMenu< TristateOption >& menu )
     {
         menu.AddItem( TristateOption::AutoName(), TristateOption::Auto() );
         menu.AddItem( TristateOption::OnName(), TristateOption::On() );
         menu.AddItem( TristateOption::OffName(), TristateOption::Off() );
     }
+    void Populate( OptionMenu< FourStateOption >& menu )
+    {
+        menu.AddItem( FourStateOption::OnName(), FourStateOption::On() );
+        menu.AddItem( FourStateOption::SuperiorSelectedName(), FourStateOption::SuperiorSelected() );
+        menu.AddItem( FourStateOption::SelectedName(), FourStateOption::Selected() );
+        menu.AddItem( FourStateOption::OffName(), FourStateOption::Off() );
+    }
 
-    void AddSubMenu( QPopupMenu* parent, const QString& label, const QIconSet& iconSet, Options& options, const std::string& option )
+    void AddSubMenu3( QPopupMenu* parent, const QString& label, const QIconSet& iconSet, Options& options, const std::string& option )
     {
         OptionMenu< TristateOption >* optionMenu = new OptionMenu< TristateOption >( parent, options, option );
+        Populate( *optionMenu );
+        parent->insertItem( iconSet, label, optionMenu );
+    }
+
+    void AddSubMenu4( QPopupMenu* parent, const QString& label, const QIconSet& iconSet, Options& options, const std::string& option )
+    {
+        OptionMenu< FourStateOption >* optionMenu = new OptionMenu< FourStateOption >( parent, options, option );
         Populate( *optionMenu );
         parent->insertItem( iconSet, label, optionMenu );
     }
@@ -66,14 +82,14 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     menu = new QPopupMenu( this );
     subMenu = new QPopupMenu( menu );
 
-    AddSubMenu( subMenu, tr( "Logistic links" )        , MAKE_ICON( loglink )    , controllers.options_, "LogisticLinks" );
-    AddSubMenu( subMenu, tr( "Missing logistic links" ), MAKE_ICON( missinglog ) , controllers.options_, "MissingLogisticLinks" );
+    AddSubMenu4( subMenu, tr( "Logistic links" )        , MAKE_ICON( loglink )    , controllers.options_, "LogisticLinks" );
+    AddSubMenu4( subMenu, tr( "Missing logistic links" ), MAKE_ICON( missinglog ) , controllers.options_, "MissingLogisticLinks" );
     menu->insertItem( tr( "Logistic..." ), subMenu );
 
     subMenu = new QPopupMenu( menu );
-    AddSubMenu( subMenu, tr( "Small text" )    , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
-    AddSubMenu( subMenu, tr( "Large text" )    , MAKE_ICON( textbig )      , controllers.options_, "BigText" );
-    AddSubMenu( subMenu, tr( "Tactical lines" ), MAKE_ICON( tacticallines ), controllers.options_, "TacticalLines" );
+    AddSubMenu3( subMenu, tr( "Small text" )    , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
+    AddSubMenu3( subMenu, tr( "Large text" )    , MAKE_ICON( textbig )      , controllers.options_, "BigText" );
+    AddSubMenu4( subMenu, tr( "Tactical lines" ), MAKE_ICON( tacticallines ), controllers.options_, "TacticalLines" );
 
     subMenu->insertSeparator();
 

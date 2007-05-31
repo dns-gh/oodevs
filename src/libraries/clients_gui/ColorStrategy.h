@@ -18,14 +18,8 @@
 
 namespace kernel
 {
-    class Entity_ABC;
     class Team_ABC;
-    class Automat_ABC;
-    class Formation_ABC;
-    class Controllers;
     class GlTools_ABC;
-    class TacticalLine_ABC;
-    class Knowledge_ABC;
 }
 
 namespace gui
@@ -41,13 +35,7 @@ class ColorStrategy : public ColorStrategy_ABC
                     , public kernel::Observer_ABC
                     , public kernel::ElementObserver_ABC< kernel::Team_ABC >
                     , public kernel::SelectionObserver_ABC
-                    , public kernel::SelectionObserver_Base< kernel::Agent_ABC >
-                    , public kernel::SelectionObserver_Base< kernel::Automat_ABC >
-                    , public kernel::SelectionObserver_Base< kernel::Formation_ABC >
-                    , public kernel::SelectionObserver_Base< kernel::Object_ABC >
-                    , public kernel::SelectionObserver_Base< kernel::Population_ABC >
-                    , public kernel::SelectionObserver_Base< kernel::TacticalLine_ABC >
-                    , public kernel::SelectionObserver_Base< kernel::Knowledge_ABC >
+                    , public kernel::SelectionObserver_Base< kernel::Entity_ABC >
 {
 
 public:
@@ -91,13 +79,7 @@ private:
     virtual void NotifyDeleted( const kernel::Team_ABC& );
 
     virtual void BeforeSelection();
-    virtual void Select( const kernel::Agent_ABC& element );
-    virtual void Select( const kernel::Automat_ABC& element );
-    virtual void Select( const kernel::Formation_ABC& element );
-    virtual void Select( const kernel::Object_ABC& element );
-    virtual void Select( const kernel::Population_ABC& element );
-    virtual void Select( const kernel::TacticalLine_ABC& element );
-    virtual void Select( const kernel::Knowledge_ABC& element );
+    virtual void Select( const kernel::Entity_ABC& element );
     virtual void AfterSelection();
 
     void InitializeColors();
@@ -108,6 +90,9 @@ private:
     QColor KnowledgeColor( const QColor& base ) const;
     void ApplyColor( const QColor& color ) const;
     QColor FindTeamColor( const kernel::Entity_ABC& team );
+
+    void Process( const kernel::Entity_ABC& entity );
+    QColor ApplySelectionStatus( const kernel::Entity_ABC& entity, const QColor& base );
     //@}
 
 private:
@@ -116,13 +101,7 @@ private:
     kernel::Controllers& controllers_;
     kernel::GlTools_ABC& tools_;
 
-    kernel::SafePointer< kernel::Object_ABC >       selectedObject_;
-    kernel::SafePointer< kernel::Agent_ABC >        selectedAgent_;
-    kernel::SafePointer< kernel::Automat_ABC >      selectedAutomat_;
-    kernel::SafePointer< kernel::Formation_ABC >    selectedFormation_;
-    kernel::SafePointer< kernel::Population_ABC >   selectedPopulation_;
-    kernel::SafePointer< kernel::TacticalLine_ABC > selectedLine_;
-    kernel::SafePointer< kernel::Knowledge_ABC >    selectedKnowledge_;
+    kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
 
     T_TeamColors teamColors_;
     T_Colors     friendlyAvailable_;

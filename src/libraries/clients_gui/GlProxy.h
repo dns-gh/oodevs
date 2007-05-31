@@ -50,7 +50,9 @@ public:
 
     virtual void CenterOn( const geometry::Point2f& point );
 
-    virtual bool Select( bool ) const;
+    virtual std::pair< bool, bool > UnSelect() const; 
+    virtual void Select( bool, bool ) const;
+
     virtual bool ShouldDisplay( const std::string& name ) const;
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
 

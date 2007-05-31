@@ -97,12 +97,21 @@ void GlProxy::CenterOn( const geometry::Point2f& point )
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlProxy::Select
-// Created: AGE 2006-03-30
+// Name: GlProxy::UnSelect
+// Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-bool GlProxy::Select( bool b ) const
+std::pair< bool, bool > GlProxy::UnSelect() const
 {
-    return tools_->Select( b );
+    return tools_->UnSelect();
+}   
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::Select
+// Created: AGE 2007-05-31
+// -----------------------------------------------------------------------------
+void GlProxy::Select( bool b1, bool b2 ) const
+{
+    tools_->Select( b1, b2 );
 }
 
 // -----------------------------------------------------------------------------

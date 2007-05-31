@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "Settings.h"
 #include "clients_kernel/TristateOption.h"
+#include "clients_kernel/FourStateOption.h"
 
 #include <qmainwindow.h>
 #include <qdockwindow.h>
@@ -80,7 +81,6 @@ void Settings::WriteEntry( const QString& field, QWidget& widget )
     endGroup();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Settings::ReadEntry
 // Created: APE 2004-06-01
@@ -146,6 +146,15 @@ void Settings::Save( const std::string& name, const TristateOption& value )
 
 // -----------------------------------------------------------------------------
 // Name: Settings::Save
+// Created: AGE 2007-05-31
+// -----------------------------------------------------------------------------
+void Settings::Save( const std::string& name, const kernel::FourStateOption& value )
+{
+    writeEntry( ( "/" + AddType( name, fourstatePrefix ) ).c_str(), (QString)value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Settings::Save
 // Created: SBO 2007-03-27
 // -----------------------------------------------------------------------------
 void Settings::Save( const std::string& name, const QString& value )
@@ -188,6 +197,16 @@ TristateOption Settings::Load( const std::string& name, const TristateOption& de
 {
     QString value = readEntry( ( "/" + AddType( name, tristatePrefix ) ).c_str(), QString( defaultValue ) );
     return TristateOption( value.ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Settings::Load
+// Created: AGE 2007-05-31
+// -----------------------------------------------------------------------------
+FourStateOption Settings::Load( const std::string& name, const kernel::FourStateOption& defaultValue )
+{
+    QString value = readEntry( ( "/" + AddType( name, fourstatePrefix ) ).c_str(), QString( defaultValue ) );
+    return FourStateOption( value.ascii() );
 }
 
 // -----------------------------------------------------------------------------

@@ -41,7 +41,7 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/TristateOption.h"
+#include "clients_kernel/FourStateOption.h"
 
 #include <ctime>
 
@@ -323,7 +323,7 @@ void AgentServerMsgMgr::OptionChanged( const std::string& name, const OptionVari
     bool* pDummy = ( name == "VisionCones" ? &needsVisionCones_ : ( name == "VisionSurfaces" ? &needsVisionSurfaces_ : 0 ) );
     if( pDummy )
     {
-        *pDummy = value.To< TristateOption >().IsSet( true );
+        *pDummy = value.To< FourStateOption >().IsSet( true, true );
         ToggleVisionCones();
     }
 }

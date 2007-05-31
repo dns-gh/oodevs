@@ -14,6 +14,7 @@
 #include "UserProfileDialog.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/TristateOption.h"
+#include "clients_kernel/FourStateOption.h"
 #include "clients_gui/OptionMenu.h"
 #include "clients_gui/resources.h"
 
@@ -28,10 +29,24 @@ namespace
         menu.AddItem( TristateOption::OnName(), TristateOption::On() );
         menu.AddItem( TristateOption::OffName(), TristateOption::Off() );
     }
+    void Populate( OptionMenu< FourStateOption >& menu )
+    {
+        menu.AddItem( FourStateOption::OnName(), FourStateOption::On() );
+        menu.AddItem( FourStateOption::SuperiorSelectedName(), FourStateOption::SuperiorSelected() );
+        menu.AddItem( FourStateOption::SelectedName(), FourStateOption::Selected() );
+        menu.AddItem( FourStateOption::OffName(), FourStateOption::Off() );
+    }
 
-    void AddSubMenu( QPopupMenu* parent, const QString& label, const QIconSet& iconSet, Options& options, const std::string& option )
+    void AddSubMenu3( QPopupMenu* parent, const QString& label, const QIconSet& iconSet, Options& options, const std::string& option )
     {
         OptionMenu< TristateOption >* optionMenu = new OptionMenu< TristateOption >( parent, options, option );
+        Populate( *optionMenu );
+        parent->insertItem( iconSet, label, optionMenu );
+    }
+
+    void AddSubMenu4( QPopupMenu* parent, const QString& label, const QIconSet& iconSet, Options& options, const std::string& option )
+    {
+        OptionMenu< FourStateOption >* optionMenu = new OptionMenu< FourStateOption >( parent, options, option );
         Populate( *optionMenu );
         parent->insertItem( iconSet, label, optionMenu );
     }
@@ -59,27 +74,27 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     menu = new QPopupMenu( this );
     QPopupMenu* subMenu = new QPopupMenu( menu );
 
-    AddSubMenu( subMenu, tr( "Vision lines" )   , MAKE_ICON( visionlines )   , controllers.options_, "VisionLines" );
-    AddSubMenu( subMenu, tr( "Vision cones" )   , MAKE_ICON( visioncones )   , controllers.options_, "VisionCones" );
-    AddSubMenu( subMenu, tr( "Vision surfaces" ), MAKE_ICON( visionsurfaces ), controllers.options_, "VisionSurfaces" );
+    AddSubMenu4( subMenu, tr( "Vision lines" )   , MAKE_ICON( visionlines )   , controllers.options_, "VisionLines" );
+    AddSubMenu4( subMenu, tr( "Vision cones" )   , MAKE_ICON( visioncones )   , controllers.options_, "VisionCones" );
+    AddSubMenu4( subMenu, tr( "Vision surfaces" ), MAKE_ICON( visionsurfaces ), controllers.options_, "VisionSurfaces" );
     subMenu->insertSeparator();
-    AddSubMenu( subMenu, tr( "Routes" )        , MAKE_ICON( path )          , controllers.options_, "Paths" );
-    AddSubMenu( subMenu, tr( "Covered routes" ), MAKE_ICON( oldpath )       , controllers.options_, "OldPaths" );
+    AddSubMenu4( subMenu, tr( "Routes" )        , MAKE_ICON( path )          , controllers.options_, "Paths" );
+    AddSubMenu4( subMenu, tr( "Covered routes" ), MAKE_ICON( oldpath )       , controllers.options_, "OldPaths" );
     subMenu->insertSeparator();
-    // $$$$ AGE 2007-05-30: 
-    AddSubMenu( subMenu, tr( "Convex hulls" ), MAKE_ICON( oldpath )       , controllers.options_, "ConvexHulls" );
+    // $$$$ AGE 2007-05-30: icon
+    AddSubMenu4( subMenu, tr( "Convex hulls" ), MAKE_ICON( oldpath )       , controllers.options_, "ConvexHulls" );
     menu->insertItem( tr( "Units..." ), subMenu );
 
     subMenu = new QPopupMenu( menu );
-    AddSubMenu( subMenu, tr( "Links" )            , MAKE_ICON( loglink )    , controllers.options_, "LogisticLinks" );
-    AddSubMenu( subMenu, tr( "Missing links" )    , MAKE_ICON( missinglog ) , controllers.options_, "MissingLogisticLinks" );
-    AddSubMenu( subMenu, tr( "Real time actions" ), MAKE_ICON( realtimelog ), controllers.options_, "RealTimeLogistic" );
+    AddSubMenu4( subMenu, tr( "Links" )            , MAKE_ICON( loglink )    , controllers.options_, "LogisticLinks" );
+    AddSubMenu4( subMenu, tr( "Missing links" )    , MAKE_ICON( missinglog ) , controllers.options_, "MissingLogisticLinks" );
+    AddSubMenu4( subMenu, tr( "Real time actions" ), MAKE_ICON( realtimelog ), controllers.options_, "RealTimeLogistic" );
     menu->insertItem( tr( "Logistic..." ), subMenu );
 
     subMenu = new QPopupMenu( menu );
-    AddSubMenu( subMenu, tr( "Small texts" )   , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
-    AddSubMenu( subMenu, tr( "Large texts" )   , MAKE_ICON( textbig )      , controllers.options_, "BigText" );
-    AddSubMenu( subMenu, tr( "Tactical lines" ), MAKE_ICON( tacticallines ), controllers.options_, "TacticalLines" );
+    AddSubMenu3( subMenu, tr( "Small texts" )   , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
+    AddSubMenu3( subMenu, tr( "Large texts" )   , MAKE_ICON( textbig )      , controllers.options_, "BigText" );
+    AddSubMenu4( subMenu, tr( "Tactical lines" ), MAKE_ICON( tacticallines ), controllers.options_, "TacticalLines" );
 
     OptionMenu< bool >* boolMenu = new OptionMenu< bool >( subMenu, controllers.options_, "Weather" );
     boolMenu->AddItem( tr( "On" ), true );

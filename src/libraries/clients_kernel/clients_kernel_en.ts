@@ -144,6 +144,25 @@
     </message>
 </context>
 <context>
+    <name>Fourstate</name>
+    <message>
+        <source>Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Superior Selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Karma</name>
     <message>
         <source>Friend</source>
