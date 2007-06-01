@@ -93,7 +93,7 @@ Section "!Basic"
     SetOutPath "$INSTDIR\data"
     File /r /x ".svn" "${DATADIR}\data\terrains"
     
-    SetOutPath "$INSTDIR\data\models\decisional"
+    SetOutPath "$INSTDIR\data\models\main\decisional"
     File /r /x ".svn" "${DATADIR}\data\models\main\decisional\Binaires"
     File /r /x ".svn" "${DATADIR}\data\models\main\decisional\*.xml"
     
@@ -105,7 +105,7 @@ SectionEnd
 
 ;--------------------------------
 Section "DirectIA models sources"
-    SetOutPath "$INSTDIR\data\models\decisional"
+    SetOutPath "$INSTDIR\data\models\main\decisional"
     File /r /x ".svn" "${DATADIR}\data\models\main\decisional\Sources"
 
     SetOutPath "$INSTDIR\exercises"
@@ -116,7 +116,7 @@ SectionEnd
 SectionGroup "Physical models"
 
 Section "France"
-    SetOutPath "$INSTDIR\data\models\physical"
+    SetOutPath "$INSTDIR\data\models\main\physical"
     File /r /x ".svn" "${DATADIR}\data\models\main\physical\france"
 
     SetOutPath "$INSTDIR\exercises"
@@ -133,7 +133,7 @@ SectionEnd
 
 ;--------------------------------
 Section "Worldwide"
-    SetOutPath "$INSTDIR\data\models\physical"
+    SetOutPath "$INSTDIR\data\models\main\physical"
     File /r /x ".svn" "${DATADIR}\data\models\main\physical\worldwide"
 
     SetOutPath "$INSTDIR\exercises"
