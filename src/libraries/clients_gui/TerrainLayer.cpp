@@ -19,6 +19,7 @@
 #include "graphics/NoVBOShapeLayer.h"
 #include "graphics/ShapeCollector.h"
 #include "graphics/extensions.h"
+#include "graphics/DataFactory.h"
 
 #include <boost/filesystem/operations.hpp>
 namespace bfs = boost::filesystem;
@@ -185,7 +186,8 @@ void TerrainLayer::LoadGraphics()
         const bfs::path aggregated = bfs::path( parameters_.graphicsDirectory_, bfs::native ) / "shapes.dump";
         if( ! bfs::exists( aggregated ) )
         {
-            ShapeCollector collector;
+            DataFactory factory;
+            ShapeCollector collector( factory );
             collector.LoadGraphicDirectory( parameters_.graphicsDirectory_ );
             collector.Finalize( aggregated.native_file_string() );
         }
