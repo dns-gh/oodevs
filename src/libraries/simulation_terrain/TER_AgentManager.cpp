@@ -84,7 +84,9 @@ namespace
     class Circle
     {
     public:
-        Circle( const MT_Vector2D& center, MT_Float rRadius ) : center_( center ), rSquareRadius_( rRadius * rRadius ) {};
+        Circle( const MT_Vector2D& center, MT_Float rRadius )
+            : center_( center )
+            , rSquareRadius_( rRadius * rRadius ) {}
         bool IsInside( const MT_Vector2D& pos ) const
         {
             return center_.SquareDistance( pos ) < rSquareRadius_;
@@ -107,7 +109,6 @@ void TER_AgentManager::GetListWithinEllipse( const MT_Ellipse& ellipse, T_AgentV
     AgentFinder< MT_Ellipse > finder( ellipse, agents );
     agents.reserve( 10 );
     agents_.Apply( intersecter, finder );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +119,8 @@ void TER_AgentManager::GetListWithinCircle( const MT_Vector2D& vCenter, MT_Float
 {
     pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2<MT_Float>( vCenter.rX_ - rRadius, vCenter.rY_ - rRadius )
                                                         , geometry::Point2<MT_Float>( vCenter.rX_ + rRadius, vCenter.rY_ + rRadius ) );
-    AgentFinder< Circle > finder( Circle( vCenter, rRadius ), agents );
+    Circle circle( vCenter, rRadius );
+    AgentFinder< Circle > finder( circle, agents );
     agents.reserve( 10 );
     agents_.Apply( intersecter, finder );
 }
