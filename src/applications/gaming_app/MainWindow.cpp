@@ -333,7 +333,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     Layer_ABC& meteo                = *new MeteoLayer( controllers_, *glProxy_ );
     Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
     Layer_ABC& logoLayer            = *new LogoLayer( *glProxy_, QImage( "logo.png" ), 0.7f );
-    Layer_ABC& formationLayer       = *new FormationLayer( controllers_, *glProxy_, *strategy_ );
+    Layer_ABC& formationLayer       = *new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );

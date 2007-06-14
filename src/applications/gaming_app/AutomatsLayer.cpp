@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "AutomatsLayer.h"
 #include "gaming/MissionParameters.h"
+#include "gaming/ConvexHulls.h"
 #include "clients_kernel/Viewport_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -32,6 +33,8 @@ AutomatsLayer::~AutomatsLayer()
     // NOTHING
 }
 
+// $$$$ AGE 2007-06-14: pas super terrible tout ca
+
 // -----------------------------------------------------------------------------
 // Name: AutomatsLayer::Draw
 // Created: AGE 2006-03-23
@@ -46,5 +49,6 @@ void AutomatsLayer::Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC
         const geometry::Point2f position = positions.GetPosition();
         viewport.SetHotpoint( position );
         selected_->Get< MissionParameters >().Draw( position, viewport, tools_ );
+        selected_->Get< ConvexHulls >().Draw( position, viewport, tools_ );
     }
 }

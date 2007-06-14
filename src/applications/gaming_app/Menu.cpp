@@ -85,6 +85,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     AddSubMenu4( subMenu, tr( "Convex hulls" ),     MAKE_ICON( oldpath )       , controllers.options_, "ConvexHulls" );
     AddSubMenu4( subMenu, tr( "Current Mission" ),  MAKE_ICON( oldpath )       , controllers.options_, "MissionParameters" );
     AddSubMenu4( subMenu, tr( "Decisional State" ), MAKE_ICON( oldpath )       , controllers.options_, "DecisionalState" );
+    AddSubMenu4( subMenu, tr( "Formations" ),       MAKE_ICON( oldpath )       , controllers.options_, "Formations" );
     menu->insertItem( tr( "Units..." ), subMenu );
 
     subMenu = new QPopupMenu( menu );

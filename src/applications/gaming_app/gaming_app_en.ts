@@ -1534,6 +1534,10 @@
         <source>Decisional State</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Formations</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MissionInterfaceBuilder</name>
