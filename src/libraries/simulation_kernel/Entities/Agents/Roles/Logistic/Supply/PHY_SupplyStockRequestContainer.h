@@ -34,7 +34,7 @@ class PHY_SupplyStockRequestContainer
 
 public:
      PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate );
-     PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate, ASN1T__SeqOfDotationStock& asnStocks );
+     PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate, const ASN1T__SeqOfDotationStock& asnStocks );
     ~PHY_SupplyStockRequestContainer();
 
     //! @name Operations

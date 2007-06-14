@@ -40,7 +40,7 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLO
 // Name: PHY_SupplyStockRequestContainer constructor
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate, ASN1T__SeqOfDotationStock& asnStocks )
+PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate, const ASN1T__SeqOfDotationStock& asnStocks )
     : suppliedAutomate_                  ( suppliedAutomate )
     , requests_                          ()
     , bAtLeastOneExplicitSupplySatisfied_( false )
