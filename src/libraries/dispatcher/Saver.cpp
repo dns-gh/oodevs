@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "Saver.h"
 #include "Savable_ABC.h"
-#include "Config.H"
+#include "Config.h"
 #include "tools/OutputBinaryWrapper.h"
 
 #pragma warning( push )

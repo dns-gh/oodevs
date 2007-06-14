@@ -768,7 +768,7 @@ void MIL_EntityManager::SendStateToNewClient() const
 // Name: MIL_EntityManager::OnReceiveMsgPionOrder
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgPionOrder( ASN1T_MsgPionOrder& asnMsg, uint nCtx )
+void MIL_EntityManager::OnReceiveMsgPionOrder( const ASN1T_MsgPionOrder& asnMsg, uint nCtx )
 {
     NET_ASN_MsgPionOrderAck ack;
     ack().oid_unite_executante = asnMsg.oid_unite_executante;
@@ -792,7 +792,7 @@ void MIL_EntityManager::OnReceiveMsgPionOrder( ASN1T_MsgPionOrder& asnMsg, uint 
 // Name: MIL_EntityManager::OnReceiveMsgAutomateOrder
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgAutomateOrder( ASN1T_MsgAutomateOrder& asnMsg, uint nCtx )
+void MIL_EntityManager::OnReceiveMsgAutomateOrder( const ASN1T_MsgAutomateOrder& asnMsg, uint nCtx )
 {
     NET_ASN_MsgAutomateOrderAck ack;
     ack().oid_unite_executante = asnMsg.oid_unite_executante;
@@ -831,7 +831,7 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( DIN::DIN_Input& msg )
 // Name: MIL_EntityManager::OnReceiveMsgUnitMagicAction
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg, uint nCtx )
+void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& asnMsg, uint nCtx )
 {
     NET_ASN_MsgUnitMagicActionAck ack;
     ack().oid        = asnMsg.oid;
@@ -860,7 +860,7 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& a
 // Name: MIL_EntityManager::OnReceiveMsgPopulationOrder
 // Created: NLD 2005-09-29
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgPopulationOrder( ASN1T_MsgPopulationOrder& asnMsg, uint nCtx )
+void MIL_EntityManager::OnReceiveMsgPopulationOrder( const ASN1T_MsgPopulationOrder& asnMsg, uint nCtx )
 {
     NET_ASN_MsgPopulationOrderAck ack;
     ack().oid_unite_executante = asnMsg.oid_unite_executante;
@@ -884,7 +884,7 @@ void MIL_EntityManager::OnReceiveMsgPopulationOrder( ASN1T_MsgPopulationOrder& a
 // Name: MIL_EntityManager::OnReceiveMsgFragOrder
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgFragOrder( ASN1T_MsgFragOrder& asnMsg, uint nCtx )
+void MIL_EntityManager::OnReceiveMsgFragOrder( const ASN1T_MsgFragOrder& asnMsg, uint nCtx )
 {
     NET_ASN_MsgFragOrderAck ack;
     ack().oid_unite_executante = asnMsg.oid_unite_executante;
@@ -915,7 +915,7 @@ void MIL_EntityManager::OnReceiveMsgFragOrder( ASN1T_MsgFragOrder& asnMsg, uint 
 // Name: MIL_EntityManager::OnReceiveMsgSetAutomateMode
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgSetAutomateMode( ASN1T_MsgSetAutomateMode& asnMsg, uint nCtx )
+void MIL_EntityManager::OnReceiveMsgSetAutomateMode( const ASN1T_MsgSetAutomateMode& asnMsg, uint nCtx )
 {
     NET_ASN_MsgSetAutomateModeAck ack;
     ack().unit_id    = asnMsg.unit_id;
@@ -939,7 +939,7 @@ void MIL_EntityManager::OnReceiveMsgSetAutomateMode( ASN1T_MsgSetAutomateMode& a
 // Name: MIL_EntityManager::OnReceiveMsgObjectMagicAction
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgObjectMagicAction( ASN1T_MsgObjectMagicAction& asnMsg, uint nCtx )
+void MIL_EntityManager::OnReceiveMsgObjectMagicAction( const ASN1T_MsgObjectMagicAction& asnMsg, uint nCtx )
 {
     assert( pObjectManager_ );
     pObjectManager_->OnReceiveMsgObjectMagicAction( asnMsg, nCtx );
@@ -949,7 +949,7 @@ void MIL_EntityManager::OnReceiveMsgObjectMagicAction( ASN1T_MsgObjectMagicActio
 // Name: MIL_EntityManager::OnReceiveMsgPopulationMagicAction
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction& asnMsg, uint nCtx )
+void MIL_EntityManager::OnReceiveMsgPopulationMagicAction( const ASN1T_MsgPopulationMagicAction& asnMsg, uint nCtx )
 {
     NET_ASN_MsgPopulationMagicActionAck ack;
     ack().oid        = asnMsg.oid;
@@ -973,7 +973,7 @@ void MIL_EntityManager::OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMa
 // Name: MIL_EntityManager::OnReceiveMsgChangeDiplomacy
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( ASN1T_MsgChangeDiplomatie& asnMsg, uint nCtx )
+void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomatie& asnMsg, uint nCtx )
 {
     NET_ASN_MsgChangeDiplomatieAck ack;
     ack().oid_camp1   = asnMsg.oid_camp1;
@@ -998,7 +998,7 @@ void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( ASN1T_MsgChangeDiplomatie& 
 // Name: MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup( ASN1T_MsgAutomateChangeGroupeConnaissance& asnMsg, uint nCtx )
+void MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup( const ASN1T_MsgAutomateChangeGroupeConnaissance& asnMsg, uint nCtx )
 {
     NET_ASN_MsgAutomateChangeGroupeConnaissanceAck ack;
     ack().oid_automate            = asnMsg.oid_automate;
@@ -1024,7 +1024,7 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup( ASN1T_MsgAutom
 // Name: MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks( ASN1T_MsgAutomateChangeLiensLogistiques& asnMsg, uint nCtx )
+void MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks( const ASN1T_MsgAutomateChangeLiensLogistiques& asnMsg, uint nCtx )
 {
     NET_ASN_MsgAutomateChangeLiensLogistiquesAck ack;
     ack().oid_automate                = asnMsg.oid_automate;
@@ -1056,7 +1056,7 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks( ASN1T_MsgAutoma
 // Name: MIL_EntityManager::OnReceiveMsgPionChangeSuperior
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgPionChangeSuperior( ASN1T_MsgPionChangeSuperior& asnMsg, uint nCtx )
+void MIL_EntityManager::OnReceiveMsgPionChangeSuperior( const ASN1T_MsgPionChangeSuperior& asnMsg, uint nCtx )
 {
     NET_ASN_MsgPionChangeSuperiorAck ack;
     ack().oid_pion     = asnMsg.oid_pion;
@@ -1081,7 +1081,7 @@ void MIL_EntityManager::OnReceiveMsgPionChangeSuperior( ASN1T_MsgPionChangeSuper
 // Name: MIL_EntityManager::OnReceiveMsgLogSupplyChangeQuotas
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& asnMsg, uint nCtx )
+void MIL_EntityManager::OnReceiveMsgLogSupplyChangeQuotas( const ASN1T_MsgLogRavitaillementChangeQuotas& asnMsg, uint nCtx )
 {
     NET_ASN_MsgLogRavitaillementChangeQuotasAck ack;
     ack() = MsgLogRavitaillementChangeQuotasAck::no_error;
@@ -1104,7 +1104,7 @@ void MIL_EntityManager::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaill
 // Name: MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementPousserFlux&  asnMsg, uint nCtx )
+void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( const ASN1T_MsgLogRavitaillementPousserFlux&  asnMsg, uint nCtx )
 {
     NET_ASN_MsgLogRavitaillementPousserFluxAck ack;
     ack() = MsgLogRavitaillementPousserFluxAck::no_error;

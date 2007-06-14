@@ -796,7 +796,7 @@ void MIL_AutomateLOG::SendFullState() const
 // Name: MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks
 // Created: NLD 2005-01-17
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgAutomateChangeLiensLogistiques& msg )
+void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const ASN1T_MsgAutomateChangeLiensLogistiques& msg )
 {
     bool bNewTC2                 = false;
     bool bNewMaintenanceSuperior = false;
@@ -863,7 +863,7 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgAutomateChangeLi
 // Name: MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& asnMsg )
+void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( const ASN1T_MsgLogRavitaillementChangeQuotas& asnMsg )
 {
     if( !pSupplySuperior_ || GetLogisticAutomate( asnMsg.oid_donneur ) != pSupplySuperior_ )
         throw NET_AsnException< ASN1T_MsgLogRavitaillementChangeQuotasAck >( MsgLogRavitaillementChangeQuotasAck::error_invalid_donneur );
@@ -887,7 +887,7 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillem
 // Name: MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementPousserFlux& asnMsg )
+void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( const ASN1T_MsgLogRavitaillementPousserFlux& asnMsg )
 {
     MIL_AutomateLOG* pSupplier = GetLogisticAutomate( asnMsg.oid_donneur );
     if( !pSupplier )

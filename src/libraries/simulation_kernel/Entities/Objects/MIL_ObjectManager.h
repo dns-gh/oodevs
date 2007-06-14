@@ -64,7 +64,7 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveMsgObjectMagicAction( ASN1T_MsgObjectMagicAction& asnMsg, uint nCtx );
+    void OnReceiveMsgObjectMagicAction( const ASN1T_MsgObjectMagicAction& asnMsg, uint nCtx );
     //@}
 
 private:

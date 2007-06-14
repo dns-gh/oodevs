@@ -134,7 +134,7 @@ public:
     void SendFullState              () const;
     void SendKnowledge              () const;
 
-    void OnReceiveMsgChangeDiplomacy( ASN1T_MsgChangeDiplomatie& msg );
+    void OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomatie& msg );
     //@}
 
 private:

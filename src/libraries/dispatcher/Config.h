@@ -23,7 +23,6 @@ namespace dispatcher
 // =============================================================================
 class Config : public virtual tools::GeneralConfig
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

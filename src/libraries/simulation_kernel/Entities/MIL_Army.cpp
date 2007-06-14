@@ -641,7 +641,7 @@ void MIL_Army::SendKnowledge() const
 // Name: MIL_Army::OnReceiveMsgChangeDiplomacy
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_Army::OnReceiveMsgChangeDiplomacy( ASN1T_MsgChangeDiplomatie& asnMsg )
+void MIL_Army::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomatie& asnMsg )
 {
     MIL_Army* pArmy2 = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asnMsg.oid_camp2 );
     if( !pArmy2 || *pArmy2 == *this )

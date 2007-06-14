@@ -616,7 +616,7 @@ void MIL_AgentPion::SendKnowledge() const
 // Name: MIL_AgentPion::OnReceiveMsgOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgOrder( ASN1T_MsgPionOrder& msg )
+void MIL_AgentPion::OnReceiveMsgOrder( const ASN1T_MsgPionOrder& msg )
 {
     orderManager_.OnReceiveMission( msg );
 }
@@ -626,7 +626,7 @@ void MIL_AgentPion::OnReceiveMsgOrder( ASN1T_MsgPionOrder& msg )
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 
-void MIL_AgentPion::OnReceiveMsgFragOrder( ASN1T_MsgFragOrder& msg )
+void MIL_AgentPion::OnReceiveMsgFragOrder( const ASN1T_MsgFragOrder& msg )
 {
     orderManager_.OnReceiveFragOrder( msg );
 }
@@ -668,7 +668,7 @@ void MIL_AgentPion::OnReceiveMsgMagicMove( const MT_Vector2D& vPosition )
 // Name: MIL_AgentPion::OnReceiveMsgMagicMove
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgMagicMove( ASN1T_MagicActionMoveTo& asn )
+void MIL_AgentPion::OnReceiveMsgMagicMove( const ASN1T_MagicActionMoveTo& asn )
 {
     if( pAutomate_->IsEngaged() )
         throw NET_AsnException< ASN1T_EnumUnitAttrErrorCode >( EnumUnitAttrErrorCode::error_automate_embraye );
@@ -684,7 +684,7 @@ void MIL_AgentPion::OnReceiveMsgMagicMove( ASN1T_MagicActionMoveTo& asn )
 // Name: MIL_AgentPion::OnReceiveMsgChangeHumanFactors
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-void  MIL_AgentPion::OnReceiveMsgChangeHumanFactors( ASN1T_MagicActionChangeFacteursHumains& asn )
+void  MIL_AgentPion::OnReceiveMsgChangeHumanFactors( const ASN1T_MagicActionChangeFacteursHumains& asn )
 {
     if( asn.m.experiencePresent )
     {
@@ -756,7 +756,7 @@ void MIL_AgentPion::OnReceiveMsgResupplyAll()
 // Name: MIL_AgentPion::OnReceiveMsgResupply
 // Created: NLD 2005-07-27
 // -----------------------------------------------------------------------------
-void  MIL_AgentPion::OnReceiveMsgResupply( ASN1T_MagicActionRecompletementPartiel& asn )
+void  MIL_AgentPion::OnReceiveMsgResupply( const ASN1T_MagicActionRecompletementPartiel& asn )
 {
     if( asn.m.equipementsPresent )
     {
@@ -841,7 +841,7 @@ void  MIL_AgentPion::OnReceiveMsgRecoverHumansTransporters()
 // Name: MIL_AgentPion::OnReceiveMsgUnitMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg )
+void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& asnMsg )
 {
     switch( asnMsg.action.t )
     {
@@ -887,7 +887,7 @@ void MIL_AgentPion::OnReceiveMagicCancelSurrender()
 // Name: MIL_AgentPion::OnReceiveMsgChangeSuperior
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgChangeSuperior( ASN1T_MsgPionChangeSuperior& asnMsg )
+void MIL_AgentPion::OnReceiveMsgChangeSuperior( const ASN1T_MsgPionChangeSuperior& asnMsg )
 {
     MIL_Automate* pNewAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( asnMsg.oid_automate );
     if( !pNewAutomate )

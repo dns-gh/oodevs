@@ -797,7 +797,7 @@ MT_Float MIL_Population::GetPionMaxSpeed( const MIL_PopulationAttitude& attitude
 // Name: MIL_Population::OnReceiveMsgOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgOrder( ASN1T_MsgPopulationOrder& msg )
+void MIL_Population::OnReceiveMsgOrder( const ASN1T_MsgPopulationOrder& msg )
 {
     orderManager_.OnReceiveMission( msg );
 }
@@ -806,7 +806,7 @@ void MIL_Population::OnReceiveMsgOrder( ASN1T_MsgPopulationOrder& msg )
 // Name: MIL_Population::OnReceiveMsgFragOrder
 // Created: SBO 2005-11-23
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgFragOrder( ASN1T_MsgFragOrder& msg )
+void MIL_Population::OnReceiveMsgFragOrder( const ASN1T_MsgFragOrder& msg )
 {
     orderManager_.OnReceiveFragOrder( msg );
 }
@@ -815,7 +815,7 @@ void MIL_Population::OnReceiveMsgFragOrder( ASN1T_MsgFragOrder& msg )
 // Name: MIL_Population::OnReceiveMsgPopulationMagicAction
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction& asnMsg )
+void MIL_Population::OnReceiveMsgPopulationMagicAction( const ASN1T_MsgPopulationMagicAction& asnMsg )
 {
     switch( asnMsg.action.t )
     {
@@ -833,7 +833,7 @@ void MIL_Population::OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagic
 // Name: MIL_Population::OnReceiveMsgMagicMove
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgMagicMove( ASN1T_MagicActionPopulationMoveTo& asn )
+void MIL_Population::OnReceiveMsgMagicMove( const ASN1T_MagicActionPopulationMoveTo& asn )
 {
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( asn, vPosTmp );
@@ -872,7 +872,7 @@ void MIL_Population::OnReceiveMsgDestroyAll()
 // Name: MIL_Population::OnReceiveMsgChangeAttitude
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgChangeAttitude( ASN1T_MagicActionPopulationChangeAttitude& asn )
+void MIL_Population::OnReceiveMsgChangeAttitude( const ASN1T_MagicActionPopulationChangeAttitude& asn )
 {
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( asn.attitude );
     if( !pAttitude )
@@ -914,7 +914,7 @@ void MIL_Population::OnReceiveMsgChangeAttitude( ASN1T_MagicActionPopulationChan
 // Name: MIL_Population::OnReceiveMsgKill
 // Created: SBO 2006-04-05
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgKill( ASN1T_MagicActionPopulationTuer& asn )
+void MIL_Population::OnReceiveMsgKill( const ASN1T_MagicActionPopulationTuer& asn )
 {
     uint remainingKills = asn;
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
@@ -935,7 +935,7 @@ void MIL_Population::OnReceiveMsgKill( ASN1T_MagicActionPopulationTuer& asn )
 // Name: MIL_Population::OnReceiveMsgResurrect
 // Created: SBO 2006-04-05
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgResurrect( ASN1T_MagicActionPopulationRessusciter& asn )
+void MIL_Population::OnReceiveMsgResurrect( const ASN1T_MagicActionPopulationRessusciter& asn )
 {
     uint remainingResurrections = asn;
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )

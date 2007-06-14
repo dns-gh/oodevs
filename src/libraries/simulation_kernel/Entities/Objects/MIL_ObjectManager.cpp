@@ -300,7 +300,7 @@ MIL_ControlZone& MIL_ObjectManager::CreateObjectControlZone( MIL_Army& army, con
 // Name: MIL_ObjectManager::OnReceiveMsgObjectMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( ASN1T_MsgObjectMagicAction& asnMsg, uint nCtx )
+void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const ASN1T_MsgObjectMagicAction& asnMsg, uint nCtx )
 {
     ASN1T_EnumObjectErrorCode nErrorCode = EnumObjectErrorCode::no_error;
 

@@ -136,20 +136,20 @@ public:
     //! @name Network
     //@{
     void OnReceiveMsgUnitMagicAction             ( DIN::DIN_Input&                            msg );
-    void OnReceiveMsgUnitMagicAction             ( ASN1T_MsgUnitMagicAction&                  msg, uint nCtx );
-    void OnReceiveMsgPopulationOrder             ( ASN1T_MsgPopulationOrder&                  msg, uint nCtx );     
-    void OnReceiveMsgPionOrder                   ( ASN1T_MsgPionOrder&                        msg, uint nCtx ); 
-    void OnReceiveMsgAutomateOrder               ( ASN1T_MsgAutomateOrder&                    msg, uint nCtx );
-    void OnReceiveMsgSetAutomateMode             ( ASN1T_MsgSetAutomateMode&                  msg, uint nCtx );
-    void OnReceiveMsgFragOrder                   ( ASN1T_MsgFragOrder&                        msg, uint nCtx );
-    void OnReceiveMsgObjectMagicAction           ( ASN1T_MsgObjectMagicAction&                msg, uint nCtx );
-    void OnReceiveMsgPopulationMagicAction       ( ASN1T_MsgPopulationMagicAction&            msg, uint nCtx );
-    void OnReceiveMsgChangeDiplomacy             ( ASN1T_MsgChangeDiplomatie&                 msg, uint nCtx );
-    void OnReceiveMsgAutomateChangeKnowledgeGroup( ASN1T_MsgAutomateChangeGroupeConnaissance& msg, uint nCtx );
-    void OnReceiveMsgAutomateChangeLogisticLinks ( ASN1T_MsgAutomateChangeLiensLogistiques&   msg, uint nCtx );
-    void OnReceiveMsgPionChangeSuperior          ( ASN1T_MsgPionChangeSuperior&               msg, uint nCtx );
-    void OnReceiveMsgLogSupplyChangeQuotas       ( ASN1T_MsgLogRavitaillementChangeQuotas&    msg, uint nCtx );
-    void OnReceiveMsgLogSupplyPushFlow           ( ASN1T_MsgLogRavitaillementPousserFlux&     msg, uint nCtx );
+    void OnReceiveMsgUnitMagicAction             ( const ASN1T_MsgUnitMagicAction&                  msg, uint nCtx );
+    void OnReceiveMsgPopulationOrder             ( const ASN1T_MsgPopulationOrder&                  msg, uint nCtx );     
+    void OnReceiveMsgPionOrder                   ( const ASN1T_MsgPionOrder&                        msg, uint nCtx ); 
+    void OnReceiveMsgAutomateOrder               ( const ASN1T_MsgAutomateOrder&                    msg, uint nCtx );
+    void OnReceiveMsgSetAutomateMode             ( const ASN1T_MsgSetAutomateMode&                  msg, uint nCtx );
+    void OnReceiveMsgFragOrder                   ( const ASN1T_MsgFragOrder&                        msg, uint nCtx );
+    void OnReceiveMsgObjectMagicAction           ( const ASN1T_MsgObjectMagicAction&                msg, uint nCtx );
+    void OnReceiveMsgPopulationMagicAction       ( const ASN1T_MsgPopulationMagicAction&            msg, uint nCtx );
+    void OnReceiveMsgChangeDiplomacy             ( const ASN1T_MsgChangeDiplomatie&                 msg, uint nCtx );
+    void OnReceiveMsgAutomateChangeKnowledgeGroup( const ASN1T_MsgAutomateChangeGroupeConnaissance& msg, uint nCtx );
+    void OnReceiveMsgAutomateChangeLogisticLinks ( const ASN1T_MsgAutomateChangeLiensLogistiques&   msg, uint nCtx );
+    void OnReceiveMsgPionChangeSuperior          ( const ASN1T_MsgPionChangeSuperior&               msg, uint nCtx );
+    void OnReceiveMsgLogSupplyChangeQuotas       ( const ASN1T_MsgLogRavitaillementChangeQuotas&    msg, uint nCtx );
+    void OnReceiveMsgLogSupplyPushFlow           ( const ASN1T_MsgLogRavitaillementPousserFlux&     msg, uint nCtx );
     //@}
 
     //! @name Population channeling

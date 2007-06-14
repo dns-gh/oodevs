@@ -144,14 +144,14 @@ public:
     virtual void SendFullState                    () const;
             void SendKnowledge                    () const;
 
-            void OnReceiveMsgOrder                ( ASN1T_MsgAutomateOrder&                    msg );
-            void OnReceiveMsgFragOrder            ( ASN1T_MsgFragOrder&                        msg );
-            void OnReceiveMsgSetAutomateMode      ( ASN1T_MsgSetAutomateMode&                  msg );
-            void OnReceiveMsgUnitMagicAction      ( ASN1T_MsgUnitMagicAction&                  msg );
-            void OnReceiveMsgChangeKnowledgeGroup ( ASN1T_MsgAutomateChangeGroupeConnaissance& msg );
-    virtual void OnReceiveMsgChangeLogisticLinks  ( ASN1T_MsgAutomateChangeLiensLogistiques&   msg );
-    virtual void OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas&    msg );
-    virtual void OnReceiveMsgLogSupplyPushFlow    ( ASN1T_MsgLogRavitaillementPousserFlux&     msg );
+            void OnReceiveMsgOrder                ( const ASN1T_MsgAutomateOrder&                    msg );
+            void OnReceiveMsgFragOrder            ( const ASN1T_MsgFragOrder&                        msg );
+            void OnReceiveMsgSetAutomateMode      ( const ASN1T_MsgSetAutomateMode&                  msg );
+            void OnReceiveMsgUnitMagicAction      ( const ASN1T_MsgUnitMagicAction&                  msg );
+            void OnReceiveMsgChangeKnowledgeGroup ( const ASN1T_MsgAutomateChangeGroupeConnaissance& msg );
+    virtual void OnReceiveMsgChangeLogisticLinks  ( const ASN1T_MsgAutomateChangeLiensLogistiques&   msg );
+    virtual void OnReceiveMsgLogSupplyChangeQuotas( const ASN1T_MsgLogRavitaillementChangeQuotas&    msg );
+    virtual void OnReceiveMsgLogSupplyPushFlow    ( const ASN1T_MsgLogRavitaillementPousserFlux&     msg );
     //@}
 
     //! @name Misc

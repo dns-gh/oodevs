@@ -825,7 +825,7 @@ void MIL_Automate::SendLogisticLinks() const
 // Name: MIL_Automate::OnReceiveMsgSetAutomateMode
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgSetAutomateMode( ASN1T_MsgSetAutomateMode& asnMsg )
+void MIL_Automate::OnReceiveMsgSetAutomateMode( const ASN1T_MsgSetAutomateMode& asnMsg )
 {
     switch( asnMsg.mode )
     {
@@ -840,7 +840,7 @@ void MIL_Automate::OnReceiveMsgSetAutomateMode( ASN1T_MsgSetAutomateMode& asnMsg
 // Name: MIL_Automate::OnReceiveMsgUnitMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg )
+void MIL_Automate::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& asnMsg )
 {
     if( asnMsg.action.t == T_MsgUnitMagicAction_action_move_to )
     {
@@ -882,7 +882,7 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg
 // Name: MIL_Automate::OnReceiveMsgChangeKnowledgeGroup
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( ASN1T_MsgAutomateChangeGroupeConnaissance& asnMsg )
+void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( const ASN1T_MsgAutomateChangeGroupeConnaissance& asnMsg )
 {
     MIL_Army* pNewArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asnMsg.oid_camp );
     if( !pNewArmy || *pNewArmy != GetArmy() )
@@ -904,7 +904,7 @@ void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( ASN1T_MsgAutomateChangeGrou
 // Name: MIL_Automate::OnReceiveMsgChangeLogisticLinks
 // Created: NLD 2005-01-17
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgAutomateChangeLiensLogistiques& msg )
+void MIL_Automate::OnReceiveMsgChangeLogisticLinks( const ASN1T_MsgAutomateChangeLiensLogistiques& msg )
 {
     if( IsSurrendered() )
         throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_unit_surrendered );
@@ -927,7 +927,7 @@ void MIL_Automate::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgAutomateChangeLiens
 // Name: MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& /*msg*/ )
+void MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas( const ASN1T_MsgLogRavitaillementChangeQuotas& /*msg*/ )
 {
     throw NET_AsnException< ASN1T_MsgLogRavitaillementChangeQuotasAck >( MsgLogRavitaillementChangeQuotasAck::error_invalid_receveur );
 }
@@ -936,7 +936,7 @@ void MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillement
 // Name: MIL_Automate::OnReceiveMsgLogSupplyPushFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementPousserFlux& /*msg*/ )
+void MIL_Automate::OnReceiveMsgLogSupplyPushFlow( const ASN1T_MsgLogRavitaillementPousserFlux& /*msg*/ )
 {
     throw NET_AsnException< ASN1T_MsgLogRavitaillementPousserFluxAck >( MsgLogRavitaillementPousserFluxAck::error_invalid_receveur );
 }
@@ -945,7 +945,7 @@ void MIL_Automate::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementPous
 // Name: MIL_Automate::OnReceiveMsgOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgOrder( ASN1T_MsgAutomateOrder& msg )
+void MIL_Automate::OnReceiveMsgOrder( const ASN1T_MsgAutomateOrder& msg )
 {
     orderManager_.OnReceiveMission( msg );
 }
@@ -954,7 +954,7 @@ void MIL_Automate::OnReceiveMsgOrder( ASN1T_MsgAutomateOrder& msg )
 // Name: MIL_Automate::OnReceiveMsgFragOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgFragOrder( ASN1T_MsgFragOrder& msg )
+void MIL_Automate::OnReceiveMsgFragOrder( const ASN1T_MsgFragOrder& msg )
 {
     orderManager_.OnReceiveFragOrder( msg );
 }

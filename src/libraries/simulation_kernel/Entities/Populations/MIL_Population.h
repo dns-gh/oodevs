@@ -122,13 +122,13 @@ public:
 
     //! @name Network 
     //@{
-    void OnReceiveMsgOrder    ( ASN1T_MsgPopulationOrder& msg );
-    void OnReceiveMsgFragOrder( ASN1T_MsgFragOrder&       msg );
+    void OnReceiveMsgOrder    ( const ASN1T_MsgPopulationOrder& msg );
+    void OnReceiveMsgFragOrder( const ASN1T_MsgFragOrder&       msg );
     void SendCreation         () const;
     void SendFullState        ();
     void UpdateNetwork        ();
 
-    void OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction& asnMsg );
+    void OnReceiveMsgPopulationMagicAction( const ASN1T_MsgPopulationMagicAction& asnMsg );
     //@}
 
     //! @name CheckPoints
@@ -154,11 +154,11 @@ private:
 
     //! @name Magic actions
     //@{
-    void OnReceiveMsgMagicMove     ( ASN1T_MagicActionPopulationMoveTo& asn );
+    void OnReceiveMsgMagicMove     ( const ASN1T_MagicActionPopulationMoveTo& asn );
     void OnReceiveMsgDestroyAll    ();
-    void OnReceiveMsgChangeAttitude( ASN1T_MagicActionPopulationChangeAttitude& asn );
-    void OnReceiveMsgKill          ( ASN1T_MagicActionPopulationTuer& asn );
-    void OnReceiveMsgResurrect     ( ASN1T_MagicActionPopulationRessusciter& asn );
+    void OnReceiveMsgChangeAttitude( const ASN1T_MagicActionPopulationChangeAttitude& asn );
+    void OnReceiveMsgKill          ( const ASN1T_MagicActionPopulationTuer& asn );
+    void OnReceiveMsgResurrect     ( const ASN1T_MagicActionPopulationRessusciter& asn );
     //@}
 
     //! @name Network
