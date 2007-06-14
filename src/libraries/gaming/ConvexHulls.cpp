@@ -74,12 +74,12 @@ void ConvexHulls::Update( T_PointVector& points, Point2f& leftMost, Point2f& rig
     bool hasChild = false;
     Iterator< const Entity_ABC& > children = holder_.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
-        {
-            const ConvexHulls& childHulls = children.NextElement().Get< ConvexHulls >();
-            childHulls.Update( points, leftMost_, rightMost_ );
-            hasChild = true;
-            position_ = childHulls.position_;
-        }
+    {
+        const ConvexHulls& childHulls = children.NextElement().Get< ConvexHulls >();
+        childHulls.Update( points, leftMost_, rightMost_ );
+        hasChild = true;
+        position_ = childHulls.position_;
+    }
 
     if( !hasChild )
     {

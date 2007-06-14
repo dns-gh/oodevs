@@ -58,6 +58,7 @@ private:
     //! @name Helpers
     //@{
     bool IsInHierarchy( const kernel::Entity_ABC& entity ) const;
+    bool IsInMixedHierarchy( const kernel::CommunicationHierarchies& h ) const;
     //@}
 
 private:

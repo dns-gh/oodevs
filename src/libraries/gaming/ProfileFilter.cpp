@@ -98,10 +98,34 @@ bool ProfileFilter::IsInHierarchy( const kernel::Entity_ABC& entity ) const
     if( ! entity_ || entity_ == &entity )
         return true;
 
-    const Hierarchies* h = entity.Retrieve< TacticalHierarchies >();
-    if( ! h )
-        h = entity.Retrieve< CommunicationHierarchies >();
-    return ( h && h->IsSubordinateOf( *entity_ ) )
-        || ( tHierarchies_ && tHierarchies_->IsSubordinateOf( entity ) )
-        || ( cHierarchies_ && cHierarchies_->IsSubordinateOf( entity ) );
+    const TacticalHierarchies*      t = entity.Retrieve< TacticalHierarchies >();
+    const CommunicationHierarchies* c = entity.Retrieve< CommunicationHierarchies >();
+    const Hierarchies* h = t;
+    if( ! h ) h = c;
+
+    // simple cases
+    if( ( h && h->IsSubordinateOf( *entity_ ) )
+     || ( tHierarchies_ && tHierarchies_->IsSubordinateOf( entity ) )
+     || ( cHierarchies_ && cHierarchies_->IsSubordinateOf( entity ) ) )
+        return true;
+
+    if( c && ! t && tHierarchies_ && ! cHierarchies_ )
+        return IsInMixedHierarchy( *c );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileFilter::IsInMixedHierarchy
+// Created: AGE 2007-06-14
+// -----------------------------------------------------------------------------
+bool ProfileFilter::IsInMixedHierarchy( const kernel::CommunicationHierarchies& h ) const
+{
+    kernel::Iterator< const kernel::Entity_ABC& > children = h.CreateSubordinateIterator();
+    while( children.HasMoreElements() )
+    {
+        const kernel::Entity_ABC& child = children.NextElement();
+        if( IsInHierarchy( child ) )
+            return true;
+    }
+    return false;
 }

@@ -42,3 +42,12 @@ void AgentConvexHulls::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
     if( attributes.m.mortPresent )
         SetDead( attributes.mort );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentConvexHulls::Draw
+// Created: AGE 2007-06-14
+// -----------------------------------------------------------------------------
+void AgentConvexHulls::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& , const kernel::GlTools_ABC& ) const
+{
+    // NOTHING
+}

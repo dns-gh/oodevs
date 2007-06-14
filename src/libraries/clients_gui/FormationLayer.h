@@ -16,6 +16,7 @@
 
 namespace kernel
 {
+    class Automat_ABC;
     class Formation_ABC;
     class GlTools_ABC;
     class Controllers;
@@ -27,13 +28,15 @@ namespace gui
 
 // =============================================================================
 /** @class  FormationLayer
-    @brief  FormationLayer
+    @brief  Layer to display entities which have no real position
 */
 // Created: AGE 2007-05-31
 // =============================================================================
 class FormationLayer : public Layer_ABC
                      , public kernel::Observer_ABC
-                     , public kernel::SelectionObserver< kernel::Formation_ABC >
+                     , public kernel::SelectionObserver_ABC
+                     , public kernel::SelectionObserver_Base< kernel::Formation_ABC >
+                     , public kernel::SelectionObserver_Base< kernel::Automat_ABC >
 {
 
 public:
@@ -57,7 +60,10 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifySelected( const kernel::Formation_ABC* element );
+    virtual void BeforeSelection();
+    virtual void Select( const kernel::Formation_ABC& element );
+    virtual void Select( const kernel::Automat_ABC& element );
+    virtual void AfterSelection();
     //@}
 
 private:
@@ -66,7 +72,8 @@ private:
     kernel::Controllers& controllers_;
     const kernel::GlTools_ABC& tools_;
     ColorStrategy_ABC& strategy_;
-    kernel::SafePointer< kernel::Formation_ABC > selected_;
+    kernel::SafePointer< kernel::Formation_ABC > selectedFormation_;
+    kernel::SafePointer< kernel::Automat_ABC >   selectedAutomat_;
     //@}
 };
 

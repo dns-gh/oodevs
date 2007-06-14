@@ -12,6 +12,8 @@
 #include "ColorStrategy_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 
 using namespace gui;
 
@@ -23,7 +25,8 @@ FormationLayer::FormationLayer( kernel::Controllers& controllers, const kernel::
     : controllers_( controllers )
     , tools_      ( tools )
     , strategy_   ( strategy )
-    , selected_   ( controllers )
+    , selectedFormation_( controllers )
+    , selectedAutomat_  ( controllers )
 {
     controllers_.Register( *this );
 }
@@ -43,18 +46,53 @@ FormationLayer::~FormationLayer()
 // -----------------------------------------------------------------------------
 void FormationLayer::Paint( kernel::Viewport_ABC& viewport )
 {
-    if( selected_ )
+    viewport.SetHotpoint( geometry::Point2f( std::numeric_limits< float >::infinity(),
+                                             std::numeric_limits< float >::infinity() ) );
+    if( selectedFormation_ )
     {
-        strategy_.SelectColor( *selected_ );
-        selected_->Draw( geometry::Point2f(), viewport, tools_ );
+        strategy_.SelectColor( *selectedFormation_ );
+        selectedFormation_->Draw( geometry::Point2f(), viewport, tools_ );
+    }
+    if( selectedAutomat_ )
+    {
+        strategy_.SelectColor( *selectedAutomat_ );
+        selectedAutomat_->Draw( geometry::Point2f(), viewport, tools_ );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: FormationLayer::NotifySelected
-// Created: AGE 2007-05-31
+// Name: FormationLayer::BeforeSelection
+// Created: AGE 2007-06-14
 // -----------------------------------------------------------------------------
-void FormationLayer::NotifySelected( const kernel::Formation_ABC* element )
+void FormationLayer::BeforeSelection()
 {
-    selected_ = element;
+    selectedFormation_ = 0;
+    selectedAutomat_   = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationLayer::Select
+// Created: AGE 2007-06-14
+// -----------------------------------------------------------------------------
+void FormationLayer::Select( const kernel::Formation_ABC& element )
+{
+    selectedFormation_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationLayer::Select
+// Created: AGE 2007-06-14
+// -----------------------------------------------------------------------------
+void FormationLayer::Select( const kernel::Automat_ABC& element )
+{
+    selectedAutomat_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationLayer::AfterSelection
+// Created: AGE 2007-06-14
+// -----------------------------------------------------------------------------
+void FormationLayer::AfterSelection()
+{
+    // NOTHING
 }
