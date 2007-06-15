@@ -49,3 +49,12 @@ void FormationLayer::Draw( const kernel::Entity_ABC& entity, kernel::Viewport_AB
         entity.Draw( geometry::Point2f(), viewport, tools_ );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: FormationLayer::ActivateEntity
+// Created: AGE 2007-06-15
+// -----------------------------------------------------------------------------
+void FormationLayer::ActivateEntity( const kernel::Entity_ABC& )
+{
+    // NOTHING
+}

@@ -54,6 +54,7 @@ private:
 protected:
     //! @name Operations
     //@{
+    virtual void ActivateEntity( const kernel::Entity_ABC& );
     virtual void Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport );
     //@}
 
