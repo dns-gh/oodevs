@@ -64,6 +64,8 @@ public:
                            static void StopComputingFrontAndBackLines                   ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
                            static void ComputeDistanceFromFrontLine                     ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
                            static void ComputeDistanceFromBackLine                      ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+                           static void ComputeDistancePointFromFrontLine                ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+                           static void ComputeDistancePointFromBackLine                 ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
                            static void ComputeNearestFuseauEntryPoint                   ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent   );
                            static void ComputeSupportPosition                           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent   );
                            static void ComputeAmbushPosition                            ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent   );

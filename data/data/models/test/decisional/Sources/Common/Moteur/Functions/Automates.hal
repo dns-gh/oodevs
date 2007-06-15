@@ -103,6 +103,8 @@ signatures
     V                                A::DEC_Geometrie_StopCalculLignesAvantEtArriere           ( U /*T_CalculLignesAvantArriere*/ );  
     R                                A::DEC_Geometrie_CalculerDistanceLigneAvant               ( U /*T_CalculLignesAvantArriere*/, A /*T_Pion*/ );       
     R                                A::DEC_Geometrie_CalculerDistanceLigneArriere             ( U /*T_CalculLignesAvantArriere*/, A /*T_Pion*/ );       
+    R                                A::DEC_Geometrie_CalculerDistancePointLigneAvant          ( U /*T_CalculLignesAvantArriere*/, U /*T_Point*/ );
+    R                                A::DEC_Geometrie_CalculerDistancePointLigneArriere        ( U /*T_CalculLignesAvantArriere*/, U /*T_Point*/ );        
     B                                A::DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( U /*T_Localisation localisation*/, U /*T_Point result*/ );
     B                                A::DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau   ( U /*T_Localisation localisation*/, U /*T_Point result*/ );
     A                                A::DEC_Geometrie_PionDevant                               ( S /*T_ListePions*/, U /*T_Direction*/ );

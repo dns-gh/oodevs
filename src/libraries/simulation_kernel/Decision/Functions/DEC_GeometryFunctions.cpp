@@ -996,6 +996,25 @@ void DEC_GeometryFunctions::ComputeDistanceFromFrontLine( DIA_Call_ABC& call, co
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeDistancePointFromFrontLine
+// Created: NLD 2003-09-29
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::ComputeDistancePointFromFrontLine( DIA_Call_ABC& call, const MIL_Automate& /*callerAgent*/ )
+{
+    assert( DEC_Tools::CheckTypeCalculLignesAvantArriere( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypePoint( call.GetParameter( 1 ) ) );
+
+    DEC_FrontAndBackLinesComputer* pComputer = call.GetParameter( 0 ).ToUserPtr( pComputer );
+    assert( pComputer );
+
+    const MT_Vector2D* pPoint = call.GetParameter( 1 ).ToUserPtr( pPoint );
+    assert( pPoint );
+
+    MT_Float rDist = pComputer->ComputeDistanceFromFrontLine( *pPoint );
+    call.GetResult().SetValue( MIL_Tools::ConvertSimToMeter( rDist ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeDistanceFromBackLine
 // Created: NLD 2003-09-29
 // -----------------------------------------------------------------------------
@@ -1014,6 +1033,24 @@ void DEC_GeometryFunctions::ComputeDistanceFromBackLine( DIA_Call_ABC& call, con
     call.GetResult().SetValue( MIL_Tools::ConvertSimToMeter( rDist ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeDistancePointFromBackLine
+// Created: NLD 2003-09-29
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::ComputeDistancePointFromBackLine( DIA_Call_ABC& call, const MIL_Automate& /*callerAgent*/ )
+{
+    assert( DEC_Tools::CheckTypeCalculLignesAvantArriere( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypePoint( call.GetParameter( 1 ) ) );
+
+    DEC_FrontAndBackLinesComputer* pComputer = call.GetParameter( 0 ).ToUserPtr( pComputer );
+    assert( pComputer );
+
+    const MT_Vector2D* pPoint = call.GetParameter( 1 ).ToUserPtr( pPoint );
+    assert( pPoint );
+
+    MT_Float rDist = pComputer->ComputeDistanceFromBackLine( *pPoint );
+    call.GetResult().SetValue( MIL_Tools::ConvertSimToMeter( rDist ) );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ClipLocalisationInFuseau
