@@ -147,6 +147,7 @@ public:
             void OnReceiveMsgOrder                ( const ASN1T_MsgAutomatOrder&                    msg );
             void OnReceiveMsgFragOrder            ( const ASN1T_MsgFragOrder&                        msg );
             void OnReceiveMsgSetAutomateMode      ( const ASN1T_MsgSetAutomatMode&                  msg );
+            void OnReceiveMsgUnitCreationRequest  ( const ASN1T_MsgUnitCreationRequest&              msg );
             void OnReceiveMsgUnitMagicAction      ( const ASN1T_MsgUnitMagicAction&                  msg );
             void OnReceiveMsgChangeKnowledgeGroup ( const ASN1T_MsgAutomatChangeKnowledgeGroup& msg );
     virtual void OnReceiveMsgChangeLogisticLinks  ( const ASN1T_MsgAutomatChangeLogisticLinks&   msg );

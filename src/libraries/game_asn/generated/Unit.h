@@ -1529,7 +1529,6 @@ EXTERN void asn1Print_MsgUnitMagicActionAck (ASN1ConstCharPtr name, ASN1T_MsgUni
 /**************************************************************/
 
 typedef struct EXTERN ASN1T_MsgUnitCreationRequest {
-   ASN1VisibleString  nom;
    ASN1T_UnitType  type_pion;
    ASN1T_Automat  oid_automate;
    ASN1T_CoordUTM  position;

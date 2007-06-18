@@ -102,10 +102,11 @@ GENERATE_EMPTY_ASN_MSG_SENDER( SimToClient, ControlSendCurrentStateBegin    , ct
 GENERATE_EMPTY_ASN_MSG_SENDER( SimToClient, ControlSendCurrentStateEnd      , ctrl_send_current_state_end       )
                                                                                             
 // Unit
-GENERATE_ASN_MSG_SENDER( SimToClient, UnitCreation       , pion_creation         )
-GENERATE_ASN_MSG_SENDER( SimToClient, UnitAttributes     , unit_attributes       )
-GENERATE_ASN_MSG_SENDER( SimToClient, UnitMagicActionAck , unit_magic_action_ack )
-GENERATE_ASN_MSG_SENDER( SimToClient, UnitPathFind       , unit_pathfind         )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, UnitCreation              , pion_creation         )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, UnitAttributes            , unit_attributes       )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, UnitMagicActionAck        , unit_magic_action_ack )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, UnitPathFind              , unit_pathfind         )
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, UnitCreationRequestAck    , unit_creation_request_ack )
 
 // Automate
 GENERATE_ASN_MSG_SENDER( SimToClient, AutomatCreation   , automate_creation   )

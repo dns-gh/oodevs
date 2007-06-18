@@ -41,6 +41,7 @@
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AsnException.h"
+#include "Network/NET_ASN_Tools.h"
 #include "Decision/DEC_ModelAutomate.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
@@ -834,6 +835,22 @@ void MIL_Automate::OnReceiveMsgSetAutomateMode( const ASN1T_MsgSetAutomatMode& a
         default:
             assert( false );
     };
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::OnReceiveMsgUnitCreationRequest
+// Created: AGE 2007-06-18
+// -----------------------------------------------------------------------------
+void MIL_Automate::OnReceiveMsgUnitCreationRequest( const ASN1T_MsgUnitCreationRequest& msg )
+{   
+    const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( msg.type_pion );
+    if( !pType )
+        throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_unit );
+
+    MT_Vector2D position;
+    NET_ASN_Tools::ReadPoint( msg.position, position );
+    MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager()
+                        .CreatePion( *pType, *this, position ); // Auto-registration
 }
 
 // -----------------------------------------------------------------------------

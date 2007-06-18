@@ -5908,14 +5908,6 @@ EXTERN int asn1PE_MsgUnitCreationRequest (ASN1CTXT* ctxt_p, ASN1T_MsgUnitCreatio
 
    rtdiag ("asn1PE_MsgUnitCreationRequest: start\n");
 
-   /* encode nom */
-
-   PU_PUSHNAME (ctxt_p, "nom");
-
-   stat = pe_VisibleString (ctxt_p, pvalue->nom, 0);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
    /* encode type_pion */
 
    PU_PUSHNAME (ctxt_p, "type_pion");
@@ -5957,15 +5949,6 @@ EXTERN int asn1PD_MsgUnitCreationRequest (ASN1CTXT* ctxt_p, ASN1T_MsgUnitCreatio
    int stat = ASN_OK;
 
    rtdiag ("asn1PD_MsgUnitCreationRequest: start\n");
-
-   /* decode nom */
-
-   PU_PUSHNAME (ctxt_p, "nom");
-
-   stat = pd_VisibleString (ctxt_p, &pvalue->nom, 0);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
 
    /* decode type_pion */
 

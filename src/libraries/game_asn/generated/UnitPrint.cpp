@@ -1221,9 +1221,6 @@ void asn1Print_MsgUnitCreationRequest (ASN1ConstCharPtr name, ASN1T_MsgUnitCreat
 {
    char namebuf[512];
 
-   sprintf (namebuf, "%s.nom", name);
-   rtPrintCharStr (namebuf, pvalue->nom);
-
    sprintf (namebuf, "%s.type_pion", name);
    asn1Print_UnitType (namebuf, &pvalue->type_pion);
 

@@ -936,6 +936,28 @@ void MIL_EntityManager::OnReceiveMsgSetAutomateMode( const ASN1T_MsgSetAutomatMo
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveMsgUnitCreationRequest
+// Created: AGE 2007-06-18
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveMsgUnitCreationRequest( const ASN1T_MsgUnitCreationRequest& msg, uint nCtx )
+{
+    NET_ASN_MsgUnitCreationRequestAck ack;
+    ack() = EnumUnitErrorCode::no_error;
+    try
+    {
+        MIL_Automate* pAutomate = FindAutomate( msg.oid_automate );
+        if( !pAutomate )
+            throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_unit );
+        pAutomate->OnReceiveMsgUnitCreationRequest( msg );
+    }
+    catch( NET_AsnException< ASN1T_EnumUnitErrorCode >& e )
+    {
+        ack() = e.GetErrorID();
+    }
+    ack.Send( nCtx );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgObjectMagicAction
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
