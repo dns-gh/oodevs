@@ -50,7 +50,7 @@ static const char* idClassesXml =
 "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"
 "<Classes>"
 "    <Classe nom=\"Unite\"                                 id=\"1\" />"
-"    <Classe nom=\"UnitFire\"                               id=\"2\" />"
+"    <Classe nom=\"TirPion\"                               id=\"2\" />"
 "    <Classe nom=\"TirPopulation\"                         id=\"227\" />"
 "    <Classe nom=\"Lima\"                                  id=\"137\" />"
 "    <Classe nom=\"Limite\"                                id=\"138\" />"
