@@ -139,8 +139,8 @@ void ChangeHumanFactorsDialog::Validate()
 {
     if( ! selected_ )
         return;
-    const ASN1T_EnumUnitFatigue tiredness = (ASN1T_EnumUnitFatigue)pTirednessCombo_->GetValue();
-    const ASN1T_EnumUnitMoral moral = (ASN1T_EnumUnitMoral)pMoralCombo_->GetValue();
+    const ASN1T_EnumUnitTiredness tiredness = (ASN1T_EnumUnitTiredness)pTirednessCombo_->GetValue();
+    const ASN1T_EnumUnitMorale moral = (ASN1T_EnumUnitMorale)pMoralCombo_->GetValue();
     const ASN1T_EnumUnitExperience experience = (ASN1T_EnumUnitExperience)pExperienceCombo_->GetValue();
     Iterator< const Entity_ABC& > it = selected_->Get< CommunicationHierarchies >().CreateSubordinateIterator();
     SendMessage( *selected_, tiredness, moral, experience );
@@ -151,7 +151,7 @@ void ChangeHumanFactorsDialog::Validate()
 // Name: ChangeHumanFactorsDialog::SendMessage
 // Created: AGE 2006-12-01
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, ASN1T_EnumUnitFatigue tiredness, ASN1T_EnumUnitMoral moral, ASN1T_EnumUnitExperience experience )
+void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, ASN1T_EnumUnitTiredness tiredness, ASN1T_EnumUnitMorale moral, ASN1T_EnumUnitExperience experience )
 {
     if( entity.Retrieve< HumanFactors_ABC >() )
         SendMessage( entity.GetId(), tiredness, moral, experience );
@@ -170,12 +170,12 @@ void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, AS
 // Name: ChangeHumanFactorsDialog::SendMessage
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::SendMessage( uint id, ASN1T_EnumUnitFatigue tiredness, ASN1T_EnumUnitMoral moral, ASN1T_EnumUnitExperience experience )
+void ChangeHumanFactorsDialog::SendMessage( uint id, ASN1T_EnumUnitTiredness tiredness, ASN1T_EnumUnitMorale moral, ASN1T_EnumUnitExperience experience )
 {
     ASN_MsgUnitMagicAction asnMsg;
     asnMsg().oid = id;
 
-    ASN1T_MagicActionChangeFacteursHumains asnMagicAction;
+    ASN1T_MagicActionChangeHumanFactors asnMagicAction;
 
     asnMsg().action.t                         = T_MsgUnitMagicAction_action_change_facteurs_humains;
     asnMsg().action.u.change_facteurs_humains = &asnMagicAction;

@@ -186,7 +186,7 @@ void DEC_Knowledge_ObjectRota::BuildMsgSpecificAttributes( ASN1T_MsgObjectKnowle
     }
 
     asnMsg.m.attributs_specifiquesPresent = 1;
-    asnMsg.attributs_specifiques.t        = T_AttrObjectSpecific_rota;
+    asnMsg.attributs_specifiques.t        = T_ObjectAttributesSpecific_rota;
     asnMsg.attributs_specifiques.u.rota   = &asnAttributes_;
 }
 

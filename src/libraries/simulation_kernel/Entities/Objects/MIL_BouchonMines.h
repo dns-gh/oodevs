@@ -76,7 +76,7 @@ private:
 
 private:
     // Specific attributes
-    ASN1T_AttrObjectBouchonMines asnAttributes_;
+    ASN1T_ObjectAttributesMineJam asnAttributes_;
 
     uint nMinesActivityTime_;
     uint nDeathTimeStep_;

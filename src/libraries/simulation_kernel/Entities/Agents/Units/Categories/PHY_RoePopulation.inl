@@ -71,7 +71,7 @@ uint PHY_RoePopulation::GetID() const
 // Created: NLD 2005-11-15
 // -----------------------------------------------------------------------------
 inline
-ASN1T_EnumRoePopulation PHY_RoePopulation::GetAsnID() const
+ASN1T_EnumPopulationRoe PHY_RoePopulation::GetAsnID() const
 {
     return nAsnID_;
 }

@@ -41,7 +41,7 @@ namespace
     class AsnSerializer : public ParamVisitor_ABC
     {
     public:
-        AsnSerializer( ASN1T_ListPoint& list )
+        AsnSerializer( ASN1T_PointList& list )
             : list_( list )
             , index_( 0 )
         {}
@@ -53,7 +53,7 @@ namespace
         }
 
     private:
-        ASN1T_ListPoint& list_;
+        ASN1T_PointList& list_;
         unsigned int index_;
     };
 }
@@ -64,8 +64,8 @@ namespace
 // -----------------------------------------------------------------------------
 void ParamPointList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    ASN1T_ListPoint*& list = asn.value.u.listPoint = new ASN1T_ListPoint();
-    asn.value.t = T_MissionParameter_value_listPoint;
+    ASN1T_PointList*& list = asn.value.u.pointList = new ASN1T_PointList();
+    asn.value.t = T_MissionParameter_value_pointList;
     list->n = Count();
     asn.null_value = list->n ? 0 : 1;
     if( asn.null_value )
@@ -81,13 +81,13 @@ void ParamPointList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamPointList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listPoint )
+    if( asn.value.u.pointList )
     {
-        for( unsigned int i = 0; i < asn.value.u.listPoint->n; ++i )
-            delete[] asn.value.u.listPoint->elem[i].vecteur_point.elem;
-        delete[] asn.value.u.listPoint->elem;
+        for( unsigned int i = 0; i < asn.value.u.pointList->n; ++i )
+            delete[] asn.value.u.pointList->elem[i].vecteur_point.elem;
+        delete[] asn.value.u.pointList->elem;
     }
-    delete asn.value.u.listPoint;
+    delete asn.value.u.pointList;
 }
 
 

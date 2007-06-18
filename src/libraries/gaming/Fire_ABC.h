@@ -25,7 +25,7 @@ namespace kernel
 */
 // Created: AGE 2006-03-10
 // =============================================================================
-class Fire_ABC : public kernel::Updatable_ABC< ASN1T_MsgStopPionFire >
+class Fire_ABC : public kernel::Updatable_ABC< ASN1T_MsgStopUnitFire >
                , public kernel::Updatable_ABC< ASN1T_MsgStopPopulationFire >
                , public kernel::Drawable_ABC
 {
@@ -39,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const ASN1T_MsgStopPionFire& message );
+    virtual void DoUpdate( const ASN1T_MsgStopUnitFire& message );
     virtual void DoUpdate( const ASN1T_MsgStopPopulationFire& message );
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const = 0;
     //@}

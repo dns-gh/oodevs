@@ -37,7 +37,7 @@
 #include "MOS_ASN_Types.h"
 #include "MOS_PointListViewItem.h"
 #include "MOS_MTH_Localisation.h"
-#include "MOS_MTH_ListLocalisation_ListView.h"
+#include "MOS_MTH_LocationList_ListView.h"
 #include "MOS_MTH_PointList_ListView.h"
 #include "MOS_MTH_Obstacle_ListView.h"
 #include "MOS_MTH_NatureAtlas.h"
@@ -52,7 +52,7 @@ using namespace DIN;
 MOS_MissionAutomate::MOS_MissionAutomate( E_MissionID nTypeMission, QWidget* pParent )
     : MOS_Mission_ABC( nTypeMission, pParent )
 {
-    pASNMsgOrder_ = new MOS_ASN_MsgAutomateOrder();
+    pASNMsgOrder_ = new MOS_ASN_MsgAutomatOrder();
 }
 
 
@@ -99,9 +99,9 @@ void MOS_MissionAutomate::Initialize()
     pTmpLayout = new QHBoxLayout( pCommonLayout_ );
 
     // Formation
-    MOS_ValueButtonList<ASN1T_EnumAutomateOrderFormation>* pFormation = &CreateVarList( pASNMsgOrder_->GetAsnMsg().formation, pCommonWidget_, pTmpLayout, "Formation", 1, 3, true  );
-    pFormation->CreateValue( "Un échelon"   , EnumAutomateOrderFormation::un_echelon, true );
-    pFormation->CreateValue( "Deux échelons", EnumAutomateOrderFormation::deux_echelons );
+    MOS_ValueButtonList<ASN1T_EnumAutomatOrderFormation>* pFormation = &CreateVarList( pASNMsgOrder_->GetAsnMsg().formation, pCommonWidget_, pTmpLayout, "Formation", 1, 3, true  );
+    pFormation->CreateValue( "Un échelon"   , EnumAutomatOrderFormation::un_echelon, true );
+    pFormation->CreateValue( "Deux échelons", EnumAutomatOrderFormation::deux_echelons );
 
     // Direction ennemi
     CreateDirection( pASNMsgOrder_->GetAsnMsg().direction_dangereuse, pCommonWidget_, pCommonLayout_, "Direction dangereuse", true );

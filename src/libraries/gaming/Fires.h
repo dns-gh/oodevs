@@ -32,8 +32,8 @@ class FireFactory;
 // Created: AGE 2006-03-10
 // =============================================================================
 class Fires : public kernel::Extension_ABC 
-            , public kernel::Updatable_ABC< ASN1T_MsgStartPionFire >
-            , public kernel::Updatable_ABC< ASN1T_MsgStopPionFire >
+            , public kernel::Updatable_ABC< ASN1T_MsgStartUnitFire >
+            , public kernel::Updatable_ABC< ASN1T_MsgStopUnitFire >
             , public kernel::Updatable_ABC< ASN1T_MsgStartPopulationFire >
             , public kernel::Updatable_ABC< ASN1T_MsgStopPopulationFire >
             , public kernel::Resolver< Fire_ABC >
@@ -65,8 +65,8 @@ private:
     void CreateFire( const T& message );
     template< typename T >
     void DestroyFire( const T& message );
-    virtual void DoUpdate( const ASN1T_MsgStartPionFire& message );
-    virtual void DoUpdate( const ASN1T_MsgStopPionFire& message );
+    virtual void DoUpdate( const ASN1T_MsgStartUnitFire& message );
+    virtual void DoUpdate( const ASN1T_MsgStopUnitFire& message );
     virtual void DoUpdate( const ASN1T_MsgStartPopulationFire& message );
     virtual void DoUpdate( const ASN1T_MsgStopPopulationFire& message );
     //@}

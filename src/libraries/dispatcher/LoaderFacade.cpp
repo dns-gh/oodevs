@@ -82,16 +82,16 @@ void LoaderFacade::OnReceive( const ASN1T_MsgsClientToMiddle& asnMsg )
 void LoaderFacade::ChangeTimeFactor( unsigned factor )
 {
     // $$$$ NLD 2007-04-24: A CHANGER => MiddleToClient
-    AsnMsgSimToClientCtrlChangeTimeFactorAck asn;
+    AsnMsgSimToClientControlChangeTimeFactorAck asn;
 
     if( factor )
     {
         factor_ = factor;
         MT_Timer_ABC::Start( MT_TimeSpan( (int)( 10000 / factor ) ) );
-        asn().error_code = EnumCtrlErrorCode::no_error;
+        asn().error_code = EnumControlErrorCode::no_error;
     }
     else
-        asn().error_code = EnumCtrlErrorCode::error_invalid_time_factor;
+        asn().error_code = EnumControlErrorCode::error_invalid_time_factor;
 
     asn().time_factor = factor_;
     asn.Send( clients_ );
@@ -105,14 +105,14 @@ void LoaderFacade::TogglePause( bool pause )
 {
     if( pause )
     {
-        AsnMsgSimToClientCtrlPauseAck asn;
-        asn() = running_ ? EnumCtrlErrorCode::no_error : EnumCtrlErrorCode::error_already_paused;
+        AsnMsgSimToClientControlPauseAck asn;
+        asn() = running_ ? EnumControlErrorCode::no_error : EnumControlErrorCode::error_already_paused;
         asn.Send( clients_ );
     }
     else
     {
-        AsnMsgSimToClientCtrlResumeAck asn;
-        asn() = running_ ? EnumCtrlErrorCode::error_not_paused :  EnumCtrlErrorCode::no_error;
+        AsnMsgSimToClientControlResumeAck asn;
+        asn() = running_ ? EnumControlErrorCode::error_not_paused :  EnumControlErrorCode::no_error;
         asn.Send( clients_ );
     }
     running_ = !pause;
@@ -124,17 +124,17 @@ void LoaderFacade::TogglePause( bool pause )
 // -----------------------------------------------------------------------------
 void LoaderFacade::SkipToFrame( unsigned frame )
 {
-    AsnMsgMiddleToClientCtrlSkipToTickAck asn;
+    AsnMsgMiddleToClientControlSkipToTickAck asn;
 
     asn().tick = loader_->GetCurrentTick();
     if( frame < loader_->GetTickNumber() )
     {
         asn().tick = frame;    
-        asn().error_code = EnumCtrlErrorCode::no_error;
+        asn().error_code = EnumControlErrorCode::no_error;
         MT_LOG_INFO_MSG( "Skipping to frame " << frame );
     }
     else
-        asn().error_code = EnumCtrlErrorCode::error_invalid_time_factor;
+        asn().error_code = EnumControlErrorCode::error_invalid_time_factor;
     asn.Send( clients_ );
     if( frame < loader_->GetTickNumber() )
         loader_->SkipToFrame( frame );
@@ -146,11 +146,11 @@ void LoaderFacade::SkipToFrame( unsigned frame )
 // -----------------------------------------------------------------------------
 void LoaderFacade::Send( Publisher_ABC& publisher ) const
 {
-    AsnMsgMiddleToClientCtrlReplayInfo asn;
+    AsnMsgMiddleToClientControlReplayInformation asn;
     asn().current_tick  = loader_->GetCurrentTick();
     asn().tick_duration = 10; // $$$$ AGE 2007-04-11: 
     asn().time_factor = factor_;
-    asn().etat = running_ ? EnumEtatSim::running : EnumEtatSim::paused;
+    asn().etat = running_ ? EnumSimulationState::running : EnumSimulationState::paused;
     asn().tick_count = loader_->GetTickNumber();
 
     asn.Send( publisher );

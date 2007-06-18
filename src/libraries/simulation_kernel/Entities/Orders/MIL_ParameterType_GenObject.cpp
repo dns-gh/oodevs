@@ -43,14 +43,14 @@ MIL_ParameterType_GenObject::~MIL_ParameterType_GenObject()
 void MIL_ParameterType_GenObject::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_missionGenObject ) 
+    if( from.null_value || from.value.t != T_MissionParameter_value_plannedWork ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( !DEC_Tools::CheckTypeGenObjet( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    NET_ASN_Tools::CopyGenObject( *from.value.u.missionGenObject, to );
+    NET_ASN_Tools::CopyGenObject( *from.value.u.plannedWork, to );
 }
 
 //-----------------------------------------------------------------------------
@@ -82,10 +82,10 @@ bool MIL_ParameterType_GenObject::Copy( const DIA_Variable_ABC& from, ASN1T_Miss
         return false;
 
     to.null_value               = false;
-    to.value.t                  = T_MissionParameter_value_missionGenObject;
-    to.value.u.missionGenObject = new ASN1T_MissionGenObject();
+    to.value.t                  = T_MissionParameter_value_plannedWork;
+    to.value.u.plannedWork = new ASN1T_PlannedWork();
     
-    if( !NET_ASN_Tools::CopyGenObject( from, *to.value.u.missionGenObject ) )
+    if( !NET_ASN_Tools::CopyGenObject( from, *to.value.u.plannedWork ) )
         return false;
 
     return true;    
@@ -97,8 +97,8 @@ bool MIL_ParameterType_GenObject::Copy( const DIA_Variable_ABC& from, ASN1T_Miss
 //-----------------------------------------------------------------------------
 void MIL_ParameterType_GenObject::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_missionGenObject );
-    assert( to.value.u.missionGenObject );
-    NET_ASN_Tools::Delete( *to.value.u.missionGenObject );
-    delete to.value.u.missionGenObject;    
+    assert( to.value.t == T_MissionParameter_value_plannedWork );
+    assert( to.value.u.plannedWork );
+    NET_ASN_Tools::Delete( *to.value.u.plannedWork );
+    delete to.value.u.plannedWork;    
 }

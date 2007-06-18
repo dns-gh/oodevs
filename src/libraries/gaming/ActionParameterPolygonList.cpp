@@ -27,8 +27,8 @@ ActionParameterPolygonList::ActionParameterPolygonList( const OrderParameter& pa
 // Name: ActionParameterPolygonList constructor
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-ActionParameterPolygonList::ActionParameterPolygonList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_ListPolygon& asn )
-    : ActionParameterLocationList( parameter, converter, (const ASN1T_ListLocalisation&)asn )
+ActionParameterPolygonList::ActionParameterPolygonList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_PolygonList& asn )
+    : ActionParameterLocationList( parameter, converter, (const ASN1T_LocationList&)asn )
 {
     // NOTHING
 }
@@ -59,9 +59,9 @@ ActionParameterPolygonList::~ActionParameterPolygonList()
 void ActionParameterPolygonList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value = 0;
-    asn.value.t = T_MissionParameter_value_listPolygon;
-    asn.value.u.listPolygon = new ASN1T_ListPolygon();
-    ActionParameterLocationList::CommitTo( *(ASN1T_ListLocalisation*)asn.value.u.listPolygon );
+    asn.value.t = T_MissionParameter_value_polygonList;
+    asn.value.u.polygonList = new ASN1T_PolygonList();
+    ActionParameterLocationList::CommitTo( *(ASN1T_LocationList*)asn.value.u.polygonList );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +70,7 @@ void ActionParameterPolygonList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ActionParameterPolygonList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listPolygon )
-        ActionParameterLocationList::Clean( *(ASN1T_ListLocalisation*)asn.value.u.listPolygon );
-    delete asn.value.u.listPolygon;
+    if( asn.value.u.polygonList )
+        ActionParameterLocationList::Clean( *(ASN1T_LocationList*)asn.value.u.polygonList );
+    delete asn.value.u.polygonList;
 }

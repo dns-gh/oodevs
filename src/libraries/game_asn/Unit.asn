@@ -13,22 +13,22 @@ UnitIncludes ::= SEQUENCE { BaseExports }
 UnitExports  ::= NULL
 -- END includes
 
-EquipementPrete ::= SEQUENCE
+LentEquipment ::= SEQUENCE
 {
-    oid-pion-emprunteur Agent,
-    type-equipement     TypeEquipement,
+    oid-pion-emprunteur Unit,
+    type-equipement     EquipmentType,
     nombre              INTEGER
 }
 
-EquipementEmprunte ::= SEQUENCE
+BorrowedEquipment ::= SEQUENCE
 {
-    oid-pion-preteur Agent,
-    type-equipement  TypeEquipement,
+    oid-pion-preteur Unit,
+    type-equipement  EquipmentType,
     nombre           INTEGER
 }
 
 -- Personnel
-DotationPersonnel ::= SEQUENCE 
+HumanDotations ::= SEQUENCE 
 {
     rang                         EnumHumanRank,
     nb-total                     INTEGER, 
@@ -42,9 +42,9 @@ DotationPersonnel ::= SEQUENCE
 }
 
 -- Equipement
-DotationEquipement ::= SEQUENCE
+EquipmentDotations ::= SEQUENCE
 {
-    type-equipement            TypeEquipement,
+    type-equipement            EquipmentType,
     nb-disponibles             INTEGER,
     nb-indisponibles           INTEGER,
     nb-reparables              INTEGER,
@@ -53,20 +53,20 @@ DotationEquipement ::= SEQUENCE
 }
 
 -- Ressources
-DotationRessource ::= SEQUENCE 
+ResourceDotations ::= SEQUENCE 
 {
-    ressource-id        TypeDotation,
+    ressource-id        DotationType,
     quantite-disponible INTEGER
 }
 
-EnumUnitFatigue ::= ENUMERATED
+EnumUnitTiredness ::= ENUMERATED
 {
     normal  (0),
     fatigue (1),
     epuise  (2)  
 }
 
-EnumUnitMoral ::= ENUMERATED
+EnumUnitMorale ::= ENUMERATED
 {
     fanatique(0),
     bon      (1),
@@ -92,7 +92,7 @@ EnumUnitPosture ::= ENUMERATED
     posture-poste-prepare-genie (6)
 }
 
-EnumEtatRapFor ::= ENUMERATED
+EnumForceRatioStatus ::= ENUMERATED
 {
     none        (0),
     neutre      (1),
@@ -108,7 +108,7 @@ EnumRoe ::= ENUMERATED
     tir-interdit   (3)
 }
 
-EnumRoePopulation ::= ENUMERATED
+EnumPopulationRoe ::= ENUMERATED
 {
     none                                        (0),
     emploi-force-interdit                       (1),
@@ -117,7 +117,7 @@ EnumRoePopulation ::= ENUMERATED
     armes-letales-autorisees                    (4)
 }
 
-EnumEtatCombatRencontre ::= ENUMERATED
+EnumMeetingEngagementStatus ::= ENUMERATED
 {
     none                  (0),
     etat-esquive          (1),
@@ -125,14 +125,14 @@ EnumEtatCombatRencontre ::= ENUMERATED
     etat-poursuite-mission(3)               
 }
 
-EnumEtatOperationnel ::= ENUMERATED
+EnumOperationalStatus ::= ENUMERATED
 {
     detruit-totalement      (0),
     detruit-tactiquement    (1),
     operationnel            (2)
 }
 
-EnumDisponibiliteAuTir ::= ENUMERATED
+EnumFireAvailability ::= ENUMERATED
 {
     none         (0),
     pret-au-tir  (1),
@@ -140,32 +140,32 @@ EnumDisponibiliteAuTir ::= ENUMERATED
 }
 
 
-MsgPionCreation ::= SEQUENCE
+MsgUnitCreation ::= SEQUENCE
 {
-    oid-pion        Agent,
-    type-pion       TypePion,
+    oid-pion        Unit,
+    type-pion       UnitType,
     nom             VisibleString,
-    oid-automate    Automate,
+    oid-automate    Automat,
     pc              BOOLEAN
 }
 
 MsgUnitAttributes ::= SEQUENCE
 {
-    oid-pion                      Agent,
+    oid-pion                      Unit,
     
-    dotation-eff-personnel        SEQUENCE OF DotationPersonnel     OPTIONAL, -- Dotations effectives du pion DELTA
-    dotation-eff-materiel         SEQUENCE OF DotationEquipement    OPTIONAL, -- DELTA
-    dotation-eff-ressource        SEQUENCE OF DotationRessource     OPTIONAL, -- DELTA
-    equipements-pretes            SEQUENCE OF EquipementPrete       OPTIONAL, -- FULL
-    equipements-empruntes         SEQUENCE OF EquipementEmprunte    OPTIONAL, -- FULL
+    dotation-eff-personnel        SEQUENCE OF HumanDotations     OPTIONAL, -- Dotations effectives du pion DELTA
+    dotation-eff-materiel         SEQUENCE OF EquipmentDotations    OPTIONAL, -- DELTA
+    dotation-eff-ressource        SEQUENCE OF ResourceDotations     OPTIONAL, -- DELTA
+    equipements-pretes            SEQUENCE OF LentEquipment       OPTIONAL, -- FULL
+    equipements-empruntes         SEQUENCE OF BorrowedEquipment    OPTIONAL, -- FULL
         
     position				      CoordUTM                          OPTIONAL,
-    direction                     Direction                         OPTIONAL, -- en degrés
-    hauteur                       Hauteur                           OPTIONAL, -- hauteur d'un pion 3D par rapport au sol en mètres
-    vitesse                       Vitesse                           OPTIONAL, -- en km/h
-    etat-operationnel-brut        PourcentageLibre                  OPTIONAL,
-    pions-renforcant              ListAgent                         OPTIONAL,
-    pion-renforce                 Agent                             OPTIONAL, -- '0' quand pas en renfort
+    direction                     Heading                         OPTIONAL, -- en degrés
+    hauteur                       Height                           OPTIONAL, -- hauteur d'un pion 3D par rapport au sol en mètres
+    vitesse                       Speed                           OPTIONAL, -- en km/h
+    etat-operationnel-brut        FreePercentage                  OPTIONAL,
+    pions-renforcant              UnitList                         OPTIONAL,
+    pion-renforce                 Unit                             OPTIONAL, -- '0' quand pas en renfort
     mort                          BOOLEAN                           OPTIONAL,   
     neutralise                    BOOLEAN                           OPTIONAL,   
     mode-furtif-actif             BOOLEAN                           OPTIONAL,
@@ -174,94 +174,94 @@ MsgUnitAttributes ::= SEQUENCE
     
     posture-old                   EnumUnitPosture                   OPTIONAL,
     posture-new                   EnumUnitPosture                   OPTIONAL,
-    posture-pourcentage           Pourcentage                       OPTIONAL,
+    posture-pourcentage           Percentage                       OPTIONAL,
     
-    etat-installation             Pourcentage                       OPTIONAL,
+    etat-installation             Percentage                       OPTIONAL,
                                                                     
     en-tenue-de-protection-nbc    BOOLEAN                           OPTIONAL,
     contamine-par-agents-nbc      ListOID                           OPTIONAL,          -- ID d'agents chimiques - Cf. MOS/IDClasses.xml
-    etat-contamination            Pourcentage                       OPTIONAL,
+    etat-contamination            Percentage                       OPTIONAL,
     
     communications-brouillees     BOOLEAN                           OPTIONAL,
     silence-radio                 BOOLEAN                           OPTIONAL,
     radar-actif                   BOOLEAN                           OPTIONAL,
     
-    pions-transportes             ListAgent                         OPTIONAL, 
-    pion-transporteur             Agent                             OPTIONAL, -- '0' quand aucun transporteur
+    pions-transportes             UnitList                         OPTIONAL, 
+    pion-transporteur             Unit                             OPTIONAL, -- '0' quand aucun transporteur
     
-    rapport-de-force              EnumEtatRapFor                    OPTIONAL,
-    combat-de-rencontre           EnumEtatCombatRencontre           OPTIONAL,
-    etat-operationnel             EnumEtatOperationnel              OPTIONAL,
-    disponibilite-au-tir-indirect EnumDisponibiliteAuTir            OPTIONAL,
+    rapport-de-force              EnumForceRatioStatus                    OPTIONAL,
+    combat-de-rencontre           EnumMeetingEngagementStatus           OPTIONAL,
+    etat-operationnel             EnumOperationalStatus              OPTIONAL,
+    disponibilite-au-tir-indirect EnumFireAvailability            OPTIONAL,
     roe                           EnumRoe                           OPTIONAL,
-    roe-population                EnumRoePopulation                 OPTIONAL,
+    roe-population                EnumPopulationRoe                 OPTIONAL,
     
-    fatigue                       EnumUnitFatigue                   OPTIONAL,
-    moral                         EnumUnitMoral                     OPTIONAL,
+    fatigue                       EnumUnitTiredness                   OPTIONAL,
+    moral                         EnumUnitMorale                     OPTIONAL,
     experience                    EnumUnitExperience                OPTIONAL,
     
-    rendu                         Camp                              OPTIONAL, -- '0' quand pas rendu
+    rendu                         Team                              OPTIONAL, -- '0' quand pas rendu
     prisonnier                    BOOLEAN                           OPTIONAL,
     refugie-pris-en-compte        BOOLEAN                           OPTIONAL
 }
 
-MsgPionDestruction ::= OID
+MsgUnitDestruction ::= OID
 
 -- Actions magiques
 
-MagicActionRecupererTransporteurs   ::= NULL
-MagicActionSeRendre                 ::= Camp
-MagicActionAnnulerReddition         ::= NULL
+MagicActionRecoverTransporters      ::= NULL
+MagicActionSurrender                ::= Team
+MagicActionCancelRendition          ::= NULL
 MagicActionMoveTo                   ::= CoordUTM    -- Position
-MagicActionDestructionTotale        ::= NULL
-MagicActionRecompletementTotal      ::= NULL
-MagicActionRecompletementPersonnel  ::= NULL
-MagicActionRecompletementEquipement ::= NULL
-MagicActionRecompletementRessources ::= NULL
-MagicActionChangeFacteursHumains    ::= SEQUENCE
+MagicActionTotalDestruction         ::= NULL
+MagicActionTotalRecovery            ::= NULL
+MagicActionHumanRecovery            ::= NULL
+MagicActionEquipmentRecovery        ::= NULL
+MagicActionRessourcesRecovery       ::= NULL
+MagicActionChangeHumanFactors       ::= SEQUENCE
 {
-    fatigue    EnumUnitFatigue    OPTIONAL,
-    moral      EnumUnitMoral      OPTIONAL,
+    fatigue    EnumUnitTiredness    OPTIONAL,
+    moral      EnumUnitMorale      OPTIONAL,
     experience EnumUnitExperience OPTIONAL
 }
 
-RecompletementDotation ::= SEQUENCE
+DotationRecovery ::= SEQUENCE
 {
-    famille-dotation    EnumFamilleDotation,
-    pourcentage         Pourcentage
+    famille-dotation    EnumDotationFamily,
+    pourcentage         Percentage
 }
 
-RecompletementDotationMunition ::= SEQUENCE
+AmmunitionDotationRecovery ::= SEQUENCE
 {
-    famille-munition EnumFamilleMunition,
-    pourcentage      Pourcentage
+    famille-munition EnumAmmunitionFamily,
+    pourcentage      Percentage
 }
 
-RecompletementEquipement ::= SEQUENCE
+EquipmentRecovery ::= SEQUENCE
 {
-    type-equipement   TypeEquipement,
+    type-equipement   EquipmentType,
     nombre-disponible INTEGER
 }
 
-RecompletementPersonnel ::= SEQUENCE
+HumanRecovery ::= SEQUENCE
 {
     rang              EnumHumanRank,
     nombre-disponible INTEGER
 }
 
-RecompletementStock ::= SEQUENCE
+StockRecovery ::= SEQUENCE
 {
-    ressource-id        TypeDotation,
+    ressource-id        DotationType,
     quantite-disponible INTEGER
 }
 
-MagicActionRecompletementPartiel ::= SEQUENCE
+MagicActionPartialRecovery ::= SEQUENCE
 {
-    equipements SEQUENCE OF RecompletementEquipement        OPTIONAL,
-    personnels  SEQUENCE OF RecompletementPersonnel         OPTIONAL,    
-    dotations   SEQUENCE OF RecompletementDotation          OPTIONAL,
-    munitions   SEQUENCE OF RecompletementDotationMunition  OPTIONAL,
-    stocks      SEQUENCE OF RecompletementStock             OPTIONAL
+    equipements SEQUENCE OF EquipmentRecovery        OPTIONAL,
+    personnels  SEQUENCE OF HumanRecovery         OPTIONAL,    
+    dotations   SEQUENCE OF DotationRecovery          OPTIONAL,
+    munitions   SEQUENCE OF AmmunitionDotationRecovery  OPTIONAL,
+    stocks      SEQUENCE OF StockRecovery             OPTIONAL
 }
 
 MsgUnitMagicAction ::= SEQUENCE
@@ -270,20 +270,20 @@ MsgUnitMagicAction ::= SEQUENCE
     action  CHOICE
     {
         move-to                     MagicActionMoveTo,
-        recompletement-total        MagicActionRecompletementTotal,
-        recompletement-partiel      MagicActionRecompletementPartiel,
-        recompletement-personnel    MagicActionRecompletementPersonnel,
-        recompletement-equipement   MagicActionRecompletementEquipement,
-        recompletement-ressources   MagicActionRecompletementRessources,
-        change-facteurs-humains     MagicActionChangeFacteursHumains,
-        destruction-totale          MagicActionDestructionTotale,
-        se-rendre                   MagicActionSeRendre,
-        annuler-reddition           MagicActionAnnulerReddition,
-        recuperer-transporteurs     MagicActionRecupererTransporteurs
+        recompletement-total        MagicActionTotalRecovery,
+        recompletement-partiel      MagicActionPartialRecovery,
+        recompletement-personnel    MagicActionHumanRecovery,
+        recompletement-equipement   MagicActionEquipmentRecovery,
+        recompletement-ressources   MagicActionRessourcesRecovery,
+        change-facteurs-humains     MagicActionChangeHumanFactors,
+        destruction-totale          MagicActionTotalDestruction,
+        se-rendre                   MagicActionSurrender,
+        annuler-reddition           MagicActionCancelRendition,
+        recuperer-transporteurs     MagicActionRecoverTransporters
     }       
 }
 
-EnumUnitAttrErrorCode ::= ENUMERATED
+EnumUnitErrorCode ::= ENUMERATED
 {
     no-error                (0),
     error-invalid-unit      (1),
@@ -295,26 +295,34 @@ EnumUnitAttrErrorCode ::= ENUMERATED
 MsgUnitMagicActionAck ::= SEQUENCE
 {
     oid         OID,
-    error-code  EnumUnitAttrErrorCode
+    error-code  EnumUnitErrorCode
 }
 
--- Path finder
+MsgUnitCreationRequest ::= SEQUENCE
+{
+    nom             VisibleString,
+    type-pion       UnitType,
+    oid-automate    Automat,
+    position	    CoordUTM
+}
+MsgUnitCreationRequestAck ::= EnumUnitErrorCode
+
 MsgUnitPathFind ::= SEQUENCE
 {
     oid-pion    OID,
-    itineraire  Itineraire
+    itineraire  Path
 }
 
-MsgPionChangeSuperiorAck ::= SEQUENCE
+MsgUnitChangeSuperiorAck ::= SEQUENCE
 {
-    oid-pion     Agent,
-    oid-automate Automate,
+    oid-pion     Unit,
+    oid-automate Automat,
     error-code   EnumChangeHierarchyErrorCode
 }
-MsgPionChangeSuperior ::= SEQUENCE
+MsgUnitChangeSuperior ::= SEQUENCE
 {
-    oid-pion     Agent,
-    oid-automate Automate
+    oid-pion     Unit,
+    oid-automate Automat
 }
 
 END -- Unit

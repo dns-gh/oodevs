@@ -47,7 +47,7 @@ namespace
     class AsnSerializer : public ParamVisitor_ABC
     {
     public:
-        AsnSerializer( ASN1T_ListLocalisation& list )
+        AsnSerializer( ASN1T_LocationList& list )
             : list_( list )
             , index_( 0 )
         {}
@@ -59,7 +59,7 @@ namespace
         }
 
     private:
-        ASN1T_ListLocalisation& list_;
+        ASN1T_LocationList& list_;
         unsigned int index_;
     };
 }
@@ -70,13 +70,13 @@ namespace
 // -----------------------------------------------------------------------------
 void ParamLocationList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    ASN1T_ListLocalisation*& list = asn.value.u.listLocalisation = new ASN1T_ListLocalisation();
-    asn.value.t = T_MissionParameter_value_listLocalisation;
+    ASN1T_LocationList*& list = asn.value.u.locationList = new ASN1T_LocationList();
+    asn.value.t = T_MissionParameter_value_locationList;
     list->n = Count();
     asn.null_value = list->n ? 0 : 1;
     if( asn.null_value )
         return;
-    list->elem = new ASN1T_Localisation[ list->n ];
+    list->elem = new ASN1T_Location[ list->n ];
     AsnSerializer serializer( *list );
     Accept( serializer );
 }
@@ -87,13 +87,13 @@ void ParamLocationList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamLocationList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listLocalisation )
+    if( asn.value.u.locationList )
     {
-        for( unsigned int i = 0; i < asn.value.u.listLocalisation->n; ++i )
-            delete[] asn.value.u.listLocalisation->elem[i].vecteur_point.elem;
-        delete[] asn.value.u.listLocalisation->elem;
+        for( unsigned int i = 0; i < asn.value.u.locationList->n; ++i )
+            delete[] asn.value.u.locationList->elem[i].vecteur_point.elem;
+        delete[] asn.value.u.locationList->elem;
     }
-    delete asn.value.u.listLocalisation;
+    delete asn.value.u.locationList;
 }
 
 namespace

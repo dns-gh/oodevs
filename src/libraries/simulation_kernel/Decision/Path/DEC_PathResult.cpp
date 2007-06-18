@@ -231,13 +231,13 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
 // Name: DEC_PathResult::Serialize
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-void DEC_PathResult::Serialize( ASN1T_Itineraire& asn ) const
+void DEC_PathResult::Serialize( ASN1T_Path& asn ) const
 {
     assert( !resultList_.empty() );
 
     ASN1T_CoordUTM* pASNCoordUTMSeq = new ASN1T_CoordUTM[ resultList_.size() ]; //$$ RAM
 
-    asn.type               = EnumTypeLocalisation::line;
+    asn.type               = EnumLocationType::line;
     asn.vecteur_point.n    = resultList_.size();
     asn.vecteur_point.elem = pASNCoordUTMSeq;
 

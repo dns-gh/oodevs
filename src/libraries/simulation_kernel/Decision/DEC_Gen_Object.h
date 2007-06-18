@@ -26,7 +26,7 @@ class MIL_ObstacleType;
 class DEC_Gen_Object
 {
 public:
-     DEC_Gen_Object( const ASN1T_MissionGenObject& asn );
+     DEC_Gen_Object( const ASN1T_PlannedWork& asn );
      DEC_Gen_Object( const DEC_Gen_Object& rhs );
     ~DEC_Gen_Object();
 
@@ -43,7 +43,7 @@ public:
     //! @name Operations
     //@{
     void operator=( const DEC_Gen_Object& rhs );
-    void Serialize( ASN1T_MissionGenObject& asn ) const;
+    void Serialize( ASN1T_PlannedWork& asn ) const;
     //@}
 
 private:

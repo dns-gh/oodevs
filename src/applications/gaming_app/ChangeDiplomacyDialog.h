@@ -77,7 +77,7 @@ private:
 
     gui::ValuedComboBox< const kernel::Team_ABC* >* pArmy1ComboBox_;
     gui::ValuedComboBox< const kernel::Team_ABC* >* pArmy2ComboBox_;
-    gui::ValuedComboBox< ASN1T_EnumDiplomatie >*    pDiplomacyComboBox_;
+    gui::ValuedComboBox< ASN1T_EnumDiplomacy >*    pDiplomacyComboBox_;
     //@}
 };
 

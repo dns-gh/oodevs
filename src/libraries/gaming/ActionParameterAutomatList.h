@@ -32,7 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ActionParameterAutomatList( const kernel::OrderParameter& parameter );
-             ActionParameterAutomatList( const kernel::OrderParameter& parameter, const ASN1T_ListAutomate& asn, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver );
+             ActionParameterAutomatList( const kernel::OrderParameter& parameter, const ASN1T_AutomatList& asn, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver );
              ActionParameterAutomatList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver );
     virtual ~ActionParameterAutomatList();
     //@}

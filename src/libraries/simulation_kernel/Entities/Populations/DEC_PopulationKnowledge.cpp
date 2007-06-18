@@ -155,7 +155,7 @@ void DEC_PopulationKnowledge::GetPionsSecuring( T_PopulationKnowledgeAgentDiaIDV
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeAgent
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_PopulationKnowledge::ResolveKnowledgeAgent( const ASN1T_KnowledgeAgent& /*asn*/ ) const
+DEC_Knowledge_Agent* DEC_PopulationKnowledge::ResolveKnowledgeAgent( const ASN1T_UnitKnowledge& /*asn*/ ) const
 {
     return 0;
 }
@@ -182,7 +182,7 @@ DEC_Knowledge_Agent* DEC_PopulationKnowledge::ResolveKnowledgeAgent( uint /*nID*
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeObject
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_PopulationKnowledge::ResolveKnowledgeObject( const ASN1T_KnowledgeObject& /*asn*/ ) const
+DEC_Knowledge_Object* DEC_PopulationKnowledge::ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& /*asn*/ ) const
 {
     return 0;
 }
@@ -209,7 +209,7 @@ DEC_Knowledge_Object* DEC_PopulationKnowledge::ResolveKnowledgeObject( uint /*nI
 // Name: DEC_PopulationKnowledge::ResolveKnowledgePopulation
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( const ASN1T_KnowledgePopulation& /*asn*/ ) const
+DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& /*asn*/ ) const
 {
     return 0;
 }

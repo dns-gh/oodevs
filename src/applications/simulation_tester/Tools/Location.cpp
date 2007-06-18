@@ -26,7 +26,7 @@ using namespace TEST;
 // Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
 Location::Location()
-    : eType_  ( EnumTypeLocalisation::point )
+    : eType_  ( EnumLocationType::point )
     , points_ ()
 {
     // NOTHING
@@ -47,14 +47,14 @@ Location::~Location()
 // Name: Location::GetTestParam_Location
 // Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
-Location& Location::GetTestParam_Location( const Position& pos, ASN1T_EnumTypeLocalisation eType /* = ( ASN1T_EnumTypeLocalisation )-1 */ )
+Location& Location::GetTestParam_Location( const Position& pos, ASN1T_EnumLocationType eType /* = ( ASN1T_EnumLocationType )-1 */ )
 {
     Location& loc = *new Location();
     // 6 types of Location
-    if( eType == ( ASN1T_EnumTypeLocalisation )-1 )
+    if( eType == ( ASN1T_EnumLocationType )-1 )
     {
         uint nTypeLoc = ( uint )( rand() * 5.0 / RAND_MAX );
-        loc.eType_ = ( ASN1T_EnumTypeLocalisation )nTypeLoc;
+        loc.eType_ = ( ASN1T_EnumLocationType )nTypeLoc;
     }
     else
         loc.eType_ = eType;        
@@ -67,15 +67,15 @@ Location& Location::GetTestParam_Location( const Position& pos, ASN1T_EnumTypeLo
 
     switch( loc.eType_ )
     {
-    case EnumTypeLocalisation::point:
+    case EnumLocationType::point:
         break;
-    case EnumTypeLocalisation::circle:
+    case EnumLocationType::circle:
         // 5km radius point
         pNodeTmp = new Position();
         pNodeTmp->SetSimCoordinates( pNode->GetSimX() + 5000, pNode->GetSimY() );
         loc.points_.push_back( pNodeTmp );
         break;
-    case EnumTypeLocalisation::ellipse:
+    case EnumLocationType::ellipse:
         // 2km small axis
         pNodeTmp = new Position();
         pNodeTmp->SetSimCoordinates( pNode->GetSimX(), pNode->GetSimY() + 2000 );
@@ -85,13 +85,13 @@ Location& Location::GetTestParam_Location( const Position& pos, ASN1T_EnumTypeLo
         pNodeTmp->SetSimCoordinates( pNode->GetSimX() + 5000, pNode->GetSimY() );
         loc.points_.push_back( pNodeTmp );
         break;
-    case EnumTypeLocalisation::line:
+    case EnumLocationType::line:
         // line second point 5km to the right
         pNodeTmp = new Position();
         pNodeTmp->SetSimCoordinates( pNode->GetSimX() + 5000, pNode->GetSimY() );
         loc.points_.push_back( pNodeTmp );
         break;
-    case EnumTypeLocalisation::polygon:
+    case EnumLocationType::polygon:
         // triangle
         pNodeTmp = new Position();
         pNodeTmp->SetSimCoordinates( pNode->GetSimX() - 3000, pNode->GetSimY() + 2000 );
@@ -100,7 +100,7 @@ Location& Location::GetTestParam_Location( const Position& pos, ASN1T_EnumTypeLo
         pNodeTmp->SetSimCoordinates( pNode->GetSimX() + 3000, pNode->GetSimY() + 3000 );
         loc.points_.push_back( pNodeTmp );
         break;
-    case EnumTypeLocalisation::sector:
+    case EnumLocationType::sector:
         // 90° sector around North ( 315° -> 45° )
         pNodeTmp = new Position();
         pNodeTmp->SetSimCoordinates( pNode->GetSimX() - 3000, pNode->GetSimY() + 3000 );
@@ -121,7 +121,7 @@ Location& Location::GetTestParam_Location( const Position& pos, ASN1T_EnumTypeLo
 // Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
 T_LocationVector& Location::GetTestParam_LocationList( const Position& pos, uint nLocation, 
-                                                       ASN1T_EnumTypeLocalisation eType /*= ( ASN1T_EnumTypeLocalisation )-1*/ )
+                                                       ASN1T_EnumLocationType eType /*= ( ASN1T_EnumLocationType )-1*/ )
 {
     T_LocationVector& locations = *new T_LocationVector();
     Position pt;

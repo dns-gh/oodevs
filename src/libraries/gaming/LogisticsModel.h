@@ -40,15 +40,15 @@ public:
     //@{
     void Purge();
 
-    void CreateMaintenanceConsign( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& asnMsg );
+    void CreateMaintenanceConsign( const ASN1T_MsgLogMaintenanceHandlingCreation& asnMsg );
     LogMaintenanceConsign& GetMaintenanceConsign( unsigned long id );
     void DeleteMaintenanceConsign( unsigned long id );
 
-    void CreateMedicalConsign( const ASN1T_MsgLogSanteTraitementHumainCreation& asnMsg );
+    void CreateMedicalConsign( const ASN1T_MsgLogMedicalHandlingCreation& asnMsg );
     LogMedicalConsign& GetMedicalConsign( unsigned long id );
     void DeleteMedicalConsign( unsigned long id );
 
-    void CreateSupplyConsign( const ASN1T_MsgLogRavitaillementTraitementCreation& asnMsg );
+    void CreateSupplyConsign( const ASN1T_MsgLogSupplyHandlingCreation& asnMsg );
     LogSupplyConsign& GetSupplyConsign( unsigned long id );
     void DeleteSupplyConsign( unsigned long id );
     //@}

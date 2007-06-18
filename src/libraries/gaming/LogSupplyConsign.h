@@ -39,7 +39,7 @@ public:
     //@{
              LogSupplyConsign( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver, 
                                const kernel::Resolver_ABC< kernel::Agent_ABC >&   agentResolver,
-                               const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver, const ASN1T_MsgLogRavitaillementTraitementCreation& asn );
+                               const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver, const ASN1T_MsgLogSupplyHandlingCreation& asn );
     virtual ~LogSupplyConsign();
     //@}
 
@@ -51,7 +51,7 @@ public:
 
     //! @name Network events
     //@{
-    void Update( const ASN1T_MsgLogRavitaillementTraitementUpdate& message );
+    void Update( const ASN1T_MsgLogSupplyHandlingUpdate& message );
     //@}
 
 private:

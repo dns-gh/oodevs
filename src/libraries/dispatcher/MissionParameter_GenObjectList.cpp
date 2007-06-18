@@ -20,9 +20,9 @@ using namespace dispatcher;
 MissionParameter_GenObjectList::MissionParameter_GenObjectList( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    objects_.reserve( asn.value.u.listMissionGenObject->n );
-    for( unsigned i = 0; i != asn.value.u.listMissionGenObject->n; ++i )
-        objects_.push_back( GenObject( asn.value.u.listMissionGenObject->elem[i] ) );
+    objects_.reserve( asn.value.u.plannedWorkList->n );
+    for( unsigned i = 0; i != asn.value.u.plannedWorkList->n; ++i )
+        objects_.push_back( GenObject( asn.value.u.plannedWorkList->elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,16 +45,16 @@ MissionParameter_GenObjectList::~MissionParameter_GenObjectList()
 void MissionParameter_GenObjectList::Send( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value                   = bNullValue_;
-    asn.value.t                      = T_MissionParameter_value_listMissionGenObject;
-    asn.value.u.listMissionGenObject = new ASN1T_ListMissionGenObject();
+    asn.value.t                      = T_MissionParameter_value_plannedWorkList;
+    asn.value.u.plannedWorkList = new ASN1T_PlannedWorkList();
 
-    asn.value.u.listMissionGenObject->n = objects_.size();
+    asn.value.u.plannedWorkList->n = objects_.size();
     if( !objects_.empty() )
     {
-        asn.value.u.listMissionGenObject->elem = new ASN1T_MissionGenObject[ objects_.size() ];
+        asn.value.u.plannedWorkList->elem = new ASN1T_PlannedWork[ objects_.size() ];
         uint i = 0;
         for( T_GenObjectVector::const_iterator it = objects_.begin(); it != objects_.end(); ++it, ++i )
-            (*it).Send( asn.value.u.listMissionGenObject->elem[ i ] );
+            (*it).Send( asn.value.u.plannedWorkList->elem[ i ] );
     }
 }
 
@@ -64,11 +64,11 @@ void MissionParameter_GenObjectList::Send( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void MissionParameter_GenObjectList::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listMissionGenObject->n > 0 )
+    if( asn.value.u.plannedWorkList->n > 0 )
     {
-        for( unsigned i = 0; i != asn.value.u.listMissionGenObject->n; ++i )
-            GenObject::AsnDelete( asn.value.u.listMissionGenObject->elem[i] );
-        delete [] asn.value.u.listMissionGenObject->elem;
+        for( unsigned i = 0; i != asn.value.u.plannedWorkList->n; ++i )
+            GenObject::AsnDelete( asn.value.u.plannedWorkList->elem[i] );
+        delete [] asn.value.u.plannedWorkList->elem;
     }
-    delete asn.value.u.listMissionGenObject;
+    delete asn.value.u.plannedWorkList;
 }

@@ -173,7 +173,7 @@ void MIL_Rota::Initialize( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 ASN1T_EnumObjectErrorCode MIL_Rota::Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject )
 {
-    if( !asnCreateObject.m.attributs_specifiquesPresent || asnCreateObject.attributs_specifiques.t != T_AttrObjectSpecific_rota )
+    if( !asnCreateObject.m.attributs_specifiquesPresent || asnCreateObject.attributs_specifiques.t != T_ObjectAttributesSpecific_rota )
         return EnumObjectErrorCode::error_missing_specific_attributes;
 
     nDanger_ = asnCreateObject.attributs_specifiques.u.rota->niveau_danger;
@@ -212,7 +212,7 @@ void MIL_Rota::WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg )
     }
 
     asnMsg().m.attributs_specifiquesPresent = 1;
-    asnMsg().attributs_specifiques.t        = T_AttrObjectSpecific_rota;
+    asnMsg().attributs_specifiques.t        = T_ObjectAttributesSpecific_rota;
     asnMsg().attributs_specifiques.u.rota   = &asnAttributes_;
 }
 

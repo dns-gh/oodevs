@@ -20,7 +20,7 @@ using namespace dispatcher;
 // Name: PopulationFlow constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-PopulationFlow::PopulationFlow( Model& /*model*/, Population& population, const ASN1T_MsgPopulationFluxCreation& msg )
+PopulationFlow::PopulationFlow( Model& /*model*/, Population& population, const ASN1T_MsgPopulationFlowCreation& msg )
     : population_     ( population )
     , nID_            ( msg.oid_flux )
     , path_           ()
@@ -51,7 +51,7 @@ PopulationFlow::~PopulationFlow()
 // Name: PopulationFlow::Update
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void PopulationFlow::Update( const ASN1T_MsgPopulationFluxCreation& )
+void PopulationFlow::Update( const ASN1T_MsgPopulationFlowCreation& )
 {
     FlagUpdate();
 }
@@ -60,7 +60,7 @@ void PopulationFlow::Update( const ASN1T_MsgPopulationFluxCreation& )
 // Name: PopulationFlow::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationFlow::Update( const ASN1T_MsgPopulationFluxUpdate& msg )
+void PopulationFlow::Update( const ASN1T_MsgPopulationFlowUpdate& msg )
 {
     if( msg.m.itinerairePresent )
         path_.Update( msg.itineraire );
@@ -88,7 +88,7 @@ void PopulationFlow::Update( const ASN1T_MsgPopulationFluxUpdate& msg )
 // -----------------------------------------------------------------------------
 void PopulationFlow::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientPopulationFluxCreation asn;
+    AsnMsgSimToClientPopulationFlowCreation asn;
 
     asn().oid_flux       = nID_;
     asn().oid_population = population_.GetID();
@@ -102,7 +102,7 @@ void PopulationFlow::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PopulationFlow::SendFullUpdate( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientPopulationFluxUpdate asn;
+    AsnMsgSimToClientPopulationFlowUpdate asn;
 
     asn().m.itinerairePresent         = 1;
     asn().m.fluxPresent               = 1;
@@ -135,7 +135,7 @@ void PopulationFlow::SendFullUpdate( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PopulationFlow::SendDestruction( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientPopulationFluxDestruction destruction;
+    AsnMsgSimToClientPopulationFlowDestruction destruction;
     destruction().oid_flux = nID_;
     destruction().oid_population = population_.GetID();
     destruction.Send( publisher );

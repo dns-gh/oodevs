@@ -113,11 +113,11 @@ enum E_Diplomatie
 };
 
 
-enum E_ChangeDiplomatieErrorCode
+enum E_ChangeDiplomacyErrorCode
 {
-    eChangeDiplomatieErrorCode_NoError,
-    eChangeDiplomatieErrorCode_ErrorInvalidCamp,
-    eNbrChangeDiplomatieErrorCode
+    eChangeDiplomacyErrorCode_NoError,
+    eChangeDiplomacyErrorCode_ErrorInvalidCamp,
+    eNbrChangeDiplomacyErrorCode
 };
 
 
@@ -397,21 +397,21 @@ enum E_LogRavitaillementTraitementEtat
 };
 
 
-enum E_MsgLogRavitaillementChangeQuotasAck
+enum E_MsgLogSupplyChangeQuotasAck
 {
-    eMsgLogRavitaillementChangeQuotasAck_NoError,
-    eMsgLogRavitaillementChangeQuotasAck_ErrorInvalidDonneur,
-    eMsgLogRavitaillementChangeQuotasAck_ErrorInvalidReceveur,
-    eNbrMsgLogRavitaillementChangeQuotasAck
+    eMsgLogSupplyChangeQuotasAck_NoError,
+    eMsgLogSupplyChangeQuotasAck_ErrorInvalidDonneur,
+    eMsgLogSupplyChangeQuotasAck_ErrorInvalidReceveur,
+    eNbrMsgLogSupplyChangeQuotasAck
 };
 
 
-enum E_MsgLogRavitaillementPousserFluxAck
+enum E_MsgLogSupplyPushFlowAck
 {
-    eMsgLogRavitaillementPousserFluxAck_NoError,
-    eMsgLogRavitaillementPousserFluxAck_ErrorInvalidDonneur,
-    eMsgLogRavitaillementPousserFluxAck_ErrorInvalidReceveur,
-    eNbrMsgLogRavitaillementPousserFluxAck
+    eMsgLogSupplyPushFlowAck_NoError,
+    eMsgLogSupplyPushFlowAck_ErrorInvalidDonneur,
+    eMsgLogSupplyPushFlowAck_ErrorInvalidReceveur,
+    eNbrMsgLogSupplyPushFlowAck
 };
 
 
@@ -535,11 +535,11 @@ enum E_OrderState
 };
 
 
-enum E_AutomateOrderFormation
+enum E_AutomatOrderFormation
 {
-    eAutomateOrderFormation_UnEchelon,
-    eAutomateOrderFormation_DeuxEchelons,
-    eNbrAutomateOrderFormation
+    eAutomatOrderFormation_UnEchelon,
+    eAutomatOrderFormation_DeuxEchelons,
+    eNbrAutomatOrderFormation
 };
 
 

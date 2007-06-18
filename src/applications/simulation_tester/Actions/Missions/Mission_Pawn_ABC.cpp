@@ -83,7 +83,7 @@ void Mission_Pawn_ABC::Send( const Scheduler& scheduler )
 {
     // disengage automat first
     MOS_ASN_MsgSetAutomateMode msg;
-    msg.GetAsnMsg().mode       = EnumAutomateState::debraye;
+    msg.GetAsnMsg().mode       = EnumAutomatMode::debraye;
     msg.GetAsnMsg().unit_id    = pTarget_->GetAutomat()->GetId();
     msg.Send( 56 );
 

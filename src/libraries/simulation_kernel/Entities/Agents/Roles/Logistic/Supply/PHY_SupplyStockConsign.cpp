@@ -306,7 +306,7 @@ bool PHY_SupplyStockConsign::Update()
 // Name: PHY_SupplyStockConsign::SendFullState
 // Created: NLD 2005-02-10
 // -----------------------------------------------------------------------------
-void PHY_SupplyStockConsign::SendFullState( NET_ASN_MsgLogRavitaillementTraitementUpdate& asn ) const
+void PHY_SupplyStockConsign::SendFullState( NET_ASN_MsgLogSupplyHandlingUpdate& asn ) const
 {
     PHY_SupplyConsign_ABC::SendFullState( asn );
 

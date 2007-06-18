@@ -34,7 +34,7 @@ class LogConsignSupply : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogConsignSupply( Model& model, const ASN1T_MsgLogRavitaillementTraitementCreation& msg );
+             LogConsignSupply( Model& model, const ASN1T_MsgLogSupplyHandlingCreation& msg );
     virtual ~LogConsignSupply();
     //@}
 
@@ -45,8 +45,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgLogRavitaillementTraitementCreation& msg );
-    void Update        ( const ASN1T_MsgLogRavitaillementTraitementUpdate& msg );
+    void Update        ( const ASN1T_MsgLogSupplyHandlingCreation& msg );
+    void Update        ( const ASN1T_MsgLogSupplyHandlingUpdate& msg );
     virtual void SendCreation   ( Publisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( Publisher_ABC& publisher ) const;
     virtual void SendDestruction( Publisher_ABC& publisher ) const;
@@ -68,7 +68,7 @@ private:
     Automat*                                  pTreatingAutomat_;
     Automat*                                  pConvoyingAutomat_;
     Agent*                                    pConvoy_;
-    ASN1T_EnumLogRavitaillementTraitementEtat nState_;
+    ASN1T_EnumLogSupplyHandlingStatus         nState_;
     ModelsContainer< LogSupplyDotation >      dotations_;
 };
 

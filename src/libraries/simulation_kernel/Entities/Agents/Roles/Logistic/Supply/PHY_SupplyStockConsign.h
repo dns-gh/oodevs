@@ -56,7 +56,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendFullState( NET_ASN_MsgLogRavitaillementTraitementUpdate& asn ) const;
+    virtual void SendFullState( NET_ASN_MsgLogSupplyHandlingUpdate& asn ) const;
     //@}
 
 private:

@@ -38,7 +38,7 @@ class Automat : public kernel::EntityImplementation< kernel::Automat_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Automat( const ASN1T_MsgAutomateCreation& message, kernel::Controller& controller, 
+             Automat( const ASN1T_MsgAutomatCreation& message, kernel::Controller& controller, 
                       const kernel::Resolver_ABC< kernel::AutomatType >& resolver );
     virtual ~Automat();
     //@}

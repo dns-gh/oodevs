@@ -49,7 +49,7 @@ public:
     //@{
     const std::string&              GetName () const;
           uint                      GetID   () const;
-          ASN1T_EnumRoePopulation   GetAsnID() const;
+          ASN1T_EnumPopulationRoe   GetAsnID() const;
     //@}
 
     //! @name Operators
@@ -72,13 +72,13 @@ private:
     //@}
 
 private:
-    PHY_RoePopulation( const std::string& strName, E_Type nType, ASN1T_EnumRoePopulation nAsnID );
+    PHY_RoePopulation( const std::string& strName, E_Type nType, ASN1T_EnumPopulationRoe nAsnID );
     ~PHY_RoePopulation();
 
 private:
     const std::string             strName_;
     const E_Type                  nType_;
-    const ASN1T_EnumRoePopulation nAsnID_;
+    const ASN1T_EnumPopulationRoe nAsnID_;
 
 private:
     static T_RoePopulationMap roePopulations_;

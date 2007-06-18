@@ -39,14 +39,14 @@ MIL_ParameterType_MedicalPriorities::~MIL_ParameterType_MedicalPriorities()
 void MIL_ParameterType_MedicalPriorities::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_santePriorites ) 
+    if( from.null_value || from.value.t != T_MissionParameter_value_logMedicalPriorities ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( !DEC_Tools::CheckTypeSantePriorites( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyMedicalPriorities( *from.value.u.santePriorites, to ) )
+    if( !NET_ASN_Tools::CopyMedicalPriorities( *from.value.u.logMedicalPriorities, to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -79,10 +79,10 @@ bool MIL_ParameterType_MedicalPriorities::Copy( const DIA_Variable_ABC& from, AS
         return false;
 
     to.null_value             = false;
-    to.value.t                = T_MissionParameter_value_santePriorites;
-    to.value.u.santePriorites = new ASN1T_SantePriorites();
+    to.value.t                = T_MissionParameter_value_logMedicalPriorities;
+    to.value.u.logMedicalPriorities = new ASN1T_LogMedicalPriorities();
     
-    if( !NET_ASN_Tools::CopyMedicalPriorities( from, *to.value.u.santePriorites ) )
+    if( !NET_ASN_Tools::CopyMedicalPriorities( from, *to.value.u.logMedicalPriorities ) )
         return false;
 
     return true;
@@ -94,8 +94,8 @@ bool MIL_ParameterType_MedicalPriorities::Copy( const DIA_Variable_ABC& from, AS
 // -----------------------------------------------------------------------------
 void MIL_ParameterType_MedicalPriorities::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_santePriorites );
-    assert( to.value.u.santePriorites );
-    NET_ASN_Tools::Delete( *to.value.u.santePriorites );
-    delete to.value.u.santePriorites;    
+    assert( to.value.t == T_MissionParameter_value_logMedicalPriorities );
+    assert( to.value.u.logMedicalPriorities );
+    NET_ASN_Tools::Delete( *to.value.u.logMedicalPriorities );
+    delete to.value.u.logMedicalPriorities;    
 }

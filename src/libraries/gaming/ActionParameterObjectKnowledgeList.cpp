@@ -31,7 +31,7 @@ ActionParameterObjectKnowledgeList::ActionParameterObjectKnowledgeList( const Or
 // Name: ActionParameterObjectKnowledgeList constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ActionParameterObjectKnowledgeList::ActionParameterObjectKnowledgeList( const OrderParameter& parameter, const ASN1T_ListKnowledgeObject& asn, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
+ActionParameterObjectKnowledgeList::ActionParameterObjectKnowledgeList( const OrderParameter& parameter, const ASN1T_ObjectKnowledgeList& asn, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
@@ -70,13 +70,13 @@ namespace
 {
     struct AsnSerializer : public ActionParameterVisitor_ABC
     {
-        explicit AsnSerializer( ASN1T_ListKnowledgeObject& asn ) : asn_( &asn ), current_( 0 ) {}
+        explicit AsnSerializer( ASN1T_ObjectKnowledgeList& asn ) : asn_( &asn ), current_( 0 ) {}
         virtual void Visit( const ActionParameterObjectKnowledge& param )
         {
             param.CommitTo( asn_->elem[current_++] );
         }
 
-        ASN1T_ListKnowledgeObject* asn_;
+        ASN1T_ObjectKnowledgeList* asn_;
         unsigned int current_;
     };
 }
@@ -87,12 +87,12 @@ namespace
 // -----------------------------------------------------------------------------
 void ActionParameterObjectKnowledgeList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.value.t = T_MissionParameter_value_listKnowledgeObject;
-    ASN1T_ListKnowledgeObject*& list = asn.value.u.listKnowledgeObject = new ASN1T_ListKnowledgeObject();
+    asn.value.t = T_MissionParameter_value_objectKnowledgeList;
+    ASN1T_ObjectKnowledgeList*& list = asn.value.u.objectKnowledgeList = new ASN1T_ObjectKnowledgeList();
     asn.null_value = ( list->n = Count() ) ? 0 : 1;
     if( asn.null_value )
         return;
-    list->elem = new ASN1T_KnowledgeObject[list->n];
+    list->elem = new ASN1T_ObjectKnowledge[list->n];
     AsnSerializer serializer( *list );
     Accept( serializer );
 }
@@ -103,7 +103,7 @@ void ActionParameterObjectKnowledgeList::CommitTo( ASN1T_MissionParameter& asn )
 // -----------------------------------------------------------------------------
 void ActionParameterObjectKnowledgeList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listKnowledgeObject )
-        delete[] asn.value.u.listKnowledgeObject->elem;
-    delete asn.value.u.listKnowledgeObject;
+    if( asn.value.u.objectKnowledgeList )
+        delete[] asn.value.u.objectKnowledgeList->elem;
+    delete asn.value.u.objectKnowledgeList;
 }

@@ -19,7 +19,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 MissionParameter_Agent::MissionParameter_Agent( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , agent_              ( asn.value.u.agent )
+    , agent_              ( asn.value.u.unit )
 {
     // NOTHING
 }
@@ -44,8 +44,8 @@ MissionParameter_Agent::~MissionParameter_Agent()
 void MissionParameter_Agent::Send( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value    = bNullValue_;
-    asn.value.t       = T_MissionParameter_value_agent;
-    asn.value.u.agent = agent_;
+    asn.value.t       = T_MissionParameter_value_unit;
+    asn.value.u.unit = agent_;
 }
 
 // -----------------------------------------------------------------------------

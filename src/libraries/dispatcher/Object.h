@@ -72,7 +72,7 @@ private:
 private:
     const unsigned long          nID_;
     const ASN1T_EnumObjectType   nType_; // XML reference - no resolved by dispatcher
-    const ASN1T_EnumTypeObstacle nObstacleType_;
+    const ASN1T_EnumObstacleType nObstacleType_;
     const std::string            strName_;
           Localisation           localisation_;
           Side&                  side_;

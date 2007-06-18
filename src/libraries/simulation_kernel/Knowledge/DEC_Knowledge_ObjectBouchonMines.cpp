@@ -125,6 +125,6 @@ void DEC_Knowledge_ObjectBouchonMines::BuildMsgSpecificAttributes( ASN1T_MsgObje
     asnAttributes_.delai_activite_mines = nMinesActivityTime_;
 
     asnMsg.m.attributs_specifiquesPresent        = 1;
-    asnMsg.attributs_specifiques.t               = T_AttrObjectSpecific_bouchon_mines;
+    asnMsg.attributs_specifiques.t               = T_ObjectAttributesSpecific_bouchon_mines;
     asnMsg.attributs_specifiques.u.bouchon_mines = &asnAttributes_;
 }

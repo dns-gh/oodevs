@@ -43,14 +43,14 @@ MIL_ParameterType_Automat::~MIL_ParameterType_Automat()
 void MIL_ParameterType_Automat::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_automate ) 
+    if( from.null_value || from.value.t != T_MissionParameter_value_automat ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( !DEC_Tools::CheckTypeAutomate( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyAutomate( from.value.u.automate, to ) )
+    if( !NET_ASN_Tools::CopyAutomate( from.value.u.automat, to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -85,9 +85,9 @@ bool MIL_ParameterType_Automat::Copy( const DIA_Variable_ABC& from, ASN1T_Missio
         return false;
 
     to.null_value = false;
-    to.value.t    = T_MissionParameter_value_automate;
+    to.value.t    = T_MissionParameter_value_automat;
     
-    if( !NET_ASN_Tools::CopyAutomate( from, to.value.u.automate ) )
+    if( !NET_ASN_Tools::CopyAutomate( from, to.value.u.automat ) )
         return false;
 
     return true;    
@@ -99,5 +99,5 @@ bool MIL_ParameterType_Automat::Copy( const DIA_Variable_ABC& from, ASN1T_Missio
 //-----------------------------------------------------------------------------
 void MIL_ParameterType_Automat::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_automate );
+    assert( to.value.t == T_MissionParameter_value_automat );
 }

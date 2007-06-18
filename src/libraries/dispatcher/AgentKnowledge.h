@@ -49,7 +49,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< ASN1T_AutomatePerception > T_AutomatePerceptionVector;
+    typedef std::vector< ASN1T_AutomatPerception > T_AutomatePerceptionVector;
 
     //$$$ bullshit
     struct T_Optionals 
@@ -76,7 +76,7 @@ private:
     const unsigned int    nID_; 
     const KnowledgeGroup& knowledgeGroup_;
     const Agent&          agent_;        
-    const ASN1T_TypePion  nTypeAgent_;
+    const ASN1T_UnitType  nTypeAgent_;
 
     unsigned int                        nRelevance_;
     ASN1T_EnumUnitIdentificationLevel   nPerceptionLevel_;

@@ -51,9 +51,9 @@ ParamAgent::~ParamAgent()
 // -----------------------------------------------------------------------------
 void ParamAgent::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.value.t = T_MissionParameter_value_agent;
-    EntityParameter< Agent_ABC >::CommitTo( asn.value.u.agent );
-    asn.null_value = asn.value.u.agent ? 0 : 1;
+    asn.value.t = T_MissionParameter_value_unit;
+    EntityParameter< Agent_ABC >::CommitTo( asn.value.u.unit );
+    asn.null_value = asn.value.u.unit ? 0 : 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ void ParamAgent::CommitTo( Action_ABC& action ) const
 // Name: ParamAgent::CommitTo
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void ParamAgent::CommitTo( ASN1T_Agent& asn ) const
+void ParamAgent::CommitTo( ASN1T_Unit& asn ) const
 {
     EntityParameter< Agent_ABC >::CommitTo( (ASN1T_OID&)asn );
 }

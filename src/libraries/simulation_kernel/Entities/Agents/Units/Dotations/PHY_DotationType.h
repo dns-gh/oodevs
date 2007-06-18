@@ -46,7 +46,7 @@ public:
     static void Terminate ();
 
     static const PHY_DotationType*     FindDotationType    ( const std::string& strName );
-    static const PHY_DotationType*     FindDotationType    ( ASN1T_EnumFamilleDotation nAsnID );
+    static const PHY_DotationType*     FindDotationType    ( ASN1T_EnumDotationFamily nAsnID );
     static const PHY_DotationType*     FindDotationType    ( uint nID );
     static const PHY_DotationCategory* FindDotationCategory( uint nID );
     static const PHY_DotationCategory* FindDotationCategory( const std::string& strName );
@@ -55,7 +55,7 @@ public:
     //! @name Accessors
     //@{
     const std::string&              GetName               () const;
-          ASN1T_EnumFamilleDotation GetAsnID              () const;
+          ASN1T_EnumDotationFamily GetAsnID              () const;
           uint                      GetID                 () const;
     const PHY_DotationLogisticType& GetDefaultLogisticType() const;
     //@}
@@ -90,7 +90,7 @@ private:
     //@}
 
 private:
-     PHY_DotationType( const std::string& strName, E_DotationType nType, ASN1T_EnumFamilleDotation nAsnID, const PHY_DotationLogisticType& defaultLogisticType );
+     PHY_DotationType( const std::string& strName, E_DotationType nType, ASN1T_EnumDotationFamily nAsnID, const PHY_DotationLogisticType& defaultLogisticType );
     ~PHY_DotationType();
 
     //! @name Initialisation
@@ -104,7 +104,7 @@ private:
 private:
     const std::string               strName_;
     const E_DotationType            nType_;
-    const ASN1T_EnumFamilleDotation nAsnID_;
+    const ASN1T_EnumDotationFamily nAsnID_;
     const PHY_DotationLogisticType& defaultLogisticType_;
           T_DotationCategoryMap     dotationCategories_;
 

@@ -44,7 +44,7 @@ MIL_PionOrderManager::~MIL_PionOrderManager()
 // Name: MIL_PionOrderManager::OnReceiveMission
 // Created: NLD 2003-01-10
 //-----------------------------------------------------------------------------
-void MIL_PionOrderManager::OnReceiveMission( const ASN1T_MsgPionOrder& asnMsg )
+void MIL_PionOrderManager::OnReceiveMission( const ASN1T_MsgUnitOrder& asnMsg )
 {
     // Check if the agent can receive this order (automate must be debraye)
     if( pion_.GetAutomate().IsEngaged() || pion_.IsDead() )

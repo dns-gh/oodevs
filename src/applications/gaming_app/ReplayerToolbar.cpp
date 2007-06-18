@@ -77,7 +77,7 @@ void ReplayerToolbar::OnSliderMove( int frame )
 {
     if( userMove_ )
     {
-        ASN_MsgCtrlSkipToTick skip;
+        ASN_MsgControlSkipToTick skip;
         skip() = frame;
         skip.Send( network_ );
     }

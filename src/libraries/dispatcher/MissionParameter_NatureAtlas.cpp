@@ -19,7 +19,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 MissionParameter_NatureAtlas::MissionParameter_NatureAtlas( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , natureAtlas_        ( asn.value.u.natureAtlas->numbits, asn.value.u.natureAtlas->data )
+    , natureAtlas_        ( asn.value.u.atlasNature->numbits, asn.value.u.atlasNature->data )
 {
     // NOTHING
 }
@@ -44,8 +44,8 @@ MissionParameter_NatureAtlas::~MissionParameter_NatureAtlas()
 void MissionParameter_NatureAtlas::Send( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value          = bNullValue_;
-    asn.value.t             = T_MissionParameter_value_natureAtlas;
-    asn.value.u.natureAtlas = new ASN1T_NatureAtlas( natureAtlas_.numbits, natureAtlas_.data );
+    asn.value.t             = T_MissionParameter_value_atlasNature;
+    asn.value.u.atlasNature = new ASN1T_AtlasNature( natureAtlas_.numbits, natureAtlas_.data );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,5 +54,5 @@ void MissionParameter_NatureAtlas::Send( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void MissionParameter_NatureAtlas::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    delete asn.value.u.natureAtlas;
+    delete asn.value.u.atlasNature;
 }

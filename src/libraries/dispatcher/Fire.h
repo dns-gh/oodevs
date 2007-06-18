@@ -30,13 +30,13 @@ class Fire : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Fire( Model& model, const ASN1T_MsgStartPionFire& msg );
+             Fire( Model& model, const ASN1T_MsgStartUnitFire& msg );
     virtual ~Fire();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgStartPionFire& msg );
+    void Update( const ASN1T_MsgStartUnitFire& msg );
     virtual void SendFullUpdate ( Publisher_ABC& publisher ) const;
     virtual void SendCreation   ( Publisher_ABC& publisher ) const;
     virtual void SendDestruction( Publisher_ABC& publisher ) const;
@@ -52,11 +52,11 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_TirPion               oid_tir;
-    ASN1T_Agent                 tireur;
-    ASN1T_MsgStartPionFire_type type;
+    ASN1T_UnitFire              oid_tir;
+    ASN1T_Unit                  tireur;
+    ASN1T_MsgStartUnitFire_type type;
     bool                        munitionPresent_;
-    ASN1T_TypeDotation          munition;
+    ASN1T_DotationType          munition;
     int                         typeCible_;
     ASN1T_OID                   oid_cible_;
     Position                    positionCible_;

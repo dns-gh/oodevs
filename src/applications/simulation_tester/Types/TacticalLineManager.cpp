@@ -179,7 +179,7 @@ T_EntityId TacticalLineManager::GetNextLimitId()
 // Name: TacticalLineManager::GetLimaByType
 // Created: SBO 2005-08-24
 // -----------------------------------------------------------------------------
-T_EntityId TacticalLineManager::GetLimaByType( ASN1T_EnumTypeLima eLimaType )
+T_EntityId TacticalLineManager::GetLimaByType( ASN1T_EnumLimaType eLimaType )
 {
     for( CIT_TacticalLineSet it = lines_.begin(); it != lines_.end(); ++it )
         if( ( *it )->GetLineType() == TacticalLine_ABC::eLima && 

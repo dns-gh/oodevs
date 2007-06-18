@@ -449,7 +449,7 @@ const PawnType* TypeManager::FindPawnType( const std::string& strName ) const
 // Name: TypeManager::Find
 // Created: SBO 2005-08-11
 // -----------------------------------------------------------------------------
-const PawnType* TypeManager::FindPawnType( ASN1T_TypePion asnId ) const
+const PawnType* TypeManager::FindPawnType( ASN1T_UnitType asnId ) const
 {
     for( CIT_PawnTypeMap it = pawnTypes_.begin(); it != pawnTypes_.end(); ++it )
         if( int( it->second->GetId() )== asnId )
@@ -471,7 +471,7 @@ const PopulationType* TypeManager::FindPopulationType( const std::string& strNam
 // Name: TypeManager::Find
 // Created: SBO 2005-08-11
 // -----------------------------------------------------------------------------
-const PopulationType* TypeManager::FindPopulationType( ASN1T_TypePion asnId ) const
+const PopulationType* TypeManager::FindPopulationType( ASN1T_UnitType asnId ) const
 {
     for( CIT_PopulationTypeMap it = populationTypes_.begin(); it != populationTypes_.end(); ++it )
         if( int( it->second->GetId() ) == asnId )

@@ -44,14 +44,14 @@ void LogisticRoutePrototype::Commit()
     if( msg_.type != EnumObjectType::itineraire_logistique )
         return;
 
-    attr_ = new ASN1T_AttrObjectItineraireLogistique();
+    attr_ = new ASN1T_ObjectAttributesLogisticRoute();
     attr_->debit              = flow_->value();
     attr_->largeur            = width_->value();
     attr_->longueur           = length_->value();
     attr_->poids_max_supporte = maxWeight_->value();
     attr_->itineraire_equipe  = equipped_->isOn();
     msg_.m.attributs_specifiquesPresent    = 1;
-    msg_.attributs_specifiques.t           = T_AttrObjectSpecific_itineraire_logistique;
+    msg_.attributs_specifiques.t           = T_ObjectAttributesSpecific_itineraire_logistique;
     msg_.attributs_specifiques.u.itineraire_logistique = attr_;
 }
 

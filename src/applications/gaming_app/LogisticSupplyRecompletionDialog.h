@@ -24,7 +24,7 @@ class StaticModel;
 class Equipment;
 class Dotation;
 class Publisher_ABC;
-struct ASN1T_MagicActionRecompletementPartiel;
+struct ASN1T_MagicActionPartialRecovery;
 
 //=============================================================================
 // Created:  SBO 2005-07-27 
@@ -80,11 +80,11 @@ private:
     void AddPersonal( unsigned pos, const QString& label, unsigned max );
     void AddAmmunition( unsigned pos, const QString& label );
 
-    void FillPersonal   ( ASN1T_MagicActionRecompletementPartiel& action );
-    void FillEquipments ( ASN1T_MagicActionRecompletementPartiel& action );
-    void FillDotations  ( ASN1T_MagicActionRecompletementPartiel& action );
-    void FillAmmunitions( ASN1T_MagicActionRecompletementPartiel& action );
-    void FillSupplies   ( ASN1T_MagicActionRecompletementPartiel& action );
+    void FillPersonal   ( ASN1T_MagicActionPartialRecovery& action );
+    void FillEquipments ( ASN1T_MagicActionPartialRecovery& action );
+    void FillDotations  ( ASN1T_MagicActionPartialRecovery& action );
+    void FillAmmunitions( ASN1T_MagicActionPartialRecovery& action );
+    void FillSupplies   ( ASN1T_MagicActionPartialRecovery& action );
 
     QStringList FilterEquipmentList() const;
     //@}

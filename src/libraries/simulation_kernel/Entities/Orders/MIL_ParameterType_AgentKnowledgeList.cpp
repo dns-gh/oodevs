@@ -43,14 +43,14 @@ MIL_ParameterType_AgentKnowledgeList::~MIL_ParameterType_AgentKnowledgeList()
 void MIL_ParameterType_AgentKnowledgeList::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const
 {
     // Check source
-    if( from.value.t != T_MissionParameter_value_listKnowledgeAgent ) 
+    if( from.value.t != T_MissionParameter_value_unitKnowledgeList ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( !DEC_Tools::CheckTypeListeConnaissancesAgent( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyAgentKnowledgeList( *from.value.u.listKnowledgeAgent, to, knowledgeResolver ) )
+    if( !NET_ASN_Tools::CopyAgentKnowledgeList( *from.value.u.unitKnowledgeList, to, knowledgeResolver ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -83,10 +83,10 @@ bool MIL_ParameterType_AgentKnowledgeList::Copy( const DIA_Variable_ABC& from, A
         return false;
 
     to.null_value                 = false;
-    to.value.t                    = T_MissionParameter_value_listKnowledgeAgent;
-    to.value.u.listKnowledgeAgent = new ASN1T_ListKnowledgeAgent();
+    to.value.t                    = T_MissionParameter_value_unitKnowledgeList;
+    to.value.u.unitKnowledgeList = new ASN1T_UnitKnowledgeList();
 
-    if( !NET_ASN_Tools::CopyAgentKnowledgeList( from, *to.value.u.listKnowledgeAgent, knowledgeResolver ) )
+    if( !NET_ASN_Tools::CopyAgentKnowledgeList( from, *to.value.u.unitKnowledgeList, knowledgeResolver ) )
         return false;
 
     return true;    
@@ -98,8 +98,8 @@ bool MIL_ParameterType_AgentKnowledgeList::Copy( const DIA_Variable_ABC& from, A
 //-----------------------------------------------------------------------------
 void MIL_ParameterType_AgentKnowledgeList::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_listKnowledgeAgent );
-    assert( to.value.u.listKnowledgeAgent );
-    NET_ASN_Tools::Delete( *to.value.u.listKnowledgeAgent );
-    delete to.value.u.listKnowledgeAgent;
+    assert( to.value.t == T_MissionParameter_value_unitKnowledgeList );
+    assert( to.value.u.unitKnowledgeList );
+    NET_ASN_Tools::Delete( *to.value.u.unitKnowledgeList );
+    delete to.value.u.unitKnowledgeList;
 }

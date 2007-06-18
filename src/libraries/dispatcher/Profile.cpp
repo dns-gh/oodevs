@@ -212,6 +212,7 @@ bool Profile::CheckRights( const ASN1T_MsgsClientToSim& msg ) const
         case T_MsgsClientToSim_msg_msg_ctrl_meteo_locale                  : return bSupervision_;
         case T_MsgsClientToSim_msg_msg_ctrl_checkpoint_save_now           : return bSupervision_;
         case T_MsgsClientToSim_msg_msg_ctrl_checkpoint_set_frequency      : return bSupervision_;
+
         case T_MsgsClientToSim_msg_msg_limit_creation_request             : return true;
         case T_MsgsClientToSim_msg_msg_limit_destruction_request          : return true;
         case T_MsgsClientToSim_msg_msg_limit_update_request               : return true;
@@ -223,6 +224,7 @@ bool Profile::CheckRights( const ASN1T_MsgsClientToSim& msg ) const
         case T_MsgsClientToSim_msg_msg_population_order                   : return true;
         case T_MsgsClientToSim_msg_msg_frag_order                         : return true;
         case T_MsgsClientToSim_msg_msg_set_automate_mode                  : return true;
+        case T_MsgsClientToSim_msg_msg_unit_creation_request              : return true;
         case T_MsgsClientToSim_msg_msg_unit_magic_action                  : return true;
         case T_MsgsClientToSim_msg_msg_object_magic_action                : return true;
         case T_MsgsClientToSim_msg_msg_population_magic_action            : return true;
@@ -278,17 +280,17 @@ void Profile::Send( ASN1T_Profile& asn ) const
 
     asn.superviseur = bSupervision_;
 
-    SendContainerRefs< ASN1T_ListAutomate, ASN1T_Automate, T_AutomatSet >( readOnlyAutomats_ , asn.read_only_automates  );
-    SendContainerRefs< ASN1T_ListAutomate, ASN1T_Automate, T_AutomatSet >( readWriteAutomats_, asn.read_write_automates );
+    SendContainerRefs< ASN1T_AutomatList, ASN1T_Automat, T_AutomatSet >( readOnlyAutomats_ , asn.read_only_automates  );
+    SendContainerRefs< ASN1T_AutomatList, ASN1T_Automat, T_AutomatSet >( readWriteAutomats_, asn.read_write_automates );
 
-    SendContainerRefs< ASN1T_ListCamp, ASN1T_Camp, T_SideSet >( readOnlySides_ , asn.read_only_camps  );
-    SendContainerRefs< ASN1T_ListCamp, ASN1T_Camp, T_SideSet >( readWriteSides_, asn.read_write_camps );
+    SendContainerRefs< ASN1T_TeamList, ASN1T_Team, T_SideSet >( readOnlySides_ , asn.read_only_camps  );
+    SendContainerRefs< ASN1T_TeamList, ASN1T_Team, T_SideSet >( readWriteSides_, asn.read_write_camps );
 
-    SendContainerRefs< ASN1T_ListFormation, ASN1T_Formation, T_FormationSet >( readOnlyFormations_ , asn.read_only_formations  );
-    SendContainerRefs< ASN1T_ListFormation, ASN1T_Formation, T_FormationSet >( readWriteFormations_, asn.read_write_formations );
+    SendContainerRefs< ASN1T_FormationList, ASN1T_Formation, T_FormationSet >( readOnlyFormations_ , asn.read_only_formations  );
+    SendContainerRefs< ASN1T_FormationList, ASN1T_Formation, T_FormationSet >( readWriteFormations_, asn.read_write_formations );
     
-    SendContainerRefs< ASN1T_ListPopulation, ASN1T_Population, T_PopulationSet >( readOnlyPopulations_ , asn.read_only_populations  );
-    SendContainerRefs< ASN1T_ListPopulation, ASN1T_Population, T_PopulationSet >( readWritePopulations_, asn.read_write_populations );
+    SendContainerRefs< ASN1T_PopulationList, ASN1T_Population, T_PopulationSet >( readOnlyPopulations_ , asn.read_only_populations  );
+    SendContainerRefs< ASN1T_PopulationList, ASN1T_Population, T_PopulationSet >( readWritePopulations_, asn.read_write_populations );
 }
 
 // -----------------------------------------------------------------------------

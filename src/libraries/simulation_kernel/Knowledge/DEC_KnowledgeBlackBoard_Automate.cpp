@@ -90,7 +90,7 @@ MT_Float DEC_KnowledgeBlackBoard_Automate::GetRapForGlobalValue() const
 // Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent( const ASN1T_KnowledgeAgent& asn ) const
+DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent( const ASN1T_UnitKnowledge& asn ) const
 {
     return pAutomate_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( asn );
 }
@@ -119,7 +119,7 @@ DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent( ui
 // Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject( const ASN1T_KnowledgeObject& asn ) const
+DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& asn ) const
 {
     return pAutomate_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeObjectFromID( asn );
 }
@@ -148,7 +148,7 @@ DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject( 
 // Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation( const ASN1T_KnowledgePopulation& asn ) const
+DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& asn ) const
 {
     return pAutomate_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( asn );
 }

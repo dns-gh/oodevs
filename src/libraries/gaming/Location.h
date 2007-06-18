@@ -38,7 +38,7 @@ class Location : public kernel::LocationVisitor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Location( const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn );
+             Location( const kernel::CoordinateConverter_ABC& converter, const ASN1T_Location& asn );
              Location( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              Location( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~Location();
@@ -50,8 +50,8 @@ public:
     geometry::Point2f GetPosition() const;
     void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
 
-    void CommitTo( ASN1T_Localisation& asn ) const;
-    void Clean( ASN1T_Localisation& asn ) const;
+    void CommitTo( ASN1T_Location& asn ) const;
+    void Clean( ASN1T_Location& asn ) const;
     //@}
 
 protected:
@@ -82,7 +82,7 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    ASN1T_EnumTypeLocalisation type_;
+    ASN1T_EnumLocationType type_;
     T_PointVector points_;
     geometry::Rectangle2f boundingBox_;
     //@}

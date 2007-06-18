@@ -16,7 +16,7 @@ using namespace dispatcher;
 // Name: GenObject constructor
 // Created: NLD 2007-04-23
 // -----------------------------------------------------------------------------
-GenObject::GenObject( const ASN1T_MissionGenObject& asn )
+GenObject::GenObject( const ASN1T_PlannedWork& asn )
     : type_              ( asn.type )
     , location_          ( asn.position )
     , typeObstacle_      ( asn.type_obstacle )
@@ -34,7 +34,7 @@ GenObject::GenObject( const ASN1T_MissionGenObject& asn )
 GenObject::GenObject()
     : type_              ( EnumObjectType::abattis )
     , location_          ()
-    , typeObstacle_      ( EnumTypeObstacle::preliminaire )
+    , typeObstacle_      ( EnumObstacleType::preliminaire )
     , density_           ( 0. )
     , tc2_               ( 0 )
     , delaiActiviteMines_( 0 )
@@ -56,7 +56,7 @@ GenObject::~GenObject()
 // Name: GenObject::Send
 // Created: NLD 2007-04-23
 // -----------------------------------------------------------------------------
-void GenObject::Send( ASN1T_MissionGenObject& asn ) const
+void GenObject::Send( ASN1T_PlannedWork& asn ) const
 {
     asn.type                 = type_;
     asn.type_obstacle        = typeObstacle_;
@@ -71,7 +71,7 @@ void GenObject::Send( ASN1T_MissionGenObject& asn ) const
 // Created: NLD 2007-04-23
 // -----------------------------------------------------------------------------
 // static
-void GenObject::AsnDelete( ASN1T_MissionGenObject& asn )
+void GenObject::AsnDelete( ASN1T_PlannedWork& asn )
 {
     Localisation::AsnDelete( asn.position );
 }

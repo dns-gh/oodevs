@@ -18,7 +18,7 @@ class PHY_DotationCategory;
 class MIL_AutomateLOG;
 class PHY_RolePion_Supply;
 
-struct ASN1T_DemandeDotation;
+struct ASN1T_DotationQuery;
 
 // =============================================================================
 // @class  PHY_SupplyRequest_ABC
@@ -61,7 +61,7 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( ASN1T_DemandeDotation& asn ) const;
+    void Serialize( ASN1T_DotationQuery& asn ) const;
     //@}
 
 protected:

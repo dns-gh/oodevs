@@ -53,7 +53,7 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( ASN1T_Itineraire& asn ) const;
+    void Serialize( ASN1T_Path& asn ) const;
     //@}
 
 private:

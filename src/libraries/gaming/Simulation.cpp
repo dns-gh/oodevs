@@ -94,10 +94,10 @@ void Simulation::ChangeSpeed( int timeFactor )
 // Name: Simulation::Update
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void Simulation::Update( const ASN1T_MsgCtrlInfo& message )
+void Simulation::Update( const ASN1T_MsgControlInformation& message )
 {
     tickDuration_ = message.tick_duration;
-    paused_       = message.etat == EnumEtatSim::paused;
+    paused_       = message.etat == EnumSimulationState::paused;
     timeFactor_   = message.time_factor;
     time_         = message.current_tick * tickDuration_;
     controller_.Update( *this );
@@ -107,11 +107,11 @@ void Simulation::Update( const ASN1T_MsgCtrlInfo& message )
 // Name: Simulation::Update
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-void Simulation::Update( const ASN1T_MsgCtrlReplayInfo& message )
+void Simulation::Update( const ASN1T_MsgControlReplayInformation& message )
 {
     tickDuration_ = message.tick_duration;
     tickCount_    = message.tick_count;
-    paused_       = message.etat == EnumEtatSim::paused;
+    paused_       = message.etat == EnumSimulationState::paused;
     timeFactor_   = message.time_factor;
     time_         = message.current_tick * tickDuration_;
     controller_.Update( *this );
@@ -142,7 +142,7 @@ void Simulation::BeginTick( int tick )
 // Name: Simulation::EndTick
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void Simulation::EndTick( const ASN1T_MsgCtrlEndTick&  )
+void Simulation::EndTick( const ASN1T_MsgControlEndTick&  )
 {
     controller_.Update( endTick_ );
     controller_.Update( *this );

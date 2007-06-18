@@ -33,14 +33,14 @@ class PopulationKnowledge_ABC;
 // =============================================================================
 class PopulationFlowKnowledge : public PopulationPartKnowledge_ABC
                               , public kernel::Drawable_ABC
-                              , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeUpdate >
+                              , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowKnowledgeUpdate >
 {
 public:
     //! @name Types
     //@{
     struct FlowPart
     {
-        FlowPart( ASN1T_PortionFlux& asn, const kernel::CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox );
+        FlowPart( ASN1T_FlowPart& asn, const kernel::CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox );
         T_PointVector flowPart_;
         float         rRelevance_;
     };
@@ -52,7 +52,7 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationFlowKnowledge( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Population_ABC& popu, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg );
+             PopulationFlowKnowledge( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Population_ABC& popu, const ASN1T_MsgPopulationFlowKnowledgeCreation& asnMsg );
     virtual ~PopulationFlowKnowledge();
     //@}
 
@@ -65,7 +65,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdate& asnMsg );
+    virtual void DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeUpdate& asnMsg );
     //@}
 
 private:

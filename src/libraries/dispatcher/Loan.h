@@ -28,15 +28,15 @@ class Loan
 public:
     //! @name Constructors/Destructor
     //@{
-     Loan( const Model& model, ASN1T_EquipementEmprunte& asnMsg );
-     Loan( const Model& model, ASN1T_EquipementPrete&    asnMsg );
+     Loan( const Model& model, ASN1T_BorrowedEquipment& asnMsg );
+     Loan( const Model& model, ASN1T_LentEquipment&    asnMsg );
     ~Loan();
     //@}
 
     //! @name Operations
     //@{
-    void Send( ASN1T_EquipementEmprunte& asnMsg ) const;
-    void Send( ASN1T_EquipementPrete&    asnMsg ) const;
+    void Send( ASN1T_BorrowedEquipment& asnMsg ) const;
+    void Send( ASN1T_LentEquipment&    asnMsg ) const;
     //@}
 
 private:

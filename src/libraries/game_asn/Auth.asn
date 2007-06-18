@@ -20,14 +20,14 @@ Profile ::= SEQUENCE
 {
     login                   VisibleString,
     password                VisibleString  OPTIONAL,
-    read-only-formations    ListFormation  OPTIONAL,
-    read-write-formations   ListFormation  OPTIONAL,
-    read-only-automates     ListAutomate   OPTIONAL,
-    read-write-automates    ListAutomate   OPTIONAL,
-    read-only-camps         ListCamp       OPTIONAL,
-    read-write-camps        ListCamp       OPTIONAL,
-    read-only-populations   ListPopulation OPTIONAL,
-    read-write-populations  ListPopulation OPTIONAL,
+    read-only-formations    FormationList  OPTIONAL,
+    read-write-formations   FormationList  OPTIONAL,
+    read-only-automates     AutomatList   OPTIONAL,
+    read-write-automates    AutomatList   OPTIONAL,
+    read-only-camps         TeamList       OPTIONAL,
+    read-write-camps        TeamList       OPTIONAL,
+    read-only-populations   PopulationList OPTIONAL,
+    read-write-populations  PopulationList OPTIONAL,
     superviseur             BOOLEAN
 }
 

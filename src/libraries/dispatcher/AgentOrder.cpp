@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Name: AgentOrder constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-AgentOrder::AgentOrder( Model& model, Agent& agent, const ASN1T_MsgPionOrder& asn )
+AgentOrder::AgentOrder( Model& model, Agent& agent, const ASN1T_MsgUnitOrder& asn )
     : Order_ABC( model, asn.mission, asn.parametres, asn.order_context )
     , agent_   ( agent )
 {
@@ -44,7 +44,7 @@ AgentOrder::~AgentOrder()
 // -----------------------------------------------------------------------------
 void AgentOrder::Send( Publisher_ABC& publisher )
 {
-    AsnMsgSimToClientPionOrder asn;
+    AsnMsgSimToClientUnitOrder asn;
     asn().oid_unite_executante = agent_.GetID();
     asn().mission              = missionID_;
     Order_ABC::Send( asn().order_context );
@@ -62,7 +62,7 @@ void AgentOrder::Send( Publisher_ABC& publisher )
 // -----------------------------------------------------------------------------
 void AgentOrder::SendNoMission( const Agent& agent, Publisher_ABC& publisher )
 {
-    AsnMsgSimToClientPionOrder asn;
+    AsnMsgSimToClientUnitOrder asn;
 
     asn().oid_unite_executante               = agent.GetID();
     asn().mission                            = 0;

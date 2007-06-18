@@ -73,8 +73,8 @@ void ParamHumanWoundList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     if( !table_ )
         InterfaceNotInitialized();
-    asn.value.t = T_MissionParameter_value_santePriorites;
-    ASN1T_SantePriorites*& list = asn.value.u.santePriorites = new ASN1T_SantePriorites();
+    asn.value.t = T_MissionParameter_value_logMedicalPriorities;
+    ASN1T_LogMedicalPriorities*& list = asn.value.u.logMedicalPriorities = new ASN1T_LogMedicalPriorities();
     list->n = 0;
     list->elem = 0;
     asn.null_value = table_->numRows() <= 1 ? 1 : 0;
@@ -96,9 +96,9 @@ void ParamHumanWoundList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamHumanWoundList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.santePriorites )
-        delete[] asn.value.u.santePriorites->elem;
-    delete asn.value.u.santePriorites;
+    if( asn.value.u.logMedicalPriorities )
+        delete[] asn.value.u.logMedicalPriorities->elem;
+    delete asn.value.u.logMedicalPriorities;
 }
 
 // -----------------------------------------------------------------------------

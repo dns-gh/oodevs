@@ -43,14 +43,14 @@ MIL_ParameterType_ObjectKnowledge::~MIL_ParameterType_ObjectKnowledge()
 void MIL_ParameterType_ObjectKnowledge::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_knowledgeObject ) 
+    if( from.null_value || from.value.t != T_MissionParameter_value_objectKnowledge ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( !DEC_Tools::CheckTypeConnaissanceObjet( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyObjectKnowledge( from.value.u.knowledgeObject, to, knowledgeResolver ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( from.value.u.objectKnowledge, to, knowledgeResolver ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -83,9 +83,9 @@ bool MIL_ParameterType_ObjectKnowledge::Copy( const DIA_Variable_ABC& from, ASN1
         return false;
 
     to.null_value = false;
-    to.value.t    = T_MissionParameter_value_knowledgeObject;
+    to.value.t    = T_MissionParameter_value_objectKnowledge;
     
-    if( !NET_ASN_Tools::CopyObjectKnowledge( from, to.value.u.knowledgeObject, knowledgeResolver ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( from, to.value.u.objectKnowledge, knowledgeResolver ) )
         return false;
 
     return true;    
@@ -97,5 +97,5 @@ bool MIL_ParameterType_ObjectKnowledge::Copy( const DIA_Variable_ABC& from, ASN1
 //-----------------------------------------------------------------------------
 void MIL_ParameterType_ObjectKnowledge::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_knowledgeObject );
+    assert( to.value.t == T_MissionParameter_value_objectKnowledge );
 }

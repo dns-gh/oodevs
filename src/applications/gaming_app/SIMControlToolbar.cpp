@@ -148,12 +148,12 @@ void SIMControlToolbar::SlotPlayPause()
 {
     if ( paused_ )
     {
-        ASN_MsgCtrlResume asnMsg;
+        ASN_MsgControlResume asnMsg;
         asnMsg.Send( publisher_ );
     }
     else
     {
-        ASN_MsgCtrlPause asnMsg;
+        ASN_MsgControlPause asnMsg;
         asnMsg.Send( publisher_ );
     }
 }
@@ -166,7 +166,7 @@ void SIMControlToolbar::SlotSpeedChange()
 {
     if( connected_ )
     {
-        ASN_MsgCtrlChangeTimeFactor asnMsg;
+        ASN_MsgControlChangeTimeFactor asnMsg;
         asnMsg() = pSpeedSpinBox_->value();
         asnMsg.Send( publisher_ );
     }

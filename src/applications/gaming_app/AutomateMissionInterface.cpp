@@ -52,10 +52,10 @@ void AutomateMissionInterface::Publish()
         CommitTo( *action );
     }
 
-    ASN_MsgAutomateOrder asn;
+    ASN_MsgAutomatOrder asn;
     asn().oid_unite_executante = GetEntity().GetId();
     asn().mission = mission_.GetId();
-    asn().formation = (ASN1T_EnumAutomateOrderFormation)EnumAutomateOrderFormation::deux_echelons; // $$$$ SBO 2007-03-15: move to order.parameters
+    asn().formation = (ASN1T_EnumAutomatOrderFormation)EnumAutomatOrderFormation::deux_echelons; // $$$$ SBO 2007-03-15: move to order.parameters
     CommitTo( asn().order_context );
     CommitTo( asn().parametres );
     asn.Send( publisher_ );

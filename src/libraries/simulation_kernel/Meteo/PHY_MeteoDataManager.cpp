@@ -117,7 +117,7 @@ void PHY_MeteoDataManager::InitializeLocalMeteos( MIL_InputArchive& archive )
 // Created: NLD 2003-08-04
 // Last modified: JVT 03-08-05
 // -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::OnReceiveMsgGlobalMeteo( const ASN1T_MsgCtrlMeteoGlobale& asnMsg )
+void PHY_MeteoDataManager::OnReceiveMsgGlobalMeteo( const ASN1T_MsgControlGlobalMeteo& asnMsg )
 {
     assert( pGlobalMeteo_ );
     pGlobalMeteo_->Update( asnMsg.attributs );
@@ -131,7 +131,7 @@ void PHY_MeteoDataManager::OnReceiveMsgGlobalMeteo( const ASN1T_MsgCtrlMeteoGlob
 // Created: NLD 2003-08-04
 // Last modified: JVT 03-08-05
 // -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::OnReceiveMsgLocalMeteo( const ASN1T_MsgCtrlMeteoLocale& asnMsg )
+void PHY_MeteoDataManager::OnReceiveMsgLocalMeteo( const ASN1T_MsgControlLocalMeteo& asnMsg )
 {
     MT_Vector2D vUpLeft;
     MT_Vector2D vDownRight;
@@ -140,7 +140,7 @@ void PHY_MeteoDataManager::OnReceiveMsgLocalMeteo( const ASN1T_MsgCtrlMeteoLocal
     NET_ASN_Tools::ReadPoint( asnMsg.rect_point_bas_droite , vDownRight );
 
     PHY_Meteo* pTmp = 0;
-    if( asnMsg.meteo.t == T_MsgCtrlMeteoLocale_meteo_attributs )
+    if( asnMsg.meteo.t == T_MsgControlLocalMeteo_meteo_attributs )
     {
         pTmp = new PHY_Meteo( *asnMsg.meteo.u.attributs );
         RegisterMeteo( *pTmp );

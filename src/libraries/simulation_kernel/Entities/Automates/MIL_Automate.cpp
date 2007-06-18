@@ -447,13 +447,13 @@ void MIL_Automate::UpdateNetwork() const
     assert( pDecision_ );
     if( bAutomateModeChanged_ || pDecision_->HasStateChanged() )
     {
-        NET_ASN_MsgAutomateAttributes msg;
+        NET_ASN_MsgAutomatAttributes msg;
         msg().oid_automate = nID_;
     
         if( bAutomateModeChanged_ )
         {
             msg().m.etat_automatePresent = 1;
-            msg().etat_automate = bEngaged_ ? EnumAutomateState::embraye : EnumAutomateState::debraye;
+            msg().etat_automate = bEngaged_ ? EnumAutomatMode::embraye : EnumAutomatMode::debraye;
         }
 
         pDecision_->SendChangedState( msg );
@@ -752,7 +752,7 @@ bool MIL_Automate::GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const
 // -----------------------------------------------------------------------------
 void MIL_Automate::SendCreation() const
 {
-    NET_ASN_MsgAutomateCreation asn;
+    NET_ASN_MsgAutomatCreation asn;
     asn().oid_automate            = nID_;
     asn().type_automate           = pType_->GetID();
     asn().oid_camp                = GetArmy().GetID();
@@ -773,10 +773,10 @@ void MIL_Automate::SendFullState() const
 {
     assert( pDecision_ );
 
-    NET_ASN_MsgAutomateAttributes asn;
+    NET_ASN_MsgAutomatAttributes asn;
     asn().oid_automate = nID_;
     asn().m.etat_automatePresent = 1;
-    asn().etat_automate = bEngaged_ ? EnumAutomateState::embraye : EnumAutomateState::debraye;
+    asn().etat_automate = bEngaged_ ? EnumAutomatMode::embraye : EnumAutomatMode::debraye;
     pDecision_->SendFullState( asn );
     asn.Send();
 
@@ -808,7 +808,7 @@ void MIL_Automate::SendKnowledge() const
 // -----------------------------------------------------------------------------
 void MIL_Automate::SendLogisticLinks() const
 {
-    NET_ASN_MsgAutomateChangeLiensLogistiques asn;
+    NET_ASN_MsgAutomatChangeLogisticLinks asn;
 
     asn().oid_automate = nID_;
 
@@ -825,12 +825,12 @@ void MIL_Automate::SendLogisticLinks() const
 // Name: MIL_Automate::OnReceiveMsgSetAutomateMode
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgSetAutomateMode( const ASN1T_MsgSetAutomateMode& asnMsg )
+void MIL_Automate::OnReceiveMsgSetAutomateMode( const ASN1T_MsgSetAutomatMode& asnMsg )
 {
     switch( asnMsg.mode )
     {
-        case EnumAutomateState::debraye: Disengage(); break;
-        case EnumAutomateState::embraye: Engage   (); break;
+        case EnumAutomatMode::debraye: Disengage(); break;
+        case EnumAutomatMode::embraye: Engage   (); break;
         default:
             assert( false );
     };
@@ -858,9 +858,9 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& 
     {
         const MIL_Army* pSurrenderedToArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asnMsg.action.u.se_rendre );
         if( !pSurrenderedToArmy || *pSurrenderedToArmy == GetArmy() )
-            throw NET_AsnException< ASN1T_EnumUnitAttrErrorCode >( EnumUnitAttrErrorCode::error_invalid_attribute );
+            throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_attribute );
         else if( IsSurrendered() )
-            throw NET_AsnException< ASN1T_EnumUnitAttrErrorCode >( EnumUnitAttrErrorCode::error_unit_surrendered );
+            throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_unit_surrendered );
         else        
         {
             Surrender( *pSurrenderedToArmy );
@@ -882,7 +882,7 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& 
 // Name: MIL_Automate::OnReceiveMsgChangeKnowledgeGroup
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( const ASN1T_MsgAutomateChangeGroupeConnaissance& asnMsg )
+void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( const ASN1T_MsgAutomatChangeKnowledgeGroup& asnMsg )
 {
     MIL_Army* pNewArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asnMsg.oid_camp );
     if( !pNewArmy || *pNewArmy != GetArmy() )
@@ -904,7 +904,7 @@ void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( const ASN1T_MsgAutomateChan
 // Name: MIL_Automate::OnReceiveMsgChangeLogisticLinks
 // Created: NLD 2005-01-17
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgChangeLogisticLinks( const ASN1T_MsgAutomateChangeLiensLogistiques& msg )
+void MIL_Automate::OnReceiveMsgChangeLogisticLinks( const ASN1T_MsgAutomatChangeLogisticLinks& msg )
 {
     if( IsSurrendered() )
         throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_unit_surrendered );
@@ -927,25 +927,25 @@ void MIL_Automate::OnReceiveMsgChangeLogisticLinks( const ASN1T_MsgAutomateChang
 // Name: MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas( const ASN1T_MsgLogRavitaillementChangeQuotas& /*msg*/ )
+void MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas( const ASN1T_MsgLogSupplyChangeQuotas& /*msg*/ )
 {
-    throw NET_AsnException< ASN1T_MsgLogRavitaillementChangeQuotasAck >( MsgLogRavitaillementChangeQuotasAck::error_invalid_receveur );
+    throw NET_AsnException< ASN1T_MsgLogSupplyChangeQuotasAck >( MsgLogSupplyChangeQuotasAck::error_invalid_receveur );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveMsgLogSupplyPushFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgLogSupplyPushFlow( const ASN1T_MsgLogRavitaillementPousserFlux& /*msg*/ )
+void MIL_Automate::OnReceiveMsgLogSupplyPushFlow( const ASN1T_MsgLogSupplyPushFlow& /*msg*/ )
 {
-    throw NET_AsnException< ASN1T_MsgLogRavitaillementPousserFluxAck >( MsgLogRavitaillementPousserFluxAck::error_invalid_receveur );
+    throw NET_AsnException< ASN1T_MsgLogSupplyPushFlowAck >( MsgLogSupplyPushFlowAck::error_invalid_receveur );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveMsgOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgOrder( const ASN1T_MsgAutomateOrder& msg )
+void MIL_Automate::OnReceiveMsgOrder( const ASN1T_MsgAutomatOrder& msg )
 {
     orderManager_.OnReceiveMission( msg );
 }

@@ -339,17 +339,17 @@ void PHY_RolePionLOG_Supply::Clean()
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
 static
-void SendComposanteUse( const PHY_RolePion_Composantes::T_ComposanteUseMap& data, ASN1T__SeqOfRavitaillementDisponibiliteMoyens& asn )
+void SendComposanteUse( const PHY_RolePion_Composantes::T_ComposanteUseMap& data, ASN1T__SeqOfLogSupplyEquimentAvailability& asn )
 {
     asn.n = data.size();
     if( data.empty() )
         return;
 
-    ASN1T_RavitaillementDisponibiliteMoyens* pData = new ASN1T_RavitaillementDisponibiliteMoyens[ data.size() ];
+    ASN1T_LogSupplyEquimentAvailability* pData = new ASN1T_LogSupplyEquimentAvailability[ data.size() ];
     uint i = 0;
     for( PHY_RolePion_Composantes::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
-        ASN1T_RavitaillementDisponibiliteMoyens& data = pData[ i++ ];
+        ASN1T_LogSupplyEquimentAvailability& data = pData[ i++ ];
         data.type_equipement = itData->first->GetMosID();
         assert( itData->second.nNbrTotal_ );
 
@@ -367,7 +367,7 @@ void SendComposanteUse( const PHY_RolePion_Composantes::T_ComposanteUseMap& data
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::SendFullState() const
 {
-    NET_ASN_MsgLogRavitaillementEtat asn;
+    NET_ASN_MsgLogSupplyState asn;
 
     asn().m.chaine_activeePresent                       = 1;
     asn().m.disponibilites_transporteurs_convoisPresent = 1;
@@ -401,7 +401,7 @@ void PHY_RolePionLOG_Supply::SendChangedState() const
     if( !( bHasChanged_ || GetRole< PHY_RolePion_Composantes >().HasChanged() || pStocks_->HasChanged() ) )
         return;
 
-    NET_ASN_MsgLogRavitaillementEtat asn;
+    NET_ASN_MsgLogSupplyState asn;
     assert( pPion_ );
     asn().oid_pion = pPion_->GetID();
 

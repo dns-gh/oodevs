@@ -67,7 +67,7 @@ void Dotations::DoUpdate( const ASN1T_MsgUnitAttributes& message )
     uint nSize = message.dotation_eff_ressource.n;
     while ( nSize > 0 )
     {
-        const ASN1T_DotationRessource& value = message.dotation_eff_ressource.elem[ --nSize ];
+        const ASN1T_ResourceDotations& value = message.dotation_eff_ressource.elem[ --nSize ];
         Dotation previous( resolver_.Get( value.ressource_id ) );
         if( Dotation* dotation = Find( value.ressource_id ) )
             previous = *dotation;

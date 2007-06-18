@@ -58,7 +58,7 @@ MIL_PionMission_$MissionName$::~MIL_PionMission_$MissionName$()
 // Name: MIL_PionMission_$MissionName$::Initialize
 // Created: 
 //-----------------------------------------------------------------------------
-ASN1T_EnumOrderErrorCode MIL_PionMission_$MissionName$::Initialize( const ASN1T_MsgPionOrder& asnMsg )
+ASN1T_EnumOrderErrorCode MIL_PionMission_$MissionName$::Initialize( const ASN1T_MsgUnitOrder& asnMsg )
 {
     ASN1T_EnumOrderErrorCode nCode = MIL_PionMission_ABC::Initialize( asnMsg );
     if( nCode != EnumOrderErrorCode::no_error )
@@ -103,7 +103,7 @@ $InitMemberFromMission$
 // Name: MIL_PionMission_$MissionName$::Serialize
 // Created: 
 //-----------------------------------------------------------------------------
-void MIL_PionMission_$MissionName$::Serialize( ASN1T_MsgPionOrder& asnMsg )
+void MIL_PionMission_$MissionName$::Serialize( ASN1T_MsgUnitOrder& asnMsg )
 {
     MIL_PionMission_ABC::Serialize( asnMsg );
     
@@ -118,7 +118,7 @@ $SerializeMembers$
 // Name: MIL_PionMission_$MissionName$::CleanAfterSerialization
 // Created: 
 //-----------------------------------------------------------------------------
-void MIL_PionMission_$MissionName$::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
+void MIL_PionMission_$MissionName$::CleanAfterSerialization( ASN1T_MsgUnitOrder& asnMsg )
 {
     assert( asnMsg.mission.t == T_Mission_Pion_$LowerMissionName$ );
     ASN1T_Mission_Pion_$MissionName$& asnMission = *asnMsg.mission.u.$LowerMissionName$;

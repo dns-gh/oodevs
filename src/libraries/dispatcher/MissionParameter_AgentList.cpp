@@ -20,8 +20,8 @@ using namespace dispatcher;
 MissionParameter_AgentList::MissionParameter_AgentList( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    for( unsigned i = 0; i != asn.value.u.listAgent->n; ++i )
-        agents_.push_back( asn.value.u.listAgent->elem[i] );
+    for( unsigned i = 0; i != asn.value.u.unitList->n; ++i )
+        agents_.push_back( asn.value.u.unitList->elem[i] );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,9 +44,9 @@ MissionParameter_AgentList::~MissionParameter_AgentList()
 void MissionParameter_AgentList::Send( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value                 = bNullValue_;
-    asn.value.t                    = T_MissionParameter_value_listAgent;
-    asn.value.u.listAgent = new ASN1T_ListAgent();
-    SendContainerValues< ASN1T_ListAgent, ASN1T_Agent, T_OIDVector >( agents_, *asn.value.u.listAgent ); 
+    asn.value.t                    = T_MissionParameter_value_unitList;
+    asn.value.u.unitList = new ASN1T_UnitList();
+    SendContainerValues< ASN1T_UnitList, ASN1T_Unit, T_OIDVector >( agents_, *asn.value.u.unitList ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ void MissionParameter_AgentList::Send( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void MissionParameter_AgentList::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listAgent->n > 0 )
-        delete [] asn.value.u.listAgent->elem;
-    delete asn.value.u.listAgent;
+    if( asn.value.u.unitList->n > 0 )
+        delete [] asn.value.u.unitList->elem;
+    delete asn.value.u.unitList;
 }

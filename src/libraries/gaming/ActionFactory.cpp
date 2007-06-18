@@ -75,7 +75,7 @@ Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const FragOrd
 // Name: ActionFactory::CreateAction
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgPionOrder& message ) const
+Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgUnitOrder& message ) const
 {
     const MissionType& mission = missions_.Get( message.mission );
     std::auto_ptr< Action_ABC > action( new ActionAgentMission( model_.agents_.GetAgent( message.oid_unite_executante ), mission, controllers_.controller_, false ) );
@@ -88,7 +88,7 @@ Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgPionOrder& message ) con
 // Name: ActionFactory::CreateAction
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgAutomateOrder& message ) const
+Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgAutomatOrder& message ) const
 {
     const MissionType& mission = missions_.Get( message.mission );
     std::auto_ptr< Action_ABC > action( new ActionAutomatMission( model_.agents_.GetAutomat( message.oid_unite_executante ), mission, controllers_.controller_, false ) );

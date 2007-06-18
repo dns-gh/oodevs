@@ -52,9 +52,9 @@ public:
     void Update        ( const ASN1T_MsgPopulationConcentrationCreation&    msg );
     void Update        ( const ASN1T_MsgPopulationConcentrationUpdate&      msg );
     void Update        ( const ASN1T_MsgPopulationConcentrationDestruction& msg );
-    void Update        ( const ASN1T_MsgPopulationFluxCreation&             msg );
-    void Update        ( const ASN1T_MsgPopulationFluxUpdate&               msg );
-    void Update        ( const ASN1T_MsgPopulationFluxDestruction&          msg );
+    void Update        ( const ASN1T_MsgPopulationFlowCreation&             msg );
+    void Update        ( const ASN1T_MsgPopulationFlowUpdate&               msg );
+    void Update        ( const ASN1T_MsgPopulationFlowDestruction&          msg );
     void Update        ( const ASN1T_MsgPopulationOrder&                    msg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
     virtual void SendFullUpdate( Publisher_ABC& publisher ) const;

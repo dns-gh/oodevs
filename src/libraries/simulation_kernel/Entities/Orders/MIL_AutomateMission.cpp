@@ -40,7 +40,7 @@ void MIL_AutomateMission::InitializeDIA()
 // Name: MIL_AutomateMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_AutomateMission::MIL_AutomateMission( const MIL_AutomateMissionType& type, MIL_Automate& automate, const ASN1T_MsgAutomateOrder& asn )
+MIL_AutomateMission::MIL_AutomateMission( const MIL_AutomateMissionType& type, MIL_Automate& automate, const ASN1T_MsgAutomatOrder& asn )
     : MIL_Mission_ABC          ( type, automate.GetKnowledge(), asn.parametres, asn.order_context, automate.GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition() )
     , type_                    ( type )
     , automate_                ( automate )
@@ -63,7 +63,7 @@ MIL_AutomateMission::MIL_AutomateMission( const MIL_AutomateMissionType& type, M
     , bDIACdtBehaviorActivated_( false )
 {
     GetVariable( nDIADirectionDanger_ ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
-    GetVariable( nDIAFormation_       ).SetValue( (int)EnumAutomateOrderFormation::deux_echelons );
+    GetVariable( nDIAFormation_       ).SetValue( (int)EnumAutomatOrderFormation::deux_echelons );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,11 +173,11 @@ void MIL_AutomateMission::GoToCdt()
 // static
 void MIL_AutomateMission::SendNoMission( const MIL_Automate& automate )
 {
-    NET_ASN_MsgAutomateOrder asn;
+    NET_ASN_MsgAutomatOrder asn;
 
     asn().oid_unite_executante               = automate.GetID();
     asn().mission                            = 0;
-    asn().formation                          = EnumAutomateOrderFormation::un_echelon;
+    asn().formation                          = EnumAutomatOrderFormation::un_echelon;
     asn().parametres.n                       = 0;
     asn().order_context.direction_dangereuse = 0;
     asn().order_context.limas.n              = 0;
@@ -190,7 +190,7 @@ void MIL_AutomateMission::SendNoMission( const MIL_Automate& automate )
 // -----------------------------------------------------------------------------
 void MIL_AutomateMission::Send() const
 {
-    NET_ASN_MsgAutomateOrder asn;
+    NET_ASN_MsgAutomatOrder asn;
 
     asn().oid_unite_executante = automate_.GetID();
     asn().mission              = type_    .GetID();

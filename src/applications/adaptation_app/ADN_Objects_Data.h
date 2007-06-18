@@ -163,15 +163,15 @@ public:
 
 
 //*****************************************************************************
-    class AreaControlInfos
+    class AreaControlInformations
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( AreaControlInfos )
+        MT_COPYNOTALLOWED( AreaControlInformations )
 
     public:
-         AreaControlInfos();
-        ~AreaControlInfos();
+         AreaControlInformations();
+        ~AreaControlInformations();
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -184,8 +184,8 @@ public:
         ADN_Type_Int                                             nPercentage_;
     };
 
-    typedef ADN_Type_Vector_ABC<AreaControlInfos> T_AreaControlInfos_Vector;
-    typedef T_AreaControlInfos_Vector::iterator  IT_AreaControlInfos_Vector;
+    typedef ADN_Type_Vector_ABC<AreaControlInformations> T_AreaControlInformations_Vector;
+    typedef T_AreaControlInformations_Vector::iterator  IT_AreaControlInformations_Vector;
 
 //*****************************************************************************
 public:    
@@ -206,7 +206,7 @@ private:
 
 private:
     T_ObjectsInfos_Vector     vObjectInfos_;
-    T_AreaControlInfos_Vector vAreaControlInfos_;
+    T_AreaControlInformations_Vector vAreaControlInformations_;
 };
 
 

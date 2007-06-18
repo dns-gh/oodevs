@@ -58,7 +58,7 @@ $StaticMemberScriptInit$
 // Name: MIL_AutomateMission_$MissionName$::Initialize
 // Created: 
 //-----------------------------------------------------------------------------
-ASN1T_EnumOrderErrorCode MIL_AutomateMission_$MissionName$::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
+ASN1T_EnumOrderErrorCode MIL_AutomateMission_$MissionName$::Initialize( const ASN1T_MsgAutomatOrder& asnMsg )
 {
     ASN1T_EnumOrderErrorCode nCode = MIL_AutomateMission_ABC::Initialize( asnMsg );
     if( nCode != EnumOrderErrorCode::no_error )
@@ -76,7 +76,7 @@ $InitMembersFromAsn$
 // Name: MIL_AutomateMission_$MissionName$::Serialize
 // Created: 
 //-----------------------------------------------------------------------------
-void MIL_AutomateMission_$MissionName$::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
+void MIL_AutomateMission_$MissionName$::Serialize( ASN1T_MsgAutomatOrder& asnMsg )
 {
     MIL_AutomateMission_ABC::Serialize( asnMsg );
     
@@ -91,7 +91,7 @@ $SerializeMembers$
 // Name: MIL_AutomateMission_$MissionName$::CleanAfterSerialization
 // Created: 
 //-----------------------------------------------------------------------------
-void MIL_AutomateMission_$MissionName$::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
+void MIL_AutomateMission_$MissionName$::CleanAfterSerialization( ASN1T_MsgAutomatOrder& asnMsg )
 {
     assert( asnMsg.mission.t == T_Mission_Automate_$LowerMissionName$ );
     ASN1T_Mission_Automate_$MissionName$& asnMission = *asnMsg.mission.u.$LowerMissionName$;

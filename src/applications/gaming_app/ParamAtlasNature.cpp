@@ -65,9 +65,9 @@ void ParamAtlasNature::BuildInterface( QWidget* parent )
 void ParamAtlasNature::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value = 0;
-    asn.value.t = T_MissionParameter_value_natureAtlas;
-    asn.value.u.natureAtlas = new ASN1T_NatureAtlas();
-    nature_.CommitTo( *asn.value.u.natureAtlas );
+    asn.value.t = T_MissionParameter_value_atlasNature;
+    asn.value.u.atlasNature = new ASN1T_AtlasNature();
+    nature_.CommitTo( *asn.value.u.atlasNature );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +76,7 @@ void ParamAtlasNature::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamAtlasNature::Clean( ASN1T_MissionParameter& asn ) const
 {
-    delete asn.value.u.natureAtlas;
+    delete asn.value.u.atlasNature;
 }
 
 // -----------------------------------------------------------------------------

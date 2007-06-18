@@ -31,7 +31,7 @@ ActionParameterAgentList::ActionParameterAgentList( const kernel::OrderParameter
 // Name: ActionParameterAgentList constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-ActionParameterAgentList::ActionParameterAgentList( const OrderParameter& parameter, const ASN1T_ListAgent& asn, const Resolver_ABC< Agent_ABC >& resolver )
+ActionParameterAgentList::ActionParameterAgentList( const OrderParameter& parameter, const ASN1T_UnitList& asn, const Resolver_ABC< Agent_ABC >& resolver )
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
@@ -70,13 +70,13 @@ namespace
 {
     struct AsnSerializer : public ActionParameterVisitor_ABC
     {
-        explicit AsnSerializer( ASN1T_ListAgent& asn ) : asn_( &asn ), current_( 0 ) {}
+        explicit AsnSerializer( ASN1T_UnitList& asn ) : asn_( &asn ), current_( 0 ) {}
         virtual void Visit( const ActionParameterAgent& param )
         {
             param.CommitTo( asn_->elem[current_++] );
         }
 
-        ASN1T_ListAgent* asn_;
+        ASN1T_UnitList* asn_;
         unsigned int current_;
     };
 }
@@ -87,12 +87,12 @@ namespace
 // -----------------------------------------------------------------------------
 void ActionParameterAgentList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.value.t = T_MissionParameter_value_listAgent;
-    ASN1T_ListAgent*& list = asn.value.u.listAgent = new ASN1T_ListAgent();
+    asn.value.t = T_MissionParameter_value_unitList;
+    ASN1T_UnitList*& list = asn.value.u.unitList = new ASN1T_UnitList();
     asn.null_value = ( list->n = Count() ) ? 0 : 1;
     if( asn.null_value )
         return;
-    list->elem = new ASN1T_Agent[list->n];
+    list->elem = new ASN1T_Unit[list->n];
     AsnSerializer serializer( *list );
     Accept( serializer );
 }
@@ -103,7 +103,7 @@ void ActionParameterAgentList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ActionParameterAgentList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listAgent )
-        delete[] asn.value.u.listAgent->elem;
-    delete asn.value.u.listAgent;
+    if( asn.value.u.unitList )
+        delete[] asn.value.u.unitList->elem;
+    delete asn.value.u.unitList;
 }

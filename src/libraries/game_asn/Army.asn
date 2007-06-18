@@ -12,7 +12,7 @@ ArmyIncludes ::= SEQUENCE { BaseExports }
 ArmyExports  ::= NULL
 -- END includes
 
-EnumDiplomatie ::= ENUMERATED
+EnumDiplomacy ::= ENUMERATED
 {
     inconnu (0),
     ami     (1),
@@ -20,32 +20,32 @@ EnumDiplomatie ::= ENUMERATED
     neutre  (3)
 }
 
-MsgChangeDiplomatie ::= SEQUENCE
+MsgChangeDiplomacy ::= SEQUENCE
 {
-    oid-camp1  Camp,
-    oid-camp2  Camp,
-    diplomatie EnumDiplomatie 
+    oid-camp1  Team,
+    oid-camp2  Team,
+    diplomatie EnumDiplomacy 
 }
 
-EnumChangeDiplomatieErrorCode ::= ENUMERATED
+EnumChangeDiplomacyErrorCode ::= ENUMERATED
 {
     no-error            (0),
     error-invalid-camp  (1)
 }
 
-MsgSideCreation ::= SEQUENCE
+MsgTeamCreation ::= SEQUENCE
 {
-    oid  Camp,
+    oid  Team,
     nom  VisibleString,
-    type EnumDiplomatie
+    type EnumDiplomacy
 }
 
-MsgChangeDiplomatieAck ::= SEQUENCE
+MsgChangeDiplomacyAck ::= SEQUENCE
 {
-    oid-camp1  Camp,
-    oid-camp2  Camp,
-    diplomatie EnumDiplomatie,
-    error-code EnumChangeDiplomatieErrorCode
+    oid-camp1  Team,
+    oid-camp2  Team,
+    diplomatie EnumDiplomacy,
+    error-code EnumChangeDiplomacyErrorCode
 }
 
 END -- Army

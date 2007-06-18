@@ -37,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Team_ABC*      CreateTeam     ( const ASN1T_MsgSideCreation& asnMsg ) = 0;
+    virtual kernel::Team_ABC*      CreateTeam     ( const ASN1T_MsgTeamCreation& asnMsg ) = 0;
     virtual kernel::Formation_ABC* CreateFormation( const ASN1T_MsgFormationCreation& asnMsg ) = 0;
     //@}
 };

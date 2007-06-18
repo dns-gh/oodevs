@@ -43,14 +43,14 @@ MIL_ParameterType_Location::~MIL_ParameterType_Location()
 void MIL_ParameterType_Location::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_localisation ) 
+    if( from.null_value || from.value.t != T_MissionParameter_value_location ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( !DEC_Tools::CheckTypeLocalisation( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyLocation( *from.value.u.localisation, to ) )
+    if( !NET_ASN_Tools::CopyLocation( *from.value.u.location, to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -83,10 +83,10 @@ bool MIL_ParameterType_Location::Copy( const DIA_Variable_ABC& from, ASN1T_Missi
         return false;
 
     to.null_value           = false;
-    to.value.t              = T_MissionParameter_value_localisation;
-    to.value.u.localisation = new ASN1T_Localisation();
+    to.value.t              = T_MissionParameter_value_location;
+    to.value.u.location = new ASN1T_Location();
     
-    if( !NET_ASN_Tools::CopyLocation( from, *to.value.u.localisation ) )
+    if( !NET_ASN_Tools::CopyLocation( from, *to.value.u.location ) )
         return false;
 
     return true;    
@@ -98,8 +98,8 @@ bool MIL_ParameterType_Location::Copy( const DIA_Variable_ABC& from, ASN1T_Missi
 //-----------------------------------------------------------------------------
 void MIL_ParameterType_Location::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_localisation );
-    assert( to.value.u.localisation );
-    NET_ASN_Tools::Delete( *to.value.u.localisation );
-    delete to.value.u.localisation;    
+    assert( to.value.t == T_MissionParameter_value_location );
+    assert( to.value.u.location );
+    NET_ASN_Tools::Delete( *to.value.u.location );
+    delete to.value.u.location;    
 }

@@ -10,7 +10,7 @@
 #ifndef __AtlasNature_h_
 #define __AtlasNature_h_
 
-struct ASN1T_NatureAtlas;
+struct ASN1T_AtlasNature;
 
 // =============================================================================
 /** @class  AtlasNature
@@ -34,7 +34,7 @@ public:
     QString GetName() const;
     unsigned short GetValue() const;
     bool IsSet( unsigned short value ) const;
-    void CommitTo( ASN1T_NatureAtlas& asn ) const;
+    void CommitTo( ASN1T_AtlasNature& asn ) const;
     void Toggle( const AtlasNature& nature );
     //@}
 

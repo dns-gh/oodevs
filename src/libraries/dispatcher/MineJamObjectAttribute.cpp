@@ -17,11 +17,11 @@ using namespace dispatcher;
 // Name: MineJamObjectAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-MineJamObjectAttribute::MineJamObjectAttribute( const Model& model, const ASN1T_AttrObjectSpecific& asnMsg )
+MineJamObjectAttribute::MineJamObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg )
     : ObjectAttribute_ABC( model, asnMsg )
     , nMinesActivityTime_( 0 )
 {
-    if( asnMsg.t == T_AttrObjectSpecific_bouchon_mines )
+    if( asnMsg.t == T_ObjectAttributesSpecific_bouchon_mines )
         nMinesActivityTime_ = asnMsg.u.bouchon_mines->delai_activite_mines;
 }
 
@@ -38,9 +38,9 @@ MineJamObjectAttribute::~MineJamObjectAttribute()
 // Name: MineJamObjectAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void MineJamObjectAttribute::Update( const ASN1T_AttrObjectSpecific& asnMsg )
+void MineJamObjectAttribute::Update( const ASN1T_ObjectAttributesSpecific& asnMsg )
 {
-    if( asnMsg.t == T_AttrObjectSpecific_bouchon_mines )
+    if( asnMsg.t == T_ObjectAttributesSpecific_bouchon_mines )
         nMinesActivityTime_ = asnMsg.u.bouchon_mines->delai_activite_mines;
 }
 
@@ -48,10 +48,10 @@ void MineJamObjectAttribute::Update( const ASN1T_AttrObjectSpecific& asnMsg )
 // Name: MineJamObjectAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void MineJamObjectAttribute::Send( ASN1T_AttrObjectSpecific& asnMsg ) const
+void MineJamObjectAttribute::Send( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
     asnMsg.t = nType_;
-    asnMsg.u.bouchon_mines = new ASN1T_AttrObjectBouchonMines();
+    asnMsg.u.bouchon_mines = new ASN1T_ObjectAttributesMineJam();
     
     asnMsg.u.bouchon_mines->delai_activite_mines = nMinesActivityTime_;
 }
@@ -60,7 +60,7 @@ void MineJamObjectAttribute::Send( ASN1T_AttrObjectSpecific& asnMsg ) const
 // Name: MineJamObjectAttribute::AsnDelete
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void MineJamObjectAttribute::AsnDelete( ASN1T_AttrObjectSpecific& asnMsg ) const
+void MineJamObjectAttribute::AsnDelete( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
     delete asnMsg.u.bouchon_mines;
 }

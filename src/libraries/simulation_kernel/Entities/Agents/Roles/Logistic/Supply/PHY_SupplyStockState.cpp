@@ -225,16 +225,16 @@ void PHY_SupplyStockState::SendMsgCreation() const
     assert( !requests_.empty() );
     assert( pSuppliedAutomate_ );
 
-    NET_ASN_MsgLogRavitaillementTraitementCreation asn;
+    NET_ASN_MsgLogSupplyHandlingCreation asn;
     asn().oid_consigne  = nID_;
     asn().oid_automate  = pSuppliedAutomate_->GetID();
     asn().tick_creation = nCreationTick_;
 
-    ASN1T_DemandeDotation* pAsnRequests = new ASN1T_DemandeDotation[ requests_.size() ];
+    ASN1T_DotationQuery* pAsnRequests = new ASN1T_DotationQuery[ requests_.size() ];
     uint i = 0;
     for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it, ++i )
     {
-        ASN1T_DemandeDotation& asnDemande = pAsnRequests[ i ];
+        ASN1T_DotationQuery& asnDemande = pAsnRequests[ i ];
         it->second.Serialize( asnDemande );
     }
 
@@ -254,7 +254,7 @@ void PHY_SupplyStockState::SendFullState() const
     assert( pSuppliedAutomate_ );
 
     SendMsgCreation();
-    NET_ASN_MsgLogRavitaillementTraitementUpdate asn;
+    NET_ASN_MsgLogSupplyHandlingUpdate asn;
     asn().oid_consigne = nID_;
     asn().oid_automate = pSuppliedAutomate_->GetID();
     if( pConsign_ )
@@ -275,7 +275,7 @@ void PHY_SupplyStockState::SendChangedState() const
 
     assert( pSuppliedAutomate_ );
 
-    NET_ASN_MsgLogRavitaillementTraitementUpdate asn;
+    NET_ASN_MsgLogSupplyHandlingUpdate asn;
     asn().oid_consigne = nID_;
     asn().oid_automate = pSuppliedAutomate_->GetID();
 
@@ -293,11 +293,11 @@ void PHY_SupplyStockState::SendChangedState() const
 
         asn().m.dotationsPresent = 1;
 
-        ASN1T_DemandeDotation* pAsnRequests = new ASN1T_DemandeDotation[ requests_.size() ];
+        ASN1T_DotationQuery* pAsnRequests = new ASN1T_DotationQuery[ requests_.size() ];
         uint i = 0;
         for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it, ++i )
         {
-            ASN1T_DemandeDotation& asnDemande = pAsnRequests[ i ];
+            ASN1T_DotationQuery& asnDemande = pAsnRequests[ i ];
             it->second.Serialize( asnDemande );
         }
 
@@ -318,7 +318,7 @@ void PHY_SupplyStockState::SendMsgDestruction() const
 {
     assert( pSuppliedAutomate_ );
 
-    NET_ASN_MsgLogRavitaillementTraitementDestruction asn;
+    NET_ASN_MsgLogSupplyHandlingDestruction asn;
     asn().oid_consigne = nID_;
     asn().oid_automate = pSuppliedAutomate_->GetID();
     asn.Send();

@@ -41,11 +41,11 @@ ChangeDiplomacyDialog::ChangeDiplomacyDialog( QWidget* parent, Controllers& cont
     pArmy1ComboBox_ = new ValuedComboBox< const Team_ABC* >( box );
     new QLabel( tr( " is " ), box );
 
-    pDiplomacyComboBox_ = new ValuedComboBox< ASN1T_EnumDiplomatie >( box );
-    pDiplomacyComboBox_->AddItem( tr( "unknown" ), EnumDiplomatie::inconnu );
-    pDiplomacyComboBox_->AddItem( tr( "friend" ),  EnumDiplomatie::ami );
-    pDiplomacyComboBox_->AddItem( tr( "enemy" ),   EnumDiplomatie::ennemi );
-    pDiplomacyComboBox_->AddItem( tr( "neutral" ), EnumDiplomatie::neutre );
+    pDiplomacyComboBox_ = new ValuedComboBox< ASN1T_EnumDiplomacy >( box );
+    pDiplomacyComboBox_->AddItem( tr( "unknown" ), EnumDiplomacy::inconnu );
+    pDiplomacyComboBox_->AddItem( tr( "friend" ),  EnumDiplomacy::ami );
+    pDiplomacyComboBox_->AddItem( tr( "enemy" ),   EnumDiplomacy::ennemi );
+    pDiplomacyComboBox_->AddItem( tr( "neutral" ), EnumDiplomacy::neutre );
 
     new QLabel( tr( "with side" ), box );
     pArmy2ComboBox_ = new ValuedComboBox< const Team_ABC* >( box );
@@ -89,7 +89,7 @@ void ChangeDiplomacyDialog::Validate()
 {
     if( pArmy1ComboBox_->count() && pArmy2ComboBox_->count() )
     {
-        ASN_MsgChangeDiplomatie asn;
+        ASN_MsgChangeDiplomacy asn;
         asn().oid_camp1  = pArmy1ComboBox_->GetValue()->GetId();
         asn().oid_camp2  = pArmy2ComboBox_->GetValue()->GetId();
         asn().diplomatie = pDiplomacyComboBox_->GetValue();

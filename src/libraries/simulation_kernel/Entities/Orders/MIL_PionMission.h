@@ -30,7 +30,7 @@ class MIL_PionMission : public MIL_Mission_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion& pion, const ASN1T_MsgPionOrder& asn );
+             MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion& pion, const ASN1T_MsgUnitOrder& asn );
              MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion& pion, const MIL_AutomateMission& parent );
              MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion& pion );
     virtual ~MIL_PionMission();

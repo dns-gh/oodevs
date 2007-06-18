@@ -64,7 +64,7 @@ private:
 
 private:
     MIL_AutomateLOG*                pTC2_;
-    ASN1T_AttrObjectCampPrisonniers asnAttributes_;
+    ASN1T_ObjectAttributesPrisonerCamp asnAttributes_;
 };
 
 #include "MIL_CampPrisonniers.inl"

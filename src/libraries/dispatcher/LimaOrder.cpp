@@ -46,7 +46,7 @@ LimaOrder::~LimaOrder()
 void LimaOrder::Send( ASN1T_LimaOrder& asn ) const
 {
     location_.Send( asn.lima );
-    SendContainerValues< ASN1T__SeqOfEnumTypeLima, ASN1T_EnumTypeLima, T_Functions >( functions_, asn.fonctions );
+    SendContainerValues< ASN1T__SeqOfEnumLimaType, ASN1T_EnumLimaType, T_Functions >( functions_, asn.fonctions );
 }
 
 // -----------------------------------------------------------------------------

@@ -33,8 +33,8 @@ DEC_BlackBoard_CanContainKnowledgeAgentPerception::DEC_BlackBoard_CanContainKnow
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeAgentPerception::~DEC_BlackBoard_CanContainKnowledgeAgentPerception()
 {
-    while( !knowledgeAgentPerceptionMap_.empty() )
-        DestroyKnowledgeAgentPerception( *knowledgeAgentPerceptionMap_.begin()->second );    
+    while( !unitKnowledgePerceptionMap_.empty() )
+        DestroyKnowledgeAgentPerception( *unitKnowledgePerceptionMap_.begin()->second );    
 }
 
 // =============================================================================
@@ -84,7 +84,7 @@ namespace boost
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeAgentPerception::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> knowledgeAgentPerceptionMap_;
+    file >> unitKnowledgePerceptionMap_;
 }
 
 // -----------------------------------------------------------------------------
@@ -93,7 +93,7 @@ void DEC_BlackBoard_CanContainKnowledgeAgentPerception::load( MIL_CheckPointInAr
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeAgentPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << knowledgeAgentPerceptionMap_;
+    file << unitKnowledgePerceptionMap_;
 }
 
 // =============================================================================
@@ -107,7 +107,7 @@ void DEC_BlackBoard_CanContainKnowledgeAgentPerception::save( MIL_CheckPointOutA
 DEC_Knowledge_AgentPerception& DEC_BlackBoard_CanContainKnowledgeAgentPerception::CreateKnowledgeAgentPerception( const MIL_AgentPion& agentPerceiving, MIL_Agent_ABC& agentPerceived )
 {
     DEC_Knowledge_AgentPerception* pKnowledge = new DEC_Knowledge_AgentPerception( agentPerceiving, agentPerceived );//$$ RAM   
-    bool bOut = knowledgeAgentPerceptionMap_.insert( std::make_pair( &agentPerceived, pKnowledge ) ).second;
+    bool bOut = unitKnowledgePerceptionMap_.insert( std::make_pair( &agentPerceived, pKnowledge ) ).second;
     assert( bOut );
     return *pKnowledge;
 }
@@ -118,7 +118,7 @@ DEC_Knowledge_AgentPerception& DEC_BlackBoard_CanContainKnowledgeAgentPerception
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeAgentPerception::DestroyKnowledgeAgentPerception( DEC_Knowledge_AgentPerception& knowledge )
 {
-    int nOut = knowledgeAgentPerceptionMap_.erase( &knowledge.GetAgentPerceived() );
+    int nOut = unitKnowledgePerceptionMap_.erase( &knowledge.GetAgentPerceived() );
     assert( nOut == 1 );
     delete &knowledge;
 }

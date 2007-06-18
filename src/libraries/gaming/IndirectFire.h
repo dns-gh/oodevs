@@ -32,7 +32,7 @@ class IndirectFire : public Fire_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             IndirectFire( const ASN1T_MsgStartPionFire& message, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::CoordinateConverter_ABC& converter );
+             IndirectFire( const ASN1T_MsgStartUnitFire& message, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::CoordinateConverter_ABC& converter );
     virtual ~IndirectFire();
     //@}
 

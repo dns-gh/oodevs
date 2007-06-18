@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-class NET_ASN_MsgLogRavitaillementTraitementUpdate;
+class NET_ASN_MsgLogSupplyHandlingUpdate;
 class MIL_AutomateLOG;
 class MIL_Automate;
 
@@ -59,9 +59,9 @@ public:
 
     //! @name Network
     //@{
-            void SendChangedState( NET_ASN_MsgLogRavitaillementTraitementUpdate& asn ) const;
-    virtual void SendFullState   ( NET_ASN_MsgLogRavitaillementTraitementUpdate& asn ) const;
-    static  void SendDefaultState( NET_ASN_MsgLogRavitaillementTraitementUpdate& asn );
+            void SendChangedState( NET_ASN_MsgLogSupplyHandlingUpdate& asn ) const;
+    virtual void SendFullState   ( NET_ASN_MsgLogSupplyHandlingUpdate& asn ) const;
+    static  void SendDefaultState( NET_ASN_MsgLogSupplyHandlingUpdate& asn );
     //@}
 
 protected:

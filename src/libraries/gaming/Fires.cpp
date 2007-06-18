@@ -73,7 +73,7 @@ void Fires::DestroyFire( const T& message )
 // Name: Fires::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Fires::DoUpdate( const ASN1T_MsgStartPionFire& message )
+void Fires::DoUpdate( const ASN1T_MsgStartUnitFire& message )
 {
     CreateFire( message );
 }
@@ -82,7 +82,7 @@ void Fires::DoUpdate( const ASN1T_MsgStartPionFire& message )
 // Name: Fires::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Fires::DoUpdate( const ASN1T_MsgStopPionFire& message )
+void Fires::DoUpdate( const ASN1T_MsgStopUnitFire& message )
 {
     DestroyFire( message );
 }

@@ -59,7 +59,7 @@ void DEC_LogisticFunctions::PionMaintenanceDisableSystem( DIA_Call_ABC& /*call*/
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::PionMaintenanceChangePriorities( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
 {
-    assert( DEC_Tools::CheckTypeMaintenancePriorites( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypeMaintenancePriorities( call.GetParameter( 0 ) ) );
 
     T_MaintenancePriorityVector* pData = call.GetParameter( 0 ).ToUserPtr( pData );
     assert( pData );

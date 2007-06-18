@@ -876,7 +876,7 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const ASN1T_MagicActionPopulati
 {
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( asn.attitude );
     if( !pAttitude )
-        throw NET_AsnException< ASN1T_EnumPopulationAttrErrorCode >( EnumPopulationAttrErrorCode::error_invalid_attribute );;
+        throw NET_AsnException< ASN1T_EnumPopulationErrorCode >( EnumPopulationErrorCode::error_invalid_attribute );;
 
     // concentration
     if( asn.beneficiaire.t == T_MagicActionPopulationChangeAttitude_beneficiaire_concentration )
@@ -887,7 +887,7 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const ASN1T_MagicActionPopulati
                 ( **it ).SetAttitude( *pAttitude );
                 return;
             }
-        throw NET_AsnException< ASN1T_EnumPopulationAttrErrorCode >( EnumPopulationAttrErrorCode::error_invalid_attribute );;
+        throw NET_AsnException< ASN1T_EnumPopulationErrorCode >( EnumPopulationErrorCode::error_invalid_attribute );;
     }
     // flow
     else if( asn.beneficiaire.t == T_MagicActionPopulationChangeAttitude_beneficiaire_flux )
@@ -898,7 +898,7 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const ASN1T_MagicActionPopulati
                 ( **it ).SetAttitude( *pAttitude );
                 return;
             }
-        throw NET_AsnException< ASN1T_EnumPopulationAttrErrorCode >( EnumPopulationAttrErrorCode::error_invalid_attribute );;
+        throw NET_AsnException< ASN1T_EnumPopulationErrorCode >( EnumPopulationErrorCode::error_invalid_attribute );;
     }
     // global
     else if( asn.beneficiaire.t == T_MagicActionPopulationChangeAttitude_beneficiaire_global )
@@ -914,7 +914,7 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const ASN1T_MagicActionPopulati
 // Name: MIL_Population::OnReceiveMsgKill
 // Created: SBO 2006-04-05
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgKill( const ASN1T_MagicActionPopulationTuer& asn )
+void MIL_Population::OnReceiveMsgKill( const ASN1T_MagicActionPopulationKill& asn )
 {
     uint remainingKills = asn;
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
@@ -935,7 +935,7 @@ void MIL_Population::OnReceiveMsgKill( const ASN1T_MagicActionPopulationTuer& as
 // Name: MIL_Population::OnReceiveMsgResurrect
 // Created: SBO 2006-04-05
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgResurrect( const ASN1T_MagicActionPopulationRessusciter& asn )
+void MIL_Population::OnReceiveMsgResurrect( const ASN1T_MagicActionPopulationResurrect& asn )
 {
     uint remainingResurrections = asn;
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )

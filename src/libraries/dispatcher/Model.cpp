@@ -267,7 +267,7 @@ void Model::Update( uint nMsgID, DIN::DIN_Input& msg )
 // -----------------------------------------------------------------------------
 void Model::Send( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientCtrlSendCurrentStateBegin().Send( publisher );
+    AsnMsgSimToClientControlSendCurrentStateBegin().Send( publisher );
 
     pSimulationModel_->Send( publisher );
 
@@ -280,7 +280,7 @@ void Model::Send( Publisher_ABC& publisher ) const
         Accept( visitor );
     }
 
-    AsnMsgSimToClientCtrlSendCurrentStateEnd().Send( publisher );
+    AsnMsgSimToClientControlSendCurrentStateEnd().Send( publisher );
 }
 
 // -----------------------------------------------------------------------------

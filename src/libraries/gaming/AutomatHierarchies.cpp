@@ -40,7 +40,7 @@ AutomatHierarchies::~AutomatHierarchies()
 // Name: AutomatHierarchies::DoUpdate
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AutomatHierarchies::DoUpdate( const ASN1T_MsgAutomateCreation& message )
+void AutomatHierarchies::DoUpdate( const ASN1T_MsgAutomatCreation& message )
 {
     SetSuperior( &groupResolver_.Get( message.oid_groupe_connaissance) );
 }
@@ -49,7 +49,7 @@ void AutomatHierarchies::DoUpdate( const ASN1T_MsgAutomateCreation& message )
 // Name: AutomatHierarchies::DoUpdate
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AutomatHierarchies::DoUpdate( const ASN1T_MsgAutomateChangeGroupeConnaissanceAck& message )
+void AutomatHierarchies::DoUpdate( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& message )
 {
     if( ! message.error_code )
         ChangeSuperior( & groupResolver_.Get( message.oid_groupe_connaissance) );

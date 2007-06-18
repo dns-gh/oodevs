@@ -112,7 +112,7 @@ void MIL_LimaOrder::Serialize( ASN1T_LimaOrder& asn ) const
     asn.fonctions.n = functions_.size();
     if( !functions_.empty() )
     {
-        asn.fonctions.elem = new ASN1T_EnumTypeLima[ functions_.size() ];
+        asn.fonctions.elem = new ASN1T_EnumLimaType[ functions_.size() ];
         uint i = 0;
         for( CIT_LimaFunctions it = functions_.begin(); it != functions_.end(); ++it )
             asn.fonctions.elem[ i++ ] = (**it).GetAsnID();

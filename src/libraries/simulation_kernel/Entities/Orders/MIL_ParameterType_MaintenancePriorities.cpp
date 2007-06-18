@@ -39,14 +39,14 @@ MIL_ParameterType_MaintenancePriorities::~MIL_ParameterType_MaintenancePrioritie
 void MIL_ParameterType_MaintenancePriorities::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_maintenancePriorites ) 
+    if( from.null_value || from.value.t != T_MissionParameter_value_logMaintenancePriorities ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
-    if( !DEC_Tools::CheckTypeMaintenancePriorites( to ) )
+    if( !DEC_Tools::CheckTypeMaintenancePriorities( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyMaintenancePriorities( *from.value.u.maintenancePriorites, to ) )
+    if( !NET_ASN_Tools::CopyMaintenancePriorities( *from.value.u.logMaintenancePriorities, to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -57,11 +57,11 @@ void MIL_ParameterType_MaintenancePriorities::Copy( const ASN1T_MissionParameter
 bool MIL_ParameterType_MaintenancePriorities::Copy( const DIA_Variable_ABC& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( !DEC_Tools::CheckTypeMaintenancePriorites( from ) )
+    if( !DEC_Tools::CheckTypeMaintenancePriorities( from ) )
         return false;
 
     // Check dest
-    if( !DEC_Tools::CheckTypeMaintenancePriorites( to ) )
+    if( !DEC_Tools::CheckTypeMaintenancePriorities( to ) )
         return false;
 
     NET_ASN_Tools::CopyMaintenancePriorities( from, to );
@@ -75,14 +75,14 @@ bool MIL_ParameterType_MaintenancePriorities::Copy( const DIA_Variable_ABC& from
 bool MIL_ParameterType_MaintenancePriorities::Copy( const DIA_Variable_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( !DEC_Tools::CheckTypeMaintenancePriorites( from ) )
+    if( !DEC_Tools::CheckTypeMaintenancePriorities( from ) )
         return false;
 
     to.null_value                   = false;
-    to.value.t                      = T_MissionParameter_value_maintenancePriorites;
-    to.value.u.maintenancePriorites = new ASN1T_MaintenancePriorites();
+    to.value.t                      = T_MissionParameter_value_logMaintenancePriorities;
+    to.value.u.logMaintenancePriorities = new ASN1T_LogMaintenancePriorities();
     
-    if( !NET_ASN_Tools::CopyMaintenancePriorities( from, *to.value.u.maintenancePriorites ) )
+    if( !NET_ASN_Tools::CopyMaintenancePriorities( from, *to.value.u.logMaintenancePriorities ) )
         return false;
 
     return true;
@@ -94,8 +94,8 @@ bool MIL_ParameterType_MaintenancePriorities::Copy( const DIA_Variable_ABC& from
 // -----------------------------------------------------------------------------
 void MIL_ParameterType_MaintenancePriorities::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_maintenancePriorites );
-    assert( to.value.u.maintenancePriorites );
-    NET_ASN_Tools::Delete( *to.value.u.maintenancePriorites );
-    delete to.value.u.maintenancePriorites;
+    assert( to.value.t == T_MissionParameter_value_logMaintenancePriorities );
+    assert( to.value.u.logMaintenancePriorities );
+    NET_ASN_Tools::Delete( *to.value.u.logMaintenancePriorities );
+    delete to.value.u.logMaintenancePriorities;
 }

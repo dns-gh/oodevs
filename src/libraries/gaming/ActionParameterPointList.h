@@ -25,7 +25,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ActionParameterPointList( const kernel::OrderParameter& parameter );
-             ActionParameterPointList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_ListPoint& asn );
+             ActionParameterPointList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_PointList& asn );
              ActionParameterPointList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~ActionParameterPointList();
     //@}

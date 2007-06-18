@@ -47,7 +47,7 @@ ActionParameterLocation::ActionParameterLocation( const kernel::OrderParameter& 
 // Name: ActionParameterLocation constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-ActionParameterLocation::ActionParameterLocation( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn )
+ActionParameterLocation::ActionParameterLocation( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Location& asn )
     : ActionParameter_ABC( name )
     , Location( converter, asn )
     , parameter_( 0 )
@@ -59,7 +59,7 @@ ActionParameterLocation::ActionParameterLocation( const QString& name, const ker
 // Name: ActionParameterLocation constructor
 // Created: SBO 2007-04-19
 // -----------------------------------------------------------------------------
-ActionParameterLocation::ActionParameterLocation( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn )
+ActionParameterLocation::ActionParameterLocation( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Location& asn )
     : ActionParameter_ABC( parameter.GetName() )
     , Location( converter, asn )
     , parameter_( &parameter )
@@ -171,10 +171,10 @@ bool ActionParameterLocation::IsContext() const
 // -----------------------------------------------------------------------------
 void ActionParameterLocation::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.value.t = T_MissionParameter_value_localisation;
+    asn.value.t = T_MissionParameter_value_location;
     asn.null_value = 0; // $$$$ SBO 2007-05-22: 
-    asn.value.u.localisation = new ASN1T_Localisation();
-    Location::CommitTo( *asn.value.u.localisation );
+    asn.value.u.location = new ASN1T_Location();
+    Location::CommitTo( *asn.value.u.location );
 }
 
 // -----------------------------------------------------------------------------
@@ -183,16 +183,16 @@ void ActionParameterLocation::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ActionParameterLocation::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.localisation )
-        Location::Clean( *asn.value.u.localisation );
-    delete asn.value.u.localisation;
+    if( asn.value.u.location )
+        Location::Clean( *asn.value.u.location );
+    delete asn.value.u.location;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterLocation::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void ActionParameterLocation::CommitTo( ASN1T_Localisation& asn ) const
+void ActionParameterLocation::CommitTo( ASN1T_Location& asn ) const
 {
     Location::CommitTo( asn );
 }
@@ -201,7 +201,7 @@ void ActionParameterLocation::CommitTo( ASN1T_Localisation& asn ) const
 // Name: ActionParameterLocation::Clean
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void ActionParameterLocation::Clean( ASN1T_Localisation& asn ) const
+void ActionParameterLocation::Clean( ASN1T_Location& asn ) const
 {
     Location::Clean( asn );
 }

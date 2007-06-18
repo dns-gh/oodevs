@@ -13,8 +13,8 @@
 #include "clients_gui/CampPrototype_ABC.h"
 
 struct ASN1T_MagicActionCreateObject;
-struct ASN1T_AttrObjectCampPrisonniers;
-struct ASN1T_AttrObjectCampRefugies;
+struct ASN1T_ObjectAttributesPrisonerCamp;
+struct ASN1T_ObjectAttributesRefugeeCamp;
 
 // =============================================================================
 /** @class  CampPrototype
@@ -49,8 +49,8 @@ private:
     //! @name Member Data
     //@{
     ASN1T_MagicActionCreateObject& msg_;
-    ASN1T_AttrObjectCampPrisonniers* attrPrisonners_;
-    ASN1T_AttrObjectCampRefugies* attrRefugees_;
+    ASN1T_ObjectAttributesPrisonerCamp* attrPrisonners_;
+    ASN1T_ObjectAttributesRefugeeCamp* attrRefugees_;
     //@}
 };
 

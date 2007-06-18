@@ -33,7 +33,7 @@ TacticalLine_ABC::E_LineType TacticalLine_Lima::GetLineType() const
 // Created: SBO 2005-08-24
 // -----------------------------------------------------------------------------
 inline
-ASN1T_EnumTypeLima TacticalLine_Lima::GetLimaType() const
+ASN1T_EnumLimaType TacticalLine_Lima::GetLimaType() const
 {
     return eLimaType_;
 }

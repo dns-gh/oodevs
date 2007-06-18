@@ -13,7 +13,7 @@ ControlExports  ::= NULL
 -- END includes
 
 -- Definition de tous les messages de controle (MOS->SIM et SIM->MOS)
-EnumCtrlErrorCode ::= ENUMERATED
+EnumControlErrorCode ::= ENUMERATED
 {
    no-error                     (0),
    error-already-started        (1),
@@ -23,31 +23,31 @@ EnumCtrlErrorCode ::= ENUMERATED
    error-invalid-time-factor    (5)
 }
 
-MsgCtrlStop     ::= NULL 
-MsgCtrlStopAck  ::= EnumCtrlErrorCode
+MsgControlStop     ::= NULL 
+MsgControlStopAck  ::= EnumControlErrorCode
 
-MsgCtrlPause    ::= NULL
-MsgCtrlPauseAck ::= EnumCtrlErrorCode
+MsgControlPause    ::= NULL
+MsgControlPauseAck ::= EnumControlErrorCode
 
-MsgCtrlResume    ::= NULL
-MsgCtrlResumeAck ::= EnumCtrlErrorCode
+MsgControlResume    ::= NULL
+MsgControlResumeAck ::= EnumControlErrorCode
 
-MsgCtrlSkipToTick    ::= INTEGER
-MsgCtrlSkipToTickAck ::= SEQUENCE
+MsgControlSkipToTick    ::= INTEGER
+MsgControlSkipToTickAck ::= SEQUENCE
 {
     tick        INTEGER,
-    error-code  EnumCtrlErrorCode
+    error-code  EnumControlErrorCode
 }
 
-MsgCtrlChangeTimeFactor    ::= INTEGER
-MsgCtrlChangeTimeFactorAck ::= SEQUENCE
+MsgControlChangeTimeFactor    ::= INTEGER
+MsgControlChangeTimeFactorAck ::= SEQUENCE
 {
     time-factor INTEGER,
-    error-code  EnumCtrlErrorCode
+    error-code  EnumControlErrorCode
 }
 
-MsgCtrlBeginTick ::= INTEGER  -- Current tick
-MsgCtrlEndTick   ::= SEQUENCE
+MsgControlBeginTick ::= INTEGER  -- Current tick
+MsgControlEndTick   ::= SEQUENCE
 {
     current-tick        INTEGER,
     tick-duration       INTEGER,    -- En millisecondes
@@ -57,32 +57,32 @@ MsgCtrlEndTick   ::= SEQUENCE
     virtual-memory      INTEGER
 }
 
-MsgCtrlClientAnnouncement ::= NULL
+MsgControlClientAnnouncement ::= NULL
 
-EnumEtatSim ::= ENUMERATED
+EnumSimulationState ::= ENUMERATED
 {
     running (0),
     paused  (1),
     stopped (2)
 }
 
-MsgCtrlInfo ::= SEQUENCE
+MsgControlInformation ::= SEQUENCE
 {
     current-tick            INTEGER,     
     tick-duration           INTEGER,  -- En secondes
     time-factor             INTEGER,
     checkpoint-frequence    INTEGER, -- En minutes
-    etat                    EnumEtatSim,
+    etat                    EnumSimulationState,
     send-vision-cones       BOOLEAN, -- No comment ...
     profiling-enabled       BOOLEAN
 }
 
-MsgCtrlReplayInfo ::= SEQUENCE
+MsgControlReplayInformation ::= SEQUENCE
 {
     current-tick            INTEGER,     
     tick-duration           INTEGER,  -- En secondes
     time-factor             INTEGER,
-    etat                    EnumEtatSim,
+    etat                    EnumSimulationState,
     tick-count              INTEGER
 }
 
@@ -91,23 +91,23 @@ MsgCtrlReplayInfo ::= SEQUENCE
 ----------------
 
 -- SIM -> MOS
-MsgCtrlCheckPointSaveBegin ::= NULL
-MsgCtrlCheckPointSaveEnd   ::= NULL
-MsgCtrlCheckPointLoadBegin ::= NULL
-MsgCtrlCheckPointLoadEnd   ::= NULL
+MsgControlCheckPointSaveBegin ::= NULL
+MsgControlCheckPointSaveEnd   ::= NULL
+MsgControlCheckPointLoadBegin ::= NULL
+MsgControlCheckPointLoadEnd   ::= NULL
 
 -- MOS -> SIM
-MsgCtrlCheckPointSetFrequency    ::= INTEGER -- En minutes
-MsgCtrlCheckPointSetFrequencyAck ::= NULL
-MsgCtrlCheckPointSaveNow         ::= SEQUENCE
+MsgControlCheckPointSetFrequency    ::= INTEGER -- En minutes
+MsgControlCheckPointSetFrequencyAck ::= NULL
+MsgControlCheckPointSaveNow         ::= SEQUENCE
 {
     nom VisibleString OPTIONAL    
 }
-MsgCtrlCheckPointSaveNowAck      ::= NULL
+MsgControlCheckPointSaveNowAck      ::= NULL
 
 -- SIM -> MOS
-MsgCtrlSendCurrentStateBegin    ::= NULL
-MsgCtrlSendCurrentStateEnd      ::= NULL
+MsgControlSendCurrentStateBegin    ::= NULL
+MsgControlSendCurrentStateEnd      ::= NULL
                                          
 ----------------
 -- METEO
@@ -123,34 +123,34 @@ EnumPrecipitationType ::= ENUMERATED
     neige               (5)
 }
 
-MeteoAttributs ::= SEQUENCE
+MeteoAttributes ::= SEQUENCE
 {
     temperature                         INTEGER,
-    vitesse-vent                        Vitesse, -- en km/h
-    direction-vent                      Direction,
-    plancher-couverture-nuageuse        Altitude,
-    plafond-couverture-nuageuse         Altitude,
-    densite-moyenne-couverture-nuageuse Pourcentage,
+    vitesse-vent                        Speed, -- en km/h
+    direction-vent                      Heading,
+    plancher-couverture-nuageuse        Elevation,
+    plafond-couverture-nuageuse         Elevation,
+    densite-moyenne-couverture-nuageuse Percentage,
     precipitation                       EnumPrecipitationType
 }
 
-MsgCtrlMeteoGlobale ::= SEQUENCE
+MsgControlGlobalMeteo ::= SEQUENCE
 {
-    attributs MeteoAttributs
+    attributs MeteoAttributes
 }
 
-MsgCtrlMeteoLocale ::= SEQUENCE
+MsgControlLocalMeteo ::= SEQUENCE
 {
     rect-point-haut-gauche CoordUTM,
     rect-point-bas-droite  CoordUTM,
     meteo CHOICE
     {
-        attributs MeteoAttributs,
+        attributs MeteoAttributes,
         globale   NULL
     }
 }
 
-MsgCtrlMeteoGlobaleAck ::= NULL
-MsgCtrlMeteoLocaleAck  ::= NULL
+MsgControlGlobalMeteoAck ::= NULL
+MsgControlLocalMeteoAck  ::= NULL
 
 END -- Control

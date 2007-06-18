@@ -222,7 +222,7 @@ void PHY_MedicalHumanState::SendFullState() const
     assert( pPion_ );
 
     SendMsgCreation();
-    NET_ASN_MsgLogSanteTraitementHumainUpdate asn;
+    NET_ASN_MsgLogMedicalHandlingUpdate asn;
     asn().oid_consigne          = nID_;
     asn().oid_pion              = pPion_->GetID();
 
@@ -233,7 +233,7 @@ void PHY_MedicalHumanState::SendFullState() const
         asn().m.oid_pion_log_traitantPresent = 1;
         asn().m.etatPresent                  = 1;
         asn().oid_pion_log_traitant          = 0;
-        asn().etat                           = EnumLogSanteTraitementEtat::termine;
+        asn().etat                           = EnumLogMedicalHandlingStatus::termine;
     }
 
     asn().m.blesse_mentalPresent         = 1;
@@ -260,7 +260,7 @@ void PHY_MedicalHumanState::SendChangedState() const
     assert( pPion_ );
     assert( pHuman_ );
 
-    NET_ASN_MsgLogSanteTraitementHumainUpdate asn;
+    NET_ASN_MsgLogMedicalHandlingUpdate asn;
     asn().oid_consigne = nID_;
     asn().oid_pion     = pPion_->GetID();
     if( pConsign_ )
@@ -270,7 +270,7 @@ void PHY_MedicalHumanState::SendChangedState() const
         asn().m.oid_pion_log_traitantPresent = 1;
         asn().m.etatPresent                  = 1;
         asn().oid_pion_log_traitant          = 0;
-        asn().etat                           = EnumLogSanteTraitementEtat::termine;
+        asn().etat                           = EnumLogMedicalHandlingStatus::termine;
     }
     if( bHumanStateHasChanged_ )
     {
@@ -309,7 +309,7 @@ void PHY_MedicalHumanState::SendMsgCreation() const
     assert( pPion_ );
     assert( pHuman_ );
 
-    NET_ASN_MsgLogSanteTraitementHumainCreation asn;
+    NET_ASN_MsgLogMedicalHandlingCreation asn;
     asn().oid_consigne   = nID_;
     asn().oid_pion       = pPion_->GetID();
     asn().tick_creation  = nCreationTick_;
@@ -328,7 +328,7 @@ void PHY_MedicalHumanState::SendMsgDestruction() const
 {
     assert( pPion_ );
     
-    NET_ASN_MsgLogSanteTraitementHumainDestruction asn;
+    NET_ASN_MsgLogMedicalHandlingDestruction asn;
     asn().oid_consigne    = nID_;
     asn().oid_pion        = pPion_->GetID();
     asn.Send();

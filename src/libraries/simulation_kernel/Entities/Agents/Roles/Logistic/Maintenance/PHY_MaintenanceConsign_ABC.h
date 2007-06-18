@@ -20,7 +20,7 @@ class PHY_ComposanteTypePion;
 class PHY_ComposantePion;
 class PHY_Breakdown;
 class MIL_AgentPionLOG_ABC;
-class NET_ASN_MsgLogMaintenanceTraitementEquipementUpdate;
+class NET_ASN_MsgLogMaintenanceHandlingUpdate;
 
 // =============================================================================
 // @class  PHY_MaintenanceConsign_ABC
@@ -59,8 +59,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgLogMaintenanceTraitementEquipementUpdate& asn ) const;
-    void SendFullState   ( NET_ASN_MsgLogMaintenanceTraitementEquipementUpdate& asn ) const;
+    void SendChangedState( NET_ASN_MsgLogMaintenanceHandlingUpdate& asn ) const;
+    void SendFullState   ( NET_ASN_MsgLogMaintenanceHandlingUpdate& asn ) const;
     //@}
 
 protected:

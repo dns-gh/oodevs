@@ -123,7 +123,7 @@ ASN1T_EnumObjectErrorCode MIL_ZoneMineeParDispersion::Initialize( const ASN1T_Ma
     if( nErrorCode != EnumObjectErrorCode::no_error )
         return nErrorCode;
 
-    if( !asn.m.attributs_specifiquesPresent || asn.attributs_specifiques.t != T_AttrObjectSpecific_zone_minee_par_dispersion )
+    if( !asn.m.attributs_specifiquesPresent || asn.attributs_specifiques.t != T_ObjectAttributesSpecific_zone_minee_par_dispersion )
         return EnumObjectErrorCode::error_missing_specific_attributes;
 
     rMinesDensity_      = asn.attributs_specifiques.u.zone_minee_par_dispersion->densite;
@@ -197,7 +197,7 @@ void MIL_ZoneMineeParDispersion::WriteSpecificAttributes( NET_ASN_MsgObjectCreat
     asnAttributes_.delai_activite_mines = nMinesActivityTime_;
 
     asnMsg().m.attributs_specifiquesPresent                    = 1;
-    asnMsg().attributs_specifiques.t                           = T_AttrObjectSpecific_zone_minee_par_dispersion;
+    asnMsg().attributs_specifiques.t                           = T_ObjectAttributesSpecific_zone_minee_par_dispersion;
     asnMsg().attributs_specifiques.u.zone_minee_par_dispersion = &asnAttributes_;
 }
 

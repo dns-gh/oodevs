@@ -31,7 +31,7 @@ namespace kernel
 // Created: AGE 2006-10-11
 // =============================================================================
 class Quotas  : public kernel::Extension_ABC
-              , public kernel::Updatable_ABC< ASN1T_MsgLogRavitaillementQuotas >
+              , public kernel::Updatable_ABC< ASN1T_MsgLogSupplyQuotas >
 {
 
 public:
@@ -44,7 +44,7 @@ public:
     //! @name Operations
     //@{
     bool IsRelevant() const;
-    virtual void DoUpdate( const ASN1T_MsgLogRavitaillementQuotas& message );
+    virtual void DoUpdate( const ASN1T_MsgLogSupplyQuotas& message );
     //@}
 
 private:

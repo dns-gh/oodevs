@@ -349,12 +349,12 @@ void FragmentaryOrderInterface::CreateOrder_ChangerReglesEngagementPopulation()
 {
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_changer_regles_engagement_population;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    ParamComboBox< ASN1T_EnumRoePopulation >* pSelector_order_conduite_changer_regles_engagement_population = &CreateVarList( asnMission.order_conduite_changer_regles_engagement_population, "Order conduite changer regles engagement population");
-    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "None", EnumRoePopulation::none );
-    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Emploi force interdit", EnumRoePopulation::emploi_force_interdit );
-    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Maintien a distance par moyens non letaux", EnumRoePopulation::maintien_a_distance_par_moyens_non_letaux );
-    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Dispersion par moyens de defense actifs", EnumRoePopulation::dispersion_par_moyens_de_defense_actifs );
-    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Armes letales autorisees", EnumRoePopulation::armes_letales_autorisees );
+    ParamComboBox< ASN1T_EnumPopulationRoe >* pSelector_order_conduite_changer_regles_engagement_population = &CreateVarList( asnMission.order_conduite_changer_regles_engagement_population, "Order conduite changer regles engagement population");
+    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "None", EnumPopulationRoe::none );
+    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Emploi force interdit", EnumPopulationRoe::emploi_force_interdit );
+    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Maintien a distance par moyens non letaux", EnumPopulationRoe::maintien_a_distance_par_moyens_non_letaux );
+    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Dispersion par moyens de defense actifs", EnumPopulationRoe::dispersion_par_moyens_de_defense_actifs );
+    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Armes letales autorisees", EnumPopulationRoe::armes_letales_autorisees );
 #undef asnMission
 }
 

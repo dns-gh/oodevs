@@ -124,7 +124,7 @@ void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcentrationKnowle
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeCreation& message )
+void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeCreation& message )
 {
     if( ! Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux ) )
     {
@@ -138,7 +138,7 @@ void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeCreati
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdate& message )
+void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeUpdate& message )
 {
     Resolver< PopulationFlowKnowledge >::Get( message.oid_connaissance_flux )
         .DoUpdate( message );
@@ -148,7 +148,7 @@ void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdate
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeDestruction& message )
+void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeDestruction& message )
 {
     delete Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux );
     Resolver< PopulationFlowKnowledge >::Remove( message.oid_connaissance_flux );

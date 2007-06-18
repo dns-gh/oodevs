@@ -19,7 +19,7 @@ class PHY_RolePionLOG_Medical;
 class PHY_ComposantePion;
 class PHY_MedicalHumanState;
 class PHY_MedicalAmbulance;
-class NET_ASN_MsgLogSanteTraitementHumainUpdate;
+class NET_ASN_MsgLogMedicalHandlingUpdate;
 class MIL_Automate;
 
 // =============================================================================
@@ -60,8 +60,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgLogSanteTraitementHumainUpdate& asn ) const;
-    void SendFullState   ( NET_ASN_MsgLogSanteTraitementHumainUpdate& asn ) const;
+    void SendChangedState( NET_ASN_MsgLogMedicalHandlingUpdate& asn ) const;
+    void SendFullState   ( NET_ASN_MsgLogMedicalHandlingUpdate& asn ) const;
     //@}
 
 protected:

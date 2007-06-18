@@ -39,14 +39,14 @@ MIL_ParameterType_Path::~MIL_ParameterType_Path()
 void MIL_ParameterType_Path::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_itineraire ) 
+    if( from.null_value || from.value.t != T_MissionParameter_value_path ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( !DEC_Tools::CheckTypeListePoints( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyPath( *from.value.u.itineraire, to ) )
+    if( !NET_ASN_Tools::CopyPath( *from.value.u.path, to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -79,10 +79,10 @@ bool MIL_ParameterType_Path::Copy( const DIA_Variable_ABC& from, ASN1T_MissionPa
         return false;
 
     to.null_value         = false;
-    to.value.t            = T_MissionParameter_value_itineraire;
-    to.value.u.itineraire = new ASN1T_Itineraire();
+    to.value.t            = T_MissionParameter_value_path;
+    to.value.u.path = new ASN1T_Path();
     
-    if( !NET_ASN_Tools::CopyPath( from, *to.value.u.itineraire ) )
+    if( !NET_ASN_Tools::CopyPath( from, *to.value.u.path ) )
         return false;
 
     return true;
@@ -94,8 +94,8 @@ bool MIL_ParameterType_Path::Copy( const DIA_Variable_ABC& from, ASN1T_MissionPa
 // -----------------------------------------------------------------------------
 void MIL_ParameterType_Path::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_itineraire );
-    assert( to.value.u.itineraire );
-    NET_ASN_Tools::Delete( *to.value.u.itineraire );
-    delete to.value.u.itineraire;   
+    assert( to.value.t == T_MissionParameter_value_path );
+    assert( to.value.u.path );
+    NET_ASN_Tools::Delete( *to.value.u.path );
+    delete to.value.u.path;   
 }

@@ -98,7 +98,7 @@ private:
     MIL_NbcAgent*           pNbcAgent_;
 
     // Specific attributes
-    ASN1T_AttrObjectZoneNBC asnAttributes_;
+    ASN1T_ObjectAttributesNbcZone asnAttributes_;
     T_LocalisationVector    decontaminatedZones_;
 };
 

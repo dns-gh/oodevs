@@ -36,7 +36,7 @@
 #include "MOS_ASN_Types.h"
 #include "MOS_PointListViewItem.h"
 #include "MOS_MTH_Localisation.h"
-#include "MOS_MTH_ListLocalisation_ListView.h"
+#include "MOS_MTH_LocationList_ListView.h"
 #include "MOS_MTH_NatureAtlas.h"
 #include "MOS_MTH_ListPoint.h"
 #include "MOS_MTH_PointList_ListView.h"
@@ -50,7 +50,7 @@ using namespace DIN;
 MOS_MissionPion::MOS_MissionPion( E_MissionID nTypeMission, QWidget* pParent )
     : MOS_Mission_ABC( nTypeMission, pParent )
 {
-    pASNMsgOrder_ = new MOS_ASN_MsgPionOrder();
+    pASNMsgOrder_ = new MOS_ASN_MsgUnitOrder();
 }
 
 

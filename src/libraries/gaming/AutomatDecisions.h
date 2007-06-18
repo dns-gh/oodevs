@@ -35,8 +35,8 @@ class Publisher_ABC;
 // Created: AGE 2006-03-14
 // =============================================================================
 class AutomatDecisions : public kernel::Extension_ABC
-                       , public kernel::Updatable_ABC< ASN1T_MsgAutomateAttributes >
-                       , public kernel::Updatable_ABC< ASN1T_MsgAutomateOrder >
+                       , public kernel::Updatable_ABC< ASN1T_MsgAutomatAttributes >
+                       , public kernel::Updatable_ABC< ASN1T_MsgAutomatOrder >
                        , public kernel::Displayable_ABC
 {
 
@@ -70,8 +70,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgAutomateAttributes& message );
-    virtual void DoUpdate( const ASN1T_MsgAutomateOrder& message );
+    virtual void DoUpdate( const ASN1T_MsgAutomatAttributes& message );
+    virtual void DoUpdate( const ASN1T_MsgAutomatOrder& message );
     //@}
 
 private:

@@ -28,13 +28,13 @@ namespace kernel
 // Created: SBO 2006-08-23
 // =============================================================================
 class PopulationFlow : public kernel::PopulationFlow_ABC
-                     , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxUpdate >
+                     , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowUpdate >
                      , public kernel::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg, const kernel::CoordinateConverter_ABC& converter );
+             PopulationFlow( const ASN1T_MsgPopulationFlowCreation& asnMsg, const kernel::CoordinateConverter_ABC& converter );
     virtual ~PopulationFlow();
     //@}
 
@@ -65,7 +65,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg );
+    virtual void DoUpdate( const ASN1T_MsgPopulationFlowUpdate& asnMsg );
     //@}
 
 private:

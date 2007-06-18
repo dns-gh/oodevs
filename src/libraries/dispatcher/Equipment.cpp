@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: Equipment constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Equipment::Equipment( const Model& /*model*/, const ASN1T_DotationEquipement& asnMsg )
+Equipment::Equipment( const Model& /*model*/, const ASN1T_EquipmentDotations& asnMsg )
    : nEquipmentType_   ( asnMsg.type_equipement )
    , nNbrAvailable_    ( asnMsg.nb_disponibles )
    , nNbrUnavailable_  ( asnMsg.nb_indisponibles )
@@ -40,7 +40,7 @@ Equipment::~Equipment()
 // Name: Equipment::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void Equipment::Update( const ASN1T_DotationEquipement& asnMsg )
+void Equipment::Update( const ASN1T_EquipmentDotations& asnMsg )
 {
    nNbrAvailable_     = asnMsg.nb_disponibles;
    nNbrUnavailable_   = asnMsg.nb_indisponibles;
@@ -53,7 +53,7 @@ void Equipment::Update( const ASN1T_DotationEquipement& asnMsg )
 // Name: Equipment::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Equipment::Send( ASN1T_DotationEquipement& asnMsg ) const
+void Equipment::Send( ASN1T_EquipmentDotations& asnMsg ) const
 {
     asnMsg.type_equipement            = nEquipmentType_;
     asnMsg.nb_disponibles             = nNbrAvailable_;

@@ -48,7 +48,7 @@ TacticalLine_Limit::TacticalLine_Limit( const ASN1T_MsgLimitCreation& asnMsg )
     nId_ = asnMsg.oid;
     idManager_.LockIdentifier( nId_ );
 
-    assert( asnMsg.geometrie.type == EnumTypeLocalisation::line );
+    assert( asnMsg.geometrie.type == EnumLocationType::line );
     for( uint i = 0; i != asnMsg.geometrie.vecteur_point.n ; ++i )
     {
         Position* pPos = new Position( std::string( (const char*)asnMsg.geometrie.vecteur_point.elem[i].data, 15 ) );
@@ -81,7 +81,7 @@ void TacticalLine_Limit::UpdateToSim()
 
     asnMsg.GetAsnMsg().oid                          = nId_;
     asnMsg.GetAsnMsg().level                        = EnumNatureLevel::ooo;
-    asnMsg.GetAsnMsg().geometrie.type               = EnumTypeLocalisation::line;
+    asnMsg.GetAsnMsg().geometrie.type               = EnumLocationType::line;
     asnMsg.GetAsnMsg().geometrie.vecteur_point.n    = points_.size();
     asnMsg.GetAsnMsg().geometrie.vecteur_point.elem = new ASN1T_CoordUTM[ points_.size() ];
 

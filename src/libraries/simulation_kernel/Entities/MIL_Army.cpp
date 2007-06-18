@@ -576,12 +576,12 @@ E_Tristate MIL_Army::IsNeutral( const MIL_Army& army ) const
 // -----------------------------------------------------------------------------
 void MIL_Army::SendCreation() const
 {
-    ASN1T_MsgSideCreation;
+    ASN1T_MsgTeamCreation;
 
-    NET_ASN_MsgSideCreation asn;
+    NET_ASN_MsgTeamCreation asn;
     asn().oid  = nID_;
     asn().nom  = strName_.c_str();
-    asn().type = (ASN1T_EnumDiplomatie)( nType_ );
+    asn().type = (ASN1T_EnumDiplomacy)( nType_ );
     asn.Send();
 
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
@@ -605,10 +605,10 @@ void MIL_Army::SendFullState() const
 {
     for( CIT_DiplomacyMap it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
-        NET_ASN_MsgChangeDiplomatie asn;
+        NET_ASN_MsgChangeDiplomacy asn;
         asn().oid_camp1  = nID_;
         asn().oid_camp2  = it->first->GetID();
-        asn().diplomatie = (ASN1T_EnumDiplomatie)( it->second );
+        asn().diplomatie = (ASN1T_EnumDiplomacy)( it->second );
         asn.Send();
     }
 
@@ -641,19 +641,19 @@ void MIL_Army::SendKnowledge() const
 // Name: MIL_Army::OnReceiveMsgChangeDiplomacy
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_Army::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomatie& asnMsg )
+void MIL_Army::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomacy& asnMsg )
 {
     MIL_Army* pArmy2 = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asnMsg.oid_camp2 );
     if( !pArmy2 || *pArmy2 == *this )
-        throw NET_AsnException< ASN1T_EnumChangeDiplomatieErrorCode >( EnumChangeDiplomatieErrorCode::error_invalid_camp );
+        throw NET_AsnException< ASN1T_EnumChangeDiplomacyErrorCode >( EnumChangeDiplomacyErrorCode::error_invalid_camp );
 
     E_Diplomacy nDiplomacy = eUnknown;
     switch( asnMsg.diplomatie )
     {
-        case EnumDiplomatie::inconnu: nDiplomacy = eUnknown; break;
-        case EnumDiplomatie::ami    : nDiplomacy = eFriend;  break;
-        case EnumDiplomatie::ennemi : nDiplomacy = eEnemy;   break;
-        case EnumDiplomatie::neutre : nDiplomacy = eNeutral; break;
+        case EnumDiplomacy::inconnu: nDiplomacy = eUnknown; break;
+        case EnumDiplomacy::ami    : nDiplomacy = eFriend;  break;
+        case EnumDiplomacy::ennemi : nDiplomacy = eEnemy;   break;
+        case EnumDiplomacy::neutre : nDiplomacy = eNeutral; break;
     }
     diplomacies_[ pArmy2 ] = nDiplomacy;
 }

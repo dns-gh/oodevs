@@ -57,7 +57,7 @@ void Equipments::DoUpdate( const ASN1T_MsgUnitAttributes& message )
     uint nSize = message.dotation_eff_materiel.n;
     while ( nSize > 0 )
     {
-        const ASN1T_DotationEquipement& value = message.dotation_eff_materiel.elem[ --nSize ];
+        const ASN1T_EquipmentDotations& value = message.dotation_eff_materiel.elem[ --nSize ];
         Equipment previous( resolver_.Get( value.type_equipement ) );
         if( Equipment* equipment = Find( value.type_equipement ) )
             previous = *equipment;

@@ -28,7 +28,7 @@ using namespace kernel;
 // Name: LogSupplyConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogSupplyConsign::LogSupplyConsign( Controller& controller, const Resolver_ABC< Automat_ABC >& resolver, const Resolver_ABC< Agent_ABC >& agentResolver, const Resolver_ABC< DotationType >& dotationResolver, const ASN1T_MsgLogRavitaillementTraitementCreation& message )
+LogSupplyConsign::LogSupplyConsign( Controller& controller, const Resolver_ABC< Automat_ABC >& resolver, const Resolver_ABC< Agent_ABC >& agentResolver, const Resolver_ABC< DotationType >& dotationResolver, const ASN1T_MsgLogSupplyHandlingCreation& message )
     : controller_           ( controller )
     , resolver_             ( resolver )
     , agentResolver_        ( agentResolver )
@@ -67,7 +67,7 @@ LogSupplyConsign::~LogSupplyConsign()
 // Name: LogSupplyConsign::OnReceiveMsgUpdate
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void LogSupplyConsign::Update( const ASN1T_MsgLogRavitaillementTraitementUpdate& message )
+void LogSupplyConsign::Update( const ASN1T_MsgLogSupplyHandlingUpdate& message )
 {
     if( message.m.oid_automate_log_traitantPresent )
     {

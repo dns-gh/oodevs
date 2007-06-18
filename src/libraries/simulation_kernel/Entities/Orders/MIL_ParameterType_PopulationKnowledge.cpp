@@ -43,14 +43,14 @@ MIL_ParameterType_PopulationKnowledge::~MIL_ParameterType_PopulationKnowledge()
 void MIL_ParameterType_PopulationKnowledge::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_knowledgePopulation ) 
+    if( from.null_value || from.value.t != T_MissionParameter_value_populationKnowledge ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( !DEC_Tools::CheckTypeConnaissancePopulation( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyPopulationKnowledge( from.value.u.knowledgePopulation, to, knowledgeResolver ) )
+    if( !NET_ASN_Tools::CopyPopulationKnowledge( from.value.u.populationKnowledge, to, knowledgeResolver ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -83,9 +83,9 @@ bool MIL_ParameterType_PopulationKnowledge::Copy( const DIA_Variable_ABC& from, 
         return false;
 
     to.null_value = false;
-    to.value.t    = T_MissionParameter_value_knowledgePopulation;
+    to.value.t    = T_MissionParameter_value_populationKnowledge;
     
-    if( !NET_ASN_Tools::CopyPopulationKnowledge( from, to.value.u.knowledgePopulation, knowledgeResolver ) )
+    if( !NET_ASN_Tools::CopyPopulationKnowledge( from, to.value.u.populationKnowledge, knowledgeResolver ) )
         return false;
 
     return true;    
@@ -97,5 +97,5 @@ bool MIL_ParameterType_PopulationKnowledge::Copy( const DIA_Variable_ABC& from, 
 //-----------------------------------------------------------------------------
 void MIL_ParameterType_PopulationKnowledge::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_knowledgePopulation );
+    assert( to.value.t == T_MissionParameter_value_populationKnowledge );
 }

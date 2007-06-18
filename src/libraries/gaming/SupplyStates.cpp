@@ -50,7 +50,7 @@ void SupplyStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 // Name: SupplyStates::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void SupplyStates::DoUpdate( const ASN1T_MsgLogRavitaillementEtat& message )
+void SupplyStates::DoUpdate( const ASN1T_MsgLogSupplyState& message )
 {
     if( message.m.chaine_activeePresent )
         bChainEnabled_ = message.chaine_activee;

@@ -50,8 +50,8 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveMsgCheckPointSaveNow     ( const ASN1T_MsgCtrlCheckPointSaveNow&      asnMsg );
-    void OnReceiveMsgCheckPointSetFrequency( const ASN1T_MsgCtrlCheckPointSetFrequency& asnMsg );
+    void OnReceiveMsgCheckPointSaveNow     ( const ASN1T_MsgControlCheckPointSaveNow&      asnMsg );
+    void OnReceiveMsgCheckPointSetFrequency( const ASN1T_MsgControlCheckPointSetFrequency& asnMsg );
     //@}
 
     //! @name CheckPoints

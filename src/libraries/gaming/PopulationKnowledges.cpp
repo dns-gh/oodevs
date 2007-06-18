@@ -114,7 +114,7 @@ void PopulationKnowledges::DoUpdate( const ASN1T_MsgPopulationConcentrationKnowl
 // Name: PopulationKnowledges::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void PopulationKnowledges::DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeCreation& message )
+void PopulationKnowledges::DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeCreation& message )
 {
     UpdatePopulation( message );
 }
@@ -123,7 +123,7 @@ void PopulationKnowledges::DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeCreat
 // Name: PopulationKnowledges::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void PopulationKnowledges::DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdate& message )
+void PopulationKnowledges::DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeUpdate& message )
 {
     UpdatePopulation( message );
 }
@@ -132,7 +132,7 @@ void PopulationKnowledges::DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdat
 // Name: PopulationKnowledges::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void PopulationKnowledges::DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeDestruction& message )
+void PopulationKnowledges::DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeDestruction& message )
 {
     UpdatePopulation( message );
 }

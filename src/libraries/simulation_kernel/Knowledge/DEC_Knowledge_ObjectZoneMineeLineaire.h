@@ -54,7 +54,7 @@ private:
     // Specific attributes
     bool bSpecificAttributesValid_;
 
-    ASN1T_AttrObjectZoneMineeLineaire asnAttributes_;
+    ASN1T_ObjectAttributesLinearMineArea asnAttributes_;
     uint                              nMinesActivityTime_;
     MT_Float                          rMinesDensity_;
 };

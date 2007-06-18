@@ -190,7 +190,7 @@ void PHY_MaintenanceComposanteState::SendFullState() const
     assert( pPion_ );
 
     SendMsgCreation();
-    NET_ASN_MsgLogMaintenanceTraitementEquipementUpdate asn;
+    NET_ASN_MsgLogMaintenanceHandlingUpdate asn;
     asn().oid_consigne          = nID_;
     asn().oid_pion              = pPion_->GetID();
 
@@ -203,7 +203,7 @@ void PHY_MaintenanceComposanteState::SendFullState() const
     {
         asn().oid_pion_log_traitant = 0;
         asn().m.etatPresent         = 1;
-        asn().etat                  = EnumLogMaintenanceTraitementEtat::termine;        
+        asn().etat                  = EnumLogMaintenanceHandlingStatus::termine;        
     }
     asn.Send();
 }
@@ -219,7 +219,7 @@ void PHY_MaintenanceComposanteState::SendChangedState() const
 
     assert( pPion_ );
 
-    NET_ASN_MsgLogMaintenanceTraitementEquipementUpdate asn;
+    NET_ASN_MsgLogMaintenanceHandlingUpdate asn;
     asn().oid_consigne          = nID_;
     asn().oid_pion              = pPion_->GetID();
 
@@ -232,7 +232,7 @@ void PHY_MaintenanceComposanteState::SendChangedState() const
     {
         asn().oid_pion_log_traitant = 0;
         asn().m.etatPresent         = 1;
-        asn().etat                  = EnumLogMaintenanceTraitementEtat::termine;
+        asn().etat                  = EnumLogMaintenanceHandlingStatus::termine;
     }
     asn.Send();
 }
@@ -257,7 +257,7 @@ void PHY_MaintenanceComposanteState::SendMsgCreation() const
     assert( pPion_ );
     assert( pComposante_ );
 
-    NET_ASN_MsgLogMaintenanceTraitementEquipementCreation asn;
+    NET_ASN_MsgLogMaintenanceHandlingCreation asn;
     asn().oid_consigne    = nID_;
     asn().oid_pion        = pPion_->GetID();
     asn().tick_creation   = nCreationTick_;
@@ -274,7 +274,7 @@ void PHY_MaintenanceComposanteState::SendMsgDestruction() const
 {
     assert( pPion_ );
 
-    NET_ASN_MsgLogMaintenanceTraitementEquipementDestruction asn;
+    NET_ASN_MsgLogMaintenanceHandlingDestruction asn;
     asn().oid_consigne    = nID_;
     asn().oid_pion        = pPion_->GetID();
     asn.Send();

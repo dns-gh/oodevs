@@ -43,14 +43,14 @@ MIL_ParameterType_AutomatList::~MIL_ParameterType_AutomatList()
 void MIL_ParameterType_AutomatList::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.value.t != T_MissionParameter_value_listAutomate ) 
+    if( from.value.t != T_MissionParameter_value_automatList ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( !DEC_Tools::CheckTypeListeAutomates( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyAutomateList( *from.value.u.listAutomate, to ) )
+    if( !NET_ASN_Tools::CopyAutomateList( *from.value.u.automatList, to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -85,10 +85,10 @@ bool MIL_ParameterType_AutomatList::Copy( const DIA_Variable_ABC& from, ASN1T_Mi
         return false;
 
     to.null_value           = false;
-    to.value.t              = T_MissionParameter_value_listAutomate;
-    to.value.u.listAutomate = new ASN1T_ListAutomate();
+    to.value.t              = T_MissionParameter_value_automatList;
+    to.value.u.automatList = new ASN1T_AutomatList();
     
-    if( !NET_ASN_Tools::CopyAutomateList( from, *to.value.u.listAutomate ) )
+    if( !NET_ASN_Tools::CopyAutomateList( from, *to.value.u.automatList ) )
         return false;
 
     return true;    
@@ -100,8 +100,8 @@ bool MIL_ParameterType_AutomatList::Copy( const DIA_Variable_ABC& from, ASN1T_Mi
 //-----------------------------------------------------------------------------
 void MIL_ParameterType_AutomatList::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_listAutomate );
-    assert( to.value.u.listAutomate );
-    NET_ASN_Tools::Delete( *to.value.u.listAutomate );
-    delete to.value.u.listAutomate;
+    assert( to.value.t == T_MissionParameter_value_automatList );
+    assert( to.value.u.automatList );
+    NET_ASN_Tools::Delete( *to.value.u.automatList );
+    delete to.value.u.automatList;
 }

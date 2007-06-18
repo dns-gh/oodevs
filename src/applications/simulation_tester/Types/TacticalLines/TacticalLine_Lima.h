@@ -45,7 +45,7 @@ public:
     //! @name Accessors
     //@{
     virtual TacticalLine_ABC::E_LineType GetLineType() const;
-            ASN1T_EnumTypeLima           GetLimaType() const;
+            ASN1T_EnumLimaType           GetLimaType() const;
     //@}
 
     //! @name Operations
@@ -63,7 +63,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_EnumTypeLima eLimaType_;
+    ASN1T_EnumLimaType eLimaType_;
     //@}
 
 };

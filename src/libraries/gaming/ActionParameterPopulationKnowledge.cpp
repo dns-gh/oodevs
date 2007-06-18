@@ -79,9 +79,9 @@ ActionParameterPopulationKnowledge::~ActionParameterPopulationKnowledge()
 // -----------------------------------------------------------------------------
 void ActionParameterPopulationKnowledge::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.value.t = T_MissionParameter_value_knowledgePopulation;
-    ActionParameterEntity< PopulationKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.knowledgePopulation );
-    asn.null_value = asn.value.u.knowledgePopulation ? 0 : 1;
+    asn.value.t = T_MissionParameter_value_populationKnowledge;
+    ActionParameterEntity< PopulationKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.populationKnowledge );
+    asn.null_value = asn.value.u.populationKnowledge ? 0 : 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +97,7 @@ void ActionParameterPopulationKnowledge::Accept( ActionParameterVisitor_ABC& vis
 // Name: ActionParameterPopulationKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void ActionParameterPopulationKnowledge::CommitTo( ASN1T_KnowledgePopulation& asn ) const
+void ActionParameterPopulationKnowledge::CommitTo( ASN1T_PopulationKnowledge& asn ) const
 {
     ActionParameterEntity< PopulationKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn );
 }

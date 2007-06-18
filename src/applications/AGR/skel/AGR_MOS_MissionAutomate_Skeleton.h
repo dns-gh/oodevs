@@ -23,7 +23,7 @@
 
 #include "MOS_Mission_ABC.h"
 
-class MOS_ASN_MsgAutomateOrder;
+class MOS_ASN_MsgAutomatOrder;
 
 //=============================================================================
 // Created:  
@@ -84,7 +84,7 @@ $MissionCreatorDeclarations$
     //@}
 
 private:
-    MOS_ASN_MsgAutomateOrder*   pASNMsgOrder_;
+    MOS_ASN_MsgAutomatOrder*   pASNMsgOrder_;
 
     QTabWidget*     pLimaLimitWidget_;
     QVBoxLayout*    pLimaLimitLayout_;

@@ -27,7 +27,7 @@ const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( const std::string& s
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
 inline
-const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( ASN1T_TypeEquipement nAsnID )
+const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( ASN1T_EquipmentType nAsnID )
 {
     for( CIT_ComposanteTypeMap it = composantesTypes_.begin(); it != composantesTypes_.end(); ++it )
     {

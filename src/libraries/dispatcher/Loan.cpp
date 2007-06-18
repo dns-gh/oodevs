@@ -20,7 +20,7 @@ using namespace dispatcher;
 // Name: Loan constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Loan::Loan( const Model& model, ASN1T_EquipementEmprunte& asnMsg )
+Loan::Loan( const Model& model, ASN1T_BorrowedEquipment& asnMsg )
     : pAgent_        ( &model.GetAgents().Get( asnMsg.oid_pion_preteur ) )
     , nEquipmentType_( asnMsg.type_equipement )
     , nQuantity_     ( asnMsg.nombre          )
@@ -31,7 +31,7 @@ Loan::Loan( const Model& model, ASN1T_EquipementEmprunte& asnMsg )
 // Name: Loan constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Loan::Loan( const Model& model, ASN1T_EquipementPrete& asnMsg )
+Loan::Loan( const Model& model, ASN1T_LentEquipment& asnMsg )
     : pAgent_        ( &model.GetAgents().Get( asnMsg.oid_pion_emprunteur ) )
     , nEquipmentType_( asnMsg.type_equipement )
     , nQuantity_     ( asnMsg.nombre          )
@@ -51,7 +51,7 @@ Loan::~Loan()
 // Name: Loan::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Loan::Send( ASN1T_EquipementEmprunte& asnMsg ) const
+void Loan::Send( ASN1T_BorrowedEquipment& asnMsg ) const
 {
     asnMsg.type_equipement  = nEquipmentType_;
     asnMsg.oid_pion_preteur = pAgent_->GetID();
@@ -62,7 +62,7 @@ void Loan::Send( ASN1T_EquipementEmprunte& asnMsg ) const
 // Name: Loan::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Loan::Send( ASN1T_EquipementPrete& asnMsg ) const
+void Loan::Send( ASN1T_LentEquipment& asnMsg ) const
 {
     asnMsg.type_equipement     = nEquipmentType_;
     asnMsg.oid_pion_emprunteur = pAgent_->GetID();

@@ -98,7 +98,7 @@ unsigned int Population::GetLivingHumans() const
 // Name: Population::DoUpdate
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
+void Population::DoUpdate( const ASN1T_MsgPopulationFlowUpdate& asnMsg )
 {
     static_cast< PopulationFlow& >( Resolver< PopulationFlow_ABC >::Get( asnMsg.oid_flux ) ).Update( asnMsg );
     ComputeCenter();
@@ -120,7 +120,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg 
 // Name: Population::DoUpdate
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const ASN1T_MsgPopulationFluxCreation& asnMsg )
+void Population::DoUpdate( const ASN1T_MsgPopulationFlowCreation& asnMsg )
 {
     if( ! Resolver< PopulationFlow_ABC >::Find( asnMsg.oid_flux ) )
     {
@@ -148,7 +148,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationCreation& asnMs
 // Name: Population::DoUpdate
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
+void Population::DoUpdate( const ASN1T_MsgPopulationFlowDestruction& asnMsg )
 {
     delete Resolver< PopulationFlow_ABC >::Find( asnMsg.oid_flux );
     Resolver< PopulationFlow_ABC >::Remove( asnMsg.oid_flux );

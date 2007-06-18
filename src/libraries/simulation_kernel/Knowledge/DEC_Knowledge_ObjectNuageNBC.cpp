@@ -145,6 +145,6 @@ void DEC_Knowledge_ObjectNuageNBC::BuildMsgSpecificAttributes( ASN1T_MsgObjectKn
     asnAttributes_.agent_nbc = pNbcAgentType_->GetID();
 
     asnMsg.m.attributs_specifiquesPresent    = 1;
-    asnMsg.attributs_specifiques.t           = T_AttrObjectSpecific_nuage_nbc;
+    asnMsg.attributs_specifiques.t           = T_ObjectAttributesSpecific_nuage_nbc;
     asnMsg.attributs_specifiques.u.nuage_nbc = &asnAttributes_;
 }

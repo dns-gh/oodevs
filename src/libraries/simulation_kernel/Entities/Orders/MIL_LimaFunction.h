@@ -38,20 +38,20 @@ public:
     //@{
     static       void              Initialize();
     static       void              Terminate ();
-    static const MIL_LimaFunction* Find      ( const ASN1T_EnumTypeLima& asn );
+    static const MIL_LimaFunction* Find      ( const ASN1T_EnumLimaType& asn );
     static const MIL_LimaFunction* Find      ( uint nID );
     //@}
 
     //! @name Accessors
     //@{
     uint               GetID   () const;
-    ASN1T_EnumTypeLima GetAsnID() const;
+    ASN1T_EnumLimaType GetAsnID() const;
     //@}
 
 private:
     //! @name Constructors/Destructor
     //@{
-     MIL_LimaFunction( const ASN1T_EnumTypeLima& asn, uint nID, const std::string& strName );
+     MIL_LimaFunction( const ASN1T_EnumLimaType& asn, uint nID, const std::string& strName );
     ~MIL_LimaFunction();
 
      MIL_LimaFunction( const MIL_LimaFunction& );            //!< Copy constructor
@@ -61,7 +61,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< ASN1T_EnumTypeLima, const MIL_LimaFunction* > T_LimaFunctionMap;
+    typedef std::map< ASN1T_EnumLimaType, const MIL_LimaFunction* > T_LimaFunctionMap;
     typedef T_LimaFunctionMap::const_iterator                       CIT_LimaFunctionMap;
     //@}
 
@@ -83,7 +83,7 @@ private:
     //@}
 
 private:
-    const ASN1T_EnumTypeLima nAsnID_;
+    const ASN1T_EnumLimaType nAsnID_;
     const uint               nID_;
     const std::string        strName_;
 

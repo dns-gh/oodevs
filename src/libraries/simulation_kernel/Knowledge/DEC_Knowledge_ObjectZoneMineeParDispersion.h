@@ -54,7 +54,7 @@ private:
     // Specific attributes
     bool bSpecificAttributesValid_;
 
-    ASN1T_AttrObjectZoneMineeParDispersion asnAttributes_;
+    ASN1T_ObjectAttributesDispersedMineArea asnAttributes_;
     uint                              nMinesActivityTime_;
     MT_Float                          rMinesDensity_;
 };
@@ -118,7 +118,7 @@ private:
     // Specific attributes
     bool bSpecificAttributesValid_;
 
-    ASN1T_AttrObjectZoneMineeParDispersion asnAttributes_;
+    ASN1T_ObjectAttributesDispersedMineArea asnAttributes_;
     uint                              nMinesActivityTime_;
     MT_Float                          rMinesDensity_;
 };

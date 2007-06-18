@@ -48,7 +48,7 @@ void Lendings::DoUpdate( const ASN1T_MsgUnitAttributes& message )
     lendings_.reserve( message.equipements_pretes.n );
     for( unsigned int i = 0; i < message.equipements_pretes.n; ++i )
     {
-        const ASN1T_EquipementPrete& pret = message.equipements_pretes.elem[i];
+        const ASN1T_LentEquipment& pret = message.equipements_pretes.elem[i];
         lendings_.push_back( Loan( equipmentResolver_.Get( pret.type_equipement ),
                                    resolver_.Get( pret.oid_pion_emprunteur ),
                                    pret.nombre ) );

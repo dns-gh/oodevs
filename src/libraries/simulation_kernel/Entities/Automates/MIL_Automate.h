@@ -33,7 +33,7 @@ class DEC_Knowledge_Object;
 class DEC_AutomateDecision;
 class PHY_SupplyDotationState;
 class PHY_DotationCategory;
-class NET_ASN_MsgAutomateCreation;
+class NET_ASN_MsgAutomatCreation;
 class DEC_KnowledgeBlackBoard_Automate;
 
 
@@ -144,14 +144,14 @@ public:
     virtual void SendFullState                    () const;
             void SendKnowledge                    () const;
 
-            void OnReceiveMsgOrder                ( const ASN1T_MsgAutomateOrder&                    msg );
+            void OnReceiveMsgOrder                ( const ASN1T_MsgAutomatOrder&                    msg );
             void OnReceiveMsgFragOrder            ( const ASN1T_MsgFragOrder&                        msg );
-            void OnReceiveMsgSetAutomateMode      ( const ASN1T_MsgSetAutomateMode&                  msg );
+            void OnReceiveMsgSetAutomateMode      ( const ASN1T_MsgSetAutomatMode&                  msg );
             void OnReceiveMsgUnitMagicAction      ( const ASN1T_MsgUnitMagicAction&                  msg );
-            void OnReceiveMsgChangeKnowledgeGroup ( const ASN1T_MsgAutomateChangeGroupeConnaissance& msg );
-    virtual void OnReceiveMsgChangeLogisticLinks  ( const ASN1T_MsgAutomateChangeLiensLogistiques&   msg );
-    virtual void OnReceiveMsgLogSupplyChangeQuotas( const ASN1T_MsgLogRavitaillementChangeQuotas&    msg );
-    virtual void OnReceiveMsgLogSupplyPushFlow    ( const ASN1T_MsgLogRavitaillementPousserFlux&     msg );
+            void OnReceiveMsgChangeKnowledgeGroup ( const ASN1T_MsgAutomatChangeKnowledgeGroup& msg );
+    virtual void OnReceiveMsgChangeLogisticLinks  ( const ASN1T_MsgAutomatChangeLogisticLinks&   msg );
+    virtual void OnReceiveMsgLogSupplyChangeQuotas( const ASN1T_MsgLogSupplyChangeQuotas&    msg );
+    virtual void OnReceiveMsgLogSupplyPushFlow    ( const ASN1T_MsgLogSupplyPushFlow&     msg );
     //@}
 
     //! @name Misc

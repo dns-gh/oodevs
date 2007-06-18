@@ -48,8 +48,7 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned int                datation_;
-    ASN1T_EnumGDH_Qualificatif  qualificatif_;
+    unsigned int datation_;
     //@}
 };
 

@@ -92,7 +92,7 @@ private:
     uint          nDanger_;
 
     // Specific attributes
-    ASN1T_AttrObjectROTA asnAttributes_;
+    ASN1T_ObjectAttributesRota asnAttributes_;
 };
 
 #include "MIL_Rota.inl"

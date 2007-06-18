@@ -96,17 +96,17 @@ void MineAttributes::UpdateData( const T& message )
 {
     if( !message.m.attributs_specifiquesPresent )
         return;
-    if( message.attributs_specifiques.t == T_AttrObjectSpecific_zone_minee_lineaire )
+    if( message.attributs_specifiques.t == T_ObjectAttributesSpecific_zone_minee_lineaire )
     {
         activityTime_ = message.attributs_specifiques.u.zone_minee_lineaire->delai_activite_mines;
         density_  = message.attributs_specifiques.u.zone_minee_lineaire->densite;
     }
-    else if( message.attributs_specifiques.t == T_AttrObjectSpecific_zone_minee_par_dispersion )
+    else if( message.attributs_specifiques.t == T_ObjectAttributesSpecific_zone_minee_par_dispersion )
     {
         activityTime_ = message.attributs_specifiques.u.zone_minee_par_dispersion->delai_activite_mines;
         density_  = message.attributs_specifiques.u.zone_minee_par_dispersion->densite;
     }
-    else if( message.attributs_specifiques.t == T_AttrObjectSpecific_bouchon_mines )
+    else if( message.attributs_specifiques.t == T_ObjectAttributesSpecific_bouchon_mines )
     {
         activityTime_ = message.attributs_specifiques.u.bouchon_mines->delai_activite_mines;
     }

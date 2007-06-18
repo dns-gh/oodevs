@@ -48,7 +48,7 @@ public:
     static       void        Initialize();
     static       void        Terminate ();
     static const PHY_Morale* Find      ( const std::string& strName );
-    static const PHY_Morale* Find      ( ASN1T_EnumUnitMoral nAsnID );
+    static const PHY_Morale* Find      ( ASN1T_EnumUnitMorale nAsnID );
     static const PHY_Morale* Find      ( uint nID );
     //@}
 
@@ -57,7 +57,7 @@ public:
     const std::string&        GetName  () const;
           uint                GetID    () const;
           MT_Float            GetWeight() const;
-          ASN1T_EnumUnitMoral GetAsnID () const;
+          ASN1T_EnumUnitMorale GetAsnID () const;
     //@}
 
     //! @name Operators
@@ -79,13 +79,13 @@ private:
     //@}
 
 private:
-     PHY_Morale( const std::string& strName, E_MoraleType nType, ASN1T_EnumUnitMoral nAsnID, MT_Float rDIAWeight );
+     PHY_Morale( const std::string& strName, E_MoraleType nType, ASN1T_EnumUnitMorale nAsnID, MT_Float rDIAWeight );
     ~PHY_Morale();
 
 private:
     const std::string         strName_;
     const E_MoraleType        nType_;
-    const ASN1T_EnumUnitMoral nAsnID_;
+    const ASN1T_EnumUnitMorale nAsnID_;
     const MT_Float            rDIAWeight_;
 
 private:

@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-29
 // -----------------------------------------------------------------------------
 Localisation::Localisation()
-    : nType_ ( EnumTypeLocalisation::ellipse )
+    : nType_ ( EnumLocationType::ellipse )
     , points_()
 {
 }
@@ -28,7 +28,7 @@ Localisation::Localisation()
 // Name: Localisation constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Localisation::Localisation( const ASN1T_Localisation& asn )
+Localisation::Localisation( const ASN1T_Location& asn )
     : nType_ ( asn.type )
     , points_( )
 {
@@ -53,7 +53,7 @@ Localisation::~Localisation()
 // Name: Localisation::Update
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Localisation::Update( const ASN1T_Localisation& asn )
+void Localisation::Update( const ASN1T_Location& asn )
 {
     nType_ = asn.type;
     points_.clear();
@@ -65,7 +65,7 @@ void Localisation::Update( const ASN1T_Localisation& asn )
 // Name: Localisation::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Localisation::Send( ASN1T_Localisation& asn ) const
+void Localisation::Send( ASN1T_Location& asn ) const
 {
     asn.type               = nType_;
     asn.vecteur_point.n    = points_.size();
@@ -78,7 +78,7 @@ void Localisation::Send( ASN1T_Localisation& asn ) const
 // Name: Localisation::AsnDelete
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Localisation::AsnDelete( ASN1T_Localisation& asn, bool bOptionalValue /*= true*/ )
+void Localisation::AsnDelete( ASN1T_Location& asn, bool bOptionalValue /*= true*/ )
 {
     if( !bOptionalValue )
         return;

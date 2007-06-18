@@ -63,7 +63,7 @@ void Mission_Automat_ABC::Send( const Scheduler& scheduler )
 {
     // engage automat first
     MOS_ASN_MsgSetAutomateMode msg;
-    msg.GetAsnMsg().mode    = EnumAutomateState::embraye;
+    msg.GetAsnMsg().mode    = EnumAutomatMode::embraye;
     msg.GetAsnMsg().unit_id = pTarget_->GetId();
     msg.Send( 56 );
 

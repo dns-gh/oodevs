@@ -19,9 +19,9 @@ using namespace kernel;
 // Name: MSEllipse constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-MSEllipse::MSEllipse( const ASN1T_Localisation& localisation, const CoordinateConverter_ABC& converter )
+MSEllipse::MSEllipse( const ASN1T_Location& localisation, const CoordinateConverter_ABC& converter )
 {
-    if( localisation.type != EnumTypeLocalisation::ellipse || localisation.vecteur_point.n != 3 )
+    if( localisation.type != EnumLocationType::ellipse || localisation.vecteur_point.n != 3 )
         throw std::runtime_error( "MSEllipse is not an ellipse" );
     origin_ = converter.ConvertToXY( localisation.vecteur_point.elem[0] );
     const Point2f majorHigh = converter.ConvertToXY( localisation.vecteur_point.elem[1] );

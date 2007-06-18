@@ -43,14 +43,14 @@ MIL_ParameterType_AgentKnowledge::~MIL_ParameterType_AgentKnowledge()
 void MIL_ParameterType_AgentKnowledge::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_knowledgeAgent ) 
+    if( from.null_value || from.value.t != T_MissionParameter_value_unitKnowledge ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( !DEC_Tools::CheckTypeConnaissanceAgent( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyAgentKnowledge( from.value.u.knowledgeAgent, to, knowledgeResolver ) )
+    if( !NET_ASN_Tools::CopyAgentKnowledge( from.value.u.unitKnowledge, to, knowledgeResolver ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -83,9 +83,9 @@ bool MIL_ParameterType_AgentKnowledge::Copy( const DIA_Variable_ABC& from, ASN1T
         return false;
 
     to.null_value = false;
-    to.value.t    = T_MissionParameter_value_knowledgeAgent;
+    to.value.t    = T_MissionParameter_value_unitKnowledge;
     
-    if( !NET_ASN_Tools::CopyAgentKnowledge( from, to.value.u.knowledgeAgent, knowledgeResolver ) )
+    if( !NET_ASN_Tools::CopyAgentKnowledge( from, to.value.u.unitKnowledge, knowledgeResolver ) )
         return false;
 
     return true;    
@@ -97,5 +97,5 @@ bool MIL_ParameterType_AgentKnowledge::Copy( const DIA_Variable_ABC& from, ASN1T
 //-----------------------------------------------------------------------------
 void MIL_ParameterType_AgentKnowledge::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_knowledgeAgent );
+    assert( to.value.t == T_MissionParameter_value_unitKnowledge );
 }

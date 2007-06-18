@@ -334,7 +334,7 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
 {
     assert( pPopulationKnowledge_ );
 
-    NET_ASN_MsgPopulationFluxKnowledgeUpdate asnMsg;
+    NET_ASN_MsgPopulationFlowKnowledgeUpdate asnMsg;
 
     asnMsg().oid_connaissance_flux = nID_;
     asnMsg().oid_connaissance_population    = pPopulationKnowledge_->GetID();
@@ -353,7 +353,7 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
     asnMsg().portions_flux.n    = flowParts_.size();
     if( !flowParts_.empty() )
     {
-        asnMsg().portions_flux.elem = new ASN1T_PortionFlux[ asnMsg().portions_flux.n ];
+        asnMsg().portions_flux.elem = new ASN1T_FlowPart[ asnMsg().portions_flux.n ];
         uint i = 0;
         for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it, ++i )
             (*it->second).Serialize( asnMsg().portions_flux.elem[ i ] );
@@ -393,7 +393,7 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
     if( *pPreviousPerceptionLevel_ == *pCurrentPerceptionLevel_ && !bHumansUpdated_ && !bAttitudeUpdated_ && !bRealFlowUpdated_ && !bFlowPartsUpdated_ && !bDirectionUpdated_ && !bSpeedUpdated_ )
         return;
 
-    NET_ASN_MsgPopulationFluxKnowledgeUpdate asnMsg;
+    NET_ASN_MsgPopulationFlowKnowledgeUpdate asnMsg;
 
     asnMsg().oid_connaissance_flux       = nID_;
     asnMsg().oid_connaissance_population = pPopulationKnowledge_->GetID();
@@ -429,7 +429,7 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
         asnMsg().portions_flux.n        = flowParts_.size();
         if( !flowParts_.empty() )
         {
-            asnMsg().portions_flux.elem = new ASN1T_PortionFlux[ asnMsg().portions_flux.n ];
+            asnMsg().portions_flux.elem = new ASN1T_FlowPart[ asnMsg().portions_flux.n ];
             uint i = 0;
             for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it, ++i )
                 (*it->second).Serialize( asnMsg().portions_flux.elem[ i ] );
@@ -472,7 +472,7 @@ void DEC_Knowledge_PopulationFlow::SendMsgCreation() const
 {
     assert( pPopulationKnowledge_ );
 
-    NET_ASN_MsgPopulationFluxKnowledgeCreation asnMsg;
+    NET_ASN_MsgPopulationFlowKnowledgeCreation asnMsg;
 
     asnMsg().oid_connaissance_flux       = nID_;
     asnMsg().oid_connaissance_population = pPopulationKnowledge_->GetID();
@@ -490,7 +490,7 @@ void DEC_Knowledge_PopulationFlow::SendMsgDestruction() const
 {
     assert( pPopulationKnowledge_ );
 
-    NET_ASN_MsgPopulationFluxKnowledgeDestruction asnMsg;
+    NET_ASN_MsgPopulationFlowKnowledgeDestruction asnMsg;
 
     asnMsg().oid_connaissance_flux       = nID_;
     asnMsg().oid_connaissance_population = pPopulationKnowledge_->GetID();

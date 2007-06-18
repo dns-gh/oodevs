@@ -329,28 +329,28 @@ void AgentServerMsgMgr::OptionChanged( const std::string& name, const OptionVari
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgAutomateCreation
+// Name: AgentServerMsgMgr::OnReceiveMsgAutomatCreation
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAutomateCreation( const ASN1T_MsgAutomateCreation& message )
+void AgentServerMsgMgr::OnReceiveMsgAutomatCreation( const ASN1T_MsgAutomatCreation& message )
 {
     GetModel().agents_.CreateAutomat( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPionCreation
+// Name: AgentServerMsgMgr::OnReceiveMsgUnitCreation
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPionCreation( const ASN1T_MsgPionCreation& message )
+void AgentServerMsgMgr::OnReceiveMsgUnitCreation( const ASN1T_MsgUnitCreation& message )
 {
     GetModel().agents_.CreateAgent( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPionDestruction
+// Name: AgentServerMsgMgr::OnReceiveMsgUnitDestruction
 // Created: AGE 2007-04-24
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPionDestruction( const ASN1T_MsgPionDestruction& message )
+void AgentServerMsgMgr::OnReceiveMsgUnitDestruction( const ASN1T_MsgUnitDestruction& message )
 {
     GetModel().agents_.DestroyAgent( message );
 }
@@ -507,9 +507,9 @@ void AgentServerMsgMgr::Send( ASN1T_MsgsClientToSim& message )
         return;
     ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
 
-    ASN1C_MsgsClientToSim asnMsgCtrl( asnPEREncodeBuffer, message );
+    ASN1C_MsgsClientToSim asnMsgControl( asnPEREncodeBuffer, message );
 
-    if( asnMsgCtrl.Encode() != ASN_OK )
+    if( asnMsgControl.Encode() != ASN_OK )
     {
         asnPEREncodeBuffer.PrintErrorInfo();
         return;
@@ -534,9 +534,9 @@ void AgentServerMsgMgr::Send( ASN1T_MsgsClientToMiddle& message )
         return;
     ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
 
-    ASN1C_MsgsClientToMiddle asnMsgCtrl( asnPEREncodeBuffer, message );
+    ASN1C_MsgsClientToMiddle asnMsgControl( asnPEREncodeBuffer, message );
 
-    if( asnMsgCtrl.Encode() != ASN_OK )
+    if( asnMsgControl.Encode() != ASN_OK )
     {
         asnPEREncodeBuffer.PrintErrorInfo();
         return;
@@ -563,49 +563,49 @@ void AgentServerMsgMgr::SendMsgClientToSim( ASN1OCTET* pMsg, int nMsgLength )
 }
 
 //-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgCtrlPauseAck
+// Name: AgentServerMsgMgr::OnReceiveMsgControlPauseAck
 // Created: NLD 2003-02-26
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrlPauseAck( const ASN1T_MsgCtrlPauseAck& message )
+void AgentServerMsgMgr::OnReceiveMsgControlPauseAck( const ASN1T_MsgControlPauseAck& message )
 {
-    if( CheckAcknowledge( message, "CtrlPauseAck" ) )
+    if( CheckAcknowledge( message, "ControlPauseAck" ) )
         simulation_.Pause( true );
 }
 
 //-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgCtrlResumeAck
+// Name: AgentServerMsgMgr::OnReceiveMsgControlResumeAck
 // Created: NLD 2003-02-26
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrlResumeAck( const ASN1T_MsgCtrlResumeAck& message )
+void AgentServerMsgMgr::OnReceiveMsgControlResumeAck( const ASN1T_MsgControlResumeAck& message )
 {
-    if( CheckAcknowledge( message, "CtrlResumeAck" ) )
+    if( CheckAcknowledge( message, "ControlResumeAck" ) )
         simulation_.Pause( false );
 }
 
 //-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgCtrlChangeTimeFactorAck
+// Name: AgentServerMsgMgr::OnReceiveMsgControlChangeTimeFactorAck
 // Created: NLD 2003-02-27
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrlChangeTimeFactorAck( const ASN1T_MsgCtrlChangeTimeFactorAck& message )
+void AgentServerMsgMgr::OnReceiveMsgControlChangeTimeFactorAck( const ASN1T_MsgControlChangeTimeFactorAck& message )
 {
-    if( CheckAcknowledge( message, "CtrlTimeFactorAck" ) )
+    if( CheckAcknowledge( message, "ControlTimeFactorAck" ) )
         simulation_.ChangeSpeed( (int)message.time_factor );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgCtrlSkipToTickAck
+// Name: AgentServerMsgMgr::OnReceiveMsgControlSkipToTickAck
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrlSkipToTickAck( const ASN1T_MsgCtrlSkipToTickAck& message )
+void AgentServerMsgMgr::OnReceiveMsgControlSkipToTickAck( const ASN1T_MsgControlSkipToTickAck& message )
 {
-    CheckAcknowledge( message, "CtrlSkipToTickAck" );
+    CheckAcknowledge( message, "ControlSkipToTickAck" );
 }
 
 //-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgCtrlInfo
+// Name: AgentServerMsgMgr::OnReceiveMsgControlInformation
 // Created: NLD 2003-02-27
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrlInfo( const ASN1T_MsgCtrlInfo& message )
+void AgentServerMsgMgr::OnReceiveMsgControlInformation( const ASN1T_MsgControlInformation& message )
 {
      // $$$$ NLD 2007-01-30: BULLSHIT A VIRER OU A GERER
 //    unsigned char visionCones, profiling;
@@ -617,26 +617,26 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlInfo( const ASN1T_MsgCtrlInfo& message )
 // Name: AgentServerMsgMgr::OnReceiveMsgCtrReplayInfo
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrReplayInfo( const ASN1T_MsgCtrlReplayInfo& message )
+void AgentServerMsgMgr::OnReceiveMsgCtrReplayInfo( const ASN1T_MsgControlReplayInformation& message )
 {
     // $$$$ AGE 2007-04-11: 
     simulation_.Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgCtrlBeginTick
+// Name: AgentServerMsgMgr::OnReceiveMsgControlBeginTick
 // Created: NLD 2004-04-05
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrlBeginTick( const ASN1T_MsgCtrlBeginTick& message )
+void AgentServerMsgMgr::OnReceiveMsgControlBeginTick( const ASN1T_MsgControlBeginTick& message )
 {
     simulation_.BeginTick( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgCtrlEndTick
+// Name: AgentServerMsgMgr::OnReceiveMsgControlEndTick
 // Created: NLD 2004-04-05
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrlEndTick( const ASN1T_MsgCtrlEndTick& message )
+void AgentServerMsgMgr::OnReceiveMsgControlEndTick( const ASN1T_MsgControlEndTick& message )
 {
     simulation_.EndTick( message );
 }
@@ -720,127 +720,127 @@ void AgentServerMsgMgr::OnReceiveMsgUnitAttributes( const ASN1T_MsgUnitAttribute
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgAutomateAttributes
+// Name: AgentServerMsgMgr::OnReceiveMsgAutomatAttributes
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAutomateAttributes( const ASN1T_MsgAutomateAttributes& message )
+void AgentServerMsgMgr::OnReceiveMsgAutomatAttributes( const ASN1T_MsgAutomatAttributes& message )
 {
     GetModel().agents_.GetAutomat( message.oid_automate ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementCreation
+// Name: AgentServerMsgMgr::OnReceiveMsgLogMaintenanceHandlingCreation
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementCreation( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& message )
+void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceHandlingCreation( const ASN1T_MsgLogMaintenanceHandlingCreation& message )
 {
     GetModel().logistics_.CreateMaintenanceConsign( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementDestruction
+// Name: AgentServerMsgMgr::OnReceiveMsgLogMaintenanceHandlingDestruction
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementDestruction( const ASN1T_MsgLogMaintenanceTraitementEquipementDestruction& message )
+void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceHandlingDestruction( const ASN1T_MsgLogMaintenanceHandlingDestruction& message )
 {
     GetModel().logistics_.DeleteMaintenanceConsign( message.oid_consigne );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementUpdate
+// Name: AgentServerMsgMgr::OnReceiveMsgLogMaintenanceHandlingUpdate
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementUpdate( const ASN1T_MsgLogMaintenanceTraitementEquipementUpdate& message )
+void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceHandlingUpdate( const ASN1T_MsgLogMaintenanceHandlingUpdate& message )
 {
     GetModel().logistics_.GetMaintenanceConsign( message.oid_consigne ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgLogMaintenanceEtat
+// Name: AgentServerMsgMgr::OnReceiveMsgLogMaintenanceState
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceEtat( const ASN1T_MsgLogMaintenanceEtat& message )
+void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceState( const ASN1T_MsgLogMaintenanceState& message )
 {
     GetModel().agents_.GetAgent( message.oid_pion ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainCreation
+// Name: AgentServerMsgMgr::OnReceiveMsgLogMedicalHandlingCreation
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainCreation( const ASN1T_MsgLogSanteTraitementHumainCreation& message )
+void AgentServerMsgMgr::OnReceiveMsgLogMedicalHandlingCreation( const ASN1T_MsgLogMedicalHandlingCreation& message )
 {
     GetModel().logistics_.CreateMedicalConsign( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainDestruction
+// Name: AgentServerMsgMgr::OnReceiveMsgLogMedicalHandlingDestruction
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainDestruction( const ASN1T_MsgLogSanteTraitementHumainDestruction& message )
+void AgentServerMsgMgr::OnReceiveMsgLogMedicalHandlingDestruction( const ASN1T_MsgLogMedicalHandlingDestruction& message )
 {
     GetModel().logistics_.DeleteMedicalConsign( message.oid_consigne );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainUpdate
+// Name: AgentServerMsgMgr::OnReceiveMsgLogMedicalHandlingUpdate
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainUpdate( const ASN1T_MsgLogSanteTraitementHumainUpdate& message )
+void AgentServerMsgMgr::OnReceiveMsgLogMedicalHandlingUpdate( const ASN1T_MsgLogMedicalHandlingUpdate& message )
 {
     GetModel().logistics_.GetMedicalConsign( message.oid_consigne ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgLogSanteEtat
+// Name: AgentServerMsgMgr::OnReceiveMsgLogMedicalState
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogSanteEtat( const ASN1T_MsgLogSanteEtat& message )
+void AgentServerMsgMgr::OnReceiveMsgLogMedicalState( const ASN1T_MsgLogMedicalState& message )
 {
     GetModel().agents_.GetAgent( message.oid_pion ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementCreation
+// Name: AgentServerMsgMgr::OnReceiveMsgLogSupplyHandlingCreation
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementCreation( const ASN1T_MsgLogRavitaillementTraitementCreation& message )
+void AgentServerMsgMgr::OnReceiveMsgLogSupplyHandlingCreation( const ASN1T_MsgLogSupplyHandlingCreation& message )
 {
     GetModel().logistics_.CreateSupplyConsign( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementDestruction
+// Name: AgentServerMsgMgr::OnReceiveMsgLogSupplyHandlingDestruction
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementDestruction( const ASN1T_MsgLogRavitaillementTraitementDestruction& message )
+void AgentServerMsgMgr::OnReceiveMsgLogSupplyHandlingDestruction( const ASN1T_MsgLogSupplyHandlingDestruction& message )
 {
     GetModel().logistics_.DeleteSupplyConsign( message.oid_consigne );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementUpdate
+// Name: AgentServerMsgMgr::OnReceiveMsgLogSupplyHandlingUpdate
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementUpdate( const ASN1T_MsgLogRavitaillementTraitementUpdate& message )
+void AgentServerMsgMgr::OnReceiveMsgLogSupplyHandlingUpdate( const ASN1T_MsgLogSupplyHandlingUpdate& message )
 {
     GetModel().logistics_.GetSupplyConsign( message.oid_consigne ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgLogRavitaillementEtat
+// Name: AgentServerMsgMgr::OnReceiveMsgLogSupplyState
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementEtat( const ASN1T_MsgLogRavitaillementEtat&  message )
+void AgentServerMsgMgr::OnReceiveMsgLogSupplyState( const ASN1T_MsgLogSupplyState&  message )
 {
     GetModel().agents_.GetAgent( message.oid_pion ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgLogRavitaillementQuotas
+// Name: AgentServerMsgMgr::OnReceiveMsgLogSupplyQuotas
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementQuotas( const ASN1T_MsgLogRavitaillementQuotas& message )
+void AgentServerMsgMgr::OnReceiveMsgLogSupplyQuotas( const ASN1T_MsgLogSupplyQuotas& message )
 {
     GetModel().agents_.GetAutomat( message.oid_automate ).Update( message );
 }
@@ -849,18 +849,18 @@ void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementQuotas( const ASN1T_MsgLogR
 // Name: AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const ASN1T_MsgLogRavitaillementChangeQuotasAck& message, unsigned long )
+void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const ASN1T_MsgLogSupplyChangeQuotasAck& message, unsigned long )
 {
-    CheckAcknowledge( message, "MsgLogRavitaillementChangeQuotasAck" );
+    CheckAcknowledge( message, "MsgLogSupplyChangeQuotasAck" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgLogRavitaillementPousserFluxAck
+// Name: AgentServerMsgMgr::OnReceiveMsgLogSupplyPushFlowAck
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementPousserFluxAck( const ASN1T_MsgLogRavitaillementPousserFluxAck& message, unsigned long )
+void AgentServerMsgMgr::OnReceiveMsgLogSupplyPushFlowAck( const ASN1T_MsgLogSupplyPushFlowAck& message, unsigned long )
 {
-    CheckAcknowledge( message, "MsgLogRavitaillementPousserFluxAck" );
+    CheckAcknowledge( message, "MsgLogSupplyPushFlowAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -891,21 +891,21 @@ void AgentServerMsgMgr::OnReceiveMsgObjectMagicActionAck( const ASN1T_MsgObjectM
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgCtrlMeteoGlobalAck
+// Name: AgentServerMsgMgr::OnReceiveMsgControlMeteoGlobalAck
 // Created: NLD 2003-08-05
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrlMeteoGlobalAck()
+void AgentServerMsgMgr::OnReceiveMsgControlMeteoGlobalAck()
 {
-    CheckAcknowledge( "CtrlMeteoGlobaleAck" );
+    CheckAcknowledge( "ControlGlobalMeteoAck" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgCtrlMeteoLocalAck
+// Name: AgentServerMsgMgr::OnReceiveMsgControlMeteoLocalAck
 // Created: NLD 2003-08-05
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrlMeteoLocalAck()
+void AgentServerMsgMgr::OnReceiveMsgControlMeteoLocalAck()
 {
-    CheckAcknowledge( "CtrlMeteoLocaleAck" );
+    CheckAcknowledge( "ControlLocalMeteoAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -918,10 +918,10 @@ void AgentServerMsgMgr::OnReveiveMsgKnowledgeGroupCreation( const ASN1T_MsgKnowl
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReveiveMsgSideCreation
+// Name: AgentServerMsgMgr::OnReveiveMsgTeamCreation
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReveiveMsgSideCreation( const ASN1T_MsgSideCreation& asnMsg )
+void AgentServerMsgMgr::OnReveiveMsgTeamCreation( const ASN1T_MsgTeamCreation& asnMsg )
 {
     GetModel().teams_.CreateTeam( asnMsg );
 }
@@ -936,19 +936,19 @@ void AgentServerMsgMgr::OnReveiveMsgFormationCreation( const ASN1T_MsgFormationC
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateBegin
+// Name: AgentServerMsgMgr::OnReceiveMsgControlSendCurrentStateBegin
 // Created: NLD 2003-10-09
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateBegin()
+void AgentServerMsgMgr::OnReceiveMsgControlSendCurrentStateBegin()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateEnd
+// Name: AgentServerMsgMgr::OnReceiveMsgControlSendCurrentStateEnd
 // Created: NLD 2003-10-09
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateEnd()
+void AgentServerMsgMgr::OnReceiveMsgControlSendCurrentStateEnd()
 {
     // NOTHING
 }
@@ -977,7 +977,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveEnd()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCheckPointSetFrequencyAck()
 {
-    CheckAcknowledge( "CtrlCheckPointSetFrequencyAck" );
+    CheckAcknowledge( "ControlCheckPointSetFrequencyAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -986,7 +986,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSetFrequencyAck()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveNowAck()
 {
-    CheckAcknowledge( "CtrlCheckPointSetSaveNowAck" );
+    CheckAcknowledge( "ControlCheckPointSetSaveNowAck" );
 }
 
 //=============================================================================
@@ -1108,39 +1108,39 @@ void AgentServerMsgMgr::OnReceiveMsgLimaDestruction( const ASN1T_MsgLimaDestruct
 //=============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgAutomateOrder
+// Name: AgentServerMsgMgr::OnReceiveMsgAutomatOrder
 // Created: SBO 2006-11-20
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAutomateOrder( const ASN1T_MsgAutomateOrder& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgAutomatOrder( const ASN1T_MsgAutomatOrder& asnMsg )
 {
     GetModel().agents_.GetAutomat( asnMsg.oid_unite_executante ).Update( asnMsg );
 }
 
 //-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgAutomateOrderAck
+// Name: AgentServerMsgMgr::OnReceiveMsgAutomatOrderAck
 // Created: NLD 2002-08-07
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrderAck& message, unsigned long /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgAutomatOrderAck( const ASN1T_MsgAutomatOrderAck& message, unsigned long /*nCtx*/ )
 {
-    if( CheckAcknowledge( message, "AutomateOrderAck" ) )
+    if( CheckAcknowledge( message, "AutomatOrderAck" ) )
         GetModel().agents_.GetAutomat( message.oid_unite_executante ).Update( message );
 }
 
 //-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPionOrderAck
+// Name: AgentServerMsgMgr::OnReceiveMsgUnitOrderAck
 // Created: NLD 2002-08-07
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& message, unsigned long /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgUnitOrderAck( const ASN1T_MsgUnitOrderAck& message, unsigned long /*nCtx*/ )
 {
-    if( CheckAcknowledge( message, "PionOrderAck" ) )
+    if( CheckAcknowledge( message, "UnitOrderAck" ) )
         GetModel().agents_.GetAgent( message.oid_unite_executante ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPionOrder
+// Name: AgentServerMsgMgr::OnReceiveMsgUnitOrder
 // Created: NLD 2003-10-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPionOrder( const ASN1T_MsgPionOrder& message )
+void AgentServerMsgMgr::OnReceiveMsgUnitOrder( const ASN1T_MsgUnitOrder& message )
 {
     GetModel().agents_.FindAllAgent( message.oid_unite_executante )->Update( message );
 }
@@ -1158,7 +1158,7 @@ void AgentServerMsgMgr::OnReceiveMsgFragOrderAck( const ASN1T_MsgFragOrderAck& m
 // Name: AgentServerMsgMgr::OnReceiveMsgCR
 // Created: NLD 2002-09-02
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCR( const ASN1T_MsgCR& message )
+void AgentServerMsgMgr::OnReceiveMsgCR( const ASN1T_MsgReport& message )
 {
     GetModel().agents_.FindAllAgent( message.unit_id )->Update( message );
 }
@@ -1182,30 +1182,30 @@ void AgentServerMsgMgr::OnReceiveMsgDecisionalState( const ASN1T_MsgDecisionalSt
 }
 
 //-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgSetAutomateModeAck
+// Name: AgentServerMsgMgr::OnReceiveMsgSetAutomatModeAck
 // Created: NLD 2003-04-11
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgSetAutomateModeAck( const ASN1T_MsgSetAutomateModeAck& message, unsigned long /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgSetAutomatModeAck( const ASN1T_MsgSetAutomatModeAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( message, "SetAutomateModeAck" );
+    CheckAcknowledge( message, "SetAutomatModeAck" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPionChangeSuperiorAck
+// Name: AgentServerMsgMgr::OnReceiveMsgUnitChangeSuperiorAck
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPionChangeSuperiorAck( const ASN1T_MsgPionChangeSuperiorAck& message, unsigned long )
+void AgentServerMsgMgr::OnReceiveMsgUnitChangeSuperiorAck( const ASN1T_MsgUnitChangeSuperiorAck& message, unsigned long )
 {
-    if( CheckAcknowledge( message, "PionChangeSuperiorAck" ) )
+    if( CheckAcknowledge( message, "UnitChangeSuperiorAck" ) )
         GetModel().agents_.GetAgent( message.oid_pion ).Update( message );
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPionChangeSuperior
+// Name: AgentServerMsgMgr::OnReceiveMsgUnitChangeSuperior
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPionChangeSuperior( const ASN1T_MsgPionChangeSuperior& message )
+void AgentServerMsgMgr::OnReceiveMsgUnitChangeSuperior( const ASN1T_MsgUnitChangeSuperior& message )
 {
     GetModel().agents_.GetAgent( message.oid_pion ).Update( message );
 }
@@ -1214,7 +1214,7 @@ void AgentServerMsgMgr::OnReceiveMsgPionChangeSuperior( const ASN1T_MsgPionChang
 // Name: AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDiplomatieAck& message, unsigned long )
+void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDiplomacyAck& message, unsigned long )
 {
     if( CheckAcknowledge( message, "ChangeDiplomacyAck" ) )
     {
@@ -1224,31 +1224,31 @@ void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDip
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgAutomateChangeGroupeConnaissanceAck
+// Name: AgentServerMsgMgr::OnReceiveMsgAutomatChangeKnowledgeGroupAck
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAutomateChangeGroupeConnaissanceAck( const ASN1T_MsgAutomateChangeGroupeConnaissanceAck& message, unsigned long )
+void AgentServerMsgMgr::OnReceiveMsgAutomatChangeKnowledgeGroupAck( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& message, unsigned long )
 {
-    if( CheckAcknowledge( message, "AutomateChangeGroupeConnaissanceAck" ) )
+    if( CheckAcknowledge( message, "AutomatChangeKnowledgeGroupAck" ) )
         GetModel().agents_.GetAutomat( message.oid_automate ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgAutomateChangeLiensLogistiques
+// Name: AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinks
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAutomateChangeLiensLogistiques( const ASN1T_MsgAutomateChangeLiensLogistiques& message )
+void AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinks( const ASN1T_MsgAutomatChangeLogisticLinks& message )
 {
     GetModel().agents_.GetAutomat( message.oid_automate ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgAutomateChangeLiensLogistiquesAck
+// Name: AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinksAck
 // Created: AGE 2005-04-06
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAutomateChangeLiensLogistiquesAck( const ASN1T_MsgAutomateChangeLiensLogistiquesAck& message, unsigned long )
+void AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinksAck( const ASN1T_MsgAutomatChangeLogisticLinksAck& message, unsigned long )
 {
-    if( CheckAcknowledge( message, "AutomateChangeLiensLogistiquesAck" ) )
+    if( CheckAcknowledge( message, "AutomatChangeLogisticLinksAck" ) )
         GetModel().agents_.GetAutomat( message.oid_automate ).Update( message );
 }
 
@@ -1373,7 +1373,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeDestruction(
 // Name: AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeCreation
 // Created: SBO 2005-10-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeCreation( const ASN1T_MsgPopulationFluxKnowledgeCreation& message )
+void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeCreation( const ASN1T_MsgPopulationFlowKnowledgeCreation& message )
 {
     GetModel().knowledgeGroups_.Get( message.oid_groupe_possesseur ).Update( message );
 }
@@ -1382,7 +1382,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeCreation( const ASN1T
 // Name: AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeUpdate
 // Created: SBO 2005-10-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdate& message )
+void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeUpdate( const ASN1T_MsgPopulationFlowKnowledgeUpdate& message )
 {
     GetModel().knowledgeGroups_.Get( message.oid_groupe_possesseur ).Update( message );
 }
@@ -1391,7 +1391,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeUpdate( const ASN1T_M
 // Name: AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeDestruction
 // Created: SBO 2005-10-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeDestruction( const ASN1T_MsgPopulationFluxKnowledgeDestruction& message )
+void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeDestruction( const ASN1T_MsgPopulationFlowKnowledgeDestruction& message )
 {
     GetModel().knowledgeGroups_.Get( message.oid_groupe_possesseur ).Update( message );
 }
@@ -1432,10 +1432,10 @@ void AgentServerMsgMgr::OnReceiveMsgObjectDestruction( const ASN1T_MsgObjectDest
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgStartPionFire
+// Name: AgentServerMsgMgr::OnReceiveMsgStartUnitFire
 // Created: NLD 2003-04-30
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgStartPionFire( const ASN1T_MsgStartPionFire& message )
+void AgentServerMsgMgr::OnReceiveMsgStartUnitFire( const ASN1T_MsgStartUnitFire& message )
 {
     Agent_ABC& src = GetModel().agents_.GetAgent( message.tireur );
     src.Update( message );
@@ -1443,10 +1443,10 @@ void AgentServerMsgMgr::OnReceiveMsgStartPionFire( const ASN1T_MsgStartPionFire&
 }
 
 //-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgStopPionFire
+// Name: AgentServerMsgMgr::OnReceiveMsgStopUnitFire
 // Created: NLD 2003-04-30
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgStopPionFire( const ASN1T_MsgStopPionFire& message )
+void AgentServerMsgMgr::OnReceiveMsgStopUnitFire( const ASN1T_MsgStopUnitFire& message )
 {
     Entity_ABC* src = GetModel().fires_.FindFirer( message );
     if( src )
@@ -1507,10 +1507,10 @@ void AgentServerMsgMgr::OnReceiveMsgStopPopulationFire( const ASN1T_MsgStopPopul
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgChangeDiplomatie
+// Name: AgentServerMsgMgr::OnReceiveMsgChangeDiplomacy
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgChangeDiplomatie( const ASN1T_MsgChangeDiplomatie& message )
+void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomacy& message )
 {
     GetModel().teams_.GetTeam( message.oid_camp1 ).Update( message );
     GetModel().teams_.GetTeam( message.oid_camp2 ).Update( message );
@@ -1562,28 +1562,28 @@ void AgentServerMsgMgr::OnMsgPopulationConcentrationUpdate( const ASN1T_MsgPopul
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnMsgPopulationFluxCreation
+// Name: AgentServerMsgMgr::OnMsgPopulationFlowCreation
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnMsgPopulationFluxCreation( const ASN1T_MsgPopulationFluxCreation& message )
+void AgentServerMsgMgr::OnMsgPopulationFlowCreation( const ASN1T_MsgPopulationFlowCreation& message )
 {
     GetModel().agents_.GetPopulation( message.oid_population ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnMsgPopulationFluxDestruction
+// Name: AgentServerMsgMgr::OnMsgPopulationFlowDestruction
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnMsgPopulationFluxDestruction  ( const ASN1T_MsgPopulationFluxDestruction& message )
+void AgentServerMsgMgr::OnMsgPopulationFlowDestruction  ( const ASN1T_MsgPopulationFlowDestruction& message )
 {
     GetModel().agents_.GetPopulation( message.oid_population ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnMsgPopulationFluxUpdate
+// Name: AgentServerMsgMgr::OnMsgPopulationFlowUpdate
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnMsgPopulationFluxUpdate( const ASN1T_MsgPopulationFluxUpdate& message )
+void AgentServerMsgMgr::OnMsgPopulationFlowUpdate( const ASN1T_MsgPopulationFlowUpdate& message )
 {
     GetModel().agents_.GetPopulation( message.oid_population ).Update( message );
 }
@@ -1676,8 +1676,8 @@ void AgentServerMsgMgr::_OnReceiveMsgSimToClient( DIN_Input& input )
 
     // Decode the message
     ASN1T_MsgsSimToClient message;
-    ASN1C_MsgsSimToClient asnMsgCtrl( asnPERDecodeBuffer, message );
-    if( asnMsgCtrl.Decode() != ASN_OK )
+    ASN1C_MsgsSimToClient asnMsgControl( asnPERDecodeBuffer, message );
+    if( asnMsgControl.Decode() != ASN_OK )
     {
         asnPERDecodeBuffer.PrintErrorInfo();
         throw std::runtime_error( "ASN fussé" );
@@ -1691,37 +1691,37 @@ void AgentServerMsgMgr::_OnReceiveMsgSimToClient( DIN_Input& input )
         case T_MsgsSimToClient_msg_msg_lima_creation_request_ack:              OnReceiveMsgLimaCreationRequestAck             ( message.msg.u.msg_lima_creation_request_ack                , message.context ); break;
         case T_MsgsSimToClient_msg_msg_lima_update_request_ack:                OnReceiveMsgLimaUpdateRequestAck               ( message.msg.u.msg_lima_update_request_ack                  , message.context ); break;
         case T_MsgsSimToClient_msg_msg_lima_destruction_request_ack:           OnReceiveMsgLimaDestructionRequestAck          ( message.msg.u.msg_lima_destruction_request_ack             , message.context ); break;
-        case T_MsgsSimToClient_msg_msg_automate_order_ack:                     OnReceiveMsgAutomateOrderAck                   ( *message.msg.u.msg_automate_order_ack                      , message.context ); break;
-        case T_MsgsSimToClient_msg_msg_pion_order_ack:                         OnReceiveMsgPionOrderAck                       ( *message.msg.u.msg_pion_order_ack                          , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_automate_order_ack:                     OnReceiveMsgAutomatOrderAck                   ( *message.msg.u.msg_automate_order_ack                      , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_pion_order_ack:                         OnReceiveMsgUnitOrderAck                       ( *message.msg.u.msg_pion_order_ack                          , message.context ); break;
         case T_MsgsSimToClient_msg_msg_frag_order_ack:                         OnReceiveMsgFragOrderAck                       ( *message.msg.u.msg_frag_order_ack                          , message.context ); break;
         case T_MsgsSimToClient_msg_msg_unit_magic_action_ack:                  OnReceiveMsgUnitMagicActionAck                 ( *message.msg.u.msg_unit_magic_action_ack                   , message.context ); break;
-        case T_MsgsSimToClient_msg_msg_set_automate_mode_ack:                  OnReceiveMsgSetAutomateModeAck                 ( *message.msg.u.msg_set_automate_mode_ack                   , message.context ); break;
-        case T_MsgsSimToClient_msg_msg_pion_change_superior_ack:               OnReceiveMsgPionChangeSuperiorAck              ( *message.msg.u.msg_pion_change_superior_ack                , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_set_automate_mode_ack:                  OnReceiveMsgSetAutomatModeAck                 ( *message.msg.u.msg_set_automate_mode_ack                   , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_pion_change_superior_ack:               OnReceiveMsgUnitChangeSuperiorAck              ( *message.msg.u.msg_pion_change_superior_ack                , message.context ); break;
         case T_MsgsSimToClient_msg_msg_change_diplomatie_ack:                  OnReceiveMsgChangeDiplomacyAck                 ( *message.msg.u.msg_change_diplomatie_ack                   , message.context ); break;
-        case T_MsgsSimToClient_msg_msg_automate_change_groupe_connaissance_ack:OnReceiveMsgAutomateChangeGroupeConnaissanceAck( *message.msg.u.msg_automate_change_groupe_connaissance_ack , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_automate_change_groupe_connaissance_ack:OnReceiveMsgAutomatChangeKnowledgeGroupAck( *message.msg.u.msg_automate_change_groupe_connaissance_ack , message.context ); break;
         case T_MsgsSimToClient_msg_msg_object_magic_action_ack:                OnReceiveMsgObjectMagicActionAck               ( *message.msg.u.msg_object_magic_action_ack                 , message.context ); break;
-        case T_MsgsSimToClient_msg_msg_automate_change_liens_logistiques_ack:  OnReceiveMsgAutomateChangeLiensLogistiquesAck  ( *message.msg.u.msg_automate_change_liens_logistiques_ack   , message.context ); break;
-        case T_MsgsSimToClient_msg_msg_automate_change_liens_logistiques:      OnReceiveMsgAutomateChangeLiensLogistiques     ( *message.msg.u.msg_automate_change_liens_logistiques                         ); break;
-        case T_MsgsSimToClient_msg_msg_log_ravitaillement_pousser_flux_ack:    OnReceiveMsgLogRavitaillementPousserFluxAck    (  message.msg.u.msg_log_ravitaillement_pousser_flux_ack     , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_automate_change_liens_logistiques_ack:  OnReceiveMsgAutomatChangeLogisticLinksAck  ( *message.msg.u.msg_automate_change_liens_logistiques_ack   , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_automate_change_liens_logistiques:      OnReceiveMsgAutomatChangeLogisticLinks     ( *message.msg.u.msg_automate_change_liens_logistiques                         ); break;
+        case T_MsgsSimToClient_msg_msg_log_ravitaillement_pousser_flux_ack:    OnReceiveMsgLogSupplyPushFlowAck    (  message.msg.u.msg_log_ravitaillement_pousser_flux_ack     , message.context ); break;
         case T_MsgsSimToClient_msg_msg_log_ravitaillement_change_quotas_ack:   OnReceiveMsgLogRavitaillementChangeQuotaAck    (  message.msg.u.msg_log_ravitaillement_change_quotas_ack    , message.context ); break;
         case T_MsgsSimToClient_msg_msg_population_magic_action_ack:            OnReceiveMsgPopulationMagicActionAck           ( *message.msg.u.msg_population_magic_action_ack             , message.context ); break;
         case T_MsgsSimToClient_msg_msg_population_order_ack:                   OnReceiveMsgPopulationOrderAck                 ( *message.msg.u.msg_population_order_ack                    , message.context ); break;
 
-        case T_MsgsSimToClient_msg_msg_ctrl_info:                            OnReceiveMsgCtrlInfo                  ( *message.msg.u.msg_ctrl_info                           ); break;
-        case T_MsgsSimToClient_msg_msg_ctrl_begin_tick:                      OnReceiveMsgCtrlBeginTick             (  message.msg.u.msg_ctrl_begin_tick                     ); break;
-        case T_MsgsSimToClient_msg_msg_ctrl_end_tick:                        OnReceiveMsgCtrlEndTick               ( *message.msg.u.msg_ctrl_end_tick                       ); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_info:                            OnReceiveMsgControlInformation                  ( *message.msg.u.msg_ctrl_info                           ); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_begin_tick:                      OnReceiveMsgControlBeginTick             (  message.msg.u.msg_ctrl_begin_tick                     ); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_end_tick:                        OnReceiveMsgControlEndTick               ( *message.msg.u.msg_ctrl_end_tick                       ); break;
         case T_MsgsSimToClient_msg_msg_ctrl_stop_ack:                        break;
-        case T_MsgsSimToClient_msg_msg_ctrl_pause_ack:                       OnReceiveMsgCtrlPauseAck              ( message.msg.u.msg_ctrl_pause_ack                       ); break;
-        case T_MsgsSimToClient_msg_msg_ctrl_resume_ack:                      OnReceiveMsgCtrlResumeAck             ( message.msg.u.msg_ctrl_resume_ack                      ); break;
-        case T_MsgsSimToClient_msg_msg_ctrl_change_time_factor_ack:          OnReceiveMsgCtrlChangeTimeFactorAck   ( *message.msg.u.msg_ctrl_change_time_factor_ack         ); break;
-        case T_MsgsSimToClient_msg_msg_ctrl_meteo_globale_ack:               OnReceiveMsgCtrlMeteoGlobalAck        (); break;
-        case T_MsgsSimToClient_msg_msg_ctrl_meteo_locale_ack:                OnReceiveMsgCtrlMeteoLocalAck         (); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_pause_ack:                       OnReceiveMsgControlPauseAck              ( message.msg.u.msg_ctrl_pause_ack                       ); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_resume_ack:                      OnReceiveMsgControlResumeAck             ( message.msg.u.msg_ctrl_resume_ack                      ); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_change_time_factor_ack:          OnReceiveMsgControlChangeTimeFactorAck   ( *message.msg.u.msg_ctrl_change_time_factor_ack         ); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_meteo_globale_ack:               OnReceiveMsgControlMeteoGlobalAck        (); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_meteo_locale_ack:                OnReceiveMsgControlMeteoLocalAck         (); break;
         case T_MsgsSimToClient_msg_msg_ctrl_checkpoint_save_begin:           OnReceiveMsgCheckPointSaveBegin       (); break;
         case T_MsgsSimToClient_msg_msg_ctrl_checkpoint_save_end:             OnReceiveMsgCheckPointSaveEnd         (); break;
         case T_MsgsSimToClient_msg_msg_ctrl_checkpoint_set_frequency_ack:    OnReceiveMsgCheckPointSetFrequencyAck (); break;
         case T_MsgsSimToClient_msg_msg_ctrl_checkpoint_save_now_ack:         OnReceiveMsgCheckPointSaveNowAck      (); break;
-        case T_MsgsSimToClient_msg_msg_ctrl_send_current_state_begin:        OnReceiveMsgCtrlSendCurrentStateBegin (); break;
-        case T_MsgsSimToClient_msg_msg_ctrl_send_current_state_end:          OnReceiveMsgCtrlSendCurrentStateEnd   (); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_send_current_state_begin:        OnReceiveMsgControlSendCurrentStateBegin (); break;
+        case T_MsgsSimToClient_msg_msg_ctrl_send_current_state_end:          OnReceiveMsgControlSendCurrentStateEnd   (); break;
 
         case T_MsgsSimToClient_msg_msg_limit_creation:                       OnReceiveMsgLimitCreation             ( *message.msg.u.msg_limit_creation                      ); break;
         case T_MsgsSimToClient_msg_msg_limit_update:                         OnReceiveMsgLimitUpdate               ( *message.msg.u.msg_limit_update                        ); break;
@@ -1731,7 +1731,7 @@ void AgentServerMsgMgr::_OnReceiveMsgSimToClient( DIN_Input& input )
         case T_MsgsSimToClient_msg_msg_lima_destruction:                     OnReceiveMsgLimaDestruction           ( message.msg.u.msg_lima_destruction                     ); break;
 
         case T_MsgsSimToClient_msg_msg_knowledge_group_creation:             OnReveiveMsgKnowledgeGroupCreation    ( *message.msg.u.msg_knowledge_group_creation            ); break;
-        case T_MsgsSimToClient_msg_msg_side_creation:                        OnReveiveMsgSideCreation              ( *message.msg.u.msg_side_creation                       ); break;
+        case T_MsgsSimToClient_msg_msg_side_creation:                        OnReveiveMsgTeamCreation              ( *message.msg.u.msg_side_creation                       ); break;
         case T_MsgsSimToClient_msg_msg_formation_creation:                   OnReveiveMsgFormationCreation         ( *message.msg.u.msg_formation_creation                  ); break;
 
         case T_MsgsSimToClient_msg_msg_unit_knowledge_creation:              OnReceiveMsgUnitKnowledgeCreation     ( *message.msg.u.msg_unit_knowledge_creation             ); break;
@@ -1740,10 +1740,10 @@ void AgentServerMsgMgr::_OnReceiveMsgSimToClient( DIN_Input& input )
 
         case T_MsgsSimToClient_msg_msg_unit_attributes:                      OnReceiveMsgUnitAttributes            ( *message.msg.u.msg_unit_attributes                     ); break;
         case T_MsgsSimToClient_msg_msg_unit_pathfind:                        OnReceiveMsgUnitPathFind              ( *message.msg.u.msg_unit_pathfind                       ); break;
-        case T_MsgsSimToClient_msg_msg_automate_attributes:                  OnReceiveMsgAutomateAttributes        ( *message.msg.u.msg_automate_attributes                 ); break;              
+        case T_MsgsSimToClient_msg_msg_automate_attributes:                  OnReceiveMsgAutomatAttributes        ( *message.msg.u.msg_automate_attributes                 ); break;              
 
-        case T_MsgsSimToClient_msg_msg_start_pion_fire:                      OnReceiveMsgStartPionFire             ( *message.msg.u.msg_start_pion_fire                     ); break;
-        case T_MsgsSimToClient_msg_msg_stop_pion_fire:                       OnReceiveMsgStopPionFire              ( *message.msg.u.msg_stop_pion_fire                      ); break;
+        case T_MsgsSimToClient_msg_msg_start_pion_fire:                      OnReceiveMsgStartUnitFire             ( *message.msg.u.msg_start_pion_fire                     ); break;
+        case T_MsgsSimToClient_msg_msg_stop_pion_fire:                       OnReceiveMsgStopUnitFire              ( *message.msg.u.msg_stop_pion_fire                      ); break;
         case T_MsgsSimToClient_msg_msg_start_population_fire:                OnReceiveMsgStartPopulationFire       ( *message.msg.u.msg_start_population_fire               ); break;
         case T_MsgsSimToClient_msg_msg_stop_population_fire:                 OnReceiveMsgStopPopulationFire        ( *message.msg.u.msg_stop_population_fire                ); break;
 
@@ -1754,8 +1754,8 @@ void AgentServerMsgMgr::_OnReceiveMsgSimToClient( DIN_Input& input )
         case T_MsgsSimToClient_msg_msg_start_fire_effect:                    OnReceiveMsgStartFireEffect           ( *message.msg.u.msg_start_fire_effect ); break;
         case T_MsgsSimToClient_msg_msg_stop_fire_effect:                     OnReceiveMsgStopFireEffect            ( message.msg.u.msg_stop_fire_effect ); break;
 
-        case T_MsgsSimToClient_msg_msg_pion_order:                           OnReceiveMsgPionOrder                 ( *message.msg.u.msg_pion_order ); break;
-        case T_MsgsSimToClient_msg_msg_automate_order:                       OnReceiveMsgAutomateOrder             ( *message.msg.u.msg_automate_order ); break;
+        case T_MsgsSimToClient_msg_msg_pion_order:                           OnReceiveMsgUnitOrder                 ( *message.msg.u.msg_pion_order ); break;
+        case T_MsgsSimToClient_msg_msg_automate_order:                       OnReceiveMsgAutomatOrder             ( *message.msg.u.msg_automate_order ); break;
         case T_MsgsSimToClient_msg_msg_population_order:                     OnReceiveMsgPopulationOrder           ( *message.msg.u.msg_population_order ); break;
 
         case T_MsgsSimToClient_msg_msg_object_creation:                      OnReceiveMsgObjectCreation            ( *message.msg.u.msg_object_creation                     ); break;
@@ -1765,38 +1765,38 @@ void AgentServerMsgMgr::_OnReceiveMsgSimToClient( DIN_Input& input )
         case T_MsgsSimToClient_msg_msg_object_knowledge_update:              OnReceiveMsgObjectKnowledgeUpdate     ( *message.msg.u.msg_object_knowledge_update             ); break;
         case T_MsgsSimToClient_msg_msg_object_knowledge_destruction:         OnReceiveMsgObjectKnowledgeDestruction( *message.msg.u.msg_object_knowledge_destruction        ); break;
 
-        case T_MsgsSimToClient_msg_msg_pion_change_superior:                 OnReceiveMsgPionChangeSuperior        ( *message.msg.u.msg_pion_change_superior ); break;
+        case T_MsgsSimToClient_msg_msg_pion_change_superior:                 OnReceiveMsgUnitChangeSuperior        ( *message.msg.u.msg_pion_change_superior ); break;
 
-        case T_MsgsSimToClient_msg_msg_pion_creation:                        OnReceiveMsgPionCreation              ( *message.msg.u.msg_pion_creation                       ); break;
-        case T_MsgsSimToClient_msg_msg_automate_creation:                    OnReceiveMsgAutomateCreation          ( *message.msg.u.msg_automate_creation                   ); break;
-        case T_MsgsSimToClient_msg_msg_change_diplomatie:                    OnReceiveMsgChangeDiplomatie          ( *message.msg.u.msg_change_diplomatie                   ); break;
-        case T_MsgsSimToClient_msg_msg_pion_destruction:                     OnReceiveMsgPionDestruction           (  message.msg.u.msg_pion_destruction                    ); break;
+        case T_MsgsSimToClient_msg_msg_pion_creation:                        OnReceiveMsgUnitCreation              ( *message.msg.u.msg_pion_creation                       ); break;
+        case T_MsgsSimToClient_msg_msg_automate_creation:                    OnReceiveMsgAutomatCreation          ( *message.msg.u.msg_automate_creation                   ); break;
+        case T_MsgsSimToClient_msg_msg_change_diplomatie:                    OnReceiveMsgChangeDiplomacy          ( *message.msg.u.msg_change_diplomatie                   ); break;
+        case T_MsgsSimToClient_msg_msg_pion_destruction:                     OnReceiveMsgUnitDestruction           (  message.msg.u.msg_pion_destruction                    ); break;
 
-        case T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_creation:    OnReceiveMsgLogMaintenanceTraitementEquipementCreation   ( *message.msg.u.msg_log_maintenance_traitement_equipement_creation ); break;
-        case T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_destruction: OnReceiveMsgLogMaintenanceTraitementEquipementDestruction( *message.msg.u.msg_log_maintenance_traitement_equipement_destruction ); break;
-        case T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_update:      OnReceiveMsgLogMaintenanceTraitementEquipementUpdate     ( *message.msg.u.msg_log_maintenance_traitement_equipement_update ); break;
-        case T_MsgsSimToClient_msg_msg_log_maintenance_etat:                              OnReceiveMsgLogMaintenanceEtat( *message.msg.u.msg_log_maintenance_etat ); break;
+        case T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_creation:    OnReceiveMsgLogMaintenanceHandlingCreation   ( *message.msg.u.msg_log_maintenance_traitement_equipement_creation ); break;
+        case T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_destruction: OnReceiveMsgLogMaintenanceHandlingDestruction( *message.msg.u.msg_log_maintenance_traitement_equipement_destruction ); break;
+        case T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_update:      OnReceiveMsgLogMaintenanceHandlingUpdate     ( *message.msg.u.msg_log_maintenance_traitement_equipement_update ); break;
+        case T_MsgsSimToClient_msg_msg_log_maintenance_etat:                              OnReceiveMsgLogMaintenanceState( *message.msg.u.msg_log_maintenance_etat ); break;
 
-        case T_MsgsSimToClient_msg_msg_log_ravitaillement_traitement_creation:    OnReceiveMsgLogRavitaillementTraitementCreation   ( *message.msg.u.msg_log_ravitaillement_traitement_creation ); break;
-        case T_MsgsSimToClient_msg_msg_log_ravitaillement_traitement_destruction: OnReceiveMsgLogRavitaillementTraitementDestruction( *message.msg.u.msg_log_ravitaillement_traitement_destruction ); break;
-        case T_MsgsSimToClient_msg_msg_log_ravitaillement_traitement_update:      OnReceiveMsgLogRavitaillementTraitementUpdate     ( *message.msg.u.msg_log_ravitaillement_traitement_update ); break;
-        case T_MsgsSimToClient_msg_msg_log_ravitaillement_etat:                   OnReceiveMsgLogRavitaillementEtat( *message.msg.u.msg_log_ravitaillement_etat ); break;
-        case T_MsgsSimToClient_msg_msg_log_ravitaillement_quotas:                 OnReceiveMsgLogRavitaillementQuotas               (  *message.msg.u.msg_log_ravitaillement_quotas ); break;
+        case T_MsgsSimToClient_msg_msg_log_ravitaillement_traitement_creation:    OnReceiveMsgLogSupplyHandlingCreation   ( *message.msg.u.msg_log_ravitaillement_traitement_creation ); break;
+        case T_MsgsSimToClient_msg_msg_log_ravitaillement_traitement_destruction: OnReceiveMsgLogSupplyHandlingDestruction( *message.msg.u.msg_log_ravitaillement_traitement_destruction ); break;
+        case T_MsgsSimToClient_msg_msg_log_ravitaillement_traitement_update:      OnReceiveMsgLogSupplyHandlingUpdate     ( *message.msg.u.msg_log_ravitaillement_traitement_update ); break;
+        case T_MsgsSimToClient_msg_msg_log_ravitaillement_etat:                   OnReceiveMsgLogSupplyState( *message.msg.u.msg_log_ravitaillement_etat ); break;
+        case T_MsgsSimToClient_msg_msg_log_ravitaillement_quotas:                 OnReceiveMsgLogSupplyQuotas               (  *message.msg.u.msg_log_ravitaillement_quotas ); break;
 
 
-        case T_MsgsSimToClient_msg_msg_log_sante_traitement_humain_creation:    OnReceiveMsgLogSanteTraitementHumainCreation   ( *message.msg.u.msg_log_sante_traitement_humain_creation ); break;
-        case T_MsgsSimToClient_msg_msg_log_sante_traitement_humain_destruction: OnReceiveMsgLogSanteTraitementHumainDestruction( *message.msg.u.msg_log_sante_traitement_humain_destruction ); break;
-        case T_MsgsSimToClient_msg_msg_log_sante_traitement_humain_update:      OnReceiveMsgLogSanteTraitementHumainUpdate     ( *message.msg.u.msg_log_sante_traitement_humain_update ); break;
-        case T_MsgsSimToClient_msg_msg_log_sante_etat:                          OnReceiveMsgLogSanteEtat( *message.msg.u.msg_log_sante_etat ); break;
+        case T_MsgsSimToClient_msg_msg_log_sante_traitement_humain_creation:    OnReceiveMsgLogMedicalHandlingCreation   ( *message.msg.u.msg_log_sante_traitement_humain_creation ); break;
+        case T_MsgsSimToClient_msg_msg_log_sante_traitement_humain_destruction: OnReceiveMsgLogMedicalHandlingDestruction( *message.msg.u.msg_log_sante_traitement_humain_destruction ); break;
+        case T_MsgsSimToClient_msg_msg_log_sante_traitement_humain_update:      OnReceiveMsgLogMedicalHandlingUpdate     ( *message.msg.u.msg_log_sante_traitement_humain_update ); break;
+        case T_MsgsSimToClient_msg_msg_log_sante_etat:                          OnReceiveMsgLogMedicalState( *message.msg.u.msg_log_sante_etat ); break;
 
         case T_MsgsSimToClient_msg_msg_population_creation                       : OnMsgPopulationCreation                ( *message.msg.u.msg_population_creation ); break;
         case T_MsgsSimToClient_msg_msg_population_update                         : OnMsgPopulationUpdate                  ( *message.msg.u.msg_population_update ); break;
         case T_MsgsSimToClient_msg_msg_population_concentration_creation         : OnMsgPopulationConcentrationCreation   ( *message.msg.u.msg_population_concentration_creation ); break;
         case T_MsgsSimToClient_msg_msg_population_concentration_destruction      : OnMsgPopulationConcentrationDestruction( *message.msg.u.msg_population_concentration_destruction ); break;
         case T_MsgsSimToClient_msg_msg_population_concentration_update           : OnMsgPopulationConcentrationUpdate     ( *message.msg.u.msg_population_concentration_update ); break;
-        case T_MsgsSimToClient_msg_msg_population_flux_creation                  : OnMsgPopulationFluxCreation            ( *message.msg.u.msg_population_flux_creation ); break;
-        case T_MsgsSimToClient_msg_msg_population_flux_destruction               : OnMsgPopulationFluxDestruction         ( *message.msg.u.msg_population_flux_destruction ); break;
-        case T_MsgsSimToClient_msg_msg_population_flux_update                    : OnMsgPopulationFluxUpdate              ( *message.msg.u.msg_population_flux_update ); break;
+        case T_MsgsSimToClient_msg_msg_population_flux_creation                  : OnMsgPopulationFlowCreation            ( *message.msg.u.msg_population_flux_creation ); break;
+        case T_MsgsSimToClient_msg_msg_population_flux_destruction               : OnMsgPopulationFlowDestruction         ( *message.msg.u.msg_population_flux_destruction ); break;
+        case T_MsgsSimToClient_msg_msg_population_flux_update                    : OnMsgPopulationFlowUpdate              ( *message.msg.u.msg_population_flux_update ); break;
 
         case T_MsgsSimToClient_msg_msg_population_knowledge_creation                  : OnReceiveMsgPopulationKnowledgeCreation                ( *message.msg.u.msg_population_knowledge_creation                  ); break;
         case T_MsgsSimToClient_msg_msg_population_knowledge_update                    : OnReceiveMsgPopulationKnowledgeUpdate                  ( *message.msg.u.msg_population_knowledge_update                    ); break;
@@ -1830,8 +1830,8 @@ void AgentServerMsgMgr::_OnReceiveMsgMiddleToClient( DIN_Input& input )
 
     // Decode the message
     ASN1T_MsgsMiddleToClient message;
-    ASN1C_MsgsMiddleToClient asnMsgCtrl( asnPERDecodeBuffer, message );
-    if( asnMsgCtrl.Decode() != ASN_OK )
+    ASN1C_MsgsMiddleToClient asnMsgControl( asnPERDecodeBuffer, message );
+    if( asnMsgControl.Decode() != ASN_OK )
     {
         asnPERDecodeBuffer.PrintErrorInfo();
         throw std::runtime_error( "ASN fussé" );
@@ -1840,7 +1840,7 @@ void AgentServerMsgMgr::_OnReceiveMsgMiddleToClient( DIN_Input& input )
     switch( message.msg.t )
     {
         case T_MsgsMiddleToClient_msg_msg_ctrl_replay_info:                     OnReceiveMsgCtrReplayInfo             ( *message.msg.u.msg_ctrl_replay_info                    ); break;
-        case T_MsgsMiddleToClient_msg_msg_ctrl_skip_to_tick_ack:                OnReceiveMsgCtrlSkipToTickAck         ( *message.msg.u.msg_ctrl_skip_to_tick_ack               ); break;
+        case T_MsgsMiddleToClient_msg_msg_ctrl_skip_to_tick_ack:                OnReceiveMsgControlSkipToTickAck         ( *message.msg.u.msg_ctrl_skip_to_tick_ack               ); break;
         case T_MsgsMiddleToClient_msg_msg_authentication_response:              OnReceiveMsgAuthenticationResponse      ( *message.msg.u.msg_authentication_response ); break;
         case T_MsgsMiddleToClient_msg_msg_profile_creation:                     OnReceiveMsgProfileCreation             ( *message.msg.u.msg_profile_creation ); break;
         case T_MsgsMiddleToClient_msg_msg_profile_creation_request_ack:         OnReceiveMsgProfileCreationRequestAck   ( *message.msg.u.msg_profile_creation_request_ack ); break;

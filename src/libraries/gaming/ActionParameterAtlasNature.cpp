@@ -29,7 +29,7 @@ ActionParameterAtlasNature::ActionParameterAtlasNature( const OrderParameter& pa
 // Name: ActionParameterAtlasNature constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ActionParameterAtlasNature::ActionParameterAtlasNature( const OrderParameter& parameter, const ASN1T_NatureAtlas& asn, const AtlasNatures& natures )
+ActionParameterAtlasNature::ActionParameterAtlasNature( const OrderParameter& parameter, const ASN1T_AtlasNature& asn, const AtlasNatures& natures )
     : ActionParameter< AtlasNature >( parameter, natures.MakeNature( unsigned short( asn.data ) ) )
 {
     // NOTHING

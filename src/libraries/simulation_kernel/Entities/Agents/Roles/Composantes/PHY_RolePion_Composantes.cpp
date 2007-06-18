@@ -197,7 +197,7 @@ namespace boost
             file << size;
             for(  PHY_RolePion_Composantes::CIT_ComposanteTypeMap it = map.begin(); it != map.end(); ++it )
             {
-                ASN1T_TypeEquipement id = it->first->GetMosID();
+                ASN1T_EquipmentType id = it->first->GetMosID();
                 file << id;
                 file << it->second;
             }
@@ -210,7 +210,7 @@ namespace boost
             file >> nNbr;
             while ( nNbr-- )
             {
-                ASN1T_TypeEquipement nID;
+                ASN1T_EquipmentType nID;
 
                 file >> nID;
                 file >> map[ PHY_ComposanteTypePion::Find( nID ) ];
@@ -1129,11 +1129,11 @@ void PHY_RolePion_Composantes::SendLoans( NET_ASN_MsgUnitAttributes& asn ) const
 
         if( !loanData.empty() )
         {
-            ASN1T_EquipementPrete* pLoan = new ASN1T_EquipementPrete[ loanData.size() ];
+            ASN1T_LentEquipment* pLoan = new ASN1T_LentEquipment[ loanData.size() ];
             uint i = 0;
             for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it, ++i )
             {
-                ASN1T_EquipementPrete& loan = pLoan[ i ];
+                ASN1T_LentEquipment& loan = pLoan[ i ];
 
                 loan.oid_pion_emprunteur = it->first.first ->GetID();
                 loan.type_equipement     = it->first.second->GetMosID();
@@ -1159,11 +1159,11 @@ void PHY_RolePion_Composantes::SendLoans( NET_ASN_MsgUnitAttributes& asn ) const
 
         if( !loanData.empty() )
         {
-            ASN1T_EquipementEmprunte* pLoan = new ASN1T_EquipementEmprunte[ loanData.size() ];
+            ASN1T_BorrowedEquipment* pLoan = new ASN1T_BorrowedEquipment[ loanData.size() ];
             uint i = 0;
             for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it, ++i )
             {
-                ASN1T_EquipementEmprunte& loan = pLoan[ i ];
+                ASN1T_BorrowedEquipment& loan = pLoan[ i ];
 
                 loan.oid_pion_preteur = it->first.first ->GetID();
                 loan.type_equipement  = it->first.second->GetMosID();
@@ -1185,14 +1185,14 @@ void PHY_RolePion_Composantes::SendFullState( NET_ASN_MsgUnitAttributes& msg ) c
 
     if( !composanteTypes_.empty() )
     {
-        ASN1T_DotationEquipement* pEquipments = new ASN1T_DotationEquipement[ composanteTypes_.size() ];
+        ASN1T_EquipmentDotations* pEquipments = new ASN1T_EquipmentDotations[ composanteTypes_.size() ];
         uint i = 0;
         for( CIT_ComposanteTypeMap itComposanteType = composanteTypes_.begin(); itComposanteType != composanteTypes_.end(); ++itComposanteType, ++i )
         {
             const PHY_ComposanteTypePion&    compType   = *itComposanteType->first;
             const T_ComposanteTypeProperties& properties =  itComposanteType->second;
 
-            ASN1T_DotationEquipement& value  = pEquipments[ i ];
+            ASN1T_EquipmentDotations& value  = pEquipments[ i ];
             value.type_equipement            = compType.GetMosID();
             value.nb_disponibles             = properties.nbrsPerState_[ PHY_ComposanteState::undamaged_ .GetID() ];
             value.nb_indisponibles           = properties.nbrsPerState_[ PHY_ComposanteState::dead_      .GetID() ];
@@ -1217,7 +1217,7 @@ void PHY_RolePion_Composantes::SendChangedState( NET_ASN_MsgUnitAttributes& msg 
 {
     if( nNbrComposanteChanged_ > 0 )
     {
-        ASN1T_DotationEquipement* pEquipments = new ASN1T_DotationEquipement[ nNbrComposanteChanged_ ];
+        ASN1T_EquipmentDotations* pEquipments = new ASN1T_EquipmentDotations[ nNbrComposanteChanged_ ];
         uint i = 0;
         for( CIT_ComposanteTypeMap itComposanteType = composanteTypes_.begin(); itComposanteType != composanteTypes_.end(); ++itComposanteType )
         {
@@ -1227,7 +1227,7 @@ void PHY_RolePion_Composantes::SendChangedState( NET_ASN_MsgUnitAttributes& msg 
             if( !properties.bHasChanged_ )
                 continue;
 
-            ASN1T_DotationEquipement& value  = pEquipments[ i++ ];
+            ASN1T_EquipmentDotations& value  = pEquipments[ i++ ];
             value.type_equipement            = compType.GetMosID();
             value.nb_disponibles             = properties.nbrsPerState_[ PHY_ComposanteState::undamaged_  .GetID() ];
             value.nb_indisponibles           = properties.nbrsPerState_[ PHY_ComposanteState::dead_       .GetID() ];

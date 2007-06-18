@@ -364,7 +364,7 @@ void LogisticSupplyRecompletionDialog::Show()
 // Name: LogisticSupplyRecompletionDialog::FillPersonal
 // Created: AGE 2006-05-02
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::FillPersonal( ASN1T_MagicActionRecompletementPartiel& action )
+void LogisticSupplyRecompletionDialog::FillPersonal( ASN1T_MagicActionPartialRecovery& action )
 {
     uint nNbrPersonals = 0;
     for( int nRow = 0; nRow < personalsTable_->numRows(); ++nRow )
@@ -379,7 +379,7 @@ void LogisticSupplyRecompletionDialog::FillPersonal( ASN1T_MagicActionRecomplete
         action.personnels.n        = nNbrPersonals;
         action.m.personnelsPresent  = 1;
 
-        ASN1T_RecompletementPersonnel* pAsnPersonnel = new ASN1T_RecompletementPersonnel[ nNbrPersonals ];
+        ASN1T_HumanRecovery* pAsnPersonnel = new ASN1T_HumanRecovery[ nNbrPersonals ];
         action.personnels.elem = pAsnPersonnel;
         uint nAsnIdx = 0;
         for( int nRow = 0; nRow < personalsTable_->numRows(); ++nRow )
@@ -388,7 +388,7 @@ void LogisticSupplyRecompletionDialog::FillPersonal( ASN1T_MagicActionRecomplete
             QTableItem*      pNbrItem               = personalsTable_->item( nRow, 2 );
             if( !pPersonnelItemCheckBox->isChecked() )
                 continue;
-            ASN1T_RecompletementPersonnel& asnPersonnel = pAsnPersonnel[ nAsnIdx ++ ];
+            ASN1T_HumanRecovery& asnPersonnel = pAsnPersonnel[ nAsnIdx ++ ];
             asnPersonnel.rang                           = (ASN1T_EnumHumanRank)nRow;
             asnPersonnel.nombre_disponible              = pNbrItem->text().toUInt();
         }
@@ -399,19 +399,19 @@ void LogisticSupplyRecompletionDialog::FillPersonal( ASN1T_MagicActionRecomplete
 // Name: LogisticSupplyRecompletionDialog::FillEquipments
 // Created: AGE 2006-05-02
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::FillEquipments( ASN1T_MagicActionRecompletementPartiel& action )
+void LogisticSupplyRecompletionDialog::FillEquipments( ASN1T_MagicActionPartialRecovery& action )
 {
     if( equipmentsTable_->numRows() > 1 )
     {
         action.m.equipementsPresent = 1;
         uint nAsnIdx = 0;
-        ASN1T_RecompletementEquipement* pAsnEquipement = new ASN1T_RecompletementEquipement[ equipmentsTable_->numRows() - 1 ];
+        ASN1T_EquipmentRecovery* pAsnEquipement = new ASN1T_EquipmentRecovery[ equipmentsTable_->numRows() - 1 ];
         for( int nRow = 0; nRow < equipmentsTable_->numRows() - 1; ++nRow )
         {
             QComboTableItem* pEquipementItem  = static_cast< QComboTableItem* >( equipmentsTable_->item( nRow, 0 ) );
             QTableItem*      pNbrItem         = equipmentsTable_->item( nRow, 1 );
 
-            ASN1T_RecompletementEquipement& asnEquipement = pAsnEquipement[ nAsnIdx ++ ];
+            ASN1T_EquipmentRecovery& asnEquipement = pAsnEquipement[ nAsnIdx ++ ];
             asnEquipement.type_equipement   = equipments_[ pEquipementItem->currentText() ]->type_.GetId();
             asnEquipement.nombre_disponible = pNbrItem->text().toUInt();
         }
@@ -425,7 +425,7 @@ void LogisticSupplyRecompletionDialog::FillEquipments( ASN1T_MagicActionRecomple
 // Name: LogisticSupplyRecompletionDialog::FillDotations
 // Created: AGE 2006-05-02
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::FillDotations(  ASN1T_MagicActionRecompletementPartiel& action )
+void LogisticSupplyRecompletionDialog::FillDotations(  ASN1T_MagicActionPartialRecovery& action )
 {
     uint nNbrDotations = 0;
     for( int nRow = 0; nRow < dotationsTable_->numRows(); ++nRow )
@@ -439,7 +439,7 @@ void LogisticSupplyRecompletionDialog::FillDotations(  ASN1T_MagicActionRecomple
         action.dotations.n        = nNbrDotations;
         action.m.dotationsPresent = 1;
 
-        ASN1T_RecompletementDotation* pAsnDotations = new ASN1T_RecompletementDotation[ nNbrDotations ];
+        ASN1T_DotationRecovery* pAsnDotations = new ASN1T_DotationRecovery[ nNbrDotations ];
         action.dotations.elem = pAsnDotations;
         uint nAsnIdx = 0;
         for( int nRow = 0; nRow < dotationsTable_->numRows(); ++nRow )
@@ -452,8 +452,8 @@ void LogisticSupplyRecompletionDialog::FillDotations(  ASN1T_MagicActionRecomple
             if( !pDotationItemCheckBox->isChecked() )
                 continue;
 
-            ASN1T_RecompletementDotation& asnDotation = pAsnDotations[ nAsnIdx ++ ];
-            asnDotation.famille_dotation = (ASN1T_EnumFamilleDotation)ENT_Tr::ConvertToFamilleDotation( pDotationItem->text().ascii() );
+            ASN1T_DotationRecovery& asnDotation = pAsnDotations[ nAsnIdx ++ ];
+            asnDotation.famille_dotation = (ASN1T_EnumDotationFamily)ENT_Tr::ConvertToFamilleDotation( pDotationItem->text().ascii() );
             asnDotation.pourcentage      = pPercentageItem->text().toUInt();
         }
     } 
@@ -463,7 +463,7 @@ void LogisticSupplyRecompletionDialog::FillDotations(  ASN1T_MagicActionRecomple
 // Name: LogisticSupplyRecompletionDialog::FillAmmunitions
 // Created: AGE 2006-05-02
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::FillAmmunitions( ASN1T_MagicActionRecompletementPartiel& action )
+void LogisticSupplyRecompletionDialog::FillAmmunitions( ASN1T_MagicActionPartialRecovery& action )
 {
     uint nNbrMunitions = 0;
     for( int nRow = 0; nRow < munitionsFamilyTable_->numRows(); ++nRow )
@@ -478,7 +478,7 @@ void LogisticSupplyRecompletionDialog::FillAmmunitions( ASN1T_MagicActionRecompl
         action.munitions.n        = nNbrMunitions;
         action.m.munitionsPresent = 1;
 
-        ASN1T_RecompletementDotationMunition* pAsnMunitions = new ASN1T_RecompletementDotationMunition[ nNbrMunitions ];
+        ASN1T_AmmunitionDotationRecovery* pAsnMunitions = new ASN1T_AmmunitionDotationRecovery[ nNbrMunitions ];
         action.munitions.elem = pAsnMunitions;
         uint nAsnIdx = 0;
         for( int nRow = 0; nRow < munitionsFamilyTable_->numRows(); ++nRow )
@@ -494,8 +494,8 @@ void LogisticSupplyRecompletionDialog::FillAmmunitions( ASN1T_MagicActionRecompl
             assert( pMunitionItem );            
             assert( pPercentageItem );
 
-            ASN1T_RecompletementDotationMunition& asnMunition = pAsnMunitions[ nAsnIdx ++ ];
-            asnMunition.famille_munition = (ASN1T_EnumFamilleMunition)ENT_Tr::ConvertToFamilleMunition( pMunitionItem->text().ascii() );
+            ASN1T_AmmunitionDotationRecovery& asnMunition = pAsnMunitions[ nAsnIdx ++ ];
+            asnMunition.famille_munition = (ASN1T_EnumAmmunitionFamily)ENT_Tr::ConvertToFamilleMunition( pMunitionItem->text().ascii() );
             asnMunition.pourcentage      = pPercentageItem->text().toUInt();
         }
     }   
@@ -505,7 +505,7 @@ void LogisticSupplyRecompletionDialog::FillAmmunitions( ASN1T_MagicActionRecompl
 // Name: LogisticSupplyRecompletionDialog::FillSupplies
 // Created: AGE 2006-05-02
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::FillSupplies( ASN1T_MagicActionRecompletementPartiel& action )
+void LogisticSupplyRecompletionDialog::FillSupplies( ASN1T_MagicActionPartialRecovery& action )
 {
     uint nNbrResources = 0;
     for( int nRow = 0; nRow < stockTable_->numRows(); ++nRow )
@@ -520,7 +520,7 @@ void LogisticSupplyRecompletionDialog::FillSupplies( ASN1T_MagicActionRecomplete
         action.stocks.n        = nNbrResources;
         action.m.stocksPresent = 1;
 
-        ASN1T_RecompletementStock* pAsnStocks = new ASN1T_RecompletementStock[ nNbrResources ];
+        ASN1T_StockRecovery* pAsnStocks = new ASN1T_StockRecovery[ nNbrResources ];
         action.stocks.elem = pAsnStocks;
         uint nAsnIdx = 0;
         for( int nRow = 0; nRow < stockTable_->numRows(); ++nRow )
@@ -536,7 +536,7 @@ void LogisticSupplyRecompletionDialog::FillSupplies( ASN1T_MagicActionRecomplete
             assert( pItem );            
             assert( pQttyItem );
 
-            ASN1T_RecompletementStock& asnStock = pAsnStocks[ nAsnIdx ++ ];
+            ASN1T_StockRecovery& asnStock = pAsnStocks[ nAsnIdx ++ ];
             asnStock.ressource_id        = stocks_[ pItem->text() ]->type_->GetId();
             asnStock.quantite_disponible = pQttyItem->text().toUInt();
         }
@@ -555,7 +555,7 @@ void LogisticSupplyRecompletionDialog::Validate()
     ASN_MsgUnitMagicAction asnMsg;
     asnMsg().oid = selected_->GetId();
 
-    ASN1T_MagicActionRecompletementPartiel asnMagicAction;
+    ASN1T_MagicActionPartialRecovery asnMagicAction;
     asnMsg().action.t                        = T_MsgUnitMagicAction_action_recompletement_partiel;
     asnMsg().action.u.recompletement_partiel = &asnMagicAction;
 

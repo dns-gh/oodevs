@@ -62,8 +62,8 @@ DEC_BlackBoard_CanContainKnowledgeAgent::DEC_BlackBoard_CanContainKnowledgeAgent
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeAgent::~DEC_BlackBoard_CanContainKnowledgeAgent()
 {
-    while( !knowledgeAgentFromIDMap_.empty() )
-        DestroyKnowledgeAgent( *knowledgeAgentFromIDMap_.begin()->second );
+    while( !unitKnowledgeFromIDMap_.empty() )
+        DestroyKnowledgeAgent( *unitKnowledgeFromIDMap_.begin()->second );
 }
 
 // =============================================================================
@@ -120,7 +120,7 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::load( MIL_CheckPointInArchive& fil
     file >> const_cast< MIL_KnowledgeGroup*& >( pKnowledgeGroup_ )
          >> nLastCacheUpdateTick_
          >> realAgentMap_
-         >> knowledgeAgentFromIDMap_;
+         >> unitKnowledgeFromIDMap_;
 }
 
 // -----------------------------------------------------------------------------
@@ -132,7 +132,7 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::save( MIL_CheckPointOutArchive& fi
     file << pKnowledgeGroup_
          << nLastCacheUpdateTick_
          << realAgentMap_
-         << knowledgeAgentFromIDMap_;
+         << unitKnowledgeFromIDMap_;
 }
 
 // =============================================================================
@@ -149,7 +149,7 @@ DEC_Knowledge_Agent& DEC_BlackBoard_CanContainKnowledgeAgent::CreateKnowledgeAge
     bool bOut = realAgentMap_.insert( std::make_pair( &agentKnown, &knowledge ) ).second;
     assert( bOut );
 
-    bOut = knowledgeAgentFromIDMap_.insert( std::make_pair( knowledge.GetID(), &knowledge ) ).second;
+    bOut = unitKnowledgeFromIDMap_.insert( std::make_pair( knowledge.GetID(), &knowledge ) ).second;
     assert( bOut );
 
     return knowledge;
@@ -163,7 +163,7 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::DestroyKnowledgeAgent( DEC_Knowled
 {
     int nOut = realAgentMap_.erase( &knowledge.GetAgentKnown() );
     assert( nOut >= 1 );
-    nOut = knowledgeAgentFromIDMap_.erase( knowledge.GetID() );
+    nOut = unitKnowledgeFromIDMap_.erase( knowledge.GetID() );
     assert( nOut == 1 );
     delete &knowledge;
 }

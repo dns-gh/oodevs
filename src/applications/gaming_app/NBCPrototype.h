@@ -12,8 +12,8 @@
 
 #include "clients_gui/NBCPrototype_ABC.h"
 
-struct ASN1T_AttrObjectZoneNBC;
-struct ASN1T_AttrObjectNuageNBC;
+struct ASN1T_ObjectAttributesNbcZone;
+struct ASN1T_ObjectAttributesNbcCloud;
 struct ASN1T_MagicActionCreateObject;
 
 // =============================================================================
@@ -49,8 +49,8 @@ private:
     //! @name Member data
     //@{
     ASN1T_MagicActionCreateObject& msg_;
-    ASN1T_AttrObjectZoneNBC* nbcArea_;
-    ASN1T_AttrObjectNuageNBC* nbcCloud_;
+    ASN1T_ObjectAttributesNbcZone* nbcArea_;
+    ASN1T_ObjectAttributesNbcCloud* nbcCloud_;
     //@}
 };
 

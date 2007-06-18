@@ -32,9 +32,9 @@ class SupplyStates;
 // Created: AGE 2006-03-01
 // =============================================================================
 class Logistics : public kernel::Extension_ABC
-                , public kernel::Updatable_ABC< ASN1T_MsgLogMaintenanceEtat >
-                , public kernel::Updatable_ABC< ASN1T_MsgLogSanteEtat >
-                , public kernel::Updatable_ABC< ASN1T_MsgLogRavitaillementEtat >
+                , public kernel::Updatable_ABC< ASN1T_MsgLogMaintenanceState >
+                , public kernel::Updatable_ABC< ASN1T_MsgLogMedicalState >
+                , public kernel::Updatable_ABC< ASN1T_MsgLogSupplyState >
 {
 
 public:
@@ -53,9 +53,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgLogSanteEtat& message );
-    virtual void DoUpdate( const ASN1T_MsgLogMaintenanceEtat& message );
-    virtual void DoUpdate( const ASN1T_MsgLogRavitaillementEtat& message );
+    virtual void DoUpdate( const ASN1T_MsgLogMedicalState& message );
+    virtual void DoUpdate( const ASN1T_MsgLogMaintenanceState& message );
+    virtual void DoUpdate( const ASN1T_MsgLogSupplyState& message );
     //@}
 
 private:

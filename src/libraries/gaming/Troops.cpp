@@ -70,7 +70,7 @@ void Troops::DoUpdate( const ASN1T_MsgUnitAttributes& message )
     uint nSize = message.dotation_eff_personnel.n;
     while( nSize > 0 )
     {
-        const ASN1T_DotationPersonnel& dot = message.dotation_eff_personnel.elem[ --nSize ];
+        const ASN1T_HumanDotations& dot = message.dotation_eff_personnel.elem[ --nSize ];
         AddDifference( differences, eTroopHealthStateTotal             , dot.rang, dot.nb_total );
         AddDifference( differences, eTroopHealthStateOperational       , dot.rang, dot.nb_operationnels );
         AddDifference( differences, eTroopHealthStateDead              , dot.rang, dot.nb_morts );

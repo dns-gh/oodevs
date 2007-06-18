@@ -31,7 +31,7 @@ class LogConsignMaintenance : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogConsignMaintenance( Model& model, const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& msg );
+             LogConsignMaintenance( Model& model, const ASN1T_MsgLogMaintenanceHandlingCreation& msg );
     virtual ~LogConsignMaintenance();
     //@}
 
@@ -42,8 +42,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& msg );
-    void Update        ( const ASN1T_MsgLogMaintenanceTraitementEquipementUpdate& msg );
+    void Update        ( const ASN1T_MsgLogMaintenanceHandlingCreation& msg );
+    void Update        ( const ASN1T_MsgLogMaintenanceHandlingUpdate& msg );
     virtual void SendCreation  ( Publisher_ABC& publisher ) const;
     virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
     virtual void SendDestruction( Publisher_ABC& publisher ) const;
@@ -65,7 +65,7 @@ private:
     const unsigned int  nBreakdownType_; // XML reference - no resolved by dispatcher
 
     Agent*                                 pTreatingAgent_;
-    ASN1T_EnumLogMaintenanceTraitementEtat nState_;
+    ASN1T_EnumLogMaintenanceHandlingStatus nState_;
     bool                                   bDiagnosed_;
 };
 

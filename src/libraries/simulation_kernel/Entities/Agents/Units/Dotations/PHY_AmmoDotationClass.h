@@ -40,7 +40,7 @@ public:
     static void Initialize();
     static void Terminate ();
 
-    static const PHY_AmmoDotationClass* Find( ASN1T_EnumFamilleMunition nAsnID );
+    static const PHY_AmmoDotationClass* Find( ASN1T_EnumAmmunitionFamily nAsnID );
     static const PHY_AmmoDotationClass* Find( int nID );
     static const PHY_AmmoDotationClass* Find( const std::string& strName );
     //@}
@@ -48,7 +48,7 @@ public:
     //! @name Accessors
     //@{
           int          GetID  () const;
-          ASN1T_EnumFamilleMunition GetAsnID() const;
+          ASN1T_EnumAmmunitionFamily GetAsnID() const;
     const std::string& GetName() const;
     //@}
 
@@ -74,13 +74,13 @@ private:
     //@}
 
 private:
-     PHY_AmmoDotationClass( const std::string& strName, E_Type nType, ASN1T_EnumFamilleMunition nAsnID );
+     PHY_AmmoDotationClass( const std::string& strName, E_Type nType, ASN1T_EnumAmmunitionFamily nAsnID );
     ~PHY_AmmoDotationClass();
 
 private:
     const std::string               strName_;
     const E_Type                    nType_;
-    const ASN1T_EnumFamilleMunition nAsnID_;
+    const ASN1T_EnumAmmunitionFamily nAsnID_;
 
 private:
     static T_TypeMap types_;

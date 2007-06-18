@@ -44,7 +44,7 @@ ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& paramete
 // Name: ActionParameterObstacle constructor
 // Created: SBO 2007-04-27
 // -----------------------------------------------------------------------------
-ActionParameterObstacle::ActionParameterObstacle( const QString& name, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const ASN1T_MissionGenObject& asn )
+ActionParameterObstacle::ActionParameterObstacle( const QString& name, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const ASN1T_PlannedWork& asn )
     : ActionParameter< QString >( name )
     , type_( types.Get( asn.type ) )
 {
@@ -57,7 +57,7 @@ ActionParameterObstacle::ActionParameterObstacle( const QString& name, const Coo
 // Name: ActionParameterObstacle constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const ASN1T_MissionGenObject& asn )
+ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const ASN1T_PlannedWork& asn )
     : ActionParameter< QString >( parameter )
     , type_( types.Get( asn.type ) )
 {
@@ -155,7 +155,7 @@ void ActionParameterObstacle::Serialize( xml::xostream& xos ) const
 // Name: ActionParameterObstacle::SetParameters
 // Created: SBO 2007-04-17
 // -----------------------------------------------------------------------------
-void ActionParameterObstacle::SetParameters( const ASN1T_MissionGenObject& asn )
+void ActionParameterObstacle::SetParameters( const ASN1T_PlannedWork& asn )
 {
     // $$$$ SBO 2007-04-17: TODO
     switch( asn.type )
@@ -186,9 +186,9 @@ void ActionParameterObstacle::SetParameters( const ASN1T_MissionGenObject& asn )
 void ActionParameterObstacle::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value = 0;
-    asn.value.t = T_MissionParameter_value_missionGenObject;
-    asn.value.u.missionGenObject = new ASN1T_MissionGenObject();
-    CommitTo( *asn.value.u.missionGenObject );
+    asn.value.t = T_MissionParameter_value_plannedWork;
+    asn.value.u.plannedWork = new ASN1T_PlannedWork();
+    CommitTo( *asn.value.u.plannedWork );
 }
 
 // -----------------------------------------------------------------------------
@@ -197,16 +197,16 @@ void ActionParameterObstacle::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ActionParameterObstacle::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.missionGenObject )
-        Clean( *asn.value.u.missionGenObject );
-    delete asn.value.u.missionGenObject;
+    if( asn.value.u.plannedWork )
+        Clean( *asn.value.u.plannedWork );
+    delete asn.value.u.plannedWork;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterObstacle::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void ActionParameterObstacle::CommitTo( ASN1T_MissionGenObject& asn ) const
+void ActionParameterObstacle::CommitTo( ASN1T_PlannedWork& asn ) const
 {
     asn.type = ASN1T_EnumObjectType( type_.id_ );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
@@ -223,7 +223,7 @@ void ActionParameterObstacle::CommitTo( ASN1T_MissionGenObject& asn ) const
 // Name: ActionParameterObstacle::Clean
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void ActionParameterObstacle::Clean( ASN1T_MissionGenObject& asn ) const
+void ActionParameterObstacle::Clean( ASN1T_PlannedWork& asn ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {

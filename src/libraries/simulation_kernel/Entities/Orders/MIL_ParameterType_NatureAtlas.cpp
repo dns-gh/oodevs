@@ -39,14 +39,14 @@ MIL_ParameterType_NatureAtlas::~MIL_ParameterType_NatureAtlas()
 void MIL_ParameterType_NatureAtlas::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_natureAtlas ) 
+    if( from.null_value || from.value.t != T_MissionParameter_value_atlasNature ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( to.Type() != eId )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyNatureAtlas( *from.value.u.natureAtlas, to ) )
+    if( !NET_ASN_Tools::CopyNatureAtlas( *from.value.u.atlasNature, to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -79,10 +79,10 @@ bool MIL_ParameterType_NatureAtlas::Copy( const DIA_Variable_ABC& from, ASN1T_Mi
         return false;
 
     to.null_value          = false;
-    to.value.t             = T_MissionParameter_value_natureAtlas;
-    to.value.u.natureAtlas = new ASN1T_NatureAtlas();
+    to.value.t             = T_MissionParameter_value_atlasNature;
+    to.value.u.atlasNature = new ASN1T_AtlasNature();
     
-    if( !NET_ASN_Tools::CopyNatureAtlas( from, *to.value.u.natureAtlas ) )
+    if( !NET_ASN_Tools::CopyNatureAtlas( from, *to.value.u.atlasNature ) )
         return false;
 
     return true;
@@ -94,7 +94,7 @@ bool MIL_ParameterType_NatureAtlas::Copy( const DIA_Variable_ABC& from, ASN1T_Mi
 // -----------------------------------------------------------------------------
 void MIL_ParameterType_NatureAtlas::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_natureAtlas );
-    assert( to.value.u.natureAtlas );
-    delete to.value.u.natureAtlas;
+    assert( to.value.t == T_MissionParameter_value_atlasNature );
+    assert( to.value.u.atlasNature );
+    delete to.value.u.atlasNature;
 }

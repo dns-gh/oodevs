@@ -35,7 +35,7 @@ class AgentFireResult : public kernel::Resolver< Equipment >
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFireResult( const ASN1T_FireDamagesPion& message, 
+             AgentFireResult( const ASN1T_UnitFireDamages& message, 
                               const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver,
                               const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver );
     virtual ~AgentFireResult();

@@ -23,7 +23,7 @@ namespace TEST {
 // Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
 inline
-ASN1T_EnumTypeLocalisation Location::GetType() const
+ASN1T_EnumLocationType Location::GetType() const
 {
     return eType_;
 }

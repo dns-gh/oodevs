@@ -79,15 +79,15 @@ void ParamEquipmentList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     if( !table_ )
         InterfaceNotInitialized();
-    asn.value.t = T_MissionParameter_value_maintenancePriorites;
-    ASN1T_MaintenancePriorites*& list = asn.value.u.maintenancePriorites = new ASN1T_MaintenancePriorites();
+    asn.value.t = T_MissionParameter_value_logMaintenancePriorities;
+    ASN1T_LogMaintenancePriorities*& list = asn.value.u.logMaintenancePriorities = new ASN1T_LogMaintenancePriorities();
     list->n = 0;
     list->elem = 0;
     asn.null_value = table_->numRows() <= 1 ? 1 : 0;
     if( asn.null_value )
         return;
     list->n = table_->numRows() - 1;
-    list->elem = new ASN1T_TypeEquipement[ list->n ];
+    list->elem = new ASN1T_EquipmentType[ list->n ];
     for( unsigned int i = 0; i < list->n; ++i )
     {
         ExclusiveComboTableItem* comboItem  = static_cast< ExclusiveComboTableItem* >( table_->item( i, 0 ) );
@@ -105,9 +105,9 @@ void ParamEquipmentList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamEquipmentList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.maintenancePriorites )
-        delete[] asn.value.u.maintenancePriorites->elem;
-    delete asn.value.u.maintenancePriorites;
+    if( asn.value.u.logMaintenancePriorities )
+        delete[] asn.value.u.logMaintenancePriorities->elem;
+    delete asn.value.u.logMaintenancePriorities;
 }
 
 // -----------------------------------------------------------------------------

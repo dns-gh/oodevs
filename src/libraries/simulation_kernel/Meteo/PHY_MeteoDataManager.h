@@ -45,8 +45,8 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveMsgGlobalMeteo( const ASN1T_MsgCtrlMeteoGlobale& asnMsg );
-    void OnReceiveMsgLocalMeteo ( const ASN1T_MsgCtrlMeteoLocale&  asnMsg );
+    void OnReceiveMsgGlobalMeteo( const ASN1T_MsgControlGlobalMeteo& asnMsg );
+    void OnReceiveMsgLocalMeteo ( const ASN1T_MsgControlLocalMeteo&  asnMsg );
     //@}
 
 private:

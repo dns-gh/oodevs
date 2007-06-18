@@ -20,29 +20,29 @@ ObjectKnowledgeExports  ::= NULL
 -- SIM -> MOS
 MsgObjectKnowledgeCreation ::= SEQUENCE
 {
-    oid-connaissance             KnowledgeObject, 
-    oid-camp-possesseur          Camp, 
+    oid-connaissance             ObjectKnowledge, 
+    oid-camp-possesseur          Team, 
     oid-objet-reel               OID, -- id de l'objet réel pointé par la connaissance
     type                         EnumObjectType,
-    type-obstacle                EnumTypeObstacle   OPTIONAL,
+    type-obstacle                EnumObstacleType   OPTIONAL,
     obstacle-de-manoeuvre-active BOOLEAN            OPTIONAL,    
-    type-dotation-construction   TypeDotation       OPTIONAL,
-    type-dotation-valorisation   TypeDotation       OPTIONAL    
+    type-dotation-construction   DotationType       OPTIONAL,
+    type-dotation-valorisation   DotationType       OPTIONAL    
 }
 
 MsgObjectKnowledgeUpdate ::= SEQUENCE
 {
-    oid-connaissance             KnowledgeObject,
-    oid-camp-possesseur          Camp,
+    oid-connaissance             ObjectKnowledge,
+    oid-camp-possesseur          Team,
     oid-objet-reel               OID                OPTIONAL, -- id de l'objet réel pointé par la connaissance
     pertinence                   INTEGER( 0..100 )  OPTIONAL,
-    localisation                 Localisation       OPTIONAL,
+    localisation                 Location       OPTIONAL,
     pourcentage-construction     INTEGER( 0..100 )  OPTIONAL, 
     pourcentage-valorisation     INTEGER( 0..100 )  OPTIONAL,
     pourcentage-contournement    INTEGER( 0..100 )  OPTIONAL,
     obstacle-de-manoeuvre-active BOOLEAN            OPTIONAL,
     est-percu                    BOOLEAN            OPTIONAL,
-    attributs-specifiques        AttrObjectSpecific OPTIONAL,
+    attributs-specifiques        ObjectAttributesSpecific OPTIONAL,
     perception-par-compagnie     ListOID            OPTIONAL, -- Liste des compagnies percevant l'objet
     nb-dotation-construction     INTEGER            OPTIONAL,
     nb-dotation-valorisation     INTEGER            OPTIONAL
@@ -50,8 +50,8 @@ MsgObjectKnowledgeUpdate ::= SEQUENCE
 
 MsgObjectKnowledgeDestruction ::= SEQUENCE
 {
-    oid-connaissance    KnowledgeObject,    
-    oid-camp-possesseur Camp     
+    oid-connaissance    ObjectKnowledge,    
+    oid-camp-possesseur Team     
 }
 
 END -- ObjectKnowledge

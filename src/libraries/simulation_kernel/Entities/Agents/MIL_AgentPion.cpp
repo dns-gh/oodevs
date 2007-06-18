@@ -583,7 +583,7 @@ void MIL_AgentPion::SendCreation() const
 {
     assert( pType_ );
 
-    NET_ASN_MsgPionCreation asnMsg;
+    NET_ASN_MsgUnitCreation asnMsg;
     asnMsg().oid_pion     = GetID();
     asnMsg().type_pion    = pType_->GetID();
     asnMsg().nom          = strName_.c_str(); // !! pointeur sur const char*
@@ -616,7 +616,7 @@ void MIL_AgentPion::SendKnowledge() const
 // Name: MIL_AgentPion::OnReceiveMsgOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgOrder( const ASN1T_MsgPionOrder& msg )
+void MIL_AgentPion::OnReceiveMsgOrder( const ASN1T_MsgUnitOrder& msg )
 {
     orderManager_.OnReceiveMission( msg );
 }
@@ -671,7 +671,7 @@ void MIL_AgentPion::OnReceiveMsgMagicMove( const MT_Vector2D& vPosition )
 void MIL_AgentPion::OnReceiveMsgMagicMove( const ASN1T_MagicActionMoveTo& asn )
 {
     if( pAutomate_->IsEngaged() )
-        throw NET_AsnException< ASN1T_EnumUnitAttrErrorCode >( EnumUnitAttrErrorCode::error_automate_embraye );
+        throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_automate_embraye );
 
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( asn, vPosTmp );
@@ -684,13 +684,13 @@ void MIL_AgentPion::OnReceiveMsgMagicMove( const ASN1T_MagicActionMoveTo& asn )
 // Name: MIL_AgentPion::OnReceiveMsgChangeHumanFactors
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-void  MIL_AgentPion::OnReceiveMsgChangeHumanFactors( const ASN1T_MagicActionChangeFacteursHumains& asn )
+void  MIL_AgentPion::OnReceiveMsgChangeHumanFactors( const ASN1T_MagicActionChangeHumanFactors& asn )
 {
     if( asn.m.experiencePresent )
     {
         const PHY_Experience* pExperience = PHY_Experience::Find( asn.experience );
         if( !pExperience )
-            throw NET_AsnException< ASN1T_EnumUnitAttrErrorCode >( EnumUnitAttrErrorCode::error_invalid_attribute );;
+            throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_attribute );;
         GetRole< PHY_RolePion_HumanFactors >().SetExperience( *pExperience );
     }
 
@@ -698,7 +698,7 @@ void  MIL_AgentPion::OnReceiveMsgChangeHumanFactors( const ASN1T_MagicActionChan
     {
         const PHY_Morale* pMoral = PHY_Morale::Find( asn.moral );
         if( !pMoral )
-            throw NET_AsnException< ASN1T_EnumUnitAttrErrorCode >( EnumUnitAttrErrorCode::error_invalid_attribute );;
+            throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_attribute );;
         GetRole< PHY_RolePion_HumanFactors >().SetMorale( *pMoral );
     }
 
@@ -706,7 +706,7 @@ void  MIL_AgentPion::OnReceiveMsgChangeHumanFactors( const ASN1T_MagicActionChan
     {
         const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( asn.fatigue );
         if( !pTiredness )
-            throw NET_AsnException< ASN1T_EnumUnitAttrErrorCode >( EnumUnitAttrErrorCode::error_invalid_attribute );;
+            throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_attribute );;
         GetRole< PHY_RolePion_HumanFactors >().SetTiredness( *pTiredness );
     }
 }
@@ -756,14 +756,14 @@ void MIL_AgentPion::OnReceiveMsgResupplyAll()
 // Name: MIL_AgentPion::OnReceiveMsgResupply
 // Created: NLD 2005-07-27
 // -----------------------------------------------------------------------------
-void  MIL_AgentPion::OnReceiveMsgResupply( const ASN1T_MagicActionRecompletementPartiel& asn )
+void  MIL_AgentPion::OnReceiveMsgResupply( const ASN1T_MagicActionPartialRecovery& asn )
 {
     if( asn.m.equipementsPresent )
     {
         PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
         for( uint i = 0; i < asn.equipements.n; ++i )
         {
-            const ASN1T_RecompletementEquipement& asnEquipement = asn.equipements.elem[ i ];
+            const ASN1T_EquipmentRecovery& asnEquipement = asn.equipements.elem[ i ];
             const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( asnEquipement.type_equipement );
             if( pComposanteType )
                 roleComposantes.ChangeComposantesAvailability( *pComposanteType, asnEquipement.nombre_disponible );
@@ -775,7 +775,7 @@ void  MIL_AgentPion::OnReceiveMsgResupply( const ASN1T_MagicActionRecompletement
         PHY_RolePion_Humans& roleHumans = GetRole< PHY_RolePion_Humans >();
         for( uint i = 0 ; i < asn.personnels.n; ++i )
         {
-            const ASN1T_RecompletementPersonnel& asnPersonnel = asn.personnels.elem[ i ];
+            const ASN1T_HumanRecovery& asnPersonnel = asn.personnels.elem[ i ];
             const PHY_HumanRank* pHumanRank = PHY_HumanRank::Find( asnPersonnel.rang );
             if( pHumanRank )
                 roleHumans.ChangeHumansAvailability( *pHumanRank, asnPersonnel.nombre_disponible ); 
@@ -787,7 +787,7 @@ void  MIL_AgentPion::OnReceiveMsgResupply( const ASN1T_MagicActionRecompletement
         PHY_RolePion_Dotations& roleDotations = GetRole< PHY_RolePion_Dotations >();
         for( uint i = 0; i < asn.dotations.n; ++i )
         {
-            const ASN1T_RecompletementDotation& asnDotation = asn.dotations.elem[ i ];
+            const ASN1T_DotationRecovery& asnDotation = asn.dotations.elem[ i ];
             const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( asnDotation.famille_dotation ); 
             if( pDotationType )
                 roleDotations.ResupplyDotations( *pDotationType, asnDotation.pourcentage / 100. );
@@ -799,7 +799,7 @@ void  MIL_AgentPion::OnReceiveMsgResupply( const ASN1T_MagicActionRecompletement
         PHY_RolePion_Dotations& roleDotations = GetRole< PHY_RolePion_Dotations >();
         for( uint i = 0; i < asn.munitions.n; ++i )
         {
-            const ASN1T_RecompletementDotationMunition& asnMunition = asn.munitions.elem[ i ];
+            const ASN1T_AmmunitionDotationRecovery& asnMunition = asn.munitions.elem[ i ];
             const PHY_AmmoDotationClass* pAmmoClass = PHY_AmmoDotationClass::Find( asnMunition.famille_munition ); 
             if( pAmmoClass )
                 roleDotations.ResupplyDotations( *pAmmoClass, asnMunition.pourcentage / 100. );
@@ -811,7 +811,7 @@ void  MIL_AgentPion::OnReceiveMsgResupply( const ASN1T_MagicActionRecompletement
         PHY_RolePion_Supply& roleSupply = GetRole< PHY_RolePion_Supply >();
         for( uint i = 0; i < asn.stocks.n; ++i )
         {
-            const ASN1T_RecompletementStock& asnStock = asn.stocks.elem[ i ];
+            const ASN1T_StockRecovery& asnStock = asn.stocks.elem[ i ];
             const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( asnStock.ressource_id );
             if( pDotationCategory )
                 roleSupply.ResupplyStocks( *pDotationCategory, asnStock.quantite_disponible );
@@ -887,7 +887,7 @@ void MIL_AgentPion::OnReceiveMagicCancelSurrender()
 // Name: MIL_AgentPion::OnReceiveMsgChangeSuperior
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgChangeSuperior( const ASN1T_MsgPionChangeSuperior& asnMsg )
+void MIL_AgentPion::OnReceiveMsgChangeSuperior( const ASN1T_MsgUnitChangeSuperior& asnMsg )
 {
     MIL_Automate* pNewAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( asnMsg.oid_automate );
     if( !pNewAutomate )
@@ -957,7 +957,7 @@ void MIL_AgentPion::ChangeSuperior( MIL_Automate& newAutomate )
 
     GetRole< DEC_RolePion_Decision >().NotifyAutomateChanged(); //$$$ à gicler quand myself.automate_ sera remplacé par une fonction DEC
 
-    NET_ASN_MsgPionChangeSuperior asnMsg;
+    NET_ASN_MsgUnitChangeSuperior asnMsg;
     asnMsg().oid_pion     = GetID();
     asnMsg().oid_automate = newAutomate.GetID();
     asnMsg.Send();

@@ -31,7 +31,7 @@ ActionParameterAutomatList::ActionParameterAutomatList( const kernel::OrderParam
 // Name: ActionParameterAutomatList constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-ActionParameterAutomatList::ActionParameterAutomatList( const OrderParameter& parameter, const ASN1T_ListAutomate& asn, const Resolver_ABC< Automat_ABC >& resolver )
+ActionParameterAutomatList::ActionParameterAutomatList( const OrderParameter& parameter, const ASN1T_AutomatList& asn, const Resolver_ABC< Automat_ABC >& resolver )
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
@@ -70,13 +70,13 @@ namespace
 {
     struct AsnSerializer : public ActionParameterVisitor_ABC
     {
-        explicit AsnSerializer( ASN1T_ListAutomate& asn ) : asn_( &asn ), current_( 0 ) {}
+        explicit AsnSerializer( ASN1T_AutomatList& asn ) : asn_( &asn ), current_( 0 ) {}
         virtual void Visit( const ActionParameterAutomat& param )
         {
             param.CommitTo( asn_->elem[current_++] );
         }
 
-        ASN1T_ListAutomate* asn_;
+        ASN1T_AutomatList* asn_;
         unsigned int current_;
     };
 }
@@ -87,12 +87,12 @@ namespace
 // -----------------------------------------------------------------------------
 void ActionParameterAutomatList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.value.t = T_MissionParameter_value_listAutomate;
-    ASN1T_ListAutomate*& list = asn.value.u.listAutomate = new ASN1T_ListAutomate();
+    asn.value.t = T_MissionParameter_value_automatList;
+    ASN1T_AutomatList*& list = asn.value.u.automatList = new ASN1T_AutomatList();
     asn.null_value = ( list->n = Count() ) ? 0 : 1;
     if( asn.null_value )
         return;
-    list->elem = new ASN1T_Automate[list->n];
+    list->elem = new ASN1T_Automat[list->n];
     AsnSerializer serializer( *list );
     Accept( serializer );
 }
@@ -103,7 +103,7 @@ void ActionParameterAutomatList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ActionParameterAutomatList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listAutomate )
-        delete[] asn.value.u.listAutomate->elem;
-    delete asn.value.u.listAutomate;
+    if( asn.value.u.automatList )
+        delete[] asn.value.u.automatList->elem;
+    delete asn.value.u.automatList;
 }

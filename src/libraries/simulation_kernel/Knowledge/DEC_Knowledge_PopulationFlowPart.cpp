@@ -152,7 +152,7 @@ bool DEC_Knowledge_PopulationFlowPart::UpdateRelevance( const MT_Float rMaxLifeT
 // Name: DEC_Knowledge_PopulationFlowPart::Serialize
 // Created: NLD 2005-10-14
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationFlowPart::Serialize( ASN1T_PortionFlux& asn ) 
+void DEC_Knowledge_PopulationFlowPart::Serialize( ASN1T_FlowPart& asn ) 
 {
     NET_ASN_Tools::WritePath( shape_, asn.forme );
     asn.pertinence      = (uint)( rRelevance_ * 100. );

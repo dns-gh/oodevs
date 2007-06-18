@@ -44,7 +44,7 @@ public:
     //@{
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
-    void CommitTo( ASN1T_KnowledgePopulation& asn ) const;
+    void CommitTo( ASN1T_PopulationKnowledge& asn ) const;
     //@}
 
 private:

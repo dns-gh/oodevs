@@ -130,7 +130,7 @@ ASN1T_EnumObjectErrorCode MIL_SiteFranchissement::Initialize( const ASN1T_MagicA
     if( nErrorCode != EnumObjectErrorCode::no_error )
         return nErrorCode;
 
-    if( !asnCreateObject.m.attributs_specifiquesPresent || asnCreateObject.attributs_specifiques.t != T_AttrObjectSpecific_site_franchissement )
+    if( !asnCreateObject.m.attributs_specifiquesPresent || asnCreateObject.attributs_specifiques.t != T_ObjectAttributesSpecific_site_franchissement )
         return EnumObjectErrorCode::error_missing_specific_attributes;
 
     rWidth_         = asnCreateObject.attributs_specifiques.u.site_franchissement->largeur;
@@ -157,7 +157,7 @@ void MIL_SiteFranchissement::WriteSpecificAttributes( NET_ASN_MsgObjectCreation&
     asnAttributes_.berges_a_amenager = bBanksToFitOut_;
 
     asnMsg().m.attributs_specifiquesPresent = 1;
-    asnMsg().attributs_specifiques.t                     = T_AttrObjectSpecific_site_franchissement;
+    asnMsg().attributs_specifiques.t                     = T_ObjectAttributesSpecific_site_franchissement;
     asnMsg().attributs_specifiques.u.site_franchissement = &asnAttributes_;
 }
 

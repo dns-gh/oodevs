@@ -59,7 +59,7 @@ DEC_Knowledge_AgentComposante::~DEC_Knowledge_AgentComposante()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentComposante::load( MIL_CheckPointInArchive& file, const uint )
 {
-    ASN1T_TypeEquipement nMosID;
+    ASN1T_EquipmentType nMosID;
     file >> nMosID;
     pType_ = PHY_ComposanteTypePion::Find( nMosID );
     
@@ -74,7 +74,7 @@ void DEC_Knowledge_AgentComposante::load( MIL_CheckPointInArchive& file, const u
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentComposante::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    ASN1T_TypeEquipement type = pType_->GetMosID();
+    ASN1T_EquipmentType type = pType_->GetMosID();
     file << type
          << bCanFire_
          << bCanFireWhenUnloaded_

@@ -443,7 +443,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::TranslateKnowledges( const T_Knowle
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeAgent( const ASN1T_KnowledgeAgent& asn ) const
+DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeAgent( const ASN1T_UnitKnowledge& asn ) const
 {
     return GetKnowledgeAgentFromID( asn );
 }
@@ -472,7 +472,7 @@ DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeAge
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject( const ASN1T_KnowledgeObject& asn ) const
+DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& asn ) const
 {
     return pKnowledgeGroup_->GetArmy().GetKnowledge().GetKnowledgeObjectFromID( asn );
 }
@@ -501,7 +501,7 @@ DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeOb
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation( const ASN1T_KnowledgePopulation& asn ) const
+DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& asn ) const
 {
     return GetKnowledgePopulationFromID( asn );
 }

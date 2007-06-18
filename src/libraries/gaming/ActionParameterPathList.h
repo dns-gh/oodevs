@@ -31,7 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ActionParameterPathList( const kernel::OrderParameter& parameter );
-             ActionParameterPathList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_ListItineraire& asn );
+             ActionParameterPathList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_PathList& asn );
              ActionParameterPathList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~ActionParameterPathList();
     //@}

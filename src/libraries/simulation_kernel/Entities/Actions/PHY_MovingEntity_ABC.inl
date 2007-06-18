@@ -61,7 +61,7 @@ void PHY_MovingEntity_ABC::SerializeEnvironmentType( DIN::DIN_BufferedMessage& m
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
 inline
-bool PHY_MovingEntity_ABC::SerializeCurrentPath( ASN1T_Itineraire& asn ) const
+bool PHY_MovingEntity_ABC::SerializeCurrentPath( ASN1T_Path& asn ) const
 {
     return pathWalker_.SerializeCurrentPath( asn );
 }

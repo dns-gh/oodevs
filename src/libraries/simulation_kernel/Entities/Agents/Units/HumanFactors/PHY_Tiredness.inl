@@ -14,9 +14,9 @@
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
 inline
-const PHY_Tiredness* PHY_Tiredness::Find( ASN1T_EnumUnitFatigue nAsnID )
+const PHY_Tiredness* PHY_Tiredness::Find( ASN1T_EnumUnitTiredness nAsnID )
 {
-    CIT_TirednessMap it = std::find_if( tirednesses_.begin(), tirednesses_.end(), std::compose1( std::bind2nd( std::equal_to< ASN1T_EnumUnitFatigue >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Tiredness::GetAsnID ), std::select2nd< T_TirednessMap::value_type >() ) ) );
+    CIT_TirednessMap it = std::find_if( tirednesses_.begin(), tirednesses_.end(), std::compose1( std::bind2nd( std::equal_to< ASN1T_EnumUnitTiredness >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Tiredness::GetAsnID ), std::select2nd< T_TirednessMap::value_type >() ) ) );
 
     return it == tirednesses_.end() ? 0 : it->second;
 }
@@ -65,7 +65,7 @@ const std::string& PHY_Tiredness::GetName() const
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 inline
-ASN1T_EnumUnitFatigue PHY_Tiredness::GetAsnID() const
+ASN1T_EnumUnitTiredness PHY_Tiredness::GetAsnID() const
 {
     return nAsnID_;
 }

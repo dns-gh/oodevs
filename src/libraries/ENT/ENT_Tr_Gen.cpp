@@ -105,11 +105,11 @@ ENT_Tr::T_ConverterDiplomatie ENT_Tr::DiplomatieConverter_[] =
     T_ConverterDiplomatie( "", "", (E_Diplomatie)-1 )
 };
 
-ENT_Tr::T_ConverterChangeDiplomatieErrorCode ENT_Tr::ChangeDiplomatieErrorCodeConverter_[] =
+ENT_Tr::T_ConverterChangeDiplomacyErrorCode ENT_Tr::ChangeDiplomacyErrorCodeConverter_[] =
 {
-    T_ConverterChangeDiplomatieErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eChangeDiplomatieErrorCode_NoError ),
-    T_ConverterChangeDiplomatieErrorCode( "error invalid camp", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid camp" ), eChangeDiplomatieErrorCode_ErrorInvalidCamp ),
-    T_ConverterChangeDiplomatieErrorCode( "", "", (E_ChangeDiplomatieErrorCode)-1 )
+    T_ConverterChangeDiplomacyErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eChangeDiplomacyErrorCode_NoError ),
+    T_ConverterChangeDiplomacyErrorCode( "error invalid camp", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid camp" ), eChangeDiplomacyErrorCode_ErrorInvalidCamp ),
+    T_ConverterChangeDiplomacyErrorCode( "", "", (E_ChangeDiplomacyErrorCode)-1 )
 };
 
 ENT_Tr::T_ConverterEtatRapFor ENT_Tr::EtatRapForConverter_[] =
@@ -365,20 +365,20 @@ ENT_Tr::T_ConverterLogRavitaillementTraitementEtat ENT_Tr::LogRavitaillementTrai
     T_ConverterLogRavitaillementTraitementEtat( "", "", (E_LogRavitaillementTraitementEtat)-1 )
 };
 
-ENT_Tr::T_ConverterMsgLogRavitaillementChangeQuotasAck ENT_Tr::MsgLogRavitaillementChangeQuotasAckConverter_[] =
+ENT_Tr::T_ConverterMsgLogSupplyChangeQuotasAck ENT_Tr::MsgLogSupplyChangeQuotasAckConverter_[] =
 {
-    T_ConverterMsgLogRavitaillementChangeQuotasAck( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eMsgLogRavitaillementChangeQuotasAck_NoError ),
-    T_ConverterMsgLogRavitaillementChangeQuotasAck( "error invalid donneur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid supplier" ), eMsgLogRavitaillementChangeQuotasAck_ErrorInvalidDonneur ),
-    T_ConverterMsgLogRavitaillementChangeQuotasAck( "error invalid receveur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid receiver" ), eMsgLogRavitaillementChangeQuotasAck_ErrorInvalidReceveur ),
-    T_ConverterMsgLogRavitaillementChangeQuotasAck( "", "", (E_MsgLogRavitaillementChangeQuotasAck)-1 )
+    T_ConverterMsgLogSupplyChangeQuotasAck( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eMsgLogSupplyChangeQuotasAck_NoError ),
+    T_ConverterMsgLogSupplyChangeQuotasAck( "error invalid donneur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid supplier" ), eMsgLogSupplyChangeQuotasAck_ErrorInvalidDonneur ),
+    T_ConverterMsgLogSupplyChangeQuotasAck( "error invalid receveur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid receiver" ), eMsgLogSupplyChangeQuotasAck_ErrorInvalidReceveur ),
+    T_ConverterMsgLogSupplyChangeQuotasAck( "", "", (E_MsgLogSupplyChangeQuotasAck)-1 )
 };
 
-ENT_Tr::T_ConverterMsgLogRavitaillementPousserFluxAck ENT_Tr::MsgLogRavitaillementPousserFluxAckConverter_[] =
+ENT_Tr::T_ConverterMsgLogSupplyPushFlowAck ENT_Tr::MsgLogSupplyPushFlowAckConverter_[] =
 {
-    T_ConverterMsgLogRavitaillementPousserFluxAck( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eMsgLogRavitaillementPousserFluxAck_NoError ),
-    T_ConverterMsgLogRavitaillementPousserFluxAck( "error invalid donneur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid supplier" ), eMsgLogRavitaillementPousserFluxAck_ErrorInvalidDonneur ),
-    T_ConverterMsgLogRavitaillementPousserFluxAck( "error invalid receveur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid receiver" ), eMsgLogRavitaillementPousserFluxAck_ErrorInvalidReceveur ),
-    T_ConverterMsgLogRavitaillementPousserFluxAck( "", "", (E_MsgLogRavitaillementPousserFluxAck)-1 )
+    T_ConverterMsgLogSupplyPushFlowAck( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eMsgLogSupplyPushFlowAck_NoError ),
+    T_ConverterMsgLogSupplyPushFlowAck( "error invalid donneur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid supplier" ), eMsgLogSupplyPushFlowAck_ErrorInvalidDonneur ),
+    T_ConverterMsgLogSupplyPushFlowAck( "error invalid receveur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid receiver" ), eMsgLogSupplyPushFlowAck_ErrorInvalidReceveur ),
+    T_ConverterMsgLogSupplyPushFlowAck( "", "", (E_MsgLogSupplyPushFlowAck)-1 )
 };
 
 ENT_Tr::T_ConverterLogSanteTraitementEtat ENT_Tr::LogSanteTraitementEtatConverter_[] =
@@ -495,11 +495,11 @@ ENT_Tr::T_ConverterOrderState ENT_Tr::OrderStateConverter_[] =
     T_ConverterOrderState( "", "", (E_OrderState)-1 )
 };
 
-ENT_Tr::T_ConverterAutomateOrderFormation ENT_Tr::AutomateOrderFormationConverter_[] =
+ENT_Tr::T_ConverterAutomatOrderFormation ENT_Tr::AutomatOrderFormationConverter_[] =
 {
-    T_ConverterAutomateOrderFormation( "un echelon", QT_TRANSLATE_NOOP( "ENT_Tr", "1 echelon formation" ), eAutomateOrderFormation_UnEchelon ),
-    T_ConverterAutomateOrderFormation( "deux echelons", QT_TRANSLATE_NOOP( "ENT_Tr", "2 echelons formation" ), eAutomateOrderFormation_DeuxEchelons ),
-    T_ConverterAutomateOrderFormation( "", "", (E_AutomateOrderFormation)-1 )
+    T_ConverterAutomatOrderFormation( "un echelon", QT_TRANSLATE_NOOP( "ENT_Tr", "1 echelon formation" ), eAutomatOrderFormation_UnEchelon ),
+    T_ConverterAutomatOrderFormation( "deux echelons", QT_TRANSLATE_NOOP( "ENT_Tr", "2 echelons formation" ), eAutomatOrderFormation_DeuxEchelons ),
+    T_ConverterAutomatOrderFormation( "", "", (E_AutomatOrderFormation)-1 )
 };
 
 //-----------------------------------------------------------------------------
@@ -516,7 +516,7 @@ void ENT_Tr::InitTranslations()
     InitTr( HumanWoundConverter_, "ENT_Tr" );
     InitTr( HumanRankConverter_, "ENT_Tr" );
     InitTr( DiplomatieConverter_, "ENT_Tr" );
-    InitTr( ChangeDiplomatieErrorCodeConverter_, "ENT_Tr" );
+    InitTr( ChangeDiplomacyErrorCodeConverter_, "ENT_Tr" );
     InitTr( EtatRapForConverter_, "ENT_Tr" );
     InitTr( TypeObstacleForConverter_, "ENT_Tr" );
     InitTr( EtatCombatRencontreConverter_, "ENT_Tr" );
@@ -543,15 +543,15 @@ void ENT_Tr::InitTranslations()
     InitTr( LogMaintenanceRegimeTravailConverter_, "ENT_Tr" );
     InitTr( LogMaintenanceTraitementEtatConverter_, "ENT_Tr" );
     InitTr( LogRavitaillementTraitementEtatConverter_, "ENT_Tr" );
-    InitTr( MsgLogRavitaillementChangeQuotasAckConverter_, "ENT_Tr" );
-    InitTr( MsgLogRavitaillementPousserFluxAckConverter_, "ENT_Tr" );
+    InitTr( MsgLogSupplyChangeQuotasAckConverter_, "ENT_Tr" );
+    InitTr( MsgLogSupplyPushFlowAckConverter_, "ENT_Tr" );
     InitTr( LogSanteTraitementEtatConverter_, "ENT_Tr" );
     InitTr( ObjectErrorCodeConverter_, "ENT_Tr" );
     InitTr( ObjectTypeConverter_, "ENT_Tr" );
     InitTr( MissionGenSousTypeObstacleConverter_, "ENT_Tr" );
     InitTr( OrderErrorCodeConverter_, "ENT_Tr" );
     InitTr( OrderStateConverter_, "ENT_Tr" );
-    InitTr( AutomateOrderFormationConverter_, "ENT_Tr" );
+    InitTr( AutomatOrderFormationConverter_, "ENT_Tr" );
 }
 
 
@@ -628,12 +628,12 @@ const std::string& ENT_Tr::ConvertFromDiplomatie( E_Diplomatie nValue, ENT_Tr_AB
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromChangeDiplomatieErrorCode
+// Name: ENT_Tr::ConvertFromChangeDiplomacyErrorCode
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromChangeDiplomatieErrorCode( E_ChangeDiplomatieErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromChangeDiplomacyErrorCode( E_ChangeDiplomacyErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( ChangeDiplomatieErrorCodeConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( ChangeDiplomacyErrorCodeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -872,21 +872,21 @@ const std::string& ENT_Tr::ConvertFromLogRavitaillementTraitementEtat( E_LogRavi
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromMsgLogRavitaillementChangeQuotasAck
+// Name: ENT_Tr::ConvertFromMsgLogSupplyChangeQuotasAck
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromMsgLogRavitaillementChangeQuotasAck( E_MsgLogRavitaillementChangeQuotasAck nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromMsgLogSupplyChangeQuotasAck( E_MsgLogSupplyChangeQuotasAck nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( MsgLogRavitaillementChangeQuotasAckConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( MsgLogSupplyChangeQuotasAckConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromMsgLogRavitaillementPousserFluxAck
+// Name: ENT_Tr::ConvertFromMsgLogSupplyPushFlowAck
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromMsgLogRavitaillementPousserFluxAck( E_MsgLogRavitaillementPousserFluxAck nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromMsgLogSupplyPushFlowAck( E_MsgLogSupplyPushFlowAck nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( MsgLogRavitaillementPousserFluxAckConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( MsgLogSupplyPushFlowAckConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -944,12 +944,12 @@ const std::string& ENT_Tr::ConvertFromOrderState( E_OrderState nValue, ENT_Tr_AB
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromAutomateOrderFormation
+// Name: ENT_Tr::ConvertFromAutomatOrderFormation
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromAutomateOrderFormation( E_AutomateOrderFormation nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromAutomatOrderFormation( E_AutomatOrderFormation nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( AutomateOrderFormationConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( AutomatOrderFormationConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1025,12 +1025,12 @@ E_Diplomatie ENT_Tr::ConvertToDiplomatie( const std::string& strName )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToChangeDiplomatieErrorCode
+// Name: ENT_Tr::ConvertToChangeDiplomacyErrorCode
 // Created: AGR
 //-----------------------------------------------------------------------------
-E_ChangeDiplomatieErrorCode ENT_Tr::ConvertToChangeDiplomatieErrorCode( const std::string& strName )
+E_ChangeDiplomacyErrorCode ENT_Tr::ConvertToChangeDiplomacyErrorCode( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( ChangeDiplomatieErrorCodeConverter_, strName );
+    return ENT_Tr::FindInConverter( ChangeDiplomacyErrorCodeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1268,21 +1268,21 @@ E_LogRavitaillementTraitementEtat ENT_Tr::ConvertToLogRavitaillementTraitementEt
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToMsgLogRavitaillementChangeQuotasAck
+// Name: ENT_Tr::ConvertToMsgLogSupplyChangeQuotasAck
 // Created: AGR
 //-----------------------------------------------------------------------------
-E_MsgLogRavitaillementChangeQuotasAck ENT_Tr::ConvertToMsgLogRavitaillementChangeQuotasAck( const std::string& strName )
+E_MsgLogSupplyChangeQuotasAck ENT_Tr::ConvertToMsgLogSupplyChangeQuotasAck( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( MsgLogRavitaillementChangeQuotasAckConverter_, strName );
+    return ENT_Tr::FindInConverter( MsgLogSupplyChangeQuotasAckConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToMsgLogRavitaillementPousserFluxAck
+// Name: ENT_Tr::ConvertToMsgLogSupplyPushFlowAck
 // Created: AGR
 //-----------------------------------------------------------------------------
-E_MsgLogRavitaillementPousserFluxAck ENT_Tr::ConvertToMsgLogRavitaillementPousserFluxAck( const std::string& strName )
+E_MsgLogSupplyPushFlowAck ENT_Tr::ConvertToMsgLogSupplyPushFlowAck( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( MsgLogRavitaillementPousserFluxAckConverter_, strName );
+    return ENT_Tr::FindInConverter( MsgLogSupplyPushFlowAckConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1340,11 +1340,11 @@ E_OrderState ENT_Tr::ConvertToOrderState( const std::string& strName )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToAutomateOrderFormation
+// Name: ENT_Tr::ConvertToAutomatOrderFormation
 // Created: AGR
 //-----------------------------------------------------------------------------
-E_AutomateOrderFormation ENT_Tr::ConvertToAutomateOrderFormation( const std::string& strName )
+E_AutomatOrderFormation ENT_Tr::ConvertToAutomatOrderFormation( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( AutomateOrderFormationConverter_, strName );
+    return ENT_Tr::FindInConverter( AutomatOrderFormationConverter_, strName );
 }
 

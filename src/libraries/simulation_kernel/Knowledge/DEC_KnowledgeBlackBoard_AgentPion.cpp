@@ -538,7 +538,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetPopulationsAttacking( T_KnowledgePopu
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( const ASN1T_KnowledgeAgent& asn ) const
+DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( const ASN1T_UnitKnowledge& asn ) const
 {
     return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( asn );
 }
@@ -567,7 +567,7 @@ DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( u
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( const ASN1T_KnowledgeObject& asn ) const
+DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& asn ) const
 {
     return pPion_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeObjectFromID( asn );
 }
@@ -596,7 +596,7 @@ DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject(
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation( const ASN1T_KnowledgePopulation& asn ) const
+DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& asn ) const
 {
     return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( asn );
 }

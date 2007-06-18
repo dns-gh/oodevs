@@ -28,15 +28,15 @@ class PopulationFlowPart
 public:
     //! @name Constructors/Destructor
     //@{
-     PopulationFlowPart( const Model& model, const ASN1T_PortionFlux& asnMsg );
+     PopulationFlowPart( const Model& model, const ASN1T_FlowPart& asnMsg );
     ~PopulationFlowPart();
     //@}
 
     //! @name Operations
     //@{
-    void Send( ASN1T_PortionFlux& asnMsg ) const ;
+    void Send( ASN1T_FlowPart& asnMsg ) const ;
 
-    static void AsnDelete( ASN1T_PortionFlux& asnMsg );
+    static void AsnDelete( ASN1T_FlowPart& asnMsg );
     //@}
 
 private:

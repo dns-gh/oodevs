@@ -39,14 +39,14 @@ MIL_ParameterType_PointList::~MIL_ParameterType_PointList()
 void MIL_ParameterType_PointList::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_listPoint ) 
+    if( from.null_value || from.value.t != T_MissionParameter_value_pointList ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( !DEC_Tools::CheckTypeListePoints( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyPointList( *from.value.u.listPoint, to ) )
+    if( !NET_ASN_Tools::CopyPointList( *from.value.u.pointList, to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -79,10 +79,10 @@ bool MIL_ParameterType_PointList::Copy( const DIA_Variable_ABC& from, ASN1T_Miss
         return false;
 
     to.null_value        = false;
-    to.value.t           = T_MissionParameter_value_listPoint;
-    to.value.u.listPoint = new ASN1T_ListPoint();
+    to.value.t           = T_MissionParameter_value_pointList;
+    to.value.u.pointList = new ASN1T_PointList();
     
-    if( !NET_ASN_Tools::CopyPointList( from, *to.value.u.listPoint ) )
+    if( !NET_ASN_Tools::CopyPointList( from, *to.value.u.pointList ) )
         return false;
 
     return true;
@@ -94,8 +94,8 @@ bool MIL_ParameterType_PointList::Copy( const DIA_Variable_ABC& from, ASN1T_Miss
 // -----------------------------------------------------------------------------
 void MIL_ParameterType_PointList::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_listPoint );
-    assert( to.value.u.listPoint );
-    NET_ASN_Tools::Delete( *to.value.u.listPoint );
-    delete to.value.u.listPoint;    
+    assert( to.value.t == T_MissionParameter_value_pointList );
+    assert( to.value.u.pointList );
+    NET_ASN_Tools::Delete( *to.value.u.pointList );
+    delete to.value.u.pointList;    
 }

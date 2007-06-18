@@ -39,7 +39,7 @@ MissionParameters::~MissionParameters()
 // Name: MissionParameters::DoUpdate
 // Created: SBO 2006-11-13
 // -----------------------------------------------------------------------------
-void MissionParameters::DoUpdate( const ASN1T_MsgPionOrder& message )
+void MissionParameters::DoUpdate( const ASN1T_MsgUnitOrder& message )
 {
      // $$$$ NLD 2007-04-25: NLD TMP A VIRER
     if( message.mission == 0 )
@@ -54,7 +54,7 @@ void MissionParameters::DoUpdate( const ASN1T_MsgPionOrder& message )
 // Name: MissionParameters::DoUpdate
 // Created: SBO 2006-11-20
 // -----------------------------------------------------------------------------
-void MissionParameters::DoUpdate( const ASN1T_MsgAutomateOrder& message )
+void MissionParameters::DoUpdate( const ASN1T_MsgAutomatOrder& message )
 {
      // $$$$ NLD 2007-04-25: NLD TMP A VIRER
     if( message.mission == 0 )

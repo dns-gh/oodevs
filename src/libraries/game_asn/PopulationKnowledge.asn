@@ -23,14 +23,14 @@ MsgPopulationKnowledgeCreation ::= SEQUENCE
     oid-groupe-possesseur OID, -- Groupe de connaissance possedant la connaissance
     
     oid-population-reelle OID,
-    camp                  OID  -- Camp de la population    
+    camp                  OID  -- Team de la population    
 }
 
 MsgPopulationKnowledgeUpdate ::= SEQUENCE
 {
     oid-connaissance      OID,
     oid-groupe-possesseur OID, -- Groupe de connaissance possedant la connaissance
-    etat-domination       Pourcentage OPTIONAL
+    etat-domination       Percentage OPTIONAL
 }
 
 MsgPopulationKnowledgeDestruction ::= SEQUENCE
@@ -63,7 +63,7 @@ MsgPopulationConcentrationKnowledgeUpdate ::= SEQUENCE
     nb-humains-vivants              INTEGER                OPTIONAL,
     nb-humains-morts                INTEGER                OPTIONAL,
     attitude                        EnumPopulationAttitude OPTIONAL,
-    pertinence                      Pourcentage            OPTIONAL,
+    pertinence                      Percentage            OPTIONAL,
     est-percu                       BOOLEAN                OPTIONAL
 }
 
@@ -79,7 +79,7 @@ MsgPopulationConcentrationKnowledgeDestruction ::= SEQUENCE
 -- Flux
 -------------------
 
-MsgPopulationFluxKnowledgeCreation ::= SEQUENCE
+MsgPopulationFlowKnowledgeCreation ::= SEQUENCE
 {
     oid-connaissance-flux       OID,
     oid-connaissance-population OID,
@@ -87,29 +87,29 @@ MsgPopulationFluxKnowledgeCreation ::= SEQUENCE
     oid-flux-reel               OID
 }
 
-PortionFlux ::= SEQUENCE
+FlowPart ::= SEQUENCE
 {
-    forme       Itineraire,
-    pertinence  Pourcentage       
+    forme       Path,
+    pertinence  Percentage       
 }
 
-MsgPopulationFluxKnowledgeUpdate ::= SEQUENCE
+MsgPopulationFlowKnowledgeUpdate ::= SEQUENCE
 {
     oid-connaissance-flux       OID,
     oid-connaissance-population OID,
     oid-groupe-possesseur       OID, -- Groupe de connaissance possedant la connaissance
     
     oid-flux-reel               OID                     OPTIONAL, 
-    portions-flux               SEQUENCE OF PortionFlux OPTIONAL,
-    direction                   Direction               OPTIONAL, -- en degres
-    vitesse                     Vitesse                 OPTIONAL, -- en km/h
+    portions-flux               SEQUENCE OF FlowPart OPTIONAL,
+    direction                   Heading               OPTIONAL, -- en degres
+    vitesse                     Speed                 OPTIONAL, -- en km/h
     nb-humains-vivants          INTEGER                 OPTIONAL,
     nb-humains-morts            INTEGER                 OPTIONAL,
     attitude                    EnumPopulationAttitude  OPTIONAL,
     est-percu                   BOOLEAN                 OPTIONAL    
 }
 
-MsgPopulationFluxKnowledgeDestruction ::= SEQUENCE
+MsgPopulationFlowKnowledgeDestruction ::= SEQUENCE
 {
     oid-connaissance-flux       OID,
     oid-connaissance-population OID,

@@ -32,7 +32,7 @@ class LogMaintenanceConsign : public kernel::Drawable_ABC
 public:
     //! @name Constructor / Destructor
     //@{
-             LogMaintenanceConsign( kernel::Controller& controller, const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& asn,
+             LogMaintenanceConsign( kernel::Controller& controller, const ASN1T_MsgLogMaintenanceHandlingCreation& asn,
                                     const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::Resolver_ABC< kernel::ComponentType >& componentResolver,
                                     const kernel::Resolver_ABC< kernel::BreakdownType >& breakdownResolver );
     virtual ~LogMaintenanceConsign();
@@ -46,7 +46,7 @@ public:
 
     //! @name Network events
     //@{
-    void Update( const ASN1T_MsgLogMaintenanceTraitementEquipementUpdate& asn );
+    void Update( const ASN1T_MsgLogMaintenanceHandlingUpdate& asn );
     //@}
 
 private:

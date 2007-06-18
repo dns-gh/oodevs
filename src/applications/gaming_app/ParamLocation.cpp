@@ -132,10 +132,10 @@ void ParamLocation::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     if( ! pLabel_ )
         InterfaceNotInitialized();
-    asn.value.t = T_MissionParameter_value_localisation;
-    asn.value.u.localisation = new ASN1T_Localisation();
-    CommitTo( *asn.value.u.localisation );
-    asn.null_value = asn.value.u.localisation->vecteur_point.n ? 0 : 1;
+    asn.value.t = T_MissionParameter_value_location;
+    asn.value.u.location = new ASN1T_Location();
+    CommitTo( *asn.value.u.location );
+    asn.null_value = asn.value.u.location->vecteur_point.n ? 0 : 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -144,16 +144,16 @@ void ParamLocation::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamLocation::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.localisation )
-        delete[] asn.value.u.localisation->vecteur_point.elem;
-    delete asn.value.u.localisation;
+    if( asn.value.u.location )
+        delete[] asn.value.u.location->vecteur_point.elem;
+    delete asn.value.u.location;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ParamLocation::CommitTo
 // Created: SBO 2007-03-14
 // -----------------------------------------------------------------------------
-void ParamLocation::CommitTo( ASN1T_Localisation& asn ) const
+void ParamLocation::CommitTo( ASN1T_Location& asn ) const
 {
     if( location_ )
     {

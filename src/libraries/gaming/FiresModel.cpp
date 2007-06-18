@@ -47,7 +47,7 @@ void FiresModel::Purge()
 // Name: FiresModel::AddFire
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-void FiresModel::AddFire( const ASN1T_MsgStartPionFire& message )
+void FiresModel::AddFire( const ASN1T_MsgStartUnitFire& message )
 {
     if( ! Find( message.oid_tir ) )
         Register( message.oid_tir, agents_.Get( message.tireur ) );
@@ -67,7 +67,7 @@ void FiresModel::AddFire( const ASN1T_MsgStartPopulationFire& message )
 // Name: FiresModel::FindFirer
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-Entity_ABC* FiresModel::FindFirer( const ASN1T_MsgStopPionFire& message )
+Entity_ABC* FiresModel::FindFirer( const ASN1T_MsgStopUnitFire& message )
 {
     return Find( message.oid_tir );
 }
@@ -85,7 +85,7 @@ Entity_ABC* FiresModel::FindFirer( const ASN1T_MsgStopPopulationFire& message )
 // Name: FiresModel::RemoveFire
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-void FiresModel::RemoveFire( const ASN1T_MsgStopPionFire& message )
+void FiresModel::RemoveFire( const ASN1T_MsgStopUnitFire& message )
 {
     Remove( message.oid_tir );
 }

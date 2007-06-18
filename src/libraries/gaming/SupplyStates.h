@@ -33,7 +33,7 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class SupplyStates : public kernel::Extension_ABC
-                   , public kernel::Updatable_ABC< ASN1T_MsgLogRavitaillementEtat >
+                   , public kernel::Updatable_ABC< ASN1T_MsgLogSupplyState >
                    , public kernel::Resolver< Dotation >
 {
 public:
@@ -46,7 +46,7 @@ public:
     //! @name Operations
     //@{
     void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual void DoUpdate( const ASN1T_MsgLogRavitaillementEtat& message );
+    virtual void DoUpdate( const ASN1T_MsgLogSupplyState& message );
     //@}
 
 private:

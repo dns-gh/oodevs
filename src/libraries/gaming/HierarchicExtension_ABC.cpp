@@ -41,7 +41,7 @@ HierarchicExtension_ABC::~HierarchicExtension_ABC()
 // Name: HierarchicExtension_ABC::DoUpdate
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
-void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgPionCreation& message )
+void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgUnitCreation& message )
 {
     superior_ = &automatResolver_.Get( message.oid_automate );
 }
@@ -50,7 +50,7 @@ void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgPionCreation& message )
 // Name: HierarchicExtension_ABC::DoUpdate
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
-void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgAutomateCreation& message )
+void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgAutomatCreation& message )
 {
     superior_ = &formationResolver_.Get( message.oid_formation );
 }
@@ -71,7 +71,7 @@ void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgFormationCreation& messag
 // Name: HierarchicExtension_ABC::DoUpdate
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
-void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgPionChangeSuperior& message )
+void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgUnitChangeSuperior& message )
 {
     UpdateSuperior( automatResolver_.Get( message.oid_automate ) );
 }
@@ -80,7 +80,7 @@ void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgPionChangeSuperior& messa
 // Name: HierarchicExtension_ABC::DoUpdate
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
-void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgPionChangeSuperiorAck& message )
+void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgUnitChangeSuperiorAck& message )
 {
     if( message.error_code == EnumObjectErrorCode::no_error )
         UpdateSuperior( automatResolver_.Get( message.oid_automate ) );

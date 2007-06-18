@@ -30,7 +30,7 @@ class PopulationFireResult
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFireResult( const ASN1T_FireDamagesPopulation& message, const kernel::Resolver_ABC< kernel::Population_ABC >& resolver );
+             PopulationFireResult( const ASN1T_PopulationFireDamages& message, const kernel::Resolver_ABC< kernel::Population_ABC >& resolver );
     virtual ~PopulationFireResult();
     //@}
 

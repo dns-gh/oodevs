@@ -22,7 +22,7 @@ using namespace dispatcher;
 // Name: AgentLogSupply constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-AgentLogSupply::AgentLogSupply( Model& model, const Agent& agent, const ASN1T_MsgLogRavitaillementEtat& asnMsg )
+AgentLogSupply::AgentLogSupply( Model& model, const Agent& agent, const ASN1T_MsgLogSupplyState& asnMsg )
     : agent_                ( agent )
     , model_                ( model )
     , bSystemEnabled_       ( false )
@@ -49,7 +49,7 @@ AgentLogSupply::~AgentLogSupply()
 // Name: AgentLogSupply::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void AgentLogSupply::Update( const ASN1T_MsgLogRavitaillementEtat& asnMsg )
+void AgentLogSupply::Update( const ASN1T_MsgLogSupplyState& asnMsg )
 {
     if( asnMsg.m.chaine_activeePresent )
         bSystemEnabled_ = asnMsg.chaine_activee;
@@ -80,7 +80,7 @@ void AgentLogSupply::Update( const ASN1T_MsgLogRavitaillementEtat& asnMsg )
 // -----------------------------------------------------------------------------
 void AgentLogSupply::Send( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientLogRavitaillementEtat asn;
+    AsnMsgSimToClientLogSupplyState asn;
 
     asn().oid_pion = agent_.GetID();
 
@@ -90,7 +90,7 @@ void AgentLogSupply::Send( Publisher_ABC& publisher ) const
 
     asn().chaine_activee = bSystemEnabled_;
 
-    convoyersAvailability_.Send< ASN1T__SeqOfRavitaillementDisponibiliteMoyens, ASN1T_RavitaillementDisponibiliteMoyens >( asn().disponibilites_transporteurs_convois );
+    convoyersAvailability_.Send< ASN1T__SeqOfLogSupplyEquimentAvailability, ASN1T_LogSupplyEquimentAvailability >( asn().disponibilites_transporteurs_convois );
 
     stocks_.Send< ASN1T__SeqOfDotationStock, ASN1T_DotationStock >( asn().stocks );
 

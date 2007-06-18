@@ -313,8 +313,8 @@ void AGR_EnumGenerator::GenerateTranslatorImplementation( const AGR_Workspace& w
 // Name: AGR_EnumGenerator::CreatePrettyEnumName
 /*
     EnumMissionInfNatureObjectif    -> E_MissionInfNatureObjectif
-    EnumAutomateOrderFormation      -> E_AutomateOrderFormation
-    EnumCtrlErrorCode               -> E_CtrlErrorCode
+    EnumAutomatOrderFormation      -> E_AutomatOrderFormation
+    EnumControlErrorCode               -> E_CtrlErrorCode
     MsgCtrlClientAnnouncement       -> E_MsgCtrlClientAnnouncement
 */
 // Created: APE 2005-02-10
@@ -398,8 +398,8 @@ std::string AGR_EnumGenerator::CreateScriptName( const std::string strValue ) co
 // Name: AGR_EnumGenerator::GetCoreEnumName
 /*
     EnumMissionInfNatureObjectif    -> MissionInfNatureObjectif
-    EnumAutomateOrderFormation      -> AutomateOrderFormation
-    EnumCtrlErrorCode               -> CtrlErrorCode
+    EnumAutomatOrderFormation      -> AutomatOrderFormation
+    EnumControlErrorCode               -> CtrlErrorCode
     MsgCtrlClientAnnouncement       -> MsgCtrlClientAnnouncement
 */
 // Created: APE 2005-02-10

@@ -106,9 +106,9 @@ ActionParameterAgent::~ActionParameterAgent()
 // -----------------------------------------------------------------------------
 void ActionParameterAgent::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.value.t = T_MissionParameter_value_agent;
-    ActionParameterEntity< Agent_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.agent );
-    asn.null_value = asn.value.u.agent ? 0 : 1;
+    asn.value.t = T_MissionParameter_value_unit;
+    ActionParameterEntity< Agent_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.unit );
+    asn.null_value = asn.value.u.unit ? 0 : 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +124,7 @@ void ActionParameterAgent::Accept( ActionParameterVisitor_ABC& visitor ) const
 // Name: ActionParameterAgent::CommitTo
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void ActionParameterAgent::CommitTo( ASN1T_Agent& asn ) const
+void ActionParameterAgent::CommitTo( ASN1T_Unit& asn ) const
 {
     ActionParameterEntity< Agent_ABC >::CommitTo( (ASN1T_OID&)asn );
 }

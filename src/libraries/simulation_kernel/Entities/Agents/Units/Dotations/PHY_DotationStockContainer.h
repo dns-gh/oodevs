@@ -18,7 +18,7 @@ class PHY_DotationCategory;
 class PHY_DotationCapacity;
 class PHY_DotationStock;
 class PHY_RolePionLOG_Supply;
-class NET_ASN_MsgLogRavitaillementEtat;
+class NET_ASN_MsgLogSupplyState;
 class PHY_SupplyStockRequestContainer;
 
 // =============================================================================
@@ -70,8 +70,8 @@ public:
     //@{
     void NotifyDotationChanged( const PHY_DotationStock& dotationStock, MT_Float rDelta );
     bool HasChanged           () const;
-    void SendChangedState     ( NET_ASN_MsgLogRavitaillementEtat& asn ) const;
-    void SendFullState        ( NET_ASN_MsgLogRavitaillementEtat& asn ) const;
+    void SendChangedState     ( NET_ASN_MsgLogSupplyState& asn ) const;
+    void SendFullState        ( NET_ASN_MsgLogSupplyState& asn ) const;
     //@}
 
     //! @name Supply

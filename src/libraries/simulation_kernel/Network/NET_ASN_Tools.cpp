@@ -59,7 +59,7 @@ typedef T_GenObjectVector::const_iterator CIT_GenObjectVector;
 // Created: AGN 03-02-04
 //-----------------------------------------------------------------------------
 // static
-void NET_ASN_Tools::ReadDirection( const ASN1T_Direction& asnDir, MT_Vector2D& vDir )
+void NET_ASN_Tools::ReadDirection( const ASN1T_Heading& asnDir, MT_Vector2D& vDir )
 {
     vDir = MT_Vector2D( 0, 1 ); // North vector
 
@@ -74,7 +74,7 @@ void NET_ASN_Tools::ReadDirection( const ASN1T_Direction& asnDir, MT_Vector2D& v
 // Created: NLD 2003-07-24
 //-----------------------------------------------------------------------------
 // static 
-bool NET_ASN_Tools::ReadLocation( const ASN1T_Localisation& asnLocalisation, TER_Localisation& localisation )
+bool NET_ASN_Tools::ReadLocation( const ASN1T_Location& asnLocalisation, TER_Localisation& localisation )
 {
     //$$$$ ACCEDER DIRECTEMENT A LA LOCALISATION (EVITER COPIE)
     T_PointVector pointVector;
@@ -107,7 +107,7 @@ void NET_ASN_Tools::ReadPoint( const ASN1T_CoordUTM& asnPoint, MT_Vector2D& vect
 // static
 bool NET_ASN_Tools::ReadPoint( const ASN1T_Point& asnLocalisation, MT_Vector2D& vect )
 {
-    if( asnLocalisation.type != EnumTypeLocalisation::point )
+    if( asnLocalisation.type != EnumLocationType::point )
         return false;
     if( asnLocalisation.vecteur_point.n != 1 )
         return false;
@@ -122,7 +122,7 @@ bool NET_ASN_Tools::ReadPoint( const ASN1T_Point& asnLocalisation, MT_Vector2D& 
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::ReadLine( const ASN1T_Line& asn, T_PointVector& points )
 {
-    if( asn.type != EnumTypeLocalisation::line || asn.vecteur_point.n < 2 )
+    if( asn.type != EnumLocationType::line || asn.vecteur_point.n < 2 )
         return false;
 
     points.clear();   
@@ -142,7 +142,7 @@ bool NET_ASN_Tools::ReadLine( const ASN1T_Line& asn, T_PointVector& points )
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::ReadLine( const ASN1T_Line& asn, TER_Localisation& localisation )
 {
-    if( asn.type != EnumTypeLocalisation::line || asn.vecteur_point.n < 2 )
+    if( asn.type != EnumLocationType::line || asn.vecteur_point.n < 2 )
         return false;
     return ReadLocation( asn, localisation );
 }
@@ -153,7 +153,7 @@ bool NET_ASN_Tools::ReadLine( const ASN1T_Line& asn, TER_Localisation& localisat
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::ReadPath( const ASN1T_Line& asn, T_PointVector& itineraire )
 {
-    if( asn.type != EnumTypeLocalisation::line || asn.vecteur_point.n < 1 )
+    if( asn.type != EnumLocationType::line || asn.vecteur_point.n < 1 )
         return false;
 
     itineraire.clear(); itineraire.reserve( asn.vecteur_point.n );
@@ -172,7 +172,7 @@ bool NET_ASN_Tools::ReadPath( const ASN1T_Line& asn, T_PointVector& itineraire )
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::ReadPolygon( const ASN1T_Polygon&      asn, TER_Localisation& localisation )
 {
-    if( asn.type != EnumTypeLocalisation::polygon || asn.vecteur_point.n < 3 )
+    if( asn.type != EnumLocationType::polygon || asn.vecteur_point.n < 3 )
         return false;
     return ReadLocation( asn, localisation );
 }
@@ -181,17 +181,17 @@ bool NET_ASN_Tools::ReadPolygon( const ASN1T_Polygon&      asn, TER_Localisation
 //---
 
 // -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::ReadListLocalisation
+// Name: NET_ASN_Tools::ReadLocationList
 // Created: NLD 2003-08-11
 // -----------------------------------------------------------------------------
 // static
-bool NET_ASN_Tools::ReadLocationList( const ASN1T_ListLocalisation& asnListLocalisation, T_LocalisationPtrVector& localisationVector, uint nNbrEltMin )
+bool NET_ASN_Tools::ReadLocationList( const ASN1T_LocationList& asnLocationList, T_LocalisationPtrVector& localisationVector, uint nNbrEltMin )
 {
-    localisationVector.clear(); localisationVector.reserve( asnListLocalisation.n );
-    for( uint i = 0; i < asnListLocalisation.n; ++i )
+    localisationVector.clear(); localisationVector.reserve( asnLocationList.n );
+    for( uint i = 0; i < asnLocationList.n; ++i )
     {
         TER_Localisation* pLocalisation = new TER_Localisation(); //$$$ RAM
-        if( !ReadLocation( asnListLocalisation.elem[i], *pLocalisation ) )
+        if( !ReadLocation( asnLocationList.elem[i], *pLocalisation ) )
         {
             for( IT_LocalisationPtrVector itLocalisation = localisationVector.begin(); itLocalisation != localisationVector.end(); ++itLocalisation )
                 delete *itLocalisation;
@@ -208,11 +208,11 @@ bool NET_ASN_Tools::ReadLocationList( const ASN1T_ListLocalisation& asnListLocal
 // Created: NLD 2003-08-11
 // -----------------------------------------------------------------------------
 // static
-bool NET_ASN_Tools::ReadPolygonList( const ASN1T_ListPolygon& asn, T_LocalisationPtrVector& localisationVector, uint nNbrEltMin )
+bool NET_ASN_Tools::ReadPolygonList( const ASN1T_PolygonList& asn, T_LocalisationPtrVector& localisationVector, uint nNbrEltMin )
 {
     for( uint i = 0; i < asn.n; ++i )
     {
-        if( asn.elem[i].type != EnumTypeLocalisation::polygon || asn.elem[i].vecteur_point.n < 3 )
+        if( asn.elem[i].type != EnumLocationType::polygon || asn.elem[i].vecteur_point.n < 3 )
             return false;
     }
     
@@ -238,7 +238,7 @@ bool NET_ASN_Tools::ReadPolygonList( const ASN1T_ListPolygon& asn, T_Localisatio
 // Created: AGN 03-01-20
 //-----------------------------------------------------------------------------
 // static
-bool NET_ASN_Tools::ReadPointList( const ASN1T_ListPoint& asn, T_PointVector& pointVector )
+bool NET_ASN_Tools::ReadPointList( const ASN1T_PointList& asn, T_PointVector& pointVector )
 {
 	pointVector.clear(); pointVector.reserve( asn.n );
     for( uint i = 0; i < asn.n; ++i )
@@ -254,7 +254,7 @@ bool NET_ASN_Tools::ReadPointList( const ASN1T_ListPoint& asn, T_PointVector& po
 // Name: NET_ASN_Tools::ReadListItineraire
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::ReadPathList( const ASN1T_ListItineraire&   asn, T_ItinerairePtrVector& itineraireVector )
+bool NET_ASN_Tools::ReadPathList( const ASN1T_PathList&   asn, T_ItinerairePtrVector& itineraireVector )
 {
     itineraireVector.clear(); itineraireVector.reserve( asn.n );
     for( uint i = 0; i < asn.n; ++i )
@@ -281,7 +281,7 @@ bool NET_ASN_Tools::ReadPathList( const ASN1T_ListItineraire&   asn, T_Itinerair
 // Created: NLD 2003-03-24
 //-----------------------------------------------------------------------------
 // static
-DEC_RolePion_Decision* NET_ASN_Tools::ReadAgent( const ASN1T_Agent& asnAgent )
+DEC_RolePion_Decision* NET_ASN_Tools::ReadAgent( const ASN1T_Unit& asnAgent )
 {
     MIL_AgentPion* pPion = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( asnAgent );
     if( !pPion )
@@ -294,7 +294,7 @@ DEC_RolePion_Decision* NET_ASN_Tools::ReadAgent( const ASN1T_Agent& asnAgent )
 // Created: AGN 03-01-20
 //-----------------------------------------------------------------------------
 // static
-bool NET_ASN_Tools::ReadAgentList( const ASN1T_ListAgent& asnListAgent, T_ObjectVector& unitList )
+bool NET_ASN_Tools::ReadAgentList( const ASN1T_UnitList& asnListAgent, T_ObjectVector& unitList )
 {
     unitList.clear(); unitList.reserve( asnListAgent.n );
     for( uint n = 0; n < asnListAgent.n; ++n )
@@ -316,7 +316,7 @@ bool NET_ASN_Tools::ReadAgentList( const ASN1T_ListAgent& asnListAgent, T_Object
 // Created: NLD 2003-03-24
 //-----------------------------------------------------------------------------
 // static
-DEC_AutomateDecision* NET_ASN_Tools::ReadAutomate( const ASN1T_Agent& asnAgent )
+DEC_AutomateDecision* NET_ASN_Tools::ReadAutomate( const ASN1T_Unit& asnAgent )
 {
     MIL_Automate* pAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( asnAgent );
     if( !pAutomate ) 
@@ -325,10 +325,10 @@ DEC_AutomateDecision* NET_ASN_Tools::ReadAutomate( const ASN1T_Agent& asnAgent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::ReadListAutomate
+// Name: NET_ASN_Tools::ReadAutomatList
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::ReadAutomateList( const ASN1T_ListAutomate& asnListAgent, T_ObjectVector& unitList )
+bool NET_ASN_Tools::ReadAutomateList( const ASN1T_AutomatList& asnListAgent, T_ObjectVector& unitList )
 {
     unitList.clear(); unitList.reserve( asnListAgent.n );
     for( uint n = 0; n < asnListAgent.n; ++n )
@@ -349,7 +349,7 @@ bool NET_ASN_Tools::ReadAutomateList( const ASN1T_ListAutomate& asnListAgent, T_
 // Created: AGN 03-04-24
 //-----------------------------------------------------------------------------
 // static $$NLDJVT$$ Interet de cette fonction
-DEC_Knowledge_Agent* NET_ASN_Tools::ReadAgentKnowledge( const ASN1T_KnowledgeAgent& asnAgent, const DEC_KnowledgeResolver_ABC& resolver )
+DEC_Knowledge_Agent* NET_ASN_Tools::ReadAgentKnowledge( const ASN1T_UnitKnowledge& asnAgent, const DEC_KnowledgeResolver_ABC& resolver )
 {
     return resolver.ResolveKnowledgeAgent( asnAgent );
 }
@@ -358,7 +358,7 @@ DEC_Knowledge_Agent* NET_ASN_Tools::ReadAgentKnowledge( const ASN1T_KnowledgeAge
 // Name: NET_ASN_Tools::ReadListKnowledgeAgent
 // Created: NLD 2004-04-05
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::ReadAgentKnowledgeList( const ASN1T_ListKnowledgeAgent& asnListAgent, T_KnowledgeAgentDiaIDVector& knowledges, const DEC_KnowledgeResolver_ABC& resolver )
+bool NET_ASN_Tools::ReadAgentKnowledgeList( const ASN1T_UnitKnowledgeList& asnListAgent, T_KnowledgeAgentDiaIDVector& knowledges, const DEC_KnowledgeResolver_ABC& resolver )
 {
     knowledges.clear(); knowledges.reserve( asnListAgent.n );
     for( uint n = 0; n < asnListAgent.n; ++n )
@@ -377,7 +377,7 @@ bool NET_ASN_Tools::ReadAgentKnowledgeList( const ASN1T_ListKnowledgeAgent& asnL
 // Created: AGN 03-04-24
 //-----------------------------------------------------------------------------
 // static
-DEC_Knowledge_Object* NET_ASN_Tools::ReadObjectKnowledge( const ASN1T_KnowledgeObject& asnObject, const DEC_KnowledgeResolver_ABC& resolver )
+DEC_Knowledge_Object* NET_ASN_Tools::ReadObjectKnowledge( const ASN1T_ObjectKnowledge& asnObject, const DEC_KnowledgeResolver_ABC& resolver )
 {
     return resolver.ResolveKnowledgeObject( asnObject );
 }
@@ -386,7 +386,7 @@ DEC_Knowledge_Object* NET_ASN_Tools::ReadObjectKnowledge( const ASN1T_KnowledgeO
 // Name: NET_ASN_Tools::ReadListKnowledgeObject
 // Created: NLD 2004-04-05
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::ReadObjectKnowledgeList( const ASN1T_ListKnowledgeObject& asnListObject, T_KnowledgeObjectDiaIDVector& knowledges, const DEC_KnowledgeResolver_ABC& resolver )
+bool NET_ASN_Tools::ReadObjectKnowledgeList( const ASN1T_ObjectKnowledgeList& asnListObject, T_KnowledgeObjectDiaIDVector& knowledges, const DEC_KnowledgeResolver_ABC& resolver )
 {
     knowledges.clear(); knowledges.reserve( asnListObject.n );
     for( uint n = 0; n < asnListObject.n; ++n )
@@ -403,7 +403,7 @@ bool NET_ASN_Tools::ReadObjectKnowledgeList( const ASN1T_ListKnowledgeObject& as
 // Name: NET_ASN_Tools::ReadPopulationKnowledge
 // Created: HME 05-12-22
 //-----------------------------------------------------------------------------
-DEC_Knowledge_Population* NET_ASN_Tools::ReadPopulationKnowledge( const ASN1T_KnowledgePopulation& asnPopulation, const DEC_KnowledgeResolver_ABC& resolver )
+DEC_Knowledge_Population* NET_ASN_Tools::ReadPopulationKnowledge( const ASN1T_PopulationKnowledge& asnPopulation, const DEC_KnowledgeResolver_ABC& resolver )
 {
     return resolver.ResolveKnowledgePopulation( asnPopulation );
 }
@@ -412,9 +412,9 @@ DEC_Knowledge_Population* NET_ASN_Tools::ReadPopulationKnowledge( const ASN1T_Kn
 // Name: NET_ASN_Tools::ReadGDH
 // Created: NLD 2004-01-15
 // -----------------------------------------------------------------------------
-uint NET_ASN_Tools::ReadGDH( const ASN1T_GDH& asnGDH )
+uint NET_ASN_Tools::ReadGDH( const ASN1T_DateTime& asnGDH )
 {
-    return asnGDH.datation - MIL_NBR_SEC_BETWEEN_1901_AND_1970;
+    return asnGDH - MIL_NBR_SEC_BETWEEN_1901_AND_1970;
 }
 
 //=============================================================================
@@ -426,7 +426,7 @@ uint NET_ASN_Tools::ReadGDH( const ASN1T_GDH& asnGDH )
 // Created: NLD 2003-05-13
 //-----------------------------------------------------------------------------
 // static
-void NET_ASN_Tools::WriteDirection( const MT_Vector2D& vDir, ASN1T_Direction& asnDir )
+void NET_ASN_Tools::WriteDirection( const MT_Vector2D& vDir, ASN1T_Heading& asnDir )
 {
     static const MT_Vector2D vNorth( 0, 1 );
  
@@ -446,10 +446,10 @@ void NET_ASN_Tools::WriteDirection( const MT_Vector2D& vDir, ASN1T_Direction& as
 // Name: NET_ASN_Tools::WriteLocation
 // Created: NLD 2003-07-24
 //-----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteLocation( const TER_Localisation& localisation, ASN1T_Localisation& asnLocalisation )
+void NET_ASN_Tools::WriteLocation( const TER_Localisation& localisation, ASN1T_Location& asnLocalisation )
 {
     assert( localisation.GetType() != TER_Localisation::eNone );
-    asnLocalisation.type            = (ASN1T_EnumTypeLocalisation)localisation.GetType();
+    asnLocalisation.type            = (ASN1T_EnumLocationType)localisation.GetType();
     asnLocalisation.vecteur_point.n = localisation.GetPoints().size(); 
     if( localisation.GetPoints().empty() )
         return;
@@ -482,7 +482,7 @@ void NET_ASN_Tools::WritePoint( const MT_Vector2D& vPos, ASN1T_Point& asnLocalis
 
     WritePoint( vPos, *pCoord );
 
-    asnLocalisation.type = EnumTypeLocalisation::point;
+    asnLocalisation.type = EnumLocationType::point;
     asnLocalisation.vecteur_point.n     = 1;
     asnLocalisation.vecteur_point.elem  = pCoord;
 }
@@ -503,7 +503,7 @@ void NET_ASN_Tools::WriteLine( const TER_Localisation& localisation, ASN1T_Line&
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::WriteLine( const T_PointVector& points, ASN1T_Line& asn )
 {
-    asn.type = EnumTypeLocalisation::line;
+    asn.type = EnumLocationType::line;
     if( points.size() < 2 )
     {
         asn.vecteur_point.n = 0;
@@ -522,9 +522,9 @@ bool NET_ASN_Tools::WriteLine( const T_PointVector& points, ASN1T_Line& asn )
 // Name: NET_ASN_Tools::WritePath
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WritePath( const T_PointVector& pointVector, ASN1T_Itineraire& asn )
+void NET_ASN_Tools::WritePath( const T_PointVector& pointVector, ASN1T_Path& asn )
 {
-    asn.type            = EnumTypeLocalisation::line;
+    asn.type            = EnumLocationType::line;
     asn.vecteur_point.n = pointVector.size(); 
     if( pointVector.empty() )
         return;
@@ -540,9 +540,9 @@ void NET_ASN_Tools::WritePath( const T_PointVector& pointVector, ASN1T_Itinerair
 // Name: NET_ASN_Tools::WritePath
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WritePath( const T_PointList& points, ASN1T_Itineraire& asn )
+void NET_ASN_Tools::WritePath( const T_PointList& points, ASN1T_Path& asn )
 {
-    asn.type            = EnumTypeLocalisation::line;
+    asn.type            = EnumLocationType::line;
     asn.vecteur_point.n = points.size(); 
     if( points.empty() )
         return;
@@ -567,9 +567,9 @@ void NET_ASN_Tools::WritePolygon( const TER_Localisation& localisation, ASN1T_Li
 // Name: NET_ASN_Tools::WriteEllipse
 // Created: JVT 04-03-25
 //-----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteEllipse( const MT_Ellipse& ellipse, ASN1T_Localisation& asnLocalisation )
+void NET_ASN_Tools::WriteEllipse( const MT_Ellipse& ellipse, ASN1T_Location& asnLocalisation )
 {
-    asnLocalisation.type = EnumTypeLocalisation::ellipse;
+    asnLocalisation.type = EnumLocationType::ellipse;
     asnLocalisation.vecteur_point.n = 3;
     asnLocalisation.vecteur_point.elem = new ASN1T_CoordUTM[3];
     WritePoint( ellipse.GetCenter(), asnLocalisation.vecteur_point.elem[0] );
@@ -583,13 +583,13 @@ void NET_ASN_Tools::WriteEllipse( const MT_Ellipse& ellipse, ASN1T_Localisation&
 // Created: AGN 03-01-20
 //-----------------------------------------------------------------------------
 // static
-void NET_ASN_Tools::WritePointList( const T_PointVector& pointVector, ASN1T_ListPoint& asn )
+void NET_ASN_Tools::WritePointList( const T_PointVector& pointVector, ASN1T_PointList& asn )
 {
     asn.n = pointVector.size();
     if( pointVector.empty() )
         return;
 
-    ASN1T_Localisation* pCoord = new ASN1T_Localisation[ pointVector.size() ]; //$$$ RAM
+    ASN1T_Location* pCoord = new ASN1T_Location[ pointVector.size() ]; //$$$ RAM
     asn.elem = pCoord;
 
     uint i = 0;
@@ -603,13 +603,13 @@ void NET_ASN_Tools::WritePointList( const T_PointVector& pointVector, ASN1T_List
 // Created: AGN 03-01-20
 //-----------------------------------------------------------------------------
 // static
-void NET_ASN_Tools::WritePointList( const T_PointList& points, ASN1T_ListPoint& asn )
+void NET_ASN_Tools::WritePointList( const T_PointList& points, ASN1T_PointList& asn )
 {
     asn.n = points.size();
     if( points.empty() )
         return;
 
-    ASN1T_Localisation* pCoord = new ASN1T_Localisation[ points.size() ]; //$$$ RAM
+    ASN1T_Location* pCoord = new ASN1T_Location[ points.size() ]; //$$$ RAM
     asn.elem = pCoord;
 
     uint i = 0;
@@ -618,11 +618,11 @@ void NET_ASN_Tools::WritePointList( const T_PointList& points, ASN1T_ListPoint& 
 }
 
 //-----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::WriteListLocalisation
+// Name: NET_ASN_Tools::WriteLocationList
 // Created: AGN 03-08-18
 //-----------------------------------------------------------------------------
 // static
-void NET_ASN_Tools::WriteLocationList( const T_LocalisationPtrVector& locaList, ASN1T_ListLocalisation& asnList )
+void NET_ASN_Tools::WriteLocationList( const T_LocalisationPtrVector& locaList, ASN1T_LocationList& asnList )
 {
     if( locaList.empty() )
     {
@@ -630,7 +630,7 @@ void NET_ASN_Tools::WriteLocationList( const T_LocalisationPtrVector& locaList, 
         return;
     }
 
-    ASN1T_Localisation* pLcal = new ASN1T_Localisation[ locaList.size() ];
+    ASN1T_Location* pLcal = new ASN1T_Location[ locaList.size() ];
     asnList.n = locaList.size();
     asnList.elem = pLcal;
 
@@ -644,7 +644,7 @@ void NET_ASN_Tools::WriteLocationList( const T_LocalisationPtrVector& locaList, 
 // Created: AGN 03-08-18
 //-----------------------------------------------------------------------------
 // static
-void NET_ASN_Tools::WritePolygonList( const T_LocalisationPtrVector& locaList, ASN1T_ListPolygon& asnList )
+void NET_ASN_Tools::WritePolygonList( const T_LocalisationPtrVector& locaList, ASN1T_PolygonList& asnList )
 {
     if( locaList.empty() )
     {
@@ -652,7 +652,7 @@ void NET_ASN_Tools::WritePolygonList( const T_LocalisationPtrVector& locaList, A
         return;
     }
 
-    ASN1T_Localisation* pLcal = new ASN1T_Localisation[ locaList.size() ];
+    ASN1T_Location* pLcal = new ASN1T_Location[ locaList.size() ];
     asnList.n = locaList.size();
     asnList.elem = pLcal;
 
@@ -664,7 +664,7 @@ void NET_ASN_Tools::WritePolygonList( const T_LocalisationPtrVector& locaList, A
 // Name: NET_ASN_Tools::WriteListItineraire
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WritePathList( const T_ItinerairePtrVector& itineraireVector, ASN1T_ListItineraire&   asn )
+void NET_ASN_Tools::WritePathList( const T_ItinerairePtrVector& itineraireVector, ASN1T_PathList&   asn )
 {
     if( itineraireVector.empty() )
     {
@@ -672,7 +672,7 @@ void NET_ASN_Tools::WritePathList( const T_ItinerairePtrVector& itineraireVector
         return;
     }
 
-    ASN1T_Localisation* pLcal = new ASN1T_Localisation[ itineraireVector.size() ];
+    ASN1T_Location* pLcal = new ASN1T_Location[ itineraireVector.size() ];
     asn.n = itineraireVector.size();
     asn.elem = pLcal;
 
@@ -686,7 +686,7 @@ void NET_ASN_Tools::WritePathList( const T_ItinerairePtrVector& itineraireVector
 // Name: NET_ASN_Tools::WriteAgent
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteAgent( const DEC_RolePion_Decision& pion, ASN1T_Agent& asn )
+void NET_ASN_Tools::WriteAgent( const DEC_RolePion_Decision& pion, ASN1T_Unit& asn )
 {
     asn = pion.GetPion().GetID();
 }
@@ -696,7 +696,7 @@ void NET_ASN_Tools::WriteAgent( const DEC_RolePion_Decision& pion, ASN1T_Agent& 
 // Name: NET_ASN_Tools::WriteAutomate
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteAutomate( const DEC_AutomateDecision& automate, ASN1T_Agent& asn )
+void NET_ASN_Tools::WriteAutomate( const DEC_AutomateDecision& automate, ASN1T_Unit& asn )
 {
     asn = automate.GetAutomate().GetID();    
 }
@@ -706,7 +706,7 @@ void NET_ASN_Tools::WriteAutomate( const DEC_AutomateDecision& automate, ASN1T_A
 // Name: NET_ASN_Tools::WriteListAgent
 // Created: AGN 03-01-20
 //-----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteAgentList( const T_ObjectVector& unitList, ASN1T_ListAgent& asnListAgent )
+void NET_ASN_Tools::WriteAgentList( const T_ObjectVector& unitList, ASN1T_UnitList& asnListAgent )
 {
     if( unitList.empty() )
     {
@@ -724,10 +724,10 @@ void NET_ASN_Tools::WriteAgentList( const T_ObjectVector& unitList, ASN1T_ListAg
 }
 
 //-----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::WriteListAutomate
+// Name: NET_ASN_Tools::WriteAutomatList
 // Created: AGN 03-01-20
 //-----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteAutomateList( const T_ObjectVector& unitList, ASN1T_ListAutomate& asnListAgent )
+void NET_ASN_Tools::WriteAutomateList( const T_ObjectVector& unitList, ASN1T_AutomatList& asnListAgent )
 {
     if( unitList.empty() )
     {
@@ -748,7 +748,7 @@ void NET_ASN_Tools::WriteAutomateList( const T_ObjectVector& unitList, ASN1T_Lis
 // Name: NET_ASN_Tools::WriteKnowledgeAgent
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteAgentKnowledge( const DEC_Knowledge_Agent& knowledge, ASN1T_KnowledgeAgent& asnKnowledge )
+void NET_ASN_Tools::WriteAgentKnowledge( const DEC_Knowledge_Agent& knowledge, ASN1T_UnitKnowledge& asnKnowledge )
 {
     asnKnowledge = knowledge.GetID();
 }
@@ -757,7 +757,7 @@ void NET_ASN_Tools::WriteAgentKnowledge( const DEC_Knowledge_Agent& knowledge, A
 // Name: NET_ASN_Tools::WriteListKnowledgeAgent
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteAgentKnowledgeList( const T_KnowledgeAgentDiaIDVector& knowledges, ASN1T_ListKnowledgeAgent& asnListKnowledge, const DEC_KnowledgeResolver_ABC& resolver )
+void NET_ASN_Tools::WriteAgentKnowledgeList( const T_KnowledgeAgentDiaIDVector& knowledges, ASN1T_UnitKnowledgeList& asnListKnowledge, const DEC_KnowledgeResolver_ABC& resolver )
 {
     asnListKnowledge.n = knowledges.size();
     if( knowledges.empty() )
@@ -781,7 +781,7 @@ void NET_ASN_Tools::WriteAgentKnowledgeList( const T_KnowledgeAgentDiaIDVector& 
 // Name: NET_ASN_Tools::WriteObjectKnowledge
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteObjectKnowledge( const DEC_Knowledge_Object& knowledge, ASN1T_KnowledgeObject& asnKnowledge )
+void NET_ASN_Tools::WriteObjectKnowledge( const DEC_Knowledge_Object& knowledge, ASN1T_ObjectKnowledge& asnKnowledge )
 {
     asnKnowledge = knowledge.GetID();
 }
@@ -790,7 +790,7 @@ void NET_ASN_Tools::WriteObjectKnowledge( const DEC_Knowledge_Object& knowledge,
 // Name: NET_ASN_Tools::WriteListKnowledgeObject
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, ASN1T_ListKnowledgeObject& asnListKnowledge, const DEC_KnowledgeResolver_ABC& resolver )
+void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, ASN1T_ObjectKnowledgeList& asnListKnowledge, const DEC_KnowledgeResolver_ABC& resolver )
 {
     asnListKnowledge.n = knowledges.size();
     if( knowledges.empty() )
@@ -817,20 +817,18 @@ void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector
 // Name: NET_ASN_Tools::WriteGDH
 // Created: NLD 2004-01-15
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteGDH( uint nRealTimeSec, ASN1T_GDH& asnGDH )
+void NET_ASN_Tools::WriteGDH( uint nRealTimeSec, ASN1T_DateTime& asnGDH )
 {
-    asnGDH.datation     = nRealTimeSec + MIL_NBR_SEC_BETWEEN_1901_AND_1970;
-	asnGDH.qualificatif = EnumGDH_Qualificatif::at;   
+    asnGDH = nRealTimeSec + MIL_NBR_SEC_BETWEEN_1901_AND_1970;
 }
 
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::WriteGDH
 // Created: NLD 2004-01-15
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteGDH( ASN1T_GDH& asnGDH )
+void NET_ASN_Tools::WriteGDH( ASN1T_DateTime& asnGDH )
 {
-    asnGDH.datation     = MIL_Tools::GetRealTime() + MIL_NBR_SEC_BETWEEN_1901_AND_1970;
-	asnGDH.qualificatif = EnumGDH_Qualificatif::at;   
+    asnGDH = MIL_Tools::GetRealTime() + MIL_NBR_SEC_BETWEEN_1901_AND_1970;
 }  
 
 //=============================================================================
@@ -841,7 +839,7 @@ void NET_ASN_Tools::WriteGDH( ASN1T_GDH& asnGDH )
 // Name: NET_ASN_Tools::Delete
 // Created: NLD 2006-10-26
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::Delete( ASN1T_ListMissionGenObject& asn )
+void NET_ASN_Tools::Delete( ASN1T_PlannedWorkList& asn )
 {
     if( asn.n > 0 )
     {
@@ -855,7 +853,7 @@ void NET_ASN_Tools::Delete( ASN1T_ListMissionGenObject& asn )
 // Name: NET_ASN_Tools::Delete
 // Created: NLD 2006-10-26
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::Delete( ASN1T_MissionGenObject& asn )
+void NET_ASN_Tools::Delete( ASN1T_PlannedWork& asn )
 {
     NET_ASN_Tools::Delete( asn.position );
 }
@@ -864,7 +862,7 @@ void NET_ASN_Tools::Delete( ASN1T_MissionGenObject& asn )
 // Name: NET_ASN_Tools::Delete
 // Created: NLD 2006-03-28
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::Delete( ASN1T_SantePriorites& asn )
+void NET_ASN_Tools::Delete( ASN1T_LogMedicalPriorities& asn )
 {
     if( asn.n > 0 )
         delete [] asn.elem;
@@ -874,7 +872,7 @@ void NET_ASN_Tools::Delete( ASN1T_SantePriorites& asn )
 // Name: NET_ASN_Tools::Delete
 // Created: NLD 2006-03-28
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::Delete( ASN1T_MaintenancePriorites& asn )
+void NET_ASN_Tools::Delete( ASN1T_LogMaintenancePriorities& asn )
 {
     if( asn.n > 0 )
         delete [] asn.elem;
@@ -884,7 +882,7 @@ void NET_ASN_Tools::Delete( ASN1T_MaintenancePriorites& asn )
 // Name: NET_ASN_Tools::Delete
 // Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::Delete( ASN1T_ListAgent& asn )
+void NET_ASN_Tools::Delete( ASN1T_UnitList& asn )
 {
     if( asn.n > 0 )
         delete [] asn.elem;
@@ -894,7 +892,7 @@ void NET_ASN_Tools::Delete( ASN1T_ListAgent& asn )
 // Name: NET_ASN_Tools::Delete
 // Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::Delete( ASN1T_ListAutomate& asn )
+void NET_ASN_Tools::Delete( ASN1T_AutomatList& asn )
 {
     if( asn.n > 0 )
         delete [] asn.elem;
@@ -914,7 +912,7 @@ void NET_ASN_Tools::Delete( ASN1T_Polygon& asn )
 // Name: NET_ASN_Tools::Delete
 // Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::Delete( ASN1T_ListPolygon& asn )
+void NET_ASN_Tools::Delete( ASN1T_PolygonList& asn )
 {
     if( asn.n > 0 )
     {
@@ -928,7 +926,7 @@ void NET_ASN_Tools::Delete( ASN1T_ListPolygon& asn )
 // Name: NET_ASN_Tools::Delete
 // Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::Delete( ASN1T_ListPoint& asn )
+void NET_ASN_Tools::Delete( ASN1T_PointList& asn )
 {
     if( asn.n > 0 )
     {
@@ -942,7 +940,7 @@ void NET_ASN_Tools::Delete( ASN1T_ListPoint& asn )
 // Name: NET_ASN_Tools::Delete
 // Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::Delete( ASN1T_ListItineraire& asn )
+void NET_ASN_Tools::Delete( ASN1T_PathList& asn )
 {
     if( asn.n > 0 )
     {
@@ -956,7 +954,7 @@ void NET_ASN_Tools::Delete( ASN1T_ListItineraire& asn )
 // Name: NET_ASN_Tools::Delete
 // Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::Delete( ASN1T_ListLocalisation& asn )
+void NET_ASN_Tools::Delete( ASN1T_LocationList& asn )
 {
     if( asn.n > 0 )
     {
@@ -970,7 +968,7 @@ void NET_ASN_Tools::Delete( ASN1T_ListLocalisation& asn )
 // Name: NET_ASN_Tools::Delete
 // Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::Delete( ASN1T_ListKnowledgeAgent& asn )
+void NET_ASN_Tools::Delete( ASN1T_UnitKnowledgeList& asn )
 {
     if( asn.n > 0 )
         delete [] asn.elem;
@@ -980,7 +978,7 @@ void NET_ASN_Tools::Delete( ASN1T_ListKnowledgeAgent& asn )
 // Name: NET_ASN_Tools::Delete
 // Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::Delete( ASN1T_ListKnowledgeObject& asn )
+void NET_ASN_Tools::Delete( ASN1T_ObjectKnowledgeList& asn )
 {
     if( asn.n > 0 )
         delete [] asn.elem;
@@ -994,7 +992,7 @@ void NET_ASN_Tools::Delete( ASN1T_ListKnowledgeObject& asn )
 // Name: NET_ASN_Tools::CopyObjectKnowledge
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyObjectKnowledge( const ASN1T_KnowledgeObject& asn, DIA_Variable_ABC& dia, const DEC_KnowledgeResolver_ABC& resolver )
+bool NET_ASN_Tools::CopyObjectKnowledge( const ASN1T_ObjectKnowledge& asn, DIA_Variable_ABC& dia, const DEC_KnowledgeResolver_ABC& resolver )
 {
     DEC_Knowledge_Object* pKnowledge = NET_ASN_Tools::ReadObjectKnowledge( asn, resolver );
     if( !pKnowledge ) 
@@ -1008,7 +1006,7 @@ bool NET_ASN_Tools::CopyObjectKnowledge( const ASN1T_KnowledgeObject& asn, DIA_V
 // Name: NET_ASN_Tools::CopyObjectKnowledge
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyObjectKnowledge( const DIA_Variable_ABC& dia, ASN1T_KnowledgeObject& asn, const DEC_KnowledgeResolver_ABC& resolver )
+bool NET_ASN_Tools::CopyObjectKnowledge( const DIA_Variable_ABC& dia, ASN1T_ObjectKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver )
 {
     assert( DEC_Tools::CheckTypeConnaissanceObjet( dia ) );
 
@@ -1037,7 +1035,7 @@ void NET_ASN_Tools::CopyObjectKnowledge( const DIA_Variable_ABC& diaFrom, DIA_Va
 // Name: NET_ASN_Tools::CopyListKnowledgeObject
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyObjectKnowledgeList( const ASN1T_ListKnowledgeObject& asn, DIA_Variable_ABC& dia, const DEC_KnowledgeResolver_ABC& resolver )
+bool NET_ASN_Tools::CopyObjectKnowledgeList( const ASN1T_ObjectKnowledgeList& asn, DIA_Variable_ABC& dia, const DEC_KnowledgeResolver_ABC& resolver )
 {
     T_KnowledgeObjectDiaIDVector knowledges;
     
@@ -1053,7 +1051,7 @@ bool NET_ASN_Tools::CopyObjectKnowledgeList( const ASN1T_ListKnowledgeObject& as
 // Name: NET_ASN_Tools::CopyListKnowledgeObject
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyObjectKnowledgeList( const DIA_Variable_ABC& dia, ASN1T_ListKnowledgeObject& asn, const DEC_KnowledgeResolver_ABC& resolver )
+bool NET_ASN_Tools::CopyObjectKnowledgeList( const DIA_Variable_ABC& dia, ASN1T_ObjectKnowledgeList& asn, const DEC_KnowledgeResolver_ABC& resolver )
 {
     assert( DEC_Tools::CheckTypeListeConnaissancesObjet( dia ) );
 
@@ -1088,7 +1086,7 @@ void NET_ASN_Tools::CopyObjectKnowledgeList( const DIA_Variable_ABC& diaFrom, DI
 // Name: NET_ASN_Tools::CopyKnowledgeAgent
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyAgentKnowledge( const ASN1T_KnowledgeAgent& asn, DIA_Variable_ABC& dia, const DEC_KnowledgeResolver_ABC& resolver )
+bool NET_ASN_Tools::CopyAgentKnowledge( const ASN1T_UnitKnowledge& asn, DIA_Variable_ABC& dia, const DEC_KnowledgeResolver_ABC& resolver )
 {
     DEC_Knowledge_Agent* pKnowledge = NET_ASN_Tools::ReadAgentKnowledge( asn, resolver );
     if( !pKnowledge ) 
@@ -1102,7 +1100,7 @@ bool NET_ASN_Tools::CopyAgentKnowledge( const ASN1T_KnowledgeAgent& asn, DIA_Var
 // Name: NET_ASN_Tools::CopyKnowledgeAgent
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyAgentKnowledge( const DIA_Variable_ABC& dia, ASN1T_KnowledgeAgent& asn, const DEC_KnowledgeResolver_ABC& resolver )
+bool NET_ASN_Tools::CopyAgentKnowledge( const DIA_Variable_ABC& dia, ASN1T_UnitKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver )
 {
     assert( DEC_Tools::CheckTypeConnaissanceAgent( dia ) );
 
@@ -1130,7 +1128,7 @@ void NET_ASN_Tools::CopyAgentKnowledge( const DIA_Variable_ABC& diaFrom, DIA_Var
 // Name: NET_ASN_Tools::CopyListKnowledgeAgent
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyAgentKnowledgeList( const ASN1T_ListKnowledgeAgent& asn, DIA_Variable_ABC& dia, const DEC_KnowledgeResolver_ABC& resolver )
+bool NET_ASN_Tools::CopyAgentKnowledgeList( const ASN1T_UnitKnowledgeList& asn, DIA_Variable_ABC& dia, const DEC_KnowledgeResolver_ABC& resolver )
 {
     T_KnowledgeAgentDiaIDVector knowledges;
     
@@ -1146,7 +1144,7 @@ bool NET_ASN_Tools::CopyAgentKnowledgeList( const ASN1T_ListKnowledgeAgent& asn,
 // Name: NET_ASN_Tools::CopyListKnowledgeAgent
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyAgentKnowledgeList( const DIA_Variable_ABC& dia, ASN1T_ListKnowledgeAgent& asn, const DEC_KnowledgeResolver_ABC& resolver )
+bool NET_ASN_Tools::CopyAgentKnowledgeList( const DIA_Variable_ABC& dia, ASN1T_UnitKnowledgeList& asn, const DEC_KnowledgeResolver_ABC& resolver )
 {
     assert( DEC_Tools::CheckTypeListeConnaissancesAgent( dia ) );
 
@@ -1182,7 +1180,7 @@ void NET_ASN_Tools::CopyAgentKnowledgeList( const DIA_Variable_ABC& diaFrom, DIA
 // Name: NET_ASN_Tools::CopyAgent
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyAgent( const ASN1T_Agent& asn, DIA_Variable_ABC& dia )
+bool NET_ASN_Tools::CopyAgent( const ASN1T_Unit& asn, DIA_Variable_ABC& dia )
 {
     DEC_RolePion_Decision* pAgent = NET_ASN_Tools::ReadAgent( asn );
     dia.SetValue( *pAgent );
@@ -1193,7 +1191,7 @@ bool NET_ASN_Tools::CopyAgent( const ASN1T_Agent& asn, DIA_Variable_ABC& dia )
 // Name: NET_ASN_Tools::CopyAgent
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyAgent( const DIA_Variable_ABC& dia, ASN1T_Agent& asn )
+bool NET_ASN_Tools::CopyAgent( const DIA_Variable_ABC& dia, ASN1T_Unit& asn )
 {
     assert( DEC_Tools::CheckTypePion( dia ) );
 
@@ -1228,7 +1226,7 @@ bool NET_ASN_Tools::CopyAgent( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC
 // Name: NET_ASN_Tools::CopyAutomate
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyAutomate( const ASN1T_Agent& asn, DIA_Variable_ABC& dia )
+bool NET_ASN_Tools::CopyAutomate( const ASN1T_Unit& asn, DIA_Variable_ABC& dia )
 {
     DEC_AutomateDecision* pAgent = NET_ASN_Tools::ReadAutomate( asn );
     dia.SetValue( *pAgent );
@@ -1239,7 +1237,7 @@ bool NET_ASN_Tools::CopyAutomate( const ASN1T_Agent& asn, DIA_Variable_ABC& dia 
 // Name: NET_ASN_Tools::CopyAutomate
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyAutomate( const DIA_Variable_ABC& dia, ASN1T_Agent& asn )
+bool NET_ASN_Tools::CopyAutomate( const DIA_Variable_ABC& dia, ASN1T_Unit& asn )
 {
     assert( DEC_Tools::CheckTypeAutomate( dia ) );
 
@@ -1274,7 +1272,7 @@ bool NET_ASN_Tools::CopyAutomate( const DIA_Variable_ABC& diaFrom, DIA_Variable_
 // Name: NET_ASN_Tools::CopyListAgent
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyAgentList( const ASN1T_ListAgent& asn, DIA_Variable_ABC& dia )
+bool NET_ASN_Tools::CopyAgentList( const ASN1T_UnitList& asn, DIA_Variable_ABC& dia )
 {
     T_ObjectVector agents;
     if( !NET_ASN_Tools::ReadAgentList( asn, agents ) )
@@ -1287,7 +1285,7 @@ bool NET_ASN_Tools::CopyAgentList( const ASN1T_ListAgent& asn, DIA_Variable_ABC&
 // Name: NET_ASN_Tools::CopyListAgent
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyAgentList( const DIA_Variable_ABC& dia, ASN1T_ListAgent& asn )
+bool NET_ASN_Tools::CopyAgentList( const DIA_Variable_ABC& dia, ASN1T_UnitList& asn )
 {
     assert( DEC_Tools::CheckTypeListePions( dia ) );
 
@@ -1308,10 +1306,10 @@ bool NET_ASN_Tools::CopyAgentList( const DIA_Variable_ABC& diaFrom, DIA_Variable
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::CopyListAutomate
+// Name: NET_ASN_Tools::CopyAutomatList
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyAutomateList( const ASN1T_ListAutomate& asn, DIA_Variable_ABC& dia )
+bool NET_ASN_Tools::CopyAutomateList( const ASN1T_AutomatList& asn, DIA_Variable_ABC& dia )
 {
     T_ObjectVector automates;
     if( !NET_ASN_Tools::ReadAutomateList( asn, automates ) )
@@ -1321,10 +1319,10 @@ bool NET_ASN_Tools::CopyAutomateList( const ASN1T_ListAutomate& asn, DIA_Variabl
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::CopyListAutomate
+// Name: NET_ASN_Tools::CopyAutomatList
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyAutomateList( const DIA_Variable_ABC& dia, ASN1T_ListAutomate& asn )
+bool NET_ASN_Tools::CopyAutomateList( const DIA_Variable_ABC& dia, ASN1T_AutomatList& asn )
 {
     assert( DEC_Tools::CheckTypeListeAutomates( dia ) );
     NET_ASN_Tools::WriteAutomateList( dia.ToSelection(), asn );
@@ -1332,7 +1330,7 @@ bool NET_ASN_Tools::CopyAutomateList( const DIA_Variable_ABC& dia, ASN1T_ListAut
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::CopyListAutomate
+// Name: NET_ASN_Tools::CopyAutomatList
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::CopyAutomateList( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo )
@@ -1351,7 +1349,7 @@ bool NET_ASN_Tools::CopyAutomateList( const DIA_Variable_ABC& diaFrom, DIA_Varia
 // Name: NET_ASN_Tools::CopyMaintenancePriorities
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyMaintenancePriorities( const ASN1T_MaintenancePriorites& asn, DIA_Variable_ABC& dia )
+bool NET_ASN_Tools::CopyMaintenancePriorities( const ASN1T_LogMaintenancePriorities& asn, DIA_Variable_ABC& dia )
 {
     T_MaintenancePriorityVector* pData = new T_MaintenancePriorityVector();
     pData->reserve( asn.n );
@@ -1361,14 +1359,14 @@ bool NET_ASN_Tools::CopyMaintenancePriorities( const ASN1T_MaintenancePriorites&
         const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::Find( nCompTypeMosID );
         if( !pType )
         {
-            dia.SetValue( 0, &DEC_Tools::GetTypeMaintenancePriorites() );
+            dia.SetValue( 0, &DEC_Tools::GetTypeMaintenancePriorities() );
             delete pData;
             return false;
         }
         pData->push_back( pType );
     }
 
-    dia.SetValue( pData, &DEC_Tools::GetTypeMaintenancePriorites());
+    dia.SetValue( pData, &DEC_Tools::GetTypeMaintenancePriorities());
     return true;
 }
 
@@ -1376,9 +1374,9 @@ bool NET_ASN_Tools::CopyMaintenancePriorities( const ASN1T_MaintenancePriorites&
 // Name: NET_ASN_Tools::CopyMaintenancePriorities
 // Created: NLD 2006-03-28
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyMaintenancePriorities( const DIA_Variable_ABC& dia, ASN1T_MaintenancePriorites& asn )
+bool NET_ASN_Tools::CopyMaintenancePriorities( const DIA_Variable_ABC& dia, ASN1T_LogMaintenancePriorities& asn )
 {
-    assert( DEC_Tools::CheckTypeMaintenancePriorites( dia ) );
+    assert( DEC_Tools::CheckTypeMaintenancePriorities( dia ) );
 
     T_MaintenancePriorityVector* pData = dia.ToUserPtr( pData );
     if( !pData )
@@ -1386,7 +1384,7 @@ bool NET_ASN_Tools::CopyMaintenancePriorities( const DIA_Variable_ABC& dia, ASN1
     else
     {
         asn.n    = pData->size();
-        asn.elem = new ASN1T_TypeEquipement[ pData->size() ];
+        asn.elem = new ASN1T_EquipmentType[ pData->size() ];
         uint i = 0;
         for( CIT_MaintenancePriorityVector it = pData->begin(); it != pData->end(); ++it )
             asn.elem[ i++ ] = (**it).GetMosID();
@@ -1400,12 +1398,12 @@ bool NET_ASN_Tools::CopyMaintenancePriorities( const DIA_Variable_ABC& dia, ASN1
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::CopyMaintenancePriorities( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo )
 {
-    assert( DEC_Tools::CheckTypeMaintenancePriorites( diaFrom ) );
+    assert( DEC_Tools::CheckTypeMaintenancePriorities( diaFrom ) );
     const T_MaintenancePriorityVector* pSrc = diaFrom.ToUserPtr( pSrc );
     assert( pSrc );
 
     T_MaintenancePriorityVector* pDst = new T_MaintenancePriorityVector( *pSrc );
-    diaTo.SetValue( pDst, &DEC_Tools::GetTypeMaintenancePriorites() );
+    diaTo.SetValue( pDst, &DEC_Tools::GetTypeMaintenancePriorities() );
     return true;
 }
 
@@ -1413,7 +1411,7 @@ bool NET_ASN_Tools::CopyMaintenancePriorities( const DIA_Variable_ABC& diaFrom, 
 // Name: NET_ASN_Tools::CopyMedicalPriorities
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyMedicalPriorities( const ASN1T_SantePriorites& asn, DIA_Variable_ABC& dia )
+bool NET_ASN_Tools::CopyMedicalPriorities( const ASN1T_LogMedicalPriorities& asn, DIA_Variable_ABC& dia )
 {
     T_MedicalPriorityVector* pData = new T_MedicalPriorityVector();
     pData->reserve( asn.n );
@@ -1437,7 +1435,7 @@ bool NET_ASN_Tools::CopyMedicalPriorities( const ASN1T_SantePriorites& asn, DIA_
 // Name: NET_ASN_Tools::CopyMedicalPriorities
 // Created: NLD 2006-03-28
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyMedicalPriorities( const DIA_Variable_ABC& dia, ASN1T_SantePriorites& asn )
+bool NET_ASN_Tools::CopyMedicalPriorities( const DIA_Variable_ABC& dia, ASN1T_LogMedicalPriorities& asn )
 {
     assert( DEC_Tools::CheckTypeSantePriorites( dia ) );
 
@@ -1478,7 +1476,7 @@ bool NET_ASN_Tools::CopyMedicalPriorities( const DIA_Variable_ABC& diaFrom, DIA_
 // Name: NET_ASN_Tools::CopyGenObject
 // Created: AGE 2004-09-21
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::CopyGenObject( const ASN1T_MissionGenObject& asn, DIA_Variable_ABC& dia )
+void NET_ASN_Tools::CopyGenObject( const ASN1T_PlannedWork& asn, DIA_Variable_ABC& dia )
 {
     DEC_Gen_Object* pGenObject = new DEC_Gen_Object( asn );
     dia.SetValue( pGenObject, &DEC_Tools::GetTypeGenObjet() );
@@ -1488,7 +1486,7 @@ void NET_ASN_Tools::CopyGenObject( const ASN1T_MissionGenObject& asn, DIA_Variab
 // Name: NET_ASN_Tools::CopyGenObject
 // Created: AGE 2004-09-21
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyGenObject( const DIA_Variable_ABC& dia, ASN1T_MissionGenObject& asn )
+bool NET_ASN_Tools::CopyGenObject( const DIA_Variable_ABC& dia, ASN1T_PlannedWork& asn )
 {
     assert( DEC_Tools::CheckTypeGenObjet( dia ) );
     const DEC_Gen_Object* pTmp = dia.ToUserPtr( pTmp );
@@ -1520,7 +1518,7 @@ void NET_ASN_Tools::CopyGenObject( const DIA_Variable_ABC& diaFrom, DIA_Variable
 // Name: NET_ASN_Tools::CopyListGenObjects
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::CopyGenObjectList( const ASN1T_ListMissionGenObject& asn, DIA_Variable_ABC& dia )
+void NET_ASN_Tools::CopyGenObjectList( const ASN1T_PlannedWorkList& asn, DIA_Variable_ABC& dia )
 {
     T_GenObjectVector objects;
     objects.reserve( asn.n );
@@ -1546,7 +1544,7 @@ void NET_ASN_Tools::CopyGenObjectList( const ASN1T_ListMissionGenObject& asn, DI
 // Name: NET_ASN_Tools::CopyListGenObjects
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyGenObjectList( const DIA_Variable_ABC& dia, ASN1T_ListMissionGenObject& asn )
+bool NET_ASN_Tools::CopyGenObjectList( const DIA_Variable_ABC& dia, ASN1T_PlannedWorkList& asn )
 {
     assert( DEC_Tools::CheckTypeListeGenObjets( dia ) );
 
@@ -1557,7 +1555,7 @@ bool NET_ASN_Tools::CopyGenObjectList( const DIA_Variable_ABC& dia, ASN1T_ListMi
     asn.n = objects.size();
     if( !objects.empty() )
     {
-        asn.elem = new ASN1T_MissionGenObject[ objects.size() ];
+        asn.elem = new ASN1T_PlannedWork[ objects.size() ];
         for( CIT_GenObjectVector it = objects.begin(); it != objects.end(); ++it )
             (**it).Serialize( asn.elem[ it - objects.begin() ] );
     }
@@ -1596,7 +1594,7 @@ void NET_ASN_Tools::CopyGenObjectList( const DIA_Variable_ABC& diaFrom, DIA_Vari
 // Name: NET_ASN_Tools::CopyLocation
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyLocation( const ASN1T_Localisation& asn, DIA_Variable_ABC& dia )
+bool NET_ASN_Tools::CopyLocation( const ASN1T_Location& asn, DIA_Variable_ABC& dia )
 {
     TER_Localisation* pLoc = new TER_Localisation();
 
@@ -1614,7 +1612,7 @@ bool NET_ASN_Tools::CopyLocation( const ASN1T_Localisation& asn, DIA_Variable_AB
 // Name: NET_ASN_Tools::CopyLocation
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyLocation( const DIA_Variable_ABC& dia, ASN1T_Localisation& asn )
+bool NET_ASN_Tools::CopyLocation( const DIA_Variable_ABC& dia, ASN1T_Location& asn )
 {
     assert( DEC_Tools::CheckTypeLocalisation( dia ) );
     TER_Localisation* pLocalisation = dia.ToUserPtr( pLocalisation );
@@ -1644,10 +1642,10 @@ void NET_ASN_Tools::CopyLocation( const DIA_Variable_ABC& diaFrom, DIA_Variable_
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::CopyListLocalisation
+// Name: NET_ASN_Tools::CopyLocationList
 // Created: NLD 2004-04-05
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyLocationList( const ASN1T_ListLocalisation& asn, DIA_Variable_ABC& dia )
+bool NET_ASN_Tools::CopyLocationList( const ASN1T_LocationList& asn, DIA_Variable_ABC& dia )
 {
     T_LocalisationPtrVector localisations;
 
@@ -1660,10 +1658,10 @@ bool NET_ASN_Tools::CopyLocationList( const ASN1T_ListLocalisation& asn, DIA_Var
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::CopyListLocalisation
+// Name: NET_ASN_Tools::CopyLocationList
 // Created: NLD 2004-04-05
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyLocationList( const DIA_Variable_ABC& dia, ASN1T_ListLocalisation& asn )
+bool NET_ASN_Tools::CopyLocationList( const DIA_Variable_ABC& dia, ASN1T_LocationList& asn )
 {
     assert( DEC_Tools::CheckTypeListeLocalisations( dia ) );
     const DIA_Variable_ObjectList& diaObjectList = static_cast< const DIA_Variable_ObjectList& >( dia );
@@ -1674,7 +1672,7 @@ bool NET_ASN_Tools::CopyLocationList( const DIA_Variable_ABC& dia, ASN1T_ListLoc
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::CopyListLocalisation
+// Name: NET_ASN_Tools::CopyLocationList
 // Created: NLD 2004-04-05
 // -----------------------------------------------------------------------------
 void NET_ASN_Tools::CopyLocationList( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo )
@@ -1752,7 +1750,7 @@ void NET_ASN_Tools::CopyPolygon( const DIA_Variable_ABC& diaFrom, DIA_Variable_A
 // Name: NET_ASN_Tools::CopyListPolygon
 // Created: NLD 2004-04-05
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyPolygonList( const ASN1T_ListPolygon& asn, DIA_Variable_ABC& dia )
+bool NET_ASN_Tools::CopyPolygonList( const ASN1T_PolygonList& asn, DIA_Variable_ABC& dia )
 {
     T_LocalisationPtrVector polygons;
 
@@ -1768,7 +1766,7 @@ bool NET_ASN_Tools::CopyPolygonList( const ASN1T_ListPolygon& asn, DIA_Variable_
 // Name: NET_ASN_Tools::CopyListPolygon
 // Created: NLD 2004-04-05
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyPolygonList( const DIA_Variable_ABC& dia, ASN1T_ListPolygon& asn )
+bool NET_ASN_Tools::CopyPolygonList( const DIA_Variable_ABC& dia, ASN1T_PolygonList& asn )
 {
     assert( DEC_Tools::CheckTypeListeLocalisations( dia ) );
 
@@ -1883,7 +1881,7 @@ bool NET_ASN_Tools::CopyPoint( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC
 // Name: NET_ASN_Tools::CopyListPoint
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyPointList( const ASN1T_ListPoint& asn, DIA_Variable_ABC& dia )
+bool NET_ASN_Tools::CopyPointList( const ASN1T_PointList& asn, DIA_Variable_ABC& dia )
 {
     T_PointVector* pPtVec = new T_PointVector();
     if( !NET_ASN_Tools::ReadPointList( asn, *pPtVec ) )
@@ -1901,7 +1899,7 @@ bool NET_ASN_Tools::CopyPointList( const ASN1T_ListPoint& asn, DIA_Variable_ABC&
 // Name: NET_ASN_Tools::CopyListPoint
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyPointList( const DIA_Variable_ABC& dia, ASN1T_ListPoint& asn )
+bool NET_ASN_Tools::CopyPointList( const DIA_Variable_ABC& dia, ASN1T_PointList& asn )
 {
     assert( DEC_Tools::CheckTypeListePoints( dia ) );
     T_PointVector* pPoints = dia.ToUserPtr( pPoints );
@@ -1941,7 +1939,7 @@ bool NET_ASN_Tools::CopyPointList( const DIA_Variable_ABC& diaFrom, DIA_Variable
 // Name: NET_ASN_Tools::CopyPath
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyPath( const ASN1T_Itineraire& asn, DIA_Variable_ABC& dia )
+bool NET_ASN_Tools::CopyPath( const ASN1T_Path& asn, DIA_Variable_ABC& dia )
 {
     T_PointVector* pPtVec = new T_PointVector();
     if( !NET_ASN_Tools::ReadPath( asn, *pPtVec ) )
@@ -1959,7 +1957,7 @@ bool NET_ASN_Tools::CopyPath( const ASN1T_Itineraire& asn, DIA_Variable_ABC& dia
 // Name: NET_ASN_Tools::CopyPath
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyPath( const DIA_Variable_ABC& dia, ASN1T_Itineraire& asn )
+bool NET_ASN_Tools::CopyPath( const DIA_Variable_ABC& dia, ASN1T_Path& asn )
 {
     assert( DEC_Tools::CheckTypeListePoints( dia ) );
 
@@ -2001,7 +1999,7 @@ bool NET_ASN_Tools::CopyPath( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC&
 // Name: NET_ASN_Tools::CopyListItineraire
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyPathList( const ASN1T_ListItineraire& asn, DIA_Variable_ABC& dia )
+bool NET_ASN_Tools::CopyPathList( const ASN1T_PathList& asn, DIA_Variable_ABC& dia )
 {
     T_ItinerairePtrVector itineraires;
 
@@ -2017,7 +2015,7 @@ bool NET_ASN_Tools::CopyPathList( const ASN1T_ListItineraire& asn, DIA_Variable_
 // Name: NET_ASN_Tools::CopyListItineraire
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyPathList( const DIA_Variable_ABC& dia, ASN1T_ListItineraire& asn )
+bool NET_ASN_Tools::CopyPathList( const DIA_Variable_ABC& dia, ASN1T_PathList& asn )
 {
     assert( DEC_Tools::CheckTypeListeListesPoints( dia ) );
 
@@ -2061,7 +2059,7 @@ bool NET_ASN_Tools::CopyPathList( const DIA_Variable_ABC& diaFrom, DIA_Variable_
 // Name: NET_ASN_Tools::CopyGDH
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyGDH( const ASN1T_GDH& asn, DIA_Variable_ABC& dia )
+bool NET_ASN_Tools::CopyGDH( const ASN1T_DateTime& asn, DIA_Variable_ABC& dia )
 {
     dia.SetValue( MIL_Tools::ConvertRealTimeSimToDia( NET_ASN_Tools::ReadGDH( asn ) ) );
     return true;
@@ -2071,7 +2069,7 @@ bool NET_ASN_Tools::CopyGDH( const ASN1T_GDH& asn, DIA_Variable_ABC& dia )
 // Name: NET_ASN_Tools::CopyGDH
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyGDH( const DIA_Variable_ABC& dia, ASN1T_GDH& asn )
+bool NET_ASN_Tools::CopyGDH( const DIA_Variable_ABC& dia, ASN1T_DateTime& asn )
 {
     float rValue = dia.ToFloat();
     if( rValue == 0. )
@@ -2098,7 +2096,7 @@ bool NET_ASN_Tools::CopyGDH( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& 
 // Name: NET_ASN_Tools::CopyDirection
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyDirection( const ASN1T_Direction& asn, DIA_Variable_ABC& dia )
+bool NET_ASN_Tools::CopyDirection( const ASN1T_Heading& asn, DIA_Variable_ABC& dia )
 {
     MT_Vector2D* pDir = new MT_Vector2D();
     NET_ASN_Tools::ReadDirection( asn, *pDir );
@@ -2110,7 +2108,7 @@ bool NET_ASN_Tools::CopyDirection( const ASN1T_Direction& asn, DIA_Variable_ABC&
 // Name: NET_ASN_Tools::CopyDirection
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyDirection( const DIA_Variable_ABC& dia, ASN1T_Direction& asn )
+bool NET_ASN_Tools::CopyDirection( const DIA_Variable_ABC& dia, ASN1T_Heading& asn )
 {
     assert( DEC_Tools::CheckTypeDirection( dia ) );
 
@@ -2281,7 +2279,7 @@ bool NET_ASN_Tools::CopyNumeric( const DIA_Variable_ABC& diaFrom, DIA_Variable_A
 // Name: NET_ASN_Tools::CopyNatureAtlas
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyNatureAtlas( const ASN1T_NatureAtlas& asn, DIA_Variable_ABC& dia )
+bool NET_ASN_Tools::CopyNatureAtlas( const ASN1T_AtlasNature& asn, DIA_Variable_ABC& dia )
 {
     int nNatureAtlas = ( asn.data[0] << 8 ) + asn.data[1];
     dia.SetValue( nNatureAtlas );
@@ -2292,7 +2290,7 @@ bool NET_ASN_Tools::CopyNatureAtlas( const ASN1T_NatureAtlas& asn, DIA_Variable_
 // Name: NET_ASN_Tools::CopyNatureAtlas
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyNatureAtlas( const DIA_Variable_ABC& dia, ASN1T_NatureAtlas& asn )
+bool NET_ASN_Tools::CopyNatureAtlas( const DIA_Variable_ABC& dia, ASN1T_AtlasNature& asn )
 {
     int nCategories = dia.ToId();
     asn.numbits = 11; //$$$ n'importe quoi ...
@@ -2319,7 +2317,7 @@ bool NET_ASN_Tools::CopyNatureAtlas( const DIA_Variable_ABC& diaFrom, DIA_Variab
 // Name: NET_ASN_Tools::CopyDotationType
 // Created: NLD 2006-08-04
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyDotationType( const ASN1T_TypeDotation& asn, DIA_Variable_ABC& dia )
+bool NET_ASN_Tools::CopyDotationType( const ASN1T_DotationType& asn, DIA_Variable_ABC& dia )
 {
     const PHY_DotationCategory* pData = PHY_DotationType::FindDotationCategory( asn );
     if( !pData ) 
@@ -2333,7 +2331,7 @@ bool NET_ASN_Tools::CopyDotationType( const ASN1T_TypeDotation& asn, DIA_Variabl
 // Name: NET_ASN_Tools::CopyDotationType
 // Created: NLD 2006-08-04
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyDotationType( const DIA_Variable_ABC& dia, ASN1T_TypeDotation& asn )
+bool NET_ASN_Tools::CopyDotationType( const DIA_Variable_ABC& dia, ASN1T_DotationType& asn )
 {
     assert( DEC_Tools::CheckTypeDotation( dia ) );
 
@@ -2366,7 +2364,7 @@ bool NET_ASN_Tools::CopyDotationType( const DIA_Variable_ABC& diaFrom, DIA_Varia
 // Name: NET_ASN_Tools::CopyEquipmentType
 // Created: NLD 2006-08-04
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyEquipmentType( const ASN1T_TypeEquipement& asn, DIA_Variable_ABC& dia )
+bool NET_ASN_Tools::CopyEquipmentType( const ASN1T_EquipmentType& asn, DIA_Variable_ABC& dia )
 {
     const PHY_ComposanteTypePion* pData = PHY_ComposanteTypePion::Find( asn );
     if( !pData ) 
@@ -2380,7 +2378,7 @@ bool NET_ASN_Tools::CopyEquipmentType( const ASN1T_TypeEquipement& asn, DIA_Vari
 // Name: NET_ASN_Tools::CopyEquipmentType
 // Created: NLD 2006-08-04
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyEquipmentType( const DIA_Variable_ABC& dia, ASN1T_TypeEquipement& asn )
+bool NET_ASN_Tools::CopyEquipmentType( const DIA_Variable_ABC& dia, ASN1T_EquipmentType& asn )
 {
     assert( DEC_Tools::CheckTypeEquipement( dia ) );
 
@@ -2413,7 +2411,7 @@ bool NET_ASN_Tools::CopyEquipmentType( const DIA_Variable_ABC& diaFrom, DIA_Vari
 // Name: NET_ASN_Tools::CopyIndirectFire
 // Created: NLD 2006-12-07
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyIndirectFire( const DIA_Variable_ABC& dia, ASN1T_TirPion& asn )
+bool NET_ASN_Tools::CopyIndirectFire( const DIA_Variable_ABC& dia, ASN1T_UnitFire& asn )
 {
     assert( DEC_Tools::CheckTypeTirIndirect( dia ) );
     asn = (uint)dia.ToPtr();
@@ -2464,7 +2462,7 @@ bool NET_ASN_Tools::CopyEnumeration( const DIA_Variable_ABC& diaFrom, DIA_Variab
 // Name: NET_ASN_Tools::CopyKnowledgePopulation
 // Created: HME 05-12-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyPopulationKnowledge( const ASN1T_KnowledgePopulation& asn, DIA_Variable_ABC& dia, const DEC_KnowledgeResolver_ABC& resolver )
+bool NET_ASN_Tools::CopyPopulationKnowledge( const ASN1T_PopulationKnowledge& asn, DIA_Variable_ABC& dia, const DEC_KnowledgeResolver_ABC& resolver )
 {
     DEC_Knowledge_Population* pKnowledge = NET_ASN_Tools::ReadPopulationKnowledge( asn, resolver );
     if( !pKnowledge ) 
@@ -2478,7 +2476,7 @@ bool NET_ASN_Tools::CopyPopulationKnowledge( const ASN1T_KnowledgePopulation& as
 // Name: NET_ASN_Tools::CopyKnowledgePopulation
 // Created: HME 05-12-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyPopulationKnowledge( const DIA_Variable_ABC& dia, ASN1T_KnowledgePopulation& asn, const DEC_KnowledgeResolver_ABC& resolver )
+bool NET_ASN_Tools::CopyPopulationKnowledge( const DIA_Variable_ABC& dia, ASN1T_PopulationKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver )
 {
     assert( DEC_Tools::CheckTypeConnaissancePopulation( dia ) );
 

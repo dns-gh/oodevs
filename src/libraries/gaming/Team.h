@@ -26,7 +26,7 @@ class Team : public kernel::EntityImplementation< kernel::Team_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( const ASN1T_MsgSideCreation& asnMsg, kernel::Controller& controller );
+             Team( const ASN1T_MsgTeamCreation& asnMsg, kernel::Controller& controller );
     virtual ~Team();
     //@}
 
@@ -52,7 +52,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_EnumDiplomatie karma_;
+    ASN1T_EnumDiplomacy karma_;
     //@}
 };
 

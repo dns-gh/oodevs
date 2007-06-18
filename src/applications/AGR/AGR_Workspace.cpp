@@ -50,13 +50,13 @@ AGR_Workspace::AGR_Workspace()
 
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:ListAgent", "AgentList", "T_ListePions", "T_IdVector", true ) );
     typeList_.push_back( new AGR_AgentType() );
-    typeList_.push_back( new AGR_Type_ABC( "ScipioBase:ListAutomate", "AutomateList", "T_ListeAutomates", "T_IdVector", true ) );
+    typeList_.push_back( new AGR_Type_ABC( "ScipioBase:AutomatList", "AutomateList", "T_ListeAutomates", "T_IdVector", true ) );
     typeList_.push_back( new AGR_AutomateType() );
     typeList_.push_back( new AGR_Type_ABC( "xsd:boolean", "Bool", "bool", "bool", false ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:Direction", "Direction", "T_Direction", "T_Direction", false ) );
     typeList_.push_back( new AGR_Type_ABC( "xsd:double", "Numeric", "float", "double", false ) );
     typeList_.push_back( new AGR_GDHType() );
-    typeList_.push_back( new AGR_Type_ABC( "ListMissionGenObject", "GenObjectList", "T_ListeGenObjets", "T_GenObjectVector", true ) );
+    typeList_.push_back( new AGR_Type_ABC( "PlannedWorkList", "GenObjectList", "T_ListeGenObjets", "T_GenObjectVector", true ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioAutomateMission_Genie:MissionGenObject", "GenObject", "T_GenObjet", "GenObject", true ) );
     typeList_.push_back( new AGR_IntegerType() );
     typeList_.push_back( new AGR_IntegerType( "Pourcentage" ) );
@@ -73,7 +73,7 @@ AGR_Workspace::AGR_Workspace()
     typeList_.push_back( new AGR_KnowledgeObjectType() );
     typeList_.push_back( new AGR_KnowledgePopulationType() );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:Line", "Location", "T_Localisation", "Location", true ) );
-    typeList_.push_back( new AGR_Type_ABC( "ScipioBase:ListLocalisation", "LocationList", "T_ListeLocalisations", "T_LocationVector", true ) );
+    typeList_.push_back( new AGR_Type_ABC( "ScipioBase:LocationList", "LocationList", "T_ListeLocalisations", "T_LocationVector", true ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:ListPoint", "PointList", "T_ListePoints", "T_PositionVector", true ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:Localisation", "Location", "T_Localisation", "Location", true ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:NatureAtlas", "NatureAtlas", "E_NatureAtlasType", "uint", false ) );
@@ -81,11 +81,11 @@ AGR_Workspace::AGR_Workspace()
     typeList_.push_back( new AGR_PointType() );
     typeList_.push_back( new AGR_DotationDType() );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:ListPolygon", "PolygonList", "T_ListeLocalisations", "T_LocationVector", true ) );
-    typeList_.push_back( new AGR_Type_ABC( "ScipioBase:MaintenancePriorites", "MaintenancePriorities", "T_MaintenancePriorites", "", true ) );
+    typeList_.push_back( new AGR_Type_ABC( "ScipioBase:MaintenancePriorities", "MaintenancePriorities", "T_MaintenancePriorities", "", true ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:SantePriorites", "MedicalPriorities", "T_SantePriorites", "T_IdVector", true ) );
     typeList_.push_back( new AGR_EquipmentType() );
     typeList_.push_back( new AGR_DotationType() );
-    typeList_.push_back( new AGR_Type_ABC( "ScipioBase:TirPion", "TirPion", "TirPion", "TirPion", true ) );
+    typeList_.push_back( new AGR_Type_ABC( "ScipioBase:UnitFire", "UnitFire", "UnitFire", "UnitFire", true ) );
     typeList_.push_back( new AGR_Type_ABC( "xsd::string", "message", "message", "message", true ) );
 
     typeList_.push_back( new AGR_PolygonType() );

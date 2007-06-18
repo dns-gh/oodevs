@@ -121,9 +121,9 @@ ActionParameterObjectKnowledge::~ActionParameterObjectKnowledge()
 // -----------------------------------------------------------------------------
 void ActionParameterObjectKnowledge::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.value.t = T_MissionParameter_value_knowledgeObject;
-    ActionParameterEntity< ObjectKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.knowledgeObject );
-    asn.null_value = asn.value.u.knowledgeObject ? 0 : 1;
+    asn.value.t = T_MissionParameter_value_objectKnowledge;
+    ActionParameterEntity< ObjectKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.objectKnowledge );
+    asn.null_value = asn.value.u.objectKnowledge ? 0 : 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +139,7 @@ void ActionParameterObjectKnowledge::Accept( ActionParameterVisitor_ABC& visitor
 // Name: ActionParameterObjectKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void ActionParameterObjectKnowledge::CommitTo( ASN1T_KnowledgeObject& asn ) const
+void ActionParameterObjectKnowledge::CommitTo( ASN1T_ObjectKnowledge& asn ) const
 {
     ActionParameterEntity< ObjectKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn );
 }

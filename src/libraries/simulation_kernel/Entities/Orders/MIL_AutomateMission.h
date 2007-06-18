@@ -29,7 +29,7 @@ class MIL_AutomateMission : public MIL_Mission_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_AutomateMission( const MIL_AutomateMissionType& type, MIL_Automate& automate, const ASN1T_MsgAutomateOrder& asn );
+             MIL_AutomateMission( const MIL_AutomateMissionType& type, MIL_Automate& automate, const ASN1T_MsgAutomatOrder& asn );
              MIL_AutomateMission( const MIL_AutomateMissionType& type, MIL_Automate& automate );
     virtual ~MIL_AutomateMission();
     //@}

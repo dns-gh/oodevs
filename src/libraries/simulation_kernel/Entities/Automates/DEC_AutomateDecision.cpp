@@ -376,16 +376,16 @@ void DEC_AutomateDecision::Reset()
 // Name: DEC_AutomateDecision::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::SendFullState( NET_ASN_MsgAutomateAttributes& msg ) const
+void DEC_AutomateDecision::SendFullState( NET_ASN_MsgAutomatAttributes& msg ) const
 {
     msg().m.rapport_de_forcePresent    = 1;
     msg().m.roePresent                 = 1;
     msg().m.combat_de_rencontrePresent = 1;
     msg().m.etat_operationnelPresent   = 1;
 
-    msg().rapport_de_force      = (ASN1T_EnumEtatRapFor)nForceRatioState_;
-    msg().combat_de_rencontre   = (ASN1T_EnumEtatCombatRencontre)nCloseCombatState_;
-    msg().etat_operationnel     = (ASN1T_EnumEtatOperationnel)nOperationalState_;
+    msg().rapport_de_force      = (ASN1T_EnumForceRatioStatus)nForceRatioState_;
+    msg().combat_de_rencontre   = (ASN1T_EnumMeetingEngagementStatus)nCloseCombatState_;
+    msg().etat_operationnel     = (ASN1T_EnumOperationalStatus)nOperationalState_;
     msg().roe                   = (ASN1T_EnumRoe)nRulesOfEngagementState_;
 }
 
@@ -393,7 +393,7 @@ void DEC_AutomateDecision::SendFullState( NET_ASN_MsgAutomateAttributes& msg ) c
 // Name: DEC_AutomateDecision::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::SendChangedState( NET_ASN_MsgAutomateAttributes& msg ) const
+void DEC_AutomateDecision::SendChangedState( NET_ASN_MsgAutomatAttributes& msg ) const
 {
     if( bStateHasChanged_ )
         SendFullState( msg );

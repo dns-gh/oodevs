@@ -55,7 +55,7 @@ public:
     void Load( const kernel::ExerciseConfig& config );
     void Purge();
 
-    Report* CreateReport( const kernel::Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgCR&  asnMsg ) const;
+    Report* CreateReport( const kernel::Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgReport&  asnMsg ) const;
     Report* CreateTrace ( const kernel::Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgTrace& asnMsg ) const;
     //@}
 

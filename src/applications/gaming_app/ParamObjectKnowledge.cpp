@@ -71,16 +71,16 @@ void ParamObjectKnowledge::NotifyContextMenu( const Object_ABC& entity, ContextM
 // -----------------------------------------------------------------------------
 void ParamObjectKnowledge::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.value.t = T_MissionParameter_value_knowledgeObject;
-    EntityParameter< ObjectKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.knowledgeObject );
-    asn.null_value = asn.value.u.knowledgeObject ? 0 : 1;
+    asn.value.t = T_MissionParameter_value_objectKnowledge;
+    EntityParameter< ObjectKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.objectKnowledge );
+    asn.null_value = asn.value.u.objectKnowledge ? 0 : 1;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ParamObjectKnowledge::CommitTo
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void ParamObjectKnowledge::CommitTo( ASN1T_KnowledgeObject& asn ) const
+void ParamObjectKnowledge::CommitTo( ASN1T_ObjectKnowledge& asn ) const
 {
     EntityParameter< ObjectKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn );
 }

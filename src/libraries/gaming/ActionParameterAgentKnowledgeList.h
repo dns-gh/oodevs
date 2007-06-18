@@ -33,7 +33,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ActionParameterAgentKnowledgeList( const kernel::OrderParameter& parameter );
-             ActionParameterAgentKnowledgeList( const kernel::OrderParameter& parameter, const ASN1T_ListKnowledgeAgent& asn, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner );
+             ActionParameterAgentKnowledgeList( const kernel::OrderParameter& parameter, const ASN1T_UnitKnowledgeList& asn, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner );
              ActionParameterAgentKnowledgeList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner );
     virtual ~ActionParameterAgentKnowledgeList();
     //@}

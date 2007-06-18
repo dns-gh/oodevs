@@ -34,8 +34,8 @@ public:
     //@{
              ActionParameterObstacle( const QString& name, const kernel::ObjectType& type );
              ActionParameterObstacle( const kernel::OrderParameter& parameter, const kernel::ObjectType& type );
-             ActionParameterObstacle( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const ASN1T_MissionGenObject& asn );
-             ActionParameterObstacle( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const ASN1T_MissionGenObject& asn );
+             ActionParameterObstacle( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const ASN1T_PlannedWork& asn );
+             ActionParameterObstacle( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const ASN1T_PlannedWork& asn );
              ActionParameterObstacle( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, xml::xistream& xis );
              ActionParameterObstacle( const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, xml::xistream& xis );
     virtual ~ActionParameterObstacle();
@@ -48,8 +48,8 @@ public:
     
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
-    void CommitTo( ASN1T_MissionGenObject& asn ) const;
-    void Clean( ASN1T_MissionGenObject& asn ) const;
+    void CommitTo( ASN1T_PlannedWork& asn ) const;
+    void Clean( ASN1T_PlannedWork& asn ) const;
 
     virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
     //@}
@@ -64,7 +64,7 @@ private:
     //! @name Helpers
     //@{
     virtual void Serialize( xml::xostream& xos ) const;
-    void SetParameters( const ASN1T_MissionGenObject& asn );
+    void SetParameters( const ASN1T_PlannedWork& asn );
     //@}
 
 private:

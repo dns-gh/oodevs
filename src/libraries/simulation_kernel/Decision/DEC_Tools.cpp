@@ -41,7 +41,7 @@ const DIA_TypeDef* DEC_Tools::pTypePerceptionPoint_               = 0;
 const DIA_TypeDef* DEC_Tools::pTypePerceptionLocalisation_        = 0;
 const DIA_TypeDef* DEC_Tools::pTypePerceptionRadar_               = 0;
 const DIA_TypeDef* DEC_Tools::pTypePerceptionSurveillance_        = 0;
-const DIA_TypeDef* DEC_Tools::pTypeMaintenancePriorites_          = 0;
+const DIA_TypeDef* DEC_Tools::pTypeMaintenancePriorities_          = 0;
 const DIA_TypeDef* DEC_Tools::pTypeSantePriorites_                = 0;
 const DIA_TypeDef* DEC_Tools::pTypePerceptionObjectsLocalisation_ = 0;
 const DIA_TypeDef* DEC_Tools::pTypePerceptionFlyingShell_         = 0;
@@ -76,7 +76,7 @@ void DEC_Tools::InitializeDIA()
     pTypePerceptionLocalisation_        = &GetDIAType( "T_PerceptionLocalisation"       );
     pTypePerceptionRadar_               = &GetDIAType( "T_PerceptionRadar"              );
     pTypePerceptionSurveillance_        = &GetDIAType( "T_PerceptionSurveillance"       );
-    pTypeMaintenancePriorites_          = &GetDIAType( "T_MaintenancePriorites"         );
+    pTypeMaintenancePriorities_         = &GetDIAType( "T_MaintenancePriorites"         );
     pTypeSantePriorites_                = &GetDIAType( "T_SantePriorites"               );
     pTypePerceptionObjectsLocalisation_ = &GetDIAType( "T_PerceptionLocalisationObjet"  );
     pTypePerceptionFlyingShell_         = &GetDIAType( "T_PerceptionTirIndirect"        );
@@ -366,7 +366,7 @@ void DEC_Tools::ManageDeletion( void* pPtr, const DIA_Type* pType )
         ; // NOTHING
     else if( *pType == *pTypePerceptionObjectsLocalisation_ )
         ; // NOTHING
-    else if( *pType == *pTypeMaintenancePriorites_ )
+    else if( *pType == *pTypeMaintenancePriorities_ )
         delete static_cast< T_MaintenancePriorityVector* >( pPtr );
     else if( *pType == *pTypeSantePriorites_ )
         delete static_cast< T_MedicalPriorityVector* >( pPtr );

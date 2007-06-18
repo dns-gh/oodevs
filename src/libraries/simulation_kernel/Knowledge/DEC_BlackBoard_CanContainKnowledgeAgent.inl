@@ -44,8 +44,8 @@ bool DEC_BlackBoard_CanContainKnowledgeAgent::HasKnowledgeAgent( const MIL_Agent
 inline
 DEC_Knowledge_Agent* DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgentFromID( uint nID ) const
 {
-    CIT_KnowledgeAgentIDMap itKnowledge = knowledgeAgentFromIDMap_.find( nID );
-    return itKnowledge == knowledgeAgentFromIDMap_.end() ? 0 : itKnowledge->second;
+    CIT_KnowledgeAgentIDMap itKnowledge = unitKnowledgeFromIDMap_.find( nID );
+    return itKnowledge == unitKnowledgeFromIDMap_.end() ? 0 : itKnowledge->second;
 }
 
 // -----------------------------------------------------------------------------

@@ -19,7 +19,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 MissionParameter_AgentKnowledge::MissionParameter_AgentKnowledge( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , agentKnowledge_     ( asn.value.u.knowledgeAgent )
+    , agentKnowledge_     ( asn.value.u.unitKnowledge )
 {
     // NOTHING
 }
@@ -44,8 +44,8 @@ MissionParameter_AgentKnowledge::~MissionParameter_AgentKnowledge()
 void MissionParameter_AgentKnowledge::Send( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value             = bNullValue_;
-    asn.value.t                = T_MissionParameter_value_knowledgeAgent;
-    asn.value.u.knowledgeAgent = agentKnowledge_;
+    asn.value.t                = T_MissionParameter_value_unitKnowledge;
+    asn.value.u.unitKnowledge = agentKnowledge_;
 }
 
 // -----------------------------------------------------------------------------

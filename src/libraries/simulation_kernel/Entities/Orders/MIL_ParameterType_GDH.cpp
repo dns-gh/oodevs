@@ -39,14 +39,14 @@ MIL_ParameterType_GDH::~MIL_ParameterType_GDH()
 void MIL_ParameterType_GDH::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_gDH ) 
+    if( from.null_value || from.value.t != T_MissionParameter_value_dateTime ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( to.Type() != eFloat )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyGDH( *from.value.u.gDH, to ) )
+    if( !NET_ASN_Tools::CopyGDH( from.value.u.dateTime, to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -79,10 +79,9 @@ bool MIL_ParameterType_GDH::Copy( const DIA_Variable_ABC& from, ASN1T_MissionPar
         return false;
 
     to.null_value  = false;
-    to.value.t     = T_MissionParameter_value_gDH;
-    to.value.u.gDH = new ASN1T_GDH();
+    to.value.t     = T_MissionParameter_value_dateTime;
 
-    if( !NET_ASN_Tools::CopyGDH( from, *to.value.u.gDH ) )
+    if( !NET_ASN_Tools::CopyGDH( from, to.value.u.dateTime ) )
         return false;
 
     return true;
@@ -94,7 +93,5 @@ bool MIL_ParameterType_GDH::Copy( const DIA_Variable_ABC& from, ASN1T_MissionPar
 // -----------------------------------------------------------------------------
 void MIL_ParameterType_GDH::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_gDH );
-    assert( to.value.u.gDH );
-    delete to.value.u.gDH;
+    // NOTHIN
 }

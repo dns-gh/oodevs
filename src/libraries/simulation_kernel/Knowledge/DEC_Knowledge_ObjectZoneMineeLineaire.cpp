@@ -130,6 +130,6 @@ void DEC_Knowledge_ObjectZoneMineeLineaire::BuildMsgSpecificAttributes( ASN1T_Ms
     asnAttributes_.densite              = rMinesDensity_;
 
     asnMsg.m.attributs_specifiquesPresent              = 1;
-    asnMsg.attributs_specifiques.t                     = T_AttrObjectSpecific_zone_minee_lineaire;
+    asnMsg.attributs_specifiques.t                     = T_ObjectAttributesSpecific_zone_minee_lineaire;
     asnMsg.attributs_specifiques.u.zone_minee_lineaire = &asnAttributes_;
 }

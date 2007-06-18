@@ -33,7 +33,7 @@ class PopulationFlowKnowledge : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFlowKnowledge( Model& model, PopulationKnowledge& populationKnowledge, const ASN1T_MsgPopulationFluxKnowledgeCreation& msg );
+             PopulationFlowKnowledge( Model& model, PopulationKnowledge& populationKnowledge, const ASN1T_MsgPopulationFlowKnowledgeCreation& msg );
     virtual ~PopulationFlowKnowledge();
     //@}
 
@@ -44,8 +44,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgPopulationFluxKnowledgeUpdate& msg );
-    void Update        ( const ASN1T_MsgPopulationFluxKnowledgeCreation& msg );
+    void Update        ( const ASN1T_MsgPopulationFlowKnowledgeUpdate& msg );
+    void Update        ( const ASN1T_MsgPopulationFlowKnowledgeCreation& msg );
     virtual void SendCreation   ( Publisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( Publisher_ABC& publisher ) const;
     virtual void SendDestruction( Publisher_ABC& publisher ) const;

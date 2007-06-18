@@ -26,7 +26,7 @@ using namespace dispatcher;
 // Name: Side constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Side::Side( Model& model, const ASN1T_MsgSideCreation& msg )
+Side::Side( Model& model, const ASN1T_MsgTeamCreation& msg )
     : model_          ( model    )
     , nID_            ( msg.oid  )
     , strName_        ( msg.nom  )
@@ -55,7 +55,7 @@ Side::~Side()
 // Name: Side::Update
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Side::Update( const ASN1T_MsgSideCreation& asnMsg )
+void Side::Update( const ASN1T_MsgTeamCreation& asnMsg )
 {
     FlagUpdate();
 }
@@ -64,7 +64,7 @@ void Side::Update( const ASN1T_MsgSideCreation& asnMsg )
 // Name: Side::Update
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Side::Update( const ASN1T_MsgChangeDiplomatie& asnMsg )
+void Side::Update( const ASN1T_MsgChangeDiplomacy& asnMsg )
 {
     FlagUpdate();
 
@@ -76,7 +76,7 @@ void Side::Update( const ASN1T_MsgChangeDiplomatie& asnMsg )
 // Name: Side::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Side::Update( const ASN1T_MsgChangeDiplomatieAck& asnMsg )
+void Side::Update( const ASN1T_MsgChangeDiplomacyAck& asnMsg )
 {
     FlagUpdate();
 
@@ -90,7 +90,7 @@ void Side::Update( const ASN1T_MsgChangeDiplomatieAck& asnMsg )
 // -----------------------------------------------------------------------------
 void Side::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientSideCreation asn;
+    AsnMsgSimToClientTeamCreation asn;
     asn().oid  = nID_;
     asn().nom  = strName_.c_str();
     asn().type = nType_;
@@ -105,7 +105,7 @@ void Side::SendFullUpdate( Publisher_ABC& publisher ) const
 {
     for( CIT_DiplomacyMap it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
-        AsnMsgSimToClientChangeDiplomatie asn;
+        AsnMsgSimToClientChangeDiplomacy asn;
         asn().oid_camp1  = nID_;
         asn().oid_camp2  = it->first->GetID();
         asn().diplomatie = it->second;

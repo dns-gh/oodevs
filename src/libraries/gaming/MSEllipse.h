@@ -30,7 +30,7 @@ class MSEllipse
 public:
     //! @name Constructors/Destructor
     //@{
-             MSEllipse( const ASN1T_Localisation& localisation, const kernel::CoordinateConverter_ABC& converter );
+             MSEllipse( const ASN1T_Location& localisation, const kernel::CoordinateConverter_ABC& converter );
     virtual ~MSEllipse();
     //@}
 

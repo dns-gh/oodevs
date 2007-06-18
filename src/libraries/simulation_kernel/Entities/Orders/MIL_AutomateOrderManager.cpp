@@ -55,7 +55,7 @@ MIL_AutomateOrderManager::~MIL_AutomateOrderManager()
 // Name: MIL_AutomateOrderManager::OnReceiveMission
 // Created: NLD 2003-01-10
 //-----------------------------------------------------------------------------
-void MIL_AutomateOrderManager::OnReceiveMission( const ASN1T_MsgAutomateOrder& asnMsg )
+void MIL_AutomateOrderManager::OnReceiveMission( const ASN1T_MsgAutomatOrder& asnMsg )
 {
     // Check if the agent can receive this order (automate must be debraye)
     if( !automate_.IsEngaged() )

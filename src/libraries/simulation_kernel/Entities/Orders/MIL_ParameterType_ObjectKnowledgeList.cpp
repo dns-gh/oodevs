@@ -43,14 +43,14 @@ MIL_ParameterType_ObjectKnowledgeList::~MIL_ParameterType_ObjectKnowledgeList()
 void MIL_ParameterType_ObjectKnowledgeList::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const
 {
     // Check source
-    if( from.value.t != T_MissionParameter_value_listKnowledgeObject ) 
+    if( from.value.t != T_MissionParameter_value_objectKnowledgeList ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( !DEC_Tools::CheckTypeListeConnaissancesObjet( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyObjectKnowledgeList( *from.value.u.listKnowledgeObject, to, knowledgeResolver ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledgeList( *from.value.u.objectKnowledgeList, to, knowledgeResolver ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -83,10 +83,10 @@ bool MIL_ParameterType_ObjectKnowledgeList::Copy( const DIA_Variable_ABC& from, 
         return false;
 
     to.null_value                  = false;
-    to.value.t                     = T_MissionParameter_value_listKnowledgeObject;
-    to.value.u.listKnowledgeObject = new ASN1T_ListKnowledgeObject();
+    to.value.t                     = T_MissionParameter_value_objectKnowledgeList;
+    to.value.u.objectKnowledgeList = new ASN1T_ObjectKnowledgeList();
     
-    if( !NET_ASN_Tools::CopyObjectKnowledgeList( from, *to.value.u.listKnowledgeObject, knowledgeResolver ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledgeList( from, *to.value.u.objectKnowledgeList, knowledgeResolver ) )
         return false;
 
     return true;    
@@ -98,8 +98,8 @@ bool MIL_ParameterType_ObjectKnowledgeList::Copy( const DIA_Variable_ABC& from, 
 //-----------------------------------------------------------------------------
 void MIL_ParameterType_ObjectKnowledgeList::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_listKnowledgeObject );
-    assert( to.value.u.listKnowledgeObject );
-    NET_ASN_Tools::Delete( *to.value.u.listKnowledgeObject );
-    delete to.value.u.listKnowledgeObject;
+    assert( to.value.t == T_MissionParameter_value_objectKnowledgeList );
+    assert( to.value.u.objectKnowledgeList );
+    NET_ASN_Tools::Delete( *to.value.u.objectKnowledgeList );
+    delete to.value.u.objectKnowledgeList;
 }

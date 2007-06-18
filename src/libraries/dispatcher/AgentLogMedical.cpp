@@ -22,7 +22,7 @@ using namespace dispatcher;
 // Name: AgentLogMedical constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-AgentLogMedical::AgentLogMedical( Model& model, const Agent& agent, const ASN1T_MsgLogSanteEtat& asnMsg )
+AgentLogMedical::AgentLogMedical( Model& model, const Agent& agent, const ASN1T_MsgLogMedicalState& asnMsg )
     : agent_                           ( agent )
     , model_                           ( model )
     , bSystemEnabled_                  ( false )
@@ -52,7 +52,7 @@ AgentLogMedical::~AgentLogMedical()
 // Name: AgentLogMedical::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void AgentLogMedical::Update( const ASN1T_MsgLogSanteEtat& asnMsg )
+void AgentLogMedical::Update( const ASN1T_MsgLogMedicalState& asnMsg )
 {
     if( asnMsg.m.chaine_activeePresent )
         bSystemEnabled_ = asnMsg.chaine_activee;
@@ -99,7 +99,7 @@ void AgentLogMedical::Update( const ASN1T_MsgLogSanteEtat& asnMsg )
 // -----------------------------------------------------------------------------
 void AgentLogMedical::Send( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientLogSanteEtat asn;
+    AsnMsgSimToClientLogMedicalState asn;
 
     asn().oid_pion = agent_.GetID();
 
@@ -112,12 +112,12 @@ void AgentLogMedical::Send( Publisher_ABC& publisher ) const
 
     asn().chaine_activee = bSystemEnabled_;
 
-    evacuationAmbulancesAvailability_.Send< ASN1T__SeqOfSanteDisponibiliteMoyens, ASN1T_SanteDisponibiliteMoyens >( asn().disponibilites_ambulances_releve    );
-    collectionAmbulancesAvailability_.Send< ASN1T__SeqOfSanteDisponibiliteMoyens, ASN1T_SanteDisponibiliteMoyens >( asn().disponibilites_ambulances_ramassage );
-    doctorsAvailability_             .Send< ASN1T__SeqOfSanteDisponibiliteMoyens, ASN1T_SanteDisponibiliteMoyens >( asn().disponibilites_medecins             );
+    evacuationAmbulancesAvailability_.Send< ASN1T__SeqOfLogMedicalEquipmentAvailability, ASN1T_LogMedicalEquipmentAvailability >( asn().disponibilites_ambulances_releve    );
+    collectionAmbulancesAvailability_.Send< ASN1T__SeqOfLogMedicalEquipmentAvailability, ASN1T_LogMedicalEquipmentAvailability >( asn().disponibilites_ambulances_ramassage );
+    doctorsAvailability_             .Send< ASN1T__SeqOfLogMedicalEquipmentAvailability, ASN1T_LogMedicalEquipmentAvailability >( asn().disponibilites_medecins             );
 
-    tacticalPriorities_.Send< ASN1T_ListAutomate, ASN1T_Automate >( asn().priorites_tactiques );
-    SendContainerValues< ASN1T_SantePriorites, ASN1T_EnumHumanWound, T_HumanWoundVector >( priorities_, asn().priorites );
+    tacticalPriorities_.Send< ASN1T_AutomatList, ASN1T_Automat >( asn().priorites_tactiques );
+    SendContainerValues< ASN1T_LogMedicalPriorities, ASN1T_EnumHumanWound, T_HumanWoundVector >( priorities_, asn().priorites );
 
     asn.Send( publisher );
 

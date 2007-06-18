@@ -33,7 +33,7 @@ using namespace TEST;
 // Name: Automat::Automat
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
-Automat::Automat( const Workspace& workspace, const ASN1T_MsgAutomateCreation& asnMsg )
+Automat::Automat( const Workspace& workspace, const ASN1T_MsgAutomatCreation& asnMsg )
     : Testable_Entity  ( workspace )
     , nId_             ( asnMsg.oid_automate )
     , pTeam_           ( workspace.GetEntityManager().FindTeam( asnMsg.oid_camp ) )

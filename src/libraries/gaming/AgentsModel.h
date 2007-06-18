@@ -49,14 +49,14 @@ public:
 
     //! @name Operations
     //@{
-    void CreateAutomat( const ASN1T_MsgAutomateCreation& asnMsg );
+    void CreateAutomat( const ASN1T_MsgAutomatCreation& asnMsg );
     kernel::Automat_ABC& GetAutomat( unsigned long id );
     kernel::Automat_ABC* FindAutomat( unsigned long id );
 
-    void CreateAgent( const ASN1T_MsgPionCreation& asnMsg );
+    void CreateAgent( const ASN1T_MsgUnitCreation& asnMsg );
     kernel::Agent_ABC& GetAgent( unsigned long id ) const;
     kernel::Agent_ABC* FindAgent( unsigned long id ) const;
-    void DestroyAgent( const ASN1T_MsgPionDestruction& asnMsg );
+    void DestroyAgent( const ASN1T_MsgUnitDestruction& asnMsg );
 
     kernel::Entity_ABC* FindAllAgent( unsigned long id ) const;
 

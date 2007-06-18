@@ -89,57 +89,57 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
         return new ActionParameterBool( parameter, asn.value.u.aBool );
     case T_MissionParameter_value_aCharStr:
         return new ActionParameter< QString >( parameter, asn.value.u.aCharStr );
-    case T_MissionParameter_value_agent:
-        return new ActionParameterAgent( parameter, asn.value.u.agent, model_.agents_ );
+    case T_MissionParameter_value_unit:
+        return new ActionParameterAgent( parameter, asn.value.u.unit, model_.agents_ );
     case T_MissionParameter_value_aReal:
         return new ActionParameterNumeric( parameter, asn.value.u.aReal );
-    case T_MissionParameter_value_automate:
-        return new ActionParameterAutomat( parameter, asn.value.u.automate, model_.agents_ );
-    case T_MissionParameter_value_direction:
-        return new ActionParameter< float >( parameter, asn.value.u.direction );
+    case T_MissionParameter_value_automat:
+        return new ActionParameterAutomat( parameter, asn.value.u.automat, model_.agents_ );
+    case T_MissionParameter_value_heading:
+        return new ActionParameter< float >( parameter, asn.value.u.heading );
     case T_MissionParameter_value_enumeration:
         return new ActionParameterEnumeration( parameter, asn.value.u.enumeration );
-    case T_MissionParameter_value_itineraire:
-        return new ActionParameterPath( parameter, converter_, *asn.value.u.itineraire );
-    case T_MissionParameter_value_knowledgeAgent:
-        return new ActionParameterAgentKnowledge( parameter, asn.value.u.knowledgeAgent, agentKnowledgeConverter_, entity );
-    case T_MissionParameter_value_knowledgeObject:
-        return new ActionParameterObjectKnowledge( parameter, asn.value.u.knowledgeObject, objectKnowledgeConverter_, entity );
-    case T_MissionParameter_value_knowledgePopulation:
-        return new ActionParameterPopulationKnowledge( parameter, asn.value.u.knowledgePopulation, agentKnowledgeConverter_, entity );
-    case T_MissionParameter_value_listAgent:
-        return new ActionParameterAgentList( parameter, *asn.value.u.listAgent, model_.agents_ );
-    case T_MissionParameter_value_listAutomate:
-        return new ActionParameterAutomatList( parameter, *asn.value.u.listAutomate, model_.agents_ );
-    case T_MissionParameter_value_listItineraire:
-        return new ActionParameterPathList( parameter, converter_, *asn.value.u.listItineraire );
-    case T_MissionParameter_value_listKnowledgeAgent:
-        return new ActionParameterAgentKnowledgeList( parameter, *asn.value.u.listKnowledgeAgent, agentKnowledgeConverter_, entity );
-    case T_MissionParameter_value_listKnowledgeObject:
-        return new ActionParameterObjectKnowledgeList( parameter, *asn.value.u.listKnowledgeObject, objectKnowledgeConverter_, entity );
-    case T_MissionParameter_value_listLocalisation:
-        return new ActionParameterLocationList( parameter, converter_, *asn.value.u.listLocalisation );
-    case T_MissionParameter_value_listMissionGenObject:
-        return new ActionParameterObstacleList( parameter, converter_, staticModel_.objectTypes_, *asn.value.u.listMissionGenObject );
-    case T_MissionParameter_value_listPoint:
-        return new ActionParameterPointList( parameter, converter_, *asn.value.u.listPoint );
-    case T_MissionParameter_value_listPolygon:
-        return new ActionParameterPolygonList( parameter, converter_, *asn.value.u.listPolygon );
-    case T_MissionParameter_value_localisation:
-        return new ActionParameterLocation( parameter, converter_, *asn.value.u.localisation );
-    case T_MissionParameter_value_missionGenObject:
-        return new ActionParameterObstacle( parameter, converter_, staticModel_.objectTypes_, *asn.value.u.missionGenObject );
-    case T_MissionParameter_value_natureAtlas:
-        return new ActionParameterAtlasNature( parameter, *asn.value.u.natureAtlas, staticModel_.atlasNatures_ );
+    case T_MissionParameter_value_path:
+        return new ActionParameterPath( parameter, converter_, *asn.value.u.path );
+    case T_MissionParameter_value_unitKnowledge:
+        return new ActionParameterAgentKnowledge( parameter, asn.value.u.unitKnowledge, agentKnowledgeConverter_, entity );
+    case T_MissionParameter_value_objectKnowledge:
+        return new ActionParameterObjectKnowledge( parameter, asn.value.u.objectKnowledge, objectKnowledgeConverter_, entity );
+    case T_MissionParameter_value_populationKnowledge:
+        return new ActionParameterPopulationKnowledge( parameter, asn.value.u.populationKnowledge, agentKnowledgeConverter_, entity );
+    case T_MissionParameter_value_unitList:
+        return new ActionParameterAgentList( parameter, *asn.value.u.unitList, model_.agents_ );
+    case T_MissionParameter_value_automatList:
+        return new ActionParameterAutomatList( parameter, *asn.value.u.automatList, model_.agents_ );
+    case T_MissionParameter_value_pathList:
+        return new ActionParameterPathList( parameter, converter_, *asn.value.u.pathList );
+    case T_MissionParameter_value_unitKnowledgeList:
+        return new ActionParameterAgentKnowledgeList( parameter, *asn.value.u.unitKnowledgeList, agentKnowledgeConverter_, entity );
+    case T_MissionParameter_value_objectKnowledgeList:
+        return new ActionParameterObjectKnowledgeList( parameter, *asn.value.u.objectKnowledgeList, objectKnowledgeConverter_, entity );
+    case T_MissionParameter_value_locationList:
+        return new ActionParameterLocationList( parameter, converter_, *asn.value.u.locationList );
+    case T_MissionParameter_value_plannedWorkList:
+        return new ActionParameterObstacleList( parameter, converter_, staticModel_.objectTypes_, *asn.value.u.plannedWorkList );
+    case T_MissionParameter_value_pointList:
+        return new ActionParameterPointList( parameter, converter_, *asn.value.u.pointList );
+    case T_MissionParameter_value_polygonList:
+        return new ActionParameterPolygonList( parameter, converter_, *asn.value.u.polygonList );
+    case T_MissionParameter_value_location:
+        return new ActionParameterLocation( parameter, converter_, *asn.value.u.location );
+    case T_MissionParameter_value_plannedWork:
+        return new ActionParameterObstacle( parameter, converter_, staticModel_.objectTypes_, *asn.value.u.plannedWork );
+    case T_MissionParameter_value_atlasNature:
+        return new ActionParameterAtlasNature( parameter, *asn.value.u.atlasNature, staticModel_.atlasNatures_ );
     case T_MissionParameter_value_point:
         return new ActionParameterPoint( parameter, converter_, *asn.value.u.point );
     case T_MissionParameter_value_polygon:
         return new ActionParameterPolygon( parameter, converter_, *asn.value.u.polygon );
-    case T_MissionParameter_value_typeDotation:
-        return new ActionParameterDotationType( parameter, asn.value.u.typeDotation, staticModel_.objectTypes_ );
-    case T_MissionParameter_value_typeEquipement:
-    case T_MissionParameter_value_maintenancePriorites:
-    case T_MissionParameter_value_santePriorites:
+    case T_MissionParameter_value_dotationType:
+        return new ActionParameterDotationType( parameter, asn.value.u.dotationType, staticModel_.objectTypes_ );
+    case T_MissionParameter_value_equipmentType:
+    case T_MissionParameter_value_logMaintenancePriorities:
+    case T_MissionParameter_value_logMedicalPriorities:
     case T_MissionParameter_value_tirIndirect: // $$$$ SBO 2007-05-21: reports only, not to be used!
         break;
     }
@@ -168,7 +168,7 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
 // Name: ActionParameterFactory::CreateParameter
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, const ASN1T_Direction& asn ) const
+ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, const ASN1T_Heading& asn ) const
 {
     return new ActionParameterDirection( parameter, asn );
 }

@@ -17,16 +17,16 @@
 
 MIL_LimaFunction::T_LimaFunctionMap MIL_LimaFunction::limaFunctions_;
 
-const MIL_LimaFunction MIL_LimaFunction::LD_  ( EnumTypeLima::ligne_debouche              , eLimaFuncLD  , "LD"   );
-const MIL_LimaFunction MIL_LimaFunction::LCA_ ( EnumTypeLima::ligne_changement_attitude   , eLimaFuncLCA , "LCA"  );
-const MIL_LimaFunction MIL_LimaFunction::LC_  ( EnumTypeLima::ligne_coordination          , eLimaFuncLC  , "LC"   );
-const MIL_LimaFunction MIL_LimaFunction::LI_  ( EnumTypeLima::ligne_interdire             , eLimaFuncLI  , "LI"   );
-const MIL_LimaFunction MIL_LimaFunction::LO_  ( EnumTypeLima::ligne_objectif              , eLimaFuncLO  , "LO"   );
-const MIL_LimaFunction MIL_LimaFunction::LCAR_( EnumTypeLima::ligne_coup_arret            , eLimaFuncLCAR, "LCAR" );
-const MIL_LimaFunction MIL_LimaFunction::LR_  ( EnumTypeLima::ligne_recueil               , eLimaFuncLR  , "LR"   );
-const MIL_LimaFunction MIL_LimaFunction::LDM_ ( EnumTypeLima::ligne_debut_mission         , eLimaFuncLDM , "LDM"  );
-const MIL_LimaFunction MIL_LimaFunction::LFM_ ( EnumTypeLima::ligne_fin_mission           , eLimaFuncLFM , "LFM"  );
-const MIL_LimaFunction MIL_LimaFunction::LIA_ ( EnumTypeLima::ligne_identification_accueil, eLimaFuncLIA , "LIA"  );
+const MIL_LimaFunction MIL_LimaFunction::LD_  ( EnumLimaType::ligne_debouche              , eLimaFuncLD  , "LD"   );
+const MIL_LimaFunction MIL_LimaFunction::LCA_ ( EnumLimaType::ligne_changement_attitude   , eLimaFuncLCA , "LCA"  );
+const MIL_LimaFunction MIL_LimaFunction::LC_  ( EnumLimaType::ligne_coordination          , eLimaFuncLC  , "LC"   );
+const MIL_LimaFunction MIL_LimaFunction::LI_  ( EnumLimaType::ligne_interdire             , eLimaFuncLI  , "LI"   );
+const MIL_LimaFunction MIL_LimaFunction::LO_  ( EnumLimaType::ligne_objectif              , eLimaFuncLO  , "LO"   );
+const MIL_LimaFunction MIL_LimaFunction::LCAR_( EnumLimaType::ligne_coup_arret            , eLimaFuncLCAR, "LCAR" );
+const MIL_LimaFunction MIL_LimaFunction::LR_  ( EnumLimaType::ligne_recueil               , eLimaFuncLR  , "LR"   );
+const MIL_LimaFunction MIL_LimaFunction::LDM_ ( EnumLimaType::ligne_debut_mission         , eLimaFuncLDM , "LDM"  );
+const MIL_LimaFunction MIL_LimaFunction::LFM_ ( EnumLimaType::ligne_fin_mission           , eLimaFuncLFM , "LFM"  );
+const MIL_LimaFunction MIL_LimaFunction::LIA_ ( EnumLimaType::ligne_identification_accueil, eLimaFuncLIA , "LIA"  );
 
 // -----------------------------------------------------------------------------
 // Name: MIL_LimaFunction::Initialize
@@ -67,7 +67,7 @@ void MIL_LimaFunction::Terminate()
 // Name: MIL_LimaFunction constructor
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-MIL_LimaFunction::MIL_LimaFunction( const ASN1T_EnumTypeLima& asn, uint nID, const std::string& strName )
+MIL_LimaFunction::MIL_LimaFunction( const ASN1T_EnumLimaType& asn, uint nID, const std::string& strName )
     : nAsnID_ ( asn )
     , nID_    ( nID )
     , strName_( strName )

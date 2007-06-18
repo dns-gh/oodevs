@@ -298,7 +298,7 @@ void MIL_AgentServer::MainSimLoop()
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::SendMsgBeginTick() const
 {
-    NET_ASN_MsgCtrlBeginTick msgBeginTick;
+    NET_ASN_MsgControlBeginTick msgBeginTick;
     msgBeginTick() = GetCurrentTimeStep();
     msgBeginTick.Send();
 }
@@ -311,7 +311,7 @@ void MIL_AgentServer::SendMsgEndTick() const
 {
     assert( pProcessMonitor_ );
 
-    NET_ASN_MsgCtrlEndTick msgEndTick;
+    NET_ASN_MsgControlEndTick msgEndTick;
     msgEndTick().current_tick        = GetCurrentTimeStep();
     msgEndTick().tick_duration       = (ASN1INT)pProfilerMgr_->GetLastTickDuration();
     msgEndTick().nb_pathfinds_courts = pPathFindManager_->GetNbrShortRequests();

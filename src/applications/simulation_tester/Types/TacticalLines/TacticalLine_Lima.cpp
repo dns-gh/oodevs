@@ -20,7 +20,7 @@ IDManager TacticalLine_Lima::idManager_( 137 );
 // -----------------------------------------------------------------------------
 TacticalLine_Lima::TacticalLine_Lima( const T_PositionVector& points )
     : TacticalLine_ABC ( points )
-    , eLimaType_       ( EnumTypeLima::ligne_debouche )
+    , eLimaType_       ( EnumLimaType::ligne_debouche )
 {
     nId_ = idManager_.GetFreeIdentifier();
     bIsSyncWithSim_  = false;
@@ -32,7 +32,7 @@ TacticalLine_Lima::TacticalLine_Lima( const T_PositionVector& points )
 // -----------------------------------------------------------------------------
 TacticalLine_Lima::TacticalLine_Lima( XmlInputArchive& archive )
     : TacticalLine_ABC ()
-    , eLimaType_       ( EnumTypeLima::ligne_debouche )
+    , eLimaType_       ( EnumLimaType::ligne_debouche )
 {
     bIsSyncWithSim_  = false;
     archive.ReadAttribute( "id", nId_ );
@@ -51,7 +51,7 @@ TacticalLine_Lima::TacticalLine_Lima( const ASN1T_MsgLimaCreation& asnMsg )
     nId_ = asnMsg.oid;
     idManager_.LockIdentifier( nId_ );
 
-    assert( asnMsg.geometrie.type == EnumTypeLocalisation::line );
+    assert( asnMsg.geometrie.type == EnumLocationType::line );
     for( uint i = 0; i != asnMsg.geometrie.vecteur_point.n ; ++i )
     {
         Position* pPos = new Position( std::string( (const char*)asnMsg.geometrie.vecteur_point.elem[i].data, 15 ) );
@@ -85,7 +85,7 @@ void TacticalLine_Lima::UpdateToSim()
 
     asnMsg.GetAsnMsg().oid                          = nId_;
     asnMsg.GetAsnMsg().fonction                     = eLimaType_;
-    asnMsg.GetAsnMsg().geometrie.type               = EnumTypeLocalisation::line;
+    asnMsg.GetAsnMsg().geometrie.type               = EnumLocationType::line;
     asnMsg.GetAsnMsg().geometrie.vecteur_point.n    = points_.size();
     asnMsg.GetAsnMsg().geometrie.vecteur_point.elem = new ASN1T_CoordUTM[ points_.size() ];
 

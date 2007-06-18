@@ -19,7 +19,7 @@ using namespace kernel;
 // Name: PopulationFlow constructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-PopulationFlow::PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg, const CoordinateConverter_ABC& converter )
+PopulationFlow::PopulationFlow( const ASN1T_MsgPopulationFlowCreation& asnMsg, const CoordinateConverter_ABC& converter )
     : converter_ ( converter )
     , nID_       ( asnMsg.oid_flux )
     , itineraire_( )
@@ -65,7 +65,7 @@ unsigned long PopulationFlow::GetId() const
 // Name: PopulationFlow::DoUpdate
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-void PopulationFlow::DoUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
+void PopulationFlow::DoUpdate( const ASN1T_MsgPopulationFlowUpdate& asnMsg )
 {
     if ( asnMsg.m.attitudePresent )
 		attitude_ = (E_PopulationAttitude)asnMsg.attitude;

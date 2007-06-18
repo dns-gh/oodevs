@@ -17,7 +17,7 @@ using namespace kernel;
 // Name: AgentFireResult constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-AgentFireResult::AgentFireResult( const ASN1T_FireDamagesPion& message, const Resolver_ABC< Agent_ABC >& resolver,  const Resolver_ABC< EquipmentType >& equipmentResolver )
+AgentFireResult::AgentFireResult( const ASN1T_UnitFireDamages& message, const Resolver_ABC< Agent_ABC >& resolver,  const Resolver_ABC< EquipmentType >& equipmentResolver )
     : target_( resolver.Get( message.cible ) )
 {
     for( unsigned i = 0; i < message.equipements.n; ++i )
@@ -34,7 +34,7 @@ AgentFireResult::AgentFireResult( const ASN1T_FireDamagesPion& message, const Re
 
     for( uint i = 0; i < message.humains.n; ++i )
     {
-        const ASN1T_FireDamagePionHuman& fire = message.humains.elem[ i ];
+        const ASN1T_UnitHumanFireDamage& fire = message.humains.elem[ i ];
 
         unsigned Casualties::* table = & Casualties::troopers_;
          if( fire.rang == EnumHumanRank::officier )

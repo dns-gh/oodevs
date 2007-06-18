@@ -37,7 +37,7 @@ Quotas::~Quotas()
 // Name: Quotas::DoUpdate
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-void Quotas::DoUpdate( const ASN1T_MsgLogRavitaillementQuotas& message )
+void Quotas::DoUpdate( const ASN1T_MsgLogSupplyQuotas& message )
 {
     quotas_.resize( message.quotas.n );
     for( uint i = 0; i < message.quotas.n; ++i )

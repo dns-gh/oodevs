@@ -47,7 +47,6 @@ void ParamPopulationKnowledge::NotifyContextMenu( const Population_ABC& entity, 
     const PopulationKnowledge_ABC* knowledge = converter_.Find( entity, agent_ );
     if( knowledge )
         EntityParameter< PopulationKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -56,9 +55,9 @@ void ParamPopulationKnowledge::NotifyContextMenu( const Population_ABC& entity, 
 // -----------------------------------------------------------------------------
 void ParamPopulationKnowledge::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.value.t = T_MissionParameter_value_knowledgePopulation;
-    EntityParameter< PopulationKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.knowledgePopulation );
-    asn.null_value = asn.value.u.knowledgePopulation ? 0 : 1;
+    asn.value.t = T_MissionParameter_value_populationKnowledge;
+    EntityParameter< PopulationKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.populationKnowledge );
+    asn.null_value = asn.value.u.populationKnowledge ? 0 : 1;
 }
 
 // -----------------------------------------------------------------------------

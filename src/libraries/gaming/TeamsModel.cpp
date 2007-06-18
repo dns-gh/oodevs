@@ -52,7 +52,7 @@ void TeamsModel::Purge()
 // Name: TeamsModel::CreateTeam
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void TeamsModel::CreateTeam( const ASN1T_MsgSideCreation& asnMsg )
+void TeamsModel::CreateTeam( const ASN1T_MsgTeamCreation& asnMsg )
 {
     if( ! Resolver< Team_ABC >::Find( asnMsg.oid ) )
     {

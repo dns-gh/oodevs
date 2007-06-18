@@ -38,14 +38,14 @@ public:
 
     //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgCtrlInfo&				 msg );
-    void Update        ( const ASN1T_MsgCtrlBeginTick&			 msg );
-    void Update        ( const ASN1T_MsgCtrlEndTick&			 msg );
-	void Update_Stop   ( const ASN1T_MsgCtrlStopAck&			 msg ); //$$$
-	void Update_Pause  ( const ASN1T_MsgCtrlPauseAck&			 msg ); //$$$
-	void Update_Resume ( const ASN1T_MsgCtrlResumeAck&			 msg ); //$$$
-	void Update		   ( const ASN1T_MsgCtrlChangeTimeFactorAck& msg );
-//    void Update        ( const ASN1T_MsgCtrlCheckPointSetFrequencyAck& msg );
+    void Update        ( const ASN1T_MsgControlInformation&				 msg );
+    void Update        ( const ASN1T_MsgControlBeginTick&			 msg );
+    void Update        ( const ASN1T_MsgControlEndTick&			 msg );
+	void Update_Stop   ( const ASN1T_MsgControlStopAck&			 msg ); //$$$
+	void Update_Pause  ( const ASN1T_MsgControlPauseAck&			 msg ); //$$$
+	void Update_Resume ( const ASN1T_MsgControlResumeAck&			 msg ); //$$$
+	void Update		   ( const ASN1T_MsgControlChangeTimeFactorAck& msg );
+//    void Update        ( const ASN1T_MsgControlCheckPointSetFrequencyAck& msg );
     void Send          ( Publisher_ABC& publisher ) const;
     void Reset         ();
     //@}
@@ -55,7 +55,7 @@ private:
    unsigned int      nTickDuration_;
    unsigned int      nTimeFactor_;
    unsigned int      nCheckpointFrequency_;
-   ASN1T_EnumEtatSim nSimState_;
+   ASN1T_EnumSimulationState nSimState_;
 
    //$$$ BULLSHIT
    bool         bSendVisionCones_;

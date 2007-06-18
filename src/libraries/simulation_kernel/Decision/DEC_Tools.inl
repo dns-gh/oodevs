@@ -44,14 +44,14 @@ bool DEC_Tools::CheckTypeDotation( const DIA_Variable_ABC& diaVariable )
 
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Tools::CheckTypeMaintenancePriorites
+// Name: DEC_Tools::CheckTypeMaintenancePriorities
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
 inline
-bool DEC_Tools::CheckTypeMaintenancePriorites( const DIA_Variable_ABC& diaVariable )
+bool DEC_Tools::CheckTypeMaintenancePriorities( const DIA_Variable_ABC& diaVariable )
 {
-    assert( pTypeMaintenancePriorites_ );
-    return diaVariable.GetType() == *pTypeMaintenancePriorites_;
+    assert( pTypeMaintenancePriorities_ );
+    return diaVariable.GetType() == *pTypeMaintenancePriorities_;
 }
 
 // -----------------------------------------------------------------------------
@@ -520,14 +520,14 @@ const DIA_TypeDef& DEC_Tools::GetTypePerceptionSurveillance()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Tools::GetTypeMaintenancePriorites
+// Name: DEC_Tools::GetTypeMaintenancePriorities
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
 inline
-const DIA_TypeDef& DEC_Tools::GetTypeMaintenancePriorites()
+const DIA_TypeDef& DEC_Tools::GetTypeMaintenancePriorities()
 {
-    assert( pTypeMaintenancePriorites_ );
-    return *pTypeMaintenancePriorites_;
+    assert( pTypeMaintenancePriorities_ );
+    return *pTypeMaintenancePriorities_;
 }
 
 // -----------------------------------------------------------------------------

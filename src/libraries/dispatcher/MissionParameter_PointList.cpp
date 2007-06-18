@@ -20,9 +20,9 @@ using namespace dispatcher;
 MissionParameter_PointList::MissionParameter_PointList( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    points_.reserve( asn.value.u.listPoint->n );
-    for( unsigned i = 0; i != asn.value.u.listPoint->n; ++i )
-        points_.push_back( Localisation( asn.value.u.listPoint->elem[i] ) );
+    points_.reserve( asn.value.u.pointList->n );
+    for( unsigned i = 0; i != asn.value.u.pointList->n; ++i )
+        points_.push_back( Localisation( asn.value.u.pointList->elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,16 +45,16 @@ MissionParameter_PointList::~MissionParameter_PointList()
 void MissionParameter_PointList::Send( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value        = bNullValue_;
-    asn.value.t           = T_MissionParameter_value_listPoint;
-    asn.value.u.listPoint = new ASN1T_ListPoint();
+    asn.value.t           = T_MissionParameter_value_pointList;
+    asn.value.u.pointList = new ASN1T_PointList();
 
-    asn.value.u.listPoint->n = points_.size();
+    asn.value.u.pointList->n = points_.size();
     if( !points_.empty() )
     {
-        asn.value.u.listPoint->elem = new ASN1T_Point[ points_.size() ];
+        asn.value.u.pointList->elem = new ASN1T_Point[ points_.size() ];
         uint i = 0;
         for( T_LocalisationVector::const_iterator it = points_.begin(); it != points_.end(); ++it, ++i )
-            (*it).Send( asn.value.u.listPoint->elem[ i ] );
+            (*it).Send( asn.value.u.pointList->elem[ i ] );
     }
 }
 
@@ -64,11 +64,11 @@ void MissionParameter_PointList::Send( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void MissionParameter_PointList::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listPoint->n > 0 )
+    if( asn.value.u.pointList->n > 0 )
     {
-        for( unsigned i = 0; i != asn.value.u.listPoint->n; ++i )
-            Localisation::AsnDelete( asn.value.u.listPoint->elem[i] );
-        delete [] asn.value.u.listPoint->elem;
+        for( unsigned i = 0; i != asn.value.u.pointList->n; ++i )
+            Localisation::AsnDelete( asn.value.u.pointList->elem[i] );
+        delete [] asn.value.u.pointList->elem;
     }
-    delete asn.value.u.listPoint;
+    delete asn.value.u.pointList;
 }

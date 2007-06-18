@@ -14,9 +14,9 @@
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
 inline
-const PHY_Morale* PHY_Morale::Find( ASN1T_EnumUnitMoral nAsnID )
+const PHY_Morale* PHY_Morale::Find( ASN1T_EnumUnitMorale nAsnID )
 {
-    CIT_MoraleMap it = std::find_if( morales_.begin(), morales_.end(), std::compose1( std::bind2nd( std::equal_to< ASN1T_EnumUnitMoral >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Morale::GetAsnID ), std::select2nd< T_MoraleMap::value_type >() ) ) );
+    CIT_MoraleMap it = std::find_if( morales_.begin(), morales_.end(), std::compose1( std::bind2nd( std::equal_to< ASN1T_EnumUnitMorale >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Morale::GetAsnID ), std::select2nd< T_MoraleMap::value_type >() ) ) );
 
     return it == morales_.end() ? 0 : it->second;
 }
@@ -61,7 +61,7 @@ const std::string& PHY_Morale::GetName() const
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 inline
-ASN1T_EnumUnitMoral PHY_Morale::GetAsnID() const
+ASN1T_EnumUnitMorale PHY_Morale::GetAsnID() const
 {
     return nAsnID_;
 }

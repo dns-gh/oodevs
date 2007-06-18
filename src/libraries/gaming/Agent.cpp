@@ -28,7 +28,7 @@ const QString Agent::typeName_ = "agent";
 // Name: Agent constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller,  const Resolver_ABC< AgentType >& resolver )
+Agent::Agent( const ASN1T_MsgUnitCreation& message, Controller& controller,  const Resolver_ABC< AgentType >& resolver )
     : EntityImplementation< Agent_ABC >( controller, message.oid_pion, message.nom )
     , type_( resolver.Get( message.type_pion ) )
     , isPc_( message.pc )

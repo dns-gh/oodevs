@@ -33,20 +33,20 @@ class AgentLogMaintenance
 public:
     //! @name Constructors/Destructor
     //@{
-     AgentLogMaintenance( Model& model, const Agent& agent, const ASN1T_MsgLogMaintenanceEtat& asnMsg );
+     AgentLogMaintenance( Model& model, const Agent& agent, const ASN1T_MsgLogMaintenanceState& asnMsg );
     ~AgentLogMaintenance();
     //@}
 
     //! @name Main
     //@{
-    void Update(  const ASN1T_MsgLogMaintenanceEtat& asnMsg );
+    void Update(  const ASN1T_MsgLogMaintenanceState& asnMsg );
     void Send  ( Publisher_ABC& publisher ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< ASN1T_TypeEquipement > T_EquipmentTypeVector;
+    typedef std::vector< ASN1T_EquipmentType > T_EquipmentTypeVector;
     //@}
 
 private:
@@ -63,8 +63,8 @@ private:
           T_EquipmentTypeVector           priorities_;
           ModelRefsContainer< Automat >   tacticalPriorities_;
 
-    ModelsContainer< EquipmentAvailability< ASN1T_MaintenanceDisponibiliteMoyens > > haulersAvailability_;
-    ModelsContainer< EquipmentAvailability< ASN1T_MaintenanceDisponibiliteMoyens > > repairersAvailability_;
+    ModelsContainer< EquipmentAvailability< ASN1T_LogMaintenanceEquipmentAvailability > > haulersAvailability_;
+    ModelsContainer< EquipmentAvailability< ASN1T_LogMaintenanceEquipmentAvailability > > repairersAvailability_;
 };
 
 }

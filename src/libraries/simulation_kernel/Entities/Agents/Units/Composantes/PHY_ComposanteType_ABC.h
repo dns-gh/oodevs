@@ -32,7 +32,7 @@ public:
 
     //! @name Accessors
     //@{
-          ASN1T_TypeEquipement GetMosID     () const;
+          ASN1T_EquipmentType GetMosID     () const;
     const PHY_Protection&      GetProtection() const;
     const PHY_Volume&          GetVolume    () const;
     const std::string&         GetName      () const;
@@ -49,7 +49,7 @@ private:
     const std::string          strName_;
     const PHY_Protection*      pProtection_;
     const PHY_Volume*          pVolume_;
-          ASN1T_TypeEquipement nMosID_;
+          ASN1T_EquipmentType nMosID_;
 };
 
 #include "PHY_ComposanteType_ABC.inl"

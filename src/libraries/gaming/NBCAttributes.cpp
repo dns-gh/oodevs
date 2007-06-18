@@ -45,12 +45,12 @@ void NBCAttributes::UpdateData( const T& message )
 {
     if( message.m.attributs_specifiquesPresent )
     {
-        if( message.attributs_specifiques.t == T_AttrObjectSpecific_nuage_nbc )
+        if( message.attributs_specifiques.t == T_ObjectAttributesSpecific_nuage_nbc )
         {
             nbc_ = & resolver_.Get( message.attributs_specifiques.u.nuage_nbc->agent_nbc );
             controller_.Update( *(NBCAttributes_ABC*)this );
         }
-        else if( message.attributs_specifiques.t == T_AttrObjectSpecific_zone_nbc )
+        else if( message.attributs_specifiques.t == T_ObjectAttributesSpecific_zone_nbc )
         {
             nbc_ = & resolver_.Get( message.attributs_specifiques.u.zone_nbc->agent_nbc );
             controller_.Update( *(NBCAttributes_ABC*)this );

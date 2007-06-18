@@ -18,7 +18,7 @@ class PHY_Ephemeride;
 class PHY_Precipitation;
 class PHY_Lighting;
 
-struct ASN1T_MeteoAttributs;
+struct ASN1T_MeteoAttributes;
 
 //*****************************************************************************
 // Created: JVT 03-08-05
@@ -37,7 +37,7 @@ public:
 
 public:
     PHY_Meteo( MIL_InputArchive& archive, const PHY_Ephemeride& ephemeride );
-    PHY_Meteo( const ASN1T_MeteoAttributs& );
+    PHY_Meteo( const ASN1T_MeteoAttributes& );
 
     //-------------------------------------------------------------------------
     /** @name Creation / destruction */
@@ -61,7 +61,7 @@ public:
     //! @name Operations
     //@{
     void Update( const PHY_Ephemeride& );
-    void Update( const ASN1T_MeteoAttributs& asn );
+    void Update( const ASN1T_MeteoAttributes& asn );
     //@}
 
 private:

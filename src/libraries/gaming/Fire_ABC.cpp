@@ -36,7 +36,7 @@ Fire_ABC::~Fire_ABC()
 // Name: Fire_ABC::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Fire_ABC::DoUpdate( const ASN1T_MsgStopPionFire& message )
+void Fire_ABC::DoUpdate( const ASN1T_MsgStopUnitFire& message )
 {
     origin_.Update( message );
 }

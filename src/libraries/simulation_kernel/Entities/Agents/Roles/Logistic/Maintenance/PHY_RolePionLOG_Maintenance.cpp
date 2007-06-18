@@ -100,7 +100,7 @@ namespace boost
             file << size;
             for ( CIT_MaintenancePriorityVector it = vector.begin(); it != vector.end(); ++it )
             {
-                ASN1T_TypeEquipement id = (*it)->GetMosID();
+                ASN1T_EquipmentType id = (*it)->GetMosID();
                 file << id;
             }
         }
@@ -113,7 +113,7 @@ namespace boost
             vector.reserve( nNbr );
             while ( nNbr-- )
             {
-                ASN1T_TypeEquipement nID;
+                ASN1T_EquipmentType nID;
                 file >> nID;
                 vector.push_back( PHY_ComposanteTypePion::Find( nID ) );
             }
@@ -637,17 +637,17 @@ void PHY_RolePionLOG_Maintenance::Clean()
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
 static
-void SendComposanteUse( const PHY_RolePion_Composantes::T_ComposanteUseMap& data, ASN1T__SeqOfMaintenanceDisponibiliteMoyens& asn, const PHY_MaintenanceWorkRate* pWorkRate )
+void SendComposanteUse( const PHY_RolePion_Composantes::T_ComposanteUseMap& data, ASN1T__SeqOfLogMaintenanceEquipmentAvailability& asn, const PHY_MaintenanceWorkRate* pWorkRate )
 {
     asn.n = data.size();
     if( data.empty() )
         return;
 
-    ASN1T_MaintenanceDisponibiliteMoyens* pData = new ASN1T_MaintenanceDisponibiliteMoyens[ data.size() ];
+    ASN1T_LogMaintenanceEquipmentAvailability* pData = new ASN1T_LogMaintenanceEquipmentAvailability[ data.size() ];
     uint i = 0;
     for( PHY_RolePion_Composantes::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
-        ASN1T_MaintenanceDisponibiliteMoyens& data = pData[ i++ ];
+        ASN1T_LogMaintenanceEquipmentAvailability& data = pData[ i++ ];
         data.type_equipement = itData->first->GetMosID();
         assert( itData->second.nNbrTotal_ );
 
@@ -675,7 +675,7 @@ void SendComposanteUse( const PHY_RolePion_Composantes::T_ComposanteUseMap& data
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Maintenance::SendFullState() const
 {
-    NET_ASN_MsgLogMaintenanceEtat asn;
+    NET_ASN_MsgLogMaintenanceState asn;
 
     asn().m.chaine_activeePresent             = 1;
     asn().m.regime_travailPresent             = 1;
@@ -692,7 +692,7 @@ void PHY_RolePionLOG_Maintenance::SendFullState() const
     asn().priorites.n = priorities_.size();
     if( !priorities_.empty() )
     {
-        ASN1T_TypeEquipement* pAsnPriorities = new ASN1T_TypeEquipement[ priorities_.size() ];
+        ASN1T_EquipmentType* pAsnPriorities = new ASN1T_EquipmentType[ priorities_.size() ];
         uint i = 0 ;
         for( CIT_MaintenancePriorityVector itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
             pAsnPriorities[ i++ ] = (**itPriority).GetMosID();
@@ -702,7 +702,7 @@ void PHY_RolePionLOG_Maintenance::SendFullState() const
     asn().priorites_tactiques.n = tacticalPriorities_.size();
     if( !tacticalPriorities_.empty() )
     {
-        ASN1T_Automate* pAsnPriorities = new ASN1T_Automate[ tacticalPriorities_.size() ];
+        ASN1T_Automat* pAsnPriorities = new ASN1T_Automat[ tacticalPriorities_.size() ];
         uint i = 0 ;
         for( CIT_AutomateVector itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
             pAsnPriorities[ i++ ] = (**itPriority).GetID();

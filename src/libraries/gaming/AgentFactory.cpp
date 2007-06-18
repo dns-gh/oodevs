@@ -110,7 +110,7 @@ AgentFactory::~AgentFactory()
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
+Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomatCreation& asnMsg )
 {
     Automat* result = new Automat( asnMsg, controllers_.controller_, static_.types_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
@@ -146,7 +146,7 @@ Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
+Agent_ABC* AgentFactory::Create( const ASN1T_MsgUnitCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controllers_.controller_, static_.types_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();

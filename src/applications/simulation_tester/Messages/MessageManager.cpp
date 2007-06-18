@@ -244,16 +244,16 @@ void MessageManager::OnReceiveMsgOutSim( DIN_Link& /*linkFrom*/, DIN_Input& inpu
         case T_MsgsOutSim_msg_msg_change_automate_ack:            OnReceiveMsgChangeAutomateAck      ( *asnMsg.msg.u.msg_change_automate_ack           , nCtx ); break;
         case T_MsgsOutSim_msg_msg_change_diplomatie_ack:          OnReceiveMsgChangeTeamRelationAck  ( *asnMsg.msg.u.msg_change_diplomatie_ack         , nCtx ); break;
         case T_MsgsOutSim_msg_msg_change_groupe_connaissance_ack: OnReceiveMsgChangeKnowledgeGroupAck( *asnMsg.msg.u.msg_change_groupe_connaissance_ack, nCtx ); break;
-        case T_MsgsOutSim_msg_msg_automate_order_ack:             OnReceiveMsgAutomateOrderAck       ( *asnMsg.msg.u.msg_automate_order_ack            , nCtx ); break;
-        case T_MsgsOutSim_msg_msg_pion_order_ack:                 OnReceiveMsgPionOrderAck           ( *asnMsg.msg.u.msg_pion_order_ack                , nCtx ); break;
+        case T_MsgsOutSim_msg_msg_automate_order_ack:             OnReceiveMsgAutomatOrderAck       ( *asnMsg.msg.u.msg_automate_order_ack            , nCtx ); break;
+        case T_MsgsOutSim_msg_msg_pion_order_ack:                 OnReceiveMsgUnitOrderAck           ( *asnMsg.msg.u.msg_pion_order_ack                , nCtx ); break;
         case T_MsgsOutSim_msg_msg_set_automate_mode_ack:          OnReceiveMsgSetAutomatModeAck      ( *asnMsg.msg.u.msg_set_automate_mode_ack         , nCtx ); break;
 
-		case T_MsgsOutSim_msg_msg_ctrl_info:                     OnReceiveMsgCtrlInfo                  ( *asnMsg.msg.u.msg_ctrl_info                    ); break;
-        case T_MsgsOutSim_msg_msg_ctrl_begin_tick:               OnReceiveMsgCtrlBeginTick             (  asnMsg.msg.u.msg_ctrl_begin_tick              ); break;
-        case T_MsgsOutSim_msg_msg_ctrl_end_tick:                 OnReceiveMsgCtrlEndTick               ( *asnMsg.msg.u.msg_ctrl_end_tick                ); break;
-        case T_MsgsOutSim_msg_msg_ctrl_change_time_factor_ack:   OnReceiveMsgCtrlChangeTimeFactorAck   ( *asnMsg.msg.u.msg_ctrl_change_time_factor_ack  ); break;
-        case T_MsgsOutSim_msg_msg_ctrl_send_current_state_begin: OnReceiveMsgCtrlSendCurrentStateBegin (); break;
-        case T_MsgsOutSim_msg_msg_ctrl_send_current_state_end:   OnReceiveMsgCtrlSendCurrentStateEnd   (); break;
+		case T_MsgsOutSim_msg_msg_ctrl_info:                     OnReceiveMsgControlInformation                  ( *asnMsg.msg.u.msg_ctrl_info                    ); break;
+        case T_MsgsOutSim_msg_msg_ctrl_begin_tick:               OnReceiveMsgControlBeginTick             (  asnMsg.msg.u.msg_ctrl_begin_tick              ); break;
+        case T_MsgsOutSim_msg_msg_ctrl_end_tick:                 OnReceiveMsgControlEndTick               ( *asnMsg.msg.u.msg_ctrl_end_tick                ); break;
+        case T_MsgsOutSim_msg_msg_ctrl_change_time_factor_ack:   OnReceiveMsgControlChangeTimeFactorAck   ( *asnMsg.msg.u.msg_ctrl_change_time_factor_ack  ); break;
+        case T_MsgsOutSim_msg_msg_ctrl_send_current_state_begin: OnReceiveMsgControlSendCurrentStateBegin (); break;
+        case T_MsgsOutSim_msg_msg_ctrl_send_current_state_end:   OnReceiveMsgControlSendCurrentStateEnd   (); break;
 
         case T_MsgsOutSim_msg_msg_unit_attributes:               OnReceiveMsgUnitAttributes            ( *asnMsg.msg.u.msg_unit_attributes              ); break;
         case T_MsgsOutSim_msg_msg_unit_pathfind:                 OnReceiveMsgPawnPathFind              ( *asnMsg.msg.u.msg_unit_pathfind                ); break;
@@ -290,13 +290,13 @@ void MessageManager::OnReceiveMsgOutSim( DIN_Link& /*linkFrom*/, DIN_Input& inpu
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: MessageManager::OnReceiveMsgCtrlInfo
+// Name: MessageManager::OnReceiveMsgControlInformation
 // Created: SBO 2005-05-17
 //-----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgCtrlInfo( const ASN1T_MsgCtrlInfo& asnMsg )
+void MessageManager::OnReceiveMsgControlInformation( const ASN1T_MsgControlInformation& asnMsg )
 {
     std::stringstream strOutputMsg;
-    strOutputMsg << "CtrlInfo - Current Tick: " << asnMsg.current_tick 
+    strOutputMsg << "ControlInformation - Current Tick: " << asnMsg.current_tick 
                  << " - Tick duration : "       << asnMsg.tick_duration
                  << " - Time factor : "         << asnMsg.time_factor;
 
@@ -308,19 +308,19 @@ void MessageManager::OnReceiveMsgCtrlInfo( const ASN1T_MsgCtrlInfo& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MessageManager::OnReceiveMsgCtrlBeginTick
+// Name: MessageManager::OnReceiveMsgControlBeginTick
 // Created: SBO 2005-05-17
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgCtrlBeginTick( const ASN1T_MsgCtrlBeginTick& asnMsg )
+void MessageManager::OnReceiveMsgControlBeginTick( const ASN1T_MsgControlBeginTick& asnMsg )
 {
     workspace_.SetTick( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MessageManager::OnReceiveMsgCtrlEndTick
+// Name: MessageManager::OnReceiveMsgControlEndTick
 // Created: NLD 2005-06-08
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgCtrlEndTick( const ASN1T_MsgCtrlEndTick& /*asnMsg*/ )
+void MessageManager::OnReceiveMsgControlEndTick( const ASN1T_MsgControlEndTick& /*asnMsg*/ )
 {
     MT_LOG_INFO_MSG( "Tick: " << workspace_.GetTick() << " (next test at " << workspace_.GetScheduler().GetNextExecutionTick() << ")" );
     // save recovery point
@@ -330,14 +330,14 @@ void MessageManager::OnReceiveMsgCtrlEndTick( const ASN1T_MsgCtrlEndTick& /*asnM
 }
 
 // -----------------------------------------------------------------------------
-// Name: MessageManager::OnReceiveMsgCtrlChangeTimeFactorAck
+// Name: MessageManager::OnReceiveMsgControlChangeTimeFactorAck
 // Created: SBO 2005-06-03
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgCtrlChangeTimeFactorAck( const ASN1T_MsgCtrlChangeTimeFactorAck& /*asnMsg*/ )
+void MessageManager::OnReceiveMsgControlChangeTimeFactorAck( const ASN1T_MsgControlChangeTimeFactorAck& /*asnMsg*/ )
 {
 /*
     // don't do anything if original command was malformed
-    if( asnMsg.error_code == EnumCtrlErrorCode::no_error )
+    if( asnMsg.error_code == EnumControlErrorCode::no_error )
     {
         workspace_.SetTimeFactor( asnMsg.time_factor );
     }
@@ -346,20 +346,20 @@ void MessageManager::OnReceiveMsgCtrlChangeTimeFactorAck( const ASN1T_MsgCtrlCha
 
 
 // -----------------------------------------------------------------------------
-// Name: MessageManager::OnReceiveMsgCtrlSendCurrentStateBegin
+// Name: MessageManager::OnReceiveMsgControlSendCurrentStateBegin
 // Created: SBO 2005-06-08
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgCtrlSendCurrentStateBegin()
+void MessageManager::OnReceiveMsgControlSendCurrentStateBegin()
 {
     MT_LOG_INFO_MSG( "Begin current state..." );
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: MessageManager::OnReceiveMsgCtrlSendCurrentStateEnd
+// Name: MessageManager::OnReceiveMsgControlSendCurrentStateEnd
 // Created: SBO 2005-06-08
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgCtrlSendCurrentStateEnd()
+void MessageManager::OnReceiveMsgControlSendCurrentStateEnd()
 {
     MT_LOG_INFO_MSG( "End current state..." );
     // change time factor
@@ -384,10 +384,10 @@ void MessageManager::OnReceiveMsgCtrlSendCurrentStateEnd()
 //=============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MessageManager::OnReceiveMsgAutomateCreation
+// Name: MessageManager::OnReceiveMsgAutomatCreation
 // Created: SBO 2005-05-11
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgAutomatCreation( const ASN1T_MsgAutomateCreation& asnMsg )
+void MessageManager::OnReceiveMsgAutomatCreation( const ASN1T_MsgAutomatCreation& asnMsg )
 {
     if( !workspace_.GetEntityManager().FindAutomat( asnMsg.oid_automate ) )
     {
@@ -400,10 +400,10 @@ void MessageManager::OnReceiveMsgAutomatCreation( const ASN1T_MsgAutomateCreatio
 }
 
 // -----------------------------------------------------------------------------
-// Name: MessageManager::OnReceiveMsgPionCreation
+// Name: MessageManager::OnReceiveMsgUnitCreation
 // Created: SBO 2005-05-11
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgPawnCreation( const ASN1T_MsgPionCreation& asnMsg )
+void MessageManager::OnReceiveMsgPawnCreation( const ASN1T_MsgUnitCreation& asnMsg )
 {
     if( !workspace_.GetEntityManager().FindPawn( asnMsg.oid_pion ) )
     {
@@ -463,7 +463,7 @@ void MessageManager::OnReceiveMsgUnitAttributes( const ASN1T_MsgUnitAttributes& 
 // Name: MessageManager::OnReceiveMsgChangeTeamRelation
 // Created: SBO 2005-05-16
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgChangeTeamRelation( const ASN1T_MsgChangeDiplomatie& asnMsg )
+void MessageManager::OnReceiveMsgChangeTeamRelation( const ASN1T_MsgChangeDiplomacy& asnMsg )
 {
     Team* pTeam1 = workspace_.GetEntityManager().FindTeam( asnMsg.oid_camp1 );
     assert( pTeam1 );
@@ -478,10 +478,10 @@ void MessageManager::OnReceiveMsgChangeTeamRelation( const ASN1T_MsgChangeDiplom
 // Name: MessageManager::OnReceiveMsgChangeTeamRelation
 // Created: SBO 2005-05-17
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgChangeTeamRelationAck( const ASN1T_MsgChangeDiplomatieAck& asnMsg, unsigned int /*nCtx*/ )
+void MessageManager::OnReceiveMsgChangeTeamRelationAck( const ASN1T_MsgChangeDiplomacyAck& asnMsg, unsigned int /*nCtx*/ )
 {
     // don't do anything if original command was malformed
-    if( asnMsg.error_code == EnumChangeDiplomatieErrorCode::no_error )
+    if( asnMsg.error_code == EnumChangeDiplomacyErrorCode::no_error )
     {
         Team* pTeam1 = workspace_.GetEntityManager().FindTeam( asnMsg.oid_camp1 );
         assert( pTeam1 );
@@ -653,7 +653,7 @@ void MessageManager::OnReceiveMsgPopulationConcentrationDestruction( const ASN1T
 // Name: MessageManager::OnReceiveMsgPopulationFlowCreation
 // Created: SBO 2005-11-24
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgPopulationFlowCreation( const ASN1T_MsgPopulationFluxCreation& asnMsg )
+void MessageManager::OnReceiveMsgPopulationFlowCreation( const ASN1T_MsgPopulationFlowCreation& asnMsg )
 {
     Population* pPopulation = workspace_.GetEntityManager().FindPopulation( asnMsg.oid_population );
     assert( pPopulation );
@@ -664,7 +664,7 @@ void MessageManager::OnReceiveMsgPopulationFlowCreation( const ASN1T_MsgPopulati
 // Name: MessageManager::OnReceiveMsgPopulationFlowUpdate
 // Created: SBO 2005-11-24
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgPopulationFlowUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
+void MessageManager::OnReceiveMsgPopulationFlowUpdate( const ASN1T_MsgPopulationFlowUpdate& asnMsg )
 {
     Population* pPopulation = workspace_.GetEntityManager().FindPopulation( asnMsg.oid_population );
     assert( pPopulation );
@@ -675,7 +675,7 @@ void MessageManager::OnReceiveMsgPopulationFlowUpdate( const ASN1T_MsgPopulation
 // Name: MessageManager::OnReceiveMsgPopulationFlowDestruction
 // Created: SBO 2005-11-24
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgPopulationFlowDestruction( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
+void MessageManager::OnReceiveMsgPopulationFlowDestruction( const ASN1T_MsgPopulationFlowDestruction& asnMsg )
 {
     Population* pPopulation = workspace_.GetEntityManager().FindPopulation( asnMsg.oid_population );
     assert( pPopulation );
@@ -786,25 +786,25 @@ void MessageManager::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObje
 }
 
 // -----------------------------------------------------------------------------
-// Name: MessageManager::OnReceiveMsgPionOrderAck
+// Name: MessageManager::OnReceiveMsgUnitOrderAck
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& asnMsg, unsigned int /*nCtx*/ )
+void MessageManager::OnReceiveMsgUnitOrderAck( const ASN1T_MsgUnitOrderAck& asnMsg, unsigned int /*nCtx*/ )
 {
     Pawn* pPawn = workspace_.GetEntityManager().FindPawn( asnMsg.oid_unite_executante );
     assert( pPawn );
 
     std::stringstream strOutputMsg;
     strOutputMsg << "Agent [" << asnMsg.oid_unite_executante << "] (" << pPawn->GetType().GetName() << ") "
-                 << "PionOrderAck - " << ASN_Tools::ToString( asnMsg.error_code );
+                 << "UnitOrderAck - " << ASN_Tools::ToString( asnMsg.error_code );
     MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MessageManager::OnReceiveMsgAutomateOrderAck
+// Name: MessageManager::OnReceiveMsgAutomatOrderAck
 // Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrderAck& asnMsg, unsigned int /*nCtx*/ )
+void MessageManager::OnReceiveMsgAutomatOrderAck( const ASN1T_MsgAutomatOrderAck& asnMsg, unsigned int /*nCtx*/ )
 {
     Automat* pAutomat = workspace_.GetEntityManager().FindAutomat( asnMsg.oid_unite_executante );
     assert( pAutomat );
@@ -819,7 +819,7 @@ void MessageManager::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrderA
 // Name: MessageManager::OnReceiveMsgSetAutomatModeAck
 // Created: SBO 2005-08-24
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgSetAutomatModeAck( const ASN1T_MsgSetAutomateModeAck& /*asnMsg*/, unsigned int /*nCtx*/ )
+void MessageManager::OnReceiveMsgSetAutomatModeAck( const ASN1T_MsgSetAutomatModeAck& /*asnMsg*/, unsigned int /*nCtx*/ )
 {
     /*
     Automat* pAutomat = workspace_.GetEntityManager().FindAutomat( asnMsg.unit_id );

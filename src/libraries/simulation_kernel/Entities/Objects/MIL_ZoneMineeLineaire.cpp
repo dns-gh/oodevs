@@ -125,7 +125,7 @@ ASN1T_EnumObjectErrorCode MIL_ZoneMineeLineaire::Initialize( const ASN1T_MagicAc
     if( nErrorCode != EnumObjectErrorCode::no_error )
         return nErrorCode;
 
-    if( !asn.m.attributs_specifiquesPresent || asn.attributs_specifiques.t != T_AttrObjectSpecific_zone_minee_lineaire )
+    if( !asn.m.attributs_specifiquesPresent || asn.attributs_specifiques.t != T_ObjectAttributesSpecific_zone_minee_lineaire )
         return EnumObjectErrorCode::error_missing_specific_attributes;
 
     rMinesDensity_      = asn.attributs_specifiques.u.zone_minee_lineaire->densite;
@@ -185,7 +185,7 @@ void MIL_ZoneMineeLineaire::WriteSpecificAttributes( NET_ASN_MsgObjectCreation& 
     asnAttributes_.delai_activite_mines = nMinesActivityTime_;
 
     asnMsg().m.attributs_specifiquesPresent = 1;
-    asnMsg().attributs_specifiques.t                     = T_AttrObjectSpecific_zone_minee_lineaire;
+    asnMsg().attributs_specifiques.t                     = T_ObjectAttributesSpecific_zone_minee_lineaire;
     asnMsg().attributs_specifiques.u.zone_minee_lineaire = &asnAttributes_;
 }
 

@@ -30,7 +30,7 @@ ActionParameterObstacleList::ActionParameterObstacleList( const OrderParameter& 
 // Name: ActionParameterObstacleList constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-ActionParameterObstacleList::ActionParameterObstacleList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& resolver, const ASN1T_ListMissionGenObject& asn )
+ActionParameterObstacleList::ActionParameterObstacleList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& resolver, const ASN1T_PlannedWorkList& asn )
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
@@ -69,13 +69,13 @@ namespace
 {
     struct AsnSerializer : public ActionParameterVisitor_ABC
     {
-        explicit AsnSerializer( ASN1T_ListMissionGenObject& asn ) : asn_( &asn ), current_( 0 ) {}
+        explicit AsnSerializer( ASN1T_PlannedWorkList& asn ) : asn_( &asn ), current_( 0 ) {}
         virtual void Visit( const ActionParameterObstacle& param )
         {
             param.CommitTo( asn_->elem[current_++] );
         }
 
-        ASN1T_ListMissionGenObject* asn_;
+        ASN1T_PlannedWorkList* asn_;
         unsigned int current_;
     };
 }
@@ -86,12 +86,12 @@ namespace
 // -----------------------------------------------------------------------------
 void ActionParameterObstacleList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    ASN1T_ListMissionGenObject*& list = asn.value.u.listMissionGenObject = new ASN1T_ListMissionGenObject();
-    asn.value.t = T_MissionParameter_value_listMissionGenObject;
+    ASN1T_PlannedWorkList*& list = asn.value.u.plannedWorkList = new ASN1T_PlannedWorkList();
+    asn.value.t = T_MissionParameter_value_plannedWorkList;
     asn.null_value = ( list->n = Count() ) ? 0 : 1;
     if( asn.null_value )
         return;
-    list->elem = new ASN1T_MissionGenObject[list->n];
+    list->elem = new ASN1T_PlannedWork[list->n];
     AsnSerializer serializer( *list );
     Accept( serializer );
 }
@@ -100,13 +100,13 @@ namespace
 {
     struct AsnCleaner : public ActionParameterVisitor_ABC
     {
-        explicit AsnCleaner( ASN1T_ListMissionGenObject& asn ) : asn_( &asn ), current_( 0 ) {}
+        explicit AsnCleaner( ASN1T_PlannedWorkList& asn ) : asn_( &asn ), current_( 0 ) {}
         virtual void Visit( const ActionParameterObstacle& param )
         {
             param.Clean( asn_->elem[current_++] );
         }
    
-        ASN1T_ListMissionGenObject* asn_;
+        ASN1T_PlannedWorkList* asn_;
         unsigned int current_;
     };
 }
@@ -117,11 +117,11 @@ namespace
 // -----------------------------------------------------------------------------
 void ActionParameterObstacleList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listMissionGenObject )
+    if( asn.value.u.plannedWorkList )
     {
-        AsnCleaner cleaner( *asn.value.u.listMissionGenObject );
+        AsnCleaner cleaner( *asn.value.u.plannedWorkList );
         Accept( cleaner );
-        delete[] asn.value.u.listMissionGenObject->elem;
+        delete[] asn.value.u.plannedWorkList->elem;
     }
-    delete asn.value.u.listMissionGenObject;
+    delete asn.value.u.plannedWorkList;
 }

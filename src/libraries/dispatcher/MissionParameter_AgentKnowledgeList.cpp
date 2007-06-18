@@ -20,8 +20,8 @@ using namespace dispatcher;
 MissionParameter_AgentKnowledgeList::MissionParameter_AgentKnowledgeList( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    for( unsigned i = 0; i != asn.value.u.listKnowledgeAgent->n; ++i )
-        agentKnowledges_.push_back( asn.value.u.listKnowledgeAgent->elem[i] );
+    for( unsigned i = 0; i != asn.value.u.unitKnowledgeList->n; ++i )
+        agentKnowledges_.push_back( asn.value.u.unitKnowledgeList->elem[i] );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,9 +44,9 @@ MissionParameter_AgentKnowledgeList::~MissionParameter_AgentKnowledgeList()
 void MissionParameter_AgentKnowledgeList::Send( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value                 = bNullValue_;
-    asn.value.t                    = T_MissionParameter_value_listKnowledgeAgent;
-    asn.value.u.listKnowledgeAgent = new ASN1T_ListKnowledgeAgent();
-    SendContainerValues< ASN1T_ListKnowledgeAgent, ASN1T_KnowledgeAgent, T_OIDVector >( agentKnowledges_, *asn.value.u.listKnowledgeAgent ); 
+    asn.value.t                    = T_MissionParameter_value_unitKnowledgeList;
+    asn.value.u.unitKnowledgeList = new ASN1T_UnitKnowledgeList();
+    SendContainerValues< ASN1T_UnitKnowledgeList, ASN1T_UnitKnowledge, T_OIDVector >( agentKnowledges_, *asn.value.u.unitKnowledgeList ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ void MissionParameter_AgentKnowledgeList::Send( ASN1T_MissionParameter& asn ) co
 // -----------------------------------------------------------------------------
 void MissionParameter_AgentKnowledgeList::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listKnowledgeAgent->n > 0 )
-        delete [] asn.value.u.listKnowledgeAgent->elem;
-    delete asn.value.u.listKnowledgeAgent;
+    if( asn.value.u.unitKnowledgeList->n > 0 )
+        delete [] asn.value.u.unitKnowledgeList->elem;
+    delete asn.value.u.unitKnowledgeList;
 }

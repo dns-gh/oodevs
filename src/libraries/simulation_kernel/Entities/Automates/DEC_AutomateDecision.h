@@ -17,7 +17,7 @@
 class MIL_Automate;
 class MIL_AutomateMission;
 
-class NET_ASN_MsgAutomateAttributes;
+class NET_ASN_MsgAutomatAttributes;
 
 enum E_ForceRatioState;
 enum E_RulesOfEngagementState;
@@ -72,8 +72,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgAutomateAttributes& msg ) const;
-    void SendFullState   ( NET_ASN_MsgAutomateAttributes& msg ) const;
+    void SendChangedState( NET_ASN_MsgAutomatAttributes& msg ) const;
+    void SendFullState   ( NET_ASN_MsgAutomatAttributes& msg ) const;
     //@}
 
     //! @name Accessors

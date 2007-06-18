@@ -31,7 +31,7 @@ class LogConsignMedical : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogConsignMedical( Model& model, const ASN1T_MsgLogSanteTraitementHumainCreation& msg );
+             LogConsignMedical( Model& model, const ASN1T_MsgLogMedicalHandlingCreation& msg );
     virtual ~LogConsignMedical();
     //@}
 
@@ -42,8 +42,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgLogSanteTraitementHumainCreation& msg );
-    void Update        ( const ASN1T_MsgLogSanteTraitementHumainUpdate& msg );
+    void Update        ( const ASN1T_MsgLogMedicalHandlingCreation& msg );
+    void Update        ( const ASN1T_MsgLogMedicalHandlingUpdate& msg );
     virtual void SendCreation   ( Publisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( Publisher_ABC& publisher ) const;
     virtual void SendDestruction( Publisher_ABC& publisher ) const;
@@ -67,7 +67,7 @@ private:
     ASN1T_EnumHumanWound             nWound_;
     bool                             bMentalDiseased_;
     bool                             bContaminated_;
-    ASN1T_EnumLogSanteTraitementEtat nState_;
+    ASN1T_EnumLogMedicalHandlingStatus nState_;
     bool                             bDiagnosed_;
 };
 

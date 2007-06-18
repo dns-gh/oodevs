@@ -33,13 +33,13 @@ class AgentLogSupply
 public:
     //! @name Constructors/Destructor
     //@{
-     AgentLogSupply( Model& model, const Agent& agent, const ASN1T_MsgLogRavitaillementEtat& asnMsg );
+     AgentLogSupply( Model& model, const Agent& agent, const ASN1T_MsgLogSupplyState& asnMsg );
     ~AgentLogSupply();
     //@}
 
     //! @name Main
     //@{
-    void Update(  const ASN1T_MsgLogRavitaillementEtat& asnMsg );
+    void Update(  const ASN1T_MsgLogSupplyState& asnMsg );
     void Send  ( Publisher_ABC& publisher ) const;
     //@}
 
@@ -56,7 +56,7 @@ private:
           bool                            bSystemEnabled_;
           ModelsContainer< Dotation  >    stocks_;
 
-    ModelsContainer< EquipmentAvailability< ASN1T_RavitaillementDisponibiliteMoyens > > convoyersAvailability_;
+    ModelsContainer< EquipmentAvailability< ASN1T_LogSupplyEquimentAvailability > > convoyersAvailability_;
 };
 
 }

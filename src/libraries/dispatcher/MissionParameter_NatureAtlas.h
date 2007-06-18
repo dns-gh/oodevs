@@ -48,7 +48,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_NatureAtlas natureAtlas_;
+    ASN1T_AtlasNature natureAtlas_;
     //@}
 };
 

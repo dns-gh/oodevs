@@ -22,7 +22,7 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 ActionParameterLimit::ActionParameterLimit( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Line& line )
     : ActionParameter_ABC( name )
-    , location_( new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, (const ASN1T_Localisation&)line ) )
+    , location_( new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, (const ASN1T_Location&)line ) )
 {
     AddParameter( *location_ );
 }

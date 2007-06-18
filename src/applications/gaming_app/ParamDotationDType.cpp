@@ -20,7 +20,7 @@ using namespace kernel;
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
 ParamDotationDType::ParamDotationDType( const kernel::OrderParameter& parameter, const Resolver_ABC< DotationType >& resolver )
-    : ParamComboBox< ASN1T_TypeDotationTrancheD >( parameter )
+    : ParamComboBox< ASN1T_DotationType >( parameter )
     , resolver_( resolver )
     , parameter_( parameter )
 {
@@ -47,9 +47,9 @@ void ParamDotationDType::BuildInterface( QWidget* parent )
     {
         const DotationType& type = it.NextElement();
         if( type.IsDType() )
-            AddItem( type.GetCategory(), (ASN1T_TypeDotationTrancheD)type.GetId() );
+            AddItem( type.GetCategory(), (ASN1T_DotationType)type.GetId() );
     }
-    ParamComboBox< ASN1T_TypeDotationTrancheD >::BuildInterface( parent );
+    ParamComboBox< ASN1T_DotationType >::BuildInterface( parent );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,8 +59,8 @@ void ParamDotationDType::BuildInterface( QWidget* parent )
 void ParamDotationDType::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value = 0;
-    asn.value.t = T_MissionParameter_value_typeDotation;
-    asn.value.u.typeDotation = GetValue();
+    asn.value.t = T_MissionParameter_value_dotationType;
+    asn.value.u.dotationType = GetValue();
 }
 
 // -----------------------------------------------------------------------------

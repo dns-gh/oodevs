@@ -63,7 +63,7 @@ public:
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
     virtual void NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& );
     virtual void Handle( kernel::Location_ABC& location );
-    void CommitTo( ASN1T_Itineraire& destination ) const;
+    void CommitTo( ASN1T_Path& destination ) const;
     virtual void CommitTo( Action_ABC& action ) const;
     virtual void CommitTo( ActionParameter_ABC& parameter ) const;
     //@}

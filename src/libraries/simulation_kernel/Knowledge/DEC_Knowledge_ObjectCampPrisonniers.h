@@ -54,7 +54,7 @@ private:
     // Specific attributes
     bool bSpecificAttributesValid_;
 
-    ASN1T_AttrObjectCampPrisonniers asnAttributes_;
+    ASN1T_ObjectAttributesPrisonerCamp asnAttributes_;
     MIL_AutomateLOG*             pTC2_;
 };
 

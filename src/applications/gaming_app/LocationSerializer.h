@@ -13,7 +13,7 @@
 #include "clients_kernel/LocationVisitor_ABC.h"
 
 struct ASN1T_CoordUTM;
-struct ASN1T_Localisation;
+struct ASN1T_Location;
 
 namespace kernel
 {
@@ -34,14 +34,14 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit LocationSerializer( const kernel::CoordinateConverter_ABC& converter );
-             LocationSerializer( const kernel::CoordinateConverter_ABC& converter, ASN1T_Localisation& localisation );
+             LocationSerializer( const kernel::CoordinateConverter_ABC& converter, ASN1T_Location& localisation );
     virtual ~LocationSerializer();
     //@}
 
     //! @name Operations
     //@{
     void Serialize( const kernel::Location_ABC& location );
-    void Serialize( const kernel::Location_ABC& location, ASN1T_Localisation& localisation );
+    void Serialize( const kernel::Location_ABC& location, ASN1T_Location& localisation );
     //@}
 
     //! @name Operations
@@ -68,7 +68,7 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    ASN1T_Localisation* localisation_;
+    ASN1T_Location* localisation_;
     ASN1T_CoordUTM* pCoords_;
     bool ownsCoords_;
     //@}

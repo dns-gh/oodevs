@@ -19,10 +19,10 @@ PHY_Morale::T_MoraleMap PHY_Morale::morales_;
 // STATIC INITIALIZATION (MANAGER)
 // =============================================================================
 
-const PHY_Morale PHY_Morale::mauvais_  ( "Mauvais"  , eMauvais  , EnumUnitMoral::mauvais  , 0.5  );
-const PHY_Morale PHY_Morale::moyen_    ( "Moyen"    , eMoyen    , EnumUnitMoral::moyen    , 0.75 );
-const PHY_Morale PHY_Morale::bon_      ( "Bon"      , eBon      , EnumUnitMoral::bon      , 1    );
-const PHY_Morale PHY_Morale::fanatique_( "Fanatique", eFanatique, EnumUnitMoral::fanatique, 1.25 );
+const PHY_Morale PHY_Morale::mauvais_  ( "Mauvais"  , eMauvais  , EnumUnitMorale::mauvais  , 0.5  );
+const PHY_Morale PHY_Morale::moyen_    ( "Moyen"    , eMoyen    , EnumUnitMorale::moyen    , 0.75 );
+const PHY_Morale PHY_Morale::bon_      ( "Bon"      , eBon      , EnumUnitMorale::bon      , 1    );
+const PHY_Morale PHY_Morale::fanatique_( "Fanatique", eFanatique, EnumUnitMorale::fanatique, 1.25 );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Morale::Initialize
@@ -54,7 +54,7 @@ void PHY_Morale::Terminate()
 // Name: PHY_Morale constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Morale::PHY_Morale( const std::string& strName, E_MoraleType nType, ASN1T_EnumUnitMoral nAsnID, MT_Float rDIAWeight )
+PHY_Morale::PHY_Morale( const std::string& strName, E_MoraleType nType, ASN1T_EnumUnitMorale nAsnID, MT_Float rDIAWeight )
     : strName_   ( strName )
     , nType_     ( nType   )
     , nAsnID_    ( nAsnID  )

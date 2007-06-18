@@ -190,7 +190,7 @@ void AgentKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
         asn().perception_par_compagnie.n = automatePerceptions_.size();
         if( !automatePerceptions_.empty() )
         {
-            asn().perception_par_compagnie.elem = new ASN1T_AutomatePerception[ automatePerceptions_.size() ];
+            asn().perception_par_compagnie.elem = new ASN1T_AutomatPerception[ automatePerceptions_.size() ];
             for( uint i = 0; i < automatePerceptions_.size(); ++i )
                 asn().perception_par_compagnie.elem[ i ] = automatePerceptions_[ i ];                
         }

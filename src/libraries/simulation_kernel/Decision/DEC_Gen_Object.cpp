@@ -24,7 +24,7 @@
 // Name: DEC_Gen_Object constructor
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
-DEC_Gen_Object::DEC_Gen_Object( const ASN1T_MissionGenObject& asn )
+DEC_Gen_Object::DEC_Gen_Object( const ASN1T_PlannedWork& asn )
     : pType_             ( MIL_RealObjectType::Find( asn.type ) )
     , localisation_      ()
     , pObstacleType_     ( MIL_ObstacleType::Find( asn.type_obstacle ) )
@@ -92,7 +92,7 @@ void DEC_Gen_Object::operator=( const DEC_Gen_Object& rhs )
 // Name: DEC_Gen_Object::Serialize
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
-void DEC_Gen_Object::Serialize( ASN1T_MissionGenObject& asn ) const
+void DEC_Gen_Object::Serialize( ASN1T_PlannedWork& asn ) const
 {
     asn.type                 = pType_->GetAsnID();
     asn.type_obstacle        = pObstacleType_->GetAsnID();

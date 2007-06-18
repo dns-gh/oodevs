@@ -117,7 +117,7 @@ namespace
         }
         void SendStartTick()
         {
-            AsnMsgSimToClientCtrlBeginTick tick;
+            AsnMsgSimToClientControlBeginTick tick;
             tick() = 0;
             tick.Send( *this );
         }

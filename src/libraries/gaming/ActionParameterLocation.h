@@ -33,8 +33,8 @@ public:
     //@{
              ActionParameterLocation( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              ActionParameterLocation( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
-             ActionParameterLocation( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn );
-             ActionParameterLocation( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn );
+             ActionParameterLocation( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Location& asn );
+             ActionParameterLocation( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Location& asn );
              ActionParameterLocation( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
              ActionParameterLocation( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~ActionParameterLocation();
@@ -49,8 +49,8 @@ public:
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
 
-    void CommitTo( ASN1T_Localisation& asn ) const;
-    void Clean( ASN1T_Localisation& asn ) const;
+    void CommitTo( ASN1T_Location& asn ) const;
+    void Clean( ASN1T_Location& asn ) const;
     virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
     //@}
 

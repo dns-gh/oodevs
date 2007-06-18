@@ -19,7 +19,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 MissionParameter_Direction::MissionParameter_Direction( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , direction_          ( asn.value.u.direction )
+    , direction_          ( asn.value.u.heading )
 {
     // NOTHING
 }
@@ -43,9 +43,9 @@ MissionParameter_Direction::~MissionParameter_Direction()
 // -----------------------------------------------------------------------------
 void MissionParameter_Direction::Send( ASN1T_MissionParameter& asn ) const
 {
-    asn.null_value        = bNullValue_;
-    asn.value.t           = T_MissionParameter_value_direction;
-    asn.value.u.direction = direction_;
+    asn.null_value      = bNullValue_;
+    asn.value.t         = T_MissionParameter_value_heading;
+    asn.value.u.heading = direction_;
 }
 
 // -----------------------------------------------------------------------------

@@ -53,7 +53,7 @@ void MedicalStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 // Name: MedicalStates::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void MedicalStates::DoUpdate( const ASN1T_MsgLogSanteEtat& message )
+void MedicalStates::DoUpdate( const ASN1T_MsgLogMedicalState& message )
 {
     if( message.m.chaine_activeePresent )
         bChainEnabled_ = message.chaine_activee;

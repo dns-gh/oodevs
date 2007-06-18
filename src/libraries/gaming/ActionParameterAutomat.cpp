@@ -106,9 +106,9 @@ ActionParameterAutomat::~ActionParameterAutomat()
 // -----------------------------------------------------------------------------
 void ActionParameterAutomat::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.value.t = T_MissionParameter_value_automate;
-    ActionParameterEntity< Automat_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.automate );
-    asn.null_value = asn.value.u.automate ? 0 : 1;
+    asn.value.t = T_MissionParameter_value_automat;
+    ActionParameterEntity< Automat_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.automat );
+    asn.null_value = asn.value.u.automat ? 0 : 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +124,7 @@ void ActionParameterAutomat::Accept( ActionParameterVisitor_ABC& visitor ) const
 // Name: ActionParameterAutomat::CommitTo
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void ActionParameterAutomat::CommitTo( ASN1T_Automate& asn ) const
+void ActionParameterAutomat::CommitTo( ASN1T_Automat& asn ) const
 {
     ActionParameterEntity< Automat_ABC >::CommitTo( (ASN1T_OID&)asn );
 }

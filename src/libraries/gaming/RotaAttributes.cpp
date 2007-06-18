@@ -43,7 +43,7 @@ template< typename T >
 void RotaAttributes::UpdateData( const T& message )
 {
     if( message.m.attributs_specifiquesPresent 
-     && message.attributs_specifiques.t == T_AttrObjectSpecific_rota )
+     && message.attributs_specifiques.t == T_ObjectAttributesSpecific_rota )
     {
         danger_ = message.attributs_specifiques.u.rota->niveau_danger;
         agents_.resize( message.attributs_specifiques.u.rota->agents_nbc.n );

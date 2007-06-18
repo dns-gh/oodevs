@@ -77,14 +77,14 @@ namespace
 {
     struct AsnSerializer : public ParamVisitor_ABC
     {
-        explicit AsnSerializer( ASN1T_ListKnowledgeObject& list ) : list_( list ), index_( 0 ) {}
+        explicit AsnSerializer( ASN1T_ObjectKnowledgeList& list ) : list_( list ), index_( 0 ) {}
         virtual void Visit( const Param_ABC& param )
         {
             if( index_ < list_.n )
                 static_cast< const ParamObjectKnowledge& >( param ).CommitTo( list_.elem[index_++] );
         }
 
-        ASN1T_ListKnowledgeObject& list_;
+        ASN1T_ObjectKnowledgeList& list_;
         unsigned int index_;
     };
 }
@@ -95,13 +95,13 @@ namespace
 // -----------------------------------------------------------------------------
 void ParamObjectKnowledgeList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    ASN1T_ListKnowledgeObject*& list = asn.value.u.listKnowledgeObject = new ASN1T_ListKnowledgeObject();
-    asn.value.t = T_MissionParameter_value_listKnowledgeObject;
+    ASN1T_ObjectKnowledgeList*& list = asn.value.u.objectKnowledgeList = new ASN1T_ObjectKnowledgeList();
+    asn.value.t = T_MissionParameter_value_objectKnowledgeList;
     list->n = Count();
     asn.null_value = list->n ? 0 : 1;
     if( asn.null_value )
         return;
-    list->elem = new ASN1T_KnowledgeObject[ list->n ];
+    list->elem = new ASN1T_ObjectKnowledge[ list->n ];
     AsnSerializer serializer( *list );
     Accept( serializer );
 }
@@ -112,9 +112,9 @@ void ParamObjectKnowledgeList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamObjectKnowledgeList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listKnowledgeObject )
-        delete[] asn.value.u.listKnowledgeObject->elem;
-    delete asn.value.u.listKnowledgeObject;
+    if( asn.value.u.objectKnowledgeList )
+        delete[] asn.value.u.objectKnowledgeList->elem;
+    delete asn.value.u.objectKnowledgeList;
 }
 
 namespace

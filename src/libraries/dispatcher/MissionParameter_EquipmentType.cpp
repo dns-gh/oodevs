@@ -19,7 +19,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 MissionParameter_EquipmentType::MissionParameter_EquipmentType( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , equipmentType_      ( asn.value.u.typeEquipement )
+    , equipmentType_      ( asn.value.u.equipmentType )
 {
     // NOTHING
 }
@@ -44,8 +44,8 @@ MissionParameter_EquipmentType::~MissionParameter_EquipmentType()
 void MissionParameter_EquipmentType::Send( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value             = bNullValue_;
-    asn.value.t                = T_MissionParameter_value_typeEquipement;
-    asn.value.u.typeEquipement = equipmentType_;
+    asn.value.t                = T_MissionParameter_value_equipmentType;
+    asn.value.u.equipmentType = equipmentType_;
 }
 
 // -----------------------------------------------------------------------------

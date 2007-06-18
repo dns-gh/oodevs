@@ -46,18 +46,18 @@ void NBCPrototype::Commit()
 {
     if( msg_.type == EnumObjectType::nuage_nbc )
     {
-        nbcCloud_ = new ASN1T_AttrObjectNuageNBC();
+        nbcCloud_ = new ASN1T_ObjectAttributesNbcCloud();
         nbcCloud_->agent_nbc  = nbcAgents_->GetValue()->GetId();
         msg_.m.attributs_specifiquesPresent    = 1;
-        msg_.attributs_specifiques.t           = T_AttrObjectSpecific_nuage_nbc;
+        msg_.attributs_specifiques.t           = T_ObjectAttributesSpecific_nuage_nbc;
         msg_.attributs_specifiques.u.nuage_nbc = nbcCloud_;
     }
     else if( msg_.type == EnumObjectType::zone_nbc )
     {
-        nbcArea_ = new ASN1T_AttrObjectZoneNBC();
+        nbcArea_ = new ASN1T_ObjectAttributesNbcZone();
         nbcArea_->agent_nbc  = nbcAgents_->GetValue()->GetId();
         msg_.m.attributs_specifiquesPresent    = 1;
-        msg_.attributs_specifiques.t           = T_AttrObjectSpecific_zone_nbc;
+        msg_.attributs_specifiques.t           = T_ObjectAttributesSpecific_zone_nbc;
         msg_.attributs_specifiques.u.zone_nbc  = nbcArea_;
     }
 }

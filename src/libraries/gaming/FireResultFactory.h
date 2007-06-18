@@ -34,8 +34,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual AgentFireResult*      CreateFireResult( const ASN1T_FireDamagesPion& message );
-    virtual PopulationFireResult* CreateFireResult( const ASN1T_FireDamagesPopulation& message );
+    virtual AgentFireResult*      CreateFireResult( const ASN1T_UnitFireDamages& message );
+    virtual PopulationFireResult* CreateFireResult( const ASN1T_PopulationFireDamages& message );
     //@}
 
 private:

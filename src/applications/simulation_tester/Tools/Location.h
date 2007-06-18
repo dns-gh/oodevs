@@ -59,16 +59,16 @@ public:
 
     //! @name Accessors
     //@{
-    ASN1T_EnumTypeLocalisation GetType          () const;
+    ASN1T_EnumLocationType GetType          () const;
     const T_PositionVector&    GetPositionVector() const;
     //@}
 
     //! @name Test Parameters
     //@{
     static Location&         GetTestParam_Location    ( const Position& pos, 
-                                                        ASN1T_EnumTypeLocalisation eType = ( ASN1T_EnumTypeLocalisation )-1 );
+                                                        ASN1T_EnumLocationType eType = ( ASN1T_EnumLocationType )-1 );
     static T_LocationVector& GetTestParam_LocationList( const Position& pos, uint nLocation, 
-                                                        ASN1T_EnumTypeLocalisation eType = ( ASN1T_EnumTypeLocalisation )-1 );
+                                                        ASN1T_EnumLocationType eType = ( ASN1T_EnumLocationType )-1 );
     //@}
 
 private:
@@ -82,7 +82,7 @@ private:
     //! @name Member data
     //@{
     T_PositionVector           points_;
-    ASN1T_EnumTypeLocalisation eType_;
+    ASN1T_EnumLocationType eType_;
     //@}
 };
 

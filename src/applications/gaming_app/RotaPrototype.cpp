@@ -48,7 +48,7 @@ void RotaPrototype::Commit()
     if( msg_.type != EnumObjectType::rota )
         return;
 
-    attr_ = new ASN1T_AttrObjectROTA();
+    attr_ = new ASN1T_ObjectAttributesRota();
     
     attr_->agents_nbc.n = GetAgentCount();
     attr_->agents_nbc.elem  = new ASN1T_OID[ attr_->agents_nbc.n ];
@@ -59,7 +59,7 @@ void RotaPrototype::Commit()
 
     attr_->niveau_danger = danger_->text().toUInt();
     msg_.m.attributs_specifiquesPresent = 1;
-    msg_.attributs_specifiques.t        = T_AttrObjectSpecific_rota;
+    msg_.attributs_specifiques.t        = T_ObjectAttributesSpecific_rota;
     msg_.attributs_specifiques.u.rota   = attr_;
 }
 

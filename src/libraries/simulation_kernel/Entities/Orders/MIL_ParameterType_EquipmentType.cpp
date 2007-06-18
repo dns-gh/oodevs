@@ -39,14 +39,14 @@ MIL_ParameterType_EquipmentType::~MIL_ParameterType_EquipmentType()
 void MIL_ParameterType_EquipmentType::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_typeEquipement ) 
+    if( from.null_value || from.value.t != T_MissionParameter_value_equipmentType ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( !DEC_Tools::CheckTypeEquipement( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyEquipmentType( from.value.u.typeEquipement, to ) )
+    if( !NET_ASN_Tools::CopyEquipmentType( from.value.u.equipmentType, to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -79,9 +79,9 @@ bool MIL_ParameterType_EquipmentType::Copy( const DIA_Variable_ABC& from, ASN1T_
         return false;
 
     to.null_value = false;
-    to.value.t    = T_MissionParameter_value_typeEquipement;
+    to.value.t    = T_MissionParameter_value_equipmentType;
     
-    if( !NET_ASN_Tools::CopyEquipmentType( from, to.value.u.typeEquipement ) )
+    if( !NET_ASN_Tools::CopyEquipmentType( from, to.value.u.equipmentType ) )
         return false;
 
     return true;
@@ -93,5 +93,5 @@ bool MIL_ParameterType_EquipmentType::Copy( const DIA_Variable_ABC& from, ASN1T_
 // -----------------------------------------------------------------------------
 void MIL_ParameterType_EquipmentType::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_typeEquipement );
+    assert( to.value.t == T_MissionParameter_value_equipmentType );
 }

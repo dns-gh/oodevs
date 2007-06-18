@@ -146,7 +146,7 @@ void DEC_Knowledge_ObjectSiteFranchissement::BuildMsgSpecificAttributes( ASN1T_M
     asnAttributes_.berges_a_amenager = bBanksToFitOut_;
 
     asnMsg.m.attributs_specifiquesPresent = 1;
-    asnMsg.attributs_specifiques.t                     = T_AttrObjectSpecific_site_franchissement;
+    asnMsg.attributs_specifiques.t                     = T_ObjectAttributesSpecific_site_franchissement;
     asnMsg.attributs_specifiques.u.site_franchissement = &asnAttributes_;
 }
 

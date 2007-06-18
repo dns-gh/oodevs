@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual Fire_ABC* CreateFire( const ASN1T_MsgStartPionFire& asnMsg );
+    virtual Fire_ABC* CreateFire( const ASN1T_MsgStartUnitFire& asnMsg );
     virtual Fire_ABC* CreateFire( const ASN1T_MsgStartPopulationFire& asnMsg );
     //@}
 

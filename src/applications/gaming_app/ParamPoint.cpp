@@ -97,7 +97,7 @@ void ParamPoint::CommitTo( ASN1T_MissionParameter& asn ) const
     asn.null_value = pPosLabel_->text() == "---" ? 1 : 0;
     if( asn.null_value )
         return;
-    point->type               = EnumTypeLocalisation::point;
+    point->type               = EnumLocationType::point;
     point->vecteur_point.n    = 1;
     point->vecteur_point.elem = new ASN1T_CoordUTM[1];
     point->vecteur_point.elem[0] = converter_.ConvertToMgrs( paramPoint_ ).c_str();

@@ -62,9 +62,9 @@ TacticalLineHierarchies::~TacticalLineHierarchies()
 // -----------------------------------------------------------------------------
 void TacticalLineHierarchies::Update( const ASN1T_TacticalLinesDiffusion& message )
 {
-    superiorIsAutomat_ = message.t == T_TacticalLinesDiffusion_automate;
+    superiorIsAutomat_ = message.t == T_TacticalLinesDiffusion_automat;
     if( superiorIsAutomat_ )
-        SetSuperior( &automats_.Get( message.u.automate ) );
+        SetSuperior( &automats_.Get( message.u.automat ) );
     else
         SetSuperior( &formations_.Get( message.u.formation ) );
 }
@@ -95,9 +95,9 @@ void TacticalLineHierarchies::WriteTo( ASN1T_TacticalLinesDiffusion& message ) c
 {
     if( !GetSuperior() )
         throw std::runtime_error( __FUNCTION__ );
-    message.t = superiorIsAutomat_ ? T_TacticalLinesDiffusion_automate : T_TacticalLinesDiffusion_formation;
+    message.t = superiorIsAutomat_ ? T_TacticalLinesDiffusion_automat : T_TacticalLinesDiffusion_formation;
     if( superiorIsAutomat_ )
-        message.u.automate  = GetSuperior()->GetId();
+        message.u.automat  = GetSuperior()->GetId();
     else
         message.u.formation = GetSuperior()->GetId();
 }

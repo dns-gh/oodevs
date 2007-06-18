@@ -41,7 +41,7 @@ MIL_TacticalLine_ABC::MIL_TacticalLine_ABC( const ASN1T_TacticalLine& asn )
     : nID_                  ( MIL_IDManager::limits_.GetFreeSimID() )
     , strName_              ( asn.nom )
     , pFormationBroadcasted_( asn.diffusion.t == T_TacticalLinesDiffusion_formation ? MIL_AgentServer::GetWorkspace().GetEntityManager().FindFormation( asn.diffusion.u.formation ) : 0 )
-    , pAutomateBroadcasted_ ( asn.diffusion.t == T_TacticalLinesDiffusion_automate  ? MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate ( asn.diffusion.u.automate  ) : 0 )
+    , pAutomateBroadcasted_ ( asn.diffusion.t == T_TacticalLinesDiffusion_automat   ? MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate ( asn.diffusion.u.automat  ) : 0 )
     , line_                 ()
 {
     if( !pFormationBroadcasted_ && !pAutomateBroadcasted_ )
@@ -154,8 +154,8 @@ void MIL_TacticalLine_ABC::Update( const ASN1T_TacticalLine& asn )
     pFormationBroadcasted_ = 0;
     if( asn.diffusion.t == T_TacticalLinesDiffusion_formation )
         pFormationBroadcasted_ = MIL_AgentServer::GetWorkspace().GetEntityManager().FindFormation( asn.diffusion.u.formation );
-    else if( asn.diffusion.t == T_TacticalLinesDiffusion_automate )
-        pAutomateBroadcasted_ = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( asn.diffusion.u.automate );
+    else if( asn.diffusion.t == T_TacticalLinesDiffusion_automat )
+        pAutomateBroadcasted_ = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( asn.diffusion.u.automat );
 
     if( !pFormationBroadcasted_ && !pAutomateBroadcasted_ )
         throw NET_AsnException< ASN1T_EnumInfoContextErrorCode >( EnumInfoContextErrorCode::error_invalid_diffusion );
@@ -183,8 +183,8 @@ void MIL_TacticalLine_ABC::Serialize( ASN1T_TacticalLine& asn ) const
     }
     else if( pAutomateBroadcasted_ )
     {
-        asn.diffusion.t          = T_TacticalLinesDiffusion_automate;
-        asn.diffusion.u.automate = pAutomateBroadcasted_->GetID();
+        asn.diffusion.t          = T_TacticalLinesDiffusion_automat;
+        asn.diffusion.u.automat = pAutomateBroadcasted_->GetID();
     }
 }
 

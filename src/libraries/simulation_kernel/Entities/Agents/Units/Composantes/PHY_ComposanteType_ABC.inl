@@ -14,7 +14,7 @@
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
 inline
-ASN1T_TypeEquipement PHY_ComposanteType_ABC::GetMosID() const
+ASN1T_EquipmentType PHY_ComposanteType_ABC::GetMosID() const
 {
     return nMosID_;
 }

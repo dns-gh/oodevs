@@ -38,7 +38,7 @@ void MIL_PionMission::InitializeDIA()
 // Name: MIL_PionMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_PionMission::MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion& pion, const ASN1T_MsgPionOrder& asn )
+MIL_PionMission::MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion& pion, const ASN1T_MsgUnitOrder& asn )
     : MIL_Mission_ABC       ( type, pion.GetKnowledge(), asn.parametres, asn.order_context, pion.GetRole< PHY_RolePion_Location >().GetPosition() )
     , type_                 ( type )
     , pion_                 ( pion )
@@ -159,7 +159,7 @@ void MIL_PionMission::Stop()
 // static
 void MIL_PionMission::SendNoMission( const MIL_AgentPion& pion )
 {
-    NET_ASN_MsgPionOrder asn;
+    NET_ASN_MsgUnitOrder asn;
 
     asn().oid_unite_executante               = pion.GetID();
     asn().mission                            = 0;
@@ -175,7 +175,7 @@ void MIL_PionMission::SendNoMission( const MIL_AgentPion& pion )
 // -----------------------------------------------------------------------------
 void MIL_PionMission::Send() const
 {
-    NET_ASN_MsgPionOrder asn;
+    NET_ASN_MsgUnitOrder asn;
 
     asn().oid_unite_executante = pion_.GetID();
     asn().mission              = type_.GetID();

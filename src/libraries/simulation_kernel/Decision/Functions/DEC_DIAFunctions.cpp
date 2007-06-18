@@ -72,10 +72,10 @@ void DEC_DIAFunctions::PathToString( DIA_Call_ABC& call )
 //=============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_DIAFunctions::CopyLocalisationToListLocalisation
+// Name: DEC_DIAFunctions::CopyLocalisationToLocationList
 // Created: NLD 2005-08-17
 // -----------------------------------------------------------------------------
-void DEC_DIAFunctions::CopyLocalisationToListLocalisation( DIA_Call_ABC& call )
+void DEC_DIAFunctions::CopyLocalisationToLocationList( DIA_Call_ABC& call )
 {
     assert( DEC_Tools::CheckTypeLocalisation      ( call.GetParameter( 0 ) ) );
     assert( DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 1 ) ) );
@@ -96,10 +96,10 @@ void DEC_DIAFunctions::CopyLocalisationToListLocalisation( DIA_Call_ABC& call )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_DIAFunctions::CopyListLocalisation
+// Name: DEC_DIAFunctions::CopyLocationList
 // Created: NLD 2004-05-18
 // -----------------------------------------------------------------------------
-void DEC_DIAFunctions::CopyListLocalisation( DIA_Call_ABC& call )
+void DEC_DIAFunctions::CopyLocationList( DIA_Call_ABC& call )
 {
     assert( DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
     assert( DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 1 ) ) );

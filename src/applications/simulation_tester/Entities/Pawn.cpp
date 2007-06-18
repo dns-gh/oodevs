@@ -37,7 +37,7 @@ using namespace TEST;
 // Name: Pawn::Pawn
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
-Pawn::Pawn( const Workspace& workspace, const ASN1T_MsgPionCreation& asnMsg )
+Pawn::Pawn( const Workspace& workspace, const ASN1T_MsgUnitCreation& asnMsg )
     : Testable_Entity ( workspace )
     , nId_            ( asnMsg.oid_pion )
     , strName_        ( asnMsg.nom )
@@ -60,7 +60,7 @@ Pawn::Pawn( const Workspace& workspace, const ASN1T_MsgPionCreation& asnMsg )
 // Name: Pawn::Pawn
 // Created: SBO 2005-05-17
 //-----------------------------------------------------------------------------
-Pawn::Pawn( const Workspace& workspace, const ASN1T_MsgAutomateCreation& asnMsg, Automat& automat )
+Pawn::Pawn( const Workspace& workspace, const ASN1T_MsgAutomatCreation& asnMsg, Automat& automat )
     : Testable_Entity ( workspace )
     , nId_            ( asnMsg.oid_automate )
     , strName_        ( asnMsg.nom )

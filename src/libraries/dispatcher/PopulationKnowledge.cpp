@@ -105,7 +105,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
 // Name: PopulationKnowledge::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeCreation& msg )
+void PopulationKnowledge::Update( const ASN1T_MsgPopulationFlowKnowledgeCreation& msg )
 {
     bool create = ! flows_.Find( msg.oid_connaissance_flux );
     PopulationFlowKnowledge& flow = flows_.Create( model_, msg.oid_connaissance_flux, *this, msg );
@@ -117,7 +117,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeCreation
 // Name: PopulationKnowledge::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate& msg )
+void PopulationKnowledge::Update( const ASN1T_MsgPopulationFlowKnowledgeUpdate& msg )
 {
     flows_.Get( msg.oid_connaissance_flux ).Update( msg );
 }
@@ -126,7 +126,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate& 
 // Name: PopulationKnowledge::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeDestruction& msg )
+void PopulationKnowledge::Update( const ASN1T_MsgPopulationFlowKnowledgeDestruction& msg )
 {
     flows_.Destroy( msg.oid_connaissance_flux );
 }

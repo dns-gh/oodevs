@@ -103,7 +103,7 @@ void PHY_MedicalConsign_ABC::EnterStateFinished()
 // Name: PHY_MedicalConsign_ABC::SendFullState
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-void PHY_MedicalConsign_ABC::SendFullState( NET_ASN_MsgLogSanteTraitementHumainUpdate& asn ) const
+void PHY_MedicalConsign_ABC::SendFullState( NET_ASN_MsgLogMedicalHandlingUpdate& asn ) const
 {
     assert( pHumanState_ );
     assert( pMedical_ );
@@ -111,14 +111,14 @@ void PHY_MedicalConsign_ABC::SendFullState( NET_ASN_MsgLogSanteTraitementHumainU
     asn().m.oid_pion_log_traitantPresent = 1;
     asn().m.etatPresent                  = 1;
     asn().oid_pion_log_traitant          = pMedical_->GetPion().GetID();
-    asn().etat                           = (ASN1T_EnumLogSanteTraitementEtat)nState_;
+    asn().etat                           = (ASN1T_EnumLogMedicalHandlingStatus)nState_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalConsign_ABC::SendChangedState
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-void PHY_MedicalConsign_ABC::SendChangedState( NET_ASN_MsgLogSanteTraitementHumainUpdate& asn ) const
+void PHY_MedicalConsign_ABC::SendChangedState( NET_ASN_MsgLogMedicalHandlingUpdate& asn ) const
 {
     assert( pHumanState_ );
     if( bHasChanged_ )

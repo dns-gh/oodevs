@@ -30,11 +30,11 @@ namespace kernel
 // Created: SBO 2007-04-12
 // =============================================================================
 class HierarchicExtension_ABC : public kernel::Extension_ABC
-                              , public kernel::Updatable_ABC< ASN1T_MsgPionCreation >
-                              , public kernel::Updatable_ABC< ASN1T_MsgAutomateCreation >
+                              , public kernel::Updatable_ABC< ASN1T_MsgUnitCreation >
+                              , public kernel::Updatable_ABC< ASN1T_MsgAutomatCreation >
                               , public kernel::Updatable_ABC< ASN1T_MsgFormationCreation >
-                              , public kernel::Updatable_ABC< ASN1T_MsgPionChangeSuperior >
-                              , public kernel::Updatable_ABC< ASN1T_MsgPionChangeSuperiorAck >
+                              , public kernel::Updatable_ABC< ASN1T_MsgUnitChangeSuperior >
+                              , public kernel::Updatable_ABC< ASN1T_MsgUnitChangeSuperiorAck >
 {
 
 public:
@@ -61,11 +61,11 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgPionCreation& message );
-    virtual void DoUpdate( const ASN1T_MsgAutomateCreation& message );
+    virtual void DoUpdate( const ASN1T_MsgUnitCreation& message );
+    virtual void DoUpdate( const ASN1T_MsgAutomatCreation& message );
     virtual void DoUpdate( const ASN1T_MsgFormationCreation& message );
-    virtual void DoUpdate( const ASN1T_MsgPionChangeSuperior& message );
-    virtual void DoUpdate( const ASN1T_MsgPionChangeSuperiorAck& message );
+    virtual void DoUpdate( const ASN1T_MsgUnitChangeSuperior& message );
+    virtual void DoUpdate( const ASN1T_MsgUnitChangeSuperiorAck& message );
 
     void UpdateSuperior( const kernel::Entity_ABC& superior );
     //@}

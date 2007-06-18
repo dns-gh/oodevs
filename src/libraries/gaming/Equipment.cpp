@@ -65,7 +65,7 @@ QString Equipment::GetName() const
 // Name: Equipment::Update
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void Equipment::Update( const ASN1T_DotationEquipement& message )
+void Equipment::Update( const ASN1T_EquipmentDotations& message )
 {
     available_     = message.nb_disponibles;
     unavailable_   = message.nb_indisponibles;

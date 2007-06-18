@@ -76,7 +76,7 @@ public:
     //! @name Network
     //@{
     void SerializeEnvironmentType( DIN::DIN_BufferedMessage& msg ) const;
-    bool SerializeCurrentPath    ( ASN1T_Itineraire& asn         ) const;
+    bool SerializeCurrentPath    ( ASN1T_Path& asn         ) const;
     //@}
 
 private:

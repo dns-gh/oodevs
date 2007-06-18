@@ -19,7 +19,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 MissionParameter_Location::MissionParameter_Location( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , location_           ( *asn.value.u.localisation )
+    , location_           ( *asn.value.u.location )
 {
     // NOTHING
 }
@@ -44,9 +44,9 @@ MissionParameter_Location::~MissionParameter_Location()
 void MissionParameter_Location::Send( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value           = bNullValue_;
-    asn.value.t              = T_MissionParameter_value_localisation;
-    asn.value.u.localisation = new ASN1T_Localisation();
-    location_.Send( *asn.value.u.localisation );
+    asn.value.t              = T_MissionParameter_value_location;
+    asn.value.u.location = new ASN1T_Location();
+    location_.Send( *asn.value.u.location );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,6 +55,6 @@ void MissionParameter_Location::Send( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void MissionParameter_Location::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    Localisation::AsnDelete( *asn.value.u.localisation );
-    delete asn.value.u.localisation;
+    Localisation::AsnDelete( *asn.value.u.location );
+    delete asn.value.u.location;
 }

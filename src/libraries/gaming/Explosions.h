@@ -34,7 +34,7 @@ class PopulationFireResult;
 // =============================================================================
 class Explosions : public kernel::Extension_ABC
                  , public kernel::Updatable_ABC< ASN1T_MsgExplosion >
-                 , public kernel::Updatable_ABC< ASN1T_MsgStopPionFire >
+                 , public kernel::Updatable_ABC< ASN1T_MsgStopUnitFire >
                  , public kernel::Updatable_ABC< ASN1T_MsgStopPopulationFire >
 {
 
@@ -70,11 +70,11 @@ private:
     template< typename T >
     void UpdateData( const T& message );
     virtual void DoUpdate( const ASN1T_MsgExplosion& message );
-    virtual void DoUpdate( const ASN1T_MsgStopPionFire& message );
+    virtual void DoUpdate( const ASN1T_MsgStopUnitFire& message );
     virtual void DoUpdate( const ASN1T_MsgStopPopulationFire& message );
 
-    void Update( const ASN1T_FireDamagesPion& message );
-    void Update( const ASN1T_FireDamagesPopulation& message );
+    void Update( const ASN1T_UnitFireDamages& message );
+    void Update( const ASN1T_PopulationFireDamages& message );
     //@}
 
 public:

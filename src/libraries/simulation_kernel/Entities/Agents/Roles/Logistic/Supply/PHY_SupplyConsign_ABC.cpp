@@ -58,7 +58,7 @@ PHY_SupplyConsign_ABC::~PHY_SupplyConsign_ABC()
 // Name: PHY_SupplyConsign_ABC::SendFullState
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-void PHY_SupplyConsign_ABC::SendFullState( NET_ASN_MsgLogRavitaillementTraitementUpdate& asn ) const
+void PHY_SupplyConsign_ABC::SendFullState( NET_ASN_MsgLogSupplyHandlingUpdate& asn ) const
 {
     assert( pSupplyingAutomate_ );
     assert( pConvoyingAutomate_ );
@@ -69,7 +69,7 @@ void PHY_SupplyConsign_ABC::SendFullState( NET_ASN_MsgLogRavitaillementTraitemen
     asn().m.oid_automate_log_fournissant_moyens_convoiPresent = 1;
     asn().m.oid_pion_convoyantPresent                         = 1;
     
-    asn().etat                                       = (ASN1T_EnumLogRavitaillementTraitementEtat)nState_;
+    asn().etat                                       = (ASN1T_EnumLogSupplyHandlingStatus)nState_;
     asn().oid_automate_log_traitant                  = pSupplyingAutomate_->GetID();
     asn().oid_automate_log_fournissant_moyens_convoi = pConvoyingAutomate_->GetID();
     asn().oid_pion_convoyant                         = 0;
@@ -79,7 +79,7 @@ void PHY_SupplyConsign_ABC::SendFullState( NET_ASN_MsgLogRavitaillementTraitemen
 // Name: PHY_SupplyConsign_ABC::SendChangedState
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-void PHY_SupplyConsign_ABC::SendChangedState( NET_ASN_MsgLogRavitaillementTraitementUpdate& asn ) const
+void PHY_SupplyConsign_ABC::SendChangedState( NET_ASN_MsgLogSupplyHandlingUpdate& asn ) const
 {
     if( bHasChanged_ )
         SendFullState( asn );
@@ -89,7 +89,7 @@ void PHY_SupplyConsign_ABC::SendChangedState( NET_ASN_MsgLogRavitaillementTraite
 // Name: PHY_SupplyConsign_ABC::SendDefaultState
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-void PHY_SupplyConsign_ABC::SendDefaultState( NET_ASN_MsgLogRavitaillementTraitementUpdate& asn )
+void PHY_SupplyConsign_ABC::SendDefaultState( NET_ASN_MsgLogSupplyHandlingUpdate& asn )
 {
     asn().m.oid_automate_log_traitantPresent                  = 1;
     asn().m.oid_automate_log_fournissant_moyens_convoiPresent = 1;
@@ -99,5 +99,5 @@ void PHY_SupplyConsign_ABC::SendDefaultState( NET_ASN_MsgLogRavitaillementTraite
     asn().oid_pion_convoyant                         = 0;
     asn().oid_automate_log_fournissant_moyens_convoi = 0;
     asn().oid_automate_log_traitant                  = 0;
-    asn().etat                                       = EnumLogRavitaillementTraitementEtat::termine;
+    asn().etat                                       = EnumLogSupplyHandlingStatus::termine;
 }

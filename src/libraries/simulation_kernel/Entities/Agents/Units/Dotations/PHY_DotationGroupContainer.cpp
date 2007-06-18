@@ -414,12 +414,12 @@ void PHY_DotationGroupContainer::SendChangedState( NET_ASN_MsgUnitAttributes& as
     if( dotationsChanged_.empty() )
         return;
 
-    ASN1T_DotationRessource* pResources = new ASN1T_DotationRessource[ dotationsChanged_.size() ];
+    ASN1T_ResourceDotations* pResources = new ASN1T_ResourceDotations[ dotationsChanged_.size() ];
     uint i = 0;
     for( CIT_DotationSet itDotation = dotationsChanged_.begin(); itDotation != dotationsChanged_.end(); ++itDotation, ++i )
     {
         const PHY_Dotation& dotation          = **itDotation;
-        ASN1T_DotationRessource& asnRessource = pResources[i];
+        ASN1T_ResourceDotations& asnRessource = pResources[i];
         asnRessource.ressource_id             = dotation.GetCategory().GetMosID();
         asnRessource.quantite_disponible      = (uint)dotation.GetValue();
     }
@@ -445,7 +445,7 @@ void PHY_DotationGroupContainer::SendFullState( NET_ASN_MsgUnitAttributes& asn )
     if( nNbrDotations == 0 )
         return;
 
-    ASN1T_DotationRessource* pResources = new ASN1T_DotationRessource[ nNbrDotations ];
+    ASN1T_ResourceDotations* pResources = new ASN1T_ResourceDotations[ nNbrDotations ];
     uint i = 0;
 
     for( itDotationGroup = dotationGroups_.begin(); itDotationGroup != dotationGroups_.end(); ++itDotationGroup )
@@ -454,7 +454,7 @@ void PHY_DotationGroupContainer::SendFullState( NET_ASN_MsgUnitAttributes& asn )
         for( PHY_DotationGroup::CIT_DotationMap itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
         {
             const PHY_Dotation& dotation          = *itDotation->second;
-            ASN1T_DotationRessource& asnRessource = pResources[ i++ ];
+            ASN1T_ResourceDotations& asnRessource = pResources[ i++ ];
             asnRessource.ressource_id             = dotation.GetCategory().GetMosID();
             asnRessource.quantite_disponible      = (uint)dotation.GetValue();
         }

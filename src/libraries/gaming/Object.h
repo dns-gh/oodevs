@@ -96,7 +96,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_EnumTypeLocalisation nTypeLocalisation_;
+    ASN1T_EnumLocationType nTypeLocalisation_;
     kernel::DotationType* construction_;
     kernel::DotationType* valorization_;
     kernel::OptionalValue< unsigned int > nDotationConstruction_;

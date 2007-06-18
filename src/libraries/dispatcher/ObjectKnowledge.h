@@ -77,7 +77,7 @@ private:
     const Side&                  side_;
     const Object*                pObject_;        
     const ASN1T_EnumObjectType   nType_;
-    const ASN1T_EnumTypeObstacle nObstacleType_;
+    const ASN1T_EnumObstacleType nObstacleType_;
     const unsigned int           nTypeDotationForConstruction_;
     const unsigned int           nTypeDotationForMining_;
 

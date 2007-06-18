@@ -95,8 +95,8 @@ MOS_GENERATE_SEND_ASN_MSG_NOPTR( CtrlChangeTimeFactor, ctrl_change_time_factor )
 MOS_GENERATE_SEND_ASN_MSG_PTR( ObjectMagicAction, object_magic_action )
 MOS_GENERATE_SEND_ASN_MSG_PTR( UnitMagicAction  , unit_magic_action   )
 
-MOS_GENERATE_SEND_ASN_MSG_PTR( PionOrder, pion_order )
-MOS_GENERATE_SEND_ASN_MSG_PTR( AutomateOrder, automate_order )
+MOS_GENERATE_SEND_ASN_MSG_PTR( UnitOrder, pion_order )
+MOS_GENERATE_SEND_ASN_MSG_PTR( AutomatOrder, automate_order )
 MOS_GENERATE_SEND_ASN_MSG_PTR( SetAutomateMode, set_automate_mode )
 MOS_GENERATE_SEND_ASN_MSG_PTR( PopulationOrder, population_order )
 

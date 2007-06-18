@@ -12,7 +12,7 @@
 
 #include "clients_gui/LogisticRoutePrototype_ABC.h"
 
-struct ASN1T_AttrObjectItineraireLogistique;
+struct ASN1T_ObjectAttributesLogisticRoute;
 struct ASN1T_MagicActionCreateObject;
 
 // =============================================================================
@@ -48,7 +48,7 @@ private:
     //! @name Member data
     //@{
     ASN1T_MagicActionCreateObject& msg_;
-    ASN1T_AttrObjectItineraireLogistique* attr_;
+    ASN1T_ObjectAttributesLogisticRoute* attr_;
     //@}
 };
 

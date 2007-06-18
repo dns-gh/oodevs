@@ -494,7 +494,7 @@ void PHY_RolePion_Humans::SendChangedState( NET_ASN_MsgUnitAttributes& asn ) con
     assert( nNbrHumansDataChanged_ <= humansData_.size() );
  
     const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
-    ASN1T_DotationPersonnel* pPersonnel = new ASN1T_DotationPersonnel[ nNbrHumansDataChanged_ ];
+    ASN1T_HumanDotations* pPersonnel = new ASN1T_HumanDotations[ nNbrHumansDataChanged_ ];
 
     uint i = 0;
     for( PHY_HumanRank::CIT_HumanRankMap itRank = ranks.begin(); itRank != ranks.end(); ++itRank )
@@ -505,7 +505,7 @@ void PHY_RolePion_Humans::SendChangedState( NET_ASN_MsgUnitAttributes& asn ) con
         if( !humanData.bHasChanged_ )
             continue;
               
-        ASN1T_DotationPersonnel& personnel = pPersonnel[ i++ ];
+        ASN1T_HumanDotations& personnel = pPersonnel[ i++ ];
 
         personnel.rang                         = rank.GetAsnID();
         personnel.nb_total                     = humanData.nNbrTotal_;
@@ -531,14 +531,14 @@ void PHY_RolePion_Humans::SendChangedState( NET_ASN_MsgUnitAttributes& asn ) con
 void PHY_RolePion_Humans::SendFullState( NET_ASN_MsgUnitAttributes& asn ) const
 {
     const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
-    ASN1T_DotationPersonnel* pPersonnel = new ASN1T_DotationPersonnel[ ranks.size() ];
+    ASN1T_HumanDotations* pPersonnel = new ASN1T_HumanDotations[ ranks.size() ];
 
     uint i = 0;
     for( PHY_HumanRank::CIT_HumanRankMap itRank = ranks.begin(); itRank != ranks.end(); ++itRank )
     {
         const PHY_HumanRank&           rank      = *itRank->second;
         const T_HumanData&             humanData = humansData_[ rank.GetID() ];
-              ASN1T_DotationPersonnel& personnel = pPersonnel[ i++ ];
+              ASN1T_HumanDotations& personnel = pPersonnel[ i++ ];
 
         personnel.rang                         = rank.GetAsnID();
         personnel.nb_total                     = humanData.nNbrTotal_;

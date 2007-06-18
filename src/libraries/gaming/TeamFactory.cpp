@@ -60,7 +60,7 @@ TeamFactory::~TeamFactory()
 // Name: TeamFactory::CreateTeam
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Team_ABC* TeamFactory::CreateTeam( const ASN1T_MsgSideCreation& asnMsg )
+Team_ABC* TeamFactory::CreateTeam( const ASN1T_MsgTeamCreation& asnMsg )
 {
     Team* result = new Team( asnMsg, controllers_.controller_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();

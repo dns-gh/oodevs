@@ -28,16 +28,16 @@ class GenObject
 public:
     //! @name Constructors/Destructor
     //@{
-    GenObject( const ASN1T_MissionGenObject& asn );
+    GenObject( const ASN1T_PlannedWork& asn );
     GenObject();
    ~GenObject();
     //@}
 
     //! @name Operations
     //@{
-    void Send( ASN1T_MissionGenObject& asn ) const;
+    void Send( ASN1T_PlannedWork& asn ) const;
 
-    static void AsnDelete( ASN1T_MissionGenObject& asn );
+    static void AsnDelete( ASN1T_PlannedWork& asn );
     //@}
 
 private:
@@ -45,7 +45,7 @@ private:
     //@{
     ASN1T_EnumObjectType      type_;
     Localisation              location_;
-    ASN1T_EnumTypeObstacle    typeObstacle_;
+    ASN1T_EnumObstacleType    typeObstacle_;
     double                    density_;
     unsigned int              tc2_;
     unsigned int              delaiActiviteMines_;

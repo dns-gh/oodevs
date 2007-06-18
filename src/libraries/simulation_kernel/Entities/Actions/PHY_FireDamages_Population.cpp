@@ -42,7 +42,7 @@ PHY_FireDamages_Population::~PHY_FireDamages_Population()
 // Name: PHY_FireDamages_Population::Serialize
 // Created: JVT 04-03-29
 //-----------------------------------------------------------------------------
-void PHY_FireDamages_Population::Serialize( const MIL_Population& target, ASN1T_FireDamagesPopulation& asn ) const
+void PHY_FireDamages_Population::Serialize( const MIL_Population& target, ASN1T_PopulationFireDamages& asn ) const
 {
     asn.cible    = target.GetID();
     asn.nb_morts = nNbrKilledHumans_;
@@ -52,7 +52,7 @@ void PHY_FireDamages_Population::Serialize( const MIL_Population& target, ASN1T_
 // Name: PHY_FireDamages_Population::CleanAfterSerialization
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-void PHY_FireDamages_Population::CleanAfterSerialization( ASN1T_FireDamagesPopulation& /*asn*/ )
+void PHY_FireDamages_Population::CleanAfterSerialization( ASN1T_PopulationFireDamages& /*asn*/ )
 {
     // NOTHING
 }

@@ -47,7 +47,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< ASN1T_EnumTypeLima > T_Functions;
+    typedef std::vector< ASN1T_EnumLimaType > T_Functions;
     //@}
 
 private:

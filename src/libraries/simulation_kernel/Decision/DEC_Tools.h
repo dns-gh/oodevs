@@ -74,7 +74,7 @@ public:
     static bool CheckTypePerceptionSurveillance             ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypePerceptionObjectsLocalisation      ( const DIA_Variable_ABC& diaVariable );   
     static bool CheckTypePerceptionFlyingShell              ( const DIA_Variable_ABC& diaVariable );   
-    static bool CheckTypeMaintenancePriorites               ( const DIA_Variable_ABC& diaVariable );   
+    static bool CheckTypeMaintenancePriorities               ( const DIA_Variable_ABC& diaVariable );   
     static bool CheckTypeSantePriorites                     ( const DIA_Variable_ABC& diaVariable ); 
     static bool CheckTypeDotation                           ( const DIA_Variable_ABC& diaVariable ); 
     static bool CheckTypeEquipement                         ( const DIA_Variable_ABC& diaVariable ); 
@@ -102,7 +102,7 @@ public:
     static const DIA_TypeDef& GetTypePerceptionSurveillance         ();
     static const DIA_TypeDef& GetTypePerceptionObjectsLocalisation  ();
     static const DIA_TypeDef& GetTypePerceptionFlyingShell          ();
-    static const DIA_TypeDef& GetTypeMaintenancePriorites           ();
+    static const DIA_TypeDef& GetTypeMaintenancePriorities           ();
     static const DIA_TypeDef& GetTypeSantePriorites                 ();    
     static const DIA_TypeDef& GetTypeDotation                       ();
     static const DIA_TypeDef& GetTypeGenObjet                       ();
@@ -133,7 +133,7 @@ private:
     static const DIA_TypeDef* pTypePerceptionRadar_;
     static const DIA_TypeDef* pTypePerceptionSurveillance_;
     static const DIA_TypeDef* pTypePerceptionObjectsLocalisation_;
-    static const DIA_TypeDef* pTypeMaintenancePriorites_;
+    static const DIA_TypeDef* pTypeMaintenancePriorities_;
     static const DIA_TypeDef* pTypeSantePriorites_;
     static const DIA_TypeDef* pTypePerceptionFlyingShell_;
     static const DIA_TypeDef* pTypeDotation_;

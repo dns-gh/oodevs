@@ -21,7 +21,7 @@ using namespace dispatcher;
 // Name: LogConsignMaintenance constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-LogConsignMaintenance::LogConsignMaintenance( Model& model, const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& msg )
+LogConsignMaintenance::LogConsignMaintenance( Model& model, const ASN1T_MsgLogMaintenanceHandlingCreation& msg )
     : model_            ( model )
     , nID_              ( msg.oid_consigne )
     , agent_            ( model.GetAgents().Get( msg.oid_pion ) )
@@ -29,7 +29,7 @@ LogConsignMaintenance::LogConsignMaintenance( Model& model, const ASN1T_MsgLogMa
     , nEquipmentType_   ( msg.type_equipement )
     , nBreakdownType_   ( msg.type_panne )
     , pTreatingAgent_   ( 0 )
-    , nState_           ( EnumLogMaintenanceTraitementEtat::attente_disponibilite_pieces )
+    , nState_           ( EnumLogMaintenanceHandlingStatus::attente_disponibilite_pieces )
     , bDiagnosed_       ( false )
 {
     // NOTHING
@@ -52,7 +52,7 @@ LogConsignMaintenance::~LogConsignMaintenance()
 // Name: LogConsignMaintenance::Update
 // Created: AGE 2007-04-16
 // -----------------------------------------------------------------------------
-void LogConsignMaintenance::Update( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& )
+void LogConsignMaintenance::Update( const ASN1T_MsgLogMaintenanceHandlingCreation& )
 {
     FlagUpdate();
 }
@@ -61,7 +61,7 @@ void LogConsignMaintenance::Update( const ASN1T_MsgLogMaintenanceTraitementEquip
 // Name: LogConsignMaintenance::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void LogConsignMaintenance::Update( const ASN1T_MsgLogMaintenanceTraitementEquipementUpdate& msg )
+void LogConsignMaintenance::Update( const ASN1T_MsgLogMaintenanceHandlingUpdate& msg )
 {
     if( msg.m.diagnostique_effectuePresent )
         bDiagnosed_ = msg.diagnostique_effectue;
@@ -78,7 +78,7 @@ void LogConsignMaintenance::Update( const ASN1T_MsgLogMaintenanceTraitementEquip
 // -----------------------------------------------------------------------------
 void LogConsignMaintenance::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientLogMaintenanceTraitementEquipementCreation asn;
+    AsnMsgSimToClientLogMaintenanceHandlingCreation asn;
     
     asn().oid_consigne  = nID_;
     asn().oid_pion      = agent_.GetID();
@@ -96,7 +96,7 @@ void LogConsignMaintenance::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void LogConsignMaintenance::SendFullUpdate( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientLogMaintenanceTraitementEquipementUpdate asn;
+    AsnMsgSimToClientLogMaintenanceHandlingUpdate asn;
 
     asn().oid_consigne = nID_;
     asn().oid_pion     = agent_.GetID();
@@ -117,7 +117,7 @@ void LogConsignMaintenance::SendFullUpdate( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void LogConsignMaintenance::SendDestruction( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientLogMaintenanceTraitementEquipementDestruction asn;
+    AsnMsgSimToClientLogMaintenanceHandlingDestruction asn;
     asn().oid_consigne = nID_;
     asn().oid_pion     = agent_.GetID();
     asn.Send( publisher );

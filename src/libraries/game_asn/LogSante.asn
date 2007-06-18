@@ -13,7 +13,7 @@ LogSanteIncludes ::= SEQUENCE { BaseExports }
 LogSanteExports  ::= NULL
 -- END includes
 
-EnumLogSanteTraitementEtat ::= ENUMERATED
+EnumLogMedicalHandlingStatus ::= ENUMERATED
 { 
     attente-disponibilite-ambulance-releve          (0),
     ambulance-releve-deplacement-aller              (1),
@@ -38,10 +38,10 @@ EnumLogSanteTraitementEtat ::= ENUMERATED
     termine                                         (20)
 }
 
-MsgLogSanteTraitementHumainCreation ::= SEQUENCE
+MsgLogMedicalHandlingCreation ::= SEQUENCE
 {
     oid-consigne    OID,
-    oid-pion        Agent,          -- pion possèdant l'Humain    
+    oid-pion        Unit,          -- pion possèdant l'Humain    
     tick-creation   INTEGER,
     rang            EnumHumanRank,
     blessure        EnumHumanWound,
@@ -49,28 +49,28 @@ MsgLogSanteTraitementHumainCreation ::= SEQUENCE
     contamine-nbc   BOOLEAN DEFAULT FALSE    
 }
 
-MsgLogSanteTraitementHumainUpdate ::= SEQUENCE
+MsgLogMedicalHandlingUpdate ::= SEQUENCE
 {
     oid-consigne          OID,
-    oid-pion              Agent,          -- pion possèdant l'Humain
-    oid-pion-log-traitant Agent                      OPTIONAL,          -- pion LOG gérant le traitement de l'humain, 0 si aucun pion (demande passée à la BLIAT par exemple)
+    oid-pion              Unit,          -- pion possèdant l'Humain
+    oid-pion-log-traitant Unit                      OPTIONAL,          -- pion LOG gérant le traitement de l'humain, 0 si aucun pion (demande passée à la BLIAT par exemple)
     blessure              EnumHumanWound             OPTIONAL,
     blesse-mental         BOOLEAN                    OPTIONAL,
     contamine-nbc         BOOLEAN                    OPTIONAL,
-    etat                  EnumLogSanteTraitementEtat OPTIONAL,
+    etat                  EnumLogMedicalHandlingStatus OPTIONAL,
     diagnostique-effectue BOOLEAN                    OPTIONAL    
 }
 
-MsgLogSanteTraitementHumainDestruction ::= SEQUENCE
+MsgLogMedicalHandlingDestruction ::= SEQUENCE
 {
     oid-consigne    OID,
-    oid-pion        Agent -- pion possèdant l'Humain    
+    oid-pion        Unit -- pion possèdant l'Humain    
 }
 
 -- Etat des pions logistiques de la santé
-SanteDisponibiliteMoyens ::= SEQUENCE
+LogMedicalEquipmentAvailability ::= SEQUENCE
 {
-    type-equipement  TypeEquipement,
+    type-equipement  EquipmentType,
     nbr-total        INTEGER,
     nbr-disponibles  INTEGER,       
     nbr-au-travail   INTEGER,
@@ -78,17 +78,17 @@ SanteDisponibiliteMoyens ::= SEQUENCE
     nbr-au-repos     INTEGER OPTIONAL -- applicable uniquement à certains moyens
 }
 
-SantePriorites ::= SEQUENCE OF EnumHumanWound
+LogMedicalPriorities ::= SEQUENCE OF EnumHumanWound
 
-MsgLogSanteEtat ::= SEQUENCE
+MsgLogMedicalState ::= SEQUENCE
 {
-    oid-pion                               Agent,
+    oid-pion                               Unit,
     chaine-activee                         BOOLEAN                              OPTIONAL,
-    priorites                              SantePriorites                       OPTIONAL,
-    priorites-tactiques                    ListAutomate                         OPTIONAL,
-    disponibilites-ambulances-releve       SEQUENCE OF SanteDisponibiliteMoyens OPTIONAL,
-    disponibilites-ambulances-ramassage    SEQUENCE OF SanteDisponibiliteMoyens OPTIONAL,
-    disponibilites-medecins                SEQUENCE OF SanteDisponibiliteMoyens OPTIONAL
+    priorites                              LogMedicalPriorities                       OPTIONAL,
+    priorites-tactiques                    AutomatList                         OPTIONAL,
+    disponibilites-ambulances-releve       SEQUENCE OF LogMedicalEquipmentAvailability OPTIONAL,
+    disponibilites-ambulances-ramassage    SEQUENCE OF LogMedicalEquipmentAvailability OPTIONAL,
+    disponibilites-medecins                SEQUENCE OF LogMedicalEquipmentAvailability OPTIONAL
 }
 
 END -- LogSante

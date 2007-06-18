@@ -31,7 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ActionParameterLocationList( const kernel::OrderParameter& parameter );
-             ActionParameterLocationList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_ListLocalisation& asn );
+             ActionParameterLocationList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_LocationList& asn );
              ActionParameterLocationList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~ActionParameterLocationList();
     //@}
@@ -40,8 +40,8 @@ public:
     //@{
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
-    void CommitTo( ASN1T_ListLocalisation& asn ) const;
-    void Clean( ASN1T_ListLocalisation& asn ) const;
+    void CommitTo( ASN1T_LocationList& asn ) const;
+    void Clean( ASN1T_LocationList& asn ) const;
     //@}
 
 private:

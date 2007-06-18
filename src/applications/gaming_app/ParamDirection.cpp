@@ -58,8 +58,8 @@ void ParamDirection::BuildInterface( QWidget* parent )
 void ParamDirection::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value = 0;
-    asn.value.t = T_MissionParameter_value_direction;
-    asn.value.u.direction = value_;
+    asn.value.t = T_MissionParameter_value_heading;
+    asn.value.u.heading = value_;
 }
 
 // -----------------------------------------------------------------------------

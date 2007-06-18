@@ -66,8 +66,8 @@ void AGR_StuffGenerator::GenerateMissionToolFile( const AGR_Workspace& workspace
     std::string strMissionPionInclude;
     std::string strMissionAutomateInclude;
     std::string strMissionPopulationInclude;
-    std::string strMissionPionCreation;
-    std::string strMissionAutomateCreation;
+    std::string strMissionUnitCreation;
+    std::string strMissionAutomatCreation;
     std::string strMissionPopulationCreation;
     std::string strMissionDiaInit;
     std::string strMissionPionIdConversion;
@@ -83,7 +83,7 @@ void AGR_StuffGenerator::GenerateMissionToolFile( const AGR_Workspace& workspace
         {
             strClassName = "MIL_AutomateMission_" + mission.BaseName();
             strMissionAutomateInclude += "#include \"Automate/" + strClassName + ".h\"\n";
-            strMissionAutomateCreation += "        case " + mission.EnumName() + ": return new " + strClassName + "();\n";
+            strMissionAutomatCreation += "        case " + mission.EnumName() + ": return new " + strClassName + "();\n";
             strMissionAutomateIdConversion += "        case T_Mission_Automate_" + mission.LowName() + ": return " + mission.EnumName() + ";\n";
         }
         else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
@@ -97,7 +97,7 @@ void AGR_StuffGenerator::GenerateMissionToolFile( const AGR_Workspace& workspace
         {
             strClassName = "MIL_PionMission_" + mission.BaseName();
             strMissionPionInclude += "#include \"Pion/" + strClassName + ".h\"\n";
-            strMissionPionCreation += "        case " + mission.EnumName() + ": return new " + strClassName + "();\n";
+            strMissionUnitCreation += "        case " + mission.EnumName() + ": return new " + strClassName + "();\n";
             strMissionPionIdConversion += "        case T_Mission_Pion_" + mission.LowName() + ": return " + mission.EnumName() + ";\n";
         }
         strMissionDiaInit += "    " + strClassName + "::InitializeDIA();\n";
@@ -106,8 +106,8 @@ void AGR_StuffGenerator::GenerateMissionToolFile( const AGR_Workspace& workspace
     workspace.ReplaceInString( strBaseContent, "$IncludePionMissionHeaders$", strMissionPionInclude );
     workspace.ReplaceInString( strBaseContent, "$IncludeAutomateMissionHeaders$", strMissionAutomateInclude );
     workspace.ReplaceInString( strBaseContent, "$IncludePopulationMissionHeaders$", strMissionPopulationInclude );
-    workspace.ReplaceInString( strBaseContent, "$CreatePionMission$", strMissionPionCreation );
-    workspace.ReplaceInString( strBaseContent, "$CreateAutomateMission$", strMissionAutomateCreation );
+    workspace.ReplaceInString( strBaseContent, "$CreatePionMission$", strMissionUnitCreation );
+    workspace.ReplaceInString( strBaseContent, "$CreateAutomateMission$", strMissionAutomatCreation );
     workspace.ReplaceInString( strBaseContent, "$CreatePopulationMission$", strMissionPopulationCreation );
     workspace.ReplaceInString( strBaseContent, "$InitMissionDiaIdx$", strMissionDiaInit );
     workspace.ReplaceInString( strBaseContent, "$ConvertPionIdAsnToSim$", strMissionPionIdConversion );

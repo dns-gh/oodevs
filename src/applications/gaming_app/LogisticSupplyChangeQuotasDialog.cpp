@@ -135,7 +135,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
     if( !selected_ || !target )
         return;
 
-    ASN_MsgLogRavitaillementChangeQuotas message;
+    ASN_MsgLogSupplyChangeQuotas message;
 
     message().oid_donneur  = selected_->GetId();
     message().oid_receveur = target->GetId();

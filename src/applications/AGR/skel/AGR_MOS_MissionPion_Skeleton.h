@@ -23,7 +23,7 @@
 
 #include "MOS_Mission_ABC.h"
 
-class MOS_ASN_MsgPionOrder;
+class MOS_ASN_MsgUnitOrder;
 
 //=============================================================================
 // Created:  NLD 
@@ -83,7 +83,7 @@ private:
     //@}
 
 private:
-    MOS_ASN_MsgPionOrder*   pASNMsgOrder_;
+    MOS_ASN_MsgUnitOrder*   pASNMsgOrder_;
 
     QTabWidget*     pLimaLimitWidget_;
     QVBoxLayout*    pLimaLimitLayout_;

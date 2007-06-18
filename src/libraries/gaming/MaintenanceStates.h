@@ -32,7 +32,7 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class MaintenanceStates : public kernel::Extension_ABC
-                        , public kernel::Updatable_ABC< ASN1T_MsgLogMaintenanceEtat >
+                        , public kernel::Updatable_ABC< ASN1T_MsgLogMaintenanceState >
 {
 public:
     //! @name Constructors/Destructor
@@ -44,7 +44,7 @@ public:
     //! @name Operations
     //@{
     void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual void DoUpdate( const ASN1T_MsgLogMaintenanceEtat& message );
+    virtual void DoUpdate( const ASN1T_MsgLogMaintenanceState& message );
     //@}
 
 private:

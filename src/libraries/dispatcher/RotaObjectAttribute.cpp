@@ -18,12 +18,12 @@ using namespace dispatcher;
 // Name: RotaObjectAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-RotaObjectAttribute::RotaObjectAttribute( const Model& model, const ASN1T_AttrObjectSpecific& asnMsg )
+RotaObjectAttribute::RotaObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg )
     : ObjectAttribute_ABC( model, asnMsg )
     , nDanger_           ( 0 )
     , nbcAgents_         ()
 {
-    if( asnMsg.t == T_AttrObjectSpecific_rota )
+    if( asnMsg.t == T_ObjectAttributesSpecific_rota )
     {
         nDanger_ = asnMsg.u.rota->niveau_danger;
         nbcAgents_.clear();
@@ -45,9 +45,9 @@ RotaObjectAttribute::~RotaObjectAttribute()
 // Name: RotaObjectAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void RotaObjectAttribute::Update( const ASN1T_AttrObjectSpecific& asnMsg )
+void RotaObjectAttribute::Update( const ASN1T_ObjectAttributesSpecific& asnMsg )
 {
-    if( asnMsg.t == T_AttrObjectSpecific_rota )
+    if( asnMsg.t == T_ObjectAttributesSpecific_rota )
     {
         nDanger_ = asnMsg.u.rota->niveau_danger;
         nbcAgents_.clear();
@@ -61,10 +61,10 @@ void RotaObjectAttribute::Update( const ASN1T_AttrObjectSpecific& asnMsg )
 // Name: RotaObjectAttribute::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void RotaObjectAttribute::Send( ASN1T_AttrObjectSpecific& asnMsg ) const
+void RotaObjectAttribute::Send( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
     asnMsg.t = nType_;
-    asnMsg.u.rota = new ASN1T_AttrObjectROTA();
+    asnMsg.u.rota = new ASN1T_ObjectAttributesRota();
 
     asnMsg.u.rota->niveau_danger = nDanger_;
 
@@ -75,7 +75,7 @@ void RotaObjectAttribute::Send( ASN1T_AttrObjectSpecific& asnMsg ) const
 // Name: RotaObjectAttribute::AsnDelete
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void RotaObjectAttribute::AsnDelete( ASN1T_AttrObjectSpecific& asnMsg ) const
+void RotaObjectAttribute::AsnDelete( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
     if( asnMsg.u.rota->agents_nbc.n > 0 )
         delete [] asnMsg.u.rota->agents_nbc.elem;

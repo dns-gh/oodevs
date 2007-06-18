@@ -30,9 +30,9 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class Diplomacies : public kernel::Extension_ABC
-                  , public kernel::Updatable_ABC< ASN1T_MsgSideCreation >
-                  , public kernel::Updatable_ABC< ASN1T_MsgChangeDiplomatieAck >
-                  , public kernel::Updatable_ABC< ASN1T_MsgChangeDiplomatie >
+                  , public kernel::Updatable_ABC< ASN1T_MsgTeamCreation >
+                  , public kernel::Updatable_ABC< ASN1T_MsgChangeDiplomacyAck >
+                  , public kernel::Updatable_ABC< ASN1T_MsgChangeDiplomacy >
 {
 
 public:
@@ -45,7 +45,7 @@ public:
     //! @name Operations
     //@{
     const kernel::Karma& GetKarma() const;
-    ASN1T_EnumDiplomatie GetRelationship( const kernel::Entity_ABC& rhs ) const;
+    ASN1T_EnumDiplomacy GetRelationship( const kernel::Entity_ABC& rhs ) const;
     //@}
 
 private:
@@ -57,15 +57,15 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const Diplomacies*, ASN1T_EnumDiplomatie > T_Diplomacies;
+    typedef std::map< const Diplomacies*, ASN1T_EnumDiplomacy > T_Diplomacies;
     typedef T_Diplomacies::const_iterator                      CIT_Diplomacies;
     //@}
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgSideCreation& message );
-    virtual void DoUpdate( const ASN1T_MsgChangeDiplomatieAck& message );
-    virtual void DoUpdate( const ASN1T_MsgChangeDiplomatie& message );
+    virtual void DoUpdate( const ASN1T_MsgTeamCreation& message );
+    virtual void DoUpdate( const ASN1T_MsgChangeDiplomacyAck& message );
+    virtual void DoUpdate( const ASN1T_MsgChangeDiplomacy& message );
     template< typename T >
     void UpdateData( const T& message );
     //@}

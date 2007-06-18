@@ -213,7 +213,7 @@ void PHY_SupplyRequest_ABC< T >::CancelMerchandiseOverheadReservation()
 // Created: NLD 2005-02-02
 // -----------------------------------------------------------------------------
 template< typename T > 
-void PHY_SupplyRequest_ABC< T >::Serialize( ASN1T_DemandeDotation& asn ) const
+void PHY_SupplyRequest_ABC< T >::Serialize( ASN1T_DotationQuery& asn ) const
 {
     asn.ressource_id        = GetDotationCategory().GetMosID();
     asn.quantite_demandee   = (uint)rTotalRequestedValue_;

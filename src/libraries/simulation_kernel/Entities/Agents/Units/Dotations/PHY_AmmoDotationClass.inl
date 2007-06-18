@@ -42,7 +42,7 @@ const PHY_AmmoDotationClass* PHY_AmmoDotationClass::Find( const std::string& str
 // Created: NLD 2005-07-29
 // -----------------------------------------------------------------------------
 inline
-const PHY_AmmoDotationClass* PHY_AmmoDotationClass::Find( ASN1T_EnumFamilleMunition nAsnID )
+const PHY_AmmoDotationClass* PHY_AmmoDotationClass::Find( ASN1T_EnumAmmunitionFamily nAsnID )
 {
     for( CIT_TypeMap it = types_.begin(); it != types_.end(); ++it )
     {
@@ -67,7 +67,7 @@ int PHY_AmmoDotationClass::GetID() const
 // Created: NLD 2005-07-29
 // -----------------------------------------------------------------------------
 inline
-ASN1T_EnumFamilleMunition PHY_AmmoDotationClass::GetAsnID() const
+ASN1T_EnumAmmunitionFamily PHY_AmmoDotationClass::GetAsnID() const
 {
     return nAsnID_;
 }

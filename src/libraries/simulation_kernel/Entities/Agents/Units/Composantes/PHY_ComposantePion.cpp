@@ -132,7 +132,7 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const uint )
     file >> nID;
     pState_ = &PHY_ComposanteState::Find( nID );
 
-    ASN1T_TypeEquipement nEqID;
+    ASN1T_EquipmentType nEqID;
     file >> nEqID;
     pType_ = PHY_ComposanteTypePion::Find( nEqID );
     assert( pType_ );

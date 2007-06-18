@@ -27,15 +27,15 @@ class ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     ObjectAttribute_ABC( const Model& model, const ASN1T_AttrObjectSpecific& asnMsg );
+     ObjectAttribute_ABC( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg );
     ~ObjectAttribute_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const ASN1T_AttrObjectSpecific& asnMsg ) = 0;
-    virtual void Send     ( ASN1T_AttrObjectSpecific& asnMsg ) const = 0;
-    virtual void AsnDelete( ASN1T_AttrObjectSpecific& asnMsg ) const = 0;
+    virtual void Update   ( const ASN1T_ObjectAttributesSpecific& asnMsg ) = 0;
+    virtual void Send     ( ASN1T_ObjectAttributesSpecific& asnMsg ) const = 0;
+    virtual void AsnDelete( ASN1T_ObjectAttributesSpecific& asnMsg ) const = 0;
     //@}
 
 protected:

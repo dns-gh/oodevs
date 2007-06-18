@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: Fire constructor
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
-Fire::Fire( Model& , const ASN1T_MsgStartPionFire& msg )
+Fire::Fire( Model& , const ASN1T_MsgStartUnitFire& msg )
     : oid_tir         ( msg.oid_tir )
     , tireur          ( msg.tireur )
     , type            ( msg.type )
@@ -25,7 +25,7 @@ Fire::Fire( Model& , const ASN1T_MsgStartPionFire& msg )
     , munition        ( msg.munition )
     , typeCible_      ( msg.cible.t )
 {
-    if( typeCible_ == T_MsgStartPionFire_cible_position )
+    if( typeCible_ == T_MsgStartUnitFire_cible_position )
         positionCible_ = Position( *msg.cible.u.position );
     else
         oid_cible_ = msg.cible.u.pion;
@@ -44,7 +44,7 @@ Fire::~Fire()
 // Name: Fire::Update
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
-void Fire::Update( const ASN1T_MsgStartPionFire& )
+void Fire::Update( const ASN1T_MsgStartUnitFire& )
 {
     FlagUpdate();
 }
@@ -64,7 +64,7 @@ void Fire::SendFullUpdate( Publisher_ABC& ) const
 // -----------------------------------------------------------------------------
 void Fire::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientStartPionFire asn;
+    AsnMsgSimToClientStartUnitFire asn;
     asn().oid_tir = oid_tir;
     asn().tireur  = tireur;
     asn().type    = type;
@@ -72,7 +72,7 @@ void Fire::SendCreation( Publisher_ABC& publisher ) const
     asn().munition = munition;
     asn().cible.t = typeCible_;
     ASN1T_CoordUTM coord;
-    if( typeCible_ == T_MsgStartPionFire_cible_position )
+    if( typeCible_ == T_MsgStartUnitFire_cible_position )
     {
         asn().cible.u.position = &coord;
         positionCible_.Send( coord );
@@ -88,7 +88,7 @@ void Fire::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Fire::SendDestruction( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientStopPionFire asn;
+    AsnMsgSimToClientStopUnitFire asn;
     asn().oid_tir = oid_tir;
     asn().degats_pions.n    = asn().degats_populations.n    = 0;
     asn().degats_pions.elem = 0;

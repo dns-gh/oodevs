@@ -17,14 +17,14 @@ using namespace dispatcher;
 // Name: CrossingSiteObjectAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-CrossingSiteObjectAttribute::CrossingSiteObjectAttribute( const Model& model, const ASN1T_AttrObjectSpecific& asnMsg )
+CrossingSiteObjectAttribute::CrossingSiteObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg )
     : ObjectAttribute_ABC( model, asnMsg )
     , nWidth_            ( 0 )
     , nDepth_            ( 0 )
     , nSpeed_            ( 0 )
     , bNeedsConstruction_( false ) 
 {
-    if( asnMsg.t == T_AttrObjectSpecific_site_franchissement )
+    if( asnMsg.t == T_ObjectAttributesSpecific_site_franchissement )
     {
         nWidth_             = asnMsg.u.site_franchissement->largeur;
         nDepth_             = asnMsg.u.site_franchissement->profondeur;
@@ -46,9 +46,9 @@ CrossingSiteObjectAttribute::~CrossingSiteObjectAttribute()
 // Name: CrossingSiteObjectAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void CrossingSiteObjectAttribute::Update( const ASN1T_AttrObjectSpecific& asnMsg )
+void CrossingSiteObjectAttribute::Update( const ASN1T_ObjectAttributesSpecific& asnMsg )
 {
-    if( asnMsg.t == T_AttrObjectSpecific_site_franchissement )
+    if( asnMsg.t == T_ObjectAttributesSpecific_site_franchissement )
     {
         nWidth_             = asnMsg.u.site_franchissement->largeur;
         nDepth_             = asnMsg.u.site_franchissement->profondeur;
@@ -61,10 +61,10 @@ void CrossingSiteObjectAttribute::Update( const ASN1T_AttrObjectSpecific& asnMsg
 // Name: CrossingSiteObjectAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void CrossingSiteObjectAttribute::Send( ASN1T_AttrObjectSpecific& asnMsg ) const
+void CrossingSiteObjectAttribute::Send( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
     asnMsg.t = nType_;
-    asnMsg.u.site_franchissement = new ASN1T_AttrObjectSiteFranchissement();
+    asnMsg.u.site_franchissement = new ASN1T_ObjectAttributesCrossingSite();
     
     asnMsg.u.site_franchissement->largeur           = nWidth_;
     asnMsg.u.site_franchissement->profondeur        = nDepth_;
@@ -76,7 +76,7 @@ void CrossingSiteObjectAttribute::Send( ASN1T_AttrObjectSpecific& asnMsg ) const
 // Name: CrossingSiteObjectAttribute::AsnDelete
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void CrossingSiteObjectAttribute::AsnDelete( ASN1T_AttrObjectSpecific& asnMsg ) const
+void CrossingSiteObjectAttribute::AsnDelete( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
     delete asnMsg.u.itineraire_logistique;
 }

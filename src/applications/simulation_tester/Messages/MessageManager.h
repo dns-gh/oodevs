@@ -115,19 +115,19 @@ private:
 	void OnReceiveMsgOutSim                   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     // Control
-    void OnReceiveMsgCtrlInfo                 ( const ASN1T_MsgCtrlInfo& asnMsg );
-    void OnReceiveMsgCtrlBeginTick            ( const ASN1T_MsgCtrlBeginTick& asnMsg );
-    void OnReceiveMsgCtrlEndTick              ( const ASN1T_MsgCtrlEndTick& asnMsg );
-    void OnReceiveMsgCtrlChangeTimeFactorAck  ( const ASN1T_MsgCtrlChangeTimeFactorAck& asnMsg );
-    void OnReceiveMsgCtrlSendCurrentStateBegin();
-    void OnReceiveMsgCtrlSendCurrentStateEnd  ();
+    void OnReceiveMsgControlInformation                 ( const ASN1T_MsgControlInformation& asnMsg );
+    void OnReceiveMsgControlBeginTick            ( const ASN1T_MsgControlBeginTick& asnMsg );
+    void OnReceiveMsgControlEndTick              ( const ASN1T_MsgControlEndTick& asnMsg );
+    void OnReceiveMsgControlChangeTimeFactorAck  ( const ASN1T_MsgControlChangeTimeFactorAck& asnMsg );
+    void OnReceiveMsgControlSendCurrentStateBegin();
+    void OnReceiveMsgControlSendCurrentStateEnd  ();
 
     //! @name Entities
     //@{
     void OnReceiveMsgKnowledgeGroup           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgTeam                     ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgAutomatCreation          ( const ASN1T_MsgAutomateCreation& asnMsg );
-	void OnReceiveMsgPawnCreation             ( const ASN1T_MsgPionCreation& asnMsg );
+    void OnReceiveMsgAutomatCreation          ( const ASN1T_MsgAutomatCreation& asnMsg );
+	void OnReceiveMsgPawnCreation             ( const ASN1T_MsgUnitCreation& asnMsg );
     void OnReceiveMsgUnitAttributes           ( const ASN1T_MsgUnitAttributes& asnMsg );
 
     void OnReceiveMsgObjectCreation           ( const ASN1T_MsgObjectCreation& asnMsg );
@@ -141,9 +141,9 @@ private:
     void OnReceiveMsgPopulationConcentrationUpdate     ( const ASN1T_MsgPopulationConcentrationUpdate&      asnMsg );
     void OnReceiveMsgPopulationConcentrationDestruction( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg );
 
-    void OnReceiveMsgPopulationFlowCreation            ( const ASN1T_MsgPopulationFluxCreation&             asnMsg );
-    void OnReceiveMsgPopulationFlowUpdate              ( const ASN1T_MsgPopulationFluxUpdate&               asnMsg );
-    void OnReceiveMsgPopulationFlowDestruction         ( const ASN1T_MsgPopulationFluxDestruction&          asnMsg );
+    void OnReceiveMsgPopulationFlowCreation            ( const ASN1T_MsgPopulationFlowCreation&             asnMsg );
+    void OnReceiveMsgPopulationFlowUpdate              ( const ASN1T_MsgPopulationFlowUpdate&               asnMsg );
+    void OnReceiveMsgPopulationFlowDestruction         ( const ASN1T_MsgPopulationFlowDestruction&          asnMsg );
     //@}
 
     //! @name Knowledge
@@ -173,13 +173,13 @@ private:
     //@}
 
     // automat mode
-    void OnReceiveMsgSetAutomatModeAck        ( const ASN1T_MsgSetAutomateModeAck& asnMsg, unsigned int nCtx );
+    void OnReceiveMsgSetAutomatModeAck        ( const ASN1T_MsgSetAutomatModeAck& asnMsg, unsigned int nCtx );
 
     // Hierarchy changes
     void OnReceiveMsgChangeAutomat            ( const ASN1T_MsgChangeAutomate& asnMsg );
     void OnReceiveMsgChangeAutomateAck        ( const ASN1T_MsgChangeAutomateAck& asnMsg, unsigned int nCtx );
-    void OnReceiveMsgChangeTeamRelation       ( const ASN1T_MsgChangeDiplomatie& asnMsg );
-    void OnReceiveMsgChangeTeamRelationAck    ( const ASN1T_MsgChangeDiplomatieAck& asnMsg, unsigned int nCtx );
+    void OnReceiveMsgChangeTeamRelation       ( const ASN1T_MsgChangeDiplomacy& asnMsg );
+    void OnReceiveMsgChangeTeamRelationAck    ( const ASN1T_MsgChangeDiplomacyAck& asnMsg, unsigned int nCtx );
     void OnReceiveMsgChangeKnowledgeGroupAck  ( const ASN1T_MsgChangeGroupeConnaissanceAck& asnMsg, unsigned int nCtx );
 
     // pathfind and terrain type
@@ -188,8 +188,8 @@ private:
     void OnReceiveMsgDebugDrawPoints          ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     // communication/orders
-    void OnReceiveMsgAutomateOrderAck         ( const ASN1T_MsgAutomateOrderAck& asnMsg, unsigned int nCtx );
-    void OnReceiveMsgPionOrderAck             ( const ASN1T_MsgPionOrderAck&     asnMsg, unsigned int nCtx );
+    void OnReceiveMsgAutomatOrderAck         ( const ASN1T_MsgAutomatOrderAck& asnMsg, unsigned int nCtx );
+    void OnReceiveMsgUnitOrderAck             ( const ASN1T_MsgUnitOrderAck&     asnMsg, unsigned int nCtx );
     //@}
 
 private:

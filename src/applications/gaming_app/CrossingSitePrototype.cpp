@@ -45,14 +45,14 @@ void CrossingSitePrototype::Commit()
     if( msg_.type != EnumObjectType::site_franchissement )
         return;
 
-    attr_ = new ASN1T_AttrObjectSiteFranchissement();
+    attr_ = new ASN1T_ObjectAttributesCrossingSite();
     
     attr_->largeur           = width_->value();
     attr_->profondeur        = depth_->value();
     attr_->vitesse_courant   = speed_->value();
     attr_->berges_a_amenager = needsConstruction_->isOn();
     msg_.m.attributs_specifiquesPresent    = 1;
-    msg_.attributs_specifiques.t           = T_AttrObjectSpecific_site_franchissement;
+    msg_.attributs_specifiques.t           = T_ObjectAttributesSpecific_site_franchissement;
     msg_.attributs_specifiques.u.site_franchissement = attr_;
 }
 

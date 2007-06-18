@@ -39,14 +39,14 @@ MIL_ParameterType_Direction::~MIL_ParameterType_Direction()
 void MIL_ParameterType_Direction::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_direction ) 
+    if( from.null_value || from.value.t != T_MissionParameter_value_heading ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( !DEC_Tools::CheckTypeDirection( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyDirection( from.value.u.direction, to ) )
+    if( !NET_ASN_Tools::CopyDirection( from.value.u.heading, to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -79,9 +79,9 @@ bool MIL_ParameterType_Direction::Copy( const DIA_Variable_ABC& from, ASN1T_Miss
         return false;
 
     to.null_value = false;
-    to.value.t    = T_MissionParameter_value_direction;
+    to.value.t    = T_MissionParameter_value_heading;
     
-    if( !NET_ASN_Tools::CopyDirection( from, to.value.u.direction ) )
+    if( !NET_ASN_Tools::CopyDirection( from, to.value.u.heading ) )
         return false;
 
     return true;
@@ -93,5 +93,5 @@ bool MIL_ParameterType_Direction::Copy( const DIA_Variable_ABC& from, ASN1T_Miss
 // -----------------------------------------------------------------------------
 void MIL_ParameterType_Direction::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_direction );
+    assert( to.value.t == T_MissionParameter_value_heading );
 }

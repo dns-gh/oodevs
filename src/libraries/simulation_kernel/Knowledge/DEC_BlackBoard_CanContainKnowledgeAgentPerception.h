@@ -66,7 +66,7 @@ public:
     template < class UnaryFunction >
     void ApplyOnKnowledgesAgentPerception( UnaryFunction fct ) const
     {
-        for( CIT_KnowledgeAgentPerceptionMap itKnowledge = knowledgeAgentPerceptionMap_.begin(); itKnowledge != knowledgeAgentPerceptionMap_.end(); )
+        for( CIT_KnowledgeAgentPerceptionMap itKnowledge = unitKnowledgePerceptionMap_.begin(); itKnowledge != unitKnowledgePerceptionMap_.end(); )
         {
             DEC_Knowledge_AgentPerception& knowledge = *itKnowledge->second;
             ++itKnowledge;
@@ -78,7 +78,7 @@ public:
 private:
     //! @name Member data
     //@{
-    T_KnowledgeAgentPerceptionMap knowledgeAgentPerceptionMap_;
+    T_KnowledgeAgentPerceptionMap unitKnowledgePerceptionMap_;
     //@}
 };
 

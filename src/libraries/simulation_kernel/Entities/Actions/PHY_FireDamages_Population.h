@@ -40,8 +40,8 @@ public:
 
     //! @name Network
     //@{
-           void Serialize              ( const MIL_Population& target, ASN1T_FireDamagesPopulation& asn ) const;
-    static void CleanAfterSerialization( ASN1T_FireDamagesPopulation& asn );
+           void Serialize              ( const MIL_Population& target, ASN1T_PopulationFireDamages& asn ) const;
+    static void CleanAfterSerialization( ASN1T_PopulationFireDamages& asn );
     //@}
 
 private:

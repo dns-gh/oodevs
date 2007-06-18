@@ -56,9 +56,9 @@ void Diplomacies::UpdateData( const T& message )
 // Name: Diplomacies::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void Diplomacies::DoUpdate( const ASN1T_MsgChangeDiplomatieAck& message )
+void Diplomacies::DoUpdate( const ASN1T_MsgChangeDiplomacyAck& message )
 {
-    if( message.error_code == EnumChangeDiplomatieErrorCode::no_error )
+    if( message.error_code == EnumChangeDiplomacyErrorCode::no_error )
         UpdateData( message );
 }
 
@@ -66,7 +66,7 @@ void Diplomacies::DoUpdate( const ASN1T_MsgChangeDiplomatieAck& message )
 // Name: Diplomacies::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void Diplomacies::DoUpdate( const ASN1T_MsgChangeDiplomatie& message )
+void Diplomacies::DoUpdate( const ASN1T_MsgChangeDiplomacy& message )
 {
     UpdateData( message );
 }
@@ -75,14 +75,14 @@ void Diplomacies::DoUpdate( const ASN1T_MsgChangeDiplomatie& message )
 // Name: Diplomacies::DoUpdate
 // Created: AGE 2006-10-25
 // -----------------------------------------------------------------------------
-void Diplomacies::DoUpdate( const ASN1T_MsgSideCreation& message )
+void Diplomacies::DoUpdate( const ASN1T_MsgTeamCreation& message )
 {
     switch( message.type )
     {
-    case EnumDiplomatie::inconnu : karma_ = kernel::Karma::unknown_; break;
-    case EnumDiplomatie::ami :     karma_ = kernel::Karma::friend_; break;
-    case EnumDiplomatie::ennemi :  karma_ = kernel::Karma::enemy_; break;
-    case EnumDiplomatie::neutre :  karma_ = kernel::Karma::neutral_; break;
+    case EnumDiplomacy::inconnu : karma_ = kernel::Karma::unknown_; break;
+    case EnumDiplomacy::ami :     karma_ = kernel::Karma::friend_; break;
+    case EnumDiplomacy::ennemi :  karma_ = kernel::Karma::enemy_; break;
+    case EnumDiplomacy::neutre :  karma_ = kernel::Karma::neutral_; break;
     }
 }
 
@@ -99,7 +99,7 @@ const kernel::Karma& Diplomacies::GetKarma() const
 // Name: Diplomacies::GetRelationship
 // Created: AGE 2006-10-24
 // -----------------------------------------------------------------------------
-ASN1T_EnumDiplomatie Diplomacies::GetRelationship( const kernel::Entity_ABC& rhs ) const
+ASN1T_EnumDiplomacy Diplomacies::GetRelationship( const kernel::Entity_ABC& rhs ) const
 {
     const CommunicationHierarchies* h = rhs.Retrieve< CommunicationHierarchies >();
     const kernel::Entity_ABC* team = h ? & h->GetTop() : 0;
@@ -107,5 +107,5 @@ ASN1T_EnumDiplomatie Diplomacies::GetRelationship( const kernel::Entity_ABC& rhs
     CIT_Diplomacies it = diplomacies_.find( o );
     if( it != diplomacies_.end() )
         return it->second;
-    return EnumDiplomatie::inconnu;
+    return EnumDiplomacy::inconnu;
 }

@@ -28,15 +28,15 @@ class NBCObjectAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     NBCObjectAttribute( const Model& model, const ASN1T_AttrObjectSpecific& asnMsg );
+     NBCObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg );
     ~NBCObjectAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const ASN1T_AttrObjectSpecific& asnMsg );
-    virtual void Send     ( ASN1T_AttrObjectSpecific& asnMsg ) const;
-    virtual void AsnDelete( ASN1T_AttrObjectSpecific& asnMsg ) const;
+    virtual void Update   ( const ASN1T_ObjectAttributesSpecific& asnMsg );
+    virtual void Send     ( ASN1T_ObjectAttributesSpecific& asnMsg ) const;
+    virtual void AsnDelete( ASN1T_ObjectAttributesSpecific& asnMsg ) const;
     //@}
 
 private:

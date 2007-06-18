@@ -62,10 +62,10 @@ protected:
 
     //! @name Network tools
     //@{
-           void Serialize              ( ASN1T_FireDamagesPions&       asn ) const;
-           void Serialize              ( ASN1T_FireDamagesPopulations& asn ) const;
-    static void CleanAfterSerialization( ASN1T_FireDamagesPions&       asn );
-    static void CleanAfterSerialization( ASN1T_FireDamagesPopulations& asn );
+           void Serialize              ( ASN1T_UnitsFireDamages&      asn ) const;
+           void Serialize              ( ASN1T_PopulationsFireDamages& asn ) const;
+    static void CleanAfterSerialization( ASN1T_UnitsFireDamages&      asn );
+    static void CleanAfterSerialization( ASN1T_PopulationsFireDamages& asn );
     //@}
 
 private:

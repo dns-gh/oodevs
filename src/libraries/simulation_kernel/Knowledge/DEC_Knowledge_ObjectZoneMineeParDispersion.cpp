@@ -129,6 +129,6 @@ void DEC_Knowledge_ObjectZoneMineeParDispersion::BuildMsgSpecificAttributes( ASN
     asnAttributes_.densite              = rMinesDensity_;
 
     asnMsg.m.attributs_specifiquesPresent                    = 1;
-    asnMsg.attributs_specifiques.t                           = T_AttrObjectSpecific_zone_minee_par_dispersion;
+    asnMsg.attributs_specifiques.t                           = T_ObjectAttributesSpecific_zone_minee_par_dispersion;
     asnMsg.attributs_specifiques.u.zone_minee_par_dispersion = &asnAttributes_;
 }

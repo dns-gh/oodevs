@@ -35,7 +35,7 @@ class Side : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Side( Model& model, const ASN1T_MsgSideCreation& msg );
+             Side( Model& model, const ASN1T_MsgTeamCreation& msg );
     virtual ~Side();
     //@}
 
@@ -50,9 +50,9 @@ public:
 
     //! @name Main
     //@{
-    void Update        ( const ASN1T_MsgSideCreation&        asnMsg );
-    void Update        ( const ASN1T_MsgChangeDiplomatie&    asnMsg );
-    void Update        ( const ASN1T_MsgChangeDiplomatieAck& asnMsg );
+    void Update        ( const ASN1T_MsgTeamCreation&        asnMsg );
+    void Update        ( const ASN1T_MsgChangeDiplomacy&    asnMsg );
+    void Update        ( const ASN1T_MsgChangeDiplomacyAck& asnMsg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
     virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
     void Accept( ModelVisitor_ABC& visitor );
@@ -68,7 +68,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< Side*, ASN1T_EnumDiplomatie > T_DiplomacyMap;
+    typedef std::map< Side*, ASN1T_EnumDiplomacy >    T_DiplomacyMap;
     typedef T_DiplomacyMap::const_iterator          CIT_DiplomacyMap;
     //@}
 
@@ -76,7 +76,7 @@ private:
           Model&                               model_;
     const unsigned long                        nID_;
           std::string                          strName_;
-          ASN1T_EnumDiplomatie                 nType_;
+          ASN1T_EnumDiplomacy                  nType_;
           ModelRefsContainer< KnowledgeGroup > knowledgeGroups_;
           ModelRefsContainer< Formation      > formations_;
 		  ModelRefsContainer< Object		 > objects_;

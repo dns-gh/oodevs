@@ -19,7 +19,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 MissionParameter_GenObject::MissionParameter_GenObject( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , data_               ( *asn.value.u.missionGenObject )
+    , data_               ( *asn.value.u.plannedWork )
 {
     // NOTHING
 }
@@ -44,9 +44,9 @@ MissionParameter_GenObject::~MissionParameter_GenObject()
 void MissionParameter_GenObject::Send( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value               = bNullValue_;
-    asn.value.t                  = T_MissionParameter_value_missionGenObject;
-    asn.value.u.missionGenObject = new ASN1T_MissionGenObject();
-    data_.Send( *asn.value.u.missionGenObject );
+    asn.value.t                  = T_MissionParameter_value_plannedWork;
+    asn.value.u.plannedWork = new ASN1T_PlannedWork();
+    data_.Send( *asn.value.u.plannedWork );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,6 +55,6 @@ void MissionParameter_GenObject::Send( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void MissionParameter_GenObject::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    GenObject::AsnDelete( *asn.value.u.missionGenObject );
-    delete asn.value.u.missionGenObject;
+    GenObject::AsnDelete( *asn.value.u.plannedWork );
+    delete asn.value.u.plannedWork;
 }

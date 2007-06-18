@@ -34,13 +34,13 @@ public:
     //@{
     static const MIL_ObstacleType* Find( const std::string& strName );
     static const MIL_ObstacleType* Find( uint nID );
-    static const MIL_ObstacleType* Find( ASN1T_EnumTypeObstacle asn );
+    static const MIL_ObstacleType* Find( ASN1T_EnumObstacleType asn );
     //@}
 
     //! @name Accessors
     //@{
           uint                   GetID   () const;
-          ASN1T_EnumTypeObstacle GetAsnID() const;
+          ASN1T_EnumObstacleType GetAsnID() const;
     const std::string&           GetName () const;
     //@}
 
@@ -62,12 +62,12 @@ private:
     //@}
 
 private:
-    MIL_ObstacleType( const std::string& strName, E_Type nType, ASN1T_EnumTypeObstacle nAsnID );
+    MIL_ObstacleType( const std::string& strName, E_Type nType, ASN1T_EnumObstacleType nAsnID );
     virtual ~MIL_ObstacleType();
 
 private:
     const E_Type                  nType_;
-    const ASN1T_EnumTypeObstacle  nAsnID_;
+    const ASN1T_EnumObstacleType  nAsnID_;
     const std::string             strName_;
 };
 

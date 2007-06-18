@@ -30,7 +30,7 @@ using namespace dispatcher;
 // Name: Agent constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Agent::Agent( Model& model, const ASN1T_MsgPionCreation& msg )
+Agent::Agent( Model& model, const ASN1T_MsgUnitCreation& msg )
     : model_                        ( model )
     , nID_                          ( msg.oid_pion )
     , nType_                        ( msg.type_pion )
@@ -61,15 +61,15 @@ Agent::Agent( Model& model, const ASN1T_MsgPionCreation& msg )
     , bRadarEnabled_                ( false )
     , transportedAgents_            ()
     , pTransporter_                 ( 0 )
-    , nForceRatioState_             ( EnumEtatRapFor         ::neutre )
-    , nCloseCombatState_            ( EnumEtatCombatRencontre::etat_esquive )
-    , nOperationalState_            ( EnumEtatOperationnel   ::operationnel )
-    , nIndirectFireAvailability_    ( EnumDisponibiliteAuTir ::indisponible )
-    , nRoe_                         ( EnumRoe                ::tir_libre )
-    , nRoePopulation_               ( EnumRoePopulation      ::emploi_force_interdit )
-    , nTiredness_                   ( EnumUnitFatigue        ::normal )
-    , nMorale_                      ( EnumUnitMoral          ::bon )
-    , nExperience_                  ( EnumUnitExperience     ::experimente )
+    , nForceRatioState_             ( EnumForceRatioStatus       ::neutre )
+    , nCloseCombatState_            ( EnumMeetingEngagementStatus::etat_esquive )
+    , nOperationalState_            ( EnumOperationalStatus      ::operationnel )
+    , nIndirectFireAvailability_    ( EnumFireAvailability       ::indisponible )
+    , nRoe_                         ( EnumRoe                    ::tir_libre )
+    , nRoePopulation_               ( EnumPopulationRoe          ::emploi_force_interdit )
+    , nTiredness_                   ( EnumUnitTiredness          ::normal )
+    , nMorale_                      ( EnumUnitMorale             ::bon )
+    , nExperience_                  ( EnumUnitExperience         ::experimente )
     , pSideSurrenderedTo_           ( 0 )
     , bPrisonner_                   ( false )
     , bRefugeeManaged_              ( false )
@@ -103,7 +103,7 @@ Agent::~Agent()
 // Name: Agent::Update
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Agent::Update( const ASN1T_MsgPionCreation& asnMsg )
+void Agent::Update( const ASN1T_MsgUnitCreation& asnMsg )
 {
     const bool superiorChanged = pAutomat_->GetID() != asnMsg.oid_automate;
     FlagUpdate( superiorChanged );
@@ -194,7 +194,7 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
     {
         for( uint i = 0; i < asnMsg.dotation_eff_materiel.n; ++i )
         {
-            const ASN1T_DotationEquipement& asn = asnMsg.dotation_eff_materiel.elem[ i ];
+            const ASN1T_EquipmentDotations& asn = asnMsg.dotation_eff_materiel.elem[ i ];
             Equipment* pEquipment = equipments_.Find( asn.type_equipement );
             if( pEquipment )
                 pEquipment->Update( asn );
@@ -207,7 +207,7 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
     {
         for( uint i = 0; i < asnMsg.dotation_eff_personnel.n; ++i )
         {
-            const ASN1T_DotationPersonnel& asn = asnMsg.dotation_eff_personnel.elem[ i ];
+            const ASN1T_HumanDotations& asn = asnMsg.dotation_eff_personnel.elem[ i ];
             Humans* pHumans = troops_.Find( asn.rang );
             if( pHumans  )
                 pHumans ->Update( asn );
@@ -220,7 +220,7 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
     {
         for( uint i = 0; i < asnMsg.dotation_eff_ressource.n; ++i )
         {
-            const ASN1T_DotationRessource& asn = asnMsg.dotation_eff_ressource.elem[ i ];
+            const ASN1T_ResourceDotations& asn = asnMsg.dotation_eff_ressource.elem[ i ];
             Dotation* pDotation = dotations_.Find( asn.ressource_id );
             if( pDotation )
                 pDotation->Update( asn );
@@ -246,9 +246,18 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
 
 // -----------------------------------------------------------------------------
 // Name: Agent::Update
+// Created: AGE 2007-06-18
+// -----------------------------------------------------------------------------
+void Agent::Update( const ASN1T_MsgDecisionalState& asnMsg )
+{
+    decisionalInfos_[ asnMsg.key ] = decisionalInfos_[ asnMsg.value ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Agent::Update( const ASN1T_MsgLogSanteEtat& asnMsg )
+void Agent::Update( const ASN1T_MsgLogMedicalState& asnMsg )
 {
     if( !pLogMedical_ )
         pLogMedical_ = new AgentLogMedical( model_, *this, asnMsg );
@@ -260,7 +269,7 @@ void Agent::Update( const ASN1T_MsgLogSanteEtat& asnMsg )
 // Name: Agent::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Agent::Update( const ASN1T_MsgLogMaintenanceEtat& asnMsg )
+void Agent::Update( const ASN1T_MsgLogMaintenanceState& asnMsg )
 {
     if( !pLogMaintenance_ )
         pLogMaintenance_ = new AgentLogMaintenance( model_, *this, asnMsg );
@@ -272,7 +281,7 @@ void Agent::Update( const ASN1T_MsgLogMaintenanceEtat& asnMsg )
 // Name: Agent::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Agent::Update( const ASN1T_MsgLogRavitaillementEtat& asnMsg )
+void Agent::Update( const ASN1T_MsgLogSupplyState& asnMsg )
 {
     if( !pLogSupply_ )
         pLogSupply_ = new AgentLogSupply( model_, *this, asnMsg );
@@ -284,7 +293,7 @@ void Agent::Update( const ASN1T_MsgLogRavitaillementEtat& asnMsg )
 // Name: Agent::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Agent::Update( const ASN1T_MsgPionChangeSuperior& asnMsg )
+void Agent::Update( const ASN1T_MsgUnitChangeSuperior& asnMsg )
 {
     pAutomat_->GetAgents().Unregister( *this );
     pAutomat_ = &model_.GetAutomats().Get( asnMsg.oid_automate );
@@ -295,7 +304,7 @@ void Agent::Update( const ASN1T_MsgPionChangeSuperior& asnMsg )
 // Name: Agent::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Agent::Update( const ASN1T_MsgPionChangeSuperiorAck& asnMsg )
+void Agent::Update( const ASN1T_MsgUnitChangeSuperiorAck& asnMsg )
 {
     if( asnMsg.error_code == EnumChangeHierarchyErrorCode::no_error )
     {
@@ -309,7 +318,7 @@ void Agent::Update( const ASN1T_MsgPionChangeSuperiorAck& asnMsg )
 // Name: Agent::Update
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void Agent::Update( const ASN1T_MsgPionOrder& asnMsg )
+void Agent::Update( const ASN1T_MsgUnitOrder& asnMsg )
 {
     delete pOrder_;
     pOrder_ = 0;
@@ -323,7 +332,7 @@ void Agent::Update( const ASN1T_MsgPionOrder& asnMsg )
 // -----------------------------------------------------------------------------
 void Agent::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientPionCreation asn;
+    AsnMsgSimToClientUnitCreation asn;
     asn().oid_pion      = nID_;
     asn().type_pion     = nType_;
     asn().nom           = strName_.c_str(); // !! pointeur sur const char*
@@ -392,7 +401,7 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
         asn().vitesse = nSpeed_;
         asn().etat_operationnel_brut = nOperationalStateValue_;
 
-        reinforcements_.Send< ASN1T_ListAgent, ASN1T_Agent >( asn().pions_renforcant );
+        reinforcements_.Send< ASN1T_UnitList, ASN1T_Unit >( asn().pions_renforcant );
 
         asn().pion_renforce = pReinforced_ ? pReinforced_->GetID() : 0 ;
         asn().mort = bDead_;
@@ -413,7 +422,7 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
         asn().silence_radio = bBlackoutEnabled_;
         asn().radar_actif = bRadarEnabled_;
 
-        transportedAgents_.Send< ASN1T_ListAgent, ASN1T_Agent >( asn().pions_transportes );
+        transportedAgents_.Send< ASN1T_UnitList, ASN1T_Unit >( asn().pions_transportes );
 
         asn().pion_transporteur = pTransporter_ ? pTransporter_->GetID() : 0;
 
@@ -430,11 +439,11 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
         asn().prisonnier = bPrisonner_;
         asn().refugie_pris_en_compte = bRefugeeManaged_;
 
-        equipments_ .Send< ASN1T__SeqOfDotationEquipement, ASN1T_DotationEquipement >( asn().dotation_eff_materiel  );
-        troops_     .Send< ASN1T__SeqOfDotationPersonnel , ASN1T_DotationPersonnel  >( asn().dotation_eff_personnel );
-        dotations_  .Send< ASN1T__SeqOfDotationRessource , ASN1T_DotationRessource  >( asn().dotation_eff_ressource );
-        borrowings_ .Send< ASN1T__SeqOfEquipementEmprunte, ASN1T_EquipementEmprunte >( asn().equipements_empruntes  );
-        lendings_   .Send< ASN1T__SeqOfEquipementPrete   , ASN1T_EquipementPrete    >( asn().equipements_pretes     );
+        equipments_ .Send< ASN1T__SeqOfEquipmentDotations, ASN1T_EquipmentDotations >( asn().dotation_eff_materiel  );
+        troops_     .Send< ASN1T__SeqOfHumanDotations , ASN1T_HumanDotations  >( asn().dotation_eff_personnel );
+        dotations_  .Send< ASN1T__SeqOfResourceDotations , ASN1T_ResourceDotations  >( asn().dotation_eff_ressource );
+        borrowings_ .Send< ASN1T__SeqOfBorrowedEquipment, ASN1T_BorrowedEquipment >( asn().equipements_empruntes  );
+        lendings_   .Send< ASN1T__SeqOfLentEquipment   , ASN1T_LentEquipment    >( asn().equipements_pretes     );
 
         asn.Send( publisher );
 
@@ -470,6 +479,15 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
         pOrder_->Send( publisher );
     else
         AgentOrder::SendNoMission( *this, publisher );
+
+    for( std::map< std::string, std::string >::const_iterator it = decisionalInfos_.begin(); it != decisionalInfos_.end(); ++it )
+    {
+        AsnMsgSimToClientDecisionalState asn;
+        asn().unit_id = nID_;
+        asn().key     = it->first.c_str();
+        asn().value   = it->second.c_str();
+        asn.Send( publisher );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -478,7 +496,7 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Agent::SendDestruction( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientPionDestruction asn;
+    AsnMsgSimToClientUnitDestruction asn;
     asn() = nID_;
     asn.Send( publisher );
 }
@@ -489,7 +507,7 @@ void Agent::SendDestruction( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Agent::SendSpecialUpdate( Publisher_ABC& publisher ) const
 {   
-    AsnMsgSimToClientPionChangeSuperiorAck ack;
+    AsnMsgSimToClientUnitChangeSuperiorAck ack;
     ack().error_code   = EnumChangeHierarchyErrorCode::no_error;
     ack().oid_automate = pAutomat_->GetID();
     ack().oid_pion     = nID_;

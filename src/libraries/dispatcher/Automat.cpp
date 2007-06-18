@@ -27,7 +27,7 @@ using namespace dispatcher;
 // Name: Automat constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Automat::Automat( Model& model, const ASN1T_MsgAutomateCreation& msg )
+Automat::Automat( Model& model, const ASN1T_MsgAutomatCreation& msg )
     : model_            ( model )
     , nID_              ( msg.oid_automate )
     , nType_            ( msg.type_automate )
@@ -41,10 +41,10 @@ Automat::Automat( Model& model, const ASN1T_MsgAutomateCreation& msg )
     , pLogMaintenance_  ( 0 )
     , pLogMedical_      ( 0 )
     , pLogSupply_       ( 0 )
-    , nAutomatState_    ( EnumAutomateState::debraye )
-    , nForceRatioState_ ( EnumEtatRapFor::neutre )
-    , nCloseCombatState_( EnumEtatCombatRencontre::etat_fixe )
-    , nOperationalState_( EnumEtatOperationnel::detruit_totalement )
+    , nAutomatState_    ( EnumAutomatMode::debraye )
+    , nForceRatioState_ ( EnumForceRatioStatus::neutre )
+    , nCloseCombatState_( EnumMeetingEngagementStatus::etat_fixe )
+    , nOperationalState_( EnumOperationalStatus::detruit_totalement )
     , nRoe_             ( EnumRoe::tir_interdit )
     , pOrder_           ( 0 )
 {
@@ -70,7 +70,7 @@ Automat::~Automat()
 // Name: Automat::Update
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Automat::Update( const ASN1T_MsgAutomateCreation& msg )
+void Automat::Update( const ASN1T_MsgAutomatCreation& msg )
 {
     const bool kgChanged = pKnowledgeGroup_->GetID() != msg.oid_groupe_connaissance;
     FlagUpdate( kgChanged );
@@ -86,7 +86,7 @@ void Automat::Update( const ASN1T_MsgAutomateCreation& msg )
 // Name: Automat::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Automat::Update( const ASN1T_MsgAutomateChangeLiensLogistiquesAck& msg )
+void Automat::Update( const ASN1T_MsgAutomatChangeLogisticLinksAck& msg )
 {
     if( msg.m.oid_tc2Present )
         pTC2_ = msg.oid_tc2 == 0 ? 0 : &model_.GetAutomats().Get( msg.oid_tc2 );
@@ -102,7 +102,7 @@ void Automat::Update( const ASN1T_MsgAutomateChangeLiensLogistiquesAck& msg )
 // Name: Automat::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Automat::Update( const ASN1T_MsgAutomateChangeLiensLogistiques& msg )
+void Automat::Update( const ASN1T_MsgAutomatChangeLogisticLinks& msg )
 {
     if( msg.m.oid_tc2Present )
         pTC2_ = msg.oid_tc2 == 0 ? 0 : &model_.GetAutomats().Get( msg.oid_tc2 );
@@ -118,7 +118,7 @@ void Automat::Update( const ASN1T_MsgAutomateChangeLiensLogistiques& msg )
 // Name: Automat::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Automat::Update( const ASN1T_MsgAutomateChangeGroupeConnaissanceAck& msg )
+void Automat::Update( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& msg )
 {
     pKnowledgeGroup_->GetAutomats().Unregister( *this );
     pKnowledgeGroup_ = &model_.GetKnowledgeGroups().Get( msg.oid_groupe_connaissance );
@@ -129,7 +129,7 @@ void Automat::Update( const ASN1T_MsgAutomateChangeGroupeConnaissanceAck& msg )
 // Name: Automat::Update
 // Created: NLD 2006-10-05
 // -----------------------------------------------------------------------------
-void Automat::Update( const ASN1T_MsgAutomateAttributes& msg )
+void Automat::Update( const ASN1T_MsgAutomatAttributes& msg )
 {
     if( msg.m.etat_automatePresent )
         nAutomatState_ = msg.etat_automate;
@@ -147,7 +147,7 @@ void Automat::Update( const ASN1T_MsgAutomateAttributes& msg )
 // Name: Automat::Update
 // Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
-void Automat::Update( const ASN1T_MsgLogRavitaillementQuotas& msg )
+void Automat::Update( const ASN1T_MsgLogSupplyQuotas& msg )
 {
     quotas_.Clear();
     for( unsigned i = 0; i < msg.quotas.n; ++i )
@@ -158,7 +158,7 @@ void Automat::Update( const ASN1T_MsgLogRavitaillementQuotas& msg )
 // Name: Automat::Update
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void Automat::Update( const ASN1T_MsgAutomateOrder& asnMsg )
+void Automat::Update( const ASN1T_MsgAutomatOrder& asnMsg )
 {
     delete pOrder_;
     pOrder_ = 0;
@@ -172,7 +172,7 @@ void Automat::Update( const ASN1T_MsgAutomateOrder& asnMsg )
 // -----------------------------------------------------------------------------
 void Automat::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientAutomateCreation asn;
+    AsnMsgSimToClientAutomatCreation asn;
     asn().oid_automate            = nID_;
     asn().type_automate           = nType_;
     asn().nom                     = strName_.c_str(); // !! pointeur sur const char*
@@ -181,7 +181,7 @@ void Automat::SendCreation( Publisher_ABC& publisher ) const
     asn().oid_formation           = formation_.GetID();
     asn.Send( publisher );
 
-    AsnMsgSimToClientLogRavitaillementQuotas asnQuotas;
+    AsnMsgSimToClientLogSupplyQuotas asnQuotas;
     asnQuotas().oid_automate = nID_;
     quotas_.Send< ASN1T__SeqOfDotationQuota, ASN1T_DotationQuota >( asnQuotas().quotas );
     asnQuotas.Send( publisher );
@@ -196,7 +196,7 @@ void Automat::SendCreation( Publisher_ABC& publisher ) const
 void Automat::SendFullUpdate( Publisher_ABC& publisher ) const
 {
     {
-        AsnMsgSimToClientAutomateAttributes asn;
+        AsnMsgSimToClientAutomatAttributes asn;
         asn().m.etat_automatePresent = 1;
         asn().m.rapport_de_forcePresent = 1;
         asn().m.combat_de_rencontrePresent = 1;
@@ -212,7 +212,7 @@ void Automat::SendFullUpdate( Publisher_ABC& publisher ) const
     }
 
     {
-        AsnMsgSimToClientAutomateChangeLiensLogistiques asn;
+        AsnMsgSimToClientAutomatChangeLogisticLinks asn;
         asn().oid_automate = nID_;
         if( pTC2_ )
         {
@@ -258,7 +258,7 @@ void Automat::Accept( ModelVisitor_ABC& visitor )
 // -----------------------------------------------------------------------------
 void Automat::SendSpecialUpdate( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientAutomateChangeGroupeConnaissanceAck ack;
+    AsnMsgSimToClientAutomatChangeKnowledgeGroupAck ack;
     ack().error_code = EnumChangeHierarchyErrorCode::no_error;
     ack().oid_automate = nID_;
     ack().oid_camp = side_.GetID();

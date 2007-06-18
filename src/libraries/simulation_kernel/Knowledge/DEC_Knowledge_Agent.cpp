@@ -408,7 +408,7 @@ void DEC_Knowledge_Agent::WriteMsgPerceptionSources( ASN1T_MsgUnitKnowledgeUpdat
 
     if( !perceptionLevelPerAutomateMap_.empty() )
     {
-        ASN1T_AutomatePerception* pPerceptions = new ASN1T_AutomatePerception[ perceptionLevelPerAutomateMap_.size() ]; //$$ RAM
+        ASN1T_AutomatPerception* pPerceptions = new ASN1T_AutomatPerception[ perceptionLevelPerAutomateMap_.size() ]; //$$ RAM
         uint i = 0;
         for( CIT_PerceptionSourceMap it = perceptionLevelPerAutomateMap_.begin(); it != perceptionLevelPerAutomateMap_.end(); ++it )
         {

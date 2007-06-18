@@ -27,8 +27,8 @@ ActionParameterPointList::ActionParameterPointList( const OrderParameter& parame
 // Name: ActionParameterPointList constructor
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-ActionParameterPointList::ActionParameterPointList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_ListPoint& asn )
-    : ActionParameterLocationList( parameter, converter, (const ASN1T_ListLocalisation&)asn )
+ActionParameterPointList::ActionParameterPointList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_PointList& asn )
+    : ActionParameterLocationList( parameter, converter, (const ASN1T_LocationList&)asn )
 {
     // NOTHING
 }
@@ -59,9 +59,9 @@ ActionParameterPointList::~ActionParameterPointList()
 void ActionParameterPointList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value = 0;
-    asn.value.t = T_MissionParameter_value_listPoint;
-    asn.value.u.listPoint = new ASN1T_ListPoint();
-    ActionParameterLocationList::CommitTo( *(ASN1T_ListLocalisation*)asn.value.u.listPoint );
+    asn.value.t = T_MissionParameter_value_pointList;
+    asn.value.u.pointList = new ASN1T_PointList();
+    ActionParameterLocationList::CommitTo( *(ASN1T_LocationList*)asn.value.u.pointList );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +70,7 @@ void ActionParameterPointList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ActionParameterPointList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listPoint )
-        ActionParameterLocationList::Clean( *(ASN1T_ListLocalisation*)asn.value.u.listPoint );
-    delete asn.value.u.listPoint;
+    if( asn.value.u.pointList )
+        ActionParameterLocationList::Clean( *(ASN1T_LocationList*)asn.value.u.pointList );
+    delete asn.value.u.pointList;
 }

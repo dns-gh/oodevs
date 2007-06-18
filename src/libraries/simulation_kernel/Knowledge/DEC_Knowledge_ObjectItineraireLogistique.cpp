@@ -161,6 +161,6 @@ void DEC_Knowledge_ObjectItineraireLogistique::BuildMsgSpecificAttributes( ASN1T
     asnAttributes_.debit              = (int)rFlow_;
 
     asnMsg.m.attributs_specifiquesPresent                = 1;
-    asnMsg.attributs_specifiques.t                       = T_AttrObjectSpecific_itineraire_logistique;
+    asnMsg.attributs_specifiques.t                       = T_ObjectAttributesSpecific_itineraire_logistique;
     asnMsg.attributs_specifiques.u.itineraire_logistique = &asnAttributes_;
 }

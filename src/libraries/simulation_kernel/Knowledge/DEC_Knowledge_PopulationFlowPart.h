@@ -51,7 +51,7 @@ public:
 
     //! @name Network operations
     //@{
-    void Serialize( ASN1T_PortionFlux& asn );
+    void Serialize( ASN1T_FlowPart& asn );
     //@}
 
 private:

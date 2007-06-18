@@ -53,7 +53,7 @@ GenObject& GenObject::GetTestParam_GenObject( const Testable_Entity& target )
 {
     GenObject& obj = *new GenObject();
 
-    obj.pLocation_        = &Location::GetTestParam_Location( target.GetPosition(), ( ASN1T_EnumTypeLocalisation )target.GetTestParam_Enumeration( 0, 5 ) );
+    obj.pLocation_        = &Location::GetTestParam_Location( target.GetPosition(), ( ASN1T_EnumLocationType )target.GetTestParam_Enumeration( 0, 5 ) );
     obj.eType_            = ( ASN1T_EnumObjectType )target.GetTestParam_Enumeration( 0, 38 );
     obj.eObstacleSubType_ = ( ASN1T_EnumMissionGenSousTypeObstacle )target.GetTestParam_Enumeration( 0, 1 );
     obj.nDensity_         = target.GetTestParam_Numeric( 0, 5 );

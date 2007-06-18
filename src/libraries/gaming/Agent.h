@@ -44,7 +44,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( const ASN1T_MsgPionCreation& message,
+             Agent( const ASN1T_MsgUnitCreation& message,
                     kernel::Controller& controller, 
                     const kernel::Resolver_ABC< kernel::AgentType >& resolver );
     virtual ~Agent();

@@ -17,7 +17,7 @@
 namespace tools
 {
     QString ToString( E_FuncLimaType nType );
-    QString ToString( ASN1T_EnumTypeLocalisation nType );
+    QString ToString( ASN1T_EnumLocationType nType );
     E_FuncLimaType FromString( const QString& type );
     E_TypeLocalisation LocationFromString( const QString& type );
 };

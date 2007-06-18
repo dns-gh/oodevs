@@ -832,17 +832,17 @@ void PHY_RolePionLOG_Medical::StopUsingForLogistic( PHY_ComposantePion& composan
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
 static
-void SendComposanteUse( const PHY_RolePion_Composantes::T_ComposanteUseMap& data, ASN1T__SeqOfSanteDisponibiliteMoyens& asn )
+void SendComposanteUse( const PHY_RolePion_Composantes::T_ComposanteUseMap& data, ASN1T__SeqOfLogMedicalEquipmentAvailability& asn )
 {
     asn.n = data.size();
     if( data.empty() )
         return;
 
-    ASN1T_SanteDisponibiliteMoyens* pData = new ASN1T_SanteDisponibiliteMoyens[ data.size() ];
+    ASN1T_LogMedicalEquipmentAvailability* pData = new ASN1T_LogMedicalEquipmentAvailability[ data.size() ];
     uint i = 0;
     for( PHY_RolePion_Composantes::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
-        ASN1T_SanteDisponibiliteMoyens& data = pData[ i++ ];
+        ASN1T_LogMedicalEquipmentAvailability& data = pData[ i++ ];
         data.type_equipement = itData->first->GetMosID();
         assert( itData->second.nNbrTotal_ );
 
@@ -860,7 +860,7 @@ void SendComposanteUse( const PHY_RolePion_Composantes::T_ComposanteUseMap& data
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::SendFullState() const
 {
-    NET_ASN_MsgLogSanteEtat asn;
+    NET_ASN_MsgLogMedicalState asn;
 
     asn().m.chaine_activeePresent                      = 1;
     asn().m.prioritesPresent                           = 1;
@@ -886,7 +886,7 @@ void PHY_RolePionLOG_Medical::SendFullState() const
     asn().priorites_tactiques.n = tacticalPriorities_.size();
     if( !tacticalPriorities_.empty() )
     {
-        ASN1T_Automate* pAsnPriorities = new ASN1T_Automate[ tacticalPriorities_.size() ];
+        ASN1T_Automat* pAsnPriorities = new ASN1T_Automat[ tacticalPriorities_.size() ];
         uint i = 0 ;
         for( CIT_AutomateVector itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
             pAsnPriorities[ i++ ] = (**itPriority).GetID();

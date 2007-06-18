@@ -132,7 +132,7 @@ bool AgentListView::Drop( const Agent_ABC& item, const Automat_ABC& target )
 {
     if( & item.Get< CommunicationHierarchies >().GetUp() == &target )
         return false;
-    ASN_MsgPionChangeSuperior asnMsg;
+    ASN_MsgUnitChangeSuperior asnMsg;
     asnMsg().oid_pion = item.GetId();
     asnMsg().oid_automate = target.GetId();
     asnMsg.Send( publisher_ );
@@ -145,7 +145,7 @@ bool AgentListView::Drop( const Agent_ABC& item, const Automat_ABC& target )
 // -----------------------------------------------------------------------------
 bool AgentListView::Drop( const Automat_ABC& item, const KnowledgeGroup_ABC& target )
 {
-    ASN_MsgAutomateChangeGroupeConnaissance asnMsg;
+    ASN_MsgAutomatChangeKnowledgeGroup asnMsg;
     asnMsg().oid_automate            = item.GetId();
     asnMsg().oid_camp                = target.Get< CommunicationHierarchies >().GetTop().GetId();
     asnMsg().oid_groupe_connaissance = target.GetId();

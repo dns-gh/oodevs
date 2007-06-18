@@ -80,8 +80,8 @@ private:
     //! @name Helpers
     //@{
     void DoContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
-    void SendMessage( uint id, ASN1T_EnumUnitFatigue, ASN1T_EnumUnitMoral, ASN1T_EnumUnitExperience );
-    void SendMessage( const kernel::Entity_ABC& entity, ASN1T_EnumUnitFatigue, ASN1T_EnumUnitMoral, ASN1T_EnumUnitExperience );
+    void SendMessage( uint id, ASN1T_EnumUnitTiredness, ASN1T_EnumUnitMorale, ASN1T_EnumUnitExperience );
+    void SendMessage( const kernel::Entity_ABC& entity, ASN1T_EnumUnitTiredness, ASN1T_EnumUnitMorale, ASN1T_EnumUnitExperience );
     virtual void Call( const E_UnitFatigue& fatigue );
     virtual void Call( const E_UnitMoral& morale );
     virtual void Call( const E_UnitExperience& experience );

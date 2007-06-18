@@ -135,7 +135,7 @@ void MIL_CampPrisonniers::Initialize( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 ASN1T_EnumObjectErrorCode MIL_CampPrisonniers::Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject )
 {
-    if( !asnCreateObject.m.attributs_specifiquesPresent || asnCreateObject.attributs_specifiques.t != T_AttrObjectSpecific_camp_prisonniers )
+    if( !asnCreateObject.m.attributs_specifiquesPresent || asnCreateObject.attributs_specifiques.t != T_ObjectAttributesSpecific_camp_prisonniers )
         return EnumObjectErrorCode::error_missing_specific_attributes;
 
     MIL_Automate* pTC2Tmp = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( asnCreateObject.attributs_specifiques.u.camp_prisonniers->tc2 );
@@ -174,6 +174,6 @@ void MIL_CampPrisonniers::WriteSpecificAttributes( NET_ASN_MsgObjectCreation& as
     asnAttributes_.tc2 = pTC2_->GetID();
 
     asnMsg().m.attributs_specifiquesPresent           = 1;
-    asnMsg().attributs_specifiques.t                  = T_AttrObjectSpecific_camp_prisonniers;
+    asnMsg().attributs_specifiques.t                  = T_ObjectAttributesSpecific_camp_prisonniers;
     asnMsg().attributs_specifiques.u.camp_prisonniers = &asnAttributes_;
 }

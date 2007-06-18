@@ -31,7 +31,7 @@ class PopulationFlow : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFlow( Model& model, Population& population, const ASN1T_MsgPopulationFluxCreation& msg );
+             PopulationFlow( Model& model, Population& population, const ASN1T_MsgPopulationFlowCreation& msg );
     virtual ~PopulationFlow();
     //@}
 
@@ -42,8 +42,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgPopulationFluxCreation& msg );
-    void Update        ( const ASN1T_MsgPopulationFluxUpdate& msg );
+    void Update        ( const ASN1T_MsgPopulationFlowCreation& msg );
+    void Update        ( const ASN1T_MsgPopulationFlowUpdate& msg );
     virtual void SendCreation   ( Publisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( Publisher_ABC& publisher ) const;
     virtual void SendDestruction( Publisher_ABC& publisher ) const;

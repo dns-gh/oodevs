@@ -406,10 +406,10 @@ void DEC_RolePion_Decision::SendFullState( NET_ASN_MsgUnitAttributes& msg ) cons
     msg().m.roePresent                           = 1;
     msg().m.roe_populationPresent                = 1;
 
-    msg().rapport_de_force              = (ASN1T_EnumEtatRapFor)nForceRatioState_;
-    msg().combat_de_rencontre           = (ASN1T_EnumEtatCombatRencontre)nCloseCombatState_;
-    msg().etat_operationnel             = (ASN1T_EnumEtatOperationnel)nOperationalState_;
-    msg().disponibilite_au_tir_indirect = (ASN1T_EnumDisponibiliteAuTir)nIndirectFireAvailability_;
+    msg().rapport_de_force              = (ASN1T_EnumForceRatioStatus)nForceRatioState_;
+    msg().combat_de_rencontre           = (ASN1T_EnumMeetingEngagementStatus)nCloseCombatState_;
+    msg().etat_operationnel             = (ASN1T_EnumOperationalStatus)nOperationalState_;
+    msg().disponibilite_au_tir_indirect = (ASN1T_EnumFireAvailability)nIndirectFireAvailability_;
     msg().roe                           = (ASN1T_EnumRoe)nRulesOfEngagementState_;
     msg().roe_population                = pRoePopulation_->GetAsnID();
 }

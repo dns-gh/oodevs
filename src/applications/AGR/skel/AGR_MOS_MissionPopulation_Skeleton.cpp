@@ -37,7 +37,7 @@
 #include "MOS_ASN_Types.h"
 #include "MOS_PointListViewItem.h"
 #include "MOS_MTH_Localisation.h"
-#include "MOS_MTH_ListLocalisation_ListView.h"
+#include "MOS_MTH_LocationList_ListView.h"
 #include "MOS_MTH_PointList_ListView.h"
 #include "MOS_MTH_Obstacle_ListView.h"
 #include "MOS_MTH_NatureAtlas.h"

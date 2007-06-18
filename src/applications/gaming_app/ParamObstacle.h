@@ -61,7 +61,7 @@ public:
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
     virtual void CommitTo( Action_ABC& action ) const;
 
-    void CommitTo( ASN1T_MissionGenObject& object ) const;
+    void CommitTo( ASN1T_PlannedWork& object ) const;
     void CommitTo( ActionParameter_ABC& parameter ) const;
     //@}
 

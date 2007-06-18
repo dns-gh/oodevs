@@ -64,7 +64,7 @@ private:
 
 private:
     MIL_AutomateLOG*             pTC2_;
-    ASN1T_AttrObjectCampRefugies asnAttributes_;
+    ASN1T_ObjectAttributesRefugeeCamp asnAttributes_;
 };
 
 #include "MIL_CampRefugies.inl"

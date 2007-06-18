@@ -44,7 +44,7 @@ public:
     //@{
     void Purge();
 
-    void CreateTeam( const ASN1T_MsgSideCreation& asnMsg );
+    void CreateTeam( const ASN1T_MsgTeamCreation& asnMsg );
     void CreateFormation( const ASN1T_MsgFormationCreation& asnMsg );
 
     kernel::Team_ABC& GetTeam( unsigned long id );

@@ -33,7 +33,7 @@ using namespace kernel;
 // Name: PopulationFlowKnowledge::FlowPart::FlowPart
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_PortionFlux& asn, const CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox )
+PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_FlowPart& asn, const CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox )
      : rRelevance_ ( asn.pertinence )
 {
     for( uint i = 0; i < asn.forme.vecteur_point.n; ++i )
@@ -52,7 +52,7 @@ PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_PortionFlux& asn, const Coord
 // Name: PopulationFlowKnowledge::PopulationFlowKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& popu, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
+PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& popu, const ASN1T_MsgPopulationFlowKnowledgeCreation& asnMsg )
     : controller_( controller )
     , converter_ ( converter )
     , popu_      ( popu )
@@ -76,7 +76,7 @@ PopulationFlowKnowledge::~PopulationFlowKnowledge()
 // Name: PopulationFlowKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdate& asnMsg )
+void PopulationFlowKnowledge::DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeUpdate& asnMsg )
 {
     if( asnMsg.m.attitudePresent )
         eAttitude_ = ( E_PopulationAttitude )asnMsg.attitude;

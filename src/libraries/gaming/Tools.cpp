@@ -63,7 +63,7 @@ E_FuncLimaType tools::FromString( const QString& type )
 // Name: tools::ToString
 // Created: AGE 2006-08-08
 // -----------------------------------------------------------------------------
-QString tools::ToString( ASN1T_EnumTypeLocalisation nType )
+QString tools::ToString( ASN1T_EnumLocationType nType )
 {
     if( nType >= 0 && nType < 6 )
         return localisations[ nType ];

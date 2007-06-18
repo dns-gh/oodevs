@@ -38,7 +38,7 @@ class Automat : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Automat( Model& model, const ASN1T_MsgAutomateCreation& msg );
+             Automat( Model& model, const ASN1T_MsgAutomatCreation& msg );
     virtual ~Automat();
     //@}
 
@@ -50,13 +50,13 @@ public:
 
     //! @name Main
     //@{
-    void Update        ( const ASN1T_MsgAutomateCreation&                    msg );
-    void Update        ( const ASN1T_MsgAutomateAttributes&                  msg );
-    void Update        ( const ASN1T_MsgLogRavitaillementQuotas&             msg );
-    void Update        ( const ASN1T_MsgAutomateChangeLiensLogistiquesAck&   msg );
-    void Update        ( const ASN1T_MsgAutomateChangeLiensLogistiques&      msg );
-    void Update        ( const ASN1T_MsgAutomateChangeGroupeConnaissanceAck& msg );
-    void Update        ( const ASN1T_MsgAutomateOrder&                       msg );
+    void Update        ( const ASN1T_MsgAutomatCreation&                    msg );
+    void Update        ( const ASN1T_MsgAutomatAttributes&                  msg );
+    void Update        ( const ASN1T_MsgLogSupplyQuotas&             msg );
+    void Update        ( const ASN1T_MsgAutomatChangeLogisticLinksAck&   msg );
+    void Update        ( const ASN1T_MsgAutomatChangeLogisticLinks&      msg );
+    void Update        ( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& msg );
+    void Update        ( const ASN1T_MsgAutomatOrder&                       msg );
     virtual void SendCreation  ( Publisher_ABC& publisher ) const;
     virtual void SendSpecialUpdate( Publisher_ABC& publisher ) const;
     virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
@@ -82,11 +82,11 @@ private:
           ModelRefsContainer< Agent >         agents_;
           ModelsContainer   < DotationQuota > quotas_;
 
-    ASN1T_EnumAutomateState       nAutomatState_;
-    ASN1T_EnumEtatRapFor          nForceRatioState_;
-    ASN1T_EnumEtatCombatRencontre nCloseCombatState_;
-    ASN1T_EnumEtatOperationnel    nOperationalState_;
-    ASN1T_EnumRoe                 nRoe_;
+    ASN1T_EnumAutomatMode             nAutomatState_;
+    ASN1T_EnumForceRatioStatus        nForceRatioState_;
+    ASN1T_EnumMeetingEngagementStatus nCloseCombatState_;
+    ASN1T_EnumOperationalStatus        nOperationalState_;
+    ASN1T_EnumRoe                     nRoe_;
 
     Automat* pTC2_;
     Automat* pLogMaintenance_;

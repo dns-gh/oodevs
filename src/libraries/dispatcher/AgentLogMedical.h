@@ -33,13 +33,13 @@ class AgentLogMedical
 public:
     //! @name Constructors/Destructor
     //@{
-     AgentLogMedical( Model& model, const Agent& agent, const ASN1T_MsgLogSanteEtat& asnMsg );
+     AgentLogMedical( Model& model, const Agent& agent, const ASN1T_MsgLogMedicalState& asnMsg );
     ~AgentLogMedical();
     //@}
 
     //! @name Main
     //@{
-    void Update(  const ASN1T_MsgLogSanteEtat& asnMsg );
+    void Update(  const ASN1T_MsgLogMedicalState& asnMsg );
     void Send  ( Publisher_ABC& publisher ) const;
     //@}
 
@@ -63,9 +63,9 @@ private:
           T_HumanWoundVector              priorities_;
           ModelRefsContainer< Automat >   tacticalPriorities_;
 
-    ModelsContainer< EquipmentAvailability< ASN1T_SanteDisponibiliteMoyens > > evacuationAmbulancesAvailability_;
-    ModelsContainer< EquipmentAvailability< ASN1T_SanteDisponibiliteMoyens > > collectionAmbulancesAvailability_;
-    ModelsContainer< EquipmentAvailability< ASN1T_SanteDisponibiliteMoyens > > doctorsAvailability_;
+    ModelsContainer< EquipmentAvailability< ASN1T_LogMedicalEquipmentAvailability > > evacuationAmbulancesAvailability_;
+    ModelsContainer< EquipmentAvailability< ASN1T_LogMedicalEquipmentAvailability > > collectionAmbulancesAvailability_;
+    ModelsContainer< EquipmentAvailability< ASN1T_LogMedicalEquipmentAvailability > > doctorsAvailability_;
 };
 
 }

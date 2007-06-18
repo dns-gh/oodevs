@@ -95,7 +95,7 @@ private:
     void OnReceiveMsgCtrlStop              ();
     void OnReceiveMsgCtrlPause             ();
     void OnReceiveMsgCtrlResume            ();
-    void OnReceiveMsgCtrlChangeTimeFactor  ( const ASN1T_MsgCtrlChangeTimeFactor& asnMsg );
+    void OnReceiveMsgCtrlChangeTimeFactor  ( const ASN1T_MsgControlChangeTimeFactor& asnMsg );
     //@}
 
     //! @name Types

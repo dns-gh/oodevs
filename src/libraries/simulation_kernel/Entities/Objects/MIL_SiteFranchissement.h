@@ -69,7 +69,7 @@ private:
 
 private:
     // Specific attributes
-    ASN1T_AttrObjectSiteFranchissement asnAttributes_;
+    ASN1T_ObjectAttributesCrossingSite asnAttributes_;
 
     MT_Float rWidth_;
     MT_Float rDepth_;

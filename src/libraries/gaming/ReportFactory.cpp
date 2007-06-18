@@ -87,17 +87,17 @@ void ReportFactory::ReadReport( xml::xistream& xis )
 // Name: ReportFactory::CreateReport
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgCR& asn ) const
+Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgReport& asn ) const
 {
     ReportTemplate* report = Find( asn.cr );
     if( !report )
         return 0;
     Report::E_Type type = Report::eRC;
-    if( asn.type == EnumTypeCR::message )
+    if( asn.type == EnumReportType::message )
         type = Report::eMessage;
-    else if( asn.type == EnumTypeCR::evenement_exceptionnel )
+    else if( asn.type == EnumReportType::evenement_exceptionnel )
         type = Report::eEvent;
-    else if( asn.type == EnumTypeCR::warning )
+    else if( asn.type == EnumReportType::warning )
         type = Report::eWarning;
     return new Report( agent, simulation, type, report->RenderMessage( asn.parametres ) );
 }
@@ -121,18 +121,18 @@ QString ReportFactory::RenderParameter( const ASN1T_MissionParameter& value ) co
     {
     case T_MissionParameter_value_aReal:
         return QString::number( value.value.u.aReal );
-    case T_MissionParameter_value_agent:
-        return rcResolver_.CreateLink( Agent::typeName_, value.value.u.agent );
-    case T_MissionParameter_value_knowledgeAgent:
-        return rcResolver_.CreateLink( AgentKnowledge_ABC::typeName_, value.value.u.knowledgeAgent );
-    case T_MissionParameter_value_knowledgeObject:
-        return rcResolver_.CreateLink( ObjectKnowledge_ABC::typeName_, value.value.u.knowledgeObject );
-    case T_MissionParameter_value_knowledgePopulation:
-        return rcResolver_.CreateLink( PopulationKnowledge_ABC::typeName_, value.value.u.knowledgePopulation );
-    case T_MissionParameter_value_typeEquipement:
-        return equipmentResolver_.Get( value.value.u.typeEquipement ).GetName();
-    case T_MissionParameter_value_typeDotation:
-        return dotationResolver_.Get( value.value.u.typeDotation ).GetCategory();
+    case T_MissionParameter_value_unit:
+        return rcResolver_.CreateLink( Agent::typeName_, value.value.u.unit );
+    case T_MissionParameter_value_unitKnowledge:
+        return rcResolver_.CreateLink( AgentKnowledge_ABC::typeName_, value.value.u.unitKnowledge );
+    case T_MissionParameter_value_objectKnowledge:
+        return rcResolver_.CreateLink( ObjectKnowledge_ABC::typeName_, value.value.u.objectKnowledge );
+    case T_MissionParameter_value_populationKnowledge:
+        return rcResolver_.CreateLink( PopulationKnowledge_ABC::typeName_, value.value.u.populationKnowledge );
+    case T_MissionParameter_value_equipmentType:
+        return equipmentResolver_.Get( value.value.u.equipmentType ).GetName();
+    case T_MissionParameter_value_dotationType:
+        return dotationResolver_.Get( value.value.u.dotationType ).GetCategory();
     case T_MissionParameter_value_tirIndirect:
         return QString::number( value.value.u.tirIndirect );
     case T_MissionParameter_value_aCharStr:

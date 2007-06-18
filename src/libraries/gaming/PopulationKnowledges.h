@@ -38,9 +38,9 @@ class PopulationKnowledges : public kernel::Extension_ABC
                            , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationKnowledgeCreation >
                            , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationKnowledgeUpdate >
                            , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationKnowledgeDestruction >
-                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeCreation >
-                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeUpdate >
-                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeDestruction >
+                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowKnowledgeCreation >
+                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowKnowledgeUpdate >
+                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowKnowledgeDestruction >
                            , public kernel::Resolver< PopulationKnowledge_ABC >
                            , public kernel::Creatable< PopulationKnowledges >
 {
@@ -72,9 +72,9 @@ private:
     virtual void DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeCreation&    message );
     virtual void DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate&      message );
     virtual void DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& message );
-    virtual void DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeCreation&             message );
-    virtual void DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdate&               message );
-    virtual void DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeDestruction&          message );
+    virtual void DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeCreation&             message );
+    virtual void DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeUpdate&               message );
+    virtual void DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeDestruction&          message );
 
     template< typename T >
     void UpdatePopulation( const T& message );

@@ -51,7 +51,7 @@ void AgentsModel::Purge()
 // Name: AgentsModel::CreateAutomat
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAutomat( const ASN1T_MsgAutomateCreation& asnMsg )
+void AgentsModel::CreateAutomat( const ASN1T_MsgAutomatCreation& asnMsg )
 {
     if( !Resolver< Automat_ABC >::Find( asnMsg.oid_automate ) )
     {
@@ -82,7 +82,7 @@ kernel::Automat_ABC* AgentsModel::FindAutomat( unsigned long id )
 // Name: AgentsModel::CreateAgent
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAgent( const ASN1T_MsgPionCreation& asnMsg )
+void AgentsModel::CreateAgent( const ASN1T_MsgUnitCreation& asnMsg )
 {
     if( !Resolver< Agent_ABC >::Find( asnMsg.oid_pion ) )
     {
@@ -113,7 +113,7 @@ Agent_ABC* AgentsModel::FindAgent( unsigned long id ) const
 // Name: AgentsModel::DestroyAgent
 // Created: AGE 2007-04-24
 // -----------------------------------------------------------------------------
-void AgentsModel::DestroyAgent( const ASN1T_MsgPionDestruction& id )
+void AgentsModel::DestroyAgent( const ASN1T_MsgUnitDestruction& id )
 {
     delete Resolver< Agent_ABC >::Find( id );
     Resolver< Agent_ABC >::Remove( id );

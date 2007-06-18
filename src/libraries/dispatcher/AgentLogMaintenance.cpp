@@ -22,7 +22,7 @@ using namespace dispatcher;
 // Name: AgentLogMaintenance constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-AgentLogMaintenance::AgentLogMaintenance( Model& model, const Agent& agent, const ASN1T_MsgLogMaintenanceEtat& asnMsg )
+AgentLogMaintenance::AgentLogMaintenance( Model& model, const Agent& agent, const ASN1T_MsgLogMaintenanceState& asnMsg )
     : agent_                ( agent )
     , model_                ( model )
     , bSystemEnabled_       ( false )
@@ -51,7 +51,7 @@ AgentLogMaintenance::~AgentLogMaintenance()
 // Name: AgentLogMaintenance::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void AgentLogMaintenance::Update( const ASN1T_MsgLogMaintenanceEtat& asnMsg )
+void AgentLogMaintenance::Update( const ASN1T_MsgLogMaintenanceState& asnMsg )
 {
     if( asnMsg.m.chaine_activeePresent )
         bSystemEnabled_ = asnMsg.chaine_activee;
@@ -91,7 +91,7 @@ void AgentLogMaintenance::Update( const ASN1T_MsgLogMaintenanceEtat& asnMsg )
 // -----------------------------------------------------------------------------
 void AgentLogMaintenance::Send( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientLogMaintenanceEtat asn;
+    AsnMsgSimToClientLogMaintenanceState asn;
 
     asn().oid_pion = agent_.GetID();
 
@@ -103,11 +103,11 @@ void AgentLogMaintenance::Send( Publisher_ABC& publisher ) const
 
     asn().chaine_activee = bSystemEnabled_;
 
-    repairersAvailability_.Send< ASN1T__SeqOfMaintenanceDisponibiliteMoyens, ASN1T_MaintenanceDisponibiliteMoyens >( asn().disponibilites_reparateurs );
-    haulersAvailability_  .Send< ASN1T__SeqOfMaintenanceDisponibiliteMoyens, ASN1T_MaintenanceDisponibiliteMoyens >( asn().disponibilites_remorqueurs );
+    repairersAvailability_.Send< ASN1T__SeqOfLogMaintenanceEquipmentAvailability, ASN1T_LogMaintenanceEquipmentAvailability >( asn().disponibilites_reparateurs );
+    haulersAvailability_  .Send< ASN1T__SeqOfLogMaintenanceEquipmentAvailability, ASN1T_LogMaintenanceEquipmentAvailability >( asn().disponibilites_remorqueurs );
 
-    tacticalPriorities_.Send< ASN1T_ListAutomate, ASN1T_Automate >( asn().priorites_tactiques );
-    SendContainerValues< ASN1T_MaintenancePriorites, ASN1T_TypeEquipement, T_EquipmentTypeVector >( priorities_, asn().priorites );
+    tacticalPriorities_.Send< ASN1T_AutomatList, ASN1T_Automat >( asn().priorites_tactiques );
+    SendContainerValues< ASN1T_LogMaintenancePriorities, ASN1T_EquipmentType, T_EquipmentTypeVector >( priorities_, asn().priorites );
 
     asn.Send( publisher );
 

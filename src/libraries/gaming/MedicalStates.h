@@ -33,7 +33,7 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class MedicalStates : public kernel::Extension_ABC
-                    , public kernel::Updatable_ABC< ASN1T_MsgLogSanteEtat >
+                    , public kernel::Updatable_ABC< ASN1T_MsgLogMedicalState >
 {
 public:
     //! @name Constructors/Destructor
@@ -45,7 +45,7 @@ public:
     //! @name Operations
     //@{
     void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual void DoUpdate( const ASN1T_MsgLogSanteEtat& message );
+    virtual void DoUpdate( const ASN1T_MsgLogMedicalState& message );
     //@}
 
 private:

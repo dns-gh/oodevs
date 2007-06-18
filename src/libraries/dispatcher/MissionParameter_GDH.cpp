@@ -19,8 +19,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 MissionParameter_GDH::MissionParameter_GDH( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , datation_           ( asn.value.u.gDH->datation )
-    , qualificatif_       ( asn.value.u.gDH->qualificatif )
+    , datation_           ( asn.value.u.dateTime )
 {
     // NOTHING
 }
@@ -45,17 +44,16 @@ MissionParameter_GDH::~MissionParameter_GDH()
 void MissionParameter_GDH::Send( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value                  = bNullValue_;
-    asn.value.t                     = T_MissionParameter_value_gDH;
-    asn.value.u.gDH                 = new ASN1T_GDH();
-    asn.value.u.gDH->datation       = datation_;
-    asn.value.u.gDH->qualificatif   = qualificatif_;
+    asn.value.t                     = T_MissionParameter_value_dateTime;
+    asn.value.u.dateTime            = datation_;
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_GDH::AsnDelete
-// Created: NLD 2007-04-20
+// Created: AGE 2007-06-18
 // -----------------------------------------------------------------------------
-void MissionParameter_GDH::AsnDelete( ASN1T_MissionParameter& asn ) const
+void MissionParameter_GDH::AsnDelete( ASN1T_MissionParameter& ) const
 {
-    delete asn.value.u.gDH;
+    // NOTHING
 }

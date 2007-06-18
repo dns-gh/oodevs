@@ -38,9 +38,9 @@ class PopulationFlow;
 // Created: HME 2005-09-29
 // =============================================================================
 class Population : public kernel::EntityImplementation< kernel::Population_ABC >
-                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxCreation > // $$$$ AGE 2006-03-13: dégager dans des extensions ?
-                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxUpdate >
-                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxDestruction >
+                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowCreation > // $$$$ AGE 2006-03-13: dégager dans des extensions ?
+                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowUpdate >
+                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowDestruction >
                  , public kernel::Updatable_ABC< ASN1T_MsgPopulationUpdate >       
                  , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationCreation >
                  , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationUpdate > 
@@ -96,9 +96,9 @@ private:
     unsigned int ComputeLivingHumans() const;
     unsigned int ComputeDeadHumans() const;
 
-    void DoUpdate( const ASN1T_MsgPopulationFluxCreation&             message );
-    void DoUpdate( const ASN1T_MsgPopulationFluxUpdate&               message );
-    void DoUpdate( const ASN1T_MsgPopulationFluxDestruction&          message );
+    void DoUpdate( const ASN1T_MsgPopulationFlowCreation&             message );
+    void DoUpdate( const ASN1T_MsgPopulationFlowUpdate&               message );
+    void DoUpdate( const ASN1T_MsgPopulationFlowDestruction&          message );
     void DoUpdate( const ASN1T_MsgPopulationUpdate&                   message );
     void DoUpdate( const ASN1T_MsgPopulationConcentrationCreation&    message );
 	void DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate&      message );

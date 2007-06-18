@@ -48,7 +48,7 @@ namespace
     class AsnSerializer : public ParamVisitor_ABC
     {
     public:
-        AsnSerializer( ASN1T_ListMissionGenObject& list )
+        AsnSerializer( ASN1T_PlannedWorkList& list )
             : list_( list )
             , index_( 0 )
         {}
@@ -60,7 +60,7 @@ namespace
         }
 
     private:
-        ASN1T_ListMissionGenObject& list_;
+        ASN1T_PlannedWorkList& list_;
         unsigned int index_;
     };
 }
@@ -71,13 +71,13 @@ namespace
 // -----------------------------------------------------------------------------
 void ParamObstacleList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    ASN1T_ListMissionGenObject*& list = asn.value.u.listMissionGenObject = new ASN1T_ListMissionGenObject();
-    asn.value.t = T_MissionParameter_value_listMissionGenObject;
+    ASN1T_PlannedWorkList*& list = asn.value.u.plannedWorkList = new ASN1T_PlannedWorkList();
+    asn.value.t = T_MissionParameter_value_plannedWorkList;
     list->n = Count();
     asn.null_value = list->n ? 0 : 1;
     if( asn.null_value )
         return;
-    list->elem = new ASN1T_MissionGenObject[ list->n ];
+    list->elem = new ASN1T_PlannedWork[ list->n ];
     AsnSerializer serializer( *list );
     Accept( serializer );
 }
@@ -88,9 +88,9 @@ void ParamObstacleList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamObstacleList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listMissionGenObject )
-        delete[] asn.value.u.listMissionGenObject->elem;
-    delete asn.value.u.listMissionGenObject;
+    if( asn.value.u.plannedWorkList )
+        delete[] asn.value.u.plannedWorkList->elem;
+    delete asn.value.u.plannedWorkList;
 }
 
 namespace

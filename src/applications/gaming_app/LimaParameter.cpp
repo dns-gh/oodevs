@@ -130,10 +130,10 @@ void LimaParameter::CommitTo( ASN1T_LimaOrder& asn ) const
     for( unsigned int i = 0; i < functions_->count(); ++i )
         count += functions_->isSelected( i ) ? 1 : 0;
     asn.fonctions.n = count;
-    asn.fonctions.elem = new ASN1T_EnumTypeLima[asn.fonctions.n];
+    asn.fonctions.elem = new ASN1T_EnumLimaType[asn.fonctions.n];
     for( unsigned int i = 0, j = 0; i < functions_->count(); ++i )
         if( functions_->isSelected( i ) )
-            asn.fonctions.elem[j++] = ASN1T_EnumTypeLima( i );
+            asn.fonctions.elem[j++] = ASN1T_EnumLimaType( i );
     lima_->CopyTo( asn.lima );
 }
 

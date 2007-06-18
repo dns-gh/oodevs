@@ -30,7 +30,7 @@ class LogMedicalConsign : public kernel::Drawable_ABC
 public:
     //! @name Operations
     //@{
-             LogMedicalConsign( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const ASN1T_MsgLogSanteTraitementHumainCreation& asn );
+             LogMedicalConsign( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const ASN1T_MsgLogMedicalHandlingCreation& asn );
     virtual ~LogMedicalConsign();
     //@}
 
@@ -42,7 +42,7 @@ public:
 
     //! @name Network events
     //@{
-    void Update( const ASN1T_MsgLogSanteTraitementHumainUpdate& message );
+    void Update( const ASN1T_MsgLogMedicalHandlingUpdate& message );
     //@}
 
 private:

@@ -49,7 +49,7 @@ ActionAgentMission::~ActionAgentMission()
 // -----------------------------------------------------------------------------
 void ActionAgentMission::Publish( Publisher_ABC& publisher ) const
 {
-    ASN_MsgPionOrder asn;
+    ASN_MsgUnitOrder asn;
     asn().oid_unite_executante = GetEntity().GetId();
     asn().mission = GetType().GetId();
     CommitTo( asn().parametres );

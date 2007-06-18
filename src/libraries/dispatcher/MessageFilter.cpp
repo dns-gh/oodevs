@@ -237,7 +237,7 @@ bool MessageFilter::IsRelevant( const ASN1T_MsgPopulationConcentrationUpdate& )
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const ASN1T_MsgPopulationFluxUpdate& )
+bool MessageFilter::IsRelevant( const ASN1T_MsgPopulationFlowUpdate& )
 {
     return true;
 }
@@ -266,7 +266,7 @@ bool MessageFilter::IsRelevant( const ASN1T_MsgPopulationConcentrationKnowledgeU
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const ASN1T_MsgPopulationFluxKnowledgeUpdate& )
+bool MessageFilter::IsRelevant( const ASN1T_MsgPopulationFlowKnowledgeUpdate& )
 {
     return true;
 }

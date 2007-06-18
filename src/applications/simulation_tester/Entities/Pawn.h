@@ -43,8 +43,8 @@ class Pawn : public Testable_Entity
 public:
     //! @name Constructors/Destructor
     //@{
-             Pawn( const Workspace& workspace, const ASN1T_MsgPionCreation& asnMsg );
-             Pawn( const Workspace& workspace, const ASN1T_MsgAutomateCreation& asnMsg, Automat& automat  );
+             Pawn( const Workspace& workspace, const ASN1T_MsgUnitCreation& asnMsg );
+             Pawn( const Workspace& workspace, const ASN1T_MsgAutomatCreation& asnMsg, Automat& automat  );
     virtual ~Pawn();
     //@}
 

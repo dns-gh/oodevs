@@ -34,7 +34,7 @@ class DirectFire : public Fire_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DirectFire( const ASN1T_MsgStartPionFire& message, 
+             DirectFire( const ASN1T_MsgStartUnitFire& message, 
                  const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver, 
                  const kernel::Resolver_ABC< kernel::Population_ABC >& populationResolver );
     virtual ~DirectFire();

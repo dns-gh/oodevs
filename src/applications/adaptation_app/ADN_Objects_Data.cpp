@@ -492,10 +492,10 @@ void ADN_Objects_Data::ObjectInfos::WriteArchive( MT_OutputArchive_ABC& output )
 
 
 // -----------------------------------------------------------------------------
-// Name: AreaControlInfos::AreaControlInfos
+// Name: AreaControlInformations::AreaControlInformations
 // Created: APE 2005-02-23
 // -----------------------------------------------------------------------------
-ADN_Objects_Data::AreaControlInfos::AreaControlInfos()
+ADN_Objects_Data::AreaControlInformations::AreaControlInformations()
 : ADN_Ref_ABC           ()
 , ADN_DataTreeNode_ABC  ()
 , ptrSize_              ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), 0 )
@@ -506,39 +506,39 @@ ADN_Objects_Data::AreaControlInfos::AreaControlInfos()
 
 
 // -----------------------------------------------------------------------------
-// Name: AreaControlInfos::~AreaControlInfos
+// Name: AreaControlInformations::~AreaControlInformations
 // Created: APE 2005-02-23
 // -----------------------------------------------------------------------------
-ADN_Objects_Data::AreaControlInfos::~AreaControlInfos()
+ADN_Objects_Data::AreaControlInformations::~AreaControlInformations()
 {
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: AreaControlInfos::GetNodeName
+// Name: AreaControlInformations::GetNodeName
 // Created: APE 2005-02-23
 // -----------------------------------------------------------------------------
-std::string ADN_Objects_Data::AreaControlInfos::GetNodeName()
-{
-    return std::string();
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: AreaControlInfos::GetItemName
-// Created: APE 2005-02-23
-// -----------------------------------------------------------------------------
-std::string ADN_Objects_Data::AreaControlInfos::GetItemName()
+std::string ADN_Objects_Data::AreaControlInformations::GetNodeName()
 {
     return std::string();
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: AreaControlInfos::ReadArchive
+// Name: AreaControlInformations::GetItemName
 // Created: APE 2005-02-23
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data::AreaControlInfos::ReadArchive( ADN_XmlInput_Helper& input )
+std::string ADN_Objects_Data::AreaControlInformations::GetItemName()
+{
+    return std::string();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: AreaControlInformations::ReadArchive
+// Created: APE 2005-02-23
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::AreaControlInformations::ReadArchive( ADN_XmlInput_Helper& input )
 {
     input.Section( "Pourcentage" );
     std::string strSize;
@@ -555,10 +555,10 @@ void ADN_Objects_Data::AreaControlInfos::ReadArchive( ADN_XmlInput_Helper& input
 
 
 // -----------------------------------------------------------------------------
-// Name: AreaControlInfos::WriteArchive
+// Name: AreaControlInformations::WriteArchive
 // Created: APE 2005-02-23
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data::AreaControlInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Objects_Data::AreaControlInformations::WriteArchive( MT_OutputArchive_ABC& output )
 {
     output.Section( "Pourcentage" );
     output.WriteAttribute( "volume", ptrSize_.GetData()->GetData() );
@@ -646,9 +646,9 @@ void ADN_Objects_Data::ReadArchive( ADN_XmlInput_Helper& input )
     input.BeginList( "PourcentagesTirParHumainParHectare" );
     while( input.NextListElement() )
     {
-        std::auto_ptr<AreaControlInfos> spNew( new AreaControlInfos() );
+        std::auto_ptr<AreaControlInformations> spNew( new AreaControlInformations() );
         spNew->ReadArchive( input );
-        vAreaControlInfos_.AddItem( spNew.release() );
+        vAreaControlInformations_.AddItem( spNew.release() );
     }
     input.EndList(); // PourcentagesTirParHumainParHectare
     input.EndSection(); // Objet
@@ -676,8 +676,8 @@ void ADN_Objects_Data::WriteArchive( MT_OutputArchive_ABC& output )
     output.Section( "ObjetsVirtuels" );
     output.Section( "Objet" );
     output.WriteAttribute( "type", "controle de zone" );
-    output.BeginList( "PourcentagesTirParHumainParHectare", vAreaControlInfos_.size() );
-    for( IT_AreaControlInfos_Vector it = vAreaControlInfos_.begin(); it != vAreaControlInfos_.end(); ++it )
+    output.BeginList( "PourcentagesTirParHumainParHectare", vAreaControlInformations_.size() );
+    for( IT_AreaControlInformations_Vector it = vAreaControlInformations_.begin(); it != vAreaControlInformations_.end(); ++it )
     {
         (*it)->WriteArchive( output );
     }

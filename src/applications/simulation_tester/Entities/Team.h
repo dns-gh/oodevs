@@ -70,7 +70,7 @@ public:
 
     //! @name Modifiers
     //@{
-    void SetRelation( Team& otherTeam, ASN1T_EnumDiplomatie diplomacy );
+    void SetRelation( Team& otherTeam, ASN1T_EnumDiplomacy diplomacy );
     //@}
 
     //! @name Message handlers

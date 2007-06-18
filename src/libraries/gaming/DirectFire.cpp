@@ -21,13 +21,13 @@ using namespace kernel;
 // Name: DirectFire constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-DirectFire::DirectFire( const ASN1T_MsgStartPionFire& message, const Resolver_ABC< Agent_ABC >& agentResolver, const Resolver_ABC< Population_ABC >& populationResolver )
+DirectFire::DirectFire( const ASN1T_MsgStartUnitFire& message, const Resolver_ABC< Agent_ABC >& agentResolver, const Resolver_ABC< Population_ABC >& populationResolver )
     : Fire_ABC( agentResolver.Get( message.tireur ) )
     , id_( message.oid_tir )
 {
-    if( message.cible.t == T_MsgStartPionFire_cible_pion )
+    if( message.cible.t == T_MsgStartUnitFire_cible_pion )
         target_ = & agentResolver.Get( message.cible.u.pion );
-    else if( message.cible.t == T_MsgStartPionFire_cible_population )
+    else if( message.cible.t == T_MsgStartUnitFire_cible_population )
         target_ = & populationResolver.Get( message.cible.u.population );
     else
         throw std::runtime_error( "DirectFire on position..." );

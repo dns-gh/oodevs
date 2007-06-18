@@ -156,7 +156,7 @@ ASN1T_EnumObjectErrorCode MIL_ItineraireLogistique::Initialize( const ASN1T_Magi
     if( !TransformLocalisation() )
         return EnumObjectErrorCode::error_invalid_localisation;
 
-    if( !asnCreateObject.m.attributs_specifiquesPresent || asnCreateObject.attributs_specifiques.t != T_AttrObjectSpecific_itineraire_logistique )
+    if( !asnCreateObject.m.attributs_specifiquesPresent || asnCreateObject.attributs_specifiques.t != T_ObjectAttributesSpecific_itineraire_logistique )
         return EnumObjectErrorCode::error_missing_specific_attributes;
 
 
@@ -198,7 +198,7 @@ void MIL_ItineraireLogistique::WriteSpecificAttributes( NET_ASN_MsgObjectCreatio
     asnAttributes_.debit              = (int)rFlow_;
 
     asnMsg().m.attributs_specifiquesPresent                = 1;
-    asnMsg().attributs_specifiques.t                       = T_AttrObjectSpecific_itineraire_logistique;
+    asnMsg().attributs_specifiques.t                       = T_ObjectAttributesSpecific_itineraire_logistique;
     asnMsg().attributs_specifiques.u.itineraire_logistique = &asnAttributes_;
 }
 
@@ -215,7 +215,7 @@ void MIL_ItineraireLogistique::WriteSpecificAttributes( NET_ASN_MsgObjectUpdate&
     asnAttributes_.debit              = (int)rFlow_;
 
     asnMsg().m.attributs_specifiquesPresent                = 1;
-    asnMsg().attributs_specifiques.t                       = T_AttrObjectSpecific_itineraire_logistique;
+    asnMsg().attributs_specifiques.t                       = T_ObjectAttributesSpecific_itineraire_logistique;
     asnMsg().attributs_specifiques.u.itineraire_logistique = &asnAttributes_;
 }
 

@@ -163,11 +163,11 @@ bool MIL_Report::Send( uint nSenderID, E_Type nType, const DEC_KnowledgeResolver
         return false;
     }
 
-    NET_ASN_MsgCR asn;
+    NET_ASN_MsgReport asn;
  
     asn().unit_id      = nSenderID;
     asn().cr           = nID_;
-    asn().type         = (ASN1T_EnumTypeCR)nType;
+    asn().type         = (ASN1T_EnumReportType)nType;
     asn().parametres.n = parameters_.size();
     if( !parameters_.empty() )
     {

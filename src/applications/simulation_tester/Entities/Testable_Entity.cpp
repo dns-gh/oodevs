@@ -267,7 +267,7 @@ Location& Testable_Entity::GetTestParam_Location() const
 T_LocationVector& Testable_Entity::GetTestParam_LocationList() const
 {
     // retrieve 3 random lines
-    return Location::GetTestParam_LocationList( GetPosition(), 3, EnumTypeLocalisation::line );
+    return Location::GetTestParam_LocationList( GetPosition(), 3, EnumLocationType::line );
 }
 
 // -----------------------------------------------------------------------------
@@ -276,7 +276,7 @@ T_LocationVector& Testable_Entity::GetTestParam_LocationList() const
 // -----------------------------------------------------------------------------
 Location& Testable_Entity::GetTestParam_Polygon() const
 {
-    return Location::GetTestParam_Location( GetPosition(), EnumTypeLocalisation::polygon );
+    return Location::GetTestParam_Location( GetPosition(), EnumLocationType::polygon );
 }
 
 // -----------------------------------------------------------------------------
@@ -286,7 +286,7 @@ Location& Testable_Entity::GetTestParam_Polygon() const
 T_LocationVector& Testable_Entity::GetTestParam_PolygonList() const
 {
     // retrieve 3 random polygons
-    return Location::GetTestParam_LocationList( GetPosition(), 3, EnumTypeLocalisation::polygon );
+    return Location::GetTestParam_LocationList( GetPosition(), 3, EnumLocationType::polygon );
 }
 
 // -----------------------------------------------------------------------------
@@ -344,7 +344,7 @@ T_IdVector& Testable_Entity::GetTestParam_Limas() const
     T_IdVector& limas = *new T_IdVector();
     for( uint i = 0; i < 10; ++i )
     {
-        uint nId = workspace_.GetTacticalLineManager().GetLimaByType( ( ASN1T_EnumTypeLima )i );
+        uint nId = workspace_.GetTacticalLineManager().GetLimaByType( ( ASN1T_EnumLimaType )i );
         if( nId )
             limas.push_back( nId );
     }

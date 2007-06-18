@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Name: AutomatOrder constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-AutomatOrder::AutomatOrder( Model& model, Automat& automat, const ASN1T_MsgAutomateOrder& asn )
+AutomatOrder::AutomatOrder( Model& model, Automat& automat, const ASN1T_MsgAutomatOrder& asn )
     : Order_ABC ( model, asn.mission, asn.parametres, asn.order_context )
     , automat_  ( automat )
     , formation_( asn.formation )
@@ -45,7 +45,7 @@ AutomatOrder::~AutomatOrder()
 // -----------------------------------------------------------------------------
 void AutomatOrder::Send( Publisher_ABC& publisher )
 {
-    AsnMsgSimToClientAutomateOrder asn;
+    AsnMsgSimToClientAutomatOrder asn;
     asn().oid_unite_executante = automat_.GetID();
     asn().mission              = missionID_;
     asn().formation            = formation_;       
@@ -65,11 +65,11 @@ void AutomatOrder::Send( Publisher_ABC& publisher )
 // static
 void AutomatOrder::SendNoMission( const Automat& automat, Publisher_ABC& publisher )
 {
-    AsnMsgSimToClientAutomateOrder asn;
+    AsnMsgSimToClientAutomatOrder asn;
 
     asn().oid_unite_executante               = automat.GetID();
     asn().mission                            = 0;
-    asn().formation                          = EnumAutomateOrderFormation::un_echelon;
+    asn().formation                          = EnumAutomatOrderFormation::un_echelon;
     asn().parametres.n                       = 0;
     asn().order_context.direction_dangereuse = 0;
     asn().order_context.limas.n              = 0;

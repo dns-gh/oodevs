@@ -516,7 +516,7 @@ void DEC_PathWalker::SerializeEnvironmentType( DIN::DIN_BufferedMessage& dinMsg 
 // Name: DEC_PathWalker::SerializeCurrentPath
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-bool DEC_PathWalker::SerializeCurrentPath( ASN1T_Itineraire& asn ) const
+bool DEC_PathWalker::SerializeCurrentPath( ASN1T_Path& asn ) const
 {
     if( !pCurrentPath_ )
         return false;

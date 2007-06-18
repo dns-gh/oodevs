@@ -45,10 +45,10 @@ private:
     bool IsRelevant( const ASN1T_MsgObjectKnowledgeUpdate& message );
     bool IsRelevant( const ASN1T_MsgPopulationUpdate& message );
     bool IsRelevant( const ASN1T_MsgPopulationConcentrationUpdate& message );
-    bool IsRelevant( const ASN1T_MsgPopulationFluxUpdate& message );
+    bool IsRelevant( const ASN1T_MsgPopulationFlowUpdate& message );
     bool IsRelevant( const ASN1T_MsgPopulationKnowledgeUpdate& message );
     bool IsRelevant( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& message );
-    bool IsRelevant( const ASN1T_MsgPopulationFluxKnowledgeUpdate& message );
+    bool IsRelevant( const ASN1T_MsgPopulationFlowKnowledgeUpdate& message );
     //@}
 
 private:

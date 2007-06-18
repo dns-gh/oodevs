@@ -60,14 +60,14 @@ namespace
 {
     struct AsnSerializer : public ParamVisitor_ABC
     {
-        explicit AsnSerializer( ASN1T_ListAgent& list ) : list_( list ), index_( 0 ) {}
+        explicit AsnSerializer( ASN1T_UnitList& list ) : list_( list ), index_( 0 ) {}
         virtual void Visit( const Param_ABC& param )
         {
             if( index_ < list_.n )
                 static_cast< const ParamAgent& >( param ).CommitTo( list_.elem[index_++] );
         }
 
-        ASN1T_ListAgent& list_;
+        ASN1T_UnitList& list_;
         unsigned int index_;
     };
 }
@@ -78,13 +78,13 @@ namespace
 // -----------------------------------------------------------------------------
 void ParamAgentList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    ASN1T_ListAgent*& list = asn.value.u.listAgent = new ASN1T_ListAgent();
-    asn.value.t = T_MissionParameter_value_listAgent;
+    ASN1T_UnitList*& list = asn.value.u.unitList = new ASN1T_UnitList();
+    asn.value.t = T_MissionParameter_value_unitList;
     list->n = Count();
     asn.null_value = list->n ? 0 : 1;
     if( asn.null_value )
         return;
-    list->elem = new ASN1T_Agent[ list->n ];
+    list->elem = new ASN1T_Unit[ list->n ];
     AsnSerializer serializer( *list );
     Accept( serializer );
 }
@@ -95,9 +95,9 @@ void ParamAgentList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamAgentList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listAgent )
-        delete[] asn.value.u.listAgent->elem;
-    delete asn.value.u.listAgent;
+    if( asn.value.u.unitList )
+        delete[] asn.value.u.unitList->elem;
+    delete asn.value.u.unitList;
 }
 
 namespace

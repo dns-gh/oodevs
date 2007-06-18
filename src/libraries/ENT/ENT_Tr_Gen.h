@@ -44,7 +44,7 @@ public:
     static const std::string& ConvertFromHumanWound( E_HumanWound, E_Conversion = eToSim );
     static const std::string& ConvertFromHumanRank( E_HumanRank, E_Conversion = eToSim );
     static const std::string& ConvertFromDiplomatie( E_Diplomatie, E_Conversion = eToSim );
-    static const std::string& ConvertFromChangeDiplomatieErrorCode( E_ChangeDiplomatieErrorCode, E_Conversion = eToSim );
+    static const std::string& ConvertFromChangeDiplomacyErrorCode( E_ChangeDiplomacyErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromEtatRapFor( E_EtatRapFor, E_Conversion = eToSim );
     static const std::string& ConvertFromTypeObstacle( E_TypeObstacle, E_Conversion = eToSim );
     static const std::string& ConvertFromEtatCombatRencontre( E_EtatCombatRencontre, E_Conversion = eToSim );
@@ -71,15 +71,15 @@ public:
     static const std::string& ConvertFromLogMaintenanceRegimeTravail( E_LogMaintenanceRegimeTravail, E_Conversion = eToSim );
     static const std::string& ConvertFromLogMaintenanceTraitementEtat( E_LogMaintenanceTraitementEtat, E_Conversion = eToSim );
     static const std::string& ConvertFromLogRavitaillementTraitementEtat( E_LogRavitaillementTraitementEtat, E_Conversion = eToSim );
-    static const std::string& ConvertFromMsgLogRavitaillementChangeQuotasAck( E_MsgLogRavitaillementChangeQuotasAck, E_Conversion = eToSim );
-    static const std::string& ConvertFromMsgLogRavitaillementPousserFluxAck( E_MsgLogRavitaillementPousserFluxAck, E_Conversion = eToSim );
+    static const std::string& ConvertFromMsgLogSupplyChangeQuotasAck( E_MsgLogSupplyChangeQuotasAck, E_Conversion = eToSim );
+    static const std::string& ConvertFromMsgLogSupplyPushFlowAck( E_MsgLogSupplyPushFlowAck, E_Conversion = eToSim );
     static const std::string& ConvertFromLogSanteTraitementEtat( E_LogSanteTraitementEtat, E_Conversion = eToSim );
     static const std::string& ConvertFromObjectErrorCode( E_ObjectErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromObjectType( E_ObjectType, E_Conversion = eToSim );
     static const std::string& ConvertFromMissionGenSousTypeObstacle( E_MissionGenSousTypeObstacle, E_Conversion = eToSim );
     static const std::string& ConvertFromOrderErrorCode( E_OrderErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromOrderState( E_OrderState, E_Conversion = eToSim );
-    static const std::string& ConvertFromAutomateOrderFormation( E_AutomateOrderFormation, E_Conversion = eToSim );
+    static const std::string& ConvertFromAutomatOrderFormation( E_AutomatOrderFormation, E_Conversion = eToSim );
 
     // ConvertTo functions
     static E_TypeLocalisation ConvertToTypeLocalisation( const std::string& );
@@ -90,7 +90,7 @@ public:
     static E_HumanWound ConvertToHumanWound( const std::string& );
     static E_HumanRank ConvertToHumanRank( const std::string& );
     static E_Diplomatie ConvertToDiplomatie( const std::string& );
-    static E_ChangeDiplomatieErrorCode ConvertToChangeDiplomatieErrorCode( const std::string& );
+    static E_ChangeDiplomacyErrorCode ConvertToChangeDiplomacyErrorCode( const std::string& );
     static E_EtatRapFor ConvertToEtatRapFor( const std::string& );
     static E_TypeObstacle ConvertToTypeObstacle( const std::string& );
     static E_EtatCombatRencontre ConvertToEtatCombatRencontre( const std::string& );
@@ -117,15 +117,15 @@ public:
     static E_LogMaintenanceRegimeTravail ConvertToLogMaintenanceRegimeTravail( const std::string& );
     static E_LogMaintenanceTraitementEtat ConvertToLogMaintenanceTraitementEtat( const std::string& );
     static E_LogRavitaillementTraitementEtat ConvertToLogRavitaillementTraitementEtat( const std::string& );
-    static E_MsgLogRavitaillementChangeQuotasAck ConvertToMsgLogRavitaillementChangeQuotasAck( const std::string& );
-    static E_MsgLogRavitaillementPousserFluxAck ConvertToMsgLogRavitaillementPousserFluxAck( const std::string& );
+    static E_MsgLogSupplyChangeQuotasAck ConvertToMsgLogSupplyChangeQuotasAck( const std::string& );
+    static E_MsgLogSupplyPushFlowAck ConvertToMsgLogSupplyPushFlowAck( const std::string& );
     static E_LogSanteTraitementEtat ConvertToLogSanteTraitementEtat( const std::string& );
     static E_ObjectErrorCode ConvertToObjectErrorCode( const std::string& );
     static E_ObjectType ConvertToObjectType( const std::string& );
     static E_MissionGenSousTypeObstacle ConvertToMissionGenSousTypeObstacle( const std::string& );
     static E_OrderErrorCode ConvertToOrderErrorCode( const std::string& );
     static E_OrderState ConvertToOrderState( const std::string& );
-    static E_AutomateOrderFormation ConvertToAutomateOrderFormation( const std::string& );
+    static E_AutomatOrderFormation ConvertToAutomatOrderFormation( const std::string& );
 
 private:
     // Typedefs
@@ -137,7 +137,7 @@ private:
     typedef ENT_Tr::converter<E_HumanWound> T_ConverterHumanWound;
     typedef ENT_Tr::converter<E_HumanRank> T_ConverterHumanRank;
     typedef ENT_Tr::converter<E_Diplomatie> T_ConverterDiplomatie;
-    typedef ENT_Tr::converter<E_ChangeDiplomatieErrorCode> T_ConverterChangeDiplomatieErrorCode;
+    typedef ENT_Tr::converter<E_ChangeDiplomacyErrorCode> T_ConverterChangeDiplomacyErrorCode;
     typedef ENT_Tr::converter<E_EtatRapFor> T_ConverterEtatRapFor;
     typedef ENT_Tr::converter<E_TypeObstacle> T_ConverterTypeObstacle;
     typedef ENT_Tr::converter<E_EtatCombatRencontre> T_ConverterEtatCombatRencontre;
@@ -164,15 +164,15 @@ private:
     typedef ENT_Tr::converter<E_LogMaintenanceRegimeTravail> T_ConverterLogMaintenanceRegimeTravail;
     typedef ENT_Tr::converter<E_LogMaintenanceTraitementEtat> T_ConverterLogMaintenanceTraitementEtat;
     typedef ENT_Tr::converter<E_LogRavitaillementTraitementEtat> T_ConverterLogRavitaillementTraitementEtat;
-    typedef ENT_Tr::converter<E_MsgLogRavitaillementChangeQuotasAck> T_ConverterMsgLogRavitaillementChangeQuotasAck;
-    typedef ENT_Tr::converter<E_MsgLogRavitaillementPousserFluxAck> T_ConverterMsgLogRavitaillementPousserFluxAck;
+    typedef ENT_Tr::converter<E_MsgLogSupplyChangeQuotasAck> T_ConverterMsgLogSupplyChangeQuotasAck;
+    typedef ENT_Tr::converter<E_MsgLogSupplyPushFlowAck> T_ConverterMsgLogSupplyPushFlowAck;
     typedef ENT_Tr::converter<E_LogSanteTraitementEtat> T_ConverterLogSanteTraitementEtat;
     typedef ENT_Tr::converter<E_ObjectErrorCode> T_ConverterObjectErrorCode;
     typedef ENT_Tr::converter<E_ObjectType> T_ConverterObjectType;
     typedef ENT_Tr::converter<E_MissionGenSousTypeObstacle> T_ConverterMissionGenSousTypeObstacle;
     typedef ENT_Tr::converter<E_OrderErrorCode> T_ConverterOrderErrorCode;
     typedef ENT_Tr::converter<E_OrderState> T_ConverterOrderState;
-    typedef ENT_Tr::converter<E_AutomateOrderFormation> T_ConverterAutomateOrderFormation;
+    typedef ENT_Tr::converter<E_AutomatOrderFormation> T_ConverterAutomatOrderFormation;
 
     // Converters
     static T_ConverterTypeLocalisation TypeLocalisationConverter_ [];
@@ -183,7 +183,7 @@ private:
     static T_ConverterHumanWound HumanWoundConverter_ [];
     static T_ConverterHumanRank HumanRankConverter_ [];
     static T_ConverterDiplomatie DiplomatieConverter_ [];
-    static T_ConverterChangeDiplomatieErrorCode ChangeDiplomatieErrorCodeConverter_ [];
+    static T_ConverterChangeDiplomacyErrorCode ChangeDiplomacyErrorCodeConverter_ [];
     static T_ConverterEtatRapFor EtatRapForConverter_ [];
     static T_ConverterTypeObstacle TypeObstacleForConverter_ [];
     static T_ConverterEtatCombatRencontre EtatCombatRencontreConverter_ [];
@@ -210,15 +210,15 @@ private:
     static T_ConverterLogMaintenanceRegimeTravail LogMaintenanceRegimeTravailConverter_ [];
     static T_ConverterLogMaintenanceTraitementEtat LogMaintenanceTraitementEtatConverter_ [];
     static T_ConverterLogRavitaillementTraitementEtat LogRavitaillementTraitementEtatConverter_ [];
-    static T_ConverterMsgLogRavitaillementChangeQuotasAck MsgLogRavitaillementChangeQuotasAckConverter_ [];
-    static T_ConverterMsgLogRavitaillementPousserFluxAck MsgLogRavitaillementPousserFluxAckConverter_ [];
+    static T_ConverterMsgLogSupplyChangeQuotasAck MsgLogSupplyChangeQuotasAckConverter_ [];
+    static T_ConverterMsgLogSupplyPushFlowAck MsgLogSupplyPushFlowAckConverter_ [];
     static T_ConverterLogSanteTraitementEtat LogSanteTraitementEtatConverter_ [];
     static T_ConverterObjectErrorCode ObjectErrorCodeConverter_ [];
     static T_ConverterObjectType ObjectTypeConverter_ [];
     static T_ConverterMissionGenSousTypeObstacle MissionGenSousTypeObstacleConverter_ [];
     static T_ConverterOrderErrorCode OrderErrorCodeConverter_ [];
     static T_ConverterOrderState OrderStateConverter_ [];
-    static T_ConverterAutomateOrderFormation AutomateOrderFormationConverter_ [];
+    static T_ConverterAutomatOrderFormation AutomatOrderFormationConverter_ [];
 };
 
 

@@ -35,7 +35,7 @@ public:
     //@{
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void CommitTo( Action_ABC& action ) const;
-    void CommitTo( ASN1T_Automate& asn ) const;
+    void CommitTo( ASN1T_Automat& asn ) const;
     void CommitTo( ActionParameter_ABC& param ) const;
     //@}
 

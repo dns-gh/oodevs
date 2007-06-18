@@ -39,14 +39,14 @@ MIL_ParameterType_DotationType::~MIL_ParameterType_DotationType()
 void MIL_ParameterType_DotationType::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_typeDotation ) 
+    if( from.null_value || from.value.t != T_MissionParameter_value_dotationType ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( !DEC_Tools::CheckTypeDotation( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyDotationType( from.value.u.typeDotation, to ) )
+    if( !NET_ASN_Tools::CopyDotationType( from.value.u.dotationType, to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -79,9 +79,9 @@ bool MIL_ParameterType_DotationType::Copy( const DIA_Variable_ABC& from, ASN1T_M
         return false;
 
     to.null_value = false;
-    to.value.t    = T_MissionParameter_value_typeDotation;
+    to.value.t    = T_MissionParameter_value_dotationType;
     
-    if( !NET_ASN_Tools::CopyDotationType( from, to.value.u.typeDotation ) )
+    if( !NET_ASN_Tools::CopyDotationType( from, to.value.u.dotationType ) )
         return false;
 
     return true;
@@ -93,5 +93,5 @@ bool MIL_ParameterType_DotationType::Copy( const DIA_Variable_ABC& from, ASN1T_M
 // -----------------------------------------------------------------------------
 void MIL_ParameterType_DotationType::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_typeDotation );
+    assert( to.value.t == T_MissionParameter_value_dotationType );
 }

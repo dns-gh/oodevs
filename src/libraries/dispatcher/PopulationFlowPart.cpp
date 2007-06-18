@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: PopulationFlowPart constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-PopulationFlowPart::PopulationFlowPart( const Model& /*model*/, const ASN1T_PortionFlux& asn )
+PopulationFlowPart::PopulationFlowPart( const Model& /*model*/, const ASN1T_FlowPart& asn )
     : localisation_( asn.forme )
     , nRelevance_  ( asn.pertinence )
 {
@@ -36,7 +36,7 @@ PopulationFlowPart::~PopulationFlowPart()
 // Name: PopulationFlowPart::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void PopulationFlowPart::Send( ASN1T_PortionFlux& asn ) const
+void PopulationFlowPart::Send( ASN1T_FlowPart& asn ) const
 {
     asn.pertinence = nRelevance_;
     localisation_.Send( asn.forme );
@@ -46,7 +46,7 @@ void PopulationFlowPart::Send( ASN1T_PortionFlux& asn ) const
 // Name: PopulationFlowPart::AsnDelete
 // Created: NLD 2006-10-03
 // -----------------------------------------------------------------------------
-void PopulationFlowPart::AsnDelete( ASN1T_PortionFlux& asn )
+void PopulationFlowPart::AsnDelete( ASN1T_FlowPart& asn )
 {
     Localisation::AsnDelete( asn.forme );
 }

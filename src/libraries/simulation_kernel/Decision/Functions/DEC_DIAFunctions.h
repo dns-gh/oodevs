@@ -52,8 +52,8 @@ public:
     static void CopyPointToListPoint              ( DIA_Call_ABC& call );
     static void CopyLocalisation                  ( DIA_Call_ABC& call );
     static void CopyPointToLocalisation           ( DIA_Call_ABC& call );
-    static void CopyListLocalisation              ( DIA_Call_ABC& call );
-    static void CopyLocalisationToListLocalisation( DIA_Call_ABC& call );
+    static void CopyLocationList              ( DIA_Call_ABC& call );
+    static void CopyLocalisationToLocationList( DIA_Call_ABC& call );
 
 	// DIA Thing management
 	static void CreateDIAThing ( DIA_Call_ABC& call );	

@@ -55,7 +55,7 @@ public:
     void              UnRegister       ( TacticalLine_ABC&  line          );
     TacticalLine_ABC* Find             ( T_EntityId         nId           );
     T_EntityId        GetNextLimitId   ();
-    T_EntityId        GetLimaByType    ( ASN1T_EnumTypeLima eLimaType     );
+    T_EntityId        GetLimaByType    ( ASN1T_EnumLimaType eLimaType     );
     void              UpdateToSim      ();
     //@}
 

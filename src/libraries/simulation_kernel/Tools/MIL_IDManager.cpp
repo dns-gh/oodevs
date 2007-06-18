@@ -71,7 +71,7 @@ void MIL_IDManager::Initialize( MIL_Config& config )
         idsFile.EndSection(); // Classe
 
              if( sCaseInsensitiveEqual()( strName, "Unite"                                  ) )  units_                             .SetClassID( nClassID );
-        else if( sCaseInsensitiveEqual()( strName, "TirPion"                                ) )  fireResultsPion_                   .SetClassID( nClassID );
+        else if( sCaseInsensitiveEqual()( strName, "UnitFire"                                ) )  fireResultsPion_                   .SetClassID( nClassID );
         else if( sCaseInsensitiveEqual()( strName, "TirPopulation"                          ) )  fireResultsPopulation_             .SetClassID( nClassID );
         else if( sCaseInsensitiveEqual()( strName, "Lima"                                   ) )  limas_                             .SetClassID( nClassID );
         else if( sCaseInsensitiveEqual()( strName, "Limite"                                 ) )  limits_                            .SetClassID( nClassID );

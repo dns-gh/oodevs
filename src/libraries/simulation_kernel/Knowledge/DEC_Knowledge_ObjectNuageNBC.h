@@ -55,7 +55,7 @@ private:
 
 private:
     // Specific attributes
-    ASN1T_AttrObjectNuageNBC asnAttributes_;
+    ASN1T_ObjectAttributesNbcCloud asnAttributes_;
 
     const MIL_NbcAgentType* pNbcAgentType_;
     bool                    bSpecificAttributesValid_;

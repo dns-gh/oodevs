@@ -48,10 +48,10 @@ AutomatDecisions::~AutomatDecisions()
 // Name: AutomatDecisions::DoUpdate
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateAttributes& message )
+void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomatAttributes& message )
 {
     if( message.m.etat_automatePresent )
-        bEmbraye_ = ( message.etat_automate == EnumAutomateState::embraye );
+        bEmbraye_ = ( message.etat_automate == EnumAutomatMode::embraye );
     controller_.Update( *this );
 }
 
@@ -59,7 +59,7 @@ void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateAttributes& message )
 // Name: AutomatDecisions::DoUpdate
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateOrder& message )
+void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomatOrder& message )
 {
     // $$$$ NLD 2007-04-25: NLD TMP A VIRER
     if( message.mission == 0 )
@@ -123,9 +123,9 @@ bool AutomatDecisions::IsEmbraye() const
 // -----------------------------------------------------------------------------
 void AutomatDecisions::Engage() const
 {
-    ASN_MsgSetAutomateMode asnMsg;
+    ASN_MsgSetAutomatMode asnMsg;
     asnMsg().unit_id = agent_.GetId();
-    asnMsg().mode    = EnumAutomateState::embraye;
+    asnMsg().mode    = EnumAutomatMode::embraye;
     asnMsg.Send( publisher_, 0 );
 }
 
@@ -135,9 +135,9 @@ void AutomatDecisions::Engage() const
 // -----------------------------------------------------------------------------
 void AutomatDecisions::Disengage() const
 {
-    ASN_MsgSetAutomateMode asnMsg;
+    ASN_MsgSetAutomatMode asnMsg;
     asnMsg().unit_id = agent_.GetId();
-    asnMsg().mode    = EnumAutomateState::debraye;
+    asnMsg().mode    = EnumAutomatMode::debraye;
     asnMsg.Send( publisher_, 0 );
 }
 

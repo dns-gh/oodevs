@@ -33,7 +33,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ActionParameterObstacleList( const kernel::OrderParameter& parameter );
-             ActionParameterObstacleList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver, const ASN1T_ListMissionGenObject& asn );
+             ActionParameterObstacleList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver, const ASN1T_PlannedWorkList& asn );
              ActionParameterObstacleList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver, xml::xistream& xis );
     virtual ~ActionParameterObstacleList();
     //@}

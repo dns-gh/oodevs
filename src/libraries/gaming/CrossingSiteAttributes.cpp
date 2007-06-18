@@ -43,7 +43,7 @@ template< typename T >
 void CrossingSiteAttributes::UpdateData( const T& message )
 {
     if( message.m.attributs_specifiquesPresent 
-     && message.attributs_specifiques.t == T_AttrObjectSpecific_site_franchissement )
+     && message.attributs_specifiques.t == T_ObjectAttributesSpecific_site_franchissement )
     {
         width_ = message.attributs_specifiques.u.site_franchissement->largeur;
         depth_ = message.attributs_specifiques.u.site_franchissement->profondeur;

@@ -75,7 +75,7 @@ private:
 
 private:
     // Specific attributes
-    ASN1T_AttrObjectZoneMineeLineaire asnAttributes_;
+    ASN1T_ObjectAttributesLinearMineArea asnAttributes_;
 
     MT_Float rMinesDensity_;
     uint     nMinesActivityTime_;

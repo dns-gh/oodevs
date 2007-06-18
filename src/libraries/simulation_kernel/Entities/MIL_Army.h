@@ -25,7 +25,7 @@ class MIL_EntityManager;
 class MIL_Formation;
 class MIL_Population;
 class MIL_RealObject_ABC;
-struct ASN1T_MsgChangeDiplomatie;
+struct ASN1T_MsgChangeDiplomacy;
 
 // =============================================================================
 // @class  MIL_Army
@@ -134,7 +134,7 @@ public:
     void SendFullState              () const;
     void SendKnowledge              () const;
 
-    void OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomatie& msg );
+    void OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomacy& msg );
     //@}
 
 private:

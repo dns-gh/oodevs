@@ -17,12 +17,12 @@ using namespace dispatcher;
 // Name: LinearMinedAreaObjectAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-LinearMinedAreaObjectAttribute::LinearMinedAreaObjectAttribute( const Model& model, const ASN1T_AttrObjectSpecific& asnMsg )
+LinearMinedAreaObjectAttribute::LinearMinedAreaObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg )
     : ObjectAttribute_ABC( model, asnMsg )
     , nMinesActivityTime_( 0 )
     , rMinesDensity_     ( 0. )
 {
-    if( asnMsg.t == T_AttrObjectSpecific_zone_minee_lineaire )
+    if( asnMsg.t == T_ObjectAttributesSpecific_zone_minee_lineaire )
     {
         nMinesActivityTime_ = asnMsg.u.zone_minee_lineaire->delai_activite_mines;
         rMinesDensity_      = asnMsg.u.zone_minee_lineaire->densite;
@@ -42,9 +42,9 @@ LinearMinedAreaObjectAttribute::~LinearMinedAreaObjectAttribute()
 // Name: LinearMinedAreaObjectAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void LinearMinedAreaObjectAttribute::Update( const ASN1T_AttrObjectSpecific& asnMsg )
+void LinearMinedAreaObjectAttribute::Update( const ASN1T_ObjectAttributesSpecific& asnMsg )
 {
-    if( asnMsg.t == T_AttrObjectSpecific_zone_minee_lineaire )
+    if( asnMsg.t == T_ObjectAttributesSpecific_zone_minee_lineaire )
     {
         nMinesActivityTime_ = asnMsg.u.zone_minee_lineaire->delai_activite_mines;
         rMinesDensity_      = asnMsg.u.zone_minee_lineaire->densite;
@@ -55,10 +55,10 @@ void LinearMinedAreaObjectAttribute::Update( const ASN1T_AttrObjectSpecific& asn
 // Name: LinearMinedAreaObjectAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void LinearMinedAreaObjectAttribute::Send( ASN1T_AttrObjectSpecific& asnMsg ) const
+void LinearMinedAreaObjectAttribute::Send( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
     asnMsg.t = nType_;
-    asnMsg.u.zone_minee_lineaire = new ASN1T_AttrObjectZoneMineeLineaire();
+    asnMsg.u.zone_minee_lineaire = new ASN1T_ObjectAttributesLinearMineArea();
     
     asnMsg.u.zone_minee_lineaire->delai_activite_mines = nMinesActivityTime_;
     asnMsg.u.zone_minee_lineaire->densite              = rMinesDensity_;
@@ -68,7 +68,7 @@ void LinearMinedAreaObjectAttribute::Send( ASN1T_AttrObjectSpecific& asnMsg ) co
 // Name: LinearMinedAreaObjectAttribute::AsnDelete
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void LinearMinedAreaObjectAttribute::AsnDelete( ASN1T_AttrObjectSpecific& asnMsg ) const
+void LinearMinedAreaObjectAttribute::AsnDelete( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
     delete asnMsg.u.zone_minee_lineaire;
 }

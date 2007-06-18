@@ -125,8 +125,8 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
     pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyPointToListPoint              , "DEC_Copie_PointDansListePoints"               );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyLocalisation                  , "DEC_Copie_Localisation"                       );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyPointToLocalisation           , "DEC_Copie_PointDansLocalisation"              );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyListLocalisation              , "DEC_Copie_ListeLocalisations"                 );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyLocalisationToListLocalisation, "DEC_Copie_LocalisationDansListeLocalisations" );
+    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyLocationList              , "DEC_Copie_ListeLocalisations"                 );
+    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyLocalisationToLocationList, "DEC_Copie_LocalisationDansListeLocalisations" );
 
     // User type lists manipulation
     pFuncTable->RegisterFunction( DEC_DIAFunctions::UserTypeList_GetAt   , "DEC_UserTypeList_GetAt"     );

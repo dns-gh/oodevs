@@ -12,7 +12,7 @@
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
 inline
-const MIL_LimaFunction* MIL_LimaFunction::Find( const ASN1T_EnumTypeLima& asn )
+const MIL_LimaFunction* MIL_LimaFunction::Find( const ASN1T_EnumLimaType& asn )
 {
     CIT_LimaFunctionMap it = limaFunctions_.find( asn );
     if( it == limaFunctions_.end() )
@@ -48,7 +48,7 @@ uint MIL_LimaFunction::GetID() const
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
 inline
-ASN1T_EnumTypeLima MIL_LimaFunction::GetAsnID() const
+ASN1T_EnumLimaType MIL_LimaFunction::GetAsnID() const
 {
     return nAsnID_;
 }

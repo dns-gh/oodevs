@@ -23,7 +23,7 @@ EnumInfoContextErrorCode ::= ENUMERATED
    error-invalid-diffusion         (4)
 }
 
-EnumTypeLima ::= ENUMERATED
+EnumLimaType ::= ENUMERATED
 { 
     ligne-debouche              (0),
     ligne-changement-attitude   (1),
@@ -40,13 +40,13 @@ EnumTypeLima ::= ENUMERATED
 -- Common types definitions
 TacticalLinesDiffusion ::= CHOICE
 {
-    automate  Automate,
+    automat   Automat,
     formation Formation
 }
 LimaOrder ::= SEQUENCE
 {
     lima      Line,
-    fonctions SEQUENCE OF EnumTypeLima    
+    fonctions SEQUENCE OF EnumLimaType    
 }
 LimasOrder ::= SEQUENCE OF LimaOrder
 

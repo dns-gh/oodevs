@@ -602,7 +602,7 @@ MT_Vector2D MIL_PopulationFlow::GetSafetyPosition( const MIL_AgentPion& agent, M
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::SendCreation() const
 {
-    NET_ASN_MsgPopulationFluxCreation asnMsg;
+    NET_ASN_MsgPopulationFlowCreation asnMsg;
     asnMsg().oid_flux       = GetID();
     asnMsg().oid_population = GetPopulation().GetID();
     asnMsg.Send();
@@ -614,7 +614,7 @@ void MIL_PopulationFlow::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::SendDestruction() const
 {
-    NET_ASN_MsgPopulationFluxDestruction asnMsg;
+    NET_ASN_MsgPopulationFlowDestruction asnMsg;
     asnMsg().oid_flux       = GetID();
     asnMsg().oid_population = GetPopulation().GetID();
     asnMsg.Send();
@@ -626,7 +626,7 @@ void MIL_PopulationFlow::SendDestruction() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::SendFullState() const
 {
-    NET_ASN_MsgPopulationFluxUpdate asnMsg;
+    NET_ASN_MsgPopulationFlowUpdate asnMsg;
     
     asnMsg().oid_flux       = GetID();
     asnMsg().oid_population = GetPopulation().GetID();
@@ -664,7 +664,7 @@ void MIL_PopulationFlow::SendChangedState() const
     if( !HasChanged() )
         return;
 
-    NET_ASN_MsgPopulationFluxUpdate asnMsg;
+    NET_ASN_MsgPopulationFlowUpdate asnMsg;
     
     asnMsg().oid_flux       = GetID();
     asnMsg().oid_population = GetPopulation().GetID();

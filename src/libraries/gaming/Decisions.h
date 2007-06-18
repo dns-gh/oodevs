@@ -34,7 +34,7 @@ namespace kernel
 // Created: AGE 2006-03-14
 // =============================================================================
 class Decisions : public kernel::Extension_ABC
-                , public kernel::Updatable_ABC< ASN1T_MsgPionOrder >
+                , public kernel::Updatable_ABC< ASN1T_MsgUnitOrder >
                 , public kernel::Displayable_ABC
                 , public kernel::Drawable_ABC
 {
@@ -68,7 +68,7 @@ private:
     //! @name Helpers
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual void DoUpdate( const ASN1T_MsgPionOrder& message );
+    virtual void DoUpdate( const ASN1T_MsgUnitOrder& message );
 
     const kernel::DecisionalModel& GetDecisionalModel() const;
     //@}

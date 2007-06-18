@@ -58,7 +58,7 @@ bool Decisions::IsEmbraye() const
 // Name: Decisions::DoUpdate
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-void Decisions::DoUpdate( const ASN1T_MsgPionOrder& message )
+void Decisions::DoUpdate( const ASN1T_MsgUnitOrder& message )
 {
     // $$$$ NLD 2007-04-25: NLD TMP A VIRER
     if( message.mission == 0 )

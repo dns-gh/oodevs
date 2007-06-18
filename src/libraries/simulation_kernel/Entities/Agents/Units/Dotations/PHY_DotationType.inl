@@ -27,7 +27,7 @@ const PHY_DotationType* PHY_DotationType::FindDotationType( const std::string& s
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------
 inline
-const PHY_DotationType* PHY_DotationType::FindDotationType( ASN1T_EnumFamilleDotation nAsnID )
+const PHY_DotationType* PHY_DotationType::FindDotationType( ASN1T_EnumDotationFamily nAsnID )
 {
     for( CIT_DotationTypeMap it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
         if( it->second->GetAsnID() == nAsnID )
@@ -107,7 +107,7 @@ uint PHY_DotationType::GetID() const
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------
 inline
-ASN1T_EnumFamilleDotation PHY_DotationType::GetAsnID() const
+ASN1T_EnumDotationFamily PHY_DotationType::GetAsnID() const
 {
     return nAsnID_;
 }

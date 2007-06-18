@@ -19,9 +19,9 @@ PHY_Tiredness::T_TirednessMap PHY_Tiredness::tirednesses_;
 // STATIC INITIALIZATION (MANAGER)
 // =============================================================================
 
-const PHY_Tiredness PHY_Tiredness::normal_ ( "Normal" , eNormal , EnumUnitFatigue::normal , 1. );
-const PHY_Tiredness PHY_Tiredness::fatigue_( "Fatigue", eFatigue, EnumUnitFatigue::fatigue, 1. );
-const PHY_Tiredness PHY_Tiredness::epuise_ ( "Epuise" , eEpuise , EnumUnitFatigue::epuise , 1. );
+const PHY_Tiredness PHY_Tiredness::normal_ ( "Normal" , eNormal , EnumUnitTiredness::normal , 1. );
+const PHY_Tiredness PHY_Tiredness::fatigue_( "Fatigue", eFatigue, EnumUnitTiredness::fatigue, 1. );
+const PHY_Tiredness PHY_Tiredness::epuise_ ( "Epuise" , eEpuise , EnumUnitTiredness::epuise , 1. );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Tiredness::Initialize
@@ -66,7 +66,7 @@ void PHY_Tiredness::Terminate()
 // Name: PHY_Tiredness constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Tiredness::PHY_Tiredness( const std::string& strName, E_TirednessType nType, ASN1T_EnumUnitFatigue nAsnID, MT_Float rDIAWeight )
+PHY_Tiredness::PHY_Tiredness( const std::string& strName, E_TirednessType nType, ASN1T_EnumUnitTiredness nAsnID, MT_Float rDIAWeight )
     : strName_                       ( strName )
     , nType_                         ( nType   )
     , nAsnID_                        ( nAsnID  )

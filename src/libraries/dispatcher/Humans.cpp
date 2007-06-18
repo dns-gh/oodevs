@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: Humans constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Humans::Humans( const Model& /*model*/, const ASN1T_DotationPersonnel& asnMsg )
+Humans::Humans( const Model& /*model*/, const ASN1T_HumanDotations& asnMsg )
     : nRank_                    ( asnMsg.rang )
     , nNbrTotal_                ( asnMsg.nb_total )
     , nNbrOperational_          ( asnMsg.nb_operationnels )
@@ -43,7 +43,7 @@ Humans::~Humans()
 // Name: Humans::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void Humans::Update( const ASN1T_DotationPersonnel& asnMsg )
+void Humans::Update( const ASN1T_HumanDotations& asnMsg )
 {
     nNbrTotal_                = asnMsg.nb_total;
     nNbrOperational_          = asnMsg.nb_operationnels;
@@ -59,7 +59,7 @@ void Humans::Update( const ASN1T_DotationPersonnel& asnMsg )
 // Name: Humans::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Humans::Send( ASN1T_DotationPersonnel& asnMsg ) const
+void Humans::Send( ASN1T_HumanDotations& asnMsg ) const
 {
     asnMsg.rang                         = nRank_;
     asnMsg.nb_total                     = nNbrTotal_;

@@ -30,15 +30,15 @@ public:
     //! @name Init
     //@{
     static void InitializeDIA( const MIL_PionMissionType& type );
-    /*final*/ ASN1T_EnumOrderErrorCode Initialize( const ASN1T_MsgPionOrder& asnMsg );
+    /*final*/ ASN1T_EnumOrderErrorCode Initialize( const ASN1T_MsgUnitOrder& asnMsg );
     /*final*/ bool                     Initialize( const MIL_AutomateMission_ABC& parentMission );
     /*final*/ bool                     Initialize( MIL_PionMission_ABC& mission );
     //@}
 
     //! @name Network 
     //@{
-    /*final*/ void Serialize              ( ASN1T_MsgPionOrder& asnMsg );
-    /*final*/ void CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg ); // Delete all the ASN members allocated for the serialization
+    /*final*/ void Serialize              ( ASN1T_MsgUnitOrder& asnMsg );
+    /*final*/ void CleanAfterSerialization( ASN1T_MsgUnitOrder& asnMsg ); // Delete all the ASN members allocated for the serialization
     //@}
 
 private:

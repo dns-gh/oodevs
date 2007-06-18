@@ -135,7 +135,7 @@ void LogisticSupplyPushFlowDialog::Validate()
     if( !selected_ || !target )
         return;
 
-    ASN_MsgLogRavitaillementPousserFlux message;
+    ASN_MsgLogSupplyPushFlow message;
 
     message().oid_donneur  = selected_->GetId();
     message().oid_receveur = target->GetId();

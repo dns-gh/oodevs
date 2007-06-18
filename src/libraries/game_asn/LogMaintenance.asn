@@ -20,16 +20,16 @@ EnumLogMaintenanceRegimeTravail ::= ENUMERATED
     regime-4    
 }
 
-MsgLogMaintenanceTraitementEquipementCreation ::= SEQUENCE
+MsgLogMaintenanceHandlingCreation ::= SEQUENCE
 {
     oid-consigne    OID,
-    oid-pion        Agent,          -- pion possèdant l'equipement
+    oid-pion        Unit,          -- pion possèdant l'equipement
     tick-creation   INTEGER,
-    type-equipement TypeEquipement,
-    type-panne      TypePanne       -- Cf. data/pannes.xml
+    type-equipement EquipmentType,
+    type-panne      BreakdownType       -- Cf. data/pannes.xml
 }
 
-EnumLogMaintenanceTraitementEtat ::= ENUMERATED
+EnumLogMaintenanceHandlingStatus ::= ENUMERATED
 { 
     deplacement-vers-chaine                     (0),         
     attente-disponibilite-remorqueur            (1),
@@ -46,26 +46,26 @@ EnumLogMaintenanceTraitementEtat ::= ENUMERATED
     termine                                     (12)
 }
 
-MsgLogMaintenanceTraitementEquipementUpdate ::= SEQUENCE
+MsgLogMaintenanceHandlingUpdate ::= SEQUENCE
 {
     oid-consigne          OID,
-    oid-pion              Agent,                            -- pion possèdant l'equipement
-    oid-pion-log-traitant Agent,                            -- pion LOG gérant la maintenance de l'equipement, 0 si aucun pion (demande passée à la BLIAT par exemple)
-    etat                  EnumLogMaintenanceTraitementEtat OPTIONAL,
+    oid-pion              Unit,                            -- pion possèdant l'equipement
+    oid-pion-log-traitant Unit,                            -- pion LOG gérant la maintenance de l'equipement, 0 si aucun pion (demande passée à la BLIAT par exemple)
+    etat                  EnumLogMaintenanceHandlingStatus OPTIONAL,
     diagnostique-effectue BOOLEAN                          OPTIONAL
 }
 
 
-MsgLogMaintenanceTraitementEquipementDestruction ::= SEQUENCE
+MsgLogMaintenanceHandlingDestruction ::= SEQUENCE
 {
     oid-consigne    OID,
-    oid-pion        Agent          -- pion possèdant l'equipement    
+    oid-pion        Unit          -- pion possèdant l'equipement    
 }
 
 -- Etat des pions logistiques de la maintenance
-MaintenanceDisponibiliteMoyens ::= SEQUENCE
+LogMaintenanceEquipmentAvailability ::= SEQUENCE
 {
-    type-equipement  TypeEquipement,
+    type-equipement  EquipmentType,
     nbr-total        INTEGER,
     nbr-disponibles  INTEGER,       
     nbr-au-travail   INTEGER,
@@ -73,17 +73,17 @@ MaintenanceDisponibiliteMoyens ::= SEQUENCE
     nbr-au-repos     INTEGER OPTIONAL -- applicable uniquement à certains moyens
 }
 
-MaintenancePriorites ::= SEQUENCE OF TypeEquipement
+LogMaintenancePriorities ::= SEQUENCE OF EquipmentType
 
-MsgLogMaintenanceEtat ::= SEQUENCE
+MsgLogMaintenanceState ::= SEQUENCE
 {
-    oid-pion                   Agent,
+    oid-pion                   Unit,
     chaine-activee             BOOLEAN                                    OPTIONAL,
     regime-travail             EnumLogMaintenanceRegimeTravail            OPTIONAL,
-    priorites                  MaintenancePriorites                       OPTIONAL, 
-    priorites-tactiques        ListAutomate                               OPTIONAL,
-    disponibilites-remorqueurs SEQUENCE OF MaintenanceDisponibiliteMoyens OPTIONAL,
-    disponibilites-reparateurs SEQUENCE OF MaintenanceDisponibiliteMoyens OPTIONAL
+    priorites                  LogMaintenancePriorities                       OPTIONAL, 
+    priorites-tactiques        AutomatList                               OPTIONAL,
+    disponibilites-remorqueurs SEQUENCE OF LogMaintenanceEquipmentAvailability OPTIONAL,
+    disponibilites-reparateurs SEQUENCE OF LogMaintenanceEquipmentAvailability OPTIONAL
 }
 
 END -- LogMaintenance

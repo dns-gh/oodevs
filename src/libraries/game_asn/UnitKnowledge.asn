@@ -14,42 +14,42 @@ UnitKnowledgeExports  ::= NULL
 
 MsgUnitKnowledgeCreation ::= SEQUENCE
 {
-    oid-connaissance        KnowledgeAgent,   -- id de la connaissance
+    oid-connaissance        UnitKnowledge,   -- id de la connaissance
     oid-groupe-possesseur   KnowledgeGroup,   -- id du groupe de connaissance qui possède cette connaissance
-    oid-unite-reelle        Agent,            -- id de l'unité réélle pointée par la connaissance
-    type-unite              TypePion
+    oid-unite-reelle        Unit,            -- id de l'unité réélle pointée par la connaissance
+    type-unite              UnitType
 }
 
-AutomatePerception ::= SEQUENCE
+AutomatPerception ::= SEQUENCE
 {
-    oid-compagnie           Automate,
+    oid-compagnie           Automat,
     identification-level    EnumUnitIdentificationLevel
 }
 
 MsgUnitKnowledgeUpdate ::= SEQUENCE
 {
-    oid-connaissance            KnowledgeAgent,
+    oid-connaissance            UnitKnowledge,
     oid-groupe-possesseur       KnowledgeGroup,
 
-    pertinence                  Pourcentage                    OPTIONAL,
+    pertinence                  Percentage                     OPTIONAL,
     identification-level        EnumUnitIdentificationLevel    OPTIONAL,
     max-identification-level    EnumUnitIdentificationLevel    OPTIONAL,
-    etat-op                     PourcentageLibre               OPTIONAL,
+    etat-op                     FreePercentage                 OPTIONAL,
     mort                        BOOLEAN                        OPTIONAL,
     position                    CoordUTM                       OPTIONAL,
-    direction                   Direction                      OPTIONAL,
-    speed                       Vitesse                        OPTIONAL,
+    direction                   Heading                        OPTIONAL,
+    speed                       Speed                          OPTIONAL,
     camp                        OID                            OPTIONAL,
     nature-pc                   BOOLEAN                        OPTIONAL,
-    perception-par-compagnie    SEQUENCE OF AutomatePerception OPTIONAL,
-    rendu                       Camp                           OPTIONAL, -- '0' quand pas rendu
+    perception-par-compagnie    SEQUENCE OF AutomatPerception  OPTIONAL,
+    rendu                       Team                           OPTIONAL, -- '0' quand pas rendu
     prisonnier                  BOOLEAN                        OPTIONAL,
     refugie-pris-en-compte      BOOLEAN                        OPTIONAL
 }
 
 MsgUnitKnowledgeDestruction ::= SEQUENCE
 {
-    oid-connaissance        KnowledgeAgent,
+    oid-connaissance        UnitKnowledge,
     oid-groupe-possesseur   KnowledgeGroup
 }
 

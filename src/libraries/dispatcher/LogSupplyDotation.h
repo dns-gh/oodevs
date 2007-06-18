@@ -27,14 +27,14 @@ class LogSupplyDotation
 public:
     //! @name Constructors/Destructor
     //@{
-     LogSupplyDotation( const Model& model, const ASN1T_DemandeDotation& asnMsg );
+     LogSupplyDotation( const Model& model, const ASN1T_DotationQuery& asnMsg );
     ~LogSupplyDotation();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_DemandeDotation& asnMsg );
-    void Send  ( ASN1T_DemandeDotation& asnMsg ) const ;
+    void Update( const ASN1T_DotationQuery& asnMsg );
+    void Send  ( ASN1T_DotationQuery& asnMsg ) const ;
     //@}
 
 private:

@@ -56,8 +56,8 @@ void TacticalLine_ABC::Update( const ASN1T_TacticalLine& asn )
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::UpdateDiffusion( const ASN1T_TacticalLinesDiffusion& diffusion )
 {
-    if( diffusion.t == T_TacticalLinesDiffusion_automate )
-        automat_ = &model_.GetAutomats().Get( diffusion.u.automate );
+    if( diffusion.t == T_TacticalLinesDiffusion_automat )
+        automat_ = &model_.GetAutomats().Get( diffusion.u.automat );
     else
         formation_ = &model_.GetFormations().Get( diffusion.u.formation );
 }
@@ -77,8 +77,8 @@ void TacticalLine_ABC::Send( ASN1T_TacticalLine& asn ) const
     }
     else if( automat_ )
     {
-        asn.diffusion.t          = T_TacticalLinesDiffusion_automate;
-        asn.diffusion.u.automate = automat_->GetID();
+        asn.diffusion.t          = T_TacticalLinesDiffusion_automat;
+        asn.diffusion.u.automat = automat_->GetID();
     }
 }
 

@@ -39,14 +39,14 @@ MIL_ParameterType_PathList::~MIL_ParameterType_PathList()
 void MIL_ParameterType_PathList::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.value.t != T_MissionParameter_value_listItineraire ) 
+    if( from.value.t != T_MissionParameter_value_pathList ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( !DEC_Tools::CheckTypeListeListesPoints( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyPathList( *from.value.u.listItineraire, to ) )
+    if( !NET_ASN_Tools::CopyPathList( *from.value.u.pathList, to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -79,10 +79,10 @@ bool MIL_ParameterType_PathList::Copy( const DIA_Variable_ABC& from, ASN1T_Missi
         return false;
 
     to.null_value              = false;
-    to.value.t                = T_MissionParameter_value_listItineraire;
-    to.value.u.listItineraire = new ASN1T_ListItineraire();
+    to.value.t                = T_MissionParameter_value_pathList;
+    to.value.u.pathList = new ASN1T_PathList();
     
-    if( !NET_ASN_Tools::CopyPathList( from, *to.value.u.listItineraire ) )
+    if( !NET_ASN_Tools::CopyPathList( from, *to.value.u.pathList ) )
         return false;
 
     return true;
@@ -94,8 +94,8 @@ bool MIL_ParameterType_PathList::Copy( const DIA_Variable_ABC& from, ASN1T_Missi
 // -----------------------------------------------------------------------------
 void MIL_ParameterType_PathList::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_listItineraire );
-    assert( to.value.u.listItineraire );
-    NET_ASN_Tools::Delete( *to.value.u.listItineraire );
-    delete to.value.u.listItineraire;
+    assert( to.value.t == T_MissionParameter_value_pathList );
+    assert( to.value.u.pathList );
+    NET_ASN_Tools::Delete( *to.value.u.pathList );
+    delete to.value.u.pathList;
 }

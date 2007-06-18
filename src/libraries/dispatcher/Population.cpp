@@ -103,7 +103,7 @@ void Population::Update( const ASN1T_MsgPopulationConcentrationDestruction& msg 
 // Name: Population::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationFluxCreation& msg )
+void Population::Update( const ASN1T_MsgPopulationFlowCreation& msg )
 {
     bool create = ! flows_.Find( msg.oid_flux );
     PopulationFlow& flow = flows_.Create( model_, msg.oid_flux, *this, msg );
@@ -115,7 +115,7 @@ void Population::Update( const ASN1T_MsgPopulationFluxCreation& msg )
 // Name: Population::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationFluxUpdate& msg )
+void Population::Update( const ASN1T_MsgPopulationFlowUpdate& msg )
 {
     flows_.Get( msg.oid_flux ).Update( msg );
 }
@@ -124,7 +124,7 @@ void Population::Update( const ASN1T_MsgPopulationFluxUpdate& msg )
 // Name: Population::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationFluxDestruction& msg )
+void Population::Update( const ASN1T_MsgPopulationFlowDestruction& msg )
 {
     flows_.Destroy( msg.oid_flux );
 }

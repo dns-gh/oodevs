@@ -127,6 +127,6 @@ void DEC_Knowledge_ObjectCampRefugies::BuildMsgSpecificAttributes( ASN1T_MsgObje
     asnAttributes_.tc2 = pTC2_->GetID();
 
     asnMsg.m.attributs_specifiquesPresent        = 1;
-    asnMsg.attributs_specifiques.t               = T_AttrObjectSpecific_camp_refugies;
+    asnMsg.attributs_specifiques.t               = T_ObjectAttributesSpecific_camp_refugies;
     asnMsg.attributs_specifiques.u.camp_refugies = &asnAttributes_;
 }

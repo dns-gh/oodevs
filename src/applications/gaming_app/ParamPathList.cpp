@@ -48,7 +48,7 @@ namespace
     class AsnSerializer : public ParamVisitor_ABC
     {
     public:
-        AsnSerializer( ASN1T_ListItineraire& list )
+        AsnSerializer( ASN1T_PathList& list )
             : list_( list )
             , index_( 0 )
         {}
@@ -60,7 +60,7 @@ namespace
         }
 
     private:
-        ASN1T_ListItineraire& list_;
+        ASN1T_PathList& list_;
         unsigned int index_;
     };
 }
@@ -71,13 +71,13 @@ namespace
 // -----------------------------------------------------------------------------
 void ParamPathList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    ASN1T_ListItineraire*& list = asn.value.u.listItineraire = new ASN1T_ListItineraire();
-    asn.value.t = T_MissionParameter_value_listItineraire;
+    ASN1T_PathList*& list = asn.value.u.pathList = new ASN1T_PathList();
+    asn.value.t = T_MissionParameter_value_pathList;
     list->n = Count();
     asn.null_value = list->n ? 0 : 1;
     if( asn.null_value )
         return;
-    list->elem = new ASN1T_Itineraire[ list->n ];
+    list->elem = new ASN1T_Path[ list->n ];
     AsnSerializer serializer( *list );
     Accept( serializer );
 }
@@ -88,13 +88,13 @@ void ParamPathList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamPathList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listItineraire )
+    if( asn.value.u.pathList )
     {
-        for( unsigned int i = 0; i < asn.value.u.listItineraire->n; ++i )
-            delete[] asn.value.u.listItineraire->elem[i].vecteur_point.elem;
-        delete[] asn.value.u.listItineraire->elem;
+        for( unsigned int i = 0; i < asn.value.u.pathList->n; ++i )
+            delete[] asn.value.u.pathList->elem[i].vecteur_point.elem;
+        delete[] asn.value.u.pathList->elem;
     }
-    delete asn.value.u.listItineraire;
+    delete asn.value.u.pathList;
 }
 
 namespace

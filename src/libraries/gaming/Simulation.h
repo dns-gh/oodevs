@@ -46,11 +46,11 @@ public:
     void Disconnect();
     void Pause( bool );
     void ChangeSpeed( int timeFactor );
-    void Update( const ASN1T_MsgCtrlInfo& asnMsg );
-    void Update( const ASN1T_MsgCtrlReplayInfo& asnMsg );
+    void Update( const ASN1T_MsgControlInformation& asnMsg );
+    void Update( const ASN1T_MsgControlReplayInformation& asnMsg );
     void Update( const ProfilingValuesMessage& message );
     void BeginTick( int tick );
-    void EndTick( const ASN1T_MsgCtrlEndTick& asnMsg );
+    void EndTick( const ASN1T_MsgControlEndTick& asnMsg );
 
     void BeginCheckPoint();
     void EndCheckPoint();

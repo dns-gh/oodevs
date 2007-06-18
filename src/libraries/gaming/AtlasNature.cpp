@@ -85,7 +85,7 @@ void AtlasNature::Toggle( const AtlasNature& nature )
 // Name: AtlasNature::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void AtlasNature::CommitTo( ASN1T_NatureAtlas& asn ) const
+void AtlasNature::CommitTo( ASN1T_AtlasNature& asn ) const
 {
     asn.numbits = 11;
     std::memcpy( asn.data, (const unsigned char*)&value_, sizeof( asn.data ) );

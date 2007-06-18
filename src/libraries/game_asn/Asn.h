@@ -24,7 +24,7 @@
 #include "generated/Messages.h"
 #include "generated/UnitKnowledge.h"
 #include "generated/Unit.h"
-#include "generated/Automate.h"
+#include "generated/Automat.h"
 #include "generated/Order.h"
 #include "generated/Object.h"
 #include "generated/Population.h"

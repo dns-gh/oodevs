@@ -40,7 +40,7 @@ const MIL_ObstacleType* MIL_ObstacleType::Find( uint nID )
 // Created: NLD 2007-05-22
 // -----------------------------------------------------------------------------
 inline
-const MIL_ObstacleType* MIL_ObstacleType::Find( ASN1T_EnumTypeObstacle asn )
+const MIL_ObstacleType* MIL_ObstacleType::Find( ASN1T_EnumObstacleType asn )
 {
     if( asn == reserved_.GetAsnID() )
         return &reserved_;
@@ -68,7 +68,7 @@ uint MIL_ObstacleType::GetID() const
 // Created: NLD 2007-05-22
 // -----------------------------------------------------------------------------
 inline
-ASN1T_EnumTypeObstacle MIL_ObstacleType::GetAsnID() const
+ASN1T_EnumObstacleType MIL_ObstacleType::GetAsnID() const
 {
     return nAsnID_;
 }

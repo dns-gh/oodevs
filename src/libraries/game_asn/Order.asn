@@ -38,22 +38,22 @@ OrderContext ::= SEQUENCE
     limite-gauche           Line OPTIONAL,
     limite-droite           Line OPTIONAL,   
     limas                   LimasOrder,
-    direction-dangereuse    Direction
+    direction-dangereuse    Heading
 }
 
 
 -- TEST MISSIONS GENERIQUES
 
-MissionGenObject ::= SEQUENCE
+PlannedWork ::= SEQUENCE
 {
     type                 EnumObjectType,
-    position             Localisation,
-    type-obstacle        EnumTypeObstacle DEFAULT preliminaire,
+    position             Location,
+    type-obstacle        EnumObstacleType DEFAULT preliminaire,
     densite              REAL(0..5)       DEFAULT 0,
-    tc2                  Automate         DEFAULT 0,
+    tc2                  Automat          DEFAULT 0,
     delai-activite-mines INTEGER          DEFAULT 0
 }
-ListMissionGenObject ::= SEQUENCE OF MissionGenObject;
+PlannedWorkList ::= SEQUENCE OF PlannedWork;
 
 
 MissionParameter ::= SEQUENCE
@@ -64,33 +64,33 @@ MissionParameter ::= SEQUENCE
         BOOLEAN,
         REAL,
         enumeration INTEGER,
-        Itineraire,
-        ListItineraire,
+        Path,
+        PathList,
         Point,
-        ListPoint,
+        PointList,
         Polygon,
-        ListPolygon,
-        Localisation,
-        ListLocalisation,
-        Direction,
-        NatureAtlas,
-        Agent,
-        ListAgent,
-        Automate,
-        ListAutomate,
-        KnowledgeAgent,
-        ListKnowledgeAgent,
-        KnowledgeObject,
-        ListKnowledgeObject,
-        KnowledgePopulation,
-        MissionGenObject,
-        ListMissionGenObject,
-        TypeDotation,
-        TypeEquipement,
-        tirIndirect TirPion,
-        GDH,
-        MaintenancePriorites,
-        SantePriorites,
+        PolygonList,
+        Location,
+        LocationList,
+        Heading,
+        AtlasNature,
+        Unit,
+        UnitList,
+        Automat,
+        AutomatList,
+        UnitKnowledge,
+        UnitKnowledgeList,
+        ObjectKnowledge,
+        ObjectKnowledgeList,
+        PopulationKnowledge,
+        PlannedWork,
+        PlannedWorkList,
+        DotationType,
+        EquipmentType,
+        tirIndirect UnitFire,
+        DateTime,
+        LogMaintenancePriorities,
+        LogMedicalPriorities,
         VisibleString
     }
 }
@@ -100,38 +100,38 @@ MissionParameters ::= SEQUENCE OF MissionParameter
 --
 -- Pion
 --
-MsgPionOrder ::= SEQUENCE
+MsgUnitOrder ::= SEQUENCE
 {
-    oid-unite-executante    Agent,
+    oid-unite-executante    Unit,
     order-context           OrderContext,
     mission                 OID,
     parametres              MissionParameters
 }
-MsgPionOrderAck ::= SEQUENCE
+MsgUnitOrderAck ::= SEQUENCE
 {
-    oid-unite-executante    Agent,
+    oid-unite-executante    Unit,
     error-code				EnumOrderErrorCode
 }
 
 --
--- Automate
+-- Automat
 --
-EnumAutomateOrderFormation ::= ENUMERATED
+EnumAutomatOrderFormation ::= ENUMERATED
 {
     un-echelon      (0),
     deux-echelons   (1)
 }
-MsgAutomateOrder ::= SEQUENCE
+MsgAutomatOrder ::= SEQUENCE
 {
-    oid-unite-executante    Automate,
+    oid-unite-executante    Automat,
     order-context           OrderContext,
     mission                 OID,
     parametres              MissionParameters,
-    formation               EnumAutomateOrderFormation
+    formation               EnumAutomatOrderFormation
 }
-MsgAutomateOrderAck ::= SEQUENCE
+MsgAutomatOrderAck ::= SEQUENCE
 {
-    oid-unite-executante    Agent,
+    oid-unite-executante    Unit,
     error-code		        EnumOrderErrorCode
 }
 
@@ -167,7 +167,7 @@ MsgFragOrderAck ::= SEQUENCE
 
 -- CR
 
-EnumTypeCR ::= ENUMERATED
+EnumReportType ::= ENUMERATED
 {
     message                 (0),
     operationel             (1),
@@ -175,23 +175,23 @@ EnumTypeCR ::= ENUMERATED
     warning                 (3)
 }
 
-MsgCR ::= SEQUENCE
+MsgReport ::= SEQUENCE
 {
-    unit-id    OID, -- Automate, pion ou population    
+    unit-id    OID, -- Automat, pion ou population    
     cr         OID,
-    type       EnumTypeCR,
+    type       EnumReportType,
     parametres MissionParameters
 }
 
 MsgTrace ::= SEQUENCE
 {
-    unit-id    OID, -- Automate, pion ou population 
+    unit-id    OID, -- Automat, pion ou population 
     message    VisibleString
 }
 
 MsgDecisionalState ::= SEQUENCE
 {
-    unit-id    OID, -- Automate, pion ou population 
+    unit-id    OID, -- Automat, pion ou population 
     key        VisibleString,
     value      VisibleString
 }

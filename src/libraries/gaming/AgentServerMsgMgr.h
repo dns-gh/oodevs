@@ -116,26 +116,26 @@ private:
     void _OnReceiveMsgMiddleToClient                        ( DIN::DIN_Input& input );    
 
     // Control
-    void OnReceiveMsgCtrlPauseAck             ( const ASN1T_MsgCtrlPauseAck&  asnMsg );
-    void OnReceiveMsgCtrlResumeAck            ( const ASN1T_MsgCtrlResumeAck& asnMsg );
-    void OnReceiveMsgCtrlChangeTimeFactorAck  ( const ASN1T_MsgCtrlChangeTimeFactorAck& asnMsg );
-    void OnReceiveMsgCtrlSkipToTickAck        ( const ASN1T_MsgCtrlSkipToTickAck& asnMsg );
-    void OnReceiveMsgCtrlInfo                 ( const ASN1T_MsgCtrlInfo& asnMsg );
-    void OnReceiveMsgCtrReplayInfo            ( const ASN1T_MsgCtrlReplayInfo& asnMsg );
-    void OnReceiveMsgCtrlMeteoGlobalAck       ();
-    void OnReceiveMsgCtrlMeteoLocalAck        ();
+    void OnReceiveMsgControlPauseAck             ( const ASN1T_MsgControlPauseAck&  asnMsg );
+    void OnReceiveMsgControlResumeAck            ( const ASN1T_MsgControlResumeAck& asnMsg );
+    void OnReceiveMsgControlChangeTimeFactorAck  ( const ASN1T_MsgControlChangeTimeFactorAck& asnMsg );
+    void OnReceiveMsgControlSkipToTickAck        ( const ASN1T_MsgControlSkipToTickAck& asnMsg );
+    void OnReceiveMsgControlInformation                 ( const ASN1T_MsgControlInformation& asnMsg );
+    void OnReceiveMsgCtrReplayInfo            ( const ASN1T_MsgControlReplayInformation& asnMsg );
+    void OnReceiveMsgControlMeteoGlobalAck       ();
+    void OnReceiveMsgControlMeteoLocalAck        ();
     void OnReceiveMsgCheckPointSaveBegin      ();
     void OnReceiveMsgCheckPointSaveEnd        ();
     void OnReceiveMsgCheckPointSetFrequencyAck();
     void OnReceiveMsgCheckPointSaveNowAck     ();
-    void OnReceiveMsgCtrlSendCurrentStateBegin();
-    void OnReceiveMsgCtrlSendCurrentStateEnd  ();
-    void OnReceiveMsgCtrlBeginTick            ( const ASN1T_MsgCtrlBeginTick& asnMsg );
-    void OnReceiveMsgCtrlEndTick              ( const ASN1T_MsgCtrlEndTick& asnMsg );
-    void OnReceiveMsgAutomateCreation         ( const ASN1T_MsgAutomateCreation& asnMsg );
-    void OnReceiveMsgPionCreation             ( const ASN1T_MsgPionCreation& asnMsg );
-    void OnReceiveMsgPionDestruction          ( const ASN1T_MsgPionDestruction& asnMsg );
-    void OnReceiveMsgChangeDiplomatie         ( const ASN1T_MsgChangeDiplomatie& asnMsg );
+    void OnReceiveMsgControlSendCurrentStateBegin();
+    void OnReceiveMsgControlSendCurrentStateEnd  ();
+    void OnReceiveMsgControlBeginTick            ( const ASN1T_MsgControlBeginTick& asnMsg );
+    void OnReceiveMsgControlEndTick              ( const ASN1T_MsgControlEndTick& asnMsg );
+    void OnReceiveMsgAutomatCreation         ( const ASN1T_MsgAutomatCreation& asnMsg );
+    void OnReceiveMsgUnitCreation             ( const ASN1T_MsgUnitCreation& asnMsg );
+    void OnReceiveMsgUnitDestruction          ( const ASN1T_MsgUnitDestruction& asnMsg );
+    void OnReceiveMsgChangeDiplomacy         ( const ASN1T_MsgChangeDiplomacy& asnMsg );
     void OnReceiveMsgAuthenticationResponse   ( const ASN1T_MsgAuthenticationResponse& asnMsg );
 
     // Profiles
@@ -148,35 +148,35 @@ private:
 
     // Side/Formation/Knowledge Group creation
     void OnReveiveMsgKnowledgeGroupCreation   ( const ASN1T_MsgKnowledgeGroupCreation& asnMsg );
-    void OnReveiveMsgSideCreation             ( const ASN1T_MsgSideCreation& asnMsg );
+    void OnReveiveMsgTeamCreation             ( const ASN1T_MsgTeamCreation& asnMsg );
     void OnReveiveMsgFormationCreation        ( const ASN1T_MsgFormationCreation& asnMsg );
 
     // Attributes
     void OnReceiveMsgUnitAttributes    ( const ASN1T_MsgUnitAttributes& asnMsg );
     void OnReceiveMsgUnitMagicActionAck( const ASN1T_MsgUnitMagicActionAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgUnitPathFind      ( const ASN1T_MsgUnitPathFind& asnMsg );
-    void OnReceiveMsgAutomateAttributes( const ASN1T_MsgAutomateAttributes& asnMsg );
+    void OnReceiveMsgAutomatAttributes( const ASN1T_MsgAutomatAttributes& asnMsg );
 
     // Log maintenance
-    void OnReceiveMsgLogMaintenanceTraitementEquipementCreation   ( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& asnMsg );
-    void OnReceiveMsgLogMaintenanceTraitementEquipementDestruction( const ASN1T_MsgLogMaintenanceTraitementEquipementDestruction& asnMsg );
-    void OnReceiveMsgLogMaintenanceTraitementEquipementUpdate     ( const ASN1T_MsgLogMaintenanceTraitementEquipementUpdate& asnMsg );
-    void OnReceiveMsgLogMaintenanceEtat                           ( const ASN1T_MsgLogMaintenanceEtat&                  asnMsg );
+    void OnReceiveMsgLogMaintenanceHandlingCreation   ( const ASN1T_MsgLogMaintenanceHandlingCreation& asnMsg );
+    void OnReceiveMsgLogMaintenanceHandlingDestruction( const ASN1T_MsgLogMaintenanceHandlingDestruction& asnMsg );
+    void OnReceiveMsgLogMaintenanceHandlingUpdate     ( const ASN1T_MsgLogMaintenanceHandlingUpdate& asnMsg );
+    void OnReceiveMsgLogMaintenanceState                           ( const ASN1T_MsgLogMaintenanceState&                  asnMsg );
 
     // Log sante
-    void OnReceiveMsgLogSanteTraitementHumainCreation   ( const ASN1T_MsgLogSanteTraitementHumainCreation& asnMsg );
-    void OnReceiveMsgLogSanteTraitementHumainDestruction( const ASN1T_MsgLogSanteTraitementHumainDestruction& asnMsg );
-    void OnReceiveMsgLogSanteTraitementHumainUpdate     ( const ASN1T_MsgLogSanteTraitementHumainUpdate& asnMsg );
-    void OnReceiveMsgLogSanteEtat                       ( const ASN1T_MsgLogSanteEtat&                  asnMsg );
+    void OnReceiveMsgLogMedicalHandlingCreation   ( const ASN1T_MsgLogMedicalHandlingCreation& asnMsg );
+    void OnReceiveMsgLogMedicalHandlingDestruction( const ASN1T_MsgLogMedicalHandlingDestruction& asnMsg );
+    void OnReceiveMsgLogMedicalHandlingUpdate     ( const ASN1T_MsgLogMedicalHandlingUpdate& asnMsg );
+    void OnReceiveMsgLogMedicalState                       ( const ASN1T_MsgLogMedicalState&                  asnMsg );
 
     // Log supply
-    void OnReceiveMsgLogRavitaillementTraitementCreation   ( const ASN1T_MsgLogRavitaillementTraitementCreation& asnMsg );
-    void OnReceiveMsgLogRavitaillementTraitementDestruction( const ASN1T_MsgLogRavitaillementTraitementDestruction& asnMsg );
-    void OnReceiveMsgLogRavitaillementTraitementUpdate     ( const ASN1T_MsgLogRavitaillementTraitementUpdate& asnMsg );
-    void OnReceiveMsgLogRavitaillementEtat                 ( const ASN1T_MsgLogRavitaillementEtat&  asnMsg );
-    void OnReceiveMsgLogRavitaillementQuotas               ( const ASN1T_MsgLogRavitaillementQuotas& asnMsg );
-    void OnReceiveMsgLogRavitaillementChangeQuotaAck       ( const ASN1T_MsgLogRavitaillementChangeQuotasAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgLogRavitaillementPousserFluxAck       ( const ASN1T_MsgLogRavitaillementPousserFluxAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgLogSupplyHandlingCreation   ( const ASN1T_MsgLogSupplyHandlingCreation& asnMsg );
+    void OnReceiveMsgLogSupplyHandlingDestruction( const ASN1T_MsgLogSupplyHandlingDestruction& asnMsg );
+    void OnReceiveMsgLogSupplyHandlingUpdate     ( const ASN1T_MsgLogSupplyHandlingUpdate& asnMsg );
+    void OnReceiveMsgLogSupplyState                 ( const ASN1T_MsgLogSupplyState&  asnMsg );
+    void OnReceiveMsgLogSupplyQuotas               ( const ASN1T_MsgLogSupplyQuotas& asnMsg );
+    void OnReceiveMsgLogRavitaillementChangeQuotaAck       ( const ASN1T_MsgLogSupplyChangeQuotasAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgLogSupplyPushFlowAck       ( const ASN1T_MsgLogSupplyPushFlowAck& asnMsg, unsigned long nCtx );
 
     // Limas / Limits
     void OnReceiveMsgLimitCreationRequestAck   ( const ASN1T_MsgLimitCreationRequestAck&    asnMsg, unsigned long nCtx );
@@ -215,36 +215,36 @@ private:
     void OnReceiveMsgPopulationConcentrationKnowledgeCreation   ( const ASN1T_MsgPopulationConcentrationKnowledgeCreation&    asnMsg );
     void OnReceiveMsgPopulationConcentrationKnowledgeUpdate     ( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate&      asnMsg );
     void OnReceiveMsgPopulationConcentrationKnowledgeDestruction( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& asnMsg );
-    void OnReceiveMsgPopulationFlowKnowledgeCreation            ( const ASN1T_MsgPopulationFluxKnowledgeCreation&             asnMsg );
-    void OnReceiveMsgPopulationFlowKnowledgeUpdate              ( const ASN1T_MsgPopulationFluxKnowledgeUpdate&               asnMsg );
-    void OnReceiveMsgPopulationFlowKnowledgeDestruction         ( const ASN1T_MsgPopulationFluxKnowledgeDestruction&          asnMsg );
+    void OnReceiveMsgPopulationFlowKnowledgeCreation            ( const ASN1T_MsgPopulationFlowKnowledgeCreation&             asnMsg );
+    void OnReceiveMsgPopulationFlowKnowledgeUpdate              ( const ASN1T_MsgPopulationFlowKnowledgeUpdate&               asnMsg );
+    void OnReceiveMsgPopulationFlowKnowledgeDestruction         ( const ASN1T_MsgPopulationFlowKnowledgeDestruction&          asnMsg );
 
     // Orders
-    void OnReceiveMsgAutomateOrder          ( const ASN1T_MsgAutomateOrder& asnMsg ); 
-    void OnReceiveMsgAutomateOrderAck       ( const ASN1T_MsgAutomateOrderAck& asnMsg, unsigned long nCtx ); 
-    void OnReceiveMsgPionOrder              ( const ASN1T_MsgPionOrder& asnMsg ); 
-    void OnReceiveMsgPionOrderAck           ( const ASN1T_MsgPionOrderAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgAutomatOrder          ( const ASN1T_MsgAutomatOrder& asnMsg ); 
+    void OnReceiveMsgAutomatOrderAck       ( const ASN1T_MsgAutomatOrderAck& asnMsg, unsigned long nCtx ); 
+    void OnReceiveMsgUnitOrder              ( const ASN1T_MsgUnitOrder& asnMsg ); 
+    void OnReceiveMsgUnitOrderAck           ( const ASN1T_MsgUnitOrderAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgFragOrderAck           ( const ASN1T_MsgFragOrderAck& asnMsg, unsigned long nCtx ); 
 
     // Automate mode
-    void OnReceiveMsgSetAutomateModeAck( const ASN1T_MsgSetAutomateModeAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgSetAutomatModeAck( const ASN1T_MsgSetAutomatModeAck& asnMsg, unsigned long nCtx );
     
     // Hierachy changes
-    void OnReceiveMsgPionChangeSuperiorAck              ( const ASN1T_MsgPionChangeSuperiorAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgPionChangeSuperior                 ( const ASN1T_MsgPionChangeSuperior& asnMsg );
-    void OnReceiveMsgChangeDiplomacyAck                 ( const ASN1T_MsgChangeDiplomatieAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgAutomateChangeGroupeConnaissanceAck( const ASN1T_MsgAutomateChangeGroupeConnaissanceAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgAutomateChangeLiensLogistiques     ( const ASN1T_MsgAutomateChangeLiensLogistiques& asnMsg );
-    void OnReceiveMsgAutomateChangeLiensLogistiquesAck  ( const ASN1T_MsgAutomateChangeLiensLogistiquesAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgUnitChangeSuperiorAck              ( const ASN1T_MsgUnitChangeSuperiorAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgUnitChangeSuperior                 ( const ASN1T_MsgUnitChangeSuperior& asnMsg );
+    void OnReceiveMsgChangeDiplomacyAck                 ( const ASN1T_MsgChangeDiplomacyAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgAutomatChangeKnowledgeGroupAck( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgAutomatChangeLogisticLinks     ( const ASN1T_MsgAutomatChangeLogisticLinks& asnMsg );
+    void OnReceiveMsgAutomatChangeLogisticLinksAck  ( const ASN1T_MsgAutomatChangeLogisticLinksAck& asnMsg, unsigned long nCtx );
 
     // RC
-    void OnReceiveMsgCR             ( const ASN1T_MsgCR& asnMsg );
+    void OnReceiveMsgCR             ( const ASN1T_MsgReport& asnMsg );
     void OnReceiveMsgTrace          ( const ASN1T_MsgTrace& asnMsg );
     void OnReceiveMsgDecisionalState( const ASN1T_MsgDecisionalState& asnMsg );
 
     // Tirs
-    void OnReceiveMsgStartPionFire         ( const ASN1T_MsgStartPionFire&       asnMsg );
-    void OnReceiveMsgStopPionFire          ( const ASN1T_MsgStopPionFire&        asnMsg );
+    void OnReceiveMsgStartUnitFire         ( const ASN1T_MsgStartUnitFire&       asnMsg );
+    void OnReceiveMsgStopUnitFire          ( const ASN1T_MsgStopUnitFire&        asnMsg );
     void OnReceiveMsgExplosion             ( const ASN1T_MsgExplosion&           asnMsg );
     void OnReceiveMsgStartFireEffect       ( const ASN1T_MsgStartFireEffect&     asnMsg );
     void OnReceiveMsgStopFireEffect        ( const ASN1T_MsgStopFireEffect&      asnMsg );
@@ -257,9 +257,9 @@ private:
 	void OnMsgPopulationConcentrationCreation	( const ASN1T_MsgPopulationConcentrationCreation& asnMsg ); 
 	void OnMsgPopulationConcentrationDestruction( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg );
 	void OnMsgPopulationConcentrationUpdate		( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg );
-	void OnMsgPopulationFluxCreation			( const ASN1T_MsgPopulationFluxCreation& asnMsg );
-	void OnMsgPopulationFluxDestruction			( const ASN1T_MsgPopulationFluxDestruction& asnMsg ); 
-	void OnMsgPopulationFluxUpdate				( const ASN1T_MsgPopulationFluxUpdate& asnMsg ); 
+	void OnMsgPopulationFlowCreation			( const ASN1T_MsgPopulationFlowCreation& asnMsg );
+	void OnMsgPopulationFlowDestruction			( const ASN1T_MsgPopulationFlowDestruction& asnMsg ); 
+	void OnMsgPopulationFlowUpdate				( const ASN1T_MsgPopulationFlowUpdate& asnMsg ); 
     void OnReceiveMsgPopulationMagicActionAck   ( const ASN1T_MsgPopulationMagicActionAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgPopulationOrderAck         ( const ASN1T_MsgPopulationOrderAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgPopulationOrder            ( const ASN1T_MsgPopulationOrder& asnMsg ); 

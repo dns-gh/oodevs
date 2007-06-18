@@ -151,10 +151,10 @@ void MIL_ZoneNBC::Initialize( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 ASN1T_EnumObjectErrorCode MIL_ZoneNBC::Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject )
 {
-    if( asnCreateObject.localisation.type != EnumTypeLocalisation::circle )
+    if( asnCreateObject.localisation.type != EnumLocationType::circle )
         return EnumObjectErrorCode::error_invalid_localisation;
 
-    if( !asnCreateObject.m.attributs_specifiquesPresent || asnCreateObject.attributs_specifiques.t != T_AttrObjectSpecific_zone_nbc )
+    if( !asnCreateObject.m.attributs_specifiquesPresent || asnCreateObject.attributs_specifiques.t != T_ObjectAttributesSpecific_zone_nbc )
         return EnumObjectErrorCode::error_missing_specific_attributes;
 
     const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( asnCreateObject.attributs_specifiques.u.zone_nbc->agent_nbc );
@@ -220,7 +220,7 @@ void MIL_ZoneNBC::WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg )
     asnAttributes_.agent_nbc  = pNbcAgent_->GetType().GetID();
 
     asnMsg().m.attributs_specifiquesPresent   = 1;
-    asnMsg().attributs_specifiques.t          = T_AttrObjectSpecific_zone_nbc;
+    asnMsg().attributs_specifiques.t          = T_ObjectAttributesSpecific_zone_nbc;
     asnMsg().attributs_specifiques.u.zone_nbc = &asnAttributes_;
 }
 

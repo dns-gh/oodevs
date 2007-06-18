@@ -43,20 +43,21 @@ class Agent : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( Model& model, const ASN1T_MsgPionCreation& msg );
+             Agent( Model& model, const ASN1T_MsgUnitCreation& msg );
     virtual ~Agent();
     //@}
 
     //! @name Main
     //@{
-    void Update        ( const ASN1T_MsgPionCreation&          asnMsg );
-    void Update        ( const ASN1T_MsgUnitAttributes&        asnMsg );
-    void Update        ( const ASN1T_MsgLogSanteEtat&          asnMsg );
-    void Update        ( const ASN1T_MsgLogMaintenanceEtat&    asnMsg );
-    void Update        ( const ASN1T_MsgLogRavitaillementEtat& asnMsg );
-    void Update        ( const ASN1T_MsgPionChangeSuperior&    asnMsg );
-    void Update        ( const ASN1T_MsgPionChangeSuperiorAck& asnMsg );
-    void Update        ( const ASN1T_MsgPionOrder&             asnMsg );
+    void Update        ( const ASN1T_MsgUnitCreation&           asnMsg );
+    void Update        ( const ASN1T_MsgUnitAttributes&         asnMsg );
+    void Update        ( const ASN1T_MsgDecisionalState&         asnMsg );
+    void Update        ( const ASN1T_MsgLogMedicalState&        asnMsg );
+    void Update        ( const ASN1T_MsgLogMaintenanceState&    asnMsg );
+    void Update        ( const ASN1T_MsgLogSupplyState& asnMsg );
+    void Update        ( const ASN1T_MsgUnitChangeSuperior&    asnMsg );
+    void Update        ( const ASN1T_MsgUnitChangeSuperiorAck& asnMsg );
+    void Update        ( const ASN1T_MsgUnitOrder&             asnMsg );
     virtual void SendCreation   ( Publisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( Publisher_ABC& publisher ) const;
     virtual void SendSpecialUpdate( Publisher_ABC& publisher ) const;
@@ -113,18 +114,20 @@ private:
     bool                          bRadarEnabled_;
     ModelRefsContainer< Agent >   transportedAgents_;
     Agent*                        pTransporter_;
-    ASN1T_EnumEtatRapFor          nForceRatioState_;
-    ASN1T_EnumEtatCombatRencontre nCloseCombatState_;
-    ASN1T_EnumEtatOperationnel    nOperationalState_;
-    ASN1T_EnumDisponibiliteAuTir  nIndirectFireAvailability_;
+    ASN1T_EnumForceRatioStatus          nForceRatioState_;
+    ASN1T_EnumMeetingEngagementStatus nCloseCombatState_;
+    ASN1T_EnumOperationalStatus    nOperationalState_;
+    ASN1T_EnumFireAvailability    nIndirectFireAvailability_;
     ASN1T_EnumRoe                 nRoe_;
-    ASN1T_EnumRoePopulation       nRoePopulation_;
-    ASN1T_EnumUnitFatigue         nTiredness_;
-    ASN1T_EnumUnitMoral           nMorale_;
+    ASN1T_EnumPopulationRoe       nRoePopulation_;
+    ASN1T_EnumUnitTiredness       nTiredness_;
+    ASN1T_EnumUnitMorale          nMorale_;
     ASN1T_EnumUnitExperience      nExperience_;
     const Side*                   pSideSurrenderedTo_;
     bool                          bPrisonner_;
     bool                          bRefugeeManaged_;
+
+    std::map< std::string, std::string > decisionalInfos_;
 
     ModelsContainer< Equipment >  equipments_;
     ModelsContainer< Humans    >  troops_;

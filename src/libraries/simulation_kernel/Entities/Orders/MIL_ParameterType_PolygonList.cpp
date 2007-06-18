@@ -39,14 +39,14 @@ MIL_ParameterType_PolygonList::~MIL_ParameterType_PolygonList()
 void MIL_ParameterType_PolygonList::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.value.t != T_MissionParameter_value_listPolygon ) 
+    if( from.value.t != T_MissionParameter_value_polygonList ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( !DEC_Tools::CheckTypeListeLocalisations( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyPolygonList( *from.value.u.listPolygon, to ) )
+    if( !NET_ASN_Tools::CopyPolygonList( *from.value.u.polygonList, to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -79,10 +79,10 @@ bool MIL_ParameterType_PolygonList::Copy( const DIA_Variable_ABC& from, ASN1T_Mi
         return false;
 
     to.null_value          = false;
-    to.value.t             = T_MissionParameter_value_listPolygon;
-    to.value.u.listPolygon = new ASN1T_ListPolygon();
+    to.value.t             = T_MissionParameter_value_polygonList;
+    to.value.u.polygonList = new ASN1T_PolygonList();
     
-    if( !NET_ASN_Tools::CopyPolygonList( from, *to.value.u.listPolygon ) )
+    if( !NET_ASN_Tools::CopyPolygonList( from, *to.value.u.polygonList ) )
         return false;
 
     return true;
@@ -94,8 +94,8 @@ bool MIL_ParameterType_PolygonList::Copy( const DIA_Variable_ABC& from, ASN1T_Mi
 // -----------------------------------------------------------------------------
 void MIL_ParameterType_PolygonList::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_listPolygon );
-    assert( to.value.u.listPolygon );
-    NET_ASN_Tools::Delete( *to.value.u.listPolygon );
-    delete to.value.u.listPolygon;    
+    assert( to.value.t == T_MissionParameter_value_polygonList );
+    assert( to.value.u.polygonList );
+    NET_ASN_Tools::Delete( *to.value.u.polygonList );
+    delete to.value.u.polygonList;    
 }

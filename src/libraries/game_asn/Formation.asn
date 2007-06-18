@@ -15,7 +15,7 @@ FormationExports  ::= NULL
 MsgFormationCreation ::= SEQUENCE
 {
     oid                     Formation,
-    oid-camp                Camp,
+    oid-camp                Team,
     oid-formation-parente   Formation OPTIONAL,
     niveau                  EnumNatureLevel,
     nom                     VisibleString          

@@ -18,10 +18,10 @@
 #include "PHY_DotationCategory_IndirectMineFire.h"
 
 
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , eObus      , EnumFamilleMunition::obus        );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", eMissileAir, EnumFamilleMunition::missile_air );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", eMissileSol, EnumFamilleMunition::missile_sol );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::mitraille_ ( "Mitraille" , eMitraille , EnumFamilleMunition::mitraille   );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , eObus      , EnumAmmunitionFamily::obus        );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", eMissileAir, EnumAmmunitionFamily::missile_air );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", eMissileSol, EnumAmmunitionFamily::missile_sol );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::mitraille_ ( "Mitraille" , eMitraille , EnumAmmunitionFamily::mitraille   );
 
 PHY_AmmoDotationClass::T_TypeMap PHY_AmmoDotationClass::types_;
 
@@ -52,7 +52,7 @@ void PHY_AmmoDotationClass::Terminate()
 // Name: PHY_AmmoDotationClass constructor
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
-PHY_AmmoDotationClass::PHY_AmmoDotationClass( const std::string& strName, E_Type nType, ASN1T_EnumFamilleMunition nAsnID )
+PHY_AmmoDotationClass::PHY_AmmoDotationClass( const std::string& strName, E_Type nType, ASN1T_EnumAmmunitionFamily nAsnID )
     : strName_( strName )
     , nType_  ( nType   )
     , nAsnID_ ( nAsnID  )

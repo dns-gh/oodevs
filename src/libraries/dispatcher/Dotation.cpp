@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: Dotation constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Dotation::Dotation( const Model& /*model*/, const ASN1T_DotationRessource& asnMsg )
+Dotation::Dotation( const Model& /*model*/, const ASN1T_ResourceDotations& asnMsg )
    : nDotationType_( asnMsg.ressource_id )
    , nNbr_         ( asnMsg.quantite_disponible )
 {
@@ -46,7 +46,7 @@ Dotation::~Dotation()
 // Name: Dotation::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void Dotation::Update( const ASN1T_DotationRessource& asnMsg )
+void Dotation::Update( const ASN1T_ResourceDotations& asnMsg )
 {
     nNbr_ = asnMsg.quantite_disponible;
 }
@@ -64,7 +64,7 @@ void Dotation::Update( const ASN1T_DotationStock& asnMsg )
 // Name: Dotation::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Dotation::Send( ASN1T_DotationRessource& asnMsg ) const
+void Dotation::Send( ASN1T_ResourceDotations& asnMsg ) const
 {
     asnMsg.ressource_id        = nDotationType_;
     asnMsg.quantite_disponible = nNbr_;

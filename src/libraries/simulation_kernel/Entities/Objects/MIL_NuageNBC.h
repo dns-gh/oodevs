@@ -91,7 +91,7 @@ private:
     MIL_NbcAgent* pNbcAgent_;
 
     // Specific attributes
-    ASN1T_AttrObjectNuageNBC asnAttributes_;
+    ASN1T_ObjectAttributesNbcCloud asnAttributes_;
     
     uint nDeathTimeStep_;
 

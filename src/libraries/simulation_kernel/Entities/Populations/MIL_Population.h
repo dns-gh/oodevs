@@ -157,8 +157,8 @@ private:
     void OnReceiveMsgMagicMove     ( const ASN1T_MagicActionPopulationMoveTo& asn );
     void OnReceiveMsgDestroyAll    ();
     void OnReceiveMsgChangeAttitude( const ASN1T_MagicActionPopulationChangeAttitude& asn );
-    void OnReceiveMsgKill          ( const ASN1T_MagicActionPopulationTuer& asn );
-    void OnReceiveMsgResurrect     ( const ASN1T_MagicActionPopulationRessusciter& asn );
+    void OnReceiveMsgKill          ( const ASN1T_MagicActionPopulationKill& asn );
+    void OnReceiveMsgResurrect     ( const ASN1T_MagicActionPopulationResurrect& asn );
     //@}
 
     //! @name Network

@@ -12,7 +12,7 @@
 
 #include "clients_gui/RotaPrototype_ABC.h"
 
-struct ASN1T_AttrObjectROTA;
+struct ASN1T_ObjectAttributesRota;
 struct ASN1T_MagicActionCreateObject;
 
 // =============================================================================
@@ -48,7 +48,7 @@ private:
     //! @name Member data
     //@{
     ASN1T_MagicActionCreateObject& msg_;
-    ASN1T_AttrObjectROTA* attr_;
+    ASN1T_ObjectAttributesRota* attr_;
     //@}
 };
 

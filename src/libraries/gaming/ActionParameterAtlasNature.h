@@ -28,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ActionParameterAtlasNature( const kernel::OrderParameter& parameter, const AtlasNature& nature );
-             ActionParameterAtlasNature( const kernel::OrderParameter& parameter, const ASN1T_NatureAtlas& asn, const AtlasNatures& natures );
+             ActionParameterAtlasNature( const kernel::OrderParameter& parameter, const ASN1T_AtlasNature& asn, const AtlasNatures& natures );
              ActionParameterAtlasNature( const kernel::OrderParameter& parameter, xml::xistream& xis, const AtlasNatures& natures );
     virtual ~ActionParameterAtlasNature();
     //@}

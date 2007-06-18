@@ -32,7 +32,7 @@ LocationSerializer::LocationSerializer( const CoordinateConverter_ABC& converter
 // Name: LocationSerializer constructor
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
-LocationSerializer::LocationSerializer( const CoordinateConverter_ABC& converter, ASN1T_Localisation& localisation )
+LocationSerializer::LocationSerializer( const CoordinateConverter_ABC& converter, ASN1T_Location& localisation )
     : converter_   ( converter )
     , localisation_( &localisation )
     , pCoords_     ( 0 )
@@ -64,7 +64,7 @@ void LocationSerializer::Serialize( const Location_ABC& location )
 // Name: LocationSerializer::Serialize
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
-void LocationSerializer::Serialize( const Location_ABC& location, ASN1T_Localisation& localisation )
+void LocationSerializer::Serialize( const Location_ABC& location, ASN1T_Location& localisation )
 {
     localisation_ = &localisation;
     Serialize( location );
@@ -102,7 +102,7 @@ void LocationSerializer::SetPoints( const T_PointVector& points )
 void LocationSerializer::VisitLines( const T_PointVector& points )
 {
     SetPoints( points );
-    localisation_->type = EnumTypeLocalisation::line;
+    localisation_->type = EnumLocationType::line;
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +112,7 @@ void LocationSerializer::VisitLines( const T_PointVector& points )
 void LocationSerializer::VisitPolygon( const T_PointVector& points )
 {
     SetPoints( points );
-    localisation_->type = EnumTypeLocalisation::polygon;
+    localisation_->type = EnumLocationType::polygon;
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +125,7 @@ void LocationSerializer::VisitCircle( const geometry::Point2f& center, float rad
     points.push_back( center );
     points.push_back( geometry::Point2f( center.X(), center.Y() + radius ) ); // $$$$ AGE 2006-08-09: may go out of extent !
     SetPoints( points );
-    localisation_->type = EnumTypeLocalisation::circle ;
+    localisation_->type = EnumLocationType::circle ;
 }
 
 // -----------------------------------------------------------------------------
@@ -136,5 +136,5 @@ void LocationSerializer::VisitPoint( const geometry::Point2f& point )
 {
     T_PointVector points( 1, point );
     SetPoints( points );
-    localisation_->type = EnumTypeLocalisation::point;
+    localisation_->type = EnumLocationType::point;
 }

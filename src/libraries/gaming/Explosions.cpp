@@ -68,7 +68,7 @@ void Explosions::DoUpdate( const ASN1T_MsgExplosion& message )
 // Name: Explosions::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::DoUpdate( const ASN1T_MsgStopPionFire& message )
+void Explosions::DoUpdate( const ASN1T_MsgStopUnitFire& message )
 {
     UpdateData( message );
 }
@@ -88,7 +88,7 @@ void Explosions::DoUpdate( const ASN1T_MsgStopPopulationFire& message )
 // Name: Explosions::Update
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::Update( const ASN1T_FireDamagesPion& message )
+void Explosions::Update( const ASN1T_UnitFireDamages& message )
 {
     agentExplosions_.push_back( factory_.CreateFireResult( message ) );
     if( agentExplosions_.size() > 20 )
@@ -102,7 +102,7 @@ void Explosions::Update( const ASN1T_FireDamagesPion& message )
 // Name: Explosions::Update
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::Update( const ASN1T_FireDamagesPopulation& message )
+void Explosions::Update( const ASN1T_PopulationFireDamages& message )
 {
     populationExplosions_.push_back( factory_.CreateFireResult( message ) );
     if( populationExplosions_.size() > 20 )

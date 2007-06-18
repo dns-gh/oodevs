@@ -20,8 +20,8 @@ using namespace dispatcher;
 MissionParameter_MaintenancePriorities::MissionParameter_MaintenancePriorities( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    for( unsigned i = 0; i != asn.value.u.maintenancePriorites->n; ++i )
-        maintenancePriorities_.push_back( asn.value.u.maintenancePriorites->elem[i] );
+    for( unsigned i = 0; i != asn.value.u.logMaintenancePriorities->n; ++i )
+        maintenancePriorities_.push_back( asn.value.u.logMaintenancePriorities->elem[i] );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,9 +44,9 @@ MissionParameter_MaintenancePriorities::~MissionParameter_MaintenancePriorities(
 void MissionParameter_MaintenancePriorities::Send( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value                   = bNullValue_;
-    asn.value.t                      = T_MissionParameter_value_maintenancePriorites;
-    asn.value.u.maintenancePriorites = new ASN1T_MaintenancePriorites();
-    SendContainerValues< ASN1T_MaintenancePriorites, ASN1T_TypeEquipement, T_OIDVector >( maintenancePriorities_, *asn.value.u.maintenancePriorites ); 
+    asn.value.t                      = T_MissionParameter_value_logMaintenancePriorities;
+    asn.value.u.logMaintenancePriorities = new ASN1T_LogMaintenancePriorities();
+    SendContainerValues< ASN1T_LogMaintenancePriorities, ASN1T_EquipmentType, T_OIDVector >( maintenancePriorities_, *asn.value.u.logMaintenancePriorities ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ void MissionParameter_MaintenancePriorities::Send( ASN1T_MissionParameter& asn )
 // -----------------------------------------------------------------------------
 void MissionParameter_MaintenancePriorities::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listAgent->n > 0 )
-        delete [] asn.value.u.maintenancePriorites->elem;
-    delete asn.value.u.maintenancePriorites;
+    if( asn.value.u.logMaintenancePriorities->n > 0 )
+        delete [] asn.value.u.logMaintenancePriorities->elem;
+    delete asn.value.u.logMaintenancePriorities;
 }

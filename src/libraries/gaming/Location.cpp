@@ -22,7 +22,7 @@ using namespace xml;
 // Name: Location constructor
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-Location::Location( const kernel::CoordinateConverter_ABC& converter, const ASN1T_Localisation& asn )
+Location::Location( const kernel::CoordinateConverter_ABC& converter, const ASN1T_Location& asn )
     : converter_( converter )
     , type_( asn.type )
 {
@@ -56,7 +56,7 @@ Location::Location( const kernel::CoordinateConverter_ABC& converter, xml::xistr
             >> attribute( "type", type )
             >> list( "point", *this, &Location::ReadPoint )
         >> end();
-    type_ = ASN1T_EnumTypeLocalisation( tools::LocationFromString( type.c_str() ) );
+    type_ = ASN1T_EnumLocationType( tools::LocationFromString( type.c_str() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +85,7 @@ void Location::ReadPoint( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void Location::VisitLines( const T_PointVector& points )
 {
-    type_ = EnumTypeLocalisation::line;
+    type_ = EnumLocationType::line;
     for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
         PushBack( *it );
 }
@@ -96,7 +96,7 @@ void Location::VisitLines( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void Location::VisitPolygon( const T_PointVector& points )
 {
-    type_ = EnumTypeLocalisation::polygon;
+    type_ = EnumLocationType::polygon;
     for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
         PushBack( *it );
 }
@@ -107,7 +107,7 @@ void Location::VisitPolygon( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void Location::VisitCircle( const geometry::Point2f& center, float radius )
 {
-    type_ = EnumTypeLocalisation::circle;
+    type_ = EnumLocationType::circle;
     PushBack( center );
     PushBack( geometry::Point2f( center.X(), center.Y() + radius ) );
 }
@@ -118,7 +118,7 @@ void Location::VisitCircle( const geometry::Point2f& center, float radius )
 // -----------------------------------------------------------------------------
 void Location::VisitPoint( const geometry::Point2f& point )
 {
-    type_ = EnumTypeLocalisation::point;
+    type_ = EnumLocationType::point;
     PushBack( point );
 }
 
@@ -211,7 +211,7 @@ void Location::Draw( const kernel::GlTools_ABC& tools ) const
 // Name: Location::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void Location::CommitTo( ASN1T_Localisation& asn ) const
+void Location::CommitTo( ASN1T_Location& asn ) const
 {
     asn.type = type_;
     asn.vecteur_point.n = points_.size();
@@ -226,7 +226,7 @@ void Location::CommitTo( ASN1T_Localisation& asn ) const
 // Name: Location::Clean
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void Location::Clean( ASN1T_Localisation& asn ) const
+void Location::Clean( ASN1T_Location& asn ) const
 {
     if( asn.vecteur_point.n )
         delete[] asn.vecteur_point.elem;

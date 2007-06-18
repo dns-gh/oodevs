@@ -38,7 +38,7 @@ ParamPolygon::~ParamPolygon()
 void ParamPolygon::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     asn.value.t = T_MissionParameter_value_polygon;
-    asn.value.u.polygon = new ASN1T_Localisation();
+    asn.value.u.polygon = new ASN1T_Location();
     ParamLocation::CommitTo( *asn.value.u.polygon );
     asn.null_value = asn.value.u.polygon->vecteur_point.n ? 0 : 1;
 }

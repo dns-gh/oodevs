@@ -27,14 +27,14 @@ class Equipment
 public:
     //! @name Constructors/Destructor
     //@{
-     Equipment( const Model& model, const ASN1T_DotationEquipement& asnMsg );
+     Equipment( const Model& model, const ASN1T_EquipmentDotations& asnMsg );
     ~Equipment();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_DotationEquipement& asnMsg );
-    void Send  ( ASN1T_DotationEquipement& asnMsg ) const;
+    void Update( const ASN1T_EquipmentDotations& asnMsg );
+    void Send  ( ASN1T_EquipmentDotations& asnMsg ) const;
     //@}
 
 private:

@@ -116,10 +116,10 @@ void ParamPath::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     if( ! pLabel_ )
         InterfaceNotInitialized();
-    asn.value.t = T_MissionParameter_value_itineraire;
-    asn.value.u.itineraire = new ASN1T_Itineraire();
-    CommitTo( *asn.value.u.itineraire );
-    asn.null_value = asn.value.u.itineraire->vecteur_point.n ? 0 : 1;
+    asn.value.t = T_MissionParameter_value_path;
+    asn.value.u.path = new ASN1T_Path();
+    CommitTo( *asn.value.u.path );
+    asn.null_value = asn.value.u.path->vecteur_point.n ? 0 : 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -128,16 +128,16 @@ void ParamPath::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamPath::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.itineraire )
-        delete[] asn.value.u.itineraire->vecteur_point.elem;
-    delete asn.value.u.itineraire;
+    if( asn.value.u.path )
+        delete[] asn.value.u.path->vecteur_point.elem;
+    delete asn.value.u.path;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ParamPath::CommitTo
 // Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-void ParamPath::CommitTo( ASN1T_Itineraire& destination ) const
+void ParamPath::CommitTo( ASN1T_Path& destination ) const
 {
     if( location_ )
     {

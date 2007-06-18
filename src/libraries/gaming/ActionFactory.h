@@ -45,8 +45,8 @@ public:
     virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const;
     virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder ) const;
 
-    virtual Action_ABC* CreateAction( const ASN1T_MsgPionOrder& message ) const;
-    virtual Action_ABC* CreateAction( const ASN1T_MsgAutomateOrder& message ) const;
+    virtual Action_ABC* CreateAction( const ASN1T_MsgUnitOrder& message ) const;
+    virtual Action_ABC* CreateAction( const ASN1T_MsgAutomatOrder& message ) const;
 
     virtual Action_ABC* CreateAction( xml::xistream& xis ) const;
     //@}

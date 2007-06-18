@@ -13,7 +13,7 @@
 #include "clients_gui/CrossingSitePrototype_ABC.h"
 
 struct ASN1T_MagicActionCreateObject;
-struct ASN1T_AttrObjectSiteFranchissement;
+struct ASN1T_ObjectAttributesCrossingSite;
 
 // =============================================================================
 /** @class  CrossingSitePrototype
@@ -48,7 +48,7 @@ private:
     //! @name Member data
     //@{
     ASN1T_MagicActionCreateObject& msg_;
-    ASN1T_AttrObjectSiteFranchissement* attr_;
+    ASN1T_ObjectAttributesCrossingSite* attr_;
     //@}
 };
 

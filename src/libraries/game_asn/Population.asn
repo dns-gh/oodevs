@@ -27,7 +27,7 @@ EnumPopulationAttitude ::= ENUMERATED
 MsgPopulationCreation ::= SEQUENCE
 {
     oid-population  OID,
-    type-population TypePopulation,
+    type-population PopulationType,
     nom             VisibleString,
     oid-camp        OID    
 }
@@ -35,7 +35,7 @@ MsgPopulationCreation ::= SEQUENCE
 MsgPopulationUpdate ::= SEQUENCE
 {
     oid-population  OID,
-    etat-domination Pourcentage OPTIONAL
+    etat-domination Percentage OPTIONAL
 }
 
 -------------------
@@ -69,26 +69,26 @@ MsgPopulationConcentrationDestruction ::= SEQUENCE
 -- Flux
 -------------------
 
-MsgPopulationFluxCreation ::= SEQUENCE
+MsgPopulationFlowCreation ::= SEQUENCE
 {
     oid-flux        OID,
     oid-population  OID
 }
 
-MsgPopulationFluxUpdate ::= SEQUENCE
+MsgPopulationFlowUpdate ::= SEQUENCE
 {
     oid-flux            OID,
     oid-population      OID,
-    itineraire          Itineraire             OPTIONAL, -- Itineraire de la tête
-    flux                Itineraire             OPTIONAL,
-    direction           Direction              OPTIONAL, -- en degres
-    vitesse             Vitesse                OPTIONAL, -- en km/h
+    itineraire          Path             OPTIONAL, -- Path de la tête
+    flux                Path             OPTIONAL,
+    direction           Heading              OPTIONAL, -- en degres
+    vitesse             Speed                OPTIONAL, -- en km/h
     nb-humains-vivants  INTEGER                OPTIONAL,
     nb-humains-morts    INTEGER                OPTIONAL,
     attitude            EnumPopulationAttitude OPTIONAL
 }
 
-MsgPopulationFluxDestruction ::= SEQUENCE
+MsgPopulationFlowDestruction ::= SEQUENCE
 {
     oid-flux        OID,
     oid-population  OID
@@ -110,9 +110,9 @@ MagicActionPopulationChangeAttitude ::= SEQUENCE
 }
 
 MagicActionPopulationMoveTo				::= CoordUTM    -- Position
-MagicActionPopulationDestructionTotale	::= NULL
-MagicActionPopulationTuer               ::= INTEGER     -- nombre de personne tuées
-MagicActionPopulationRessusciter        ::= INTEGER     -- nombre de personne ressuscitées
+MagicActionPopulationTotalDestruction	::= NULL
+MagicActionPopulationKill               ::= INTEGER     -- nombre de personne tuées
+MagicActionPopulationResurrect          ::= INTEGER     -- nombre de personne ressuscitées
 
 MsgPopulationMagicAction ::= SEQUENCE
 {
@@ -121,13 +121,13 @@ MsgPopulationMagicAction ::= SEQUENCE
     {       
         change-attitude    MagicActionPopulationChangeAttitude,
         move-to            MagicActionPopulationMoveTo,
-        destruction-totale MagicActionPopulationDestructionTotale,
-        tuer               MagicActionPopulationTuer,
-        ressusciter        MagicActionPopulationRessusciter
+        destruction-totale MagicActionPopulationTotalDestruction,
+        tuer               MagicActionPopulationKill,
+        ressusciter        MagicActionPopulationResurrect
     }       
 }
 
-EnumPopulationAttrErrorCode ::= ENUMERATED
+EnumPopulationErrorCode ::= ENUMERATED
 {
     no-error                (0),
     error-invalid-unit      (1),
@@ -137,7 +137,7 @@ EnumPopulationAttrErrorCode ::= ENUMERATED
 MsgPopulationMagicActionAck ::= SEQUENCE
 {
     oid         OID,
-    error-code  EnumPopulationAttrErrorCode
+    error-code  EnumPopulationErrorCode
 }
 
 END -- Population

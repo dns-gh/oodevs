@@ -41,7 +41,7 @@ namespace
     class AsnSerializer : public ParamVisitor_ABC
     {
     public:
-        AsnSerializer( ASN1T_ListPolygon& list )
+        AsnSerializer( ASN1T_PolygonList& list )
             : list_( list )
             , index_( 0 )
         {}
@@ -53,7 +53,7 @@ namespace
         }
 
     private:
-        ASN1T_ListPolygon& list_;
+        ASN1T_PolygonList& list_;
         unsigned int index_;
     };
 }
@@ -64,8 +64,8 @@ namespace
 // -----------------------------------------------------------------------------
 void ParamPolygonList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    ASN1T_ListPolygon*& list = asn.value.u.listPolygon = new ASN1T_ListPolygon();
-    asn.value.t = T_MissionParameter_value_listPolygon;
+    ASN1T_PolygonList*& list = asn.value.u.polygonList = new ASN1T_PolygonList();
+    asn.value.t = T_MissionParameter_value_polygonList;
     list->n = Count();
     asn.null_value = list->n ? 0 : 1;
     if( asn.null_value )
@@ -81,13 +81,13 @@ void ParamPolygonList::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamPolygonList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listPolygon )
+    if( asn.value.u.polygonList )
     {
-        for( unsigned int i = 0; i < asn.value.u.listPolygon->n; ++i )
-            delete[] asn.value.u.listPolygon->elem[i].vecteur_point.elem;
-        delete[] asn.value.u.listPolygon->elem;
+        for( unsigned int i = 0; i < asn.value.u.polygonList->n; ++i )
+            delete[] asn.value.u.polygonList->elem[i].vecteur_point.elem;
+        delete[] asn.value.u.polygonList->elem;
     }
-    delete asn.value.u.listPolygon;
+    delete asn.value.u.polygonList;
 }
 
 namespace

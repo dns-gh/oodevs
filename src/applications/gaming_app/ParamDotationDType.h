@@ -27,7 +27,7 @@ namespace kernel
 */
 // Created: SBO 2006-08-09
 // =============================================================================
-class ParamDotationDType : public ParamComboBox< ASN1T_TypeDotationTrancheD >
+class ParamDotationDType : public ParamComboBox< ASN1T_DotationType >
 {
 
 public:

@@ -76,7 +76,7 @@ private:
 
 private:
     // Specific attributes
-    ASN1T_AttrObjectZoneMineeParDispersion asnAttributes_;
+    ASN1T_ObjectAttributesDispersedMineArea asnAttributes_;
 
     MT_Float rMinesDensity_;
     uint     nMinesActivityTime_;

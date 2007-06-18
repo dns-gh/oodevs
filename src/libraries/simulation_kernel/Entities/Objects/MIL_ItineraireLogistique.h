@@ -84,7 +84,7 @@ private:
 
 private:
     // Specific attributes
-    ASN1T_AttrObjectItineraireLogistique asnAttributes_;
+    ASN1T_ObjectAttributesLogisticRoute asnAttributes_;
     bool                                 bEquipped_;
     MT_Float                             rWeightSupported_;
     MT_Float                             rWidth_;

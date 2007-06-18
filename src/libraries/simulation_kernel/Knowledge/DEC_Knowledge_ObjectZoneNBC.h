@@ -56,7 +56,7 @@ private:
 
 private:
     // Specific attributes
-    ASN1T_AttrObjectZoneNBC asnAttributes_;
+    ASN1T_ObjectAttributesNbcZone asnAttributes_;
 
     const MIL_NbcAgentType* pNbcAgentType_;
     bool                    bSpecificAttributesValid_;

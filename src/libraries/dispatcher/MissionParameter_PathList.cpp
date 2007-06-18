@@ -20,9 +20,9 @@ using namespace dispatcher;
 MissionParameter_PathList::MissionParameter_PathList( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    paths_.reserve( asn.value.u.listItineraire->n );
-    for( unsigned i = 0; i != asn.value.u.listItineraire->n; ++i )
-        paths_.push_back( Localisation( asn.value.u.listItineraire->elem[i] ) );
+    paths_.reserve( asn.value.u.pathList->n );
+    for( unsigned i = 0; i != asn.value.u.pathList->n; ++i )
+        paths_.push_back( Localisation( asn.value.u.pathList->elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,16 +45,16 @@ MissionParameter_PathList::~MissionParameter_PathList()
 void MissionParameter_PathList::Send( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value             = bNullValue_;
-    asn.value.t                = T_MissionParameter_value_listItineraire;
-    asn.value.u.listItineraire = new ASN1T_ListItineraire();
+    asn.value.t                = T_MissionParameter_value_pathList;
+    asn.value.u.pathList = new ASN1T_PathList();
 
-    asn.value.u.listItineraire->n = paths_.size();
+    asn.value.u.pathList->n = paths_.size();
     if( !paths_.empty() )
     {
-        asn.value.u.listItineraire->elem = new ASN1T_Itineraire[ paths_.size() ];
+        asn.value.u.pathList->elem = new ASN1T_Path[ paths_.size() ];
         uint i = 0;
         for( T_LocalisationVector::const_iterator it = paths_.begin(); it != paths_.end(); ++it, ++i )
-            (*it).Send( asn.value.u.listItineraire->elem[ i ] );
+            (*it).Send( asn.value.u.pathList->elem[ i ] );
     }
 }
 
@@ -64,11 +64,11 @@ void MissionParameter_PathList::Send( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void MissionParameter_PathList::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listItineraire->n > 0 )
+    if( asn.value.u.pathList->n > 0 )
     {
-        for( unsigned i = 0; i != asn.value.u.listItineraire->n; ++i )
-            Localisation::AsnDelete( asn.value.u.listItineraire->elem[i] );
-        delete [] asn.value.u.listItineraire->elem;
+        for( unsigned i = 0; i != asn.value.u.pathList->n; ++i )
+            Localisation::AsnDelete( asn.value.u.pathList->elem[i] );
+        delete [] asn.value.u.pathList->elem;
     }
-    delete asn.value.u.listItineraire;
+    delete asn.value.u.pathList;
 }

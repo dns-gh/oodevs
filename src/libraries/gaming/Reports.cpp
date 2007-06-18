@@ -44,7 +44,7 @@ Reports::~Reports()
 // Name: Reports::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Reports::DoUpdate( const ASN1T_MsgCR& message )
+void Reports::DoUpdate( const ASN1T_MsgReport& message )
 {
     // $$$$ AGE 2007-04-20: limiter le nombre de reports ?
     Report* report = reportFactory_.CreateReport( agent_, simulation_, message );

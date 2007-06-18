@@ -170,9 +170,9 @@ void ParamObstacle::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     if( ! typeCombo_ )
         InterfaceNotInitialized();
-    ASN1T_MissionGenObject*& object = asn.value.u.missionGenObject = new ASN1T_MissionGenObject();
+    ASN1T_PlannedWork*& object = asn.value.u.plannedWork = new ASN1T_PlannedWork();
     asn.null_value = 0;
-    asn.value.t = T_MissionParameter_value_missionGenObject;
+    asn.value.t = T_MissionParameter_value_plannedWork;
     CommitTo( *object );
 }
 
@@ -180,13 +180,13 @@ void ParamObstacle::CommitTo( ASN1T_MissionParameter& asn ) const
 // Name: ParamObstacle::CommitTo
 // Created: SBO 2007-03-15
 // -----------------------------------------------------------------------------
-void ParamObstacle::CommitTo( ASN1T_MissionGenObject& object ) const
+void ParamObstacle::CommitTo( ASN1T_PlannedWork& object ) const
 {
     const kernel::ObjectType* type = typeCombo_->GetValue();
     if( !type ) // $$$$ SBO 2007-04-26: 
         return;
     object.type          = (ASN1T_EnumObjectType)type->id_;
-    object.type_obstacle = (ASN1T_EnumTypeObstacle)obstacleTypeCombo_->currentItem();
+    object.type_obstacle = (ASN1T_EnumObstacleType)obstacleTypeCombo_->currentItem();
     switch( type->id_ )
     {
     case EnumObjectType::zone_minee_lineaire:
@@ -207,7 +207,7 @@ void ParamObstacle::CommitTo( ASN1T_MissionGenObject& object ) const
 // -----------------------------------------------------------------------------
 void ParamObstacle::Clean( ASN1T_MissionParameter& asn ) const
 {
-    delete asn.value.u.missionGenObject;
+    delete asn.value.u.plannedWork;
 }
 
 // -----------------------------------------------------------------------------

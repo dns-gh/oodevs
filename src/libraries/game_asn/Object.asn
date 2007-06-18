@@ -12,7 +12,7 @@ ObjectIncludes ::= SEQUENCE { BaseExports }
 ObjectExports  ::= NULL
 -- END includes
 
-EnumTypeObstacle ::= ENUMERATED
+EnumObstacleType ::= ENUMERATED
 {
     preliminaire(0),
     de-manoeuvre(1)
@@ -76,7 +76,7 @@ EnumObjectErrorCode ::= ENUMERATED
 ---------------------------
 -- Attributs specifiques a certains objets
 ---------------------------     
-AttrObjectSiteFranchissement ::= SEQUENCE
+ObjectAttributesCrossingSite ::= SEQUENCE
 {
     largeur             INTEGER,    -- en mètres
     profondeur          INTEGER,    -- en mètres
@@ -84,23 +84,23 @@ AttrObjectSiteFranchissement ::= SEQUENCE
     berges-a-amenager   BOOLEAN
 }
 
-AttrObjectNuageNBC ::= SEQUENCE
+ObjectAttributesNbcCloud ::= SEQUENCE
 {
     agent-nbc OID -- Cf. Data/NBC.xml
 }
 
-AttrObjectZoneNBC ::= SEQUENCE
+ObjectAttributesNbcZone ::= SEQUENCE
 {
     agent-nbc OID -- Cf. Data/NBC.xml
 }
 
-AttrObjectROTA ::= SEQUENCE
+ObjectAttributesRota ::= SEQUENCE
 {
     niveau-danger       INTEGER(0..10),
     agents-nbc          ListOID -- Cf. Data/NBC.xml
 }
 
-AttrObjectItineraireLogistique ::= SEQUENCE
+ObjectAttributesLogisticRoute ::= SEQUENCE
 {
     itineraire-equipe   BOOLEAN,
     poids-max-supporte  INTEGER,
@@ -109,45 +109,45 @@ AttrObjectItineraireLogistique ::= SEQUENCE
     debit               INTEGER
 }
 
-AttrObjectCampPrisonniers ::= SEQUENCE
+ObjectAttributesPrisonerCamp ::= SEQUENCE
 {
-    tc2  Automate
+    tc2  Automat
 }
 
-AttrObjectCampRefugies ::= SEQUENCE
+ObjectAttributesRefugeeCamp ::= SEQUENCE
 {
-    tc2  Automate
+    tc2  Automat
 }
 
-AttrObjectZoneMineeLineaire ::= SEQUENCE
-{
-    densite              REAL(0..5) DEFAULT 0,
-    delai-activite-mines INTEGER    DEFAULT 0       
-}
-
-AttrObjectZoneMineeParDispersion ::= SEQUENCE
+ObjectAttributesLinearMineArea ::= SEQUENCE
 {
     densite              REAL(0..5) DEFAULT 0,
     delai-activite-mines INTEGER    DEFAULT 0       
 }
 
-AttrObjectBouchonMines ::= SEQUENCE
+ObjectAttributesDispersedMineArea ::= SEQUENCE
+{
+    densite              REAL(0..5) DEFAULT 0,
+    delai-activite-mines INTEGER    DEFAULT 0       
+}
+
+ObjectAttributesMineJam ::= SEQUENCE
 {
     delai-activite-mines INTEGER DEFAULT 0
 }
 
-AttrObjectSpecific ::= CHOICE
+ObjectAttributesSpecific ::= CHOICE
 {
-    site-franchissement       AttrObjectSiteFranchissement,
-    nuage-nbc                 AttrObjectNuageNBC,
-    rota                      AttrObjectROTA,
-    zone-nbc                  AttrObjectZoneNBC,
-    itineraire-logistique     AttrObjectItineraireLogistique,
-    camp-prisonniers          AttrObjectCampPrisonniers,
-    camp-refugies             AttrObjectCampRefugies,
-    zone-minee-lineaire       AttrObjectZoneMineeLineaire,
-    zone-minee-par-dispersion AttrObjectZoneMineeParDispersion,
-    bouchon-mines             AttrObjectBouchonMines
+    site-franchissement       ObjectAttributesCrossingSite,
+    nuage-nbc                 ObjectAttributesNbcCloud,
+    rota                      ObjectAttributesRota,
+    zone-nbc                  ObjectAttributesNbcZone,
+    itineraire-logistique     ObjectAttributesLogisticRoute,
+    camp-prisonniers          ObjectAttributesPrisonerCamp,
+    camp-refugies             ObjectAttributesRefugeeCamp,
+    zone-minee-lineaire       ObjectAttributesLinearMineArea,
+    zone-minee-par-dispersion ObjectAttributesDispersedMineArea,
+    bouchon-mines             ObjectAttributesMineJam
 }
  
 ---------------------------
@@ -158,14 +158,14 @@ MsgObjectCreation ::= SEQUENCE
 {
     oid                          OID,
     type                         EnumObjectType,
-    type-obstacle                EnumTypeObstacle   OPTIONAL,
+    type-obstacle                EnumObstacleType   OPTIONAL,
     obstacle-de-manoeuvre-active BOOLEAN            OPTIONAL,    
-    localisation                 Localisation,
+    localisation                 Location,
     nom                          VisibleString,
-    camp                         Camp,
-    attributs-specifiques        AttrObjectSpecific OPTIONAL,
-    type-dotation-construction   TypeDotation       OPTIONAL,
-    type-dotation-valorisation   TypeDotation       OPTIONAL
+    camp                         Team,
+    attributs-specifiques        ObjectAttributesSpecific OPTIONAL,
+    type-dotation-construction   DotationType       OPTIONAL,
+    type-dotation-valorisation   DotationType       OPTIONAL
 }
 
 MsgObjectUpdate ::= SEQUENCE
@@ -177,8 +177,8 @@ MsgObjectUpdate ::= SEQUENCE
     obstacle-de-manoeuvre-active        BOOLEAN            OPTIONAL,
     nb-dotation-construction            INTEGER            OPTIONAL,
     nb-dotation-valorisation            INTEGER            OPTIONAL,   
-    localisation                        Localisation       OPTIONAL,
-    attributs-specifiques               AttrObjectSpecific OPTIONAL
+    localisation                        Location       OPTIONAL,
+    attributs-specifiques               ObjectAttributesSpecific OPTIONAL
 }
 
 MsgObjectDestruction ::= OID
@@ -199,13 +199,13 @@ MagicActionUpdateObject ::= SEQUENCE
 
 MagicActionCreateObject ::= SEQUENCE
 {
-    oid-camp                     Camp, 
+    oid-camp                     Team, 
     type                         EnumObjectType,
-    type-obstacle                EnumTypeObstacle   OPTIONAL,
+    type-obstacle                EnumObstacleType   OPTIONAL,
     obstacle-de-manoeuvre-active BOOLEAN            OPTIONAL,
-    localisation                 Localisation,
+    localisation                 Location,
     nom                          VisibleString      OPTIONAL,    
-    attributs-specifiques        AttrObjectSpecific OPTIONAL
+    attributs-specifiques        ObjectAttributesSpecific OPTIONAL
 }
 
 MagicActionDestroyObjet ::= OID -- oid-objet

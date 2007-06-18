@@ -43,14 +43,14 @@ MIL_ParameterType_AgentList::~MIL_ParameterType_AgentList()
 void MIL_ParameterType_AgentList::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.value.t != T_MissionParameter_value_listAgent ) 
+    if( from.value.t != T_MissionParameter_value_unitList ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
     if( !DEC_Tools::CheckTypeListePions( to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyAgentList( *from.value.u.listAgent, to ) )
+    if( !NET_ASN_Tools::CopyAgentList( *from.value.u.unitList, to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -85,10 +85,10 @@ bool MIL_ParameterType_AgentList::Copy( const DIA_Variable_ABC& from, ASN1T_Miss
         return false;
 
     to.null_value        = false;
-    to.value.t           = T_MissionParameter_value_listAgent;
-    to.value.u.listAgent = new ASN1T_ListAgent();
+    to.value.t           = T_MissionParameter_value_unitList;
+    to.value.u.unitList = new ASN1T_UnitList();
     
-    if( !NET_ASN_Tools::CopyAgentList( from, *to.value.u.listAgent ) )
+    if( !NET_ASN_Tools::CopyAgentList( from, *to.value.u.unitList ) )
         return false;
 
     return true;    
@@ -100,8 +100,8 @@ bool MIL_ParameterType_AgentList::Copy( const DIA_Variable_ABC& from, ASN1T_Miss
 //-----------------------------------------------------------------------------
 void MIL_ParameterType_AgentList::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_listAgent );
-    assert( to.value.u.listAgent );
-    NET_ASN_Tools::Delete( *to.value.u.listAgent );
-    delete to.value.u.listAgent;
+    assert( to.value.t == T_MissionParameter_value_unitList );
+    assert( to.value.u.unitList );
+    NET_ASN_Tools::Delete( *to.value.u.unitList );
+    delete to.value.u.unitList;
 }

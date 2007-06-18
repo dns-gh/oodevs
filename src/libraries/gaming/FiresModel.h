@@ -40,11 +40,11 @@ public:
     //@{
     void Purge();
 
-    void AddFire        ( const ASN1T_MsgStartPionFire& message );
+    void AddFire        ( const ASN1T_MsgStartUnitFire& message );
     void AddFire        ( const ASN1T_MsgStartPopulationFire& message );
-    kernel::Entity_ABC* FindFirer( const ASN1T_MsgStopPionFire& message );
+    kernel::Entity_ABC* FindFirer( const ASN1T_MsgStopUnitFire& message );
     kernel::Entity_ABC* FindFirer( const ASN1T_MsgStopPopulationFire& message );
-    void RemoveFire     ( const ASN1T_MsgStopPionFire& message );
+    void RemoveFire     ( const ASN1T_MsgStopUnitFire& message );
     void RemoveFire     ( const ASN1T_MsgStopPopulationFire& message );
     //@}
 

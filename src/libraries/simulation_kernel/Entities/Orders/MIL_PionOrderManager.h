@@ -32,7 +32,7 @@ public:
     // @name Events 
     //@{
     virtual void OnReceiveFragOrder( const ASN1T_MsgFragOrder& asn );
-            void OnReceiveMission  ( const ASN1T_MsgPionOrder& asn );
+            void OnReceiveMission  ( const ASN1T_MsgUnitOrder& asn );
             void OnReceiveMission  ( const MIL_PionMissionType& type );
     //@}
 

@@ -22,7 +22,7 @@ using namespace dispatcher;
 // Name: LogConsignSupply constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-LogConsignSupply::LogConsignSupply( Model& model, const ASN1T_MsgLogRavitaillementTraitementCreation& msg )
+LogConsignSupply::LogConsignSupply( Model& model, const ASN1T_MsgLogSupplyHandlingCreation& msg )
     : model_            ( model )
     , nID_              ( msg.oid_consigne )
     , automat_          ( model.GetAutomats().Get( msg.oid_automate ) )
@@ -30,7 +30,7 @@ LogConsignSupply::LogConsignSupply( Model& model, const ASN1T_MsgLogRavitailleme
     , pTreatingAutomat_ ( 0 )
     , pConvoyingAutomat_( 0 )
     , pConvoy_          ( 0 )
-    , nState_           ( EnumLogRavitaillementTraitementEtat::convoi_deplacement_vers_point_chargement )
+    , nState_           ( EnumLogSupplyHandlingStatus::convoi_deplacement_vers_point_chargement )
     , dotations_        ()
 {
     // NOTHING
@@ -53,7 +53,7 @@ LogConsignSupply::~LogConsignSupply()
 // Name: LogConsignSupply::Update
 // Created: AGE 2007-04-16
 // -----------------------------------------------------------------------------
-void LogConsignSupply::Update( const ASN1T_MsgLogRavitaillementTraitementCreation& )
+void LogConsignSupply::Update( const ASN1T_MsgLogSupplyHandlingCreation& )
 {
     FlagUpdate();
 }
@@ -62,7 +62,7 @@ void LogConsignSupply::Update( const ASN1T_MsgLogRavitaillementTraitementCreatio
 // Name: LogConsignSupply::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void LogConsignSupply::Update( const ASN1T_MsgLogRavitaillementTraitementUpdate& msg )
+void LogConsignSupply::Update( const ASN1T_MsgLogSupplyHandlingUpdate& msg )
 {
     if( msg.m.oid_automate_log_traitantPresent )
         pTreatingAutomat_ = ( msg.oid_automate_log_traitant == 0 ) ? 0 : &model_.GetAutomats().Get( msg.oid_automate_log_traitant );
@@ -95,13 +95,13 @@ void LogConsignSupply::Update( const ASN1T_MsgLogRavitaillementTraitementUpdate&
 // -----------------------------------------------------------------------------
 void LogConsignSupply::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientLogRavitaillementTraitementCreation asn;
+    AsnMsgSimToClientLogSupplyHandlingCreation asn;
 
     asn().oid_consigne  = nID_;
     asn().oid_automate  = automat_.GetID();
     asn().tick_creation = nTickCreation_;
 
-    dotations_.Send< ASN1T__SeqOfDemandeDotation, ASN1T_DemandeDotation >( asn().dotations );
+    dotations_.Send< ASN1T__SeqOfDotationQuery, ASN1T_DotationQuery >( asn().dotations );
 
     asn.Send( publisher );
 
@@ -115,7 +115,7 @@ void LogConsignSupply::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void LogConsignSupply::SendFullUpdate( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientLogRavitaillementTraitementUpdate asn;
+    AsnMsgSimToClientLogSupplyHandlingUpdate asn;
 
     asn().oid_consigne = nID_;
     asn().oid_automate = automat_.GetID();
@@ -130,7 +130,7 @@ void LogConsignSupply::SendFullUpdate( Publisher_ABC& publisher ) const
     asn().oid_automate_log_fournissant_moyens_convoi = pConvoyingAutomat_ ? pConvoyingAutomat_->GetID() : 0;
     asn().oid_pion_convoyant                         = pConvoy_ ? pConvoy_->GetID() : 0;
     asn().etat                                       = nState_;
-    dotations_.Send< ASN1T__SeqOfDemandeDotation, ASN1T_DemandeDotation >( asn().dotations );
+    dotations_.Send< ASN1T__SeqOfDotationQuery, ASN1T_DotationQuery >( asn().dotations );
 
     asn.Send( publisher );
 
@@ -144,7 +144,7 @@ void LogConsignSupply::SendFullUpdate( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void LogConsignSupply::SendDestruction( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientLogRavitaillementTraitementDestruction asn;
+    AsnMsgSimToClientLogSupplyHandlingDestruction asn;
     asn().oid_consigne = nID_;
     asn().oid_automate = automat_.GetID();
     asn.Send( publisher );

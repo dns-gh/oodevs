@@ -16,8 +16,8 @@
 inline
 DEC_Knowledge_AgentPerception* DEC_BlackBoard_CanContainKnowledgeAgentPerception::GetKnowledgeAgentPerception( const MIL_Agent_ABC& associatedAgent ) const
 {
-    CIT_KnowledgeAgentPerceptionMap itKnowledge = knowledgeAgentPerceptionMap_.find( &associatedAgent );
-    if ( itKnowledge != knowledgeAgentPerceptionMap_.end() )
+    CIT_KnowledgeAgentPerceptionMap itKnowledge = unitKnowledgePerceptionMap_.find( &associatedAgent );
+    if ( itKnowledge != unitKnowledgePerceptionMap_.end() )
         return itKnowledge->second;
     else
         return 0;

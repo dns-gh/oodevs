@@ -41,8 +41,8 @@ public:
 
     //! @name Network
     //@{
-           void Serialize              ( const MIL_Agent_ABC& target, ASN1T_FireDamagesPion& asn ) const;
-    static void CleanAfterSerialization( ASN1T_FireDamagesPion& asn );
+           void Serialize              ( const MIL_Agent_ABC& target, ASN1T_UnitFireDamages& asn ) const;
+    static void CleanAfterSerialization( ASN1T_UnitFireDamages& asn );
     //@}
 
 private:

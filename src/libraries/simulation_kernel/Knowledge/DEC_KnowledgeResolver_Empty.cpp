@@ -36,7 +36,7 @@ DEC_KnowledgeResolver_Empty::~DEC_KnowledgeResolver_Empty()
 // Name: DEC_KnowledgeResolver_Empty::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_KnowledgeResolver_Empty::ResolveKnowledgeAgent( const ASN1T_KnowledgeAgent& /*asn*/ ) const
+DEC_Knowledge_Agent* DEC_KnowledgeResolver_Empty::ResolveKnowledgeAgent( const ASN1T_UnitKnowledge& /*asn*/ ) const
 {
     return 0;
 }
@@ -63,7 +63,7 @@ DEC_Knowledge_Agent* DEC_KnowledgeResolver_Empty::ResolveKnowledgeAgent( uint /*
 // Name: DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject( const ASN1T_KnowledgeObject& /*asn*/ ) const
+DEC_Knowledge_Object* DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& /*asn*/ ) const
 {
     return 0;
 }
@@ -90,7 +90,7 @@ DEC_Knowledge_Object* DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject( uint 
 // Name: DEC_KnowledgeResolver_Empty::ResolveKnowledgePopulation
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeResolver_Empty::ResolveKnowledgePopulation( const ASN1T_KnowledgePopulation& /*asn*/ ) const
+DEC_Knowledge_Population* DEC_KnowledgeResolver_Empty::ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& /*asn*/ ) const
 {
     return 0;
 }

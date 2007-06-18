@@ -106,7 +106,7 @@ private:
     //@{
     const MIL_KnowledgeGroup*   pKnowledgeGroup_;
           T_KnowledgeAgentMap   realAgentMap_;
-          T_KnowledgeAgentIDMap knowledgeAgentFromIDMap_;
+          T_KnowledgeAgentIDMap unitKnowledgeFromIDMap_;
     //@}
 
     //! @name Queries caches

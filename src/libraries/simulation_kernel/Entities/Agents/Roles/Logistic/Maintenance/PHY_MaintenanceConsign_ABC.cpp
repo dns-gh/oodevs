@@ -115,21 +115,21 @@ void PHY_MaintenanceConsign_ABC::EnterStateFinished()
 // Name: PHY_MaintenanceConsign_ABC::SendFullState
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-void PHY_MaintenanceConsign_ABC::SendFullState( NET_ASN_MsgLogMaintenanceTraitementEquipementUpdate& asn ) const
+void PHY_MaintenanceConsign_ABC::SendFullState( NET_ASN_MsgLogMaintenanceHandlingUpdate& asn ) const
 {
     assert( pComposanteState_ );
     assert( pMaintenance_ );
     
     asn().oid_pion_log_traitant = pMaintenance_->GetPion().GetID();
     asn().m.etatPresent         = 1;
-    asn().etat                  = (ASN1T_EnumLogMaintenanceTraitementEtat)nState_;
+    asn().etat                  = (ASN1T_EnumLogMaintenanceHandlingStatus)nState_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceConsign_ABC::SendChangedState
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-void PHY_MaintenanceConsign_ABC::SendChangedState( NET_ASN_MsgLogMaintenanceTraitementEquipementUpdate& asn ) const
+void PHY_MaintenanceConsign_ABC::SendChangedState( NET_ASN_MsgLogMaintenanceHandlingUpdate& asn ) const
 {
     assert( pComposanteState_ );
     if( bHasChanged_ )

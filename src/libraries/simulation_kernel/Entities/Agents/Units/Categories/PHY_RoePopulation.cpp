@@ -14,7 +14,7 @@
 #include "PHY_RoePopulation.h"
 
 PHY_RoePopulation::T_RoePopulationMap PHY_RoePopulation::roePopulations_;
-const PHY_RoePopulation               PHY_RoePopulation::none_( "None", PHY_RoePopulation::eNone, EnumRoePopulation::none );
+const PHY_RoePopulation               PHY_RoePopulation::none_( "None", PHY_RoePopulation::eNone, EnumPopulationRoe::none );
 
 // =============================================================================
 // MANAGER
@@ -27,10 +27,10 @@ const PHY_RoePopulation               PHY_RoePopulation::none_( "None", PHY_RoeP
 void PHY_RoePopulation::Initialize()
 {
     roePopulations_[ none_.GetName()  ] = &none_;
-    roePopulations_[ "emploi force interdit"       ] = new PHY_RoePopulation( "Emploi force interdit"      , eEmploiForceInterdit      , EnumRoePopulation::emploi_force_interdit );
-    roePopulations_[ "maintien a distance par moyens non letaux"      ] = new PHY_RoePopulation( "Maintien à distance par moyens non létaux"     , eMaintienADistanceParMoyensNonLetaux     , EnumRoePopulation::maintien_a_distance_par_moyens_non_letaux ); 
-    roePopulations_[ "dispersion par moyens de defense actifs"     ] = new PHY_RoePopulation( "Dispersion par moyens de défense actifs"    , eDispersionParMoyensDeDefenseActifs    , EnumRoePopulation::dispersion_par_moyens_de_defense_actifs );
-    roePopulations_[ "armes letales autorisees" ] = new PHY_RoePopulation( "Armes létales autorisées", eArmesLetalesAutorisees, EnumRoePopulation::armes_letales_autorisees );
+    roePopulations_[ "emploi force interdit"       ] = new PHY_RoePopulation( "Emploi force interdit"      , eEmploiForceInterdit      , EnumPopulationRoe::emploi_force_interdit );
+    roePopulations_[ "maintien a distance par moyens non letaux"      ] = new PHY_RoePopulation( "Maintien à distance par moyens non létaux"     , eMaintienADistanceParMoyensNonLetaux     , EnumPopulationRoe::maintien_a_distance_par_moyens_non_letaux ); 
+    roePopulations_[ "dispersion par moyens de defense actifs"     ] = new PHY_RoePopulation( "Dispersion par moyens de défense actifs"    , eDispersionParMoyensDeDefenseActifs    , EnumPopulationRoe::dispersion_par_moyens_de_defense_actifs );
+    roePopulations_[ "armes letales autorisees" ] = new PHY_RoePopulation( "Armes létales autorisées", eArmesLetalesAutorisees, EnumPopulationRoe::armes_letales_autorisees );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ void PHY_RoePopulation::Terminate()
 // Name: PHY_RoePopulation constructor
 // Created: JVT 2004-12-09
 // -----------------------------------------------------------------------------
-PHY_RoePopulation::PHY_RoePopulation( const std::string& strName, E_Type nType, ASN1T_EnumRoePopulation nAsnID )
+PHY_RoePopulation::PHY_RoePopulation( const std::string& strName, E_Type nType, ASN1T_EnumPopulationRoe nAsnID )
     : strName_ ( strName )
     , nType_   ( nType   )
     , nAsnID_  ( nAsnID  )

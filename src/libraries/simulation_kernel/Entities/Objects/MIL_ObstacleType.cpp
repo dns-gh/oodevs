@@ -11,14 +11,14 @@
 
 #include "MIL_ObstacleType.h"
 
-const MIL_ObstacleType MIL_ObstacleType::reserved_( "reserved", MIL_ObstacleType::eReserved, EnumTypeObstacle::de_manoeuvre );
-const MIL_ObstacleType MIL_ObstacleType::initial_ ( "initial" , MIL_ObstacleType::eInitial, EnumTypeObstacle::preliminaire );
+const MIL_ObstacleType MIL_ObstacleType::reserved_( "reserved", MIL_ObstacleType::eReserved, EnumObstacleType::de_manoeuvre );
+const MIL_ObstacleType MIL_ObstacleType::initial_ ( "initial" , MIL_ObstacleType::eInitial, EnumObstacleType::preliminaire );
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObstacleType constructor
 // Created: NLD 2007-05-22
 // -----------------------------------------------------------------------------
-MIL_ObstacleType::MIL_ObstacleType( const std::string& strName, E_Type nType, ASN1T_EnumTypeObstacle nAsnID )
+MIL_ObstacleType::MIL_ObstacleType( const std::string& strName, E_Type nType, ASN1T_EnumObstacleType nAsnID )
     : nType_  ( nType )
     , nAsnID_ ( nAsnID )
     , strName_( strName )

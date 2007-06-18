@@ -16,7 +16,7 @@ BaseExports  ::= NULL
 --
 -- Géométrie
 --
-EnumTypeLocalisation ::= ENUMERATED
+EnumLocationType ::= ENUMERATED
 { 
     circle   (0), -- Circle
     ellipse  (1), -- Ellipse
@@ -28,70 +28,64 @@ EnumTypeLocalisation ::= ENUMERATED
 
 CoordUTM ::= OCTET STRING (SIZE(15))
 
-Localisation ::= SEQUENCE 
+Location ::= SEQUENCE 
 {
-    type            EnumTypeLocalisation,
+    type            EnumLocationType,
     vecteur-point   SEQUENCE OF CoordUTM
 }
 
-Point      ::= Localisation (WITH COMPONENTS {...,type(point)})
-Line       ::= Localisation (WITH COMPONENTS {...,type(line)})
-Itineraire ::= Localisation (WITH COMPONENTS {...,type(line)})
-Polygon    ::= Localisation (WITH COMPONENTS {...,type(polygon)})
-Segment    ::= Localisation (WITH COMPONENTS {type(line)   , vecteur-point (SIZE(2))})
-Circle	   ::= Localisation (WITH COMPONENTS {type(circle) , vecteur-point (SIZE(2))}) -- Format : centre, point sur le cercle
-Ellipse	   ::= Localisation (WITH COMPONENTS {type(ellipse), vecteur-point (SIZE(3))}) -- Format : centre, point petit axe, point grand axe
-Sector	   ::= Localisation (WITH COMPONENTS {type(sector) , vecteur-point (SIZE(3))}) -- Format : centre, point 1, point 2 dans le sens trigo
+Point      ::= Location (WITH COMPONENTS {...,type(point)})
+Line       ::= Location (WITH COMPONENTS {...,type(line)})
+Path       ::= Location (WITH COMPONENTS {...,type(line)})
+Polygon    ::= Location (WITH COMPONENTS {...,type(polygon)})
+Segment    ::= Location (WITH COMPONENTS {type(line)   , vecteur-point (SIZE(2))})
+Circle	   ::= Location (WITH COMPONENTS {type(circle) , vecteur-point (SIZE(2))}) -- Format : centre, point sur le cercle
+Ellipse	   ::= Location (WITH COMPONENTS {type(ellipse), vecteur-point (SIZE(3))}) -- Format : centre, point petit axe, point grand axe
+Sector	   ::= Location (WITH COMPONENTS {type(sector) , vecteur-point (SIZE(3))}) -- Format : centre, point 1, point 2 dans le sens trigo
 
-ListLocalisation ::= SEQUENCE OF Localisation
-ListPolygon      ::= SEQUENCE OF Polygon
-ListItineraire   ::= SEQUENCE OF Itineraire
-ListPoint        ::= SEQUENCE OF Point
+LocationList ::= SEQUENCE OF Location
+PolygonList  ::= SEQUENCE OF Polygon
+PathList     ::= SEQUENCE OF Path
+PointList    ::= SEQUENCE OF Point
 
 --
 -- Types
 --
 OID                     ::= INTEGER
 ListOID                 ::= SEQUENCE OF OID
-TirPion                 ::= OID
-TirPopulation           ::= OID
-Agent                   ::= OID
-Automate                ::= OID
+UnitFire                ::= OID
+PopulationFire          ::= OID
+Unit                    ::= OID
+Automat                 ::= OID
 Population              ::= OID
-Camp                    ::= OID
+Team                    ::= OID
 Formation               ::= OID
 KnowledgeGroup          ::= OID
-KnowledgeAgent          ::= OID
-KnowledgeObject         ::= OID
-KnowledgePopulation     ::= OID
-ListAutomate            ::= SEQUENCE OF Automate 
-ListAgent               ::= SEQUENCE OF Agent
-ListKnowledgeAgent      ::= SEQUENCE OF KnowledgeAgent
-ListKnowledgeObject     ::= SEQUENCE OF KnowledgeObject
-ListCamp                ::= SEQUENCE OF Camp
-ListPopulation          ::= SEQUENCE OF Population
-ListFormation           ::= SEQUENCE OF Formation
-TypeEquipement          ::= OID
-TypeDotation            ::= OID
-TypeDotationTrancheD    ::= OID
-TypePanne               ::= OID
-TypePion                ::= OID
-TypeAutomate            ::= OID
-TypePopulation          ::= OID
-Pourcentage             ::= INTEGER(0..100)
-PourcentageLibre        ::= INTEGER
-Hauteur                 ::= INTEGER
-Altitude                ::= INTEGER
-Vitesse                 ::= INTEGER
-Angle                   ::= INTEGER(0..360)
-Direction               ::= INTEGER(0..<360)
-GDH                     ::= SEQUENCE 
-{
-    datation        INTEGER,
-    qualificatif    EnumGDH_Qualificatif 
-}
+UnitKnowledge           ::= OID
+ObjectKnowledge         ::= OID
+PopulationKnowledge     ::= OID
+AutomatList             ::= SEQUENCE OF Automat 
+UnitList                ::= SEQUENCE OF Unit
+UnitKnowledgeList       ::= SEQUENCE OF UnitKnowledge
+ObjectKnowledgeList     ::= SEQUENCE OF ObjectKnowledge
+TeamList                ::= SEQUENCE OF Team
+PopulationList          ::= SEQUENCE OF Population
+FormationList           ::= SEQUENCE OF Formation
+EquipmentType           ::= OID
+DotationType            ::= OID
+BreakdownType           ::= OID
+UnitType                ::= OID
+AutomatType             ::= OID
+PopulationType          ::= OID
+Percentage              ::= INTEGER(0..100)
+FreePercentage          ::= INTEGER
+Height                  ::= INTEGER
+Elevation               ::= INTEGER
+Speed                   ::= INTEGER
+Heading                 ::= INTEGER(0..<360)
+DateTime                ::= INTEGER 
 
-EnumFamilleDotation ::= ENUMERATED
+EnumDotationFamily ::= ENUMERATED
 {
     munition (0),
     carburant(1),
@@ -102,29 +96,12 @@ EnumFamilleDotation ::= ENUMERATED
     ration   (6)
 }
 
-EnumFamilleMunition ::= ENUMERATED
+EnumAmmunitionFamily ::= ENUMERATED
 {
     obus        (0),
     missile-air (1),
     missile-sol (2),
     mitraille   (3)
-}
-
-EnumGDH_Qualificatif ::= ENUMERATED
-{
-    at          (0),
-    after       (1),
-    as-of       (2),
-    before      (3),
-    cleared     (4),
-    due         (5),
-    end         (6),
-    off         (7),
-    on          (8),
-    since       (9),
-    start       (10),
-    until       (11),
-    wef         (12)
 }
 
 EnumUnitIdentificationLevel ::= ENUMERATED
@@ -151,7 +128,7 @@ EnumNatureLevel ::= ENUMERATED
     xxxxx       (11)  -- Army group/front (obsolete)
 }
 
-NatureAtlas ::= BIT STRING 
+AtlasNature ::= BIT STRING 
 { 
     blinde          (0), 
     ass             (1), 

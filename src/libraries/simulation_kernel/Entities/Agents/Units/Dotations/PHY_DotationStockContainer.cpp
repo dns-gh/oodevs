@@ -409,7 +409,7 @@ void PHY_DotationStockContainer::FillSupplyRequest( PHY_SupplyStockRequestContai
 // Name: PHY_DotationStockContainer::SendChangedState
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-void PHY_DotationStockContainer::SendChangedState( NET_ASN_MsgLogRavitaillementEtat& asn ) const
+void PHY_DotationStockContainer::SendChangedState( NET_ASN_MsgLogSupplyState& asn ) const
 {
     asn().stocks.n = stocksChanged_.size();
     if( stocksChanged_.empty() )
@@ -433,7 +433,7 @@ void PHY_DotationStockContainer::SendChangedState( NET_ASN_MsgLogRavitaillementE
 // Name: PHY_DotationStockContainer::SendFullState
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-void PHY_DotationStockContainer::SendFullState( NET_ASN_MsgLogRavitaillementEtat& asn ) const
+void PHY_DotationStockContainer::SendFullState( NET_ASN_MsgLogSupplyState& asn ) const
 {
     asn().stocks.n = stocks_.size();
 

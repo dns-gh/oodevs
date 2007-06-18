@@ -64,7 +64,7 @@ PHY_Meteo::PHY_Meteo( MIL_InputArchive& archive, const PHY_Ephemeride& ephemerid
 // Name: PHY_Meteo constructor
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
-PHY_Meteo::PHY_Meteo( const ASN1T_MeteoAttributs& asnMsg )
+PHY_Meteo::PHY_Meteo( const ASN1T_MeteoAttributes& asnMsg )
     : pLighting_     ( &PHY_Lighting::jourSansNuage_ )
     , pPrecipitation_( &PHY_Precipitation::none_ )
     , nRefCount_     ( 0 )
@@ -86,7 +86,7 @@ PHY_Meteo::~PHY_Meteo()
 // Name: PHY_Meteo::Update
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-void PHY_Meteo::Update( const ASN1T_MeteoAttributs& asnMsg )
+void PHY_Meteo::Update( const ASN1T_MeteoAttributes& asnMsg )
 {
     // Plancher de couverture nuageuse
     nPlancherCouvertureNuageuse_ = asnMsg.plancher_couverture_nuageuse;

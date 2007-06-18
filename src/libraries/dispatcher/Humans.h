@@ -27,14 +27,14 @@ class Humans
 public:
     //! @name Constructors/Destructor
     //@{
-     Humans( const Model& model, const ASN1T_DotationPersonnel& asnMsg );
+     Humans( const Model& model, const ASN1T_HumanDotations& asnMsg );
     ~Humans();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_DotationPersonnel& asnMsg );
-    void Send  ( ASN1T_DotationPersonnel& asnMsg ) const ;
+    void Update( const ASN1T_HumanDotations& asnMsg );
+    void Send  ( ASN1T_HumanDotations& asnMsg ) const ;
     //@}
 
 private:

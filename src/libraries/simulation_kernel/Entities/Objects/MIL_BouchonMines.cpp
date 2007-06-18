@@ -114,7 +114,7 @@ ASN1T_EnumObjectErrorCode MIL_BouchonMines::Initialize( const ASN1T_MagicActionC
     if( nErrorCode != EnumObjectErrorCode::no_error )
         return nErrorCode;
 
-    if( !asn.m.attributs_specifiquesPresent || asn.attributs_specifiques.t != T_AttrObjectSpecific_bouchon_mines )
+    if( !asn.m.attributs_specifiquesPresent || asn.attributs_specifiques.t != T_ObjectAttributesSpecific_bouchon_mines )
         return EnumObjectErrorCode::error_missing_specific_attributes;
 
     nMinesActivityTime_ = asn.attributs_specifiques.u.bouchon_mines->delai_activite_mines;
@@ -169,7 +169,7 @@ void MIL_BouchonMines::WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMs
     asnAttributes_.delai_activite_mines = nMinesActivityTime_;
 
     asnMsg().m.attributs_specifiquesPresent        = 1;
-    asnMsg().attributs_specifiques.t               = T_AttrObjectSpecific_bouchon_mines;
+    asnMsg().attributs_specifiques.t               = T_ObjectAttributesSpecific_bouchon_mines;
     asnMsg().attributs_specifiques.u.bouchon_mines = &asnAttributes_;
 }
 

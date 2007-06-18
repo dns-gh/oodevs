@@ -56,7 +56,7 @@ void MaintenanceStates::CreateDictionary( kernel::PropertiesDictionary& dico ) c
 // Name: MaintenanceStates::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void MaintenanceStates::DoUpdate( const ASN1T_MsgLogMaintenanceEtat& message )
+void MaintenanceStates::DoUpdate( const ASN1T_MsgLogMaintenanceState& message )
 {
     if( message.m.chaine_activeePresent )
         bChainEnabled_ = message.chaine_activee;

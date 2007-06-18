@@ -52,7 +52,7 @@ protected:
 protected:
     //! @name Member data
     //@{
-    MOS_ASN_MsgPionOrder asnMsg_;
+    MOS_ASN_MsgUnitOrder asnMsg_;
     //@}
 };
 

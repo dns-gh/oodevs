@@ -25,7 +25,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ActionParameterPolygonList( const kernel::OrderParameter& parameter );
-             ActionParameterPolygonList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_ListPolygon& asn );
+             ActionParameterPolygonList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_PolygonList& asn );
              ActionParameterPolygonList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~ActionParameterPolygonList();
     //@}

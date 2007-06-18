@@ -66,7 +66,7 @@ void Population::Concentration::OnUpdate( const ASN1T_MsgPopulationConcentration
 // Name: Population::Flow::Flow
 // Created: SBO 2005-11-24
 // -----------------------------------------------------------------------------
-Population::Flow::Flow( const ASN1T_MsgPopulationFluxCreation& /*asnMsg*/ )
+Population::Flow::Flow( const ASN1T_MsgPopulationFlowCreation& /*asnMsg*/ )
 : shape_ ()
 {
 }
@@ -83,7 +83,7 @@ Population::Flow::~Flow()
 // Name: Population::Flow::OnUpdate
 // Created: SBO 2005-11-24
 // -----------------------------------------------------------------------------
-void Population::Flow::OnUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
+void Population::Flow::OnUpdate( const ASN1T_MsgPopulationFlowUpdate& asnMsg )
 {
     if( asnMsg.m.fluxPresent )
     {
@@ -184,7 +184,7 @@ void Population::OnConcentrationDestroyed( const ASN1T_MsgPopulationConcentratio
 // Name: Population::OnFlowCreated
 // Created: SBO 2005-11-24
 // -----------------------------------------------------------------------------
-void Population::OnFlowCreated( const ASN1T_MsgPopulationFluxCreation& asnMsg )
+void Population::OnFlowCreated( const ASN1T_MsgPopulationFlowCreation& asnMsg )
 {
     if( !flows_[ asnMsg.oid_flux ] )
         flows_[ asnMsg.oid_flux ] = new Flow( asnMsg );
@@ -194,7 +194,7 @@ void Population::OnFlowCreated( const ASN1T_MsgPopulationFluxCreation& asnMsg )
 // Name: Population::OnFlowUpdated
 // Created: SBO 2005-11-24
 // -----------------------------------------------------------------------------
-void Population::OnFlowUpdated( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
+void Population::OnFlowUpdated( const ASN1T_MsgPopulationFlowUpdate& asnMsg )
 {
     if( flows_[ asnMsg.oid_flux ] )
         flows_[ asnMsg.oid_flux ]->OnUpdate( asnMsg );
@@ -204,7 +204,7 @@ void Population::OnFlowUpdated( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 // Name: Population::OnFlowDestroyed
 // Created: SBO 2005-11-24
 // -----------------------------------------------------------------------------
-void Population::OnFlowDestroyed( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
+void Population::OnFlowDestroyed( const ASN1T_MsgPopulationFlowDestruction& asnMsg )
 {
     if( flows_[ asnMsg.oid_flux ] )
         delete flows_[ asnMsg.oid_flux ];

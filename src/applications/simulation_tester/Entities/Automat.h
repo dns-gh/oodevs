@@ -47,7 +47,7 @@ class Automat : public Testable_Entity
 public:
     //! @name Constructors/Destructor
     //@{
-             Automat( const Workspace& workspace, const ASN1T_MsgAutomateCreation& asnMsg );
+             Automat( const Workspace& workspace, const ASN1T_MsgAutomatCreation& asnMsg );
     virtual ~Automat();
     //@}
 

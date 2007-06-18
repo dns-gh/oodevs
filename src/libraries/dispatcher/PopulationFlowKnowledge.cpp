@@ -25,7 +25,7 @@ using namespace dispatcher;
 // Name: PopulationFlowKnowledge constructor
 // Created: NLD 2006-10-03
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::PopulationFlowKnowledge( Model& model, PopulationKnowledge& populationKnowledge, const ASN1T_MsgPopulationFluxKnowledgeCreation& msg )
+PopulationFlowKnowledge::PopulationFlowKnowledge( Model& model, PopulationKnowledge& populationKnowledge, const ASN1T_MsgPopulationFlowKnowledgeCreation& msg )
     : model_              ( model )
     , populationKnowledge_( populationKnowledge )
     , nID_                ( msg.oid_connaissance_flux )
@@ -64,7 +64,7 @@ PopulationFlowKnowledge::~PopulationFlowKnowledge()
 // Name: PopulationFlowKnowledge::Update
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeCreation& )
+void PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFlowKnowledgeCreation& )
 {
     FlagUpdate();
 }
@@ -73,7 +73,7 @@ void PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeCrea
 // Name: PopulationFlowKnowledge::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate& msg )
+void PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFlowKnowledgeUpdate& msg )
 {
     if( msg.m.oid_flux_reelPresent )
     {
@@ -133,7 +133,7 @@ void PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpda
 // -----------------------------------------------------------------------------
 void PopulationFlowKnowledge::SendCreation( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientPopulationFluxKnowledgeCreation asn;
+    AsnMsgSimToClientPopulationFlowKnowledgeCreation asn;
 
     asn().oid_connaissance_flux       = nID_;
     asn().oid_connaissance_population = populationKnowledge_.GetID();
@@ -149,7 +149,7 @@ void PopulationFlowKnowledge::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PopulationFlowKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientPopulationFluxKnowledgeUpdate asn;
+    AsnMsgSimToClientPopulationFlowKnowledgeUpdate asn;
 
     asn().oid_connaissance_flux       = nID_;
     asn().oid_connaissance_population = populationKnowledge_.GetID();
@@ -159,7 +159,7 @@ void PopulationFlowKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
     asn().oid_flux_reel          = pFlow_ ? pFlow_->GetID() : 0;
 
     asn().m.portions_fluxPresent = 1;
-    flowParts_.Send< ASN1T__SeqOfPortionFlux, ASN1T_PortionFlux >( asn().portions_flux );
+    flowParts_.Send< ASN1T__SeqOfFlowPart, ASN1T_FlowPart >( asn().portions_flux );
 
     if( optionals_.directionPresent )
     {
@@ -208,7 +208,7 @@ void PopulationFlowKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PopulationFlowKnowledge::SendDestruction( Publisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientPopulationFluxKnowledgeDestruction asn;
+    AsnMsgSimToClientPopulationFlowKnowledgeDestruction asn;
     asn().oid_connaissance_flux       = nID_;
     asn().oid_connaissance_population = populationKnowledge_.GetID();
     asn().oid_groupe_possesseur       = populationKnowledge_.GetKnowledgeGroup().GetID();

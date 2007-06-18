@@ -20,9 +20,9 @@ using namespace dispatcher;
 MissionParameter_LocationList::MissionParameter_LocationList( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    locations_.reserve( asn.value.u.listLocalisation->n );
-    for( unsigned i = 0; i != asn.value.u.listLocalisation->n; ++i )
-        locations_.push_back( Localisation( asn.value.u.listLocalisation->elem[i] ) );
+    locations_.reserve( asn.value.u.locationList->n );
+    for( unsigned i = 0; i != asn.value.u.locationList->n; ++i )
+        locations_.push_back( Localisation( asn.value.u.locationList->elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,16 +45,16 @@ MissionParameter_LocationList::~MissionParameter_LocationList()
 void MissionParameter_LocationList::Send( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value               = bNullValue_;
-    asn.value.t                  = T_MissionParameter_value_listLocalisation;
-    asn.value.u.listLocalisation = new ASN1T_ListLocalisation();
+    asn.value.t                  = T_MissionParameter_value_locationList;
+    asn.value.u.locationList = new ASN1T_LocationList();
 
-    asn.value.u.listLocalisation->n = locations_.size();
+    asn.value.u.locationList->n = locations_.size();
     if( !locations_.empty() )
     {
-        asn.value.u.listLocalisation->elem = new ASN1T_Localisation[ locations_.size() ];
+        asn.value.u.locationList->elem = new ASN1T_Location[ locations_.size() ];
         uint i = 0;
         for( T_LocalisationVector::const_iterator it = locations_.begin(); it != locations_.end(); ++it, ++i )
-            (*it).Send( asn.value.u.listLocalisation->elem[ i ] );
+            (*it).Send( asn.value.u.locationList->elem[ i ] );
     }
 }
 
@@ -64,11 +64,11 @@ void MissionParameter_LocationList::Send( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void MissionParameter_LocationList::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.listLocalisation->n > 0 )
+    if( asn.value.u.locationList->n > 0 )
     {
-        for( unsigned i = 0; i != asn.value.u.listLocalisation->n; ++i )
-            Localisation::AsnDelete( asn.value.u.listLocalisation->elem[i] );
-        delete [] asn.value.u.listLocalisation->elem;
+        for( unsigned i = 0; i != asn.value.u.locationList->n; ++i )
+            Localisation::AsnDelete( asn.value.u.locationList->elem[i] );
+        delete [] asn.value.u.locationList->elem;
     }
-    delete asn.value.u.listLocalisation;
+    delete asn.value.u.locationList;
 }

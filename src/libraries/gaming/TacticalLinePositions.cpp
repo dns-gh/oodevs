@@ -138,7 +138,7 @@ void TacticalLinePositions::Draw( const geometry::Point2f&, const kernel::Viewpo
 // -----------------------------------------------------------------------------
 void TacticalLinePositions::WriteGeometry( ASN1T_Line& line ) const
 {
-    line.type               = EnumTypeLocalisation::line;
+    line.type               = EnumLocationType::line;
     line.vecteur_point.n    = pointList_.size();
     if( pointList_.empty() )
     {

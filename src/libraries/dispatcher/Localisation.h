@@ -30,17 +30,17 @@ class Localisation
 public:
     //! @name Constructors/Destructor
     //@{
-     Localisation( const ASN1T_Localisation& asn ); 
+     Localisation( const ASN1T_Location& asn ); 
      Localisation(); 
     ~Localisation();
     //@}
 
     //! @name Main
     //@{
-    void Update( const ASN1T_Localisation& asn );
-    void Send  ( ASN1T_Localisation& asn ) const;
+    void Update( const ASN1T_Location& asn );
+    void Send  ( ASN1T_Location& asn ) const;
 
-    static void AsnDelete( ASN1T_Localisation& asn, bool bOptionalValue = true );
+    static void AsnDelete( ASN1T_Location& asn, bool bOptionalValue = true );
     //@}
 
 private:
@@ -50,8 +50,8 @@ private:
     //@}
 
 private:
-    ASN1T_EnumTypeLocalisation nType_;
-    T_PositionVector           points_;
+    ASN1T_EnumLocationType nType_;
+    T_PositionVector       points_;
 };
 
 }

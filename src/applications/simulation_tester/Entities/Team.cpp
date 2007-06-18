@@ -107,20 +107,20 @@ E_Tristate Team::IsNeutral( const Team& team ) const
 // Name: Team::SetRelation
 // Created: SBO 2005-05-16
 // -----------------------------------------------------------------------------
-void Team::SetRelation( Team& otherTeam, ASN1T_EnumDiplomatie diplomacy )
+void Team::SetRelation( Team& otherTeam, ASN1T_EnumDiplomacy diplomacy )
 {
     switch( diplomacy )
     {
-        case EnumDiplomatie::inconnu:
+        case EnumDiplomacy::inconnu:
             relations_[ &otherTeam ] = eUnknown;
             break;
-        case EnumDiplomatie::ami:
+        case EnumDiplomacy::ami:
             relations_[ &otherTeam ] = eFriend;
             break;
-        case EnumDiplomatie::ennemi:
+        case EnumDiplomacy::ennemi:
             relations_[ &otherTeam ] = eEnemy;
             break;
-        case EnumDiplomatie::neutre:
+        case EnumDiplomacy::neutre:
             relations_[ &otherTeam ] = eNeutral;
             break;
         default:

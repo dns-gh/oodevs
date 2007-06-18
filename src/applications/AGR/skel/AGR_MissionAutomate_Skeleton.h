@@ -30,13 +30,13 @@ public:
     //@{
     static void InitializeDIA( const MIL_AutomateMissionType& type );
 
-    virtual ASN1T_EnumOrderErrorCode Initialize( const ASN1T_MsgAutomateOrder& asnMsg );
+    virtual ASN1T_EnumOrderErrorCode Initialize( const ASN1T_MsgAutomatOrder& asnMsg );
     //@}
 
     //! @name Network 
     //@{
-    /*final*/ void Serialize              ( ASN1T_MsgAutomateOrder& asnMsg );
-    /*final*/ void CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg ); // Delete all the ASN members allocated for the serialization
+    /*final*/ void Serialize              ( ASN1T_MsgAutomatOrder& asnMsg );
+    /*final*/ void CleanAfterSerialization( ASN1T_MsgAutomatOrder& asnMsg ); // Delete all the ASN members allocated for the serialization
     //@}
 
 private:

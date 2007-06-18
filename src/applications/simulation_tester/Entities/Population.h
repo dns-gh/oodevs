@@ -67,13 +67,13 @@ private:
     public:
         //! @name Constructor/Destructor
         //@{
-         Flow( const ASN1T_MsgPopulationFluxCreation& asnMsg );
+         Flow( const ASN1T_MsgPopulationFlowCreation& asnMsg );
         ~Flow();
         //@}
 
         //! @name Operations
         //@{
-        void OnUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg );
+        void OnUpdate( const ASN1T_MsgPopulationFlowUpdate& asnMsg );
         //@} 
 
     public:
@@ -105,9 +105,9 @@ public:
     void OnConcentrationUpdated  ( const ASN1T_MsgPopulationConcentrationUpdate&      asnMsg );
     void OnConcentrationDestroyed( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg );
 
-    void OnFlowCreated           ( const ASN1T_MsgPopulationFluxCreation&             asnMsg );
-    void OnFlowUpdated           ( const ASN1T_MsgPopulationFluxUpdate&               asnMsg );
-    void OnFlowDestroyed         ( const ASN1T_MsgPopulationFluxDestruction&          asnMsg );
+    void OnFlowCreated           ( const ASN1T_MsgPopulationFlowCreation&             asnMsg );
+    void OnFlowUpdated           ( const ASN1T_MsgPopulationFlowUpdate&               asnMsg );
+    void OnFlowDestroyed         ( const ASN1T_MsgPopulationFlowDestruction&          asnMsg );
     //@}
 
     //! @name Operations

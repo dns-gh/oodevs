@@ -32,7 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ActionParameterAgentList( const kernel::OrderParameter& parameter );
-             ActionParameterAgentList( const kernel::OrderParameter& parameter, const ASN1T_ListAgent& asn, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver );
+             ActionParameterAgentList( const kernel::OrderParameter& parameter, const ASN1T_UnitList& asn, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver );
              ActionParameterAgentList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver );
     virtual ~ActionParameterAgentList();
     //@}

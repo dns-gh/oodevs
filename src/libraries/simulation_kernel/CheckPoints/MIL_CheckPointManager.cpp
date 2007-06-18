@@ -362,7 +362,7 @@ bool MIL_CheckPointManager::SaveCheckPoint( const std::string& name, const std::
 // Name: MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow
 // Created: NLD 2003-08-05
 // -----------------------------------------------------------------------------
-void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow( const ASN1T_MsgCtrlCheckPointSaveNow& asnMsg )
+void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow( const ASN1T_MsgControlCheckPointSaveNow& asnMsg )
 {
     std::string strCheckPointName;
     if( asnMsg.m.nomPresent )
@@ -378,7 +378,7 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow( const ASN1T_MsgCtrlCh
 // Name: MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency
 // Created: NLD 2003-08-05
 // -----------------------------------------------------------------------------
-void MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency( const ASN1T_MsgCtrlCheckPointSetFrequency& asnMsg )
+void MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency( const ASN1T_MsgControlCheckPointSetFrequency& asnMsg )
 {
     nCheckPointsFrequency_ = asnMsg * 60; // $$$$ NLD 2007-01-11: beeeeeeaaaaah
      

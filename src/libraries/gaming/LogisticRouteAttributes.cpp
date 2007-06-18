@@ -43,7 +43,7 @@ template< typename T >
 void LogisticRouteAttributes::UpdateData( const T& message )
 {
     if( message.m.attributs_specifiquesPresent
-     && message.attributs_specifiques.t == T_AttrObjectSpecific_itineraire_logistique )
+     && message.attributs_specifiques.t == T_ObjectAttributesSpecific_itineraire_logistique )
     {
         nLogRouteFlow_      = message.attributs_specifiques.u.itineraire_logistique->debit;
         nLogRouteLength_    = message.attributs_specifiques.u.itineraire_logistique->longueur;

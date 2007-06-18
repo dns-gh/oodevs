@@ -42,28 +42,28 @@ void MinePrototype::Commit()
 {
     if( msg_.type == EnumObjectType::bouchon_mines )
     {
-        attrMineJam_ = new ASN1T_AttrObjectBouchonMines();
+        attrMineJam_ = new ASN1T_ObjectAttributesMineJam();
         attrMineJam_->delai_activite_mines = activityTime_->value();
         msg_.m.attributs_specifiquesPresent = 1;
-        msg_.attributs_specifiques.t        = T_AttrObjectSpecific_bouchon_mines;
+        msg_.attributs_specifiques.t        = T_ObjectAttributesSpecific_bouchon_mines;
         msg_.attributs_specifiques.u.bouchon_mines = attrMineJam_;
     }
     else if( msg_.type == EnumObjectType::zone_minee_lineaire )
     {
-        attrLinearMinedArea_ = new ASN1T_AttrObjectZoneMineeLineaire();
+        attrLinearMinedArea_ = new ASN1T_ObjectAttributesLinearMineArea();
         attrLinearMinedArea_->delai_activite_mines = activityTime_->value();
         attrLinearMinedArea_->densite = density_->text().toFloat();
         msg_.m.attributs_specifiquesPresent = 1;
-        msg_.attributs_specifiques.t        = T_AttrObjectSpecific_zone_minee_lineaire;
+        msg_.attributs_specifiques.t        = T_ObjectAttributesSpecific_zone_minee_lineaire;
         msg_.attributs_specifiques.u.zone_minee_lineaire = attrLinearMinedArea_;
     }
     else if( msg_.type == EnumObjectType::zone_minee_par_dispersion )
     {
-        attrDispersedMinedArea_ = new ASN1T_AttrObjectZoneMineeParDispersion();
+        attrDispersedMinedArea_ = new ASN1T_ObjectAttributesDispersedMineArea();
         attrDispersedMinedArea_->delai_activite_mines = activityTime_->value();
         attrDispersedMinedArea_->densite = density_->text().toFloat();
         msg_.m.attributs_specifiquesPresent = 1;
-        msg_.attributs_specifiques.t        = T_AttrObjectSpecific_zone_minee_par_dispersion;
+        msg_.attributs_specifiques.t        = T_ObjectAttributesSpecific_zone_minee_par_dispersion;
         msg_.attributs_specifiques.u.zone_minee_par_dispersion = attrDispersedMinedArea_;
     }
 }

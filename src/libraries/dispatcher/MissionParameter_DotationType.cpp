@@ -19,7 +19,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 MissionParameter_DotationType::MissionParameter_DotationType( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , dotationType_       ( asn.value.u.typeDotation )
+    , dotationType_       ( asn.value.u.dotationType )
 {
     // NOTHING
 }
@@ -44,8 +44,8 @@ MissionParameter_DotationType::~MissionParameter_DotationType()
 void MissionParameter_DotationType::Send( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value          = bNullValue_;
-    asn.value.t              = T_MissionParameter_value_typeDotation;
-    asn.value.u.typeDotation = dotationType_;
+    asn.value.t              = T_MissionParameter_value_dotationType;
+    asn.value.u.dotationType = dotationType_;
 }
 
 // -----------------------------------------------------------------------------

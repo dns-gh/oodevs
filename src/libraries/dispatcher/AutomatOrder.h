@@ -12,7 +12,7 @@
 
 #include "Order_ABC.h"
 
-struct ASN1T_MsgAutomateOrder;
+struct ASN1T_MsgAutomatOrder;
 
 namespace dispatcher
 {
@@ -31,7 +31,7 @@ class AutomatOrder : public Order_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatOrder( Model& model, Automat& automat, const ASN1T_MsgAutomateOrder& asn );
+             AutomatOrder( Model& model, Automat& automat, const ASN1T_MsgAutomatOrder& asn );
     virtual ~AutomatOrder();
     //@}
 
@@ -52,7 +52,7 @@ private:
     //! @name Member data
     //@{
     Automat&                            automat_;
-    ASN1T_EnumAutomateOrderFormation    formation_;
+    ASN1T_EnumAutomatOrderFormation    formation_;
     //@}
 };
 

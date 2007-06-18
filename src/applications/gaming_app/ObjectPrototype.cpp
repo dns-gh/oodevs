@@ -69,7 +69,7 @@ void ObjectPrototype::Commit( Publisher_ABC& publisher )
     creation_.m.obstacle_de_manoeuvre_activePresent = creation_.m.type_obstaclePresent = GetType().CanBeReservedObstacle();
     if( creation_.m.type_obstaclePresent )
     {
-        creation_.type_obstacle = (ASN1T_EnumTypeObstacle)obstacleTypes_->GetValue();
+        creation_.type_obstacle = (ASN1T_EnumObstacleType)obstacleTypes_->GetValue();
         creation_.m.obstacle_de_manoeuvre_activePresent = creation_.type_obstacle == eTypeObstacle_DeManoeuvre;
         creation_.obstacle_de_manoeuvre_active = reservedObstacleActivated_->isChecked();
     }
