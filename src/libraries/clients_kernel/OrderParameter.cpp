@@ -36,11 +36,11 @@ OrderParameter::OrderParameter( xml::xistream& xis )
 // Name: OrderParameter constructor
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-OrderParameter::OrderParameter( const QString& name, const QString& type, bool optional )
+OrderParameter::OrderParameter( const QString& name, const QString& type, bool optional, bool context /*= false*/ )
     : name_    ( name )
     , type_    ( type )
     , optional_( optional )
-    , context_ ( true )
+    , context_ ( context )
 {
     // NOTHING
 }
@@ -51,7 +51,7 @@ OrderParameter::OrderParameter( const QString& name, const QString& type, bool o
 // -----------------------------------------------------------------------------
 OrderParameter::~OrderParameter()
 {
-    DeleteAll();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -91,11 +91,33 @@ bool OrderParameter::IsContext() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: OrderParameter::GetValue
+// Created: SBO 2007-05-25
+// -----------------------------------------------------------------------------
+const OrderParameterValue& OrderParameter::GetValue( unsigned int id ) const
+{
+    CIT_OrderParameterValues it = values_.find( id );
+    if( it == values_.end() )
+        throw std::runtime_error( "Undefined enumeration value." ); // $$$$ SBO 2007-05-25: 
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
 // Name: OrderParameter::ReadValue
 // Created: SBO 2007-04-23
 // -----------------------------------------------------------------------------
 void OrderParameter::ReadValue( xml::xistream& xis )
 {
-    OrderParameterValue* value = new OrderParameterValue( xis );
-    Register( value->GetId(), *value );
+    OrderParameterValue value( xis );
+    values_.insert( std::make_pair( value.GetId(), value ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::Accept
+// Created: SBO 2007-05-25
+// -----------------------------------------------------------------------------
+void OrderParameter::Accept( OrderParameterValueVisitor_ABC& visitor ) const
+{
+    for( CIT_OrderParameterValues it = values_.begin(); it != values_.end(); ++it )
+        visitor.Visit( it->second );
 }

@@ -34,10 +34,8 @@ class ActionParameterAgentKnowledge : public ActionParameterEntity< AgentKnowled
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionParameterAgentKnowledge( const QString& name );
     explicit ActionParameterAgentKnowledge( const kernel::OrderParameter& parameter );
              ActionParameterAgentKnowledge( const kernel::OrderParameter& parameter, unsigned long id, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner );
-             ActionParameterAgentKnowledge( const QString& name, unsigned long id, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner );
              ActionParameterAgentKnowledge( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner );
              ActionParameterAgentKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner );
     virtual ~ActionParameterAgentKnowledge();

@@ -26,7 +26,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ParamAgent( QObject* parent, const kernel::OrderParameter& parameter );
-             ParamAgent( QObject* parent, const QString& name, const kernel::Agent_ABC& entity );
+             ParamAgent( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Agent_ABC& entity );
     virtual ~ParamAgent();
     //@}
 
@@ -48,7 +48,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::OrderParameter* parameter_;
+    kernel::OrderParameter parameter_;
     //@}
 };
 

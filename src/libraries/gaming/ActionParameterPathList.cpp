@@ -15,12 +15,13 @@
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterPathList constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-ActionParameterPathList::ActionParameterPathList( const kernel::OrderParameter& parameter )
+ActionParameterPathList::ActionParameterPathList( const OrderParameter& parameter )
     : ActionParameter< QString >( parameter )
 {
     // NOTHING
@@ -30,18 +31,18 @@ ActionParameterPathList::ActionParameterPathList( const kernel::OrderParameter& 
 // Name: ActionParameterPathList constructor
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-ActionParameterPathList::ActionParameterPathList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_PathList& asn )
+ActionParameterPathList::ActionParameterPathList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_PathList& asn )
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new ActionParameterPath( tools::translate( "ActionParameter", "Route %1" ).arg( i ), converter, asn.elem[i] ) );
+        AddParameter( *new ActionParameterPath( OrderParameter( tools::translate( "ActionParameter", "Route %1" ).arg( i ), "path", false ), converter, asn.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterPathList constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-ActionParameterPathList::ActionParameterPathList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
+ActionParameterPathList::ActionParameterPathList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, xml::xistream& xis )
     : ActionParameter< QString >( parameter )
 {
     xis >> list( "parameter", *this, &ActionParameterPathList::ReadPath, converter );
@@ -60,7 +61,7 @@ ActionParameterPathList::~ActionParameterPathList()
 // Name: ActionParameterPathList::ReadPath
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void ActionParameterPathList::ReadPath( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
+void ActionParameterPathList::ReadPath( xml::xistream& xis, const CoordinateConverter_ABC& converter )
 {
     AddParameter( *new ActionParameterPath( converter, xis ) );
 }

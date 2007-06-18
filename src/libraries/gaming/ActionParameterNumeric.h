@@ -24,7 +24,6 @@ class ActionParameterNumeric : public ActionParameter< float >
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterNumeric( const QString& name, float value );
              ActionParameterNumeric( const kernel::OrderParameter& parameter, float value );
              ActionParameterNumeric( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~ActionParameterNumeric();
@@ -33,6 +32,8 @@ public:
     //! @name Operations
     //@{
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    void CommitTo( ASN1REAL& asn ) const;
+    virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
     //@}
 
 private:

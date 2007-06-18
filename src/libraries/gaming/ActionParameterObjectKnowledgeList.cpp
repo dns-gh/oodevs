@@ -35,7 +35,7 @@ ActionParameterObjectKnowledgeList::ActionParameterObjectKnowledgeList( const Or
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new ActionParameterObjectKnowledge( tools::translate( "ActionParameter", "Object knowledge %1" ).arg( i + 1 ), asn.elem[i], converter, owner ) );
+        AddParameter( *new ActionParameterObjectKnowledge( OrderParameter( tools::translate( "ActionParameter", "Object knowledge %1" ).arg( i + 1 ), "objectknowledge", false ), asn.elem[i], converter, owner ) );
 }
 
 // -----------------------------------------------------------------------------

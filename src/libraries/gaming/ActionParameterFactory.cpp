@@ -120,7 +120,7 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     case T_MissionParameter_value_locationList:
         return new ActionParameterLocationList( parameter, converter_, *asn.value.u.locationList );
     case T_MissionParameter_value_plannedWorkList:
-        return new ActionParameterObstacleList( parameter, converter_, staticModel_.objectTypes_, *asn.value.u.plannedWorkList );
+        return new ActionParameterObstacleList( parameter, converter_, staticModel_.objectTypes_, model_.agents_, *asn.value.u.plannedWorkList );
     case T_MissionParameter_value_pointList:
         return new ActionParameterPointList( parameter, converter_, *asn.value.u.pointList );
     case T_MissionParameter_value_polygonList:
@@ -128,7 +128,7 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     case T_MissionParameter_value_location:
         return new ActionParameterLocation( parameter, converter_, *asn.value.u.location );
     case T_MissionParameter_value_plannedWork:
-        return new ActionParameterObstacle( parameter, converter_, staticModel_.objectTypes_, *asn.value.u.plannedWork );
+        return new ActionParameterObstacle( parameter, converter_, staticModel_.objectTypes_, model_.agents_, *asn.value.u.plannedWork );
     case T_MissionParameter_value_atlasNature:
         return new ActionParameterAtlasNature( parameter, *asn.value.u.atlasNature, staticModel_.atlasNatures_ );
     case T_MissionParameter_value_point:
@@ -225,9 +225,9 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     else if( type == "dotationtype" )
         return new ActionParameterDotationType( parameter, xis, staticModel_.objectTypes_ );
     else if( type == "genobject" )
-        return new ActionParameterObstacle( parameter, converter_, staticModel_.objectTypes_, xis );
+        return new ActionParameterObstacle( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis );
     else if( type == "genobjectlist" )
-        return new ActionParameterObstacleList( parameter, converter_, staticModel_.objectTypes_, xis );
+        return new ActionParameterObstacleList( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis );
     else if( type == "agentknowledge" )
         return new ActionParameterAgentKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity );
     else if( type == "populationknowledge" )

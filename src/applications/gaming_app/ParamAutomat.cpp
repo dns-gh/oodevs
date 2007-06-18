@@ -18,9 +18,9 @@ using namespace kernel;
 // Name: ParamAutomat constructor
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-ParamAutomat::ParamAutomat( QObject* parent, const kernel::OrderParameter& parameter )
+ParamAutomat::ParamAutomat( QObject* parent, const OrderParameter& parameter )
     : EntityParameter< Automat_ABC >( parent, parameter )
-    , parameter_( &parameter )
+    , parameter_( parameter )
 {
     // NOTHING
 }
@@ -29,19 +29,9 @@ ParamAutomat::ParamAutomat( QObject* parent, const kernel::OrderParameter& param
 // Name: ParamAutomat constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-ParamAutomat::ParamAutomat( QObject* parent, const QString& name, const kernel::Automat_ABC& entity )
-    : EntityParameter< Automat_ABC >( parent, name, entity )
-    , parameter_( 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamAutomat constructor
-// Created: SBO 2007-05-23
-// -----------------------------------------------------------------------------
-ParamAutomat::ParamAutomat( QObject* parent, const QString& name, bool optional )
-    : EntityParameter< Automat_ABC >( parent, name, optional )
+ParamAutomat::ParamAutomat( QObject* parent, const OrderParameter& parameter, const Automat_ABC& entity )
+    : EntityParameter< Automat_ABC >( parent, parameter, entity )
+    , parameter_( parameter )
 {
     // NOTHING
 }
@@ -81,9 +71,7 @@ void ParamAutomat::CommitTo( ASN1T_Automat& asn ) const
 // -----------------------------------------------------------------------------
 void ParamAutomat::CommitTo( Action_ABC& action ) const
 {
-    if( !parameter_ )
-        throw std::runtime_error( "OrderParameter not set" ); // $$$$ SBO 2007-04-25: 
-    std::auto_ptr< ActionParameterEntity< Automat_ABC > > param( new ActionParameterAutomat( *parameter_ ) );
+    std::auto_ptr< ActionParameterEntity< Automat_ABC > > param( new ActionParameterAutomat( parameter_ ) );
     EntityParameter< Automat_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }
@@ -94,7 +82,7 @@ void ParamAutomat::CommitTo( Action_ABC& action ) const
 // -----------------------------------------------------------------------------
 void ParamAutomat::CommitTo( ActionParameter_ABC& param ) const
 {
-    std::auto_ptr< ActionParameterEntity< Automat_ABC > > parameter( new ActionParameterAutomat( GetName() ) );
+    std::auto_ptr< ActionParameterEntity< Automat_ABC > > parameter( new ActionParameterAutomat( parameter_ ) );
     EntityParameter< Automat_ABC >::CommitTo( *parameter );
     param.AddParameter( *parameter.release() );
 }

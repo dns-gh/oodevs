@@ -10,6 +10,7 @@
 #ifndef __ActionParameterVisitor_ABC_h_
 #define __ActionParameterVisitor_ABC_h_
 
+class ActionParameterNumeric;
 class ActionParameterObstacle;
 class ActionParameterLima;
 class ActionParameterLimit;
@@ -40,6 +41,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Visit( const ActionParameterNumeric&             ) {}
     virtual void Visit( const ActionParameterObstacle&            ) {}
     virtual void Visit( const ActionParameterLima&                ) {}
     virtual void Visit( const ActionParameterLimit&               ) {}

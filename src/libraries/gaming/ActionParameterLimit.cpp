@@ -15,14 +15,15 @@
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterLimit constructor
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-ActionParameterLimit::ActionParameterLimit( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Line& line )
-    : ActionParameter_ABC( name )
-    , location_( new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, (const ASN1T_Location&)line ) )
+ActionParameterLimit::ActionParameterLimit( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_Line& line )
+    : ActionParameter< QString >( parameter )
+    , location_( new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, (const ASN1T_Location&)line ) )
 {
     AddParameter( *location_ );
 }
@@ -31,9 +32,9 @@ ActionParameterLimit::ActionParameterLimit( const QString& name, const kernel::C
 // Name: ActionParameterLimit constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-ActionParameterLimit::ActionParameterLimit( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location )
-    : ActionParameter_ABC( name )
-    , location_( new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, location ) )
+ActionParameterLimit::ActionParameterLimit( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Location_ABC& location )
+    : ActionParameter< QString >( parameter )
+    , location_( new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, location ) )
 {
     AddParameter( *location_ );
 }
@@ -52,8 +53,8 @@ namespace
 // Name: ActionParameterLimit constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-ActionParameterLimit::ActionParameterLimit( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
-    : ActionParameter_ABC( ReadName( xis ) )
+ActionParameterLimit::ActionParameterLimit( const CoordinateConverter_ABC& converter, xml::xistream& xis )
+    : ActionParameter< QString >( OrderParameter( ReadName( xis ), "limit", false, true ) )
 {
     xis >> start( "parameter" );
     location_ = new ActionParameterLocation( converter, xis );
@@ -68,25 +69,6 @@ ActionParameterLimit::ActionParameterLimit( const kernel::CoordinateConverter_AB
 ActionParameterLimit::~ActionParameterLimit()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterLimit::Serialize
-// Created: SBO 2007-04-24
-// -----------------------------------------------------------------------------
-void ActionParameterLimit::Serialize( xml::xostream& xos ) const
-{
-    ActionParameter_ABC::Serialize( xos );
-    xos << attribute( "type", "limit" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterLimit::IsContext
-// Created: SBO 2007-04-25
-// -----------------------------------------------------------------------------
-bool ActionParameterLimit::IsContext() const
-{
-    return true;
 }
 
 // -----------------------------------------------------------------------------

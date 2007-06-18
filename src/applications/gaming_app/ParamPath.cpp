@@ -164,7 +164,7 @@ void ParamPath::CommitTo( Action_ABC& action ) const
 // -----------------------------------------------------------------------------
 void ParamPath::CommitTo( ActionParameter_ABC& parameter ) const
 {
-    parameter.AddParameter( *new ActionParameterPath( GetName(), converter_, *location_ ) );
+    parameter.AddParameter( *new ActionParameterPath( OrderParameter( GetName(), "path", false ), converter_, *location_ ) );
 }
 
 // -----------------------------------------------------------------------------

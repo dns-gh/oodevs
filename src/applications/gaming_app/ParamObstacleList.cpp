@@ -130,5 +130,5 @@ void ParamObstacleList::CommitTo( Action_ABC& action ) const
 // -----------------------------------------------------------------------------
 Param_ABC* ParamObstacleList::CreateElement()
 {
-    return new ParamObstacle( this, tr( "Obstacle %1" ).arg( ++count_ ), objectTypes_, layer_, converter_, false );
+    return new ParamObstacle(this, OrderParameter( tr( "Obstacle %1" ).arg( ++count_ ), "obstacle", false ), objectTypes_, layer_, converter_ );
 }

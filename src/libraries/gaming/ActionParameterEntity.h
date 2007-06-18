@@ -26,9 +26,7 @@ class ActionParameterEntity : public ActionParameter< const ConcreteEntity* >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionParameterEntity( const QString& name );
     explicit ActionParameterEntity( const kernel::OrderParameter& parameter );
-             ActionParameterEntity( const QString& name, const ConcreteEntity* entity );
              ActionParameterEntity( const kernel::OrderParameter& parameter, const ConcreteEntity* entity );
     virtual ~ActionParameterEntity();
     //@}
@@ -56,30 +54,8 @@ private:
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-ActionParameterEntity< ConcreteEntity >::ActionParameterEntity( const QString& name )
-    : ActionParameter< const ConcreteEntity* >( name )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterEntity constructor
-// Created: SBO 2007-05-23
-// -----------------------------------------------------------------------------
-template< typename ConcreteEntity >
 ActionParameterEntity< ConcreteEntity >::ActionParameterEntity( const kernel::OrderParameter& parameter )
     : ActionParameter< const ConcreteEntity* >( parameter )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterEntity constructor
-// Created: SBO 2007-05-23
-// -----------------------------------------------------------------------------
-template< typename ConcreteEntity >
-ActionParameterEntity< ConcreteEntity >::ActionParameterEntity( const QString& name, const ConcreteEntity* entity )
-    : ActionParameter< const ConcreteEntity* >( name, entity )
 {
     // NOTHING
 }

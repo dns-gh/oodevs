@@ -18,6 +18,7 @@ namespace kernel
 {
     class CoordinateConverter_ABC;
     class ObjectType;
+    class Automat_ABC;
 }
 
 // =============================================================================
@@ -32,18 +33,17 @@ class ActionParameterObstacle : public ActionParameter< QString >
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterObstacle( const QString& name, const kernel::ObjectType& type );
              ActionParameterObstacle( const kernel::OrderParameter& parameter, const kernel::ObjectType& type );
-             ActionParameterObstacle( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const ASN1T_PlannedWork& asn );
-             ActionParameterObstacle( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const ASN1T_PlannedWork& asn );
-             ActionParameterObstacle( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, xml::xistream& xis );
-             ActionParameterObstacle( const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, xml::xistream& xis );
+             ActionParameterObstacle( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, const ASN1T_PlannedWork& asn );
+             ActionParameterObstacle( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis );
+             ActionParameterObstacle( const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis );
     virtual ~ActionParameterObstacle();
     //@}
 
     //! @name Operations
     //@{
-    virtual QString GetType() const;
+    void AddObstacleType( unsigned int type );
+
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
@@ -63,8 +63,9 @@ private:
 
     //! @name Helpers
     //@{
+    void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats );
     virtual void Serialize( xml::xostream& xos ) const;
-    void SetParameters( const ASN1T_PlannedWork& asn );
+    void SetParameters( const ASN1T_PlannedWork& asn, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats );
     //@}
 
 private:

@@ -13,11 +13,13 @@
 #include "ActionParameterVisitor_ABC.h"
 #include "Tools.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ActionParameterLimaList constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-ActionParameterLimaList::ActionParameterLimaList( const kernel::OrderParameter& parameter )
+ActionParameterLimaList::ActionParameterLimaList( const OrderParameter& parameter )
     : ActionParameter< QString >( parameter )
 {
     // NOTHING
@@ -27,18 +29,18 @@ ActionParameterLimaList::ActionParameterLimaList( const kernel::OrderParameter& 
 // Name: ActionParameterLimaList constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-ActionParameterLimaList::ActionParameterLimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_LimasOrder& limas )
+ActionParameterLimaList::ActionParameterLimaList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_LimasOrder& limas )
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < limas.n; ++i )
-        AddParameter( *new ActionParameterLima( tools::translate( "ActionParameter", "Lima %1" ).arg( i ), converter, limas.elem[i] ) );
+        AddParameter( *new ActionParameterLima( OrderParameter( tools::translate( "ActionParameter", "Lima %1" ).arg( i + 1 ), "lima", false ), converter, limas.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterLimaList constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-ActionParameterLimaList::ActionParameterLimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
+ActionParameterLimaList::ActionParameterLimaList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, xml::xistream& xis )
     : ActionParameter< QString >( parameter )
 {
     xis >> list( "parameter", *this, &ActionParameterLimaList::ReadLima, converter );
@@ -57,7 +59,7 @@ ActionParameterLimaList::~ActionParameterLimaList()
 // Name: ActionParameterLimaList::ReadLima
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-void ActionParameterLimaList::ReadLima( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
+void ActionParameterLimaList::ReadLima( xml::xistream& xis, const CoordinateConverter_ABC& converter )
 {
     AddParameter( *new ActionParameterLima( converter, xis ) );
 }

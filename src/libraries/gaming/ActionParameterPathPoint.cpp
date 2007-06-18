@@ -18,16 +18,6 @@ using namespace xml;
 // Name: ActionParameterPathPoint constructor
 // Created: SBO 2007-05-15
 // -----------------------------------------------------------------------------
-ActionParameterPathPoint::ActionParameterPathPoint( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location )
-    : ActionParameterLocation( name, converter, location )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterPathPoint constructor
-// Created: SBO 2007-05-15
-// -----------------------------------------------------------------------------
 ActionParameterPathPoint::ActionParameterPathPoint( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location )
     : ActionParameterLocation( parameter, converter, location )
 {

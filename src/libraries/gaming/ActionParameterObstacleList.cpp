@@ -30,21 +30,21 @@ ActionParameterObstacleList::ActionParameterObstacleList( const OrderParameter& 
 // Name: ActionParameterObstacleList constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-ActionParameterObstacleList::ActionParameterObstacleList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& resolver, const ASN1T_PlannedWorkList& asn )
+ActionParameterObstacleList::ActionParameterObstacleList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& resolver, const Resolver_ABC< Automat_ABC >& automats, const ASN1T_PlannedWorkList& asn )
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new ActionParameterObstacle( tools::translate( "ActionParameter", "Obstacle %1" ).arg( i + 1 ), converter, resolver, asn.elem[i] ) );
+        AddParameter( *new ActionParameterObstacle( OrderParameter( tools::translate( "ActionParameter", "Obstacle %1" ).arg( i + 1 ), "obstacle", false ), converter, resolver, automats, asn.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterObstacleList constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-ActionParameterObstacleList::ActionParameterObstacleList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& resolver, xml::xistream& xis )
+ActionParameterObstacleList::ActionParameterObstacleList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& resolver, const Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis )
     : ActionParameter< QString >( parameter )
 {
-    xis >> list( "parameter", *this, &ActionParameterObstacleList::ReadObstacle, converter, resolver );
+    xis >> list( "parameter", *this, &ActionParameterObstacleList::ReadObstacle, converter, resolver, automats );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,9 +60,9 @@ ActionParameterObstacleList::~ActionParameterObstacleList()
 // Name: ActionParameterObstacleList::ReadObstacle
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void ActionParameterObstacleList::ReadObstacle( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver )
+void ActionParameterObstacleList::ReadObstacle( xml::xistream& xis, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& resolver, const Resolver_ABC< Automat_ABC >& automats )
 {
-    AddParameter( *new ActionParameterObstacle( converter, resolver, xis ) );
+    AddParameter( *new ActionParameterObstacle( converter, resolver, automats, xis ) );
 }
 
 namespace

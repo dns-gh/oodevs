@@ -7,38 +7,38 @@
 //
 // *****************************************************************************
 
-#ifndef __ActionParameterEnumeration_h_
-#define __ActionParameterEnumeration_h_
+#ifndef __ActionParameterObstacleType_h_
+#define __ActionParameterObstacleType_h_
 
 #include "ActionParameter.h"
 
 // =============================================================================
-/** @class  ActionParameterEnumeration
-    @brief  ActionParameterEnumeration
+/** @class  ActionParameterObstacleType
+    @brief  ActionParameterObstacleType
 */
-// Created: SBO 2007-05-21
+// Created: SBO 2007-05-25
 // =============================================================================
-class ActionParameterEnumeration : public ActionParameter< QString >
+class ActionParameterObstacleType : public ActionParameter< QString >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterEnumeration( const kernel::OrderParameter& parameter, xml::xistream& xis );
-             ActionParameterEnumeration( const kernel::OrderParameter& parameter, unsigned int value );
-    virtual ~ActionParameterEnumeration();
+             ActionParameterObstacleType( const kernel::OrderParameter& parameter, unsigned int value );
+    explicit ActionParameterObstacleType( xml::xistream& xis );
+    virtual ~ActionParameterObstacleType();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    void CommitTo( ASN1T_EnumObstacleType& asn ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ActionParameterEnumeration( const ActionParameterEnumeration& );            //!< Copy constructor
-    ActionParameterEnumeration& operator=( const ActionParameterEnumeration& ); //!< Assignment operator
+    ActionParameterObstacleType( const ActionParameterObstacleType& );            //!< Copy constructor
+    ActionParameterObstacleType& operator=( const ActionParameterObstacleType& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -49,8 +49,8 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameterValue value_;
+    E_TypeObstacle value_;
     //@}
 };
 
-#endif // __ActionParameterEnumeration_h_
+#endif // __ActionParameterObstacleType_h_

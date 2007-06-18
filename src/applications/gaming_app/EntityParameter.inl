@@ -14,25 +14,9 @@
 template< typename ConcreteEntity >
 EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const kernel::OrderParameter& parameter )
     : EntityParameterBase( parent, parameter.GetName() )
-    , parameter_         ( &parameter )
+    , parameter_         ( parameter )
     , potential_         ( 0 )
     , selected_          ( 0 )
-    , optional_          ( parameter.IsOptional() )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityParameter constructor
-// Created: SBO 2007-04-25
-// -----------------------------------------------------------------------------
-template< typename ConcreteEntity >
-EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const QString& name, bool optional )
-    : EntityParameterBase( parent, name )
-    , parameter_         ( 0 )
-    , potential_         ( 0 )
-    , selected_          ( 0 )
-    , optional_          ( optional )
 {
     // NOTHING
 }
@@ -42,12 +26,11 @@ EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const QStri
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const QString& name, const ConcreteEntity& entity )
-    : EntityParameterBase( parent, name )
-    , parameter_         ( 0 )
+EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const kernel::OrderParameter& parameter, const ConcreteEntity& entity )
+    : EntityParameterBase( parent, parameter.GetName() )
+    , parameter_         ( parameter )
     , potential_         ( &entity )
     , selected_          ( 0 )
-    , optional_          ( false )
 {
     // NOTHING
 }
@@ -80,7 +63,7 @@ void EntityParameter< ConcreteEntity >::NotifyContextMenu( const ConcreteEntity&
 template< typename ConcreteEntity >
 bool EntityParameter< ConcreteEntity >::CheckValidity()
 {
-    if( ! optional_ && ! selected_ )
+    if( ! parameter_.IsOptional() && ! selected_ )
         return Invalid();
     return true;
 }

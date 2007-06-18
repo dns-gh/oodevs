@@ -32,7 +32,7 @@ namespace
 // -----------------------------------------------------------------------------
 ActionParameterEnumeration::ActionParameterEnumeration( const OrderParameter& parameter, xml::xistream& xis )
     : ActionParameter< QString >( parameter )
-    , value_( parameter.Get( ReadValue( xis ) ) )
+    , value_( parameter.GetValue( ReadValue( xis ) ) )
 {
     SetValue( value_.GetName() );
 }
@@ -43,7 +43,7 @@ ActionParameterEnumeration::ActionParameterEnumeration( const OrderParameter& pa
 // -----------------------------------------------------------------------------
 ActionParameterEnumeration::ActionParameterEnumeration( const OrderParameter& parameter, unsigned int value )
     : ActionParameter< QString >( parameter )
-    , value_( parameter.Get( value ) )
+    , value_( parameter.GetValue( value ) )
 {
     SetValue( value_.GetName() );
 }

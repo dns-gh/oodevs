@@ -41,17 +41,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    OrderParameterValue( const OrderParameterValue& );            //!< Copy constructor
-    OrderParameterValue& operator=( const OrderParameterValue& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
     //! @name Member data
     //@{
     int id_;

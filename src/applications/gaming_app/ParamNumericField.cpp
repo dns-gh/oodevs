@@ -20,21 +20,7 @@
 // -----------------------------------------------------------------------------
 ParamNumericField::ParamNumericField( const kernel::OrderParameter& parameter, bool isReal )
     : Param_ABC( parameter.GetName() )
-    , parameter_( &parameter )
-    , isReal_( isReal )
-    , pLabel_( 0 )
-    , pEdit_ ( 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamNumericField constructor
-// Created: SBO 2007-04-25
-// -----------------------------------------------------------------------------
-ParamNumericField::ParamNumericField( const QString& name, bool isReal )
-    : Param_ABC( name )
-    , parameter_( 0 )
+    , parameter_( parameter )
     , isReal_( isReal )
     , pLabel_( 0 )
     , pEdit_ ( 0 )
@@ -121,7 +107,7 @@ void ParamNumericField::CommitTo( ASN1REAL& asn ) const
 // -----------------------------------------------------------------------------
 void ParamNumericField::CommitTo( Action_ABC& action ) const
 {
-    action.AddParameter( *new ActionParameterNumeric( *parameter_, pEdit_->text().toFloat() ) );
+    action.AddParameter( *new ActionParameterNumeric( parameter_, pEdit_->text().toFloat() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,7 +116,7 @@ void ParamNumericField::CommitTo( Action_ABC& action ) const
 // -----------------------------------------------------------------------------
 void ParamNumericField::CommitTo( ActionParameter_ABC& parameter ) const
 {
-    parameter.AddParameter( *new ActionParameterNumeric( GetName(), pEdit_->text().toFloat() ) );
+    parameter.AddParameter( *new ActionParameterNumeric( parameter_, pEdit_->text().toFloat() ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -106,14 +106,15 @@ public:
         return elements_.size();
     }
     //@}
-    // $$$$ AGE 2006-02-14: 
-protected:
+    
+private:
     //! @name Copy/Assignement
     //@{
     Resolver( const Resolver& );            //!< Copy constructor
     Resolver& operator=( const Resolver& ); //!< Assignement operator
     //@}
 
+protected:
     //! @name Helpers
     //@{
     void Error( const Identifier& identifier, const std::string& message ) const

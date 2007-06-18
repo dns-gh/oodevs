@@ -20,6 +20,7 @@
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionParameter.h"
 #include "gaming/ActionParameterObstacle.h"
+#include "gaming/ActionParameterObstacleType.h"
 
 #include "ENT/ENT_Tr.h"
 
@@ -31,37 +32,18 @@ using namespace gui;
 // Created: APE 2004-05-18
 // -----------------------------------------------------------------------------
 ParamObstacle::ParamObstacle( QObject* parent, const kernel::OrderParameter& parameter, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
-    : QObject( parent )
-    , Param_ABC( parameter.GetName() )
-    , parameter_( &parameter )
+    : QObject     ( parent )
+    , Param_ABC   ( parameter.GetName() )
+    , parameter_  ( parameter )
     , objectTypes_( objectTypes )
-    , layer_( layer )
-    , converter_( converter )
-    , location_( 0 )
-    , typeCombo_( 0 )
-    , density_( 0 )
-    , tc2_( 0 )
-    , optional_( parameter.IsOptional() )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamObstacle constructor
-// Created: SBO 2007-04-25
-// -----------------------------------------------------------------------------
-ParamObstacle::ParamObstacle( QObject* parent, const QString& name, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, bool optional )
-    : QObject( parent )
-    , Param_ABC( name )
-    , parameter_( 0 )
-    , objectTypes_( objectTypes )
-    , layer_( layer )
-    , converter_( converter )
-    , location_( 0 )
-    , typeCombo_( 0 )
-    , density_( 0 )
-    , tc2_( 0 )
-    , optional_( optional )
+    , layer_      ( layer )
+    , converter_  ( converter )
+    , typeCombo_  ( 0 )
+    , obstacleTypeCombo_( 0 )
+    , location_   ( 0 )
+    , density_    ( 0 )
+    , tc2_        ( 0 )
+    , optional_   ( parameter.IsOptional() )
 {
     // NOTHING
 }
@@ -72,6 +54,7 @@ ParamObstacle::ParamObstacle( QObject* parent, const QString& name, const kernel
 // -----------------------------------------------------------------------------
 ParamObstacle::~ParamObstacle()
 {
+    delete tc2_;
     delete density_;
     delete location_;
 }
@@ -98,19 +81,23 @@ void ParamObstacle::BuildInterface( QWidget* parent )
     box = new QHBox( group );
     box->setSpacing( 5 );
 
-    new QLabel( tr( "Obstacle type:" ), box );
-    obstacleTypeCombo_ = new QComboBox( box );
-    for( int i = 0; i < eNbrTypeObstacle ; ++i )
-        obstacleTypeCombo_->insertItem( ENT_Tr::ConvertFromTypeObstacle( ( E_TypeObstacle)i, ENT_Tr::eToTr ).c_str(), i );
+    {
+        QLabel* label = new QLabel( tr( "Obstacle type:" ), box );
+        obstacleTypeCombo_ = new ValuedComboBox< unsigned int >( box );
+        for( unsigned int i = 0; i < eNbrTypeObstacle ; ++i )
+            obstacleTypeCombo_->AddItem( ENT_Tr::ConvertFromTypeObstacle( ( E_TypeObstacle)i, ENT_Tr::eToTr ).c_str(), i );
+        connect( this, SIGNAL( ToggleReservable( bool ) ), label, SLOT( setShown( bool ) ) );
+        connect( this, SIGNAL( ToggleReservable( bool ) ), obstacleTypeCombo_, SLOT( setShown( bool ) ) );
+    }
 
-    density_ = new ParamNumericField( tr( "Density" ), true );
+    density_ = new ParamNumericField( OrderParameter( tr( "Density" ), "density", false ), true );
     density_->BuildInterface( group );
     density_->SetLimits( 0.f, 5.f );
 
-    tc2_ = new ParamAutomat( this, tr( "TC2" ), false );
+    tc2_ = new ParamAutomat( this, OrderParameter( tr( "TC2" ), "tc2", false ) );
     tc2_->BuildInterface( group );
 
-    location_ = new ParamLocation( tr( "Location" ), layer_, converter_, false );
+    location_ = new ParamLocation( OrderParameter( tr( "Location" ), "location", false ), layer_, converter_ );
     location_->BuildInterface( group );
 
     connect( typeCombo_, SIGNAL( activated( int ) ), SLOT( OnTypeChanged() ) );
@@ -183,10 +170,10 @@ void ParamObstacle::CommitTo( ASN1T_MissionParameter& asn ) const
 void ParamObstacle::CommitTo( ASN1T_PlannedWork& object ) const
 {
     const kernel::ObjectType* type = typeCombo_->GetValue();
-    if( !type ) // $$$$ SBO 2007-04-26: 
+    if( !type )
         return;
     object.type          = (ASN1T_EnumObjectType)type->id_;
-    object.type_obstacle = (ASN1T_EnumObstacleType)obstacleTypeCombo_->currentItem();
+    object.type_obstacle = (ASN1T_EnumObstacleType)obstacleTypeCombo_->GetValue();
     switch( type->id_ )
     {
     case EnumObjectType::zone_minee_lineaire:
@@ -207,6 +194,7 @@ void ParamObstacle::CommitTo( ASN1T_PlannedWork& object ) const
 // -----------------------------------------------------------------------------
 void ParamObstacle::Clean( ASN1T_MissionParameter& asn ) const
 {
+    location_->Clean( asn.value.u.plannedWork->position );
     delete asn.value.u.plannedWork;
 }
 
@@ -216,12 +204,10 @@ void ParamObstacle::Clean( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamObstacle::CommitTo( Action_ABC& action ) const
 {
-    if( ! parameter_ )
-        throw std::runtime_error( "OrderParameter not defined" ); // $$$$ SBO 2007-04-25: 
     const kernel::ObjectType* type = typeCombo_->GetValue();
-    if( !type ) // $$$$ SBO 2007-04-26: 
+    if( !type )
         return;
-    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterObstacle( *parameter_, *type ) );
+    std::auto_ptr< ActionParameterObstacle > param( new ActionParameterObstacle( parameter_, *type ) );
     switch( type->id_ )
     {
     case EnumObjectType::zone_minee_lineaire:
@@ -233,6 +219,8 @@ void ParamObstacle::CommitTo( Action_ABC& action ) const
         tc2_->CommitTo( *param );
         break;
     };
+    if( type->CanBeReservedObstacle() )
+        param->AddParameter( *new ActionParameterObstacleType( OrderParameter( tr( "Obstacle type" ), "obstacletype", false ), obstacleTypeCombo_->GetValue() ) );
     location_->CommitTo( *param );
     action.AddParameter( *param.release() );
 }
@@ -246,7 +234,7 @@ void ParamObstacle::CommitTo( ActionParameter_ABC& parameter ) const
     const kernel::ObjectType* type = typeCombo_->GetValue();
     if( !type ) // $$$$ SBO 2007-04-26: 
         return;
-    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterObstacle( GetName(), *type ) );
+    std::auto_ptr< ActionParameterObstacle > param( new ActionParameterObstacle( parameter_, *type ) );
     location_->CommitTo( *param );
     switch( type->id_ )
     {
@@ -259,6 +247,8 @@ void ParamObstacle::CommitTo( ActionParameter_ABC& parameter ) const
         tc2_->CommitTo( *param );
         break;
     };
+    if( type->CanBeReservedObstacle() )
+        param->AddParameter( *new ActionParameterObstacleType( OrderParameter( tr( "Obstacle type" ), "obstacletype", false ), obstacleTypeCombo_->GetValue() ) );
     parameter.AddParameter( *param.release() );
 }
 
@@ -281,7 +271,10 @@ void ParamObstacle::OnTypeChanged()
 {
     density_->Hide();
     tc2_->Hide();
-    switch( typeCombo_->GetValue()->id_ )
+    const ObjectType* type = typeCombo_->GetValue();
+    if( !type )
+        return;
+    switch( type->id_ )
     {
     case EnumObjectType::zone_minee_lineaire:
     case EnumObjectType::zone_minee_par_dispersion:
@@ -292,4 +285,5 @@ void ParamObstacle::OnTypeChanged()
         tc2_->Show();
         break;
     };
+    emit ToggleReservable( type->CanBeReservedObstacle() );
 }

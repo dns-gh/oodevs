@@ -9,19 +9,10 @@
 
 #include "gaming_pch.h"
 #include "ActionParameterNumeric.h"
+#include "ActionParameterVisitor_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterNumeric constructor
-// Created: SBO 2007-05-21
-// -----------------------------------------------------------------------------
-ActionParameterNumeric::ActionParameterNumeric( const QString& name, float value )
-    : ActionParameter< float >( name, value )
-{
-    // NOTHING
-}
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterNumeric constructor
@@ -81,4 +72,22 @@ void ActionParameterNumeric::CommitTo( ASN1T_MissionParameter& asn ) const
     asn.null_value = 0;
     asn.value.t = T_MissionParameter_value_aReal;
     asn.value.u.aReal = GetValue();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterNumeric::CommitTo
+// Created: SBO 2007-05-25
+// -----------------------------------------------------------------------------
+void ActionParameterNumeric::CommitTo( ASN1REAL& asn ) const
+{
+    asn = GetValue();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterNumeric::Accept
+// Created: SBO 2007-05-25
+// -----------------------------------------------------------------------------
+void ActionParameterNumeric::Accept( ActionParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

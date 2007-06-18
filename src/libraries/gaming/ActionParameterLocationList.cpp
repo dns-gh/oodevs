@@ -13,11 +13,13 @@
 #include "ActionParameterVisitor_ABC.h"
 #include "Tools.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ActionParameterLocationList constructor
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-ActionParameterLocationList::ActionParameterLocationList( const kernel::OrderParameter& parameter )
+ActionParameterLocationList::ActionParameterLocationList( const OrderParameter& parameter )
     : ActionParameter< QString >( parameter )
 {
     // NOTHING
@@ -27,18 +29,18 @@ ActionParameterLocationList::ActionParameterLocationList( const kernel::OrderPar
 // Name: ActionParameterLocationList constructor
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-ActionParameterLocationList::ActionParameterLocationList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_LocationList& asn )
+ActionParameterLocationList::ActionParameterLocationList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_LocationList& asn )
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new ActionParameterLocation( tools::translate( "ActionParameter", "Location %1" ).arg( i ), converter, asn.elem[i] ) );
+        AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location %1" ).arg( i ), "location", false ), converter, asn.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterLocationList constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-ActionParameterLocationList::ActionParameterLocationList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
+ActionParameterLocationList::ActionParameterLocationList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, xml::xistream& xis )
     : ActionParameter< QString >( parameter )
 {
     xis >> list( "parameter", *this, &ActionParameterLocationList::ReadLocation, converter );
@@ -57,7 +59,7 @@ ActionParameterLocationList::~ActionParameterLocationList()
 // Name: ActionParameterLocationList::ReadLocation
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void ActionParameterLocationList::ReadLocation( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
+void ActionParameterLocationList::ReadLocation( xml::xistream& xis, const CoordinateConverter_ABC& converter )
 {
     AddParameter( *new ActionParameterLocation( converter, xis ) );
 }

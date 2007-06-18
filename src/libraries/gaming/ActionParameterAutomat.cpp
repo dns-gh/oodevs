@@ -10,7 +10,6 @@
 #include "gaming_pch.h"
 #include "ActionParameterAutomat.h"
 #include "ActionParameterVisitor_ABC.h"
-#include "clients_kernel/Automat_ABC.h"
 
 using namespace kernel;
 
@@ -35,8 +34,8 @@ namespace
 // Name: ActionParameterAutomat constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-ActionParameterAutomat::ActionParameterAutomat( const QString& name )
-    : ActionParameterEntity< Automat_ABC >( name )
+ActionParameterAutomat::ActionParameterAutomat( const kernel::OrderParameter& parameter )
+    : ActionParameterEntity< Automat_ABC >( parameter )
 {
     // NOTHING
 }
@@ -45,8 +44,8 @@ ActionParameterAutomat::ActionParameterAutomat( const QString& name )
 // Name: ActionParameterAutomat constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-ActionParameterAutomat::ActionParameterAutomat( const kernel::OrderParameter& parameter )
-    : ActionParameterEntity< Automat_ABC >( parameter )
+ActionParameterAutomat::ActionParameterAutomat( const kernel::OrderParameter& parameter, unsigned int id, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver )
+    : ActionParameterEntity< Automat_ABC >( parameter, &resolver.Get( id ) )
 {
     // NOTHING
 }
@@ -65,28 +64,8 @@ ActionParameterAutomat::ActionParameterAutomat( const OrderParameter& parameter,
 // Name: ActionParameterAutomat constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-ActionParameterAutomat::ActionParameterAutomat( const QString& name, unsigned int id, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver )
-    : ActionParameterEntity< Automat_ABC >( name, &resolver.Get( id ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterAutomat constructor
-// Created: SBO 2007-05-23
-// -----------------------------------------------------------------------------
-ActionParameterAutomat::ActionParameterAutomat( const kernel::OrderParameter& parameter, unsigned int id, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver )
-    : ActionParameterEntity< Automat_ABC >( parameter, &resolver.Get( id ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterAutomat constructor
-// Created: SBO 2007-05-23
-// -----------------------------------------------------------------------------
 ActionParameterAutomat::ActionParameterAutomat( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver )
-    : ActionParameterEntity< Automat_ABC >( ReadName( xis ), &resolver.Get( ReadId( xis ) ) )
+    : ActionParameterEntity< Automat_ABC >( OrderParameter( ReadName( xis ), "automat", false ), &resolver.Get( ReadId( xis ) ) )
 {
     // NOTHING
 }

@@ -13,6 +13,7 @@
 #include "game_asn/Asn.h"
 #include "Param_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
+#include "clients_kernel/OrderParameter.h"
 
 namespace kernel
 {
@@ -20,7 +21,6 @@ namespace kernel
     class ObjectTypes;
     class CoordinateConverter_ABC;
     class Automat_ABC;
-    class OrderParameter;
 }
 
 namespace gui
@@ -46,7 +46,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              ParamObstacle( QObject* parent, const kernel::OrderParameter& parameter, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
-             ParamObstacle( QObject* parent, const QString& name, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, bool optional );
     virtual ~ParamObstacle();
     //@}
 
@@ -65,6 +64,12 @@ public:
     void CommitTo( ActionParameter_ABC& parameter ) const;
     //@}
 
+signals:
+    //! @name Signals
+    //@{
+    void ToggleReservable( bool );
+    //@}
+
 private slots:
     //! @name Slots
     //@{
@@ -81,14 +86,13 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::OrderParameter parameter_;
     const kernel::ObjectTypes& objectTypes_;
-    const kernel::OrderParameter* parameter_;
     gui::ParametersLayer& layer_;
     const kernel::CoordinateConverter_ABC& converter_;
-    ParamLocation* location_;
-
     gui::ValuedComboBox< const kernel::ObjectType* >* typeCombo_;
-    QComboBox* obstacleTypeCombo_;
+    gui::ValuedComboBox< unsigned int >* obstacleTypeCombo_;
+    ParamLocation* location_;
     ParamNumericField* density_;
     ParamAutomat* tc2_;
     bool optional_;

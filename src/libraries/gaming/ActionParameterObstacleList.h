@@ -18,6 +18,7 @@ namespace kernel
 {
     class CoordinateConverter_ABC;
     class ObjectType;
+    class Automat_ABC;
 }
 
 // =============================================================================
@@ -33,8 +34,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ActionParameterObstacleList( const kernel::OrderParameter& parameter );
-             ActionParameterObstacleList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver, const ASN1T_PlannedWorkList& asn );
-             ActionParameterObstacleList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver, xml::xistream& xis );
+             ActionParameterObstacleList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, const ASN1T_PlannedWorkList& asn );
+             ActionParameterObstacleList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis );
     virtual ~ActionParameterObstacleList();
     //@}
 
@@ -53,7 +54,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadObstacle( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver );
+    void ReadObstacle( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats );
     //@}
 };
 

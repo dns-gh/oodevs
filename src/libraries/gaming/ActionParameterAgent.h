@@ -29,10 +29,8 @@ class ActionParameterAgent : public ActionParameterEntity< kernel::Agent_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionParameterAgent( const QString& name );
     explicit ActionParameterAgent( const kernel::OrderParameter& parameter );
              ActionParameterAgent( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver );
-             ActionParameterAgent( const QString& name, unsigned int id, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver );
              ActionParameterAgent( const kernel::OrderParameter& parameter, unsigned int id, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver );
              ActionParameterAgent( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver );;
     virtual ~ActionParameterAgent();

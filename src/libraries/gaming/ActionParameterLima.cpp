@@ -15,14 +15,15 @@
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterLima constructor
 // Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
-ActionParameterLima::ActionParameterLima( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location )
-    : ActionParameter< QString >( name )
-    , location_( new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, location ) )
+ActionParameterLima::ActionParameterLima( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Location_ABC& location )
+    : ActionParameter< QString >( parameter )
+    , location_( new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, location ) )
 {
     AddParameter( *location_ );
 }
@@ -31,9 +32,9 @@ ActionParameterLima::ActionParameterLima( const QString& name, const kernel::Coo
 // Name: ActionParameterLima constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-ActionParameterLima::ActionParameterLima( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_LimaOrder& asn )
-    : ActionParameter< QString >( name )
-    , location_( new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, asn.lima ) )
+ActionParameterLima::ActionParameterLima( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_LimaOrder& asn )
+    : ActionParameter< QString >( parameter )
+    , location_( new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, asn.lima ) )
 {
     QStringList functions;
     for( unsigned int i = 0; i < asn.fonctions.n; ++i )
@@ -56,8 +57,8 @@ namespace
 // Name: ActionParameterLima constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-ActionParameterLima::ActionParameterLima( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
-    : ActionParameter< QString >( ReadName( xis ) )
+ActionParameterLima::ActionParameterLima( const CoordinateConverter_ABC& converter, xml::xistream& xis )
+    : ActionParameter< QString >( OrderParameter( ReadName( xis ), "lima", false ) )
 {
     std::string value;
     xis >> attribute( "value", value )
@@ -112,7 +113,7 @@ void ActionParameterLima::Serialize( xml::xostream& xos ) const
 // Name: ActionParameterLima::DisplayInToolTip
 // Created: SBO 2007-05-15
 // -----------------------------------------------------------------------------
-void ActionParameterLima::DisplayInToolTip( kernel::Displayer_ABC& displayer ) const
+void ActionParameterLima::DisplayInToolTip( Displayer_ABC& displayer ) const
 {
     ActionParameter< QString >::DisplayInToolTip( displayer );
     displayer.Display( "", GetValue() );

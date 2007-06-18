@@ -53,7 +53,7 @@ void ParamAgentList::AddToMenu( kernel::ContextMenu& menu )
 // -----------------------------------------------------------------------------
 EntityParameter< kernel::Agent_ABC >* ParamAgentList::CreateElement( const kernel::Agent_ABC& potential )
 {
-    return new ParamAgent( this, tr( "Agent %1" ).arg( ++count_ ), potential );
+    return new ParamAgent( this, OrderParameter( tr( "Agent %1" ).arg( ++count_ ), "agent", false ), potential );
 }
 
 namespace

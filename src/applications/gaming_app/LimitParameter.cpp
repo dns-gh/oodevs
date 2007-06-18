@@ -16,11 +16,13 @@
 #include "clients_gui/RichLabel.h"
 #include "clients_kernel/Lines.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: LimitParameter constructor
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-LimitParameter::LimitParameter( QObject* parent, const QString& name, const kernel::CoordinateConverter_ABC& converter, bool optional )
+LimitParameter::LimitParameter( QObject* parent, const QString& name, const CoordinateConverter_ABC& converter, bool optional )
     : QObject   ( parent )
     , Param_ABC ( name )
     , converter_( converter )
@@ -110,7 +112,7 @@ void LimitParameter::Clean( ASN1T_Line& asn ) const
 // Name: LimitParameter::NotifyContextMenu
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void LimitParameter::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu )
+void LimitParameter::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, ContextMenu& menu )
 {
     if( entity.IsLimit() )
     {
@@ -158,13 +160,13 @@ void LimitParameter::Display( const QString& what )
 // Name: LimitParameter::Draw
 // Created: SBO 2006-11-20
 // -----------------------------------------------------------------------------
-void LimitParameter::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void LimitParameter::Draw( const geometry::Point2f& point, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( !selected_ )
         return;
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glColor4f( 1.f, 1.f, 1.f, 1.f );
-        selected_->Interface().Apply( &kernel::Drawable_ABC::Draw, point, viewport, tools );
+        selected_->Interface().Apply( &Drawable_ABC::Draw, point, viewport, tools );
     glPopAttrib();
 }
 
@@ -185,8 +187,8 @@ void LimitParameter::CommitTo( ActionParameter_ABC& parameter ) const
 {
     if( !selected_ )
         return;
-    kernel::Lines lines;
+    Lines lines;
     selected_->CopyTo( lines );
-    std::auto_ptr< ActionParameterLimit > param( new ActionParameterLimit( GetName(), converter_, lines ) );
+    std::auto_ptr< ActionParameterLimit > param( new ActionParameterLimit( OrderParameter( GetName(), "limit", false, true ), converter_, lines ) );
     parameter.AddParameter( *param.release() );
 }

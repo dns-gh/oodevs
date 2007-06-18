@@ -10,13 +10,8 @@
 #ifndef __ActionParameterLocation_h_
 #define __ActionParameterLocation_h_
 
-#include "ActionParameter_ABC.h"
+#include "ActionParameter.h"
 #include "Location.h"
-
-namespace kernel
-{
-    class OrderParameter;
-}
 
 // =============================================================================
 /** @class  ActionParameterLocation
@@ -24,16 +19,14 @@ namespace kernel
 */
 // Created: SBO 2007-04-19
 // =============================================================================
-class ActionParameterLocation : public ActionParameter_ABC
+class ActionParameterLocation : public ActionParameter< QString >
                               , public Location
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterLocation( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              ActionParameterLocation( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
-             ActionParameterLocation( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Location& asn );
              ActionParameterLocation( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Location& asn );
              ActionParameterLocation( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
              ActionParameterLocation( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
@@ -42,7 +35,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool IsContext() const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
 
@@ -65,12 +57,6 @@ private:
     //@{
     virtual geometry::Point2f GetPosition() const;
     virtual void Serialize( xml::xostream& xos ) const;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const kernel::OrderParameter* parameter_;
     //@}
 };
 

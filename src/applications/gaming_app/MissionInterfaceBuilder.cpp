@@ -380,6 +380,19 @@ Param_ABC* MissionInterfaceBuilder::BuildMedicalPriorities( const OrderParameter
     return new ParamHumanWoundList( missionInterface_, parameter );
 }
 
+namespace
+{
+    struct OrderParameterValueVisitor : public kernel::OrderParameterValueVisitor_ABC
+    {
+        OrderParameterValueVisitor( ParamComboBox< ASN1INT >& param ) : param_( &param ) {}
+        virtual void Visit( const OrderParameterValue& value )
+        {
+            param_->AddItem( value.GetName(), value.GetId() );
+        }
+        ParamComboBox< ASN1INT >* param_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildEnumeration
 // Created: SBO 2006-12-01
@@ -387,12 +400,8 @@ Param_ABC* MissionInterfaceBuilder::BuildMedicalPriorities( const OrderParameter
 Param_ABC* MissionInterfaceBuilder::BuildEnumeration( const OrderParameter& parameter ) const
 {
     ParamComboBox< ASN1INT >& param = BuildVarList< ASN1INT >( parameter );
-    Iterator< const OrderParameterValue& > it = parameter.CreateIterator();
-    while( it.HasMoreElements() )
-    {
-        const OrderParameterValue& value = it.NextElement();
-        param.AddItem( value.GetName(), value.GetId() );
-    }
+    OrderParameterValueVisitor visitor( param );
+    parameter.Accept( visitor );
     return &param;
 }
 

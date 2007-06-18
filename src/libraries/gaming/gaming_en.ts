@@ -40,6 +40,18 @@
         <source>Error loading mission parameters. Found type: &apos;%1&apos; expecting: &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>TC2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Density</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActionParameterFactory</name>

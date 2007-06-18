@@ -34,8 +34,6 @@ class ActionParameterPath : public ActionParameter< QString >
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterPath( const QString& name, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
-             ActionParameterPath( const QString& name, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Location& asn );
              ActionParameterPath( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              ActionParameterPath( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Location& asn );
              ActionParameterPath( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );

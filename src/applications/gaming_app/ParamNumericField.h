@@ -12,11 +12,7 @@
 
 #include "game_asn/Asn.h"
 #include "Param_ABC.h"
-
-namespace kernel
-{
-    class OrderParameter;
-}
+#include "clients_kernel/OrderParameter.h"
 
 namespace gui
 {
@@ -38,7 +34,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              ParamNumericField( const kernel::OrderParameter& parameter, bool isReal );
-             ParamNumericField( const QString& name, bool isReal );
     virtual ~ParamNumericField();
     //@}
 
@@ -67,7 +62,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::OrderParameter* parameter_;
+    kernel::OrderParameter parameter_;
     bool isReal_;
     gui::RichLabel* pLabel_;
     QLineEdit* pEdit_;

@@ -35,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ParamAgentKnowledge( QObject* pParent, const kernel::OrderParameter& parameter, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
-             ParamAgentKnowledge( QObject* pParent, const QString& name, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, const AgentKnowledge_ABC& potential );
+             ParamAgentKnowledge( QObject* pParent, const kernel::OrderParameter& parameter, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, const AgentKnowledge_ABC& potential );
     virtual ~ParamAgentKnowledge();
     //@}
 
@@ -62,7 +62,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::OrderParameter* parameter_;
+    kernel::OrderParameter parameter_;
     AgentKnowledgeConverter_ABC& converter_;
     const kernel::Entity_ABC& agent_;
     //@}

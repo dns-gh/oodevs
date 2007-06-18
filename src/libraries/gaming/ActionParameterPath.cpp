@@ -22,28 +22,6 @@ using namespace xml;
 // Name: ActionParameterPath constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-ActionParameterPath::ActionParameterPath( const QString& name, const CoordinateConverter_ABC& converter, const Location_ABC& location )
-    : ActionParameter< QString >( name )
-    , converter_( converter )
-{
-    location.Accept( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterPath constructor
-// Created: SBO 2007-04-26
-// -----------------------------------------------------------------------------
-ActionParameterPath::ActionParameterPath( const QString& name, const CoordinateConverter_ABC& converter, const ASN1T_Location& asn )
-    : ActionParameter< QString >( name )
-    , converter_( converter )
-{
-    AddPoints( asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterPath constructor
-// Created: SBO 2007-04-26
-// -----------------------------------------------------------------------------
 ActionParameterPath::ActionParameterPath( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Location_ABC& location )
     : ActionParameter< QString >( parameter )
     , converter_( converter )
@@ -88,7 +66,7 @@ namespace
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 ActionParameterPath::ActionParameterPath( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
-    : ActionParameter< QString >( ReadName( xis ) )
+    : ActionParameter< QString >( OrderParameter( ReadName( xis ), "path", false ) )
     , converter_( converter )
 {
     xis >> list( "parameter", *this, &ActionParameterPath::ReadPoint );
@@ -118,7 +96,7 @@ void ActionParameterPath::AddPoints( const ASN1T_Location& asn )
             label = tools::translate( "ActionParameter", "Destination" );
         else
             label = tools::translate( "ActionParameter", "Way point %1" ).arg( i + 1 );
-        AddParameter( *new ActionParameterPathPoint( label, converter_, pt ) );
+        AddParameter( *new ActionParameterPathPoint( OrderParameter( label, "pathpoint", false ), converter_, pt ) );
     }
 }
 
@@ -138,7 +116,7 @@ void ActionParameterPath::VisitLines( const T_PointVector& points )
             label = tools::translate( "ActionParameter", "Destination" );
         else
             label = tools::translate( "ActionParameter", "Way point %1" ).arg( i );
-        AddParameter( *new ActionParameterPathPoint( label, converter_, pt ) );
+        AddParameter( *new ActionParameterPathPoint( OrderParameter( label, "pathpoint", false ), converter_, pt ) );
     }
 }
 

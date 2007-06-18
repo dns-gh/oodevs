@@ -17,7 +17,6 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/OrderParameter.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionParameterLocation.h"
 
@@ -30,33 +29,13 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 ParamLocation::ParamLocation( const OrderParameter& parameter, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : Param_ABC  ( parameter.GetName() )
-    , parameter_ ( &parameter )
+    , parameter_ ( parameter )
     , converter_ ( converter )
     , layer_     ( layer )
     , creator_   ( 0 )
     , controller_( 0 )
     , pLabel_    ( 0 )
     , location_  ( 0 )
-    , optional_  ( parameter.IsOptional() )
-    , filter_    ( true, true, true, true )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLocation constructor
-// Created: SBO 2007-04-25
-// -----------------------------------------------------------------------------
-ParamLocation::ParamLocation( const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, bool optional )
-    : Param_ABC  ( name )
-    , parameter_ ( 0 )
-    , converter_ ( converter )
-    , layer_     ( layer )
-    , creator_   ( 0 )
-    , controller_( 0 )
-    , pLabel_    ( 0 )
-    , location_  ( 0 )
-    , optional_  ( optional )
     , filter_    ( true, true, true, true )
 {
     // NOTHING
@@ -116,7 +95,7 @@ void ParamLocation::RegisterIn( ActionController& controller )
 // -----------------------------------------------------------------------------
 bool ParamLocation::CheckValidity()
 {
-    if( !optional_ && !location_ )
+    if( !parameter_.IsOptional() && !location_ )
     {
         pLabel_->Warn( 3000 );
         return false;
@@ -145,7 +124,7 @@ void ParamLocation::CommitTo( ASN1T_MissionParameter& asn ) const
 void ParamLocation::Clean( ASN1T_MissionParameter& asn ) const
 {
     if( asn.value.u.location )
-        delete[] asn.value.u.location->vecteur_point.elem;
+        Clean( *asn.value.u.location );
     delete asn.value.u.location;
 }
 
@@ -163,14 +142,21 @@ void ParamLocation::CommitTo( ASN1T_Location& asn ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParamLocation::Clean
+// Created: SBO 2007-05-25
+// -----------------------------------------------------------------------------
+void ParamLocation::Clean( ASN1T_Location& asn ) const
+{
+    delete[] asn.vecteur_point.elem;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParamLocation::CommitTo
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
 void ParamLocation::CommitTo( Action_ABC& action ) const
 {
-    if( !parameter_ )
-        throw std::runtime_error( "OrderParameter not defined" );
-    action.AddParameter( *new ActionParameterLocation( *parameter_, converter_, *location_ ) );
+    action.AddParameter( *new ActionParameterLocation( parameter_, converter_, *location_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -179,7 +165,7 @@ void ParamLocation::CommitTo( Action_ABC& action ) const
 // -----------------------------------------------------------------------------
 void ParamLocation::CommitTo( ActionParameter_ABC& parameter ) const
 {
-    parameter.AddParameter( *new ActionParameterLocation( GetName(), converter_, *location_ ) );
+    parameter.AddParameter( *new ActionParameterLocation( parameter_, converter_, *location_ ) );
 }
 
 // -----------------------------------------------------------------------------

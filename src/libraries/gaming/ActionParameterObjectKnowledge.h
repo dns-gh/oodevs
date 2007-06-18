@@ -34,10 +34,8 @@ class ActionParameterObjectKnowledge : public ActionParameterEntity< ObjectKnowl
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionParameterObjectKnowledge( const QString& name );
     explicit ActionParameterObjectKnowledge( const kernel::OrderParameter& parameter );
              ActionParameterObjectKnowledge( const kernel::OrderParameter& parameter, unsigned long id, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner );
-             ActionParameterObjectKnowledge( const QString& name, unsigned long id, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner );
              ActionParameterObjectKnowledge( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Object_ABC >& resolver, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner );
              ActionParameterObjectKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Object_ABC >& resolver, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner );
     virtual ~ActionParameterObjectKnowledge();

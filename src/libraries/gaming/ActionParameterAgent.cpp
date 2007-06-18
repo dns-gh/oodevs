@@ -35,17 +35,7 @@ namespace
 // Name: ActionParameterAgent constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-ActionParameterAgent::ActionParameterAgent( const QString& name )
-    : ActionParameterEntity< Agent_ABC >( name )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterAgent constructor
-// Created: SBO 2007-05-23
-// -----------------------------------------------------------------------------
-ActionParameterAgent::ActionParameterAgent( const kernel::OrderParameter& parameter )
+ActionParameterAgent::ActionParameterAgent( const OrderParameter& parameter )
     : ActionParameterEntity< Agent_ABC >( parameter )
 {
     // NOTHING
@@ -65,17 +55,7 @@ ActionParameterAgent::ActionParameterAgent( const OrderParameter& parameter, xml
 // Name: ActionParameterAgent constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-ActionParameterAgent::ActionParameterAgent( const QString& name, unsigned int id, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver )
-    : ActionParameterEntity< Agent_ABC >( name, &resolver.Get( id ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterAgent constructor
-// Created: SBO 2007-05-23
-// -----------------------------------------------------------------------------
-ActionParameterAgent::ActionParameterAgent( const kernel::OrderParameter& parameter, unsigned int id, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver )
+ActionParameterAgent::ActionParameterAgent( const OrderParameter& parameter, unsigned int id, const Resolver_ABC< Agent_ABC >& resolver )
     : ActionParameterEntity< Agent_ABC >( parameter, &resolver.Get( id ) )
 {
     // NOTHING
@@ -85,8 +65,8 @@ ActionParameterAgent::ActionParameterAgent( const kernel::OrderParameter& parame
 // Name: ActionParameterAgent constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-ActionParameterAgent::ActionParameterAgent( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver )
-    : ActionParameterEntity< Agent_ABC >( ReadName( xis ), &resolver.Get( ReadId( xis ) ) )
+ActionParameterAgent::ActionParameterAgent( xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver )
+    : ActionParameterEntity< Agent_ABC >( OrderParameter( ReadName( xis ), "agent", false ), &resolver.Get( ReadId( xis ) ) )
 {
     // NOTHING
 }

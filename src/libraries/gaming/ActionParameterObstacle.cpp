@@ -11,23 +11,15 @@
 #include "ActionParameterObstacle.h"
 #include "clients_kernel/ObjectType.h"
 #include "ActionParameterLocation.h"
+#include "ActionParameterAutomat.h"
+#include "ActionParameterNumeric.h"
+#include "ActionParameterObstacleType.h"
 #include "ActionParameterVisitor_ABC.h"
 #include "Tools.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
 using namespace xml;
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterObstacle constructor
-// Created: SBO 2007-04-26
-// -----------------------------------------------------------------------------
-ActionParameterObstacle::ActionParameterObstacle( const QString& name, const ObjectType& type )
-    : ActionParameter< QString >( name, type.GetName() )
-    , type_( type )
-{
-    // NOTHING
-}
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterObstacle constructor
@@ -42,37 +34,24 @@ ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& paramete
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterObstacle constructor
-// Created: SBO 2007-04-27
-// -----------------------------------------------------------------------------
-ActionParameterObstacle::ActionParameterObstacle( const QString& name, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const ASN1T_PlannedWork& asn )
-    : ActionParameter< QString >( name )
-    , type_( types.Get( asn.type ) )
-{
-    AddParameter( *new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, asn.position ) );
-    SetValue( type_.GetName() );
-//    SetParameters( asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterObstacle constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const ASN1T_PlannedWork& asn )
+ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const Resolver_ABC< Automat_ABC >& automats, const ASN1T_PlannedWork& asn )
     : ActionParameter< QString >( parameter )
     , type_( types.Get( asn.type ) )
 {
-    AddParameter( *new ActionParameterLocation( tools::translate( "ActionParameter", "Location" ), converter, asn.position ) );
+    AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, asn.position ) );
     SetValue( type_.GetName() );
-//    SetParameters( asn );
+    SetParameters( asn, automats );
 }
 
 namespace
 {
-    unsigned int ReadType( xml::xistream& xis )
+    unsigned int ReadValue( xml::xistream& xis )
     {
-        unsigned int type;
-        xis >> attribute( "value", type );
-        return type;
+        unsigned int value;
+        xis >> attribute( "value", value );
+        return value;
     }
 
     QString ReadName( xml::xistream& xis )
@@ -87,13 +66,11 @@ namespace
 // Name: ActionParameterObstacle constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, xml::xistream& xis )
+ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis )
     : ActionParameter< QString >( parameter )
-    , type_( types.Get( ReadType( xis ) ) )
+    , type_( types.Get( ReadValue( xis ) ) )
 {
-    xis >> start( "parameter" );
-    AddParameter( *new ActionParameterLocation( converter, xis ) );
-    xis >> end();
+    xis >> list( "parameter", *this, &ActionParameterObstacle::ReadParameter, converter, automats );
     SetValue( type_.GetName() );
 }
 
@@ -101,13 +78,11 @@ ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& paramete
 // Name: ActionParameterObstacle constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-ActionParameterObstacle::ActionParameterObstacle( const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, xml::xistream& xis )
-    : ActionParameter< QString >( ReadName( xis ) )
-    , type_( types.Get( ReadType( xis ) ) )
+ActionParameterObstacle::ActionParameterObstacle( const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis )
+    : ActionParameter< QString >( OrderParameter( ReadName( xis ), "obstacle", false ) )
+    , type_( types.Get( ReadValue( xis ) ) )
 {
-    xis >> start( "parameter" );
-    AddParameter( *new ActionParameterLocation( converter, xis ) );
-    xis >> end();
+    xis >> list( "parameter", *this, &ActionParameterObstacle::ReadParameter, converter, automats );
     SetValue( type_.GetName() );
 }
 
@@ -121,13 +96,29 @@ ActionParameterObstacle::~ActionParameterObstacle()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionParameterObstacle::GetType
-// Created: SBO 2007-05-22
+// Name: ActionParameterObstacle::ReadParameter
+// Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------
-QString ActionParameterObstacle::GetType() const
+void ActionParameterObstacle::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter, const Resolver_ABC< Automat_ABC >& automats )
 {
-    const QString& type = ActionParameter< QString >::GetType();
-    return type == "undefined" ? "obstacle" : type;
+    std::string type;
+    xis >> attribute( "type", type );
+    if( type == "obstacletype" && type_.CanBeReservedObstacle() )
+        AddParameter( *new ActionParameterObstacleType( xis ) );
+    else if( type == "location" )
+        AddParameter( *new ActionParameterLocation( converter, xis ) );
+    else if( type == "tc2" )
+        AddParameter( *new ActionParameterAutomat( xis, automats ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterObstacle::AddObstacleType
+// Created: SBO 2007-05-25
+// -----------------------------------------------------------------------------
+void ActionParameterObstacle::AddObstacleType( unsigned int type )
+{
+    const OrderParameter orderParameter( tools::translate( "ActionParameter", "Obstacle type" ), "obstacletype", false );
+    AddParameter( *new ActionParameterObstacleType( orderParameter, type ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,33 +138,31 @@ void ActionParameterObstacle::Draw( const geometry::Point2f& where, const Viewpo
 void ActionParameterObstacle::Serialize( xml::xostream& xos ) const
 {
     ActionParameter< QString >::Serialize( xos );
-    xos << attribute( "value", type_.id_ ); // $$$$ SBO 2007-05-21:
-    // $$$$ SBO 2007-05-21: Serialize additionnal parameters
+    xos << attribute( "value", type_.id_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterObstacle::SetParameters
 // Created: SBO 2007-04-17
 // -----------------------------------------------------------------------------
-void ActionParameterObstacle::SetParameters( const ASN1T_PlannedWork& asn )
+void ActionParameterObstacle::SetParameters( const ASN1T_PlannedWork& asn, const Resolver_ABC< Automat_ABC >& automats )
 {
-    // $$$$ SBO 2007-04-17: TODO
     switch( asn.type )
     {
     case EnumObjectType::camp_prisonniers:
     case EnumObjectType::camp_refugies:
-        break;
-    case EnumObjectType::itineraire_logistique:
-        break;
-    case EnumObjectType::nuage_nbc:
-    case EnumObjectType::zone_nbc:
-        break;
-    case EnumObjectType::rota:
-        break;
-    case EnumObjectType::site_franchissement:
-    case EnumObjectType::bouchon_mines:
+        {
+            const OrderParameter param( tools::translate( "ActionParameter", "TC2" ), "tc2", false );
+            AddParameter( *new ActionParameterAutomat( param, asn.tc2, automats ) );
+            break;
+        }
     case EnumObjectType::zone_minee_lineaire:
     case EnumObjectType::zone_minee_par_dispersion:
+        {
+            const OrderParameter param( tools::translate( "ActionParameter", "Density" ), "density", false );
+            AddParameter( *new ActionParameterNumeric( param, asn.densite ) );
+            break;
+        }
     default:
         ;
     }
@@ -213,9 +202,13 @@ void ActionParameterObstacle::CommitTo( ASN1T_PlannedWork& asn ) const
     {
         const QString& type = it->second->GetType();
         if( type == "location" )
-            static_cast< ActionParameterLocation* >( it->second )->CommitTo( asn.position );
-//        else if( type == "numeric" )
-//            static_cast< ActionParameterNumeric* >( it->second )->CommitTo( asn.densite );
+            static_cast< const ActionParameterLocation* >( it->second )->CommitTo( asn.position );
+        else if( type == "obstacletype" )
+            static_cast< const ActionParameterObstacleType* >( it->second )->CommitTo( asn.type_obstacle );
+        else if( type == "density" )
+            static_cast< const ActionParameterNumeric* >( it->second )->CommitTo( asn.densite );
+        else if( type == "tc2" )
+            static_cast< const ActionParameterAutomat* >( it->second )->CommitTo( asn.tc2 );
     }
 }
 
@@ -229,9 +222,7 @@ void ActionParameterObstacle::Clean( ASN1T_PlannedWork& asn ) const
     {
         const QString& type = it->second->GetType();
         if( type == "location" )
-            static_cast< ActionParameterLocation* >( it->second )->Clean( asn.position );
-//        else if( type == "numeric" )
-//            static_cast< ActionParameterNumeric* >( it->second )->Clean( asn.densite );
+            static_cast< const ActionParameterLocation* >( it->second )->Clean( asn.position );
     }
 }
 

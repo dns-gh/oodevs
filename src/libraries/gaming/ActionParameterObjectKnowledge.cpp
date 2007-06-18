@@ -38,16 +38,6 @@ namespace
 // Name: ActionParameterObjectKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ActionParameterObjectKnowledge::ActionParameterObjectKnowledge( const QString& name )
-    : ActionParameterEntity< ObjectKnowledge_ABC >( name )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterObjectKnowledge constructor
-// Created: SBO 2007-05-24
-// -----------------------------------------------------------------------------
 ActionParameterObjectKnowledge::ActionParameterObjectKnowledge( const OrderParameter& parameter )
     : ActionParameterEntity< ObjectKnowledge_ABC >( parameter )
 {
@@ -71,21 +61,8 @@ ActionParameterObjectKnowledge::ActionParameterObjectKnowledge( const OrderParam
 // Name: ActionParameterObjectKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ActionParameterObjectKnowledge::ActionParameterObjectKnowledge( const QString& name, unsigned long id, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
-    : ActionParameterEntity< ObjectKnowledge_ABC >( name )
-{
-    const Team_ABC& team = static_cast< const Team_ABC& >( owner.Get< CommunicationHierarchies >().GetTop() );
-    SetValue( converter.Find( id, team ) );
-    if( ! GetValue() )
-        throw std::runtime_error( tools::translate( "ActionParameter", "Object knowledge not found." ).ascii() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterObjectKnowledge constructor
-// Created: SBO 2007-05-24
-// -----------------------------------------------------------------------------
 ActionParameterObjectKnowledge::ActionParameterObjectKnowledge( xml::xistream& xis, const Resolver_ABC< Object_ABC >& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
-    : ActionParameterEntity< ObjectKnowledge_ABC >( ReadName( xis ) )
+    : ActionParameterEntity< ObjectKnowledge_ABC >( OrderParameter( ReadName( xis ), "objectknowledge", false ) )
 {
     const Team_ABC& team = static_cast< const Team_ABC& >( owner.Get< CommunicationHierarchies >().GetTop() );
     SetValue( converter.Find( resolver.Get( ReadId( xis ) ), team ) );

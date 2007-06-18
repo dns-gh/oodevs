@@ -29,8 +29,6 @@ class ActionParameter : public ActionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionParameter( const QString& name );
-             ActionParameter( const QString& name, const T& value );
     explicit ActionParameter( const kernel::OrderParameter& parameter );
              ActionParameter( const kernel::OrderParameter& parameter, const T& value );
     virtual ~ActionParameter();
@@ -56,7 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::OrderParameter* parameter_;
+    kernel::OrderParameter parameter_;
     T value_;
     //@}
 };

@@ -37,16 +37,6 @@ namespace
 // Name: ActionParameterAgentKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ActionParameterAgentKnowledge::ActionParameterAgentKnowledge( const QString& name )
-    : ActionParameterEntity< AgentKnowledge_ABC >( name )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterAgentKnowledge constructor
-// Created: SBO 2007-05-24
-// -----------------------------------------------------------------------------
 ActionParameterAgentKnowledge::ActionParameterAgentKnowledge( const OrderParameter& parameter )
     : ActionParameterEntity< AgentKnowledge_ABC >( parameter )
 {
@@ -68,18 +58,8 @@ ActionParameterAgentKnowledge::ActionParameterAgentKnowledge( const OrderParamet
 // Name: ActionParameterAgentKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ActionParameterAgentKnowledge::ActionParameterAgentKnowledge( const QString& name, unsigned long id, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
-    : ActionParameterEntity< AgentKnowledge_ABC >( name, converter.FindAgent( id, owner ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterAgentKnowledge constructor
-// Created: SBO 2007-05-24
-// -----------------------------------------------------------------------------
 ActionParameterAgentKnowledge::ActionParameterAgentKnowledge( xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
-    : ActionParameterEntity< AgentKnowledge_ABC >( ReadName( xis ), converter.Find( resolver.Get( ReadId( xis ) ), owner ) )
+    : ActionParameterEntity< AgentKnowledge_ABC >( OrderParameter( ReadName( xis ), "agentknowledge", false ), converter.Find( resolver.Get( ReadId( xis ) ), owner ) )
 {
     // NOTHING
 }

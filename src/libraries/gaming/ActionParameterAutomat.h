@@ -11,11 +11,7 @@
 #define __ActionParameterAutomat_h_
 
 #include "ActionParameterEntity.h"
-
-namespace kernel
-{
-    class Automat_ABC;
-}
+#include "clients_kernel/Automat_ABC.h"
 
 // =============================================================================
 /** @class  ActionParameterAutomat
@@ -29,11 +25,9 @@ class ActionParameterAutomat : public ActionParameterEntity< kernel::Automat_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionParameterAutomat( const QString& name );
     explicit ActionParameterAutomat( const kernel::OrderParameter& parameter );
-             ActionParameterAutomat( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver );
-             ActionParameterAutomat( const QString& name, unsigned int id, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver );
              ActionParameterAutomat( const kernel::OrderParameter& parameter, unsigned int id, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver );
+             ActionParameterAutomat( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver );
              ActionParameterAutomat( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver );
     virtual ~ActionParameterAutomat();
     //@}

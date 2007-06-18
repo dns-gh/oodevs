@@ -65,7 +65,7 @@ void MissionType::ReadParameter( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MissionType::AddContextParameters()
 {
-    Register( Count(), *new OrderParameter( tools::translate( "MissionType", "Limits" ), "limits", !automat_ ) );
-    Register( Count(), *new OrderParameter( tools::translate( "MissionType", "Limas" ) , "limalist", true ) );
-    Register( Count(), *new OrderParameter( tools::translate( "MissionType", "Dangerous Direction" ), "dangerousdirection", !automat_ ) );
+    Register( Count(), *new OrderParameter( tools::translate( "MissionType", "Limits" ), "limits", !automat_, true ) );
+    Register( Count(), *new OrderParameter( tools::translate( "MissionType", "Limas" ) , "limalist", true, true ) );
+    Register( Count(), *new OrderParameter( tools::translate( "MissionType", "Dangerous Direction" ), "dangerousdirection", !automat_, true ) );
 }

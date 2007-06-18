@@ -10,7 +10,7 @@
 #ifndef __OrderParameter_h_
 #define __OrderParameter_h_
 
-#include "Resolver.h"
+#include "OrderParameterValue.h"
 
 namespace xml
 {
@@ -19,7 +19,15 @@ namespace xml
 
 namespace kernel
 {
-    class OrderParameterValue;
+
+class OrderParameterValueVisitor_ABC
+{
+public:
+             OrderParameterValueVisitor_ABC() {}
+    virtual ~OrderParameterValueVisitor_ABC() {}
+
+    virtual void Visit( const OrderParameterValue& value ) = 0;
+};
 
 // =============================================================================
 /** @class  OrderParameter
@@ -27,14 +35,14 @@ namespace kernel
 */
 // Created: SBO 2007-04-23
 // =============================================================================
-class OrderParameter : public Resolver< OrderParameterValue >
+class OrderParameter
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
     explicit OrderParameter( xml::xistream& xis );
-             OrderParameter( const QString& name, const QString& type, bool optional );
+             OrderParameter( const QString& name, const QString& type, bool optional, bool context = false );
     virtual ~OrderParameter();
     //@}
 
@@ -44,18 +52,20 @@ public:
     QString GetType() const;
     bool IsOptional() const;
     bool IsContext() const;
+    const OrderParameterValue& GetValue( unsigned int id ) const;
+    virtual void Accept( OrderParameterValueVisitor_ABC& visitor ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    OrderParameter( const OrderParameter& );            //!< Copy constructor
-    OrderParameter& operator=( const OrderParameter& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadValue( xml::xistream& xis );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< unsigned int, OrderParameterValue > T_OrderParameterValues;
+    typedef T_OrderParameterValues::const_iterator      CIT_OrderParameterValues;
     //@}
 
 private:
@@ -65,6 +75,7 @@ private:
     QString type_;
     bool optional_;
     bool context_;
+    T_OrderParameterValues values_;
     //@}
 };
 

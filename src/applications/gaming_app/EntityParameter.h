@@ -14,6 +14,7 @@
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/OrderParameter.h"
 #include "gaming/ActionParameterEntity.h"
 #include "gaming/Action_ABC.h"
 
@@ -84,8 +85,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              EntityParameter( QObject* parent, const kernel::OrderParameter& parameter );
-             EntityParameter( QObject* parent, const QString& name, bool optional );
-             EntityParameter( QObject* parent, const QString& name, const ConcreteEntity& entity );
+             EntityParameter( QObject* parent, const kernel::OrderParameter& parameter, const ConcreteEntity& entity );
     virtual ~EntityParameter();
     //@}
 
@@ -115,7 +115,7 @@ protected:
 private:
     //! @name Member data
     //@{
-    const kernel::OrderParameter* parameter_;
+    kernel::OrderParameter parameter_;
     const ConcreteEntity* potential_;
     const ConcreteEntity* selected_;
     bool optional_;

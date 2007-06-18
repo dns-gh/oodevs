@@ -133,5 +133,5 @@ void ParamLocationList::CommitTo( Action_ABC& action ) const
 // -----------------------------------------------------------------------------
 Param_ABC* ParamLocationList::CreateElement()
 {
-    return new ParamLocation( tr( "Location %1" ).arg( ++count_ ), layer_, converter_, false );
+    return new ParamLocation( OrderParameter( tr( "Location %1" ).arg( ++count_ ), "location", false ), layer_, converter_ );
 }

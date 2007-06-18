@@ -20,7 +20,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 ParamAgent::ParamAgent( QObject* parent, const kernel::OrderParameter& parameter )
     : EntityParameter< Agent_ABC >( parent, parameter )
-    , parameter_( &parameter )
+    , parameter_( parameter )
 {
     // NOTHING
 }
@@ -29,9 +29,9 @@ ParamAgent::ParamAgent( QObject* parent, const kernel::OrderParameter& parameter
 // Name: ParamAgent constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-ParamAgent::ParamAgent( QObject* parent, const QString& name, const kernel::Agent_ABC& entity )
-    : EntityParameter< Agent_ABC >( parent, name, entity )
-    , parameter_( 0 )
+ParamAgent::ParamAgent( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Agent_ABC& entity )
+    : EntityParameter< Agent_ABC >( parent, parameter, entity )
+    , parameter_( parameter )
 {
     // NOTHING
 }
@@ -62,9 +62,7 @@ void ParamAgent::CommitTo( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ParamAgent::CommitTo( Action_ABC& action ) const
 {
-    if( !parameter_ )
-        throw std::runtime_error( "OrderParameter not set" ); // $$$$ SBO 2007-04-25: 
-    std::auto_ptr< ActionParameterEntity< Agent_ABC > > param( new ActionParameterAgent( *parameter_ ) );
+    std::auto_ptr< ActionParameterEntity< Agent_ABC > > param( new ActionParameterAgent( parameter_ ) );
     EntityParameter< Agent_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }
@@ -84,7 +82,7 @@ void ParamAgent::CommitTo( ASN1T_Unit& asn ) const
 // -----------------------------------------------------------------------------
 void ParamAgent::CommitTo( ActionParameter_ABC& param ) const
 {
-    std::auto_ptr< ActionParameterEntity< Agent_ABC > > parameter( new ActionParameterAgent( GetName() ) );
+    std::auto_ptr< ActionParameterEntity< Agent_ABC > > parameter( new ActionParameterAgent( parameter_ ) );
     EntityParameter< Agent_ABC >::CommitTo( *parameter );
     param.AddParameter( *parameter.release() );
 }

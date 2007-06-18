@@ -12,13 +12,13 @@
 
 #include "game_asn/Asn.h"
 #include "Param_ABC.h"
+#include "clients_kernel/OrderParameter.h"
 #include "clients_gui/ShapeHandler_ABC.h"
 #include "LocationSerializer.h"
 
 namespace kernel
 {
     class CoordinateConverter_ABC;
-    class OrderParameter;
 }
 
 namespace gui
@@ -42,7 +42,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              ParamLocation( const kernel::OrderParameter& parameter, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
-             ParamLocation( const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, bool optional );
     virtual ~ParamLocation();
     //@}
 
@@ -60,6 +59,7 @@ public:
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
     virtual void CommitTo( Action_ABC& action ) const;
     void CommitTo( ASN1T_Location& asn ) const;
+    void Clean( ASN1T_Location& asn ) const;
     void CommitTo( ActionParameter_ABC& parameter ) const;
     //@}
 
@@ -84,14 +84,13 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    const kernel::OrderParameter* parameter_;
+    kernel::OrderParameter parameter_;
     gui::ParametersLayer& layer_;
     gui::LocationCreator* creator_;
     gui::RichLabel* pLabel_;
     QLabel* pShapeLabel_;
     kernel::Location_ABC* location_;
     kernel::ActionController* controller_; // $$$$ AGE 2006-04-03: sucks
-    bool optional_;
     ShapeFilter filter_;
     //@}
 };
