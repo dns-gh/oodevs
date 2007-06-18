@@ -231,7 +231,7 @@ bool EntityLayerBase::RemoveEntity( const Entity_ABC& entity )
         if( selected_  >= entities_.size() )
             selected_ = 0;
         if( tooltiped_ >= entities_.size() )
-            tooltiped_ = 0;
+            tooltiped_ = std::numeric_limits< unsigned >::max();
         return true;
     }
     return false;
