@@ -31,9 +31,9 @@ public:
     //! @name Member data
     //@{
     E_HumanWound wound_;
-    unsigned officers_;
-    unsigned subOfficers_;
-    unsigned troopers_;
+    int officers_;
+    int subOfficers_;
+    int troopers_;
     //@}
 };
 
