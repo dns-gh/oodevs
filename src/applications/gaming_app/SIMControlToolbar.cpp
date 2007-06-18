@@ -17,7 +17,9 @@
 #include "gaming/ASN_Messages.h"
 #include "gaming/Simulation.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/resources.h"
+#include "gaming/statusicons.h"
 
 using namespace kernel;
 
@@ -96,6 +98,24 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     pSpeedButton_->setText( tr( "Ok" ) );
     pSpeedButton_->setEnabled( false );
 
+    pCheckpointButton_ = new QToolButton( this );
+    pCheckpointButton_->setIconSet( MAKE_ICON( checkpoint ) );
+    pCheckpointButton_->setTextLabel( tr( "Save checkpoint" ) );
+    pCheckpointButton_->setEnabled( false );
+    pCheckpointButton_->setShown( false );
+
+    {
+        QPopupMenu* popup = new QPopupMenu( pCheckpointButton_ );
+        QHBox* box = new QHBox( popup );
+        new QLabel( tr( "Checkpoint name: " ), box );
+        QLineEdit* lineEdit = new QLineEdit( box );
+        popup->insertItem( box );
+        pCheckpointButton_->setPopup( popup );
+        pCheckpointButton_->setPopupDelay( 0 );
+        connect( lineEdit, SIGNAL( returnPressed() ), SLOT( SlotNamedCheckPoint() ) );
+    }
+
+
     pConnectDlg_ = new ConnectDialog( this, network );
     pConnectDlg_->SetContextMenu( pConnectButton_ );
     pConnectDlg_->hide();
@@ -103,10 +123,11 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     pDisconnectDlg_ = new DisconnectDialog( this, network );
     pDisconnectDlg_->hide();
 
-    connect( pConnectButton_, SIGNAL( clicked() ), this, SLOT( SlotConnectDisconnect() ) );
-    connect( pPlayButton_,    SIGNAL( clicked() ), this, SLOT( SlotPlayPause() ) );
-    connect( pSpeedButton_,   SIGNAL( clicked() ), this, SLOT( SlotSpeedChange() ) );
-    connect( pSpeedSpinBox_ , SIGNAL( valueChanged( int ) ), this, SLOT( SlotOnSpinBoxChange( int ) ) );
+    connect( pConnectButton_, SIGNAL( clicked() ), SLOT( SlotConnectDisconnect() ) );
+    connect( pPlayButton_,    SIGNAL( clicked() ), SLOT( SlotPlayPause() ) );
+    connect( pSpeedButton_,   SIGNAL( clicked() ), SLOT( SlotSpeedChange() ) );
+    connect( pSpeedSpinBox_ , SIGNAL( valueChanged( int ) ), SLOT( SlotOnSpinBoxChange( int ) ) );
+    connect( pCheckpointButton_, SIGNAL( clicked() ), SLOT( SlotCheckpoint() ) );
 
     controllers_.Register( *this );
 }
@@ -198,6 +219,8 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
             pPlayButton_->setEnabled( true );
             if( !pSpeedSpinBox_->isEnabled() )
                 pSpeedSpinBox_->setEnabled( true );
+            if( !pCheckpointButton_->isEnabled() )
+                pCheckpointButton_->setEnabled( true );
         }
         else
         {
@@ -207,6 +230,7 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
             pPlayButton_->setEnabled( false );
             pSpeedSpinBox_->setEnabled( false );
             pSpeedButton_->setEnabled( false );
+            pCheckpointButton_->setEnabled( false );
         }
     }
 
@@ -231,4 +255,50 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
         pSpeedSpinBox_->setValue( speed_ );
         pSpeedButton_->setEnabled( false );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SIMControlToolbar::NotifyUpdated
+// Created: SBO 2007-06-18
+// -----------------------------------------------------------------------------
+void SIMControlToolbar::NotifyUpdated( const kernel::Profile_ABC& profile )
+{
+    pCheckpointButton_->setShown( profile.IsSupervision() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SIMControlToolbar::SlotCheckpoint
+// Created: SBO 2007-06-18
+// -----------------------------------------------------------------------------
+void SIMControlToolbar::SlotCheckpoint()
+{
+    RequestCheckpoint( "" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SIMControlToolbar::SlotNamedCheckPoint
+// Created: SBO 2007-06-18
+// -----------------------------------------------------------------------------
+void SIMControlToolbar::SlotNamedCheckPoint()
+{
+    const QObject* obj = sender();
+    if( obj->isA( "QLineEdit" ) )
+    {
+        const QLineEdit* edit = static_cast< const QLineEdit* >( obj );
+        RequestCheckpoint( edit->text().ascii() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SIMControlToolbar::RequestCheckpoint
+// Created: SBO 2007-06-18
+// -----------------------------------------------------------------------------
+void SIMControlToolbar::RequestCheckpoint( const std::string& name )
+{
+    ASN_MsgControlCheckPointSaveNow asn;
+    asn().m.nomPresent = ! name.empty();
+    if( asn().m.nomPresent )
+        asn().nom = name.c_str();
+    asn.Send( publisher_ );
+    pCheckpointButton_->popup()->hide();
 }

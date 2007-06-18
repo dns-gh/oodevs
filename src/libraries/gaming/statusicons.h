@@ -51,6 +51,7 @@ DECLARE_ICON( parent );
 DECLARE_ICON( mission );
 DECLARE_ICON( mission_title );
 DECLARE_ICON( parameter );
+DECLARE_ICON( checkpoint );
 DECLARE_ICON( checkpoint1 );
 DECLARE_ICON( checkpoint2 );
 DECLARE_ICON( checkpoint3 );

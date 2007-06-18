@@ -46,3 +46,12 @@ bool PreparationProfile::CanDoMagic( const kernel::Entity_ABC& ) const
 {
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PreparationProfile::IsSupervision
+// Created: SBO 2007-06-18
+// -----------------------------------------------------------------------------
+bool PreparationProfile::IsSupervision() const
+{
+    return true;
+}

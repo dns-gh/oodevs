@@ -16,6 +16,7 @@
 namespace kernel
 {
     class Controllers;
+    class Profile_ABC;
 }
 
 class ConnectDialog;
@@ -25,12 +26,16 @@ class Simulation;
 class Network;
 class Publisher_ABC;
 
-//*****************************************************************************
-// Created: FBD 03-01-14
-//*****************************************************************************
+// =============================================================================
+/** @class  SIMControlToolbar
+    @brief  SIMControlToolbar
+*/
+// Created: AGE 2007-04-11
+// =============================================================================
 class SIMControlToolbar : public QToolBar
                         , public kernel::Observer_ABC
                         , public kernel::ElementObserver_ABC< Simulation >
+                        , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
 {
     Q_OBJECT
 
@@ -53,6 +58,8 @@ private slots:
     void SlotConnectDisconnect();
     void SlotPlayPause();
     void SlotOnSpinBoxChange( int );
+    void SlotCheckpoint();
+    void SlotNamedCheckPoint();
     //@}
 
 private:
@@ -65,6 +72,8 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );
+    virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
+    void RequestCheckpoint( const std::string& name );
     //@}
 
 private:
@@ -76,6 +85,7 @@ private:
     QToolButton*        pPlayButton_;
     QToolButton*        pSpeedButton_;
     QSpinBox*           pSpeedSpinBox_;
+    QToolButton*        pCheckpointButton_;
     ConnectDialog*      pConnectDlg_;
     DisconnectDialog*   pDisconnectDlg_;
     int speed_;

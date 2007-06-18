@@ -66,6 +66,15 @@ bool ProfileFilter::CanDoMagic( const kernel::Entity_ABC& entity ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ProfileFilter::IsSupervision
+// Created: SBO 2007-06-18
+// -----------------------------------------------------------------------------
+bool ProfileFilter::IsSupervision() const
+{
+    return forward_.IsSupervision();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ProfileFilter::SetFilter
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------

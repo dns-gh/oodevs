@@ -2069,6 +2069,14 @@
         <source>Connecting</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Save checkpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checkpoint name: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Spy</name>

@@ -63,7 +63,7 @@ public:
     //@{
     QString GetLogin() const;
     bool IsLoggedIn() const;
-    bool IsSupervision() const;
+    virtual bool IsSupervision() const;
     //@}
 
     //! @name Operations
