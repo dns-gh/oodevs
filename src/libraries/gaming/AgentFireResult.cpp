@@ -36,8 +36,8 @@ AgentFireResult::AgentFireResult( const ASN1T_UnitFireDamages& message, const Re
     {
         const ASN1T_UnitHumanFireDamage& fire = message.humains.elem[ i ];
 
-        unsigned Casualties::* table = & Casualties::troopers_;
-         if( fire.rang == EnumHumanRank::officier )
+        int Casualties::* table = & Casualties::troopers_;
+        if( fire.rang == EnumHumanRank::officier )
             table = & Casualties::officers_;
         else if( fire.rang == EnumHumanRank::sous_officer )
             table = & Casualties::subOfficers_;
