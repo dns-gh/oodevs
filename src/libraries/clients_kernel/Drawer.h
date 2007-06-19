@@ -39,12 +39,6 @@ public:
     void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const;
     //@}
 
-    // $$$$ AGE 2006-08-10: mettre static ?
-    //! @name Operations
-    //@{
-    void SetPosition( const std::string& name, unsigned pos );
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{
@@ -56,6 +50,8 @@ private:
     //@{
     void Add( const Drawable_ABC& extension );
     std::string Strip( const std::string& name );
+    static bool InitializePositions();
+    static void SetPosition( const std::string& name, unsigned pos );
     //@}
 
     //! @name Types
@@ -69,7 +65,7 @@ private:
 private:
     //! @name Member data
     //@{
-    T_Positions positions_;
+    static T_Positions positions_;
     T_Drawables extensions_; 
     //@}
 };

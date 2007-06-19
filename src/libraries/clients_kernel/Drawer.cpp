@@ -14,17 +14,15 @@
 
 using namespace kernel;
 
+Drawer::T_Positions Drawer::positions_;
+
 // -----------------------------------------------------------------------------
 // Name: Drawer constructor
 // Created: AGE 2006-08-10
 // -----------------------------------------------------------------------------
 Drawer::Drawer()
 {
-    SetPosition( "Lives",      0 );
-    SetPosition( "Positions",  1 );
-    SetPosition( "Object",     2 );
-    SetPosition( "Agent",      2 );
-    SetPosition( "Attributes", 3 );
+    static bool bDenis = InitializePositions();
 }
 
 // -----------------------------------------------------------------------------
@@ -34,6 +32,20 @@ Drawer::Drawer()
 Drawer::~Drawer()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Drawer::InitializePositions
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+bool Drawer::InitializePositions()
+{
+    SetPosition( "Lives",      0 );
+    SetPosition( "Positions",  1 );
+    SetPosition( "Object",     2 );
+    SetPosition( "Agent",      2 );
+    SetPosition( "Attributes", 3 );
+    return true;
 }
 
 // -----------------------------------------------------------------------------

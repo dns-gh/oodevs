@@ -100,14 +100,10 @@ QString DrawerStyle::GetDescription() const
 // -----------------------------------------------------------------------------
 QPixmap DrawerStyle::GetPixmap() const
 {
-    // $$$$ SBO 2007-03-22: bof
-    if( type_ == "line" )
-        return linePixmap_;
-    if( type_ == "point" )
-        return pointPixmap_;
-    if( type_ == "polygon" )
-        return polygonPixmap_;
-    return QPixmap();
+    return type_ == "line"    ? linePixmap_ :
+           type_ == "point"   ? pointPixmap_ :
+           type_ == "polygon" ? polygonPixmap_ :
+            QPixmap();
 }
 
 // -----------------------------------------------------------------------------

@@ -131,7 +131,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setIcon( MAKE_PIXMAP( csword ) );
     setCaption( APP_NAME + tr( " - Not connected" ) );
 
-    ProfileFilter& profile = *new ProfileFilter( controllers, p ); // $$$$ AGE 2006-12-13: mem. // $$$$ _RC_ MCO 2007-01-12: auto_ptr
+    ProfileFilter& profile = *new ProfileFilter( controllers, p ); // $$$$ AGE 2006-12-13: mem. // $$$$ _RC_ MCO 2007-01-12: auto_ptr // $$$$ AGE 2007-06-19: tégé !
 
     Publisher_ABC& publisher = network_.GetMessageMgr();
 
