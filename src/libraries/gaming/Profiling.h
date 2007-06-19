@@ -12,6 +12,7 @@
 
 #include <ctime>
 struct ProfilingValuesMessage;
+struct ASN1T_MsgControlEndTick;
 
 // =============================================================================
 /** @class  Profiling
@@ -35,7 +36,12 @@ public:
     void Clear();
 
     void Update( const ProfilingValuesMessage& message );
+    void Update( const ASN1T_MsgControlEndTick& message );
     float EffectiveSpeed() const;
+    unsigned long GetMemory() const;
+    unsigned long GetVirtualMemory() const;
+    unsigned long GetShortPathfinds() const;
+    unsigned long GetLongPathfinds() const; 
     //@}
 
 private:
@@ -62,6 +68,11 @@ private:
     T_History decision_;
     T_History action_;
     T_History total_;
+
+    unsigned long memory_;
+    unsigned long virtualMemory_;
+    unsigned long shortPathfinds_;
+    unsigned long longPathfinds_;
     //@}
 };
 

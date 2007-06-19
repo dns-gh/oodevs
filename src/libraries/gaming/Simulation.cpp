@@ -142,8 +142,9 @@ void Simulation::BeginTick( int tick )
 // Name: Simulation::EndTick
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void Simulation::EndTick( const ASN1T_MsgControlEndTick&  )
+void Simulation::EndTick( const ASN1T_MsgControlEndTick& message )
 {
+    profiling_.Update( message );
     controller_.Update( endTick_ );
     controller_.Update( *this );
 }
@@ -260,4 +261,40 @@ QString Simulation::GetTimeAsString() const
     return QString( "%1:%2:%3" ).arg( QString::number( ( time_ / 3600 ) % 24 ).rightJustify( 2, '0' ) )
                                 .arg( QString::number( ( time_ / 60   ) % 60 ).rightJustify( 2, '0' ) )
                                 .arg( QString::number( ( time_ % 60   )      ).rightJustify( 2, '0' ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetMemory
+// Created: SBO 2007-06-19
+// -----------------------------------------------------------------------------
+unsigned long Simulation::GetMemory() const
+{
+    return profiling_.GetMemory();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetVirtualMemory
+// Created: SBO 2007-06-19
+// -----------------------------------------------------------------------------
+unsigned long Simulation::GetVirtualMemory() const
+{
+    return profiling_.GetVirtualMemory();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetShortPathfinds
+// Created: SBO 2007-06-19
+// -----------------------------------------------------------------------------
+unsigned long Simulation::GetShortPathfinds() const
+{
+    return profiling_.GetShortPathfinds();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetLongPathfinds
+// Created: SBO 2007-06-19
+// -----------------------------------------------------------------------------
+unsigned long Simulation::GetLongPathfinds() const
+{
+    return profiling_.GetLongPathfinds();
 }

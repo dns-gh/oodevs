@@ -19,6 +19,7 @@ StatisticsWidget::StatisticsWidget( QWidget* parent )
     : GQ_Plot( parent )
     , data_( new GQ_PlotData( 0, *this ) )
     , yMax_( 0 )
+    , visibleTicks_( 100 )
 {
     YAxis().ShowAxis( true );
     YAxis().ShowGrid( true );
@@ -36,8 +37,8 @@ StatisticsWidget::StatisticsWidget( QWidget* parent )
     XAxis().SetAxisCaption( tr( "Time (Tick)" ).ascii() );
 
     SetBackgroundColor( Qt::white );
-    setMinimumHeight( 100 );
-    setMinimumWidth( 150 );
+    setMinimumHeight( 130 );
+    setMinimumWidth( 160 );
     RegisterPlotData( *data_ );
 }
 
@@ -57,13 +58,39 @@ StatisticsWidget::~StatisticsWidget()
 void StatisticsWidget::AddValue( unsigned int tick, unsigned long value )
 {
     lastValues_.push_back( value );
-    if( lastValues_.size() > 100 )
+    if( lastValues_.size() > visibleTicks_ )
         lastValues_.erase( lastValues_.begin() );
 
     T_Values::iterator itMax = std::max_element( lastValues_.begin(), lastValues_.end() );
     if( itMax != lastValues_.end() )
         YAxis().SetAxisRange( 0, *itMax, true );
     data_->AddPoint( tick, value );
-    data_->SetDataRange( std::max( 0, (int)tick - 100 ) );
+    data_->SetDataRange( std::max< int >( 0, tick - visibleTicks_ ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: StatisticsWidget::SetYAxisCaption
+// Created: SBO 2007-06-19
+// -----------------------------------------------------------------------------
+void StatisticsWidget::SetYAxisCaption( const QString& caption )
+{
+    YAxis().SetAxisCaption( caption.ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StatisticsWidget::SetXAxisCaption
+// Created: SBO 2007-06-19
+// -----------------------------------------------------------------------------
+void StatisticsWidget::SetXAxisCaption( const QString& caption )
+{
+    XAxis().SetAxisCaption( caption.ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StatisticsWidget::SetVisibleTicks
+// Created: SBO 2007-06-19
+// -----------------------------------------------------------------------------
+void StatisticsWidget::SetVisibleTicks( unsigned int count )
+{
+    visibleTicks_ = count;
+}

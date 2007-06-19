@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "Profiling.h"
 #include "DIN_Types.h"
+#include "game_asn/Asn.h"
 
 // -----------------------------------------------------------------------------
 // Name: Profiling constructor
@@ -18,6 +19,10 @@
 Profiling::Profiling()
     : lastCall_( 0 )
     , tickSum_( 0 )
+    , memory_( 0 )
+    , virtualMemory_( 0 )
+    , shortPathfinds_( 0 )
+    , longPathfinds_( 0 )
 {
     // NOTHING
 }
@@ -43,6 +48,18 @@ void Profiling::Update( const ProfilingValuesMessage& message )
     decision_  .push_back( rDecisionTime );
     action_    .push_back( rActionTime );
     total_     .push_back( rMainLoopTime );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profiling::Update
+// Created: SBO 2007-06-19
+// -----------------------------------------------------------------------------
+void Profiling::Update( const ASN1T_MsgControlEndTick& message )
+{
+    memory_ = message.memory;
+    virtualMemory_ = message.virtual_memory;
+    shortPathfinds_ = message.nb_pathfinds_courts;
+    longPathfinds_ = message.nb_pathfinds_longs;
 }
 
 namespace
@@ -91,4 +108,40 @@ float Profiling::EffectiveSpeed() const
         return 1.f / mean;
     }
     return -1.f;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profiling::GetMemory
+// Created: SBO 2007-06-19
+// -----------------------------------------------------------------------------
+unsigned long Profiling::GetMemory() const
+{
+    return memory_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profiling::GetVirtualMemory
+// Created: SBO 2007-06-19
+// -----------------------------------------------------------------------------
+unsigned long Profiling::GetVirtualMemory() const
+{
+    return virtualMemory_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profiling::GetShortPathfinds
+// Created: SBO 2007-06-19
+// -----------------------------------------------------------------------------
+unsigned long Profiling::GetShortPathfinds() const
+{
+    return shortPathfinds_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profiling::GetLongPathfinds
+// Created: SBO 2007-06-19
+// -----------------------------------------------------------------------------
+unsigned long Profiling::GetLongPathfinds() const
+{
+    return longPathfinds_;
 }

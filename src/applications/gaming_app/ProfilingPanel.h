@@ -28,7 +28,7 @@ class StatisticsWidget;
 */
 // Created: SBO 2007-01-04
 // =============================================================================
-class ProfilingPanel : public QVBox
+class ProfilingPanel : public QTabWidget
                      , public kernel::Observer_ABC
                      , public kernel::ElementObserver_ABC< Simulation::sEndTick >
 {
@@ -36,7 +36,7 @@ class ProfilingPanel : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfilingPanel( QWidget* parent, kernel::Controllers& controllers, const Network& network );
+             ProfilingPanel( QWidget* parent, kernel::Controllers& controllers, const Network& network, const Simulation& simulation );
     virtual ~ProfilingPanel();
     //@}
 
@@ -61,10 +61,19 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const Network& network_;
+    const Simulation& simulation_;
     StatisticsWidget* networkReceived_;
     StatisticsWidget* networkSent_;
+    StatisticsWidget* memory_;
+    StatisticsWidget* virtualMemory_;
+    StatisticsWidget* shortPathfinds_;
+    StatisticsWidget* longPathfinds_;
     QLabel* networkTotalReceived_;
     QLabel* networkTotalSent_;
+    QLabel* memoryUsage_;
+    QLabel* virtualMemoryUsage_;
+    QLabel* shortPathfindsCount_;
+    QLabel* longPathfindsCount_;
 
     unsigned long previousTotalReceived_;
     unsigned long previousTotalSent_;

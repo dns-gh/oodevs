@@ -258,7 +258,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     // Profiler
     QDockWindow* pProfilerDockWnd_ = new QDockWindow( this );
     moveDockWindow( pProfilerDockWnd_, Qt::DockRight );
-    ProfilingPanel* profilingPanel_ = new ProfilingPanel( pProfilerDockWnd_, controllers_, network_ );
+    ProfilingPanel* profilingPanel_ = new ProfilingPanel( pProfilerDockWnd_, controllers_, network_, simulation );
     pProfilerDockWnd_->setWidget( profilingPanel_ );
     pProfilerDockWnd_->setResizeEnabled( true );
     pProfilerDockWnd_->setCloseMode( QDockWindow::Always );

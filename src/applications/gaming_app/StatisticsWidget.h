@@ -33,6 +33,9 @@ public:
     //! @name Operations
     //@{
     void AddValue( unsigned int tick, unsigned long value );
+    void SetYAxisCaption( const QString& caption );
+    void SetXAxisCaption( const QString& caption );
+    void SetVisibleTicks( unsigned int count );
     //@}
 
 private:
@@ -53,6 +56,7 @@ private:
     GQ_PlotData* data_;
     unsigned long yMax_;
     T_Values lastValues_;
+    unsigned int visibleTicks_;
     //@}
 };
 
