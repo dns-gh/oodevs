@@ -814,21 +814,6 @@ void MIL_EntityManager::OnReceiveMsgAutomatOrder( const ASN1T_MsgAutomatOrder& a
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgUnitMagicAction
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgUnitMagicAction( DIN::DIN_Input& msg )
-{
-    uint32 nAgentID;
-    msg >> nAgentID;
-
-    MIL_AgentPion* pAgent = FindAgentPion( nAgentID );
-    if( !pAgent )
-        return;
-    pAgent->OnReceiveMsgUnitMagicAction( msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgUnitMagicAction
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& asnMsg, uint nCtx )
@@ -839,12 +824,9 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAct
 
     try
     {
-        MIL_Automate*  pAutomate = FindAutomate ( asnMsg.oid );
-        MIL_AgentPion* pPion     = FindAgentPion( asnMsg.oid );
-
-        if( pAutomate )
+        if( MIL_Automate*  pAutomate = FindAutomate ( asnMsg.oid ) )
             pAutomate->OnReceiveMsgUnitMagicAction( asnMsg );
-        else if( pPion )
+        else if( MIL_AgentPion* pPion = FindAgentPion( asnMsg.oid ) )
             pPion->OnReceiveMsgUnitMagicAction( asnMsg );
         else
             throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_unit );

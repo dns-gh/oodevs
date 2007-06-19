@@ -135,7 +135,6 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveMsgUnitMagicAction             ( DIN::DIN_Input&                                  msg );
     void OnReceiveMsgUnitMagicAction             ( const ASN1T_MsgUnitMagicAction&                  msg, uint nCtx );
     void OnReceiveMsgPopulationOrder             ( const ASN1T_MsgPopulationOrder&                  msg, uint nCtx );     
     void OnReceiveMsgUnitOrder                   ( const ASN1T_MsgUnitOrder&                        msg, uint nCtx ); 

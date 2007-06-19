@@ -30,7 +30,7 @@ class NET_AS_MOSServerMsgMgr : public NET_AS_MOSServerMgr_ABC
     MT_COPYNOTALLOWED( NET_AS_MOSServerMsgMgr );
 
 public:
-    NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer ); 
+             NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer ); 
     virtual ~NET_AS_MOSServerMsgMgr();
 
     //! @name Service activation 
@@ -86,7 +86,6 @@ private:
     void OnReceiveMsgDisableProfiling      ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgEnableUnitVisionCones ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgDisableUnitVisionCones( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgUnitMagicAction       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     
     void OnReceiveMsgClientToSim           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgMiddleToSim           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );

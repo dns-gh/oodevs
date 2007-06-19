@@ -849,8 +849,7 @@ void MIL_Automate::OnReceiveMsgUnitCreationRequest( const ASN1T_MsgUnitCreationR
 
     MT_Vector2D position;
     NET_ASN_Tools::ReadPoint( msg.position, position );
-    MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager()
-                        .CreatePion( *pType, *this, position ); // Auto-registration
+    MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position ); // Auto-registration
 }
 
 // -----------------------------------------------------------------------------

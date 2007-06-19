@@ -111,7 +111,6 @@ public:
     void SendFullState() const;
     void SendKnowledge() const;
 
-    void OnReceiveMsgUnitMagicAction  ( DIN::DIN_Input&              msg );
     void OnReceiveMsgUnitMagicAction  ( const ASN1T_MsgUnitMagicAction&    msg );
     void OnReceiveMsgOrder            ( const ASN1T_MsgUnitOrder&          msg ); 
     void OnReceiveMsgFragOrder        ( const ASN1T_MsgFragOrder&          msg );
@@ -154,6 +153,7 @@ private:
     void OnReceiveMsgResupplyAll              ();
     void OnReceiveMsgResupply                 ( const ASN1T_MagicActionPartialRecovery& asn );
     void OnReceiveMsgDestroyAll               ();
+    void OnReceiveMsgDestroyComponent         ();
     void OnReceiveMsgRecoverHumansTransporters();
     //@}
 

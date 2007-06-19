@@ -632,15 +632,12 @@ void MIL_AgentPion::OnReceiveMsgFragOrder( const ASN1T_MsgFragOrder& msg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgUnitMagicAction
-// Created: NLD 2004-09-07
+// Name: MIL_AgentPion::OnReceiveMsgDestroyComponent
+// Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgUnitMagicAction( DIN::DIN_Input& msg )
+void MIL_AgentPion::OnReceiveMsgDestroyComponent()
 {
-    uint8 nMagicAction;
-    msg >> nMagicAction;
-    if( nMagicAction == 0 /*eUnitMagicActionDestroyComposante*/ )
-        GetRole< PHY_RolePion_Composantes >().DestroyRandomComposante();
+    GetRole< PHY_RolePion_Composantes >().DestroyRandomComposante();
 }
 
 // -----------------------------------------------------------------------------
@@ -853,6 +850,7 @@ void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction&
         case T_MsgUnitMagicAction_action_recompletement_partiel     : OnReceiveMsgResupply                   ( *asnMsg.action.u.recompletement_partiel ); break;
         case T_MsgUnitMagicAction_action_change_facteurs_humains    : OnReceiveMsgChangeHumanFactors         ( *asnMsg.action.u.change_facteurs_humains ); break;
         case T_MsgUnitMagicAction_action_destruction_totale         : OnReceiveMsgDestroyAll                 (); break;
+        case T_MsgUnitMagicAction_action_destruction_composante     : OnReceiveMsgDestroyComponent           (); break;
         case T_MsgUnitMagicAction_action_recuperer_transporteurs    : OnReceiveMsgRecoverHumansTransporters  (); break;
         case T_MsgUnitMagicAction_action_se_rendre                  : pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg ); return;        
         case T_MsgUnitMagicAction_action_annuler_reddition          : pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg ); return;        

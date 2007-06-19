@@ -42,7 +42,6 @@ static enum
 
     eMsgEnableUnitVisionCones                  = 1000,
     eMsgDisableUnitVisionCones                 = 1001,
-    eMsgUnitMagicAction                        = 1002,
     eMsgEnableProfiling                        = 1003,
     eMsgDisableProfiling                       = 1004,
     eMsgUnitVisionCones                        = 1005,
@@ -70,7 +69,6 @@ NET_AS_MOSServerMsgMgr::NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer )
     messageService_.RegisterReceivedMessage( eMsgDisableUnitVisionCones, *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgDisableUnitVisionCones );
     messageService_.RegisterReceivedMessage( eMsgEnableProfiling       , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgEnableProfiling        );
     messageService_.RegisterReceivedMessage( eMsgDisableProfiling      , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgDisableProfiling       );
-    messageService_.RegisterReceivedMessage( eMsgUnitMagicAction       , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgUnitMagicAction        );
     messageService_.RegisterReceivedMessage( eMsgDebugDrawPoints       , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgDebugDrawPoints        );
 
     messageService_.SetCbkOnError( & NET_AS_MOSServerMsgMgr::OnError );
@@ -543,7 +541,6 @@ void NET_AS_MOSServerMsgMgr::DoUpdate( const T_MessageMiddleToSimControllerVecto
         NET_ASN_MsgsMiddleToSimController& msgCtrl = **it;
         ASN1T_MsgsMiddleToSim& asnMsg = msgCtrl.GetMessage();
 
-        uint nCtx = asnMsg.context;
         switch( asnMsg.msg.t )
         {
             case T_MsgsMiddleToSim_msg_msg_ctrl_client_announcement : OnReceiveMsgCtrlClientAnnouncement( *msgCtrl.GetLink() ); break;
@@ -592,15 +589,6 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgEnableUnitVisionCones( DIN::DIN_Link& /
 void NET_AS_MOSServerMsgMgr::OnReceiveMsgDisableUnitVisionCones( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& /*input*/ )
 {
     agentServer_.SetMustSendUnitVisionCones( false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::OnReceiveMsgUnitMagicAction
-// Created: NLD 2004-02-04
-// -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveMsgUnitMagicAction( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
-{
-    MIL_AgentServer::GetWorkspace().GetEntityManager().OnReceiveMsgUnitMagicAction( input );
 }
 
 //=============================================================================
