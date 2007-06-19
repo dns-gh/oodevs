@@ -108,8 +108,9 @@ void ParamObstacle::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 void ParamObstacle::RemoveFromController()
 {
-    tc2_->RemoveFromController();
     location_->RemoveFromController();
+    tc2_->RemoveFromController();
+    density_->RemoveFromController();
 }
 
 // -----------------------------------------------------------------------------
@@ -118,8 +119,9 @@ void ParamObstacle::RemoveFromController()
 // -----------------------------------------------------------------------------
 void ParamObstacle::RegisterIn( ActionController& controller )
 {
-    tc2_->RegisterIn( controller );
     location_->RegisterIn( controller );
+    tc2_->RegisterIn( controller );
+    density_->RegisterIn( controller );
 }
 
 // -----------------------------------------------------------------------------

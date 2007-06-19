@@ -86,7 +86,8 @@ bool EntityParameterBase::Invalid()
 // -----------------------------------------------------------------------------
 void EntityParameterBase::AddToMenu( ContextMenu& menu )
 {
-    menu.InsertItem( "Parameter", GetName(), this, SLOT( MenuItemValidated() ) );
+    if( entityLabel_->isShown() )
+        menu.InsertItem( "Parameter", GetName(), this, SLOT( MenuItemValidated() ) );
 }
 
 // -----------------------------------------------------------------------------
