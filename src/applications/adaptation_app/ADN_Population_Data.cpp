@@ -214,11 +214,11 @@ std::string ADN_Population_Data::FireEffectInfos::GetItemName()
 // Name: ADN_Population_Data::FireEffectRoeInfos::FireEffectRoeInfos
 // Created: SBO 2005-11-21
 // -----------------------------------------------------------------------------
-ADN_Population_Data::FireEffectRoeInfos::FireEffectRoeInfos( E_RoePopulation nRoe )
+ADN_Population_Data::FireEffectRoeInfos::FireEffectRoeInfos( E_PopulationRoe nRoe )
 : ADN_Ref_ABC         ()
 , ADN_DataTreeNode_ABC()
 , nRoe_               ( nRoe )
-, strName_            ( ENT_Tr::ConvertFromRoePopulation( nRoe ) )
+, strName_            ( ENT_Tr::ConvertFromPopulationRoe( nRoe ) )
 , rAttritionSurface_  ( 0. )
 , rPH_                ( 0. )
 {
@@ -272,7 +272,7 @@ void ADN_Population_Data::FireEffectRoeInfos::WriteArchive( MT_OutputArchive_ABC
     if( rAttritionSurface_.GetData() == 0. && rPH_.GetData() == 0. )
         return;
     output.Section( "RegleEngagementTireur" );
-    output.WriteAttribute( "nom", ENT_Tr::ConvertFromRoePopulation( nRoe_ ) );
+    output.WriteAttribute( "nom", ENT_Tr::ConvertFromPopulationRoe( nRoe_ ) );
     output.WriteField( "SurfaceAttrition", rAttritionSurface_.GetData() );
     output.WriteField( "PH", rPH_.GetData() );
     output.EndSection(); // RegleEngagementTireur
@@ -463,9 +463,9 @@ ADN_Population_Data::PopulationInfos::PopulationInfos()
         std::auto_ptr< FireEffectInfos > spFireNew( pFireNew );
         vFireEffectInfos_.AddItem( spFireNew.release() );
     }
-    for( int i = 0; i < eNbrRoePopulation; ++i )
+    for( int i = 0; i < eNbrPopulationRoe; ++i )
     {
-        FireEffectRoeInfos* pFireRoeNew = new FireEffectRoeInfos( ( E_RoePopulation )i );
+        FireEffectRoeInfos* pFireRoeNew = new FireEffectRoeInfos( ( E_PopulationRoe )i );
         std::auto_ptr< FireEffectRoeInfos > spFireRoeNew( pFireRoeNew );
         vFireEffectRoeInfos_.AddItem( spFireRoeNew.release() );
     }
@@ -521,7 +521,7 @@ ADN_Population_Data::PopulationInfos* ADN_Population_Data::PopulationInfos::Crea
         pCopy->vSpeedEffectInfos_[ i ] = vSpeedEffectInfos_[ i ];
         pCopy->vFireEffectInfos_ [ i ] = vFireEffectInfos_ [ i ];
     }
-    for( int i = 0; i < eNbrRoePopulation; ++i )
+    for( int i = 0; i < eNbrPopulationRoe; ++i )
         pCopy->vFireEffectRoeInfos_[ i ] = vFireEffectRoeInfos_[ i ];
 
     return pCopy;
@@ -595,8 +595,8 @@ void ADN_Population_Data::PopulationInfos::ReadArchive( ADN_XmlInput_Helper& inp
             {
                 std::string strROE;
                 input.ReadAttribute( "nom", strROE );
-                uint nROE = ENT_Tr::ConvertToRoePopulation( strROE );
-                if( nROE == (E_RoePopulation)-1 )
+                uint nROE = ENT_Tr::ConvertToPopulationRoe( strROE );
+                if( nROE == (E_PopulationRoe)-1 )
                     throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Invalid population ROE." ).ascii() );
                 vFireEffectRoeInfos_[ nROE ]->ReadArchive( input );
                 input.EndSection(); // RegleEngagementTireur

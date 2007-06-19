@@ -23,8 +23,8 @@ using namespace kernel;
 HumanFactors::HumanFactors( Controller& controller, PropertiesDictionary& dictionary )
     : controller_( controller )
     , experience_( (E_UnitExperience)0 )
-    , tiredness_( (E_UnitFatigue)0 )
-    , morale_( (E_UnitMoral)0 )
+    , tiredness_( (E_UnitTiredness)0 )
+    , morale_( (E_UnitMorale)0 )
 {
     CreateDictionary( dictionary );
 }
@@ -56,13 +56,13 @@ void HumanFactors::CreateDictionary( kernel::PropertiesDictionary& dictionary ) 
 void HumanFactors::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     if( message.m.moralPresent )
-        morale_ = (E_UnitMoral)message.moral;
+        morale_ = (E_UnitMorale)message.moral;
 
     if( message.m.experiencePresent )
         experience_ = (E_UnitExperience)message.experience;
 
     if( message.m.fatiguePresent )
-        tiredness_ = (E_UnitFatigue)message.fatigue;
+        tiredness_ = (E_UnitTiredness)message.fatigue;
 
     controller_.Update( *(HumanFactors_ABC*)this );
 }
@@ -92,7 +92,7 @@ E_UnitExperience HumanFactors::GetExperience() const
 // Name: HumanFactors::GetTiredness
 // Created: SBO 2006-06-27
 // -----------------------------------------------------------------------------
-E_UnitFatigue HumanFactors::GetTiredness() const
+E_UnitTiredness HumanFactors::GetTiredness() const
 {
     return tiredness_;
 }
@@ -101,7 +101,7 @@ E_UnitFatigue HumanFactors::GetTiredness() const
 // Name: HumanFactors::GetMorale
 // Created: SBO 2006-06-27
 // -----------------------------------------------------------------------------
-E_UnitMoral HumanFactors::GetMorale() const
+E_UnitMorale HumanFactors::GetMorale() const
 {
     return morale_;
 }

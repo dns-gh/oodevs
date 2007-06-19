@@ -109,7 +109,7 @@ protected:
     ValuedComboBox< const kernel::Team_ABC* >* teams_;
     ValuedComboBox< const kernel::ObjectType* >* objectTypes_;
     QLineEdit* name_;
-    ValuedComboBox< E_TypeObstacle >* obstacleTypes_;
+    ValuedComboBox< E_ObstacleType >* obstacleTypes_;
     QCheckBox* reservedObstacleActivated_;
 
     LocationCreator* locationCreator_;

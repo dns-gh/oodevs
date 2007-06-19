@@ -32,9 +32,9 @@ class GlTooltip : public kernel::GlTooltip_ABC
                 , public NoLinkDisplayer
                 , public kernel::Caller< QColor >
                 , public kernel::Caller< kernel::Styles::Style >
-                , public kernel::Caller< E_EtatOperationnel >
-                , public kernel::Caller< E_EtatRapFor >
-                , public kernel::Caller< E_EtatCombatRencontre >
+                , public kernel::Caller< E_OperationalStatus >
+                , public kernel::Caller< E_ForceRatioStatus >
+                , public kernel::Caller< E_MeetingEngagementStatus >
 {
 
 public:
@@ -62,9 +62,9 @@ private:
     //@{
     virtual void Call( const QColor& value );
     virtual void Call( const kernel::Styles::Style& value );
-    virtual void Call( const E_EtatOperationnel& value );
-    virtual void Call( const E_EtatRapFor& value );
-    virtual void Call( const E_EtatCombatRencontre& value );
+    virtual void Call( const E_OperationalStatus& value );
+    virtual void Call( const E_ForceRatioStatus& value );
+    virtual void Call( const E_MeetingEngagementStatus& value );
 
     virtual Displayer_ABC& SubItem( const QString& name );
     virtual void StartDisplay();

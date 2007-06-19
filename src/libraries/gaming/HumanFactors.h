@@ -47,8 +47,8 @@ public:
     //! @name Accessors
     //@{
     E_UnitExperience GetExperience() const;
-    E_UnitFatigue GetTiredness() const;
-    E_UnitMoral GetMorale() const;
+    E_UnitTiredness GetTiredness() const;
+    E_UnitMorale GetMorale() const;
     //@}
 
 private:
@@ -69,8 +69,8 @@ private:
     //@{
     kernel::Controller& controller_;
     E_UnitExperience experience_;
-    E_UnitFatigue    tiredness_;
-    E_UnitMoral      morale_;
+    E_UnitTiredness    tiredness_;
+    E_UnitMorale      morale_;
     //@}
 };
 

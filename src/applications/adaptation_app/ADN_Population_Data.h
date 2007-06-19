@@ -134,7 +134,7 @@ public:
         MT_COPYNOTALLOWED( FireEffectRoeInfos )
 
     public:
-         FireEffectRoeInfos( E_RoePopulation nRoe );
+         FireEffectRoeInfos( E_PopulationRoe nRoe );
         ~FireEffectRoeInfos();
 
         virtual std::string GetNodeName();
@@ -145,7 +145,7 @@ public:
 
     public:
         ADN_Type_String strName_;
-        E_RoePopulation nRoe_;
+        E_PopulationRoe nRoe_;
         ADN_Type_Double rAttritionSurface_;
         ADN_Type_Double rPH_;
     };

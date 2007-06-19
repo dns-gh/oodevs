@@ -52,11 +52,11 @@ ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controller
     pLayout->setRowStretch( 2, 0 );
     
     pLayout->addWidget( new QLabel( tr( "Tiredness:" ), this ), 1, 0 );
-    pTirednessCombo_ = new ValuedComboBox< E_UnitFatigue >( this );
+    pTirednessCombo_ = new ValuedComboBox< E_UnitTiredness >( this );
     pLayout->addWidget( pTirednessCombo_, 1, 1 );
 
     pLayout->addWidget( new QLabel( tr( "Moral:" ), this ), 2, 0 );
-    pMoralCombo_ = new ValuedComboBox< E_UnitMoral >( this );
+    pMoralCombo_ = new ValuedComboBox< E_UnitMorale >( this );
     pLayout->addWidget( pMoralCombo_, 2, 1 );
 
     pLayout->addWidget( new QLabel( tr( "Experience:" ), this ), 3, 0 );
@@ -91,8 +91,8 @@ ChangeHumanFactorsDialog::~ChangeHumanFactorsDialog()
 // -----------------------------------------------------------------------------
 void ChangeHumanFactorsDialog::Show()
 {
-    Populate( eNbrUnitFatigue, *pTirednessCombo_ );
-    Populate( eNbrUnitMoral, *pMoralCombo_ );
+    Populate( eNbrUnitTiredness,  *pTirednessCombo_ );
+    Populate( eNbrUnitMorale,     *pMoralCombo_ );
     Populate( eNbrUnitExperience, *pExperienceCombo_ );
 
     if( const HumanFactors_ABC* factors = selected_->Retrieve< HumanFactors_ABC >() )
@@ -104,7 +104,7 @@ void ChangeHumanFactorsDialog::Show()
 // Name: ChangeHumanFactorsDialog::Call
 // Created: AGE 2006-08-24
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::Call( const E_UnitFatigue& fatigue )
+void ChangeHumanFactorsDialog::Call( const E_UnitTiredness& fatigue )
 {
     pTirednessCombo_->SetCurrentItem( fatigue );
 }
@@ -113,7 +113,7 @@ void ChangeHumanFactorsDialog::Call( const E_UnitFatigue& fatigue )
 // Name: ChangeHumanFactorsDialog::Call
 // Created: AGE 2006-08-24
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::Call( const E_UnitMoral& morale )
+void ChangeHumanFactorsDialog::Call( const E_UnitMorale& morale )
 {
     pMoralCombo_->SetCurrentItem( morale );
 }

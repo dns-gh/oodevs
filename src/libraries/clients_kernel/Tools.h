@@ -29,22 +29,22 @@ namespace tools
     QString ToString( kernel::E_WeatherType weather );
 
     QString ToString( E_PopulationAttitude nType );
-    QString ToString( E_TypeObstacle nType );
+    QString ToString( E_ObstacleType nType );
     QString ToString( E_UnitPosture nType );
-    QString ToString( E_EtatOperationnel nType );
-    QString ToString( E_EtatRapFor nType );
+    QString ToString( E_OperationalStatus nType );
+    QString ToString( E_ForceRatioStatus nType );
     QString ToString( E_Roe nType );
-    QString ToString( E_RoePopulation nType );
-    QString ToString( E_EtatCombatRencontre nType );
-    QString ToString( E_DisponibiliteAuTir nType );
+    QString ToString( E_PopulationRoe nType );
+    QString ToString( E_MeetingEngagementStatus nType );
+    QString ToString( E_FireAvailability nType );
     QString ToString( E_NatureLevel nType );
     QString ToString( E_UnitExperience nType );
-    QString ToString( E_UnitMoral nType );
-    QString ToString( E_UnitFatigue nType );
+    QString ToString( E_UnitMorale nType );
+    QString ToString( E_UnitTiredness nType );
     QString ToString( E_HumanWound nType );
-    QString ToString( E_LogRavitaillementTraitementEtat nType );
-    QString ToString( E_LogSanteTraitementEtat nType );
-    QString ToString( E_LogMaintenanceTraitementEtat nType );
+    QString ToString( E_LogSupplyHandlingStatus nType );
+    QString ToString( E_LogMedicalHandlingStatus nType );
+    QString ToString( E_LogMaintenanceHandlingStatus nType );
 
     QString Unknown();
 
@@ -53,7 +53,7 @@ namespace tools
     const char* GetXmlSection( kernel::E_LightingType nLightingType );
 
     E_ObjectType       ObjectTypeFromString     ( const std::string& type );
-    E_FamilleDotation  FamilleDotationFromString( const std::string& type );
+    E_DotationFamily   DotationFamilyFromString( const std::string& type );
     E_NatureLevel      NatureLevelFromString    ( const std::string& type );
 };
 

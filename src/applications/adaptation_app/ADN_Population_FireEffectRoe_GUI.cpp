@@ -35,8 +35,8 @@ public:
     {
         assert( obj );
         
-        E_RoePopulation nRoe = static_cast<FireEffectRoeInfos*>(obj)->nRoe_;
-        uint nNbrHiddenRoe = (uint)eRoePopulation_EmploiForceInterdit + 1;
+        E_PopulationRoe nRoe = static_cast<FireEffectRoeInfos*>(obj)->nRoe_;
+        uint nNbrHiddenRoe = (uint)ePopulationRoe_EmploiForceInterdit + 1;
 
         if( (uint)nRoe < nNbrHiddenRoe )
             return;
@@ -51,7 +51,7 @@ public:
         
         // disable first column
         pItemString->setEnabled( false );
-        pItemString->setText( ENT_Tr::ConvertFromRoePopulation( nRoe, ENT_Tr_ABC::eToTr ).c_str() );
+        pItemString->setText( ENT_Tr::ConvertFromPopulationRoe( nRoe, ENT_Tr_ABC::eToTr ).c_str() );
 
         // set table item properties
         pItemPH->GetValidator().setRange( 0, 1, 4 );

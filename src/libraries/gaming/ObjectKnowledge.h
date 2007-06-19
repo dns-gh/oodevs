@@ -93,7 +93,7 @@ private:
     kernel::OptionalValue< unsigned int >   nValorizationPercentage_;
     kernel::OptionalValue< unsigned int >   nBypassConstructionPercentage_;
     kernel::OptionalValue< bool >           bIsPerceived_;
-    kernel::OptionalValue< E_TypeObstacle > obstacleType_;
+    kernel::OptionalValue< E_ObstacleType > obstacleType_;
     kernel::OptionalValue< bool           > reservedObstacleActivated_;
     kernel::OptionalValue< uint >           nRelevance_;
     // $$$$ NLD 2007-05-23: Manque les dotations

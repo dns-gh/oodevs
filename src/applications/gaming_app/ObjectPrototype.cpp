@@ -70,7 +70,7 @@ void ObjectPrototype::Commit( Publisher_ABC& publisher )
     if( creation_.m.type_obstaclePresent )
     {
         creation_.type_obstacle = (ASN1T_EnumObstacleType)obstacleTypes_->GetValue();
-        creation_.m.obstacle_de_manoeuvre_activePresent = creation_.type_obstacle == eTypeObstacle_DeManoeuvre;
+        creation_.m.obstacle_de_manoeuvre_activePresent = creation_.type_obstacle == eObstacleType_DeManoeuvre;
         creation_.obstacle_de_manoeuvre_active = reservedObstacleActivated_->isChecked();
     }
     creation_.oid_camp = teams_->GetValue()->GetId();

@@ -65,7 +65,7 @@ private:
     const kernel::ComponentType* equipmentType_;
     const kernel::BreakdownType* breakdownType_;
     bool    diagnosed_;
-    E_LogMaintenanceTraitementEtat nState_;
+    E_LogMaintenanceHandlingStatus nState_;
 };
 
 #endif // __LogMaintenanceConsign_h_

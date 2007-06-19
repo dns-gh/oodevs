@@ -84,7 +84,7 @@ Deserializer& operator>>( Deserializer& deserializer, TER_Localisation& localisa
 {
     std::string strLocalisationType;
     deserializer >> strLocalisationType;
-    TER_Localisation::E_TypeLocalisation eType = TER_Localisation::ConvertLocalisationType( strLocalisationType );
+    TER_Localisation::E_LocationType eType = TER_Localisation::ConvertLocalisationType( strLocalisationType );
     if( eType == TER_Localisation::eNone )
         return deserializer;
 

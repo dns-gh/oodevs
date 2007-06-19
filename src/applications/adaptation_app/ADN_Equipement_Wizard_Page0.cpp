@@ -46,7 +46,7 @@ ADN_Equipement_Wizard_Page0::~ADN_Equipement_Wizard_Page0()
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Wizard_Page0::NewT()
 {
-    if( parentDotation_.nType_ == eFamilleDotation_Munition )
+    if( parentDotation_.nType_ == eDotationFamily_Munition )
         return new ADN_Equipement_Data::AmmoCategoryInfo( parentDotation_ );
     else
         return new ADN_Equipement_Data::CategoryInfo( parentDotation_ );

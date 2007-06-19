@@ -37,6 +37,6 @@ struct Enum_##name : public Enum_ABC< E_##name > { \
 };
 
 DECLARE_ENUMTYPE( PopulationAttitude )
-DECLARE_ENUMTYPE( TypeObstacle )
+DECLARE_ENUMTYPE( ObstacleType )
 
 #endif // __EnumTypes_h_

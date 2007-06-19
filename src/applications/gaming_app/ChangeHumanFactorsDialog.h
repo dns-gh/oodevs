@@ -42,8 +42,8 @@ class ChangeHumanFactorsDialog : public QDialog
                                , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                                , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                                , public kernel::NullDisplayer
-                               , public kernel::Caller< E_UnitFatigue >
-                               , public kernel::Caller< E_UnitMoral >
+                               , public kernel::Caller< E_UnitTiredness >
+                               , public kernel::Caller< E_UnitMorale >
                                , public kernel::Caller< E_UnitExperience >
 {
     Q_OBJECT
@@ -82,8 +82,8 @@ private:
     void DoContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     void SendMessage( uint id, ASN1T_EnumUnitTiredness, ASN1T_EnumUnitMorale, ASN1T_EnumUnitExperience );
     void SendMessage( const kernel::Entity_ABC& entity, ASN1T_EnumUnitTiredness, ASN1T_EnumUnitMorale, ASN1T_EnumUnitExperience );
-    virtual void Call( const E_UnitFatigue& fatigue );
-    virtual void Call( const E_UnitMoral& morale );
+    virtual void Call( const E_UnitTiredness& fatigue );
+    virtual void Call( const E_UnitMorale& morale );
     virtual void Call( const E_UnitExperience& experience );
     //@}
 
@@ -95,8 +95,8 @@ private:
     const kernel::Profile_ABC& profile_;
 
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    gui::ValuedComboBox< E_UnitFatigue >*     pTirednessCombo_;
-    gui::ValuedComboBox< E_UnitMoral >*       pMoralCombo_;
+    gui::ValuedComboBox< E_UnitTiredness >*     pTirednessCombo_;
+    gui::ValuedComboBox< E_UnitMorale >*       pMoralCombo_;
     gui::ValuedComboBox< E_UnitExperience >*  pExperienceCombo_;
     //@}
 };

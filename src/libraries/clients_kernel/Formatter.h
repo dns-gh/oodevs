@@ -181,15 +181,15 @@ struct Formatter< E_UnitPosture >
 };
 
 template< >
-struct Formatter< E_EtatOperationnel >
+struct Formatter< E_OperationalStatus >
 {
-    void operator()( const E_EtatOperationnel& e, Displayer_ABC& displayer ) const;
+    void operator()( const E_OperationalStatus& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
-struct Formatter< E_EtatRapFor >
+struct Formatter< E_ForceRatioStatus >
 {
-    void operator()( const E_EtatRapFor& e, Displayer_ABC& displayer ) const;
+    void operator()( const E_ForceRatioStatus& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
@@ -199,21 +199,21 @@ struct Formatter< E_Roe >
 };
 
 template< >
-struct Formatter< E_RoePopulation >
+struct Formatter< E_PopulationRoe >
 {
-    void operator()( const E_RoePopulation& e, Displayer_ABC& displayer ) const;
+    void operator()( const E_PopulationRoe& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
-struct Formatter< E_EtatCombatRencontre >
+struct Formatter< E_MeetingEngagementStatus >
 {
-    void operator()( const E_EtatCombatRencontre& e, Displayer_ABC& displayer ) const;
+    void operator()( const E_MeetingEngagementStatus& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
-struct Formatter< E_DisponibiliteAuTir >
+struct Formatter< E_FireAvailability >
 {
-    void operator()( const E_DisponibiliteAuTir& e, Displayer_ABC& displayer ) const;
+    void operator()( const E_FireAvailability& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
@@ -235,15 +235,15 @@ struct Formatter< E_UnitExperience >
 };
 
 template< >
-struct Formatter< E_UnitMoral >
+struct Formatter< E_UnitMorale >
 {
-    void operator()( const E_UnitMoral& e, Displayer_ABC& displayer ) const;
+    void operator()( const E_UnitMorale& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
-struct Formatter< E_UnitFatigue >
+struct Formatter< E_UnitTiredness >
 {
-    void operator()( const E_UnitFatigue& e, Displayer_ABC& displayer ) const;
+    void operator()( const E_UnitTiredness& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
@@ -259,27 +259,27 @@ struct Formatter< E_HumanWound >
 };
 
 template< >
-struct Formatter< E_LogRavitaillementTraitementEtat >
+struct Formatter< E_LogSupplyHandlingStatus >
 {
-    void operator()( const E_LogRavitaillementTraitementEtat& e, Displayer_ABC& displayer ) const;
+    void operator()( const E_LogSupplyHandlingStatus& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
-struct Formatter< E_LogSanteTraitementEtat >
+struct Formatter< E_LogMedicalHandlingStatus >
 {
-    void operator()( const E_LogSanteTraitementEtat& e, Displayer_ABC& displayer ) const;
+    void operator()( const E_LogMedicalHandlingStatus& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
-struct Formatter< E_LogMaintenanceTraitementEtat >
+struct Formatter< E_LogMaintenanceHandlingStatus >
 {
-    void operator()( const E_LogMaintenanceTraitementEtat& e, Displayer_ABC& displayer ) const;
+    void operator()( const E_LogMaintenanceHandlingStatus& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
-struct Formatter< E_TypeObstacle >
+struct Formatter< E_ObstacleType >
 {
-    void operator()( const E_TypeObstacle& e, Displayer_ABC& displayer ) const;
+    void operator()( const E_ObstacleType& e, Displayer_ABC& displayer ) const;
 };
 
 // =============================================================================

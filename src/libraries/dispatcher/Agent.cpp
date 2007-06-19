@@ -66,7 +66,7 @@ Agent::Agent( Model& model, const ASN1T_MsgUnitCreation& msg )
     , nOperationalState_            ( EnumOperationalStatus      ::operationnel )
     , nIndirectFireAvailability_    ( EnumFireAvailability       ::indisponible )
     , nRoe_                         ( EnumRoe                    ::tir_libre )
-    , nRoePopulation_               ( EnumPopulationRoe          ::emploi_force_interdit )
+    , nPopulationRoe_               ( EnumPopulationRoe          ::emploi_force_interdit )
     , nTiredness_                   ( EnumUnitTiredness          ::normal )
     , nMorale_                      ( EnumUnitMorale             ::bon )
     , nExperience_                  ( EnumUnitExperience         ::experimente )
@@ -179,7 +179,7 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
     UPDATE_ASN_ATTRIBUTE( etat_operationnel, nOperationalState_ );
     UPDATE_ASN_ATTRIBUTE( disponibilite_au_tir_indirect, nIndirectFireAvailability_ );
     UPDATE_ASN_ATTRIBUTE( roe, nRoe_ );
-    UPDATE_ASN_ATTRIBUTE( roe_population, nRoePopulation_ );
+    UPDATE_ASN_ATTRIBUTE( roe_population, nPopulationRoe_ );
     UPDATE_ASN_ATTRIBUTE( fatigue, nTiredness_ );
     UPDATE_ASN_ATTRIBUTE( moral, nMorale_ );
     UPDATE_ASN_ATTRIBUTE( experience, nExperience_ );
@@ -431,7 +431,7 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
         asn().etat_operationnel = nOperationalState_;
         asn().disponibilite_au_tir_indirect = nIndirectFireAvailability_;
         asn().roe = nRoe_;
-        asn().roe_population = nRoePopulation_;
+        asn().roe_population = nPopulationRoe_;
         asn().fatigue = nTiredness_;
         asn().moral = nMorale_;
         asn().experience = nExperience_;

@@ -452,7 +452,7 @@ void LogisticSupplyRecompletionDialog::FillDotations(  ASN1T_MagicActionPartialR
                 continue;
 
             ASN1T_DotationRecovery& asnDotation = pAsnDotations[ nAsnIdx ++ ];
-            asnDotation.famille_dotation = (ASN1T_EnumDotationFamily)tools::FamilleDotationFromString( pDotationItem->text() );
+            asnDotation.famille_dotation = (ASN1T_EnumDotationFamily)tools::DotationFamilyFromString( pDotationItem->text() );
             asnDotation.pourcentage      = pPercentageItem->text().toUInt();
         }
     } 
@@ -494,7 +494,7 @@ void LogisticSupplyRecompletionDialog::FillAmmunitions( ASN1T_MagicActionPartial
             assert( pPercentageItem );
 
             ASN1T_AmmunitionDotationRecovery& asnMunition = pAsnMunitions[ nAsnIdx ++ ];
-            asnMunition.famille_munition = (ASN1T_EnumAmmunitionFamily)tools::FamilleMunitionFromString( pMunitionItem->text() );
+            asnMunition.famille_munition = (ASN1T_EnumAmmunitionFamily)tools::AmmunitionFamilyFromString( pMunitionItem->text() );
             asnMunition.pourcentage      = pPercentageItem->text().toUInt();
         }
     }   

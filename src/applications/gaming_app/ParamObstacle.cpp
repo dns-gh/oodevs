@@ -82,8 +82,8 @@ void ParamObstacle::BuildInterface( QWidget* parent )
     {
         QLabel* label = new QLabel( tr( "Obstacle type:" ), box );
         obstacleTypeCombo_ = new ValuedComboBox< unsigned int >( box );
-        for( unsigned int i = 0; i < eNbrTypeObstacle ; ++i )
-            obstacleTypeCombo_->AddItem( tools::ToString( ( E_TypeObstacle)i ), i );
+        for( unsigned int i = 0; i < eNbrObstacleType ; ++i )
+            obstacleTypeCombo_->AddItem( tools::ToString( ( E_ObstacleType)i ), i );
         connect( this, SIGNAL( ToggleReservable( bool ) ), label, SLOT( setShown( bool ) ) );
         connect( this, SIGNAL( ToggleReservable( bool ) ), obstacleTypeCombo_, SLOT( setShown( bool ) ) );
     }

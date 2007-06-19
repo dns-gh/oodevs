@@ -110,7 +110,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void BuildGeneric( E_FamilleDotation nType, QTabWidget* pParent );
+    void BuildGeneric( E_DotationFamily nType, QTabWidget* pParent );
     void BuildAmmunition( QTabWidget* pParent );
     //@}
 

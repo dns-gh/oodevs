@@ -35,18 +35,18 @@ Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& c
     , nAltitude_( 0 )
     , nDirection_( 0 )
     , nRawOpState_( 0 )
-    , nOpState_( (E_EtatOperationnel)0 )
-    , nFightRateState_( (E_EtatRapFor)0 )
+    , nOpState_( (E_OperationalStatus)0 )
+    , nFightRateState_( (E_ForceRatioStatus)0 )
     , nRulesOfEngagementState_( (E_Roe)0 )
-    , nRulesOfEngagementPopulationState_( (E_RoePopulation)0 )
-    , nCloseCombatState_( (E_EtatCombatRencontre)0 )
+    , nRulesOfEngagementPopulationState_( (E_PopulationRoe)0 )
+    , nCloseCombatState_( (E_MeetingEngagementStatus)0 )
     , bDead_( false )
     , bNeutralized_( false )
     , nOldPosture_( (E_UnitPosture)0 )
     , nCurrentPosture_( (E_UnitPosture)0 )
     , nPostureCompletionPourcentage_( 0 )
     , nInstallationState_( 0 )
-    , nIndirectFireAvailability_( (E_DisponibiliteAuTir)0 )
+    , nIndirectFireAvailability_( (E_FireAvailability)0 )
     , bLoadingState_( false )
     , bHumanTransportersReady_( false )
     , bStealthModeEnabled_( false )
@@ -105,10 +105,10 @@ void Attributes::DoUpdate( const ASN1T_MsgUnitAttributes& message )
         nRawOpState_ = message.etat_operationnel_brut;
 
     if( message.m.etat_operationnelPresent )
-        nOpState_ = (E_EtatOperationnel)message.etat_operationnel;
+        nOpState_ = (E_OperationalStatus)message.etat_operationnel;
 
     if( message.m.disponibilite_au_tir_indirectPresent )
-        nIndirectFireAvailability_  = (E_DisponibiliteAuTir)message.disponibilite_au_tir_indirect;
+        nIndirectFireAvailability_  = (E_FireAvailability)message.disponibilite_au_tir_indirect;
     
     if( message.m.posture_newPresent )
         nCurrentPosture_ = (E_UnitPosture)message.posture_new;
@@ -129,16 +129,16 @@ void Attributes::DoUpdate( const ASN1T_MsgUnitAttributes& message )
         bNeutralized_ = message.neutralise;
 
     if( message.m.rapport_de_forcePresent )
-        nFightRateState_ = (E_EtatRapFor)message.rapport_de_force;
+        nFightRateState_ = (E_ForceRatioStatus)message.rapport_de_force;
 
     if( message.m.roePresent )
         nRulesOfEngagementState_ = (E_Roe)message.roe;
 
     if( message.m.roe_populationPresent )
-        nRulesOfEngagementPopulationState_ = (E_RoePopulation)message.roe_population;
+        nRulesOfEngagementPopulationState_ = (E_PopulationRoe)message.roe_population;
 
     if( message.m.combat_de_rencontrePresent )
-        nCloseCombatState_ = (E_EtatCombatRencontre)message.combat_de_rencontre;
+        nCloseCombatState_ = (E_MeetingEngagementStatus)message.combat_de_rencontre;
 
     if( message.m.embarquePresent )
         bLoadingState_ = message.embarque;

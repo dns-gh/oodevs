@@ -40,7 +40,7 @@ ObjectKnowledge::ObjectKnowledge( const Team_ABC& owner, const ASN1T_MsgObjectKn
     pRealObject_ = objectResolver_.Find( message.oid_objet_reel );
 
     if( message.m.type_obstaclePresent )
-        obstacleType_ = (E_TypeObstacle)message.type_obstacle;   
+        obstacleType_ = (E_ObstacleType)message.type_obstacle;   
     if( message.m.obstacle_de_manoeuvre_activePresent )
         reservedObstacleActivated_ = message.obstacle_de_manoeuvre_active;
 }

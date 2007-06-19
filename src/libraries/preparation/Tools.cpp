@@ -58,21 +58,21 @@ E_PopulationAttitude tools::PopulationAttitudeFromString( const QString& type )
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::TypeObstacleFromString
+// Name: tools::ObstacleTypeFromString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-E_TypeObstacle tools::TypeObstacleFromString( const QString& type )
+E_ObstacleType tools::ObstacleTypeFromString( const QString& type )
 {
-    return ENT_Tr::ConvertToTypeObstacle( type.ascii() );
+    return ENT_Tr::ConvertToObstacleType( type.ascii() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: tools::ToXml
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-std::string tools::ToXml( E_TypeObstacle type )
+std::string tools::ToXml( E_ObstacleType type )
 {
-    return ENT_Tr::ConvertFromTypeObstacle( type, ENT_Tr::eToSim );
+    return ENT_Tr::ConvertFromObstacleType( type, ENT_Tr::eToSim );
 }
 
 // -----------------------------------------------------------------------------

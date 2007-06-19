@@ -200,9 +200,9 @@ QString tools::ToString( E_PopulationAttitude nType )
 // Name: tools::ToString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_TypeObstacle nType )
+QString tools::ToString( E_ObstacleType nType )
 {
-    return ENT_Tr::ConvertFromTypeObstacle( nType, ENT_Tr::eToTr ).c_str();
+    return ENT_Tr::ConvertFromObstacleType( nType, ENT_Tr::eToTr ).c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -218,18 +218,18 @@ QString tools::ToString( E_UnitPosture nType )
 // Name: tools::ToString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_EtatOperationnel nType )
+QString tools::ToString( E_OperationalStatus nType )
 {
-    return ENT_Tr::ConvertFromEtatOperationnel( nType, ENT_Tr::eToTr ).c_str();
+    return ENT_Tr::ConvertFromOperationalStatus( nType, ENT_Tr::eToTr ).c_str();
 }
 
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_EtatRapFor nType )
+QString tools::ToString( E_ForceRatioStatus nType )
 {
-    return ENT_Tr::ConvertFromEtatRapFor( nType, ENT_Tr::eToTr ).c_str();
+    return ENT_Tr::ConvertFromForceRatioStatus( nType, ENT_Tr::eToTr ).c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -245,27 +245,27 @@ QString tools::ToString( E_Roe nType )
 // Name: tools::ToString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_RoePopulation nType )
+QString tools::ToString( E_PopulationRoe nType )
 {
-    return ENT_Tr::ConvertFromRoePopulation( nType, ENT_Tr::eToTr ).c_str();
+    return ENT_Tr::ConvertFromPopulationRoe( nType, ENT_Tr::eToTr ).c_str();
 }
 
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_EtatCombatRencontre nType )
+QString tools::ToString( E_MeetingEngagementStatus nType )
 {
-    return ENT_Tr::ConvertFromEtatCombatRencontre( nType, ENT_Tr::eToTr ).c_str();
+    return ENT_Tr::ConvertFromMeetingEngagementStatus( nType, ENT_Tr::eToTr ).c_str();
 }
 
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_DisponibiliteAuTir nType )
+QString tools::ToString( E_FireAvailability nType )
 {
-    return ENT_Tr::ConvertFromDisponibiliteAuTir( nType, ENT_Tr::eToTr ).c_str();
+    return ENT_Tr::ConvertFromFireAvailability( nType, ENT_Tr::eToTr ).c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -290,18 +290,18 @@ QString tools::ToString( E_UnitExperience nType )
 // Name: tools::ToString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_UnitMoral nType )
+QString tools::ToString( E_UnitMorale nType )
 {
-    return ENT_Tr::ConvertFromUnitMoral( nType, ENT_Tr::eToTr ).c_str();
+    return ENT_Tr::ConvertFromUnitMorale( nType, ENT_Tr::eToTr ).c_str();
 }
 
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_UnitFatigue nType )
+QString tools::ToString( E_UnitTiredness nType )
 {
-    return ENT_Tr::ConvertFromUnitFatigue( nType, ENT_Tr::eToTr ).c_str();
+    return ENT_Tr::ConvertFromUnitTiredness( nType, ENT_Tr::eToTr ).c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -317,27 +317,27 @@ QString tools::ToString( E_HumanWound nType )
 // Name: tools::ToString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_LogRavitaillementTraitementEtat nType )
+QString tools::ToString( E_LogSupplyHandlingStatus nType )
 {
-    return ENT_Tr::ConvertFromLogRavitaillementTraitementEtat( nType, ENT_Tr::eToTr ).c_str();
+    return ENT_Tr::ConvertFromLogSupplyHandlingStatus( nType, ENT_Tr::eToTr ).c_str();
 }
 
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_LogSanteTraitementEtat nType )
+QString tools::ToString( E_LogMedicalHandlingStatus nType )
 {
-    return ENT_Tr::ConvertFromLogSanteTraitementEtat( nType, ENT_Tr::eToTr ).c_str();
+    return ENT_Tr::ConvertFromLogMedicalHandlingStatus( nType, ENT_Tr::eToTr ).c_str();
 }
 
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_LogMaintenanceTraitementEtat nType )
+QString tools::ToString( E_LogMaintenanceHandlingStatus nType )
 {
-    return ENT_Tr::ConvertFromLogMaintenanceTraitementEtat( nType, ENT_Tr::eToTr ).c_str();
+    return ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( nType, ENT_Tr::eToTr ).c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -350,12 +350,12 @@ E_ObjectType tools::ObjectTypeFromString( const std::string& type )
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::FamilleDotationFromString
+// Name: tools::DotationFamilyFromString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-E_FamilleDotation tools::FamilleDotationFromString( const std::string& type )
+E_DotationFamily tools::DotationFamilyFromString( const std::string& type )
 {
-    return ENT_Tr::ConvertToFamilleDotation( type );
+    return ENT_Tr::ConvertToDotationFamily( type );
 }
 
 // -----------------------------------------------------------------------------

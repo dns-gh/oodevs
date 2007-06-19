@@ -61,10 +61,10 @@ void ObjectPrototype::Commit()
     const QString name = name_->text();
     const kernel::Team_ABC* team = teams_->GetValue();
     
-    const E_TypeObstacle obstacleType = obstacleTypes_->GetValue();
+    const E_ObstacleType obstacleType = obstacleTypes_->GetValue();
     const bool reservedObstacleActivated = reservedObstacleActivated_->isChecked();
 
-    creation_ = teamsModel_.CreateObject( *team, const_cast< ObjectType& >( GetType() ), name, Enum_TypeObstacle( obstacleType ), reservedObstacleActivated, *location_ );
+    creation_ = teamsModel_.CreateObject( *team, const_cast< ObjectType& >( GetType() ), name, Enum_ObstacleType( obstacleType ), reservedObstacleActivated, *location_ );
     if( creation_ && activeAttributes_ )
         activeAttributes_->Commit();
     creation_ = 0;

@@ -89,7 +89,7 @@ private:
     kernel::OptionalValue< float          > rConstructionPercentage_;
     kernel::OptionalValue< float          > rValorizationPercentage_;
     kernel::OptionalValue< float          > rBypassConstructionPercentage_;
-    kernel::OptionalValue< E_TypeObstacle > obstacleType_;
+    kernel::OptionalValue< E_ObstacleType > obstacleType_;
     kernel::OptionalValue< bool           > reservedObstacleActivated_;
     //@}
 

@@ -36,7 +36,7 @@ public:
     /** @name Types */
     //-------------------------------------------------------------------------
     //@{
-    enum E_TypeLocalisation
+    enum E_LocationType
     {
         eCircle     = 0,
         eEllipse    = 1,
@@ -51,7 +51,7 @@ public:
 public:
      TER_Localisation();
      TER_Localisation( const TER_Localisation& );
-     TER_Localisation( E_TypeLocalisation, const T_PointVector& );
+     TER_Localisation( E_LocationType, const T_PointVector& );
      TER_Localisation( const MT_Vector2D& vPos, MT_Float rRadius );
     ~TER_Localisation();
 
@@ -68,7 +68,7 @@ public:
     //-------------------------------------------------------------------------
     //@{
     // $$$$ JVT : ?????
-    bool Reset( E_TypeLocalisation nType, const T_PointVector& pointVector );
+    bool Reset( E_LocationType nType, const T_PointVector& pointVector );
     void Reset();
     void Reset( const TER_Localisation& localisation );
     void Reset( const MT_Vector2D& vPos );
@@ -121,7 +121,7 @@ public:
     //-------------------------------------------------------------------------
     //@{
     const T_PointVector& GetPoints() const;
-    E_TypeLocalisation   GetType  () const;
+    E_LocationType   GetType  () const;
 
     // Circle <---- $$$ C'est de la grosse merde en plastique, vraiment
           bool         WasACircle     () const;
@@ -131,8 +131,8 @@ public:
     
     //! @name Tools
     //@{
-    static E_TypeLocalisation ConvertLocalisationType( const std::string& strType ); // A deplacer dans TER_Tools si nécessaire
-    static std::string        ConvertLocalisationType( E_TypeLocalisation );         // A deplacer dans TER_Tools si nécessaire
+    static E_LocationType ConvertLocalisationType( const std::string& strType ); // A deplacer dans TER_Tools si nécessaire
+    static std::string        ConvertLocalisationType( E_LocationType );         // A deplacer dans TER_Tools si nécessaire
     //@}
 
 private:
@@ -153,7 +153,7 @@ private:
     //@}
     
 protected:
-    E_TypeLocalisation nType_;
+    E_LocationType nType_;
     T_PointVector      pointVector_; // Initial points
 
     // $$$$ JVT : Hummmm ça ne serait pas une union...                  ?

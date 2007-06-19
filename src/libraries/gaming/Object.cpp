@@ -49,7 +49,7 @@ Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, 
         valorization_ = & dotationResolver.Get( message.type_dotation_valorisation );
 
     if( message.m.type_obstaclePresent )
-        obstacleType_ = (E_TypeObstacle)message.type_obstacle;
+        obstacleType_ = (E_ObstacleType)message.type_obstacle;
     
     if( message.m.obstacle_de_manoeuvre_activePresent )
         reservedObstacleActivated_ = message.obstacle_de_manoeuvre_active;
@@ -178,7 +178,7 @@ void Object::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport,
 // -----------------------------------------------------------------------------
 bool Object::IsReservedObstacle() const
 {
-    return obstacleType_.IsSet() && obstacleType_ == eTypeObstacle_DeManoeuvre;
+    return obstacleType_.IsSet() && obstacleType_ == eObstacleType_DeManoeuvre;
 }
 
 // -----------------------------------------------------------------------------

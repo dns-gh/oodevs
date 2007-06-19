@@ -38,7 +38,7 @@ LogSupplyConsign::LogSupplyConsign( Controller& controller, const Resolver_ABC< 
     , pAutomateLogHandling_ ( 0 )
     , pPionLogConvoying_    ( 0 )
     , pAutomateLogProvidingConvoyResources_( 0 )
-    , nState_( eLogRavitaillementTraitementEtat_Termine )
+    , nState_( eLogSupplyHandlingStatus_Termine )
 {
     for( uint i = 0; i < message.dotations.n; ++i )
         Register( message.dotations.elem[i].ressource_id,
@@ -91,7 +91,7 @@ void LogSupplyConsign::Update( const ASN1T_MsgLogSupplyHandlingUpdate& message )
         pAutomateLogProvidingConvoyResources_ = resolver_.Find( message.oid_automate_log_fournissant_moyens_convoi );
 
     if( message.m.etatPresent )
-        nState_ = E_LogRavitaillementTraitementEtat( message.etat );
+        nState_ = E_LogSupplyHandlingStatus( message.etat );
 
     if( message.m.dotationsPresent )
     {
@@ -148,11 +148,11 @@ void LogSupplyConsign::Draw( const Point2f& , const kernel::Viewport_ABC& viewpo
     glColor4f( COLOR_ORANGE );
     switch( nState_ )
     {
-    case eLogRavitaillementTraitementEtat_ConvoiDeplacementVersPointChargement:
-    case eLogRavitaillementTraitementEtat_ConvoiDeplacementVersPointDechargement:
+    case eLogSupplyHandlingStatus_ConvoiDeplacementVersPointChargement:
+    case eLogSupplyHandlingStatus_ConvoiDeplacementVersPointDechargement:
         glLineStipple( 1, tools.StipplePattern() );
         break;
-    case eLogRavitaillementTraitementEtat_ConvoiDeplacementRetour:
+    case eLogSupplyHandlingStatus_ConvoiDeplacementRetour:
         glLineStipple( 1, tools.StipplePattern(-1) );
         break;
     default:

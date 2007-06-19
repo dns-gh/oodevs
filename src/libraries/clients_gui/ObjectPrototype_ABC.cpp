@@ -76,7 +76,7 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
 
     {
         QLabel* label = new QLabel( tr( "Obstacle type:" ), this );
-        obstacleTypes_ = new ValuedComboBox< E_TypeObstacle >( this );
+        obstacleTypes_ = new ValuedComboBox< E_ObstacleType >( this );
         connect( this, SIGNAL( ToggleReservable( bool ) ), label, SLOT( setShown( bool ) ) );
         connect( this, SIGNAL( ToggleReservable( bool ) ), obstacleTypes_, SLOT( setShown( bool ) ) );
     }
@@ -110,7 +110,7 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::NotifyUpdated( const ModelLoaded& )
 {
-    Populate( eNbrTypeObstacle, *obstacleTypes_ );
+    Populate( eNbrObstacleType, *obstacleTypes_ );
     FillObjectTypes();
     OnTypeChanged();
 }
@@ -121,7 +121,7 @@ void ObjectPrototype_ABC::NotifyUpdated( const ModelLoaded& )
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::showEvent( QShowEvent* e )
 {
-    Populate( eNbrTypeObstacle, *obstacleTypes_ );
+    Populate( eNbrObstacleType, *obstacleTypes_ );
     FillObjectTypes();
     controllers_.Register( *locationCreator_ );
     QGroupBox::showEvent( e );
@@ -278,8 +278,8 @@ void ObjectPrototype_ABC::OnTypeChanged()
 void ObjectPrototype_ABC::OnObstacleTypeChanged()
 {
     const ObjectType* type = objectTypes_->GetValue();
-    E_TypeObstacle obstacleType = obstacleTypes_->GetValue();
-    emit ToggleActivable( type && type->CanBeReservedObstacle() && obstacleType == eTypeObstacle_DeManoeuvre );
+    E_ObstacleType obstacleType = obstacleTypes_->GetValue();
+    emit ToggleActivable( type && type->CanBeReservedObstacle() && obstacleType == eObstacleType_DeManoeuvre );
 }
 
 // -----------------------------------------------------------------------------

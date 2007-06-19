@@ -85,7 +85,7 @@ bool NET_ASN_Tools::ReadLocation( const ASN1T_Location& asnLocalisation, TER_Loc
         NET_ASN_Tools::ReadPoint( asnLocalisation.vecteur_point.elem[i], vPos );
         pointVector.push_back( vPos );
     }
-    return localisation.Reset( (TER_Localisation::E_TypeLocalisation)asnLocalisation.type, pointVector );
+    return localisation.Reset( (TER_Localisation::E_LocationType)asnLocalisation.type, pointVector );
 }
 
 

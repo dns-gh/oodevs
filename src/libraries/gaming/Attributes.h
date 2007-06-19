@@ -84,11 +84,11 @@ public:
     int	nDirection_;
 
     unsigned              nRawOpState_;
-    E_EtatOperationnel    nOpState_;
-    E_EtatRapFor          nFightRateState_;
+    E_OperationalStatus    nOpState_;
+    E_ForceRatioStatus          nFightRateState_;
     E_Roe                 nRulesOfEngagementState_;
-    E_RoePopulation       nRulesOfEngagementPopulationState_;
-    E_EtatCombatRencontre nCloseCombatState_;
+    E_PopulationRoe       nRulesOfEngagementPopulationState_;
+    E_MeetingEngagementStatus nCloseCombatState_;
 
     bool     bDead_;
     bool     bNeutralized_;
@@ -98,7 +98,7 @@ public:
     uint		  nPostureCompletionPourcentage_;
     uint          nInstallationState_;
 
-    E_DisponibiliteAuTir    nIndirectFireAvailability_;
+    E_FireAvailability    nIndirectFireAvailability_;
 
     bool bLoadingState_;
     bool bHumanTransportersReady_;

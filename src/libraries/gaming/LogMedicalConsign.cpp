@@ -37,7 +37,7 @@ LogMedicalConsign::LogMedicalConsign( Controller& controller, const Resolver_ABC
     , bMentalDeceased_ ( message.blesse_mental )
     , bContaminated_   ( message.contamine_nbc )
     , diagnosed_       ( false )
-    , nState_          ( eLogSanteTraitementEtat_Termine )
+    , nState_          ( eLogMedicalHandlingStatus_Termine )
 {
     pion_.Get< LogMedicalConsigns >().AddConsign( *this );
 }
@@ -79,7 +79,7 @@ void LogMedicalConsign::Update( const ASN1T_MsgLogMedicalHandlingUpdate& message
     if( message.m.blessurePresent )
         wound_ = E_HumanWound( message.blessure );
     if( message.m.etatPresent )
-        nState_ = E_LogSanteTraitementEtat( message.etat );
+        nState_ = E_LogMedicalHandlingStatus( message.etat );
     if( message.m.diagnostique_effectuePresent )
         diagnosed_ = message.diagnostique_effectue;
 
@@ -123,11 +123,11 @@ void LogMedicalConsign::Draw( const Point2f& , const kernel::Viewport_ABC& viewp
     glColor4f( COLOR_PINK );
     switch( nState_ )
     {
-    case eLogSanteTraitementEtat_AmbulanceReleveDeplacementAller:
-    case eLogSanteTraitementEtat_AmbulanceRamassageDeplacementAller:
+    case eLogMedicalHandlingStatus_AmbulanceReleveDeplacementAller:
+    case eLogMedicalHandlingStatus_AmbulanceRamassageDeplacementAller:
         glLineStipple( 1, tools.StipplePattern() );
         break;
-    case eLogSanteTraitementEtat_AmbulanceReleveDeplacementRetour:
+    case eLogMedicalHandlingStatus_AmbulanceReleveDeplacementRetour:
         glLineStipple( 1, tools.StipplePattern(-1) );
         break;
     default:

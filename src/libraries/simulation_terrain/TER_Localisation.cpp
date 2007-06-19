@@ -95,7 +95,7 @@ void TER_Localisation::save( boost::archive::binary_oarchive& file, const uint )
 // Name: TER_Localisation constructor
 // Created: JVT 04-06-07
 //-----------------------------------------------------------------------------
-TER_Localisation::TER_Localisation( E_TypeLocalisation nType, const T_PointVector& pointVector )
+TER_Localisation::TER_Localisation( E_LocationType nType, const T_PointVector& pointVector )
     : nType_        ( nType )
     , pointVector_  ( pointVector )
     , bWasCircle_   ( false )
@@ -414,7 +414,7 @@ void TER_Localisation::Reset()
 // Name: TER_Localisation::Reset
 // Created: NLD 2003-07-24
 //-----------------------------------------------------------------------------
-bool TER_Localisation::Reset( E_TypeLocalisation nType, const T_PointVector& pointVector )
+bool TER_Localisation::Reset( E_LocationType nType, const T_PointVector& pointVector )
 {
     Reset();
     nType_       = nType;
@@ -577,7 +577,7 @@ void TER_Localisation::Write( MT_OutputArchive_ABC& archive ) const
 // Last modified: JVT 03-10-07
 //-----------------------------------------------------------------------------
 // static
-TER_Localisation::E_TypeLocalisation TER_Localisation::ConvertLocalisationType( const std::string& strType )
+TER_Localisation::E_LocationType TER_Localisation::ConvertLocalisationType( const std::string& strType )
 {
     if ( !::strcmpi( strType.c_str(),"cercle" ) )
         return eCircle;
@@ -600,7 +600,7 @@ TER_Localisation::E_TypeLocalisation TER_Localisation::ConvertLocalisationType( 
 // Name: std::string 
 // Created: JVT 03-07-31
 //-----------------------------------------------------------------------------
-std::string TER_Localisation::ConvertLocalisationType( E_TypeLocalisation nType )         // A deplacer dans TER_Tools si nécessaire
+std::string TER_Localisation::ConvertLocalisationType( E_LocationType nType )         // A deplacer dans TER_Tools si nécessaire
 {
     switch ( nType )
     {

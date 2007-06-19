@@ -61,11 +61,11 @@ void Formatter< E_UnitPosture >::operator()( const E_UnitPosture& e, Displayer_A
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
-void Formatter< E_EtatOperationnel >::operator()( const E_EtatOperationnel& e, Displayer_ABC& displayer ) const {
+void Formatter< E_OperationalStatus >::operator()( const E_OperationalStatus& e, Displayer_ABC& displayer ) const {
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
-void Formatter< E_EtatRapFor >::operator()( const E_EtatRapFor& e, Displayer_ABC& displayer ) const {
+void Formatter< E_ForceRatioStatus >::operator()( const E_ForceRatioStatus& e, Displayer_ABC& displayer ) const {
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
@@ -73,15 +73,15 @@ void Formatter< E_Roe >::operator()( const E_Roe& e, Displayer_ABC& displayer ) 
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
-void Formatter< E_RoePopulation >::operator()( const E_RoePopulation& e, Displayer_ABC& displayer ) const {
+void Formatter< E_PopulationRoe >::operator()( const E_PopulationRoe& e, Displayer_ABC& displayer ) const {
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
-void Formatter< E_EtatCombatRencontre >::operator()( const E_EtatCombatRencontre& e, Displayer_ABC& displayer ) const {
+void Formatter< E_MeetingEngagementStatus >::operator()( const E_MeetingEngagementStatus& e, Displayer_ABC& displayer ) const {
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
-void Formatter< E_DisponibiliteAuTir >::operator()( const E_DisponibiliteAuTir& e, Displayer_ABC& displayer ) const {
+void Formatter< E_FireAvailability >::operator()( const E_FireAvailability& e, Displayer_ABC& displayer ) const {
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
@@ -97,11 +97,11 @@ void Formatter< E_UnitExperience >::operator()( const E_UnitExperience& e, Displ
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
-void Formatter< E_UnitMoral >::operator()( const E_UnitMoral& e, Displayer_ABC& displayer ) const {
+void Formatter< E_UnitMorale >::operator()( const E_UnitMorale& e, Displayer_ABC& displayer ) const {
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
-void Formatter< E_UnitFatigue >::operator()( const E_UnitFatigue& e, Displayer_ABC& displayer ) const {
+void Formatter< E_UnitTiredness >::operator()( const E_UnitTiredness& e, Displayer_ABC& displayer ) const {
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
@@ -113,19 +113,19 @@ void  Formatter< E_HumanWound >::operator()( const E_HumanWound& e, Displayer_AB
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
-void  Formatter< E_LogRavitaillementTraitementEtat >::operator()( const E_LogRavitaillementTraitementEtat& e, Displayer_ABC& displayer ) const {
+void  Formatter< E_LogSupplyHandlingStatus >::operator()( const E_LogSupplyHandlingStatus& e, Displayer_ABC& displayer ) const {
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
-void  Formatter< E_LogSanteTraitementEtat >::operator()( const E_LogSanteTraitementEtat& e, Displayer_ABC& displayer ) const {
+void  Formatter< E_LogMedicalHandlingStatus >::operator()( const E_LogMedicalHandlingStatus& e, Displayer_ABC& displayer ) const {
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
-void  Formatter< E_LogMaintenanceTraitementEtat >::operator()( const E_LogMaintenanceTraitementEtat& e, Displayer_ABC& displayer ) const {
+void  Formatter< E_LogMaintenanceHandlingStatus >::operator()( const E_LogMaintenanceHandlingStatus& e, Displayer_ABC& displayer ) const {
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
-void  Formatter< E_TypeObstacle >::operator()( const E_TypeObstacle& e, Displayer_ABC& displayer ) const {
+void  Formatter< E_ObstacleType >::operator()( const E_ObstacleType& e, Displayer_ABC& displayer ) const {
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 

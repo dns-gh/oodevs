@@ -75,28 +75,28 @@ E_FuncLimaType tools::LimaTypeFromString( const QString& type )
 // Name: tools::LocationFromString
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-E_TypeLocalisation tools::LocationFromString( const QString& type )
+E_LocationType tools::LocationFromString( const QString& type )
 {
     for( int i = 0; i < 6; ++i )
         if( type == localisations[i] )
-            return (E_TypeLocalisation)i;
-    return (E_TypeLocalisation)-1;
+            return (E_LocationType)i;
+    return (E_LocationType)-1;
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::FamilleMunitionFromString
+// Name: tools::AmmunitionFamilyFromString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-E_FamilleMunition tools::FamilleMunitionFromString( const QString& type )
+E_AmmunitionFamily tools::AmmunitionFamilyFromString( const QString& type )
 {
-    return ENT_Tr::ConvertToFamilleMunition( type.ascii() );
+    return ENT_Tr::ConvertToAmmunitionFamily( type.ascii() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::FamilleDotationFromString
+// Name: tools::DotationFamilyFromString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-E_FamilleDotation tools::FamilleDotationFromString( const QString& type )
+E_DotationFamily tools::DotationFamilyFromString( const QString& type )
 {
-    return FamilleDotationFromString( std::string( type.ascii() ) );
+    return DotationFamilyFromString( std::string( type.ascii() ) );
 }

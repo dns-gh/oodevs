@@ -20,7 +20,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 ActionParameterObstacleType::ActionParameterObstacleType( const OrderParameter& parameter, unsigned int value )
     : ActionParameter< QString >( parameter )
-    , value_( E_TypeObstacle( value ) )
+    , value_( E_ObstacleType( value ) )
 {
     SetValue( tools::ToString( value_ )  );
 }
@@ -41,11 +41,11 @@ namespace
         return type.c_str();
     }
 
-    E_TypeObstacle ReadValue( xml::xistream& xis )
+    E_ObstacleType ReadValue( xml::xistream& xis )
     {
         unsigned int value;
         xis >> attribute( "value", value );
-        return E_TypeObstacle( value );
+        return E_ObstacleType( value );
     }
 }
 

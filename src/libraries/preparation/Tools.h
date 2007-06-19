@@ -18,9 +18,9 @@ namespace tools
     QString ToString( E_FuncLimaType nType );
     E_FuncLimaType FromString( const QString& type );
     E_PopulationAttitude PopulationAttitudeFromString( const QString& type );
-    E_TypeObstacle TypeObstacleFromString( const QString& type );
+    E_ObstacleType ObstacleTypeFromString( const QString& type );
 
-    std::string ToXml( E_TypeObstacle type );
+    std::string ToXml( E_ObstacleType type );
     std::string ToXml( E_PopulationAttitude type );
 };
 

@@ -36,12 +36,12 @@ typedef ADN_Equipement_Data::CategoryInfo CategoryInfo;
 // Name: ADN_Equipement_GenericListView constructor
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-ADN_Equipement_GenericListView::ADN_Equipement_GenericListView( E_FamilleDotation nType, QWidget* pParent, const char* szName, WFlags f )
+ADN_Equipement_GenericListView::ADN_Equipement_GenericListView( E_DotationFamily nType, QWidget* pParent, const char* szName, WFlags f )
 : ADN_ListView( pParent, szName, f )
 , nType_      ( nType )
 {
     // Add one column
-    std::string strName = ENT_Tr::ConvertFromFamilleDotation( nType, ENT_Tr::eToTr );
+    std::string strName = ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr::eToTr );
     addColumn( strName.c_str() );
     setResizeMode( QListView::AllColumns );
 

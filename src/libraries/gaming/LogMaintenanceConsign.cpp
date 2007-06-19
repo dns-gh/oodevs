@@ -34,7 +34,7 @@ LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const ASN1
     , equipmentType_   ( & componentResolver.Get( message.type_equipement ) )
     , breakdownType_   ( & breakdownResolver.Get( message.type_panne ) )
     , diagnosed_       ( false )
-    , nState_          ( eLogMaintenanceTraitementEtat_Termine )
+    , nState_          ( eLogMaintenanceHandlingStatus_Termine )
 {
     if( LogMaintenanceConsigns* consign = pion_.Retrieve< LogMaintenanceConsigns >() )
         consign->AddConsign( *this );
@@ -65,7 +65,7 @@ LogMaintenanceConsign::~LogMaintenanceConsign()
 void LogMaintenanceConsign::Update( const ASN1T_MsgLogMaintenanceHandlingUpdate& message )
 {
     if( message.m.etatPresent )
-        nState_ = E_LogMaintenanceTraitementEtat( message.etat );
+        nState_ = E_LogMaintenanceHandlingStatus( message.etat );
     if( message.m.diagnostique_effectuePresent )
         diagnosed_ = message.diagnostique_effectue;
 
@@ -111,10 +111,10 @@ void LogMaintenanceConsign::Draw( const Point2f& , const kernel::Viewport_ABC& v
     glColor4f( COLOR_MAROON );
     switch( nState_ )
     {
-    case eLogMaintenanceTraitementEtat_RemorqueurDeplacementAller:
+    case eLogMaintenanceHandlingStatus_RemorqueurDeplacementAller:
         glLineStipple( 1, tools.StipplePattern() );
         break;
-    case eLogMaintenanceTraitementEtat_RemorqueurDeplacementRetour:
+    case eLogMaintenanceHandlingStatus_RemorqueurDeplacementRetour:
         glLineStipple( 1, tools.StipplePattern(-1) );
         break;
     default:

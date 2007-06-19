@@ -74,7 +74,7 @@ private:
     kernel::Automat_ABC* pAutomateLogHandling_;
     kernel::Agent_ABC*   pPionLogConvoying_;
     kernel::Automat_ABC* pAutomateLogProvidingConvoyResources_;
-    E_LogRavitaillementTraitementEtat nState_;
+    E_LogSupplyHandlingStatus nState_;
     //@}
 };
 

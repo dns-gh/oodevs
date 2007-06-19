@@ -57,38 +57,38 @@ void GlTooltip::Call( const Styles::Style& value )
 // Name: GlTooltip::Call
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-void GlTooltip::Call( const E_EtatOperationnel& value )
+void GlTooltip::Call( const E_OperationalStatus& value )
 {
     font_.setItalic( true );
-    if ( value == eEtatOperationnel_DetruitTactiquement )
+    if ( value == eOperationalStatus_DetruitTactiquement )
         color_.setRgb( 255, 128, 0 );
-    else if( value == eEtatOperationnel_DetruitTotalement )
+    else if( value == eOperationalStatus_DetruitTotalement )
         color_.setRgb( 255, 0, 0 );
-    Formatter< E_EtatOperationnel >()( value, *this );
+    Formatter< E_OperationalStatus >()( value, *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GlTooltip::Call
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-void GlTooltip::Call( const E_EtatRapFor& value )
+void GlTooltip::Call( const E_ForceRatioStatus& value )
 {
     font_.setBold( true );
-    if ( value == eEtatRapFor_Defavorable )
+    if ( value == eForceRatioStatus_Defavorable )
         color_.setRgb( 160, 0, 0 );
     else
         color_.setRgb( 0, 160, 0 );
-    Formatter< E_EtatRapFor >()( value, *this );
+    Formatter< E_ForceRatioStatus >()( value, *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GlTooltip::Call
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-void GlTooltip::Call( const E_EtatCombatRencontre& value )
+void GlTooltip::Call( const E_MeetingEngagementStatus& value )
 {
-    if( value != eEtatCombatRencontre_None )
-        Formatter< E_EtatCombatRencontre >()( value, *this );
+    if( value != eMeetingEngagementStatus_None )
+        Formatter< E_MeetingEngagementStatus >()( value, *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -119,7 +119,7 @@ private:
     ASN1T_EnumOperationalStatus    nOperationalState_;
     ASN1T_EnumFireAvailability    nIndirectFireAvailability_;
     ASN1T_EnumRoe                 nRoe_;
-    ASN1T_EnumPopulationRoe       nRoePopulation_;
+    ASN1T_EnumPopulationRoe       nPopulationRoe_;
     ASN1T_EnumUnitTiredness       nTiredness_;
     ASN1T_EnumUnitMorale          nMorale_;
     ASN1T_EnumUnitExperience      nExperience_;

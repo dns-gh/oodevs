@@ -32,7 +32,7 @@ using namespace xml;
 // Name: Object::Object
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------    
-Object::Object( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type, const QString& name, const Enum_TypeObstacle& obstacleType, bool reservedObstacleActivated, IdManager& idManager )
+Object::Object( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type, const QString& name, const Enum_ObstacleType& obstacleType, bool reservedObstacleActivated, IdManager& idManager )
     : EntityImplementation< Object_ABC >( controller, idManager.GetNextId(), "" )
     , converter_                     ( converter )
     , type_                          ( type )
@@ -122,14 +122,14 @@ const kernel::ObjectType& Object::ReadType( xml::xistream& xis, const Resolver_A
 // Name: Object::ReadObstacleType
 // Created: SBO 2007-03-20
 // -----------------------------------------------------------------------------
-Enum_TypeObstacle Object::ReadObstacleType( xml::xistream& xis )
+Enum_ObstacleType Object::ReadObstacleType( xml::xistream& xis )
 {
     if( !type_.CanBeReservedObstacle() )
-        return eTypeObstacle_Preliminaire;
+        return eObstacleType_Preliminaire;
 
     std::string strType;
     xis >> attribute( "obstacle-type", strType );
-    return Enum_TypeObstacle( strType.c_str() );
+    return Enum_ObstacleType( strType.c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +138,7 @@ Enum_TypeObstacle Object::ReadObstacleType( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 bool Object::ReadReservedObstacleActivated( xml::xistream& xis )
 {
-    if( !type_.CanBeReservedObstacle() || obstacleType_.GetValue() != eTypeObstacle_DeManoeuvre )
+    if( !type_.CanBeReservedObstacle() || obstacleType_.GetValue() != eObstacleType_DeManoeuvre )
         return false;
 
     bool bReservedObstacleActivated = false;
@@ -199,7 +199,7 @@ void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
     if( type_.CanBeReservedObstacle() )
     {
         displayer.Display( tools::translate( "Object", "Obstacle type:" ), obstacleType_.GetValue() );
-        if( obstacleType_.GetValue() == eTypeObstacle_DeManoeuvre )
+        if( obstacleType_.GetValue() == eObstacleType_DeManoeuvre )
             displayer.Display( tools::translate( "Object", "Reserved obstacle activated:" ), reservedObstacleActivated_ );
     }
 }
@@ -226,7 +226,7 @@ void Object::SerializeAttributes( xml::xostream& xos ) const
     if( type_.CanBeReservedObstacle() )
     {
         xos << attribute( "obstacle-type", obstacleType_.ToXml() );
-        if( obstacleType_.GetValue() == eTypeObstacle_DeManoeuvre )
+        if( obstacleType_.GetValue() == eObstacleType_DeManoeuvre )
             xos << attribute( "reserved-obstacle-activated", reservedObstacleActivated_ );
     }
 }

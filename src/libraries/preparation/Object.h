@@ -48,7 +48,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Object( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
-                     const kernel::ObjectType& type, const QString& name, const Enum_TypeObstacle& obstacleType, bool reservedObstacleActivated, IdManager& idManager );
+                     const kernel::ObjectType& type, const QString& name, const Enum_ObstacleType& obstacleType, bool reservedObstacleActivated, IdManager& idManager );
              Object( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, 
                      const kernel::Resolver_ABC< kernel::ObjectType, QString >& types, IdManager& idManager );
     virtual ~Object();
@@ -80,7 +80,7 @@ private:
     unsigned long             ReadId                       ( xml::xistream& xis );
     QString                   ReadName                     ( xml::xistream& xis );
     const kernel::ObjectType& ReadType                     ( xml::xistream& xis, const kernel::Resolver_ABC< kernel::ObjectType, QString >& types );
-    Enum_TypeObstacle         ReadObstacleType             ( xml::xistream& xis );
+    Enum_ObstacleType         ReadObstacleType             ( xml::xistream& xis );
     bool                      ReadReservedObstacleActivated( xml::xistream& xis );
     //@}
 
@@ -94,7 +94,7 @@ public:
     float rValorizationPercentage_;
     float rBypassConstructionPercentage_;
 
-    Enum_TypeObstacle obstacleType_;
+    Enum_ObstacleType obstacleType_;
     bool              reservedObstacleActivated_;
 
     kernel::DotationType* construction_;

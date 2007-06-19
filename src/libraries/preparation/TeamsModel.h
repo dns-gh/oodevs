@@ -32,7 +32,7 @@ namespace kernel
 
 class TeamFactory_ABC;
 class Model;
-struct Enum_TypeObstacle;
+struct Enum_ObstacleType;
 
 // =============================================================================
 /** @class  TeamsModel
@@ -58,7 +58,7 @@ public:
     void Purge();
     void CreateTeam();
     void CreateKnowledgeGroup( const kernel::Team_ABC& team );
-    kernel::Object_ABC* CreateObject( const kernel::Team_ABC& team, kernel::ObjectType& type, const QString& name, const Enum_TypeObstacle& obstacleType, bool reservedObstacleActivated, const kernel::Location_ABC& location );
+    kernel::Object_ABC* CreateObject( const kernel::Team_ABC& team, kernel::ObjectType& type, const QString& name, const Enum_ObstacleType& obstacleType, bool reservedObstacleActivated, const kernel::Location_ABC& location );
 
     kernel::Team_ABC* FindTeam( const QString& name ) const;
     kernel::KnowledgeGroup_ABC* FindKnowledgeGroup( const unsigned long& id ) const;

@@ -22,7 +22,7 @@ const T_PointVector& TER_Localisation::GetPoints() const
 // Name: TER_Localisation::GetType
 // Created: NLD 2003-07-24
 //-----------------------------------------------------------------------------
-TER_Localisation::E_TypeLocalisation TER_Localisation::GetType() const
+TER_Localisation::E_LocationType TER_Localisation::GetType() const
 {
     return nType_;
 }

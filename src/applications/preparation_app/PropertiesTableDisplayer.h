@@ -29,7 +29,7 @@ class DotationsItem;
 class PropertiesTableDisplayer : public gui::TableItemDisplayer
                                , public kernel::Caller< kernel::Karma >
                                , public kernel::Caller< Enum_PopulationAttitude >
-                               , public kernel::Caller< Enum_TypeObstacle >
+                               , public kernel::Caller< Enum_ObstacleType >
                                , public kernel::Caller< DotationsItem >
 {
 
@@ -44,7 +44,7 @@ public:
     //@{
     virtual void Call( const kernel::Karma& value );
     virtual void Call( const Enum_PopulationAttitude& value );
-    virtual void Call( const Enum_TypeObstacle & value );
+    virtual void Call( const Enum_ObstacleType & value );
     virtual void Call( const DotationsItem& value );
     //@}
 

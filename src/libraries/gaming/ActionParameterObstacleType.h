@@ -49,7 +49,7 @@ private:
 private:
     //! @name Member data
     //@{
-    E_TypeObstacle value_;
+    E_ObstacleType value_;
     //@}
 };
 

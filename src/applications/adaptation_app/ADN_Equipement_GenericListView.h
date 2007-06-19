@@ -34,7 +34,7 @@ class ADN_Equipement_GenericListView
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_Equipement_GenericListView( E_FamilleDotation nType, QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+     ADN_Equipement_GenericListView( E_DotationFamily nType, QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
     ~ADN_Equipement_GenericListView();
     //@}
 
@@ -46,7 +46,7 @@ private:
     //@}
 
 private:
-    E_FamilleDotation nType_;
+    E_DotationFamily nType_;
 };
 
 #endif // __ADN_Equipement_GenericListView_h_

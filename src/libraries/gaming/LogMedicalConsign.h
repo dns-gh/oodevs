@@ -65,7 +65,7 @@ private:
     bool    bContaminated_;
     bool    diagnosed_;
     E_HumanWound wound_;
-    E_LogSanteTraitementEtat nState_;
+    E_LogMedicalHandlingStatus nState_;
     //@}
 };
 

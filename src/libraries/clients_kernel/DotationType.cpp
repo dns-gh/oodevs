@@ -21,7 +21,7 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 DotationType::DotationType( const std::string& dotationName, xistream& xis )
     : name_( dotationName.c_str() )
-    , nameId_( tools::FamilleDotationFromString( dotationName ) )
+    , nameId_( tools::DotationFamilyFromString( dotationName ) )
     , gaz_( name_ == "carburant" ) // $$$$ AGE 2006-04-10: 
     , ammunition_( name_ == "munition" )
     , dType_( false )
