@@ -6,20 +6,9 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGN 2004-04-26 $
-// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_Enumeration.cpp $
-// $Author: Ape $
-// $Modtime: 22/02/05 10:22 $
-// $Revision: 6 $
-// $Workfile: AGR_Enumeration.cpp $
-//
-// *****************************************************************************
 
 #include "AGR_pch.h"
 #include "AGR_Enumeration.h"
-#include "AGR_Member.h"
-#include "AGR_Class.h"
 
 #include <boost/algorithm/string.hpp>
 #include <cstdio>
@@ -32,8 +21,7 @@
 // Created: AGN 2004-04-26
 // -----------------------------------------------------------------------------
 AGR_Enumeration::AGR_Enumeration( const std::string& strName )
-    : AGR_Type_ABC( strName, "Enumeration", "id", "uint", false )
-    , strName_( strName )
+    : strName_( strName )
 {
     
 }
@@ -90,83 +78,4 @@ std::string AGR_Enumeration::HumanName( const std::string& strValue ) const
     }
     boost::trim( strResult );
     return strResult;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AGR_Enumeration::Mos2InitialisationCode
-// Created: AGE 2004-09-15
-// -----------------------------------------------------------------------------
-std::string AGR_Enumeration::Mos2InitialisationCode( const AGR_Member& member ) const
-{
-    std::string strResult = "    ParamComboBox< ASN1T_" + strName_ + " >* pSelector_" + member.ASNName() + " = &CreateVarList( asnMission." + member.ASNName() + ", \"" 
-            + member.HumanName() + "\"";
-
-    if( member.IsOptional() )
-    {
-        strResult += ", BuildOptionalParamFunctor< OptionalParamFunctor_" + member.OwnerClass().Name() + "_" + member.ASNName()
-               +                          ", ASN1T_" + member.OwnerClass().Name() + ">( asnMission )";
-    }
-    strResult += ");\n";
-
-
-    for( CIT_String_Vector itValues = valueList_.begin(); itValues != valueList_.end(); ++itValues )
-        strResult += "    pSelector_" + member.ASNName() + "->AddItem( \"" + HumanName( *itValues ) + "\", " + strName_ + "::" + *itValues + " );\n";
-    return strResult;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AGR_Enumeration::TesterSerializationCode
-// Created: AGE 2004-09-21
-// -----------------------------------------------------------------------------
-std::string AGR_Enumeration::TesterSerializationCode( const AGR_Member& member ) const
-{
-    std::stringstream ss;
-    ss << "    ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, "
-       << ( valueList_.size() - 1 ) 
-       << " ), asnMission." << member.ASNName() 
-       << " );\n";
-    return ss.str();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AGR_Enumeration::MissionXMLCode
-// Created: NLD 2006-11-26
-// -----------------------------------------------------------------------------
-std::string AGR_Enumeration::MissionXMLCode( const AGR_Member& member ) const
-{
-    std::stringstream strResult;
-    strResult << "\t\t<parameter";   
-    strResult << " name=\"" << member.HumanName() << "\"";
-    strResult << " dia-name=\"" << member.CPPName() << "\"";
-    strResult << " type=\"enumeration\"";
-    if( member.IsOptional() )
-        strResult << " optional=\"true\"";
-    strResult << ">" << std::endl;
-
-    uint i = 0;
-    for( CIT_String_Vector itValues = valueList_.begin(); itValues != valueList_.end(); ++itValues, ++i )
-        strResult << "\t\t\t<value id=\"" << i << "\" name=\"" << *itValues << "\"></value>" << std::endl;
-
-    strResult << "\t\t</parameter>" << std::endl;
-
-    return strResult.str();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AGR_Enumeration::RCXMLCode
-// Created: NLD 2006-12-07
-// -----------------------------------------------------------------------------
-std::string AGR_Enumeration::RCXMLCode() const
-{
-    std::stringstream strResult;
-    strResult << "\t\t<parameter";   
-    strResult << " type=\"" << GetFunctionSuffix() << "\"";
-    strResult << ">" << std::endl;
-
-    uint i = 0;
-    for( CIT_String_Vector itValues = valueList_.begin(); itValues != valueList_.end(); ++itValues, ++i )
-        strResult << "\t\t\t<value id=\"" << i << "\" name=\"" << *itValues << "\"></value>" << std::endl;
-
-    strResult << "\t\t</parameter>" << std::endl;
-    return strResult.str();
 }

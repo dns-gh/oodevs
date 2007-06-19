@@ -6,20 +6,9 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGN 2004-04-26 $
-// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_Enumeration.h $
-// $Author: Ape $
-// $Modtime: 22/02/05 10:22 $
-// $Revision: 5 $
-// $Workfile: AGR_Enumeration.h $
-//
-// *****************************************************************************
 
 #ifndef __AGR_Enumeration_h_
 #define __AGR_Enumeration_h_
-
-#include "AGR_Type_ABC.h"
 
 // =============================================================================
 /** @class  AGR_Enumeration
@@ -27,7 +16,7 @@
 */
 // Created: AGN 2004-04-26
 // =============================================================================
-class AGR_Enumeration : public AGR_Type_ABC
+class AGR_Enumeration
 {
 
 public:
@@ -40,11 +29,6 @@ public:
     //! @name Operations
     //@{
     void Read( MT_InputArchive_ABC& input );
-
-    virtual std::string Mos2InitialisationCode ( const AGR_Member& member ) const;
-    virtual std::string TesterSerializationCode( const AGR_Member& member ) const;
-    virtual std::string MissionXMLCode         ( const AGR_Member& member ) const;
-    virtual std::string RCXMLCode              () const;
     //@}
 
     //! @name Accessors

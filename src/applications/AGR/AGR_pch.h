@@ -44,5 +44,6 @@ typedef std::vector< AGR_Enumeration* >      T_Enumeration_Vector;
 typedef T_Enumeration_Vector::iterator       IT_Enumeration_Vector;
 typedef T_Enumeration_Vector::const_iterator CIT_Enumeration_Vector;
 
+#define AGR_SKEL_DIR "../../src/applications/AGR/skel/"
 
 #endif // __AGR_pch_h_

@@ -6,53 +6,62 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-02-09 $
-// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_ENT_Enums_Skeleton.h $
-// $Author: Ape $
-// $Modtime: 21/02/05 11:27 $
-// $Revision: 2 $
-// $Workfile: AGR_ENT_Enums_Skeleton.h $
-//
-// *****************************************************************************
 
 #ifndef __ENT_Emuns_Gen_h_
 #define __ENT_Emuns_Gen_h_
 
 
-enum E_TypeLocalisation
+enum E_ChangeHierarchyErrorCode
 {
-    eTypeLocalisation_Circle,
-    eTypeLocalisation_Ellipse,
-    eTypeLocalisation_Line,
-    eTypeLocalisation_Polygon,
-    eTypeLocalisation_Point,
-    eTypeLocalisation_Sector,
-    eNbrTypeLocalisation
+    eChangeHierarchyErrorCode_NoError,
+    eChangeHierarchyErrorCode_ErrorInvalidPion,
+    eChangeHierarchyErrorCode_ErrorInvalidAutomate,
+    eChangeHierarchyErrorCode_ErrorInvalidAutomateTc2,
+    eChangeHierarchyErrorCode_ErrorInvalidAutomateMaintenance,
+    eChangeHierarchyErrorCode_ErrorInvalidAutomateSante,
+    eChangeHierarchyErrorCode_ErrorInvalidAutomateRavitaillement,
+    eChangeHierarchyErrorCode_ErrorUnitSurrendered,
+    eChangeHierarchyErrorCode_ErrorInvalidCamp,
+    eChangeHierarchyErrorCode_ErrorInvalidGroupeConnaissance,
+    eChangeHierarchyErrorCode_ErrorCampsIncompatibles,
+    eNbrChangeHierarchyErrorCode
 };
 
 
-enum E_FamilleDotation
+enum E_LocationType
 {
-    eFamilleDotation_Munition,
-    eFamilleDotation_Carburant,
-    eFamilleDotation_Explosif,
-    eFamilleDotation_Mine,
-    eFamilleDotation_Barbele,
-    eFamilleDotation_Piece,
-    eFamilleDotation_Ration,
-    eNbrFamilleDotation
+    eLocationType_Circle,
+    eLocationType_Ellipse,
+    eLocationType_Line,
+    eLocationType_Polygon,
+    eLocationType_Point,
+    eLocationType_Sector,
+    eNbrLocationType
 };
 
 
-enum E_FamilleMunition
+enum E_DotationFamily
 {
-    eFamilleMunition_Obus,
-    eFamilleMunition_MissileAir,
-    eFamilleMunition_MissileSol,
-    eFamilleMunition_Mitraille,
-    eNbrFamilleMunition
+    eDotationFamily_Munition,
+    eDotationFamily_Carburant,
+    eDotationFamily_Explosif,
+    eDotationFamily_Mine,
+    eDotationFamily_Barbele,
+    eDotationFamily_Piece,
+    eDotationFamily_Ration,
+    eNbrDotationFamily
 };
+
+
+enum E_AmmunitionFamily
+{
+    eAmmunitionFamily_Obus,
+    eAmmunitionFamily_MissileAir,
+    eAmmunitionFamily_MissileSol,
+    eAmmunitionFamily_Mitraille,
+    eNbrAmmunitionFamily
+};
+
 
 enum E_UnitIdentificationLevel
 {
@@ -103,13 +112,13 @@ enum E_HumanRank
 };
 
 
-enum E_Diplomatie
+enum E_Diplomacy
 {
-    eDiplomatie_Inconnu,
-    eDiplomatie_Ami,
-    eDiplomatie_Ennemi,
-    eDiplomatie_Neutre,
-    eNbrDiplomatie
+    eDiplomacy_Inconnu,
+    eDiplomacy_Ami,
+    eDiplomacy_Ennemi,
+    eDiplomacy_Neutre,
+    eNbrDiplomacy
 };
 
 
@@ -121,38 +130,32 @@ enum E_ChangeDiplomacyErrorCode
 };
 
 
-enum E_EtatRapFor
+enum E_ForceRatioStatus
 {
-    eEtatRapFor_None,
-    eEtatRapFor_Neutre,
-    eEtatRapFor_Favorable,
-    eEtatRapFor_Defavorable,
-    eNbrEtatRapFor
-};
-
-enum E_TypeObstacle
-{
-    eTypeObstacle_Preliminaire,
-    eTypeObstacle_DeManoeuvre,
-    eNbrTypeObstacle
-};
-
-enum E_EtatCombatRencontre
-{
-    eEtatCombatRencontre_None,
-    eEtatCombatRencontre_EtatEsquive,
-    eEtatCombatRencontre_EtatFixe,
-    eEtatCombatRencontre_EtatPoursuiteMission,
-    eNbrEtatCombatRencontre
+    eForceRatioStatus_None,
+    eForceRatioStatus_Neutre,
+    eForceRatioStatus_Favorable,
+    eForceRatioStatus_Defavorable,
+    eNbrForceRatioStatus
 };
 
 
-enum E_EtatOperationnel
+enum E_MeetingEngagementStatus
 {
-    eEtatOperationnel_DetruitTotalement,
-    eEtatOperationnel_DetruitTactiquement,
-    eEtatOperationnel_Operationnel,
-    eNbrEtatOperationnel
+    eMeetingEngagementStatus_None,
+    eMeetingEngagementStatus_EtatEsquive,
+    eMeetingEngagementStatus_EtatFixe,
+    eMeetingEngagementStatus_EtatPoursuiteMission,
+    eNbrMeetingEngagementStatus
+};
+
+
+enum E_OperationalStatus
+{
+    eOperationalStatus_DetruitTotalement,
+    eOperationalStatus_DetruitTactiquement,
+    eOperationalStatus_Operationnel,
+    eNbrOperationalStatus
 };
 
 
@@ -166,14 +169,14 @@ enum E_Roe
 };
 
 
-enum E_UnitAttrErrorCode
+enum E_UnitErrorCode
 {
-    eUnitAttrErrorCode_NoError,
-    eUnitAttrErrorCode_ErrorInvalidUnit,
-    eUnitAttrErrorCode_ErrorAutomateEmbraye,
-    eUnitAttrErrorCode_ErrorInvalidAttribute,
-    eUnitAttrErrorCode_ErrorUnitSurrendered,
-    eNbrUnitAttrErrorCode
+    eUnitErrorCode_NoError,
+    eUnitErrorCode_ErrorInvalidUnit,
+    eUnitErrorCode_ErrorAutomateEmbraye,
+    eUnitErrorCode_ErrorInvalidAttribute,
+    eUnitErrorCode_ErrorUnitSurrendered,
+    eNbrUnitErrorCode
 };
 
 
@@ -190,42 +193,42 @@ enum E_UnitPosture
 };
 
 
-enum E_DisponibiliteAuTir
+enum E_FireAvailability
 {
-    eDisponibiliteAuTir_None,
-    eDisponibiliteAuTir_PretAuTir,
-    eDisponibiliteAuTir_Indisponible,
-    eNbrDisponibiliteAuTir
+    eFireAvailability_None,
+    eFireAvailability_PretAuTir,
+    eFireAvailability_Indisponible,
+    eNbrFireAvailability
 };
 
 
-enum E_RoePopulation
+enum E_PopulationRoe
 {
-    eRoePopulation_None,
-    eRoePopulation_EmploiForceInterdit,
-    eRoePopulation_MaintienADistanceParMoyensNonLetaux,
-    eRoePopulation_DispersionParMoyensDeDefenseActifs,
-    eRoePopulation_ArmesLetalesAutorisees,
-    eNbrRoePopulation
+    ePopulationRoe_None,
+    ePopulationRoe_EmploiForceInterdit,
+    ePopulationRoe_MaintienADistanceParMoyensNonLetaux,
+    ePopulationRoe_DispersionParMoyensDeDefenseActifs,
+    ePopulationRoe_ArmesLetalesAutorisees,
+    eNbrPopulationRoe
 };
 
 
-enum E_UnitFatigue
+enum E_UnitTiredness
 {
-    eUnitFatigue_Normal,
-    eUnitFatigue_Fatigue,
-    eUnitFatigue_Epuise,
-    eNbrUnitFatigue
+    eUnitTiredness_Normal,
+    eUnitTiredness_Fatigue,
+    eUnitTiredness_Epuise,
+    eNbrUnitTiredness
 };
 
 
-enum E_UnitMoral
+enum E_UnitMorale
 {
-    eUnitMoral_Fanatique,
-    eUnitMoral_Bon,
-    eUnitMoral_Moyen,
-    eUnitMoral_Mauvais,
-    eNbrUnitMoral
+    eUnitMorale_Fanatique,
+    eUnitMorale_Bon,
+    eUnitMorale_Moyen,
+    eUnitMorale_Mauvais,
+    eNbrUnitMorale
 };
 
 
@@ -238,43 +241,41 @@ enum E_UnitExperience
 };
 
 
-enum E_AutomateState
+enum E_AutomatMode
 {
-    eAutomateState_Embraye,
-    eAutomateState_Debraye,
-    eNbrAutomateState
+    eAutomatMode_Embraye,
+    eAutomatMode_Debraye,
+    eNbrAutomatMode
 };
 
 
-enum E_SetAutomateModeErrorCode
+enum E_SetAutomatModeErrorCode
 {
-    eSetAutomateModeErrorCode_NoError,
-    eSetAutomateModeErrorCode_ErrorInvalidUnit,
-    eSetAutomateModeErrorCode_ErrorUnitNotAutomate,
-    eSetAutomateModeErrorCode_ErrorAlreadyEmbraye,
-    eSetAutomateModeErrorCode_ErrorAlreadyDebraye,
-    eSetAutomateModeErrorCode_ErrorUnitSurrendered,
-    eNbrSetAutomateModeErrorCode
-};
-
-enum E_CtrlErrorCode
-{
-    eCtrlErrorCode_NoError,
-    eCtrlErrorCode_ErrorAlreadyStarted,
-    eCtrlErrorCode_ErrorNotStarted,
-    eCtrlErrorCode_ErrorNotPaused,
-    eCtrlErrorCode_ErrorAlreadyPaused,
-    eCtrlErrorCode_ErrorInvalidTimeFactor,
-    eNbrCtrlErrorCode
+    eSetAutomatModeErrorCode_NoError,
+    eSetAutomatModeErrorCode_ErrorInvalidUnit,
+    eSetAutomatModeErrorCode_ErrorNotAllowed,
+    eNbrSetAutomatModeErrorCode
 };
 
 
-enum E_EtatSim
+enum E_ControlErrorCode
 {
-    eEtatSim_Running,
-    eEtatSim_Paused,
-    eEtatSim_Stopped,
-    eNbrEtatSim
+    eControlErrorCode_NoError,
+    eControlErrorCode_ErrorAlreadyStarted,
+    eControlErrorCode_ErrorNotStarted,
+    eControlErrorCode_ErrorNotPaused,
+    eControlErrorCode_ErrorAlreadyPaused,
+    eControlErrorCode_ErrorInvalidTimeFactor,
+    eNbrControlErrorCode
+};
+
+
+enum E_SimulationState
+{
+    eSimulationState_Running,
+    eSimulationState_Paused,
+    eSimulationState_Stopped,
+    eNbrSimulationState
 };
 
 
@@ -290,19 +291,11 @@ enum E_PrecipitationType
 };
 
 
-enum E_TypeLima
+enum E_FireEffectType
 {
-    eTypeLima_LigneDebouche,
-    eTypeLima_LigneChangementAttitude,
-    eTypeLima_LigneCoordination,
-    eTypeLima_LigneInterdire,
-    eTypeLima_LigneObjectif,
-    eTypeLima_LigneCoupArret,
-    eTypeLima_LigneRecueil,
-    eTypeLima_LigneDebutMission,
-    eTypeLima_LigneFinMission,
-    eTypeLima_LigneIdentificationAccueil,
-    eNbrTypeLima
+    eFireEffectType_Fumigene,
+    eFireEffectType_Eclairant,
+    eNbrFireEffectType
 };
 
 
@@ -317,40 +310,19 @@ enum E_InfoContextErrorCode
 };
 
 
-enum E_PopulationAttitude
+enum E_LimaType
 {
-    ePopulationAttitude_Calme,
-    ePopulationAttitude_Agitee,
-    ePopulationAttitude_Excitee,
-    ePopulationAttitude_Agressive,
-    eNbrPopulationAttitude
-};
-
-
-enum E_PopulationAttrErrorCode
-{
-    ePopulationAttrErrorCode_NoError,
-    ePopulationAttrErrorCode_ErrorInvalidUnit,
-    ePopulationAttrErrorCode_ErrorInvalidAttribute,
-    eNbrPopulationAttrErrorCode
-};
-
-
-enum E_TypeCR
-{
-    eTypeCR_Message,
-    eTypeCR_Operationel,
-    eTypeCR_EvenementExceptionnel,
-    eTypeCR_Warning,
-    eNbrTypeCR
-};
-
-
-enum E_FireEffectType
-{
-    eFireEffectType_Fumigene,
-    eFireEffectType_Eclairant,
-    eNbrFireEffectType
+    eLimaType_LigneDebouche,
+    eLimaType_LigneChangementAttitude,
+    eLimaType_LigneCoordination,
+    eLimaType_LigneInterdire,
+    eLimaType_LigneObjectif,
+    eLimaType_LigneCoupArret,
+    eLimaType_LigneRecueil,
+    eLimaType_LigneDebutMission,
+    eLimaType_LigneFinMission,
+    eLimaType_LigneIdentificationAccueil,
+    eNbrLimaType
 };
 
 
@@ -364,36 +336,36 @@ enum E_LogMaintenanceRegimeTravail
 };
 
 
-enum E_LogMaintenanceTraitementEtat
+enum E_LogMaintenanceHandlingStatus
 {
-    eLogMaintenanceTraitementEtat_DeplacementVersChaine,
-    eLogMaintenanceTraitementEtat_AttenteDisponibiliteRemorqueur,
-    eLogMaintenanceTraitementEtat_RemorqueurDeplacementAller,
-    eLogMaintenanceTraitementEtat_RemorqueurChargement,
-    eLogMaintenanceTraitementEtat_RemorqueurDeplacementRetour,
-    eLogMaintenanceTraitementEtat_RemorqueurDechargement,
-    eLogMaintenanceTraitementEtat_Diagnostique,
-    eLogMaintenanceTraitementEtat_AttentePriseEnChargeParNiveauSuperieur,
-    eLogMaintenanceTraitementEtat_AttenteDisponibilitePieces,
-    eLogMaintenanceTraitementEtat_AttenteDisponibiliteReparateur,
-    eLogMaintenanceTraitementEtat_Reparation,
-    eLogMaintenanceTraitementEtat_RetourPion,
-    eLogMaintenanceTraitementEtat_Termine,
-    eNbrLogMaintenanceTraitementEtat
+    eLogMaintenanceHandlingStatus_DeplacementVersChaine,
+    eLogMaintenanceHandlingStatus_AttenteDisponibiliteRemorqueur,
+    eLogMaintenanceHandlingStatus_RemorqueurDeplacementAller,
+    eLogMaintenanceHandlingStatus_RemorqueurChargement,
+    eLogMaintenanceHandlingStatus_RemorqueurDeplacementRetour,
+    eLogMaintenanceHandlingStatus_RemorqueurDechargement,
+    eLogMaintenanceHandlingStatus_Diagnostique,
+    eLogMaintenanceHandlingStatus_AttentePriseEnChargeParNiveauSuperieur,
+    eLogMaintenanceHandlingStatus_AttenteDisponibilitePieces,
+    eLogMaintenanceHandlingStatus_AttenteDisponibiliteReparateur,
+    eLogMaintenanceHandlingStatus_Reparation,
+    eLogMaintenanceHandlingStatus_RetourPion,
+    eLogMaintenanceHandlingStatus_Termine,
+    eNbrLogMaintenanceHandlingStatus
 };
 
 
-enum E_LogRavitaillementTraitementEtat
+enum E_LogSupplyHandlingStatus
 {
-    eLogRavitaillementTraitementEtat_ConvoiEnAttenteCamions,
-    eLogRavitaillementTraitementEtat_ConvoiConstitution,
-    eLogRavitaillementTraitementEtat_ConvoiDeplacementVersPointChargement,
-    eLogRavitaillementTraitementEtat_ConvoiChargement,
-    eLogRavitaillementTraitementEtat_ConvoiDeplacementVersPointDechargement,
-    eLogRavitaillementTraitementEtat_ConvoiDechargement,
-    eLogRavitaillementTraitementEtat_ConvoiDeplacementRetour,
-    eLogRavitaillementTraitementEtat_Termine,
-    eNbrLogRavitaillementTraitementEtat
+    eLogSupplyHandlingStatus_ConvoiEnAttenteCamions,
+    eLogSupplyHandlingStatus_ConvoiConstitution,
+    eLogSupplyHandlingStatus_ConvoiDeplacementVersPointChargement,
+    eLogSupplyHandlingStatus_ConvoiChargement,
+    eLogSupplyHandlingStatus_ConvoiDeplacementVersPointDechargement,
+    eLogSupplyHandlingStatus_ConvoiDechargement,
+    eLogSupplyHandlingStatus_ConvoiDeplacementRetour,
+    eLogSupplyHandlingStatus_Termine,
+    eNbrLogSupplyHandlingStatus
 };
 
 
@@ -415,30 +387,30 @@ enum E_MsgLogSupplyPushFlowAck
 };
 
 
-enum E_LogSanteTraitementEtat
+enum E_LogMedicalHandlingStatus
 {
-    eLogSanteTraitementEtat_AttenteDisponibiliteAmbulanceReleve,
-    eLogSanteTraitementEtat_AmbulanceReleveDeplacementAller,
-    eLogSanteTraitementEtat_AmbulanceReleveChargement,
-    eLogSanteTraitementEtat_AttenteChargementCompletAmbulanceReleve,
-    eLogSanteTraitementEtat_AmbulanceReleveDeplacementRetour,
-    eLogSanteTraitementEtat_AmbulanceReleveDechargement,
-    eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourDiagnostique,
-    eLogSanteTraitementEtat_Diagnostique,
-    eLogSanteTraitementEtat_RechercheSecteurTri,
-    eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourTri,
-    eLogSanteTraitementEtat_Tri,
-    eLogSanteTraitementEtat_RechercheSecteurSoin,
-    eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourSoin,
-    eLogSanteTraitementEtat_Soin,
-    eLogSanteTraitementEtat_Hospitalisation,
-    eLogSanteTraitementEtat_AttenteDisponibiliteAmbulanceRamassage,
-    eLogSanteTraitementEtat_AmbulanceRamassageChargement,
-    eLogSanteTraitementEtat_AttenteChargementCompletAmbulanceRamassage,
-    eLogSanteTraitementEtat_AmbulanceRamassageDeplacementAller,
-    eLogSanteTraitementEtat_AmbulanceRamassageDechargement,
-    eLogSanteTraitementEtat_Termine,
-    eNbrLogSanteTraitementEtat
+    eLogMedicalHandlingStatus_AttenteDisponibiliteAmbulanceReleve,
+    eLogMedicalHandlingStatus_AmbulanceReleveDeplacementAller,
+    eLogMedicalHandlingStatus_AmbulanceReleveChargement,
+    eLogMedicalHandlingStatus_AttenteChargementCompletAmbulanceReleve,
+    eLogMedicalHandlingStatus_AmbulanceReleveDeplacementRetour,
+    eLogMedicalHandlingStatus_AmbulanceReleveDechargement,
+    eLogMedicalHandlingStatus_AttenteDisponibiliteMedecinPourDiagnostique,
+    eLogMedicalHandlingStatus_Diagnostique,
+    eLogMedicalHandlingStatus_RechercheSecteurTri,
+    eLogMedicalHandlingStatus_AttenteDisponibiliteMedecinPourTri,
+    eLogMedicalHandlingStatus_Tri,
+    eLogMedicalHandlingStatus_RechercheSecteurSoin,
+    eLogMedicalHandlingStatus_AttenteDisponibiliteMedecinPourSoin,
+    eLogMedicalHandlingStatus_Soin,
+    eLogMedicalHandlingStatus_Hospitalisation,
+    eLogMedicalHandlingStatus_AttenteDisponibiliteAmbulanceRamassage,
+    eLogMedicalHandlingStatus_AmbulanceRamassageChargement,
+    eLogMedicalHandlingStatus_AttenteChargementCompletAmbulanceRamassage,
+    eLogMedicalHandlingStatus_AmbulanceRamassageDeplacementAller,
+    eLogMedicalHandlingStatus_AmbulanceRamassageDechargement,
+    eLogMedicalHandlingStatus_Termine,
+    eNbrLogMedicalHandlingStatus
 };
 
 
@@ -500,11 +472,11 @@ enum E_ObjectType
 };
 
 
-enum E_MissionGenSousTypeObstacle
+enum E_ObstacleType
 {
-    eMissionGenSousTypeObstacle_Preliminaire,
-    eMissionGenSousTypeObstacle_DeManoeuvre,
-    eNbrMissionGenSousTypeObstacle
+    eObstacleType_Preliminaire,
+    eObstacleType_DeManoeuvre,
+    eNbrObstacleType
 };
 
 
@@ -527,11 +499,13 @@ enum E_OrderErrorCode
 };
 
 
-enum E_OrderState
+enum E_ReportType
 {
-    eOrderState_Started,
-    eOrderState_Stopped,
-    eNbrOrderState
+    eReportType_Message,
+    eReportType_Operationel,
+    eReportType_EvenementExceptionnel,
+    eReportType_Warning,
+    eNbrReportType
 };
 
 
@@ -541,6 +515,27 @@ enum E_AutomatOrderFormation
     eAutomatOrderFormation_DeuxEchelons,
     eNbrAutomatOrderFormation
 };
+
+
+enum E_PopulationErrorCode
+{
+    ePopulationErrorCode_NoError,
+    ePopulationErrorCode_ErrorInvalidUnit,
+    ePopulationErrorCode_ErrorInvalidAttribute,
+    eNbrPopulationErrorCode
+};
+
+
+enum E_PopulationAttitude
+{
+    ePopulationAttitude_Calme,
+    ePopulationAttitude_Agitee,
+    ePopulationAttitude_Excitee,
+    ePopulationAttitude_Agressive,
+    eNbrPopulationAttitude
+};
+
+
 
 
 #endif // __ENT_Emuns_Gen_h_

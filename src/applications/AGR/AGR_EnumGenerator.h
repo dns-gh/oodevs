@@ -6,22 +6,9 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-02-08 $
-// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_EnumGenerator.h $
-// $Author: Ape $
-// $Modtime: 11/02/05 11:39 $
-// $Revision: 1 $
-// $Workfile: AGR_EnumGenerator.h $
-//
-// *****************************************************************************
 
 #ifndef __AGR_EnumGenerator_h_
 #define __AGR_EnumGenerator_h_
-
-#ifdef __GNUG__
-#   pragma interface
-#endif
 
 #include "AGR_Generator_ABC.h"
 

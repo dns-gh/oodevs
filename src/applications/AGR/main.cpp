@@ -1,18 +1,6 @@
 #include "AGR_pch.h"
 #include "AGR_Workspace.h"
-#include "AGR_MilMissionGenerator.h"
-#include "AGR_MilFragOrderGenerator.h"
-#include "AGR_MilProjectGenerator.h"
-#include "AGR_Mos2Generator.h"
-#include "AGR_HalGenerator.h"
 #include "AGR_EnumGenerator.h"
-#include "AGR_Adn2Generator.h"
-#include "AGR_FichesMissionsGenerator.h"
-#include "AGR_TesterMissionGenerator.h"
-#include "AGR_TesterProjectGenerator.h"
-#include "AGR_XmlGenerator.h"
-#include "AGR_MilRCGenerator.h"
-
 #include "MT_Tools/MT_Version.h"
 #include <windows.h>
 
@@ -27,12 +15,6 @@ int main( int /*argc*/, char** /*argv*/ )
 
     try
     {
-//        if( !CheckModifications( "./agr_tmp", "*.xsd", "./asn/src/asn", "*.asn" ) )
-//        {
-//            std::cout << "AGR : Nothing to do." << std::endl;
-//            return EXIT_SUCCESS;
-//        }
-
         std::cout << "Current directory : " << MT_GetCurrentDir() << std::endl;
 
         std::cout << "Destroying old directories" << std::endl;
@@ -49,7 +31,7 @@ int main( int /*argc*/, char** /*argv*/ )
 
         std::cout << "Generating XSD files from ASN files" << std::endl;
         MT_MakeDir( "agr_tmp" );
-        std::string strCommandLine( "asn2xsd.exe ../../src/libraries/asnold/asn/*.asn -o ./agr_tmp" );
+        std::string strCommandLine( "asn2xsd.exe ../../src/libraries/game_asn/*.asn -o ./agr_tmp" );
         int nErrorCode = system( strCommandLine.c_str() );
         if( nErrorCode != EXIT_SUCCESS )
         {
@@ -65,20 +47,7 @@ int main( int /*argc*/, char** /*argv*/ )
             workspace.Read( itFiles->fileName_ );
 
         std::vector< AGR_Generator_ABC* > generators;
-        generators.push_back( new AGR_MilMissionGenerator() );
-        generators.push_back( new AGR_MilFragOrderGenerator() );
-        generators.push_back( new AGR_MilProjectGenerator() );
-        generators.push_back( new AGR_MilRCGenerator() );
-        generators.push_back( new AGR_Mos2Generator() );
-        generators.push_back( new AGR_HalGenerator() );
         generators.push_back( new AGR_EnumGenerator() );
-        generators.push_back( new AGR_Adn2Generator() );
-        generators.push_back( new AGR_FichesMissionsGenerator() );
-        generators.push_back( new AGR_TesterMissionGenerator() );
-        generators.push_back( new AGR_TesterProjectGenerator() );
-        generators.push_back( new AGR_XmlGenerator() );
-
-        
 
         MT_MakeDir( strOutputPath );        
         for( std::vector< AGR_Generator_ABC* >::iterator it = generators.begin(); it != generators.end(); ++it )

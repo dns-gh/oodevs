@@ -37,32 +37,16 @@ public:
 public:
     // ConvertFrom functions 
 $ConvertFromFunctions$
-    static const std::string& ConvertFromAutomataMission  ( E_AutomataMission  , E_Conversion = eToSim );
-    static const std::string& ConvertFromUnitMission      ( E_UnitMission      , E_Conversion = eToSim );
-    static const std::string& ConvertFromPopulationMission( E_PopulationMission, E_Conversion = eToSim );
-    static const std::string& ConvertFromFragOrder        ( E_FragOrder        , E_Conversion = eToSim );
 
     // ConvertTo functions
 $ConvertToFunctions$
-    static E_AutomataMission   ConvertToAutomataMission  ( const std::string& );
-    static E_UnitMission       ConvertToUnitMission      ( const std::string& );
-    static E_PopulationMission ConvertToPopulationMission( const std::string& );
-    static E_FragOrder         ConvertToFragOrder        ( const std::string& );
 
 private:
     // Typedefs
 $Typdefs$
-    typedef ENT_Tr::converter<E_AutomataMission>   T_ConverterAutomataMission;
-    typedef ENT_Tr::converter<E_UnitMission>       T_ConverterUnitMission;
-    typedef ENT_Tr::converter<E_PopulationMission> T_ConverterPopulationMission;
-    typedef ENT_Tr::converter<E_FragOrder>         T_ConverterFragOrder;
 
     // Converters
 $Converters$
-    static T_ConverterAutomataMission   automataMissionConverter_[];
-    static T_ConverterUnitMission       unitMissionConverter_[];
-    static T_ConverterPopulationMission populationMissionConverter_[];
-    static T_ConverterFragOrder         fragOrderConverter_[];
 };
 
 

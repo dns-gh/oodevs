@@ -6,27 +6,11 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-02-08 $
-// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_EnumGenerator.cpp $
-// $Author: Ape $
-// $Modtime: 22/02/05 10:22 $
-// $Revision: 2 $
-// $Workfile: AGR_EnumGenerator.cpp $
-//
-// *****************************************************************************
-
-#ifdef __GNUG__
-#   pragma implementation
-#endif
 
 #include "AGR_pch.h"
 #include "AGR_EnumGenerator.h"
 #include "AGR_Workspace.h"
 #include "AGR_Enumeration.h"
-#include "AGR_Mission.h"
-#include "AGR_FragOrder.h"
-
 
 // -----------------------------------------------------------------------------
 // Name: AGR_EnumGenerator constructor
@@ -45,7 +29,6 @@ AGR_EnumGenerator::~AGR_EnumGenerator()
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AGR_EnumGenerator::Generate
 // Created: APE 2005-02-08
@@ -60,7 +43,6 @@ void AGR_EnumGenerator::Generate( const AGR_Workspace& workspace, const std::str
     GenerateTranslatorHeader( workspace, strOutputPath );
     GenerateTranslatorImplementation( workspace, strOutputPath );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AGR_EnumGenerator::GenerateEnumFile
@@ -88,39 +70,11 @@ void AGR_EnumGenerator::GenerateEnumFile( const AGR_Workspace& workspace, const 
         strEnumsDeclaration << "    eNbr" << GetCoreEnumName( strEnumName ) << "\n};\n\n\n";
     }
 
-    // Missions & frag orders enums
-    std::string strAutomataMissionList;
-    std::string strPopulationMissionList;
-    std::string strUnitMissionList;
-    std::string strFragOrderList;
-
-    for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
-    {
-        const AGR_Mission& mission = **it;
-        std::string& strList = mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) ? strAutomataMissionList
-                           : ( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) ? strPopulationMissionList
-                           : strUnitMissionList );
-        const std::string strEntry = "    " + mission.EnumName() + ( strList.empty() ? " = 1" : "" ) + ",\n";
-        strList += strEntry;
-    }
-
-    for( AGR_Workspace::CIT_FragOrder_Vector it = workspace.FragOrders().begin(); it != workspace.FragOrders().end(); ++it )
-    {
-        const AGR_FragOrder& order = **it;
-        strFragOrderList += "    " + order.EnumName() + ",\n";
-    }
-
-
     std::string strBaseContent = "";
     workspace.ReadStringFile( AGR_SKEL_DIR "AGR_ENT_Enums_Skeleton.h", strBaseContent );
     workspace.ReplaceInString( strBaseContent, "$Enums$", strEnumsDeclaration.str() );
-    workspace.ReplaceInString( strBaseContent, "$AutomateMissionEnumList$", strAutomataMissionList );
-    workspace.ReplaceInString( strBaseContent, "$PopulationMissionEnumList$", strPopulationMissionList );
-    workspace.ReplaceInString( strBaseContent, "$PionMissionEnumList$", strUnitMissionList );
-    workspace.ReplaceInString( strBaseContent, "$OrderConduiteEnumList$", strFragOrderList );
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/libraries/ENT/ENT_Enums_Gen.h" );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AGR_EnumGenerator::GenerateTranslatorHeader
@@ -191,13 +145,6 @@ void AGR_EnumGenerator::GenerateTranslatorImplementation( const AGR_Workspace& w
         std::string strConvertFromFctName = "ConvertFrom" + strCoreEnumName;
         const T_String_Vector& enumValues = (*it)->GetEnumValueSet();
 
-        // ENT_Tr::T_ConverterObjectType ENT_Tr::ObjectTypeConverter_[] =
-        // {
-        //     T_ConverterObjectType( "fosse anti char", QT_TRANSLATE_NOOP( "ENT_Tr", "anti tank pit"), eObjectTypeFosseAntiChar ),
-        //     T_ConverterObjectType( "abatti"         , QT_TRANSLATE_NOOP( "ENT_Tr", "abattis")      , eObjectTypeAbatti        ),
-        //     T_ConverterObjectType( ""               , ""    ,   (E_ObjectTypeID)-1 )
-
-        // };
         strConverters << "ENT_Tr::" << strConverterType << " ENT_Tr::" << strConverterName << "[] =\n{\n";
 
         for( CIT_String_Vector itValue = enumValues.begin(); itValue != enumValues.end(); ++itValue )
@@ -248,66 +195,14 @@ void AGR_EnumGenerator::GenerateTranslatorImplementation( const AGR_Workspace& w
         strInitTr << "    InitTr( " << strConverterName << ", \"ENT_Tr\" );\n";
     }
 
-
-    // Missions & frag orders converters
-    std::string strAutomataMissionConverterList;
-    std::string strPopulationMissionConverterList;
-    std::string strUnitMissionConverterList;
-    std::string strFragOrderConverterList;
-
-    for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
-    {
-        const AGR_Mission& mission = **it;
-
-        std::string strEntry;
-        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
-            strEntry += "    T_ConverterAutomataMission( \"";
-        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
-            strEntry += "    T_ConverterPopulationMission( \"";
-        else
-            strEntry += "    T_ConverterUnitMission( \"";
-
-        std::string strConverterInput = mission.Name().substr( std::string( "Mission_" ).size() );
-        workspace.ReplaceInString( strConverterInput, "_", " " );
-        strEntry += strConverterInput + "\", QT_TRANSLATE_NOOP( \"ENT\", \"";
-        strEntry += mission.HumanName();
-        strEntry += "\" ), " + mission.EnumName() + " ),\n";
-
-        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
-            strAutomataMissionConverterList += strEntry;
-        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
-            strPopulationMissionConverterList += strEntry;
-        else
-            strUnitMissionConverterList += strEntry;
-    }
-
-    for( AGR_Workspace::CIT_FragOrder_Vector it = workspace.FragOrders().begin(); it != workspace.FragOrders().end(); ++it )
-    {
-        const AGR_FragOrder& order = **it;
-
-        strFragOrderConverterList += "    T_ConverterFragOrder( \"";
-
-        std::string strConverterInput = order.Name().substr( std::string( "OrderConduite_" ).size() );
-        workspace.ReplaceInString( strConverterInput, "_", " " );
-        strFragOrderConverterList += strConverterInput + "\", QT_TRANSLATE_NOOP( \"ENT\", \"";
-        strFragOrderConverterList += order.HumanName();
-        strFragOrderConverterList += "\" ), " + order.EnumName() + " ),\n";
-    }
-
-
     std::string strBaseContent = "";
     workspace.ReadStringFile( AGR_SKEL_DIR "AGR_ENT_Tr_Skeleton.cpp", strBaseContent );
     workspace.ReplaceInString( strBaseContent, "$ConvertFromFunctions$", strConvertFromFunctions.str() );
     workspace.ReplaceInString( strBaseContent, "$ConvertToFunctions$", strConvertToFunctions.str() );
     workspace.ReplaceInString( strBaseContent, "$Converters$", strConverters.str() );
-    workspace.ReplaceInString( strBaseContent, "$AutomataMissionConverterList$", strAutomataMissionConverterList );
-    workspace.ReplaceInString( strBaseContent, "$PopulationMissionConverterList$", strPopulationMissionConverterList );
-    workspace.ReplaceInString( strBaseContent, "$UnitMissionConverterList$", strUnitMissionConverterList );
-    workspace.ReplaceInString( strBaseContent, "$FragOrderConverterList$", strFragOrderConverterList );
     workspace.ReplaceInString( strBaseContent, "$InitTr$", strInitTr.str() );
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/libraries/ENT/ENT_Tr_Gen.cpp" );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AGR_EnumGenerator::CreatePrettyEnumName
@@ -323,8 +218,6 @@ std::string AGR_EnumGenerator::CreatePrettyEnumName( const std::string strEnumNa
 {
     return "E_" + GetCoreEnumName( strEnumName );
 }
-
-
 
 // -----------------------------------------------------------------------------
 // Name: AGR_EnumGenerator::CreatePrettyValueName
