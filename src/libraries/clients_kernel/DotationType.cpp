@@ -10,7 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "DotationType.h"
 #include "xeumeuleu/xml.h"
-#include "ENT/ENT_Tr.h"
+#include "tools.h"
 
 using namespace kernel;
 using namespace xml;
@@ -19,9 +19,9 @@ using namespace xml;
 // Name: DotationType constructor
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-DotationType::DotationType( const QString& dotationName, xistream& xis )
-    : name_( dotationName )
-    , nameId_( ENT_Tr::ConvertToFamilleDotation( name_.ascii() ) )
+DotationType::DotationType( const std::string& dotationName, xistream& xis )
+    : name_( dotationName.c_str() )
+    , nameId_( tools::FamilleDotationFromString( dotationName ) )
     , gaz_( name_ == "carburant" ) // $$$$ AGE 2006-04-10: 
     , ammunition_( name_ == "munition" )
     , dType_( false )

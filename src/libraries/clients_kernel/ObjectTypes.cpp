@@ -15,8 +15,8 @@
 #include "NBCAgent.h"
 #include "BreakdownType.h"
 #include "ExerciseConfig.h"
-#include "ENT/ENT_Tr.h"
 #include "xeumeuleu/xml.h"
+#include "tools.h"
 
 using namespace kernel;
 using namespace xml;
@@ -96,7 +96,7 @@ void ObjectTypes::ReadObjectType( xml::xistream& xis )
 {
     std::string type;
     xis >> attribute( "type", type );
-    int nType = ENT_Tr::ConvertToObjectType( type );
+    int nType = tools::ObjectTypeFromString( type );
     Resolver2< ObjectType >::Register( nType, type.c_str(), *new ObjectType( xis, nType ) );
 }
 

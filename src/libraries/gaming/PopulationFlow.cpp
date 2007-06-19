@@ -11,6 +11,7 @@
 #include "PopulationFlow.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "tools.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -141,7 +142,7 @@ unsigned int PopulationFlow::GetDeadHumans() const
 // -----------------------------------------------------------------------------
 std::string PopulationFlow::GetAttitude() const
 {
-    return ENT_Tr::ConvertFromPopulationAttitude( attitude_, ENT_Tr::eToTr );
+    return tools::ToString( attitude_ );
 }
     
 // -----------------------------------------------------------------------------

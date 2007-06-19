@@ -12,6 +12,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/ActionController.h"
+#include "tools.h"
 
 using namespace kernel;
 
@@ -116,7 +117,7 @@ unsigned int PopulationConcentration::GetDensity() const
 // -----------------------------------------------------------------------------
 std::string PopulationConcentration::GetAttitude() const
 {
-    return ENT_Tr::ConvertFromPopulationAttitude( attitude_, ENT_Tr::eToTr );
+    return tools::ToString( attitude_ );
 }
 
 // -----------------------------------------------------------------------------

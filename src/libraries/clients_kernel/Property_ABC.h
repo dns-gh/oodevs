@@ -14,6 +14,7 @@
 #include "Controller.h"
 #include "EditorFactory_ABC.h"
 #include "Displayer_ABC.h"
+#include <qwidget.h>
 
 namespace kernel
 {

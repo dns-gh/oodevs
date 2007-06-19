@@ -12,6 +12,7 @@
 #include "moc_ChangeHumanFactorsDialog.cpp"
 #include "gaming/ASN_Messages.h"
 #include "gaming/HumanFactors.h"
+#include "gaming/tools.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -21,22 +22,17 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
 
-#include "ENT/ENT_Tr.h"
-
 using namespace kernel;
 using namespace gui;
 
 namespace 
 {
-    template< typename Enum, typename Combo, typename Converter >
-    void Populate( Enum size, Combo& combo, Converter converter )
+    template< typename Enum, typename Combo >
+    void Populate( Enum size, Combo& combo )
     {
         combo.Clear();
         for( unsigned int i = 0; i < (unsigned int)size; ++i )
-        {
-            const std::string& value = converter( (Enum)i, ENT_Tr_ABC::eToTr );
-            combo.AddItem( value.c_str(), (Enum)i );
-        }
+            combo.AddItem( tools::ToString( (Enum)i ), (Enum)i );
     }
 }
 // -----------------------------------------------------------------------------
@@ -95,9 +91,9 @@ ChangeHumanFactorsDialog::~ChangeHumanFactorsDialog()
 // -----------------------------------------------------------------------------
 void ChangeHumanFactorsDialog::Show()
 {
-    Populate( eNbrUnitFatigue, *pTirednessCombo_, &ENT_Tr::ConvertFromUnitFatigue );
-    Populate( eNbrUnitMoral, *pMoralCombo_, &ENT_Tr::ConvertFromUnitMoral );
-    Populate( eNbrUnitExperience, *pExperienceCombo_, &ENT_Tr::ConvertFromUnitExperience );
+    Populate( eNbrUnitFatigue, *pTirednessCombo_ );
+    Populate( eNbrUnitMoral, *pMoralCombo_ );
+    Populate( eNbrUnitExperience, *pExperienceCombo_ );
 
     if( const HumanFactors_ABC* factors = selected_->Retrieve< HumanFactors_ABC >() )
         factors->Display( *this );

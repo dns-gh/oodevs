@@ -10,12 +10,11 @@
 #include "preparation_app_pch.h"
 #include "Application.h"
 
-#include "ENT/ENT_Tr.h"
-
 #include "tools/Win32/StackWalkerProxy.h"
 #include <qapplication.h>
 #include <qmessagebox.h>
 #include <fstream>
+#include "ENT/ENT_Tr.h"
 
 namespace
 {

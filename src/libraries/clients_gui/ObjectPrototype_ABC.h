@@ -14,9 +14,9 @@
 #include "clients_kernel/Observer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
+#include "clients_kernel/tools.h"
 #include "ShapeHandler_ABC.h"
 #include "ValuedComboBox.h"
-#include "ENT/ENT_Tr.h"
 
 namespace kernel
 {

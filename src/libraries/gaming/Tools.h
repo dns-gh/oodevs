@@ -16,10 +16,13 @@
 
 namespace tools
 {
-    QString ToString( E_FuncLimaType nType );
     QString ToString( ASN1T_EnumLocationType nType );
-    E_FuncLimaType FromString( const QString& type );
-    E_TypeLocalisation LocationFromString( const QString& type );
+    QString ToString( E_FuncLimaType nType );
+
+    E_FuncLimaType     LimaTypeFromString       ( const QString& type );
+    E_TypeLocalisation LocationFromString       ( const QString& type );
+    E_FamilleMunition  FamilleMunitionFromString( const QString& type );
+    E_FamilleDotation  FamilleDotationFromString( const QString& type );
 };
 
 #endif // __Gaming_Tools_h_

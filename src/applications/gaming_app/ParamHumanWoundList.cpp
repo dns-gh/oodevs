@@ -13,8 +13,7 @@
 #include "clients_gui/ExclusiveComboTableItem.h"
 #include "clients_kernel/OrderParameter.h"
 #include "game_asn/Asn.h"
-
-#include "ENT/ENT_Tr.h"
+#include "gaming/tools.h"
 
 using namespace gui;
 
@@ -55,7 +54,7 @@ void ParamHumanWoundList::BuildInterface( QWidget* parent )
 
     humanWoundsList_.append( "" );
     for( unsigned int i = eHumanWound_BlesseUrgence1; i < eNbrHumanWound; ++i )
-        humanWoundsList_.append( ENT_Tr::ConvertFromHumanWound( ( E_HumanWound )i, ENT_Tr::eToTr ).c_str() );
+        humanWoundsList_.append( tools::ToString( ( E_HumanWound )i ) );
 
     table_->setNumRows( 0 );
     table_->insertRows( 0, 1 );

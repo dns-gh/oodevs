@@ -13,7 +13,6 @@
 #include <qstring.h>
 #include "Displayer_ABC.h"
 #include "Types.h"
-#include "ENT/ENT_Tr.h"
 
 namespace kernel
 {

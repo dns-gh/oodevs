@@ -11,9 +11,9 @@
 #include "InfoStatusBar.h"
 #include "gaming/HumanFactors.h"
 #include "gaming/Reinforcements.h"
+#include "gaming/tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "ENT/ENT_Tr.h"
 #include "icons.h"
 #include <qgrid.h>
 
@@ -134,11 +134,11 @@ void InfoStatusBar::SetHumanFactors( const HumanFactors& humans )
 {
     show();
     mood_->setPixmap( moodIcons_.at( humans.GetMorale() ) );
-    QToolTip::add( mood_, tr( "Morale: " ) + ENT_Tr::ConvertFromUnitMoral( humans.GetMorale(), ENT_Tr::eToTr ).c_str() );
+    QToolTip::add( mood_, tr( "Morale: " ) + tools::ToString( humans.GetMorale() ) );
     experience_->setPixmap( experienceIcons_.at( humans.GetExperience() ) );
-    QToolTip::add( experience_, tr( "Experience: " ) + ENT_Tr::ConvertFromUnitExperience( humans.GetExperience(), ENT_Tr::eToTr ).c_str() );
+    QToolTip::add( experience_, tr( "Experience: " ) + tools::ToString( humans.GetExperience() ) );
     tiredness_->setPixmap( tirednessIcons_.at( humans.GetTiredness() ) );
-    QToolTip::add( tiredness_, tr( "Tiredness: " ) + ENT_Tr::ConvertFromUnitFatigue( humans.GetTiredness(), ENT_Tr::eToTr ).c_str() );
+    QToolTip::add( tiredness_, tr( "Tiredness: " ) + tools::ToString( humans.GetTiredness() ) );
 }
 
 // -----------------------------------------------------------------------------

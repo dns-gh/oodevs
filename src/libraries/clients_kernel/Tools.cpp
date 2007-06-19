@@ -9,10 +9,10 @@
 
 #include "clients_kernel_pch.h"
 #include "Tools.h"
+#include "ENT/ENT_Tr.h"
 #include <qapplication.h>
 
 using namespace kernel;
-
 
 // -----------------------------------------------------------------------------
 // Name: tools::translate
@@ -184,4 +184,185 @@ const char* tools::GetXmlSection( E_LightingType weather )
         default:
             return "Unknown";
     }
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_PopulationAttitude nType )
+{
+    return ENT_Tr::ConvertFromPopulationAttitude( nType, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_TypeObstacle nType )
+{
+    return ENT_Tr::ConvertFromTypeObstacle( nType, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_UnitPosture nType )
+{
+    return ENT_Tr::ConvertFromUnitPosture( nType, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_EtatOperationnel nType )
+{
+    return ENT_Tr::ConvertFromEtatOperationnel( nType, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_EtatRapFor nType )
+{
+    return ENT_Tr::ConvertFromEtatRapFor( nType, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_Roe nType )
+{
+    return ENT_Tr::ConvertFromRoe( nType, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_RoePopulation nType )
+{
+    return ENT_Tr::ConvertFromRoePopulation( nType, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_EtatCombatRencontre nType )
+{
+    return ENT_Tr::ConvertFromEtatCombatRencontre( nType, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_DisponibiliteAuTir nType )
+{
+    return ENT_Tr::ConvertFromDisponibiliteAuTir( nType, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_NatureLevel nType )
+{
+    return ENT_Tr::ConvertFromNatureLevel( nType, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_UnitExperience nType )
+{
+    return ENT_Tr::ConvertFromUnitExperience( nType, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_UnitMoral nType )
+{
+    return ENT_Tr::ConvertFromUnitMoral( nType, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_UnitFatigue nType )
+{
+    return ENT_Tr::ConvertFromUnitFatigue( nType, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_HumanWound nType )
+{
+    return ENT_Tr::ConvertFromHumanWound( nType, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_LogRavitaillementTraitementEtat nType )
+{
+    return ENT_Tr::ConvertFromLogRavitaillementTraitementEtat( nType, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_LogSanteTraitementEtat nType )
+{
+    return ENT_Tr::ConvertFromLogSanteTraitementEtat( nType, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_LogMaintenanceTraitementEtat nType )
+{
+    return ENT_Tr::ConvertFromLogMaintenanceTraitementEtat( nType, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ObjectTypeFromString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+E_ObjectType tools::ObjectTypeFromString( const std::string& type )
+{
+    return ENT_Tr::ConvertToObjectType( type );
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::FamilleDotationFromString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+E_FamilleDotation tools::FamilleDotationFromString( const std::string& type )
+{
+    return ENT_Tr::ConvertToFamilleDotation( type );
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::NatureLevelFromString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+E_NatureLevel tools::NatureLevelFromString( const std::string& type )
+{
+    return ENT_Tr::ConvertToNatureLevel( type );
 }

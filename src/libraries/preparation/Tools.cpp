@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "Tools.h"
+#include "ENT/ENT_Tr.h"
 
 const QString limas[] = 
 {
@@ -45,4 +46,40 @@ E_FuncLimaType tools::FromString( const QString& type )
         if( limas[i] == type )
             return (E_FuncLimaType)i;
     return (E_FuncLimaType)-1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::PopulationAttitudeFromString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+E_PopulationAttitude tools::PopulationAttitudeFromString( const QString& type )
+{
+    return ENT_Tr::ConvertToPopulationAttitude( type.ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::TypeObstacleFromString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+E_TypeObstacle tools::TypeObstacleFromString( const QString& type )
+{
+    return ENT_Tr::ConvertToTypeObstacle( type.ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToXml
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+std::string tools::ToXml( E_TypeObstacle type )
+{
+    return ENT_Tr::ConvertFromTypeObstacle( type, ENT_Tr::eToSim );
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToXml
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+std::string tools::ToXml( E_PopulationAttitude type )
+{
+    return ENT_Tr::ConvertFromPopulationAttitude( type, ENT_Tr::eToSim );
 }

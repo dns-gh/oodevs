@@ -12,7 +12,6 @@
 #include "GlTools_ABC.h"
 #include "Viewport_ABC.h"
 #include "objecticons.h"
-#include "ENT/ENT_Tr.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;

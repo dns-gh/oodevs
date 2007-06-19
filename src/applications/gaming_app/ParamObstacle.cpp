@@ -22,8 +22,6 @@
 #include "gaming/ActionParameterObstacle.h"
 #include "gaming/ActionParameterObstacleType.h"
 
-#include "ENT/ENT_Tr.h"
-
 using namespace kernel;
 using namespace gui;
 
@@ -85,7 +83,7 @@ void ParamObstacle::BuildInterface( QWidget* parent )
         QLabel* label = new QLabel( tr( "Obstacle type:" ), box );
         obstacleTypeCombo_ = new ValuedComboBox< unsigned int >( box );
         for( unsigned int i = 0; i < eNbrTypeObstacle ; ++i )
-            obstacleTypeCombo_->AddItem( ENT_Tr::ConvertFromTypeObstacle( ( E_TypeObstacle)i, ENT_Tr::eToTr ).c_str(), i );
+            obstacleTypeCombo_->AddItem( tools::ToString( ( E_TypeObstacle)i ), i );
         connect( this, SIGNAL( ToggleReservable( bool ) ), label, SLOT( setShown( bool ) ) );
         connect( this, SIGNAL( ToggleReservable( bool ) ), obstacleTypeCombo_, SLOT( setShown( bool ) ) );
     }

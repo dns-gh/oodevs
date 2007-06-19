@@ -39,15 +39,12 @@ using namespace gui;
 
 namespace
 {
-    template< typename Enum, typename Combo, typename Converter >
-    void Populate( Enum size, Combo& combo, Converter converter )
+    template< typename Enum, typename Combo >
+    void Populate( Enum size, Combo& combo )
     {
         combo.Clear();
         for( unsigned int i = 0; i < (unsigned int)size; ++i )
-        {
-            const std::string& value = converter( (Enum)i, ENT_Tr_ABC::eToTr );
-            combo.AddItem( value.c_str(), (Enum)i );
-        }
+            combo.AddItem( tools::ToString( (Enum)i ), (Enum)i );
     }
 }
 
@@ -113,7 +110,7 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::NotifyUpdated( const ModelLoaded& )
 {
-    Populate( eNbrTypeObstacle, *obstacleTypes_, &ENT_Tr::ConvertFromTypeObstacle );
+    Populate( eNbrTypeObstacle, *obstacleTypes_ );
     FillObjectTypes();
     OnTypeChanged();
 }
@@ -124,7 +121,7 @@ void ObjectPrototype_ABC::NotifyUpdated( const ModelLoaded& )
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::showEvent( QShowEvent* e )
 {
-    Populate( eNbrTypeObstacle, *obstacleTypes_, &ENT_Tr::ConvertFromTypeObstacle );
+    Populate( eNbrTypeObstacle, *obstacleTypes_ );
     FillObjectTypes();
     controllers_.Register( *locationCreator_ );
     QGroupBox::showEvent( e );

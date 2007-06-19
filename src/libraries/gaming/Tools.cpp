@@ -1,16 +1,17 @@
 //*****************************************************************************
 //
 // $Created: NLD 2003-05-31 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/Tools.cpp $
+// $Archive: /MVW_v10/Build/SDK/Light2/src/tools.cpp $
 // $Author: Age $
 // $Modtime: 27/04/05 18:51 $
 // $Revision: 21 $
-// $Workfile: Tools.cpp $
+// $Workfile: tools.cpp $
 //
 //*****************************************************************************
 
 #include "gaming_pch.h"
-#include "Tools.h"
+#include "tools.h"
+#include "ENT/ENT_Tr.h"
 
 const QString limas[] = 
 {
@@ -48,18 +49,6 @@ QString tools::ToString( E_FuncLimaType nType )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Tools::FromString
-// Created: SBO 2006-11-08
-// -----------------------------------------------------------------------------
-E_FuncLimaType tools::FromString( const QString& type )
-{
-    for( int i = 0; i < int( eLimaFuncNbr ); ++i )
-        if( limas[i] == type )
-            return (E_FuncLimaType)i;
-    return (E_FuncLimaType)-1;
-}
-
-// -----------------------------------------------------------------------------
 // Name: tools::ToString
 // Created: AGE 2006-08-08
 // -----------------------------------------------------------------------------
@@ -71,7 +60,19 @@ QString tools::ToString( ASN1T_EnumLocationType nType )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Tools::LocationFromString
+// Name: tools::LimaTypeFromString
+// Created: SBO 2006-11-08
+// -----------------------------------------------------------------------------
+E_FuncLimaType tools::LimaTypeFromString( const QString& type )
+{
+    for( int i = 0; i < int( eLimaFuncNbr ); ++i )
+        if( limas[i] == type )
+            return (E_FuncLimaType)i;
+    return (E_FuncLimaType)-1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::LocationFromString
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
 E_TypeLocalisation tools::LocationFromString( const QString& type )
@@ -80,4 +81,22 @@ E_TypeLocalisation tools::LocationFromString( const QString& type )
         if( type == localisations[i] )
             return (E_TypeLocalisation)i;
     return (E_TypeLocalisation)-1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::FamilleMunitionFromString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+E_FamilleMunition tools::FamilleMunitionFromString( const QString& type )
+{
+    return ENT_Tr::ConvertToFamilleMunition( type.ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::FamilleDotationFromString
+// Created: AGE 2007-06-19
+// -----------------------------------------------------------------------------
+E_FamilleDotation tools::FamilleDotationFromString( const QString& type )
+{
+    return FamilleDotationFromString( std::string( type.ascii() ) );
 }

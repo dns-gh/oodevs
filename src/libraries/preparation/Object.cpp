@@ -24,7 +24,6 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
 #include "xeumeuleu/xml.h"
-#include "ENT/ENT_Tr.h"  // $$$$ NLD 2007-05-24:  E_ObstacleType
 
 using namespace kernel;
 using namespace xml;
@@ -226,7 +225,7 @@ void Object::SerializeAttributes( xml::xostream& xos ) const
     
     if( type_.CanBeReservedObstacle() )
     {
-        xos << attribute( "obstacle-type", obstacleType_.ToString( ENT_Tr::eToSim ) );
+        xos << attribute( "obstacle-type", obstacleType_.ToXml() );
         if( obstacleType_.GetValue() == eTypeObstacle_DeManoeuvre )
             xos << attribute( "reserved-obstacle-activated", reservedObstacleActivated_ );
     }

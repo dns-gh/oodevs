@@ -10,11 +10,11 @@
 #include "gaming_app_pch.h"
 #include "InfoStancesWidget.h"
 #include "gaming/Attributes.h"
+#include "gaming/tools.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "icons.h"
-#include "ENT/ENT_Tr.h"
 
 using namespace kernel;
 
@@ -59,12 +59,15 @@ void InfoStancesWidget::Update( const Attributes& attributes )
 {
     show();
     previous_->setPixmap( pixmaps_.at( attributes.nOldPosture_ ) );
-    QToolTip::add( previous_, tr( "Stance: previous was: '%1'" ).arg( ENT_Tr::ConvertFromUnitPosture( (E_UnitPosture)attributes.nOldPosture_, ENT_Tr::eToTr ).c_str() ) );
+    QToolTip::add( previous_, tr( "Stance: previous was: '%1'" )
+        .arg( tools::ToString( attributes.nOldPosture_ ) ) );
     next_->setPixmap( pixmaps_.at( attributes.nCurrentPosture_ ) );
     if( attributes.nPostureCompletionPourcentage_ < 100 )
-        QToolTip::add( next_, tr( "Stance: next is: '%1'" ).arg( ENT_Tr::ConvertFromUnitPosture( (E_UnitPosture)attributes.nCurrentPosture_, ENT_Tr::eToTr ).c_str() ) );
+        QToolTip::add( next_, tr( "Stance: next is: '%1'" )
+            .arg( tools::ToString( attributes.nCurrentPosture_ ) ) );
     else
-        QToolTip::add( next_, tr( "Stance: current is: '%1'" ).arg( ENT_Tr::ConvertFromUnitPosture( (E_UnitPosture)attributes.nCurrentPosture_, ENT_Tr::eToTr ).c_str() ) );
+        QToolTip::add( next_, tr( "Stance: current is: '%1'" )
+            .arg( tools::ToString( attributes.nCurrentPosture_ ) ) );
     progress_->setText( QString::number( attributes.nPostureCompletionPourcentage_ ) + Units::percentage );
 }
 

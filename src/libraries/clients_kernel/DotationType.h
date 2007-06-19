@@ -27,7 +27,7 @@ class DotationType
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationType( const QString& dotationName, xml::xistream& xis );
+             DotationType( const std::string& dotationName, xml::xistream& xis );
     virtual ~DotationType();
     //@}
 

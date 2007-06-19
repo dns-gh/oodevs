@@ -18,6 +18,7 @@
 #include "gaming/StaticModel.h"
 #include "gaming/SupplyStates.h"
 #include "gaming/Troops.h"
+#include "gaming/tools.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AutomatType.h"
@@ -25,8 +26,6 @@
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Profile_ABC.h"
-
-#include "ENT/ENT_Tr.h"
 
 using namespace kernel;
 using namespace gui;
@@ -453,7 +452,7 @@ void LogisticSupplyRecompletionDialog::FillDotations(  ASN1T_MagicActionPartialR
                 continue;
 
             ASN1T_DotationRecovery& asnDotation = pAsnDotations[ nAsnIdx ++ ];
-            asnDotation.famille_dotation = (ASN1T_EnumDotationFamily)ENT_Tr::ConvertToFamilleDotation( pDotationItem->text().ascii() );
+            asnDotation.famille_dotation = (ASN1T_EnumDotationFamily)tools::FamilleDotationFromString( pDotationItem->text() );
             asnDotation.pourcentage      = pPercentageItem->text().toUInt();
         }
     } 
@@ -495,7 +494,7 @@ void LogisticSupplyRecompletionDialog::FillAmmunitions( ASN1T_MagicActionPartial
             assert( pPercentageItem );
 
             ASN1T_AmmunitionDotationRecovery& asnMunition = pAsnMunitions[ nAsnIdx ++ ];
-            asnMunition.famille_munition = (ASN1T_EnumAmmunitionFamily)ENT_Tr::ConvertToFamilleMunition( pMunitionItem->text().ascii() );
+            asnMunition.famille_munition = (ASN1T_EnumAmmunitionFamily)tools::FamilleMunitionFromString( pMunitionItem->text() );
             asnMunition.pourcentage      = pPercentageItem->text().toUInt();
         }
     }   

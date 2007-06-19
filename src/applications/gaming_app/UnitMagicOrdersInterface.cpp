@@ -29,7 +29,6 @@
 #include "gaming/AutomatDecisions.h"
 #include "gaming/ASN_Messages.h"
 #include "gaming/Attributes.h"
-#include "ENT/ENT_Tr.h"
 
 using namespace kernel;
 using namespace gui;

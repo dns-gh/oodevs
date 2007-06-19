@@ -131,7 +131,7 @@ void ActionParameterLima::CommitTo( ASN1T_LimaOrder& asn ) const
     asn.fonctions.n = functions.count();
     asn.fonctions.elem = new ASN1T_EnumLimaType[asn.fonctions.n];
     for( unsigned int i = 0; i < asn.fonctions.n; ++i )
-        asn.fonctions.elem[i] = ASN1T_EnumLimaType( tools::FromString( functions[i] ) );
+        asn.fonctions.elem[i] = ASN1T_EnumLimaType( tools::LimaTypeFromString( functions[i] ) );
     location_->CommitTo( asn.lima );
 }
 

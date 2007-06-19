@@ -22,7 +22,7 @@ ActionParameterObstacleType::ActionParameterObstacleType( const OrderParameter& 
     : ActionParameter< QString >( parameter )
     , value_( E_TypeObstacle( value ) )
 {
-    SetValue( ENT_Tr::ConvertFromTypeObstacle( value_, ENT_Tr::eToTr ).c_str() );
+    SetValue( tools::ToString( value_ )  );
 }
 
 namespace
@@ -57,7 +57,7 @@ ActionParameterObstacleType::ActionParameterObstacleType( xml::xistream& xis )
     : ActionParameter< QString >( OrderParameter( ReadName( xis ), ReadType( xis ), false ) )
     , value_( ReadValue( xis ) )
 {
-    SetValue( ENT_Tr::ConvertFromTypeObstacle( value_, ENT_Tr::eToTr ).c_str() );
+    SetValue( tools::ToString( value_ ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -17,10 +17,9 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
-
 #include "gaming/StaticModel.h"
 #include "gaming/ASN_Messages.h"
-#include "ENT/ENT_Tr.h"
+#include "gaming/tools.h"
 
 using namespace kernel;
 using namespace gui;
@@ -103,7 +102,7 @@ void PopulationMagicOrdersInterface::NotifyContextMenu( const Population_ABC& en
 
     QPopupMenu* choiceMenu = new QPopupMenu( magicMenu );
     for( unsigned int i = 0; i < (unsigned int)eNbrPopulationAttitude; ++i )
-        choiceMenu->insertItem( ENT_Tr::ConvertFromPopulationAttitude( (E_PopulationAttitude)i, ENT_Tr::eToTr ).c_str(), this, SLOT( ChangePopulationAttitude( int ) ), 0, i );
+        choiceMenu->insertItem( tools::ToString( (E_PopulationAttitude)i ), 0, i );
     magicMenu->insertItem( tr( "Change population attitude" ), choiceMenu );
 }
 

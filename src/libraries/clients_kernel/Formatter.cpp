@@ -58,31 +58,31 @@ void Formatter< Separator >::operator()( const Separator& , Displayer_ABC& displ
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
 void Formatter< E_UnitPosture >::operator()( const E_UnitPosture& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromUnitPosture( e, ENT_Tr::eToTr ) );
+    displayer.AddToDisplay( tools::ToString( e ) );
 }
 
 void Formatter< E_EtatOperationnel >::operator()( const E_EtatOperationnel& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromEtatOperationnel( e, ENT_Tr::eToTr ) );
+    displayer.AddToDisplay( tools::ToString( e ) );
 }
 
 void Formatter< E_EtatRapFor >::operator()( const E_EtatRapFor& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromEtatRapFor( e, ENT_Tr::eToTr ) );
+    displayer.AddToDisplay( tools::ToString( e ) );
 }
 
 void Formatter< E_Roe >::operator()( const E_Roe& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromRoe( e, ENT_Tr::eToTr ) );
+    displayer.AddToDisplay( tools::ToString( e ) );
 }
 
 void Formatter< E_RoePopulation >::operator()( const E_RoePopulation& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromRoePopulation( e, ENT_Tr::eToTr ) );
+    displayer.AddToDisplay( tools::ToString( e ) );
 }
 
 void Formatter< E_EtatCombatRencontre >::operator()( const E_EtatCombatRencontre& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromEtatCombatRencontre( e, ENT_Tr::eToTr ) );
+    displayer.AddToDisplay( tools::ToString( e ) );
 }
 
 void Formatter< E_DisponibiliteAuTir >::operator()( const E_DisponibiliteAuTir& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromDisponibiliteAuTir( e, ENT_Tr::eToTr ) );
+    displayer.AddToDisplay( tools::ToString( e ) );
 }
 
 void Formatter< E_PerceptionResult >::operator()( const E_PerceptionResult& e, Displayer_ABC& displayer ) const {
@@ -90,19 +90,19 @@ void Formatter< E_PerceptionResult >::operator()( const E_PerceptionResult& e, D
 }
 
 void Formatter< E_NatureLevel >::operator()( const E_NatureLevel& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromNatureLevel( e, ENT_Tr::eToTr ) );
+    displayer.AddToDisplay( tools::ToString( e ) );
 }
 
 void Formatter< E_UnitExperience >::operator()( const E_UnitExperience& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromUnitExperience( e, ENT_Tr::eToTr ) );
+    displayer.AddToDisplay( tools::ToString( e ) );
 }
 
 void Formatter< E_UnitMoral >::operator()( const E_UnitMoral& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromUnitMoral( e, ENT_Tr::eToTr ) );
+    displayer.AddToDisplay( tools::ToString( e ) );
 }
 
 void Formatter< E_UnitFatigue >::operator()( const E_UnitFatigue& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromUnitFatigue( e, ENT_Tr::eToTr ) );
+    displayer.AddToDisplay( tools::ToString( e ) );
 }
 
 void Formatter< E_TroopHealthState >::operator()( const E_TroopHealthState& e, Displayer_ABC& displayer ) const {
@@ -110,23 +110,23 @@ void Formatter< E_TroopHealthState >::operator()( const E_TroopHealthState& e, D
 }
 
 void  Formatter< E_HumanWound >::operator()( const E_HumanWound& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromHumanWound( e, ENT_Tr::eToTr ) );
+    displayer.AddToDisplay( tools::ToString( e ) );
 }
 
 void  Formatter< E_LogRavitaillementTraitementEtat >::operator()( const E_LogRavitaillementTraitementEtat& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromLogRavitaillementTraitementEtat( e, ENT_Tr::eToTr ) );
+    displayer.AddToDisplay( tools::ToString( e ) );
 }
 
 void  Formatter< E_LogSanteTraitementEtat >::operator()( const E_LogSanteTraitementEtat& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromLogSanteTraitementEtat( e, ENT_Tr::eToTr ) );
+    displayer.AddToDisplay( tools::ToString( e ) );
 }
 
 void  Formatter< E_LogMaintenanceTraitementEtat >::operator()( const E_LogMaintenanceTraitementEtat& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromLogMaintenanceTraitementEtat( e, ENT_Tr::eToTr ) );
+    displayer.AddToDisplay( tools::ToString( e ) );
 }
 
 void  Formatter< E_TypeObstacle >::operator()( const E_TypeObstacle& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromTypeObstacle( e, ENT_Tr::eToTr ) );
+    displayer.AddToDisplay( tools::ToString( e ) );
 }
 
 

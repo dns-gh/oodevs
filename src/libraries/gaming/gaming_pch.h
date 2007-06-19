@@ -37,8 +37,6 @@ typedef std::vector< geometry::Point2f > T_PointVector;
 typedef T_PointVector::iterator         IT_PointVector;
 typedef T_PointVector::const_iterator  CIT_PointVector;
 
-#include "ENT/ENT_Tr.h"
-
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"

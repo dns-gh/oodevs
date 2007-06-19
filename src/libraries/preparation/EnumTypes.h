@@ -10,8 +10,7 @@
 #ifndef __EnumTypes_h_
 #define __EnumTypes_h_
 
-#include "ENT/ENT_Tr.h"
-
+#include "tools.h"
 // $$$$ SBO 2007-05-15: piece of shit
 
 template< typename T >
@@ -20,7 +19,8 @@ struct Enum_ABC
     Enum_ABC( const T& value ) : value_( value ) {}
     const T GetValue() const { return value_; }
 
-    virtual QString ToString( ENT_Tr::E_Conversion conversion = ENT_Tr::eToTr ) const = 0;
+    virtual QString     ToString() const = 0;
+    virtual std::string ToXml() const = 0;
 
 protected:
     T value_;
@@ -30,8 +30,9 @@ protected:
 struct Enum_##name : public Enum_ABC< E_##name > { \
     Enum_##name( int value ) : Enum_ABC< E_##name >( (E_##name)value ) {}\
     Enum_##name( const E_##name& value ) : Enum_ABC< E_##name >( value ) {}\
-    Enum_##name( const QString& name ) : Enum_ABC< E_##name >( ENT_Tr::ConvertTo##name( name.ascii() ) ) {}\
-    virtual QString ToString( ENT_Tr::E_Conversion conversion = ENT_Tr::eToTr ) const { return ENT_Tr::ConvertFrom##name( value_, conversion ).c_str(); } \
+    Enum_##name( const QString& name ) : Enum_ABC< E_##name >( tools::name##FromString( name ) ) {}\
+    virtual QString ToString() const { return tools::ToString( value_ ); } \
+    virtual std::string ToXml() const { return tools::ToXml( value_ ); } \
     static int max() { return int( eNbr##name ); } \
 };
 

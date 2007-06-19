@@ -272,5 +272,5 @@ void AgentKnowledge::UpdateSymbol()
     currentNature_ = Strip( realAgent_.GetType().GetNature().GetNature(), toKeep - 3 ); // $$$$ AGE 2006-10-25: 
 
     if( nLevel_ == eNatureLevel_None && nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
-        nLevel_ = ENT_Tr::ConvertToNatureLevel( realAgent_.GetType().GetNature().GetLevel() ); // $$$$ AGE 2006-11-20: 
+        nLevel_ = tools::NatureLevelFromString( realAgent_.GetType().GetNature().GetLevel() ); // $$$$ AGE 2006-11-20: 
 }
