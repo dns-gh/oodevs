@@ -71,7 +71,6 @@ public:
 
     virtual void Send( ASN1T_MsgsClientToSim& message );
     virtual void Send( ASN1T_MsgsClientToMiddle& message );
-    virtual void SendMagicDestruction( const kernel::Entity_ABC& agent );
 
     DIN::DIN_BufferedMessage BuildMessage();
     void SendMsgClientToSim ( ASN1OCTET* pMsg, int nMsgLength );

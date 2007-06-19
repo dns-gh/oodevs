@@ -200,7 +200,12 @@ void UnitMagicOrdersInterface::Magic( int type )
 void UnitMagicOrdersInterface::DestroyComponent()
 {
     if( selectedEntity_ )
-        publisher_.SendMagicDestruction( *selectedEntity_ ); // $$$$ SBO 2006-07-06: 
+    {
+        ASN_MsgUnitMagicAction asnMsg;
+        asnMsg().oid      = selectedEntity_->GetId();
+        asnMsg().action.t = T_MsgUnitMagicAction_action_destruction_composante;
+        asnMsg.Send( publisher_ );
+    }
 }
 
 // -----------------------------------------------------------------------------

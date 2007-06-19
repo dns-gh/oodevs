@@ -43,7 +43,7 @@ public:
     virtual std::pair< bool, bool > UnSelect() const; 
     virtual void Select( bool, bool ) const;
 
-    virtual bool ShouldDisplay( const std::string& name ) const;
+    virtual bool ShouldDisplay( const std::string& name = std::string() ) const;
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
     virtual bool ShouldDisplay( const std::string& name, bool b1, bool b2 ) const;
     virtual void SetCurrentColor  ( float r, float g, float b, float a = 1 );

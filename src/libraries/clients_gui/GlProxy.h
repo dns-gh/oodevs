@@ -53,7 +53,7 @@ public:
     virtual std::pair< bool, bool > UnSelect() const; 
     virtual void Select( bool, bool ) const;
 
-    virtual bool ShouldDisplay( const std::string& name ) const;
+    virtual bool ShouldDisplay( const std::string& name = std::string() ) const;
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
 
     virtual unsigned short StipplePattern( int factor = 1 ) const;

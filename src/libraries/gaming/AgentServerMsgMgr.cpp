@@ -281,24 +281,6 @@ void AgentServerMsgMgr::Send( unsigned int id )
         pMessageService_->Send( *session_, id );
 }
 
-enum E_UnitMagicAction
-{
-    eUnitMagicActionDestroyComposante = 0
-};
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::SendMagicDestruction
-// Created: SBO 2006-07-06
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::SendMagicDestruction( const Entity_ABC& agent )
-{
-    DIN_BufferedMessage dinMsg = BuildMessage();
-    dinMsg << agent.GetId();
-    dinMsg << (uint8)eUnitMagicActionDestroyComposante;
-
-    Send( eMsgUnitMagicAction, dinMsg );
-}
-
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::ToggleVisionCones
 // Created: AGE 2006-05-02
@@ -607,9 +589,6 @@ void AgentServerMsgMgr::OnReceiveMsgControlSkipToTickAck( const ASN1T_MsgControl
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgControlInformation( const ASN1T_MsgControlInformation& message )
 {
-     // $$$$ NLD 2007-01-30: BULLSHIT A VIRER OU A GERER
-//    unsigned char visionCones, profiling;
-//    input >> visionCones >> profiling; // whatever
     simulation_.Update( message );
 }
 
@@ -619,7 +598,6 @@ void AgentServerMsgMgr::OnReceiveMsgControlInformation( const ASN1T_MsgControlIn
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCtrReplayInfo( const ASN1T_MsgControlReplayInformation& message )
 {
-    // $$$$ AGE 2007-04-11: 
     simulation_.Update( message );
 }
 

@@ -73,7 +73,7 @@ void GlToolsBase::Select( bool b1, bool b2 ) const
 // Name: GlToolsBase::ShouldDisplay
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-bool GlToolsBase::ShouldDisplay( const std::string& name ) const
+bool GlToolsBase::ShouldDisplay( const std::string& name /*= std::string()*/ ) const
 {
     return ShouldDisplay( name, selected_, superiorSelected_ );
 }
@@ -93,6 +93,8 @@ bool GlToolsBase::ShouldDisplay( const std::string& name, bool autoCondition ) c
 // -----------------------------------------------------------------------------
 bool GlToolsBase::ShouldDisplay( const std::string& name, bool b1, bool b2 ) const
 {
+    if( name.empty() )
+        return b1;
     IT_Options it = options_.find( name );
     if( it == options_.end() )
     {

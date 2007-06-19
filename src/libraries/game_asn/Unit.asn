@@ -214,6 +214,7 @@ MagicActionSurrender                ::= Team
 MagicActionCancelRendition          ::= NULL
 MagicActionMoveTo                   ::= CoordUTM    -- Position
 MagicActionTotalDestruction         ::= NULL
+MagicActionComponentDestruction     ::= NULL
 MagicActionTotalRecovery            ::= NULL
 MagicActionHumanRecovery            ::= NULL
 MagicActionEquipmentRecovery        ::= NULL
@@ -277,6 +278,7 @@ MsgUnitMagicAction ::= SEQUENCE
         recompletement-ressources   MagicActionRessourcesRecovery,
         change-facteurs-humains     MagicActionChangeHumanFactors,
         destruction-totale          MagicActionTotalDestruction,
+        destruction-composante      MagicActionComponentDestruction,
         se-rendre                   MagicActionSurrender,
         annuler-reddition           MagicActionCancelRendition,
         recuperer-transporteurs     MagicActionRecoverTransporters
