@@ -31,11 +31,12 @@ using namespace xml;
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
 ActionFactory::ActionFactory( Controllers& controllers, const ActionParameterFactory_ABC& factory, const Model& model
-                            , const Resolver_ABC< MissionType >& missions )
+                            , const Resolver_ABC< MissionType >& missions, const Simulation& simulation )
     : controllers_( controllers )
     , factory_( factory )
     , model_( model )
     , missions_( missions )
+    , simulation_( simulation )
 {
     // NOTHING
 }
@@ -56,9 +57,9 @@ ActionFactory::~ActionFactory()
 Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const MissionType& mission ) const
 {
     if( model_.agents_.FindAgent( target.GetId() ) ) 
-        return new ActionAgentMission( target, mission, controllers_.controller_, true );
+        return new ActionAgentMission( target, mission, controllers_.controller_, simulation_, true );
     if( model_.agents_.FindAutomat( target.GetId() ) )
-        return new ActionAutomatMission( target, mission, controllers_.controller_, true );
+        return new ActionAutomatMission( target, mission, controllers_.controller_, simulation_, true );
     return 0;
 }
 
@@ -68,7 +69,7 @@ Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const Mission
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const FragOrderType& fragOrder ) const
 {
-    return new ActionFragOrder( target, fragOrder, controllers_.controller_ );
+    return new ActionFragOrder( target, fragOrder, controllers_.controller_, simulation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +79,7 @@ Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const FragOrd
 Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgUnitOrder& message ) const
 {
     const MissionType& mission = missions_.Get( message.mission );
-    std::auto_ptr< Action_ABC > action( new ActionAgentMission( model_.agents_.GetAgent( message.oid_unite_executante ), mission, controllers_.controller_, false ) );
+    std::auto_ptr< Action_ABC > action( new ActionAgentMission( model_.agents_.GetAgent( message.oid_unite_executante ), mission, controllers_.controller_, simulation_, false ) );
     AddParameters( *action, mission, message.parametres );
     AddOrderContext( *action, mission, message.order_context );
     return action.release();
@@ -91,7 +92,7 @@ Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgUnitOrder& message ) con
 Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgAutomatOrder& message ) const
 {
     const MissionType& mission = missions_.Get( message.mission );
-    std::auto_ptr< Action_ABC > action( new ActionAutomatMission( model_.agents_.GetAutomat( message.oid_unite_executante ), mission, controllers_.controller_, false ) );
+    std::auto_ptr< Action_ABC > action( new ActionAutomatMission( model_.agents_.GetAutomat( message.oid_unite_executante ), mission, controllers_.controller_, simulation_, false ) );
     AddParameters( *action, mission, message.parametres );
     AddOrderContext( *action, mission, message.order_context );
     return action.release();
@@ -149,9 +150,9 @@ Action_ABC* ActionFactory::CreateAction( xml::xistream& xis ) const
     std::auto_ptr< ActionMission > action;
     const kernel::Entity_ABC* target = model_.agents_.FindAgent( id );
     if( target )
-        action.reset( new ActionAgentMission( xis, controllers_.controller_, missions_, *target ) );
+        action.reset( new ActionAgentMission( xis, controllers_.controller_, missions_, *target, simulation_ ) );
     else if( target = model_.agents_.FindAutomat( id ) )
-        action.reset( new ActionAutomatMission( xis, controllers_.controller_, missions_, *target ) );
+        action.reset( new ActionAutomatMission( xis, controllers_.controller_, missions_, *target, simulation_ ) );
     else
         throw std::runtime_error( tools::translate( "ActionFactory", "Mission's entity '%1' not found." ).arg( id ).ascii() );
     Iterator< const OrderParameter& > it = action->GetType().CreateIterator();

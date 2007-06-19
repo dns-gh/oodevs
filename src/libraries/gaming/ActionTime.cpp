@@ -8,49 +8,49 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "ActionFragOrder.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/FragOrderType.h"
+#include "ActionTime.h"
+#include "Simulation.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
 
 // -----------------------------------------------------------------------------
-// Name: ActionFragOrder constructor
-// Created: SBO 2007-03-19
+// Name: ActionTime constructor
+// Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-ActionFragOrder::ActionFragOrder( const kernel::Entity_ABC& entity, const kernel::FragOrderType& fragOrder, kernel::Controller& controller, const Simulation& simulation )
-    : Action_ABC( controller, fragOrder, entity, simulation )
-    , controller_( controller )
+ActionTime::ActionTime( const Simulation& simulation )
+    : simulation_( simulation )
+    , startDay_( simulation.GetDay() )
+    , startTime_( simulation.GetTime() )
 {
-    controller_.Create( *(Action_ABC*)this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionFragOrder destructor
-// Created: SBO 2007-03-19
+// Name: ActionTime destructor
+// Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-ActionFragOrder::~ActionFragOrder()
+ActionTime::~ActionTime()
 {
-    controller_.Delete( *(Action_ABC*)this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionFragOrder::Serialize
-// Created: SBO 2007-04-24
+// Name: ActionTime::SetStart
+// Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-void ActionFragOrder::Serialize( xml::xostream& xos ) const
+void ActionTime::SetStart( xml::xistream& xis )
 {
-    xos << start( "fragorder" );
-    Action_ABC::Serialize( xos );
-    xos << end();
+    std::string date;
+    xis >> xml::attribute( "startdate", date );
+    // $$$$ SBO 2007-06-19: 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionFragOrder::Publish
-// Created: SBO 2007-05-21
+// Name: ActionTime::Serialize
+// Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-void ActionFragOrder::Publish( Publisher_ABC& publisher ) const
+void ActionTime::Serialize( xml::xostream& xos ) const
 {
-    // $$$$ SBO 2007-05-21: TODO
+    
 }

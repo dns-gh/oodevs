@@ -18,8 +18,8 @@ using namespace kernel;
 // Name: ActionAgentMission constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-ActionAgentMission::ActionAgentMission( const Entity_ABC& entity, const MissionType& mission, Controller& controller, bool registered /*= true*/ )
-    : ActionMission( entity, mission, controller, registered )
+ActionAgentMission::ActionAgentMission( const Entity_ABC& entity, const MissionType& mission, Controller& controller, const Simulation& simulation, bool registered /*= true*/ )
+    : ActionMission( entity, mission, controller, simulation, registered )
 {
     // NOTHING
 }
@@ -28,8 +28,8 @@ ActionAgentMission::ActionAgentMission( const Entity_ABC& entity, const MissionT
 // Name: ActionAgentMission constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-ActionAgentMission::ActionAgentMission( xml::xistream& xis, Controller& controller, const Resolver_ABC< MissionType >& missions, const kernel::Entity_ABC& entity )
-    : ActionMission( xis, controller, missions, entity )
+ActionAgentMission::ActionAgentMission( xml::xistream& xis, Controller& controller, const Resolver_ABC< MissionType >& missions, const kernel::Entity_ABC& entity, const Simulation& simulation )
+    : ActionMission( xis, controller, missions, entity, simulation )
 {
     // NOTHING
 }

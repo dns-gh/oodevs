@@ -24,8 +24,8 @@ class ActionAutomatMission : public ActionMission
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionAutomatMission( const kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::Controller& controller, bool registered = true );
-             ActionAutomatMission( xml::xistream& xis, kernel::Controller& controller, const kernel::Resolver_ABC< kernel::MissionType >& missions, const kernel::Entity_ABC& entity );
+             ActionAutomatMission( const kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::Controller& controller, const Simulation& simulation, bool registered = true );
+             ActionAutomatMission( xml::xistream& xis, kernel::Controller& controller, const kernel::Resolver_ABC< kernel::MissionType >& missions, const kernel::Entity_ABC& entity, const Simulation& simulation );
     virtual ~ActionAutomatMission();
     //@}
 

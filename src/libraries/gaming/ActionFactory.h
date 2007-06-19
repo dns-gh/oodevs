@@ -22,6 +22,7 @@ namespace kernel
 
 class Model;
 class ActionParameterFactory_ABC;
+class Simulation;
 
 // =============================================================================
 /** @class  ActionFactory
@@ -36,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ActionFactory( kernel::Controllers& controllers, const ActionParameterFactory_ABC& factory
-                          , const Model& model, const kernel::Resolver_ABC< kernel::MissionType >& missions );
+                          , const Model& model, const kernel::Resolver_ABC< kernel::MissionType >& missions, const Simulation& simulation );
     virtual ~ActionFactory();
     //@}
 
@@ -72,6 +73,7 @@ private:
     const ActionParameterFactory_ABC& factory_;
     const Model& model_;
     const kernel::Resolver_ABC< kernel::MissionType >& missions_;
+    const Simulation& simulation_;
     //@}
 };
 

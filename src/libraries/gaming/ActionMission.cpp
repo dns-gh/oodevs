@@ -22,8 +22,8 @@ using namespace xml;
 // Name: ActionMission constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionMission::ActionMission( const Entity_ABC& entity, const MissionType& mission, Controller& controller, bool registered /* = true */ )
-    : Action_ABC( controller, mission, entity )
+ActionMission::ActionMission( const Entity_ABC& entity, const MissionType& mission, Controller& controller, const Simulation& simulation, bool registered /* = true */ )
+    : Action_ABC( controller, mission, entity, simulation )
     , controller_( controller )
     , registered_( registered )
 {
@@ -45,8 +45,8 @@ namespace
 // Name: ActionMission constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-ActionMission::ActionMission( xml::xistream& xis, Controller& controller, const Resolver_ABC< MissionType >& missions, const Entity_ABC& entity )
-    : Action_ABC( controller, ReadMission( xis, missions ), entity )
+ActionMission::ActionMission( xml::xistream& xis, Controller& controller, const Resolver_ABC< MissionType >& missions, const Entity_ABC& entity, const Simulation& simulation )
+    : Action_ABC( controller, ReadMission( xis, missions ), entity, simulation )
     , controller_( controller )
     , registered_( true )
 {

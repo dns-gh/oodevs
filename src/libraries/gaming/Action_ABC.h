@@ -10,6 +10,7 @@
 #ifndef __Action_ABC_h_
 #define __Action_ABC_h_
 
+#include "ActionTime.h"
 #include "game_asn/asn.h"
 #include "clients_kernel/Resolver.h"
 
@@ -30,6 +31,7 @@ namespace xml
 
 class ActionParameter_ABC;
 class Publisher_ABC;
+class Simulation;
 
 // =============================================================================
 /** @class  Action_ABC
@@ -38,12 +40,13 @@ class Publisher_ABC;
 // Created: SBO 2007-03-12
 // =============================================================================
 class Action_ABC : public kernel::Resolver< ActionParameter_ABC >
+                 , public ActionTime
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Action_ABC( kernel::Controller& controller, const kernel::OrderType& type, const kernel::Entity_ABC& target );
+             Action_ABC( kernel::Controller& controller, const kernel::OrderType& type, const kernel::Entity_ABC& target, const Simulation& simulation );
     virtual ~Action_ABC();
     //@}
 

@@ -30,7 +30,7 @@ class ActionFragOrder : public Action_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionFragOrder( const kernel::Entity_ABC& entity, const kernel::FragOrderType& fragOrder, kernel::Controller& controller );
+             ActionFragOrder( const kernel::Entity_ABC& entity, const kernel::FragOrderType& fragOrder, kernel::Controller& controller, const Simulation& simulation );
     virtual ~ActionFragOrder();
     //@}
 
