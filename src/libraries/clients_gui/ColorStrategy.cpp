@@ -293,6 +293,8 @@ void ColorStrategy::NotifyDeleted( const Team_ABC& team )
         if( it->second.second )
             it->second.second->push_back( it->second.first );
         teamColors_.erase( it );
+        if( teamColors_.empty() )
+            InitializeColors();
     }
 }
 
@@ -331,18 +333,24 @@ QColor ColorStrategy::FindTeamColor( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void ColorStrategy::InitializeColors()
 {
+    enemyAvailable_.clear();
+    enemyAvailable_.push_back( QColor( 240, 60, 150 ) );   // framboise
     enemyAvailable_.push_back( QColor( 170, 90, 40 ) );   // marron
     enemyAvailable_.push_back( QColor( 255, 150, 10 ) );  // orange
     enemyAvailable_.push_back( QColor( 255, 0, 255 ) ); // magenta
     enemyAvailable_.push_back( QColor( 255, 50, 50 ) );   // rouge  
 
-    friendlyAvailable_.push_back( QColor( 170, 100, 60 ) ); // vert d'eau
-    friendlyAvailable_.push_back( QColor( 50, 50, 128 ) ); // cobalt
-    friendlyAvailable_.push_back( QColor( 0, 230, 230 ) ); // cyan
+    friendlyAvailable_.clear();
+    friendlyAvailable_.push_back( QColor( 60, 100, 170 ) ); // bleu metal 2
+    friendlyAvailable_.push_back( QColor( 80, 80, 240 ) ); // cobalt
+    friendlyAvailable_.push_back( QColor( 110, 230, 230 ) ); // cyan
+    friendlyAvailable_.push_back( QColor( 75, 190, 220 ) ); // bleu metal
     friendlyAvailable_.push_back( QColor( 100, 125, 255 ) ); // bleu
 
+    neutralAvailable_.clear();
     neutralAvailable_.push_back( QColor( 255, 255, 255 ) ); // blanc
     neutralAvailable_.push_back( QColor( 80, 80, 80 ) );  /// noir
     neutralAvailable_.push_back( QColor( 140, 140, 140 ) ); // gris
+    neutralAvailable_.push_back( QColor( 60, 240, 95 ) ); // vert flashy
     neutralAvailable_.push_back( QColor( 0, 170, 0 ) ); // vert
 }

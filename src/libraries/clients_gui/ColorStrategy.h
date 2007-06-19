@@ -66,12 +66,6 @@ private:
     ColorStrategy& operator=( const ColorStrategy& ); //!< Assignement operator
     //@}
 
-    //! @name Types 
-    //@{
-    typedef std::vector< QColor >                                                 T_Colors;
-    typedef std::map< const kernel::Entity_ABC*, std::pair< QColor, T_Colors* > > T_TeamColors;
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const kernel::Team_ABC& );
@@ -93,6 +87,12 @@ private:
 
     void Process( const kernel::Entity_ABC& entity );
     QColor ApplySelectionStatus( const kernel::Entity_ABC& entity, const QColor& base );
+    //@}
+
+    //! @name Types 
+    //@{
+    typedef std::vector< QColor >                                                 T_Colors;
+    typedef std::map< const kernel::Entity_ABC*, std::pair< QColor, T_Colors* > > T_TeamColors;
     //@}
 
 private:
