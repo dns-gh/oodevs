@@ -44,7 +44,7 @@ public:
     virtual unsigned int GetLivingHumans() const;
     virtual unsigned int GetDeadHumans() const;
     virtual unsigned int GetDensity() const;
-    virtual std::string  GetAttitude() const;
+    virtual QString  GetAttitude() const;
     virtual float GetHeight() const;
 
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;

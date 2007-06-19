@@ -36,7 +36,7 @@ class LogisticConsigns_ABC : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LogisticConsigns_ABC( kernel::Controller& controller );
+             LogisticConsigns_ABC( kernel::Controller& controller, float r, float g, float b, float a );
     virtual ~LogisticConsigns_ABC();
     //@}
 
@@ -51,12 +51,6 @@ public:
     void TerminateConsign( Consign& consign );
 
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    //@}
-
-protected:
-    //! @name Helpers
-    //@{
-    virtual void SelectColor() const = 0;
     //@}
 
 private:
@@ -77,6 +71,7 @@ public:
     kernel::Controller& controller_;
     T_Consigns requested_;
     T_Consigns handled_;
+    float r_, g_, b_, a_;
     //@}
 };
 
@@ -86,36 +81,24 @@ class LogMaintenanceConsigns : public LogisticConsigns_ABC< LogMaintenanceConsig
 {
 public:
     explicit LogMaintenanceConsigns( kernel::Controller& controller )
-        : LogisticConsigns_ABC< LogMaintenanceConsigns, LogMaintenanceConsign >( controller )
+        : LogisticConsigns_ABC< LogMaintenanceConsigns, LogMaintenanceConsign >( controller, COLOR_MAROON )
     {}
-    virtual ~LogMaintenanceConsigns() {}
-
-protected:
-    virtual void SelectColor() const { glColor4f( COLOR_MAROON ); } // $$$$ SBO 2007-03-30: 
 };
 
 class LogMedicalConsigns : public LogisticConsigns_ABC< LogMedicalConsigns, LogMedicalConsign >
 {
 public:
     explicit LogMedicalConsigns( kernel::Controller& controller )
-        : LogisticConsigns_ABC< LogMedicalConsigns, LogMedicalConsign >( controller )
+        : LogisticConsigns_ABC< LogMedicalConsigns, LogMedicalConsign >( controller, COLOR_PINK )
     {}
-    virtual ~LogMedicalConsigns() {}
-
-protected:
-    virtual void SelectColor() const { glColor4f( COLOR_PINK ); } // $$$$ SBO 2007-03-30: 
 };
 
 class LogSupplyConsigns : public LogisticConsigns_ABC< LogSupplyConsigns, LogSupplyConsign >
 {
 public:
     explicit LogSupplyConsigns( kernel::Controller& controller )
-        : LogisticConsigns_ABC< LogSupplyConsigns, LogSupplyConsign >( controller )
+        : LogisticConsigns_ABC< LogSupplyConsigns, LogSupplyConsign >( controller, COLOR_ORANGE )
     {}
-    virtual ~LogSupplyConsigns() {}
-
-protected:
-    virtual void SelectColor() const { glColor4f( COLOR_ORANGE ); } // $$$$ SBO 2007-03-30: 
 };
 
 #endif // __LogisticConsigns_h_

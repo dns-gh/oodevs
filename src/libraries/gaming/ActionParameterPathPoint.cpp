@@ -59,7 +59,7 @@ void ActionParameterPathPoint::DisplayInToolTip( kernel::Displayer_ABC& displaye
 // -----------------------------------------------------------------------------
 void ActionParameterPathPoint::CommitTo( ASN1T_CoordUTM& asn ) const
 {
-    ASN1T_Location loc; // $$$$ SBO 2007-05-22: ugly trick
+    ASN1T_Location loc;
     ActionParameterLocation::CommitTo( loc );
     asn = loc.vecteur_point.elem[0];
     ActionParameterLocation::Clean( loc );

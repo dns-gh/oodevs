@@ -140,7 +140,7 @@ unsigned int PopulationFlow::GetDeadHumans() const
 // Name: PopulationFlow::GetAttitude
 // Created: SBO 2006-08-23
 // -----------------------------------------------------------------------------
-std::string PopulationFlow::GetAttitude() const
+QString PopulationFlow::GetAttitude() const
 {
     return tools::ToString( attitude_ );
 }

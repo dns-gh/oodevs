@@ -18,8 +18,12 @@
 // Created: SBO 2007-03-30
 // -----------------------------------------------------------------------------
 template< typename ConcreteExtension, typename Consign >
-LogisticConsigns_ABC< ConcreteExtension, Consign >::LogisticConsigns_ABC( kernel::Controller& controller )
+LogisticConsigns_ABC< ConcreteExtension, Consign >::LogisticConsigns_ABC( kernel::Controller& controller, float r, float g, float b, float a  )
     : controller_( controller )
+    , r_( r )
+    , g_( g )
+    , b_( b )
+    , a_( a )
 {
     // NOTHING
 }
@@ -105,7 +109,7 @@ void LogisticConsigns_ABC< ConcreteExtension, Consign >::Draw( const geometry::P
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glLineWidth( 2.0 );
     glEnable( GL_LINE_STIPPLE );
-    SelectColor();
+    glColor4fv( &r_ );
     for( T_Consigns::const_iterator it = handled_.begin(); it != handled_.end(); ++it )
             (*it)->Draw( where, viewport, tools );
     if( ! handledOnly )

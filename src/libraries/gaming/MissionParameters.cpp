@@ -41,7 +41,6 @@ MissionParameters::~MissionParameters()
 // -----------------------------------------------------------------------------
 void MissionParameters::DoUpdate( const ASN1T_MsgUnitOrder& message )
 {
-     // $$$$ NLD 2007-04-25: NLD TMP A VIRER
     if( message.mission == 0 )
         return;
 
@@ -56,7 +55,6 @@ void MissionParameters::DoUpdate( const ASN1T_MsgUnitOrder& message )
 // -----------------------------------------------------------------------------
 void MissionParameters::DoUpdate( const ASN1T_MsgAutomatOrder& message )
 {
-     // $$$$ NLD 2007-04-25: NLD TMP A VIRER
     if( message.mission == 0 )
         return;
 

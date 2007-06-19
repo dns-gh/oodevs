@@ -115,9 +115,9 @@ unsigned int PopulationConcentration::GetDensity() const
 // Name: PopulationConcentration::GetAttitude
 // Created: SBO 2006-08-23
 // -----------------------------------------------------------------------------
-std::string PopulationConcentration::GetAttitude() const
+QString PopulationConcentration::GetAttitude() const
 {
-    return tools::ToString( attitude_ ).ascii(); // $$$$ SBO 2007-06-19: QString?
+    return tools::ToString( attitude_ ); 
 }
 
 // -----------------------------------------------------------------------------
