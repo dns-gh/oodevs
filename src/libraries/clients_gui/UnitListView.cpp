@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_gui_pch.h"
 #include "UnitListView.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AgentType.h"

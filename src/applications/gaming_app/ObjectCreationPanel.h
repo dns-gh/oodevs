@@ -10,18 +10,21 @@
 #ifndef __ObjectCreationPanel_h_
 #define __ObjectCreationPanel_h_
 
-#include "clients_kernel/Resolver.h"
+#include "clients_gui/InfoPanel_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
 
 namespace kernel
 {
     class Controllers;
     class GlTools_ABC;
     class Viewport_ABC;
+    class ModelLoaded;
 }
 
 namespace gui
 {
     class ParametersLayer;
+    class PanelStack_ABC;
 }
 
 class ObjectPrototype;
@@ -34,14 +37,16 @@ class Publisher_ABC;
 */
 // Created: SBO 2006-04-18
 // =============================================================================
-class ObjectCreationPanel : public QVBox
+class ObjectCreationPanel : public gui::InfoPanel_ABC
+                          , public kernel::Observer_ABC
+                          , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectCreationPanel( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& model, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
+             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& model, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
     virtual ~ObjectCreationPanel();
     //@}
 
@@ -63,9 +68,15 @@ private:
     ObjectCreationPanel& operator=( const ObjectCreationPanel& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    //@}
+
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
     const kernel::GlTools_ABC& tools_;
     ObjectPrototype* created_;

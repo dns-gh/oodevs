@@ -55,6 +55,18 @@ namespace
     private:
         SIMControlToolbar& toolBar_;
     };
+
+    class AutoFitPopupMenu : public QPopupMenu
+    {
+    public:
+        explicit AutoFitPopupMenu( QWidget* parent ) : QPopupMenu( parent ) {}
+        virtual ~AutoFitPopupMenu() {}
+        virtual void showEvent( QShowEvent* event )
+        {
+            QPopupMenu::showEvent( event );
+            adjustSize();
+        }
+    };
 }
 
 //-----------------------------------------------------------------------------
@@ -105,16 +117,16 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     pCheckpointButton_->setShown( false );
 
     {
-        QPopupMenu* popup = new QPopupMenu( pCheckpointButton_ );
+        QPopupMenu* popup = new AutoFitPopupMenu( pCheckpointButton_ );
+        pCheckpointButton_->setPopup( popup );
+        pCheckpointButton_->setPopupDelay( 0 );
         QHBox* box = new QHBox( popup );
+        box->setMargin( 5 );
         new QLabel( tr( "Checkpoint name: " ), box );
         QLineEdit* lineEdit = new QLineEdit( box );
         popup->insertItem( box );
-        pCheckpointButton_->setPopup( popup );
-        pCheckpointButton_->setPopupDelay( 0 );
         connect( lineEdit, SIGNAL( returnPressed() ), SLOT( SlotNamedCheckPoint() ) );
     }
-
 
     pConnectDlg_ = new ConnectDialog( this, network );
     pConnectDlg_->SetContextMenu( pConnectButton_ );

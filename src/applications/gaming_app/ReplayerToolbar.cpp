@@ -12,8 +12,8 @@
 #include "moc_ReplayerToolbar.cpp"
 #include "gaming/Simulation.h"
 #include "gaming/ASN_Messages.h"
-#include "clients_gui/resources.h"
 #include "clients_kernel/Controllers.h"
+#include "icons.h"
 
 // -----------------------------------------------------------------------------
 // Name: ReplayerToolbar constructor
@@ -27,6 +27,11 @@ ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& con
     , previousTickCount_( unsigned( -2 ) )
     , userMove_( true )
 {
+    setLabel( tr( "Replay control" ) );
+
+    QLabel* label = new QLabel( this );    
+    label->setPixmap( MAKE_PIXMAP( replayer ) );
+    addSeparator();
     controllers_.Register( *this );
 }
 
@@ -56,11 +61,18 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
         {
             previousTickCount_ = simulation.GetTickCount();
             slider_ = new QSlider( 0, simulation.GetTickCount() - 1, 1, simulation.GetCurrentTick(), Qt::Horizontal, this );
-            slider_->setTracking( false );
-            connect( slider_, SIGNAL( valueChanged( int ) ), SLOT( OnSliderMove( int ) ) );
+            slider_->setMinimumWidth( 200 );
+            slider_->setTickInterval( slider_->maxValue() / 20 );
+            slider_->setTickmarks( QSlider::Below );
+            addSeparator();
+            value_ = new QLabel( this );
+            value_->setMargin( 5 );
+            connect( slider_, SIGNAL( sliderReleased() ), SLOT( OnSliderReleased() ) );
+            connect( slider_, SIGNAL( valueChanged( int ) ), SLOT( OnSliderMoved( int ) ) );
         }
         userMove_ = false;
         slider_->setValue( simulation.GetCurrentTick() );
+        OnSliderMoved( simulation.GetCurrentTick() );
         userMove_ = true;
         if( ! isVisible() )
             show();
@@ -70,15 +82,24 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ReplayerToolbar::OnSliderMove
+// Name: ReplayerToolbar::OnSliderMoved
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-void ReplayerToolbar::OnSliderMove( int frame )
+void ReplayerToolbar::OnSliderMoved( int frame )
+{
+    value_->setText( tr( "Tick %1" ).arg( frame + 1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplayerToolbar::OnSliderReleased
+// Created: SBO 2007-06-20
+// -----------------------------------------------------------------------------
+void ReplayerToolbar::OnSliderReleased()
 {
     if( userMove_ )
     {
         ASN_MsgControlSkipToTick skip;
-        skip() = frame;
+        skip() = slider_->value();
         skip.Send( network_ );
     }
 }

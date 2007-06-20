@@ -1132,6 +1132,15 @@ void AgentServerMsgMgr::OnReceiveMsgFragOrderAck( const ASN1T_MsgFragOrderAck& m
     CheckAcknowledge( message, "FragOrderAck" );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgUnitCreationRequestAck
+// Created: SBO 2007-06-20
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgUnitCreationRequestAck( const ASN1T_MsgUnitCreationRequestAck& message )
+{
+    CheckAcknowledge( message, "UnitCreationRequestAck" );
+}
+
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgCR
 // Created: NLD 2002-09-02
@@ -1669,18 +1678,19 @@ void AgentServerMsgMgr::_OnReceiveMsgSimToClient( DIN_Input& input )
         case T_MsgsSimToClient_msg_msg_lima_creation_request_ack:              OnReceiveMsgLimaCreationRequestAck             ( message.msg.u.msg_lima_creation_request_ack                , message.context ); break;
         case T_MsgsSimToClient_msg_msg_lima_update_request_ack:                OnReceiveMsgLimaUpdateRequestAck               ( message.msg.u.msg_lima_update_request_ack                  , message.context ); break;
         case T_MsgsSimToClient_msg_msg_lima_destruction_request_ack:           OnReceiveMsgLimaDestructionRequestAck          ( message.msg.u.msg_lima_destruction_request_ack             , message.context ); break;
-        case T_MsgsSimToClient_msg_msg_automate_order_ack:                     OnReceiveMsgAutomatOrderAck                   ( *message.msg.u.msg_automate_order_ack                      , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_automate_order_ack:                     OnReceiveMsgAutomatOrderAck                    ( *message.msg.u.msg_automate_order_ack                      , message.context ); break;
         case T_MsgsSimToClient_msg_msg_pion_order_ack:                         OnReceiveMsgUnitOrderAck                       ( *message.msg.u.msg_pion_order_ack                          , message.context ); break;
         case T_MsgsSimToClient_msg_msg_frag_order_ack:                         OnReceiveMsgFragOrderAck                       ( *message.msg.u.msg_frag_order_ack                          , message.context ); break;
         case T_MsgsSimToClient_msg_msg_unit_magic_action_ack:                  OnReceiveMsgUnitMagicActionAck                 ( *message.msg.u.msg_unit_magic_action_ack                   , message.context ); break;
-        case T_MsgsSimToClient_msg_msg_set_automate_mode_ack:                  OnReceiveMsgSetAutomatModeAck                 ( *message.msg.u.msg_set_automate_mode_ack                   , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_unit_creation_request_ack:              OnReceiveMsgUnitCreationRequestAck             (  message.msg.u.msg_unit_creation_request_ack                                 ); break;
+        case T_MsgsSimToClient_msg_msg_set_automate_mode_ack:                  OnReceiveMsgSetAutomatModeAck                  ( *message.msg.u.msg_set_automate_mode_ack                   , message.context ); break;
         case T_MsgsSimToClient_msg_msg_pion_change_superior_ack:               OnReceiveMsgUnitChangeSuperiorAck              ( *message.msg.u.msg_pion_change_superior_ack                , message.context ); break;
         case T_MsgsSimToClient_msg_msg_change_diplomatie_ack:                  OnReceiveMsgChangeDiplomacyAck                 ( *message.msg.u.msg_change_diplomatie_ack                   , message.context ); break;
-        case T_MsgsSimToClient_msg_msg_automate_change_groupe_connaissance_ack:OnReceiveMsgAutomatChangeKnowledgeGroupAck( *message.msg.u.msg_automate_change_groupe_connaissance_ack , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_automate_change_groupe_connaissance_ack:OnReceiveMsgAutomatChangeKnowledgeGroupAck     ( *message.msg.u.msg_automate_change_groupe_connaissance_ack , message.context ); break;
         case T_MsgsSimToClient_msg_msg_object_magic_action_ack:                OnReceiveMsgObjectMagicActionAck               ( *message.msg.u.msg_object_magic_action_ack                 , message.context ); break;
-        case T_MsgsSimToClient_msg_msg_automate_change_liens_logistiques_ack:  OnReceiveMsgAutomatChangeLogisticLinksAck  ( *message.msg.u.msg_automate_change_liens_logistiques_ack   , message.context ); break;
-        case T_MsgsSimToClient_msg_msg_automate_change_liens_logistiques:      OnReceiveMsgAutomatChangeLogisticLinks     ( *message.msg.u.msg_automate_change_liens_logistiques                         ); break;
-        case T_MsgsSimToClient_msg_msg_log_ravitaillement_pousser_flux_ack:    OnReceiveMsgLogSupplyPushFlowAck    (  message.msg.u.msg_log_ravitaillement_pousser_flux_ack     , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_automate_change_liens_logistiques_ack:  OnReceiveMsgAutomatChangeLogisticLinksAck      ( *message.msg.u.msg_automate_change_liens_logistiques_ack   , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_automate_change_liens_logistiques:      OnReceiveMsgAutomatChangeLogisticLinks         ( *message.msg.u.msg_automate_change_liens_logistiques                         ); break;
+        case T_MsgsSimToClient_msg_msg_log_ravitaillement_pousser_flux_ack:    OnReceiveMsgLogSupplyPushFlowAck               (  message.msg.u.msg_log_ravitaillement_pousser_flux_ack     , message.context ); break;
         case T_MsgsSimToClient_msg_msg_log_ravitaillement_change_quotas_ack:   OnReceiveMsgLogRavitaillementChangeQuotaAck    (  message.msg.u.msg_log_ravitaillement_change_quotas_ack    , message.context ); break;
         case T_MsgsSimToClient_msg_msg_population_magic_action_ack:            OnReceiveMsgPopulationMagicActionAck           ( *message.msg.u.msg_population_magic_action_ack             , message.context ); break;
         case T_MsgsSimToClient_msg_msg_population_order_ack:                   OnReceiveMsgPopulationOrderAck                 ( *message.msg.u.msg_population_order_ack                    , message.context ); break;

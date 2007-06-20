@@ -1129,10 +1129,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Object creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source> - Not connected</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1166,6 +1162,10 @@
     </message>
     <message>
         <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1592,6 +1592,10 @@
     <name>ObjectCreationPanel</name>
     <message>
         <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

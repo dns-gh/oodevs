@@ -47,7 +47,8 @@ protected:
 private slots:
     //! @name Slots
     //@{
-    void OnSliderMove( int );
+    void OnSliderMoved( int );
+    void OnSliderReleased();
     //@}
 
 private:
@@ -63,6 +64,7 @@ private:
     kernel::Controllers& controllers_;
     Publisher_ABC& network_;
     QSlider* slider_;
+    QLabel* value_;
     unsigned previousTickCount_;
     bool userMove_;
     //@}

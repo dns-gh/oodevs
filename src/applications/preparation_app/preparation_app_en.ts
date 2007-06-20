@@ -366,18 +366,6 @@
 </context>
 <context>
     <name>UnitListView</name>
-    <message>
-        <source>Unit type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Count</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CP</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>UnitsPanel</name>

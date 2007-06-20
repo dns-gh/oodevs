@@ -114,6 +114,7 @@ GENERATE_ASN_MSG_SENDER( ClientToSim, FragOrder, frag_order )
 GENERATE_ASN_MSG_SENDER( ClientToSim, AutomatOrder, automate_order )
 GENERATE_ASN_MSG_SENDER( ClientToSim, SetAutomatMode, set_automate_mode )
 GENERATE_ASN_MSG_SENDER( ClientToSim, PopulationOrder, population_order )
+GENERATE_ASN_MSG_SENDER( ClientToSim, UnitCreationRequest, unit_creation_request )
 
 GENERATE_ASN_MSG_SENDER( ClientToSim, UnitChangeSuperior              , pion_change_superior                )
 GENERATE_ASN_MSG_SENDER( ClientToSim, ChangeDiplomacy                , change_diplomatie                   )

@@ -10,9 +10,9 @@
 #ifndef __UnitsPanel_h_
 #define __UnitsPanel_h_
 
+#include "InfoPanel_ABC.h"
+#include "ValuedComboBox.h"
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_gui/InfoPanel_ABC.h"
-#include "clients_gui/ValuedComboBox.h"
 
 namespace kernel
 {
@@ -25,9 +25,7 @@ namespace gui
 {
     class PanelStack_ABC;
     class ItemFactory_ABC;
-}
-
-class UnitListView;
+    class UnitListView;
 
 // =============================================================================
 /** @class  UnitsPanel
@@ -35,7 +33,7 @@ class UnitListView;
 */
 // Created: SBO 2006-08-28
 // =============================================================================
-class UnitsPanel : public gui::InfoPanel_ABC
+class UnitsPanel : public InfoPanel_ABC
                  , public kernel::Observer_ABC
                  , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 {
@@ -44,7 +42,7 @@ class UnitsPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitsPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::AgentTypes& agentTypes, gui::ItemFactory_ABC& factory );
+             UnitsPanel( QWidget* parent, PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::AgentTypes& agentTypes, ItemFactory_ABC& factory );
     virtual ~UnitsPanel();
     //@}
 
@@ -72,9 +70,11 @@ private:
     //! @name Data members
     //@{
     kernel::Controllers& controllers_;
-    gui::ValuedComboBox< std::string >* combo_;
+    ValuedComboBox< std::string >* combo_;
     UnitListView* list_;
     //@}
 };
+
+}
 
 #endif // __UnitsPanel_h_

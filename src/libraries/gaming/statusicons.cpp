@@ -55,3 +55,4 @@
 #include "res/checkpoint3.xpm"
 #include "res/activated.xpm"
 #include "res/not_activated.xpm"
+#include "res/replayer.xpm"

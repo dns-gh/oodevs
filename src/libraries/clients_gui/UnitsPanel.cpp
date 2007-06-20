@@ -7,13 +7,13 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_gui_pch.h"
 #include "UnitsPanel.h"
 #include "moc_UnitsPanel.cpp"
 #include "clients_kernel/Controllers.h"
-#include "clients_gui/Tools.h"
-#include "UnitListView.h"
 #include "clients_kernel/AgentTypes.h"
+#include "UnitListView.h"
+#include "Tools.h"
 
 using namespace kernel;
 using namespace gui;
@@ -23,6 +23,7 @@ namespace
     ValuedComboBox< std::string >* BuildNatureFieldsCombo( QWidget* parent )
     {
         ValuedComboBox< std::string >* combo = new ValuedComboBox< std::string >( parent );
+        // $$$$ SBO 2006-08-28: Iterator sur AgentNatures?
         combo->AddItem( tools::translate( "UnitsPanel", "Hierarchical view" ), "" );
         combo->AddItem( tools::translate( "UnitsPanel", "Level" ), "level" );
         combo->AddItem( tools::translate( "UnitsPanel", "Nature" ), "nature" );

@@ -46,7 +46,7 @@ class StaticModel;
 class Profile;
 class Network;
 class MissionPanel;
-class ObjectCreationPanel;
+class CreationPanels;
 class LoginDialog;
 class Publisher_ABC;
 
@@ -106,7 +106,7 @@ private:
 
     static std::string BuildRemotePath( std::string server, std::string path );
 
-    void CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, gui::ParametersLayer& parameters, gui::LocationsLayer& locationsLayer,
+    void CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::LocationsLayer& locationsLayer,
                        gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::DrawerLayer& drawer, gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
     //@}
 

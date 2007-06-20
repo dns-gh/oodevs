@@ -10,7 +10,7 @@
 #ifndef __UnitListView_h_
 #define __UnitListView_h_
 
-#include "clients_gui/ListView.h"
+#include "ListView.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
 namespace kernel
@@ -27,7 +27,6 @@ namespace kernel
 namespace gui
 {
     class ItemFactory_ABC;
-}
 
 // =============================================================================
 /** @class  UnitListView
@@ -35,7 +34,7 @@ namespace gui
 */
 // Created: SBO 2006-08-28
 // =============================================================================
-class UnitListView : public gui::ListView< UnitListView >
+class UnitListView : public ListView< UnitListView >
                    , public kernel::Observer_ABC
                    , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
                    , public kernel::ElementObserver_ABC< kernel::ModelUnLoaded >
@@ -44,7 +43,7 @@ class UnitListView : public gui::ListView< UnitListView >
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitListView( QWidget* parent, kernel::Controllers& controllers, const kernel::AgentTypes& list, gui::ItemFactory_ABC& factory );
+             UnitListView( QWidget* parent, kernel::Controllers& controllers, const kernel::AgentTypes& list, ItemFactory_ABC& factory );
     virtual ~UnitListView();
     //@}
 
@@ -52,8 +51,8 @@ public:
     //@{
     void SetOpen( bool open );
     void SetSorting( const std::string& nature );
-    void Display( const kernel::AutomatComposition& type, gui::ValuedListItem* );
-    void Display( const kernel::AutomatType& type, gui::ValuedListItem* );
+    void Display( const kernel::AutomatComposition& type, ValuedListItem* );
+    void Display( const kernel::AutomatType& type, ValuedListItem* );
     //@}
 
 private:
@@ -83,5 +82,7 @@ private:
     std::string sorting_;
     //@}
 };
+
+}
 
 #endif // __UnitListView_h_

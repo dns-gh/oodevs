@@ -18,7 +18,7 @@
 #include "MagicOrdersInterface.h"
 #include "Menu.h"
 #include "MissionPanel.h"
-#include "ObjectCreationPanel.h"
+#include "CreationPanels.h"
 #include "RecorderToolbar.h"
 #include "OrderBrowser.h"
 #include "SIMControlToolbar.h"
@@ -161,7 +161,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_, *locationsLayer ) );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, profile );
-    ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *agentsLayer );
+    ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *agentsLayer, publisher, staticModel_.coordinateConverter_ );
 
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
@@ -265,26 +265,26 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pProfilerDockWnd_->setCaption( tr( "Profiling" ) );
     setDockEnabled( pProfilerDockWnd_, Qt::DockTop, false );
 
-    // object creation window
-    QDockWindow* pObjectCreationWnd = new QDockWindow( this );
-    moveDockWindow( pObjectCreationWnd, Qt::DockRight );
-    pObjectCreationWnd->hide();
-    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pObjectCreationWnd, controllers, publisher, staticModel_, *paramLayer, *glProxy_ );
-    pObjectCreationWnd->setWidget( objectCreationPanel );
-    pObjectCreationWnd->setResizeEnabled( true );
-    pObjectCreationWnd->setCloseMode( QDockWindow::Always );
-    pObjectCreationWnd->setCaption( tr( "Object creation" ) );
-    setDockEnabled( pObjectCreationWnd, Qt::DockTop, false );
+    // object/unit creation window
+    QDockWindow* pCreationWnd = new QDockWindow( this );
+    moveDockWindow( pCreationWnd, Qt::DockRight );
+    pCreationWnd->hide();
+    CreationPanels* creationPanels = new CreationPanels( pCreationWnd, controllers, staticModel_, *factory, publisher, *paramLayer, *glProxy_ );
+    pCreationWnd->setWidget( creationPanels );
+    pCreationWnd->setResizeEnabled( true );
+    pCreationWnd->setCloseMode( QDockWindow::Always );
+    pCreationWnd->setCaption( tr( "Creation" ) );
+    setDockEnabled( pCreationWnd, Qt::DockTop, false );
 
     new MagicOrdersInterface( this, controllers_, publisher, staticModel_, *paramLayer, profile );
     new SIMControlToolbar( this, controllers, network, publisher );
-    new ReplayerToolbar( this, controllers, publisher );
+    ReplayerToolbar* replayerToolbar = new ReplayerToolbar( this, controllers, publisher );
     new DisplayToolbar( this, controllers );
     new EventToolbar( this, controllers, profile );
 
     // $$$$ AGE 2007-05-14: mettre un GetOrdersDirectory
     OrderBrowser* browser = new OrderBrowser( this, config.BuildExerciseChildFile( "orders" ).c_str() );
-    RecorderToolbar* recorderToolbar = new RecorderToolbar( this, network, browser );
+    new RecorderToolbar( this, network, browser );
     
     // Drawer
     DrawerLayer* drawer = new DrawerLayer( *glProxy_ );
@@ -293,7 +293,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new Menu( this, controllers, *prefDialog, *profileDialog, *browser, *factory );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
-    CreateLayers( *pMissionPanel_, *objectCreationPanel, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *drawer, *prefDialog, profile, publisher );
+    CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *drawer, *prefDialog, profile, publisher );
 
     ::StatusBar* pStatus = new ::StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_, controllers_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
@@ -303,6 +303,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     ReadSettings();
     ReadOptions();
     pMissionPanel_->hide();
+    replayerToolbar->hide();
 
     new XPSPlayer( this, controllers_ );
 
@@ -314,10 +315,10 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, ParametersLayer& parameters, LocationsLayer& locationsLayer, gui::AgentsLayer& agents, gui::AutomatsLayer& automats, DrawerLayer& drawer, PreferencesDialog& preferences, const Profile_ABC& profile, Publisher_ABC& publisher )
+void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, ParametersLayer& parameters, LocationsLayer& locationsLayer, gui::AgentsLayer& agents, gui::AutomatsLayer& automats, DrawerLayer& drawer, PreferencesDialog& preferences, const Profile_ABC& profile, Publisher_ABC& publisher )
 {
     Layer_ABC& missionsLayer        = *new MiscLayer< MissionPanel >( missions );
-    Layer_ABC& objectCreationLayer  = *new MiscLayer< ObjectCreationPanel >( objects );
+    Layer_ABC& creationsLayer       = *new MiscLayer< CreationPanels >( creationPanels );
     Elevation2dLayer& elevation2d   = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     Layer_ABC& raster               = *new RasterLayer( controllers_.controller_ );
     Layer_ABC& terrain              = *new TerrainLayer( controllers_, *glProxy_, preferences.GetPreferences() );
@@ -353,7 +354,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );
     glProxy_->Register( automats );                 preferences.AddLayer( tr( "Automats" ), automats );
     glProxy_->Register( missionsLayer );
-    glProxy_->Register( objectCreationLayer );
+    glProxy_->Register( creationsLayer );
     glProxy_->Register( parameters );
     glProxy_->Register( metrics );
     glProxy_->Register( locationsLayer );

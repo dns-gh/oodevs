@@ -12,6 +12,7 @@
 #include "moc_ObjectCreationPanel.cpp"
 #include "ObjectPrototype.h"
 #include "clients_kernel/ObjectType.h"
+#include "clients_kernel/Controllers.h"
 
 using namespace kernel;
 using namespace gui;
@@ -20,14 +21,16 @@ using namespace gui;
 // Name: ObjectCreationPanel constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& model, ParametersLayer& layer, const GlTools_ABC& tools )
-    : QVBox( parent )
+ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& model, ParametersLayer& layer, const GlTools_ABC& tools )
+    : InfoPanel_ABC( parent, panel, tr( "Objects" ) )
+    , controllers_( controllers )
     , publisher_( publisher )
     , tools_( tools )
     , created_( new ObjectPrototype( this, controllers, model, layer ) )
 {
     QPushButton* pOkButton = new QPushButton( tr( "Create" ), this );
     connect( pOkButton, SIGNAL( clicked() ), this, SLOT( Commit() ) );
+    controllers_.Register( *this );
 }
     
 // -----------------------------------------------------------------------------
@@ -36,7 +39,7 @@ ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, Controllers& controll
 // -----------------------------------------------------------------------------
 ObjectCreationPanel::~ObjectCreationPanel()
 {
-    // NOTHING
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,4 +60,13 @@ void ObjectCreationPanel::Commit()
 void ObjectCreationPanel::Draw( const kernel::Viewport_ABC& /*viewport*/ )
 {
     created_->Draw( tools_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectCreationPanel::NotifyUpdated
+// Created: SBO 2007-06-19
+// -----------------------------------------------------------------------------
+void ObjectCreationPanel::NotifyUpdated( const kernel::ModelLoaded& )
+{
+    Show();
 }
