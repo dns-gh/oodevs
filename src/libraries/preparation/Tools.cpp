@@ -49,21 +49,21 @@ E_FuncLimaType tools::FromString( const QString& type )
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::PopulationAttitudeFromString
+// Name: tools::PopulationAttitudeFromXml
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-E_PopulationAttitude tools::PopulationAttitudeFromString( const QString& type )
+E_PopulationAttitude tools::PopulationAttitudeFromXml( const std::string& type )
 {
-    return ENT_Tr::ConvertToPopulationAttitude( type.ascii() );
+    return ENT_Tr::ConvertToPopulationAttitude( type  );
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::ObstacleTypeFromString
+// Name: tools::ObstacleTypeFromXml
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-E_ObstacleType tools::ObstacleTypeFromString( const QString& type )
+E_ObstacleType tools::ObstacleTypeFromXml( const std::string& type )
 {
-    return ENT_Tr::ConvertToObstacleType( type.ascii() );
+    return ENT_Tr::ConvertToObstacleType( type );
 }
 
 // -----------------------------------------------------------------------------

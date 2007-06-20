@@ -48,7 +48,7 @@ PlannedWork ::= SEQUENCE
 {
     type                 EnumObjectType,
     position             Location,
-    type-obstacle        EnumObstacleType DEFAULT preliminaire,
+    type-obstacle        EnumObstacleType DEFAULT initial,
     densite              REAL(0..5)       DEFAULT 0,
     tc2                  Automat          DEFAULT 0,
     delai-activite-mines INTEGER          DEFAULT 0

@@ -279,7 +279,7 @@ void ObjectPrototype_ABC::OnObstacleTypeChanged()
 {
     const ObjectType* type = objectTypes_->GetValue();
     E_ObstacleType obstacleType = obstacleTypes_->GetValue();
-    emit ToggleActivable( type && type->CanBeReservedObstacle() && obstacleType == eObstacleType_DeManoeuvre );
+    emit ToggleActivable( type && type->CanBeReservedObstacle() && obstacleType == eObstacleType_Reserved );
 }
 
 // -----------------------------------------------------------------------------

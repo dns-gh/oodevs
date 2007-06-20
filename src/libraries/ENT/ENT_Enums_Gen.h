@@ -474,8 +474,8 @@ enum E_ObjectType
 
 enum E_ObstacleType
 {
-    eObstacleType_Preliminaire,
-    eObstacleType_DeManoeuvre,
+    eObstacleType_Initial,
+    eObstacleType_Reserved,
     eNbrObstacleType
 };
 

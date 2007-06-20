@@ -178,7 +178,7 @@ void Object::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport,
 // -----------------------------------------------------------------------------
 bool Object::IsReservedObstacle() const
 {
-    return obstacleType_.IsSet() && obstacleType_ == eObstacleType_DeManoeuvre;
+    return obstacleType_.IsSet() && obstacleType_ == eObstacleType_Reserved;
 }
 
 // -----------------------------------------------------------------------------

@@ -49,10 +49,10 @@ void WeatherLayer::Paint( const geometry::Rectangle2f& viewport )
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glColor4f( 1, 0, 0, 0.5f );
     glLineWidth( 5.f );
-    tools_.DrawLine( topLeft_, topRight );
-    tools_.DrawLine( topRight, bottomRight_ );
-    tools_.DrawLine( bottomRight_, bottomLeft );
-    tools_.DrawLine( bottomLeft, topLeft_ );
+        tools_.DrawLine( topLeft_, topRight );
+        tools_.DrawLine( topRight, bottomRight_ );
+        tools_.DrawLine( bottomRight_, bottomLeft );
+        tools_.DrawLine( bottomLeft, topLeft_ );
     glPopAttrib();
 }
 

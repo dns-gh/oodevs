@@ -26,14 +26,15 @@ protected:
     T value_;
 };
 
-#define DECLARE_ENUMTYPE( name ) \
-struct Enum_##name : public Enum_ABC< E_##name > { \
-    Enum_##name( int value ) : Enum_ABC< E_##name >( (E_##name)value ) {}\
-    Enum_##name( const E_##name& value ) : Enum_ABC< E_##name >( value ) {}\
-    Enum_##name( const QString& name ) : Enum_ABC< E_##name >( tools::name##FromString( name ) ) {}\
-    virtual QString ToString() const { return tools::ToString( value_ ); } \
-    virtual std::string ToXml() const { return tools::ToXml( value_ ); } \
-    static int max() { return int( eNbr##name ); } \
+#define DECLARE_ENUMTYPE( name )                                                                        \
+struct Enum_##name : public Enum_ABC< E_##name > {                                                      \
+    Enum_##name( int value ) : Enum_ABC< E_##name >( (E_##name)value ) {}                               \
+    Enum_##name( const E_##name& value ) : Enum_ABC< E_##name >( value ) {}                             \
+    Enum_##name( const std::string& xml ) : Enum_ABC< E_##name >( tools::name##FromXml( xml ) )         \
+    { if( value_ == -1 ) throw std::runtime_error( "Invalid " #name " value '" + xml + "'" ); }          \
+    virtual QString ToString() const { return tools::ToString( value_ ); }                              \
+    virtual std::string ToXml() const { return tools::ToXml( value_ ); }                                \
+    static int max() { return int( eNbr##name ); }                                                      \
 };
 
 DECLARE_ENUMTYPE( PopulationAttitude )

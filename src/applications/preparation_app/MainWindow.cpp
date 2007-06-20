@@ -121,7 +121,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     selector_ = new GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
 
-    RichItemFactory* factory = new RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
+    RichItemFactory* factory = new RichItemFactory( this );
 
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this );

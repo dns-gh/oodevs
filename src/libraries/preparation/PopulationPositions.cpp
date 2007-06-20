@@ -93,7 +93,7 @@ geometry::Point2f PopulationPositions::GetPosition() const
 {
     return center_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PopulationPositions::GetHeight
 // Created: SBO 2006-11-08
@@ -102,7 +102,7 @@ float PopulationPositions::GetHeight() const
 {
     return 0.;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PopulationPositions::IsAt
 // Created: SBO 2006-11-08
@@ -111,7 +111,7 @@ bool PopulationPositions::IsAt( const geometry::Point2f& pos, float precision /*
 {
     return pos.Distance( center_ ) < radius_ + precision;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PopulationPositions::IsIn
 // Created: SBO 2006-11-08
@@ -120,7 +120,7 @@ bool PopulationPositions::IsIn( const geometry::Rectangle2f& rectangle ) const
 {
     return ! boundingBox_.Intersect( rectangle ).IsEmpty();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PopulationPositions::GetBoundingBox
 // Created: SBO 2006-11-08
@@ -136,7 +136,7 @@ geometry::Rectangle2f PopulationPositions::GetBoundingBox() const
 // -----------------------------------------------------------------------------
 void PopulationPositions::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    const_cast< PopulationPositions* >( this )->UpdatePosition(); // $$$$ SBO 2006-11-09: 
+    const_cast< PopulationPositions* >( this )->UpdatePosition(); // $$$$ SBO 2006-11-09:
     if( viewport.IsVisible( boundingBox_ ) )
         tools.DrawDisc( center_, radius_ );
 }

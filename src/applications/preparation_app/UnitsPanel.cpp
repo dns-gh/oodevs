@@ -23,7 +23,6 @@ namespace
     ValuedComboBox< std::string >* BuildNatureFieldsCombo( QWidget* parent )
     {
         ValuedComboBox< std::string >* combo = new ValuedComboBox< std::string >( parent );
-        // $$$$ SBO 2006-08-28: Iterator sur AgentNatures?
         combo->AddItem( tools::translate( "UnitsPanel", "Hierarchical view" ), "" );
         combo->AddItem( tools::translate( "UnitsPanel", "Level" ), "level" );
         combo->AddItem( tools::translate( "UnitsPanel", "Nature" ), "nature" );

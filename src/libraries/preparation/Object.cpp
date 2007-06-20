@@ -125,7 +125,7 @@ const kernel::ObjectType& Object::ReadType( xml::xistream& xis, const Resolver_A
 Enum_ObstacleType Object::ReadObstacleType( xml::xistream& xis )
 {
     if( !type_.CanBeReservedObstacle() )
-        return eObstacleType_Preliminaire;
+        return eObstacleType_Initial;
 
     std::string strType;
     xis >> attribute( "obstacle-type", strType );
@@ -138,7 +138,7 @@ Enum_ObstacleType Object::ReadObstacleType( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 bool Object::ReadReservedObstacleActivated( xml::xistream& xis )
 {
-    if( !type_.CanBeReservedObstacle() || obstacleType_.GetValue() != eObstacleType_DeManoeuvre )
+    if( !type_.CanBeReservedObstacle() || obstacleType_.GetValue() != eObstacleType_Reserved )
         return false;
 
     bool bReservedObstacleActivated = false;
@@ -199,7 +199,7 @@ void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
     if( type_.CanBeReservedObstacle() )
     {
         displayer.Display( tools::translate( "Object", "Obstacle type:" ), obstacleType_.GetValue() );
-        if( obstacleType_.GetValue() == eObstacleType_DeManoeuvre )
+        if( obstacleType_.GetValue() == eObstacleType_Reserved )
             displayer.Display( tools::translate( "Object", "Reserved obstacle activated:" ), reservedObstacleActivated_ );
     }
 }
@@ -226,7 +226,7 @@ void Object::SerializeAttributes( xml::xostream& xos ) const
     if( type_.CanBeReservedObstacle() )
     {
         xos << attribute( "obstacle-type", obstacleType_.ToXml() );
-        if( obstacleType_.GetValue() == eObstacleType_DeManoeuvre )
+        if( obstacleType_.GetValue() == eObstacleType_Reserved )
             xos << attribute( "reserved-obstacle-activated", reservedObstacleActivated_ );
     }
 }

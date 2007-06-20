@@ -436,8 +436,8 @@ ENT_Tr::T_ConverterObjectType ENT_Tr::ObjectTypeConverter_[] =
 
 ENT_Tr::T_ConverterObstacleType ENT_Tr::ObstacleTypeConverter_[] =
 {
-    T_ConverterObstacleType( "preliminaire", QT_TRANSLATE_NOOP( "ENT_Tr", "preliminaire" ), eObstacleType_Preliminaire ),
-    T_ConverterObstacleType( "de manoeuvre", QT_TRANSLATE_NOOP( "ENT_Tr", "de manoeuvre" ), eObstacleType_DeManoeuvre ),
+    T_ConverterObstacleType( "initial", QT_TRANSLATE_NOOP( "ENT_Tr", "initial" ), eObstacleType_Initial ),
+    T_ConverterObstacleType( "reserved", QT_TRANSLATE_NOOP( "ENT_Tr", "reserved" ), eObstacleType_Reserved ),
     T_ConverterObstacleType( "", "", (E_ObstacleType)-1 )
 };
 
