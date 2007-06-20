@@ -37,7 +37,7 @@ ObjectKnowledge::ObjectKnowledge( Model& model, const ASN1T_MsgObjectKnowledgeCr
     , side_                         ( model.GetSides().Get( asnMsg.oid_camp_possesseur ) )
     , pObject_                      ( model.GetObjects().Find( asnMsg.oid_objet_reel ) )
     , nType_                        ( asnMsg.type )
-    , nObstacleType_                ( asnMsg.m.type_obstaclePresent ? asnMsg.type_obstacle : EnumObstacleType::preliminaire )
+    , nObstacleType_                ( asnMsg.m.type_obstaclePresent ? asnMsg.type_obstacle : EnumObstacleType::initial )
     , nTypeDotationForConstruction_ ( asnMsg.m.type_dotation_constructionPresent ? asnMsg.type_dotation_construction : std::numeric_limits< unsigned int >::max() )
     , nTypeDotationForMining_       ( asnMsg.m.type_dotation_valorisationPresent ? asnMsg.type_dotation_valorisation : std::numeric_limits< unsigned int >::max() )
     , pAttributes_                  ( 0 )

@@ -32,7 +32,7 @@ using namespace dispatcher;
 Object::Object( Model& model, const ASN1T_MsgObjectCreation& msg )
     : nID_                         ( msg.oid  )
     , nType_                       ( msg.type )
-    , nObstacleType_               ( msg.m.type_obstaclePresent ? msg.type_obstacle : EnumObstacleType::preliminaire )
+    , nObstacleType_               ( msg.m.type_obstaclePresent ? msg.type_obstacle : EnumObstacleType::initial )
     , strName_                     ( msg.nom  )
     , localisation_                ( msg.localisation )
     , side_                        ( model.GetSides().Get( msg.camp ) )
