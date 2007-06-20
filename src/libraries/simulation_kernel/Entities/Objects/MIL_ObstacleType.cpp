@@ -11,8 +11,8 @@
 
 #include "MIL_ObstacleType.h"
 
-const MIL_ObstacleType MIL_ObstacleType::reserved_( "reserved", MIL_ObstacleType::eReserved, EnumObstacleType::de_manoeuvre );
-const MIL_ObstacleType MIL_ObstacleType::initial_ ( "initial" , MIL_ObstacleType::eInitial, EnumObstacleType::preliminaire );
+const MIL_ObstacleType MIL_ObstacleType::reserved_( "reserved", MIL_ObstacleType::eReserved, EnumObstacleType::reserved );
+const MIL_ObstacleType MIL_ObstacleType::initial_ ( "initial" , MIL_ObstacleType::eInitial, EnumObstacleType::initial );
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObstacleType constructor
