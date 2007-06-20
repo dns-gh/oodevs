@@ -54,6 +54,7 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const ExerciseCo
     , viewport_( 0, 0, width_, height_ )
     , frame_( 0 )
     , iconLayout_( iconLayout )
+    , baseFont_( 0 )
 {
     setAcceptDrops( true );
     Register( *new SpyLayer( viewport_, frame_ ) );
@@ -558,7 +559,24 @@ namespace
 // Name: GlWidget::Print
 // Created: AGE 2006-03-20
 // -----------------------------------------------------------------------------
-void GlWidget::Print( const std::string& message, const Point2f& where, const QFont& font /*= QFont()*/ ) const
+void GlWidget::Print( const std::string& message, const Point2f& where ) const
+{
+    glRasterPos2fv( (const float*)&where );
+    if( !baseFont_ )
+    {
+        const_cast< GlWidget* >( this )->baseFont_ = GenerateList( QFont() );
+        if( !baseFont_ ) // GenerateList can fail
+            return;
+    }
+    glListBase( baseFont_ );
+    glCallLists( message.length(), GL_UNSIGNED_BYTE, message.c_str() );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::Print
+// Created: AGE 2007-06-20
+// -----------------------------------------------------------------------------
+void GlWidget::Print( const std::string& message, const geometry::Point2f& where, const QFont& font ) const
 {
     glRasterPos2fv( (const float*)&where );
     int listBase = 0;
@@ -634,7 +652,6 @@ void GlWidget::DrawImage( const QImage& image, const geometry::Point2f& where ) 
     if( image.bits() )
     {
         glRasterPos3f( where.X(), where.Y(), 300 );
-        glBitmap(0, 0, 0, 0, 0, - image.height(), 0 );
         glDrawPixels( image.width(), image.height(), GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
     }
 }

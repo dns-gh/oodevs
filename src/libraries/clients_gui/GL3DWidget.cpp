@@ -358,9 +358,18 @@ void Gl3dWidget::DrawLife( const Point2f& center, float h, float factor /*= 1.f*
 
 // -----------------------------------------------------------------------------
 // Name: Gl3dWidget::Print
+// Created: AGE 2007-06-20
+// -----------------------------------------------------------------------------
+void Gl3dWidget::Print( const std::string& message, const geometry::Point2f& where ) const
+{
+    Print( message, where, QFont() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::Print
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::Print( const std::string& message, const Point2f& where, const QFont& font /*= QFont()*/ ) const
+void Gl3dWidget::Print( const std::string& message, const Point2f& where, const QFont& font ) const
 {
     QGLWidget* that = const_cast< Gl3dWidget* >( this );
     that->renderText( where.X(), where.Y(), ElevationAt( where ), message.c_str(), font );
@@ -411,7 +420,6 @@ void Gl3dWidget::DrawImage( const QImage& image, const Point2f& where ) const
     {
         glDisable( GL_DEPTH_TEST );
         glRasterPos3f( where.X(), where.Y(), ElevationAt( where ) + 100.f );
-        glBitmap(0, 0, 0, 0, 0, - image.height(), 0 );
         glDrawPixels( image.width(), image.height(), GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
         glEnable( GL_DEPTH_TEST );
     }

@@ -251,9 +251,18 @@ void GlProxy::DrawLife( const geometry::Point2f& center, float height, float fac
 
 // -----------------------------------------------------------------------------
 // Name: GlProxy::Print
+// Created: AGE 2007-06-20
+// -----------------------------------------------------------------------------
+void GlProxy::Print( const std::string& message, const geometry::Point2f& where ) const
+{
+    tools_->Print( message, where );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::Print
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::Print( const std::string& message, const geometry::Point2f& where, const QFont& font /*= QFont()*/ ) const
+void GlProxy::Print( const std::string& message, const geometry::Point2f& where, const QFont& font ) const
 {
     tools_->Print( message, where, font );
 }

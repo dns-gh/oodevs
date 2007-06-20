@@ -128,10 +128,21 @@ void GlTooltip::DisplayFormatted( const QString& formatted )
 void GlTooltip::EndDisplay()
 {
     if( ! currentItem_.isEmpty() )
-        messages_.push_back( T_Message( currentItem_ + " " + message_, T_Style( color_, font_ ) ) );
+        new_.push_back( T_Message( currentItem_ + " " + message_, T_Style( color_, font_ ) ) );
     else if( ! message_.isEmpty() )
-        messages_.push_back( T_Message( message_, T_Style( color_, font_ ) ) );
-    image_ = QImage();
+        new_.push_back( T_Message( message_, T_Style( color_, font_ ) ) );
+    DirtyImage();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlTooltip::DirtyImage
+// Created: AGE 2007-06-20
+// -----------------------------------------------------------------------------
+void GlTooltip::DirtyImage()
+{
+    if( current_.size() < new_.size()
+     || new_.back() != current_.at( new_.size() - 1 ) )
+        image_ = QImage();
 }
 
 // -----------------------------------------------------------------------------
@@ -142,6 +153,7 @@ void GlTooltip::Draw( const geometry::Point2f& position )
 {
     if( image_.isNull() )
         GenerateImage();
+    new_.clear();
     tools_.DrawImage( image_, position );
 }
 
@@ -151,7 +163,7 @@ void GlTooltip::Draw( const geometry::Point2f& position )
 // -----------------------------------------------------------------------------
 void GlTooltip::GenerateImage()
 {
-    if( messages_.empty() )
+    if( new_.empty() )
         return;
     QPainter p;
     QFontMetrics metrics( p.font() );
@@ -163,7 +175,7 @@ void GlTooltip::GenerateImage()
         p.setPen( Qt::black );
         p.drawRect( pixmap.rect() );
         int y = fontHeight;
-        for( CIT_Messages it = messages_.begin(); it != messages_.end(); ++it )
+        for( CIT_Messages it = new_.begin(); it != new_.end(); ++it )
         {
             p.setPen( it->second.first );
             if( p.font() != it->second.second )
@@ -178,8 +190,8 @@ void GlTooltip::GenerateImage()
     p.end();
     image_ = pixmap.convertToImage().mirror();
     RestoreAlpha();
-
-    messages_.clear();
+    std::swap( new_, current_ );
+    new_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -209,7 +221,7 @@ QPixmap GlTooltip::CreatePixmap()
 {
     int w = 0;
     int h = 0;
-    for( CIT_Messages it = messages_.begin(); it != messages_.end(); ++it )
+    for( CIT_Messages it = new_.begin(); it != new_.end(); ++it )
     {
         const QFontMetrics metrics( it->second.second );
         const QRect bounds = metrics.boundingRect( it->first );
@@ -225,7 +237,8 @@ QPixmap GlTooltip::CreatePixmap()
 // -----------------------------------------------------------------------------
 void GlTooltip::Hide()
 {
-    messages_.clear();
+    current_.clear();
+    new_.clear();
     image_ = QImage();
 }
 

@@ -74,6 +74,7 @@ private:
     void GenerateImage();
     QPixmap CreatePixmap();
     void RestoreAlpha();
+    void DirtyImage();
     //@}
 
     //! @name Types
@@ -92,7 +93,7 @@ private:
     QColor color_;
     QFont font_;
     QString message_;
-    T_Messages messages_;
+    T_Messages current_, new_;
     QImage image_;
     //@}
 };
