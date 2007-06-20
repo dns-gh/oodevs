@@ -139,7 +139,9 @@ const kernel::KnowledgeGroup_ABC& AgentKnowledge::GetOwner() const
 // -----------------------------------------------------------------------------
 QString AgentKnowledge::GetName() const
 {
-    return realAgent_.GetName();
+    if( GetRecognizedEntity() )
+        return realAgent_.GetName();
+    return tools::translate( "AgentKnowledge", "Unknown unit" );
 }
 
 // -----------------------------------------------------------------------------
