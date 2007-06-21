@@ -18,7 +18,6 @@ namespace kernel
     class Controllers;
 }
 
-class AlarmsWidget;
 class Publisher_ABC;
 class Profile;
 
@@ -28,7 +27,7 @@ class Profile;
 */
 // Created: SBO 2007-04-17
 // =============================================================================
-class ClockWidget : public QVBox
+class ClockWidget : public QHBox
                   , public kernel::Observer_ABC
                   , public kernel::ElementObserver_ABC< Simulation >
 {
@@ -50,7 +49,6 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );
-    virtual void mouseDoubleClickEvent( QMouseEvent * e );
     //@}
 
 private:
@@ -59,7 +57,6 @@ private:
     kernel::Controllers& controllers_;
     QLabel* time_;
     QLabel* day_;
-    AlarmsWidget* alarms_;
     //@}
 };
 

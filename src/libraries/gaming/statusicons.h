@@ -58,5 +58,6 @@ DECLARE_ICON( checkpoint3 );
 DECLARE_ICON( activated );
 DECLARE_ICON( not_activated );
 DECLARE_ICON( replayer );
+DECLARE_ICON( timer );
 
 #endif // __statusicons_h_

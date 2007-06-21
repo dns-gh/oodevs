@@ -56,3 +56,4 @@
 #include "res/activated.xpm"
 #include "res/not_activated.xpm"
 #include "res/replayer.xpm"
+#include "res/timer.xpm"
