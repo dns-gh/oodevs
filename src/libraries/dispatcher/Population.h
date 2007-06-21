@@ -13,6 +13,7 @@
 #include "game_asn/Asn.h"
 #include "ModelsContainer.h"
 #include "Entity_ABC.h"
+#include "DecisionalState.h"
 
 namespace dispatcher
 {
@@ -56,6 +57,7 @@ public:
     void Update        ( const ASN1T_MsgPopulationFlowUpdate&               msg );
     void Update        ( const ASN1T_MsgPopulationFlowDestruction&          msg );
     void Update        ( const ASN1T_MsgPopulationOrder&                    msg );
+    void Update        ( const ASN1T_MsgDecisionalState&                    msg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
     virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
 
@@ -81,6 +83,8 @@ private:
 
     ModelsContainer< PopulationConcentration > concentrations_;
     ModelsContainer< PopulationFlow          > flows_;
+
+    DecisionalState decisionalInfos_;
 };
 
 }

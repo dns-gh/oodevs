@@ -15,6 +15,7 @@
 #include "ModelRefsContainer.h"
 #include "ModelsContainer.h"
 #include "Entity_ABC.h"
+#include "DecisionalState.h"
 
 namespace dispatcher
 {
@@ -127,7 +128,7 @@ private:
     bool                          bPrisonner_;
     bool                          bRefugeeManaged_;
 
-    std::map< std::string, std::string > decisionalInfos_;
+    DecisionalState decisionalInfos_;
 
     ModelsContainer< Equipment >  equipments_;
     ModelsContainer< Humans    >  troops_;

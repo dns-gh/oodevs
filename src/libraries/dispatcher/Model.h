@@ -109,6 +109,8 @@ private:
     //@{
     template< typename T, typename P >
     void CreateUpdate( ModelsContainer< T >& container, unsigned id, const P& parameter );
+    template< typename T >
+    void UpdateAnyAgent( unsigned id, const T& message );
     //@}
 
 private:

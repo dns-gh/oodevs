@@ -165,7 +165,7 @@ void Model::Update( const ASN1T_MsgsSimToClient& asnMsg )
         case T_MsgsSimToClient_msg_msg_cr:
         case T_MsgsSimToClient_msg_msg_trace:
             break;  // $$$$ AGE 2007-04-18: Evenements, modèle client => rien, ou remanier
-        case T_MsgsSimToClient_msg_msg_decisional_state:                     agents_     .Get( asnMsg.msg.u.msg_decisional_state->unit_id ).Update( *asnMsg.msg.u.msg_decisional_state ); break;
+        case T_MsgsSimToClient_msg_msg_decisional_state:                     UpdateAnyAgent( asnMsg.msg.u.msg_decisional_state->unit_id, *asnMsg.msg.u.msg_decisional_state ); break;
         case T_MsgsSimToClient_msg_msg_start_fire_effect:                    CreateUpdate( fireEffects_, asnMsg.msg.u.msg_start_fire_effect->oid_effet, *asnMsg.msg.u.msg_start_fire_effect ); break;
         case T_MsgsSimToClient_msg_msg_stop_fire_effect:                     fireEffects_.Destroy( asnMsg.msg.u.msg_stop_fire_effect ); break;
 
@@ -232,6 +232,22 @@ void Model::CreateUpdate( ModelsContainer< T >& container, unsigned id, const P&
     if( synching_ )
         object.StartSynchronisation( create );
     object.Update( parameter );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::UpdateAnyAgent
+// Created: ZEBRE 2007-06-21
+// -----------------------------------------------------------------------------
+template< typename T >
+void Model::UpdateAnyAgent( unsigned id, const T& message )
+{
+    if( Agent* agent = agents_.Find( id ) )
+        agent->Update( message );
+    else if( Automat* automat = automats_.Find( id ) )
+        automat->Update( message );
+    else if( Population* popu = populations_.Find( id ) )
+        popu->Update( message );
+    else throw std::runtime_error( __FUNCTION__ " : Unknown entity" );
 }
 
 // -----------------------------------------------------------------------------
@@ -330,3 +346,4 @@ void Model::EndSynchronisation( Publisher_ABC& publisher )
     // $$$$ AGE 2007-04-24: c'est crado. Séparer l'envoi au client (dans le CommitDestruction() )
     // $$$$ AGE 2007-04-24: et la destruction (depuis la liste, séparément).
 }
+

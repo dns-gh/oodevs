@@ -14,6 +14,7 @@
 #include "ModelRefsContainer.h"
 #include "ModelsContainer.h"
 #include "Entity_ABC.h"
+#include "DecisionalState.h"
 
 namespace dispatcher
 {
@@ -50,13 +51,14 @@ public:
 
     //! @name Main
     //@{
-    void Update        ( const ASN1T_MsgAutomatCreation&                    msg );
-    void Update        ( const ASN1T_MsgAutomatAttributes&                  msg );
-    void Update        ( const ASN1T_MsgLogSupplyQuotas&             msg );
-    void Update        ( const ASN1T_MsgAutomatChangeLogisticLinksAck&   msg );
-    void Update        ( const ASN1T_MsgAutomatChangeLogisticLinks&      msg );
+    void Update        ( const ASN1T_MsgAutomatCreation&                msg );
+    void Update        ( const ASN1T_MsgDecisionalState&                msg );
+    void Update        ( const ASN1T_MsgAutomatAttributes&              msg );
+    void Update        ( const ASN1T_MsgLogSupplyQuotas&                msg );
+    void Update        ( const ASN1T_MsgAutomatChangeLogisticLinksAck&  msg );
+    void Update        ( const ASN1T_MsgAutomatChangeLogisticLinks&     msg );
     void Update        ( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& msg );
-    void Update        ( const ASN1T_MsgAutomatOrder&                       msg );
+    void Update        ( const ASN1T_MsgAutomatOrder&                   msg );
     virtual void SendCreation  ( Publisher_ABC& publisher ) const;
     virtual void SendSpecialUpdate( Publisher_ABC& publisher ) const;
     virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
@@ -94,6 +96,8 @@ private:
     Automat* pLogSupply_;
 
     AutomatOrder* pOrder_;
+
+    DecisionalState decisionalInfos_;
 };
 
 }

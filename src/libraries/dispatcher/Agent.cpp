@@ -250,7 +250,7 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
 // -----------------------------------------------------------------------------
 void Agent::Update( const ASN1T_MsgDecisionalState& asnMsg )
 {
-    decisionalInfos_[ asnMsg.key ] = decisionalInfos_[ asnMsg.value ];
+    decisionalInfos_.Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -480,14 +480,7 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
     else
         AgentOrder::SendNoMission( *this, publisher );
 
-    for( std::map< std::string, std::string >::const_iterator it = decisionalInfos_.begin(); it != decisionalInfos_.end(); ++it )
-    {
-        AsnMsgSimToClientDecisionalState asn;
-        asn().unit_id = nID_;
-        asn().key     = it->first.c_str();
-        asn().value   = it->second.c_str();
-        asn.Send( publisher );
-    }
+    decisionalInfos_.Send( nID_, publisher );
 }
 
 // -----------------------------------------------------------------------------

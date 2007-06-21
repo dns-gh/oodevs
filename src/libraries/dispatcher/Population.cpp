@@ -141,6 +141,15 @@ void Population::Update( const ASN1T_MsgPopulationOrder& msg )
         pOrder_ = new PopulationOrder( model_, *this, msg );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Population::Update
+// Created: ZEBRE 2007-06-21
+// -----------------------------------------------------------------------------
+void Population::Update( const ASN1T_MsgDecisionalState& msg )
+{
+    decisionalInfos_.Update( msg );
+}
+
 // =============================================================================
 // NETWORK
 // =============================================================================
@@ -182,6 +191,8 @@ void Population::SendFullUpdate( Publisher_ABC& publisher ) const
         pOrder_->Send( publisher );
     else
         PopulationOrder::SendNoMission( *this, publisher );
+
+    decisionalInfos_.Send( nID_, publisher );
 }
 
 // -----------------------------------------------------------------------------

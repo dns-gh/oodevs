@@ -61,15 +61,17 @@ void Config::Parse( int argc, char** argv )
                     >> xml::start( "profiles" )
                         >> xml::attribute( "file", profiles_ );
 
+    int port;
     xml::xifstream xisGame( GetGameFile() );
     xisGame >> xml::start( "config" )
                 >> xml::start( "dispatcher" )
                     >> xml::start( "network" )
                         >> xml::attribute( "client", networkSimulationParameters_ )
-                        >> xml::attribute( "server", networkClientsParameters_    )
+                        >> xml::attribute( "server", port )
                     >> xml::end()
                     >> xml::start( "recorder" )
                         >> xml::attribute( "enabled", bRecorderEnabled_ );
+    networkClientsParameters_ = unsigned short( port );
 }
 
 // =============================================================================

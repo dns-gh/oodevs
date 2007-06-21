@@ -145,6 +145,15 @@ void Automat::Update( const ASN1T_MsgAutomatAttributes& msg )
 
 // -----------------------------------------------------------------------------
 // Name: Automat::Update
+// Created: ZEBRE 2007-06-21
+// -----------------------------------------------------------------------------
+void Automat::Update( const ASN1T_MsgDecisionalState& asnMsg )
+{
+    decisionalInfos_.Update( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::Update
 // Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
 void Automat::Update( const ASN1T_MsgLogSupplyQuotas& msg )
@@ -240,6 +249,8 @@ void Automat::SendFullUpdate( Publisher_ABC& publisher ) const
         pOrder_->Send( publisher );
     else
         AutomatOrder::SendNoMission( *this, publisher );
+
+    decisionalInfos_.Send( nID_, publisher );
 }
 
 // -----------------------------------------------------------------------------
