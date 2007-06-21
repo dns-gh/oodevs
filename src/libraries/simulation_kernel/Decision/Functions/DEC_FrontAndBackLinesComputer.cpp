@@ -99,7 +99,6 @@ void DEC_FrontAndBackLinesComputer::Compute()
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_FrontAndBackLinesComputer::GetDistanceFromFrontLine
 // Created: NLD 2003-09-29
@@ -108,18 +107,17 @@ MT_Float DEC_FrontAndBackLinesComputer::ComputeDistanceFromFrontLine( const MT_V
 {
     Compute();
 
-    const MT_Float rDistFromFrontLine = frontLineDroite_.GetDistanceToPoint( vPoint );
-    const MT_Float rDistFromBackLine  = backLineDroite_ .GetDistanceToPoint( vPoint );
+    const MT_Float          rDistFromFrontLine = frontLineDroite_.GetDistanceToPoint( vPoint );
+    const MT_Droite::E_Side nFrontLineSide     = frontLineDroite_.GetSide( vPoint );
 
-    if( MT_IsPointBetweenTwoLines( frontLineDroite_, backLineDroite_, vPoint ) )
-        return rDistFromFrontLine;
-
-    if( rDistFromBackLine > rDistFromFrontLine )
+    // Front line behind
+    if( nFrontLineSide == MT_Droite::eOnNegativeSide )
         return -rDistFromFrontLine;
-    else
+
+    // Front line ahead
+    else // MT_Droite::eOnPositiveSide || MT_Droite::eOnBoundary
         return rDistFromFrontLine;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_FrontAndBackLinesComputer::GetDistanceFromBackLine
@@ -129,14 +127,14 @@ MT_Float DEC_FrontAndBackLinesComputer::ComputeDistanceFromBackLine( const MT_Ve
 {
     Compute();
 
-    const MT_Float rDistFromFrontLine = frontLineDroite_.GetDistanceToPoint( vPoint );
-    const MT_Float rDistFromBackLine  = backLineDroite_ .GetDistanceToPoint( vPoint );
+    const MT_Float          rDistFromBackLine  = backLineDroite_ .GetDistanceToPoint( vPoint );
+    const MT_Droite::E_Side nBackLineSide      = backLineDroite_ .GetSide( vPoint );
 
-    if( MT_IsPointBetweenTwoLines( frontLineDroite_, backLineDroite_, vPoint ) )
+    // Back line behind
+    if( nBackLineSide == MT_Droite::eOnNegativeSide )
         return -rDistFromBackLine;
 
-    if( rDistFromBackLine > rDistFromFrontLine )
-        return -rDistFromBackLine;
-    else
+    // Back line ahead
+    else // MT_Droite::eOnPositiveSide || MT_Droite::eOnBoundary
         return rDistFromBackLine;
 }
