@@ -53,7 +53,7 @@ PlannedWork ::= SEQUENCE
     tc2                  Automat          DEFAULT 0,
     delai-activite-mines INTEGER          DEFAULT 0
 }
-PlannedWorkList ::= SEQUENCE OF PlannedWork;
+PlannedWorkList ::= SEQUENCE OF PlannedWork
 
 
 MissionParameter ::= SEQUENCE
