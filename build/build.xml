@@ -58,7 +58,7 @@ BLOCK "VarFileInfo"
             <exec executable="rc.exe" failonerror="true">
                 <arg value="version.rc"/>           
             </exec>
-            <exec executable="C:\Documents and Settings\nld\Bureau\ResHack\reshacker.exe">
+            <exec executable="reshacker.exe">
                 <arg line="-addoverwrite @{file}, @{file}, version.res, versioninfo,1,"/>
             </exec>  
             <delete file="version.rc"/>
