@@ -102,7 +102,7 @@ namespace crossbow
         }
         #endregion
                 
-        #region "Get FeatureLayer from Layer Name"
+        #region Get FeatureLayer from Layer Name
         public static IFeatureLayer GetIFeatureLayerFromLayerName(ESRI.ArcGIS.Carto.IActiveView activeView, System.String name)
         {
             if (activeView == null || name == null)
@@ -126,7 +126,29 @@ namespace crossbow
             }
             return null;
         }
-    }
         #endregion
+
+        #region Get value of specified feature field
+        public static System.String GetFieldValueByName( ESRI.ArcGIS.Geodatabase.IFeature feature, System.String fieldName )
+        {
+            int index = feature.Fields.FindField(fieldName);
+            if (index < 0 )
+                return null;
+            return (System.String)feature.get_Value(index);
+        }
+        #endregion
+
+        #region Create IColor from RGB components
+        public static ESRI.ArcGIS.Display.IColor MakeColor(short red, short green, short blue)
+        {
+            ESRI.ArcGIS.Display.RgbColor color = new ESRI.ArcGIS.Display.RgbColor();
+            color.Red = red;
+            color.Green = green;
+            color.Blue = blue;
+            return color;
+        }
+        #endregion
+    }
+
 
 }
