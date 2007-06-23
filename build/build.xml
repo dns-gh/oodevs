@@ -432,11 +432,12 @@ BLOCK "VarFileInfo"
     -->
 
     <target name="package" description="package the distribution" >
-        <generation-version-resource file="${out.dir}/release/applications/adaptation_app/adaptation_app.exe"/>
+<!--        <generation-version-resource file="${out.dir}/release/applications/adaptation_app/adaptation_app.exe"/>
         <generation-version-resource file="${out.dir}/release/applications/gaming_app/gaming_app.exe"/>
         <generation-version-resource file="${out.dir}/release/applications/preparation_app/preparation_app.exe"/>
         <generation-version-resource file="${out.dir}/release/applications/simulation_app/simulation_app.exe"/>
         <generation-version-resource file="${out.dir}/release/applications/replayer_app/replayer_app.exe"/>
+-->
         
         <zip destfile="${run.dir}/symbols.pak">
             <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
