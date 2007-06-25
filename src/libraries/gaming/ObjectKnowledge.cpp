@@ -19,7 +19,9 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "Tools.h"
+#include "statusicons.h"
 
 using namespace kernel;
 
@@ -126,7 +128,7 @@ void ObjectKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 // Name: ObjectKnowledge::DisplayInSummary
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+void ObjectKnowledge::DisplayInSummary( Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Object", "Type:" ), type_ )
              .Display( tools::translate( "Object", "Relevance:" ), nRelevance_ )
@@ -163,7 +165,7 @@ QString ObjectKnowledge::GetTypeName() const
 // Name: ObjectKnowledge::GetEntity
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-const kernel::Object_ABC* ObjectKnowledge::GetEntity() const
+const Object_ABC* ObjectKnowledge::GetEntity() const
 {
     return pRealObject_;
 }
@@ -172,7 +174,7 @@ const kernel::Object_ABC* ObjectKnowledge::GetEntity() const
 // Name: ObjectKnowledge::GetRecognizedEntity
 // Created: SBO 2006-12-08
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC* ObjectKnowledge::GetRecognizedEntity() const
+const Entity_ABC* ObjectKnowledge::GetRecognizedEntity() const
 {
     return pRealObject_;
 }
@@ -181,7 +183,7 @@ const kernel::Entity_ABC* ObjectKnowledge::GetRecognizedEntity() const
 // Name: ObjectKnowledge::GetOwner
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-const kernel::Team_ABC& ObjectKnowledge::GetOwner() const
+const Team_ABC& ObjectKnowledge::GetOwner() const
 {
     return owner_;
 }
@@ -190,8 +192,21 @@ const kernel::Team_ABC& ObjectKnowledge::GetOwner() const
 // Name: ObjectKnowledge::Draw
 // Created: AGE 2006-05-19
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void ObjectKnowledge::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( type_ )
         type_->Draw( where, viewport, tools );
+    if( viewport.IsVisible( where ) )
+    {
+        // $$$$ SBO 2007-05-04: hard coded icon positions
+        glPushAttrib( GL_CURRENT_BIT );
+            glColor3f( 1, 1, 1 );
+            if( reservedObstacleActivated_.IsSet() )
+                tools.DrawIcon( reservedObstacleActivated_ ? xpm_activated : xpm_not_activated, where + geometry::Vector2f( 250.f, 150.f ), 150.f );
+            if( nConstructionPercentage_.IsSet() )
+                tools.DrawLife( where - geometry::Vector2f( 0.f, 250.f ), nConstructionPercentage_ / 100.f );
+            if( nBypassConstructionPercentage_.IsSet() )
+                tools.DrawLife( where - geometry::Vector2f( 0.f, 200.f ), nBypassConstructionPercentage_ / 100.f );
+        glPopAttrib();
+    }
 }

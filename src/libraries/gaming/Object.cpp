@@ -168,6 +168,8 @@ void Object::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport,
                 tools.DrawIcon( reservedObstacleActivated_ ? xpm_activated : xpm_not_activated, where + geometry::Vector2f( 250.f, 150.f ), 150.f );
             if( rConstructionPercentage_.IsSet() )
                 tools.DrawLife( where - geometry::Vector2f( 0.f, 250.f ), rConstructionPercentage_ / 100.f );
+            if( rBypassConstructionPercentage_.IsSet() )
+                tools.DrawLife( where - geometry::Vector2f( 0.f, 200.f ), rBypassConstructionPercentage_ / 100.f );
         glPopAttrib();
     }
 }
