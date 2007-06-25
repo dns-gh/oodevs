@@ -157,7 +157,7 @@ void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
     {
         optionals_.perception_par_compagniePresent = 1;
         automatPerceptions_.Clear();
-        for( uint i = 0; i < asnMsg.perception_par_compagnie.n; ++i )
+        for( unsigned int i = 0; i < asnMsg.perception_par_compagnie.n; ++i )
             automatPerceptions_.Register( model_.GetAutomats().Get( asnMsg.perception_par_compagnie.elem[ i ]) );
     }
 

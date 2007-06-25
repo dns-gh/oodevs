@@ -27,7 +27,7 @@ RotaObjectAttribute::RotaObjectAttribute( const Model& model, const ASN1T_Object
     {
         nDanger_ = asnMsg.u.rota->niveau_danger;
         nbcAgents_.clear();
-        for( uint i = 0; i < asnMsg.u.rota->agents_nbc.n; ++i )
+        for( unsigned int i = 0; i < asnMsg.u.rota->agents_nbc.n; ++i )
             nbcAgents_.push_back( asnMsg.u.rota->agents_nbc.elem[ i ] );
     }
 }
@@ -51,7 +51,7 @@ void RotaObjectAttribute::Update( const ASN1T_ObjectAttributesSpecific& asnMsg )
     {
         nDanger_ = asnMsg.u.rota->niveau_danger;
         nbcAgents_.clear();
-        for( uint i = 0; i < asnMsg.u.rota->agents_nbc.n; ++i )
+        for( unsigned int i = 0; i < asnMsg.u.rota->agents_nbc.n; ++i )
             nbcAgents_.push_back( asnMsg.u.rota->agents_nbc.elem[ i ] );
     }
 

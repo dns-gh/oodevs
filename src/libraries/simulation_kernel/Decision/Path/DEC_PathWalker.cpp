@@ -26,6 +26,7 @@
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MIL_AgentServer.h"
+#include "DIN/MessageService/DIN_BufferedMessage.h"
 
 //$$$ Refactorer gestion collisions objets
 

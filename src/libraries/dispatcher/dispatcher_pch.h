@@ -18,10 +18,10 @@
 #include <map>
 #include <set>
 #include <cassert>
+#include <fstream>
+#include <sstream>
 
 #pragma warning ( pop )
-
-#include "MT/MT_Logger/MT_Logger_lib.h"
 
 #endif // __dispatcher_pch_h_
 

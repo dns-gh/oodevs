@@ -17,7 +17,6 @@ namespace dispatcher
 inline
 Model& Dispatcher::GetModel() const
 {
-    assert( pModel_ );
     return *pModel_;
 }
 
@@ -28,7 +27,6 @@ Model& Dispatcher::GetModel() const
 inline
 ClientsNetworker& Dispatcher::GetClientsNetworker() const
 {
-    assert( pClientsNetworker_ );
     return *pClientsNetworker_;
 }
 
@@ -39,7 +37,6 @@ ClientsNetworker& Dispatcher::GetClientsNetworker() const
 inline
 SimulationNetworker& Dispatcher::GetSimulationNetworker() const
 {
-    assert( pSimulationNetworker_ );
     return *pSimulationNetworker_;
 }
 
@@ -50,7 +47,6 @@ SimulationNetworker& Dispatcher::GetSimulationNetworker() const
 inline
 ProfileManager& Dispatcher::GetProfileManager() const
 {
-    assert( pProfileManager_ );
     return *pProfileManager_;
 }
 

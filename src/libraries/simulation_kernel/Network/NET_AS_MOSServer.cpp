@@ -10,7 +10,7 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
+#include "DIN/DIN_Link.h"
 #include "NET_AS_MOSServer.h"
 
 using namespace DIN;
@@ -34,4 +34,22 @@ NET_AS_MOSServer::NET_AS_MOSServer( DIN::DIN_Link& link )
 NET_AS_MOSServer::~NET_AS_MOSServer()
 {
     link_.SetUserData( 0 );
+}
+
+//-----------------------------------------------------------------------------
+// Name: NET_AS_MOSServer::GetLink
+// Created: NLD 2002-07-08
+//-----------------------------------------------------------------------------
+DIN::DIN_Link& NET_AS_MOSServer::GetLink() const
+{
+    return link_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: NET_AS_MOSServer::GetStationID
+// Created: NLD 2002-07-08
+//-----------------------------------------------------------------------------
+DIN::DIN_StationID NET_AS_MOSServer::GetStationID() const
+{
+    return link_.GetStationID();
 }

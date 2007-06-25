@@ -32,7 +32,7 @@ Localisation::Localisation( const ASN1T_Location& asn )
     : nType_ ( asn.type )
     , points_( )
 {
-    for( uint i = 0; i < asn.vecteur_point.n; ++i )
+    for( unsigned int i = 0; i < asn.vecteur_point.n; ++i )
         points_.push_back( Position( asn.vecteur_point.elem[ i ] ) );
 }
 
@@ -57,7 +57,7 @@ void Localisation::Update( const ASN1T_Location& asn )
 {
     nType_ = asn.type;
     points_.clear();
-    for( uint i = 0; i < asn.vecteur_point.n; ++i )
+    for( unsigned int i = 0; i < asn.vecteur_point.n; ++i )
         points_.push_back( Position( asn.vecteur_point.elem[ i ] ) );
 }
 
@@ -70,7 +70,7 @@ void Localisation::Send( ASN1T_Location& asn ) const
     asn.type               = nType_;
     asn.vecteur_point.n    = points_.size();
     asn.vecteur_point.elem = new ASN1T_CoordUTM[ points_.size() ];
-    for( uint i = 0; i < points_.size(); ++i )
+    for( unsigned int i = 0; i < points_.size(); ++i )
         points_[ i ].Send( asn.vecteur_point.elem[ i ] );
 }
 

@@ -67,7 +67,6 @@ void ModelsContainer< T >::Destroy( unsigned long nID )
     if( it == models_.end() )
         ThrowError( nID, "doesn't exist" );
     delete it->second;
-//    MT_LOG_INFO_MSG( "Delete element type '" << typeid( T ).name() << "' '" << nID << "' " );
     models_.erase( it );
 }
 
@@ -143,7 +142,7 @@ void ModelsContainer< T >::Send( L& asnList ) const
     if( !models_.empty() )
     {
         asnList.elem = new E[ models_.size() ];
-        uint i = 0;
+        unsigned int i = 0;
         for( CIT_ModelMap it = models_.begin(); it != models_.end(); ++it, ++i )
             it->second->Send( asnList.elem[ i ] );
     }

@@ -15,6 +15,7 @@
 #include "MIL.h"
 #undef Yield // $$$$ AGE 2005-03-02: ....
 #include "tools/thread/Thread.h"
+#include "DIN/DIN_Engine.h"
 
 class NET_AS_MOSServerConnectionMgr;
 class NET_AS_MOSServerMsgMgr;

@@ -1,4 +1,3 @@
-
 //*****************************************************************************
 //
 // $Created: NLD 2002-06-28 $
@@ -15,20 +14,21 @@
 
 
 #include "MIL.h"
-
+#include "DIN/DIN_UserData_ABC.h"
+namespace DIN {
+    class DIN_Link;
+}
 
 //=============================================================================
 // Created: NLD 2002-06-28
 //=============================================================================
 class NET_AS_MOSServer : public DIN::DIN_UserData_ABC
 {
-    friend class NET_AS_MOSServerConnectionMgr; // For Initialize() / Terminate()
-
     MT_COPYNOTALLOWED( NET_AS_MOSServer );
 
 public:
-     NET_AS_MOSServer( DIN::DIN_Link& link );
-    ~NET_AS_MOSServer();
+    explicit NET_AS_MOSServer( DIN::DIN_Link& link );
+    virtual ~NET_AS_MOSServer();
 
     //! @name Accessors
     //@{
@@ -40,5 +40,4 @@ private:
     DIN::DIN_Link& link_;
 };
 
-#   include "NET_AS_MOSServer.inl"
 #endif // __NET_AS_MOSServer_h_

@@ -24,6 +24,7 @@
 #include "DIN/MessageService/DIN_MessageService_ABC.h"
 #include "DIN/DIN_Link.h"
 #include "xeumeuleu/xml.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 
 using namespace dispatcher;
 using namespace tools;

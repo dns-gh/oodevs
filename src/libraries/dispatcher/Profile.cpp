@@ -19,6 +19,7 @@
 #include "Population.h"
 #include "ClientsNetworker.h"
 #include "xeumeuleu/xml.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 
 using namespace dispatcher;
 

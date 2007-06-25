@@ -34,7 +34,7 @@ OrderContext::OrderContext( Model& model, const ASN1T_OrderContext& asn )
         bLeftLimitPresent_ = true;
         leftLimit_.Update( asn.limite_gauche );
     }
-    for( uint i = 0; i < asn.limas.n; ++i )
+    for( unsigned int i = 0; i < asn.limas.n; ++i )
         limaOrders_.Create( model, i, asn.limas.elem[ i ] );
 }
 

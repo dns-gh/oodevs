@@ -10,7 +10,6 @@
 #ifndef __SIM_Dispatcher_h_
 #define __SIM_Dispatcher_h_
 
-#include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
 #undef Yield // $$$$ AGE 2005-03-02: ....
 #include "tools/thread/Thread.h"
 #include "dispatcher/Dispatcher.h"

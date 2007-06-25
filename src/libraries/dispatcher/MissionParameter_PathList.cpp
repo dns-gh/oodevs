@@ -52,7 +52,7 @@ void MissionParameter_PathList::Send( ASN1T_MissionParameter& asn ) const
     if( !paths_.empty() )
     {
         asn.value.u.pathList->elem = new ASN1T_Path[ paths_.size() ];
-        uint i = 0;
+        unsigned int i = 0;
         for( T_LocalisationVector::const_iterator it = paths_.begin(); it != paths_.end(); ++it, ++i )
             (*it).Send( asn.value.u.pathList->elem[ i ] );
     }

@@ -45,10 +45,10 @@ typedef T_LimaVector::const_iterator  CIT_LimaVector;
 
 //typedef uint32 uint;
 
-namespace NEK
+namespace DIN
 {
-    class NEK_Input;
-    class NEK_Output;
+    class DIN_Input;
+    class DIN_BufferedMessage;
 }
 
 namespace boost
@@ -67,8 +67,8 @@ typedef boost::archive::binary_oarchive MIL_CheckPointOutArchive;
 
 std::ostream&    operator << ( std::ostream&, const MT_Vector3D& );
 std::ostream&    operator << ( std::ostream&, const MT_Vector2D& );
-NEK::NEK_Output& operator << ( NEK::NEK_Output& msg, const MT_Vector2D& vPos );
-NEK::NEK_Input&  operator >> ( NEK::NEK_Input& msg, MT_Vector2D& vPos );
+DIN::DIN_BufferedMessage& operator << ( DIN::DIN_BufferedMessage& msg, const MT_Vector2D& vPos );
+DIN::DIN_Input&           operator >> ( DIN::DIN_Input& msg, MT_Vector2D& vPos );
 
 template<class T> std::ostream& operator << ( std::ostream& out, const std::vector< T >& vect )
 {

@@ -13,6 +13,9 @@
 #define __NET_AS_MOSServerMgr_ABC_h_
 
 #include "MIL.h"
+#include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
+#include "DIN/ConnectionService/DIN_ConnectionServiceServerUserCbk.h"
+#include "DIN/ConnectionService/DIN_ConnectionServiceClientUserCbk.h"
 
 class NET_AS_MOSServer;
 class NET_AgentServer;

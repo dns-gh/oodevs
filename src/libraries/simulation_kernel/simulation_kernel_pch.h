@@ -40,10 +40,6 @@
 #include "MT/MT_Time/MT_Time_lib.h"
 #include "MT/MT_XmlTools/MT_XmlTools_lib.h"
 
-#include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
-#include "DIN/ConnectionService/DIN_ConnectionServiceServerUserCbk.h"
-#include "DIN/ConnectionService/DIN_ConnectionServiceClientUserCbk.h"
-
 #include "DIA/DIA_Tool_Script_lib.h"
 #include "DIA/DIA_Kernel_lib.h"
 #include "DIA/DIA_ToolManager_lib.h"

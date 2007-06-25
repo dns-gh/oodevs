@@ -52,7 +52,7 @@ void MissionParameter_PolygonList::Send( ASN1T_MissionParameter& asn ) const
     if( !polygons_.empty() )
     {
         asn.value.u.polygonList->elem = new ASN1T_Polygon[ polygons_.size() ];
-        uint i = 0;
+        unsigned int i = 0;
         for( T_LocalisationVector::const_iterator it = polygons_.begin(); it != polygons_.end(); ++it, ++i )
             (*it).Send( asn.value.u.polygonList->elem[ i ] );
     }

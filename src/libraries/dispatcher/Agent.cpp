@@ -134,7 +134,7 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
     if( asnMsg.m.pions_renforcantPresent )
     {
         reinforcements_.Clear();
-        for( uint i = 0; i < asnMsg.pions_renforcant.n; ++i )
+        for( unsigned int i = 0; i < asnMsg.pions_renforcant.n; ++i )
             reinforcements_.Register( model_.GetAgents().Get( asnMsg.pions_renforcant.elem[ i ] ) );
     }
 
@@ -155,7 +155,7 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
     if( asnMsg.m.contamine_par_agents_nbcPresent )
     {
         nbcAgentTypesContaminating_.clear();
-        for( uint i = 0; i < asnMsg.contamine_par_agents_nbc.n; ++i )
+        for( unsigned int i = 0; i < asnMsg.contamine_par_agents_nbc.n; ++i )
             nbcAgentTypesContaminating_.push_back( asnMsg.contamine_par_agents_nbc.elem[ i ] );
     }
 
@@ -167,7 +167,7 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
     if( asnMsg.m.pions_transportesPresent )
     {
         transportedAgents_.Clear();
-        for( uint i = 0; i < asnMsg.pions_transportes.n; ++i )
+        for( unsigned int i = 0; i < asnMsg.pions_transportes.n; ++i )
             transportedAgents_.Register( model_.GetAgents().Get( asnMsg.pions_transportes.elem[ i ] ) );
     }
 
@@ -192,7 +192,7 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
 
     if( asnMsg.m.dotation_eff_materielPresent )
     {
-        for( uint i = 0; i < asnMsg.dotation_eff_materiel.n; ++i )
+        for( unsigned int i = 0; i < asnMsg.dotation_eff_materiel.n; ++i )
         {
             const ASN1T_EquipmentDotations& asn = asnMsg.dotation_eff_materiel.elem[ i ];
             Equipment* pEquipment = equipments_.Find( asn.type_equipement );
@@ -205,7 +205,7 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
 
     if( asnMsg.m.dotation_eff_personnelPresent )
     {
-        for( uint i = 0; i < asnMsg.dotation_eff_personnel.n; ++i )
+        for( unsigned int i = 0; i < asnMsg.dotation_eff_personnel.n; ++i )
         {
             const ASN1T_HumanDotations& asn = asnMsg.dotation_eff_personnel.elem[ i ];
             Humans* pHumans = troops_.Find( asn.rang );
@@ -218,7 +218,7 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
 
     if( asnMsg.m.dotation_eff_ressourcePresent )
     {
-        for( uint i = 0; i < asnMsg.dotation_eff_ressource.n; ++i )
+        for( unsigned int i = 0; i < asnMsg.dotation_eff_ressource.n; ++i )
         {
             const ASN1T_ResourceDotations& asn = asnMsg.dotation_eff_ressource.elem[ i ];
             Dotation* pDotation = dotations_.Find( asn.ressource_id );
@@ -232,14 +232,14 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
     if( asnMsg.m.equipements_pretesPresent )
     {
         lendings_.Clear();
-        for( uint i = 0; i < asnMsg.equipements_pretes.n; ++i )
+        for( unsigned int i = 0; i < asnMsg.equipements_pretes.n; ++i )
             lendings_.Create( model_, i, asnMsg.equipements_pretes.elem[ i ] );
     }
 
     if( asnMsg.m.equipements_empruntesPresent )
     {
         borrowings_.Clear();
-        for( uint i = 0; i < asnMsg.equipements_empruntes.n; ++i )
+        for( unsigned int i = 0; i < asnMsg.equipements_empruntes.n; ++i )
             borrowings_.Create( model_, i, asnMsg.equipements_empruntes.elem[ i ] );
     }
 }

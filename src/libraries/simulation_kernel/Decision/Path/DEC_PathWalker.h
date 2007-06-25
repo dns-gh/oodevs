@@ -27,6 +27,9 @@
 class MIL_Object_ABC;
 class TerrainData;
 class PHY_MovingEntity_ABC;
+namespace DIN {
+    class DIN_BufferedMessage;
+}
 
 // =============================================================================
 // Created: NLD 2005-09-30

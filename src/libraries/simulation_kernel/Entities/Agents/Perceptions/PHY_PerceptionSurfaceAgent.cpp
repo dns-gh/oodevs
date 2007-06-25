@@ -13,6 +13,7 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "DIN/MessageService/DIN_BufferedMessage.h"
 
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 

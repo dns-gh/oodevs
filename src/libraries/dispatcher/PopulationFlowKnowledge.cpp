@@ -86,7 +86,7 @@ void PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFlowKnowledgeUpda
     if( msg.m.portions_fluxPresent )
     {
         flowParts_.Clear();
-        for( uint i = 0; i < msg.portions_flux.n; ++i )
+        for( unsigned int i = 0; i < msg.portions_flux.n; ++i )
             flowParts_.Create( model_, i, msg.portions_flux.elem[ i ] );
         optionals_.portions_fluxPresent = 1;
     }
@@ -196,7 +196,7 @@ void PopulationFlowKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 
     if( asn().m.portions_fluxPresent && asn().portions_flux.n > 0 )
     {
-        for( uint i = 0; i < asn().portions_flux.n; ++i )
+        for( unsigned int i = 0; i < asn().portions_flux.n; ++i )
             PopulationFlowPart::AsnDelete( asn().portions_flux.elem[ i ] );
         delete [] asn().portions_flux.elem;
     }

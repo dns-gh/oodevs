@@ -12,6 +12,7 @@
 #include "SIM_Dispatcher.h"
 #include "SIM_Config.h"
 #include "tools/win32/Win32Exception.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 
 // -----------------------------------------------------------------------------
 // Name: SIM_Dispatcher constructor
@@ -44,17 +45,6 @@ void SIM_Dispatcher::Run()
 {
     while( 1 )
     {
-      /*  do
-        {
-            {
-                MT_CriticalSectionLocker locker( dinEngineCriticalSection_ );
-                dinEngine_.Update();
-            }
-            Yield();
-        }
-        while( dinEngine_.GetEventManager().GetPendingEvents() > 10 || pConnectionMgr_->NeedsUpdating() );
-        Sleep( 25 );*/
-        
         dispatcher_.Update();
         Sleep( 25 ); 
     }

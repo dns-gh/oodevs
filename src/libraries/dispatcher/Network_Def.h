@@ -199,7 +199,7 @@ void SendContainerValues( const P& container, L& asnList )
     if( !container.empty() )
     {
         asnList.elem = new E[ container.size() ];
-        uint i = 0;
+        unsigned int i = 0;
         for( P::const_iterator it = container.begin(); it != container.end(); ++it, ++i )
             asnList.elem[ i ] = *it;
     }
@@ -212,7 +212,7 @@ void SendContainerRefs( const P& container, L& asnList )
     if( !container.empty() )
     {
         asnList.elem = new E[ container.size() ];
-        uint i = 0;
+        unsigned int i = 0;
         for( P::const_iterator it = container.begin(); it != container.end(); ++it, ++i )
             asnList.elem[ i ] = (**it).GetID();
     }

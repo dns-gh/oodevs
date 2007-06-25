@@ -85,7 +85,7 @@ void ModelRefsContainer< T >::Send( L& asnList ) const
     if( !modelRefs_.empty() )
     {
         asnList.elem = new E[ modelRefs_.size() ];
-        uint i = 0;
+        unsigned int i = 0;
         for( CIT_ModelRefMap it = modelRefs_.begin(); it != modelRefs_.end(); ++it, ++i )
             asnList.elem[ i ] = it->second->GetID();
     }

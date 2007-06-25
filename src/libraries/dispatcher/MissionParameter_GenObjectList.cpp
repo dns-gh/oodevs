@@ -52,7 +52,7 @@ void MissionParameter_GenObjectList::Send( ASN1T_MissionParameter& asn ) const
     if( !objects_.empty() )
     {
         asn.value.u.plannedWorkList->elem = new ASN1T_PlannedWork[ objects_.size() ];
-        uint i = 0;
+        unsigned int i = 0;
         for( T_GenObjectVector::const_iterator it = objects_.begin(); it != objects_.end(); ++it, ++i )
             (*it).Send( asn.value.u.plannedWorkList->elem[ i ] );
     }

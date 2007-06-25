@@ -13,6 +13,7 @@
 #include "ClientsNetworker.h"
 #include "network_def.h"
 #include "game_asn/Asn.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 
 using namespace dispatcher;
 

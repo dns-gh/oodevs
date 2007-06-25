@@ -108,7 +108,7 @@ void AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
     {
         optionals_.perception_par_compagniePresent = 1;
         automatePerceptions_.clear();
-        for( uint i = 0; i < asnMsg.perception_par_compagnie.n; ++i )
+        for( unsigned int i = 0; i < asnMsg.perception_par_compagnie.n; ++i )
             automatePerceptions_.push_back( asnMsg.perception_par_compagnie.elem[ i ] );
     }
 
@@ -191,7 +191,7 @@ void AgentKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
         if( !automatePerceptions_.empty() )
         {
             asn().perception_par_compagnie.elem = new ASN1T_AutomatPerception[ automatePerceptions_.size() ];
-            for( uint i = 0; i < automatePerceptions_.size(); ++i )
+            for( unsigned int i = 0; i < automatePerceptions_.size(); ++i )
                 asn().perception_par_compagnie.elem[ i ] = automatePerceptions_[ i ];                
         }
     }

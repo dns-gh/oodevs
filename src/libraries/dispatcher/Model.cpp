@@ -254,7 +254,7 @@ void Model::UpdateAnyAgent( unsigned id, const T& message )
 // Name: Model::Update
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-void Model::Update( uint nMsgID, DIN::DIN_Input& msg )
+void Model::Update( unsigned int nMsgID, DIN::DIN_Input& msg )
 {
     // $$$$ AGE 2007-04-10: TODO
 //    switch( nMsgID )

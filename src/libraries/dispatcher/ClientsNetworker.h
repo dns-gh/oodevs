@@ -84,7 +84,7 @@ private:
     //! @name Tools
     //@{
     template< typename T >
-    void Dispatch( const T& asnMsg, uint nDinID, const DIN::DIN_BufferedMessage& dinMsg );
+    void Dispatch( const T& asnMsg, unsigned int nDinID, const DIN::DIN_BufferedMessage& dinMsg );
     //@}
 
 private:
