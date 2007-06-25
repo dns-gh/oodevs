@@ -249,6 +249,8 @@ void GlWidget::RenderIcons()
     MapWidget::resizeGL( windowWidth_, windowHeight_ );
 }
 
+#include <qbitmap.h>
+
 // -----------------------------------------------------------------------------
 // Name: GlWidget::RenderIcon
 // Created: AGE 2006-11-22
@@ -260,7 +262,7 @@ void GlWidget::RenderIcon( const T_IconTask& task, const geometry::Rectangle2f& 
     QImage image( iconSide_, iconSide_, 32 );
     glColor3f( 1, 1, 1 );
     glRectf( viewport.Left() - 50, viewport.Bottom() - 50, viewport.Right() + 50, viewport.Top() + 50 );
-    SetCurrentColor( task.color.red()/ 255.f, task.color.green()/255.f, task.color.blue()/255.f );
+    SetCurrentColor( task.color.red() / 255.f, task.color.green() / 255.f, task.color.blue() / 255.f );
     windowWidth_ = windowHeight_ = viewport.Width() * 1.5f; // => trait svg de 2 px
     const Point2f center( 300, 100 );
     DrawApp6Symbol( task.name, center );
@@ -272,7 +274,9 @@ void GlWidget::RenderIcon( const T_IconTask& task, const geometry::Rectangle2f& 
     glReadPixels( 0, 0, iconSide_, iconSide_, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
     glFlush();
 
-    task.handler->AddIcon( task.name, task.name2, task.color, QPixmap( image.mirror().smoothScale( 32, 32 ) ) );
+    QPixmap result( image.mirror().smoothScale( 32, 32 ) );
+    result.setMask( result.createHeuristicMask( true ) );
+    task.handler->AddIcon( task.name, task.name2, task.color, result );
 }
 
 // -----------------------------------------------------------------------------
