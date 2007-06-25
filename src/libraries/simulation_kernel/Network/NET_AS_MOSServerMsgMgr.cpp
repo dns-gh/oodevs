@@ -15,10 +15,9 @@
 
 #include "MIL_AgentServer.h"
 
-#include "NET_AS_MOSServer.h"
 #include "NET_AS_MOSServerConnectionMgr.h"
 #include "NET_ASN_Messages.h"
-
+#include "NET_AgentServer.h"
 #include "Entities/Orders/MIL_TacticalLineManager.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Meteo/PHY_MeteoDataManager.h"
@@ -60,8 +59,8 @@ static enum
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
 NET_AS_MOSServerMsgMgr::NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer )
-    : NET_AS_MOSServerMgr_ABC( agentServer )
-    , messageService_        ( *this, agentServer.GetDINEngine(), DIN_ConnectorHost() )
+    : agentServer_   ( agentServer )
+    , messageService_( *this, agentServer.GetDINEngine(), DIN_ConnectorHost() )
 {
     messageService_.RegisterReceivedMessage( eMsgClientToSim           , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgClientToSim            );
     messageService_.RegisterReceivedMessage( eMsgMiddleToSim           , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgMiddleToSim            );
@@ -116,10 +115,10 @@ void NET_AS_MOSServerMsgMgr::Disable( DIN_Link& link )
 //-----------------------------------------------------------------------------
 void NET_AS_MOSServerMsgMgr::SendMsgToAll( uint nMsgID, DIN_BufferedMessage& msg ) 
 {
-    const T_ConnectionMap& connections = agentServer_.GetConnectionMgr().GetConnections();
+    const NET_AS_MOSServerConnectionMgr::T_ConnectionMap& connections = agentServer_.GetConnectionMgr().GetConnections();
     MT_CriticalSectionLocker locker( agentServer_.GetDINEngineCriticalSection() );
-    for( CIT_ConnectionMap itConnection = connections.begin(); itConnection != connections.end(); ++itConnection )
-        messageService_.Send( itConnection->second->GetLink(), nMsgID, msg );    
+    for(NET_AS_MOSServerConnectionMgr::CIT_ConnectionMap itConnection = connections.begin(); itConnection != connections.end(); ++itConnection )
+        messageService_.Send( **itConnection, nMsgID, msg );    
 }
 
 // -----------------------------------------------------------------------------

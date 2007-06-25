@@ -27,7 +27,7 @@ static const unsigned int magicCookie_ = 1;
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
 NET_AS_MOSServerConnectionMgr::NET_AS_MOSServerConnectionMgr( NET_AgentServer& agentServer )
-    : NET_AS_MOSServerMgr_ABC( agentServer )
+    : agentServer_           ( agentServer )
     , pServer_               ( 0 )
     , connectionService_     ( *this, agentServer.GetDINEngine(), DIN_ConnectorHost(), DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 ), magicCookie_ )
 {
@@ -121,7 +121,6 @@ void NET_AS_MOSServerConnectionMgr::OnConnectionLost( DIN_Server& /*server*/, DI
     agentServer_.GetMessageMgr().Disable( link );
     RemoveConnection( link );
     agentServer_.GetMessageMgr().DeleteMessagesFrom( link );
-    // $$$$ AGE 2005-06-23: MsgManager.TrashMessagesFrom( link );
 }
 
 //=============================================================================
@@ -132,11 +131,9 @@ void NET_AS_MOSServerConnectionMgr::OnConnectionLost( DIN_Server& /*server*/, DI
 // Name: NET_AS_MOSServerConnectionMgr::AddConnection
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-NET_AS_MOSServer& NET_AS_MOSServerConnectionMgr::AddConnection( DIN::DIN_Link& link )
+void NET_AS_MOSServerConnectionMgr::AddConnection( DIN::DIN_Link& link )
 {
-    NET_AS_MOSServer* pConnection = new NET_AS_MOSServer( link );
-    connections_.insert( std::make_pair( link.GetStationID(), pConnection ) );
-    return *pConnection;
+    connections_.insert( &link );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,12 +142,7 @@ NET_AS_MOSServer& NET_AS_MOSServerConnectionMgr::AddConnection( DIN::DIN_Link& l
 // -----------------------------------------------------------------------------
 void NET_AS_MOSServerConnectionMgr::RemoveConnection( DIN::DIN_Link& link )
 {
-    NET_AS_MOSServer* pConnection = GetMosConnectionFromLink( link );
-    if( !pConnection )
-        return;
-
-    connections_.erase( link.GetStationID() );
-    delete pConnection;
+    connections_.erase( &link );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,9 +155,17 @@ bool NET_AS_MOSServerConnectionMgr::NeedsUpdating() const
     unsigned int nPending = 0;
     for( CIT_ConnectionMap it = connections_.begin(); it != connections_.end() && nPending < nMaxPending; ++it )
     {
-        assert( it->second );
-        const NET_AS_MOSServer& server = *it->second;
-        nPending += server.GetLink().GetPendingMessages();
+        const DIN::DIN_Link& server = **it;
+        nPending += server.GetPendingMessages();
     }
     return nPending >= nMaxPending;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_AS_MOSServerConnectionMgr::GetConnections
+// Created: AGE 2007-06-25
+// -----------------------------------------------------------------------------
+const NET_AS_MOSServerConnectionMgr::T_ConnectionMap& NET_AS_MOSServerConnectionMgr::GetConnections() const
+{
+    return connections_;
 }

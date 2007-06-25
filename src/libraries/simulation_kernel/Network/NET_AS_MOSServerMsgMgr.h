@@ -13,24 +13,26 @@
 #define __NET_AS_MOSServerMsgMgr_h_
 
 #include "MIL.h"
-#include "NET_AS_MOSServerMgr_ABC.h"
 #include "NET_ASN_MessageController.h"
 #include "game_asn/Asn.h"
+#include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
 
 NET_ASN_GENERATE_MESSAGE_CONTROLLER( MsgsClientToSim )
 NET_ASN_GENERATE_MESSAGE_CONTROLLER( MsgsMiddleToSim )
-class MIL_Agent_ABC;
+
+class NET_AgentServer;
 
 //=============================================================================
 // Created: NLD 2002-07-12
 // Last Modified : JVT 02-10-10
 //=============================================================================
-class NET_AS_MOSServerMsgMgr : public NET_AS_MOSServerMgr_ABC
+class NET_AS_MOSServerMsgMgr
 {
     MT_COPYNOTALLOWED( NET_AS_MOSServerMsgMgr );
 
 public:
-             NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer ); 
+
+    explicit NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer ); 
     virtual ~NET_AS_MOSServerMsgMgr();
 
     //! @name Service activation 
@@ -113,6 +115,7 @@ private:
     //@}
     
 private:
+    NET_AgentServer& agentServer_;
     DIN::DIN_MessageServiceUserCbk< NET_AS_MOSServerMsgMgr > messageService_;
 
     // ASN
