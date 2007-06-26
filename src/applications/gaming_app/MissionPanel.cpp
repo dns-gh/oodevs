@@ -325,6 +325,7 @@ void MissionPanel::SetInterface( MissionInterface_ABC* missionInterface )
     {
         hide();
         delete pMissionInterface_;
+        pMissionInterface_ = 0;
     }
     else
     {
