@@ -36,6 +36,7 @@
 #include "ActionParameterNumeric.h"
 #include "ActionParameterDotationType.h"
 #include "ActionParameterAtlasNature.h"
+#include "ActionParameterMaintenancePriorities.h"
 #include "ActionParameterMedicalPriorities.h"
 #include "Model.h"
 #include "StaticModel.h"
@@ -139,8 +140,9 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     case T_MissionParameter_value_dotationType:
         return new ActionParameterDotationType( parameter, asn.value.u.dotationType, staticModel_.objectTypes_ );
     case T_MissionParameter_value_equipmentType:
-    case T_MissionParameter_value_logMaintenancePriorities:
         break;
+    case T_MissionParameter_value_logMaintenancePriorities:
+        return new ActionParameterMaintenancePriorities( parameter, staticModel_.objectTypes_, *asn.value.u.logMaintenancePriorities );
     case T_MissionParameter_value_logMedicalPriorities:
         return new ActionParameterMedicalPriorities( parameter, *asn.value.u.logMedicalPriorities );
     case T_MissionParameter_value_tirIndirect: // $$$$ SBO 2007-05-21: reports only, not to be used!
@@ -245,6 +247,8 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
         return new ActionParameterAtlasNature( parameter, xis, staticModel_.atlasNatures_ );
     else if( type == "medicalpriorities" )
         return new ActionParameterMedicalPriorities( parameter, xis );
+    else if( type == "maintenancepriorities" )
+        return new ActionParameterMaintenancePriorities( parameter, staticModel_.objectTypes_, xis );
 
     return new ActionParameter< QString >( parameter ); // $$$$ SBO 2007-05-16: default not yet implemented parameters...
 }

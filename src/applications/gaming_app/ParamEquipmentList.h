@@ -12,14 +12,12 @@
 
 #include "Param_ABC.h"
 #include "clients_kernel/Resolver.h"
+#include "clients_kernel/OrderParameter.h"
 
 namespace kernel
 {
     class EquipmentType;
-    class OrderParameter;
 }
-
-class QTable;
 
 // =============================================================================
 /** @class  ParamEquipmentList
@@ -43,29 +41,25 @@ public:
     virtual void BuildInterface( QWidget* parent );
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnEquipmentChanged( int row, int col );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::map< QString, const kernel::EquipmentType* > T_EquipmentTypes;
-    typedef T_EquipmentTypes::const_iterator                CIT_EquipmentTypes;
+    void OnUp();
+    void OnDown();
+    void OnAdd( int index );
+    void OnRemove();
+    void OnContextMenu( QListViewItem* item, const QPoint& point, int col );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::OrderParameter& parameter_;
+    kernel::OrderParameter parameter_;
     const kernel::Resolver< kernel::EquipmentType >& resolver_;
-    QTable*                     table_;
-    QStringList                 equipmentList_;
-    T_EquipmentTypes            equipmentTypes_;
+    QListView* list_;
     //@}
 };
 
