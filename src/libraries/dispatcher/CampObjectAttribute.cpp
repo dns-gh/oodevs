@@ -25,10 +25,7 @@ CampObjectAttribute::CampObjectAttribute( const Model& model, const ASN1T_Object
     , model_             ( model )
     , pTC2_              ( 0 )
 {
-    if( asnMsg.t == T_ObjectAttributesSpecific_camp_prisonniers )
-        pTC2_ = &model_.GetAutomats().Get( asnMsg.u.camp_prisonniers->tc2 );
-    else if( asnMsg.t == T_ObjectAttributesSpecific_camp_refugies )
-        pTC2_ = &model_.GetAutomats().Get( asnMsg.u.camp_refugies->tc2 );        
+    Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,10 +43,10 @@ CampObjectAttribute::~CampObjectAttribute()
 // -----------------------------------------------------------------------------
 void CampObjectAttribute::Update( const ASN1T_ObjectAttributesSpecific& asnMsg )
 {
-    if( asnMsg.t == T_ObjectAttributesSpecific_camp_prisonniers )
-        pTC2_ = &model_.GetAutomats().Get( asnMsg.u.camp_prisonniers->tc2 );
-    else if( asnMsg.t == T_ObjectAttributesSpecific_camp_refugies )
-        pTC2_ = &model_.GetAutomats().Get( asnMsg.u.camp_refugies->tc2 );
+    if( asnMsg.t == T_ObjectAttributesSpecific_prisoner_camp )
+        pTC2_ = &model_.GetAutomats().Get( asnMsg.u.prisoner_camp->tc2 );
+    else if( asnMsg.t == T_ObjectAttributesSpecific_refugee_camp )
+        pTC2_ = &model_.GetAutomats().Get( asnMsg.u.refugee_camp->tc2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,13 +60,13 @@ void CampObjectAttribute::Send( ASN1T_ObjectAttributesSpecific& asnMsg ) const
     asnMsg.t = nType_;
     switch( nType_ )
     {
-        case T_ObjectAttributesSpecific_camp_prisonniers: 
-            asnMsg.u.camp_prisonniers = new ASN1T_ObjectAttributesPrisonerCamp();
-            asnMsg.u.camp_prisonniers->tc2 = pTC2_->GetID(); 
+        case T_ObjectAttributesSpecific_prisoner_camp: 
+            asnMsg.u.prisoner_camp = new ASN1T_ObjectAttributesPrisonerCamp();
+            asnMsg.u.prisoner_camp->tc2 = pTC2_->GetID(); 
             break;
-        case T_ObjectAttributesSpecific_camp_refugies   : 
-            asnMsg.u.camp_refugies = new ASN1T_ObjectAttributesRefugeeCamp();
-            asnMsg.u.camp_refugies->tc2 = pTC2_->GetID(); 
+        case T_ObjectAttributesSpecific_refugee_camp: 
+            asnMsg.u.refugee_camp = new ASN1T_ObjectAttributesRefugeeCamp();
+            asnMsg.u.refugee_camp->tc2 = pTC2_->GetID(); 
             break;
         default:
             throw std::runtime_error( "object specific attributes inconsistency" );
@@ -84,11 +81,11 @@ void CampObjectAttribute::AsnDelete( ASN1T_ObjectAttributesSpecific& asnMsg ) co
 {
     switch( nType_ )
     {
-        case T_ObjectAttributesSpecific_camp_prisonniers: 
-            delete asnMsg.u.camp_prisonniers;
+        case T_ObjectAttributesSpecific_prisoner_camp: 
+            delete asnMsg.u.prisoner_camp;
             break;
-        case T_ObjectAttributesSpecific_camp_refugies: 
-            delete asnMsg.u.camp_refugies;
+        case T_ObjectAttributesSpecific_refugee_camp: 
+            delete asnMsg.u.refugee_camp;
             break;
         default:
             throw std::runtime_error( "object specific attributes inconsistency" );

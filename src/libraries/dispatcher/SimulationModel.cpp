@@ -59,8 +59,8 @@ void SimulationModel::Update( const ASN1T_MsgControlInformation& msg )
     nCurrentTick_         = msg.current_tick;
     nTickDuration_        = msg.tick_duration;
     nTimeFactor_          = msg.time_factor;
-    nCheckpointFrequency_ = msg.checkpoint_frequence;
-    nSimState_            = msg.etat;
+    nCheckpointFrequency_ = msg.checkpoint_frequency;
+    nSimState_            = msg.status;
     bSendVisionCones_     = msg.send_vision_cones;
     bProfilingEnabled_    = msg.profiling_enabled;
 }
@@ -148,8 +148,8 @@ void SimulationModel::Send( Publisher_ABC& publisher ) const
     asn().current_tick           = nCurrentTick_;
     asn().tick_duration          = nTickDuration_;
     asn().time_factor            = nTimeFactor_;
-    asn().checkpoint_frequence   = nCheckpointFrequency_;
-    asn().etat                   = nSimState_;
+    asn().checkpoint_frequency   = nCheckpointFrequency_;
+    asn().status                 = nSimState_;
     asn().send_vision_cones      = bSendVisionCones_;
     asn().profiling_enabled      = bProfilingEnabled_;
     asn.Send( publisher );

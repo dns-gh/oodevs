@@ -365,34 +365,7 @@
     </message>
 </context>
 <context>
-    <name>UnitListView</name>
-</context>
-<context>
     <name>UnitsPanel</name>
-    <message>
-        <source>Hierarchical view</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Nature</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Atlas qualifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display type:</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>UserProfileList</name>

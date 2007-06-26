@@ -68,11 +68,11 @@ void Paths::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // -----------------------------------------------------------------------------
 void Paths::DoUpdate( const ASN1T_MsgUnitPathFind& message )
 {
-    plannedPath_.clear(); plannedPath_.reserve( message.itineraire.vecteur_point.n );
+    plannedPath_.clear(); plannedPath_.reserve( message.itineraire.coordinates.n );
     plannedBox_ = Rectangle2f();
-    for( uint i = 0; i < message.itineraire.vecteur_point.n; ++i )
+    for( uint i = 0; i < message.itineraire.coordinates.n; ++i )
     {
-        plannedPath_.push_back( converter_.ConvertToXY( message.itineraire.vecteur_point.elem[i] ) );
+        plannedPath_.push_back( converter_.ConvertToXY( message.itineraire.coordinates.elem[i] ) );
         plannedBox_.Incorporate( plannedPath_.back() );
     }
     UpdatePathfind();

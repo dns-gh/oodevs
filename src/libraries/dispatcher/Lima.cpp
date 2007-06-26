@@ -65,7 +65,7 @@ void Lima::SendCreation( Publisher_ABC& publisher ) const
     TacticalLine_ABC::Send( asn().tactical_line );
     asn.Send( publisher );
 
-    Localisation::AsnDelete( asn().tactical_line.geometrie );
+    Localisation::AsnDelete( asn().tactical_line.geometry );
 }
 
 // -----------------------------------------------------------------------------

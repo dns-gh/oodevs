@@ -49,14 +49,14 @@ void LoaderFacade::OnReceive( const ASN1T_MsgsClientToSim& asnMsg )
 {
     switch( asnMsg.msg.t )
     {
-        case T_MsgsClientToSim_msg_msg_ctrl_pause:
+        case T_MsgsClientToSim_msg_msg_control_pause:
             TogglePause( true );
             break;
-        case T_MsgsClientToSim_msg_msg_ctrl_resume:
+        case T_MsgsClientToSim_msg_msg_control_resume:
             TogglePause( false );
             break;
-        case T_MsgsClientToSim_msg_msg_ctrl_change_time_factor:
-            ChangeTimeFactor( asnMsg.msg.u.msg_ctrl_change_time_factor );
+        case T_MsgsClientToSim_msg_msg_control_change_time_factor:
+            ChangeTimeFactor( asnMsg.msg.u.msg_control_change_time_factor );
             break;
     };
     // $$$$ NLD 2007-04-24: Messages devraient être ClientToMiddle
@@ -70,8 +70,8 @@ void LoaderFacade::OnReceive( const ASN1T_MsgsClientToMiddle& asnMsg )
 {
     switch( asnMsg.msg.t )
     {      
-        case T_MsgsClientToMiddle_msg_msg_ctrl_skip_to_tick:
-            skipToFrame_ = asnMsg.msg.u.msg_ctrl_skip_to_tick;
+        case T_MsgsClientToMiddle_msg_msg_control_skip_to_tick:
+            skipToFrame_ = asnMsg.msg.u.msg_control_skip_to_tick;
             break;
     };
 }
@@ -151,7 +151,7 @@ void LoaderFacade::Send( Publisher_ABC& publisher ) const
     asn().current_tick  = loader_->GetCurrentTick();
     asn().tick_duration = 10; // $$$$ AGE 2007-04-11: 
     asn().time_factor = factor_;
-    asn().etat = running_ ? EnumSimulationState::running : EnumSimulationState::paused;
+    asn().status = running_ ? EnumSimulationState::running : EnumSimulationState::paused;
     asn().tick_count = loader_->GetTickNumber();
 
     asn.Send( publisher );

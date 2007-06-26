@@ -51,8 +51,8 @@ MsgControlEndTick   ::= SEQUENCE
 {
     current-tick        INTEGER,
     tick-duration       INTEGER,    -- En millisecondes
-    nb-pathfinds-longs  INTEGER,
-    nb-pathfinds-courts INTEGER,
+    long-pathfinds      INTEGER,
+    short-pathfinds     INTEGER,
     memory              INTEGER,
     virtual-memory      INTEGER
 }
@@ -71,8 +71,8 @@ MsgControlInformation ::= SEQUENCE
     current-tick            INTEGER,     
     tick-duration           INTEGER,  -- En secondes
     time-factor             INTEGER,
-    checkpoint-frequence    INTEGER, -- En minutes
-    etat                    EnumSimulationState,
+    checkpoint-frequency    INTEGER, -- En minutes
+    status                  EnumSimulationState,
     send-vision-cones       BOOLEAN, -- No comment ...
     profiling-enabled       BOOLEAN
 }
@@ -82,7 +82,7 @@ MsgControlReplayInformation ::= SEQUENCE
     current-tick            INTEGER,     
     tick-duration           INTEGER,  -- En secondes
     time-factor             INTEGER,
-    etat                    EnumSimulationState,
+    status                  EnumSimulationState,
     tick-count              INTEGER
 }
 
@@ -101,7 +101,7 @@ MsgControlCheckPointSetFrequency    ::= INTEGER -- En minutes
 MsgControlCheckPointSetFrequencyAck ::= NULL
 MsgControlCheckPointSaveNow         ::= SEQUENCE
 {
-    nom VisibleString OPTIONAL    
+    name VisibleString OPTIONAL    
 }
 MsgControlCheckPointSaveNowAck      ::= NULL
 
@@ -126,27 +126,27 @@ EnumPrecipitationType ::= ENUMERATED
 MeteoAttributes ::= SEQUENCE
 {
     temperature                         INTEGER,
-    vitesse-vent                        Speed, -- en km/h
-    direction-vent                      Heading,
-    plancher-couverture-nuageuse        Elevation,
-    plafond-couverture-nuageuse         Elevation,
-    densite-moyenne-couverture-nuageuse Percentage,
+    wind-speed                          Speed, -- en km/h
+    wind-direction                      Heading,
+    cloud-floor                         Elevation,
+    cloud-ceiling                       Elevation,
+    cloud-density                       Percentage,
     precipitation                       EnumPrecipitationType
 }
 
 MsgControlGlobalMeteo ::= SEQUENCE
 {
-    attributs MeteoAttributes
+    attributes MeteoAttributes
 }
 
 MsgControlLocalMeteo ::= SEQUENCE
 {
-    rect-point-haut-gauche CoordUTM,
-    rect-point-bas-droite  CoordUTM,
+    top-left-coordinate      CoordUTM,
+    bottom-right-coordinate  CoordUTM,
     meteo CHOICE
     {
-        attributs MeteoAttributes,
-        globale   NULL
+        attributes MeteoAttributes,
+        global     NULL
     }
 }
 

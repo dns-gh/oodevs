@@ -51,7 +51,7 @@ PlannedWork ::= SEQUENCE
     type-obstacle        EnumObstacleType DEFAULT initial,
     densite              REAL(0..5)       DEFAULT 0,
     tc2                  Automat          DEFAULT 0,
-    delai-activite-mines INTEGER          DEFAULT 0
+    activity-time        INTEGER          DEFAULT 0
 }
 PlannedWorkList ::= SEQUENCE OF PlannedWork
 

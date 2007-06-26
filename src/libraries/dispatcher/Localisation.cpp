@@ -32,8 +32,8 @@ Localisation::Localisation( const ASN1T_Location& asn )
     : nType_ ( asn.type )
     , points_( )
 {
-    for( unsigned int i = 0; i < asn.vecteur_point.n; ++i )
-        points_.push_back( Position( asn.vecteur_point.elem[ i ] ) );
+    for( unsigned int i = 0; i < asn.coordinates.n; ++i )
+        points_.push_back( Position( asn.coordinates.elem[ i ] ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,8 +57,8 @@ void Localisation::Update( const ASN1T_Location& asn )
 {
     nType_ = asn.type;
     points_.clear();
-    for( unsigned int i = 0; i < asn.vecteur_point.n; ++i )
-        points_.push_back( Position( asn.vecteur_point.elem[ i ] ) );
+    for( unsigned int i = 0; i < asn.coordinates.n; ++i )
+        points_.push_back( Position( asn.coordinates.elem[ i ] ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,10 +68,10 @@ void Localisation::Update( const ASN1T_Location& asn )
 void Localisation::Send( ASN1T_Location& asn ) const
 {
     asn.type               = nType_;
-    asn.vecteur_point.n    = points_.size();
-    asn.vecteur_point.elem = new ASN1T_CoordUTM[ points_.size() ];
+    asn.coordinates.n    = points_.size();
+    asn.coordinates.elem = new ASN1T_CoordUTM[ points_.size() ];
     for( unsigned int i = 0; i < points_.size(); ++i )
-        points_[ i ].Send( asn.vecteur_point.elem[ i ] );
+        points_[ i ].Send( asn.coordinates.elem[ i ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,6 +83,6 @@ void Localisation::AsnDelete( ASN1T_Location& asn, bool bOptionalValue /*= true*
     if( !bOptionalValue )
         return;
 
-    if( asn.vecteur_point.n > 0 )
-        delete [] asn.vecteur_point.elem;
+    if( asn.coordinates.n > 0 )
+        delete [] asn.coordinates.elem;
 }

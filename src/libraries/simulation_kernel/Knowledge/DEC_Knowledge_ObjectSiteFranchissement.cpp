@@ -140,14 +140,14 @@ void DEC_Knowledge_ObjectSiteFranchissement::BuildMsgSpecificAttributes( ASN1T_M
     if( !IsAttributeUpdated( eAttr_Specific ) || !bSpecificAttributesValid_ )
         return;
     
-    asnAttributes_.largeur           = (int)rWidth_;
-    asnAttributes_.profondeur        = (int)rDepth_;
-    asnAttributes_.vitesse_courant   = (int)rCurrentSpeed_;
-    asnAttributes_.berges_a_amenager = bBanksToFitOut_;
+    asnAttributes_.width                 = (int)rWidth_;
+    asnAttributes_.depth                 = (int)rDepth_;
+    asnAttributes_.flow_rate             = (int)rCurrentSpeed_;
+    asnAttributes_.banks_require_fitting = bBanksToFitOut_;
 
-    asnMsg.m.attributs_specifiquesPresent = 1;
-    asnMsg.attributs_specifiques.t                     = T_ObjectAttributesSpecific_site_franchissement;
-    asnMsg.attributs_specifiques.u.site_franchissement = &asnAttributes_;
+    asnMsg.m.specific_attributesPresent        = 1;
+    asnMsg.specific_attributes.t               = T_ObjectAttributesSpecific_crossing_site;
+    asnMsg.specific_attributes.u.crossing_site = &asnAttributes_;
 }
 
 

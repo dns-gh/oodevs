@@ -31,10 +31,10 @@ const QString Object::typeName_ = "object";
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
 Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& typeResolver, const Resolver_ABC< DotationType >& dotationResolver )
-    : EntityImplementation< Object_ABC >( controller, message.oid, message.nom )
+    : EntityImplementation< Object_ABC >( controller, message.oid, message.name )
     , converter_                     ( converter )
     , type_                          ( typeResolver.Get( message.type ) )
-    , nTypeLocalisation_             ( message.localisation.type )
+    , nTypeLocalisation_             ( message.location.type )
     , construction_                  ( 0 )
     , valorization_                  ( 0 )
 {
@@ -42,17 +42,17 @@ Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, 
         name_ = QString( "%1 %2" ).arg( type_.GetName() ).arg( message.oid );
     RegisterSelf( *this );
 
-    if( message.m.type_dotation_constructionPresent )
-        construction_ = & dotationResolver.Get( message.type_dotation_construction );
+    if( message.m.construction_dotation_typePresent )
+        construction_ = & dotationResolver.Get( message.construction_dotation_type );
     
-    if( message.m.type_dotation_valorisationPresent )
-        valorization_ = & dotationResolver.Get( message.type_dotation_valorisation );
+    if( message.m.mining_dotation_typePresent )
+        valorization_ = & dotationResolver.Get( message.mining_dotation_type );
 
-    if( message.m.type_obstaclePresent )
-        obstacleType_ = (E_ObstacleType)message.type_obstacle;
+    if( message.m.obstacle_typePresent )
+        obstacleType_ = (E_ObstacleType)message.obstacle_type;
     
-    if( message.m.obstacle_de_manoeuvre_activePresent )
-        reservedObstacleActivated_ = message.obstacle_de_manoeuvre_active;
+    if( message.m.reserved_obstacle_activatedPresent )
+        reservedObstacleActivated_ = message.reserved_obstacle_activated;
 }
 
 // -----------------------------------------------------------------------------
@@ -88,20 +88,20 @@ QString Object::GetTypeName() const
 // -----------------------------------------------------------------------------
 void Object::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 {
-    if( message.m.obstacle_de_manoeuvre_activePresent )
-        reservedObstacleActivated_ = message.obstacle_de_manoeuvre_active;
+    if( message.m.reserved_obstacle_activatedPresent )
+        reservedObstacleActivated_ = message.reserved_obstacle_activated;
 
-    if( message.m.nb_dotation_constructionPresent )
-        nDotationConstruction_ = message.nb_dotation_construction;
-    if( message.m.nb_dotation_valorisationPresent && type_.CanBeValorized() )
-        nDotationValorization_ = message.nb_dotation_valorisation;
+    if( message.m.construction_dotation_nbrPresent )
+        nDotationConstruction_ = message.construction_dotation_nbr;
+    if( message.m.mining_dotation_nbrPresent && type_.CanBeValorized() )
+        nDotationValorization_ = message.mining_dotation_nbr;
 
-    if( message.m.pourcentage_constructionPresent )
-        rConstructionPercentage_ = message.pourcentage_construction;
-    if( message.m.pourcentage_valorisationPresent && type_.CanBeValorized() )
-        rValorizationPercentage_ = message.pourcentage_valorisation;
-    if( message.m.pourcentage_creation_contournementPresent && type_.CanBeBypassed() )
-        rBypassConstructionPercentage_ = message.pourcentage_creation_contournement;
+    if( message.m.construction_percentagePresent )
+        rConstructionPercentage_ = message.construction_percentage;
+    if( message.m.mining_percentagePresent && type_.CanBeValorized() )
+        rValorizationPercentage_ = message.mining_percentage;
+    if( message.m.bypass_construction_percentagePresent && type_.CanBeBypassed() )
+        rBypassConstructionPercentage_ = message.bypass_construction_percentage;
 
     Touch();
 }

@@ -29,7 +29,7 @@ DEC_Gen_Object::DEC_Gen_Object( const ASN1T_PlannedWork& asn )
     , localisation_      ()
     , pObstacleType_     ( MIL_ObstacleType::Find( asn.type_obstacle ) )
     , rDensity_          ( asn.densite )
-    , nMinesActivityTime_( asn.delai_activite_mines )
+    , nMinesActivityTime_( asn.activity_time )
     , pTC2_              ( 0 )    
 {
     if( !pType_ || !pObstacleType_ )
@@ -98,6 +98,6 @@ void DEC_Gen_Object::Serialize( ASN1T_PlannedWork& asn ) const
     asn.type_obstacle        = pObstacleType_->GetAsnID();
     asn.tc2                  = pTC2_ ? pTC2_->GetID() : 0;
     asn.densite              = rDensity_;
-    asn.delai_activite_mines = nMinesActivityTime_;
+    asn.activity_time = nMinesActivityTime_;
     NET_ASN_Tools::WriteLocation( localisation_, asn.position );
 }

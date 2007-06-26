@@ -119,7 +119,7 @@ void ParamPath::CommitTo( ASN1T_MissionParameter& asn ) const
     asn.value.t = T_MissionParameter_value_path;
     asn.value.u.path = new ASN1T_Path();
     CommitTo( *asn.value.u.path );
-    asn.null_value = asn.value.u.path->vecteur_point.n ? 0 : 1;
+    asn.null_value = asn.value.u.path->coordinates.n ? 0 : 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -129,7 +129,7 @@ void ParamPath::CommitTo( ASN1T_MissionParameter& asn ) const
 void ParamPath::Clean( ASN1T_MissionParameter& asn ) const
 {
     if( asn.value.u.path )
-        delete[] asn.value.u.path->vecteur_point.elem;
+        delete[] asn.value.u.path->coordinates.elem;
     delete asn.value.u.path;
 }
 

@@ -312,12 +312,12 @@ void MIL_AgentServer::SendMsgEndTick() const
     assert( pProcessMonitor_ );
 
     NET_ASN_MsgControlEndTick msgEndTick;
-    msgEndTick().current_tick        = GetCurrentTimeStep();
-    msgEndTick().tick_duration       = (ASN1INT)pProfilerMgr_->GetLastTickDuration();
-    msgEndTick().nb_pathfinds_courts = pPathFindManager_->GetNbrShortRequests();
-    msgEndTick().nb_pathfinds_longs  = pPathFindManager_->GetNbrLongRequests ();
-    msgEndTick().memory              = pProcessMonitor_->GetMemory();
-    msgEndTick().virtual_memory      = pProcessMonitor_->GetVirtualMemory();
+    msgEndTick().current_tick      = GetCurrentTimeStep();
+    msgEndTick().tick_duration     = (ASN1INT)pProfilerMgr_->GetLastTickDuration();
+    msgEndTick().short_pathfinds   = pPathFindManager_->GetNbrShortRequests();
+    msgEndTick().long_pathfinds    = pPathFindManager_->GetNbrLongRequests ();
+    msgEndTick().memory            = pProcessMonitor_->GetMemory();
+    msgEndTick().virtual_memory    = pProcessMonitor_->GetVirtualMemory();
     msgEndTick.Send();
 }
 

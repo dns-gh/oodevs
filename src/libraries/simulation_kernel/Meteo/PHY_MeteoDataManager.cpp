@@ -120,9 +120,9 @@ void PHY_MeteoDataManager::InitializeLocalMeteos( MIL_InputArchive& archive )
 void PHY_MeteoDataManager::OnReceiveMsgGlobalMeteo( const ASN1T_MsgControlGlobalMeteo& asnMsg )
 {
     assert( pGlobalMeteo_ );
-    pGlobalMeteo_->Update( asnMsg.attributs );
+    pGlobalMeteo_->Update( asnMsg.attributes );
     
-    NET_ASN_MsgCtrlMeteoGlobaleAck asnReplyMsg;
+    NET_ASN_MsgControlGlobalMeteoAck asnReplyMsg;
     asnReplyMsg.Send();
 }
 
@@ -136,20 +136,20 @@ void PHY_MeteoDataManager::OnReceiveMsgLocalMeteo( const ASN1T_MsgControlLocalMe
     MT_Vector2D vUpLeft;
     MT_Vector2D vDownRight;
 
-    NET_ASN_Tools::ReadPoint( asnMsg.rect_point_haut_gauche, vUpLeft    );
-    NET_ASN_Tools::ReadPoint( asnMsg.rect_point_bas_droite , vDownRight );
+    NET_ASN_Tools::ReadPoint( asnMsg.top_left_coordinate,      vUpLeft    );
+    NET_ASN_Tools::ReadPoint( asnMsg.bottom_right_coordinate , vDownRight );
 
     PHY_Meteo* pTmp = 0;
-    if( asnMsg.meteo.t == T_MsgControlLocalMeteo_meteo_attributs )
+    if( asnMsg.meteo.t == T_MsgControlLocalMeteo_meteo_attributes )
     {
-        pTmp = new PHY_Meteo( *asnMsg.meteo.u.attributs );
+        pTmp = new PHY_Meteo( *asnMsg.meteo.u.attributes );
         RegisterMeteo( *pTmp );
     }
 
     assert( pRawData_ );
     pRawData_->RegisterMeteoPatch( vUpLeft, vDownRight, pTmp );
 
-    NET_ASN_MsgCtrlMeteoLocaleAck asnReplyMsg;
+    NET_ASN_MsgControlLocalMeteoAck asnReplyMsg;
     asnReplyMsg.Send();
 }
 

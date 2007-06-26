@@ -79,18 +79,18 @@ void LocationSerializer::SetPoints( const T_PointVector& points )
     if( ! localisation_ )
         throw std::runtime_error( "localisation not set" );
     const unsigned nNbrPoints = points.size();
-    localisation_->vecteur_point.n = nNbrPoints;
+    localisation_->coordinates.n = nNbrPoints;
     if( nNbrPoints )
     {
         if( ownsCoords_ )
             delete[] pCoords_;
         pCoords_ = new ASN1T_CoordUTM[ nNbrPoints ];
-        localisation_->vecteur_point.elem = pCoords_;
+        localisation_->coordinates.elem = pCoords_;
 
         for( unsigned i = 0; i < nNbrPoints; ++i )
         {
             const std::string coord = converter_.ConvertToMgrs( points[i] );
-            localisation_->vecteur_point.elem[i] = coord.c_str();
+            localisation_->coordinates.elem[i] = coord.c_str();
         }
     }
 }

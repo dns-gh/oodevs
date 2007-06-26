@@ -25,14 +25,7 @@ LogisticRouteObjectAttribute::LogisticRouteObjectAttribute( const Model& model, 
     , nLength_           ( 0 )
     , nFlow_             ( 0 )
 {
-    if( asnMsg.t == T_ObjectAttributesSpecific_itineraire_logistique )
-    {
-        bEquipped_  = asnMsg.u.itineraire_logistique->itineraire_equipe;
-        nMaxWeight_ = asnMsg.u.itineraire_logistique->poids_max_supporte;
-        nWidth_     = asnMsg.u.itineraire_logistique->largeur;
-        nLength_    = asnMsg.u.itineraire_logistique->longueur;
-        nFlow_      = asnMsg.u.itineraire_logistique->debit;
-    }
+    Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,13 +43,13 @@ LogisticRouteObjectAttribute::~LogisticRouteObjectAttribute()
 // -----------------------------------------------------------------------------
 void LogisticRouteObjectAttribute::Update( const ASN1T_ObjectAttributesSpecific& asnMsg )
 {
-    if( asnMsg.t == T_ObjectAttributesSpecific_itineraire_logistique )
+    if( asnMsg.t == T_ObjectAttributesSpecific_logistic_route )
     {
-        bEquipped_  = asnMsg.u.itineraire_logistique->itineraire_equipe;
-        nMaxWeight_ = asnMsg.u.itineraire_logistique->poids_max_supporte;
-        nWidth_     = asnMsg.u.itineraire_logistique->largeur;
-        nLength_    = asnMsg.u.itineraire_logistique->longueur;
-        nFlow_      = asnMsg.u.itineraire_logistique->debit;
+        bEquipped_  = asnMsg.u.logistic_route->equipped;
+        nMaxWeight_ = asnMsg.u.logistic_route->max_weight;
+        nWidth_     = asnMsg.u.logistic_route->width;
+        nLength_    = asnMsg.u.logistic_route->length;
+        nFlow_      = asnMsg.u.logistic_route->flow_rate;
     }
 }
 
@@ -67,13 +60,12 @@ void LogisticRouteObjectAttribute::Update( const ASN1T_ObjectAttributesSpecific&
 void LogisticRouteObjectAttribute::Send( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
     asnMsg.t = nType_;
-    asnMsg.u.itineraire_logistique = new ASN1T_ObjectAttributesLogisticRoute();
-    
-    asnMsg.u.itineraire_logistique->itineraire_equipe  = bEquipped_;
-    asnMsg.u.itineraire_logistique->poids_max_supporte = nMaxWeight_;
-    asnMsg.u.itineraire_logistique->largeur            = nWidth_;
-    asnMsg.u.itineraire_logistique->longueur           = nLength_;
-    asnMsg.u.itineraire_logistique->debit              = nFlow_;
+    asnMsg.u.logistic_route = new ASN1T_ObjectAttributesLogisticRoute();
+    asnMsg.u.logistic_route->equipped         = bEquipped_;
+    asnMsg.u.logistic_route->max_weight       = nMaxWeight_;
+    asnMsg.u.logistic_route->width            = nWidth_;
+    asnMsg.u.logistic_route->length           = nLength_;
+    asnMsg.u.logistic_route->flow_rate        = nFlow_;
 }
 
 // -----------------------------------------------------------------------------
@@ -82,6 +74,6 @@ void LogisticRouteObjectAttribute::Send( ASN1T_ObjectAttributesSpecific& asnMsg 
 // -----------------------------------------------------------------------------
 void LogisticRouteObjectAttribute::AsnDelete( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
-    delete asnMsg.u.itineraire_logistique;
+    delete asnMsg.u.logistic_route;
 }
 

@@ -35,7 +35,7 @@ Lima::Lima( Controller& controller, Publisher_ABC& publisher )
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 Lima::Lima( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimaCreation& asnMsg )
-    : TacticalLine_ABC( asnMsg.tactical_line.nom, asnMsg.oid, publisher )
+    : TacticalLine_ABC( asnMsg.tactical_line.name, asnMsg.oid, publisher )
     , controller_     ( controller )
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
@@ -62,22 +62,22 @@ void Lima::UpdateToSim( E_State state )
     case eStateCreated:
         {
             ASN_MsgLimaCreationRequest message;
-            message().nom = GetName();
-            WriteGeometry ( message().geometrie );
+            message().name = GetName();
+            WriteGeometry ( message().geometry );
             WriteDiffusion( message().diffusion );
             Send( message );
-            delete[] message().geometrie.vecteur_point.elem;
+            delete[] message().geometry.coordinates.elem;
         }
         break;
     case eStateModified:
         {
             ASN_MsgLimaUpdateRequest message;
             message().oid = GetId();
-            message().tactical_line.nom = GetName();
-            WriteGeometry ( message().tactical_line.geometrie );
+            message().tactical_line.name= GetName();
+            WriteGeometry ( message().tactical_line.geometry );
             WriteDiffusion( message().tactical_line.diffusion );
             Send( message );
-            delete[] message().tactical_line.geometrie.vecteur_point.elem;
+            delete[] message().tactical_line.geometry.coordinates.elem;
         }
         break;
     case eStateDeleted:

@@ -88,8 +88,8 @@ void LimitParameter::CommitTo( ASN1T_Line& asn ) const
 {
     if( ! pLabel_ )
         InterfaceNotInitialized();
-    asn.vecteur_point.n = 0;
-    asn.vecteur_point.elem = 0;
+    asn.coordinates.n = 0;
+    asn.coordinates.elem = 0;
     if( ! selected_ )
     {
         if( optional_ )
@@ -105,7 +105,7 @@ void LimitParameter::CommitTo( ASN1T_Line& asn ) const
 // -----------------------------------------------------------------------------
 void LimitParameter::Clean( ASN1T_Line& asn ) const
 {
-    delete[] asn.vecteur_point.elem;
+    delete[] asn.coordinates.elem;
 }
 
 // -----------------------------------------------------------------------------

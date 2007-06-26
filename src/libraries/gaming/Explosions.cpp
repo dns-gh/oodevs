@@ -46,11 +46,11 @@ Explosions::~Explosions()
 template< typename T >
 void Explosions::UpdateData( const T& message )
 {
-    for( uint i = 0; i < message.degats_pions.n; ++i )
-        Update( message.degats_pions.elem[ i ] );
+    for( uint i = 0; i < message.units_damages.n; ++i )
+        Update( message.units_damages.elem[ i ] );
 
-    for( uint i = 0; i < message.degats_populations.n; ++i )
-        Update( message.degats_populations.elem[ i ] );
+    for( uint i = 0; i < message.populations_damages.n; ++i )
+        Update( message.populations_damages.elem[ i ] );
 
     controller_.Update( *this );
 }
@@ -79,8 +79,8 @@ void Explosions::DoUpdate( const ASN1T_MsgStopUnitFire& message )
 // -----------------------------------------------------------------------------
 void Explosions::DoUpdate( const ASN1T_MsgStopPopulationFire& message )
 {
-    for( uint i = 0; i < message.degats_pions.n; ++i )
-        Update( message.degats_pions.elem[ i ] );
+    for( uint i = 0; i < message.units_damages.n; ++i )
+        Update( message.units_damages.elem[ i ] );
     controller_.Update( *this );
 }
 

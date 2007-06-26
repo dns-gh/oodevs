@@ -18,36 +18,36 @@ using namespace kernel;
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
 AgentFireResult::AgentFireResult( const ASN1T_UnitFireDamages& message, const Resolver_ABC< Agent_ABC >& resolver,  const Resolver_ABC< EquipmentType >& equipmentResolver )
-    : target_( resolver.Get( message.cible ) )
+    : target_( resolver.Get( message.target ) )
 {
-    for( unsigned i = 0; i < message.equipements.n; ++i )
+    for( unsigned i = 0; i < message.equipments.n; ++i )
     {
-        const EquipmentType* type = & equipmentResolver.Get( message.equipements.elem[ i ].type_equipement );
+        const EquipmentType* type = & equipmentResolver.Get( message.equipments.elem[ i ].equipement_type );
         Equipment* equipment = new Equipment( *type );
-        equipment->available_   = message.equipements.elem[ i ].nb_disponibles;
-        equipment->unavailable_ = message.equipements.elem[ i ].nb_indisponibles;
-        equipment->repairable_  = message.equipements.elem[ i ].nb_reparables;
-        Register( message.equipements.elem[ i ].type_equipement, *equipment );
+        equipment->available_   = message.equipments.elem[ i ].available_nbr;
+        equipment->unavailable_ = message.equipments.elem[ i ].unavailable_nbr;
+        equipment->repairable_  = message.equipments.elem[ i ].repairable_nbr;
+        Register( message.equipments.elem[ i ].equipement_type, *equipment );
     }
     for( unsigned i = 0; i < eNbrHumanWound; ++i )
         casualties_[i].wound_ = E_HumanWound( i );
 
-    for( uint i = 0; i < message.humains.n; ++i )
+    for( uint i = 0; i < message.humans.n; ++i )
     {
-        const ASN1T_UnitHumanFireDamage& fire = message.humains.elem[ i ];
+        const ASN1T_UnitHumanFireDamage& fire = message.humans.elem[ i ];
 
         int Casualties::* table = & Casualties::troopers_;
-        if( fire.rang == EnumHumanRank::officier )
+        if( fire.rank == EnumHumanRank::officier )
             table = & Casualties::officers_;
-        else if( fire.rang == EnumHumanRank::sous_officer )
+        else if( fire.rank == EnumHumanRank::sous_officer )
             table = & Casualties::subOfficers_;
 
-        casualties_[ eHumanWound_BlesseUrgence1 ].*table        = fire.nb_blesses_urgence_1;
-        casualties_[ eHumanWound_BlesseUrgence2 ].*table        = fire.nb_blesses_urgence_2;
-        casualties_[ eHumanWound_BlesseUrgence3 ].*table        = fire.nb_blesses_urgence_3;
-        casualties_[ eHumanWound_BlesseUrgenceExtreme ].*table  = fire.nb_blesses_urgence_extreme;
-        casualties_[ eHumanWound_Mort ].*table                  = fire.nb_morts;
-        casualties_[ eHumanWound_NonBlesse ].*table             = fire.nb_non_blesses;
+        casualties_[ eHumanWound_BlesseUrgence1 ].*table        = fire.wounded_u1_nbr;
+        casualties_[ eHumanWound_BlesseUrgence2 ].*table        = fire.wounded_u2_nbr;
+        casualties_[ eHumanWound_BlesseUrgence3 ].*table        = fire.wounded_u3_nbr;
+        casualties_[ eHumanWound_BlesseUrgenceExtreme ].*table  = fire.wounded_ue_nbr;
+        casualties_[ eHumanWound_Mort ].*table                  = fire.dead_nbr;
+        casualties_[ eHumanWound_NonBlesse ].*table             = fire.alive_nbr;
     }
 }
 

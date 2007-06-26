@@ -37,7 +37,7 @@ MIL_Rota::MIL_Rota( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
     : MIL_RealObject_ABC( type, nID, army )
     , nDanger_          ( 0 )
 {
-    asnAttributes_.agents_nbc.n = 0;
+    asnAttributes_.nbc_agents.n = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +48,7 @@ MIL_Rota::MIL_Rota()
     : MIL_RealObject_ABC()
     , nDanger_          ( 0 )
 {
-    asnAttributes_.agents_nbc.n = 0;
+    asnAttributes_.nbc_agents.n = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -173,15 +173,15 @@ void MIL_Rota::Initialize( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 ASN1T_EnumObjectErrorCode MIL_Rota::Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject )
 {
-    if( !asnCreateObject.m.attributs_specifiquesPresent || asnCreateObject.attributs_specifiques.t != T_ObjectAttributesSpecific_rota )
+    if( !asnCreateObject.m.specific_attributesPresent || asnCreateObject.specific_attributes.t != T_ObjectAttributesSpecific_rota )
         return EnumObjectErrorCode::error_missing_specific_attributes;
 
-    nDanger_ = asnCreateObject.attributs_specifiques.u.rota->niveau_danger;
+    nDanger_ = asnCreateObject.specific_attributes.u.rota->danger_level;
 
     nbcAgents_.clear();
-    for( uint i = 0; i < asnCreateObject.attributs_specifiques.u.rota->agents_nbc.n; ++i )
+    for( uint i = 0; i < asnCreateObject.specific_attributes.u.rota->nbc_agents.n; ++i )
     {
-        const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( asnCreateObject.attributs_specifiques.u.rota->agents_nbc.elem[i] );
+        const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( asnCreateObject.specific_attributes.u.rota->nbc_agents.elem[i] );
         if( !pNbcAgentType )
             return EnumObjectErrorCode::error_invalid_specific_attributes;
         nbcAgents_.insert( pNbcAgentType );
@@ -201,19 +201,19 @@ ASN1T_EnumObjectErrorCode MIL_Rota::Initialize( const ASN1T_MagicActionCreateObj
 void MIL_Rota::WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg )
 {
     CleanSpecificAttributes();
-    asnAttributes_.niveau_danger = nDanger_;
-    asnAttributes_.agents_nbc.n = nbcAgents_.size();
+    asnAttributes_.danger_level = nDanger_;
+    asnAttributes_.nbc_agents.n = nbcAgents_.size();
     if( !nbcAgents_.empty() )
     {
-        asnAttributes_.agents_nbc.elem = new ASN1T_OID[ nbcAgents_.size() ];
+        asnAttributes_.nbc_agents.elem = new ASN1T_OID[ nbcAgents_.size() ];
         uint i = 0;
         for( CIT_NbcAgentSet itNbc = nbcAgents_.begin(); itNbc != nbcAgents_.end(); ++itNbc, ++i )
-            asnAttributes_.agents_nbc.elem[ i ]  = (**itNbc).GetID();
+            asnAttributes_.nbc_agents.elem[ i ]  = (**itNbc).GetID();
     }
 
-    asnMsg().m.attributs_specifiquesPresent = 1;
-    asnMsg().attributs_specifiques.t        = T_ObjectAttributesSpecific_rota;
-    asnMsg().attributs_specifiques.u.rota   = &asnAttributes_;
+    asnMsg().m.specific_attributesPresent = 1;
+    asnMsg().specific_attributes.t        = T_ObjectAttributesSpecific_rota;
+    asnMsg().specific_attributes.u.rota   = &asnAttributes_;
 }
 
 // -----------------------------------------------------------------------------
@@ -222,8 +222,8 @@ void MIL_Rota::WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg )
 // -----------------------------------------------------------------------------
 void MIL_Rota::CleanSpecificAttributes()
 {
-    if( asnAttributes_.agents_nbc.n > 0 )
-        delete [] asnAttributes_.agents_nbc.elem;
+    if( asnAttributes_.nbc_agents.n > 0 )
+        delete [] asnAttributes_.nbc_agents.elem;
 }
 
 // =============================================================================

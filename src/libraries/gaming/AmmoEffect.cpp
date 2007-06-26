@@ -20,9 +20,9 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 AmmoEffect::AmmoEffect( const ASN1T_MsgStartFireEffect& message, Controller& controller, const CoordinateConverter_ABC& converter )
     : controller_( controller )
-    , id_( message.oid_effet )
+    , id_( message.effect_oid )
     , type_( message.type )
-    , ellipse_( message.localisation, converter )
+    , ellipse_( message.location, converter )
 {
     controller_.Create( *this );
 }

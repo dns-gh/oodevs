@@ -52,9 +52,9 @@ LimasOrder ::= SEQUENCE OF LimaOrder
 
 TacticalLine ::= SEQUENCE
 {
-    nom         VisibleString,
-    geometrie   Line,
-    diffusion   TacticalLinesDiffusion
+    name       VisibleString,
+    geometry   Line,
+    diffusion  TacticalLinesDiffusion
 }
 
 -- Limites

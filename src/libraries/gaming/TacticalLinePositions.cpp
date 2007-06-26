@@ -36,10 +36,10 @@ TacticalLinePositions::TacticalLinePositions( const ASN1T_Line& asnMsg, const ke
     : converter_( converter )
     , owner_    ( owner )
 {
-    pointList_.reserve( asnMsg.vecteur_point.n );
-    for( uint i = 0; i != asnMsg.vecteur_point.n; ++i )
+    pointList_.reserve( asnMsg.coordinates.n );
+    for( uint i = 0; i != asnMsg.coordinates.n; ++i )
     {
-        pointList_.push_back( converter.ConvertToXY( asnMsg.vecteur_point.elem[i] ) );
+        pointList_.push_back( converter.ConvertToXY( asnMsg.coordinates.elem[i] ) );
         boundingBox_.Incorporate( pointList_.back() );
     }
 }
@@ -138,20 +138,20 @@ void TacticalLinePositions::Draw( const geometry::Point2f&, const kernel::Viewpo
 // -----------------------------------------------------------------------------
 void TacticalLinePositions::WriteGeometry( ASN1T_Line& line ) const
 {
-    line.type               = EnumLocationType::line;
-    line.vecteur_point.n    = pointList_.size();
+    line.type             = EnumLocationType::line;
+    line.coordinates.n    = pointList_.size();
     if( pointList_.empty() )
     {
-        line.vecteur_point.elem = 0;
+        line.coordinates.elem = 0;
         return;
     }
-    line.vecteur_point.elem = new ASN1T_CoordUTM[ pointList_.size() ];
+    line.coordinates.elem = new ASN1T_CoordUTM[ pointList_.size() ];
 
     unsigned int i = 0;
     for ( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
     {
         const std::string strMGRS = converter_.ConvertToMgrs( *itPoint );
-        line.vecteur_point.elem[i] = strMGRS.c_str();
+        line.coordinates.elem[i] = strMGRS.c_str();
         ++i;
     }
 }
@@ -191,11 +191,11 @@ void TacticalLinePositions::DoUpdate( const ASN1T_MsgLimitUpdate& message )
 void TacticalLinePositions::Update( const ASN1T_TacticalLine& message )
 {
     pointList_.clear();
-    pointList_.reserve( message.geometrie.vecteur_point.n );
+    pointList_.reserve( message.geometry.coordinates.n );
     boundingBox_ = geometry::Rectangle2f();
-    for( unsigned int i = 0; i < message.geometrie.vecteur_point.n; ++i )
+    for( unsigned int i = 0; i < message.geometry.coordinates.n; ++i )
     {
-        pointList_.push_back( converter_.ConvertToXY( message.geometrie.vecteur_point.elem[i] ) );
+        pointList_.push_back( converter_.ConvertToXY( message.geometry.coordinates.elem[i] ) );
         boundingBox_.Incorporate( pointList_.back() );
     }
 }

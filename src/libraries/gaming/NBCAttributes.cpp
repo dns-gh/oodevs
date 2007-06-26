@@ -43,16 +43,16 @@ NBCAttributes::~NBCAttributes()
 template< typename T >
 void NBCAttributes::UpdateData( const T& message )
 {
-    if( message.m.attributs_specifiquesPresent )
+    if( message.m.specific_attributesPresent )
     {
-        if( message.attributs_specifiques.t == T_ObjectAttributesSpecific_nuage_nbc )
+        if( message.specific_attributes.t == T_ObjectAttributesSpecific_nbc_cloud )
         {
-            nbc_ = & resolver_.Get( message.attributs_specifiques.u.nuage_nbc->agent_nbc );
+            nbc_ = & resolver_.Get( message.specific_attributes.u.nbc_cloud->nbc_agent );
             controller_.Update( *(NBCAttributes_ABC*)this );
         }
-        else if( message.attributs_specifiques.t == T_ObjectAttributesSpecific_zone_nbc )
+        else if( message.specific_attributes.t == T_ObjectAttributesSpecific_nbc_zone )
         {
-            nbc_ = & resolver_.Get( message.attributs_specifiques.u.zone_nbc->agent_nbc );
+            nbc_ = & resolver_.Get( message.specific_attributes.u.nbc_zone->nbc_agent );
             controller_.Update( *(NBCAttributes_ABC*)this );
         }
     }

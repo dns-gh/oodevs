@@ -106,7 +106,7 @@ void TacticalLine_ABC::WriteDiffusion( ASN1T_TacticalLinesDiffusion& diffusion )
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::DoUpdate( const ASN1T_MsgLimaUpdate& message )
 {
-    name_ = message.tactical_line.nom;
+    name_ = message.tactical_line.name;
 }
     
 // -----------------------------------------------------------------------------
@@ -115,5 +115,5 @@ void TacticalLine_ABC::DoUpdate( const ASN1T_MsgLimaUpdate& message )
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::DoUpdate( const ASN1T_MsgLimitUpdate& message )
 {
-    name_ = message.tactical_line.nom;
+    name_ = message.tactical_line.name;
 }

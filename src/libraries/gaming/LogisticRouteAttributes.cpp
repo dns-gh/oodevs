@@ -42,14 +42,14 @@ LogisticRouteAttributes::~LogisticRouteAttributes()
 template< typename T >
 void LogisticRouteAttributes::UpdateData( const T& message )
 {
-    if( message.m.attributs_specifiquesPresent
-     && message.attributs_specifiques.t == T_ObjectAttributesSpecific_itineraire_logistique )
+    if( message.m.specific_attributesPresent
+     && message.specific_attributes.t == T_ObjectAttributesSpecific_logistic_route )
     {
-        nLogRouteFlow_      = message.attributs_specifiques.u.itineraire_logistique->debit;
-        nLogRouteLength_    = message.attributs_specifiques.u.itineraire_logistique->longueur;
-        nLogRouteWidth_     = message.attributs_specifiques.u.itineraire_logistique->largeur;
-        nLogRouteMaxWeight_ = message.attributs_specifiques.u.itineraire_logistique->poids_max_supporte;
-        bLogRouteEquipped_  = message.attributs_specifiques.u.itineraire_logistique->itineraire_equipe;
+        nLogRouteFlow_      = message.specific_attributes.u.logistic_route->flow_rate;
+        nLogRouteLength_    = message.specific_attributes.u.logistic_route->length;
+        nLogRouteWidth_     = message.specific_attributes.u.logistic_route->width;
+        nLogRouteMaxWeight_ = message.specific_attributes.u.logistic_route->max_weight;
+        bLogRouteEquipped_  = message.specific_attributes.u.logistic_route->equipped;
         controller_.Update( *(LogisticRouteAttributes_ABC*)this );
     }
 }

@@ -52,7 +52,7 @@ void WeatherModel::Purge()
 // -----------------------------------------------------------------------------
 void WeatherModel::CreateAmmoEffect( const ASN1T_MsgStartFireEffect& message )
 {
-    Register( message.oid_effet, *new AmmoEffect( message, controllers_.controller_, model_.static_.coordinateConverter_ ) );
+    Register( message.effect_oid, *new AmmoEffect( message, controllers_.controller_, model_.static_.coordinateConverter_ ) );
 }
     
 // -----------------------------------------------------------------------------

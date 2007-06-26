@@ -68,9 +68,9 @@ void PopulationFire::SendCreation( Publisher_ABC& publisher ) const
 void PopulationFire::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientStopPopulationFire asn;
-    asn().oid_tir = msg_.oid_tir;
-    asn().degats_pions.n    = 0;
-    asn().degats_pions.elem = 0;
+    asn().fire_oid = msg_.fire_oid;
+    asn().units_damages.n    = 0;
+    asn().units_damages.elem = 0;
     asn.Send( publisher );
 }
 

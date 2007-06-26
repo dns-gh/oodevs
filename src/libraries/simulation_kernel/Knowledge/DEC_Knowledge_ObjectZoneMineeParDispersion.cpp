@@ -125,10 +125,10 @@ void DEC_Knowledge_ObjectZoneMineeParDispersion::BuildMsgSpecificAttributes( ASN
     if( !IsAttributeUpdated( eAttr_Specific ) || !bSpecificAttributesValid_ )
         return;
 
-    asnAttributes_.delai_activite_mines = nMinesActivityTime_;
-    asnAttributes_.densite              = rMinesDensity_;
+    asnAttributes_.activity_time = nMinesActivityTime_;
+    asnAttributes_.density       = rMinesDensity_;
 
-    asnMsg.m.attributs_specifiquesPresent                    = 1;
-    asnMsg.attributs_specifiques.t                           = T_ObjectAttributesSpecific_zone_minee_par_dispersion;
-    asnMsg.attributs_specifiques.u.zone_minee_par_dispersion = &asnAttributes_;
+    asnMsg.m.specific_attributesPresent = 1;
+    asnMsg.specific_attributes.t                     = T_ObjectAttributesSpecific_dispersed_mine_area;
+    asnMsg.specific_attributes.u.dispersed_mine_area = &asnAttributes_;
 }

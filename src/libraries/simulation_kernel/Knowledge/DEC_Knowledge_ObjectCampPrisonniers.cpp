@@ -126,7 +126,7 @@ void DEC_Knowledge_ObjectCampPrisonniers::BuildMsgSpecificAttributes( ASN1T_MsgO
 
     asnAttributes_.tc2 = pTC2_->GetID();
 
-    asnMsg.m.attributs_specifiquesPresent           = 1;
-    asnMsg.attributs_specifiques.t                  = T_ObjectAttributesSpecific_camp_prisonniers;
-    asnMsg.attributs_specifiques.u.camp_prisonniers = &asnAttributes_;
+    asnMsg.m.specific_attributesPresent        = 1;
+    asnMsg.specific_attributes.t               = T_ObjectAttributesSpecific_prisoner_camp;
+    asnMsg.specific_attributes.u.prisoner_camp = &asnAttributes_;
 }

@@ -30,18 +30,18 @@ CoordUTM ::= OCTET STRING (SIZE(15))
 
 Location ::= SEQUENCE 
 {
-    type            EnumLocationType,
-    vecteur-point   SEQUENCE OF CoordUTM
+    type          EnumLocationType,
+    coordinates   SEQUENCE OF CoordUTM
 }
 
 Point      ::= Location (WITH COMPONENTS {...,type(point)})
 Line       ::= Location (WITH COMPONENTS {...,type(line)})
 Path       ::= Location (WITH COMPONENTS {...,type(line)})
 Polygon    ::= Location (WITH COMPONENTS {...,type(polygon)})
-Segment    ::= Location (WITH COMPONENTS {type(line)   , vecteur-point (SIZE(2))})
-Circle	   ::= Location (WITH COMPONENTS {type(circle) , vecteur-point (SIZE(2))}) -- Format : centre, point sur le cercle
-Ellipse	   ::= Location (WITH COMPONENTS {type(ellipse), vecteur-point (SIZE(3))}) -- Format : centre, point petit axe, point grand axe
-Sector	   ::= Location (WITH COMPONENTS {type(sector) , vecteur-point (SIZE(3))}) -- Format : centre, point 1, point 2 dans le sens trigo
+Segment    ::= Location (WITH COMPONENTS {type(line)   , coordinates (SIZE(2))})
+Circle	   ::= Location (WITH COMPONENTS {type(circle) , coordinates (SIZE(2))}) -- Format : centre, point sur le cercle
+Ellipse	   ::= Location (WITH COMPONENTS {type(ellipse), coordinates (SIZE(3))}) -- Format : centre, point petit axe, point grand axe
+Sector	   ::= Location (WITH COMPONENTS {type(sector) , coordinates (SIZE(3))}) -- Format : centre, point 1, point 2 dans le sens trigo
 
 LocationList ::= SEQUENCE OF Location
 PolygonList  ::= SEQUENCE OF Polygon

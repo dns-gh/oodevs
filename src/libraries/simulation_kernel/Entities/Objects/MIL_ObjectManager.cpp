@@ -195,7 +195,7 @@ ASN1T_EnumObjectErrorCode MIL_ObjectManager::CreateObject( const ASN1T_MagicActi
     if( !pType )
         return EnumObjectErrorCode::error_invalid_object;
 
-    MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asn.oid_camp );
+    MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asn.team );
     if( !pArmy )
         return EnumObjectErrorCode::error_invalid_camp;
 
@@ -316,7 +316,7 @@ void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const ASN1T_MsgObjectMagi
     }
     else if( asnMsg.action.t == T_MsgObjectMagicAction_action_update_object )
     {
-        MIL_RealObject_ABC* pObject = FindRealObject( asnMsg.action.u.update_object->oid_objet );
+        MIL_RealObject_ABC* pObject = FindRealObject( asnMsg.action.u.update_object->oid );
         if( !pObject )
             nErrorCode = EnumObjectErrorCode::error_invalid_object;
         else

@@ -205,14 +205,14 @@ bool Profile::CheckRights( const ASN1T_MsgsClientToSim& msg ) const
 {
     switch( msg.msg.t )
     {
-        case T_MsgsClientToSim_msg_msg_ctrl_stop                          : return bSupervision_;
-        case T_MsgsClientToSim_msg_msg_ctrl_pause                         : return bSupervision_;
-        case T_MsgsClientToSim_msg_msg_ctrl_resume                        : return bSupervision_; 
-        case T_MsgsClientToSim_msg_msg_ctrl_change_time_factor            : return bSupervision_;
-        case T_MsgsClientToSim_msg_msg_ctrl_meteo_globale                 : return bSupervision_;
-        case T_MsgsClientToSim_msg_msg_ctrl_meteo_locale                  : return bSupervision_;
-        case T_MsgsClientToSim_msg_msg_ctrl_checkpoint_save_now           : return bSupervision_;
-        case T_MsgsClientToSim_msg_msg_ctrl_checkpoint_set_frequency      : return bSupervision_;
+        case T_MsgsClientToSim_msg_msg_control_stop                          : return bSupervision_;
+        case T_MsgsClientToSim_msg_msg_control_pause                         : return bSupervision_;
+        case T_MsgsClientToSim_msg_msg_control_resume                        : return bSupervision_; 
+        case T_MsgsClientToSim_msg_msg_control_change_time_factor            : return bSupervision_;
+        case T_MsgsClientToSim_msg_msg_control_global_meteo                  : return bSupervision_;
+        case T_MsgsClientToSim_msg_msg_control_local_meteo                   : return bSupervision_;
+        case T_MsgsClientToSim_msg_msg_control_checkpoint_save_now           : return bSupervision_;
+        case T_MsgsClientToSim_msg_msg_control_checkpoint_set_frequency      : return bSupervision_;
 
         case T_MsgsClientToSim_msg_msg_limit_creation_request             : return true;
         case T_MsgsClientToSim_msg_msg_limit_destruction_request          : return true;
@@ -220,21 +220,21 @@ bool Profile::CheckRights( const ASN1T_MsgsClientToSim& msg ) const
         case T_MsgsClientToSim_msg_msg_lima_creation_request              : return true;
         case T_MsgsClientToSim_msg_msg_lima_destruction_request           : return true;
         case T_MsgsClientToSim_msg_msg_lima_update_request                : return true;
-        case T_MsgsClientToSim_msg_msg_pion_order                         : return true;
-        case T_MsgsClientToSim_msg_msg_automate_order                     : return true;
+        case T_MsgsClientToSim_msg_msg_unit_order                         : return true;
+        case T_MsgsClientToSim_msg_msg_automat_order                      : return true;
         case T_MsgsClientToSim_msg_msg_population_order                   : return true;
         case T_MsgsClientToSim_msg_msg_frag_order                         : return true;
-        case T_MsgsClientToSim_msg_msg_set_automate_mode                  : return true;
+        case T_MsgsClientToSim_msg_msg_set_automat_mode                   : return true;
         case T_MsgsClientToSim_msg_msg_unit_creation_request              : return true;
         case T_MsgsClientToSim_msg_msg_unit_magic_action                  : return true;
         case T_MsgsClientToSim_msg_msg_object_magic_action                : return true;
         case T_MsgsClientToSim_msg_msg_population_magic_action            : return true;
-        case T_MsgsClientToSim_msg_msg_change_diplomatie                  : return true;
-        case T_MsgsClientToSim_msg_msg_automate_change_groupe_connaissance: return true;
-        case T_MsgsClientToSim_msg_msg_automate_change_liens_logistiques  : return true;
-        case T_MsgsClientToSim_msg_msg_pion_change_superior               : return true;
-        case T_MsgsClientToSim_msg_msg_log_ravitaillement_pousser_flux    : return true;
-        case T_MsgsClientToSim_msg_msg_log_ravitaillement_change_quotas   : return true;
+        case T_MsgsClientToSim_msg_msg_change_diplomacy                   : return true;
+        case T_MsgsClientToSim_msg_msg_automat_change_knowledge_group     : return true;
+        case T_MsgsClientToSim_msg_msg_automat_change_logistic_links      : return true;
+        case T_MsgsClientToSim_msg_msg_unit_change_superior               : return true;
+        case T_MsgsClientToSim_msg_msg_log_supply_push_flow               : return true;
+        case T_MsgsClientToSim_msg_msg_log_supply_change_quotas           : return true;
         default:
             return false;
     }
@@ -248,7 +248,7 @@ bool Profile::CheckRights( const ASN1T_MsgsClientToMiddle& msg ) const
 {
     switch( msg.msg.t )
     {
-        case T_MsgsClientToMiddle_msg_msg_ctrl_skip_to_tick                  : return bSupervision_;
+        case T_MsgsClientToMiddle_msg_msg_control_skip_to_tick               : return bSupervision_;
         case T_MsgsClientToMiddle_msg_msg_authentication_request             : return true;
         case T_MsgsClientToMiddle_msg_msg_profile_creation_request           : return bSupervision_; //$$$ Administration
         case T_MsgsClientToMiddle_msg_msg_profile_update_request             : return bSupervision_; //$$$ Administration

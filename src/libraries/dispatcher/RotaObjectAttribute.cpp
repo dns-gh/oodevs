@@ -25,10 +25,10 @@ RotaObjectAttribute::RotaObjectAttribute( const Model& model, const ASN1T_Object
 {
     if( asnMsg.t == T_ObjectAttributesSpecific_rota )
     {
-        nDanger_ = asnMsg.u.rota->niveau_danger;
+        nDanger_ = asnMsg.u.rota->danger_level;
         nbcAgents_.clear();
-        for( unsigned int i = 0; i < asnMsg.u.rota->agents_nbc.n; ++i )
-            nbcAgents_.push_back( asnMsg.u.rota->agents_nbc.elem[ i ] );
+        for( unsigned int i = 0; i < asnMsg.u.rota->nbc_agents.n; ++i )
+            nbcAgents_.push_back( asnMsg.u.rota->nbc_agents.elem[ i ] );
     }
 }
 
@@ -49,10 +49,10 @@ void RotaObjectAttribute::Update( const ASN1T_ObjectAttributesSpecific& asnMsg )
 {
     if( asnMsg.t == T_ObjectAttributesSpecific_rota )
     {
-        nDanger_ = asnMsg.u.rota->niveau_danger;
+        nDanger_ = asnMsg.u.rota->danger_level;
         nbcAgents_.clear();
-        for( unsigned int i = 0; i < asnMsg.u.rota->agents_nbc.n; ++i )
-            nbcAgents_.push_back( asnMsg.u.rota->agents_nbc.elem[ i ] );
+        for( unsigned int i = 0; i < asnMsg.u.rota->nbc_agents.n; ++i )
+            nbcAgents_.push_back( asnMsg.u.rota->nbc_agents.elem[ i ] );
     }
 
 }
@@ -66,9 +66,9 @@ void RotaObjectAttribute::Send( ASN1T_ObjectAttributesSpecific& asnMsg ) const
     asnMsg.t = nType_;
     asnMsg.u.rota = new ASN1T_ObjectAttributesRota();
 
-    asnMsg.u.rota->niveau_danger = nDanger_;
+    asnMsg.u.rota->danger_level = nDanger_;
 
-    SendContainerValues< ASN1T_ListOID, ASN1T_OID, T_IDVector >( nbcAgents_, asnMsg.u.rota->agents_nbc );
+    SendContainerValues< ASN1T_ListOID, ASN1T_OID, T_IDVector >( nbcAgents_, asnMsg.u.rota->nbc_agents );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +77,7 @@ void RotaObjectAttribute::Send( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 // -----------------------------------------------------------------------------
 void RotaObjectAttribute::AsnDelete( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
-    if( asnMsg.u.rota->agents_nbc.n > 0 )
-        delete [] asnMsg.u.rota->agents_nbc.elem;
+    if( asnMsg.u.rota->nbc_agents.n > 0 )
+        delete [] asnMsg.u.rota->nbc_agents.elem;
     delete asnMsg.u.rota;
 }

@@ -53,14 +53,14 @@ bool SimulationDispatcher::IsNotDestruction( const ASN1T_MsgsSimToClient& asnMsg
         case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:
         case T_MsgsSimToClient_msg_msg_object_destruction:
         case T_MsgsSimToClient_msg_msg_object_knowledge_destruction:
-        case T_MsgsSimToClient_msg_msg_log_sante_traitement_humain_destruction:
-        case T_MsgsSimToClient_msg_msg_log_maintenance_traitement_equipement_destruction:
-        case T_MsgsSimToClient_msg_msg_log_ravitaillement_traitement_destruction:
+        case T_MsgsSimToClient_msg_msg_log_medical_handling_destruction:
+        case T_MsgsSimToClient_msg_msg_log_maintenance_handling_destruction:
+        case T_MsgsSimToClient_msg_msg_log_supply_handling_destruction:
         case T_MsgsSimToClient_msg_msg_population_concentration_destruction:
-        case T_MsgsSimToClient_msg_msg_population_flux_destruction:
+        case T_MsgsSimToClient_msg_msg_population_flow_destruction:
         case T_MsgsSimToClient_msg_msg_population_knowledge_destruction:
         case T_MsgsSimToClient_msg_msg_population_concentration_knowledge_destruction:
-        case T_MsgsSimToClient_msg_msg_population_flux_knowledge_destruction:
+        case T_MsgsSimToClient_msg_msg_population_flow_knowledge_destruction:
             return false;
         default:
             return true;

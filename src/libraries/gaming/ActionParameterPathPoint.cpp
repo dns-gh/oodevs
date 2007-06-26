@@ -61,7 +61,7 @@ void ActionParameterPathPoint::CommitTo( ASN1T_CoordUTM& asn ) const
 {
     ASN1T_Location loc;
     ActionParameterLocation::CommitTo( loc );
-    asn = loc.vecteur_point.elem[0];
+    asn = loc.coordinates.elem[0];
     ActionParameterLocation::Clean( loc );
 }
 

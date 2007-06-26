@@ -14,34 +14,34 @@ FireExports  ::= NULL
 
 UnitHumanFireDamage ::= SEQUENCE
 {
-    rang                        EnumHumanRank,
-    nb-non-blesses              INTEGER, -- NB : toutes les valeurs peuvent être négatives
-    nb-morts                    INTEGER,
-    nb-blesses-urgence-1        INTEGER,
-    nb-blesses-urgence-2        INTEGER,
-    nb-blesses-urgence-3        INTEGER,
-    nb-blesses-urgence-extreme  INTEGER
+    rank                        EnumHumanRank,
+    alive-nbr                   INTEGER, -- NB : toutes les valeurs peuvent être négatives
+    dead-nbr                    INTEGER,
+    wounded-u1-nbr              INTEGER,
+    wounded-u2-nbr              INTEGER,
+    wounded-u3-nbr              INTEGER,
+    wounded-ue-nbr              INTEGER
 }
 
 UnitEquipmentFireDamage ::= SEQUENCE
 {
-    type-equipement  EquipmentType,
-    nb-disponibles   INTEGER,
-    nb-indisponibles INTEGER,
-    nb-reparables    INTEGER
+    equipement-type  EquipmentType,
+    available-nbr    INTEGER,
+    unavailable-nbr  INTEGER,
+    repairable-nbr   INTEGER
 }
 
 UnitFireDamages ::= SEQUENCE
 {
-    cible       Unit,
-    humains     SEQUENCE OF UnitHumanFireDamage,
-    equipements SEQUENCE OF UnitEquipmentFireDamage
+    target     Unit,
+    humans     SEQUENCE OF UnitHumanFireDamage,
+    equipments SEQUENCE OF UnitEquipmentFireDamage
 }
 
 PopulationFireDamages ::= SEQUENCE
 {
-    cible       Population,
-    nb-morts    INTEGER
+    target    Population,
+    dead-nbr  INTEGER
 }
 
 UnitsFireDamages       ::= SEQUENCE OF UnitFireDamages
@@ -50,11 +50,11 @@ PopulationsFireDamages ::= SEQUENCE OF PopulationFireDamages
 -- Tir pion
 MsgStartUnitFire ::= SEQUENCE
 {
-    oid-tir     UnitFire,
-    tireur      Unit,
-    cible       CHOICE
+    fire-oid     UnitFire,
+    firer-oid    Unit,
+    target      CHOICE
     {
-        pion       Unit,
+        unit       Unit,
         population Population,
         position   CoordUTM
     },
@@ -63,35 +63,35 @@ MsgStartUnitFire ::= SEQUENCE
         direct,
         indirect
     },
-    munition    DotationType OPTIONAL
+    ammunition    DotationType OPTIONAL
 }
 
 MsgStopUnitFire ::= SEQUENCE
 {
-    oid-tir            UnitFire,
-    degats-pions       UnitsFireDamages,
-    degats-populations PopulationsFireDamages
+    fire-oid             UnitFire,
+    units-damages       UnitsFireDamages,
+    populations-damages PopulationsFireDamages
 }
 
 -- Tir population
 MsgStartPopulationFire ::= SEQUENCE
 {
-    oid-tir     PopulationFire,
-    oid-src     Population
+    fire-oid     PopulationFire,
+    firer-oid    Population
 }
 
 MsgStopPopulationFire ::= SEQUENCE
 {
-    oid-tir      PopulationFire,
-    degats-pions UnitsFireDamages
+    fire-oid       PopulationFire,
+    units-damages UnitsFireDamages
 }
 
 -- Explosion mine
 MsgExplosion ::= SEQUENCE
 {
-    oid-objet          OID,
-    degats-pions       UnitsFireDamages,
-    degats-populations PopulationsFireDamages
+    object-oid           OID,
+    units-damages       UnitsFireDamages,
+    populations-damages PopulationsFireDamages
 }
 
 -- Effets de tirs
@@ -103,9 +103,9 @@ EnumFireEffectType ::= ENUMERATED
 
 MsgStartFireEffect ::= SEQUENCE
 {
-    oid-effet       OID,
-    localisation    Location,
-    type            EnumFireEffectType
+    effect-oid   OID,
+    location    Location,
+    type        EnumFireEffectType
 }
 
 MsgStopFireEffect ::= OID

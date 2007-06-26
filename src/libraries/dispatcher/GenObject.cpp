@@ -22,7 +22,7 @@ GenObject::GenObject( const ASN1T_PlannedWork& asn )
     , typeObstacle_      ( asn.type_obstacle )
     , density_           ( asn.densite )
     , tc2_               ( asn.tc2 )
-    , delaiActiviteMines_( asn.delai_activite_mines )
+    , delaiActiviteMines_( asn.activity_time )
 {
     // NOTHING
 }
@@ -58,11 +58,11 @@ GenObject::~GenObject()
 // -----------------------------------------------------------------------------
 void GenObject::Send( ASN1T_PlannedWork& asn ) const
 {
-    asn.type                 = type_;
-    asn.type_obstacle        = typeObstacle_;
-    asn.densite              = density_;
-    asn.tc2                  = tc2_;
-    asn.delai_activite_mines = delaiActiviteMines_;
+    asn.type           = type_;
+    asn.type_obstacle  = typeObstacle_;
+    asn.densite        = density_;
+    asn.tc2            = tc2_;
+    asn.activity_time = delaiActiviteMines_;
     location_.Send( asn.position );
 }
 

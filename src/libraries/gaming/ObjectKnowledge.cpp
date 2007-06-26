@@ -31,7 +31,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( const Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, 
                                   const Resolver_ABC< Object_ABC >& objectResolver, const Resolver_ABC< ObjectType >& typeResolver )
-    : EntityImplementation< ObjectKnowledge_ABC >( controller, message.oid_connaissance, "" )
+    : EntityImplementation< ObjectKnowledge_ABC >( controller, message.oid, "" )
     , converter_     ( converter )
     , owner_         ( owner )
     , objectResolver_( objectResolver )
@@ -39,12 +39,12 @@ ObjectKnowledge::ObjectKnowledge( const Team_ABC& owner, const ASN1T_MsgObjectKn
     , pRealObject_   ( 0 )
 {
     RegisterSelf( *this );
-    pRealObject_ = objectResolver_.Find( message.oid_objet_reel );
+    pRealObject_ = objectResolver_.Find( message.real_object );
 
-    if( message.m.type_obstaclePresent )
-        obstacleType_ = (E_ObstacleType)message.type_obstacle;   
-    if( message.m.obstacle_de_manoeuvre_activePresent )
-        reservedObstacleActivated_ = message.obstacle_de_manoeuvre_active;
+    if( message.m.obstacle_typePresent )
+        obstacleType_ = (E_ObstacleType)message.obstacle_type;   
+    if( message.m.reserved_obstacle_activatedPresent )
+        reservedObstacleActivated_ = message.reserved_obstacle_activated;
 }
 
 // -----------------------------------------------------------------------------
@@ -62,29 +62,29 @@ ObjectKnowledge::~ObjectKnowledge()
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 {
-    if( message.m.oid_objet_reelPresent )
-        pRealObject_ = objectResolver_.Find( message.oid_objet_reel );
+    if( message.m.real_objectPresent )
+        pRealObject_ = objectResolver_.Find( message.real_object );
 
-    if( message.m.pertinencePresent )
-        nRelevance_ = message.pertinence;
+    if( message.m.relevancePresent )
+        nRelevance_ = message.relevance;
 
-    if( message.m.localisationPresent && message.localisation.vecteur_point.n )
-        position_ = std::string( (const char*)( message.localisation.vecteur_point.elem[0].data ), 15 );
+    if( message.m.locationPresent && message.location.coordinates.n )
+        position_ = std::string( (const char*)( message.location.coordinates.elem[0].data ), 15 );
 
-    if( message.m.pourcentage_constructionPresent )
-        nConstructionPercentage_ = message.pourcentage_construction;
+    if( message.m.construction_percentagePresent )
+        nConstructionPercentage_ = message.construction_percentage;
     
-    if( message.m.pourcentage_valorisationPresent )
-        nValorizationPercentage_ = message.pourcentage_valorisation;
+    if( message.m.mining_percentagePresent )
+        nValorizationPercentage_ = message.mining_percentage;
     
-    if( message.m.pourcentage_contournementPresent )
-        nBypassConstructionPercentage_ = message.pourcentage_contournement;
+    if( message.m.bypass_construction_percentagePresent )
+        nBypassConstructionPercentage_ = message.bypass_construction_percentage;
     
-    if( message.m.obstacle_de_manoeuvre_activePresent )
-        reservedObstacleActivated_ = message.obstacle_de_manoeuvre_active;
+    if( message.m.reserved_obstacle_activatedPresent )
+        reservedObstacleActivated_ = message.reserved_obstacle_activated;
     
-    if( message.m.est_percuPresent )
-        bIsPerceived_ = message.est_percu;
+    if( message.m.perceivedPresent )
+        bIsPerceived_ = message.perceived;
 
     Touch();
 }

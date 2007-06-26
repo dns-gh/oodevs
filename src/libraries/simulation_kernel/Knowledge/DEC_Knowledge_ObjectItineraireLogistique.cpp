@@ -154,13 +154,13 @@ void DEC_Knowledge_ObjectItineraireLogistique::BuildMsgSpecificAttributes( ASN1T
     if( !IsAttributeUpdated( eAttr_Specific ) )
         return;
 
-    asnAttributes_.itineraire_equipe  = bEquipped_;
-    asnAttributes_.poids_max_supporte = (int)rWeightSupported_;
-    asnAttributes_.largeur            = (int)rWidth_;
-    asnAttributes_.longueur           = (int)rLength_;
-    asnAttributes_.debit              = (int)rFlow_;
+    asnAttributes_.equipped   = bEquipped_;
+    asnAttributes_.max_weight = (int)rWeightSupported_;
+    asnAttributes_.width      = (int)rWidth_;
+    asnAttributes_.length     = (int)rLength_;
+    asnAttributes_.flow_rate  = (int)rFlow_;
 
-    asnMsg.m.attributs_specifiquesPresent                = 1;
-    asnMsg.attributs_specifiques.t                       = T_ObjectAttributesSpecific_itineraire_logistique;
-    asnMsg.attributs_specifiques.u.itineraire_logistique = &asnAttributes_;
+    asnMsg.m.specific_attributesPresent         = 1;
+    asnMsg.specific_attributes.t                = T_ObjectAttributesSpecific_logistic_route;
+    asnMsg.specific_attributes.u.logistic_route = &asnAttributes_;
 }

@@ -114,7 +114,7 @@ void ParamLocation::CommitTo( ASN1T_MissionParameter& asn ) const
     asn.value.t = T_MissionParameter_value_location;
     asn.value.u.location = new ASN1T_Location();
     CommitTo( *asn.value.u.location );
-    asn.null_value = asn.value.u.location->vecteur_point.n ? 0 : 1;
+    asn.null_value = asn.value.u.location->coordinates.n ? 0 : 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -147,7 +147,7 @@ void ParamLocation::CommitTo( ASN1T_Location& asn ) const
 // -----------------------------------------------------------------------------
 void ParamLocation::Clean( ASN1T_Location& asn ) const
 {
-    delete[] asn.vecteur_point.elem;
+    delete[] asn.coordinates.elem;
 }
 
 // -----------------------------------------------------------------------------

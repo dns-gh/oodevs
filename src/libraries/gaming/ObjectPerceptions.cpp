@@ -38,11 +38,11 @@ ObjectPerceptions::~ObjectPerceptions()
 // -----------------------------------------------------------------------------
 void ObjectPerceptions::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 {
-    if( message.m.perception_par_compagniePresent )
+    if( message.m.automat_perceptionPresent )
     {
         detectingAutomats_.clear();
-        detectingAutomats_.reserve( message.perception_par_compagnie.n );
-        for( uint i = 0; i < message.perception_par_compagnie.n; ++i )
-            detectingAutomats_.push_back( & agentResolver_.Get( message.perception_par_compagnie.elem[i] ) );
+        detectingAutomats_.reserve( message.automat_perception.n );
+        for( uint i = 0; i < message.automat_perception.n; ++i )
+            detectingAutomats_.push_back( & agentResolver_.Get( message.automat_perception.elem[i] ) );
     }
 }

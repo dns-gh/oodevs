@@ -21,8 +21,8 @@ MineJamObjectAttribute::MineJamObjectAttribute( const Model& model, const ASN1T_
     : ObjectAttribute_ABC( model, asnMsg )
     , nMinesActivityTime_( 0 )
 {
-    if( asnMsg.t == T_ObjectAttributesSpecific_bouchon_mines )
-        nMinesActivityTime_ = asnMsg.u.bouchon_mines->delai_activite_mines;
+    if( asnMsg.t == T_ObjectAttributesSpecific_mine_jam )
+        nMinesActivityTime_ = asnMsg.u.mine_jam->activity_time;
 }
 
 // -----------------------------------------------------------------------------
@@ -40,8 +40,8 @@ MineJamObjectAttribute::~MineJamObjectAttribute()
 // -----------------------------------------------------------------------------
 void MineJamObjectAttribute::Update( const ASN1T_ObjectAttributesSpecific& asnMsg )
 {
-    if( asnMsg.t == T_ObjectAttributesSpecific_bouchon_mines )
-        nMinesActivityTime_ = asnMsg.u.bouchon_mines->delai_activite_mines;
+    if( asnMsg.t == T_ObjectAttributesSpecific_mine_jam )
+        nMinesActivityTime_ = asnMsg.u.mine_jam->activity_time;
 }
 
 // -----------------------------------------------------------------------------
@@ -51,9 +51,8 @@ void MineJamObjectAttribute::Update( const ASN1T_ObjectAttributesSpecific& asnMs
 void MineJamObjectAttribute::Send( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
     asnMsg.t = nType_;
-    asnMsg.u.bouchon_mines = new ASN1T_ObjectAttributesMineJam();
-    
-    asnMsg.u.bouchon_mines->delai_activite_mines = nMinesActivityTime_;
+    asnMsg.u.mine_jam = new ASN1T_ObjectAttributesMineJam();
+    asnMsg.u.mine_jam->activity_time = nMinesActivityTime_;
 }
 
 // -----------------------------------------------------------------------------
@@ -62,5 +61,5 @@ void MineJamObjectAttribute::Send( ASN1T_ObjectAttributesSpecific& asnMsg ) cons
 // -----------------------------------------------------------------------------
 void MineJamObjectAttribute::AsnDelete( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
-    delete asnMsg.u.bouchon_mines;
+    delete asnMsg.u.mine_jam;
 }

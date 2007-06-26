@@ -22,17 +22,17 @@ using namespace kernel;
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
 DirectFire::DirectFire( const ASN1T_MsgStartUnitFire& message, const Resolver_ABC< Agent_ABC >& agentResolver, const Resolver_ABC< Population_ABC >& populationResolver )
-    : Fire_ABC( agentResolver.Get( message.tireur ) )
-    , id_( message.oid_tir )
+    : Fire_ABC( agentResolver.Get( message.firer_oid ) )
+    , id_( message.fire_oid )
 {
-    if( message.cible.t == T_MsgStartUnitFire_cible_pion )
-        target_ = & agentResolver.Get( message.cible.u.pion );
-    else if( message.cible.t == T_MsgStartUnitFire_cible_population )
-        target_ = & populationResolver.Get( message.cible.u.population );
+    if( message.target.t == T_MsgStartUnitFire_target_unit )
+        target_ = & agentResolver.Get( message.target.u.unit );
+    else if( message.target.t == T_MsgStartUnitFire_target_population )
+        target_ = & populationResolver.Get( message.target.u.population );
     else
         throw std::runtime_error( "DirectFire on position..." );
 
-    if( message.m.munitionPresent )
+    if( message.m.ammunitionPresent )
         ; // $$$$ AGE 2006-03-10: 
     targetPosition_ = target_->Retrieve< Positions >();
 }

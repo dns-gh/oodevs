@@ -130,13 +130,13 @@ ASN1T_EnumObjectErrorCode MIL_SiteFranchissement::Initialize( const ASN1T_MagicA
     if( nErrorCode != EnumObjectErrorCode::no_error )
         return nErrorCode;
 
-    if( !asnCreateObject.m.attributs_specifiquesPresent || asnCreateObject.attributs_specifiques.t != T_ObjectAttributesSpecific_site_franchissement )
+    if( !asnCreateObject.m.specific_attributesPresent || asnCreateObject.specific_attributes.t != T_ObjectAttributesSpecific_crossing_site )
         return EnumObjectErrorCode::error_missing_specific_attributes;
 
-    rWidth_         = asnCreateObject.attributs_specifiques.u.site_franchissement->largeur;
-    rDepth_         = asnCreateObject.attributs_specifiques.u.site_franchissement->profondeur;
-    rCurrentSpeed_  = asnCreateObject.attributs_specifiques.u.site_franchissement->vitesse_courant;
-    bBanksToFitOut_ = asnCreateObject.attributs_specifiques.u.site_franchissement->berges_a_amenager != false;
+    rWidth_         = asnCreateObject.specific_attributes.u.crossing_site->width;
+    rDepth_         = asnCreateObject.specific_attributes.u.crossing_site->depth;
+    rCurrentSpeed_  = asnCreateObject.specific_attributes.u.crossing_site->flow_rate;
+    bBanksToFitOut_ = asnCreateObject.specific_attributes.u.crossing_site->banks_require_fitting != false;
 
     return EnumObjectErrorCode::no_error;
 }
@@ -151,14 +151,14 @@ ASN1T_EnumObjectErrorCode MIL_SiteFranchissement::Initialize( const ASN1T_MagicA
 // -----------------------------------------------------------------------------
 void MIL_SiteFranchissement::WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg )
 {
-    asnAttributes_.largeur           = (int)rWidth_;
-    asnAttributes_.profondeur        = (int)rDepth_;
-    asnAttributes_.vitesse_courant   = (int)rCurrentSpeed_;
-    asnAttributes_.berges_a_amenager = bBanksToFitOut_;
+    asnAttributes_.width                 = (int)rWidth_;
+    asnAttributes_.depth                 = (int)rDepth_;
+    asnAttributes_.flow_rate             = (int)rCurrentSpeed_;
+    asnAttributes_.banks_require_fitting = bBanksToFitOut_;
 
-    asnMsg().m.attributs_specifiquesPresent = 1;
-    asnMsg().attributs_specifiques.t                     = T_ObjectAttributesSpecific_site_franchissement;
-    asnMsg().attributs_specifiques.u.site_franchissement = &asnAttributes_;
+    asnMsg().m.specific_attributesPresent        = 1;
+    asnMsg().specific_attributes.t               = T_ObjectAttributesSpecific_crossing_site;
+    asnMsg().specific_attributes.u.crossing_site = &asnAttributes_;
 }
 
 // -----------------------------------------------------------------------------

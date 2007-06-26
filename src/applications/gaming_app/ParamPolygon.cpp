@@ -40,7 +40,7 @@ void ParamPolygon::CommitTo( ASN1T_MissionParameter& asn ) const
     asn.value.t = T_MissionParameter_value_polygon;
     asn.value.u.polygon = new ASN1T_Location();
     ParamLocation::CommitTo( *asn.value.u.polygon );
-    asn.null_value = asn.value.u.polygon->vecteur_point.n ? 0 : 1;
+    asn.null_value = asn.value.u.polygon->coordinates.n ? 0 : 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -50,6 +50,6 @@ void ParamPolygon::CommitTo( ASN1T_MissionParameter& asn ) const
 void ParamPolygon::Clean( ASN1T_MissionParameter& asn ) const
 {
     if( asn.value.u.polygon )
-        delete[] asn.value.u.polygon->vecteur_point.elem;
+        delete[] asn.value.u.polygon->coordinates.elem;
     delete asn.value.u.polygon;
 }

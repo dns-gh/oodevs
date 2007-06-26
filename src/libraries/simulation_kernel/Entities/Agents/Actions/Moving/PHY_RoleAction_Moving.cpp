@@ -375,7 +375,7 @@ void PHY_RoleAction_Moving::SendCurrentPath() const
         return;
 
     asnMsg.Send();
-    delete [] asnMsg().itineraire.vecteur_point.elem;
+    delete [] asnMsg().itineraire.coordinates.elem;
 }
 
 // -----------------------------------------------------------------------------

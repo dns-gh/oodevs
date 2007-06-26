@@ -89,19 +89,19 @@ PHY_Meteo::~PHY_Meteo()
 void PHY_Meteo::Update( const ASN1T_MeteoAttributes& asnMsg )
 {
     // Plancher de couverture nuageuse
-    nPlancherCouvertureNuageuse_ = asnMsg.plancher_couverture_nuageuse;
+    nPlancherCouvertureNuageuse_ = asnMsg.cloud_floor;
 
     // Plafond de couverture nuageuse
-    nPlafondCouvertureNuageuse_ = asnMsg.plafond_couverture_nuageuse;
+    nPlafondCouvertureNuageuse_ = asnMsg.cloud_ceiling;
 
     // Densite moyenne de couverture nuageuse
-    rDensiteCouvertureNuageuse_ = std::min( std::max( asnMsg.densite_moyenne_couverture_nuageuse, 0 ), 100 ) / 100.;
+    rDensiteCouvertureNuageuse_ = std::min( std::max( asnMsg.cloud_density, 0 ), 100 ) / 100.;
 
     // Vitesse du vent
-    wind_.rWindSpeed_ = MIL_Tools::ConvertSpeedMosToSim( asnMsg.vitesse_vent );
+    wind_.rWindSpeed_ = MIL_Tools::ConvertSpeedMosToSim( asnMsg.wind_speed );
 
     // Direction du vent
-    NET_ASN_Tools::ReadDirection( asnMsg.direction_vent, wind_.vWindDirection_ );
+    NET_ASN_Tools::ReadDirection( asnMsg.wind_direction, wind_.vWindDirection_ );
 
     // Précipitation
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( asnMsg.precipitation );

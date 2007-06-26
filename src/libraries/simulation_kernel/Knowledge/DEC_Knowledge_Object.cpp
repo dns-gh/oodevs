@@ -486,8 +486,8 @@ void DEC_Knowledge_Object::BuildMsgPerceptionSources( ASN1T_MsgObjectKnowledgeUp
     if( !IsAttributeUpdated( eAttr_PerceptionSources ) )
         return;
 
-    asn.m.perception_par_compagniePresent = 1;
-    asn.perception_par_compagnie.n        = perceptionPerAutomateSet_.size();
+    asn.m.automat_perceptionPresent = 1;
+    asn.automat_perception.n        = perceptionPerAutomateSet_.size();
 
     if( perceptionPerAutomateSet_.empty() )
         return;
@@ -499,7 +499,7 @@ void DEC_Knowledge_Object::BuildMsgPerceptionSources( ASN1T_MsgObjectKnowledgeUp
         pPerceptions[i] = (*it)->GetID();
         ++i;
     }
-    asn.perception_par_compagnie.elem = pPerceptions;
+    asn.automat_perception.elem = pPerceptions;
 }
 
 // -----------------------------------------------------------------------------
@@ -511,8 +511,8 @@ void DEC_Knowledge_Object::BuildMsgRelevance( ASN1T_MsgObjectKnowledgeUpdate& as
     if( !IsAttributeUpdated( eAttr_Relevance ) )
         return;
 
-    asn.m.pertinencePresent = 1;
-    asn.pertinence = (uint)( rRelevance_ * 100. );    
+    asn.m.relevancePresent = 1;
+    asn.relevance = (uint)( rRelevance_ * 100. );    
 }
 
 // -----------------------------------------------------------------------------
@@ -524,8 +524,8 @@ void DEC_Knowledge_Object::BuildMsgLocalisations( ASN1T_MsgObjectKnowledgeUpdate
     if( !IsAttributeUpdated( eAttr_Localisation ) )
         return;
 
-    asn.m.localisationPresent = 1;
-    NET_ASN_Tools::WriteLocation( localisation_, asn.localisation );
+    asn.m.locationPresent = 1;
+    NET_ASN_Tools::WriteLocation( localisation_, asn.location );
 }
 
 // -----------------------------------------------------------------------------
@@ -537,8 +537,8 @@ void DEC_Knowledge_Object::BuildMsgCurrentPerceptionLevel( ASN1T_MsgObjectKnowle
     if( !IsAttributeUpdated( eAttr_CurrentPerceptionLevel ) )
         return;
 
-    asn.m.est_percuPresent = 1;
-    asn.est_percu = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
+    asn.m.perceivedPresent = 1;
+    asn.perceived = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -553,39 +553,39 @@ void DEC_Knowledge_Object::BuildMsgStates( ASN1T_MsgObjectKnowledgeUpdate& asn )
 
     if( IsAttributeUpdated( eAttr_ConstructionPercentage ) )
     {
-        asn.m.pourcentage_constructionPresent = 1;
-        asn.pourcentage_construction = nConstructionPercentage_;
+        asn.m.construction_percentagePresent = 1;
+        asn.construction_percentage = nConstructionPercentage_;
     }
 
     if( IsAttributeUpdated( eAttr_MiningPercentage ) )
     {
-        asn.m.pourcentage_valorisationPresent = 1;
-        asn.pourcentage_valorisation = nMiningPercentage_;
+        asn.m.mining_percentagePresent = 1;
+        asn.mining_percentage = nMiningPercentage_;
     }
 
     if( IsAttributeUpdated( eAttr_BypassPercentage ) )
     {
-        asn.m.pourcentage_contournementPresent = 1;
-        asn.pourcentage_contournement = nBypassPercentage_;
+        asn.m.bypass_construction_percentagePresent = 1;
+        asn.bypass_construction_percentage = nBypassPercentage_;
     }
 
     if( IsAttributeUpdated( eAttr_ReservedObstacleActivated ) && IsReservedObstacle() )
     {
-        asn.m.obstacle_de_manoeuvre_activePresent = 1;
-        asn.obstacle_de_manoeuvre_active          = bReservedObstacleActivated_;
+        asn.m.reserved_obstacle_activatedPresent = 1;
+        asn.reserved_obstacle_activated          = bReservedObstacleActivated_;
     }     
 
     if( IsAttributeUpdated( eAttr_Dotations ) )
     {
         if( pObjectType_->GetDotationCategoryForConstruction() )
         {
-            asn.m.nb_dotation_constructionPresent = 1;
-            asn.nb_dotation_construction          = nNbrDotationForConstruction_;
+            asn.m.construction_dotation_nbrPresent = 1;
+            asn.construction_dotation_nbr          = nNbrDotationForConstruction_;
         }
         if( pObjectType_->GetDotationCategoryForMining() )
         {
-            asn.m.nb_dotation_valorisationPresent = 1;
-            asn.nb_dotation_valorisation          = nNbrDotationForMining_;
+            asn.m.mining_dotation_nbrPresent = 1;
+            asn.mining_dotation_nbr          = nNbrDotationForMining_;
         }
     }
 }
@@ -600,8 +600,8 @@ void DEC_Knowledge_Object::BuildMsgRealObject( ASN1T_MsgObjectKnowledgeUpdate& a
     if( !IsAttributeUpdated( eAttr_RealObject ) )
         return;
 
-    asn.m.oid_objet_reelPresent = 1;
-    asn.oid_objet_reel = pObjectKnown_ ? pObjectKnown_->GetID() : 0;
+    asn.m.real_objectPresent = 1;
+    asn.real_object = pObjectKnown_ ? pObjectKnown_->GetID() : 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -620,10 +620,10 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
         return;
 
     NET_ASN_MsgObjectKnowledgeUpdate asn;
-    asn().oid_connaissance    = nID_;
+    asn().oid    = nID_;
     
     assert( pArmyKnowing_ );
-    asn().oid_camp_possesseur = pArmyKnowing_->GetID();
+    asn().team = pArmyKnowing_->GetID();
     
     BuildMsgRealObject            ( asn() );
     BuildMsgPerceptionSources     ( asn() );
@@ -635,11 +635,11 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
     
     asn.Send();
 
-    if( asn().m.perception_par_compagniePresent && asn().perception_par_compagnie.n > 0 )
-        delete [] asn().perception_par_compagnie.elem; //$$$ RAM
+    if( asn().m.automat_perceptionPresent && asn().automat_perception.n > 0 )
+        delete [] asn().automat_perception.elem; //$$$ RAM
 
-    if( asn().m.localisationPresent )
-        NET_ASN_Tools::Delete( asn().localisation );
+    if( asn().m.locationPresent )
+        NET_ASN_Tools::Delete( asn().location );
 }
 
 // -----------------------------------------------------------------------------
@@ -649,39 +649,39 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
 void DEC_Knowledge_Object::SendMsgCreation() const
 {
     NET_ASN_MsgObjectKnowledgeCreation asn;
-    asn().oid_connaissance    = nID_;
+    asn().oid    = nID_;
     
     assert( pArmyKnowing_ );
-    asn().oid_camp_possesseur = pArmyKnowing_->GetID();
+    asn().team = pArmyKnowing_->GetID();
     assert( pObjectType_ );
     asn().type                = pObjectType_->GetAsnID();
 
     if( pObstacleType_ )
     {
-        asn().m.type_obstaclePresent = 1;
-        asn().type_obstacle          = pObstacleType_->GetAsnID();
+        asn().m.obstacle_typePresent = 1;
+        asn().obstacle_type          = pObstacleType_->GetAsnID();
         if( pObstacleType_->CouldBeActivated() )
         {
-            asn().m.obstacle_de_manoeuvre_activePresent = 1;
-            asn().obstacle_de_manoeuvre_active          = bReservedObstacleActivated_;
+            asn().m.reserved_obstacle_activatedPresent = 1;
+            asn().reserved_obstacle_activated          = bReservedObstacleActivated_;
         }
     }
 
     if( pObjectKnown_ )
-        asn().oid_objet_reel = pObjectKnown_->GetID();
+        asn().real_object = pObjectKnown_->GetID();
     else
-        asn().oid_objet_reel = 0;
+        asn().real_object = 0;
 
     if( pObjectType_->GetDotationCategoryForConstruction() )
     {
-        asn().m.type_dotation_constructionPresent = 1;
-        asn().type_dotation_construction          = pObjectType_->GetDotationCategoryForConstruction()->GetMosID();
+        asn().m.construction_dotation_typePresent = 1;
+        asn().construction_dotation_type          = pObjectType_->GetDotationCategoryForConstruction()->GetMosID();
     }
 
     if( pObjectType_->GetDotationCategoryForMining() )
     {
-        asn().m.type_dotation_valorisationPresent = 1;
-        asn().type_dotation_valorisation          = pObjectType_->GetDotationCategoryForMining()->GetMosID();
+        asn().m.mining_dotation_typePresent = 1;
+        asn().mining_dotation_type          = pObjectType_->GetDotationCategoryForMining()->GetMosID();
     }
     
     asn.Send();
@@ -694,10 +694,10 @@ void DEC_Knowledge_Object::SendMsgCreation() const
 void DEC_Knowledge_Object::SendMsgDestruction() const
 {
     NET_ASN_MsgObjectKnowledgeDestruction asn;
-    asn().oid_connaissance    = nID_;
+    asn().oid    = nID_;
     
     assert( pArmyKnowing_ );
-    asn().oid_camp_possesseur = pArmyKnowing_->GetID();
+    asn().team = pArmyKnowing_->GetID();
     asn.Send();
 }
     

@@ -137,7 +137,7 @@ void LocationPositions::Draw( const kernel::GlTools_ABC& tools ) const
 // -----------------------------------------------------------------------------
 void LocationPositions::Update( const ASN1T_Location& asn )
 {
-    points_.clear(); points_.reserve( asn.vecteur_point.n );
+    points_.clear(); points_.reserve( asn.coordinates.n );
     center_ = geometry::Point2f( 0, 0 );
     boundingBox_.Set( 0, 0, 0, 0 );
     AddLocation( asn );
@@ -149,7 +149,7 @@ void LocationPositions::Update( const ASN1T_Location& asn )
 // -----------------------------------------------------------------------------
 void LocationPositions::Update( const ASN1T_Location& asn, const geometry::Point2f& startPoint )
 {
-    points_.clear(); points_.reserve( asn.vecteur_point.n + 1 );
+    points_.clear(); points_.reserve( asn.coordinates.n + 1 );
     center_ = geometry::Point2f( 0, 0 );
     boundingBox_.Set( 0, 0, 0, 0 );
     AddPoint( startPoint );
@@ -162,8 +162,8 @@ void LocationPositions::Update( const ASN1T_Location& asn, const geometry::Point
 // -----------------------------------------------------------------------------
 void LocationPositions::AddLocation( const ASN1T_Location& asn )
 {
-    for( uint i = 0; i < asn.vecteur_point.n; ++i )
-        AddPoint( converter_.ConvertToXY( asn.vecteur_point.elem[i] ) );
+    for( uint i = 0; i < asn.coordinates.n; ++i )
+        AddPoint( converter_.ConvertToXY( asn.coordinates.elem[i] ) );
     if( !points_.empty() )
         center_.Set( center_.X() / points_.size(), center_.Y() / points_.size() );
 }

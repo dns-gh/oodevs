@@ -22,8 +22,8 @@ using namespace dispatcher;
 TacticalLine_ABC::TacticalLine_ABC( const Model& model, unsigned int id, const ASN1T_TacticalLine& asn )
     : model_    ( model )
     , id_       ( id )
-    , strName_  ( asn.nom )
-    , location_ ( asn.geometrie )
+    , strName_  ( asn.name )
+    , location_ ( asn.geometry )
     , automat_  ( 0 )
     , formation_( 0 )
 {
@@ -45,8 +45,8 @@ TacticalLine_ABC::~TacticalLine_ABC()
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::Update( const ASN1T_TacticalLine& asn )
 {
-    strName_ = asn.nom;
-    location_.Update( asn.geometrie );
+    strName_ = asn.name;
+    location_.Update( asn.geometry );
     UpdateDiffusion( asn.diffusion );
 }
 
@@ -68,8 +68,8 @@ void TacticalLine_ABC::UpdateDiffusion( const ASN1T_TacticalLinesDiffusion& diff
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::Send( ASN1T_TacticalLine& asn ) const
 {
-    location_.Send( asn.geometrie );
-    asn.nom = strName_.c_str();
+    location_.Send( asn.geometry );
+    asn.name = strName_.c_str();
     if( formation_ )
     {
         asn.diffusion.t           = T_TacticalLinesDiffusion_formation;

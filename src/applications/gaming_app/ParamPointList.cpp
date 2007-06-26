@@ -84,7 +84,7 @@ void ParamPointList::Clean( ASN1T_MissionParameter& asn ) const
     if( asn.value.u.pointList )
     {
         for( unsigned int i = 0; i < asn.value.u.pointList->n; ++i )
-            delete[] asn.value.u.pointList->elem[i].vecteur_point.elem;
+            delete[] asn.value.u.pointList->elem[i].coordinates.elem;
         delete[] asn.value.u.pointList->elem;
     }
     delete asn.value.u.pointList;

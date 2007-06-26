@@ -142,9 +142,9 @@ void DEC_Knowledge_ObjectNuageNBC::BuildMsgSpecificAttributes( ASN1T_MsgObjectKn
         return;
 
     assert( pNbcAgentType_ );   
-    asnAttributes_.agent_nbc = pNbcAgentType_->GetID();
+    asnAttributes_.nbc_agent = pNbcAgentType_->GetID();
 
-    asnMsg.m.attributs_specifiquesPresent    = 1;
-    asnMsg.attributs_specifiques.t           = T_ObjectAttributesSpecific_nuage_nbc;
-    asnMsg.attributs_specifiques.u.nuage_nbc = &asnAttributes_;
+    asnMsg.m.specific_attributesPresent    = 1;
+    asnMsg.specific_attributes.t           = T_ObjectAttributesSpecific_nbc_cloud;
+    asnMsg.specific_attributes.u.nbc_cloud = &asnAttributes_;
 }

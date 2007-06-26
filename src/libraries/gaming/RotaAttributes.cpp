@@ -42,13 +42,13 @@ RotaAttributes::~RotaAttributes()
 template< typename T >
 void RotaAttributes::UpdateData( const T& message )
 {
-    if( message.m.attributs_specifiquesPresent 
-     && message.attributs_specifiques.t == T_ObjectAttributesSpecific_rota )
+    if( message.m.specific_attributesPresent
+     && message.specific_attributes.t == T_ObjectAttributesSpecific_rota )
     {
-        danger_ = message.attributs_specifiques.u.rota->niveau_danger;
-        agents_.resize( message.attributs_specifiques.u.rota->agents_nbc.n );
-        for( uint i = 0; i < message.attributs_specifiques.u.rota->agents_nbc.n; ++i )
-            agents_[ i ] = & resolver_.Get( message.attributs_specifiques.u.rota->agents_nbc.elem[ i ] );
+        danger_ = message.specific_attributes.u.rota->danger_level;
+        agents_.resize( message.specific_attributes.u.rota->nbc_agents.n );
+        for( uint i = 0; i < message.specific_attributes.u.rota->nbc_agents.n; ++i )
+            agents_[ i ] = & resolver_.Get( message.specific_attributes.u.rota->nbc_agents.elem[ i ] );
         controller_.Update( *(RotaAttributes_ABC*)this );
     }
 }

@@ -112,15 +112,14 @@ void ::ObjectPanel::OnApply()
     {
         ASN1T_MagicActionUpdateObject asnAction;
 
-        asnAction.m.pourcentage_constructionPresent           = 1;
-        asnAction.m.pourcentage_valorisationPresent           = 1;
-        asnAction.m.pourcentage_creation_contournementPresent = 1;
-//        asnAction.m.en_preparationPresent                     = 1;
+        asnAction.m.construction_percentagePresent        = 1;
+        asnAction.m.mining_percentagePresent              = 1;
+        asnAction.m.bypass_construction_percentagePresent = 1;
 
-        asnAction.oid_objet                          = object->GetId();
-        asnAction.pourcentage_construction           = construction_ ->GetValue();
-        asnAction.pourcentage_valorisation           = valorisation_ ->GetValue();
-        asnAction.pourcentage_creation_contournement = contournement_->GetValue();
+        asnAction.oid                                     = object->GetId();
+        asnAction.construction_percentage                 = construction_ ->GetValue();
+        asnAction.mining_percentage                       = valorisation_ ->GetValue();
+        asnAction.bypass_construction_percentage          = contournement_->GetValue();
 //        asnAction.en_preparation                     = prepared_     ->IsChecked();
 
         ASN_MsgObjectMagicAction asnMsg;

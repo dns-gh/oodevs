@@ -163,13 +163,13 @@ void MIL_NuageNBC::Initialize( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 ASN1T_EnumObjectErrorCode MIL_NuageNBC::Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject )
 {
-    if( asnCreateObject.localisation.type != EnumLocationType::circle )
+    if( asnCreateObject.location.type != EnumLocationType::circle )
         return EnumObjectErrorCode::error_invalid_localisation;
    
-    if( !asnCreateObject.m.attributs_specifiquesPresent || asnCreateObject.attributs_specifiques.t != T_ObjectAttributesSpecific_nuage_nbc )
+    if( !asnCreateObject.m.specific_attributesPresent || asnCreateObject.specific_attributes.t != T_ObjectAttributesSpecific_nbc_cloud )
         return EnumObjectErrorCode::error_missing_specific_attributes;
 
-    const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( asnCreateObject.attributs_specifiques.u.nuage_nbc->agent_nbc );
+    const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( asnCreateObject.specific_attributes.u.nbc_cloud->nbc_agent );
     if( !pNbcAgentType )
         return EnumObjectErrorCode::error_invalid_specific_attributes;
     pNbcAgent_ = new MIL_NbcAgent( *pNbcAgentType, MIL_NbcAgent::eGas );
@@ -231,11 +231,11 @@ void MIL_NuageNBC::ProcessAgentEntering( MIL_Agent_ABC& agent )
 void MIL_NuageNBC::WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg )
 {
     assert( pNbcAgent_ );
-    asnAttributes_.agent_nbc  = pNbcAgent_->GetType().GetID();
+    asnAttributes_.nbc_agent  = pNbcAgent_->GetType().GetID();
 
-    asnMsg().m.attributs_specifiquesPresent    = 1;
-    asnMsg().attributs_specifiques.t           = T_ObjectAttributesSpecific_nuage_nbc;
-    asnMsg().attributs_specifiques.u.nuage_nbc = &asnAttributes_;
+    asnMsg().m.specific_attributesPresent    = 1;
+    asnMsg().specific_attributes.t           = T_ObjectAttributesSpecific_nbc_cloud;
+    asnMsg().specific_attributes.u.nbc_cloud = &asnAttributes_;
 }
 
 

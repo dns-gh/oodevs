@@ -42,16 +42,15 @@ FireFactory::~FireFactory()
 // -----------------------------------------------------------------------------
 Fire_ABC* FireFactory::CreateFire( const ASN1T_MsgStartUnitFire& message )
 {
-    switch( message.cible.t )
+    switch( message.target.t )
     {
-    case T_MsgStartUnitFire_cible_pion:
-    case T_MsgStartUnitFire_cible_population:
+    case T_MsgStartUnitFire_target_unit:
+    case T_MsgStartUnitFire_target_population:
         return new DirectFire( message, model_.agents_, model_.agents_ );
-    case T_MsgStartUnitFire_cible_position:
+    case T_MsgStartUnitFire_target_position:
         return new IndirectFire( message, model_.agents_, model_.static_.coordinateConverter_ );
     default: 
         throw std::runtime_error( "Invalid target type" );
-
     };
 }
 

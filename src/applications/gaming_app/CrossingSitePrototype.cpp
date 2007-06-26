@@ -47,13 +47,13 @@ void CrossingSitePrototype::Commit()
 
     attr_ = new ASN1T_ObjectAttributesCrossingSite();
     
-    attr_->largeur           = width_->value();
-    attr_->profondeur        = depth_->value();
-    attr_->vitesse_courant   = speed_->value();
-    attr_->berges_a_amenager = needsConstruction_->isOn();
-    msg_.m.attributs_specifiquesPresent    = 1;
-    msg_.attributs_specifiques.t           = T_ObjectAttributesSpecific_site_franchissement;
-    msg_.attributs_specifiques.u.site_franchissement = attr_;
+    attr_->width                 = width_->value();
+    attr_->depth                 = depth_->value();
+    attr_->flow_rate             = speed_->value();
+    attr_->banks_require_fitting = needsConstruction_->isOn();
+    msg_.m.specific_attributesPresent    = 1;
+    msg_.specific_attributes.t           = T_ObjectAttributesSpecific_crossing_site;
+    msg_.specific_attributes.u.crossing_site = attr_;
 }
 
 // -----------------------------------------------------------------------------

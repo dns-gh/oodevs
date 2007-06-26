@@ -36,9 +36,9 @@ using namespace kernel;
 PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_FlowPart& asn, const CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox )
      : rRelevance_ ( asn.pertinence )
 {
-    for( uint i = 0; i < asn.forme.vecteur_point.n; ++i )
+    for( uint i = 0; i < asn.forme.coordinates.n; ++i )
     {
-        const geometry::Point2f point = converter.ConvertToXY( asn.forme.vecteur_point.elem[ i ] );
+        const geometry::Point2f point = converter.ConvertToXY( asn.forme.coordinates.elem[ i ] );
         flowPart_.push_back( point );
         boundingBox.Incorporate( point );
     }

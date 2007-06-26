@@ -78,11 +78,11 @@ bool NET_ASN_Tools::ReadLocation( const ASN1T_Location& asnLocalisation, TER_Loc
 {
     //$$$$ ACCEDER DIRECTEMENT A LA LOCALISATION (EVITER COPIE)
     T_PointVector pointVector;
-    pointVector.reserve( asnLocalisation.vecteur_point.n );
-    for( uint i = 0; i < asnLocalisation.vecteur_point.n; ++i )
+    pointVector.reserve( asnLocalisation.coordinates.n );
+    for( uint i = 0; i < asnLocalisation.coordinates.n; ++i )
     {
         MT_Vector2D vPos;
-        NET_ASN_Tools::ReadPoint( asnLocalisation.vecteur_point.elem[i], vPos );
+        NET_ASN_Tools::ReadPoint( asnLocalisation.coordinates.elem[i], vPos );
         pointVector.push_back( vPos );
     }
     return localisation.Reset( (TER_Localisation::E_LocationType)asnLocalisation.type, pointVector );
@@ -109,10 +109,10 @@ bool NET_ASN_Tools::ReadPoint( const ASN1T_Point& asnLocalisation, MT_Vector2D& 
 {
     if( asnLocalisation.type != EnumLocationType::point )
         return false;
-    if( asnLocalisation.vecteur_point.n != 1 )
+    if( asnLocalisation.coordinates.n != 1 )
         return false;
 
-    ReadPoint( asnLocalisation.vecteur_point.elem[0], vect );
+    ReadPoint( asnLocalisation.coordinates.elem[0], vect );
     return true;
 }
 
@@ -122,15 +122,15 @@ bool NET_ASN_Tools::ReadPoint( const ASN1T_Point& asnLocalisation, MT_Vector2D& 
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::ReadLine( const ASN1T_Line& asn, T_PointVector& points )
 {
-    if( asn.type != EnumLocationType::line || asn.vecteur_point.n < 2 )
+    if( asn.type != EnumLocationType::line || asn.coordinates.n < 2 )
         return false;
 
     points.clear();   
-    points.reserve( asn.vecteur_point.n );
-    for( uint i = 0; i < asn.vecteur_point.n; ++i )
+    points.reserve( asn.coordinates.n );
+    for( uint i = 0; i < asn.coordinates.n; ++i )
     {
         MT_Vector2D vPosTmp;
-        MIL_Tools::ConvertCoordMosToSim( asn.vecteur_point.elem[i], vPosTmp );
+        MIL_Tools::ConvertCoordMosToSim( asn.coordinates.elem[i], vPosTmp );
         points.push_back( vPosTmp );
     }
     return true;
@@ -142,7 +142,7 @@ bool NET_ASN_Tools::ReadLine( const ASN1T_Line& asn, T_PointVector& points )
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::ReadLine( const ASN1T_Line& asn, TER_Localisation& localisation )
 {
-    if( asn.type != EnumLocationType::line || asn.vecteur_point.n < 2 )
+    if( asn.type != EnumLocationType::line || asn.coordinates.n < 2 )
         return false;
     return ReadLocation( asn, localisation );
 }
@@ -153,14 +153,14 @@ bool NET_ASN_Tools::ReadLine( const ASN1T_Line& asn, TER_Localisation& localisat
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::ReadPath( const ASN1T_Line& asn, T_PointVector& itineraire )
 {
-    if( asn.type != EnumLocationType::line || asn.vecteur_point.n < 1 )
+    if( asn.type != EnumLocationType::line || asn.coordinates.n < 1 )
         return false;
 
-    itineraire.clear(); itineraire.reserve( asn.vecteur_point.n );
-    for( uint i = 0; i < asn.vecteur_point.n; ++i )
+    itineraire.clear(); itineraire.reserve( asn.coordinates.n );
+    for( uint i = 0; i < asn.coordinates.n; ++i )
     {
         MT_Vector2D vPos;
-        ReadPoint( asn.vecteur_point.elem[i], vPos );
+        ReadPoint( asn.coordinates.elem[i], vPos );
         itineraire.push_back( vPos );
     }
     return true;
@@ -172,7 +172,7 @@ bool NET_ASN_Tools::ReadPath( const ASN1T_Line& asn, T_PointVector& itineraire )
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::ReadPolygon( const ASN1T_Polygon&      asn, TER_Localisation& localisation )
 {
-    if( asn.type != EnumLocationType::polygon || asn.vecteur_point.n < 3 )
+    if( asn.type != EnumLocationType::polygon || asn.coordinates.n < 3 )
         return false;
     return ReadLocation( asn, localisation );
 }
@@ -212,7 +212,7 @@ bool NET_ASN_Tools::ReadPolygonList( const ASN1T_PolygonList& asn, T_Localisatio
 {
     for( uint i = 0; i < asn.n; ++i )
     {
-        if( asn.elem[i].type != EnumLocationType::polygon || asn.elem[i].vecteur_point.n < 3 )
+        if( asn.elem[i].type != EnumLocationType::polygon || asn.elem[i].coordinates.n < 3 )
             return false;
     }
     
@@ -450,12 +450,12 @@ void NET_ASN_Tools::WriteLocation( const TER_Localisation& localisation, ASN1T_L
 {
     assert( localisation.GetType() != TER_Localisation::eNone );
     asnLocalisation.type            = (ASN1T_EnumLocationType)localisation.GetType();
-    asnLocalisation.vecteur_point.n = localisation.GetPoints().size(); 
+    asnLocalisation.coordinates.n   = localisation.GetPoints().size(); 
     if( localisation.GetPoints().empty() )
         return;
 
     ASN1T_CoordUTM* pCoord = new ASN1T_CoordUTM[ localisation.GetPoints().size() ]; //$$$ RAM
-    asnLocalisation.vecteur_point.elem = pCoord;
+    asnLocalisation.coordinates.elem = pCoord;
     uint i = 0;
     for( CIT_PointVector itPoint = localisation.GetPoints().begin(); itPoint != localisation.GetPoints().end(); ++itPoint )
         WritePoint( *itPoint, pCoord[i++] );
@@ -483,8 +483,8 @@ void NET_ASN_Tools::WritePoint( const MT_Vector2D& vPos, ASN1T_Point& asnLocalis
     WritePoint( vPos, *pCoord );
 
     asnLocalisation.type = EnumLocationType::point;
-    asnLocalisation.vecteur_point.n     = 1;
-    asnLocalisation.vecteur_point.elem  = pCoord;
+    asnLocalisation.coordinates.n     = 1;
+    asnLocalisation.coordinates.elem  = pCoord;
 }
 
 
@@ -506,15 +506,15 @@ bool NET_ASN_Tools::WriteLine( const T_PointVector& points, ASN1T_Line& asn )
     asn.type = EnumLocationType::line;
     if( points.size() < 2 )
     {
-        asn.vecteur_point.n = 0;
+        asn.coordinates.n = 0;
         return false;
     }
 
-    asn.vecteur_point.n = points.size();
-    asn.vecteur_point.elem = new ASN1T_CoordUTM[ points.size() ];
+    asn.coordinates.n = points.size();
+    asn.coordinates.elem = new ASN1T_CoordUTM[ points.size() ];
     uint i = 0;
     for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
-        WritePoint( *it, asn.vecteur_point.elem[i++] );
+        WritePoint( *it, asn.coordinates.elem[i++] );
     return true;
 }
 
@@ -524,13 +524,13 @@ bool NET_ASN_Tools::WriteLine( const T_PointVector& points, ASN1T_Line& asn )
 // -----------------------------------------------------------------------------
 void NET_ASN_Tools::WritePath( const T_PointVector& pointVector, ASN1T_Path& asn )
 {
-    asn.type            = EnumLocationType::line;
-    asn.vecteur_point.n = pointVector.size(); 
+    asn.type          = EnumLocationType::line;
+    asn.coordinates.n = pointVector.size(); 
     if( pointVector.empty() )
         return;
 
     ASN1T_CoordUTM* pCoord = new ASN1T_CoordUTM[ pointVector.size() ]; //$$$ RAM
-    asn.vecteur_point.elem = pCoord;
+    asn.coordinates.elem = pCoord;
     uint i = 0;
     for( CIT_PointVector itPoint = pointVector.begin(); itPoint != pointVector.end(); ++itPoint )
         WritePoint( *itPoint, pCoord[i++] );
@@ -542,13 +542,13 @@ void NET_ASN_Tools::WritePath( const T_PointVector& pointVector, ASN1T_Path& asn
 // -----------------------------------------------------------------------------
 void NET_ASN_Tools::WritePath( const T_PointList& points, ASN1T_Path& asn )
 {
-    asn.type            = EnumLocationType::line;
-    asn.vecteur_point.n = points.size(); 
+    asn.type          = EnumLocationType::line;
+    asn.coordinates.n = points.size(); 
     if( points.empty() )
         return;
 
     ASN1T_CoordUTM* pCoord = new ASN1T_CoordUTM[ points.size() ]; //$$$ RAM
-    asn.vecteur_point.elem = pCoord;
+    asn.coordinates.elem = pCoord;
     uint i = 0;
     for( CIT_PointList itPoint = points.begin(); itPoint != points.end(); ++itPoint )
         WritePoint( *itPoint, pCoord[i++] );
@@ -570,11 +570,11 @@ void NET_ASN_Tools::WritePolygon( const TER_Localisation& localisation, ASN1T_Li
 void NET_ASN_Tools::WriteEllipse( const MT_Ellipse& ellipse, ASN1T_Location& asnLocalisation )
 {
     asnLocalisation.type = EnumLocationType::ellipse;
-    asnLocalisation.vecteur_point.n = 3;
-    asnLocalisation.vecteur_point.elem = new ASN1T_CoordUTM[3];
-    WritePoint( ellipse.GetCenter(), asnLocalisation.vecteur_point.elem[0] );
-    WritePoint( ellipse.GetMajorAxisHighPoint(), asnLocalisation.vecteur_point.elem[1] );
-    WritePoint( ellipse.GetMinorAxisHighPoint(), asnLocalisation.vecteur_point.elem[2] );
+    asnLocalisation.coordinates.n = 3;
+    asnLocalisation.coordinates.elem = new ASN1T_CoordUTM[3];
+    WritePoint( ellipse.GetCenter(), asnLocalisation.coordinates.elem[0] );
+    WritePoint( ellipse.GetMajorAxisHighPoint(), asnLocalisation.coordinates.elem[1] );
+    WritePoint( ellipse.GetMinorAxisHighPoint(), asnLocalisation.coordinates.elem[2] );
 }
 
 
@@ -904,8 +904,8 @@ void NET_ASN_Tools::Delete( ASN1T_AutomatList& asn )
 // -----------------------------------------------------------------------------
 void NET_ASN_Tools::Delete( ASN1T_Polygon& asn )
 {
-    if( asn.vecteur_point.n > 0 )
-        delete [] asn.vecteur_point.elem;
+    if( asn.coordinates.n > 0 )
+        delete [] asn.coordinates.elem;
 }
 
 // -----------------------------------------------------------------------------

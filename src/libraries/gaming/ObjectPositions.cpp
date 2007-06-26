@@ -37,8 +37,8 @@ ObjectPositions::~ObjectPositions()
 // -----------------------------------------------------------------------------
 void ObjectPositions::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 {
-    if( message.m.localisationPresent )
-        Update( message.localisation );
+    if( message.m.locationPresent )
+        Update( message.location );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,5 +47,5 @@ void ObjectPositions::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 // -----------------------------------------------------------------------------
 void ObjectPositions::DoUpdate( const ASN1T_MsgObjectCreation& message )
 {
-    Update( message.localisation );
+    Update( message.location );
 }

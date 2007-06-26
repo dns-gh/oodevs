@@ -81,16 +81,16 @@ void PopulationFlow::DoUpdate( const ASN1T_MsgPopulationFlowUpdate& asnMsg )
 	if ( asnMsg.m.itinerairePresent )
 	{
         itineraire_.clear();
-		for( uint i = 0; i < asnMsg.itineraire.vecteur_point.n; ++i )
-            itineraire_.push_back( converter_.ConvertToXY( asnMsg.itineraire.vecteur_point.elem[i] ) );
+		for( uint i = 0; i < asnMsg.itineraire.coordinates.n; ++i )
+            itineraire_.push_back( converter_.ConvertToXY( asnMsg.itineraire.coordinates.elem[i] ) );
 	}
 	if ( asnMsg.m.fluxPresent )
 	{
-        flow_.clear(); flow_.reserve( asnMsg.flux.vecteur_point.n );
+        flow_.clear(); flow_.reserve( asnMsg.flux.coordinates.n );
         boundingBox_ = Rectangle2f();
-		for( uint i = 0; i < asnMsg.flux.vecteur_point.n; ++i )
+		for( uint i = 0; i < asnMsg.flux.coordinates.n; ++i )
         {
-			flow_.push_back( converter_.ConvertToXY( asnMsg.flux.vecteur_point.elem[i] ) );
+			flow_.push_back( converter_.ConvertToXY( asnMsg.flux.coordinates.elem[i] ) );
             boundingBox_.Incorporate( flow_.back() );
         }
 

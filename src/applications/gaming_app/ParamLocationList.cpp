@@ -90,7 +90,7 @@ void ParamLocationList::Clean( ASN1T_MissionParameter& asn ) const
     if( asn.value.u.locationList )
     {
         for( unsigned int i = 0; i < asn.value.u.locationList->n; ++i )
-            delete[] asn.value.u.locationList->elem[i].vecteur_point.elem;
+            delete[] asn.value.u.locationList->elem[i].coordinates.elem;
         delete[] asn.value.u.locationList->elem;
     }
     delete asn.value.u.locationList;

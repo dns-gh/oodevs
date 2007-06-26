@@ -45,14 +45,14 @@ void LogisticRoutePrototype::Commit()
         return;
 
     attr_ = new ASN1T_ObjectAttributesLogisticRoute();
-    attr_->debit              = flow_->value();
-    attr_->largeur            = width_->value();
-    attr_->longueur           = length_->value();
-    attr_->poids_max_supporte = maxWeight_->value();
-    attr_->itineraire_equipe  = equipped_->isOn();
-    msg_.m.attributs_specifiquesPresent    = 1;
-    msg_.attributs_specifiques.t           = T_ObjectAttributesSpecific_itineraire_logistique;
-    msg_.attributs_specifiques.u.itineraire_logistique = attr_;
+    attr_->flow_rate        = flow_->value();
+    attr_->width            = width_->value();
+    attr_->length           = length_->value();
+    attr_->max_weight       = maxWeight_->value();
+    attr_->equipped         = equipped_->isOn();
+    msg_.m.specific_attributesPresent    = 1;
+    msg_.specific_attributes.t           = T_ObjectAttributesSpecific_logistic_route;
+    msg_.specific_attributes.u.logistic_route = attr_;
 }
 
 // -----------------------------------------------------------------------------

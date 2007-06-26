@@ -22,11 +22,7 @@ LinearMinedAreaObjectAttribute::LinearMinedAreaObjectAttribute( const Model& mod
     , nMinesActivityTime_( 0 )
     , rMinesDensity_     ( 0. )
 {
-    if( asnMsg.t == T_ObjectAttributesSpecific_zone_minee_lineaire )
-    {
-        nMinesActivityTime_ = asnMsg.u.zone_minee_lineaire->delai_activite_mines;
-        rMinesDensity_      = asnMsg.u.zone_minee_lineaire->densite;
-    }
+    Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,10 +40,10 @@ LinearMinedAreaObjectAttribute::~LinearMinedAreaObjectAttribute()
 // -----------------------------------------------------------------------------
 void LinearMinedAreaObjectAttribute::Update( const ASN1T_ObjectAttributesSpecific& asnMsg )
 {
-    if( asnMsg.t == T_ObjectAttributesSpecific_zone_minee_lineaire )
+    if( asnMsg.t == T_ObjectAttributesSpecific_linear_mine_area )
     {
-        nMinesActivityTime_ = asnMsg.u.zone_minee_lineaire->delai_activite_mines;
-        rMinesDensity_      = asnMsg.u.zone_minee_lineaire->densite;
+        nMinesActivityTime_ = asnMsg.u.linear_mine_area->activity_time;
+        rMinesDensity_      = asnMsg.u.linear_mine_area->density;
     }
 }
 
@@ -58,10 +54,10 @@ void LinearMinedAreaObjectAttribute::Update( const ASN1T_ObjectAttributesSpecifi
 void LinearMinedAreaObjectAttribute::Send( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
     asnMsg.t = nType_;
-    asnMsg.u.zone_minee_lineaire = new ASN1T_ObjectAttributesLinearMineArea();
+    asnMsg.u.linear_mine_area = new ASN1T_ObjectAttributesLinearMineArea();
     
-    asnMsg.u.zone_minee_lineaire->delai_activite_mines = nMinesActivityTime_;
-    asnMsg.u.zone_minee_lineaire->densite              = rMinesDensity_;
+    asnMsg.u.linear_mine_area->activity_time = nMinesActivityTime_;
+    asnMsg.u.linear_mine_area->density       = rMinesDensity_;
 }
 
 // -----------------------------------------------------------------------------
@@ -70,5 +66,5 @@ void LinearMinedAreaObjectAttribute::Send( ASN1T_ObjectAttributesSpecific& asnMs
 // -----------------------------------------------------------------------------
 void LinearMinedAreaObjectAttribute::AsnDelete( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
-    delete asnMsg.u.zone_minee_lineaire;
+    delete asnMsg.u.linear_mine_area;
 }

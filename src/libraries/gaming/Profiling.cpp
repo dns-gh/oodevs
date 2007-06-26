@@ -58,8 +58,8 @@ void Profiling::Update( const ASN1T_MsgControlEndTick& message )
 {
     memory_ = message.memory;
     virtualMemory_ = message.virtual_memory;
-    shortPathfinds_ = message.nb_pathfinds_courts;
-    longPathfinds_ = message.nb_pathfinds_longs;
+    shortPathfinds_ = message.short_pathfinds;
+    longPathfinds_ = message.long_pathfinds;
 }
 
 namespace

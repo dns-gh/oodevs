@@ -156,14 +156,14 @@ ASN1T_EnumObjectErrorCode MIL_ItineraireLogistique::Initialize( const ASN1T_Magi
     if( !TransformLocalisation() )
         return EnumObjectErrorCode::error_invalid_localisation;
 
-    if( !asnCreateObject.m.attributs_specifiquesPresent || asnCreateObject.attributs_specifiques.t != T_ObjectAttributesSpecific_itineraire_logistique )
+    if( !asnCreateObject.m.specific_attributesPresent || asnCreateObject.specific_attributes.t != T_ObjectAttributesSpecific_logistic_route )
         return EnumObjectErrorCode::error_missing_specific_attributes;
 
 
-    rWeightSupported_ = asnCreateObject.attributs_specifiques.u.itineraire_logistique->poids_max_supporte;
-    rWidth_           = asnCreateObject.attributs_specifiques.u.itineraire_logistique->largeur;
-    rLength_          = asnCreateObject.attributs_specifiques.u.itineraire_logistique->longueur;
-    rFlow_            = asnCreateObject.attributs_specifiques.u.itineraire_logistique->debit;
+    rWeightSupported_ = asnCreateObject.specific_attributes.u.logistic_route->max_weight;
+    rWidth_           = asnCreateObject.specific_attributes.u.logistic_route->width;
+    rLength_          = asnCreateObject.specific_attributes.u.logistic_route->length;
+    rFlow_            = asnCreateObject.specific_attributes.u.logistic_route->flow_rate;
 
     return EnumObjectErrorCode::no_error;
 }
@@ -191,15 +191,15 @@ DEC_Knowledge_Object& MIL_ItineraireLogistique::CreateKnowledge( const MIL_Army&
 // -----------------------------------------------------------------------------
 void MIL_ItineraireLogistique::WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg )
 {
-    asnAttributes_.itineraire_equipe  = bEquipped_;
-    asnAttributes_.poids_max_supporte = (int)rWeightSupported_;
-    asnAttributes_.largeur            = (int)rWidth_;
-    asnAttributes_.longueur           = (int)rLength_;
-    asnAttributes_.debit              = (int)rFlow_;
+    asnAttributes_.equipped   = bEquipped_;
+    asnAttributes_.max_weight = (int)rWeightSupported_;
+    asnAttributes_.width      = (int)rWidth_;
+    asnAttributes_.length     = (int)rLength_;
+    asnAttributes_.flow_rate  = (int)rFlow_;
 
-    asnMsg().m.attributs_specifiquesPresent                = 1;
-    asnMsg().attributs_specifiques.t                       = T_ObjectAttributesSpecific_itineraire_logistique;
-    asnMsg().attributs_specifiques.u.itineraire_logistique = &asnAttributes_;
+    asnMsg().m.specific_attributesPresent         = 1;
+    asnMsg().specific_attributes.t                = T_ObjectAttributesSpecific_logistic_route;
+    asnMsg().specific_attributes.u.logistic_route = &asnAttributes_;
 }
 
 // -----------------------------------------------------------------------------
@@ -208,15 +208,15 @@ void MIL_ItineraireLogistique::WriteSpecificAttributes( NET_ASN_MsgObjectCreatio
 // -----------------------------------------------------------------------------
 void MIL_ItineraireLogistique::WriteSpecificAttributes( NET_ASN_MsgObjectUpdate&   asnMsg )
 {
-    asnAttributes_.itineraire_equipe  = bEquipped_;
-    asnAttributes_.poids_max_supporte = (int)rWeightSupported_;
-    asnAttributes_.largeur            = (int)rWidth_;
-    asnAttributes_.longueur           = (int)rLength_;
-    asnAttributes_.debit              = (int)rFlow_;
+    asnAttributes_.equipped   = bEquipped_;
+    asnAttributes_.max_weight = (int)rWeightSupported_;
+    asnAttributes_.width      = (int)rWidth_;
+    asnAttributes_.length     = (int)rLength_;
+    asnAttributes_.flow_rate  = (int)rFlow_;
 
-    asnMsg().m.attributs_specifiquesPresent                = 1;
-    asnMsg().attributs_specifiques.t                       = T_ObjectAttributesSpecific_itineraire_logistique;
-    asnMsg().attributs_specifiques.u.itineraire_logistique = &asnAttributes_;
+    asnMsg().m.specific_attributesPresent         = 1;
+    asnMsg().specific_attributes.t                = T_ObjectAttributesSpecific_logistic_route;
+    asnMsg().specific_attributes.u.logistic_route = &asnAttributes_;
 }
 
 // =============================================================================

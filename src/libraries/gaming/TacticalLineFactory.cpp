@@ -54,7 +54,7 @@ TacticalLineFactory::~TacticalLineFactory()
 ::TacticalLine_ABC* TacticalLineFactory::Create( const ASN1T_MsgLimaCreation& asnMsg )
 {
     ::TacticalLine_ABC* line = new Lima( controllers_.controller_, publisher_, asnMsg );
-    line->Attach< kernel::Positions >( *new TacticalLinePositions( asnMsg.tactical_line.geometrie, converter_, *line ) );
+    line->Attach< kernel::Positions >( *new TacticalLinePositions( asnMsg.tactical_line.geometry, converter_, *line ) );
     line->Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, *line, asnMsg.tactical_line.diffusion, model_.agents_, model_.teams_ ) );
     return line;
 }
@@ -66,7 +66,7 @@ TacticalLineFactory::~TacticalLineFactory()
 ::TacticalLine_ABC* TacticalLineFactory::Create( const ASN1T_MsgLimitCreation& asnMsg )
 {
     ::TacticalLine_ABC* line = new Limit( controllers_.controller_, publisher_, asnMsg );
-    line->Attach< kernel::Positions >( *new TacticalLinePositions( asnMsg.tactical_line.geometrie, converter_, *line ) );
+    line->Attach< kernel::Positions >( *new TacticalLinePositions( asnMsg.tactical_line.geometry, converter_, *line ) );
     line->Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, *line, asnMsg.tactical_line.diffusion, model_.agents_, model_.teams_ ) );
     return line;
 }

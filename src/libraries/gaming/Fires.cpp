@@ -45,10 +45,10 @@ Fires::~Fires()
 template< typename T >
 void Fires::CreateFire( const T& message )
 {
-    if( ! Find( message.oid_tir ) )
+    if( ! Find( message.fire_oid ) )
     {
         Fire_ABC* fire = factory_.CreateFire( message );
-        Register( message.oid_tir, *fire );
+        Register( message.fire_oid, *fire );
         controller_.Update( *this );
     }
 }
@@ -60,10 +60,10 @@ void Fires::CreateFire( const T& message )
 template< typename T >
 void Fires::DestroyFire( const T& message )
 {
-    Fire_ABC* fire = Find( message.oid_tir );
+    Fire_ABC* fire = Find( message.fire_oid );
     if( fire )
     {
-        Remove( message.oid_tir );
+        Remove( message.fire_oid );
         delete fire;
         controller_.Update( *this );
     }

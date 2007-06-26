@@ -24,13 +24,7 @@ CrossingSiteObjectAttribute::CrossingSiteObjectAttribute( const Model& model, co
     , nSpeed_            ( 0 )
     , bNeedsConstruction_( false ) 
 {
-    if( asnMsg.t == T_ObjectAttributesSpecific_site_franchissement )
-    {
-        nWidth_             = asnMsg.u.site_franchissement->largeur;
-        nDepth_             = asnMsg.u.site_franchissement->profondeur;
-        nSpeed_             = asnMsg.u.site_franchissement->vitesse_courant;
-        bNeedsConstruction_ = asnMsg.u.site_franchissement->berges_a_amenager;
-    }
+    Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,12 +42,12 @@ CrossingSiteObjectAttribute::~CrossingSiteObjectAttribute()
 // -----------------------------------------------------------------------------
 void CrossingSiteObjectAttribute::Update( const ASN1T_ObjectAttributesSpecific& asnMsg )
 {
-    if( asnMsg.t == T_ObjectAttributesSpecific_site_franchissement )
+    if( asnMsg.t == T_ObjectAttributesSpecific_crossing_site )
     {
-        nWidth_             = asnMsg.u.site_franchissement->largeur;
-        nDepth_             = asnMsg.u.site_franchissement->profondeur;
-        nSpeed_             = asnMsg.u.site_franchissement->vitesse_courant;
-        bNeedsConstruction_ = asnMsg.u.site_franchissement->berges_a_amenager;
+        nWidth_             = asnMsg.u.crossing_site->width;
+        nDepth_             = asnMsg.u.crossing_site->depth;
+        nSpeed_             = asnMsg.u.crossing_site->flow_rate;
+        bNeedsConstruction_ = asnMsg.u.crossing_site->banks_require_fitting;
     }
 }
 
@@ -64,12 +58,11 @@ void CrossingSiteObjectAttribute::Update( const ASN1T_ObjectAttributesSpecific& 
 void CrossingSiteObjectAttribute::Send( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
     asnMsg.t = nType_;
-    asnMsg.u.site_franchissement = new ASN1T_ObjectAttributesCrossingSite();
-    
-    asnMsg.u.site_franchissement->largeur           = nWidth_;
-    asnMsg.u.site_franchissement->profondeur        = nDepth_;
-    asnMsg.u.site_franchissement->vitesse_courant   = nSpeed_;
-    asnMsg.u.site_franchissement->berges_a_amenager = bNeedsConstruction_;
+    asnMsg.u.crossing_site = new ASN1T_ObjectAttributesCrossingSite();
+    asnMsg.u.crossing_site->width                 = nWidth_;
+    asnMsg.u.crossing_site->depth                 = nDepth_;
+    asnMsg.u.crossing_site->flow_rate             = nSpeed_;
+    asnMsg.u.crossing_site->banks_require_fitting = bNeedsConstruction_;
 }
 
 // -----------------------------------------------------------------------------
@@ -78,5 +71,5 @@ void CrossingSiteObjectAttribute::Send( ASN1T_ObjectAttributesSpecific& asnMsg )
 // -----------------------------------------------------------------------------
 void CrossingSiteObjectAttribute::AsnDelete( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
-    delete asnMsg.u.itineraire_logistique;
+    delete asnMsg.u.crossing_site;
 }

@@ -97,10 +97,10 @@ void ParamPoint::CommitTo( ASN1T_MissionParameter& asn ) const
     asn.null_value = pPosLabel_->text() == "---" ? 1 : 0;
     if( asn.null_value )
         return;
-    point->type               = EnumLocationType::point;
-    point->vecteur_point.n    = 1;
-    point->vecteur_point.elem = new ASN1T_CoordUTM[1];
-    point->vecteur_point.elem[0] = converter_.ConvertToMgrs( paramPoint_ ).c_str();
+    point->type             = EnumLocationType::point;
+    point->coordinates.n    = 1;
+    point->coordinates.elem = new ASN1T_CoordUTM[1];
+    point->coordinates.elem[0] = converter_.ConvertToMgrs( paramPoint_ ).c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +110,7 @@ void ParamPoint::CommitTo( ASN1T_MissionParameter& asn ) const
 void ParamPoint::Clean( ASN1T_MissionParameter& asn ) const
 {
     if( asn.value.u.point )
-        delete[] asn.value.u.point->vecteur_point.elem;
+        delete[] asn.value.u.point->coordinates.elem;
     delete asn.value.u.point;
 }
 

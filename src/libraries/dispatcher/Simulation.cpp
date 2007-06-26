@@ -65,14 +65,14 @@ void Simulation::OnReceive( const ASN1T_MsgsSimToClient& asnMsg )
 
     switch( asnMsg.msg.t )
     {
-        case T_MsgsSimToClient_msg_msg_ctrl_send_current_state_begin:
+        case T_MsgsSimToClient_msg_msg_control_send_current_state_begin:
         {
             dispatcher_.GetClientsNetworker().DenyConnections();
             dispatcher_.GetModel           ().Reset();
             MT_LOG_INFO_MSG( "Dispatcher - Initializing model" );
             break;
         }
-        case T_MsgsSimToClient_msg_msg_ctrl_send_current_state_end:  
+        case T_MsgsSimToClient_msg_msg_control_send_current_state_end:  
         {
             MT_LOG_INFO_MSG( "Dispatcher - Model initialized" );
             dispatcher_.GetProfileManager  ().Reset(); // Profiles initialization

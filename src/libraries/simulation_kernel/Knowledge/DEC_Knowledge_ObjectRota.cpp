@@ -30,7 +30,7 @@ DEC_Knowledge_ObjectRota::DEC_Knowledge_ObjectRota( const MIL_Army& armyKnowing,
     , bSpecificAttributesValid_( false )
     , nDanger_                 ( 0 )
 {
-    asnAttributes_.agents_nbc.n = 0;
+    asnAttributes_.nbc_agents.n = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ DEC_Knowledge_ObjectRota::DEC_Knowledge_ObjectRota()
     , bSpecificAttributesValid_( false )
     , nDanger_                 ( 0 )
 {
-    asnAttributes_.agents_nbc.n = 0;
+    asnAttributes_.nbc_agents.n = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -175,19 +175,19 @@ void DEC_Knowledge_ObjectRota::BuildMsgSpecificAttributes( ASN1T_MsgObjectKnowle
 
     CleanMsgSpecificAttributes();
 
-    asnAttributes_.niveau_danger = nDanger_;
-    asnAttributes_.agents_nbc.n = nbcAgents_.size();
+    asnAttributes_.danger_level = nDanger_;
+    asnAttributes_.nbc_agents.n = nbcAgents_.size();
     if( !nbcAgents_.empty() )
     {
-        asnAttributes_.agents_nbc.elem = new ASN1T_OID[ nbcAgents_.size() ];
+        asnAttributes_.nbc_agents.elem = new ASN1T_OID[ nbcAgents_.size() ];
         uint i = 0;
         for( CIT_NbcAgentSet itNbc = nbcAgents_.begin(); itNbc != nbcAgents_.end(); ++itNbc, ++i )
-            asnAttributes_.agents_nbc.elem[ i ]  = (**itNbc).GetID();
+            asnAttributes_.nbc_agents.elem[ i ]  = (**itNbc).GetID();
     }
 
-    asnMsg.m.attributs_specifiquesPresent = 1;
-    asnMsg.attributs_specifiques.t        = T_ObjectAttributesSpecific_rota;
-    asnMsg.attributs_specifiques.u.rota   = &asnAttributes_;
+    asnMsg.m.specific_attributesPresent = 1;
+    asnMsg.specific_attributes.t        = T_ObjectAttributesSpecific_rota;
+    asnMsg.specific_attributes.u.rota   = &asnAttributes_;
 }
 
 // -----------------------------------------------------------------------------
@@ -196,6 +196,6 @@ void DEC_Knowledge_ObjectRota::BuildMsgSpecificAttributes( ASN1T_MsgObjectKnowle
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectRota::CleanMsgSpecificAttributes()
 {
-    if( asnAttributes_.agents_nbc.n > 0 )
-        delete [] asnAttributes_.agents_nbc.elem;
+    if( asnAttributes_.nbc_agents.n > 0 )
+        delete [] asnAttributes_.nbc_agents.elem;
 }

@@ -44,8 +44,8 @@ PHY_FireDamages_Population::~PHY_FireDamages_Population()
 //-----------------------------------------------------------------------------
 void PHY_FireDamages_Population::Serialize( const MIL_Population& target, ASN1T_PopulationFireDamages& asn ) const
 {
-    asn.cible    = target.GetID();
-    asn.nb_morts = nNbrKilledHumans_;
+    asn.target   = target.GetID();
+    asn.dead_nbr = nNbrKilledHumans_;
 }
 
 // -----------------------------------------------------------------------------

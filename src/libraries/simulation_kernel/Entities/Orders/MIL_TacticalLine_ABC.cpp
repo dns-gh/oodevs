@@ -39,7 +39,7 @@ MIL_TacticalLine_ABC::MIL_TacticalLine_ABC()
 // -----------------------------------------------------------------------------
 MIL_TacticalLine_ABC::MIL_TacticalLine_ABC( const ASN1T_TacticalLine& asn )
     : nID_                  ( MIL_IDManager::limits_.GetFreeSimID() )
-    , strName_              ( asn.nom )
+    , strName_              ( asn.name )
     , pFormationBroadcasted_( asn.diffusion.t == T_TacticalLinesDiffusion_formation ? MIL_AgentServer::GetWorkspace().GetEntityManager().FindFormation( asn.diffusion.u.formation ) : 0 )
     , pAutomateBroadcasted_ ( asn.diffusion.t == T_TacticalLinesDiffusion_automat   ? MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate ( asn.diffusion.u.automat  ) : 0 )
     , line_                 ()
@@ -47,7 +47,7 @@ MIL_TacticalLine_ABC::MIL_TacticalLine_ABC( const ASN1T_TacticalLine& asn )
     if( !pFormationBroadcasted_ && !pAutomateBroadcasted_ )
         throw NET_AsnException< ASN1T_EnumInfoContextErrorCode >( EnumInfoContextErrorCode::error_invalid_diffusion );
 
-    if( !NET_ASN_Tools::ReadLine( asn.geometrie, line_ ) )
+    if( !NET_ASN_Tools::ReadLine( asn.geometry, line_ ) )
         throw NET_AsnException< ASN1T_EnumInfoContextErrorCode >( EnumInfoContextErrorCode::error_invalid_geometry );
 }
 
@@ -160,7 +160,7 @@ void MIL_TacticalLine_ABC::Update( const ASN1T_TacticalLine& asn )
     if( !pFormationBroadcasted_ && !pAutomateBroadcasted_ )
         throw NET_AsnException< ASN1T_EnumInfoContextErrorCode >( EnumInfoContextErrorCode::error_invalid_diffusion );
 
-    if( !NET_ASN_Tools::ReadLine( asn.geometrie, line_ ) )
+    if( !NET_ASN_Tools::ReadLine( asn.geometry, line_ ) )
         throw NET_AsnException< ASN1T_EnumInfoContextErrorCode >( EnumInfoContextErrorCode::error_invalid_geometry );
 }
 
@@ -174,8 +174,8 @@ void MIL_TacticalLine_ABC::Update( const ASN1T_TacticalLine& asn )
 // -----------------------------------------------------------------------------
 void MIL_TacticalLine_ABC::Serialize( ASN1T_TacticalLine& asn ) const
 {
-    NET_ASN_Tools::WriteLine( line_, asn.geometrie );
-    asn.nom = strName_.c_str();
+    NET_ASN_Tools::WriteLine( line_, asn.geometry );
+    asn.name = strName_.c_str();
     if( pFormationBroadcasted_ )
     {
         asn.diffusion.t           = T_TacticalLinesDiffusion_formation;
@@ -194,6 +194,6 @@ void MIL_TacticalLine_ABC::Serialize( ASN1T_TacticalLine& asn ) const
 // -----------------------------------------------------------------------------
 void MIL_TacticalLine_ABC::CleanAfterSerialization( ASN1T_TacticalLine& asn ) const
 {
-    NET_ASN_Tools::Delete( asn.geometrie );
+    NET_ASN_Tools::Delete( asn.geometry );
 }
 

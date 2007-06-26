@@ -322,24 +322,24 @@ ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::Initialize( const ASN1T_MagicActio
 {
     assert( pType_ );    
     TER_Localisation localisation; 
-    if( !NET_ASN_Tools::ReadLocation( asn.localisation, localisation ) )
+    if( !NET_ASN_Tools::ReadLocation( asn.location, localisation ) )
         return EnumObjectErrorCode::error_invalid_specific_attributes;
 
-    if( asn.m.nomPresent ) 
-        strName_ = asn.nom;
+    if( asn.m.namePresent ) 
+        strName_ = asn.name;
 
     if( pType_->CanBeReservedObstacle() )
     {
-        if( !asn.m.type_obstaclePresent )
+        if( !asn.m.obstacle_typePresent )
             return EnumObjectErrorCode::error_invalid_localisation;
-        pObstacleType_ = MIL_ObstacleType::Find( asn.type_obstacle );
+        pObstacleType_ = MIL_ObstacleType::Find( asn.obstacle_type );
         if( !pObstacleType_ )
             return EnumObjectErrorCode::error_invalid_specific_attributes;
         if( pObstacleType_->CouldBeActivated() )
         {
-            if( !asn.m.obstacle_de_manoeuvre_activePresent )
+            if( !asn.m.reserved_obstacle_activatedPresent )
                 return EnumObjectErrorCode::error_invalid_specific_attributes;
-            bReservedObstacleActivated_ = asn.obstacle_de_manoeuvre_active;
+            bReservedObstacleActivated_ = asn.reserved_obstacle_activated;
         }
     }
     InitializeCommon( localisation );
@@ -422,41 +422,41 @@ void MIL_RealObject_ABC::SendCreation()
     assert( pType_ );
 
     asn().oid  = nID_;
-    asn().nom  = strName_.c_str(); // !! pointeur sur const char*
+    asn().name = strName_.c_str();
     asn().type = pType_->GetAsnID();
-    asn().camp = GetArmy().GetID();
+    asn().team = GetArmy().GetID();
     
-    NET_ASN_Tools::WriteLocation( GetLocalisation(), asn().localisation );
+    NET_ASN_Tools::WriteLocation( GetLocalisation(), asn().location );
 
     if( pObstacleType_ )
     {
-        asn().m.type_obstaclePresent = 1;
-        asn().type_obstacle          = pObstacleType_->GetAsnID();
+        asn().m.obstacle_typePresent = 1;
+        asn().obstacle_type = pObstacleType_->GetAsnID();
         if( pObstacleType_->CouldBeActivated() )
         {
-            asn().m.obstacle_de_manoeuvre_activePresent = 1;
-            asn().obstacle_de_manoeuvre_active          = bReservedObstacleActivated_;
+            asn().m.reserved_obstacle_activatedPresent = 1;
+            asn().reserved_obstacle_activated          = bReservedObstacleActivated_;
         }
     }
 
     if( pType_->GetDotationCategoryForConstruction() )
     {
-        asn().m.type_dotation_constructionPresent = 1;
-        asn().type_dotation_construction          = pType_->GetDotationCategoryForConstruction()->GetMosID();
+        asn().m.construction_dotation_typePresent = 1;
+        asn().construction_dotation_type          = pType_->GetDotationCategoryForConstruction()->GetMosID();
     }
 
     if( pType_->GetDotationCategoryForMining() )
     {
-        asn().m.type_dotation_valorisationPresent = 1;
-        asn().type_dotation_valorisation          = pType_->GetDotationCategoryForMining()->GetMosID();
+        asn().m.mining_dotation_typePresent = 1;
+        asn().mining_dotation_type          = pType_->GetDotationCategoryForMining()->GetMosID();
     }
 
-    asn().m.attributs_specifiquesPresent = 0;
+    asn().m.specific_attributesPresent = 0;
     WriteSpecificAttributes( asn );
     
     asn.Send();
 
-    NET_ASN_Tools::Delete( asn().localisation );
+    NET_ASN_Tools::Delete( asn().location );
 }
 
 
@@ -515,38 +515,38 @@ void MIL_RealObject_ABC::SendMsgUpdate()
     if( IsAttributeUpdated( eAttrUpdate_ConstructionPercentage, rConstructionPercentage_, nLastValueConstructionPercentage_ ) )
     {
         nLastValueConstructionPercentage_     = (uint)( rConstructionPercentage_ * 100. );
-        asn().m.pourcentage_constructionPresent = 1;
-        asn().pourcentage_construction          = nLastValueConstructionPercentage_;
+        asn().m.construction_percentagePresent = 1;
+        asn().construction_percentage          = nLastValueConstructionPercentage_;
         if( pType_->GetDotationCategoryForConstruction() )
         {
-            asn().m.nb_dotation_constructionPresent = 1;
-            asn().nb_dotation_construction          = nCurrentNbrDotationForConstruction_;
+            asn().m.construction_dotation_nbrPresent = 1;
+            asn().construction_dotation_nbr          = nCurrentNbrDotationForConstruction_;
         }
     }
 
     if( IsAttributeUpdated( eAttrUpdate_MiningPercentage, rMiningPercentage_, nLastValueMiningPercentage_ ) )
     {
         nLastValueMiningPercentage_ = (uint)( rMiningPercentage_ * 100. );
-        asn().m.pourcentage_valorisationPresent = 1;
-        asn().pourcentage_valorisation          = nLastValueMiningPercentage_;
+        asn().m.mining_percentagePresent = 1;
+        asn().mining_percentage          = nLastValueMiningPercentage_;
         if( pType_->GetDotationCategoryForMining() )
         {
-            asn().m.nb_dotation_valorisationPresent = 1;
-            asn().nb_dotation_valorisation          = nCurrentNbrDotationForMining_;
+            asn().m.mining_dotation_nbrPresent = 1;
+            asn().mining_dotation_nbr          = nCurrentNbrDotationForMining_;
         }
     }
 
     if( IsAttributeUpdated( eAttrUpdate_BypassPercentage, rBypassPercentage_, nLastValueBypassPercentage_ ) )
     {
         nLastValueBypassPercentage_ = (uint)( rBypassPercentage_ * 100. );
-        asn().m.pourcentage_creation_contournementPresent = 1;
-        asn().pourcentage_creation_contournement  = nLastValueBypassPercentage_;
+        asn().m.bypass_construction_percentagePresent = 1;
+        asn().bypass_construction_percentage = nLastValueBypassPercentage_;
     }
 
     if( xAttrToUpdate_ & eAttrUpdate_Localisation )
     {
-        asn().m.localisationPresent = 1;
-        NET_ASN_Tools::WriteLocation( GetLocalisation(), asn().localisation );
+        asn().m.locationPresent = 1;
+        NET_ASN_Tools::WriteLocation( GetLocalisation(), asn().location );
     }
 
     if( xAttrToUpdate_ & eAttrUpdate_SpecificAttributes )
@@ -556,8 +556,8 @@ void MIL_RealObject_ABC::SendMsgUpdate()
     {
         if( IsReservedObstacle() )
         {
-            asn().m.obstacle_de_manoeuvre_activePresent = 1;
-            asn().obstacle_de_manoeuvre_active          = bReservedObstacleActivated_;
+            asn().m.reserved_obstacle_activatedPresent = 1;
+            asn().reserved_obstacle_activated          = bReservedObstacleActivated_;
         }
     }
 
@@ -565,8 +565,8 @@ void MIL_RealObject_ABC::SendMsgUpdate()
     xAttrToUpdate_ = 0;
     asn.Send();
 
-    if( asn().m.localisationPresent )
-        NET_ASN_Tools::Delete( asn().localisation );
+    if( asn().m.locationPresent )
+        NET_ASN_Tools::Delete( asn().location );
 }
 
 // -----------------------------------------------------------------------------
@@ -575,27 +575,27 @@ void MIL_RealObject_ABC::SendMsgUpdate()
 // -----------------------------------------------------------------------------
 ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::OnReceiveMagicActionUpdate( const ASN1T_MagicActionUpdateObject& asn )
 {
-    if( asn.m.pourcentage_constructionPresent )
+    if( asn.m.construction_percentagePresent )
     {
-        ChangeConstructionPercentage( asn.pourcentage_construction / 100. );
+        ChangeConstructionPercentage( asn.construction_percentage / 100. );
         NotifyAttributeUpdated( eAttrUpdate_ConstructionPercentage );
     }
 
-    if( asn.m.pourcentage_valorisationPresent )
+    if( asn.m.mining_percentagePresent )
     {
-        ChangeMiningPercentage( asn.pourcentage_valorisation / 100. );
+        ChangeMiningPercentage( asn.mining_percentage / 100. );
         NotifyAttributeUpdated( eAttrUpdate_MiningPercentage );
     }
         
-    if( asn.m.pourcentage_creation_contournementPresent )
+    if( asn.m.bypass_construction_percentagePresent )
     {
-        rBypassPercentage_ = asn.pourcentage_creation_contournement / 100.;
+        rBypassPercentage_ = asn.bypass_construction_percentage / 100.;
         NotifyAttributeUpdated( eAttrUpdate_BypassPercentage );
     }
 
-    if( asn.m.obstacle_de_manoeuvre_activePresent && IsReservedObstacle() )
+    if( asn.m.reserved_obstacle_activatedPresent && IsReservedObstacle() )
     {
-        bReservedObstacleActivated_ = asn.obstacle_de_manoeuvre_active;
+        bReservedObstacleActivated_ = asn.reserved_obstacle_activated;
         NotifyAttributeUpdated( eAttrUpdate_ReservedObstacleActivated );
     }
 

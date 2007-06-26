@@ -42,13 +42,13 @@ CrossingSiteAttributes::~CrossingSiteAttributes()
 template< typename T >
 void CrossingSiteAttributes::UpdateData( const T& message )
 {
-    if( message.m.attributs_specifiquesPresent 
-     && message.attributs_specifiques.t == T_ObjectAttributesSpecific_site_franchissement )
+    if( message.m.specific_attributesPresent 
+     && message.specific_attributes.t == T_ObjectAttributesSpecific_crossing_site )
     {
-        width_ = message.attributs_specifiques.u.site_franchissement->largeur;
-        depth_ = message.attributs_specifiques.u.site_franchissement->profondeur;
-        speed_ = message.attributs_specifiques.u.site_franchissement->vitesse_courant;
-        needsConstruction_ = message.attributs_specifiques.u.site_franchissement->berges_a_amenager;
+        width_ = message.specific_attributes.u.crossing_site->width;
+        depth_ = message.specific_attributes.u.crossing_site->depth;
+        speed_ = message.specific_attributes.u.crossing_site->flow_rate;
+        needsConstruction_ = message.specific_attributes.u.crossing_site->banks_require_fitting;
         controller_.Update( *(CrossingSiteAttributes_ABC*)this );
     }
 }

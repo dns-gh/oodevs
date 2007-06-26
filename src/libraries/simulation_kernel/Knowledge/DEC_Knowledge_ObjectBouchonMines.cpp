@@ -122,9 +122,9 @@ void DEC_Knowledge_ObjectBouchonMines::BuildMsgSpecificAttributes( ASN1T_MsgObje
     if( !IsAttributeUpdated( eAttr_Specific ) || !bSpecificAttributesValid_ )
         return;
 
-    asnAttributes_.delai_activite_mines = nMinesActivityTime_;
+    asnAttributes_.activity_time = nMinesActivityTime_;
 
-    asnMsg.m.attributs_specifiquesPresent        = 1;
-    asnMsg.attributs_specifiques.t               = T_ObjectAttributesSpecific_bouchon_mines;
-    asnMsg.attributs_specifiques.u.bouchon_mines = &asnAttributes_;
+    asnMsg.m.specific_attributesPresent   = 1;
+    asnMsg.specific_attributes.t          = T_ObjectAttributesSpecific_mine_jam;
+    asnMsg.specific_attributes.u.mine_jam = &asnAttributes_;
 }

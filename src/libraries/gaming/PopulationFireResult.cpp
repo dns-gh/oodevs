@@ -17,8 +17,8 @@ using namespace kernel;
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
 PopulationFireResult::PopulationFireResult( const ASN1T_PopulationFireDamages& message , const Resolver_ABC< Population_ABC >& resolver )
-    : target_( resolver.Get( message .cible ) )
-    , deadPeople_( message.nb_morts )
+    : target_( resolver.Get( message.target ) )
+    , deadPeople_( message.dead_nbr )
 {
     // NOTHING
 }

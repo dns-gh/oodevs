@@ -20,38 +20,38 @@ ObjectKnowledgeExports  ::= NULL
 -- SIM -> MOS
 MsgObjectKnowledgeCreation ::= SEQUENCE
 {
-    oid-connaissance             ObjectKnowledge, 
-    oid-camp-possesseur          Team, 
-    oid-objet-reel               OID, -- id de l'objet réel pointé par la connaissance
+    oid                          ObjectKnowledge, 
+    team                         Team, 
+    real-object                  OID, -- id de l'objet réel pointé par la connaissance
     type                         EnumObjectType,
-    type-obstacle                EnumObstacleType   OPTIONAL,
-    obstacle-de-manoeuvre-active BOOLEAN            OPTIONAL,    
-    type-dotation-construction   DotationType       OPTIONAL,
-    type-dotation-valorisation   DotationType       OPTIONAL    
+    obstacle-type                EnumObstacleType   OPTIONAL,
+    reserved-obstacle-activated  BOOLEAN            OPTIONAL,    
+    construction-dotation-type   DotationType       OPTIONAL,
+    mining-dotation-type         DotationType       OPTIONAL    
 }
 
 MsgObjectKnowledgeUpdate ::= SEQUENCE
 {
-    oid-connaissance             ObjectKnowledge,
-    oid-camp-possesseur          Team,
-    oid-objet-reel               OID                OPTIONAL, -- id de l'objet réel pointé par la connaissance
-    pertinence                   INTEGER( 0..100 )  OPTIONAL,
-    localisation                 Location       OPTIONAL,
-    pourcentage-construction     INTEGER( 0..100 )  OPTIONAL, 
-    pourcentage-valorisation     INTEGER( 0..100 )  OPTIONAL,
-    pourcentage-contournement    INTEGER( 0..100 )  OPTIONAL,
-    obstacle-de-manoeuvre-active BOOLEAN            OPTIONAL,
-    est-percu                    BOOLEAN            OPTIONAL,
-    attributs-specifiques        ObjectAttributesSpecific OPTIONAL,
-    perception-par-compagnie     ListOID            OPTIONAL, -- Liste des compagnies percevant l'objet
-    nb-dotation-construction     INTEGER            OPTIONAL,
-    nb-dotation-valorisation     INTEGER            OPTIONAL
+    oid                             ObjectKnowledge,
+    team                            Team,
+    real-object                     OID                OPTIONAL, -- id de l'objet réel pointé par la connaissance
+    relevance                       INTEGER( 0..100 )  OPTIONAL,
+    location                        Location       OPTIONAL,
+    construction-percentage         INTEGER( 0..100 )  OPTIONAL, 
+    mining-percentage               INTEGER( 0..100 )  OPTIONAL,
+    bypass-construction-percentage  INTEGER( 0..100 )  OPTIONAL,
+    reserved-obstacle-activated     BOOLEAN            OPTIONAL,
+    perceived                       BOOLEAN            OPTIONAL,
+    specific-attributes             ObjectAttributesSpecific OPTIONAL,
+    automat-perception              ListOID            OPTIONAL, -- Liste des compagnies percevant l'objet
+    construction-dotation-nbr       INTEGER            OPTIONAL,
+    mining-dotation-nbr             INTEGER            OPTIONAL
 }
 
 MsgObjectKnowledgeDestruction ::= SEQUENCE
 {
-    oid-connaissance    ObjectKnowledge,    
-    oid-camp-possesseur Team     
+    oid    ObjectKnowledge,    
+    team   Team     
 }
 
 END -- ObjectKnowledge

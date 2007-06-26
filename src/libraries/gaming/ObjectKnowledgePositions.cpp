@@ -39,11 +39,11 @@ ObjectKnowledgePositions::~ObjectKnowledgePositions()
 // -----------------------------------------------------------------------------
 void ObjectKnowledgePositions::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 {
-    if( message.m.localisationPresent )
-        Update( message.localisation );
-    if( message.m.est_percuPresent )
-        perceived_ = message.est_percu;
-    if( message.m.oid_objet_reelPresent )
+    if( message.m.locationPresent )
+        Update( message.location );
+    if( message.m.perceivedPresent )
+        perceived_ = message.perceived;
+    if( message.m.real_objectPresent )
         realObjectKnown_ = true;
 }
 

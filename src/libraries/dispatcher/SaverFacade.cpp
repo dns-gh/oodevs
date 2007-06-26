@@ -47,9 +47,9 @@ SaverFacade::~SaverFacade()
 // -----------------------------------------------------------------------------
 void SaverFacade::Save( const ASN1T_MsgsSimToClient& asnMsg )
 {
-    if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_ctrl_begin_tick )
+    if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_begin_tick )
         StartFrame( const_cast< ASN1T_MsgsSimToClient& >( asnMsg ) );
-    else if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_ctrl_end_tick )
+    else if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
         EndFrame( const_cast< ASN1T_MsgsSimToClient& >( asnMsg ) );
     else if( filter_.IsRelevant( asnMsg ) )
         SaveUpdate( const_cast< ASN1T_MsgsSimToClient& >( asnMsg ) );

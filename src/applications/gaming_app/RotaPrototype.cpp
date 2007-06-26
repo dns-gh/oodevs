@@ -50,17 +50,17 @@ void RotaPrototype::Commit()
 
     attr_ = new ASN1T_ObjectAttributesRota();
     
-    attr_->agents_nbc.n = GetAgentCount();
-    attr_->agents_nbc.elem  = new ASN1T_OID[ attr_->agents_nbc.n ];
+    attr_->nbc_agents.n = GetAgentCount();
+    attr_->nbc_agents.elem  = new ASN1T_OID[ attr_->nbc_agents.n ];
     unsigned i = 0;
     for( QListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
         if( item->isSelected() )
-            attr_->agents_nbc.elem[i++] = static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent >()->GetId();
+            attr_->nbc_agents.elem[i++] = static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent >()->GetId();
 
-    attr_->niveau_danger = danger_->text().toUInt();
-    msg_.m.attributs_specifiquesPresent = 1;
-    msg_.attributs_specifiques.t        = T_ObjectAttributesSpecific_rota;
-    msg_.attributs_specifiques.u.rota   = attr_;
+    attr_->danger_level = danger_->text().toUInt();
+    msg_.m.specific_attributesPresent = 1;
+    msg_.specific_attributes.t        = T_ObjectAttributesSpecific_rota;
+    msg_.specific_attributes.u.rota   = attr_;
 }
 
 // -----------------------------------------------------------------------------

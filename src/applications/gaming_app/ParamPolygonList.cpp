@@ -84,7 +84,7 @@ void ParamPolygonList::Clean( ASN1T_MissionParameter& asn ) const
     if( asn.value.u.polygonList )
     {
         for( unsigned int i = 0; i < asn.value.u.polygonList->n; ++i )
-            delete[] asn.value.u.polygonList->elem[i].vecteur_point.elem;
+            delete[] asn.value.u.polygonList->elem[i].coordinates.elem;
         delete[] asn.value.u.polygonList->elem;
     }
     delete asn.value.u.polygonList;

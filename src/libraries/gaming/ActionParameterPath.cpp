@@ -87,12 +87,12 @@ ActionParameterPath::~ActionParameterPath()
 // -----------------------------------------------------------------------------
 void ActionParameterPath::AddPoints( const ASN1T_Location& asn )
 {
-    for( unsigned int i = 0; i < asn.vecteur_point.n; ++i )
+    for( unsigned int i = 0; i < asn.coordinates.n; ++i )
     {
         Point pt;
-        pt.AddPoint( converter_.ConvertToXY( asn.vecteur_point.elem[i] ) );
+        pt.AddPoint( converter_.ConvertToXY( asn.coordinates.elem[i] ) );
         QString label;
-        if( i + 1 == asn.vecteur_point.n )
+        if( i + 1 == asn.coordinates.n )
             label = tools::translate( "ActionParameter", "Destination" );
         else
             label = tools::translate( "ActionParameter", "Way point %1" ).arg( i + 1 );
@@ -138,7 +138,7 @@ void ActionParameterPath::CommitTo( ASN1T_MissionParameter& asn ) const
     asn.value.t = T_MissionParameter_value_path;
     ASN1T_Path*& path = asn.value.u.path = new ASN1T_Path();
     CommitTo( *path );
-    asn.null_value = path->vecteur_point.n ? 0 : 1;
+    asn.null_value = path->coordinates.n ? 0 : 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -159,7 +159,7 @@ namespace
         explicit AsnSerializer( ASN1T_Path& asn ) : asn_( &asn ), current_( 0 ) {}
         virtual void Visit( const ActionParameterPathPoint& param )
         {
-            param.CommitTo( asn_->vecteur_point.elem[current_++] );
+            param.CommitTo( asn_->coordinates.elem[current_++] );
         }
 
         ASN1T_Path* asn_;
@@ -174,8 +174,8 @@ namespace
 void ActionParameterPath::CommitTo( ASN1T_Path& asn ) const
 {
     asn.type = EnumLocationType::line;
-    asn.vecteur_point.n = Count();
-    asn.vecteur_point.elem = new ASN1T_CoordUTM[asn.vecteur_point.n];
+    asn.coordinates.n = Count();
+    asn.coordinates.elem = new ASN1T_CoordUTM[asn.coordinates.n];
     AsnSerializer serializer( asn );
     Accept( serializer );
 }
@@ -186,8 +186,8 @@ void ActionParameterPath::CommitTo( ASN1T_Path& asn ) const
 // -----------------------------------------------------------------------------
 void ActionParameterPath::Clean( ASN1T_Path& asn ) const
 {
-    if( asn.vecteur_point.n )
-        delete[] asn.vecteur_point.elem;
+    if( asn.coordinates.n )
+        delete[] asn.coordinates.elem;
 }
 
 // -----------------------------------------------------------------------------

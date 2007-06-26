@@ -49,8 +49,8 @@ void FiresModel::Purge()
 // -----------------------------------------------------------------------------
 void FiresModel::AddFire( const ASN1T_MsgStartUnitFire& message )
 {
-    if( ! Find( message.oid_tir ) )
-        Register( message.oid_tir, agents_.Get( message.tireur ) );
+    if( ! Find( message.fire_oid ) )
+        Register( message.fire_oid, agents_.Get( message.firer_oid ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,8 +59,8 @@ void FiresModel::AddFire( const ASN1T_MsgStartUnitFire& message )
 // -----------------------------------------------------------------------------
 void FiresModel::AddFire( const ASN1T_MsgStartPopulationFire& message )
 {
-    if( ! Find( message.oid_tir ) )
-        Register( message.oid_tir, populations_.Get( message.oid_src ) );
+    if( ! Find( message.fire_oid ) )
+        Register( message.fire_oid, populations_.Get( message.firer_oid ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ void FiresModel::AddFire( const ASN1T_MsgStartPopulationFire& message )
 // -----------------------------------------------------------------------------
 Entity_ABC* FiresModel::FindFirer( const ASN1T_MsgStopUnitFire& message )
 {
-    return Find( message.oid_tir );
+    return Find( message.fire_oid );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +78,7 @@ Entity_ABC* FiresModel::FindFirer( const ASN1T_MsgStopUnitFire& message )
 // -----------------------------------------------------------------------------
 Entity_ABC* FiresModel::FindFirer( const ASN1T_MsgStopPopulationFire& message )
 {
-    return Find( message.oid_tir );
+    return Find( message.fire_oid );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ Entity_ABC* FiresModel::FindFirer( const ASN1T_MsgStopPopulationFire& message )
 // -----------------------------------------------------------------------------
 void FiresModel::RemoveFire( const ASN1T_MsgStopUnitFire& message )
 {
-    Remove( message.oid_tir );
+    Remove( message.fire_oid );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,5 +96,5 @@ void FiresModel::RemoveFire( const ASN1T_MsgStopUnitFire& message )
 // -----------------------------------------------------------------------------
 void FiresModel::RemoveFire( const ASN1T_MsgStopPopulationFire& message )
 {
-    Remove( message.oid_tir );
+    Remove( message.fire_oid );
 }

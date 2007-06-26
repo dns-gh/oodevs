@@ -308,9 +308,9 @@ void SIMControlToolbar::SlotNamedCheckPoint()
 void SIMControlToolbar::RequestCheckpoint( const std::string& name )
 {
     ASN_MsgControlCheckPointSaveNow asn;
-    asn().m.nomPresent = ! name.empty();
-    if( asn().m.nomPresent )
-        asn().nom = name.c_str();
+    asn().m.namePresent = ! name.empty();
+    if( asn().m.namePresent )
+        asn().name = name.c_str();
     asn.Send( publisher_ );
     pCheckpointButton_->popup()->hide();
 }

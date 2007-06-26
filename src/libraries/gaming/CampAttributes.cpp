@@ -43,16 +43,16 @@ CampAttributes::~CampAttributes()
 template< typename T >
 void CampAttributes::UpdateData( const T& message )
 {
-    if( message.m.attributs_specifiquesPresent 
-     && message.attributs_specifiques.t == T_ObjectAttributesSpecific_camp_prisonniers )
+    if( message.m.specific_attributesPresent 
+     && message.specific_attributes.t == T_ObjectAttributesSpecific_prisoner_camp )
     {
-        tc2_ = resolver_.Find( message.attributs_specifiques.u.camp_prisonniers->tc2 );
+        tc2_ = resolver_.Find( message.specific_attributes.u.prisoner_camp->tc2 );
         controller_.Update( *(CampAttributes_ABC*)this );
     }
-    if( message.m.attributs_specifiquesPresent 
-     && message.attributs_specifiques.t == T_ObjectAttributesSpecific_camp_refugies )
+    if( message.m.specific_attributesPresent 
+     && message.specific_attributes.t == T_ObjectAttributesSpecific_refugee_camp )
     {
-        tc2_ = resolver_.Find( message.attributs_specifiques.u.camp_refugies->tc2 );
+        tc2_ = resolver_.Find( message.specific_attributes.u.refugee_camp->tc2 );
         controller_.Update( *(CampAttributes_ABC*)this );
     }
 }

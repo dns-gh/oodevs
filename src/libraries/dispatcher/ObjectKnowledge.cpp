@@ -33,38 +33,38 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( Model& model, const ASN1T_MsgObjectKnowledgeCreation& asnMsg )
     : model_                        ( model )
-    , nID_                          ( asnMsg.oid_connaissance )
-    , side_                         ( model.GetSides().Get( asnMsg.oid_camp_possesseur ) )
-    , pObject_                      ( model.GetObjects().Find( asnMsg.oid_objet_reel ) )
+    , nID_                          ( asnMsg.oid )
+    , side_                         ( model.GetSides().Get( asnMsg.team ) )
+    , pObject_                      ( model.GetObjects().Find( asnMsg.real_object ) )
     , nType_                        ( asnMsg.type )
-    , nObstacleType_                ( asnMsg.m.type_obstaclePresent ? asnMsg.type_obstacle : EnumObstacleType::initial )
-    , nTypeDotationForConstruction_ ( asnMsg.m.type_dotation_constructionPresent ? asnMsg.type_dotation_construction : std::numeric_limits< unsigned int >::max() )
-    , nTypeDotationForMining_       ( asnMsg.m.type_dotation_valorisationPresent ? asnMsg.type_dotation_valorisation : std::numeric_limits< unsigned int >::max() )
+    , nObstacleType_                ( asnMsg.m.obstacle_typePresent ? asnMsg.obstacle_type : EnumObstacleType::initial )
+    , nTypeDotationForConstruction_ ( asnMsg.m.construction_dotation_typePresent ? asnMsg.construction_dotation_type : std::numeric_limits< unsigned int >::max() )
+    , nTypeDotationForMining_       ( asnMsg.m.mining_dotation_typePresent ? asnMsg.mining_dotation_type : std::numeric_limits< unsigned int >::max() )
     , pAttributes_                  ( 0 )
     , nRelevance_                   ( std::numeric_limits< unsigned int >::max() )
     , localisation_                 ()
     , nConstructionPercentage_      ( std::numeric_limits< unsigned int >::max() )
     , nMiningPercentage_            ( std::numeric_limits< unsigned int >::max() )
     , nBypassingPercentage_         ( std::numeric_limits< unsigned int >::max() )
-    , bReservedObstacleActivated_   ( asnMsg.m.obstacle_de_manoeuvre_activePresent ? asnMsg.obstacle_de_manoeuvre_active : false )
+    , bReservedObstacleActivated_   ( asnMsg.m.reserved_obstacle_activatedPresent ? asnMsg.reserved_obstacle_activated : false )
     , bPerceived_                   ( false )
     , automatPerceptions_           ()
     , nNbrDotationForConstruction_  ( std::numeric_limits< unsigned int >::max() )
     , nNbrDotationForMining_        ( std::numeric_limits< unsigned int >::max() )
 {
     //$$ BULLSHIT // $$$$ AGE 2007-05-11: Clair !
-    optionals_.pertinencePresent                   = 0;
-    optionals_.localisationPresent                 = 0;
-    optionals_.pourcentage_constructionPresent     = 0;
-    optionals_.pourcentage_valorisationPresent     = 0;
-    optionals_.pourcentage_contournementPresent    = 0;
-    optionals_.est_percuPresent                    = 0;
-    optionals_.attributs_specifiquesPresent        = 0;
-    optionals_.perception_par_compagniePresent     = 0;
-    optionals_.nb_dotation_constructionPresent     = 0;
-    optionals_.nb_dotation_valorisationPresent     = 0;
-    optionals_.type_obstaclePresent                = asnMsg.m.type_obstaclePresent;
-    optionals_.obstacle_de_manoeuvre_activePresent = asnMsg.m.obstacle_de_manoeuvre_activePresent;
+    optionals_.relevancePresent                         = 0;
+    optionals_.locationPresent                          = 0;
+    optionals_.construction_percentagePresent           = 0;
+    optionals_.mining_percentagePresent                 = 0;
+    optionals_.bypass_construction_percentagePresent    = 0;
+    optionals_.reserved_obstacle_activatedPresent       = asnMsg.m.reserved_obstacle_activatedPresent;
+    optionals_.perceivedPresent                         = 0;
+    optionals_.specific_attributesPresent               = 0;
+    optionals_.automat_perceptionPresent                = 0;
+    optionals_.construction_dotation_nbrPresent         = 0;
+    optionals_.mining_dotation_nbrPresent               = 0;
+    optionals_.obstacle_typePresent                     = asnMsg.m.obstacle_typePresent;
 }
 
 // -----------------------------------------------------------------------------
@@ -82,12 +82,12 @@ ObjectKnowledge::~ObjectKnowledge()
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeCreation& message )
 {
-    bool realObjectChanged = ( message.oid_objet_reel && ! pObject_ )
-                          || ( pObject_ && pObject_->GetID() != message.oid_objet_reel );
+    bool realObjectChanged = ( message.real_object && ! pObject_ )
+                          || ( pObject_ && pObject_->GetID() != message.real_object );
 
     FlagUpdate( realObjectChanged );
     if( realObjectChanged )
-        pObject_ = model_.GetObjects().Find( message.oid_objet_reel );
+        pObject_ = model_.GetObjects().Find( message.real_object );
 }
 
 // =============================================================================
@@ -107,7 +107,7 @@ void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeCreation& message )
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
 {
-    if( asnMsg.m.attributs_specifiquesPresent )
+    if( asnMsg.m.specific_attributesPresent)
     {
         if( !pAttributes_ )
         {
@@ -115,63 +115,63 @@ void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
             {
                 case EnumObjectType::camp_prisonniers:
                 case EnumObjectType::camp_refugies:
-                    pAttributes_ = new CampObjectAttribute( model_, asnMsg.attributs_specifiques );
+                    pAttributes_ = new CampObjectAttribute( model_, asnMsg.specific_attributes );
                     break;
                 case EnumObjectType::itineraire_logistique:
-                    pAttributes_ = new LogisticRouteObjectAttribute( model_, asnMsg.attributs_specifiques );
+                    pAttributes_ = new LogisticRouteObjectAttribute( model_, asnMsg.specific_attributes );
                     break;
                 case EnumObjectType::nuage_nbc:
                 case EnumObjectType::zone_nbc:
-                    pAttributes_ = new NBCObjectAttribute( model_, asnMsg.attributs_specifiques );
+                    pAttributes_ = new NBCObjectAttribute( model_, asnMsg.specific_attributes );
                     break;
                 case EnumObjectType::rota:
-                    pAttributes_ = new RotaObjectAttribute( model_, asnMsg.attributs_specifiques );
+                    pAttributes_ = new RotaObjectAttribute( model_, asnMsg.specific_attributes );
                     break;
                 case EnumObjectType::site_franchissement:
-                    pAttributes_ = new CrossingSiteObjectAttribute( model_, asnMsg.attributs_specifiques );
+                    pAttributes_ = new CrossingSiteObjectAttribute( model_, asnMsg.specific_attributes );
                     break;
                 case EnumObjectType::bouchon_mines:
-                    pAttributes_ = new MineJamObjectAttribute( model_, asnMsg.attributs_specifiques );
+                    pAttributes_ = new MineJamObjectAttribute( model_, asnMsg.specific_attributes );
                     break;
                 case EnumObjectType::zone_minee_lineaire:
-                    pAttributes_ = new LinearMinedAreaObjectAttribute( model_, asnMsg.attributs_specifiques );
+                    pAttributes_ = new LinearMinedAreaObjectAttribute( model_, asnMsg.specific_attributes );
                     break;
                 case EnumObjectType::zone_minee_par_dispersion:
-                    pAttributes_ = new DispersedMinedAreaObjectAttribute( model_, asnMsg.attributs_specifiques );
+                    pAttributes_ = new DispersedMinedAreaObjectAttribute( model_, asnMsg.specific_attributes );
                     break;
                 default:
                     pAttributes_ = 0;
             }
         }
-        pAttributes_->Update( asnMsg.attributs_specifiques );
-        optionals_.attributs_specifiquesPresent = 1;
+        pAttributes_->Update( asnMsg.specific_attributes );
+        optionals_.specific_attributesPresent = 1;
     }
    
-    if( asnMsg.m.localisationPresent )
+    if( asnMsg.m.locationPresent )
     {
-        localisation_.Update( asnMsg.localisation );
-        optionals_.localisationPresent = 1;
+        localisation_.Update( asnMsg.location );
+        optionals_.locationPresent = 1;
     }
 
-    if( asnMsg.m.perception_par_compagniePresent )
+    if( asnMsg.m.automat_perceptionPresent )
     {
-        optionals_.perception_par_compagniePresent = 1;
+        optionals_.automat_perceptionPresent = 1;
         automatPerceptions_.Clear();
-        for( unsigned int i = 0; i < asnMsg.perception_par_compagnie.n; ++i )
-            automatPerceptions_.Register( model_.GetAutomats().Get( asnMsg.perception_par_compagnie.elem[ i ]) );
+        for( unsigned int i = 0; i < asnMsg.automat_perception.n; ++i )
+            automatPerceptions_.Register( model_.GetAutomats().Get( asnMsg.automat_perception.elem[ i ]) );
     }
 
-    if( asnMsg.m.oid_objet_reelPresent )
-        pObject_ = model_.GetObjects().Find( asnMsg.oid_objet_reel );
+    if( asnMsg.m.real_objectPresent )
+        pObject_ = model_.GetObjects().Find( asnMsg.real_object );
 
-    UPDATE_ASN_ATTRIBUTE( pertinence                  , nRelevance_                   );
-    UPDATE_ASN_ATTRIBUTE( pourcentage_construction    , nConstructionPercentage_      );
-    UPDATE_ASN_ATTRIBUTE( pourcentage_valorisation    , nMiningPercentage_            );
-    UPDATE_ASN_ATTRIBUTE( pourcentage_contournement   , nBypassingPercentage_         );
-    UPDATE_ASN_ATTRIBUTE( est_percu                   , bPerceived_                   );
-    UPDATE_ASN_ATTRIBUTE( nb_dotation_construction    , nNbrDotationForConstruction_  );
-    UPDATE_ASN_ATTRIBUTE( nb_dotation_valorisation    , nNbrDotationForMining_        );
-    UPDATE_ASN_ATTRIBUTE( obstacle_de_manoeuvre_active, bReservedObstacleActivated_   );
+    UPDATE_ASN_ATTRIBUTE( relevance                     , nRelevance_                   );
+    UPDATE_ASN_ATTRIBUTE( construction_percentage       , nConstructionPercentage_      );
+    UPDATE_ASN_ATTRIBUTE( mining_percentage             , nMiningPercentage_            );
+    UPDATE_ASN_ATTRIBUTE( bypass_construction_percentage, nBypassingPercentage_         );
+    UPDATE_ASN_ATTRIBUTE( perceived                     , bPerceived_                   );
+    UPDATE_ASN_ATTRIBUTE( construction_dotation_nbr     , nNbrDotationForConstruction_  );
+    UPDATE_ASN_ATTRIBUTE( mining_dotation_nbr           , nNbrDotationForMining_        );
+    UPDATE_ASN_ATTRIBUTE( reserved_obstacle_activated   , bReservedObstacleActivated_   );
 }
 
 #define SEND_ASN_ATTRIBUTE( ASN, CPP )  \
@@ -189,25 +189,25 @@ void ObjectKnowledge::SendCreation( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientObjectKnowledgeCreation asn;
 
-    asn().oid_connaissance    = nID_;
-    asn().oid_camp_possesseur = side_.GetID();
-    asn().oid_objet_reel      = pObject_ ? pObject_->GetID() : 0;
-    asn().type                = nType_;
+    asn().oid         = nID_;
+    asn().team        = side_.GetID();
+    asn().real_object = pObject_ ? pObject_->GetID() : 0;
+    asn().type        = nType_;
 
     if( nTypeDotationForConstruction_ != std::numeric_limits< unsigned int >::max() )
     {
-        asn().m.type_dotation_constructionPresent = 1;
-        asn().type_dotation_construction = nTypeDotationForConstruction_;
+        asn().m.construction_dotation_typePresent = 1;
+        asn().construction_dotation_type = nTypeDotationForConstruction_;
     }
 
     if( nTypeDotationForMining_ != std::numeric_limits< unsigned int >::max() )
     {
-        asn().m.type_dotation_valorisationPresent = 1;
-        asn().type_dotation_valorisation = nTypeDotationForMining_;
+        asn().m.mining_dotation_typePresent = 1;
+        asn().mining_dotation_type = nTypeDotationForMining_;
     }
 
-    SEND_ASN_ATTRIBUTE( type_obstacle               , nObstacleType_              );
-    SEND_ASN_ATTRIBUTE( obstacle_de_manoeuvre_active, bReservedObstacleActivated_ );
+    SEND_ASN_ATTRIBUTE( obstacle_type              , nObstacleType_              );
+    SEND_ASN_ATTRIBUTE( reserved_obstacle_activated, bReservedObstacleActivated_ );
 
     asn.Send( publisher );
 }
@@ -220,49 +220,49 @@ void ObjectKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientObjectKnowledgeUpdate asn;
 
-    asn().oid_connaissance      = nID_;
-    asn().oid_camp_possesseur   = side_.GetID();
+    asn().oid    = nID_;
+    asn().team   = side_.GetID();
 
-    asn().m.oid_objet_reelPresent = 1;
-    asn().oid_objet_reel          = pObject_ ? pObject_->GetID() : 0;
+    asn().m.real_objectPresent = 1;
+    asn().real_object          = pObject_ ? pObject_->GetID() : 0;
 
-    if( optionals_.attributs_specifiquesPresent && pAttributes_ )
+    if( optionals_.specific_attributesPresent && pAttributes_ )
     {
-        asn().m.attributs_specifiquesPresent = 1;
-        pAttributes_->Send( asn().attributs_specifiques );
+        asn().m.specific_attributesPresent = 1;
+        pAttributes_->Send( asn().specific_attributes );
     }
 
-    if( optionals_.localisationPresent )
+    if( optionals_.locationPresent )
     {
-        asn().m.localisationPresent = 1;
-        localisation_.Send( asn().localisation );
+        asn().m.locationPresent = 1;
+        localisation_.Send( asn().location );
     }
 
-    if( optionals_.perception_par_compagniePresent )
+    if( optionals_.automat_perceptionPresent )
     {
-        asn().m.perception_par_compagniePresent = 1;
-        automatPerceptions_.Send< ASN1T_ListOID, ASN1T_OID >( asn().perception_par_compagnie );
+        asn().m.automat_perceptionPresent = 1;
+        automatPerceptions_.Send< ASN1T_ListOID, ASN1T_OID >( asn().automat_perception );
     }
 
-    SEND_ASN_ATTRIBUTE( pertinence                  , nRelevance_                   );
-    SEND_ASN_ATTRIBUTE( pourcentage_construction    , nConstructionPercentage_      );
-    SEND_ASN_ATTRIBUTE( pourcentage_valorisation    , nMiningPercentage_            );
-    SEND_ASN_ATTRIBUTE( pourcentage_contournement   , nBypassingPercentage_         );   
-    SEND_ASN_ATTRIBUTE( obstacle_de_manoeuvre_active, bReservedObstacleActivated_   );    
-    SEND_ASN_ATTRIBUTE( est_percu                   , bPerceived_                   );
-    SEND_ASN_ATTRIBUTE( nb_dotation_construction    , nNbrDotationForConstruction_  );
-    SEND_ASN_ATTRIBUTE( nb_dotation_valorisation    , nNbrDotationForMining_        );
+    SEND_ASN_ATTRIBUTE( relevance                     , nRelevance_                   );
+    SEND_ASN_ATTRIBUTE( construction_percentage       , nConstructionPercentage_      );
+    SEND_ASN_ATTRIBUTE( mining_percentage             , nMiningPercentage_            );
+    SEND_ASN_ATTRIBUTE( bypass_construction_percentage, nBypassingPercentage_         );
+    SEND_ASN_ATTRIBUTE( perceived                     , bPerceived_                   );
+    SEND_ASN_ATTRIBUTE( construction_dotation_nbr     , nNbrDotationForConstruction_  );
+    SEND_ASN_ATTRIBUTE( mining_dotation_nbr           , nNbrDotationForMining_        );
+    SEND_ASN_ATTRIBUTE( reserved_obstacle_activated   , bReservedObstacleActivated_   );
 
     asn.Send( publisher );
 
-    if( asn().m.attributs_specifiquesPresent && pAttributes_ )
-        pAttributes_->AsnDelete( asn().attributs_specifiques );
+    if( asn().m.specific_attributesPresent && pAttributes_ )
+        pAttributes_->AsnDelete( asn().specific_attributes );
 
-    if( asn().m.localisationPresent )
-        Localisation::AsnDelete( asn().localisation );
+    if( asn().m.locationPresent )
+        Localisation::AsnDelete( asn().location );
 
-    if( asn().m.perception_par_compagniePresent && asn().perception_par_compagnie.n > 0 )
-        delete [] asn().perception_par_compagnie.elem;
+    if( asn().m.automat_perceptionPresent && asn().automat_perception.n > 0 )
+        delete [] asn().automat_perception.elem;
 }
 
 // -----------------------------------------------------------------------------
@@ -272,8 +272,8 @@ void ObjectKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 void ObjectKnowledge::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientObjectKnowledgeDestruction asn;
-    asn().oid_connaissance    = nID_;
-    asn().oid_camp_possesseur = side_.GetID();
+    asn().oid  = nID_;
+    asn().team = side_.GetID();
     asn.Send( publisher );
 }
 
@@ -285,9 +285,9 @@ void ObjectKnowledge::SendSpecialUpdate( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientObjectKnowledgeUpdate asn;
 
-    asn().oid_connaissance      = nID_;
-    asn().oid_camp_possesseur   = side_.GetID();
-    asn().m.oid_objet_reelPresent = 1;
-    asn().oid_objet_reel          = pObject_ ? pObject_->GetID() : 0;
+    asn().oid                  = nID_;
+    asn().team                 = side_.GetID();
+    asn().m.real_objectPresent = 1;
+    asn().real_object          = pObject_ ? pObject_->GetID() : 0;
     asn.Send( publisher );
 }

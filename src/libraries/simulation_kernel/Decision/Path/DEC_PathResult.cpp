@@ -237,13 +237,13 @@ void DEC_PathResult::Serialize( ASN1T_Path& asn ) const
 
     ASN1T_CoordUTM* pASNCoordUTMSeq = new ASN1T_CoordUTM[ resultList_.size() ]; //$$ RAM
 
-    asn.type               = EnumLocationType::line;
-    asn.vecteur_point.n    = resultList_.size();
-    asn.vecteur_point.elem = pASNCoordUTMSeq;
+    asn.type             = EnumLocationType::line;
+    asn.coordinates.n    = resultList_.size();
+    asn.coordinates.elem = pASNCoordUTMSeq;
 
     uint i = 0;
     for( CIT_PathPointList itPathPoint = resultList_.begin(); itPathPoint != resultList_.end(); ++itPathPoint )
-        NET_ASN_Tools::WritePoint( (*itPathPoint)->GetPos(), asn.vecteur_point.elem[i++] );
+        NET_ASN_Tools::WritePoint( (*itPathPoint)->GetPos(), asn.coordinates.elem[i++] );
 }
 
 // =============================================================================

@@ -139,9 +139,9 @@ void DEC_Knowledge_ObjectZoneNBC::BuildMsgSpecificAttributes( ASN1T_MsgObjectKno
         return;
 
     assert( pNbcAgentType_ );   
-    asnAttributes_.agent_nbc = pNbcAgentType_->GetID();
+    asnAttributes_.nbc_agent = pNbcAgentType_->GetID();
 
-    asnMsg.m.attributs_specifiquesPresent   = 1;
-    asnMsg.attributs_specifiques.t          = T_ObjectAttributesSpecific_zone_nbc;
-    asnMsg.attributs_specifiques.u.zone_nbc = &asnAttributes_;
+    asnMsg.m.specific_attributesPresent = 1;
+    asnMsg.specific_attributes.t          = T_ObjectAttributesSpecific_nbc_zone;
+    asnMsg.specific_attributes.u.nbc_zone = &asnAttributes_;
 }

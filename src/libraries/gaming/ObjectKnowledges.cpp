@@ -44,8 +44,8 @@ ObjectKnowledges::~ObjectKnowledges()
 // -----------------------------------------------------------------------------
 void ObjectKnowledges::DoUpdate( const ASN1T_MsgObjectKnowledgeCreation& message )
 {
-    if( ! Find( message.oid_connaissance ) )
-        Register( message.oid_connaissance, * factory_.Create( team_, message ) );
+    if( ! Find( message.oid ) )
+        Register( message.oid, * factory_.Create( team_, message ) );
     controller_.Update( *this );
 }
 
@@ -55,7 +55,7 @@ void ObjectKnowledges::DoUpdate( const ASN1T_MsgObjectKnowledgeCreation& message
 // -----------------------------------------------------------------------------
 void ObjectKnowledges::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 {
-    Get( message.oid_connaissance ).Update( message );
+    Get( message.oid ).Update( message );
     controller_.Update( *this );
 }
 
@@ -65,7 +65,7 @@ void ObjectKnowledges::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 // -----------------------------------------------------------------------------
 void ObjectKnowledges::DoUpdate( const ASN1T_MsgObjectKnowledgeDestruction& message )
 {
-    delete Find( message.oid_connaissance );
-    Remove( message.oid_connaissance );
+    delete Find( message.oid );
+    Remove( message.oid );
     controller_.Update( *this );
 }

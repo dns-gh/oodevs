@@ -22,11 +22,7 @@ DispersedMinedAreaObjectAttribute::DispersedMinedAreaObjectAttribute( const Mode
     , nMinesActivityTime_( 0 )
     , rMinesDensity_     ( 0. )
 {
-    if( asnMsg.t == T_ObjectAttributesSpecific_zone_minee_par_dispersion )
-    {
-        nMinesActivityTime_ = asnMsg.u.zone_minee_par_dispersion->delai_activite_mines;
-        rMinesDensity_      = asnMsg.u.zone_minee_par_dispersion->densite;
-    }
+    Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,10 +40,10 @@ DispersedMinedAreaObjectAttribute::~DispersedMinedAreaObjectAttribute()
 // -----------------------------------------------------------------------------
 void DispersedMinedAreaObjectAttribute::Update( const ASN1T_ObjectAttributesSpecific& asnMsg )
 {
-    if( asnMsg.t == T_ObjectAttributesSpecific_zone_minee_par_dispersion )
+    if( asnMsg.t == T_ObjectAttributesSpecific_dispersed_mine_area )
     {
-        nMinesActivityTime_ = asnMsg.u.zone_minee_par_dispersion->delai_activite_mines;
-        rMinesDensity_      = asnMsg.u.zone_minee_par_dispersion->densite;
+        nMinesActivityTime_ = asnMsg.u.dispersed_mine_area->activity_time;
+        rMinesDensity_      = asnMsg.u.dispersed_mine_area->density;
     }
 }
 
@@ -58,10 +54,10 @@ void DispersedMinedAreaObjectAttribute::Update( const ASN1T_ObjectAttributesSpec
 void DispersedMinedAreaObjectAttribute::Send( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
     asnMsg.t = nType_;
-    asnMsg.u.zone_minee_par_dispersion = new ASN1T_ObjectAttributesDispersedMineArea();
+    asnMsg.u.dispersed_mine_area = new ASN1T_ObjectAttributesDispersedMineArea();
     
-    asnMsg.u.zone_minee_par_dispersion->delai_activite_mines = nMinesActivityTime_;
-    asnMsg.u.zone_minee_par_dispersion->densite              = rMinesDensity_;
+    asnMsg.u.dispersed_mine_area->activity_time = nMinesActivityTime_;
+    asnMsg.u.dispersed_mine_area->density       = rMinesDensity_;
 }
 
 // -----------------------------------------------------------------------------
@@ -70,5 +66,5 @@ void DispersedMinedAreaObjectAttribute::Send( ASN1T_ObjectAttributesSpecific& as
 // -----------------------------------------------------------------------------
 void DispersedMinedAreaObjectAttribute::AsnDelete( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
-    delete asnMsg.u.zone_minee_par_dispersion;
+    delete asnMsg.u.dispersed_mine_area;
 }

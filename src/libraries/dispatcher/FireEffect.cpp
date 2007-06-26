@@ -18,8 +18,8 @@ using namespace dispatcher;
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
 FireEffect::FireEffect( Model& , const ASN1T_MsgStartFireEffect& message )
-    : id_          ( message.oid_effet )
-    , localisation_( message.localisation )
+    : id_          ( message.effect_oid )
+    , localisation_( message.location )
     , type_        ( message.type )
 {
     // NOTHING
@@ -59,11 +59,11 @@ void FireEffect::SendFullUpdate( Publisher_ABC& ) const
 void FireEffect::SendCreation( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientStartFireEffect asn;
-    asn().oid_effet = id_;
-    localisation_.Send( asn().localisation );
+    asn().effect_oid = id_;
+    localisation_.Send( asn().location );
     asn().type = type_;
     asn.Send( publisher );
-    localisation_.AsnDelete( asn().localisation );
+    localisation_.AsnDelete( asn().location );
 }
 
 // -----------------------------------------------------------------------------

@@ -21,11 +21,11 @@ using namespace kernel;
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
 IndirectFire::IndirectFire( const ASN1T_MsgStartUnitFire& message, const Resolver_ABC< Agent_ABC >& resolver, const CoordinateConverter_ABC& converter )
-    : Fire_ABC( resolver.Get( message.tireur ) )
-    , id_( message.oid_tir )
-    , target_( converter.ConvertToXY( *message.cible.u.position ) )
+    : Fire_ABC( resolver.Get( message.firer_oid ) )
+    , id_( message.fire_oid )
+    , target_( converter.ConvertToXY( *message.target.u.position ) )
 {
-    if( message.cible.t != T_MsgStartUnitFire_cible_position )
+    if( message.target.t != T_MsgStartUnitFire_target_position )
         throw std::runtime_error( "Indirect fire on an agent..." );
 }
 

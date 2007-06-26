@@ -56,18 +56,18 @@ private:
     //$$$ bullshit
     struct T_Optionals 
     {
-        unsigned pertinencePresent                   : 1;
-        unsigned localisationPresent                 : 1;
-        unsigned pourcentage_constructionPresent     : 1;
-        unsigned pourcentage_valorisationPresent     : 1;
-        unsigned pourcentage_contournementPresent    : 1;
-        unsigned obstacle_de_manoeuvre_activePresent : 1;
-        unsigned type_obstaclePresent                : 1;
-        unsigned est_percuPresent                    : 1;
-        unsigned attributs_specifiquesPresent        : 1;
-        unsigned perception_par_compagniePresent     : 1;
-        unsigned nb_dotation_constructionPresent     : 1;
-        unsigned nb_dotation_valorisationPresent     : 1;
+        unsigned relevancePresent : 1;
+        unsigned locationPresent : 1;
+        unsigned construction_percentagePresent : 1;
+        unsigned mining_percentagePresent : 1;
+        unsigned bypass_construction_percentagePresent : 1;
+        unsigned reserved_obstacle_activatedPresent : 1;
+        unsigned perceivedPresent : 1;
+        unsigned specific_attributesPresent : 1;
+        unsigned automat_perceptionPresent : 1;
+        unsigned construction_dotation_nbrPresent : 1;
+        unsigned mining_dotation_nbrPresent : 1;
+        unsigned obstacle_typePresent : 1;
     };
     //@}
 

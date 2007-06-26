@@ -340,7 +340,7 @@ bool MIL_CheckPointManager::SaveCheckPoint( const std::string& name, const std::
 {
     // création du fichier
     MT_LOG_INFO_MSG( "Begin save checkpoint " << name );
-    NET_ASN_MsgCtrlCheckPointSaveBegin asnSaveBeginMsg;
+    NET_ASN_MsgControlCheckPointSaveBegin asnSaveBeginMsg;
     asnSaveBeginMsg.Send();
 
     ::_mkdir( MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", name ).c_str() );
@@ -348,7 +348,7 @@ bool MIL_CheckPointManager::SaveCheckPoint( const std::string& name, const std::
     const bool bNotOk = !SaveOrbatCheckPoint( name ) || !SaveFullCheckPoint ( name, userName );
 
     MT_LOG_INFO_MSG( "End save checkpoint" );
-    NET_ASN_MsgCtrlCheckPointSaveEnd asnSaveEndMsg;
+    NET_ASN_MsgControlCheckPointSaveEnd asnSaveEndMsg;
     asnSaveEndMsg.Send();
 
     return !bNotOk;
@@ -365,12 +365,12 @@ bool MIL_CheckPointManager::SaveCheckPoint( const std::string& name, const std::
 void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow( const ASN1T_MsgControlCheckPointSaveNow& asnMsg )
 {
     std::string strCheckPointName;
-    if( asnMsg.m.nomPresent )
-        strCheckPointName = asnMsg.nom;
+    if( asnMsg.m.namePresent )
+        strCheckPointName = asnMsg.name;
 
     SaveCheckPoint( BuildCheckPointName(), strCheckPointName );
     
-    NET_ASN_MsgCtrlCheckPointSaveNowAck asnReplyMsg;
+    NET_ASN_MsgControlCheckPointSaveNowAck asnReplyMsg;
     asnReplyMsg.Send();
 }
           
@@ -382,7 +382,7 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency( const ASN1T_MsgC
 {
     nCheckPointsFrequency_ = asnMsg * 60; // $$$$ NLD 2007-01-11: beeeeeeaaaaah
      
-    NET_ASN_MsgCtrlCheckPointSetFrequencyAck asnReplyMsg;
+    NET_ASN_MsgControlCheckPointSetFrequencyAck asnReplyMsg;
     asnReplyMsg.Send();
 
     UpdateNextCheckPointTick();

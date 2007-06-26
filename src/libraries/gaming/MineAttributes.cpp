@@ -94,21 +94,21 @@ void MineAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 template< typename T >
 void MineAttributes::UpdateData( const T& message )
 {
-    if( !message.m.attributs_specifiquesPresent )
+    if( !message.m.specific_attributesPresent )
         return;
-    if( message.attributs_specifiques.t == T_ObjectAttributesSpecific_zone_minee_lineaire )
+    if( message.specific_attributes.t == T_ObjectAttributesSpecific_linear_mine_area )
     {
-        activityTime_ = message.attributs_specifiques.u.zone_minee_lineaire->delai_activite_mines;
-        density_  = message.attributs_specifiques.u.zone_minee_lineaire->densite;
+        activityTime_ = message.specific_attributes.u.linear_mine_area->activity_time;
+        density_  = message.specific_attributes.u.linear_mine_area->density;
     }
-    else if( message.attributs_specifiques.t == T_ObjectAttributesSpecific_zone_minee_par_dispersion )
+    else if( message.specific_attributes.t == T_ObjectAttributesSpecific_dispersed_mine_area )
     {
-        activityTime_ = message.attributs_specifiques.u.zone_minee_par_dispersion->delai_activite_mines;
-        density_  = message.attributs_specifiques.u.zone_minee_par_dispersion->densite;
+        activityTime_ = message.specific_attributes.u.dispersed_mine_area->activity_time;
+        density_  = message.specific_attributes.u.dispersed_mine_area->density;
     }
-    else if( message.attributs_specifiques.t == T_ObjectAttributesSpecific_bouchon_mines )
+    else if( message.specific_attributes.t == T_ObjectAttributesSpecific_mine_jam )
     {
-        activityTime_ = message.attributs_specifiques.u.bouchon_mines->delai_activite_mines;
+        activityTime_ = message.specific_attributes.u.mine_jam->activity_time;
     }
     controller_.Update( *(MineAttributes_ABC*)this );
 }

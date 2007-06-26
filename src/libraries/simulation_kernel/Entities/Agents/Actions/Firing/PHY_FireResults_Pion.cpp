@@ -31,12 +31,12 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MI
     , nID_               ( MIL_IDManager::fireResultsPion_.GetFreeSimID() )
 {
     NET_ASN_MsgStartUnitFire asnMsg;
-    asnMsg().m.munitionPresent = 0;
-    asnMsg().oid_tir           = nID_;
-    asnMsg().tireur            = firer.GetID();
-    asnMsg().type              = MsgStartUnitFire_type::direct;
-    asnMsg().cible.t           = T_MsgStartUnitFire_cible_pion;
-    asnMsg().cible.u.pion      = target.GetID();    
+    asnMsg().m.ammunitionPresent = 0;
+    asnMsg().fire_oid            = nID_;
+    asnMsg().firer_oid           = firer.GetID();
+    asnMsg().type                = MsgStartUnitFire_type::direct;
+    asnMsg().target.t            = T_MsgStartUnitFire_target_unit;
+    asnMsg().target.u.unit       = target.GetID();    
     
     asnMsg.Send();
 }
@@ -51,12 +51,12 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MI
     , nID_               ( MIL_IDManager::fireResultsPion_.GetFreeSimID() )
 {
     NET_ASN_MsgStartUnitFire asnMsg;
-    asnMsg().m.munitionPresent  = 0;
-    asnMsg().oid_tir            = nID_;
-    asnMsg().tireur             = firer.GetID();
-    asnMsg().type               = MsgStartUnitFire_type::direct;
-    asnMsg().cible.t            = T_MsgStartUnitFire_cible_population;
-    asnMsg().cible.u.population = target.GetID();    
+    asnMsg().m.ammunitionPresent = 0;
+    asnMsg().fire_oid            = nID_;
+    asnMsg().firer_oid           = firer.GetID();
+    asnMsg().type                = MsgStartUnitFire_type::direct;
+    asnMsg().target.t            = T_MsgStartUnitFire_target_population;
+    asnMsg().target.u.population = target.GetID();    
     
     asnMsg.Send();
 }
@@ -71,18 +71,18 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MT
     , nID_               ( MIL_IDManager::fireResultsPion_.GetFreeSimID() )
 {
     NET_ASN_MsgStartUnitFire asnMsg;
-    asnMsg().m.munitionPresent = 1;
-    asnMsg().oid_tir           = nID_;
-    asnMsg().tireur            = firer.GetID();
-    asnMsg().type              = MsgStartUnitFire_type::indirect;
-    asnMsg().cible.t           = T_MsgStartUnitFire_cible_position;
-    asnMsg().cible.u.position  = new ASN1T_CoordUTM();
-    asnMsg().munition          = dotationCategory.GetMosID();
-    NET_ASN_Tools::WritePoint( targetPosition, *asnMsg().cible.u.position );
+    asnMsg().m.ammunitionPresent = 1;
+    asnMsg().fire_oid            = nID_;
+    asnMsg().firer_oid           = firer.GetID();
+    asnMsg().type                = MsgStartUnitFire_type::indirect;
+    asnMsg().target.t            = T_MsgStartUnitFire_target_position;
+    asnMsg().target.u.position   = new ASN1T_CoordUTM();
+    asnMsg().ammunition          = dotationCategory.GetMosID();
+    NET_ASN_Tools::WritePoint( targetPosition, *asnMsg().target.u.position );
 
     asnMsg.Send();
 
-    delete asnMsg().cible.u.position;   
+    delete asnMsg().target.u.position;   
 }
 
 // -----------------------------------------------------------------------------
@@ -92,15 +92,15 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MT
 PHY_FireResults_Pion::~PHY_FireResults_Pion()
 {
     NET_ASN_MsgStopUnitFire asnMsg;
-    asnMsg().oid_tir = nID_;
+    asnMsg().fire_oid = nID_;
 
-    Serialize( asnMsg().degats_pions       );
-    Serialize( asnMsg().degats_populations );
+    Serialize( asnMsg().units_damages       );
+    Serialize( asnMsg().populations_damages );
    
     asnMsg.Send();
 
-    CleanAfterSerialization( asnMsg().degats_pions       );
-    CleanAfterSerialization( asnMsg().degats_populations );
+    CleanAfterSerialization( asnMsg().units_damages       );
+    CleanAfterSerialization( asnMsg().populations_damages );
 
     // $$$ Merde pour VABF Popu
     static MT_Random randomGenerator;

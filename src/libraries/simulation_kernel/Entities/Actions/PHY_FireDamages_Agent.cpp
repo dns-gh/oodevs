@@ -79,47 +79,47 @@ void PHY_FireDamages_Agent::NotifyHumanWoundChanged( const PHY_Human& human, con
 //-----------------------------------------------------------------------------
 void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, ASN1T_UnitFireDamages& asn ) const
 {
-    asn.cible = target.GetID();
+    asn.target = target.GetID();
 
     // Composantes
-    asn.equipements.n = composanteResults_.size();
-    if( asn.equipements.n )
+    asn.equipments.n = composanteResults_.size();
+    if( asn.equipments.n )
     {
-        asn.equipements.elem = new ASN1T_UnitEquipmentFireDamage[ composanteResults_.size() ]; 
+        asn.equipments.elem = new ASN1T_UnitEquipmentFireDamage[ composanteResults_.size() ]; 
         uint i = 0;
         for( CIT_ComposanteResults itResult = composanteResults_.begin(); itResult != composanteResults_.end(); ++itResult, ++i )
         {
             const PHY_ComposanteType_ABC& type   = *itResult->first;
             const T_ComposanteStates&      states =  itResult->second;
 
-            ASN1T_UnitEquipmentFireDamage& asnEquipement = asn.equipements.elem[i];
-            asnEquipement.type_equipement = type.GetMosID();
-            asnEquipement.nb_disponibles   = states[ PHY_ComposanteState::undamaged_.GetID() ];
-            asnEquipement.nb_reparables    = states[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] + states[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ];
-            asnEquipement.nb_indisponibles = states[ PHY_ComposanteState::dead_.GetID() ];
+            ASN1T_UnitEquipmentFireDamage& asnEquipement = asn.equipments.elem[i];
+            asnEquipement.equipement_type = type.GetMosID();
+            asnEquipement.available_nbr   = states[ PHY_ComposanteState::undamaged_.GetID() ];
+            asnEquipement.repairable_nbr  = states[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] + states[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ];
+            asnEquipement.unavailable_nbr = states[ PHY_ComposanteState::dead_.GetID() ];
         }
     }
 
     // Humans
-    asn.humains.n    = PHY_HumanRank::GetHumanRanks().size();
-    asn.humains.elem = new ASN1T_UnitHumanFireDamage[ asn.humains.n ]; 
+    asn.humans.n    = PHY_HumanRank::GetHumanRanks().size();
+    asn.humans.elem = new ASN1T_UnitHumanFireDamage[ asn.humans.n ]; 
 
     uint i = 0;
     for( PHY_HumanRank::CIT_HumanRankMap it = PHY_HumanRank::GetHumanRanks().begin(); it != PHY_HumanRank::GetHumanRanks().end(); ++it, ++i )
     {
         const PHY_HumanRank& rank = *it->second;
 
-        ASN1T_UnitHumanFireDamage& personnel = asn.humains.elem[ i ];
+        ASN1T_UnitHumanFireDamage& personnel = asn.humans.elem[ i ];
 
         const T_HumansPerWoundVector& wounds = humanResults_[ rank.GetID() ];
 
-        personnel.rang                       = rank.GetAsnID();
-        personnel.nb_non_blesses             = wounds[ PHY_HumanWound::notWounded_.GetID() ];
-        personnel.nb_blesses_urgence_1       = wounds[ PHY_HumanWound::woundedU1_ .GetID() ];
-        personnel.nb_blesses_urgence_2       = wounds[ PHY_HumanWound::woundedU2_ .GetID() ];
-        personnel.nb_blesses_urgence_3       = wounds[ PHY_HumanWound::woundedU3_ .GetID() ];
-        personnel.nb_blesses_urgence_extreme = wounds[ PHY_HumanWound::woundedUE_ .GetID() ];
-        personnel.nb_morts                   = wounds[ PHY_HumanWound::killed_    .GetID() ];
+        personnel.rank           = rank.GetAsnID();
+        personnel.alive_nbr      = wounds[ PHY_HumanWound::notWounded_.GetID() ];
+        personnel.wounded_u1_nbr = wounds[ PHY_HumanWound::woundedU1_ .GetID() ];
+        personnel.wounded_u2_nbr = wounds[ PHY_HumanWound::woundedU2_ .GetID() ];
+        personnel.wounded_u3_nbr = wounds[ PHY_HumanWound::woundedU3_ .GetID() ];
+        personnel.wounded_ue_nbr = wounds[ PHY_HumanWound::woundedUE_ .GetID() ];
+        personnel.dead_nbr       = wounds[ PHY_HumanWound::killed_    .GetID() ];
     }
 }
 
@@ -129,9 +129,9 @@ void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, ASN1T_UnitFi
 // -----------------------------------------------------------------------------
 void PHY_FireDamages_Agent::CleanAfterSerialization( ASN1T_UnitFireDamages& asn )
 {
-    if( asn.equipements.n > 0 )    
-        delete [] asn.equipements.elem;
+    if( asn.equipments.n > 0 )    
+        delete [] asn.equipments.elem;
 
-    if( asn.humains.n > 0 )
-        delete [] asn.humains.elem;
+    if( asn.humans.n > 0 )
+        delete [] asn.humans.elem;
 }

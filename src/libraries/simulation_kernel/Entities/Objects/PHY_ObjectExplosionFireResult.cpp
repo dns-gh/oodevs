@@ -36,15 +36,15 @@ PHY_ObjectExplosionFireResult::PHY_ObjectExplosionFireResult( const MIL_RealObje
 PHY_ObjectExplosionFireResult::~PHY_ObjectExplosionFireResult()
 {
     NET_ASN_MsgExplosion asnMsg;
-    asnMsg().oid_objet   = object_ .GetID();
+    asnMsg().object_oid = object_ .GetID();
 
-    Serialize( asnMsg().degats_pions       );
-    Serialize( asnMsg().degats_populations );
+    Serialize( asnMsg().units_damages       );
+    Serialize( asnMsg().populations_damages );
     
     asnMsg.Send();
 
-    CleanAfterSerialization( asnMsg().degats_pions       );
-    CleanAfterSerialization( asnMsg().degats_populations );
+    CleanAfterSerialization( asnMsg().units_damages );
+    CleanAfterSerialization( asnMsg().populations_damages );
 
     // $$$ Merde pour VABF Popu
     static MT_Random randomGenerator;

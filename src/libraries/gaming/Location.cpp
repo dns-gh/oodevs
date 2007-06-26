@@ -26,11 +26,11 @@ Location::Location( const kernel::CoordinateConverter_ABC& converter, const ASN1
     : converter_( converter )
     , type_( asn.type )
 {
-    if( asn.vecteur_point.n > 0 )
+    if( asn.coordinates.n > 0 )
     {
-        points_.reserve( asn.vecteur_point.n );
-        for( unsigned int i = 0; i < asn.vecteur_point.n; ++i )
-            PushBack( converter_.ConvertToXY( asn.vecteur_point.elem[i] ) );
+        points_.reserve( asn.coordinates.n );
+        for( unsigned int i = 0; i < asn.coordinates.n; ++i )
+            PushBack( converter_.ConvertToXY( asn.coordinates.elem[i] ) );
     }
 }
 
@@ -212,12 +212,12 @@ void Location::Draw( const kernel::GlTools_ABC& tools ) const
 void Location::CommitTo( ASN1T_Location& asn ) const
 {
     asn.type = type_;
-    asn.vecteur_point.n = points_.size();
+    asn.coordinates.n = points_.size();
     if( points_.empty() )
         return;
-    asn.vecteur_point.elem = new ASN1T_CoordUTM[asn.vecteur_point.n];
-    for( unsigned int i = 0; i < asn.vecteur_point.n; ++i )
-        asn.vecteur_point.elem[i] = converter_.ConvertToMgrs( points_[i] ).c_str();
+    asn.coordinates.elem = new ASN1T_CoordUTM[asn.coordinates.n];
+    for( unsigned int i = 0; i < asn.coordinates.n; ++i )
+        asn.coordinates.elem[i] = converter_.ConvertToMgrs( points_[i] ).c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -226,6 +226,6 @@ void Location::CommitTo( ASN1T_Location& asn ) const
 // -----------------------------------------------------------------------------
 void Location::Clean( ASN1T_Location& asn ) const
 {
-    if( asn.vecteur_point.n )
-        delete[] asn.vecteur_point.elem;
+    if( asn.coordinates.n )
+        delete[] asn.coordinates.elem;
 }

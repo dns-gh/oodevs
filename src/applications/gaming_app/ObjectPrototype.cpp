@@ -31,7 +31,7 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, con
     : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer )
     , msg_()
     , creation_()
-    , serializer_( model.coordinateConverter_, creation_.localisation )
+    , serializer_( model.coordinateConverter_, creation_.location )
 {
     msg_().action.t                 = T_MsgObjectMagicAction_action_create_object;
     msg_().action.u.create_object   = &creation_;
@@ -59,32 +59,32 @@ ObjectPrototype::~ObjectPrototype()
 // -----------------------------------------------------------------------------
 void ObjectPrototype::Commit( Publisher_ABC& publisher )
 {
-    creation_.m.nomPresent = 0;
+    creation_.m.namePresent = 0;
     if( !name_->text().isEmpty() )
     {
-        creation_.m.nomPresent = 1;
-        creation_.nom = name_->text().ascii();
+        creation_.m.namePresent = 1;
+        creation_.name = name_->text().ascii();
     }
 
-    creation_.m.obstacle_de_manoeuvre_activePresent = creation_.m.type_obstaclePresent = GetType().CanBeReservedObstacle();
-    if( creation_.m.type_obstaclePresent )
+    creation_.m.reserved_obstacle_activatedPresent = creation_.m.obstacle_typePresent = GetType().CanBeReservedObstacle();
+    if( creation_.m.obstacle_typePresent )
     {
-        creation_.type_obstacle = (ASN1T_EnumObstacleType)obstacleTypes_->GetValue();
-        creation_.m.obstacle_de_manoeuvre_activePresent = creation_.type_obstacle == eObstacleType_Reserved;
-        creation_.obstacle_de_manoeuvre_active = reservedObstacleActivated_->isChecked();
+        creation_.obstacle_type = (ASN1T_EnumObstacleType)obstacleTypes_->GetValue();
+        creation_.m.reserved_obstacle_activatedPresent = creation_.obstacle_type == eObstacleType_Reserved;
+        creation_.reserved_obstacle_activated = reservedObstacleActivated_->isChecked();
     }
-    creation_.oid_camp = teams_->GetValue()->GetId();
+    creation_.team = teams_->GetValue()->GetId();
     creation_.type = (ASN1T_EnumObjectType)objectTypes_->GetValue()->id_;
     if( location_ )
         serializer_.Serialize( *location_ );
 
     if( activeAttributes_ )
     {
-        creation_.m.attributs_specifiquesPresent = 1;
+        creation_.m.specific_attributesPresent = 1;
         activeAttributes_->Commit();
     }
     else
-        creation_.m.attributs_specifiquesPresent = 0;
+        creation_.m.specific_attributesPresent = 0;
 
     msg_.Send( publisher );
     Clean();

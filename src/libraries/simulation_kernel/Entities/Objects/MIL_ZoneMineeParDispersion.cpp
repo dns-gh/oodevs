@@ -123,11 +123,11 @@ ASN1T_EnumObjectErrorCode MIL_ZoneMineeParDispersion::Initialize( const ASN1T_Ma
     if( nErrorCode != EnumObjectErrorCode::no_error )
         return nErrorCode;
 
-    if( !asn.m.attributs_specifiquesPresent || asn.attributs_specifiques.t != T_ObjectAttributesSpecific_zone_minee_par_dispersion )
+    if( !asn.m.specific_attributesPresent || asn.specific_attributes.t != T_ObjectAttributesSpecific_dispersed_mine_area )
         return EnumObjectErrorCode::error_missing_specific_attributes;
 
-    rMinesDensity_      = asn.attributs_specifiques.u.zone_minee_par_dispersion->densite;
-    nMinesActivityTime_ = asn.attributs_specifiques.u.zone_minee_par_dispersion->delai_activite_mines;
+    rMinesDensity_      = asn.specific_attributes.u.dispersed_mine_area->density;
+    nMinesActivityTime_ = asn.specific_attributes.u.dispersed_mine_area->activity_time;
 
     rSizeCoef_                          = MIL_Tools::ConvertSimToMeter( GetLocalisation().GetLength() ); // Coef      : tps construction/destruction au m
     nFullNbrDotationForConstruction_    = std::max( (uint)1, (uint)( rMinesDensity_ * rSizeCoef_ ) );
@@ -193,12 +193,12 @@ void MIL_ZoneMineeParDispersion::ProcessAgentMovingInside( MIL_Agent_ABC& agent 
 // -----------------------------------------------------------------------------
 void MIL_ZoneMineeParDispersion::WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg )
 {
-    asnAttributes_.densite              = rMinesDensity_;
-    asnAttributes_.delai_activite_mines = nMinesActivityTime_;
+    asnAttributes_.density       = rMinesDensity_;
+    asnAttributes_.activity_time = nMinesActivityTime_;
 
-    asnMsg().m.attributs_specifiquesPresent                    = 1;
-    asnMsg().attributs_specifiques.t                           = T_ObjectAttributesSpecific_zone_minee_par_dispersion;
-    asnMsg().attributs_specifiques.u.zone_minee_par_dispersion = &asnAttributes_;
+    asnMsg().m.specific_attributesPresent              = 1;
+    asnMsg().specific_attributes.t                     = T_ObjectAttributesSpecific_dispersed_mine_area;
+    asnMsg().specific_attributes.u.dispersed_mine_area = &asnAttributes_;
 }
 
 // -----------------------------------------------------------------------------

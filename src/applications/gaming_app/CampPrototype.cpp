@@ -48,17 +48,17 @@ void CampPrototype::Commit()
     {
         attrPrisonners_ = new ASN1T_ObjectAttributesPrisonerCamp();
         attrPrisonners_->tc2 = tc2s_->GetValue()->GetId();
-        msg_.m.attributs_specifiquesPresent    = 1;
-        msg_.attributs_specifiques.t           = T_ObjectAttributesSpecific_camp_prisonniers;
-        msg_.attributs_specifiques.u.camp_prisonniers= attrPrisonners_;
+        msg_.m.specific_attributesPresent    = 1;
+        msg_.specific_attributes.t           = T_ObjectAttributesSpecific_prisoner_camp;
+        msg_.specific_attributes.u.prisoner_camp= attrPrisonners_;
     }
     else if( msg_.type == EnumObjectType::camp_refugies )
     {
         attrRefugees_ = new ASN1T_ObjectAttributesRefugeeCamp();
         attrRefugees_->tc2 = tc2s_->GetValue()->GetId();
-        msg_.m.attributs_specifiquesPresent    = 1;
-        msg_.attributs_specifiques.t           = T_ObjectAttributesSpecific_camp_refugies;
-        msg_.attributs_specifiques.u.camp_refugies = attrRefugees_;
+        msg_.m.specific_attributesPresent    = 1;
+        msg_.specific_attributes.t           = T_ObjectAttributesSpecific_refugee_camp;
+        msg_.specific_attributes.u.refugee_camp = attrRefugees_;
     }
 }
 
