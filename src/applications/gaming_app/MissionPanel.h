@@ -26,6 +26,7 @@ namespace kernel
     class GlTools_ABC;
     class Viewport_ABC;
     class Mission;
+    class FragOrder;
     class Profile_ABC;
 }
 
@@ -104,6 +105,8 @@ private:
     void AddPopulationMissions( const PopulationDecisions& decisions, kernel::ContextMenu& menu ); 
     template< typename D >
     int AddFragOrders( const D& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot );
+    void AddFragOrders( kernel::Iterator< const kernel::FragOrder& > it, QPopupMenu& menu, const char* slot );
+    void SetInterface( MissionInterface_ABC* missionInterface );
     //@}
 
 private:

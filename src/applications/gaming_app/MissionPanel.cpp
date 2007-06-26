@@ -144,33 +144,44 @@ int MissionPanel::AddMissions( Iterator< const Mission& > it, ContextMenu& menu,
 template< typename D >
 int MissionPanel::AddFragOrders( const D& decisions, ContextMenu& menu, const QString& name, const char* slot )
 {
-    std::set< unsigned long > fragOrders_;
     QPopupMenu& orders = *new QPopupMenu( menu );
-    Iterator< const FragOrder& > fragIt = decisions.GetFragOrders();
-    while( fragIt.HasMoreElements() )
+    Iterator< const FragOrder& > it = decisions.GetFragOrders();
+    AddFragOrders( it, orders, slot );
+    
+    if( const Mission* mission = decisions.GetCurrentMission() )
     {
-        const FragOrder& fragOrder = fragIt.NextElement();
-        if( fragOrders_.insert( fragOrder.GetId() ).second )
+        it = static_cast< const Resolver< FragOrder >& >( *mission ).CreateIterator();
+        AddFragOrders( it, orders, slot );
+    }
+    return menu.InsertItem( "Order", name, &orders );
+}
+
+namespace
+{
+    bool ItemExists( QPopupMenu& menu, int value )
+    {
+        for( unsigned int i = 0; i < menu.count(); ++i )
+            if( menu.itemParameter( menu.idAt( i ) ) == value )
+                return true;
+        return false;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionPanel::AddFragOrders
+// Created: SBO 2007-06-26
+// -----------------------------------------------------------------------------
+void MissionPanel::AddFragOrders( Iterator< const FragOrder& > it, QPopupMenu& menu, const char* slot )
+{
+    while( it.HasMoreElements() )
+    {
+        const FragOrder& fragOrder = it.NextElement();
+        if( ! ItemExists( menu, fragOrder.GetId() ) )
         {
-            int nId = orders.insertItem( fragOrder.GetName(), this, slot );
-            orders.setItemParameter( nId, fragOrder.GetId() );
+            const int id = menu.insertItem( fragOrder.GetName(), this, slot );
+            menu.setItemParameter( id, fragOrder.GetId() );
         }
     }
-    if( decisions.GetCurrentMission() )
-    {
-        const Mission& mission = *decisions.GetCurrentMission();
-        Iterator< const FragOrder& > fragIt = static_cast< const Resolver< FragOrder >& >( mission ).CreateIterator();
-        while( fragIt.HasMoreElements() )
-        {
-            const FragOrder& fragOrder = fragIt.NextElement();
-            if( fragOrders_.insert( fragOrder.GetId() ).second )
-            {
-                int nId = orders.insertItem( fragOrder.GetName(), this, slot );
-                orders.setItemParameter( nId, fragOrder.GetId() );
-            }
-        }
-    }
-    return menu.InsertItem( "Order", name, &orders  );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,17 +225,9 @@ void MissionPanel::AddPopulationMissions( const PopulationDecisions& decisions, 
 // -----------------------------------------------------------------------------
 void MissionPanel::ActivateAgentMission( int id )
 {
-    hide();
-    delete pMissionInterface_;
-    // $$$$ AGE 2006-03-31: 
-    MissionType& mission = ((Resolver_ABC< MissionType >&)static_.types_).Get( id );
-    pMissionInterface_ = new UnitMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, publisher_, *interfaceBuilder_, actionsModel_ );
-    setWidget( pMissionInterface_ );
-
-    // For some magic reason, the following line resizes the widget
-    // to a nice size (but not the minimal one).
-    resize( 10, 10 );
-    show();
+    SetInterface( 0 );
+    const MissionType& mission = static_cast< Resolver_ABC< MissionType >& >( static_.types_).Get( id );
+    SetInterface( new UnitMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, publisher_, *interfaceBuilder_, actionsModel_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -233,16 +236,12 @@ void MissionPanel::ActivateAgentMission( int id )
 // -----------------------------------------------------------------------------
 void MissionPanel::ActivateAutomatMission( int id )
 {
-    hide();
-    delete pMissionInterface_;
-    MissionType& mission = ((Resolver_ABC< MissionType >&)static_.types_).Get( id );
+    SetInterface( 0 );
+    const MissionType& mission = static_cast< Resolver_ABC< MissionType >& >( static_.types_).Get( id );
     Entity_ABC* entity = selectedEntity_.ConstCast();
     if( !entity->Retrieve< AutomatDecisions >() )
         entity = const_cast< kernel::Entity_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() );
-    pMissionInterface_ = new AutomateMissionInterface( this, *entity, mission, controllers_.actions_, publisher_, *interfaceBuilder_, actionsModel_ );
-    setWidget( pMissionInterface_ );
-    resize( 10, 10 );
-    show();
+    SetInterface( new AutomateMissionInterface( this, *entity, mission, controllers_.actions_, publisher_, *interfaceBuilder_, actionsModel_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -251,14 +250,9 @@ void MissionPanel::ActivateAutomatMission( int id )
 // -----------------------------------------------------------------------------
 void MissionPanel::ActivatePopulationMission( int id )
 {
-    hide();
-    delete pMissionInterface_;
-    // $$$$ AGE 2006-03-31: 
-    MissionType& mission = ((Resolver_ABC< MissionType >&)static_.types_).Get( id );
-    pMissionInterface_ = new PopulationMissionInterface( this, const_cast< Entity_ABC& >( *selectedEntity_ ), mission, controllers_.actions_, publisher_, *interfaceBuilder_, actionsModel_ );
-    setWidget( pMissionInterface_ );
-    resize( 10, 10 );
-    show();
+    SetInterface( 0 );
+    const MissionType& mission = static_cast< Resolver_ABC< MissionType >& >( static_.types_).Get( id );
+    SetInterface( new PopulationMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, publisher_, *interfaceBuilder_, actionsModel_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -267,19 +261,9 @@ void MissionPanel::ActivatePopulationMission( int id )
 // -----------------------------------------------------------------------------
 void MissionPanel::ActivateFragOrder( int id )
 {
-    hide();
-    delete pMissionInterface_;
-    // $$$$ AGE 2006-03-31: 
-    FragOrderType& order = ((Resolver_ABC< FragOrderType >&)static_.types_).Get( id );
-    pMissionInterface_ = new FragmentaryOrderInterface( this, *selectedEntity_.ConstCast(), order, controllers_.actions_, publisher_, *interfaceBuilder_, actionsModel_ );
-    if( pMissionInterface_->IsEmpty() )
-        pMissionInterface_->OnOk();
-    else
-    {
-        setWidget( pMissionInterface_ );
-        resize( 10, 10 );
-        show();
-    }
+    SetInterface( 0 );
+    const FragOrderType& order = static_cast< Resolver_ABC< FragOrderType >& >( static_.types_).Get( id );
+    SetInterface( new FragmentaryOrderInterface( this, *selectedEntity_.ConstCast(), order, controllers_.actions_, publisher_, *interfaceBuilder_, actionsModel_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -291,8 +275,7 @@ void MissionPanel::hideEvent( QHideEvent* pEvent )
     if( ! pEvent->spontaneous() )
     {
         layer_.Reset();
-        delete pMissionInterface_;
-        pMissionInterface_ = 0;
+        SetInterface( 0 );
     }
 }
 
@@ -330,4 +313,29 @@ void MissionPanel::Disengage()
 {
     AutomatDecisions* decisions = selectedEntity_ ? selectedEntity_.ConstCast()->Retrieve< AutomatDecisions >() : 0;
     decisions->Disengage();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionPanel::SetInterface
+// Created: SBO 2007-06-26
+// -----------------------------------------------------------------------------
+void MissionPanel::SetInterface( MissionInterface_ABC* missionInterface )
+{
+    if( !missionInterface )
+    {
+        hide();
+        delete pMissionInterface_;
+    }
+    else
+    {
+        pMissionInterface_ = missionInterface;
+        if( pMissionInterface_->IsEmpty() )
+            pMissionInterface_->OnOk();
+        else
+        {
+            setWidget( pMissionInterface_ );
+            resize( 10, 10 );
+            show();
+        }
+    }
 }

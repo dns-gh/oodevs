@@ -58,7 +58,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , fireResultsFactory_( *new FireResultFactory( *this ) )
     , userProfileFactory_( *new UserProfileFactory( *this, controllers, publisher ) )
     , actionParameterFactory_( *new ActionParameterFactory( staticModel.coordinateConverter_, *this, staticModel, agentKnowledgeConverter_, objectKnowledgeConverter_ ) )
-    , actionFactory_( *new ActionFactory( controllers, actionParameterFactory_, *this, staticModel.types_, simulation ) )
+    , actionFactory_( *new ActionFactory( controllers, actionParameterFactory_, *this, staticModel.types_, staticModel.types_, simulation ) )
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
     , teams_( *new TeamsModel( teamFactory_ ) )

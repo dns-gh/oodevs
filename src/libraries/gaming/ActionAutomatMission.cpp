@@ -9,7 +9,8 @@
 
 #include "gaming_pch.h"
 #include "ActionAutomatMission.h"
-#include "gaming/ASN_Messages.h"
+#include "ASN_Messages.h"
+#include "AutomatDecisions.h"
 #include "clients_kernel/OrderType.h"
 
 using namespace kernel;
@@ -49,6 +50,11 @@ ActionAutomatMission::~ActionAutomatMission()
 // -----------------------------------------------------------------------------
 void ActionAutomatMission::Publish( Publisher_ABC& publisher ) const
 {
+    // $$$$ SBO 2007-06-26: check profile! CanBeOrdered
+    const AutomatDecisions& decisions = GetEntity().Get< AutomatDecisions >();
+    if( ! decisions.IsEmbraye() )
+        decisions.Engage();
+
     ASN_MsgAutomatOrder asn;
     asn().oid_unite_executante = GetEntity().GetId();
     asn().mission = GetType().GetId();

@@ -78,7 +78,7 @@ void ActionsModel::Load( const std::string& filename )
     {
         xml::xifstream xis( filename );
         xis >> start( "actions" )
-                >> list( "mission", *this, &ActionsModel::ReadMission )
+                >> list( "action", *this, &ActionsModel::ReadAction )
             >> end();
     }
     catch( ... )
@@ -89,10 +89,10 @@ void ActionsModel::Load( const std::string& filename )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsModel::ReadMission
+// Name: ActionsModel::ReadAction
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-void ActionsModel::ReadMission( xml::xistream& xis )
+void ActionsModel::ReadAction( xml::xistream& xis )
 {
     Action_ABC* action = factory_.CreateAction( xis );
     Register( action->GetId(), *action );
@@ -107,7 +107,11 @@ void ActionsModel::Save( const std::string& filename ) const
     xml::xofstream xos( filename );
     xos << start( "actions" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    {
+        xos << start( "action" );
         it->second->Serialize( xos );
+        xos << end();
+    }
     xos << end();
 }
 

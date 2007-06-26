@@ -69,9 +69,8 @@ ActionMission::~ActionMission()
 // -----------------------------------------------------------------------------
 void ActionMission::Serialize( xml::xostream& xos ) const
 {
-    xos << start( "mission" );
+    xos << attribute( "type", "mission" );
     Action_ABC::Serialize( xos );
-    xos << end();
 }
 
 // -----------------------------------------------------------------------------

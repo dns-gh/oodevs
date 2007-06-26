@@ -9,19 +9,45 @@
 
 #include "gaming_pch.h"
 #include "ActionFragOrder.h"
+#include "ASN_Messages.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/FragOrderType.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ActionFragOrder constructor
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-ActionFragOrder::ActionFragOrder( const kernel::Entity_ABC& entity, const kernel::FragOrderType& fragOrder, kernel::Controller& controller, const Simulation& simulation )
-    : Action_ABC( controller, fragOrder, entity, simulation )
+ActionFragOrder::ActionFragOrder( const Entity_ABC& entity, const FragOrderType& fragOrder, Controller& controller, const Simulation& simulation, bool registered )
+    : Action_ABC ( controller, fragOrder, entity, simulation )
     , controller_( controller )
+    , registered_( registered )
+{
+    if( registered_ )
+        controller_.Create( *(Action_ABC*)this );
+}
+
+namespace
+{
+    const FragOrderType& ReadFragOrder( xml::xistream& xis, const Resolver_ABC< FragOrderType >& fragOrders )
+    {
+        unsigned int id = 0;
+        xis >> attribute( "id", id );
+        return fragOrders.Get( id );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFragOrder constructor
+// Created: SBO 2007-06-26
+// -----------------------------------------------------------------------------
+ActionFragOrder::ActionFragOrder( xml::xistream& xis, Controller& controller, const Resolver_ABC< FragOrderType >& fragOrders, const Entity_ABC& entity, const Simulation& simulation )
+    : Action_ABC ( controller, ReadFragOrder( xis, fragOrders ), entity, simulation )
+    , controller_( controller )
+    , registered_( true )
 {
     controller_.Create( *(Action_ABC*)this );
 }
@@ -32,7 +58,8 @@ ActionFragOrder::ActionFragOrder( const kernel::Entity_ABC& entity, const kernel
 // -----------------------------------------------------------------------------
 ActionFragOrder::~ActionFragOrder()
 {
-    controller_.Delete( *(Action_ABC*)this );
+    if( registered_ )
+        controller_.Delete( *(Action_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,9 +68,8 @@ ActionFragOrder::~ActionFragOrder()
 // -----------------------------------------------------------------------------
 void ActionFragOrder::Serialize( xml::xostream& xos ) const
 {
-    xos << start( "fragorder" );
+    xos << attribute( "type", "fragorder" );
     Action_ABC::Serialize( xos );
-    xos << end();
 }
 
 // -----------------------------------------------------------------------------
@@ -52,5 +78,13 @@ void ActionFragOrder::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void ActionFragOrder::Publish( Publisher_ABC& publisher ) const
 {
-    // $$$$ SBO 2007-05-21: TODO
+    // $$$$ SBO 2007-06-26: check profile! CanBeOrdered
+    // $$$$ SBO 2007-06-26: check engaged/disengaged
+
+    ASN_MsgFragOrder asn;
+    asn().oid_unite_executante = GetEntity().GetId();
+    asn().frag_order = GetType().GetId();
+    CommitTo( asn().parametres );
+    asn.Send( publisher );
+    Clean( asn().parametres );
 }

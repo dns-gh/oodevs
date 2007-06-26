@@ -9,8 +9,11 @@
 
 #include "gaming_pch.h"
 #include "ActionAgentMission.h"
-#include "gaming/ASN_Messages.h"
+#include "ASN_Messages.h"
+#include "AutomatDecisions.h"
 #include "clients_kernel/OrderType.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 
 using namespace kernel;
 
@@ -49,6 +52,14 @@ ActionAgentMission::~ActionAgentMission()
 // -----------------------------------------------------------------------------
 void ActionAgentMission::Publish( Publisher_ABC& publisher ) const
 {
+    // $$$$ SBO 2007-06-26: check profile! CanBeOrdered
+    if( const Automat_ABC* automat = static_cast< const Automat_ABC* >( GetEntity().Get< kernel::TacticalHierarchies >().GetSuperior() ) )
+    {
+        const AutomatDecisions& decisions = automat->Get< AutomatDecisions >();
+        if( decisions.IsEmbraye() )
+            decisions.Disengage();
+    }
+
     ASN_MsgUnitOrder asn;
     asn().oid_unite_executante = GetEntity().GetId();
     asn().mission = GetType().GetId();

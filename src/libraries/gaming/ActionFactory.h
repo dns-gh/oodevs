@@ -36,8 +36,9 @@ class ActionFactory : public ActionFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionFactory( kernel::Controllers& controllers, const ActionParameterFactory_ABC& factory
-                          , const Model& model, const kernel::Resolver_ABC< kernel::MissionType >& missions, const Simulation& simulation );
+             ActionFactory( kernel::Controllers& controllers, const ActionParameterFactory_ABC& factory, const Model& model
+                          , const kernel::Resolver_ABC< kernel::MissionType >& missions
+                          , const kernel::Resolver_ABC< kernel::FragOrderType >& fragOrders, const Simulation& simulation );
     virtual ~ActionFactory();
     //@}
 
@@ -48,6 +49,7 @@ public:
 
     virtual Action_ABC* CreateAction( const ASN1T_MsgUnitOrder& message ) const;
     virtual Action_ABC* CreateAction( const ASN1T_MsgAutomatOrder& message ) const;
+    virtual Action_ABC* CreateAction( const ASN1T_MsgFragOrder& message ) const;
 
     virtual Action_ABC* CreateAction( xml::xistream& xis ) const;
     //@}
@@ -61,6 +63,9 @@ private:
 
     //! @name Helpers
     //@{
+    Action_ABC* CreateMission( xml::xistream& xis ) const;
+    Action_ABC* CreateFragOrder( xml::xistream& xis ) const;
+
     void AddParameters  ( Action_ABC& action, const kernel::OrderType& order, const ASN1T_MissionParameters& asn ) const;
     void AddOrderContext( Action_ABC& action, const kernel::OrderType& order, const ASN1T_OrderContext& asn ) const;
     void ReadParameter  ( xml::xistream& xis, Action_ABC& action, kernel::Iterator< const kernel::OrderParameter& >& it, const kernel::Entity_ABC& entity ) const;
@@ -73,6 +78,7 @@ private:
     const ActionParameterFactory_ABC& factory_;
     const Model& model_;
     const kernel::Resolver_ABC< kernel::MissionType >& missions_;
+    const kernel::Resolver_ABC< kernel::FragOrderType >& fragOrders_;
     const Simulation& simulation_;
     //@}
 };
