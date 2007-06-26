@@ -1770,6 +1770,17 @@
     </message>
 </context>
 <context>
+    <name>ParamHumanWoundList</name>
+    <message>
+        <source>Add...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ParamLimaList</name>
     <message>
         <source>Lima %1</source>

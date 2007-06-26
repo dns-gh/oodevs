@@ -52,9 +52,9 @@ namespace tools
     const char* GetXmlSection( kernel::E_WeatherType nWeatherType );
     const char* GetXmlSection( kernel::E_LightingType nLightingType );
 
-    E_ObjectType       ObjectTypeFromString     ( const std::string& type );
+    E_ObjectType       ObjectTypeFromString    ( const std::string& type );
     E_DotationFamily   DotationFamilyFromString( const std::string& type );
-    E_NatureLevel      NatureLevelFromString    ( const std::string& type );
+    E_NatureLevel      NatureLevelFromString   ( const std::string& type );
 };
 
 #endif // __Kernel_Tools_h_

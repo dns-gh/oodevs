@@ -11,11 +11,7 @@
 #define __ParamHumanWoundList_h_
 
 #include "Param_ABC.h"
-
-namespace kernel
-{
-    class OrderParameter;
-}
+#include "clients_kernel/OrderParameter.h"
 
 // =============================================================================
 /** @class  ParamHumanWoundList
@@ -39,20 +35,24 @@ public:
     virtual void BuildInterface( QWidget* parent );
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Action_ABC& action ) const;
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnHumanWoundChanged( int row, int col );
+    void OnUp();
+    void OnDown();
+    void OnAdd( int index );
+    void OnRemove();
+    void OnContextMenu( QListViewItem* item, const QPoint& point, int col );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::OrderParameter& parameter_;
-    QTable*     table_;
-    QStringList humanWoundsList_;
+    kernel::OrderParameter parameter_;
+    QListView* list_;
     //@}
 };
 
