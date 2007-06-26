@@ -1,11 +1,11 @@
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geodatabase;
 
 namespace crossbow
 {
     static class Tools
     {
-
         #region "Get MxDocument from ArcMap"
         // ArcGIS Snippet Title: 
         // Get MxDocument from ArcMap
@@ -91,7 +91,6 @@ namespace crossbow
             {
                 if (layerName == map.get_Layer(i).Name)
                 {
-
                     // Layer was found
                     return i;
                 }
@@ -102,7 +101,7 @@ namespace crossbow
         }
         #endregion
                 
-        #region Get FeatureLayer from Layer Name
+        #region "Get FeatureLayer from Layer Name"
         public static IFeatureLayer GetIFeatureLayerFromLayerName(ESRI.ArcGIS.Carto.IActiveView activeView, System.String name)
         {
             if (activeView == null || name == null)
@@ -128,7 +127,24 @@ namespace crossbow
         }
         #endregion
 
-        #region Get value of specified feature field
+        #region "Retrieve Current Workspace"
+        public static IFeatureWorkspace RetrieveWorkspace(IFeatureLayer pLayer)
+        {            
+            if (pLayer != null)
+            {
+                IDataset pDataset = (IDataset)pLayer;
+                return (IFeatureWorkspace)pDataset.Workspace;
+            }
+            return null;
+        }
+        
+        public static IFeatureWorkspace OpenWorkspace(ESRI.ArcGIS.Carto.IActiveView activeView, System.String name)
+        {
+            return RetrieveWorkspace(Tools.GetIFeatureLayerFromLayerName(activeView, name));            
+        }
+        #endregion
+
+        #region "Get value of specified feature field"
         public static System.String GetFieldValueByName( ESRI.ArcGIS.Geodatabase.IFeature feature, System.String fieldName )
         {
             int index = feature.Fields.FindField(fieldName);
@@ -138,7 +154,7 @@ namespace crossbow
         }
         #endregion
 
-        #region Create IColor from RGB components
+        #region "Create IColor from RGB components"
         public static ESRI.ArcGIS.Display.IColor MakeColor(short red, short green, short blue)
         {
             ESRI.ArcGIS.Display.RgbColor color = new ESRI.ArcGIS.Display.RgbColor();
@@ -149,6 +165,4 @@ namespace crossbow
         }
         #endregion
     }
-
-
 }

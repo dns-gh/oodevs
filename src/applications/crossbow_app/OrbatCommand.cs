@@ -3,22 +3,19 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using ESRI.ArcGIS.ADF.BaseClasses;
 using ESRI.ArcGIS.ADF.CATIDs;
-using ESRI.ArcGIS.ArcMapUI;
-using ESRI.ArcGIS.Carto;
-using ESRI.ArcGIS.Catalog;
-using ESRI.ArcGIS.CatalogUI;
 using ESRI.ArcGIS.Framework;
-using ESRI.ArcGIS.Geodatabase;
+using ESRI.ArcGIS.esriSystem;
+using ESRI.ArcGIS.Display;
 
 namespace crossbow
 {
     /// <summary>
-    /// Summary description for AddDynamicMoleLayer.
+    /// Summary description for dockable window toggle command
     /// </summary>
-    [Guid("603d8bfc-14b0-4a37-a42a-de1f5c7b4156")]
+    [Guid("3ea5717a-2554-4839-9daf-667305a11285")]
     [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("crossbow.AddDynamicMoleLayer")]
-    public sealed class AddDynamicMoleLayer : BaseCommand
+    [ProgId("crossbow.CommandOrbatCommand")]
+    public sealed class OrbatCommand : BaseCommand
     {
         #region COM Registration Function(s)
         [ComRegisterFunction()]
@@ -64,22 +61,29 @@ namespace crossbow
         {
             string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
             MxCommands.Unregister(regKey);
+
         }
 
         #endregion
         #endregion
 
         private IApplication m_application;
-        public AddDynamicMoleLayer()
+        private IDockableWindow m_dockableWindow;
+        private const string DockableWindowGuid = "{02a14a61-dd9f-493e-80be-7927ae8a5bac}";
+       
+        public OrbatCommand()
         {
             base.m_category = "CSword"; //localizable text
-            base.m_caption = "Add Dynamic Mole Layer";  //localizable text
-            base.m_message = "Add a dynamic MOLE layer";  //localizable text 
-            base.m_toolTip = "Add Dynamic Mole Layer";  //localizable text 
-            base.m_name = "CSword_AddDynamicMoleLayer";   //unique id, non-localizable (e.g. "MyCategory_ArcMapCommand")
+            base.m_caption = "Show/Hide Orbat";  //localizable text
+            base.m_message = "Command toggles dockable Orbat";  //localizable text 
+            base.m_toolTip = "Toggle Dockable Orbat (C#)";  //localizable text 
+            base.m_name = "DeveloperTemplate_OrbatCommand";   //unique id, non-localizable (e.g. "MyCategory_ArcMapCommand")
 
             try
             {
+                //
+                // TODO: change bitmap name if necessary
+                //
                 string bitmapResourceName = GetType().Name + ".bmp";
                 base.m_bitmap = new Bitmap(GetType(), bitmapResourceName);
             }
@@ -90,67 +94,67 @@ namespace crossbow
         }
 
         #region Overriden Class Methods
-
         /// <summary>
         /// Occurs when this command is created
         /// </summary>
         /// <param name="hook">Instance of the application</param>
         public override void OnCreate(object hook)
         {
-            if (hook == null)
-                return;
+            if (hook != null)
+                m_application = hook as IApplication;
 
-            m_application = hook as IApplication;
-
-            //Disable if it is not ArcMap
-            if (hook is IMxApplication)
-                base.m_enabled = true;
+            if (m_application != null)
+            {
+                SetupDockableWindow();                
+                base.m_enabled = m_dockableWindow != null;
+            }
             else
-                base.m_enabled = false;
+                base.m_enabled = false;            
         }
 
         /// <summary>
-        /// Occurs when this command is clicked
+        /// Toggle visiblity of dockable window and show the visible state by its checked property
         /// </summary>
         public override void OnClick()
         {
-            GxDialog openDialog = new GxDialog();
-            openDialog.Title = "Add data layer";
-            openDialog.ObjectFilter = new GxFilterDatasetsAndLayersClass();
-            IEnumGxObject selection;
-            if (openDialog.DoModalOpen(0, out selection))
+            if (m_dockableWindow == null)
+                return;            
+            if (m_dockableWindow.IsVisible())
+            {                
+                m_dockableWindow.Show(false);
+                // IOrbat orbat = (IOrbat)dockWndDef.UserData;
+            }
+            else
             {
-                EnableDynamicDisplay();
-                IGxObject element;
-                while( (element = selection.Next()) != null )
-                {
-                    IGxDataset gxDs = element as IGxDataset;
-                    if (gxDs != null)
-                    {
-                        IDataset ds = gxDs.Dataset;
-                        DynamicMoleLayer layer = new DynamicMoleLayer();
-                        layer.Name = element.Name;
-                        layer.FeatureClass = ds as IFeatureClass;
+                IOrbat orbat = (IOrbat)m_dockableWindow.UserData;
+                if (orbat != null)
+                    orbat.Load();
+                m_dockableWindow.Show(true);
+            }
 
-                        IMxDocument mxDocument = Tools.GetMxDocument(m_application);
-                        mxDocument.AddLayer(layer);
-                        mxDocument.ActiveView.Refresh();
-                    }
-                }
+            base.m_checked = m_dockableWindow.IsVisible();
+        }
+
+        public override bool Checked
+        {
+            get
+            {
+                return m_dockableWindow != null && m_dockableWindow.IsVisible();
             }
         }
         #endregion
 
-        private void EnableDynamicDisplay()
+        private void SetupDockableWindow()
         {
-            IMxDocument mxDocument = Tools.GetMxDocument(m_application);
-            IDynamicMap map = mxDocument.FocusMap as IDynamicMap;
-            if (map == null)
-                throw new System.Exception("Dynamic display not supported");
-            if (!map.DynamicMapEnabled)
+            if (m_dockableWindow == null)
             {
-                map.DynamicMapEnabled = true;
-                mxDocument.ActiveView.Refresh();
+                IDockableWindowManager dockWindowManager = m_application as IDockableWindowManager;
+                if (dockWindowManager != null)
+                {
+                    UID windowID = new UIDClass();
+                    windowID.Value = DockableWindowGuid;
+                    m_dockableWindow = dockWindowManager.GetDockableWindow(windowID);
+                }
             }
         }
     }

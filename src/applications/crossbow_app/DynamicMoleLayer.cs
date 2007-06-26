@@ -24,16 +24,13 @@ namespace crossbow
 
         private IFeatureClass m_featureClass;
         private System.Collections.Hashtable m_elements;
-        private IFEGraphicFactory m_symbolFactory;
+        private SymbolFactory m_symbolFactory;
 
         #region class constructor
         public DynamicMoleLayer()
         {
             m_featureClass = null;
-
-            IMoleCoreHelper helper = new MoleCoreHelperClass();
-            IForceElement2525BRenderer renderer = (IForceElement2525BRenderer)helper.ForceElementRenderer;
-            m_symbolFactory = renderer.GraphicFactory;
+            m_symbolFactory = new SymbolFactory();
             m_elements = new System.Collections.Hashtable();
         }
         #endregion
@@ -103,30 +100,15 @@ namespace crossbow
 
         private DynamicElement BuildSymbol(IDisplay display, IDynamicDisplay dynamicDisplay, String symbolId)
         {
-            IFEGraphic graphic = m_symbolFactory.Make(symbolId);
-            if (graphic == null)
-                throw new System.Exception("Failed to create symbol: " + symbolId);
-
-            IPoint point = new PointClass();
-            point.X = point.Y = 0;
-
+            const int size = 100;
+            SymbolFactory pFactory = new SymbolFactory();            
             DynamicElement element = new DynamicElement();
-            element.graphic = (ICachedGraphic)graphic;
-            element.graphic.Geometry = point;
-
-            ICreateBitmap bmpBuilder = (ICreateBitmap)element.graphic;
-            IPictureMarkerSymbol marker = new PictureMarkerSymbolClass();
-            IColor bgColor = Tools.MakeColor(255, 255, 255);
-            marker.Picture = bmpBuilder.DrawToPicture(display, 100, 100, 1, bgColor);
-            marker.BitmapTransparencyColor = bgColor;
-            marker.Size = 100;
-
-            IDynamicGlyphFactory factory = (IDynamicGlyphFactory)dynamicDisplay;
-            element.glyph = factory.CreateDynamicGlyph((ISymbol)marker);
+            element.graphic = pFactory.CreateGraphics(symbolId, "");
+            element.glyph = pFactory.CreateDynamicGlyph(display, dynamicDisplay, element.graphic, size);
 
             float width = 0, height = 0;
             element.glyph.QueryDimensions(ref width, ref height);
-            element.sizeRatio = (float)marker.Size / width;
+            element.sizeRatio = (float)size / width;
             return element;
         }
     }
