@@ -21,6 +21,9 @@ namespace kernel
 class Action_ABC;
 class ActionParameter_ABC;
 class ActionsToolbar;
+class ActionsListView;
+
+typedef gui::ListView< ActionsListView > ActionsListViewBase;
 
 // =============================================================================
 /** @class  ActionsListView
@@ -28,10 +31,11 @@ class ActionsToolbar;
 */
 // Created: SBO 2007-03-12
 // =============================================================================
-class ActionsListView : public gui::ListView< ActionsListView >
+class ActionsListView : public ActionsListViewBase
                       , public kernel::Observer_ABC
                       , public kernel::ElementObserver_ABC< Action_ABC >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -43,6 +47,12 @@ public:
     //! @name Operations
     //@{
     virtual void Display( const ActionParameter_ABC& param, gui::ValuedListItem* item );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnItemClicked( QListViewItem* item, const QPoint& point, int col );
     //@}
 
 private:

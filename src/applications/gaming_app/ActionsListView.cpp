@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "ActionsListView.h"
+#include "moc_ActionsListView.cpp"
 #include "GamingListItemDisplayer.h"
 #include "clients_kernel/Controllers.h"
 #include "gaming/Action_ABC.h"
@@ -70,6 +71,7 @@ void ActionsListView::NotifyCreated( const Action_ABC& action )
     item->setPixmap( 2, mission_ );
     item->setText( 2, action.GetName() );
     item->setText( 3, tr( "Target: %1" ).arg( action.GetEntity().GetName() ) );
+    connect( this, SIGNAL( clicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( QListViewItem*, const QPoint&, int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,4 +102,18 @@ void ActionsListView::Display( const ActionParameter_ABC& param, gui::ValuedList
     item->setPixmap( 2, parameter_ );
     param.Display( (*sub_)( item ) );
     DeleteTail( gui::ListView< ActionsListView >::Display( param.CreateIterator(), item ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsListView::OnItemClicked
+// Created: SBO 2007-06-27
+// -----------------------------------------------------------------------------
+void ActionsListView::OnItemClicked( QListViewItem* item, const QPoint&, int col )
+{
+    if( col != 0 )
+        return;
+    if( item->pixmap( 0 )->serialNumber() == checkboxOn_.serialNumber() )
+        item->setPixmap( 0, checkboxOff_ );
+    else
+        item->setPixmap( 0, checkboxOn_ );
 }
