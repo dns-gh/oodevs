@@ -103,6 +103,8 @@
 #include "res/drawings.xpm"
 #include "res/arrow_up.xpm"
 #include "res/arrow_down.xpm"
+#include "res/checkbox_on.xpm"
+#include "res/checkbox_off.xpm"
 
 QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {

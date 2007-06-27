@@ -236,7 +236,7 @@ const QColor& RichListItem::GetBackgroundColor()
 // Name: RichListItem::paintCell
 // Created: APE 2004-09-08
 // -----------------------------------------------------------------------------
-void RichListItem::paintCell( QPainter* pPainter, const QColorGroup& cg, int nColumn, int nWidth, int /*nAlign*/ )
+void RichListItem::paintCell( QPainter* pPainter, const QColorGroup& cg, int nColumn, int nWidth, int nAlign )
 {
     if( nColumn >= (int)columns_.size() )
         return;
@@ -269,10 +269,12 @@ void RichListItem::paintCell( QPainter* pPainter, const QColorGroup& cg, int nCo
     const QPixmap& pm = columns_[nColumn].pixMap;
     QRect rect( 0, 0, nWidth, height() );
 
-    const int hoffset = pm.isNull() ? 0 : ( pm.width() + margin_ );
     const int voffset = ( height() - pRichText->height() ) / 2;
-    pRichText->draw( pPainter, hoffset, voffset, rect, colorGroup, &brush );
-    pPainter->drawPixmap( QPoint( 0, ( height() - pm.height() )/2 ), pm );
+    int hoffset = pm.isNull() ? 0 : ( pm.width() + margin_ );
+    int hindent = ( nAlign & Qt::AlignHCenter ) == 0 ? 0 : ( nWidth - pRichText->widthUsed() - hoffset ) / 2;
+
+    pRichText->draw( pPainter, hoffset + hindent, voffset, rect, colorGroup, &brush );
+    pPainter->drawPixmap( QPoint( hindent + margin_ / 2, ( height() - pm.height() ) / 2 ), pm );
 }
 
 

@@ -22,11 +22,15 @@
 ActionsListView::ActionsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : gui::ListView< ActionsListView >( parent, *this, factory )
     , controllers_( controllers )
-    , factory_( factory )
-    , mission_  ( MAKE_PIXMAP( mission ) )
-    , parameter_( MAKE_PIXMAP( parameter ) )
+    , factory_    ( factory )
+    , mission_    ( MAKE_PIXMAP( mission ) )
+    , checkboxOn_ ( MAKE_PIXMAP( checkbox_on ) )
+    , checkboxOff_( MAKE_PIXMAP( checkbox_off ) )
+    , parameter_  ( MAKE_PIXMAP( parameter ) )
 {
     sub_ = new GamingListItemDisplayer();
+    AddColumn( tr( "S" ), Qt::AlignHCenter );
+    AddColumn( tr( "Time" ), Qt::AlignHCenter );
     AddColumn( tr( "Action" ) );
     AddColumn( tr( "Value" ) );
     controllers_.Register( *this );
@@ -46,9 +50,10 @@ ActionsListView::~ActionsListView()
 // Name: ActionsListView::AddColumn
 // Created: SBO 2007-03-28
 // -----------------------------------------------------------------------------
-void ActionsListView::AddColumn( const QString& column )
+void ActionsListView::AddColumn( const QString& column, int alignment /*=AlignAuto*/ )
 {
-    addColumn( column );
+    int col = addColumn( column );
+    setColumnAlignment( col, alignment );
     sub_->AddColumn( column );
 }
 
@@ -60,9 +65,11 @@ void ActionsListView::NotifyCreated( const Action_ABC& action )
 {
     gui::ValuedListItem* item = factory_.CreateItem( this, firstChild() );
     item->SetValue( &action );
-    item->setPixmap( 0, mission_ );
-    item->setText( 0, action.GetName() );
-    item->setText( 1, tr( "Target: %1" ).arg( action.GetEntity().GetName() ) );
+    item->setPixmap( 0, checkboxOn_ );
+    item->setText( 1, "00:00" );
+    item->setPixmap( 2, mission_ );
+    item->setText( 2, action.GetName() );
+    item->setText( 3, tr( "Target: %1" ).arg( action.GetEntity().GetName() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +97,7 @@ void ActionsListView::NotifyDeleted( const Action_ABC& action )
 // -----------------------------------------------------------------------------
 void ActionsListView::Display( const ActionParameter_ABC& param, gui::ValuedListItem* item )
 {
-    item->setPixmap( 0, parameter_ );
+    item->setPixmap( 2, parameter_ );
     param.Display( (*sub_)( item ) );
     DeleteTail( gui::ListView< ActionsListView >::Display( param.CreateIterator(), item ) );
 }

@@ -2467,5 +2467,13 @@
         <source>Reserved obstacle activated:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

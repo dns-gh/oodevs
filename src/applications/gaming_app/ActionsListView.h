@@ -54,7 +54,7 @@ private:
 
     //! @name Helpers
     //@{
-    void AddColumn( const QString& column );
+    void AddColumn( const QString& column, int alignment = AlignAuto );
     virtual void NotifyCreated( const Action_ABC& action );
     virtual void NotifyUpdated( const Action_ABC& action );
     virtual void NotifyDeleted( const Action_ABC& action );
@@ -67,6 +67,7 @@ private:
     gui::ItemFactory_ABC& factory_;
     gui::ListItemDisplayer* sub_;
     QPixmap mission_;
+    QPixmap checkboxOn_, checkboxOff_;
     QPixmap parameter_;
     //@}
 };
