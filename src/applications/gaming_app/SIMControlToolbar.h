@@ -91,7 +91,7 @@ private:
     int speed_;
     bool connected_, paused_;
 
-    QIconSet connectedPix_, disconnectedPix_;
+    QIconSet connectPix_, disconnectPix_;
     QIconSet playPix_, stopPix_;
     //@}
 };

@@ -80,16 +80,16 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     , speed_( 4212 )
     , connected_( false )
     , paused_( false )
-    , connectedPix_   ( MAKE_ICON( connected ) )
-    , disconnectedPix_( MAKE_ICON( notconnected ) )
-    , playPix_        ( MAKE_ICON( play ) )
-    , stopPix_        ( MAKE_ICON( stop ) )
+    , connectPix_   ( MAKE_ICON( notconnected ) )
+    , disconnectPix_( MAKE_ICON( connected ) )
+    , playPix_      ( MAKE_ICON( play ) )
+    , stopPix_      ( MAKE_ICON( stop ) )
 {
     setLabel( tr( "Simulation control" ) );
 
     pConnectButton_ = new QToolButton( this );
     pConnectButton_->setAccel( Key_C );
-    pConnectButton_->setIconSet( MAKE_ICON( notconnected ) );
+    pConnectButton_->setIconSet( disconnectPix_ );
     pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
     
     pPlayButton_ = new QToolButton( this );
@@ -168,7 +168,7 @@ void SIMControlToolbar::SlotConnectDisconnect()
         pConnectButton_->setIconSet( MAKE_ICON( connecting ) );
         pConnectButton_->setTextLabel( tr( "Connecting" ) );
         pConnectDlg_->exec();
-        pConnectButton_->setIconSet( disconnectedPix_ );
+        pConnectButton_->setIconSet( disconnectPix_ );
         pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
     }
 }
@@ -225,7 +225,7 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
         connected_ = simulation.IsConnected();
         if( connected_ )
         {
-            pConnectButton_->setIconSet( connectedPix_ );
+            pConnectButton_->setIconSet( connectPix_ );
             pConnectButton_->setTextLabel( tr( "Disconnect (C)" ) );
             pConnectButton_->setPopup( 0 );
             pPlayButton_->setEnabled( true );
@@ -236,7 +236,7 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
         }
         else
         {
-            pConnectButton_->setIconSet( disconnectedPix_ );
+            pConnectButton_->setIconSet( disconnectPix_ );
             pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
             pConnectDlg_->SetContextMenu( pConnectButton_ );
             pPlayButton_->setEnabled( false );
