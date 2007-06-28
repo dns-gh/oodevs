@@ -36,8 +36,8 @@ class ActionMission : public Action_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionMission( const kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::Controller& controller, const Simulation& simulation, bool registered = true );
-             ActionMission( xml::xistream& xis, kernel::Controller& controller, const kernel::Resolver_ABC< kernel::MissionType >& missions, const kernel::Entity_ABC& entity, const Simulation& simulation );
+             ActionMission( const kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::Controller& controller, bool registered = true );
+             ActionMission( xml::xistream& xis, kernel::Controller& controller, const kernel::Resolver_ABC< kernel::MissionType >& missions, const kernel::Entity_ABC& entity );
     virtual ~ActionMission();
     //@}
 

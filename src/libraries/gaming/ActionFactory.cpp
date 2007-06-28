@@ -14,6 +14,7 @@
 #include "ActionFragOrder.h"
 #include "Model.h"
 #include "AgentsModel.h"
+#include "ActionTiming.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -58,11 +59,16 @@ ActionFactory::~ActionFactory()
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const MissionType& mission ) const
 {
+    std::auto_ptr< Action_ABC > action;
     if( model_.agents_.FindAgent( target.GetId() ) ) 
-        return new ActionAgentMission( target, mission, controllers_.controller_, simulation_, true );
-    if( model_.agents_.FindAutomat( target.GetId() ) )
-        return new ActionAutomatMission( target, mission, controllers_.controller_, simulation_, true );
-    return 0;
+        action.reset( new ActionAgentMission( target, mission, controllers_.controller_, true ) );
+    else if( model_.agents_.FindAutomat( target.GetId() ) )
+        action.reset( new ActionAutomatMission( target, mission, controllers_.controller_, true ) );
+    else
+        return 0;
+
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    return action.release();
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +77,9 @@ Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const Mission
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const FragOrderType& fragOrder ) const
 {
-    return new ActionFragOrder( target, fragOrder, controllers_.controller_, simulation_, true );
+    std::auto_ptr< Action_ABC > action( new ActionFragOrder( target, fragOrder, controllers_.controller_, true ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    return action.release();
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +89,9 @@ Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const FragOrd
 Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgUnitOrder& message ) const
 {
     const MissionType& mission = missions_.Get( message.mission );
-    std::auto_ptr< Action_ABC > action( new ActionAgentMission( model_.agents_.GetAgent( message.oid_unite_executante ), mission, controllers_.controller_, simulation_, false ) );
+    std::auto_ptr< Action_ABC > action( new ActionAgentMission( model_.agents_.GetAgent( message.oid_unite_executante ), mission, controllers_.controller_, false ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+
     AddParameters( *action, mission, message.parametres );
     AddOrderContext( *action, mission, message.order_context );
     return action.release();
@@ -94,7 +104,9 @@ Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgUnitOrder& message ) con
 Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgAutomatOrder& message ) const
 {
     const MissionType& mission = missions_.Get( message.mission );
-    std::auto_ptr< Action_ABC > action( new ActionAutomatMission( model_.agents_.GetAutomat( message.oid_unite_executante ), mission, controllers_.controller_, simulation_, false ) );
+    std::auto_ptr< Action_ABC > action( new ActionAutomatMission( model_.agents_.GetAutomat( message.oid_unite_executante ), mission, controllers_.controller_, false ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+
     AddParameters( *action, mission, message.parametres );
     AddOrderContext( *action, mission, message.order_context );
     return action.release();
@@ -109,9 +121,11 @@ Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgFragOrder& message ) con
     const FragOrderType& order = fragOrders_.Get( message.frag_order );
     std::auto_ptr< Action_ABC > action;
     if( const Agent_ABC* agent = model_.agents_.FindAgent( message.oid_unite_executante ) )
-        action.reset( new ActionFragOrder( *agent, order, controllers_.controller_, simulation_, false ) );
+        action.reset( new ActionFragOrder( *agent, order, controllers_.controller_, false ) );
     else if( const Automat_ABC* automat = model_.agents_.FindAutomat( message.oid_unite_executante ) )
-        action.reset( new ActionFragOrder( *automat, order, controllers_.controller_, simulation_, false ) );
+        action.reset( new ActionFragOrder( *automat, order, controllers_.controller_, false ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+
     AddParameters( *action, order, message.parametres );
     return action.release();
 }
@@ -184,11 +198,13 @@ Action_ABC* ActionFactory::CreateMission( xml::xistream& xis ) const
     std::auto_ptr< ActionMission > action;
     const kernel::Entity_ABC* target = model_.agents_.FindAgent( id );
     if( target )
-        action.reset( new ActionAgentMission( xis, controllers_.controller_, missions_, *target, simulation_ ) );
+        action.reset( new ActionAgentMission( xis, controllers_.controller_, missions_, *target ) );
     else if( target = model_.agents_.FindAutomat( id ) )
-        action.reset( new ActionAutomatMission( xis, controllers_.controller_, missions_, *target, simulation_ ) );
+        action.reset( new ActionAutomatMission( xis, controllers_.controller_, missions_, *target ) );
     else
         throw std::runtime_error( tools::translate( "ActionFactory", "Mission's entity '%1' not found." ).arg( id ).ascii() );
+
+    action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
 
     Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
     xis >> start( "parameters" )
@@ -217,7 +233,10 @@ Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis ) const
         target = model_.agents_.FindAutomat( id );
     if( !target )
         throw std::runtime_error( tools::translate( "ActionFactory", "Frag order's entity '%1' not found." ).arg( id ).ascii() );
-    action.reset( new ActionFragOrder( xis, controllers_.controller_, fragOrders_, *target, simulation_ ) );
+    action.reset( new ActionFragOrder( xis, controllers_.controller_, fragOrders_, *target ) );
+
+    action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
+
     Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
     xis >> start( "parameters" )
             >> list( "parameter", *this, ReadParameter, *action, it, *target )

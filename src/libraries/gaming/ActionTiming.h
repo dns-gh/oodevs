@@ -7,8 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __ActionTime_h_
-#define __ActionTime_h_
+#ifndef __ActionTiming_h_
+#define __ActionTiming_h_
+
+#include "clients_kernel/Extension_ABC.h"
 
 namespace xml
 {
@@ -16,35 +18,49 @@ namespace xml
     class xostream;
 }
 
+namespace kernel
+{
+    class Controller;
+}
+
+class Action_ABC;
 class Simulation;
 
 // =============================================================================
-/** @class  ActionTime
-    @brief  ActionTime
+/** @class  ActionTiming
+    @brief  ActionTiming
 */
 // Created: SBO 2007-06-19
 // =============================================================================
-class ActionTime
+class ActionTiming : public kernel::Extension_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionTime( const Simulation& simulation );
-    virtual ~ActionTime();
+             ActionTiming( kernel::Controller& controller, const Simulation& simulation, const Action_ABC& owner );
+             ActionTiming( xml::xistream& xis, kernel::Controller& controller, const Simulation& simulation, const Action_ABC& owner );
+    virtual ~ActionTiming();
     //@}
 
     //! @name Operations
     //@{
+    void ToggleEnabled();
     void SetStart( xml::xistream& xis );
     void Serialize( xml::xostream& xos ) const;
+    //@}
+
+    //! @name Accessors
+    //@{
+    const Action_ABC& GetAction() const;
+    bool IsEnabled() const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ActionTime( const ActionTime& );            //!< Copy constructor
-    ActionTime& operator=( const ActionTime& ); //!< Assignment operator
+    ActionTiming( const ActionTiming& );            //!< Copy constructor
+    ActionTiming& operator=( const ActionTiming& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -54,10 +70,13 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     const Simulation& simulation_;
+    const Action_ABC& owner_;
     int startDay_;
     int startTime_;
+    bool enabled_;
     //@}
 };
 
-#endif // __ActionTime_h_
+#endif // __ActionTiming_h_

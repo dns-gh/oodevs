@@ -21,8 +21,8 @@ using namespace kernel;
 // Name: ActionFragOrder constructor
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-ActionFragOrder::ActionFragOrder( const Entity_ABC& entity, const FragOrderType& fragOrder, Controller& controller, const Simulation& simulation, bool registered )
-    : Action_ABC ( controller, fragOrder, entity, simulation )
+ActionFragOrder::ActionFragOrder( const Entity_ABC& entity, const FragOrderType& fragOrder, Controller& controller, bool registered )
+    : Action_ABC ( controller, fragOrder, entity )
     , controller_( controller )
     , registered_( registered )
 {
@@ -44,8 +44,8 @@ namespace
 // Name: ActionFragOrder constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-ActionFragOrder::ActionFragOrder( xml::xistream& xis, Controller& controller, const Resolver_ABC< FragOrderType >& fragOrders, const Entity_ABC& entity, const Simulation& simulation )
-    : Action_ABC ( controller, ReadFragOrder( xis, fragOrders ), entity, simulation )
+ActionFragOrder::ActionFragOrder( xml::xistream& xis, Controller& controller, const Resolver_ABC< FragOrderType >& fragOrders, const Entity_ABC& entity )
+    : Action_ABC ( controller, ReadFragOrder( xis, fragOrders ), entity )
     , controller_( controller )
     , registered_( true )
 {

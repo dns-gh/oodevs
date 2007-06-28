@@ -24,9 +24,8 @@ unsigned long Action_ABC::idManager_ = 0; // $$$$ SBO 2007-03-12: real id manage
 // Name: Action_ABC constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType& type, const kernel::Entity_ABC& target, const Simulation& simulation )
-    : ActionTime( simulation )
-    , controller_( controller )
+Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType& type, const kernel::Entity_ABC& target )
+    : controller_( controller )
     , id_( ++idManager_ )
     , target_( target )
     , type_( type )

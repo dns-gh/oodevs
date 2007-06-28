@@ -62,7 +62,7 @@ void InfoMissionsTab::Display( const Action_ABC& action, kernel::Displayer_ABC& 
 // -----------------------------------------------------------------------------
 void InfoMissionsTab::Display( const ActionParameter_ABC& param, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item )
 {
-    item->setPixmap( 0, MAKE_PIXMAP( parameter ) );
+    item->setPixmap( 0, MAKE_PIXMAP( parameter2 ) );
     param.Display( (*sub_)( item ) );
     DeleteTail( DisplayList( param.CreateIterator(), item ) );
 }

@@ -19,8 +19,8 @@ using namespace kernel;
 // Name: ActionAutomatMission constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-ActionAutomatMission::ActionAutomatMission( const Entity_ABC& entity, const MissionType& mission, Controller& controller, const Simulation& simulation, bool registered /*= true*/ )
-    : ActionMission( entity, mission, controller, simulation, registered )
+ActionAutomatMission::ActionAutomatMission( const Entity_ABC& entity, const MissionType& mission, Controller& controller, bool registered /*= true*/ )
+    : ActionMission( entity, mission, controller, registered )
 {
     // NOTHING
 }
@@ -29,8 +29,8 @@ ActionAutomatMission::ActionAutomatMission( const Entity_ABC& entity, const Miss
 // Name: ActionAutomatMission constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-ActionAutomatMission::ActionAutomatMission( xml::xistream& xis, Controller& controller, const Resolver_ABC< MissionType >& missions, const Entity_ABC& entity, const Simulation& simulation )
-    : ActionMission( xis, controller, missions, entity, simulation )
+ActionAutomatMission::ActionAutomatMission( xml::xistream& xis, Controller& controller, const Resolver_ABC< MissionType >& missions, const Entity_ABC& entity )
+    : ActionMission( xis, controller, missions, entity )
 {
     // NOTHING
 }

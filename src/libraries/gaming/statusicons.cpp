@@ -48,7 +48,7 @@
 #include "res/parent.xpm"
 #include "res/mission.xpm"
 #include "res/mission_title.xpm"
-#include "res/parameter.xpm"
+#include "res/parameter2.xpm"
 #include "res/checkpoint.xpm"
 #include "res/checkpoint1.xpm"
 #include "res/checkpoint2.xpm"

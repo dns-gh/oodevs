@@ -14,6 +14,7 @@
 #include "clients_kernel/Controllers.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionParameter_ABC.h"
+#include "gaming/ActionTiming.h"
 #include "icons.h"
 
 // -----------------------------------------------------------------------------
@@ -27,7 +28,7 @@ ActionsListView::ActionsListView( QWidget* parent, kernel::Controllers& controll
     , mission_    ( MAKE_PIXMAP( mission ) )
     , checkboxOn_ ( MAKE_PIXMAP( checkbox_on ) )
     , checkboxOff_( MAKE_PIXMAP( checkbox_off ) )
-    , parameter_  ( MAKE_PIXMAP( parameter ) )
+    , parameter_  ( MAKE_PIXMAP( parameter2 ) )
 {
     sub_ = new GamingListItemDisplayer();
     AddColumn( tr( "S" ), Qt::AlignHCenter );
@@ -94,6 +95,16 @@ void ActionsListView::NotifyDeleted( const Action_ABC& action )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsListView::NotifyUpdated
+// Created: SBO 2007-06-28
+// -----------------------------------------------------------------------------
+void ActionsListView::NotifyUpdated( const ActionTiming& extension )
+{
+    if( QListViewItem* item = gui::FindItem( &extension.GetAction(), firstChild() ) )
+        item->setPixmap( 0, extension.IsEnabled() ? checkboxOn_ : checkboxOff_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsListView::Display
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
@@ -110,10 +121,13 @@ void ActionsListView::Display( const ActionParameter_ABC& param, gui::ValuedList
 // -----------------------------------------------------------------------------
 void ActionsListView::OnItemClicked( QListViewItem* item, const QPoint&, int col )
 {
-    if( col != 0 )
+    if( col != 0 || !item )
         return;
-    if( item->pixmap( 0 )->serialNumber() == checkboxOn_.serialNumber() )
-        item->setPixmap( 0, checkboxOff_ );
-    else
-        item->setPixmap( 0, checkboxOn_ );
+    gui::ValuedListItem* value = static_cast< gui::ValuedListItem* >( item );
+    if( value->IsA< const Action_ABC >() )
+    {
+        const Action_ABC* action = value->GetValue< const Action_ABC >();
+        if( ActionTiming* timing = const_cast< ActionTiming* >( action->Retrieve< ActionTiming >() ) )
+            timing->ToggleEnabled();
+    }
 }

@@ -21,8 +21,9 @@ namespace kernel
 class Action_ABC;
 class ActionParameter_ABC;
 class ActionsToolbar;
-class ActionsListView;
+class ActionTiming;
 
+class ActionsListView;
 typedef gui::ListView< ActionsListView > ActionsListViewBase;
 
 // =============================================================================
@@ -34,6 +35,7 @@ typedef gui::ListView< ActionsListView > ActionsListViewBase;
 class ActionsListView : public ActionsListViewBase
                       , public kernel::Observer_ABC
                       , public kernel::ElementObserver_ABC< Action_ABC >
+                      , public kernel::ElementObserver_ABC< ActionTiming >
 {
     Q_OBJECT;
 
@@ -68,6 +70,7 @@ private:
     virtual void NotifyCreated( const Action_ABC& action );
     virtual void NotifyUpdated( const Action_ABC& action );
     virtual void NotifyDeleted( const Action_ABC& action );
+    virtual void NotifyUpdated( const ActionTiming& extension );
     //@}
 
 private:
