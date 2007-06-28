@@ -83,24 +83,13 @@ void PopulationListView::NotifyUpdated( const Entity_ABC& element )
         item->SetNamed( element );
 }
 
-namespace
-{
-    void DeleteHierarchy( QListViewItem* item )
-    {
-        QListViewItem* parent = item ? item->parent() : 0;
-        delete item;
-        if( parent && ! parent->childCount() )
-            DeleteHierarchy( parent );
-    };  
-}
-
 // -----------------------------------------------------------------------------
 // Name: PopulationListView::NotifyDeleted
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
 void PopulationListView::NotifyDeleted( const Population_ABC& element )
 {
-    DeleteHierarchy( FindItem( (const Entity_ABC*)&element, firstChild() ) );
+    delete FindItem( (const Entity_ABC*)&element, firstChild() );
 }
 
 // $$$$ AGE 2006-03-22: somehow factor these things
@@ -170,7 +159,7 @@ void PopulationListView::NotifyUpdated( const kernel::Profile_ABC& profile )
         if( item->IsA< const Entity_ABC >() )
         {
             const Entity_ABC& entity = *item->GetValue< const Entity_ABC >();
-            item->setVisible( profile_.IsVisible( entity ) );
+            item->setVisible( profile.IsVisible( entity ) );
         }
         ++it;
     }
@@ -196,6 +185,5 @@ void PopulationListView::NotifyCreated( const kernel::Team_ABC& team )
 // -----------------------------------------------------------------------------
 void PopulationListView::NotifyDeleted( const kernel::Team_ABC& team )
 {
-    if( ValuedListItem* teamItem = FindSibling( (const Entity_ABC*)&team, firstChild() ) )
-        DeleteHierarchy( teamItem );
+    delete FindSibling( (const Entity_ABC*)&team, firstChild() );
 }

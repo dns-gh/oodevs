@@ -112,12 +112,9 @@ void ChangeDiplomacyDialog::Reject()
 // -----------------------------------------------------------------------------
 void ChangeDiplomacyDialog::NotifyCreated( const Team_ABC& team )
 {
-    const int rows = table_->numRows();
-    table_->setNumCols( rows + 1 );
-    table_->setNumRows( rows + 1 );
-    table_->verticalHeader  ()->setLabel( rows, team.GetName() );
-    table_->horizontalHeader()->setLabel( rows, team.GetName() );
     teams_.push_back( &team );
+    
+    
 }
 
 // -----------------------------------------------------------------------------
@@ -126,14 +123,24 @@ void ChangeDiplomacyDialog::NotifyCreated( const Team_ABC& team )
 // -----------------------------------------------------------------------------
 void ChangeDiplomacyDialog::NotifyDeleted( const Team_ABC& team )
 {
-    const int rows = table_->numRows();
-    if( rows > 0 )
+    T_Teams::iterator it = std::find( teams_.begin(), teams_.end(), &team );
+    if( it != teams_.end() )
+        teams_.erase( it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeDiplomacyDialog::UpdateTable
+// Created: AGE 2007-06-28
+// -----------------------------------------------------------------------------
+void ChangeDiplomacyDialog::UpdateTable()
+{
+    table_->setNumCols( teams_.size() );
+    table_->setNumRows( teams_.size() );
+    for( unsigned i = 0; i < teams_.size(); ++i )
     {
-        table_->setNumCols( rows - 1 );
-        table_->setNumRows( rows - 1 );
-        T_Teams::iterator it = std::find( teams_.begin(), teams_.end(), &team );
-        if( it != teams_.end() )
-            teams_.erase( it );
+        const QString name = teams_.at( i )->GetName();
+        table_->verticalHeader  ()->setLabel( i, name );
+        table_->horizontalHeader()->setLabel( i, name );
     }
 }
     
@@ -141,7 +148,7 @@ void ChangeDiplomacyDialog::NotifyDeleted( const Team_ABC& team )
 // Name: ChangeDiplomacyDialog::NotifyContextMenu
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-void ChangeDiplomacyDialog::NotifyContextMenu( const Team_ABC& team, ContextMenu& menu )
+void ChangeDiplomacyDialog::NotifyContextMenu( const Team_ABC& , ContextMenu& menu )
 {
     menu.InsertItem( "Command", tr( "Diplomacy" ), this, SLOT( show() ) );
 }
@@ -152,6 +159,8 @@ void ChangeDiplomacyDialog::NotifyContextMenu( const Team_ABC& team, ContextMenu
 // -----------------------------------------------------------------------------
 void ChangeDiplomacyDialog::showEvent( QShowEvent* )
 {
+    UpdateTable();
+
     for( unsigned int i = 0; i < teams_.size(); ++i )
         for( unsigned int j = 0; j < teams_.size(); ++j )
         {

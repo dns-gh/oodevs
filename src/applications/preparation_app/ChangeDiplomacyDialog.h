@@ -59,6 +59,7 @@ private:
 
     virtual void showEvent( QShowEvent* );
     virtual QSize sizeHint();
+    void UpdateTable();
     //@}
 
 private:

@@ -365,9 +365,6 @@
     </message>
 </context>
 <context>
-    <name>UnitsPanel</name>
-</context>
-<context>
     <name>UserProfileList</name>
     <message>
         <source>Create</source>
