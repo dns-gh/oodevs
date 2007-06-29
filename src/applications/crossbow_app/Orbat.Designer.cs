@@ -68,7 +68,7 @@ namespace crossbow
             IRow pRow = pCursor.NextRow();
             while (pRow != null)
             {
-                string symbolID = (string)pRow.get_Value(mFields[(int)EnumFields.eSymbol]);                
+                string symbolID = (string)pRow.get_Value(mFields[(int)FieldsProperty.EnumFields.eSymbol]);                
                 Image pImage = (Image)m_pSymbolFactory.GetSymbol(pDisplay, symbolID, "", 32);
                 m_pSymbolTree.ImageList.Images.Add(symbolID, pImage);
                 pRow = pCursor.NextRow();                
@@ -103,10 +103,10 @@ namespace crossbow
             IFeatureWorkspace pWorkspace = Tools.RetrieveWorkspace(pLayer);
             ICursor pCursor = GetCursor(pWorkspace.OpenTable("Formations"));
             if (pCursor != null)
-                InitializeSymbolOnCursor(m_SimpleDisplay, pCursor, m_formationFields);
+                InitializeSymbolOnCursor(m_SimpleDisplay, pCursor, m_Fields.Formation);
             pCursor = GetCursor((ITable)pLayer.FeatureClass);
             if (pCursor != null)
-                InitializeSymbolOnCursor(m_SimpleDisplay, pCursor, m_tacticalElementFields);
+                InitializeSymbolOnCursor(m_SimpleDisplay, pCursor, m_Fields.Element);
         }
 
         private void RunAgentCursorOnSubordinate(IFeatureClass pFeatureClass, string stOIDFormation, string stOIDParent)
@@ -119,9 +119,9 @@ namespace crossbow
             System.Windows.Forms.TreeNode[] node = m_pSymbolTree.Nodes.Find(stOIDFormation, true);
             while (pFeature != null)
             {
-                int oid = (int)pFeature.get_Value(m_tacticalElementFields[(int)EnumFields.eOID]);
-                string symbol = (string)pFeature.get_Value(m_tacticalElementFields[(int)EnumFields.eSymbol]);
-                string name = (string)pFeature.get_Value(m_tacticalElementFields[(int)EnumFields.eName]);
+                int oid = (int)pFeature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eOID]);
+                string symbol = (string)pFeature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eSymbol]);
+                string name = (string)pFeature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eName]);
 
                 // m_pSymbolTree.Nodes.Insert(m_pSymbolTree.Nodes.IndexOfKey(stOIDFormation), oid.ToString(), name, symbol);
                 node[0].Nodes.Add(oid.ToString(), name, symbol);
@@ -138,11 +138,11 @@ namespace crossbow
             IFeature pFeature = pCursor.NextFeature();
             while (pFeature != null)
             {
-                int oid = (int)pFeature.get_Value(m_tacticalElementFields[(int)EnumFields.eOID]);
-                int oidParent = (int)pFeature.get_Value(m_tacticalElementFields[(int)EnumFields.eParentOID]);
-                int formation = (int)pFeature.get_Value(m_tacticalElementFields[(int)EnumFields.eFormationOID]);
-                string name = (string)pFeature.get_Value(m_tacticalElementFields[(int)EnumFields.eName]);
-                string symbol = (string)pFeature.get_Value(m_tacticalElementFields[(int)EnumFields.eSymbol]);
+                int oid = (int)pFeature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eOID]);
+                int oidParent = (int)pFeature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eParentOID]);
+                int formation = (int)pFeature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eFormationOID]);
+                string name = (string)pFeature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eName]);
+                string symbol = (string)pFeature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eSymbol]);
 
                 System.Windows.Forms.TreeNode[] node = m_pSymbolTree.Nodes.Find(oidParent.ToString(), true);
                 node[0].Nodes.Add(oid.ToString(), name, symbol);                
@@ -160,10 +160,10 @@ namespace crossbow
             
             while (pRow != null)
             {
-                int oid = (int)pRow.get_Value(m_formationFields[(int)EnumFields.eOID]);
-                int oidParent = (int)pRow.get_Value(m_formationFields[(int)EnumFields.eParentOID]);
-                string name = (string)pRow.get_Value(m_formationFields[(int)EnumFields.eName]);
-                string symbolID = (string)pRow.get_Value(m_formationFields[(int)EnumFields.eSymbol]);
+                int oid = (int)pRow.get_Value(m_Fields.Formation[(int)FieldsProperty.EnumFields.eOID]);
+                int oidParent = (int)pRow.get_Value(m_Fields.Formation[(int)FieldsProperty.EnumFields.eParentOID]);
+                string name = (string)pRow.get_Value(m_Fields.Formation[(int)FieldsProperty.EnumFields.eName]);
+                string symbolID = (string)pRow.get_Value(m_Fields.Formation[(int)FieldsProperty.EnumFields.eSymbol]);
 
                 if (oidParent > 0 && oidParent < 4472872)
                 {
@@ -187,8 +187,8 @@ namespace crossbow
             if (pLayer != null)
             {
                 IFeatureWorkspace pWorkspace = Tools.RetrieveWorkspace(pLayer);
-                SetupFormationFields(pWorkspace.OpenTable("Formations"));                
-                SetupTacticalElementFields(pLayer.FeatureClass);
+                m_Fields.SetupFormationFields(pWorkspace.OpenTable("Formations"));
+                m_Fields.SetupTacticalElementFields(pLayer.FeatureClass);
                 SetupSymbols(pLayer);
 
                 UpdateFormation(pLayer);
@@ -198,6 +198,6 @@ namespace crossbow
         #endregion
 
         private System.Windows.Forms.TreeView m_pSymbolTree;
-        private System.Windows.Forms.Label labelPlaceholder;        
+        // private System.Windows.Forms.Label labelPlaceholder;        
     }
 }

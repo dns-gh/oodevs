@@ -112,15 +112,15 @@ namespace crossbow
             IMap map = activeView.FocusMap;
             ILayer layer = map.get_Layer( index );
             if (layer is IFeatureLayer)
-                return (IFeatureLayer)(layer);
+                return (IFeatureLayer)layer;
             else if (layer is ICompositeLayer)
             {
-                ICompositeLayer composite = (ICompositeLayer)(layer);
+                ICompositeLayer composite = (ICompositeLayer)(layer);                
                 for (int i = 0; i < composite.Count - 1; ++i)
                 {
                     layer = composite.get_Layer(i);
                     if (layer is IFeatureLayer)
-                        return (IFeatureLayer)(layer);
+                        return (IFeatureLayer)layer;
                 }
             }
             return null;
@@ -131,9 +131,17 @@ namespace crossbow
         public static IFeatureWorkspace RetrieveWorkspace(IFeatureLayer pLayer)
         {            
             if (pLayer != null)
-            {
-                IDataset pDataset = (IDataset)pLayer;
-                return (IFeatureWorkspace)pDataset.Workspace;
+            {                
+                IDataset pDataset = null;
+                if ( pLayer is IDynamicLayerDataset )
+                {
+                    IDynamicLayerDataset dataset = (IDynamicLayerDataset)pLayer;
+                    pDataset = dataset.Dataset;
+                }
+                else
+                    pDataset = (IDataset)pLayer;
+                if ( pDataset != null )
+                    return (IFeatureWorkspace)pDataset.Workspace;
             }
             return null;
         }

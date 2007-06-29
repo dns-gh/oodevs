@@ -14,40 +14,78 @@ namespace crossbow
     [ProgId("crossbow.SymbolFactory")]
     public class SymbolFactory
     {
-        private IFEGraphicFactory m_pGraphicFactory;
-
-        public SymbolFactory()
-        {
+        private ISpatialReference   m_SpatialReference;
+        private IFEGraphicFactory   m_pGraphicFactory;
+        
+        public SymbolFactory( )
+        {                         
             IMoleCoreHelper moleHelper = new MoleCoreHelperClass();
             IForceElement2525BRenderer renderer = (IForceElement2525BRenderer)moleHelper.ForceElementRenderer;
             m_pGraphicFactory = renderer.GraphicFactory;
+            m_SpatialReference = null;
+        }
+        
+        IPoint CreatePoint( double x, double y )
+        {
+            IPoint pPoint = new PointClass();
+            pPoint.PutCoords(1.0, 1.0);
+            if (m_SpatialReference != null)
+                pPoint.SpatialReference = m_SpatialReference;
+            return pPoint;
+        }
+
+        public ISpatialReference SpacialReference
+        {
+            get
+            {
+                return m_SpatialReference;
+            }
+            set
+            {
+                m_SpatialReference = value;
+            }
         }
 
         public IForceElement CreateForceElement(string stSymbolID, string stName)
         {                        
             IForceElement   pForceElement = new ForceElementClass();
-            IPoint          pPoint = new PointClass();
-        
-            pPoint.PutCoords( 0, 0 );
+            
             // Initialize position
-            pForceElement.Shape = pPoint;
-            // register symbol id
+            pForceElement.Shape = CreatePoint(1.0, 1.0);
+            // register symbol id            
             pForceElement.MessageString = stSymbolID;
             pForceElement.PropertySet.SetProperty( "Symbol_ID", stSymbolID );
             pForceElement.PropertySet.SetProperty( "Name", stName );
             pForceElement.PropertySet.SetProperty( "Info", "" );
             return pForceElement;    
         }
-
+    
+        // Create mole graphic with no scale
         public ICachedGraphic CreateGraphics(string stSymbolID, string stName)
         {
             IFEGraphic pFEGraphic;
-
+            
             pFEGraphic = m_pGraphicFactory.Make(stSymbolID);
+            pFEGraphic.Style.FrameOption = moleStyleFrameEnum.moleStyleFrameOn;
+            pFEGraphic.Style.FillOption = moleStyleFillEnum.moleStyleFillSolid;
+            pFEGraphic.Style.UseFonts = true;
+            // IMPORTANT: when using CachedGraphic.Draw method, TTFs are rebuilt each .Draw() call so
+            // adversely affects performance (but provide better text quality, flexibility/customizability)
+            ((ICachedGraphicStyle)pFEGraphic.Style).UseGDI = true;
+            // pFEGraphic.Style.FriendlyLine.Width = 1.5;
             pFEGraphic.ForceElement = CreateForceElement(stSymbolID, stName);
             return (ICachedGraphic)pFEGraphic;
         }
+        
+        // Create Mole unit with the rigth scale
+        public ICachedGraphic CreateMoleUnit(IDisplay pDisplay, string stSymbolID, string stName, double size)
+        {
+            ICachedGraphic pGraphic = CreateGraphics(stSymbolID, stName);
+            pGraphic.Size = size;
+            return pGraphic;
+        }
 
+        // Export Picture from mole unit graphic
         public stdole.IPictureDisp CreatePicture(IDisplay pDisplay, ICachedGraphic pGraphic, int size)
         {
             ICreateBitmap pBitmap = (ICreateBitmap)pGraphic;
@@ -55,35 +93,35 @@ namespace crossbow
             return pBitmap.DrawToPicture(pDisplay, size, size, 1.2, bgColor);
         }
 
+        // Export Bitmap from mole unit graphic
         public System.Drawing.Bitmap CreateBitmap(IDisplay pDisplay, ICachedGraphic pGraphic, int size)
         {
             ICreateBitmap   pBitmap = (ICreateBitmap)pGraphic;
             IColor          bgColor = Tools.MakeColor(255, 255, 255);
-            int             hDIB = pBitmap.DrawToDIB(pDisplay, size, size, 1, bgColor);
+            int             hDIB = pBitmap.DrawToDIB(pDisplay, size, size, 1.2, bgColor);
             System.IntPtr   iPtr = new IntPtr(hDIB);
 
             return System.Drawing.Bitmap.FromHbitmap(iPtr);
         }
 
+        // Create mole dynamic glyph
         public IDynamicGlyph CreateDynamicGlyph(IDisplay pDisplay, IDynamicDisplay pDynamicDisplay, ICachedGraphic pGraphic, int size)
         {
-            ICreateBitmap pBitmap = (ICreateBitmap)pGraphic;
+            ICreateBitmap pBitmap = pGraphic as ICreateBitmap;
             IPictureMarkerSymbol pMarker = new PictureMarkerSymbolClass();
             IColor bgColor = Tools.MakeColor(255, 255, 255);
-            IDynamicGlyphFactory pFactory = (IDynamicGlyphFactory)pDynamicDisplay;
+            IDynamicGlyphFactory pFactory = pDynamicDisplay.DynamicGlyphFactory as IDynamicGlyphFactory;
 
-            pMarker.Picture = pBitmap.DrawToPicture(pDisplay, size, size, 1, bgColor);
+            pMarker.Picture = pBitmap.DrawToPicture(pDisplay, size, size, 1.2, bgColor);
             pMarker.BitmapTransparencyColor = bgColor;
-            pMarker.Size = size;
-            return pFactory.CreateDynamicGlyph((ISymbol)pMarker);
+            pMarker.Size = size;            
+            return pFactory.CreateDynamicGlyph(pMarker as ISymbol);
         }
 
         public System.Drawing.Bitmap GetSymbol(IDisplay pDisplay, string stSymbolID, string stName, int size)
         {
-            ICachedGraphic pGraphic = CreateGraphics(stSymbolID, stName);
-
-            pGraphic.Size = size;
-            return CreateBitmap(pDisplay, pGraphic, 32);
+            ICachedGraphic pGraphic = CreateMoleUnit( pDisplay, stSymbolID, stName, 0.5);
+            return CreateBitmap(pDisplay, pGraphic, size);
         }
     }
 }

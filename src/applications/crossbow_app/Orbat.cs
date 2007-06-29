@@ -30,6 +30,7 @@ namespace crossbow
         private IApplication m_application;        
         private SymbolFactory m_pSymbolFactory;
         private IDisplay m_SimpleDisplay;
+        private bool m_IsLoaded;
 
         #region COM Registration Function(s)
         [ComRegisterFunction()]
@@ -81,41 +82,31 @@ namespace crossbow
         #endregion
 
         #region "Fields definition"
-        private enum EnumFields { eOID, eParentOID, eName, eSymbol, eFormationOID };
-        private int[] m_formationFields;
-        private int[] m_tacticalElementFields;
-
-        public void SetupFormationFields(ITable pTable)
-        {
-            m_formationFields[(int)EnumFields.eSymbol] = pTable.FindField("Symbol_ID");
-            m_formationFields[(int)EnumFields.eOID] = pTable.FindField("Public_OID");
-            m_formationFields[(int)EnumFields.eParentOID] = pTable.FindField("Parent_OID");
-            m_formationFields[(int)EnumFields.eName] = pTable.FindField("Name");
-        }
-
-        public void SetupTacticalElementFields(IFeatureClass pFeatureClass)
-        {
-            m_tacticalElementFields[(int)EnumFields.eSymbol] = pFeatureClass.FindField("Symbol_ID");
-            m_tacticalElementFields[(int)EnumFields.eOID] = pFeatureClass.FindField("Public_OID");
-            m_tacticalElementFields[(int)EnumFields.eParentOID] = pFeatureClass.FindField("Parent_OID");
-            m_tacticalElementFields[(int)EnumFields.eName] = pFeatureClass.FindField("Name");
-            m_tacticalElementFields[(int)EnumFields.eFormationOID] = pFeatureClass.FindField("Formation_OID");
-        }
+        private FieldsProperty m_Fields;        
         #endregion
 
         public Orbat()
         {
+            m_IsLoaded = false;
             m_SimpleDisplay = new SimpleDisplayClass();
             m_pSymbolFactory = new SymbolFactory();
-            m_formationFields = new int[4];
-            m_tacticalElementFields = new int[5];
+            m_Fields = new FieldsProperty();            
             InitializeComponent();
+        }
+
+        ~Orbat()
+        {
+            m_SimpleDisplay = null;
+            m_pSymbolFactory = null;
+            m_Fields = null;
         }
 
         #region IOrbat Members
         void IOrbat.Load()
         {
-            SetupOrbatCommand();
+            if (!m_IsLoaded)
+                SetupOrbatCommand();
+            m_IsLoaded = true;
         }
 
         void IOrbat.Unload()
