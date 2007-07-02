@@ -146,6 +146,18 @@ Please check access rights or write protection.</source>
         <source>Fit color gradient to viewport</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Hillshade</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strength</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FixedLightWidget</name>

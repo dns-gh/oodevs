@@ -46,6 +46,10 @@ private slots:
     //@{
     void OnColorChanged();
     void OnEnableVariable( bool );
+    void OnEnableHillshade( bool );
+    void OnHillShadeDirection( int );
+    void OnMinus();
+    void OnPlus();
     //@}
 
 private:
@@ -61,6 +65,12 @@ private:
     Elevation2dLayer& layer_;
     ColorButton* min_;
     ColorButton* max_;
+
+    QGroupBox* hsBox_;
+    QDial* hsDial_;
+    bool enableHs_, previousEnableHs_;
+    int  directionHs_, previousDirectionHs_;
+    float strengthHs_, previousStrengthHs_;
     //@}
 };
 

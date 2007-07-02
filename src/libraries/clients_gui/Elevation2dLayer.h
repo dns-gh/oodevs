@@ -53,7 +53,10 @@ public:
     virtual void NotifyUpdated( const kernel::ModelLoaded& modelLoaded );
 
     void SetColors( const QColor& min, const QColor& max );
+    void SetHillShadeDirection( int angle );
     void EnableVariableGradient( bool enable );
+    void SetHillShadeStrength( float strength );
+
     virtual void Reset();
     //@}
 
@@ -69,9 +72,8 @@ private:
     void CreateShader();
     void CreateTextures();
     void SetGradient();
-    void SetShader();
     void Cleanup();
-    void SetElevations( unsigned short min, unsigned short max );
+    void SetElevations();
     //@}
 
 private:
@@ -89,6 +91,8 @@ private:
     QColor max_;
     bool updateGradient_;
     unsigned gradient_;
+    float hsx_, hsy_;
+    float hsStrength_;
 
     bool enabled_;
     short minElevation_, maxElevation_;

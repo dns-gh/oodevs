@@ -17,7 +17,6 @@
 #include "graphics/ElevationShader.h"
 #include "graphics/extensions.h"
 #include "graphics/Visitor2d.h"
-#include "graphics/ShaderProgram.h"
 #include "ElevationExtrema.h"
 
 using namespace kernel;
@@ -39,6 +38,9 @@ Elevation2dLayer::Elevation2dLayer( Controller& controller, const DetectionMap& 
     , enabled_       ( true )
     , minElevation_  ( 0 )
     , maxElevation_  ( 0 )
+    , hsx_           ( 1 )
+    , hsy_           ( 1 )
+    , hsStrength_    ( 1 )
 {
     controller_.Register( *this );
 }
@@ -64,6 +66,17 @@ void Elevation2dLayer::SetColors( const QColor& min, const QColor& max )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Elevation2dLayer::SetHillShadeDirection
+// Created: AGE 2007-07-02
+// -----------------------------------------------------------------------------
+void Elevation2dLayer::SetHillShadeDirection( int angle )
+{
+    const float convert = std::acos( -1.f ) / 180.f;
+    hsx_ = std::cos( angle * convert );
+    hsy_ = std::sin( angle * convert );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Elevation2dLayer::EnableVariableGradient
 // Created: AGE 2007-01-18
 // -----------------------------------------------------------------------------
@@ -74,15 +87,27 @@ void Elevation2dLayer::EnableVariableGradient( bool enable )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Elevation2dLayer::SetHillShadeStrength
+// Created: AGE 2007-07-02
+// -----------------------------------------------------------------------------
+void Elevation2dLayer::SetHillShadeStrength( float strength )
+{
+    hsStrength_ = strength;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Elevation2dLayer::SetElevations
 // Created: AGE 2007-01-17
 // -----------------------------------------------------------------------------
-void Elevation2dLayer::SetElevations( unsigned short min, unsigned short max )
+void Elevation2dLayer::SetElevations()
 {
+    CreateShader();
     if( shader_.get() )
     {
-        shader_->SetMinimumElevation( min );
-        shader_->SetMaximumElevation( max );
+        shader_->SetMinimumElevation( minElevation_ );
+        shader_->SetMaximumElevation( maxElevation_ );
+        shader_->SetHillShade( hsx_, hsy_, hsStrength_ );
+        shader_->Use();
     }
 }
 
@@ -92,7 +117,7 @@ void Elevation2dLayer::SetElevations( unsigned short min, unsigned short max )
 // -----------------------------------------------------------------------------
 void Elevation2dLayer::NotifyUpdated( const ModelLoaded& /*modelLoaded*/ )
 {
-    layer_.reset(); // $$$$ SBO 2007-03-21: hack because ElevationExtrema/TextureSet keeps a reference on elevation_.GetMap() which has been reset
+    layer_.reset();
     modelLoaded_ = true;
 }
 
@@ -104,6 +129,30 @@ void Elevation2dLayer::SetAlpha( float alpha )
 {
     Layer2d_ABC::SetAlpha( alpha );
     updateGradient_ = true;
+}
+
+namespace
+{
+    struct MyVisitor : public Visitor2d
+    {
+        MyVisitor( ElevationShader& shader ) 
+            : shader_( &shader )
+            , previousWidth_( 0 )
+            , previousHeight_( 0 ){}
+        virtual void Visit( const geometry::Rectangle2f& extent, unsigned width, unsigned height )
+        {
+            if( previousHeight_ != height || previousWidth_ != width )
+            {
+                previousWidth_  = width;
+                previousHeight_ = height;
+                shader_->SetTextureSize( width, height );
+                shader_->UpdateParameters();
+            }
+            Visitor2d::Visit( extent, width, height );
+        }
+        ElevationShader* shader_;
+        unsigned previousWidth_, previousHeight_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -121,22 +170,18 @@ void Elevation2dLayer::Paint( const geometry::Rectangle2f& viewport )
     if( layer_.get() )
     {
         SetGradient();
-        SetShader();
-        Visitor2d visitor;
-        short min = minElevation_;
-        short max = maxElevation_;
         if( ! enabled_ )
         {
-            min = minElevation_ = 0;
-            max = maxElevation_ = elevation_.MaximumElevation();
+            minElevation_ = 0;
+            maxElevation_ = elevation_.MaximumElevation();
         }
         else if( viewport != lastViewport_ )
         {
-            extrema_->FindExtrema( viewport, min, max );
-            minElevation_ = min; maxElevation_ = max; 
+            extrema_->FindExtrema( viewport, minElevation_, maxElevation_ );
             lastViewport_ = viewport;
         }
-        SetElevations( min, max );
+        SetElevations();
+        Visitor2d visitor;
         layer_->Accept( visitor, 0, viewport );
         Cleanup();
     }
@@ -158,7 +203,7 @@ void Elevation2dLayer::Paint( kernel::Viewport_ABC& )
 void Elevation2dLayer::Cleanup()
 {
     if( shader_.get() )
-        gl::ShaderProgram::Unuse();
+        shader_->Unuse();
     gl::glActiveTexture( gl::GL_TEXTURE1 );
     glBindTexture( GL_TEXTURE_1D, 0 );
     glDisable( GL_TEXTURE_1D );
@@ -195,17 +240,6 @@ void Elevation2dLayer::SetGradient()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Elevation2dLayer::SetShader
-// Created: AGE 2007-01-17
-// -----------------------------------------------------------------------------
-void Elevation2dLayer::SetShader()
-{
-    CreateShader();
-    if( shader_.get() )
-        shader_->Use();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Elevation2dLayer::Reset
 // Created: AGE 2007-01-19
 // -----------------------------------------------------------------------------
@@ -233,7 +267,7 @@ void Elevation2dLayer::CreateShader()
         try
         {
             shader_.reset( new ElevationShader() );
-            SetElevations( 0, elevation_.MaximumElevation() );
+            minElevation_ = 0; maxElevation_ = elevation_.MaximumElevation();
         }
         catch( ... )
         {

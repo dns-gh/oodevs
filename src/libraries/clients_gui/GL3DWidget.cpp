@@ -14,7 +14,6 @@
 #include "ColorStrategy.h"
 #include "clients_kernel/DetectionMap.h"
 
-#include "graphics/ElevationTextureTree.h"
 #include "graphics/Compass.h"
 #include "graphics/Visitor3d.h"
 #include "graphics/ViewFrustum.h"
