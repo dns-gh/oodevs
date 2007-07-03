@@ -78,6 +78,7 @@ void GradientItem::SetPercentage( unsigned short percentage )
 // -----------------------------------------------------------------------------
 void GradientItem::draw( QPainter& painter )
 {
+    UpdatePosition();
     if( isSelected() )
         setPen( QColor( Qt::white ) );
     else

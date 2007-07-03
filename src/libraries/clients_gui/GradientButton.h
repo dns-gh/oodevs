@@ -61,6 +61,7 @@ private:
     virtual void mouseReleaseEvent( QMouseEvent* event );
     virtual void mouseMoveEvent( QMouseEvent* event );
     virtual void keyPressEvent( QKeyEvent* event );
+    virtual void resizeEvent( QResizeEvent* event );
 
     void SetSelected( GradientItem& item );
     void ClearSelection();

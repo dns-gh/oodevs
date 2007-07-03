@@ -301,3 +301,13 @@ GradientItem* GradientButton::AddItem( unsigned int percentage, const QColor& co
     std::sort( colors_.begin(), colors_.end(), sComparator() );
     return item;
 }
+
+// -----------------------------------------------------------------------------
+// Name: GradientButton::resizeEvent
+// Created: SBO 2007-07-03
+// -----------------------------------------------------------------------------
+void GradientButton::resizeEvent( QResizeEvent* event )
+{
+    QCanvasView::resizeEvent( event );
+    canvas()->resize( event->size().width(), event->size().height() );
+}
