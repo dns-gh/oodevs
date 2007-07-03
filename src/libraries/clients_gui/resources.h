@@ -99,5 +99,7 @@ DECLARE_ICON( arrow_up );
 DECLARE_ICON( arrow_down );
 DECLARE_ICON( checkbox_on );
 DECLARE_ICON( checkbox_off );
+DECLARE_ICON( trash );
+DECLARE_ICON( copy );
 
 #endif // __demo_resources_h_

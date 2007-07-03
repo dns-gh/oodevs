@@ -83,6 +83,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     T_Pages          pages_;
     PreferencesList* list_;
     LayersPanel*     layersPanel_;

@@ -135,14 +135,6 @@ Please check access rights or write protection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Highest heights color: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lowest heights color: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Fit color gradient to viewport</source>
         <translation type="unfinished"></translation>
     </message>
@@ -156,6 +148,10 @@ Please check access rights or write protection.</source>
     </message>
     <message>
         <source>Strength</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gradient: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

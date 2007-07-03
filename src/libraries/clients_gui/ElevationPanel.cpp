@@ -12,6 +12,8 @@
 #include "moc_ElevationPanel.cpp"
 #include "ColorButton.h"
 #include "Elevation2dLayer.h"
+#include "GradientWidget.h"
+#include "GradientPreferences.h"
 
 using namespace gui;
 
@@ -19,9 +21,10 @@ using namespace gui;
 // Name: ElevationPanel constructor
 // Created: AGE 2007-01-17
 // -----------------------------------------------------------------------------
-ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer )
+ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel::Controllers& controllers )
     : PreferencePanel_ABC( parent )
     , layer_( layer )
+    , preferences_( *new GradientPreferences() )
     , enableHs_( true )
     , previousEnableHs_( true )
     , directionHs_( 315 )
@@ -32,19 +35,15 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer )
     {
         QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, tr( "Elevation colors" ), this );
         
-        new QLabel( tr( "Highest heights color: " ), box );
-        max_ = new ColorButton( box, "", black );
-        
-        new QLabel( tr( "Lowest heights color: " ), box );
-        min_ = new ColorButton( box, "", white );
-
         new QLabel( tr( "Fit color gradient to viewport" ), box );
         QCheckBox* check = new QCheckBox( box );
         check->setChecked( true );
 
+	    new QLabel( tr( "Gradient: " ), box );
+    	gradient_ = new GradientWidget( box, preferences_, controllers );
+
         connect( check, SIGNAL( toggled( bool ) ), SLOT( OnEnableVariable( bool ) ) );
-        connect( min_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged() ) );
-        connect( max_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged() ) );
+        connect( gradient_, SIGNAL( GradientChanged( const Gradient& ) ), SLOT( OnGradientChanged( const Gradient& ) ) );
     }
     {
         hsBox_ = new QGroupBox( 2, Qt::Horizontal, tr( "Hillshade" ), this );
@@ -52,6 +51,7 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer )
         hsBox_->setChecked( enableHs_ );
         new QLabel( tr( "Direction" ), hsBox_ );
         hsDial_ = new QDial( 0, 359, 1, directionHs_, hsBox_ );
+        hsDial_->setMaximumSize( 50, 50 );
 
         new QLabel( tr( "Strength" ), hsBox_ );
         QHBox* buttonGroup = new QHBox( hsBox_ );
@@ -71,18 +71,15 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer )
 // -----------------------------------------------------------------------------
 ElevationPanel::~ElevationPanel()
 {
-    // NOTHING
+    delete &preferences_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ElevationPanel::OnColorChanged
-// Created: AGE 2007-01-17
+// Name: ElevationPanel::OnGradientChanged
+// Created: SBO 2007-07-03
 // -----------------------------------------------------------------------------
-void ElevationPanel::OnColorChanged()
+void ElevationPanel::OnGradientChanged( const Gradient& gradient )
 {
-    Gradient gradient;
-    gradient.AddColor( 0, min_->GetColor() );
-    gradient.AddColor( 1, max_->GetColor() );
     layer_.SetGradient( gradient );
 }
 
@@ -92,8 +89,7 @@ void ElevationPanel::OnColorChanged()
 // -----------------------------------------------------------------------------
 void ElevationPanel::Commit()
 {
-    min_->Commit();
-    max_->Commit();
+    gradient_->Commit();
     previousEnableHs_ = enableHs_;
     previousDirectionHs_ = directionHs_;
     previousStrengthHs_ = strengthHs_;
@@ -105,8 +101,7 @@ void ElevationPanel::Commit()
 // -----------------------------------------------------------------------------
 void ElevationPanel::Reset()
 {
-    min_->Revert();
-    max_->Revert();
+    gradient_->Reset();
     enableHs_    = previousEnableHs_;    hsBox_->setChecked( enableHs_ );
     directionHs_ = previousDirectionHs_; hsDial_->setValue( directionHs_ );
     strengthHs_  = previousStrengthHs_;  OnEnableHillshade( enableHs_ );

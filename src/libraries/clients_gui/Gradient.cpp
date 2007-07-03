@@ -12,6 +12,7 @@
 #include "xeumeuleu/xml.h"
 #include "graphics/extensions.h"
 
+using namespace xml;
 using namespace gui;
 
 namespace 
@@ -33,7 +34,10 @@ Gradient::Gradient( xml::xistream& xis )
      : usedRatio_( 1 )
      , textureSize_( 0 )
 {
-    xis >> xml::list( "color", *this, &Gradient::LoadValue );
+    std::string name;
+    xis >> attribute( "name", name )
+            >> list( "color", *this, &Gradient::LoadValue );
+    name_ = name.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -41,7 +45,8 @@ Gradient::Gradient( xml::xistream& xis )
 // Created: AGE 2007-07-03
 // -----------------------------------------------------------------------------
 Gradient::Gradient()
-    : usedRatio_( 1 )
+    : name_( "" )
+    , usedRatio_( 1 )
     , textureSize_( 0 )
 {
     // NOTHING
@@ -54,6 +59,24 @@ Gradient::Gradient()
 Gradient::~Gradient()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gradient::SetName
+// Created: SBO 2007-07-03
+// -----------------------------------------------------------------------------
+void Gradient::SetName( const QString& name )
+{
+    name_ = name;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gradient::GetName
+// Created: SBO 2007-07-03
+// -----------------------------------------------------------------------------
+QString Gradient::GetName() const
+{
+    return name_;
 }
 
 namespace
@@ -165,8 +188,8 @@ void Gradient::LoadValue( xml::xistream& xis )
 {
     float ratio;
     std::string colorName;
-    xis >> xml::attribute( "position", ratio )
-        >> xml::attribute( "color", colorName );
+    xis >> attribute( "position", ratio )
+        >> attribute( "color", colorName );
     QColor color( colorName.c_str() );
     if( color.isValid() )
         colors_.push_back( T_Color( ratio, color ) );
@@ -210,4 +233,42 @@ unsigned Gradient::FindBaseDistance() const
             pgcd = Pgcd( pgcd, distance );
     }
     return pgcd;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gradient::Save
+// Created: SBO 2007-07-03
+// -----------------------------------------------------------------------------
+void Gradient::Save( xml::xostream& xos ) const
+{
+    xos << start( "gradient" )
+            << attribute( "name", name_.ascii() );
+    for( CIT_Colors it = colors_.begin(); it != colors_.end(); ++it )
+        xos << start( "color" )
+                << attribute( "position", it->first )
+                << attribute( "color", it->second.name() )
+            << end();
+    xos << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gradient::Accept
+// Created: SBO 2007-07-03
+// -----------------------------------------------------------------------------
+void Gradient::Accept( GradientVisitor_ABC& visitor ) const
+{
+    for( CIT_Colors it = colors_.begin(); it != colors_.end(); ++it )
+        visitor.Visit( it->first, it->second );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gradient::operator=
+// Created: SBO 2007-07-03
+// -----------------------------------------------------------------------------
+Gradient& Gradient::operator=( const Gradient& rhs )
+{
+    colors_ = rhs.colors_;
+    textureSize_ = rhs.textureSize_;
+    usedRatio_ = rhs.usedRatio_;
+    return *this;
 }

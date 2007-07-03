@@ -31,6 +31,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers, LightingProxy& lighting )
     : QDialog( parent )
+    , controllers_( controllers )
     , pGraphicPrefPanel_( 0 )
 {
     setCaption( tr( "Preferences" ) );
@@ -173,6 +174,6 @@ void PreferencesDialog::AddLayer( const QString& name, gui::Layer_ABC& layer )
 // -----------------------------------------------------------------------------
 void PreferencesDialog::AddLayer( const QString& name, gui::Elevation2dLayer& layer )
 {
-    AddPage( tr( "2D/Elevation" ), *new ElevationPanel( this, layer ) );
+    AddPage( tr( "2D/Elevation" ), *new ElevationPanel( this, layer, controllers_ ) );
     layersPanel_->AddLayer( name, layer );
 }

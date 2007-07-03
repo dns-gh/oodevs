@@ -12,11 +12,18 @@
 
 #include "PreferencePanel_ABC.h"
 
+namespace kernel
+{
+    class Controllers;
+}
+
 namespace gui
 {
-
-class Elevation2dLayer;
-class ColorButton;
+    class Elevation2dLayer;
+    class Gradient;
+    class ColorButton;
+    class GradientPreferences;
+    class GradientWidget;
 
 // =============================================================================
 /** @class  ElevationPanel
@@ -31,7 +38,7 @@ class ElevationPanel : public PreferencePanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ElevationPanel( QWidget* parent, Elevation2dLayer& layer );
+             ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel::Controllers& controllers );
     virtual ~ElevationPanel();
     //@}
 
@@ -44,7 +51,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnColorChanged();
+    void OnGradientChanged( const Gradient& gradient );
     void OnEnableVariable( bool );
     void OnEnableHillshade( bool );
     void OnHillShadeDirection( int );
@@ -63,14 +70,14 @@ private:
     //! @name Member data
     //@{
     Elevation2dLayer& layer_;
-    ColorButton* min_;
-    ColorButton* max_;
+    GradientPreferences& preferences_;
 
     QGroupBox* hsBox_;
     QDial* hsDial_;
     bool enableHs_, previousEnableHs_;
     int  directionHs_, previousDirectionHs_;
     float strengthHs_, previousStrengthHs_;
+    GradientWidget* gradient_;
     //@}
 };
 

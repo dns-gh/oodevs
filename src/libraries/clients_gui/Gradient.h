@@ -13,10 +13,21 @@
 namespace xml 
 {
     class xistream;
+    class xostream;
 }
 
 namespace gui
 {
+
+class GradientVisitor_ABC
+{
+public:
+             GradientVisitor_ABC() {};
+    virtual ~GradientVisitor_ABC() {}
+
+    virtual void Visit( float position, const QColor& color ) = 0;
+};
+
 
 // =============================================================================
 /** @class  Gradient
@@ -42,9 +53,14 @@ public:
 
     //! @name Operations
     //@{
+    void SetName( const QString& name );
+    QString GetName() const;
     void MakeGlTexture( float alpha );
     unsigned Length() const;
     float UsedRatio() const;
+    void Save( xml::xostream& xos ) const;
+    void Accept( GradientVisitor_ABC& visitor ) const;
+    Gradient& operator=( const Gradient& rhs );
     //@}
 
 private:
@@ -64,6 +80,7 @@ private:
 private:
     //! @name Member data
     //@{
+    QString name_;
     T_Colors colors_;
     unsigned textureSize_;
     float usedRatio_;
