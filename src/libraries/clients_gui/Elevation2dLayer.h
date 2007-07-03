@@ -12,6 +12,7 @@
 
 #include "Layer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
+#include "Gradient.h"
 
 class TextureSet;
 class ElevationShader;
@@ -52,7 +53,7 @@ public:
     virtual void Paint( kernel::Viewport_ABC& viewport );
     virtual void NotifyUpdated( const kernel::ModelLoaded& modelLoaded );
 
-    void SetColors( const QColor& min, const QColor& max );
+    void SetGradient( const Gradient& gradient );
     void SetHillShadeDirection( int angle );
     void EnableVariableGradient( bool enable );
     void SetHillShadeStrength( float strength );
@@ -87,10 +88,9 @@ private:
     bool modelLoaded_;
     bool ignore_;
 
-    QColor min_;
-    QColor max_;
+    Gradient gradient_;
     bool updateGradient_;
-    unsigned gradient_;
+    unsigned gradientTexture_;
     float hsx_, hsy_;
     float hsStrength_;
 

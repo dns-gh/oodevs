@@ -137,7 +137,7 @@ std::pair< short, short > ElevationExtrema::AddExtrema( unsigned level, int x, i
 
     typedef std::pair< short, short > T_Bermuda;
     T_Bermuda result( 20000, 0 );
-    if( w > 20 || h > 20 )
+    if( w > 100 || h > 100 )
     {
         const int hw = w / 2;
         const int hh = h / 2;

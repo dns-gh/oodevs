@@ -34,7 +34,17 @@ Gradient::Gradient( xml::xistream& xis )
      , textureSize_( 0 )
 {
     xis >> xml::list( "color", *this, &Gradient::LoadValue );
-    std::sort( colors_.begin(), colors_.end(), Less() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gradient constructor
+// Created: AGE 2007-07-03
+// -----------------------------------------------------------------------------
+Gradient::Gradient()
+    : usedRatio_( 1 )
+    , textureSize_( 0 )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -98,11 +108,22 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: Gradient::AddColor
+// Created: AGE 2007-07-03
+// -----------------------------------------------------------------------------
+void Gradient::AddColor( float position, const QColor& color )
+{
+    colors_.push_back( T_Color( position, color ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Gradient::MakeGlTexture
 // Created: AGE 2007-07-02
 // -----------------------------------------------------------------------------
 void Gradient::MakeGlTexture( float alpha )
 {
+    std::sort( colors_.begin(), colors_.end(), Less() );
+
     unsigned distance = FindBaseDistance();
     unsigned size = 1024 / distance + 1;
     textureSize_ = TextureSize( size );

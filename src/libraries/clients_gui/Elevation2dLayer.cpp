@@ -18,6 +18,7 @@
 #include "graphics/extensions.h"
 #include "graphics/Visitor2d.h"
 #include "ElevationExtrema.h"
+#include "Gradient.h"
 
 using namespace kernel;
 using namespace gui;
@@ -27,21 +28,21 @@ using namespace gui;
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
 Elevation2dLayer::Elevation2dLayer( Controller& controller, const DetectionMap& elevation )
-    : controller_    ( controller )
-    , elevation_     ( elevation )
-    , modelLoaded_   ( false )
-    , ignore_        ( false )
-    , min_           ( Qt::white )
-    , max_           ( Qt::black )
-    , updateGradient_( true )
-    , gradient_      ( 0 )
-    , enabled_       ( true )
-    , minElevation_  ( 0 )
-    , maxElevation_  ( 0 )
-    , hsx_           ( 1 )
-    , hsy_           ( 1 )
-    , hsStrength_    ( 1 )
+    : controller_     ( controller )
+    , elevation_      ( elevation )
+    , modelLoaded_    ( false )
+    , ignore_         ( false )
+    , updateGradient_ ( true )
+    , gradientTexture_( 0 )
+    , enabled_        ( true )
+    , minElevation_   ( 0 )
+    , maxElevation_   ( 0 )
+    , hsx_            ( 1 )
+    , hsy_            ( 1 )
+    , hsStrength_     ( 1 )
 {
+    gradient_.AddColor( 0, Qt::white );
+    gradient_.AddColor( 1, Qt::black );
     controller_.Register( *this );
 }
 
@@ -55,13 +56,12 @@ Elevation2dLayer::~Elevation2dLayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Elevation2dLayer::SetColors
-// Created: AGE 2007-01-17
+// Name: Elevation2dLayer::SetGradient
+// Created: AGE 2007-07-03
 // -----------------------------------------------------------------------------
-void Elevation2dLayer::SetColors( const QColor& min, const QColor& max )
+void Elevation2dLayer::SetGradient( const Gradient& gradient )
 {
-    min_ = min;
-    max_ = max;
+    gradient_ = gradient;
     updateGradient_ = true;
 }
 
@@ -106,7 +106,8 @@ void Elevation2dLayer::SetElevations()
     {
         shader_->SetMinimumElevation( minElevation_ );
         shader_->SetMaximumElevation( maxElevation_ );
-        shader_->SetHillShade( hsx_, hsy_, hsStrength_ );
+        float delta = std::min( 1.f, 100.f / float( maxElevation_ - minElevation_ ) );
+        shader_->SetHillShade( hsx_, hsy_, delta * hsStrength_ );
         shader_->Use();
     }
 }
@@ -222,19 +223,15 @@ void Elevation2dLayer::SetGradient()
     glEnable( GL_TEXTURE_1D );
     if( updateGradient_ )
     {
-        glDeleteTextures( 1, &gradient_ );
-        glGenTextures( 1, &gradient_ );
-        glBindTexture( GL_TEXTURE_1D, gradient_ );
-        unsigned char gradient[] = 
-            { min_.red(), min_.green(), min_.blue(), 255 * GetAlpha(),
-              max_.red(), max_.green(), max_.blue(), 255 * GetAlpha() };
-        glTexImage1D( GL_TEXTURE_1D, 0, GL_RGBA, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, gradient ) ;
-        glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_WRAP_S , gl::GL_CLAMP_TO_EDGE );
+        glDeleteTextures( 1, &gradientTexture_ );
+        glGenTextures( 1, &gradientTexture_ );
+        glBindTexture( GL_TEXTURE_1D, gradientTexture_ );
+        gradient_.MakeGlTexture( GetAlpha() );
+        if( shader_.get() )
+            shader_->SetGradientSize( gradient_.Length(), gradient_.UsedRatio() );
         updateGradient_ = false;
     }
-    glBindTexture( GL_TEXTURE_1D, gradient_ );
+    glBindTexture( GL_TEXTURE_1D, gradientTexture_ );
     gl::glActiveTexture( gl::GL_TEXTURE0 );
     glEnable( GL_TEXTURE_2D );
 }
@@ -250,8 +247,8 @@ void Elevation2dLayer::Reset()
     modelLoaded_ = false;
     ignore_ = false;
     layer_.reset();
-    glDeleteTextures( 1, &gradient_ );
-    gradient_ = 0;
+    glDeleteTextures( 1, &gradientTexture_ );
+    gradientTexture_ = 0;
     updateGradient_ = true;
     lastViewport_ = geometry::Rectangle2f();
 }

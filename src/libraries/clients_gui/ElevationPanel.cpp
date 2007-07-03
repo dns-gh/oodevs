@@ -63,7 +63,6 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer )
         connect( minus, SIGNAL( clicked() ), SLOT( OnMinus() ) );
         connect( plus,  SIGNAL( clicked() ), SLOT( OnPlus() ) );
     }
-
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +80,10 @@ ElevationPanel::~ElevationPanel()
 // -----------------------------------------------------------------------------
 void ElevationPanel::OnColorChanged()
 {
-    layer_.SetColors( min_->GetColor(), max_->GetColor() );
+    Gradient gradient;
+    gradient.AddColor( 0, min_->GetColor() );
+    gradient.AddColor( 1, max_->GetColor() );
+    layer_.SetGradient( gradient );
 }
 
 // -----------------------------------------------------------------------------

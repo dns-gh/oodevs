@@ -30,8 +30,14 @@ class Gradient
 public:
     //! @name Constructors/Destructor
     //@{
+             Gradient();
     explicit Gradient( xml::xistream& xis );
     virtual ~Gradient();
+    //@}
+
+    //! @name Construction
+    //@{
+    void AddColor( float position, const QColor& color );
     //@}
 
     //! @name Operations
@@ -42,12 +48,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Gradient( const Gradient& );            //!< Copy constructor
-    Gradient& operator=( const Gradient& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void LoadValue( xml::xistream& xis );
