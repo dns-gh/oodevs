@@ -142,11 +142,13 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
             return false;
         if( const AgentPositions* position = static_cast< const AgentPositions* >( selectedAgent_->Retrieve< Positions >() ) )
         {
-            const_cast< AgentPositions* >( position )->Set( point );
+            // if the events comes from the list or if far enough
+            if( event->source() || position->GetPosition().Distance( point ) > 100 )
+                const_cast< AgentPositions* >( position )->Set( point );
             return true;
         }
     }
-    else if( event->provides( "csword/AgentType" ) )
+    if( event->provides( "csword/AgentType" ) )
     {
         if( !selectedAutomat_ )
             return false;
@@ -158,7 +160,7 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
             return true;
         }
     }
-    else if( event->provides( "csword/AutomatType" ) )
+    if( event->provides( "csword/AutomatType" ) )
     {
         if( !selectedFormation_ )
             return false;
@@ -170,7 +172,7 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
             return true;
         }
     }
-    else if( event->provides( "csword/HierarchyTemplate" ) )
+    if( event->provides( "csword/HierarchyTemplate" ) )
     {
          // $$$$ AGE 2007-05-30: test selectedParent !
         if( !selectedFormation_ )
@@ -184,4 +186,28 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         }
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::HandleMousePress
+// Created: AGE 2007-07-03
+// -----------------------------------------------------------------------------
+bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
+{
+    bool result = gui::AgentsLayer::HandleMousePress( event, point );
+    if( ( event->button() & Qt::LeftButton ) != 0 && event->state() == Qt::NoButton && IsEligibleForDrag( point ) )
+    {
+        QDragObject* drag = new QStoredDrag( "Agent" );
+        drag->drag();
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::IsEligibleForDrag
+// Created: AGE 2007-07-03
+// -----------------------------------------------------------------------------
+bool AgentsLayer::IsEligibleForDrag( const geometry::Point2f& point ) const
+{
+    return selectedAgent_ && IsInSelection( *selectedAgent_, point );
 }

@@ -42,6 +42,7 @@ public:
     virtual bool HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point );
     virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
     virtual bool HandleKeyPress( QKeyEvent* key );
+    virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     //@}
 
 private:
@@ -57,6 +58,7 @@ private:
     virtual void AfterSelection();
     virtual void Select( const kernel::Entity_ABC& element );
     virtual void Select( const kernel::Population_ABC& element );
+    bool IsEligibleForDrag( const geometry::Point2f& point );
     //@}
 
 private:

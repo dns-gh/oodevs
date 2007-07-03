@@ -80,3 +80,15 @@ void PopulationListView::NotifyCreated( const kernel::Team_ABC& team )
     if( item )
         item->setRenameEnabled( 0, true );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationListView::dragObject
+// Created: AGE 2007-07-03
+// -----------------------------------------------------------------------------
+QDragObject* PopulationListView::dragObject()
+{
+    QListViewItem* pItem = selectedItem();
+    if( !pItem || !pItem->parent() )
+        return 0;
+    return new QStoredDrag( "population", this );
+}

@@ -70,7 +70,9 @@ void PopulationListView::NotifyCreated( const Population_ABC& popu )
         teamItem = factory_.CreateItem( this );
         teamItem->SetNamed( team );
     }
-    factory_.CreateItem( teamItem )->SetNamed( (const Entity_ABC&)popu );
+    ValuedListItem* popItem = factory_.CreateItem( teamItem );
+    popItem->SetNamed( (const Entity_ABC&)popu );
+    popItem->setDragEnabled( true );
 }
 
 // -----------------------------------------------------------------------------

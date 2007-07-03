@@ -47,6 +47,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual QDragObject* dragObject();
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void keyPressEvent( QKeyEvent* key );

@@ -65,6 +65,9 @@ private:
     virtual void Select( const kernel::Team_ABC& element );
 
     bool IsValidTemplate( QDragEnterEvent* event ) const;
+    bool IsEligibleForDrag( const geometry::Point2f& point ) const;
+
+    virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     //@}
 
 private:

@@ -54,6 +54,11 @@ public:
     virtual geometry::Rectangle2f GetBoundingBox() const;
     //@}
 
+    //! @name Modifiers
+    //@{
+    void Set( const geometry::Point2f& point );
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{

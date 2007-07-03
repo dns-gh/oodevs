@@ -14,6 +14,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "preparation/Model.h"
 #include "preparation/AgentsModel.h"
+#include "preparation/PopulationPositions.h"
 
 using namespace kernel;
 
@@ -45,7 +46,8 @@ PopulationsLayer::~PopulationsLayer()
 // -----------------------------------------------------------------------------
 bool PopulationsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& )
 {
-    return event->provides( "csword/PopulationType" );
+    return event->provides( "csword/PopulationType" )
+        || ( selectedPopulation_ && event->provides( "population" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,6 +72,14 @@ bool PopulationsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point
                 model_.agents_.CreatePopulation( *const_cast< kernel::Team_ABC* >( team ), *droppedItem, point );
                 return true;
             }
+        }
+    }
+    else if( event->provides( "population" ) && selectedPopulation_ )
+    {
+        if( const PopulationPositions* positions = static_cast< const PopulationPositions* >( selectedPopulation_->Retrieve< Positions >() ) )
+        {
+            const_cast< PopulationPositions* >( positions )->Set( point );
+            return true;
         }
     }
     return false;
@@ -124,4 +134,30 @@ void PopulationsLayer::Select( const kernel::Entity_ABC& element )
 void PopulationsLayer::Select( const kernel::Population_ABC& element )
 {
     selectedPopulation_ = &element;
+}
+
+// $$$$ AGE 2007-07-03: ^c^v...
+
+// -----------------------------------------------------------------------------
+// Name: PopulationsLayer::HandleMousePress
+// Created: AGE 2007-07-03
+// -----------------------------------------------------------------------------
+bool PopulationsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
+{
+    bool result = gui::PopulationsLayer::HandleMousePress( event, point );
+    if( ( event->button() & Qt::LeftButton ) != 0 && event->state() == Qt::NoButton && IsEligibleForDrag( point ) )
+    {
+        QDragObject* drag = new QStoredDrag( "Population" );
+        drag->drag();
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationsLayer::IsEligibleForDrag
+// Created: AGE 2007-07-03
+// -----------------------------------------------------------------------------
+bool PopulationsLayer::IsEligibleForDrag( const geometry::Point2f& point )
+{
+    return selectedPopulation_ && IsInSelection( *selectedPopulation_, point );
 }

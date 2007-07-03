@@ -149,3 +149,12 @@ void PopulationPositions::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "position", converter_.ConvertToMgrs( center_ ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationPositions::Set
+// Created: AGE 2007-07-03
+// -----------------------------------------------------------------------------
+void PopulationPositions::Set( const geometry::Point2f& point )
+{
+    center_ = point;
+}
