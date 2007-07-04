@@ -42,6 +42,7 @@
 #include "UserProfileDialog.h"
 #include "InfoDock.h"
 #include "ActionsPanel.h"
+#include "TimelinePanel.h"
 #include "ReplayerToolbar.h"
 #include "icons.h"
 #include "ClockDock.h"
@@ -232,6 +233,10 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     moveDockWindow( actionsPanel, Qt::DockRight );
     setDockEnabled( actionsPanel, Qt::DockTop, false );
     actionsPanel->hide();
+
+    TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_.actions_ );
+    moveDockWindow( timelinePanel, Qt::DockTop );
+    timelinePanel->hide();
 
 
     // Logger
