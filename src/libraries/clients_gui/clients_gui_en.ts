@@ -326,11 +326,11 @@ Please check access rights or write protection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Location is not valid UTM coordinates.</source>
+        <source>Bookmark location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Bookmark location</source>
+        <source> is not a valid coordinate.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

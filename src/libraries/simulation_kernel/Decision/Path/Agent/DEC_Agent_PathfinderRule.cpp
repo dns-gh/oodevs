@@ -207,32 +207,6 @@ MT_Float DEC_Agent_PathfinderRule::GetEnemiesCost( const MT_Vector2D& from, cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Agent_PathfinderRule::GetFuseauxCost
-// Created: NLD 2006-01-31
-// -----------------------------------------------------------------------------
-inline
-MT_Float DEC_Agent_PathfinderRule::GetFuseauxCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
-{
-    MT_Float rCost = 0.;
-    // Vérification si le link est dans le fuseau de l'agent
-    {
-        const MT_Float rFuseauCost = pFuseau_ ? pFuseau_->GetCost( from, to, rMaximumFuseauDistance_, rFuseauCostPerMeterOut_, rComfortFuseauDistance_, rFuseauCostPerMeterIn_ ) : 0;
-        if( rFuseauCost < 0 )
-            return rFuseauCost;
-        rCost += rFuseauCost;
-    }
-    
-    // $$$$ AGE 2005-06-24: Going out of the automate fuseau is a no-no. Avoid precision issues
-    {
-        const MT_Float rAutomateFuseauCost = pAutomateFuseau_ ? pAutomateFuseau_->GetCost( from, to, rMaximumAutomataFuseauDistance_, rAutomataFuseauCostPerMeterOut_, 0, 0 ) : 0;
-        if( rAutomateFuseauCost < 0 )
-            return rAutomateFuseauCost;
-        rCost += rAutomateFuseauCost;
-    }
-    return rCost;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathfinderRule::GetPopulationsCost
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
@@ -266,6 +240,30 @@ MT_Float DEC_Agent_PathfinderRule::GetAltitudeCost( MT_Float rAltitudeTo ) const
     return 0.;
 }
 
+namespace
+{
+    double LogImpossible( const MT_Vector2D& from, const MT_Vector2D& to, const char* reason )
+    {
+        std::cout << "Impossible from " << from << " to " << to << " : " << reason << std::endl;
+        return -1.;
+    }
+
+    double LogImpossible( const MT_Vector2D& at, const char* reason )
+    {
+        std::cout << "Impossible at " << at << " : " << reason << std::endl;
+        return -1.;
+    }
+
+#ifdef DEBUG_IMPOSSIBLE_PATHFIND
+#   define IMPOSSIBLE_DESTINATION( reason ) LogImpossible( to, reason )
+#   define IMPOSSIBLE_WAY( reason )         LogImpossible( from, to, reason )
+#else
+#   define IMPOSSIBLE_DESTINATION( reason ) -1.
+#   define IMPOSSIBLE_WAY( reason )         -1.
+#endif
+
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathfinderRule::GetCost
 // Created: AGE 2005-03-08
@@ -273,15 +271,15 @@ MT_Float DEC_Agent_PathfinderRule::GetAltitudeCost( MT_Float rAltitudeTo ) const
 MT_Float DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType )
 {
     if( ! world_.IsValidPosition( to ) )
-        return -1.;
+        return IMPOSSIBLE_DESTINATION( "Out of world" );
 
     // vitesse
     const MT_Float rSpeed = path_.GetUnitSpeeds().GetMaxSpeed( nLinkTerrainType );
     if( rSpeed <= 0. )
-        return -1;
+        return IMPOSSIBLE_WAY( "Speeds on terrain" );
 
     if( ! path_.GetUnitSpeeds().IsPassable( nToTerrainType ) )
-        return -1;
+        return IMPOSSIBLE_DESTINATION( "Terrain type" );
     
     const MT_Float rDistance     = from.Distance( to );
     const MT_Float rAltitudeFrom = altitudeData_.GetAltitude( from );
@@ -291,7 +289,7 @@ MT_Float DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Ve
         const MT_Float rGroundDistance = sqrt( rDelta * rDelta + rDistance * rDistance );
         const MT_Float rSlope          = rGroundDistance > 0 ? rDelta / rGroundDistance : 0;
         if( rSlope > rMaxSlope_ )
-            return -1;
+            return IMPOSSIBLE_WAY( "Slope" );
     }
 
     // Calcul du cout dû aux éléments dynamiques du terrain
@@ -304,7 +302,7 @@ MT_Float DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Ve
     // Fuseaux
     const MT_Float rFuseauxCost = GetFuseauxCost( from, to );
     if( rFuseauxCost < 0. )
-        return rFuseauxCost;
+        return -1.;
     rDynamicCost += rFuseauxCost;
     
     // types de terrain
@@ -316,23 +314,50 @@ MT_Float DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Ve
     // objects
     const MT_Float rObjectsCost = GetObjectsCost( from, to, nToTerrainType, nLinkTerrainType );
     if( rObjectsCost < 0 )
-        return rObjectsCost;
+        return IMPOSSIBLE_WAY( "Objects" );
     rDynamicCost += rObjectsCost;
 
     // ennemies
     const MT_Float rEnemiesCost = GetEnemiesCost( from, to, nToTerrainType, nLinkTerrainType );
     if( rEnemiesCost < 0 )
-        return rEnemiesCost;
+        return IMPOSSIBLE_WAY( "Enemies" );
     rDynamicCost += rEnemiesCost;
 
     // populations
     const MT_Float rPopulationsCost = GetPopulationsCost( from, to, nToTerrainType, nLinkTerrainType );
     if( rPopulationsCost < 0 )
-        return rPopulationsCost;
+        return IMPOSSIBLE_WAY( "Populations" );
     rDynamicCost += rPopulationsCost;   
 
     const MT_Float rBaseCost = bShort_ ? rDistance : ( rDistance / rSpeed );
     return rBaseCost * ( 1 + rDynamicCost );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_PathfinderRule::GetFuseauxCost
+// Created: NLD 2006-01-31
+// -----------------------------------------------------------------------------
+inline
+MT_Float DEC_Agent_PathfinderRule::GetFuseauxCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
+{
+    MT_Float rCost = 0.;
+    // Vérification si le link est dans le fuseau de l'agent
+    {
+        const MT_Float rFuseauCost = pFuseau_ ? pFuseau_->GetCost( from, to, rMaximumFuseauDistance_, rFuseauCostPerMeterOut_, rComfortFuseauDistance_, rFuseauCostPerMeterIn_ ) : 0;
+        if( rFuseauCost < 0 )
+            return IMPOSSIBLE_WAY( "Fuseau agent" );
+        rCost += rFuseauCost;
+    }
+    
+    // $$$$ AGE 2005-06-24: Going out of the automate fuseau is a no-no. Avoid precision issues
+    {
+        const MT_Float rAutomateFuseauCost = pAutomateFuseau_ ? pAutomateFuseau_->GetCost( from, to, rMaximumAutomataFuseauDistance_, rAutomataFuseauCostPerMeterOut_, 0, 0 ) : 0;
+        if( rAutomateFuseauCost < 0 )
+            return IMPOSSIBLE_WAY( "Fuseau automate" );
+        rCost += rAutomateFuseauCost;
+    }
+    return rCost;
 }
 
 // -----------------------------------------------------------------------------

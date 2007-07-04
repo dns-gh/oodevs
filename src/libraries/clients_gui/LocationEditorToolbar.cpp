@@ -37,7 +37,7 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
     new QLabel( tr( "Location: " ), this );
     utm_ = new QLineEdit( this );
     QToolTip::add( utm_, tr( "Enter UTM coordinate" ) );
-    utm_->setMaxLength( 15 );
+    utm_->setMaxLength( 20 );
     utm_->setFixedWidth( 110 );
     gotoButton_ = new QToolButton( this );
     gotoButton_->setIconSet( MAKE_PIXMAP( goto ) );
@@ -196,19 +196,42 @@ void LocationEditorToolbar::ClearBookmarks()
     bookmarksMenu_->insertItem( tr( "No bookmark defined" ) );
 }
 
+namespace
+{
+    geometry::Point2f Parse( std::string coord )
+    {
+        std::replace( coord.begin(), coord.end(), ',', ' ' );
+        std::replace( coord.begin(), coord.end(), ';', ' ' );
+        std::replace( coord.begin(), coord.end(), '[', ' ' );
+        std::replace( coord.begin(), coord.end(), ']', ' ' );
+        std::replace( coord.begin(), coord.end(), '(', ' ' );
+        std::replace( coord.begin(), coord.end(), ')', ' ' );
+
+        std::stringstream str( coord );
+        float x, y;
+        str >> x >> y;
+        if( ! str )
+            throw std::runtime_error( "" );
+        return geometry::Point2f( x, y );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LocationEditorToolbar::GetPosition
 // Created: SBO 2007-03-06
 // -----------------------------------------------------------------------------
 geometry::Point2f LocationEditorToolbar::GetPosition() const
 {
-    try
+    const std::string coord( utm_->text().ascii() );
+    try {
+        return converter_.ConvertToXY( coord );
+    } catch( ... ) {}
+
+    try {
+        return Parse( coord );
+    } catch( ... )
     {
-        return converter_.ConvertToXY( std::string( utm_->text().ascii() ) );
-    }
-    catch( ... )
-    {
-        QMessageBox::critical( topLevelWidget(), tr( "Error" ), tr( "Location is not valid UTM coordinates." ) );
+        QMessageBox::critical( topLevelWidget(), tr( "Error" ), "'" + utm_->text() + "'" + tr( " is not a valid coordinate." ) );
         throw;
     }
 }
