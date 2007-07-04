@@ -11,6 +11,7 @@
 #include "FormationTemplateElement.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 #include "FormationModel.h"
 #include "xeumeuleu/xml.h"
 
@@ -34,7 +35,8 @@ FormationTemplateElement::FormationTemplateElement( FormationModel& formations, 
     : formations_( formations )
 {
     std::string name;
-    input >> xml::attribute( "level", levelId_ );
+    input >> xml::attribute( "level", levelId_ )
+          >> xml::attribute( "name", name );
     name_ = name.c_str();
 }
 
@@ -73,7 +75,8 @@ void FormationTemplateElement::Serialize( xml::xostream& output )
 bool FormationTemplateElement::IsCompatible( const kernel::Entity_ABC& superior ) const
 {
     const kernel::Formation_ABC* formation = dynamic_cast< const kernel::Formation_ABC* >( &superior );
-    return formation && formation->GetLevel().GetId() > levelId_;
+    return ( formation && formation->GetLevel().GetId() > levelId_ )
+        || dynamic_cast< const kernel::Team_ABC* >( &superior );
 }
 
 // -----------------------------------------------------------------------------

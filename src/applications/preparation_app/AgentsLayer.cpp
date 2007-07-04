@@ -174,14 +174,14 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
     }
     if( event->provides( "csword/HierarchyTemplate" ) )
     {
-         // $$$$ AGE 2007-05-30: test selectedParent !
-        if( !selectedFormation_ )
+        if( !selectedFormation_ && !selectedTeam_ )
             return false;
         QByteArray tmp = event->encodedData( "csword/HierarchyTemplate" );
         const HierarchyTemplate* droppedItem = *reinterpret_cast< const HierarchyTemplate** >( tmp.data() );
         if( droppedItem )
         {
-            droppedItem->Instanciate( *selectedFormation_.ConstCast(), point );
+            Entity_ABC* superior = selectedFormation_ ? selectedFormation_.ConstCast() : (Entity_ABC*)selectedTeam_.ConstCast();
+            droppedItem->Instanciate( *superior, point );
             return true;
         }
     }
