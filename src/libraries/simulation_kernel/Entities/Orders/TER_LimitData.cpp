@@ -46,14 +46,14 @@ TER_LimitData::DistanceData::DistanceData( const MT_Vector2D& from, const MT_Vec
 // -----------------------------------------------------------------------------
 MT_Float TER_LimitData::DistanceData::SquareDistance( const MT_Vector2D& p ) const
 {
+    // $$$$ AGE 2007-07-04: buggued since 1992
     const MT_Vector2D v( p - origin_ );
     const MT_Float rDotProduct = DotProduct( direction_, v );
     if( rDotProduct <= 0 )
         return p.SquareDistance( origin_ );
     if( rDotProduct >= rSquareLength_ )
         return std::numeric_limits< MT_Float >::max();
-    const MT_Float rCrossProduct = direction_.rX_ * v.rY_ - direction_.rY_ * v.rX_;
-    return std::fabs( rCrossProduct );
+    return v.SquareMagnitude() - rDotProduct * rDotProduct / rSquareLength_;
 }
 
 // =============================================================================

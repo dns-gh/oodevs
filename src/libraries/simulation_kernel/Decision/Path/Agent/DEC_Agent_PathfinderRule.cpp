@@ -240,29 +240,30 @@ MT_Float DEC_Agent_PathfinderRule::GetAltitudeCost( MT_Float rAltitudeTo ) const
     return 0.;
 }
 
+//#define DEBUG_IMPOSSIBLE_PATHFIND
+
+#ifdef DEBUG_IMPOSSIBLE_PATHFIND
 namespace
 {
     double LogImpossible( const MT_Vector2D& from, const MT_Vector2D& to, const char* reason )
     {
-        std::cout << "Impossible from " << from << " to " << to << " : " << reason << std::endl;
+        MT_LOG_INFO_MSG( "Impossible from " << from << " to " << to << " : " << reason );
         return -1.;
     }
 
     double LogImpossible( const MT_Vector2D& at, const char* reason )
     {
-        std::cout << "Impossible at " << at << " : " << reason << std::endl;
+        MT_LOG_INFO_MSG( "Impossible at " << at << " : " << reason );
         return -1.;
     }
+}
 
-#ifdef DEBUG_IMPOSSIBLE_PATHFIND
 #   define IMPOSSIBLE_DESTINATION( reason ) LogImpossible( to, reason )
 #   define IMPOSSIBLE_WAY( reason )         LogImpossible( from, to, reason )
-#else
+#else // DEBUG_IMPOSSIBLE_PATHFIND
 #   define IMPOSSIBLE_DESTINATION( reason ) -1.
 #   define IMPOSSIBLE_WAY( reason )         -1.
-#endif
-
-}
+#endif // DEBUG_IMPOSSIBLE_PATHFIND
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathfinderRule::GetCost
