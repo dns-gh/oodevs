@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "TimelineActionItem.h"
+#include "TimelineEntityItem.h"
 #include "gaming/Action_ABC.h"
 #include <qpainter.h>
 
@@ -16,8 +17,8 @@
 // Name: TimelineActionItem constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineActionItem::TimelineActionItem( QCanvasRectangle* parent, const Action_ABC& action )
-    : QCanvasRectangle( parent->canvas() )
+TimelineActionItem::TimelineActionItem( TimelineEntityItem& parent, const Action_ABC& action )
+    : QCanvasRectangle( parent.canvas() )
     , parentItem_( parent )
     , action_( action )
 {
@@ -26,7 +27,8 @@ TimelineActionItem::TimelineActionItem( QCanvasRectangle* parent, const Action_A
     palette_.setColor( QPalette::Active  , QColorGroup::Background, QColor( 180, 220, 250 ) );
     palette_.setColor( QPalette::Active  , QColorGroup::Foreground, QColor(  50, 120, 200 ) );
 
-    setZ( parent->z() - 100 );
+    setX( parent.width() + 50 ); // $$$$ SBO 2007-07-05: action time
+    setZ( parent.z() - 100 );
     show();
 }
 
@@ -40,6 +42,18 @@ TimelineActionItem::~TimelineActionItem()
 }
 
 // -----------------------------------------------------------------------------
+// Name: TimelineActionItem::moveBy
+// Created: SBO 2007-07-05
+// -----------------------------------------------------------------------------
+void TimelineActionItem::moveBy( double dx, double dy )
+{
+    if( x() + dx < parentItem_.width() )
+        dx = 0;
+    QCanvasRectangle::moveBy( dx, dy );
+    // $$$$ SBO 2007-07-05: set action time
+}
+
+// -----------------------------------------------------------------------------
 // Name: TimelineActionItem::draw
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
@@ -48,14 +62,12 @@ void TimelineActionItem::draw( QPainter& painter )
     const QPalette::ColorGroup colorGroup = isSelected() ? QPalette::Active : QPalette::Inactive;
     const QPen oldPen = painter.pen();
 
-    setX( parentItem_->width() + 50 );
-    setY( parentItem_->y() + 3 );
-    setSize( 100, parentItem_->height() - 5 );
+    setY( parentItem_.y() + 3 );
+    setSize( 100, parentItem_.height() - 5 );
 
     painter.fillRect( rect(), palette_.color( colorGroup, QColorGroup::Background ) );
     painter.setPen( palette_.color( colorGroup, QColorGroup::Foreground ) );
     painter.drawRect( rect() );
-
     painter.drawText( rect(), Qt::AlignLeft | Qt::AlignVCenter, " " + action_.GetName() );
 
     painter.setPen( oldPen );

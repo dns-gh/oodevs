@@ -33,20 +33,14 @@ class TimelineEntityItem : public QCanvasRectangle
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineEntityItem( QCanvas* canvas, QCanvasView* view, const kernel::Entity_ABC& entity );
+             TimelineEntityItem( QCanvasView& view, const QCanvasItem* after, const kernel::Entity_ABC& entity );
     virtual ~TimelineEntityItem();
     //@}
 
     //! @name Operations
     //@{
-    void NotifyCreated( const Action_ABC& action );
-    void NotifyUpdated( const Action_ABC& action );
-    void NotifyDeleted( const Action_ABC& action );
-    //@}
-
-    //! @name Display
-    //@{
-    void SetYOffset( unsigned int lineIndex );
+    void AddAction( const Action_ABC& action );
+    void RemoveAction( const Action_ABC& action );
     //@}
 
 private:
@@ -72,6 +66,7 @@ private:
     //! @name Member data
     //@{
     QCanvasView& view_;
+    const QCanvasItem* previous_;
     const kernel::Entity_ABC& entity_;
     T_Items items_;
     //@}

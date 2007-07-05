@@ -13,13 +13,17 @@
 #include "clients_kernel/Entity_ABC.h"
 #include <qpainter.h>
 
+const unsigned int itemHeight_ = 30;
+const unsigned int itemWidth_  = 200;
+
 // -----------------------------------------------------------------------------
 // Name: TimelineEntityItem constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineEntityItem::TimelineEntityItem( QCanvas* canvas, QCanvasView* view, const kernel::Entity_ABC& entity )
-    : QCanvasRectangle( 0, 0, 200, 30, canvas )
-    , view_( *view )
+TimelineEntityItem::TimelineEntityItem( QCanvasView& view, const QCanvasItem* after, const kernel::Entity_ABC& entity )
+    : QCanvasRectangle( 0, 0, itemWidth_, itemHeight_, view.canvas() )
+    , view_( view )
+    , previous_( after )
     , entity_( entity )
 {
     setZ( 900 );
@@ -36,41 +40,21 @@ TimelineEntityItem::~TimelineEntityItem()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineEntityItem::SetYOffset
-// Created: SBO 2007-07-04
+// Name: TimelineEntityItem::AddAction
+// Created: SBO 2007-07-05
 // -----------------------------------------------------------------------------
-void TimelineEntityItem::SetYOffset( unsigned int lineIndex )
-{
-    setY( lineIndex * height() + 15 ); // $$$$ SBO 2007-07-04: ruler height !!
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineEntityItem::NotifyCreated
-// Created: SBO 2007-07-04
-// -----------------------------------------------------------------------------
-void TimelineEntityItem::NotifyCreated( const Action_ABC& action )
+void TimelineEntityItem::AddAction( const Action_ABC& action )
 {
     TimelineActionItem*& item = items_[ &action ];
     if( !item )
-        item = new TimelineActionItem( this, action );
+        item = new TimelineActionItem( *this, action );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineEntityItem::NotifyUpdated
-// Created: SBO 2007-07-04
+// Name: TimelineEntityItem::RemoveAction
+// Created: SBO 2007-07-05
 // -----------------------------------------------------------------------------
-void TimelineEntityItem::NotifyUpdated( const Action_ABC& action )
-{
-//    CIT_Items it = items_.find( &action );
-//    if( it != items_.end() )
-//        it->second->Update( action );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineEntityItem::NotifyDeleted
-// Created: SBO 2007-07-04
-// -----------------------------------------------------------------------------
-void TimelineEntityItem::NotifyDeleted( const Action_ABC& action )
+void TimelineEntityItem::RemoveAction( const Action_ABC& action )
 {
     T_Items::iterator it = items_.find( &action );
     if( it != items_.end() )
@@ -88,6 +72,10 @@ void TimelineEntityItem::draw( QPainter& painter )
 {
     const QPoint canvasTopLeft = view_.inverseWorldMatrix().map( QPoint( view_.contentsX(), view_.contentsY() ) );
     setX( canvasTopLeft.x() );
+    if( previous_ )
+        setY( previous_->y() + itemHeight_ );
+    else
+        setY( 15 );
     painter.fillRect( rect(), QColor( 240, 240, 240 ) );
     painter.drawText( rect(), Qt::AlignLeft | Qt::AlignVCenter, " " + entity_.GetName() );
 }

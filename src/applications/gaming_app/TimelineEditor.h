@@ -59,7 +59,6 @@ private:
     //! @name Events
     //@{
     virtual void mousePressEvent( QMouseEvent* event );
-    virtual void mouseReleaseEvent( QMouseEvent* event );
     virtual void mouseMoveEvent( QMouseEvent* event );
     virtual void keyPressEvent( QKeyEvent* event );
     //@}
@@ -67,30 +66,31 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const Action_ABC& action );
-    virtual void NotifyUpdated( const Action_ABC& action );
     virtual void NotifyDeleted( const Action_ABC& action );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
 
     void ClearSelection();
     void SetSelected( QCanvasItem& item );
+    QPoint ConvertToContent( const QPoint& point ) const;
     //@}
 
     //! @name Types
     //@{
     typedef std::map< const kernel::Entity_ABC*, TimelineEntityItem* > T_EntityItems;
     typedef T_EntityItems::const_iterator                            CIT_EntityItems;
-
-    typedef std::vector< QCanvasItem* > T_Items;
+    typedef std::vector< TimelineEntityItem* >                         T_Lines;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    ActionsModel& actions_;
-    T_EntityItems items_;
-    T_Items overlayItems_;
-    QTimer* updateTimer_;
+    ActionsModel&        actions_;
+    T_EntityItems        items_;
+    T_Lines              lines_;
+    QTimer*              updateTimer_;
+    QCanvasItem*         selectedItem_;
+    QPoint               grabPoint_;
     //@}
 };
 

@@ -91,6 +91,7 @@ void TimelineRuler::DrawGrid( QPainter& painter )
     p.setColor( QColor( 150, 150, 150 ) );
     painter.setPen( p );
     for( int i = rulerHeight_; i < height(); i += lineHeight_ )
-        painter.drawLine( 0, i, width(), i );
+        if( i > y() + rulerHeight_ )
+            painter.drawLine( 0, i, width(), i );
     painter.setPen( oldPen );
 }

@@ -27,8 +27,9 @@ TimelineEditor::TimelineEditor( QWidget* parent, QCanvas* canvas, Controllers& c
     : QCanvasView( canvas, parent )
     , controllers_( controllers )
     , actions_( actions )
+    , selectedItem_( 0 )
 {
-    overlayItems_.push_back( new TimelineRuler( canvas, this ) );
+    new TimelineRuler( canvas, this );
     controllers_.Register( *this );
 
     updateTimer_ = new QTimer( this );
@@ -54,24 +55,10 @@ void TimelineEditor::NotifyCreated( const Action_ABC& action )
     TimelineEntityItem*& line = items_[ &action.GetEntity() ];
     if( !line )
     {
-        line = new TimelineEntityItem( canvas(), this, action.GetEntity() );
-        line->SetYOffset( items_.size() - 1 );
-        overlayItems_.push_back( line );
+        line = new TimelineEntityItem( *this, lines_.empty() ? 0 : lines_.back(), action.GetEntity() );
+        lines_.push_back( line );
     }
-    line->NotifyCreated( action );
-    Update();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineEditor::NotifyUpdated
-// Created: SBO 2007-07-04
-// -----------------------------------------------------------------------------
-void TimelineEditor::NotifyUpdated( const Action_ABC& action )
-{
-    CIT_EntityItems it = items_.find( &action.GetEntity() );
-    if( it != items_.end() )
-        it->second->NotifyUpdated( action );
-    Update();
+    line->AddAction( action );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,8 +69,7 @@ void TimelineEditor::NotifyDeleted( const Action_ABC& action )
 {
     CIT_EntityItems it = items_.find( &action.GetEntity() );
     if( it != items_.end() )
-        it->second->NotifyDeleted( action );
-    Update();
+        it->second->RemoveAction( action );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,10 +81,10 @@ void TimelineEditor::NotifyDeleted( const kernel::Entity_ABC& entity )
     T_EntityItems::iterator it = items_.find( &entity );
     if( it != items_.end() )
     {
-        T_Items::iterator overlayIt = std::find( overlayItems_.begin(), overlayItems_.end(), it->second );
-        if( overlayIt != overlayItems_.end() )
-            overlayItems_.erase( overlayIt );
-        // $$$$ SBO 2007-07-04: delete it->second ?
+        T_Lines::iterator itLine = std::find( lines_.begin(), lines_.end(), it->second );
+        if( itLine != lines_.end() )
+            lines_.erase( itLine );
+        delete it->second; // $$$$ SBO 2007-07-05: could be cleaned by Qt
         items_.erase( it );
     }
 }
@@ -119,23 +105,16 @@ void TimelineEditor::Update()
 // -----------------------------------------------------------------------------
 void TimelineEditor::mousePressEvent( QMouseEvent* event )
 {
+    setFocus();
     ClearSelection();
-    QCanvasItemList list = canvas()->collisions( inverseWorldMatrix().map( viewportToContents( event->pos() ) ) );
+    grabPoint_ = ConvertToContent( event->pos() );
+    QCanvasItemList list = canvas()->collisions( grabPoint_ );
     for( QCanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
         if( TimelineActionItem* item = dynamic_cast< TimelineActionItem* >( *it ) )
         {
             SetSelected( *item ); // $$$$ SBO 2007-07-02: rotate through selection...
-            return;
+            break;;
         }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineEditor::mouseReleaseEvent
-// Created: SBO 2007-07-04
-// -----------------------------------------------------------------------------
-void TimelineEditor::mouseReleaseEvent( QMouseEvent* event )
-{
-
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +123,14 @@ void TimelineEditor::mouseReleaseEvent( QMouseEvent* event )
 // -----------------------------------------------------------------------------
 void TimelineEditor::mouseMoveEvent( QMouseEvent* event )
 {
-
+    if( !selectedItem_ )
+        return;
+    if( event->state() | Qt::LeftButton )
+    {
+        const QPoint position = ConvertToContent( event->pos() );
+        selectedItem_->moveBy( position.x() - grabPoint_.x(), 0 );
+        grabPoint_ = position;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +139,17 @@ void TimelineEditor::mouseMoveEvent( QMouseEvent* event )
 // -----------------------------------------------------------------------------
 void TimelineEditor::keyPressEvent( QKeyEvent* event )
 {
-
+    if( !selectedItem_ )
+        return;
+    if( event->key() == Qt::Key_Delete )
+    {
+        // delete action
+    }
+    else if( event->key() == Qt::Key_Left || event->key() == Qt::Key_Right )
+    {
+        const short sign = event->key() == Qt::Key_Left ? -1 : 1;
+        selectedItem_->moveBy( sign * ( ( event->state() & Qt::ShiftButton ) ? 100 : 5 ), 0 ); // $$$$ SBO 2007-07-05: ruler.getPageStep / ruler.getTickStep
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -165,6 +161,7 @@ void TimelineEditor::ClearSelection()
     QCanvasItemList list = canvas()->allItems();
     for( QCanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
         (*it)->setSelected( false );
+    selectedItem_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -174,4 +171,14 @@ void TimelineEditor::ClearSelection()
 void TimelineEditor::SetSelected( QCanvasItem& item )
 {
     item.setSelected( true );
+    selectedItem_ = &item;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineEditor::ConvertToContent
+// Created: SBO 2007-07-05
+// -----------------------------------------------------------------------------
+QPoint TimelineEditor::ConvertToContent( const QPoint& point ) const
+{
+    return inverseWorldMatrix().map( viewportToContents( point ) );
 }

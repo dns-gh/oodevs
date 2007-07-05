@@ -12,6 +12,7 @@
 
 #include <qcanvas.h>
 
+class TimelineEntityItem;
 class Action_ABC;
 
 // =============================================================================
@@ -26,12 +27,13 @@ class TimelineActionItem : public QCanvasRectangle
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineActionItem( QCanvasRectangle* parent, const Action_ABC& action );
+             TimelineActionItem( TimelineEntityItem& parent, const Action_ABC& action );
     virtual ~TimelineActionItem();
     //@}
 
     //! @name Operations
     //@{
+    virtual void moveBy( double dx, double dy );
     //@}
 
 private:
@@ -49,7 +51,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QCanvasRectangle* parentItem_;
+    TimelineEntityItem& parentItem_;
     const Action_ABC& action_;
 
     QPalette palette_;
