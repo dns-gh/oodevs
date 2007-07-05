@@ -16,7 +16,6 @@
 
 namespace dispatcher
 {
-    class SimulationDispatcher;
     class Loader;
     class Publisher_ABC;
 
@@ -39,10 +38,10 @@ public:
     //! @name Operations
     //@{
     void Update();
+    void SendReplayInfo( Publisher_ABC& publisher ) const;
 
     void OnReceive( const ASN1T_MsgsClientToSim&    asnInMsg );
     void OnReceive( const ASN1T_MsgsClientToMiddle& asnInMsg );
-    void SendReplayInfo( Publisher_ABC& publisher ) const;
     //@}
 
 protected:
