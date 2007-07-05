@@ -12,6 +12,7 @@
 
 #include "game_asn/Asn.h"
 #include "Frames.h"
+#include <vector>
 
 namespace tools
 {
@@ -21,7 +22,7 @@ namespace tools
 namespace dispatcher
 {
     class Config;
-    class SimulationDispatcher;
+    class ReplayModel_ABC;
 
 // =============================================================================
 /** @class  Loader
@@ -35,7 +36,7 @@ class Loader
 public:
     //! @name Constructors/Destructor
     //@{
-             Loader( SimulationDispatcher& simulation, const Config& config, const std::string& records );
+             Loader( ReplayModel_ABC& model, const Config& config, const std::string& records );
     virtual ~Loader();
     //@}
 
@@ -74,7 +75,7 @@ private:
 private:
     //! @name Member data
     //@{
-    SimulationDispatcher& simulation_;
+    ReplayModel_ABC& model_;
     T_Frames frames_;
     T_KeyFrames keyFrames_;
     std::ifstream updates_;

@@ -10,12 +10,15 @@
 #ifndef __Replayer_h_
 #define __Replayer_h_
 
+#include <memory>
+
 namespace dispatcher
 {
     class Config;
     class Model;
     class ClientsNetworker;
     class SimulationDispatcher;
+    class Loader;
     class LoaderFacade;
     class ProfileManager;
 
@@ -57,12 +60,12 @@ private:
 private:
     //! @name Member data
     //@{
-    const Config&               config_;
-          Model*                pModel_;
-          ClientsNetworker*     pClientsNetworker_;
-          SimulationDispatcher* simulation_;
-          LoaderFacade*         loader_;
-          ProfileManager*       profiles_;
+    std::auto_ptr< Model >                model_;
+    std::auto_ptr< ClientsNetworker >     clientsNetworker_;
+    std::auto_ptr< SimulationDispatcher > simulation_;
+    std::auto_ptr< Loader >               loader_;
+    std::auto_ptr< LoaderFacade >         facade_;
+    std::auto_ptr< ProfileManager >       profiles_;
     //@}
 };
 

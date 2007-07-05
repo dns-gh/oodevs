@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "LoaderFacade.h"
 #include "Loader.h"
-#include "ClientsNetworker.h"
+#include "Publisher_ABC.h"
 #include "network_def.h"
 #include "game_asn/Asn.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
@@ -21,9 +21,9 @@ using namespace dispatcher;
 // Name: LoaderFacade constructor
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-LoaderFacade::LoaderFacade( ClientsNetworker& clients, SimulationDispatcher& simulation, const Config& config, const std::string& records )
+LoaderFacade::LoaderFacade( Publisher_ABC& clients, Loader& loader )
     : clients_    ( clients )
-    , loader_     ( new Loader( simulation, config, records ) )
+    , loader_     ( loader )
     , factor_     ( 1 )
     , running_    ( false )
     , skipToFrame_( -1 )
@@ -127,8 +127,8 @@ void LoaderFacade::SkipToFrame( unsigned frame )
 {
     AsnMsgMiddleToClientControlSkipToTickAck asn;
 
-    asn().tick = loader_->GetCurrentTick();
-    if( frame < loader_->GetTickNumber() )
+    asn().tick = loader_.GetCurrentTick();
+    if( frame < loader_.GetTickNumber() )
     {
         asn().tick = frame;    
         asn().error_code = EnumControlErrorCode::no_error;
@@ -137,22 +137,22 @@ void LoaderFacade::SkipToFrame( unsigned frame )
     else
         asn().error_code = EnumControlErrorCode::error_invalid_time_factor;
     asn.Send( clients_ );
-    if( frame < loader_->GetTickNumber() )
-        loader_->SkipToFrame( frame );
+    if( frame < loader_.GetTickNumber() )
+        loader_.SkipToFrame( frame );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LoaderFacade::Send
+// Name: LoaderFacade::SendReplayInfo
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-void LoaderFacade::Send( Publisher_ABC& publisher ) const
+void LoaderFacade::SendReplayInfo( Publisher_ABC& publisher ) const
 {
     AsnMsgMiddleToClientControlReplayInformation asn;
-    asn().current_tick  = loader_->GetCurrentTick();
+    asn().current_tick  = loader_.GetCurrentTick();
     asn().tick_duration = 10; // $$$$ AGE 2007-04-11: 
     asn().time_factor = factor_;
     asn().status = running_ ? EnumSimulationState::running : EnumSimulationState::paused;
-    asn().tick_count = loader_->GetTickNumber();
+    asn().tick_count = loader_.GetTickNumber();
 
     asn.Send( publisher );
 }
@@ -178,5 +178,5 @@ void LoaderFacade::Update()
 void LoaderFacade::OnTimer()
 {
     if( running_ )
-        loader_->Tick();
+        loader_.Tick();
 }

@@ -10,6 +10,8 @@
 #include "App.h"
 #include "dispatcher/Replayer.h"
 #include "MT/MT_Logger/MT_Logger_Lib.h"
+#include "ReplayModel.h"
+#include "dispatcher/Loader.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4244 )
@@ -117,6 +119,11 @@ void App::CreateReplayer()
 
     MT_LOG_INFO_MSG( "Loading record " << chosen.leaf() );
     replayer_ = new Replayer( config_, chosen.leaf() );
+
+//    ReplayModel* model = new ReplayModel();
+//    Loader* loader = new Loader( *model, config_, chosen.leaf() );
+//    while( loader->Tick() )
+//        ;
 }
 
 // -----------------------------------------------------------------------------

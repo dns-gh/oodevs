@@ -135,7 +135,7 @@ void Client::OnReceiveMsgAuthenticationRequest( const ASN1T_MsgAuthenticationReq
     model_   .Send( *this );
     profiles_.Send( *this );
     if( loader_ )
-        loader_->Send( *this );
+        loader_->SendReplayInfo( *this );
 }
 
 // -----------------------------------------------------------------------------

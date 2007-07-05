@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "Loader.h"
-#include "SimulationDispatcher.h"
+#include "ReplayModel_ABC.h"
 #include "Publisher_ABC.h"
 #include "Config.h"
 #include "tools/InputBinaryStream.h"
@@ -24,8 +24,8 @@ using namespace dispatcher;
 // Name: Loader constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-Loader::Loader( SimulationDispatcher& simulation, const Config& config, const std::string& records )
-    : simulation_  ( simulation )
+Loader::Loader( ReplayModel_ABC& model, const Config& config, const std::string& records )
+    : model_       ( model )
     , currentFrame_( 0 )
 {
     const bfs::path dir( config.GetRecorderDirectory( records ), bfs::native );
@@ -99,13 +99,13 @@ void Loader::SkipToFrame( unsigned frame )
     const bool requiresKeyFrame = RequiresKeyFrame( frame );
     if( requiresKeyFrame )
     {
-        simulation_.StartSynchronisation();
+        model_.StartSynchronisation();
         LoadKeyFrame( frame );
     }
     while( currentFrame_+1 < frame && Tick() )
         ;
     if( requiresKeyFrame )
-        simulation_.EndSynchronisation();
+        model_.EndSynchronisation();
 
     if( currentFrame_ < frame )
         Tick();
@@ -178,7 +178,7 @@ void Loader::LoadSimToClientMessage( tools::InputBinaryWrapper& input )
         decoder.PrintErrorInfo();
         throw std::runtime_error( "ASN fussé" );
     }
-    simulation_.OnReceive( message );
+    model_.OnReceive( message );
 }
 
 // -----------------------------------------------------------------------------

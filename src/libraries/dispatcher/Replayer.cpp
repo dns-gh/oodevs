@@ -15,6 +15,7 @@
 #include "SimulationDispatcher.h"
 #include "LoaderFacade.h"
 #include "ProfileManager.h"
+#include "Loader.h"
 
 #include "xeumeuleu/xml.h"
 
@@ -25,16 +26,15 @@ using namespace dispatcher;
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
 Replayer::Replayer( const Config& config, const std::string& records )
-    : config_( config )
+    : model_           ( new Model() )
+    , clientsNetworker_( new ClientsNetworker( *this, config ) )
+    , simulation_      ( new SimulationDispatcher( *clientsNetworker_, *model_ ) )
+    , loader_          ( new Loader( *simulation_, config, records ) )
+    , facade_          ( new LoaderFacade( *clientsNetworker_, *loader_ ) )
+    , profiles_        ( new ProfileManager( *model_, *clientsNetworker_, config ) )
 {
-    pModel_            = new Model               ();
-    pClientsNetworker_ = new ClientsNetworker    ( *this, config_ );
-    simulation_        = new SimulationDispatcher( *pClientsNetworker_, *pModel_ );
-    loader_            = new LoaderFacade        ( *pClientsNetworker_, *simulation_, config_, records );
-    profiles_          = new ProfileManager      ( *pModel_, *pClientsNetworker_, config_ );
-
     profiles_->Reset();
-    pClientsNetworker_->AllowConnections();
+    clientsNetworker_->AllowConnections();
 }
  
 // -----------------------------------------------------------------------------
@@ -52,8 +52,8 @@ Replayer::~Replayer()
 // -----------------------------------------------------------------------------
 void Replayer::Update()
 {
-    pClientsNetworker_->Update();
-    loader_->Update();
+    clientsNetworker_->Update();
+    facade_->Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ void Replayer::Update()
 // -----------------------------------------------------------------------------
 Model& Replayer::GetModel() const
 {
-    return *pModel_;
+    return *model_;
 }
 
 // -----------------------------------------------------------------------------
@@ -80,5 +80,5 @@ ProfileManager& Replayer::GetProfiles() const
 // -----------------------------------------------------------------------------
 LoaderFacade& Replayer::GetLoader() const
 {
-    return *loader_;
+    return *facade_;
 }

@@ -11,6 +11,7 @@
 #define __SimulationDispatcher_h_
 
 #include "game_asn/Asn.h"
+#include "ReplayModel_ABC.h"
 
 namespace dispatcher
 {
@@ -23,7 +24,7 @@ namespace dispatcher
 */
 // Created: AGE 2007-04-10
 // =============================================================================
-class SimulationDispatcher
+class SimulationDispatcher : public ReplayModel_ABC
 {
 
 public:
@@ -35,10 +36,9 @@ public:
 
     //! @name Operations
     //@{
-    void OnReceive( const ASN1T_MsgsSimToClient& asnMsg );
-
-    void StartSynchronisation();
-    void EndSynchronisation();
+    virtual void OnReceive( const ASN1T_MsgsSimToClient& asnMsg );
+    virtual void StartSynchronisation();
+    virtual void EndSynchronisation();
     //@}
 
 private:

@@ -113,6 +113,7 @@ void ClientsNetworker::OnConnectionReceived( DIN_Server& server, DIN_Link& link 
     ServerNetworker_ABC::OnConnectionReceived( server, link );
 
     Client* pClient = 0;
+    // $$$$ AGE 2007-07-05: n'importe quoi
     if( dispatcher_ )
         pClient = new Client( dispatcher_->GetModel(), dispatcher_->GetProfileManager(), dispatcher_->GetSimulationNetworker(), GetMessageService(), link );
     else
