@@ -47,7 +47,7 @@ public:
     //@{
     void OnReceive( const ASN1T_MsgsInMaster& asnMsg );
     void Send     ( const ASN1T_MsgsOutMaster& asnMsg );
-//    void Send     ( const ASN1T_MsgsOutMaster& asnMsg, const DIN::DIN_BufferedMessage& dinMsg );    
+    void Send     ( const ASN1T_MsgsOutMaster& asnMsg, const DIN::DIN_BufferedMessage& dinMsg );    
     //@}
 
     //! @name Tools
