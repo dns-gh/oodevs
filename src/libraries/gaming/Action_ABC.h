@@ -61,6 +61,8 @@ public:
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void Serialize( xml::xostream& xos ) const;
     virtual void Publish( Publisher_ABC& publisher ) const = 0;
+
+    virtual void Polish() = 0;
     //@}
 
 protected:

@@ -7,52 +7,51 @@
 //
 // *****************************************************************************
 
-#ifndef __TimelineRuler_h_
-#define __TimelineRuler_h_
+#ifndef __TimelineItem_ABC_h_
+#define __TimelineItem_ABC_h_
 
-#include "TimelineItem_ABC.h"
+#include <qcanvas.h>
 
 // =============================================================================
-/** @class  TimelineRuler
-    @brief  TimelineRuler
+/** @class  TimelineItem_ABC
+    @brief  TimelineItem_ABC
 */
-// Created: SBO 2007-07-04
+// Created: SBO 2007-07-06
 // =============================================================================
-class TimelineRuler : public TimelineItem_ABC
+class TimelineItem_ABC : public QCanvasRectangle
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineRuler( QCanvas* canvas, QCanvasView* view );
-    virtual ~TimelineRuler();
+    explicit TimelineItem_ABC( QCanvas* canvas );
+             TimelineItem_ABC( QCanvas* canvas, const QRect& area );
+    virtual ~TimelineItem_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update();
+    virtual void Update() = 0;
+    void SetOverlayed( bool overlayed );
+    bool IsOverlayed() const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    TimelineRuler( const TimelineRuler& );            //!< Copy constructor
-    TimelineRuler& operator=( const TimelineRuler& ); //!< Assignment operator
+    TimelineItem_ABC( const TimelineItem_ABC& );            //!< Copy constructor
+    TimelineItem_ABC& operator=( const TimelineItem_ABC& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
-    virtual void draw( QPainter& painter );
-    void DrawTimeline( QPainter& painter );
     //@}
 
 private:
     //! @name Member data
     //@{
-    QCanvasView& view_;
-    unsigned int tickStep_;
-    unsigned int pageStep_;
+    bool overlayed_;
     //@}
 };
 
-#endif // __TimelineRuler_h_
+#endif // __TimelineItem_ABC_h_

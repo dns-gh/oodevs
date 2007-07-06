@@ -10,7 +10,7 @@
 #ifndef __TimelineEntityItem_h_
 #define __TimelineEntityItem_h_
 
-#include <qcanvas.h>
+#include "TimelineItem_ABC.h"
 
 namespace kernel
 {
@@ -19,7 +19,6 @@ namespace kernel
 }
 
 class Action_ABC;
-class TimelineActionItem;
 
 // =============================================================================
 /** @class  TimelineEntityItem
@@ -27,13 +26,13 @@ class TimelineActionItem;
 */
 // Created: SBO 2007-07-04
 // =============================================================================
-class TimelineEntityItem : public QCanvasRectangle
+class TimelineEntityItem : public TimelineItem_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineEntityItem( QCanvasView& view, const QCanvasItem* after, const kernel::Entity_ABC& entity );
+             TimelineEntityItem( QCanvasView& view, const TimelineItem_ABC* after, kernel::Controllers& controllers, const kernel::Entity_ABC& entity );
     virtual ~TimelineEntityItem();
     //@}
 
@@ -41,6 +40,7 @@ public:
     //@{
     void AddAction( const Action_ABC& action );
     void RemoveAction( const Action_ABC& action );
+    void Update();
     //@}
 
 private:
@@ -53,22 +53,22 @@ private:
     //! @name Helpers
     //@{
     virtual void draw( QPainter& painter );
-    virtual QPointArray chunks() const;
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< const Action_ABC*, TimelineActionItem* > T_Items;
-    typedef T_Items::const_iterator                          CIT_Items;
+    typedef std::map< const Action_ABC*, TimelineItem_ABC* > T_Items;
+    typedef T_Items::const_iterator                        CIT_Items;
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     QCanvasView& view_;
-    const QCanvasItem* previous_;
+    const TimelineItem_ABC* previous_;
     const kernel::Entity_ABC& entity_;
-    T_Items items_;
+    T_Items childItems_;
     //@}
 };
 

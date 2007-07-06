@@ -21,7 +21,9 @@ namespace kernel
 
 class ActionsModel;
 class Action_ABC;
+class TimelineItem_ABC;
 class TimelineEntityItem;
+class TimelineActionItem;
 
 // =============================================================================
 /** @class  TimelineEditor
@@ -61,6 +63,7 @@ private:
     virtual void mousePressEvent( QMouseEvent* event );
     virtual void mouseMoveEvent( QMouseEvent* event );
     virtual void keyPressEvent( QKeyEvent* event );
+    virtual void resizeEvent( QResizeEvent* event );
     //@}
 
     //! @name Helpers
@@ -70,7 +73,7 @@ private:
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
 
     void ClearSelection();
-    void SetSelected( QCanvasItem& item );
+    void SetSelected( TimelineActionItem& item );
     QPoint ConvertToContent( const QPoint& point ) const;
     //@}
 
@@ -78,7 +81,7 @@ private:
     //@{
     typedef std::map< const kernel::Entity_ABC*, TimelineEntityItem* > T_EntityItems;
     typedef T_EntityItems::const_iterator                            CIT_EntityItems;
-    typedef std::vector< TimelineEntityItem* >                         T_Lines;
+    typedef std::vector< TimelineItem_ABC* >                           T_Lines;
     //@}
 
 private:
@@ -89,7 +92,7 @@ private:
     T_EntityItems        items_;
     T_Lines              lines_;
     QTimer*              updateTimer_;
-    QCanvasItem*         selectedItem_;
+    TimelineActionItem*  selectedAction_;
     QPoint               grabPoint_;
     //@}
 };

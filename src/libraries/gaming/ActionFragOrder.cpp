@@ -26,8 +26,7 @@ ActionFragOrder::ActionFragOrder( const Entity_ABC& entity, const FragOrderType&
     , controller_( controller )
     , registered_( registered )
 {
-    if( registered_ )
-        controller_.Create( *(Action_ABC*)this );
+    // NOTHING
 }
 
 namespace
@@ -49,7 +48,7 @@ ActionFragOrder::ActionFragOrder( xml::xistream& xis, Controller& controller, co
     , controller_( controller )
     , registered_( true )
 {
-    controller_.Create( *(Action_ABC*)this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -60,6 +59,16 @@ ActionFragOrder::~ActionFragOrder()
 {
     if( registered_ )
         controller_.Delete( *(Action_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFragOrder::Polish
+// Created: SBO 2007-07-06
+// -----------------------------------------------------------------------------
+void ActionFragOrder::Polish()
+{
+    if( registered_ )
+        controller_.Create( *(Action_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

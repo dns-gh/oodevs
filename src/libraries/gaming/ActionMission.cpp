@@ -27,8 +27,7 @@ ActionMission::ActionMission( const Entity_ABC& entity, const MissionType& missi
     , controller_( controller )
     , registered_( registered )
 {
-    if( registered_ )
-        controller_.Create( *(Action_ABC*)this );
+    // NOTHING
 }
 
 namespace
@@ -50,7 +49,7 @@ ActionMission::ActionMission( xml::xistream& xis, Controller& controller, const 
     , controller_( controller )
     , registered_( true )
 {
-    controller_.Create( *(Action_ABC*)this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -61,6 +60,16 @@ ActionMission::~ActionMission()
 {
     if( registered_ )
         controller_.Delete( *(Action_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionMission::Polish
+// Created: SBO 2007-07-06
+// -----------------------------------------------------------------------------
+void ActionMission::Polish()
+{
+    if( registered_ )
+        controller_.Create( *(Action_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

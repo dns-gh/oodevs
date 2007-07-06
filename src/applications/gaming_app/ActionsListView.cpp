@@ -35,6 +35,12 @@ ActionsListView::ActionsListView( QWidget* parent, kernel::Controllers& controll
     AddColumn( tr( "Time" ), Qt::AlignHCenter );
     AddColumn( tr( "Action" ) );
     AddColumn( tr( "Value" ) );
+    setColumnWidth( 0, 20 );
+    setColumnWidth( 1, 50 );
+    setSortColumn( 1 );
+
+    connect( this, SIGNAL( clicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( QListViewItem*, const QPoint&, int ) ) );
+
     controllers_.Register( *this );
 }
 
@@ -67,12 +73,14 @@ void ActionsListView::NotifyCreated( const Action_ABC& action )
 {
     gui::ValuedListItem* item = factory_.CreateItem( this, firstChild() );
     item->SetValue( &action );
-    item->setPixmap( 0, checkboxOn_ );
-    item->setText( 1, "00:00" );
+    if( const ActionTiming* timing = action.Retrieve< ActionTiming >() )
+    {
+        item->setPixmap( 0, timing->IsEnabled() ? checkboxOn_ : checkboxOff_ );
+        item->setText( 1, QString( "%1" ).arg( timing->GetTime() ) );
+    }
     item->setPixmap( 2, mission_ );
     item->setText( 2, action.GetName() );
     item->setText( 3, tr( "Target: %1" ).arg( action.GetEntity().GetName() ) );
-    connect( this, SIGNAL( clicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( QListViewItem*, const QPoint&, int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +109,10 @@ void ActionsListView::NotifyDeleted( const Action_ABC& action )
 void ActionsListView::NotifyUpdated( const ActionTiming& extension )
 {
     if( QListViewItem* item = gui::FindItem( &extension.GetAction(), firstChild() ) )
+    {
         item->setPixmap( 0, extension.IsEnabled() ? checkboxOn_ : checkboxOff_ );
+        item->setText  ( 1, QString( "%1" ).arg( extension.GetTime() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

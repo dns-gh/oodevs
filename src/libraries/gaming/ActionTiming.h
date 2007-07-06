@@ -48,12 +48,14 @@ public:
     void ToggleEnabled();
     void SetStart( xml::xistream& xis );
     void Serialize( xml::xostream& xos ) const;
+    void Shift( long shift );
     //@}
 
     //! @name Accessors
     //@{
     const Action_ABC& GetAction() const;
     bool IsEnabled() const;
+    unsigned long GetTime() const; // $$$$ SBO 2007-07-05: should be a datetime
     //@}
 
 private:
@@ -76,6 +78,7 @@ private:
     int startDay_;
     int startTime_;
     bool enabled_;
+    unsigned long time_;
     //@}
 };
 

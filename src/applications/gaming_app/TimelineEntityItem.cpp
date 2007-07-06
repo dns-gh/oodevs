@@ -20,13 +20,17 @@ const unsigned int itemWidth_  = 200;
 // Name: TimelineEntityItem constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineEntityItem::TimelineEntityItem( QCanvasView& view, const QCanvasItem* after, const kernel::Entity_ABC& entity )
-    : QCanvasRectangle( 0, 0, itemWidth_, itemHeight_, view.canvas() )
+TimelineEntityItem::TimelineEntityItem( QCanvasView& view, const TimelineItem_ABC* after, kernel::Controllers& controllers, const kernel::Entity_ABC& entity )
+    : TimelineItem_ABC( view.canvas(), QRect( 0, 0, itemWidth_, itemHeight_ ) )
+    , controllers_( controllers )
     , view_( view )
     , previous_( after )
     , entity_( entity )
 {
+    SetOverlayed( true );
     setZ( 900 );
+    if( previous_ )
+        setY( previous_->y() + previous_->height() );
     show();
 }
 
@@ -45,9 +49,12 @@ TimelineEntityItem::~TimelineEntityItem()
 // -----------------------------------------------------------------------------
 void TimelineEntityItem::AddAction( const Action_ABC& action )
 {
-    TimelineActionItem*& item = items_[ &action ];
+    TimelineItem_ABC*& item = childItems_[ &action ];
     if( !item )
-        item = new TimelineActionItem( *this, action );
+    {
+        item = new TimelineActionItem( *this, controllers_, action );
+        canvas()->resize( canvas()->width(), canvas()->height() + itemHeight_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -56,12 +63,24 @@ void TimelineEntityItem::AddAction( const Action_ABC& action )
 // -----------------------------------------------------------------------------
 void TimelineEntityItem::RemoveAction( const Action_ABC& action )
 {
-    T_Items::iterator it = items_.find( &action );
-    if( it != items_.end() )
+    T_Items::iterator it = childItems_.find( &action );
+    if( it != childItems_.end() )
     {
         delete it->second;
-        items_.erase( it );
+        childItems_.erase( it );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineEntityItem::Update
+// Created: SBO 2007-07-06
+// -----------------------------------------------------------------------------
+void TimelineEntityItem::Update()
+{
+    const QPoint canvasTopLeft = view_.inverseWorldMatrix().map( QPoint( view_.contentsX(), view_.contentsY() ) );
+    setX( canvasTopLeft.x() );
+    if( previous_ && ! previous_->IsOverlayed() )
+        setY( previous_->y() + previous_->height() );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,25 +89,7 @@ void TimelineEntityItem::RemoveAction( const Action_ABC& action )
 // -----------------------------------------------------------------------------
 void TimelineEntityItem::draw( QPainter& painter )
 {
-    const QPoint canvasTopLeft = view_.inverseWorldMatrix().map( QPoint( view_.contentsX(), view_.contentsY() ) );
-    setX( canvasTopLeft.x() );
-    if( previous_ )
-        setY( previous_->y() + itemHeight_ );
-    else
-        setY( 15 );
-    painter.fillRect( rect(), QColor( 240, 240, 240 ) );
+    static const QColor fillColor( 240, 240, 240 );
+    painter.fillRect( rect().left(), rect().top() + 1, rect().width(), rect().height() - 2, fillColor );
     painter.drawText( rect(), Qt::AlignLeft | Qt::AlignVCenter, " " + entity_.GetName() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineEntityItem::chunks
-// Created: SBO 2007-07-04
-// -----------------------------------------------------------------------------
-QPointArray TimelineEntityItem::chunks() const
-{
-    // $$$$ SBO 2007-07-04: this is a hack to force redraw on each canvas update => item is "always present in viewport"
-    QPointArray array = QCanvasRectangle::chunks();
-    array.resize( array.size() + 1 );
-    array[int( array.size() - 1 )] = view_.inverseWorldMatrix().map( QPoint( view_.contentsX() + 10, view_.contentsY() + 10 ) );
-    return array;
 }

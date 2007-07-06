@@ -11,14 +11,17 @@
 #include "TimelineActionItem.h"
 #include "TimelineEntityItem.h"
 #include "gaming/Action_ABC.h"
+#include "gaming/ActionTiming.h"
+#include "clients_kernel/Controllers.h"
 #include <qpainter.h>
 
 // -----------------------------------------------------------------------------
 // Name: TimelineActionItem constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineActionItem::TimelineActionItem( TimelineEntityItem& parent, const Action_ABC& action )
-    : QCanvasRectangle( parent.canvas() )
+TimelineActionItem::TimelineActionItem( const TimelineItem_ABC& parent, kernel::Controllers& controllers, const Action_ABC& action )
+    : TimelineItem_ABC( parent.canvas() )
+    , controllers_( controllers )
     , parentItem_( parent )
     , action_( action )
 {
@@ -27,9 +30,9 @@ TimelineActionItem::TimelineActionItem( TimelineEntityItem& parent, const Action
     palette_.setColor( QPalette::Active  , QColorGroup::Background, QColor( 180, 220, 250 ) );
     palette_.setColor( QPalette::Active  , QColorGroup::Foreground, QColor(  50, 120, 200 ) );
 
-    setX( parent.width() + 50 ); // $$$$ SBO 2007-07-05: action time
     setZ( parent.z() - 100 );
     show();
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,19 +41,55 @@ TimelineActionItem::TimelineActionItem( TimelineEntityItem& parent, const Action
 // -----------------------------------------------------------------------------
 TimelineActionItem::~TimelineActionItem()
 {
-    // NOTHING
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineActionItem::moveBy
+// Name: TimelineActionItem::NotifyUpdated
 // Created: SBO 2007-07-05
 // -----------------------------------------------------------------------------
-void TimelineActionItem::moveBy( double dx, double dy )
+void TimelineActionItem::NotifyUpdated( const ActionTiming& timing )
 {
-    if( x() + dx < parentItem_.width() )
-        dx = 0;
-    QCanvasRectangle::moveBy( dx, dy );
-    // $$$$ SBO 2007-07-05: set action time
+    if( &timing == action_.Retrieve< ActionTiming >() )
+    {
+        setX( parentItem_.width() + timing.GetTime() ); // $$$$ SBO 2007-07-05: 
+        setVisible( timing.IsEnabled() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineActionItem::setVisible
+// Created: SBO 2007-07-05
+// -----------------------------------------------------------------------------
+void TimelineActionItem::setVisible( bool visible )
+{
+    QCanvasRectangle::setVisible( visible );
+    if( ActionTiming* timing = const_cast< ActionTiming* >( action_.Retrieve< ActionTiming >() ) )
+    {
+        if( timing->IsEnabled() != isVisible() )
+            timing->ToggleEnabled();
+        setX( parentItem_.width() + timing->GetTime() ); // $$$$ SBO 2007-07-05: 
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineActionItem::Shift
+// Created: SBO 2007-07-06
+// -----------------------------------------------------------------------------
+void TimelineActionItem::Shift( long shift )
+{
+    if( ActionTiming* timing = const_cast< ActionTiming* >( action_.Retrieve< ActionTiming >() ) )
+        timing->Shift( shift ); // $$$$ SBO 2007-07-06: 
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineActionItem::Update
+// Created: SBO 2007-07-06
+// -----------------------------------------------------------------------------
+void TimelineActionItem::Update()
+{
+    setY( parentItem_.y() + 3 );
+    setSize( 100, parentItem_.height() - 5 );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,16 +98,13 @@ void TimelineActionItem::moveBy( double dx, double dy )
 // -----------------------------------------------------------------------------
 void TimelineActionItem::draw( QPainter& painter )
 {
+    Update();
+
     const QPalette::ColorGroup colorGroup = isSelected() ? QPalette::Active : QPalette::Inactive;
     const QPen oldPen = painter.pen();
-
-    setY( parentItem_.y() + 3 );
-    setSize( 100, parentItem_.height() - 5 );
-
     painter.fillRect( rect(), palette_.color( colorGroup, QColorGroup::Background ) );
     painter.setPen( palette_.color( colorGroup, QColorGroup::Foreground ) );
     painter.drawRect( rect() );
     painter.drawText( rect(), Qt::AlignLeft | Qt::AlignVCenter, " " + action_.GetName() );
-
     painter.setPen( oldPen );
 }

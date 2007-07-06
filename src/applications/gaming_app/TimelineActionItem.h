@@ -10,10 +10,16 @@
 #ifndef __TimelineActionItem_h_
 #define __TimelineActionItem_h_
 
-#include <qcanvas.h>
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "TimelineItem_ABC.h"
 
-class TimelineEntityItem;
+namespace kernel
+{
+    class Controllers;
+}
+
 class Action_ABC;
+class ActionTiming;
 
 // =============================================================================
 /** @class  TimelineActionItem
@@ -21,19 +27,23 @@ class Action_ABC;
 */
 // Created: SBO 2007-07-04
 // =============================================================================
-class TimelineActionItem : public QCanvasRectangle
+class TimelineActionItem : public TimelineItem_ABC
+                         , public kernel::Observer_ABC
+                         , public kernel::ElementObserver_ABC< ActionTiming >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineActionItem( TimelineEntityItem& parent, const Action_ABC& action );
+             TimelineActionItem( const TimelineItem_ABC& parent, kernel::Controllers& controllers, const Action_ABC& action );
     virtual ~TimelineActionItem();
     //@}
 
     //! @name Operations
     //@{
-    virtual void moveBy( double dx, double dy );
+    virtual void Update();
+    virtual void setVisible( bool visible );
+    void Shift( long shift );
     //@}
 
 private:
@@ -46,12 +56,14 @@ private:
     //! @name Helpers
     //@{
     virtual void draw( QPainter& painter );
+    virtual void NotifyUpdated( const ActionTiming& timing );
     //@}
 
 private:
     //! @name Member data
     //@{
-    TimelineEntityItem& parentItem_;
+    kernel::Controllers& controllers_;
+    const TimelineItem_ABC& parentItem_;
     const Action_ABC& action_;
 
     QPalette palette_;

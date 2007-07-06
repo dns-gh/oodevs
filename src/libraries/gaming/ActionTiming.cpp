@@ -26,6 +26,7 @@ ActionTiming::ActionTiming( kernel::Controller& controller, const Simulation& si
     , startDay_( simulation.GetDay() )
     , startTime_( simulation.GetTime() )
     , enabled_( true )
+    , time_( 0 )
 {
     // NOTHING
 }
@@ -41,6 +42,7 @@ ActionTiming::ActionTiming( xml::xistream& xis, kernel::Controller& controller, 
     , startDay_( simulation.GetDay() )
     , startTime_( simulation.GetTime() )
     , enabled_( true )
+    , time_( 0 )
 {
     // NOTHING
 }
@@ -100,4 +102,23 @@ void ActionTiming::ToggleEnabled()
 bool ActionTiming::IsEnabled() const
 {
     return enabled_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionTiming::GetTime
+// Created: SBO 2007-07-05
+// -----------------------------------------------------------------------------
+unsigned long ActionTiming::GetTime() const
+{
+    return time_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionTiming::Shift
+// Created: SBO 2007-07-06
+// -----------------------------------------------------------------------------
+void ActionTiming::Shift( long shift )
+{
+    time_ = std::max< long >( 0, long( time_ ) + shift );
+    controller_.Update( *this );
 }
