@@ -42,10 +42,10 @@ SaverFacade::~SaverFacade()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SaverFacade::Save
+// Name: SaverFacade::Receive
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-void SaverFacade::Save( const ASN1T_MsgsSimToClient& asnMsg )
+void SaverFacade::Receive( const ASN1T_MsgsSimToClient& asnMsg )
 {
     if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_begin_tick )
         StartFrame( const_cast< ASN1T_MsgsSimToClient& >( asnMsg ) );

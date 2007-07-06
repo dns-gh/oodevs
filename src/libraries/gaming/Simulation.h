@@ -48,7 +48,7 @@ public:
     void ChangeSpeed( int timeFactor );
     void Update( const ASN1T_MsgControlInformation& asnMsg );
     void Update( const ASN1T_MsgControlReplayInformation& asnMsg );
-    void Update( const ProfilingValuesMessage& message );
+    void Update( const ASN1T_MsgControlProfilingInformation& message );
     void BeginTick( int tick );
     void EndTick( const ASN1T_MsgControlEndTick& asnMsg );
 

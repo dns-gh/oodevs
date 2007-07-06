@@ -51,7 +51,7 @@ void PHY_MovingEntity_ABC::MoveCanceled( DEC_PathResult& path )
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
 inline
-void PHY_MovingEntity_ABC::SerializeEnvironmentType( DIN::DIN_BufferedMessage& msg ) const
+void PHY_MovingEntity_ABC::SerializeEnvironmentType( ASN1T_MsgUnitEnvironmentType& msg ) const
 {
     pathWalker_.SerializeEnvironmentType( msg );
 }

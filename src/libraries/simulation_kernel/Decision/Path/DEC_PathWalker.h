@@ -27,9 +27,6 @@
 class MIL_Object_ABC;
 class TerrainData;
 class PHY_MovingEntity_ABC;
-namespace DIN {
-    class DIN_BufferedMessage;
-}
 
 // =============================================================================
 // Created: NLD 2005-09-30
@@ -78,8 +75,8 @@ public:
 
     //! @name Network
     //@{
-    void SerializeEnvironmentType( DIN::DIN_BufferedMessage& msg ) const;
-    bool SerializeCurrentPath    ( ASN1T_Path& asn         ) const;
+    void SerializeEnvironmentType( ASN1T_MsgUnitEnvironmentType& msg ) const;
+    bool SerializeCurrentPath    ( ASN1T_Path& asn                   ) const;
     //@}
 
 private:

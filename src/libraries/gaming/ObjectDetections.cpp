@@ -41,15 +41,10 @@ ObjectDetections::~ObjectDetections()
 // Name: ObjectDetections::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void ObjectDetections::DoUpdate( const ObjectDetectionMessage& message )
+void ObjectDetections::DoUpdate( const ASN1T_MsgObjectDetection& message )
 {
-    unsigned long  id;
-    unsigned char  nObjectVisType;
-
-    message >> id >> nObjectVisType;
-    Object_ABC* object = & resolver_.Get( id );
-
-    if( nObjectVisType == eVisTypeInvisible )
+    Object_ABC* object = & resolver_.Get( message.object_oid );
+    if( message.visibility == EnumUnitVisibility::invisible )
         perceivedObjects_.erase( object );
     else
         perceivedObjects_.insert( object );

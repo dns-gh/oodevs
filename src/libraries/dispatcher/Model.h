@@ -12,11 +12,7 @@
 
 #include "game_asn/Asn.h"
 #include "ModelsContainer.h"
-
-namespace DIN
-{
-    class DIN_Input;
-}
+#include "MessageHandler_ABC.h"
 
 namespace dispatcher
 {
@@ -50,7 +46,7 @@ class FireEffect;
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Model
+class Model : public MessageHandler_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -63,8 +59,8 @@ public:
     //@{
     void Reset();
 
+    virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg );
     void Update( const ASN1T_MsgsSimToClient& asnMsg );
-    void Update( unsigned int nMsgID, DIN::DIN_Input& input );
 
     void Send  ( Publisher_ABC& publisher ) const;
     //@}

@@ -50,19 +50,16 @@ VisionCones::~VisionCones()
 // Name: VisionCones::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void VisionCones::DoUpdate( const VisionConesMessage& message )
+void VisionCones::DoUpdate( const ASN1T_MsgUnitVisionCones& message )
 {
     for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
         delete *itSurface;
-    surfaces_.clear();
-    unsigned long nNbrSurfaces;
-    message >> nNbrSurfaces;
-    surfaces_.reserve( nNbrSurfaces );
-    for( uint i = 0; i < nNbrSurfaces; ++i )
-        surfaces_.push_back( factory_.CreateSurface( agent_, message ) );
-    message >> elongationFactor_;
-    for( uint i = 0; i < nNbrSurfaces; ++i )
-        surfaces_[ i ]->SetElongation( elongationFactor_ );
+    elongationFactor_ = message.elongation;
+    
+    surfaces_.resize( message.cones.n );
+    for( unsigned i = 0; i < message.cones.n; ++i )
+        surfaces_[i] = factory_.CreateSurface( agent_, message.cones.elem[i], elongationFactor_ );
+    
     Invalidate();
 }
 

@@ -10,14 +10,6 @@
 #ifndef __Dispatcher_h_
 #define __Dispatcher_h_
 
-struct ASN1T_MsgsInClient;
-struct ASN1T_MsgsInSim;
-
-namespace DIN
-{
-    class DIN_Input;
-}
-
 namespace dispatcher
 {
 class Config;

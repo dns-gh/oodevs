@@ -38,19 +38,6 @@ static enum
 
     eMsgClientToMiddle                         = 4,
     eMsgMiddleToClient                         = 5,
-
-    eMsgEnableUnitVisionCones                  = 1000,
-    eMsgDisableUnitVisionCones                 = 1001,
-    eMsgEnableProfiling                        = 1003,
-    eMsgDisableProfiling                       = 1004,
-    eMsgUnitVisionCones                        = 1005,
-    eMsgProfilingValues                        = 1008,
-    eMsgUnitInterVisibility                    = 1009,
-    eMsgObjectInterVisibility                  = 1010,
-    eMsgPopulationConcentrationInterVisibility = 1011,
-    eMsgPopulationFlowInterVisibility          = 1012,
-    eMsgDebugDrawPoints                        = 1015,
-    eMsgEnvironmentType                        = 1016,
 };
 //@}
 
@@ -64,11 +51,6 @@ NET_AS_MOSServerMsgMgr::NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer )
 {
     messageService_.RegisterReceivedMessage( eMsgClientToSim           , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgClientToSim            );
     messageService_.RegisterReceivedMessage( eMsgMiddleToSim           , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgMiddleToSim            );
-    messageService_.RegisterReceivedMessage( eMsgEnableUnitVisionCones , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgEnableUnitVisionCones  );
-    messageService_.RegisterReceivedMessage( eMsgDisableUnitVisionCones, *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgDisableUnitVisionCones );
-    messageService_.RegisterReceivedMessage( eMsgEnableProfiling       , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgEnableProfiling        );
-    messageService_.RegisterReceivedMessage( eMsgDisableProfiling      , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgDisableProfiling       );
-    messageService_.RegisterReceivedMessage( eMsgDebugDrawPoints       , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgDebugDrawPoints        );
 
     messageService_.SetCbkOnError( & NET_AS_MOSServerMsgMgr::OnError );
 }
@@ -146,117 +128,6 @@ void NET_AS_MOSServerMsgMgr::DeleteMessagesFrom( DIN_Link& dinLink )
             else
                 ++it;
     }
-}
-
-//=============================================================================
-// MESSAGES : MISC
-//=============================================================================
-
-//-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgProfilingValues
-// Created: NLD 2002-10-14
-//-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::SendMsgProfilingValues( DIN_BufferedMessage& msg )
-{
-    SendMsgToAll( eMsgProfilingValues, msg );
-}
-
-//=============================================================================
-// MESSAGES : DEBUG
-//=============================================================================
-
-//-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgProfilingValues
-// Created: SBO 2005-07-05
-//-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveMsgDebugDrawPoints( DIN_Link& /*linkFrom*/, DIN_Input& input )
-{
-    //$$$ A Améliorer copie de buffer 
-    uint32 nId;
-    uint32 nSize;
-    double rTmpX;
-    double rTmpY;
-
-    input >> nId;
-    input >> nSize;
-
-    DIN_BufferedMessage dinMsg = BuildMessage();
-
-    dinMsg << (uint32)nId;
-    dinMsg << (uint32)nSize;
-    for( uint i = 0; i < nSize; i++ )
-    {
-        input  >> rTmpX;
-        input  >> rTmpY;
-
-        dinMsg << rTmpX;
-        dinMsg << rTmpY;
-
-    }
-    SendMsgDebugDrawPoints( dinMsg );
-}
-
-//-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgUnitVisionCones
-// Created: NLD 2003-02-12
-//-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::SendMsgUnitVisionCones( DIN_BufferedMessage& msg )
-{
-    SendMsgToAll( eMsgUnitVisionCones, msg );
-}
-
-//-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgUnitInterVisibility
-// Created: NLD 2003-03-17
-//-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::SendMsgUnitInterVisibility( DIN::DIN_BufferedMessage& msg )
-{
-    SendMsgToAll( eMsgUnitInterVisibility, msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgObjectInterVisibility
-// Created: NLD 2004-03-23
-// -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::SendMsgObjectInterVisibility( DIN::DIN_BufferedMessage& msg )
-{
-    SendMsgToAll( eMsgObjectInterVisibility, msg );    
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgPopulationConcentrationInterVisibility
-// Created: NLD 2005-10-12
-// -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::SendMsgPopulationConcentrationInterVisibility( DIN::DIN_BufferedMessage& msg )
-{
-    SendMsgToAll( eMsgPopulationConcentrationInterVisibility, msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgPopulationFlowInterVisibility
-// Created: NLD 2005-10-12
-// -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::SendMsgPopulationFlowInterVisibility( DIN::DIN_BufferedMessage& msg )
-{
-    SendMsgToAll( eMsgPopulationFlowInterVisibility, msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgDebugDrawPoints
-// Created: NLD 2005-03-22
-// -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::SendMsgDebugDrawPoints( DIN::DIN_BufferedMessage& msg )
-{
-    SendMsgToAll( eMsgDebugDrawPoints, msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgEnvironmentType
-// Created: SBO 2005-06-15
-// -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::SendMsgEnvironmentType( DIN::DIN_BufferedMessage& msg )
-{
-    SendMsgToAll( eMsgEnvironmentType, msg );
 }
 
 //=============================================================================
@@ -499,6 +370,7 @@ void NET_AS_MOSServerMsgMgr::DoUpdate( const T_MessageClientToSimControllerVecto
             case T_MsgsClientToSim_msg_msg_control_local_meteo                : workspace.GetMeteoDataManager     ().OnReceiveMsgLocalMeteo                  ( *asnMsg.msg.u.msg_control_local_meteo                       ); break;
             case T_MsgsClientToSim_msg_msg_control_checkpoint_save_now        : workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSaveNow           ( *asnMsg.msg.u.msg_control_checkpoint_save_now               ); break;
             case T_MsgsClientToSim_msg_msg_control_checkpoint_set_frequency   : workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSetFrequency      (  asnMsg.msg.u.msg_control_checkpoint_set_frequency          ); break;
+            case T_MsgsClientToSim_msg_msg_control_toggle_vision_cones        : agentServer_                        .SetMustSendUnitVisionCones              (  asnMsg.msg.u.msg_control_toggle_vision_cones               ); break;
             case T_MsgsClientToSim_msg_msg_limit_creation_request             : workspace.GetTacticalLineManager  ().OnReceiveMsgLimitCreationRequest        ( *asnMsg.msg.u.msg_limit_creation_request             , nCtx ); break;
             case T_MsgsClientToSim_msg_msg_limit_destruction_request          : workspace.GetTacticalLineManager  ().OnReceiveMsgLimitDestructionRequest     (  asnMsg.msg.u.msg_limit_destruction_request          , nCtx ); break;
             case T_MsgsClientToSim_msg_msg_limit_update_request               : workspace.GetTacticalLineManager  ().OnReceiveMsgLimitUpdateRequest          ( *asnMsg.msg.u.msg_limit_update_request               , nCtx ); break;
@@ -548,46 +420,6 @@ void NET_AS_MOSServerMsgMgr::DoUpdate( const T_MessageMiddleToSimControllerVecto
         }
         delete &msgCtrl;
     }
-}
-
-// =============================================================================
-// DEBUG MESSAGES
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::OnReceiveMsgEnableProfiling
-// Created: NLD 2005-03-15
-// -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveMsgEnableProfiling( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& /*input*/ )
-{
-    MIL_AgentServer::GetWorkspace().GetProfilerManager().EnableProfiling( );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::OnReceiveMsgDisableProfiling
-// Created: NLD 2005-03-15
-// -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveMsgDisableProfiling( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& /*input*/ )
-{
-    MIL_AgentServer::GetWorkspace().GetProfilerManager().DisableProfiling();
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::OnReceiveMsgEnableUnitVisionCones
-// Created: NLD 2003-10-24
-// -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveMsgEnableUnitVisionCones( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& /*input*/ )
-{
-    agentServer_.SetMustSendUnitVisionCones( true );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::OnReceiveMsgDisableUnitVisionCones
-// Created: NLD 2003-10-24
-// -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveMsgDisableUnitVisionCones( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& /*input*/ )
-{
-    agentServer_.SetMustSendUnitVisionCones( false );
 }
 
 //=============================================================================

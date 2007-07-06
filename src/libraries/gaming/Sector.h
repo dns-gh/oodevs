@@ -26,7 +26,7 @@ class Sector
 {
 
 public:
-             Sector( const geometry::Point2f& origin, const geometry::Vector2f& direction, float rAngle );
+             Sector( const geometry::Point2f& origin, unsigned heading, float rAngle );
              Sector();
     virtual ~Sector();
 

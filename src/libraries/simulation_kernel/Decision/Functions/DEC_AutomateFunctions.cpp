@@ -29,10 +29,9 @@
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/MIL_Army.h"
-#include "Network/NET_AS_MOSServerMsgMgr.h"
-#include "Network/NET_AgentServer.h"
-#include "Decision/DEC_Tools.h"
 #include "Network/NET_ASN_Messages.h"
+#include "Network/NET_ASN_Tools.h"
+#include "Decision/DEC_Tools.h"
     
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::GetPionsWithoutPC
@@ -172,14 +171,11 @@ void DEC_AutomateFunctions::DebugDrawPoints( DIA_Call_ABC& call, const MIL_Autom
     T_PointVector* pPoints = call.GetParameter( 0 ).ToUserPtr( pPoints );
     assert( pPoints );
 
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
-    DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
-    
-    dinMsg << (uint32)callerAutomate.GetID();
-    dinMsg << (uint32)pPoints->size();
-    for( CIT_PointVector itPoint = pPoints->begin(); itPoint != pPoints->end(); ++itPoint )
-        dinMsg << *itPoint;
-    msgMgr.SendMsgDebugDrawPoints( dinMsg );
+    NET_ASN_MsgDebugPoints asn;
+    asn().unit_id = callerAutomate.GetID();
+    NET_ASN_Tools::WriteCoordinates( *pPoints, asn().coordinates );
+    asn.Send();
+    NET_ASN_Tools::Delete( asn().coordinates );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,13 +189,13 @@ void DEC_AutomateFunctions::DebugDrawPoint( DIA_Call_ABC& call, const MIL_Automa
     const MT_Vector2D* pPoint = call.GetParameter( 0 ).ToUserPtr( pPoint );
     assert( pPoint );
 
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
-    DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
-    
-    dinMsg << (uint32)callerAutomate.GetID();
-    dinMsg << (uint32)1;
-    dinMsg << *pPoint;
-    msgMgr.SendMsgDebugDrawPoints( dinMsg );
+    NET_ASN_MsgDebugPoints asn;
+    asn().unit_id = callerAutomate.GetID();
+    asn().coordinates.n = 1;
+    ASN1T_CoordUTM coord;
+    NET_ASN_Tools::WritePoint( *pPoint, coord );
+    asn().coordinates.elem = &coord;
+    asn.Send();
 }
 
 // -----------------------------------------------------------------------------

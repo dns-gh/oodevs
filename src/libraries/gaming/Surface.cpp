@@ -18,6 +18,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -26,32 +27,20 @@ using namespace kernel;
 // Name: Surface constructor
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-Surface::Surface( const Agent_ABC& agent, const VisionConesMessage& input, const DetectionMap& map, const Resolver_ABC< SensorType, QString >& resolver )
+Surface::Surface( const Agent_ABC& agent, const ASN1T_VisionCone& message, const kernel::CoordinateConverter_ABC& converter, const DetectionMap& map, const Resolver_ABC< SensorType, QString >& resolver )
     : agent_( agent )
     , map_( map )
+    , origin_( converter.ConvertToXY( message.origin ) )
+    , height_( message.height )
+    , sensorType_( resolver.Get( message.sensor ) )
     , elongation_( 1 )
     , distanceModificator_( 1 )
 {
-    double oX, oY, rHeight;
-    input >> oX >> oY; origin_ = Point2f( float( oX ), float( oY ) );
-    input >> rHeight; height_ = float( rHeight );
-
-    std::string strTypeName;
-    input >> strTypeName;
-
-    pSensorType_ = & resolver.Get( strTypeName.c_str() );
- 
-    unsigned long nNbrSectors;
-    input >> nNbrSectors;
-    sectors_.reserve( nNbrSectors );
-    for( uint i = 0; i < nNbrSectors; ++i )
-    {
-        double x, y;
-        input >> x >> y;
-        sectors_.push_back( Sector( origin_, Vector2f( float(x), float(y) ), pSensorType_->GetAngle() ) );
-    }
-    distanceModificator_ = elongation_ * pSensorType_->GetDistanceModificator( agent_ );
-    maxRadius_ = pSensorType_->GetMaxDistance( distanceModificator_ );
+    sectors_.reserve( message.directions.n );
+    for( uint i = 0; i < message.directions.n; ++i )
+        sectors_.push_back( Sector( origin_, message.directions.elem[i], sensorType_.GetAngle() ) );
+    distanceModificator_ = elongation_ * sensorType_.GetDistanceModificator( agent_ );
+    maxRadius_ = sensorType_.GetMaxDistance( distanceModificator_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,8 +50,8 @@ Surface::Surface( const Agent_ABC& agent, const VisionConesMessage& input, const
 void Surface::SetElongation( float elongation )
 {
     elongation_ = elongation;
-    distanceModificator_ = elongation_ * pSensorType_->GetDistanceModificator( agent_ );
-    maxRadius_ = pSensorType_->GetMaxDistance( distanceModificator_ );
+    distanceModificator_ = elongation_ * sensorType_.GetDistanceModificator( agent_ );
+    maxRadius_ = sensorType_.GetMaxDistance( distanceModificator_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,8 +145,8 @@ bool Surface::IsInSector( const geometry::Point2f& point ) const
 // -----------------------------------------------------------------------------
 E_PerceptionResult Surface::ComputePerception( const geometry::Point2f& point ) const
 {
-    distanceModificator_ = elongation_ * pSensorType_->GetDistanceModificator( agent_ );
-    maxRadius_ = pSensorType_->GetMaxDistance( distanceModificator_ );
+    distanceModificator_ = elongation_ * sensorType_.GetDistanceModificator( agent_ );
+    maxRadius_ = sensorType_.GetMaxDistance( distanceModificator_ );
 
     VisionLine line( map_, origin_, point, height_ + agent_.Get< Positions >().GetHeight() );
     float skyrock = std::numeric_limits< float >::infinity();
@@ -165,11 +154,11 @@ E_PerceptionResult Surface::ComputePerception( const geometry::Point2f& point ) 
     {
         line.Increment();
         if( skyrock == std::numeric_limits< float >::infinity() )
-            skyrock = pSensorType_->ComputeExtinction( distanceModificator_,
+            skyrock = sensorType_.ComputeExtinction( distanceModificator_,
                 line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length() );
         else
-            skyrock = pSensorType_->ComputeExtinction( distanceModificator_, skyrock,
+            skyrock = sensorType_.ComputeExtinction( distanceModificator_, skyrock,
                 line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length() );
     }
-    return pSensorType_->InterpreteNRJ( skyrock );
+    return sensorType_.InterpreteNRJ( skyrock );
 }

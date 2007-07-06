@@ -11,7 +11,6 @@
 #define __VisionCones_h_
 
 #include "game_asn/Asn.h"
-#include "DIN_Types.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
@@ -36,7 +35,7 @@ class VisionMap;
 // Created: AGE 2006-02-14
 // =============================================================================
 class VisionCones : public kernel::Extension_ABC
-                  , public kernel::Updatable_ABC< VisionConesMessage >
+                  , public kernel::Updatable_ABC< ASN1T_MsgUnitVisionCones >
                   , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
                   , public kernel::Drawable_ABC
 {
@@ -69,7 +68,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const VisionConesMessage& message );
+    virtual void DoUpdate( const ASN1T_MsgUnitVisionCones& message );
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     void Invalidate();
     void Update() const;

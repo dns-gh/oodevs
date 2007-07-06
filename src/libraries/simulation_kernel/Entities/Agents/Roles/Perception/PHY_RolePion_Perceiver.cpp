@@ -1222,16 +1222,19 @@ bool PHY_RolePion_Perceiver::HasDelayedPerceptions() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::SendDebugState() const
 {
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
-    DIN::DIN_BufferedMessage msg = msgMgr.BuildMessage();
-    
-    assert( pPion_ );
-    msg << (uint32)pPion_->GetID();
-    msg << (uint32)surfacesAgent_.size();
+    NET_ASN_MsgUnitVisionCones asn;
+    asn().unit_oid = pPion_->GetID();
+    asn().elongation = GetRole< PHY_RolePion_Posture >().GetElongationFactor();
+    asn().cones.n = surfacesAgent_.size();
+    asn().cones.elem = asn().cones.n ? new ASN1T_VisionCone[ asn().cones.n ] : 0;
+    unsigned i = 0;
     for( CIT_SurfaceAgentMap it = surfacesAgent_.begin(); it != surfacesAgent_.end(); ++it )
-        it->second.SendFullState( msg );
-    msg << GetRole< PHY_RolePion_Posture >().GetElongationFactor();
-    msgMgr.SendMsgUnitVisionCones( msg );
+        it->second.SendFullState( asn().cones.elem[ i++ ] );
+    asn.Send();
+
+    for( unsigned i = 0; i < asn().cones.n; ++i )
+        delete[] asn().cones.elem[i].directions.elem;
+    delete[] asn().cones.elem;
 }
 
 // -----------------------------------------------------------------------------

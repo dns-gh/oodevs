@@ -11,7 +11,6 @@
 #define __Reports_h_
 
 #include "game_asn/Asn.h"
-#include "DIN_Types.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"

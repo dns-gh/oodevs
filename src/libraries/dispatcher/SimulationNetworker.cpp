@@ -39,14 +39,6 @@ SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, const Config& 
 {
     GetMessageService().RegisterReceivedMessage( eMsgSimToClient                           , *this, &SimulationNetworker::OnReceiveMsgSimToClient                            );
     GetMessageService().RegisterReceivedMessage( eMsgSimToMiddle                           , *this, &SimulationNetworker::OnReceiveMsgSimToMiddle                            );
-    GetMessageService().RegisterReceivedMessage( eMsgProfilingValues                       , *this, &SimulationNetworker::OnReceiveMsgProfilingValues                        );
-    GetMessageService().RegisterReceivedMessage( eMsgUnitVisionCones                       , *this, &SimulationNetworker::OnReceiveMsgUnitVisionCones                        );
-    GetMessageService().RegisterReceivedMessage( eMsgUnitInterVisibility                   , *this, &SimulationNetworker::OnReceiveMsgUnitInterVisibility                    );
-    GetMessageService().RegisterReceivedMessage( eMsgObjectInterVisibility                 , *this, &SimulationNetworker::OnReceiveMsgObjectInterVisibility                  );
-    GetMessageService().RegisterReceivedMessage( eMsgPopulationConcentrationInterVisibility, *this, &SimulationNetworker::OnReceiveMsgPopulationConcentrationInterVisibility );
-    GetMessageService().RegisterReceivedMessage( eMsgPopulationFlowInterVisibility         , *this, &SimulationNetworker::OnReceiveMsgPopulationFlowInterVisibility          );
-    GetMessageService().RegisterReceivedMessage( eMsgDebugDrawPoints                       , *this, &SimulationNetworker::OnReceiveMsgDebugDrawPoints                        );
-    GetMessageService().RegisterReceivedMessage( eMsgEnvironmentType                       , *this, &SimulationNetworker::OnReceiveMsgEnvironmentType                        );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,23 +98,6 @@ void SimulationNetworker::OnConnectionLost( DIN_Link& link, const DIN_ErrorDescr
 // RECEIVED MESSAGES
 // =============================================================================
 
-#define DECLARE_DIN_CALLBACK( MSG )                                                                \
-    void SimulationNetworker::OnReceiveMsg##MSG( DIN::DIN_Link& linkFrom, DIN::DIN_Input& msg )    \
-    {                                                                                              \
-        assert( pSimulation_ && pSimulation_ == &Simulation::GetSimulationFromLink( linkFrom ) );  \
-        pSimulation_->OnReceive( eMsg##MSG, msg );                                                 \
-    }
-
-DECLARE_DIN_CALLBACK( ProfilingValues                        )
-DECLARE_DIN_CALLBACK( UnitVisionCones                        )
-DECLARE_DIN_CALLBACK( UnitInterVisibility                    )
-DECLARE_DIN_CALLBACK( ObjectInterVisibility                  )
-DECLARE_DIN_CALLBACK( PopulationConcentrationInterVisibility )
-DECLARE_DIN_CALLBACK( PopulationFlowInterVisibility          )
-DECLARE_DIN_CALLBACK( DebugDrawPoints                        )
-DECLARE_DIN_CALLBACK( EnvironmentType                        )
-
-
 // -----------------------------------------------------------------------------
 // Name: SimulationNetworker::OnReceiveMsgSimToClient
 // Created: NLD 2006-09-21
@@ -174,8 +149,7 @@ void SimulationNetworker::Send( const ASN1T_MsgsClientToSim& asnMsg )
     assert( pSimulation_ );
     try
     {
-        AsnMessageEncoder< ASN1T_MsgsClientToSim, ASN1C_MsgsClientToSim > asnEncoder( GetMessageService(), asnMsg );
-        pSimulation_->Send( asnMsg, asnEncoder.GetDinMsg() );
+        pSimulation_->Send( asnMsg );
     }
     catch( std::runtime_error& exception )
     {
@@ -192,25 +166,10 @@ void SimulationNetworker::Send( const ASN1T_MsgsMiddleToSim& asnMsg )
     assert( pSimulation_ );
     try
     {
-        AsnMessageEncoder< ASN1T_MsgsMiddleToSim, ASN1C_MsgsMiddleToSim > asnEncoder( GetMessageService(), asnMsg );
-        pSimulation_->Send( asnMsg, asnEncoder.GetDinMsg() );
+        pSimulation_->Send( asnMsg );
     }
     catch( std::runtime_error& exception )
     {
         MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimulationNetworker::Send
-// Created: NLD 2006-09-21
-// -----------------------------------------------------------------------------
-void SimulationNetworker::Send( unsigned int nMsgID, const DIN::DIN_Input& dinMsg )
-{
-    assert( pSimulation_ );
-
-    DIN_BufferedMessage copiedMsg( GetMessageService() );
-    copiedMsg.GetOutput().Append( dinMsg.GetBuffer( 0 ), dinMsg.GetAvailable() );
-
-    pSimulation_->Send( nMsgID, copiedMsg );
 }

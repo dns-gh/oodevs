@@ -39,6 +39,8 @@ MsgControlSkipToTickAck ::= SEQUENCE
     error-code  EnumControlErrorCode
 }
 
+MsgControlToggleVisionCones ::= BOOLEAN
+
 MsgControlChangeTimeFactor    ::= INTEGER
 MsgControlChangeTimeFactorAck ::= SEQUENCE
 {
@@ -84,6 +86,14 @@ MsgControlReplayInformation ::= SEQUENCE
     time-factor             INTEGER,
     status                  EnumSimulationState,
     tick-count              INTEGER
+}
+
+MsgControlProfilingInformation ::= SEQUENCE
+{
+    perception              REAL, 
+    decision                REAL,
+    action                  REAL,
+    main-loop               REAL
 }
 
 ----------------

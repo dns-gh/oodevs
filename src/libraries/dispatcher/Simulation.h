@@ -14,11 +14,6 @@
 #include "game_asn/Asn.h"
 #include "tools/Server_ABC.h"
 
-namespace DIN
-{
-    class DIN_Input;
-}
-
 namespace dispatcher
 {
     class Config;
@@ -44,15 +39,11 @@ public:
 
     //! @name Messages
     //@{
-            void OnReceive( const ASN1T_MsgsSimToClient& asnMsg );
-            void OnReceive( const ASN1T_MsgsSimToMiddle& asnMsg );
-            void OnReceive( unsigned int nMsgID, DIN::DIN_Input& dinMsg );
+   void OnReceive( const ASN1T_MsgsSimToClient& asnMsg );
+   void OnReceive( const ASN1T_MsgsSimToMiddle& asnMsg );
 
-    virtual void Send     ( const ASN1T_MsgsMiddleToSim& asnMsg );
-            void Send     ( const ASN1T_MsgsMiddleToSim& asnMsg, const DIN::DIN_BufferedMessage& dinMsg );    
-    virtual void Send     ( const ASN1T_MsgsClientToSim& asnMsg );
-            void Send     ( const ASN1T_MsgsClientToSim& asnMsg, const DIN::DIN_BufferedMessage& dinMsg );
-            void Send     ( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg );
+    virtual void Send( const ASN1T_MsgsMiddleToSim& asnMsg );
+    virtual void Send( const ASN1T_MsgsClientToSim& asnMsg );
     //@}
 
     //! @name Tools

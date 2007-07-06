@@ -14,8 +14,9 @@
 
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "MIL_AgentServer.h"
-#include "Network/NET_AS_MOSServerMsgMgr.h"
 #include "Network/NET_AgentServer.h"
+#include "Network/NET_ASN_Messages.h"
+#include "Network/NET_ASN_Tools.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_Population.h"
@@ -23,8 +24,6 @@
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationFlowPerception, "DEC_Knowledge_PopulationFlowPerception" )
-
-using namespace DIN;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlowPerception constructor
@@ -236,15 +235,11 @@ void DEC_Knowledge_PopulationFlowPerception::SendStateToNewClient() const
 {
     assert( pPopulationKnowledge_ );
     assert( pPopulationFlowPerceived_ );
-
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
-    DIN_BufferedMessage msg = msgMgr.BuildMessage();
-    msg << (uint32)pPopulationKnowledge_->GetAgentPerceiving().GetID();
-    msg << (uint32)pPopulationKnowledge_->GetPopulationPerceived().GetID();
-    msg << (uint32)pPopulationFlowPerceived_->GetID();
-
-    msg << (uint32)shape_.size();
-    for( CIT_PointVector it = shape_.begin(); it != shape_.end(); ++it )
-        msg << *it;
-    msgMgr.SendMsgPopulationFlowInterVisibility( msg );
+    NET_ASN_MsgPopulationFlowDetection asn;
+    asn().unit_oid       = pPopulationKnowledge_->GetAgentPerceiving().GetID();
+    asn().population_oid = pPopulationKnowledge_->GetPopulationPerceived().GetID();
+    asn().flow_oid       = pPopulationFlowPerceived_->GetID();
+    NET_ASN_Tools::WritePath( shape_, asn().visible_flow );
+    asn.Send();
+    NET_ASN_Tools::Delete( asn().visible_flow );
 }

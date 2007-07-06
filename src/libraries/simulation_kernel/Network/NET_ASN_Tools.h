@@ -218,6 +218,7 @@ public:
     static void Delete( ASN1T_ObjectKnowledgeList&  asn );
     static void Delete( ASN1T_LogMedicalPriorities&       asn );
     static void Delete( ASN1T_LogMaintenancePriorities& asn );
+    static void Delete( ASN1T_CoordUTMList& asn );
     //@}
 
     //! @name Decoding tools
@@ -233,17 +234,18 @@ public:
 
     //! @name Encoding tools
     //@{
-    static bool WriteLine     ( const T_PointVector&    points      , ASN1T_Line&        asn );
-    static void WriteLine     ( const TER_Localisation& localisation, ASN1T_Line&        asn );
-    static void WriteDirection( const MT_Vector2D&      vDir        , ASN1T_Heading&     asn );
-    static void WriteLocation ( const TER_Localisation& localisation, ASN1T_Location&    asn );
-    static void WritePoint    ( const MT_Vector2D&      vPoint      , ASN1T_Point&       asn );
-    static void WritePoint    ( const MT_Vector2D&      vPoint      , ASN1T_CoordUTM&    asn );
-    static void WritePointList( const T_PointList&      points      , ASN1T_PointList&   asn );
-    static void WriteEllipse  ( const MT_Ellipse&       ellipse     , ASN1T_Location&    asn );
-    static void WritePath     ( const T_PointList&      points      , ASN1T_Path&        asn );
-    static void WritePath     ( const T_PointVector&    points      , ASN1T_Path&        asn );
-    static void WriteGenObject( const DEC_Gen_Object&   object      , ASN1T_PlannedWork& asn );
+    static bool WriteCoordinates( const T_PointVector&    points      , ASN1T_CoordUTMList& asn );
+    static bool WriteLine       ( const T_PointVector&    points      , ASN1T_Line&         asn );
+    static void WriteLine       ( const TER_Localisation& localisation, ASN1T_Line&         asn );
+    static void WriteDirection  ( const MT_Vector2D&      vDir        , ASN1T_Heading&      asn );
+    static void WriteLocation   ( const TER_Localisation& localisation, ASN1T_Location&     asn );
+    static void WritePoint      ( const MT_Vector2D&      vPoint      , ASN1T_Point&        asn );
+    static void WritePoint      ( const MT_Vector2D&      vPoint      , ASN1T_CoordUTM&     asn );
+    static void WritePointList  ( const T_PointList&      points      , ASN1T_PointList&    asn );
+    static void WriteEllipse    ( const MT_Ellipse&       ellipse     , ASN1T_Location&     asn );
+    static void WritePath       ( const T_PointList&      points      , ASN1T_Path&         asn );
+    static void WritePath       ( const T_PointVector&    points      , ASN1T_Path&         asn );
+    static void WriteGenObject  ( const DEC_Gen_Object&   object      , ASN1T_PlannedWork&  asn );
     //@}
 
 private:

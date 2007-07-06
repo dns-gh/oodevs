@@ -39,12 +39,6 @@ ClientsNetworker::ClientsNetworker( Dispatcher& dispatcher, const Config& config
 {
     GetMessageService().RegisterReceivedMessage( eMsgClientToSim           , *this, &ClientsNetworker::OnReceiveMsgClientToSim            );
     GetMessageService().RegisterReceivedMessage( eMsgClientToMiddle        , *this, &ClientsNetworker::OnReceiveMsgClientToMiddle         );
-    GetMessageService().RegisterReceivedMessage( eMsgEnableUnitVisionCones , *this, &ClientsNetworker::OnReceiveMsgEnableUnitVisionCones  );
-    GetMessageService().RegisterReceivedMessage( eMsgDisableUnitVisionCones, *this, &ClientsNetworker::OnReceiveMsgDisableUnitVisionCones );
-    GetMessageService().RegisterReceivedMessage( eMsgEnableProfiling       , *this, &ClientsNetworker::OnReceiveMsgEnableProfiling        );
-    GetMessageService().RegisterReceivedMessage( eMsgDisableProfiling      , *this, &ClientsNetworker::OnReceiveMsgDisableProfiling       );
-    GetMessageService().RegisterReceivedMessage( eMsgUnitMagicAction       , *this, &ClientsNetworker::OnReceiveMsgUnitMagicAction        );
-    GetMessageService().RegisterReceivedMessage( eMsgDebugDrawPoints       , *this, &ClientsNetworker::OnReceiveMsgDebugDrawPoints        );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,12 +52,6 @@ ClientsNetworker::ClientsNetworker( Replayer& replayer, const Config& config )
 {
     GetMessageService().RegisterReceivedMessage( eMsgClientToSim           , *this, &ClientsNetworker::OnReceiveMsgClientToSim            );
     GetMessageService().RegisterReceivedMessage( eMsgClientToMiddle        , *this, &ClientsNetworker::OnReceiveMsgClientToMiddle         );
-    GetMessageService().RegisterReceivedMessage( eMsgEnableUnitVisionCones , *this, &ClientsNetworker::OnReceiveMsgEnableUnitVisionCones  );
-    GetMessageService().RegisterReceivedMessage( eMsgDisableUnitVisionCones, *this, &ClientsNetworker::OnReceiveMsgDisableUnitVisionCones );
-    GetMessageService().RegisterReceivedMessage( eMsgEnableProfiling       , *this, &ClientsNetworker::OnReceiveMsgEnableProfiling        );
-    GetMessageService().RegisterReceivedMessage( eMsgDisableProfiling      , *this, &ClientsNetworker::OnReceiveMsgDisableProfiling       );
-    GetMessageService().RegisterReceivedMessage( eMsgUnitMagicAction       , *this, &ClientsNetworker::OnReceiveMsgUnitMagicAction        );
-    GetMessageService().RegisterReceivedMessage( eMsgDebugDrawPoints       , *this, &ClientsNetworker::OnReceiveMsgDebugDrawPoints        );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,19 +126,6 @@ void ClientsNetworker::OnConnectionLost( DIN_Server& server, DIN_Link& link, con
 // RECEIVED MESSAGES
 // =============================================================================
 
-#define DECLARE_DIN_CALLBACK( MSG )                                                           \
-    void ClientsNetworker::OnReceiveMsg##MSG( DIN::DIN_Link& linkFrom, DIN::DIN_Input& msg )  \
-    {                                                                                         \
-        Client::GetClientFromLink( linkFrom ).OnReceive( eMsg##MSG, msg );                    \
-    }
-
-DECLARE_DIN_CALLBACK( EnableUnitVisionCones  )
-DECLARE_DIN_CALLBACK( DisableUnitVisionCones )
-DECLARE_DIN_CALLBACK( EnableProfiling        )
-DECLARE_DIN_CALLBACK( DisableProfiling       )
-DECLARE_DIN_CALLBACK( UnitMagicAction        )
-DECLARE_DIN_CALLBACK( DebugDrawPoints        )
-
 // -----------------------------------------------------------------------------
 // Name: ClientsNetworker::OnReceiveMsgClientToSim
 // Created: NLD 2006-09-21
@@ -223,17 +198,4 @@ void ClientsNetworker::Send( const ASN1T_MsgsMiddleToClient& asnMsg )
     {
         MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ClientsNetworker::Send
-// Created: NLD 2006-09-25
-// -----------------------------------------------------------------------------
-void ClientsNetworker::Send( unsigned int nMsgID, const DIN::DIN_Input& dinMsg )
-{
-    DIN_BufferedMessage copiedMsg( GetMessageService() );
-    copiedMsg.GetOutput().Append( dinMsg.GetBuffer( 0 ), dinMsg.GetAvailable() );
-
-    for( CIT_ClientSet it = clients_.begin(); it != clients_.end(); ++it )
-        (**it).Send( nMsgID, copiedMsg );
 }

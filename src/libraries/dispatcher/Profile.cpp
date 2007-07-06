@@ -214,6 +214,7 @@ bool Profile::CheckRights( const ASN1T_MsgsClientToSim& msg ) const
         case T_MsgsClientToSim_msg_msg_control_checkpoint_save_now           : return bSupervision_;
         case T_MsgsClientToSim_msg_msg_control_checkpoint_set_frequency      : return bSupervision_;
 
+        case T_MsgsClientToSim_msg_msg_control_toggle_vision_cones        : return true; // $$$$ AGE 2007-07-06: devrait etre un client to middle et par client ?
         case T_MsgsClientToSim_msg_msg_limit_creation_request             : return true;
         case T_MsgsClientToSim_msg_msg_limit_destruction_request          : return true;
         case T_MsgsClientToSim_msg_msg_limit_update_request               : return true;

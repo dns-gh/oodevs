@@ -102,10 +102,17 @@ GENERATE_EMPTY_ASN_MSG_SENDER( SimToClient, ControlSendCurrentStateBegin    , co
 GENERATE_EMPTY_ASN_MSG_SENDER( SimToClient, ControlSendCurrentStateEnd      , control_send_current_state_end       )
                                                                                             
 // Unit
-GENERATE_ASN_MSG_SENDER      ( SimToClient, UnitCreation              , unit_creation         )
-GENERATE_ASN_MSG_SENDER      ( SimToClient, UnitAttributes            , unit_attributes       )
-GENERATE_ASN_MSG_SENDER      ( SimToClient, UnitMagicActionAck        , unit_magic_action_ack )
-GENERATE_ASN_MSG_SENDER      ( SimToClient, UnitPathFind              , unit_pathfind         )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, UnitCreation                    , unit_creation         )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, UnitAttributes                  , unit_attributes       )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, UnitMagicActionAck              , unit_magic_action_ack )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, UnitPathFind                    , unit_pathfind         )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, UnitEnvironmentType             , unit_environment_type )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, UnitVisionCones                 , unit_vision_cones     )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, UnitDetection                   , unit_detection        )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, ObjectDetection                 , object_detection      )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, PopulationConcentrationDetection, population_concentration_detection      )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, PopulationFlowDetection,          population_flow_detection      )
+
 GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, UnitCreationRequestAck    , unit_creation_request_ack )
 
 // Automate
@@ -183,9 +190,10 @@ GENERATE_ASN_MSG_SENDER( SimToClient, SetAutomatModeAck        , set_automat_mod
 GENERATE_ASN_MSG_SENDER( SimToClient, PopulationMagicActionAck , population_magic_action_ack )
 
 // CR
-GENERATE_ASN_MSG_SENDER( SimToClient, Report, report )
-GENERATE_ASN_MSG_SENDER( SimToClient, Trace, trace )
+GENERATE_ASN_MSG_SENDER( SimToClient, Report,          report )
+GENERATE_ASN_MSG_SENDER( SimToClient, Trace,           trace )
 GENERATE_ASN_MSG_SENDER( SimToClient, DecisionalState, decisional_state )
+GENERATE_ASN_MSG_SENDER( SimToClient, DebugPoints,     debug_points )
 
 // Objects
 GENERATE_ASN_MSG_SENDER      ( SimToClient, ObjectCreation       , object_creation         )

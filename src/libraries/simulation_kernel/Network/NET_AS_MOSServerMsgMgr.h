@@ -49,19 +49,6 @@ public:
     
     //! @name Message sending
     //@{
-    // $$$ Tests
-    void SendMsgProfilingValues( DIN::DIN_BufferedMessage& msg );
-
-    // Debug
-    void SendMsgUnitVisionCones                       ( DIN::DIN_BufferedMessage& msg );
-    void SendMsgUnitInterVisibility                   ( DIN::DIN_BufferedMessage& msg );
-    void SendMsgObjectInterVisibility                 ( DIN::DIN_BufferedMessage& msg );
-    void SendMsgPopulationConcentrationInterVisibility( DIN::DIN_BufferedMessage& msg );
-    void SendMsgPopulationFlowInterVisibility         ( DIN::DIN_BufferedMessage& msg );
-    void SendMsgDebugDrawPoints                       ( DIN::DIN_BufferedMessage& msg );
-    void SendMsgEnvironmentType                       ( DIN::DIN_BufferedMessage& msg );
-    
-    // ASN
     void Send( ASN1T_MsgsSimToClient& asnMsg );
     //@}
 
@@ -83,12 +70,6 @@ private:
 
     //! @name Msg callbacks
     //@{     
-    void OnReceiveMsgDebugDrawPoints       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgEnableProfiling       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgDisableProfiling      ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgEnableUnitVisionCones ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgDisableUnitVisionCones( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    
     void OnReceiveMsgClientToSim           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgMiddleToSim           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 

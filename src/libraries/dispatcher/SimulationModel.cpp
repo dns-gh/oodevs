@@ -10,11 +10,8 @@
 #include "dispatcher_pch.h"
 #include "SimulationModel.h"
 #include "Network_Def.h"
-#include "DIN/DIN_Input.h"
-#include "DIN/MessageService/DIN_BufferedMessage.h"
 
 using namespace dispatcher;
-using namespace DIN;
 
 // -----------------------------------------------------------------------------
 // Name: SimulationModel constructor

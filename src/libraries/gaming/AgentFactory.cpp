@@ -132,7 +132,7 @@ Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomatCreation& asnMsg )
     result->Attach( *new Equipments( controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_ ) );
-    result->Attach( *new DebugPoints() );
+    result->Attach( *new DebugPoints( static_.coordinateConverter_ ) );
     result->Attach( *new ConvexHulls( *result ) );
     result->Attach( *new DecisionalStates() );
 
@@ -210,12 +210,12 @@ Population_ABC* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg 
 // -----------------------------------------------------------------------------
 void AgentFactory::AttachExtensions( Entity_ABC& agent )
 {
-    agent.Attach( *new DebugPoints() );
+    agent.Attach( *new DebugPoints( static_.coordinateConverter_ ) );
     agent.Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_ ) );
     agent.Attach( *new Paths( static_.coordinateConverter_ ) );
     agent.Attach( *new Reports( agent, controllers_.controller_, simulation_, static_.reportFactory_ ) );
     agent.Attach( *new ObjectDetections( controllers_.controller_, model_.objects_ ) );
-    agent.Attach( *new PopulationDetections( controllers_.controller_, model_.agents_, agent ) );
+    agent.Attach( *new PopulationDetections( controllers_.controller_, static_.coordinateConverter_, model_.agents_, agent ) );
     agent.Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
     agent.Attach( *new Fires( controllers_.controller_, model_.fireFactory_ ) );
 }

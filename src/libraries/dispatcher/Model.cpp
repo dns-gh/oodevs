@@ -37,7 +37,6 @@
 #include "SimulationModel.h"
 
 using namespace dispatcher;
-using namespace DIN;
 
 // -----------------------------------------------------------------------------
 // Name: Model constructor
@@ -86,6 +85,15 @@ void Model::Reset()
     knowledgeGroups_        .Clear();
     formations_             .Clear();
     sides_                  .Clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::Receive
+// Created: AGE 2007-07-05
+// -----------------------------------------------------------------------------
+void Model::Receive( const ASN1T_MsgsSimToClient& asnMsg )
+{
+    Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -248,33 +256,6 @@ void Model::UpdateAnyAgent( unsigned id, const T& message )
     else if( Population* popu = populations_.Find( id ) )
         popu->Update( message );
     else throw std::runtime_error( __FUNCTION__ " : Unknown entity" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Model::Update
-// Created: NLD 2006-09-25
-// -----------------------------------------------------------------------------
-void Model::Update( unsigned int nMsgID, DIN::DIN_Input& msg )
-{
-    // $$$$ AGE 2007-04-10: TODO
-//    switch( nMsgID )
-//    {
-//        case eMsgEnableUnitVisionCones                  : break;
-//        case eMsgDisableUnitVisionCones                 : break;
-//        case eMsgUnitMagicAction                        : break;
-//        case eMsgEnableProfiling                        : break;
-//        case eMsgDisableProfiling                       : break;
-//        case eMsgUnitVisionCones                        : break;
-//        case eMsgProfilingValues                        : break;
-//        case eMsgUnitInterVisibility                    : break;
-//        case eMsgObjectInterVisibility                  : break;
-//        case eMsgPopulationConcentrationInterVisibility : break;
-//        case eMsgPopulationFlowInterVisibility          : break;
-//        case eMsgDebugDrawPoints                        : break;
-//        case eMsgEnvironmentType                        : break;
-//        default:
-//            ;
-//    }
 }
 
 // -----------------------------------------------------------------------------

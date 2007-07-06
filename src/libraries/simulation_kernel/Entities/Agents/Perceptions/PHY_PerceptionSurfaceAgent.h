@@ -17,10 +17,6 @@ class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
 class DEC_Knowledge_Agent;
 
-namespace DIN
-{
-    class DIN_BufferedMessage;
-}
 
 //*****************************************************************************
 // Created: DFT 02-02-26
@@ -65,7 +61,7 @@ public:
 
     //! @name Network
     //@{
-    void SendFullState( DIN::DIN_BufferedMessage& msg ) const;
+    void SendFullState( ASN1T_VisionCone& msg ) const;
     //@}
 
 private:

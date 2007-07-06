@@ -11,13 +11,14 @@
 #define __SurfaceFactory_h_
 
 #include "clients_kernel/Resolver_ABC.h"
-#include "DIN_Types.h"
+#include "game_asn/asn.h"
 
 namespace kernel
 {
     class DetectionMap;
     class SensorType;
     class Agent_ABC;
+    class CoordinateConverter_ABC;
 }
 
 class Surface;
@@ -36,13 +37,13 @@ class SurfaceFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             SurfaceFactory( const kernel::DetectionMap& map, const kernel::Resolver_ABC< kernel::SensorType, QString >& resolver );
+             SurfaceFactory( const kernel::CoordinateConverter_ABC& converter, const kernel::DetectionMap& map, const kernel::Resolver_ABC< kernel::SensorType, QString >& resolver );
     virtual ~SurfaceFactory();
     //@}
 
     //! @name Operations
     //@{
-    Surface* CreateSurface( const kernel::Agent_ABC& agent, const VisionConesMessage& input );
+    Surface* CreateSurface( const kernel::Agent_ABC& agent, const ASN1T_VisionCone& input, float elongation );
     VisionMap* CreateVisionMap();
     //@}
 
@@ -56,6 +57,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::CoordinateConverter_ABC& converter_;
     const kernel::DetectionMap& map_;
     const kernel::Resolver_ABC< kernel::SensorType, QString >& resolver_;
     //@}

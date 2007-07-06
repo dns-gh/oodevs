@@ -68,10 +68,10 @@ bool SimulationDispatcher::IsNotDestruction( const ASN1T_MsgsSimToClient& asnMsg
 }
 
 // -----------------------------------------------------------------------------
-// Name: SimulationDispatcher::OnReceive
+// Name: SimulationDispatcher::Receive
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-void SimulationDispatcher::OnReceive( const ASN1T_MsgsSimToClient& asnMsg )
+void SimulationDispatcher::Receive( const ASN1T_MsgsSimToClient& asnMsg )
 {
     model_.Update( asnMsg );
 

@@ -74,7 +74,6 @@ public:
 
     DIN::DIN_BufferedMessage BuildMessage();
     void SendMsgClientToSim ( ASN1OCTET* pMsg, int nMsgLength );
-    void SendMsgUnitMagicActionDestroyComposante( const kernel::Agent_ABC& agent );
 
     void SetModel( Model& model );
     //@}
@@ -87,39 +86,28 @@ private:
 
     //! @name Message callbacks
     //@{
-    // Tests
-    void OnReceiveMsgProfilingValues( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-
-    // Debug
-    void OnReceiveMsgUnitVisionCones                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgUnitInterVisibility                   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgObjectInterVisibility                 ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgPopulationFlowInterVisibility         ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgKnowledgeGroup                        ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgDebugDrawPoints                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-
     // ASN
     void OnReceiveMsgSimToClient   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgMiddleToClient( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
-    void _OnReceiveMsgProfilingValues                       ( DIN::DIN_Input& input );
-    void _OnReceiveMsgUnitVisionCones                       ( DIN::DIN_Input& input );
-    void _OnReceiveMsgUnitInterVisibility                   ( DIN::DIN_Input& input );
-    void _OnReceiveMsgObjectInterVisibility                 ( DIN::DIN_Input& input );
-    void _OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Input& input );
-    void _OnReceiveMsgPopulationFlowInterVisibility         ( DIN::DIN_Input& input );
-    void _OnReceiveMsgKnowledgeGroup                        ( DIN::DIN_Input& input );
-    void _OnReceiveMsgDebugDrawPoints                       ( DIN::DIN_Input& input );
     void _OnReceiveMsgSimToClient                           ( DIN::DIN_Input& input );    
     void _OnReceiveMsgMiddleToClient                        ( DIN::DIN_Input& input );    
+
+    
+    void OnReceiveMsgUnitVisionCones                       ( const ASN1T_MsgUnitVisionCones& message );
+    void OnReceiveMsgUnitInterVisibility                   ( const ASN1T_MsgUnitDetection& message );
+    void OnReceiveMsgObjectInterVisibility                 ( const ASN1T_MsgObjectDetection& message );
+    void OnReceiveMsgPopulationConcentrationInterVisibility( const ASN1T_MsgPopulationConcentrationDetection& message );
+    void OnReceiveMsgPopulationFlowInterVisibility         ( const ASN1T_MsgPopulationFlowDetection& message );
+    void OnReceiveMsgDebugDrawPoints                       ( const ASN1T_MsgDebugPoints& message );
 
     // Control
     void OnReceiveMsgControlPauseAck             ( const ASN1T_MsgControlPauseAck&  asnMsg );
     void OnReceiveMsgControlResumeAck            ( const ASN1T_MsgControlResumeAck& asnMsg );
     void OnReceiveMsgControlChangeTimeFactorAck  ( const ASN1T_MsgControlChangeTimeFactorAck& asnMsg );
     void OnReceiveMsgControlSkipToTickAck        ( const ASN1T_MsgControlSkipToTickAck& asnMsg );
-    void OnReceiveMsgControlInformation                 ( const ASN1T_MsgControlInformation& asnMsg );
+    void OnReceiveMsgControlInformation          ( const ASN1T_MsgControlInformation& asnMsg );
+    void OnReceiveMsgProfilingValues             ( const ASN1T_MsgControlProfilingInformation& message );
     void OnReceiveMsgCtrReplayInfo            ( const ASN1T_MsgControlReplayInformation& asnMsg );
     void OnReceiveMsgControlMeteoGlobalAck       ();
     void OnReceiveMsgControlMeteoLocalAck        ();
@@ -268,7 +256,6 @@ private:
     //! @name Helpers
     //@{
     void Send( unsigned int id, DIN::DIN_BufferedMessage& message );
-    void Send( unsigned int id );
     typedef void ( AgentServerMsgMgr::* T_Callback ) ( DIN::DIN_Input& input );
     void Enqueue( DIN::DIN_Input& input, T_Callback function );
 

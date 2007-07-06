@@ -180,18 +180,6 @@ void Client::OnReceive( const ASN1T_MsgsClientToMiddle& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Client::OnReceive
-// Created: NLD 2006-09-25
-// -----------------------------------------------------------------------------
-void Client::OnReceive( unsigned int nMsgID, DIN::DIN_Input& dinMsg )
-{
-    // $$$ TMP
-    if( !pProfile_ || !simulation_ )
-        return;
-    simulation_->Send( nMsgID, dinMsg );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Client::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
@@ -230,23 +218,11 @@ void Client::Send( const ASN1T_MsgsSimToClient& asnMsg )
 // Name: Client::Send
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-void Client::Send( const ASN1T_MsgsSimToClient& asnMsg, const DIN_BufferedMessage& dinMsg )
+void Client::Send( const ASN1T_MsgsSimToClient& , const DIN_BufferedMessage& dinMsg )
 {
     if( !pProfile_ )
         return;
     messageService_.Send( link_, eMsgSimToClient, dinMsg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::Send
-// Created: NLD 2006-09-25
-// -----------------------------------------------------------------------------
-void Client::Send( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg )
-{
-    // $$$ TMP
-    if( !pProfile_ )
-        return;
-    messageService_.Send( link_, nMsgID, dinMsg );
 }
 
 // =============================================================================

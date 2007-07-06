@@ -12,14 +12,12 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_ObjectPerception.h"
 
-#include "Network/NET_AS_MOSServerMsgMgr.h"
 #include "Network/NET_AgentServer.h"
+#include "Network/NET_ASN_Messages.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ObjectPerception, "DEC_Knowledge_ObjectPerception" )
-
-using namespace DIN;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectPerception constructor
@@ -136,12 +134,9 @@ void DEC_Knowledge_ObjectPerception::UpdateOnNetwork() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectPerception::SendStateToNewClient() const
 {
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
-    DIN_BufferedMessage msg = msgMgr.BuildMessage();
-    assert( pAgentPerceiving_ );
-    msg << (uint32)pAgentPerceiving_->GetID();
-    assert( pObjectPerceived_ );
-    msg << (uint32)pObjectPerceived_->GetID();
-    msg << (uint8)pCurrentPerceptionLevel_->GetID();
-    msgMgr.SendMsgObjectInterVisibility( msg );
+    NET_ASN_MsgObjectDetection asn;
+    asn().unit_oid   = pAgentPerceiving_->GetID();
+    asn().object_oid = pObjectPerceived_->GetID();
+    asn().visibility = ASN1T_EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() );
+    asn.Send();
 }

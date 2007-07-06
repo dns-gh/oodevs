@@ -12,6 +12,7 @@
 
 #include "game_asn/Asn.h"
 #include "MessageFilter.h"
+#include "MessageHandler_ABC.h"
 
 namespace dispatcher
 {
@@ -25,7 +26,7 @@ namespace dispatcher
 */
 // Created: AGE 2007-04-10
 // =============================================================================
-class SaverFacade
+class SaverFacade : public MessageHandler_ABC
 {
 
 public:
@@ -37,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    void Save( const ASN1T_MsgsSimToClient& asnMsg );
+    virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg );
     //@}
 
 private:

@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void OnReceive( const ASN1T_MsgsSimToClient& asnMsg );
+    virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg );
     virtual void StartSynchronisation();
     virtual void EndSynchronisation();
     //@}

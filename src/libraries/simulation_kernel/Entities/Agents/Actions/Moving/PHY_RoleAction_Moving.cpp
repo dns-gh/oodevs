@@ -352,13 +352,10 @@ MT_Vector2D PHY_RoleAction_Moving::ExtrapolatePosition( const MT_Float rTime, co
 void PHY_RoleAction_Moving::SendEnvironmentType() const
 {
     assert( pPion_ );
-
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
-    DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
-
-    dinMsg << ( uint32 )pPion_->GetID();
-    SerializeEnvironmentType( dinMsg );
-    msgMgr.SendMsgEnvironmentType( dinMsg );    
+    NET_ASN_MsgUnitEnvironmentType asn;
+    asn().oid_pion = pPion_->GetID();
+    SerializeEnvironmentType( asn() );
+    asn.Send();
 }
 
 // -----------------------------------------------------------------------------

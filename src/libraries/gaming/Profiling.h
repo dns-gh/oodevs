@@ -10,9 +10,8 @@
 #ifndef __Profiling_h_
 #define __Profiling_h_
 
+#include "game_asn/asn.h"
 #include <ctime>
-struct ProfilingValuesMessage;
-struct ASN1T_MsgControlEndTick;
 
 // =============================================================================
 /** @class  Profiling
@@ -35,7 +34,7 @@ public:
     void Tick();
     void Clear();
 
-    void Update( const ProfilingValuesMessage& message );
+    void Update( const ASN1T_MsgControlProfilingInformation& message );
     void Update( const ASN1T_MsgControlEndTick& message );
     float EffectiveSpeed() const;
     unsigned long GetMemory() const;

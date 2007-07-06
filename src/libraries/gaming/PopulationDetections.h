@@ -10,7 +10,7 @@
 #ifndef __PopulationDetections_h_
 #define __PopulationDetections_h_
 
-#include "DIN_Types.h"
+#include "game_asn/Asn.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
@@ -22,6 +22,7 @@ namespace kernel
     class Population_ABC;
     class PopulationPart_ABC;
     class Entity_ABC;
+    class CoordinateConverter_ABC;
 }
 
 // =============================================================================
@@ -31,15 +32,15 @@ namespace kernel
 // Created: AGE 2006-02-27
 // =============================================================================
 class PopulationDetections : public kernel::Extension_ABC
-                           , public kernel::Updatable_ABC< ConcentrationDetectionMessage >
-                           , public kernel::Updatable_ABC< FlowDetectionMessage >
+                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationDetection >
+                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowDetection >
                            , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationDetections( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Population_ABC >& resolver, const kernel::Entity_ABC& entity );
+             PopulationDetections( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::Population_ABC >& resolver, const kernel::Entity_ABC& entity );
     virtual ~PopulationDetections();
     //@}
 
@@ -57,8 +58,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ConcentrationDetectionMessage& message );
-    virtual void DoUpdate( const FlowDetectionMessage& message );
+    virtual void DoUpdate( const ASN1T_MsgPopulationConcentrationDetection& message );
+    virtual void DoUpdate( const ASN1T_MsgPopulationFlowDetection& message );
     //@}
 
     //! @name Types
@@ -71,10 +72,10 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
+    const kernel::CoordinateConverter_ABC& converter_;
     const kernel::Resolver_ABC< kernel::Population_ABC >& resolver_;
     const kernel::Entity_ABC& entity_;
     T_Parts perceived_;
-    T_PointVector shape_;
     //@}
 };
 

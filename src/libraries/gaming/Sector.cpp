@@ -23,12 +23,12 @@ using namespace kernel;
 // Name: Sector constructor
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-Sector::Sector( const Point2f& vOrigin, const Vector2f& vDirection, float rAngle )
+Sector::Sector( const Point2f& vOrigin, unsigned heading, float rAngle )
     : vOrigin_   ( vOrigin )
-    , vDirection_( vDirection )
+    , vDirection_( std::cos( heading * pi_ / 180.f ), std::sin( heading * pi_ / 180.f ) )
     , rSemiAngle_( rAngle / 2. )
 {
-    if ( vDirection.IsNull() )
+    if ( vDirection_.IsNull() )
     {   // -> on passe à 360°
         rSemiAngle_ = rSemiAngle_ > 0 ? -rSemiAngle_ : rSemiAngle_ ;
     }
@@ -39,12 +39,12 @@ Sector::Sector( const Point2f& vOrigin, const Vector2f& vDirection, float rAngle
         float COS = std::cos( rSemiAngle_ );
         float SIN = std::sin( rSemiAngle_ );
 
-        rA1_ = vDirection.Y() * COS + vDirection.X() * SIN;
-        rB1_ = vDirection.Y() * SIN - vDirection.X() * COS;
+        rA1_ = vDirection_.Y() * COS + vDirection_.X() * SIN;
+        rB1_ = vDirection_.Y() * SIN - vDirection_.X() * COS;
         rC1_ = -( rA1_ * vOrigin_.X() + rB1_ * vOrigin_.Y() );
 
-        rA2_ = vDirection.Y() * COS - vDirection.X() * SIN;
-        rB2_ = -vDirection.Y() * SIN - vDirection.X() * COS;
+        rA2_ = vDirection_.Y() * COS - vDirection_.X() * SIN;
+        rB2_ = -vDirection_.Y() * SIN - vDirection_.X() * COS;
         rC2_ = -( rA2_ * vOrigin_.X() + rB2_ * vOrigin_.Y() );    
     }
 

@@ -15,6 +15,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "Attr_def.h"
 
 using namespace kernel;
@@ -23,8 +24,9 @@ using namespace kernel;
 // Name: PopulationDetections constructor
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-PopulationDetections::PopulationDetections( Controller& controller, const Resolver_ABC< Population_ABC >& resolver, const kernel::Entity_ABC& entity )
+PopulationDetections::PopulationDetections( Controller& controller, const kernel::CoordinateConverter_ABC& converter, const Resolver_ABC< Population_ABC >& resolver, const kernel::Entity_ABC& entity )
     : controller_( controller )
+    , converter_( converter )
     , resolver_( resolver )
     , entity_( entity )
 {
@@ -44,17 +46,10 @@ PopulationDetections::~PopulationDetections()
 // Name: PopulationDetections::DoUpdate
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-void PopulationDetections::DoUpdate( const ConcentrationDetectionMessage& message )
+void PopulationDetections::DoUpdate( const ASN1T_MsgPopulationConcentrationDetection& message )
 {
-    unsigned long nPopulationID;
-    unsigned long nConcentrationID;
-    char nVisType;
-
-    message >> nPopulationID >> nConcentrationID >> nVisType;
-
-    const Population_ABC* pPopulation = & resolver_.Get( nPopulationID );
-    const PopulationPart_ABC* pConcentration = & pPopulation->GetConcentration( nConcentrationID );
-    if( nVisType == eVisTypeInvisible )
+    const PopulationPart_ABC* pConcentration = & resolver_.Get( message.population_oid ).GetConcentration( message.concentration_oid );
+    if( message.visibility == EnumUnitVisibility::invisible )
         perceived_.erase( pConcentration );
     else
         perceived_.insert( pConcentration );
@@ -64,28 +59,11 @@ void PopulationDetections::DoUpdate( const ConcentrationDetectionMessage& messag
 // Name: PopulationDetections::DoUpdate
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-void PopulationDetections::DoUpdate( const FlowDetectionMessage& message )
+void PopulationDetections::DoUpdate( const ASN1T_MsgPopulationFlowDetection& message )
 {
-    unsigned long nPopulationID;
-    unsigned long nFlowID;
+    const PopulationPart_ABC* pFlow = & resolver_.Get( message.population_oid ).GetFlow( message.flow_oid );
 
-    message >> nPopulationID >> nFlowID;
-    const Population_ABC* pPopulation = & resolver_.Get( nPopulationID );
-
-    const PopulationPart_ABC* pFlow = & pPopulation->GetFlow( nFlowID );
-
-    unsigned long nNbrPoints;
-    message >> nNbrPoints;
-
-    shape_.clear(); shape_.reserve( nNbrPoints );
-    for( unsigned i = 0; i < nNbrPoints; ++i )
-    {
-        double x, y;
-        message >> x >> y;
-        shape_.push_back( geometry::Point2f( float( x ), float( y ) ) );
-    }
-
-    if( nNbrPoints )
+    if( message.visible_flow.coordinates.n )
         perceived_.insert( pFlow );
     else
         perceived_.erase( pFlow );

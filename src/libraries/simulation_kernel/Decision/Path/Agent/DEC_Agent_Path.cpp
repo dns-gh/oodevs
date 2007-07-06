@@ -519,32 +519,6 @@ void DEC_Agent_Path::InsertDecPoints()
 
     // Limas
     InsertLimas();
-
-
-    //$$$$$ TEST
-    /*T_PointVector cock; cock.reserve( dick );
-    std::cout << "========== BEGIN PATH ============" << std::endl;
-    for( IT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); ++itPoint )
-    {::
-        DEC_PathPoint& current = **itPoint;
-
-        current.Dump();
-
-        if( current.GetType() == DEC_PathPoint::eTypePointSpecial )
-            cock.push_back( current.GetPos() );
-    }
-    std::cout << "========== END PATH ============" << std::endl;
-   
-
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
-    DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
-    
-    dinMsg << (uint32)GetQueryMaker().GetID();
-    dinMsg << (uint32)cock.size();
-    for( CIT_PointVector itPoint = cock.begin(); itPoint != cock.end(); ++itPoint )
-        dinMsg << *itPoint;
-    msgMgr.SendMsgDebugDrawPoints( dinMsg );
-    //$$$$$ TEST*/
 }
 
 // =============================================================================

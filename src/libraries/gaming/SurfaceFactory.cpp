@@ -18,8 +18,9 @@ using namespace kernel;
 // Name: SurfaceFactory constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-SurfaceFactory::SurfaceFactory( const DetectionMap& map, const Resolver_ABC< SensorType, QString >& resolver )
-    : map_( map )
+SurfaceFactory::SurfaceFactory( const kernel::CoordinateConverter_ABC& converter, const DetectionMap& map, const Resolver_ABC< SensorType, QString >& resolver )
+    : converter_( converter )
+    , map_( map )
     , resolver_( resolver )
 {
     // NOTHING
@@ -38,9 +39,11 @@ SurfaceFactory::~SurfaceFactory()
 // Name: SurfaceFactory::CreateSurface
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-Surface* SurfaceFactory::CreateSurface( const Agent_ABC& agent, const VisionConesMessage& input )
+Surface* SurfaceFactory::CreateSurface( const Agent_ABC& agent, const ASN1T_VisionCone& input, float elongation )
 {
-    return new Surface( agent, input, map_, resolver_ );
+    Surface* result = new Surface( agent, input, converter_, map_, resolver_ );
+    result->SetElongation( elongation );
+    return result;
 }
 
 // -----------------------------------------------------------------------------

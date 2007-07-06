@@ -10,10 +10,15 @@
 #ifndef __DebugPoints_h_
 #define __DebugPoints_h_
 
-#include "DIN_Types.h"
+#include "game_asn/asn.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
 
 // =============================================================================
 /** @class  DebugPoints
@@ -22,14 +27,14 @@
 // Created: AGE 2006-02-13
 // =============================================================================
 class DebugPoints : public kernel::Extension_ABC
-                  , public kernel::Updatable_ABC< DebugPointsMessage >
+                  , public kernel::Updatable_ABC< ASN1T_MsgDebugPoints >
                   , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DebugPoints();
+    explicit DebugPoints( const kernel::CoordinateConverter_ABC& converter );
     virtual ~DebugPoints();
     //@}
 
@@ -47,12 +52,13 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const DebugPointsMessage& message );
+    virtual void DoUpdate( const ASN1T_MsgDebugPoints& message );
     //@}
 
 private:
     //! @name Member data
     //@{
+    const kernel::CoordinateConverter_ABC& converter_;
     T_PointVector points_;
     //@}
 };

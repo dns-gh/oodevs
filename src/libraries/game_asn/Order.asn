@@ -196,4 +196,10 @@ MsgDecisionalState ::= SEQUENCE
     value      VisibleString
 }
 
+MsgDebugPoints ::= SEQUENCE
+{
+    unit-id       OID, -- Automat, pion ou population 
+    coordinates   CoordUTMList
+}
+
 END -- Order

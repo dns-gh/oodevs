@@ -38,9 +38,9 @@
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
-#include "Network/NET_AS_MOSServerMsgMgr.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
+#include "Network/NET_ASN_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Decision/DEC_Tools.h"
 #include "Tools/MIL_Tools.h"
@@ -420,14 +420,11 @@ void DEC_AgentFunctions::DebugDrawPoints( DIA_Call_ABC& call, const MIL_AgentPio
     T_PointVector* pPoints = call.GetParameter( 0 ).ToUserPtr( pPoints );
     assert( pPoints );
 
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
-    DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
-    
-    dinMsg << (uint32)callerAgent.GetID();
-    dinMsg << (uint32)pPoints->size();
-    for( CIT_PointVector itPoint = pPoints->begin(); itPoint != pPoints->end(); ++itPoint )
-        dinMsg << *itPoint;
-    msgMgr.SendMsgDebugDrawPoints( dinMsg );
+    NET_ASN_MsgDebugPoints asn;
+    asn().unit_id = callerAgent.GetID();
+    NET_ASN_Tools::WriteCoordinates( *pPoints, asn().coordinates );
+    asn.Send();
+    NET_ASN_Tools::Delete( asn().coordinates );
 }
 
 // -----------------------------------------------------------------------------
@@ -441,13 +438,13 @@ void DEC_AgentFunctions::DebugDrawPoint( DIA_Call_ABC& call, const MIL_AgentPion
     const MT_Vector2D* pPoint = call.GetParameter( 0 ).ToUserPtr( pPoint );
     assert( pPoint );
 
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
-    DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
-    
-    dinMsg << (uint32)callerAgent.GetID();
-    dinMsg << (uint32)1;
-    dinMsg << *pPoint;
-    msgMgr.SendMsgDebugDrawPoints( dinMsg );
+    NET_ASN_MsgDebugPoints asn;
+    asn().unit_id = callerAgent.GetID();
+    asn().coordinates.n = 1;
+    ASN1T_CoordUTM coord;
+    NET_ASN_Tools::WritePoint( *pPoint, coord );
+    asn().coordinates.elem = &coord;
+    asn.Send();
 }
 
 // -----------------------------------------------------------------------------

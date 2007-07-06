@@ -27,11 +27,12 @@ EnumLocationType ::= ENUMERATED
 }
 
 CoordUTM ::= OCTET STRING (SIZE(15))
+CoordUTMList ::= SEQUENCE OF CoordUTM
 
 Location ::= SEQUENCE 
 {
     type          EnumLocationType,
-    coordinates   SEQUENCE OF CoordUTM
+    coordinates   CoordUTMList
 }
 
 Point      ::= Location (WITH COMPONENTS {...,type(point)})
@@ -111,6 +112,17 @@ EnumUnitIdentificationLevel ::= ENUMERATED
     detectee   (2),
     signale    (3) 
 }
+
+-- $$$$ Merge with above
+EnumUnitVisibility ::= ENUMERATED
+{
+    invisible  (0),
+    detected   (1),
+    recognized (2),
+    identified (3),
+    recorded   (4)
+}
+
 
 EnumNatureLevel ::= ENUMERATED
 {

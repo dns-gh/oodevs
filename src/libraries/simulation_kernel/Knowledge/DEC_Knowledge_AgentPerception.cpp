@@ -14,9 +14,8 @@
 
 #include "Network/NET_AS_MOSServerMsgMgr.h"
 #include "Network/NET_AgentServer.h"
+#include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-
-using namespace DIN;
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_AgentPerception, "DEC_Knowledge_AgentPerception" )
 
@@ -190,16 +189,12 @@ void DEC_Knowledge_AgentPerception::Update( const PHY_PerceptionLevel& perceptio
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentPerception::SendStateToNewClient() const
 {
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
-    DIN_BufferedMessage msg = msgMgr.BuildMessage();
-    assert( pAgentPerceiving_ );
-    assert( pAgentPerceived_ );
-    msg << (uint32)pAgentPerceiving_->GetID();
-    msg << (uint32)pAgentPerceived_ ->GetID();
-    msg << (uint8)pCurrentPerceptionLevel_->GetID();
-    msg << (uint8)pMaxPerceptionLevel_    ->GetID();
-    msg << bRecordModeEnabled_;
-    msgMgr.SendMsgUnitInterVisibility( msg );        
+    NET_ASN_MsgUnitDetection asn;
+    asn().unit_oid           = pAgentPerceiving_   ->GetID();
+    asn().detected_unit_oid  = pAgentPerceived_    ->GetID();
+    asn().current_visibility = bRecordModeEnabled_ ? EnumUnitVisibility::recorded : ASN1T_EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() );
+    asn().max_visibility     = ASN1T_EnumUnitVisibility( pMaxPerceptionLevel_->GetID() );
+    asn.Send();
 }
 
 // -----------------------------------------------------------------------------

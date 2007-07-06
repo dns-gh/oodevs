@@ -13,8 +13,8 @@
 #include "DEC_Knowledge_PopulationConcentrationPerception.h"
 
 #include "DEC_Knowledge_PopulationPerception.h"
-#include "Network/NET_AS_MOSServerMsgMgr.h"
 #include "Network/NET_AgentServer.h"
+#include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_Population.h"
@@ -23,8 +23,6 @@
 #include "MIL_AgentServer.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationConcentrationPerception, "DEC_Knowledge_PopulationConcentrationPerception" )
-
-using namespace DIN;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationConcentrationPerception constructor
@@ -202,14 +200,10 @@ void DEC_Knowledge_PopulationConcentrationPerception::UpdateOnNetwork() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationConcentrationPerception::SendStateToNewClient() const
 {
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
-    DIN_BufferedMessage msg = msgMgr.BuildMessage();
-    assert( pPopulationKnowledge_ );
-    assert( pPopulationConcentrationPerceived_ );
-    assert( pCurrentPerceptionLevel_ );
-    msg << (uint32)pPopulationKnowledge_->GetAgentPerceiving().GetID();
-    msg << (uint32)pPopulationKnowledge_->GetPopulationPerceived().GetID();
-    msg << (uint32)pPopulationConcentrationPerceived_->GetID();
-    msg << (uint8)pCurrentPerceptionLevel_->GetID();
-    msgMgr.SendMsgPopulationConcentrationInterVisibility( msg );
+    NET_ASN_MsgPopulationConcentrationDetection asn;
+    asn().unit_oid          = pPopulationKnowledge_->GetAgentPerceiving().GetID();
+    asn().population_oid    = pPopulationKnowledge_->GetPopulationPerceived().GetID();
+    asn().concentration_oid = pPopulationConcentrationPerceived_->GetID();
+    asn().visibility        = ASN1T_EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() );
+    asn.Send();
 }

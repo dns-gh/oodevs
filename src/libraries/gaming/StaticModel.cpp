@@ -34,7 +34,7 @@ StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& 
     , types_              ( *new AgentTypes() )
     , objectTypes_        ( *new ObjectTypes() )
     , levels_             ( *new FormationLevels() )
-    , surfaceFactory_     ( *new SurfaceFactory( detection_, types_ ) )
+    , surfaceFactory_     ( *new SurfaceFactory( coordinateConverter_, detection_, types_ ) )
     , reportFactory_      ( *new ReportFactory( rcResolver, objectTypes_, objectTypes_ ) )
     , atlasNatures_       ( *new AtlasNatures() )
 {

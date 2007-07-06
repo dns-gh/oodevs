@@ -18,7 +18,6 @@ struct ASN1T_MsgsInClient;
 namespace DIN
 {
     class DIN_Input;
-    class DIN_BufferedMessage;
 }
 
 namespace dispatcher 
@@ -52,7 +51,6 @@ public:
 
     virtual void Send( const ASN1T_MsgsSimToClient&    asnMsg );
     virtual void Send( const ASN1T_MsgsMiddleToClient& asnMsg );
-            void Send( unsigned int nMsgID, const DIN::DIN_Input& dinMsg );
     //@}
 
 private:
@@ -70,21 +68,8 @@ private:
 
     //! @name Messages callbacks
     //@{
-    void OnReceiveMsgClientToSim           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgClientToMiddle        ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    
-    void OnReceiveMsgEnableUnitVisionCones ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgDisableUnitVisionCones( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgEnableProfiling       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgDisableProfiling      ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgUnitMagicAction       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgDebugDrawPoints       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    //@}
-
-    //! @name Tools
-    //@{
-    template< typename T >
-    void Dispatch( const T& asnMsg, unsigned int nDinID, const DIN::DIN_BufferedMessage& dinMsg );
+    void OnReceiveMsgClientToSim   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgClientToMiddle( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     //@}
 
 private:

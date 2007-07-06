@@ -28,14 +28,14 @@ BorrowedEquipment ::= SEQUENCE
 }
 
 -- Personnel
-HumanDotations ::= SEQUENCE 
+HumanDotations ::= SEQUENCE
 {
     rang                         EnumHumanRank,
-    nb-total                     INTEGER, 
-    nb-operationnels             INTEGER, 
-    nb-morts                     INTEGER, 
-    nb-blesses                   INTEGER, 
-    nb-blesses-mentaux           INTEGER, 
+    nb-total                     INTEGER,
+    nb-operationnels             INTEGER,
+    nb-morts                     INTEGER,
+    nb-blesses                   INTEGER,
+    nb-blesses-mentaux           INTEGER,
     nb-contamines-nbc            INTEGER,
     nb-dans-chaine-sante         INTEGER,
     nb-utilises-pour-maintenance INTEGER
@@ -53,7 +53,7 @@ EquipmentDotations ::= SEQUENCE
 }
 
 -- Ressources
-ResourceDotations ::= SEQUENCE 
+ResourceDotations ::= SEQUENCE
 {
     ressource-id        DotationType,
     quantite-disponible INTEGER
@@ -63,7 +63,7 @@ EnumUnitTiredness ::= ENUMERATED
 {
     normal  (0),
     fatigue (1),
-    epuise  (2)  
+    epuise  (2)
 }
 
 EnumUnitMorale ::= ENUMERATED
@@ -102,7 +102,7 @@ EnumForceRatioStatus ::= ENUMERATED
 
 EnumRoe ::= ENUMERATED
 {
-    none           (0),       
+    none           (0),
     tir-libre      (1),
     tir-sur-riposte(2),
     tir-interdit   (3)
@@ -122,7 +122,7 @@ EnumMeetingEngagementStatus ::= ENUMERATED
     none                  (0),
     etat-esquive          (1),
     etat-fixe             (2),
-    etat-poursuite-mission(3)               
+    etat-poursuite-mission(3)
 }
 
 EnumOperationalStatus ::= ENUMERATED
@@ -152,57 +152,66 @@ MsgUnitCreation ::= SEQUENCE
 MsgUnitAttributes ::= SEQUENCE
 {
     oid-pion                      Unit,
-    
+
     dotation-eff-personnel        SEQUENCE OF HumanDotations     OPTIONAL, -- Dotations effectives du pion DELTA
     dotation-eff-materiel         SEQUENCE OF EquipmentDotations    OPTIONAL, -- DELTA
     dotation-eff-ressource        SEQUENCE OF ResourceDotations     OPTIONAL, -- DELTA
     equipements-pretes            SEQUENCE OF LentEquipment       OPTIONAL, -- FULL
     equipements-empruntes         SEQUENCE OF BorrowedEquipment    OPTIONAL, -- FULL
-        
-    position				      CoordUTM                          OPTIONAL,
+
+    position                      CoordUTM                          OPTIONAL,
     direction                     Heading                         OPTIONAL, -- en degrés
     hauteur                       Height                           OPTIONAL, -- hauteur d'un pion 3D par rapport au sol en mètres
     vitesse                       Speed                           OPTIONAL, -- en km/h
     etat-operationnel-brut        FreePercentage                  OPTIONAL,
     pions-renforcant              UnitList                         OPTIONAL,
     pion-renforce                 Unit                             OPTIONAL, -- '0' quand pas en renfort
-    mort                          BOOLEAN                           OPTIONAL,   
-    neutralise                    BOOLEAN                           OPTIONAL,   
+    mort                          BOOLEAN                           OPTIONAL,
+    neutralise                    BOOLEAN                           OPTIONAL,
     mode-furtif-actif             BOOLEAN                           OPTIONAL,
     embarque                      BOOLEAN                           OPTIONAL,
     transporteurs-disponibles     BOOLEAN                           OPTIONAL,
-    
+
     posture-old                   EnumUnitPosture                   OPTIONAL,
     posture-new                   EnumUnitPosture                   OPTIONAL,
     posture-pourcentage           Percentage                       OPTIONAL,
-    
+
     etat-installation             Percentage                       OPTIONAL,
-                                                                    
+
     en-tenue-de-protection-nbc    BOOLEAN                           OPTIONAL,
     contamine-par-agents-nbc      ListOID                           OPTIONAL,          -- ID d'agents chimiques - Cf. MOS/IDClasses.xml
     etat-contamination            Percentage                       OPTIONAL,
-    
+
     communications-brouillees     BOOLEAN                           OPTIONAL,
     silence-radio                 BOOLEAN                           OPTIONAL,
     radar-actif                   BOOLEAN                           OPTIONAL,
-    
-    pions-transportes             UnitList                         OPTIONAL, 
+
+    pions-transportes             UnitList                         OPTIONAL,
     pion-transporteur             Unit                             OPTIONAL, -- '0' quand aucun transporteur
-    
+
     rapport-de-force              EnumForceRatioStatus                    OPTIONAL,
     combat-de-rencontre           EnumMeetingEngagementStatus           OPTIONAL,
     etat-operationnel             EnumOperationalStatus              OPTIONAL,
     disponibilite-au-tir-indirect EnumFireAvailability            OPTIONAL,
     roe                           EnumRoe                           OPTIONAL,
     roe-population                EnumPopulationRoe                 OPTIONAL,
-    
+
     fatigue                       EnumUnitTiredness                   OPTIONAL,
     moral                         EnumUnitMorale                     OPTIONAL,
     experience                    EnumUnitExperience                OPTIONAL,
-    
+
     rendu                         Team                              OPTIONAL, -- '0' quand pas rendu
     prisonnier                    BOOLEAN                           OPTIONAL,
     refugie-pris-en-compte        BOOLEAN                           OPTIONAL
+}
+
+MsgUnitEnvironmentType ::= SEQUENCE
+{
+    oid-pion    Unit,
+    area        INTEGER( 0..255 ), 
+    left        INTEGER( 0..255 ),
+    right       INTEGER( 0..255 ),
+    linear      INTEGER( 0..65535 )
 }
 
 MsgUnitDestruction ::= OID
@@ -259,7 +268,7 @@ StockRecovery ::= SEQUENCE
 MagicActionPartialRecovery ::= SEQUENCE
 {
     equipements SEQUENCE OF EquipmentRecovery        OPTIONAL,
-    personnels  SEQUENCE OF HumanRecovery         OPTIONAL,    
+    personnels  SEQUENCE OF HumanRecovery         OPTIONAL,
     dotations   SEQUENCE OF DotationRecovery          OPTIONAL,
     munitions   SEQUENCE OF AmmunitionDotationRecovery  OPTIONAL,
     stocks      SEQUENCE OF StockRecovery             OPTIONAL
@@ -282,7 +291,7 @@ MsgUnitMagicAction ::= SEQUENCE
         se-rendre                   MagicActionSurrender,
         annuler-reddition           MagicActionCancelRendition,
         recuperer-transporteurs     MagicActionRecoverTransporters
-    }       
+    }
 }
 
 EnumUnitErrorCode ::= ENUMERATED
@@ -304,7 +313,7 @@ MsgUnitCreationRequest ::= SEQUENCE
 {
     type-pion       UnitType,
     oid-automate    Automat,
-    position	    CoordUTM
+    position        CoordUTM
 }
 MsgUnitCreationRequestAck ::= EnumUnitErrorCode
 
@@ -320,10 +329,57 @@ MsgUnitChangeSuperiorAck ::= SEQUENCE
     oid-automate Automat,
     error-code   EnumChangeHierarchyErrorCode
 }
+
 MsgUnitChangeSuperior ::= SEQUENCE
 {
     oid-pion     Unit,
     oid-automate Automat
+}
+
+VisionCone ::= SEQUENCE
+{
+    origin       CoordUTM,
+    height       Height,
+    sensor       VisibleString,
+    directions   SEQUENCE OF Heading
+}
+
+MsgUnitVisionCones ::= SEQUENCE
+{
+    unit-oid     Unit,
+    cones        SEQUENCE OF VisionCone,
+    elongation   REAL
+}
+
+MsgUnitDetection ::= SEQUENCE
+{
+    unit-oid            Unit,
+    detected-unit-oid   Unit,
+    current-visibility  EnumUnitVisibility,
+    max-visibility      EnumUnitVisibility
+}
+
+MsgObjectDetection ::= SEQUENCE
+{
+    unit-oid            Unit,
+    object-oid          OID,
+    visibility          EnumUnitVisibility
+}
+
+MsgPopulationConcentrationDetection ::= SEQUENCE
+{
+    unit-oid            Unit,
+    population-oid      OID,
+    concentration-oid   OID,
+    visibility          EnumUnitVisibility
+}
+
+MsgPopulationFlowDetection ::= SEQUENCE
+{
+    unit-oid            Unit,
+    population-oid      OID,
+    flow-oid            OID,
+    visible-flow        Path
 }
 
 END -- Unit

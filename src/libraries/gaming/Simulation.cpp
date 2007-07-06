@@ -121,7 +121,7 @@ void Simulation::Update( const ASN1T_MsgControlReplayInformation& message )
 // Name: Simulation::Update
 // Created: AGE 2006-09-15
 // -----------------------------------------------------------------------------
-void Simulation::Update( const ProfilingValuesMessage& message )
+void Simulation::Update( const ASN1T_MsgControlProfilingInformation& message )
 {
     profiling_.Update( message );
 }

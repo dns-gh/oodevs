@@ -11,7 +11,6 @@
 #define __ReportFactory_h_
 
 #include "clients_kernel/Resolver.h"
-#include "DIN_Types.h"
 #include "game_asn/Asn.h"
 
 namespace xml

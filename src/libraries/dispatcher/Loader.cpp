@@ -178,7 +178,7 @@ void Loader::LoadSimToClientMessage( tools::InputBinaryWrapper& input )
         decoder.PrintErrorInfo();
         throw std::runtime_error( "ASN fussé" );
     }
-    model_.OnReceive( message );
+    model_.Receive( message );
 }
 
 // -----------------------------------------------------------------------------

@@ -13,7 +13,7 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "DIN/MessageService/DIN_BufferedMessage.h"
+#include "Network/NET_ASN_Tools.h"
 
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
@@ -182,17 +182,15 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const 
 // Name: PHY_PerceptionSurfaceAgent::SendFullState
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-void PHY_PerceptionSurfaceAgent::SendFullState( DIN::DIN_BufferedMessage& msg ) const
+void PHY_PerceptionSurfaceAgent::SendFullState( ASN1T_VisionCone& msg ) const
 {
-    msg << vOrigin_;
-    msg << rHeight_;
-    msg << pSensorType_->GetType().GetName();
-    msg << (uint32)sectors_.size();
-    for( CIT_SectorVector itSector = sectors_.begin(); itSector != sectors_.end(); ++itSector )
-    {
-        const MT_Sector& sector = *itSector;
-        msg << sector.GetDirection();
-    }
+    NET_ASN_Tools::WritePoint( vOrigin_, msg.origin );
+    msg.height = rHeight_;
+    msg.sensor = pSensorType_->GetType().GetName().c_str();
+    msg.directions.n = sectors_.size();
+    msg.directions.elem = msg.directions.n ? new ASN1T_Heading[ msg.directions.n ] : 0;
+    for( unsigned i = 0; i < msg.directions.n; ++i )
+        NET_ASN_Tools::WriteDirection( sectors_[i].GetDirection(), msg.directions.elem[i] );
 }
 
 

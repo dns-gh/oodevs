@@ -61,7 +61,7 @@ Simulation::~Simulation()
 // -----------------------------------------------------------------------------
 void Simulation::OnReceive( const ASN1T_MsgsSimToClient& asnMsg )
 {
-    simulationDispatcher_->OnReceive( asnMsg );
+    simulationDispatcher_->Receive( asnMsg );
 
     switch( asnMsg.msg.t )
     {
@@ -82,7 +82,7 @@ void Simulation::OnReceive( const ASN1T_MsgsSimToClient& asnMsg )
     };
     
     if( saver_ )
-        saver_->Save( asnMsg );
+        saver_->Receive( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,16 +93,6 @@ void Simulation::OnReceive( const ASN1T_MsgsSimToMiddle& asnMsg )
 {
     // NOTHING
     assert( false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Simulation::OnReceive
-// Created: NLD 2006-09-25
-// -----------------------------------------------------------------------------
-void Simulation::OnReceive( unsigned int nMsgID, DIN::DIN_Input& dinMsg )
-{
-    dispatcher_.GetClientsNetworker().Send( nMsgID, dinMsg );            
-    dispatcher_.GetModel().Update( nMsgID, dinMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,39 +107,12 @@ void Simulation::Send( const ASN1T_MsgsMiddleToSim& asnMsg )
 
 // -----------------------------------------------------------------------------
 // Name: Simulation::Send
-// Created: NLD 2007-04-24
-// -----------------------------------------------------------------------------
-void Simulation::Send( const ASN1T_MsgsMiddleToSim& asnMsg, const DIN::DIN_BufferedMessage& dinMsg )
-{
-    messageService_.Send( link_, eMsgMiddleToSim, dinMsg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Simulation::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
 void Simulation::Send( const ASN1T_MsgsClientToSim& asnMsg )
 {
     AsnMessageEncoder< ASN1T_MsgsClientToSim, ASN1C_MsgsClientToSim > asnEncoder( messageService_, asnMsg );
     messageService_.Send( link_, eMsgClientToSim, asnEncoder.GetDinMsg() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Simulation::Send
-// Created: NLD 2006-09-25
-// -----------------------------------------------------------------------------
-void Simulation::Send( const ASN1T_MsgsClientToSim& /*asnMsg*/, const DIN_BufferedMessage& dinMsg )
-{
-    messageService_.Send( link_, eMsgClientToSim, dinMsg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Simulation::Send
-// Created: NLD 2006-09-25
-// -----------------------------------------------------------------------------
-void Simulation::Send( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg )
-{
-    messageService_.Send( link_, nMsgID, dinMsg );
 }
 
 // -----------------------------------------------------------------------------

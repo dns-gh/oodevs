@@ -12,7 +12,7 @@
 
 #include "Types.h"
 #include "Sector.h"
-#include "DIN_Types.h"
+#include "game_asn/asn.h"
 #include "clients_kernel/Resolver_ABC.h"
 
 namespace kernel
@@ -22,6 +22,7 @@ namespace kernel
     class GlTools_ABC;
     class Viewport_ABC;
     class DetectionMap;
+    class CoordinateConverter_ABC;
 }
 
 class VisionMap;
@@ -35,7 +36,7 @@ class Surface
 public:
     //! @name Constructor/Destructor
     //@{
-             Surface( const kernel::Agent_ABC& agent, const VisionConesMessage& input, const kernel::DetectionMap& map, const kernel::Resolver_ABC< kernel::SensorType, QString >& resolver );
+             Surface( const kernel::Agent_ABC& agent, const ASN1T_VisionCone& message, const kernel::CoordinateConverter_ABC& converter, const kernel::DetectionMap& map, const kernel::Resolver_ABC< kernel::SensorType, QString >& resolver );
     virtual ~Surface();
     //@}
 
@@ -76,8 +77,9 @@ private:
     const kernel::DetectionMap& map_;
     geometry::Point2f origin_;
     float height_;
+    const kernel::SensorType& sensorType_;
     T_SectorVector sectors_;
-    const kernel::SensorType* pSensorType_;
+    
     float elongation_;
     mutable float maxRadius_;
     mutable float distanceModificator_;

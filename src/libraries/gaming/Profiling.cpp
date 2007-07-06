@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "Profiling.h"
-#include "DIN_Types.h"
 #include "game_asn/Asn.h"
 
 // -----------------------------------------------------------------------------
@@ -40,14 +39,12 @@ Profiling::~Profiling()
 // Name: Profiling::Update
 // Created: AGE 2006-09-15
 // -----------------------------------------------------------------------------
-void Profiling::Update( const ProfilingValuesMessage& message )
+void Profiling::Update( const ASN1T_MsgControlProfilingInformation& message )
 {
-    double rPerceptionTime, rDecisionTime, rActionTime, rMainLoopTime;
-    message >> rPerceptionTime >> rDecisionTime >> rActionTime >> rMainLoopTime;
-    perception_.push_back( rPerceptionTime );
-    decision_  .push_back( rDecisionTime );
-    action_    .push_back( rActionTime );
-    total_     .push_back( rMainLoopTime );
+    perception_.push_back( message.perception );
+    decision_  .push_back( message.decision );
+    action_    .push_back( message.action );
+    total_     .push_back( message.main_loop );
 }
 
 // -----------------------------------------------------------------------------

@@ -498,6 +498,20 @@ void NET_ASN_Tools::WriteLine( const TER_Localisation& localisation, ASN1T_Line&
 }
 
 // -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::WriteCoordinates
+// Created: AGE 2007-07-06
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::WriteCoordinates( const T_PointVector& points , ASN1T_CoordUTMList& asn )
+{
+    asn.n    = points.size();
+    asn.elem = asn.n ? new ASN1T_CoordUTM[ asn.n ] : 0;
+    uint i = 0;
+    for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+        WritePoint( *it, asn.elem[i++] );
+    return true;
+}   
+
+// -----------------------------------------------------------------------------
 // Name NET_ASN_Tools::WriteLine
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
@@ -509,13 +523,7 @@ bool NET_ASN_Tools::WriteLine( const T_PointVector& points, ASN1T_Line& asn )
         asn.coordinates.n = 0;
         return false;
     }
-
-    asn.coordinates.n = points.size();
-    asn.coordinates.elem = new ASN1T_CoordUTM[ points.size() ];
-    uint i = 0;
-    for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
-        WritePoint( *it, asn.coordinates.elem[i++] );
-    return true;
+    return WriteCoordinates( points, asn.coordinates );
 }
 
 // -----------------------------------------------------------------------------
@@ -528,12 +536,7 @@ void NET_ASN_Tools::WritePath( const T_PointVector& pointVector, ASN1T_Path& asn
     asn.coordinates.n = pointVector.size(); 
     if( pointVector.empty() )
         return;
-
-    ASN1T_CoordUTM* pCoord = new ASN1T_CoordUTM[ pointVector.size() ]; //$$$ RAM
-    asn.coordinates.elem = pCoord;
-    uint i = 0;
-    for( CIT_PointVector itPoint = pointVector.begin(); itPoint != pointVector.end(); ++itPoint )
-        WritePoint( *itPoint, pCoord[i++] );
+    WriteCoordinates( pointVector, asn.coordinates );
 }
 
 // -----------------------------------------------------------------------------
@@ -577,7 +580,6 @@ void NET_ASN_Tools::WriteEllipse( const MT_Ellipse& ellipse, ASN1T_Location& asn
     WritePoint( ellipse.GetMinorAxisHighPoint(), asnLocalisation.coordinates.elem[2] );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::WriteListPoint
 // Created: AGN 03-01-20
@@ -596,7 +598,6 @@ void NET_ASN_Tools::WritePointList( const T_PointVector& pointVector, ASN1T_Poin
     for( CIT_PointVector itPoint = pointVector.begin(); itPoint != pointVector.end(); ++itPoint )
         WritePoint( *itPoint, pCoord[i++] );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::WriteListPoint
@@ -691,7 +692,6 @@ void NET_ASN_Tools::WriteAgent( const DEC_RolePion_Decision& pion, ASN1T_Unit& a
     asn = pion.GetPion().GetID();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::WriteAutomate
 // Created: NLD 2004-04-22
@@ -700,7 +700,6 @@ void NET_ASN_Tools::WriteAutomate( const DEC_AutomateDecision& automate, ASN1T_U
 {
     asn = automate.GetAutomate().GetID();    
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::WriteListAgent
@@ -775,7 +774,6 @@ void NET_ASN_Tools::WriteAgentKnowledgeList( const T_KnowledgeAgentDiaIDVector& 
         ++i;
     }
 }
- 
 
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::WriteObjectKnowledge
@@ -809,10 +807,6 @@ void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector
     }
 }
   
-
-
-
-
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::WriteGDH
 // Created: NLD 2004-01-15
@@ -893,6 +887,16 @@ void NET_ASN_Tools::Delete( ASN1T_UnitList& asn )
 // Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------
 void NET_ASN_Tools::Delete( ASN1T_AutomatList& asn )
+{
+    if( asn.n > 0 )
+        delete [] asn.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::Delete
+// Created: AGE 2007-07-06
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::Delete( ASN1T_CoordUTMList& asn )
 {
     if( asn.n > 0 )
         delete [] asn.elem;

@@ -30,7 +30,6 @@
 #include "WeatherModel.h"
 #include "UserProfilesModel.h"
 #include "UserProfile.h"
-#include "DIN_Types.h"
 #include "DIN_InputDeepCopy.h"
 #include "LogTools.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -61,20 +60,6 @@ static enum
 
     eMsgClientToMiddle                         = 4,
     eMsgMiddleToClient                         = 5,
-
-    eMsgEnableUnitVisionCones                  = 1000,
-    eMsgDisableUnitVisionCones                 = 1001,
-    eMsgUnitMagicAction                        = 1002,
-    eMsgEnableProfiling                        = 1003,
-    eMsgDisableProfiling                       = 1004,
-    eMsgUnitVisionCones                        = 1005,
-    eMsgProfilingValues                        = 1008,
-    eMsgUnitInterVisibility                    = 1009,
-    eMsgObjectInterVisibility                  = 1010,
-    eMsgPopulationConcentrationInterVisibility = 1011,
-    eMsgPopulationFlowInterVisibility          = 1012,
-    eMsgDebugDrawPoints                        = 1015,
-    eMsgEnvironmentType                        = 1016,
 };
 //@}
 
@@ -94,14 +79,6 @@ AgentServerMsgMgr::AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine&
 {
     pMessageService_ = new DIN_MessageServiceUserCbk< AgentServerMsgMgr >( *this, engine, DIN_ConnectorGuest(), "Msgs MOS Server -> Agent_ABC Server" );
 
-    pMessageService_->RegisterReceivedMessage( eMsgProfilingValues                       , *this, & AgentServerMsgMgr::OnReceiveMsgProfilingValues     );
-
-    pMessageService_->RegisterReceivedMessage( eMsgUnitVisionCones                       , *this, & AgentServerMsgMgr::OnReceiveMsgUnitVisionCones     );
-    pMessageService_->RegisterReceivedMessage( eMsgUnitInterVisibility                   , *this, & AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility );
-    pMessageService_->RegisterReceivedMessage( eMsgObjectInterVisibility                 , *this, & AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility );
-    pMessageService_->RegisterReceivedMessage( eMsgPopulationConcentrationInterVisibility, *this, & AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility );
-    pMessageService_->RegisterReceivedMessage( eMsgPopulationFlowInterVisibility         , *this, & AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility );
-    pMessageService_->RegisterReceivedMessage( eMsgDebugDrawPoints                       , *this, & AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints       );
     pMessageService_->RegisterReceivedMessage( eMsgSimToClient                           , *this, & AgentServerMsgMgr::OnReceiveMsgSimToClient );
     pMessageService_->RegisterReceivedMessage( eMsgMiddleToClient                        , *this, & AgentServerMsgMgr::OnReceiveMsgMiddleToClient );
 //eMsgEnvironmentType // $$$$ AGE 2006-05-03:
@@ -260,17 +237,6 @@ void AgentServerMsgMgr::Send( unsigned int id, DIN::DIN_BufferedMessage& message
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::Send
-// Created: AGE 2006-02-08
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::Send( unsigned int id )
-{
-    boost::mutex::scoped_lock locker( mutex_ );
-    if( session_ )
-        pMessageService_->Send( *session_, id );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::ToggleVisionCones
 // Created: AGE 2006-05-02
 // -----------------------------------------------------------------------------
@@ -278,10 +244,9 @@ void AgentServerMsgMgr::ToggleVisionCones()
 {
     if( session_ )
     {
-        if( needsVisionSurfaces_ || needsVisionCones_ )
-            Send( eMsgEnableUnitVisionCones );
-        else
-            Send( eMsgDisableUnitVisionCones );
+        ASN_MsgControlToggleVisionCones msg;
+        msg() = needsVisionSurfaces_ || needsVisionCones_;
+        msg.Send( *this );
     }
 }
 
@@ -326,142 +291,58 @@ void AgentServerMsgMgr::OnReceiveMsgUnitDestruction( const ASN1T_MsgUnitDestruct
     GetModel().agents_.DestroyAgent( message );
 }
 
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgProfilingValues
-// Created: NLD 2002-10-14
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgProfilingValues( DIN_Link& /*linkFrom*/, DIN_Input& input )
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgUnitVisionCones
+// Created: AGE 2007-07-05
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgUnitVisionCones( const ASN1T_MsgUnitVisionCones& message )
 {
-    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgProfilingValues );
+    GetModel().agents_.GetAgent( message.unit_oid ).Update( message );
 }
 
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgProfilingValues
-// Created: NLD 2002-10-14
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::_OnReceiveMsgProfilingValues( DIN_Input& input )
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility
+// Created: AGE 2007-07-05
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility( const ASN1T_MsgUnitDetection& message )
 {
-    simulation_.Update( ProfilingValuesMessage( input ) );
+    GetModel().agents_.GetAgent( message.unit_oid ).Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility
+// Created: AGE 2007-07-05
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility( const ASN1T_MsgObjectDetection& message )
+{
+    GetModel().agents_.GetAgent( message.unit_oid ).Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility
+// Created: AGE 2007-07-05
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility( const ASN1T_MsgPopulationConcentrationDetection& message )
+{
+    GetModel().agents_.GetAgent( message.unit_oid ).Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility
+// Created: AGE 2007-07-05
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility( const ASN1T_MsgPopulationFlowDetection& message )
+{
+    GetModel().agents_.GetAgent( message.unit_oid ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints
-// Created: NLD 2005-03-22
+// Created: AGE 2007-07-05
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
+void AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints( const ASN1T_MsgDebugPoints& message )
 {
-    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgDebugDrawPoints );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints
-// Created: NLD 2005-03-22
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::_OnReceiveMsgDebugDrawPoints( DIN::DIN_Input& input )
-{
-    unsigned long nAgentID;
-    input >> nAgentID;
-    GetModel().agents_.FindAllAgent( nAgentID )->Update( DebugPointsMessage( input ) );
-}
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgUnitVisionCones
-// Created: NLD 2003-02-12
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgUnitVisionCones( DIN_Link& /*linkFrom*/, DIN_Input& input )
-{
-    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgUnitVisionCones );
-}
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgUnitVisionCones
-// Created: NLD 2003-02-12
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::_OnReceiveMsgUnitVisionCones( DIN_Input& input )
-{
-    unsigned long nAgentID;
-    input >> nAgentID;
-    GetModel().agents_.GetAgent( nAgentID ).Update( VisionConesMessage( input ) );
-}
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility
-// Created: NLD 2003-03-17
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
-{
-    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgUnitInterVisibility );
-}
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility
-// Created: NLD 2003-03-17
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::_OnReceiveMsgUnitInterVisibility( DIN::DIN_Input& input )
-{
-    unsigned long nAgentID;
-    input >> nAgentID;
-    GetModel().agents_.GetAgent( nAgentID ).Update( DetectionMessage( input ) );
-}
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility
-// Created: NLD 2003-03-17
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
-{
-    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgPopulationConcentrationInterVisibility );
-}
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility
-// Created: NLD 2003-03-17
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::_OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Input& input )
-{
-    unsigned long nAgentID;
-    input >> nAgentID;
-    GetModel().agents_.GetAgent( nAgentID ).Update( ConcentrationDetectionMessage( input ) );
-}
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility
-// Created: NLD 2003-03-17
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
-{
-    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgPopulationFlowInterVisibility );
-}
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility
-// Created: NLD 2003-03-17
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::_OnReceiveMsgPopulationFlowInterVisibility( DIN::DIN_Input& input )
-{
-    unsigned long nAgentID;
-    input >> nAgentID;
-    GetModel().agents_.GetAgent( nAgentID ).Update( FlowDetectionMessage( input ) );
-}
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility
-// Created: NLD 2003-03-17
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
-{
-    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgObjectInterVisibility );
-}
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility
-// Created: NLD 2003-03-17
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::_OnReceiveMsgObjectInterVisibility( DIN::DIN_Input& input )
-{
-    unsigned long nAgentID;
-    input >> nAgentID;
-    GetModel().agents_.GetAgent( nAgentID ).Update( ObjectDetectionMessage( input ) );
+    GetModel().agents_.FindAllAgent( message.unit_id )->Update( message );
 }
 
 //=============================================================================
@@ -586,6 +467,15 @@ void AgentServerMsgMgr::OnReceiveMsgControlInformation( const ASN1T_MsgControlIn
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCtrReplayInfo( const ASN1T_MsgControlReplayInformation& message )
+{
+    simulation_.Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgProfilingValues
+// Created: AGE 2007-07-05
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgProfilingValues( const ASN1T_MsgControlProfilingInformation& message )
 {
     simulation_.Update( message );
 }
@@ -1685,6 +1575,7 @@ void AgentServerMsgMgr::_OnReceiveMsgSimToClient( DIN_Input& input )
         case T_MsgsSimToClient_msg_msg_population_order_ack:                   OnReceiveMsgPopulationOrderAck                 ( *message.msg.u.msg_population_order_ack                    , message.context ); break;
 
         case T_MsgsSimToClient_msg_msg_control_information:                     OnReceiveMsgControlInformation           ( *message.msg.u.msg_control_information                    ); break;
+        case T_MsgsSimToClient_msg_msg_control_profiling_information:           OnReceiveMsgProfilingValues              ( *message.msg.u.msg_control_profiling_information          ); break;
         case T_MsgsSimToClient_msg_msg_control_begin_tick:                      OnReceiveMsgControlBeginTick             (  message.msg.u.msg_control_begin_tick                     ); break;
         case T_MsgsSimToClient_msg_msg_control_end_tick:                        OnReceiveMsgControlEndTick               ( *message.msg.u.msg_control_end_tick                       ); break;
         case T_MsgsSimToClient_msg_msg_control_stop_ack:                        break;
@@ -1718,6 +1609,11 @@ void AgentServerMsgMgr::_OnReceiveMsgSimToClient( DIN_Input& input )
         case T_MsgsSimToClient_msg_msg_unit_attributes:                      OnReceiveMsgUnitAttributes            ( *message.msg.u.msg_unit_attributes                     ); break;
         case T_MsgsSimToClient_msg_msg_unit_pathfind:                        OnReceiveMsgUnitPathFind              ( *message.msg.u.msg_unit_pathfind                       ); break;
         case T_MsgsSimToClient_msg_msg_automat_attributes:                   OnReceiveMsgAutomatAttributes         ( *message.msg.u.msg_automat_attributes                  ); break;              
+        case T_MsgsSimToClient_msg_msg_unit_vision_cones:                    OnReceiveMsgUnitVisionCones           ( *message.msg.u.msg_unit_vision_cones                   ); break;
+        case T_MsgsSimToClient_msg_msg_unit_detection:                       OnReceiveMsgUnitInterVisibility       ( *message.msg.u.msg_unit_detection                      ); break;
+        case T_MsgsSimToClient_msg_msg_object_detection:                     OnReceiveMsgObjectInterVisibility     ( *message.msg.u.msg_object_detection                    ); break;
+        case T_MsgsSimToClient_msg_msg_population_concentration_detection:   OnReceiveMsgPopulationConcentrationInterVisibility( *message.msg.u.msg_population_concentration_detection ); break;
+        case T_MsgsSimToClient_msg_msg_population_flow_detection:            OnReceiveMsgPopulationFlowInterVisibility( *message.msg.u.msg_population_flow_detection        ); break;
 
         case T_MsgsSimToClient_msg_msg_start_unit_fire:                      OnReceiveMsgStartUnitFire             ( *message.msg.u.msg_start_unit_fire                     ); break;
         case T_MsgsSimToClient_msg_msg_stop_unit_fire:                       OnReceiveMsgStopUnitFire              ( *message.msg.u.msg_stop_unit_fire                      ); break;
@@ -1726,6 +1622,7 @@ void AgentServerMsgMgr::_OnReceiveMsgSimToClient( DIN_Input& input )
 
         case T_MsgsSimToClient_msg_msg_explosion:                            OnReceiveMsgExplosion                 ( *message.msg.u.msg_explosion                           ); break;
         case T_MsgsSimToClient_msg_msg_report:                               OnReceiveMsgCR                        ( *message.msg.u.msg_report                              ); break;
+        case T_MsgsSimToClient_msg_msg_debug_points:                         OnReceiveMsgDebugDrawPoints           ( *message.msg.u.msg_debug_points                        ); break;
         case T_MsgsSimToClient_msg_msg_trace:                                OnReceiveMsgTrace                     ( *message.msg.u.msg_trace                               ); break;
         case T_MsgsSimToClient_msg_msg_decisional_state:                     OnReceiveMsgDecisionalState           ( *message.msg.u.msg_decisional_state                    ); break;
         case T_MsgsSimToClient_msg_msg_start_fire_effect:                    OnReceiveMsgStartFireEffect           ( *message.msg.u.msg_start_fire_effect ); break;
@@ -1784,6 +1681,7 @@ void AgentServerMsgMgr::_OnReceiveMsgSimToClient( DIN_Input& input )
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_creation             : OnReceiveMsgPopulationFlowKnowledgeCreation            ( *message.msg.u.msg_population_flow_knowledge_creation             ); break;
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_update               : OnReceiveMsgPopulationFlowKnowledgeUpdate              ( *message.msg.u.msg_population_flow_knowledge_update               ); break;
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_destruction          : OnReceiveMsgPopulationFlowKnowledgeDestruction         ( *message.msg.u.msg_population_flow_knowledge_destruction          ); break;
+        case T_MsgsSimToClient_msg_msg_unit_environment_type                          : break; // $$$$ AGE 2007-07-06: 
         default:
             UnhandledMessage( message.msg.t );
     }

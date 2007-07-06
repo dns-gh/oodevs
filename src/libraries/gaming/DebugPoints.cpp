@@ -11,6 +11,7 @@
 #include "DebugPoints.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 
 using namespace kernel;
 
@@ -18,7 +19,8 @@ using namespace kernel;
 // Name: DebugPoints constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-DebugPoints::DebugPoints()
+DebugPoints::DebugPoints( const kernel::CoordinateConverter_ABC& converter )
+    : converter_( converter )
 {
     // NOTHING
 }
@@ -36,19 +38,11 @@ DebugPoints::~DebugPoints()
 // Name: DebugPoints::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void DebugPoints::DoUpdate( const DebugPointsMessage& message )
+void DebugPoints::DoUpdate( const ASN1T_MsgDebugPoints& message )
 {
-    unsigned long size;
-    message >> size;
-
-    points_.clear();
-    points_.reserve( size );
-    for( unsigned i = 0; i < size; ++i )
-    {
-        double x, y;
-        message >> x >> y;
-        points_.push_back( geometry::Point2f( float(x), float(y) ) );
-    }
+    points_.resize( message.coordinates.n );
+    for( unsigned i = 0; i < message.coordinates.n; ++i )
+        points_[ i ] = converter_.ConvertToXY( message.coordinates.elem[i] );
 }
 
 // -----------------------------------------------------------------------------

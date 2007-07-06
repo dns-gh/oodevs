@@ -96,6 +96,7 @@ GENERATE_ASN_MSG_SENDER( ClientToSim, ControlCheckPointSaveNow, control_checkpoi
 GENERATE_NOPTR_ASN_MSG_SENDER( ClientToSim, ControlCheckPointSetFrequency, control_checkpoint_set_frequency )
 GENERATE_ASN_MSG_SENDER( ClientToSim, ControlGlobalMeteo, control_global_meteo )
 GENERATE_ASN_MSG_SENDER( ClientToSim, ControlLocalMeteo, control_local_meteo )
+GENERATE_NOPTR_ASN_MSG_SENDER( ClientToSim, ControlToggleVisionCones, control_toggle_vision_cones )
 
 GENERATE_ASN_MSG_SENDER( ClientToSim, LimitCreationRequest, limit_creation_request )
 GENERATE_NOPTR_ASN_MSG_SENDER( ClientToSim, LimitDestructionRequest, limit_destruction_request )

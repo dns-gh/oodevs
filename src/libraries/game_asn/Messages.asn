@@ -71,6 +71,7 @@ MsgsSimToClient ::= SEQUENCE
 
         -- MESSAGES
         msg-control-information                                 MsgControlInformation,
+        msg-control-profiling-information                       MsgControlProfilingInformation,
         msg-control-begin-tick                                  MsgControlBeginTick,
         msg-control-end-tick                                    MsgControlEndTick,
         msg-control-stop-ack                                    MsgControlStopAck,
@@ -104,6 +105,7 @@ MsgsSimToClient ::= SEQUENCE
         msg-unit-attributes                                     MsgUnitAttributes,
         msg-unit-pathfind                                       MsgUnitPathFind,                
         msg-unit-destruction                                    MsgUnitDestruction,
+        msg-unit-environment-type                               MsgUnitEnvironmentType,
 
         msg-change-diplomacy                                    MsgChangeDiplomacy,
         msg-unit-change-superior                                MsgUnitChangeSuperior,        
@@ -124,6 +126,13 @@ MsgsSimToClient ::= SEQUENCE
         msg-report                                              MsgReport,
         msg-trace                                               MsgTrace,
         msg-decisional-state                                    MsgDecisionalState,
+        msg-debug-points                                        MsgDebugPoints,
+        
+        msg-unit-vision-cones                                        MsgUnitVisionCones,
+        msg-unit-detection                                      MsgUnitDetection,
+        msg-object-detection                                    MsgObjectDetection,
+        msg-population-concentration-detection                  MsgPopulationConcentrationDetection,
+        msg-population-flow-detection                           MsgPopulationFlowDetection,
 
         msg-unit-order                                          MsgUnitOrder,        
         msg-automat-order                                       MsgAutomatOrder,
@@ -186,6 +195,7 @@ MsgsClientToSim ::= SEQUENCE
         msg-control-local-meteo                    MsgControlLocalMeteo,
         msg-control-checkpoint-save-now            MsgControlCheckPointSaveNow,
         msg-control-checkpoint-set-frequency       MsgControlCheckPointSetFrequency, 
+        msg-control-toggle-vision-cones            MsgControlToggleVisionCones,
 
         msg-limit-creation-request              MsgLimitCreationRequest,
         msg-limit-destruction-request           MsgLimitDestructionRequest,

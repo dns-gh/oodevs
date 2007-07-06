@@ -7,39 +7,36 @@
 //
 // *****************************************************************************
 
-#ifndef __ReplayModel_ABC_h_
-#define __ReplayModel_ABC_h_
+#ifndef __MessageHandler_ABC_h_
+#define __MessageHandler_ABC_h_
 
-#include "game_asn/Asn.h"
-#include "MessageHandler_ABC.h"
+#include "game_asn/asn.h"
 
 namespace dispatcher
 {
 
 // =============================================================================
-/** @class  ReplayModel_ABC
-    @brief  Replay model definition
+/** @class  MessageHandler_ABC
+    @brief  Simulation message handler definition
 */
 // Created: AGE 2007-07-05
 // =============================================================================
-class ReplayModel_ABC : public MessageHandler_ABC
+class MessageHandler_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayModel_ABC() {};
-    virtual ~ReplayModel_ABC() {};
+             MessageHandler_ABC() {};
+    virtual ~MessageHandler_ABC() {};
     //@}
 
     //! @name Operations
     //@{
-    virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg ) = 0;
-    virtual void StartSynchronisation() = 0;
-    virtual void EndSynchronisation() = 0;
+    virtual void Receive( const ASN1T_MsgsSimToClient& message ) = 0;
     //@}
 };
 
 }
 
-#endif // __ReplayModel_ABC_h_
+#endif // __MessageHandler_ABC_h_

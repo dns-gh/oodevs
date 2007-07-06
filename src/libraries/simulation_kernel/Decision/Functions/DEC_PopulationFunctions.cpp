@@ -20,9 +20,8 @@
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Entities/Objects/MIL_RealObjectTypeFilter.h"
-#include "Network/NET_AS_MOSServerMsgMgr.h"
 #include "Network/NET_ASN_Messages.h"
-#include "Network/NET_AgentServer.h"
+#include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_Tools.h"
 #include "Decision/DEC_Tools.h"
 #include "DEC_FunctionsTools.h"
@@ -70,6 +69,8 @@ void DEC_PopulationFunctions::DecisionalState( DIA_Call_ABC& call, const MIL_Pop
     msg.Send();
 }
 
+// $$$$ AGE 2007-07-06: ^c^v de merde
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::DebugDrawPoints
 // Created: NLD 2005-03-22
@@ -81,14 +82,11 @@ void DEC_PopulationFunctions::DebugDrawPoints( DIA_Call_ABC& call, const MIL_Pop
     T_PointVector* pPoints = call.GetParameter( 0 ).ToUserPtr( pPoints );
     assert( pPoints );
 
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
-    DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
-    
-    dinMsg << (uint32)callerPopulation.GetID();
-    dinMsg << (uint32)pPoints->size();
-    for( CIT_PointVector itPoint = pPoints->begin(); itPoint != pPoints->end(); ++itPoint )
-        dinMsg << *itPoint;
-    msgMgr.SendMsgDebugDrawPoints( dinMsg );
+    NET_ASN_MsgDebugPoints asn;
+    asn().unit_id = callerPopulation.GetID();
+    NET_ASN_Tools::WriteCoordinates( *pPoints, asn().coordinates );
+    asn.Send();
+    NET_ASN_Tools::Delete( asn().coordinates );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,13 +100,13 @@ void DEC_PopulationFunctions::DebugDrawPoint( DIA_Call_ABC& call, const MIL_Popu
     const MT_Vector2D* pPoint = call.GetParameter( 0 ).ToUserPtr( pPoint );
     assert( pPoint );
 
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
-    DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
-    
-    dinMsg << (uint32)callerPopulation.GetID();
-    dinMsg << (uint32)1;
-    dinMsg << *pPoint;
-    msgMgr.SendMsgDebugDrawPoints( dinMsg );
+    NET_ASN_MsgDebugPoints asn;
+    asn().unit_id = callerPopulation.GetID();
+    asn().coordinates.n = 1;
+    ASN1T_CoordUTM coord;
+    NET_ASN_Tools::WritePoint( *pPoint, coord );
+    asn().coordinates.elem = &coord;
+    asn.Send();
 }
 
 // -----------------------------------------------------------------------------

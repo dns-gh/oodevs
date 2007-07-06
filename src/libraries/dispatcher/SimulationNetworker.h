@@ -46,7 +46,6 @@ public:
     //@{
     virtual void Send( const ASN1T_MsgsClientToSim& asnMsg );
     virtual void Send( const ASN1T_MsgsMiddleToSim& asnMsg );
-            void Send( unsigned int nMsgID, const DIN::DIN_Input& dinMsg );
     //@}
 
 private:
@@ -65,17 +64,8 @@ private:
 
     //! @name Messages callbacks
     //@{
-    void OnReceiveMsgSimToClient                           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );    
-    void OnReceiveMsgSimToMiddle                           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );        
-
-    void OnReceiveMsgProfilingValues                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgUnitVisionCones                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgUnitInterVisibility                   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgObjectInterVisibility                 ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgPopulationFlowInterVisibility         ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgDebugDrawPoints                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgEnvironmentType                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgSimToClient( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );    
+    void OnReceiveMsgSimToMiddle( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );        
     //@}
 
 private:

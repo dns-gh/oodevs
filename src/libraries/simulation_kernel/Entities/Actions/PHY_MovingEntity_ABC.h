@@ -29,11 +29,6 @@ class MIL_RC;
 class DEC_PathResult;
 class TerrainData;
 
-namespace DIN
-{
-    class DIN_BufferedMessage;
-}      
-
 // =============================================================================
 // @class  PHY_Actor
 // Created: JVT 2004-08-03
@@ -101,8 +96,8 @@ public:
 protected:
     //! @name Network
     //@{
-    void SerializeEnvironmentType( DIN::DIN_BufferedMessage& msg ) const;
-    bool SerializeCurrentPath    ( ASN1T_Path& asn         ) const;
+    void SerializeEnvironmentType( ASN1T_MsgUnitEnvironmentType& msg ) const;
+    bool SerializeCurrentPath    ( ASN1T_Path& asn                   ) const;
     //@}
 
     //! @name Tools

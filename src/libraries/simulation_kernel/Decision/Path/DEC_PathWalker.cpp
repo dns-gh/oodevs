@@ -26,7 +26,6 @@
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MIL_AgentServer.h"
-#include "DIN/MessageService/DIN_BufferedMessage.h"
 
 //$$$ Refactorer gestion collisions objets
 
@@ -505,12 +504,12 @@ void DEC_PathWalker::Apply()
 // Name: DEC_PathWalker::SerializeEnvironmentType
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-void DEC_PathWalker::SerializeEnvironmentType( DIN::DIN_BufferedMessage& dinMsg ) const
+void DEC_PathWalker::SerializeEnvironmentType( ASN1T_MsgUnitEnvironmentType& msg ) const
 {
-    dinMsg << environment_.Area();
-    dinMsg << environment_.Left();
-    dinMsg << environment_.Right();
-    dinMsg << environment_.Linear();
+    msg.area   = environment_.Area();
+    msg.left   = environment_.Left();
+    msg.right  = environment_.Right();
+    msg.linear = environment_.Linear();
 }
 
 // -----------------------------------------------------------------------------
