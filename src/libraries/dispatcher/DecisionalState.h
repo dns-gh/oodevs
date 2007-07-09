@@ -34,6 +34,7 @@ public:
 
     //! @name Operations
     //@{
+    void Clear();
     void Update( const ASN1T_MsgDecisionalState& asnMsg );
     void Send( unsigned id, Publisher_ABC& publisher ) const;
     //@}

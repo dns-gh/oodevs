@@ -80,6 +80,7 @@ void Automat::Update( const ASN1T_MsgAutomatCreation& msg )
         pKnowledgeGroup_ = &model_.GetKnowledgeGroups().Get( msg.oid_groupe_connaissance );
         pKnowledgeGroup_->GetAutomats().Register( *this );
     }
+    decisionalInfos_.Clear();
 }
 
 // -----------------------------------------------------------------------------

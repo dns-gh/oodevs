@@ -113,6 +113,7 @@ void Agent::Update( const ASN1T_MsgUnitCreation& asnMsg )
         pAutomat_ = &model_.GetAutomats().Get( asnMsg.oid_automate );
         pAutomat_->GetAgents().Register( *this );
     }
+    decisionalInfos_.Clear();
 }
 
 #define UPDATE_ASN_ATTRIBUTE( ASN, CPP ) \

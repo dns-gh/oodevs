@@ -57,6 +57,7 @@ Population::~Population()
 void Population::Update( const ASN1T_MsgPopulationCreation& )
 {
     FlagUpdate();
+    decisionalInfos_.Clear();
 }
 
 // -----------------------------------------------------------------------------
