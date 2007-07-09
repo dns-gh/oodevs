@@ -11,6 +11,7 @@
 #define __ProfileManager_h_
 
 #include "game_asn/Asn.h"
+#include "MessageHandler_ABC.h"
 
 namespace xml{ class xistream; };
 
@@ -28,18 +29,18 @@ class ClientsNetworker;
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class ProfileManager
+class ProfileManager : public MessageHandler_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileManager( Model& model, ClientsNetworker& clients, const Config& config );
+             ProfileManager( Model& model, Publisher_ABC& clients, const Config& config );
     virtual ~ProfileManager();
     //@}
 
     //! @name Operations
     //@{
-    void     Reset       ();
+    void Reset();
     Profile* Authenticate( const std::string& strName, const std::string& strPassword ) const;
     Profile* Find        ( const std::string& strName ) const;
 
@@ -48,6 +49,12 @@ public:
     ASN1T_MsgProfileCreationRequestAck_error_code    Create ( const ASN1T_MsgProfileCreationRequest&    message );
     ASN1T_MsgProfileUpdateRequestAck_error_code      Update ( const ASN1T_MsgProfileUpdateRequest&      message );
     ASN1T_MsgProfileDestructionRequestAck_error_code Destroy( const ASN1T_MsgProfileDestructionRequest& message );
+    //@}
+
+protected:
+    //! @name Operations
+    //@{
+    virtual void Receive( const ASN1T_MsgsSimToClient& message );
     //@}
 
 private:
@@ -70,10 +77,10 @@ private:
     //@}
 
 private:
-    const Config&           config_;
-          Model&            model_;
-          ClientsNetworker& clients_;
-          T_ProfileMap      profiles_;
+    const Config&        config_;
+          Model&         model_;
+          Publisher_ABC& clients_;
+          T_ProfileMap   profiles_;
 };
 
 }

@@ -10,7 +10,6 @@
 #include "dispatcher_pch.h"
 #include "SimulationNetworker.h"
 
-#include "Dispatcher.h"
 #include "Simulation.h"
 #include "Model.h"
 #include "ClientsNetworker.h"
@@ -18,7 +17,6 @@
 #include "Network_Def.h"
 #include "tools/AsnMessageDecoder.h"
 #include "tools/AsnMessageEncoder.h"
-#include "xeumeuleu/xml.h"
 #include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
 
 using namespace tools;
@@ -31,14 +29,14 @@ static const unsigned int magicCookie_ = 1;
 // Name: SimulationNetworker constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, const Config& config )
+SimulationNetworker::SimulationNetworker( Model& model, ClientsNetworker& clients, MessageHandler_ABC& handler, const Config& config )
     : ClientNetworker_ABC( magicCookie_, config.GetNetworkSimulationParameters() )
-    , config_            ( config ) 
-    , dispatcher_        ( dispatcher )
-    , pSimulation_       ( 0 )
+    , model_             ( model )
+    , clients_           ( clients )
+    , handler_           ( handler )
 {
-    GetMessageService().RegisterReceivedMessage( eMsgSimToClient                           , *this, &SimulationNetworker::OnReceiveMsgSimToClient                            );
-    GetMessageService().RegisterReceivedMessage( eMsgSimToMiddle                           , *this, &SimulationNetworker::OnReceiveMsgSimToMiddle                            );
+    GetMessageService().RegisterReceivedMessage( eMsgSimToClient , *this, &SimulationNetworker::OnReceiveMsgSimToClient );
+    GetMessageService().RegisterReceivedMessage( eMsgSimToMiddle , *this, &SimulationNetworker::OnReceiveMsgSimToMiddle );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,9 +59,8 @@ SimulationNetworker::~SimulationNetworker()
 void SimulationNetworker::OnConnected( DIN_Link& link )
 {
     ClientNetworker_ABC::OnConnected( link );
-
-    assert( !pSimulation_ );
-    pSimulation_ = new Simulation( dispatcher_, GetMessageService(), link, config_ );
+    assert( !simulation_.get() );
+    simulation_.reset( new Simulation( handler_, GetMessageService(), link ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,9 +70,8 @@ void SimulationNetworker::OnConnected( DIN_Link& link )
 void SimulationNetworker::OnConnectionFailed( DIN_Link& link, const DIN_ErrorDescription& reason )
 {
     ClientNetworker_ABC::OnConnectionFailed( link, reason );
-
-    dispatcher_.GetModel().Reset();
-    dispatcher_.GetClientsNetworker().DenyConnections();
+    model_.Reset();
+    clients_.DenyConnections();
 }
 
 // -----------------------------------------------------------------------------
@@ -85,13 +81,9 @@ void SimulationNetworker::OnConnectionFailed( DIN_Link& link, const DIN_ErrorDes
 void SimulationNetworker::OnConnectionLost( DIN_Link& link, const DIN_ErrorDescription& reason )
 {
     ClientNetworker_ABC::OnConnectionLost( link, reason );
-
-    assert( pSimulation_ );
-    delete pSimulation_;
-    pSimulation_ = 0;
-
-    dispatcher_.GetModel().Reset();
-    dispatcher_.GetClientsNetworker().DenyConnections();
+    simulation_.reset();
+    model_.Reset();
+    clients_.DenyConnections();
 }
 
 // =============================================================================
@@ -102,14 +94,12 @@ void SimulationNetworker::OnConnectionLost( DIN_Link& link, const DIN_ErrorDescr
 // Name: SimulationNetworker::OnReceiveMsgSimToClient
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void SimulationNetworker::OnReceiveMsgSimToClient( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input )
+void SimulationNetworker::OnReceiveMsgSimToClient( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
 {
-    assert( pSimulation_ && pSimulation_ == &Simulation::GetSimulationFromLink( linkFrom ) );
-
     try
     {
         AsnMessageDecoder< ASN1T_MsgsSimToClient, ASN1C_MsgsSimToClient > asnDecoder( input );
-        pSimulation_->OnReceive( asnDecoder.GetAsnMsg() );
+        simulation_->OnReceive( asnDecoder.GetAsnMsg() );
     }
     catch( std::runtime_error& exception )
     {
@@ -121,14 +111,12 @@ void SimulationNetworker::OnReceiveMsgSimToClient( DIN::DIN_Link& linkFrom, DIN:
 // Name: SimulationNetworker::OnReceiveMsgSimToMiddle
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void SimulationNetworker::OnReceiveMsgSimToMiddle( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input )
+void SimulationNetworker::OnReceiveMsgSimToMiddle( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
 {
-    assert( pSimulation_ && pSimulation_ == &Simulation::GetSimulationFromLink( linkFrom ) );
-
     try
     {
         AsnMessageDecoder< ASN1T_MsgsSimToMiddle, ASN1C_MsgsSimToMiddle > asnDecoder( input );
-        pSimulation_->OnReceive( asnDecoder.GetAsnMsg() );
+        simulation_->OnReceive( asnDecoder.GetAsnMsg() );
     }
     catch( std::runtime_error& exception )
     {
@@ -146,10 +134,9 @@ void SimulationNetworker::OnReceiveMsgSimToMiddle( DIN::DIN_Link& linkFrom, DIN:
 // -----------------------------------------------------------------------------
 void SimulationNetworker::Send( const ASN1T_MsgsClientToSim& asnMsg )
 {
-    assert( pSimulation_ );
     try
     {
-        pSimulation_->Send( asnMsg );
+        simulation_->Send( asnMsg );
     }
     catch( std::runtime_error& exception )
     {
@@ -163,10 +150,9 @@ void SimulationNetworker::Send( const ASN1T_MsgsClientToSim& asnMsg )
 // -----------------------------------------------------------------------------
 void SimulationNetworker::Send( const ASN1T_MsgsMiddleToSim& asnMsg )
 {
-    assert( pSimulation_ );
     try
     {
-        pSimulation_->Send( asnMsg );
+        simulation_->Send( asnMsg );
     }
     catch( std::runtime_error& exception )
     {

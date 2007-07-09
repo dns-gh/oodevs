@@ -10,13 +10,16 @@
 #ifndef __Dispatcher_h_
 #define __Dispatcher_h_
 
+#include "CompositeMessageHandler.h"
+#include "boost/shared_ptr.hpp"
+
 namespace dispatcher
 {
-class Config;
-class Model;
-class SimulationNetworker;
-class ClientsNetworker;
-class ProfileManager;
+    class Config;
+    class Model;
+    class SimulationNetworker;
+    class ClientsNetworker;
+    class ProfileManager;
 
 // =============================================================================
 /** @class  Dispatcher
@@ -29,7 +32,7 @@ class Dispatcher
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Dispatcher( Config& config );
+    explicit Dispatcher( const Config& config );
     virtual ~Dispatcher();
     //@}
 
@@ -54,11 +57,12 @@ private:
     //@}
 
 private:
-    const Config&              config_;
-          Model*               pModel_;
-          SimulationNetworker* pSimulationNetworker_;
-          ClientsNetworker*    pClientsNetworker_;
-          ProfileManager*      pProfileManager_;
+    const Config&                             config_;
+    CompositeMessageHandler                   handler_;
+    boost::shared_ptr< Model >                pModel_;
+    boost::shared_ptr< ClientsNetworker >     pClientsNetworker_;
+    boost::shared_ptr< SimulationNetworker >  pSimulationNetworker_;
+    boost::shared_ptr< ProfileManager >       pProfileManager_;
 };
 
 }

@@ -16,7 +16,8 @@
 #include "ClientsNetworker.h"
 #include "ProfileManager.h"
 #include "Config.h"
-#include "xeumeuleu/xml.h"
+#include "SimulationDispatcher.h"
+#include "SaverFacade.h"
 
 using namespace dispatcher;
 
@@ -24,17 +25,20 @@ using namespace dispatcher;
 // Name: Dispatcher constructor
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-Dispatcher::Dispatcher( Config& config )
-    : config_              ( config )
-    , pModel_              ( 0 )
-    , pSimulationNetworker_( 0 )
-    , pClientsNetworker_   ( 0 )
-    , pProfileManager_     ( 0 )
+Dispatcher::Dispatcher( const Config& config )
+    : config_( config )
+    , pModel_( new Model() )
 {
-    pModel_               = new Model              ();
-    pSimulationNetworker_ = new SimulationNetworker( *this, config_  );
-    pClientsNetworker_    = new ClientsNetworker   ( *this, config_ );
-    pProfileManager_      = new ProfileManager     ( *pModel_, *pClientsNetworker_, config_ );
+    pClientsNetworker_   .reset( new ClientsNetworker   ( *this, config_ ) );
+    pSimulationNetworker_.reset( new SimulationNetworker( *pModel_, *pClientsNetworker_, handler_, config_ ) );
+    pProfileManager_     .reset( new ProfileManager     ( *pModel_, *pClientsNetworker_, config_ ) );
+
+    handler_.Add( boost::shared_ptr< MessageHandler_ABC >( new SimulationDispatcher( *pClientsNetworker_, *pModel_ ) ) );
+    handler_.Add( pProfileManager_ );
+    handler_.Add( pClientsNetworker_ );
+    handler_.Add( pModel_ );
+    if( config.RecorderEnabled() )
+        handler_.Add( boost::shared_ptr< MessageHandler_ABC >( new SaverFacade( *pModel_, config_ ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,10 +47,6 @@ Dispatcher::Dispatcher( Config& config )
 // -----------------------------------------------------------------------------
 Dispatcher::~Dispatcher()
 {
-    delete pModel_;
-    delete pSimulationNetworker_;
-    delete pClientsNetworker_;
-    delete pProfileManager_;
 }
 
 // =============================================================================

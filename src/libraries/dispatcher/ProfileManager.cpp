@@ -21,7 +21,7 @@ using namespace dispatcher;
 // Name: ProfileManager constructor
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-ProfileManager::ProfileManager( Model& model, ClientsNetworker& clients, const Config& config )
+ProfileManager::ProfileManager( Model& model, Publisher_ABC& clients, const Config& config )
     : model_   ( model )
     , clients_ ( clients )
     , config_  ( config )
@@ -42,6 +42,16 @@ ProfileManager::~ProfileManager()
 // =============================================================================
 // MAIN
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: ProfileManager::Receive
+// Created: AGE 2007-07-09
+// -----------------------------------------------------------------------------
+void ProfileManager::Receive( const ASN1T_MsgsSimToClient& message )
+{
+    if( message.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_end )
+        Reset();
+}
 
 // -----------------------------------------------------------------------------
 // Name: ProfileManager::ReadProfile

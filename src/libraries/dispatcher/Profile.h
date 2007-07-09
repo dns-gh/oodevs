@@ -35,8 +35,8 @@ class Profile
 public:
     //! @name Constructors/Destructor
     //@{
-             Profile( Model& model, ClientsNetworker& clients, const std::string& strLogin, xml::xistream& xis );
-             Profile( Model& model, ClientsNetworker& clients, const ASN1T_MsgProfileCreationRequest& message );
+             Profile( Model& model, Publisher_ABC& clients, const std::string& strLogin, xml::xistream& xis );
+             Profile( Model& model, Publisher_ABC& clients, const ASN1T_MsgProfileCreationRequest& message );
     virtual ~Profile();
     //@}
 
@@ -90,7 +90,7 @@ private:
 
 private:
     Model& model_;
-    ClientsNetworker& clients_;
+    Publisher_ABC& clients_;
 
     std::string     strLogin_;
     std::string     strPassword_;

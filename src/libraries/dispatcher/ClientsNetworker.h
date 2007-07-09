@@ -11,6 +11,7 @@
 #define __ClientsNetworker_h_
 
 #include "Publisher_ABC.h"
+#include "MessageHandler_ABC.h"
 #include "tools/ServerNetworker_ABC.h"
 
 struct ASN1T_MsgsInClient;
@@ -35,6 +36,7 @@ class Config;
 // =============================================================================
 class ClientsNetworker : public tools::ServerNetworker_ABC
                        , public Publisher_ABC
+                       , public MessageHandler_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -51,6 +53,12 @@ public:
 
     virtual void Send( const ASN1T_MsgsSimToClient&    asnMsg );
     virtual void Send( const ASN1T_MsgsMiddleToClient& asnMsg );
+    //@}
+
+protected:
+    //! @name Operations
+    //@{
+    virtual void Receive( const ASN1T_MsgsSimToClient& message );
     //@}
 
 private:

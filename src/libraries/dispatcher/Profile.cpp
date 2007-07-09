@@ -17,7 +17,7 @@
 #include "Side.h"
 #include "Formation.h"
 #include "Population.h"
-#include "ClientsNetworker.h"
+#include "Publisher_ABC.h"
 #include "xeumeuleu/xml.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 
@@ -27,7 +27,7 @@ using namespace dispatcher;
 // Name: Profile constructor
 // Created: NLD 2006-10-06
 // -----------------------------------------------------------------------------
-Profile::Profile( Model& model, ClientsNetworker& clients, const std::string& strLogin, xml::xistream& xis )
+Profile::Profile( Model& model, Publisher_ABC& clients, const std::string& strLogin, xml::xistream& xis )
     : model_       ( model )
     , clients_     ( clients )
     , strLogin_    ( strLogin )
@@ -55,7 +55,7 @@ Profile::Profile( Model& model, ClientsNetworker& clients, const std::string& st
 // Name: Profile constructor
 // Created: SBO 2007-01-22
 // -----------------------------------------------------------------------------
-Profile::Profile( Model& model, ClientsNetworker& clients, const ASN1T_MsgProfileCreationRequest& message )
+Profile::Profile( Model& model, Publisher_ABC& clients, const ASN1T_MsgProfileCreationRequest& message )
     : model_       ( model )
     , clients_     ( clients )
     , strLogin_    ( message.login )

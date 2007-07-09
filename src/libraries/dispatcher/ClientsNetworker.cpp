@@ -68,6 +68,18 @@ ClientsNetworker::~ClientsNetworker()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: ClientsNetworker::Receive
+// Created: AGE 2007-07-09
+// -----------------------------------------------------------------------------
+void ClientsNetworker::Receive( const ASN1T_MsgsSimToClient& message )
+{
+    if( message.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_begin )
+        DenyConnections();
+    else if( message.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_end )
+        AllowConnections();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ClientsNetworker::DenyConnections
 // Created: NLD 2006-10-05
 // -----------------------------------------------------------------------------

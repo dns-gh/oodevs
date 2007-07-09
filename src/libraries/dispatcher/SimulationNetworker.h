@@ -22,9 +22,11 @@ namespace DIN
 
 namespace dispatcher 
 {
-class Dispatcher;
-class Simulation;
-class Config;
+    class Model;
+    class ClientsNetworker;
+    class MessageHandler_ABC;
+    class Simulation;
+    class Config;
 
 // =============================================================================
 /** @class  SimulationNetworker
@@ -38,7 +40,7 @@ class SimulationNetworker : public tools::ClientNetworker_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SimulationNetworker( Dispatcher& dispatcher, const Config& config );
+             SimulationNetworker( Model& model, ClientsNetworker& clients, MessageHandler_ABC& handler, const Config& config );
     virtual ~SimulationNetworker();
     //@}
 
@@ -69,9 +71,10 @@ private:
     //@}
 
 private:
-    const Config&     config_;
-          Dispatcher& dispatcher_;    
-          Simulation* pSimulation_;
+    Model&                      model_;
+    ClientsNetworker&           clients_;
+    MessageHandler_ABC&         handler_;
+    std::auto_ptr< Simulation > simulation_;
 };
 
 }

@@ -33,6 +33,7 @@
 #include "PopulationFire.h"
 #include "FireEffect.h"
 #include "Synchroniser.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 
 #include "SimulationModel.h"
 
@@ -93,6 +94,13 @@ void Model::Reset()
 // -----------------------------------------------------------------------------
 void Model::Receive( const ASN1T_MsgsSimToClient& asnMsg )
 {
+    if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_begin )
+    {
+        Reset();
+        MT_LOG_INFO_MSG( "Dispatcher - Initializing model" );
+    }
+    else if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_end )
+        MT_LOG_INFO_MSG( "Dispatcher - Model initialized" );
     Update( asnMsg );
 }
 

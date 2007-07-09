@@ -16,10 +16,7 @@
 
 namespace dispatcher
 {
-    class Config;
-    class Dispatcher;
-    class SaverFacade;
-    class SimulationDispatcher;
+    class MessageHandler_ABC;
 
 // =============================================================================
 /** @class  Simulation
@@ -33,7 +30,7 @@ class Simulation : public tools::Server_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Simulation( Dispatcher& dispatcher, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link, const Config& config );
+             Simulation( MessageHandler_ABC& handler, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link );
     virtual ~Simulation();
     //@}
 
@@ -46,11 +43,6 @@ public:
     virtual void Send( const ASN1T_MsgsClientToSim& asnMsg );
     //@}
 
-    //! @name Tools
-    //@{
-    static Simulation& GetSimulationFromLink( const DIN::DIN_Link& link );
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{
@@ -59,9 +51,7 @@ private:
     //@}
 
 private:
-    Dispatcher&           dispatcher_;
-    SaverFacade*          saver_;
-    SimulationDispatcher* simulationDispatcher_;
+    MessageHandler_ABC& handler_;
 };
 
 }
