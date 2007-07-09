@@ -17,7 +17,6 @@
 #include "ProfileManager.h"
 #include "Network_Def.h"
 #include "SimulationNetworker.h"
-#include "ClientDispatcher.h"
 #include "ProfilesDispatcher.h"
 #include "LoaderFacade.h"
 #include "tools/AsnMessageEncoder.h"
@@ -150,10 +149,7 @@ void Client::OnReceive( const ASN1T_MsgsClientToSim& asnMsg )
         return;
     }
     if( simulation_ )
-    {
-        ClientDispatcher dispatcher( *simulation_ );
-        dispatcher.OnReceive( asnMsg );
-    }
+        simulation_->Send( asnMsg );
     if( loader_ )
         loader_->OnReceive( asnMsg ); // $$$$ NLD 2007-04-24: A GICLER devrait être que MsgsClientToMiddle
 }
