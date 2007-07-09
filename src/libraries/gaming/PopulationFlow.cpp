@@ -22,7 +22,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 PopulationFlow::PopulationFlow( const ASN1T_MsgPopulationFlowCreation& asnMsg, const CoordinateConverter_ABC& converter )
     : converter_ ( converter )
-    , nID_       ( asnMsg.oid_flux )
+    , nID_       ( asnMsg.oid )
     , itineraire_( )
     , flow_      ( 2, geometry::Point2f( 0, 0 ) )
     , nDirection_( 0 )

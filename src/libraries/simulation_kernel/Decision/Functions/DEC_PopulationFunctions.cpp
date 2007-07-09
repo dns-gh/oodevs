@@ -48,7 +48,7 @@ void DEC_PopulationFunctions::Trace( DIA_Call_ABC& call, const MIL_Population& c
 {
     std::string message( call.GetParameter( 0 ).ToString() );
     NET_ASN_MsgTrace msg;
-    msg().unit_id = callerPopulation.GetID();
+    msg().oid = callerPopulation.GetID();
     msg().message = message.c_str();
     msg.Send();
 }
@@ -63,9 +63,9 @@ void DEC_PopulationFunctions::DecisionalState( DIA_Call_ABC& call, const MIL_Pop
     std::string value( call.GetParameter( 1 ).ToString() );
 
     NET_ASN_MsgDecisionalState msg;
-    msg().unit_id = callerPopulation.GetID();
-    msg().key     = key.c_str();
-    msg().value   = value.c_str();
+    msg().oid   = callerPopulation.GetID();
+    msg().key   = key.c_str();
+    msg().value = value.c_str();
     msg.Send();
 }
 
@@ -83,7 +83,7 @@ void DEC_PopulationFunctions::DebugDrawPoints( DIA_Call_ABC& call, const MIL_Pop
     assert( pPoints );
 
     NET_ASN_MsgDebugPoints asn;
-    asn().unit_id = callerPopulation.GetID();
+    asn().oid = callerPopulation.GetID();
     NET_ASN_Tools::WriteCoordinates( *pPoints, asn().coordinates );
     asn.Send();
     NET_ASN_Tools::Delete( asn().coordinates );
@@ -101,7 +101,7 @@ void DEC_PopulationFunctions::DebugDrawPoint( DIA_Call_ABC& call, const MIL_Popu
     assert( pPoint );
 
     NET_ASN_MsgDebugPoints asn;
-    asn().unit_id = callerPopulation.GetID();
+    asn().oid = callerPopulation.GetID();
     asn().coordinates.n = 1;
     ASN1T_CoordUTM coord;
     NET_ASN_Tools::WritePoint( *pPoint, coord );

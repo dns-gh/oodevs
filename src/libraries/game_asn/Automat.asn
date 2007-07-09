@@ -21,7 +21,7 @@ EnumAutomatMode ::= ENUMERATED
 
 MsgAutomatCreation ::= SEQUENCE
 {
-    oid-automate             Automat,
+    oid                      Automat,
     type-automate            AutomatType,
     nom                      VisibleString,
     oid-formation            Formation,
@@ -31,7 +31,7 @@ MsgAutomatCreation ::= SEQUENCE
 
 MsgAutomatAttributes ::= SEQUENCE
 {
-    oid-automate                  Automat,    
+    oid                           Automat,    
     etat-automate                 EnumAutomatMode       OPTIONAL,   
     rapport-de-force              EnumForceRatioStatus          OPTIONAL,
     combat-de-rencontre           EnumMeetingEngagementStatus OPTIONAL,
@@ -48,26 +48,26 @@ EnumSetAutomatModeErrorCode ::= ENUMERATED
 }
 MsgSetAutomatMode ::= SEQUENCE
 {
-    unit-id Unit,
+    oid     Automat,
     mode    EnumAutomatMode
 }
 MsgSetAutomatModeAck ::= SEQUENCE
 {
-    unit-id     Unit,
+    oid         Automat,
     error-code  EnumSetAutomatModeErrorCode
 }
 
 -- Changement hierarchie
 MsgAutomatChangeKnowledgeGroup ::= SEQUENCE
 {
-    oid-automate             Automat,
+    oid                      Automat,
     oid-camp                 Team,
     oid-groupe-connaissance  KnowledgeGroup 
 }
 
 MsgAutomatChangeKnowledgeGroupAck ::= SEQUENCE
 {
-    oid-automate             Automat,
+    oid                      Automat,
     oid-camp                 Team,
     oid-groupe-connaissance  KnowledgeGroup,
     error-code               EnumChangeHierarchyErrorCode
@@ -75,7 +75,7 @@ MsgAutomatChangeKnowledgeGroupAck ::= SEQUENCE
    
 MsgAutomatChangeLogisticLinks ::= SEQUENCE
 {
-    oid-automate       Automat,
+    oid                Automat,
     oid-tc2            Automat OPTIONAL,
     oid-maintenance    Automat OPTIONAL,
     oid-sante          Automat OPTIONAL,
@@ -84,7 +84,7 @@ MsgAutomatChangeLogisticLinks ::= SEQUENCE
 
 MsgAutomatChangeLogisticLinksAck ::= SEQUENCE
 {
-    oid-automate       Automat,
+    oid                Automat,
     oid-tc2            Automat OPTIONAL,
     oid-maintenance    Automat OPTIONAL,
     oid-sante          Automat OPTIONAL,

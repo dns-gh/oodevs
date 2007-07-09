@@ -297,7 +297,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitDestruction( const ASN1T_MsgUnitDestruct
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitVisionCones( const ASN1T_MsgUnitVisionCones& message )
 {
-    GetModel().agents_.GetAgent( message.unit_oid ).Update( message );
+    GetModel().agents_.GetAgent( message.oid ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -306,7 +306,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitVisionCones( const ASN1T_MsgUnitVisionCo
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility( const ASN1T_MsgUnitDetection& message )
 {
-    GetModel().agents_.GetAgent( message.unit_oid ).Update( message );
+    GetModel().agents_.GetAgent( message.oid ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -315,7 +315,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility( const ASN1T_MsgUnitDete
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility( const ASN1T_MsgObjectDetection& message )
 {
-    GetModel().agents_.GetAgent( message.unit_oid ).Update( message );
+    GetModel().agents_.GetAgent( message.oid ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -324,7 +324,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility( const ASN1T_MsgObject
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility( const ASN1T_MsgPopulationConcentrationDetection& message )
 {
-    GetModel().agents_.GetAgent( message.unit_oid ).Update( message );
+    GetModel().agents_.GetAgent( message.oid ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -333,7 +333,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility( cons
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility( const ASN1T_MsgPopulationFlowDetection& message )
 {
-    GetModel().agents_.GetAgent( message.unit_oid ).Update( message );
+    GetModel().agents_.GetAgent( message.oid ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -342,7 +342,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility( const ASN1T_M
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints( const ASN1T_MsgDebugPoints& message )
 {
-    GetModel().agents_.FindAllAgent( message.unit_id )->Update( message );
+    GetModel().agents_.FindAllAgent( message.oid )->Update( message );
 }
 
 //=============================================================================
@@ -573,7 +573,7 @@ void AgentServerMsgMgr::OnReceiveMsgProfileUpdateRequestAck( const ASN1T_MsgProf
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitAttributes( const ASN1T_MsgUnitAttributes& message )
 {
-    GetModel().agents_.GetAgent( message.oid_pion ).Update( message );
+    GetModel().agents_.GetAgent( message.oid ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -582,7 +582,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitAttributes( const ASN1T_MsgUnitAttribute
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomatAttributes( const ASN1T_MsgAutomatAttributes& message )
 {
-    GetModel().agents_.GetAutomat( message.oid_automate ).Update( message );
+    GetModel().agents_.GetAutomat( message.oid ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -726,7 +726,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogSupplyPushFlowAck( const ASN1T_MsgLogSupp
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitPathFind( const ASN1T_MsgUnitPathFind& message )
 {
-    GetModel().agents_.GetAgent( message.oid_pion ).Update( message );
+    GetModel().agents_.GetAgent( message.oid ).Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -970,7 +970,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimaDestruction( const ASN1T_MsgLimaDestruct
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomatOrder( const ASN1T_MsgAutomatOrder& asnMsg )
 {
-    GetModel().agents_.GetAutomat( asnMsg.oid_unite_executante ).Update( asnMsg );
+    GetModel().agents_.GetAutomat( asnMsg.oid ).Update( asnMsg );
 }
 
 //-----------------------------------------------------------------------------
@@ -980,7 +980,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatOrder( const ASN1T_MsgAutomatOrder& a
 void AgentServerMsgMgr::OnReceiveMsgAutomatOrderAck( const ASN1T_MsgAutomatOrderAck& message, unsigned long /*nCtx*/ )
 {
     if( CheckAcknowledge( message, "AutomatOrderAck" ) )
-        GetModel().agents_.GetAutomat( message.oid_unite_executante ).Update( message );
+        GetModel().agents_.GetAutomat( message.oid ).Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -990,7 +990,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatOrderAck( const ASN1T_MsgAutomatOrder
 void AgentServerMsgMgr::OnReceiveMsgUnitOrderAck( const ASN1T_MsgUnitOrderAck& message, unsigned long /*nCtx*/ )
 {
     if( CheckAcknowledge( message, "UnitOrderAck" ) )
-        GetModel().agents_.GetAgent( message.oid_unite_executante ).Update( message );
+        GetModel().agents_.GetAgent( message.oid ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -999,7 +999,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitOrderAck( const ASN1T_MsgUnitOrderAck& m
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitOrder( const ASN1T_MsgUnitOrder& message )
 {
-    GetModel().agents_.FindAllAgent( message.oid_unite_executante )->Update( message );
+    GetModel().agents_.FindAllAgent( message.oid )->Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -1026,7 +1026,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitCreationRequestAck( const ASN1T_MsgUnitC
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCR( const ASN1T_MsgReport& message )
 {
-    GetModel().agents_.FindAllAgent( message.unit_id )->Update( message );
+    GetModel().agents_.FindAllAgent( message.oid )->Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1035,7 +1035,7 @@ void AgentServerMsgMgr::OnReceiveMsgCR( const ASN1T_MsgReport& message )
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgTrace( const ASN1T_MsgTrace& message )
 {
-    GetModel().agents_.FindAllAgent( message.unit_id )->Update( message );
+    GetModel().agents_.FindAllAgent( message.oid )->Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1044,7 +1044,7 @@ void AgentServerMsgMgr::OnReceiveMsgTrace( const ASN1T_MsgTrace& message )
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgDecisionalState( const ASN1T_MsgDecisionalState& message )
 {
-    GetModel().agents_.FindAllAgent( message.unit_id )->Update( message );
+    GetModel().agents_.FindAllAgent( message.oid )->Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -1063,7 +1063,7 @@ void AgentServerMsgMgr::OnReceiveMsgSetAutomatModeAck( const ASN1T_MsgSetAutomat
 void AgentServerMsgMgr::OnReceiveMsgUnitChangeSuperiorAck( const ASN1T_MsgUnitChangeSuperiorAck& message, unsigned long )
 {
     if( CheckAcknowledge( message, "UnitChangeSuperiorAck" ) )
-        GetModel().agents_.GetAgent( message.oid_pion ).Update( message );
+        GetModel().agents_.GetAgent( message.oid ).Update( message );
 }
 
 
@@ -1073,7 +1073,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitChangeSuperiorAck( const ASN1T_MsgUnitCh
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitChangeSuperior( const ASN1T_MsgUnitChangeSuperior& message )
 {
-    GetModel().agents_.GetAgent( message.oid_pion ).Update( message );
+    GetModel().agents_.GetAgent( message.oid ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1096,7 +1096,7 @@ void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDip
 void AgentServerMsgMgr::OnReceiveMsgAutomatChangeKnowledgeGroupAck( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& message, unsigned long )
 {
     if( CheckAcknowledge( message, "AutomatChangeKnowledgeGroupAck" ) )
-        GetModel().agents_.GetAutomat( message.oid_automate ).Update( message );
+        GetModel().agents_.GetAutomat( message.oid ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1105,7 +1105,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatChangeKnowledgeGroupAck( const ASN1T_
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinks( const ASN1T_MsgAutomatChangeLogisticLinks& message )
 {
-    GetModel().agents_.GetAutomat( message.oid_automate ).Update( message );
+    GetModel().agents_.GetAutomat( message.oid ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1115,7 +1115,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinks( const ASN1T_MsgA
 void AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinksAck( const ASN1T_MsgAutomatChangeLogisticLinksAck& message, unsigned long )
 {
     if( CheckAcknowledge( message, "AutomatChangeLogisticLinksAck" ) )
-        GetModel().agents_.GetAutomat( message.oid_automate ).Update( message );
+        GetModel().agents_.GetAutomat( message.oid ).Update( message );
 }
 
 // =============================================================================
@@ -1397,7 +1397,7 @@ void AgentServerMsgMgr::OnMsgPopulationCreation( const ASN1T_MsgPopulationCreati
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnMsgPopulationUpdate( const ASN1T_MsgPopulationUpdate& message )
 {
-    GetModel().agents_.GetPopulation( message.oid_population ).Update( message );
+    GetModel().agents_.GetPopulation( message.oid ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1478,7 +1478,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationOrderAck( const ASN1T_MsgPopulatio
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationOrder( const ASN1T_MsgPopulationOrder& message )
 {
-    GetModel().agents_.GetPopulation( message.oid_unite_executante ).Update( message );
+    GetModel().agents_.GetPopulation( message.oid ).Update( message );
 }
 
 // -----------------------------------------------------------------------------

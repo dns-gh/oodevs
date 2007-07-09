@@ -21,7 +21,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 PopulationConcentration::PopulationConcentration( Model& /*model*/, Population& population, const ASN1T_MsgPopulationConcentrationCreation& msg )
     : population_     ( population )
-    , nID_            ( msg.oid_concentration )
+    , nID_            ( msg.oid )
     , position_       ( msg.position )
     , nNbrAliveHumans_( 0 )
     , nNbrDeadHumans_ ( 0 )
@@ -78,7 +78,7 @@ void PopulationConcentration::SendCreation( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationConcentrationCreation asn;
 
-    asn().oid_concentration = nID_;
+    asn().oid = nID_;
     asn().oid_population    = population_.GetID();
     position_.Send( asn().position );
 
@@ -97,7 +97,7 @@ void PopulationConcentration::SendFullUpdate( Publisher_ABC& publisher ) const
     asn().m.nb_humains_mortsPresent   = 1;
     asn().m.nb_humains_vivantsPresent = 1;
 
-    asn().oid_concentration  = nID_;
+    asn().oid = nID_;
     asn().oid_population     = population_.GetID();
     asn().attitude           = nAttitude_;
     asn().nb_humains_morts   = nNbrDeadHumans_;
@@ -114,7 +114,7 @@ void PopulationConcentration::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationConcentrationDestruction destruction;
     destruction().oid_population    = population_.GetID();
-    destruction().oid_concentration = nID_;
+    destruction().oid               = nID_;
     destruction.Send( publisher );
 }
 

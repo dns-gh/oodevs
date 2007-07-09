@@ -14,7 +14,7 @@ UnitKnowledgeExports  ::= NULL
 
 MsgUnitKnowledgeCreation ::= SEQUENCE
 {
-    oid-connaissance        UnitKnowledge,   -- id de la connaissance
+    oid                     UnitKnowledge,   -- id de la connaissance
     oid-groupe-possesseur   KnowledgeGroup,   -- id du groupe de connaissance qui possède cette connaissance
     oid-unite-reelle        Unit,            -- id de l'unité réélle pointée par la connaissance
     type-unite              UnitType
@@ -28,7 +28,7 @@ AutomatPerception ::= SEQUENCE
 
 MsgUnitKnowledgeUpdate ::= SEQUENCE
 {
-    oid-connaissance            UnitKnowledge,
+    oid                         UnitKnowledge,
     oid-groupe-possesseur       KnowledgeGroup,
 
     pertinence                  Percentage                     OPTIONAL,
@@ -49,7 +49,7 @@ MsgUnitKnowledgeUpdate ::= SEQUENCE
 
 MsgUnitKnowledgeDestruction ::= SEQUENCE
 {
-    oid-connaissance        UnitKnowledge,
+    oid                     UnitKnowledge,
     oid-groupe-possesseur   KnowledgeGroup
 }
 

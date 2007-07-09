@@ -29,11 +29,11 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Automat::Automat( const ASN1T_MsgAutomatCreation& message, Controller& controller, 
                   const Resolver_ABC< AutomatType >& resolver )
-    : EntityImplementation< Automat_ABC >( controller, message.oid_automate, message.nom )
+    : EntityImplementation< Automat_ABC >( controller, message.oid, message.nom )
     , type_( resolver.Get( message.type_automate ) )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( type_.GetName() ).arg( message.oid_automate );
+        name_ = QString( "%1 %2" ).arg( type_.GetName() ).arg( message.oid );
     RegisterSelf( *this );
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );

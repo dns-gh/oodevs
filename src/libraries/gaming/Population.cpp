@@ -32,13 +32,13 @@ unsigned long Population::nMaxId_ = 200;
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
 Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< PopulationType >& typeResolver )
-    : EntityImplementation< Population_ABC >( controller, message.oid_population, message.nom )
+    : EntityImplementation< Population_ABC >( controller, message.oid, message.nom )
     , controller_   ( controller )
     , converter_    ( converter )
     , type_         ( typeResolver.Get( message.type_population ) )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( type_.GetName() ).arg( message.oid_population );
+        name_ = QString( "%1 %2" ).arg( type_.GetName() ).arg( message.oid );
     RegisterSelf( *this );
     Attach( *new PropertiesDictionary( controller ) );
 }
@@ -100,7 +100,7 @@ unsigned int Population::GetLivingHumans() const
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationFlowUpdate& asnMsg )
 {
-    static_cast< PopulationFlow& >( Resolver< PopulationFlow_ABC >::Get( asnMsg.oid_flux ) ).Update( asnMsg );
+    static_cast< PopulationFlow& >( Resolver< PopulationFlow_ABC >::Get( asnMsg.oid ) ).Update( asnMsg );
     ComputeCenter();
     Touch();
 }
@@ -111,7 +111,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFlowUpdate& asnMsg )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
-    static_cast< PopulationConcentration& >( Resolver< PopulationConcentration_ABC >::Get( asnMsg.oid_concentration ) ).Update( asnMsg );
+    static_cast< PopulationConcentration& >( Resolver< PopulationConcentration_ABC >::Get( asnMsg.oid ) ).Update( asnMsg );
     ComputeCenter();
     Touch();
 }
@@ -122,9 +122,9 @@ void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg 
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationFlowCreation& asnMsg )
 {
-    if( ! Resolver< PopulationFlow_ABC >::Find( asnMsg.oid_flux ) )
+    if( ! Resolver< PopulationFlow_ABC >::Find( asnMsg.oid ) )
     {
-        Resolver< PopulationFlow_ABC >::Register( asnMsg.oid_flux, *new PopulationFlow( asnMsg, converter_ ) );
+        Resolver< PopulationFlow_ABC >::Register( asnMsg.oid , *new PopulationFlow( asnMsg, converter_ ) );
         ComputeCenter();
         Touch();
     }
@@ -136,9 +136,9 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFlowCreation& asnMsg )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
 {
-    if( ! Resolver< PopulationConcentration_ABC >::Find( asnMsg.oid_concentration ) )
+    if( ! Resolver< PopulationConcentration_ABC >::Find( asnMsg.oid ) )
     {
-        Resolver< PopulationConcentration_ABC >::Register( asnMsg.oid_concentration, *new PopulationConcentration( asnMsg, converter_, type_.GetDensity() ) );
+        Resolver< PopulationConcentration_ABC >::Register( asnMsg.oid, *new PopulationConcentration( asnMsg, converter_, type_.GetDensity() ) );
         ComputeCenter();
         Touch();
     }
@@ -150,8 +150,8 @@ void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationCreation& asnMs
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationFlowDestruction& asnMsg )
 {
-    delete Resolver< PopulationFlow_ABC >::Find( asnMsg.oid_flux );
-    Resolver< PopulationFlow_ABC >::Remove( asnMsg.oid_flux );
+    delete Resolver< PopulationFlow_ABC >::Find( asnMsg.oid );
+    Resolver< PopulationFlow_ABC >::Remove( asnMsg.oid );
     ComputeCenter();
     Touch();
 }
@@ -162,8 +162,8 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFlowDestruction& asnMsg )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
 {
-    delete Resolver< PopulationConcentration_ABC >::Find( asnMsg.oid_concentration );
-    Resolver< PopulationConcentration_ABC >::Remove( asnMsg.oid_concentration );
+    delete Resolver< PopulationConcentration_ABC >::Find( asnMsg.oid );
+    Resolver< PopulationConcentration_ABC >::Remove( asnMsg.oid );
     ComputeCenter();
     Touch();
 }

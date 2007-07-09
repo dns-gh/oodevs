@@ -125,7 +125,7 @@ void DEC_AutomateFunctions::Trace( DIA_Call_ABC& call, const MIL_Automate& calle
 {
     std::string message( call.GetParameter( 0 ).ToString() );
     NET_ASN_MsgTrace msg;
-    msg().unit_id = callerAutomate.GetID();
+    msg().oid = callerAutomate.GetID();
     msg().message = message.c_str();
     msg.Send();
 }
@@ -140,7 +140,7 @@ void DEC_AutomateFunctions::DecisionalState( DIA_Call_ABC& call, const MIL_Autom
     std::string value( call.GetParameter( 1 ).ToString() );
 
     NET_ASN_MsgDecisionalState msg;
-    msg().unit_id = callerAutomate.GetID();
+    msg().oid     = callerAutomate.GetID();
     msg().key     = key.c_str();
     msg().value   = value.c_str();
     msg.Send();
@@ -172,7 +172,7 @@ void DEC_AutomateFunctions::DebugDrawPoints( DIA_Call_ABC& call, const MIL_Autom
     assert( pPoints );
 
     NET_ASN_MsgDebugPoints asn;
-    asn().unit_id = callerAutomate.GetID();
+    asn().oid = callerAutomate.GetID();
     NET_ASN_Tools::WriteCoordinates( *pPoints, asn().coordinates );
     asn.Send();
     NET_ASN_Tools::Delete( asn().coordinates );
@@ -190,7 +190,7 @@ void DEC_AutomateFunctions::DebugDrawPoint( DIA_Call_ABC& call, const MIL_Automa
     assert( pPoint );
 
     NET_ASN_MsgDebugPoints asn;
-    asn().unit_id = callerAutomate.GetID();
+    asn().oid = callerAutomate.GetID();
     asn().coordinates.n = 1;
     ASN1T_CoordUTM coord;
     NET_ASN_Tools::WritePoint( *pPoint, coord );

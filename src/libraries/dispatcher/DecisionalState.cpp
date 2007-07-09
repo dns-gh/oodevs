@@ -49,9 +49,9 @@ void DecisionalState::Send( unsigned id, Publisher_ABC& publisher ) const
     for( std::map< std::string, std::string >::const_iterator it = decisionalInfos_.begin(); it != decisionalInfos_.end(); ++it )
     {
         AsnMsgSimToClientDecisionalState asn;
-        asn().unit_id = id;
-        asn().key     = it->first.c_str();
-        asn().value   = it->second.c_str();
+        asn().oid   = id;
+        asn().key   = it->first.c_str();
+        asn().value = it->second.c_str();
         asn.Send( publisher );
     }
 }

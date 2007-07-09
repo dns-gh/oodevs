@@ -771,12 +771,12 @@ void MIL_EntityManager::SendStateToNewClient() const
 void MIL_EntityManager::OnReceiveMsgUnitOrder( const ASN1T_MsgUnitOrder& asnMsg, uint nCtx )
 {
     NET_ASN_MsgUnitOrderAck ack;
-    ack().oid_unite_executante = asnMsg.oid_unite_executante;
-    ack().error_code           = EnumOrderErrorCode::no_error;
+    ack().oid        = asnMsg.oid;
+    ack().error_code = EnumOrderErrorCode::no_error;
 
     try
     {
-        MIL_AgentPion* pPion = FindAgentPion( asnMsg.oid_unite_executante );
+        MIL_AgentPion* pPion = FindAgentPion( asnMsg.oid );
         if( !pPion )
             throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_unit );
         pPion->OnReceiveMsgOrder( asnMsg );
@@ -795,12 +795,12 @@ void MIL_EntityManager::OnReceiveMsgUnitOrder( const ASN1T_MsgUnitOrder& asnMsg,
 void MIL_EntityManager::OnReceiveMsgAutomatOrder( const ASN1T_MsgAutomatOrder& asnMsg, uint nCtx )
 {
     NET_ASN_MsgAutomatOrderAck ack;
-    ack().oid_unite_executante = asnMsg.oid_unite_executante;
-    ack().error_code           = EnumOrderErrorCode::no_error;
+    ack().oid        = asnMsg.oid;
+    ack().error_code = EnumOrderErrorCode::no_error;
 
     try
     {
-        MIL_Automate* pAutomate = FindAutomate( asnMsg.oid_unite_executante );
+        MIL_Automate* pAutomate = FindAutomate( asnMsg.oid );
         if( !pAutomate )
             throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_unit );
         pAutomate->OnReceiveMsgOrder( asnMsg );
@@ -845,12 +845,12 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAct
 void MIL_EntityManager::OnReceiveMsgPopulationOrder( const ASN1T_MsgPopulationOrder& asnMsg, uint nCtx )
 {
     NET_ASN_MsgPopulationOrderAck ack;
-    ack().oid_unite_executante = asnMsg.oid_unite_executante;
-    ack().error_code           = EnumOrderErrorCode::no_error;
+    ack().oid        = asnMsg.oid;
+    ack().error_code = EnumOrderErrorCode::no_error;
 
     try
     {
-        MIL_Population* pPopulation = FindPopulation( asnMsg.oid_unite_executante );
+        MIL_Population* pPopulation = FindPopulation( asnMsg.oid );
         if( !pPopulation )
             throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_unit );
         pPopulation->OnReceiveMsgOrder( asnMsg );
@@ -869,19 +869,16 @@ void MIL_EntityManager::OnReceiveMsgPopulationOrder( const ASN1T_MsgPopulationOr
 void MIL_EntityManager::OnReceiveMsgFragOrder( const ASN1T_MsgFragOrder& asnMsg, uint nCtx )
 {
     NET_ASN_MsgFragOrderAck ack;
-    ack().oid_unite_executante = asnMsg.oid_unite_executante;
-    ack().error_code           = EnumOrderErrorCode::no_error;
+    ack().oid        = asnMsg.oid;
+    ack().error_code = EnumOrderErrorCode::no_error;
 
     try
     {
-        MIL_Automate*   pAutomate   = FindAutomate  ( asnMsg.oid_unite_executante );
-        MIL_AgentPion*  pPion       = FindAgentPion ( asnMsg.oid_unite_executante );
-        MIL_Population* pPopulation = FindPopulation( asnMsg.oid_unite_executante );
-        if( pAutomate )
+        if( MIL_Automate* pAutomate = FindAutomate  ( asnMsg.oid ) )
             pAutomate->OnReceiveMsgFragOrder( asnMsg );
-        else if( pPopulation )
+        else if( MIL_Population* pPopulation = FindPopulation( asnMsg.oid ) )
             pPopulation->OnReceiveMsgFragOrder( asnMsg );
-        else if( pPion )
+        else if( MIL_AgentPion* pPion = FindAgentPion ( asnMsg.oid ) )
             pPion->OnReceiveMsgFragOrder( asnMsg );
         else
             throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_unit );
@@ -900,12 +897,12 @@ void MIL_EntityManager::OnReceiveMsgFragOrder( const ASN1T_MsgFragOrder& asnMsg,
 void MIL_EntityManager::OnReceiveMsgSetAutomateMode( const ASN1T_MsgSetAutomatMode& asnMsg, uint nCtx )
 {
     NET_ASN_MsgSetAutomatModeAck ack;
-    ack().unit_id    = asnMsg.unit_id;
+    ack().oid        = asnMsg.oid;
     ack().error_code = EnumSetAutomatModeErrorCode::no_error;
 
     try
     {
-        MIL_Automate* pAutomate = FindAutomate( asnMsg.unit_id );
+        MIL_Automate* pAutomate = FindAutomate( asnMsg.oid );
         if( !pAutomate )
             throw NET_AsnException< ASN1T_EnumSetAutomatModeErrorCode >( EnumSetAutomatModeErrorCode::error_invalid_unit );
         pAutomate->OnReceiveMsgSetAutomateMode( asnMsg );
@@ -1005,14 +1002,14 @@ void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplom
 void MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup( const ASN1T_MsgAutomatChangeKnowledgeGroup& asnMsg, uint nCtx )
 {
     NET_ASN_MsgAutomatChangeKnowledgeGroupAck ack;
-    ack().oid_automate            = asnMsg.oid_automate;
+    ack().oid                     = asnMsg.oid;
     ack().oid_camp                = asnMsg.oid_camp;
     ack().oid_groupe_connaissance = asnMsg.oid_groupe_connaissance;
     ack().error_code              = EnumChangeHierarchyErrorCode::no_error;
 
     try
     {
-        MIL_Automate* pAutomate = FindAutomate( asnMsg.oid_automate );
+        MIL_Automate* pAutomate = FindAutomate( asnMsg.oid );
         if( !pAutomate )
             throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate );
         pAutomate->OnReceiveMsgChangeKnowledgeGroup( asnMsg );
@@ -1031,7 +1028,7 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup( const ASN1T_Ms
 void MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks( const ASN1T_MsgAutomatChangeLogisticLinks& asnMsg, uint nCtx )
 {
     NET_ASN_MsgAutomatChangeLogisticLinksAck ack;
-    ack().oid_automate                = asnMsg.oid_automate;
+    ack().oid                         = asnMsg.oid;
     ack().m.oid_tc2Present            = asnMsg.m.oid_tc2Present;
     ack().m.oid_maintenancePresent    = asnMsg.m.oid_maintenancePresent;
     ack().m.oid_santePresent          = asnMsg.m.oid_santePresent;
@@ -1044,7 +1041,7 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks( const ASN1T_Msg
 
     try
     {
-        MIL_Automate* pAutomate = FindAutomate( asnMsg.oid_automate );
+        MIL_Automate* pAutomate = FindAutomate( asnMsg.oid );
         if( !pAutomate )
             throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate );
         pAutomate->OnReceiveMsgChangeLogisticLinks( asnMsg );
@@ -1063,13 +1060,13 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks( const ASN1T_Msg
 void MIL_EntityManager::OnReceiveMsgUnitChangeSuperior( const ASN1T_MsgUnitChangeSuperior& asnMsg, uint nCtx )
 {
     NET_ASN_MsgUnitChangeSuperiorAck ack;
-    ack().oid_pion     = asnMsg.oid_pion;
+    ack().oid          = asnMsg.oid;
     ack().oid_automate = asnMsg.oid_automate;
     ack().error_code   = EnumChangeHierarchyErrorCode::no_error;
 
     try
     {
-        MIL_AgentPion* pPion = FindAgentPion( asnMsg.oid_pion );
+        MIL_AgentPion* pPion = FindAgentPion( asnMsg.oid );
         if( !pPion )
             throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_pion );
         pPion->OnReceiveMsgChangeSuperior( asnMsg );

@@ -201,7 +201,7 @@ void DEC_Knowledge_PopulationConcentrationPerception::UpdateOnNetwork() const
 void DEC_Knowledge_PopulationConcentrationPerception::SendStateToNewClient() const
 {
     NET_ASN_MsgPopulationConcentrationDetection asn;
-    asn().unit_oid          = pPopulationKnowledge_->GetAgentPerceiving().GetID();
+    asn().oid               = pPopulationKnowledge_->GetAgentPerceiving().GetID();
     asn().population_oid    = pPopulationKnowledge_->GetPopulationPerceived().GetID();
     asn().concentration_oid = pPopulationConcentrationPerceived_->GetID();
     asn().visibility        = ASN1T_EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() );

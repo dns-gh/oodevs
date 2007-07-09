@@ -43,10 +43,10 @@ AgentKnowledges::~AgentKnowledges()
 // -----------------------------------------------------------------------------
 void AgentKnowledges::DoUpdate( const ASN1T_MsgUnitKnowledgeCreation& message )
 {
-    if( ! Find( message.oid_connaissance ) )
+    if( ! Find( message.oid ) )
     {
         AgentKnowledge_ABC* pAgentKnowledge = factory_.CreateAgentKnowledge( group_, message );
-        Register( message.oid_connaissance, *pAgentKnowledge );
+        Register( message.oid, *pAgentKnowledge );
         controller_.Update( *this );
     }
 }
@@ -57,7 +57,7 @@ void AgentKnowledges::DoUpdate( const ASN1T_MsgUnitKnowledgeCreation& message )
 // -----------------------------------------------------------------------------
 void AgentKnowledges::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
 {
-    Get( message.oid_connaissance ).Update( message );
+    Get( message.oid ).Update( message );
     controller_.Update( *this );
 }
 
@@ -67,7 +67,7 @@ void AgentKnowledges::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
 // -----------------------------------------------------------------------------
 void AgentKnowledges::DoUpdate( const ASN1T_MsgUnitKnowledgeDestruction& message )
 {
-    delete Find( message.oid_connaissance );
-    Remove( message.oid_connaissance );
+    delete Find( message.oid );
+    Remove( message.oid );
     controller_.Update( *this );
 }

@@ -108,9 +108,9 @@ void MIL_PopulationMission::SendNoMission( const MIL_Population& population )
 {
     NET_ASN_MsgPopulationOrder asn;
 
-    asn().oid_unite_executante = population.GetID();
-    asn().mission              = 0;
-    asn().parametres.n         = 0;
+    asn().oid           = population.GetID();
+    asn().mission       = 0;
+    asn().parametres.n  = 0;
     asn.Send();
 }
 
@@ -122,8 +122,8 @@ void MIL_PopulationMission::Send() const
 {
     NET_ASN_MsgPopulationOrder asn;
 
-    asn().oid_unite_executante = population_.GetID();
-    asn().mission              = type_.GetID();
+    asn().oid     = population_.GetID();
+    asn().mission = type_.GetID();
 
     MIL_Mission_ABC::Serialize( asn().parametres );
 

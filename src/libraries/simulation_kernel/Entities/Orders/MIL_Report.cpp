@@ -165,7 +165,7 @@ bool MIL_Report::Send( uint nSenderID, E_Type nType, const DEC_KnowledgeResolver
 
     NET_ASN_MsgReport asn;
  
-    asn().unit_id      = nSenderID;
+    asn().oid          = nSenderID;
     asn().cr           = nID_;
     asn().type         = (ASN1T_EnumReportType)nType;
     asn().parametres.n = parameters_.size();

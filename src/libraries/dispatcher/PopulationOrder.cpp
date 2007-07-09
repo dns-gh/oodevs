@@ -45,8 +45,8 @@ PopulationOrder::~PopulationOrder()
 void PopulationOrder::Send( Publisher_ABC& publisher )
 {
     AsnMsgSimToClientPopulationOrder asn;
-    asn().oid_unite_executante = population_.GetID();
-    asn().mission              = missionID_;
+    asn().oid       = population_.GetID();
+    asn().mission   = missionID_;
     
     Order_ABC::Send( asn().parametres );
 
@@ -64,8 +64,8 @@ void PopulationOrder::SendNoMission( const Population& population, Publisher_ABC
 {
     AsnMsgSimToClientPopulationOrder asn;
 
-    asn().oid_unite_executante = population.GetID();
-    asn().mission              = 0;
-    asn().parametres.n         = 0;
+    asn().oid          = population.GetID();
+    asn().mission      = 0;
+    asn().parametres.n = 0;
     asn.Send( publisher );
 }

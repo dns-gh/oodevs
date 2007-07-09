@@ -91,7 +91,7 @@ Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const FragOrd
 Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgUnitOrder& message ) const
 {
     const MissionType& mission = missions_.Get( message.mission );
-    std::auto_ptr< Action_ABC > action( new ActionAgentMission( model_.agents_.GetAgent( message.oid_unite_executante ), mission, controllers_.controller_, false ) );
+    std::auto_ptr< Action_ABC > action( new ActionAgentMission( model_.agents_.GetAgent( message.oid ), mission, controllers_.controller_, false ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Polish();
 
@@ -107,7 +107,7 @@ Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgUnitOrder& message ) con
 Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgAutomatOrder& message ) const
 {
     const MissionType& mission = missions_.Get( message.mission );
-    std::auto_ptr< Action_ABC > action( new ActionAutomatMission( model_.agents_.GetAutomat( message.oid_unite_executante ), mission, controllers_.controller_, false ) );
+    std::auto_ptr< Action_ABC > action( new ActionAutomatMission( model_.agents_.GetAutomat( message.oid ), mission, controllers_.controller_, false ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Polish();
 
@@ -124,9 +124,9 @@ Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgFragOrder& message ) con
 {
     const FragOrderType& order = fragOrders_.Get( message.frag_order );
     std::auto_ptr< Action_ABC > action;
-    if( const Agent_ABC* agent = model_.agents_.FindAgent( message.oid_unite_executante ) )
+    if( const Agent_ABC* agent = model_.agents_.FindAgent( message.oid ) )
         action.reset( new ActionFragOrder( *agent, order, controllers_.controller_, false ) );
-    else if( const Automat_ABC* automat = model_.agents_.FindAutomat( message.oid_unite_executante ) )
+    else if( const Automat_ABC* automat = model_.agents_.FindAutomat( message.oid ) )
         action.reset( new ActionFragOrder( *automat, order, controllers_.controller_, false ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Polish();

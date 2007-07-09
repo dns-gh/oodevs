@@ -25,7 +25,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 AgentKnowledge::AgentKnowledge( Model& model, const ASN1T_MsgUnitKnowledgeCreation& asnMsg )
     : model_                ( model )
-    , nID_                  ( asnMsg.oid_connaissance )
+    , nID_                  ( asnMsg.oid )
     , knowledgeGroup_       ( model.GetKnowledgeGroups().Get( asnMsg.oid_groupe_possesseur ) )
     , agent_                ( model.GetAgents().Get( asnMsg.oid_unite_reelle ) )
     , nTypeAgent_           ( asnMsg.type_unite )
@@ -134,7 +134,7 @@ void AgentKnowledge::SendCreation( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientUnitKnowledgeCreation asn;
 
-    asn().oid_connaissance      = nID_;
+    asn().oid                   = nID_;
     asn().oid_groupe_possesseur = knowledgeGroup_.GetID();
     asn().oid_unite_reelle      = agent_.GetID();
     asn().type_unite            = nTypeAgent_;
@@ -157,7 +157,7 @@ void AgentKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientUnitKnowledgeUpdate asn;
 
-    asn().oid_connaissance      = nID_;
+    asn().oid                   = nID_;
     asn().oid_groupe_possesseur = knowledgeGroup_.GetID();
 
     SEND_ASN_ATTRIBUTE( pertinence               , nRelevance_            ); 
@@ -214,7 +214,7 @@ void AgentKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 void AgentKnowledge::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientUnitKnowledgeDestruction asn;
-    asn().oid_connaissance      = nID_;
+    asn().oid                   = nID_;
     asn().oid_groupe_possesseur = knowledgeGroup_.GetID();
     asn.Send( publisher );
 }

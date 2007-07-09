@@ -449,7 +449,7 @@ void MIL_Automate::UpdateNetwork() const
     if( bAutomateModeChanged_ || pDecision_->HasStateChanged() )
     {
         NET_ASN_MsgAutomatAttributes msg;
-        msg().oid_automate = nID_;
+        msg().oid = nID_;
     
         if( bAutomateModeChanged_ )
         {
@@ -754,7 +754,7 @@ bool MIL_Automate::GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const
 void MIL_Automate::SendCreation() const
 {
     NET_ASN_MsgAutomatCreation asn;
-    asn().oid_automate            = nID_;
+    asn().oid                     = nID_;
     asn().type_automate           = pType_->GetID();
     asn().oid_camp                = GetArmy().GetID();
     asn().oid_groupe_connaissance = GetKnowledgeGroup().GetID();
@@ -775,7 +775,7 @@ void MIL_Automate::SendFullState() const
     assert( pDecision_ );
 
     NET_ASN_MsgAutomatAttributes asn;
-    asn().oid_automate = nID_;
+    asn().oid = nID_;
     asn().m.etat_automatePresent = 1;
     asn().etat_automate = bEngaged_ ? EnumAutomatMode::embraye : EnumAutomatMode::debraye;
     pDecision_->SendFullState( asn );
@@ -811,7 +811,7 @@ void MIL_Automate::SendLogisticLinks() const
 {
     NET_ASN_MsgAutomatChangeLogisticLinks asn;
 
-    asn().oid_automate = nID_;
+    asn().oid = nID_;
 
     if( pTC2_ )
     {

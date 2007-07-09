@@ -183,7 +183,7 @@ void NET_RolePion_Dotations::SendChangedState() const
 
     NET_ASN_MsgUnitAttributes msg;
     assert( pPion_ );
-    msg().oid_pion = pPion_->GetID();
+    msg().oid = pPion_->GetID();
 
     GetRole< PHY_RolePion_Humans         >().SendChangedState( msg );
     GetRole< PHY_RolePion_Dotations      >().SendChangedState( msg );
@@ -239,7 +239,7 @@ void NET_RolePion_Dotations::SendFullState() const
     assert( pPion_ );
 
     NET_ASN_MsgUnitAttributes msg;
-    msg().oid_pion            = pPion_->GetID();
+    msg().oid                 = pPion_->GetID();
     msg().m.mortPresent       = 1;
     msg().mort                = bLastStateDead_ = pPion_->IsDead();
     msg().m.neutralisePresent = 1;

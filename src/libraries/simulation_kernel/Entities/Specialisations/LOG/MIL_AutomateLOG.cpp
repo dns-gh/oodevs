@@ -909,7 +909,7 @@ void MIL_AutomateLOG::SendLogisticLinks() const
 {
     NET_ASN_MsgAutomatChangeLogisticLinks asn;
 
-    asn().oid_automate = GetID();
+    asn().oid = GetID();
 
     if( GetTC2() )
     {

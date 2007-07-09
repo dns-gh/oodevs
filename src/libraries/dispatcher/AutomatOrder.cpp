@@ -46,9 +46,9 @@ AutomatOrder::~AutomatOrder()
 void AutomatOrder::Send( Publisher_ABC& publisher )
 {
     AsnMsgSimToClientAutomatOrder asn;
-    asn().oid_unite_executante = automat_.GetID();
-    asn().mission              = missionID_;
-    asn().formation            = formation_;       
+    asn().oid       = automat_.GetID();
+    asn().mission   = missionID_;
+    asn().formation = formation_;       
     Order_ABC::Send( asn().order_context );
     Order_ABC::Send( asn().parametres );
 
@@ -67,7 +67,7 @@ void AutomatOrder::SendNoMission( const Automat& automat, Publisher_ABC& publish
 {
     AsnMsgSimToClientAutomatOrder asn;
 
-    asn().oid_unite_executante               = automat.GetID();
+    asn().oid                                = automat.GetID();
     asn().mission                            = 0;
     asn().formation                          = EnumAutomatOrderFormation::un_echelon;
     asn().parametres.n                       = 0;

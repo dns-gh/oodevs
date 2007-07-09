@@ -29,12 +29,12 @@ const QString Agent::typeName_ = "agent";
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 Agent::Agent( const ASN1T_MsgUnitCreation& message, Controller& controller,  const Resolver_ABC< AgentType >& resolver )
-    : EntityImplementation< Agent_ABC >( controller, message.oid_pion, message.nom )
+    : EntityImplementation< Agent_ABC >( controller, message.oid, message.nom )
     , type_( resolver.Get( message.type_pion ) )
     , isPc_( message.pc )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( type_.GetName() ).arg( message.oid_pion );
+        name_ = QString( "%1 %2" ).arg( type_.GetName() ).arg( message.oid );
     RegisterSelf( *this );
     CreateDictionary( controller );
 }

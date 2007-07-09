@@ -110,7 +110,7 @@ bool TacticalListView::Drop( const kernel::Agent_ABC& item, const kernel::Automa
     if( & item.Get< kernel::TacticalHierarchies >().GetUp() == &target )
         return false;
     ASN_MsgUnitChangeSuperior asnMsg;
-    asnMsg().oid_pion = item.GetId();
+    asnMsg().oid = item.GetId();
     asnMsg().oid_automate = target.GetId();
     asnMsg.Send( publisher_ );
     return true;

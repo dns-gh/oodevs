@@ -45,8 +45,8 @@ AgentOrder::~AgentOrder()
 void AgentOrder::Send( Publisher_ABC& publisher )
 {
     AsnMsgSimToClientUnitOrder asn;
-    asn().oid_unite_executante = agent_.GetID();
-    asn().mission              = missionID_;
+    asn().oid     = agent_.GetID();
+    asn().mission = missionID_;
     Order_ABC::Send( asn().order_context );
     Order_ABC::Send( asn().parametres );
 
@@ -64,7 +64,7 @@ void AgentOrder::SendNoMission( const Agent& agent, Publisher_ABC& publisher )
 {
     AsnMsgSimToClientUnitOrder asn;
 
-    asn().oid_unite_executante               = agent.GetID();
+    asn().oid                                = agent.GetID();
     asn().mission                            = 0;
     asn().parametres.n                       = 0;
     asn().order_context.direction_dangereuse = 0;

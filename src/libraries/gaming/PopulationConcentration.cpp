@@ -22,7 +22,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 PopulationConcentration::PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg, const CoordinateConverter_ABC& converter, float density )
     : position_( converter.ConvertToXY( asnMsg.position ) )
-    , nID_( asnMsg.oid_concentration )
+    , nID_( asnMsg.oid )
     , density_ ( density )
     , nLivingHumans_( 0 )
     , nDeadHumans_( 0 )

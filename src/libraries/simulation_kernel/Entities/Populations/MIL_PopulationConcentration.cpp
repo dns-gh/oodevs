@@ -279,7 +279,7 @@ void MIL_PopulationConcentration::SetPullingFlowsDensity( const MIL_RealObject_A
 void MIL_PopulationConcentration::SendCreation() const
 {
     NET_ASN_MsgPopulationConcentrationCreation asnMsg;
-    asnMsg().oid_concentration = GetID();
+    asnMsg().oid = GetID();
     asnMsg().oid_population    = GetPopulation().GetID();
     NET_ASN_Tools::WritePoint( position_, asnMsg().position ); 
     asnMsg.Send();
@@ -292,7 +292,7 @@ void MIL_PopulationConcentration::SendCreation() const
 void MIL_PopulationConcentration::SendDestruction() const
 {
     NET_ASN_MsgPopulationConcentrationDestruction asnMsg;
-    asnMsg().oid_concentration = GetID();
+    asnMsg().oid = GetID();
     asnMsg().oid_population    = GetPopulation().GetID();
     asnMsg.Send();
 }
@@ -304,7 +304,7 @@ void MIL_PopulationConcentration::SendDestruction() const
 void MIL_PopulationConcentration::SendFullState() const
 {
     NET_ASN_MsgPopulationConcentrationUpdate asnMsg;
-    asnMsg().oid_concentration = GetID();
+    asnMsg().oid = GetID();
     asnMsg().oid_population    = GetPopulation().GetID();
 
     asnMsg().m.attitudePresent           = 1;
@@ -328,7 +328,7 @@ void MIL_PopulationConcentration::SendChangedState() const
         return;
 
     NET_ASN_MsgPopulationConcentrationUpdate asnMsg;
-    asnMsg().oid_concentration = GetID();
+    asnMsg().oid = GetID();
     asnMsg().oid_population    = GetPopulation().GetID();
 
     if( HasAttitudeChanged() )

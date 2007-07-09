@@ -175,7 +175,7 @@ void MIL_AutomateMission::SendNoMission( const MIL_Automate& automate )
 {
     NET_ASN_MsgAutomatOrder asn;
 
-    asn().oid_unite_executante               = automate.GetID();
+    asn().oid                                = automate.GetID();
     asn().mission                            = 0;
     asn().formation                          = EnumAutomatOrderFormation::un_echelon;
     asn().parametres.n                       = 0;
@@ -192,8 +192,8 @@ void MIL_AutomateMission::Send() const
 {
     NET_ASN_MsgAutomatOrder asn;
 
-    asn().oid_unite_executante = automate_.GetID();
-    asn().mission              = type_    .GetID();
+    asn().oid       = automate_.GetID();
+    asn().mission   = type_    .GetID();
 
     NET_ASN_Tools::CopyEnumeration( const_cast< MIL_AutomateMission* >( this )->GetVariable( nDIAFormation_ ), asn().formation );
 

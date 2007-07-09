@@ -135,7 +135,7 @@ void DEC_Knowledge_ObjectPerception::UpdateOnNetwork() const
 void DEC_Knowledge_ObjectPerception::SendStateToNewClient() const
 {
     NET_ASN_MsgObjectDetection asn;
-    asn().unit_oid   = pAgentPerceiving_->GetID();
+    asn().oid        = pAgentPerceiving_->GetID();
     asn().object_oid = pObjectPerceived_->GetID();
     asn().visibility = ASN1T_EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() );
     asn.Send();

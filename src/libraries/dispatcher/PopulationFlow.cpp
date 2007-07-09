@@ -22,7 +22,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 PopulationFlow::PopulationFlow( Model& /*model*/, Population& population, const ASN1T_MsgPopulationFlowCreation& msg )
     : population_     ( population )
-    , nID_            ( msg.oid_flux )
+    , nID_            ( msg.oid )
     , path_           ()
     , flow_           ()
     , nDirection_     ()
@@ -90,7 +90,7 @@ void PopulationFlow::SendCreation( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationFlowCreation asn;
 
-    asn().oid_flux       = nID_;
+    asn().oid            = nID_;
     asn().oid_population = population_.GetID();
 
     asn.Send( publisher );
@@ -113,7 +113,7 @@ void PopulationFlow::SendFullUpdate( Publisher_ABC& publisher ) const
     asn().m.nb_humains_vivantsPresent = 1;
 
 
-    asn().oid_flux           = nID_;
+    asn().oid                = nID_;
     asn().oid_population     = population_.GetID();
     asn().direction          = nDirection_; 
     asn().vitesse            = nSpeed_;
@@ -136,7 +136,7 @@ void PopulationFlow::SendFullUpdate( Publisher_ABC& publisher ) const
 void PopulationFlow::SendDestruction( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationFlowDestruction destruction;
-    destruction().oid_flux = nID_;
+    destruction().oid            = nID_;
     destruction().oid_population = population_.GetID();
     destruction.Send( publisher );
 }

@@ -236,7 +236,7 @@ void DEC_Knowledge_PopulationFlowPerception::SendStateToNewClient() const
     assert( pPopulationKnowledge_ );
     assert( pPopulationFlowPerceived_ );
     NET_ASN_MsgPopulationFlowDetection asn;
-    asn().unit_oid       = pPopulationKnowledge_->GetAgentPerceiving().GetID();
+    asn().oid            = pPopulationKnowledge_->GetAgentPerceiving().GetID();
     asn().population_oid = pPopulationKnowledge_->GetPopulationPerceived().GetID();
     asn().flow_oid       = pPopulationFlowPerceived_->GetID();
     NET_ASN_Tools::WritePath( shape_, asn().visible_flow );

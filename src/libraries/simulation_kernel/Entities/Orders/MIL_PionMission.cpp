@@ -161,7 +161,7 @@ void MIL_PionMission::SendNoMission( const MIL_AgentPion& pion )
 {
     NET_ASN_MsgUnitOrder asn;
 
-    asn().oid_unite_executante               = pion.GetID();
+    asn().oid                                = pion.GetID();
     asn().mission                            = 0;
     asn().parametres.n                       = 0;
     asn().order_context.direction_dangereuse = 0;
@@ -177,8 +177,8 @@ void MIL_PionMission::Send() const
 {
     NET_ASN_MsgUnitOrder asn;
 
-    asn().oid_unite_executante = pion_.GetID();
-    asn().mission              = type_.GetID();
+    asn().oid       = pion_.GetID();
+    asn().mission   = type_.GetID();
 
     MIL_Mission_ABC::Serialize( asn().order_context );
     MIL_Mission_ABC::Serialize( asn().parametres    );

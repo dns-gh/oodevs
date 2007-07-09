@@ -178,7 +178,7 @@ void ChangeLogisticLinksDialog::Validate()
     if( selected_ )
     {
         ASN_MsgAutomatChangeLogisticLinks message;
-        message().oid_automate = selected_->GetId();
+        message().oid = selected_->GetId();
 
         message().m.oid_tc2Present            = SetId( *tc2Combo_, message().oid_tc2 );
         message().m.oid_maintenancePresent    = SetId( *maintenanceCombo_, message().oid_maintenance );

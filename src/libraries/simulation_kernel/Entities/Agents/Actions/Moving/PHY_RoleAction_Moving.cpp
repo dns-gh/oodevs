@@ -353,7 +353,7 @@ void PHY_RoleAction_Moving::SendEnvironmentType() const
 {
     assert( pPion_ );
     NET_ASN_MsgUnitEnvironmentType asn;
-    asn().oid_pion = pPion_->GetID();
+    asn().oid = pPion_->GetID();
     SerializeEnvironmentType( asn() );
     asn.Send();
 }
@@ -367,7 +367,7 @@ void PHY_RoleAction_Moving::SendCurrentPath() const
     NET_ASN_MsgUnitPathFind asnMsg;
     
     assert( pPion_ );
-    asnMsg().oid_pion = pPion_->GetID();   
+    asnMsg().oid = pPion_->GetID();   
     if( !SerializeCurrentPath( asnMsg().itineraire ) )
         return;
 

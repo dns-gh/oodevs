@@ -190,7 +190,7 @@ void DEC_Knowledge_AgentPerception::Update( const PHY_PerceptionLevel& perceptio
 void DEC_Knowledge_AgentPerception::SendStateToNewClient() const
 {
     NET_ASN_MsgUnitDetection asn;
-    asn().unit_oid           = pAgentPerceiving_   ->GetID();
+    asn().oid                = pAgentPerceiving_   ->GetID();
     asn().detected_unit_oid  = pAgentPerceived_    ->GetID();
     asn().current_visibility = bRecordModeEnabled_ ? EnumUnitVisibility::recorded : ASN1T_EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() );
     asn().max_visibility     = ASN1T_EnumUnitVisibility( pMaxPerceptionLevel_->GetID() );

@@ -53,7 +53,7 @@ void FragmentaryOrderInterface::Publish()
     }
 
     ASN_MsgFragOrder asn;
-    asn().oid_unite_executante = GetEntity().GetId();
+    asn().oid = GetEntity().GetId();
     asn().frag_order = fragOrder_.GetId();
     CommitTo( asn().parametres );
     asn.Send( publisher_ );

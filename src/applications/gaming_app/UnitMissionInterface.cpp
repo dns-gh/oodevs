@@ -53,7 +53,7 @@ void UnitMissionInterface::Publish()
     }
 
     ASN_MsgUnitOrder asn;
-    asn().oid_unite_executante = GetEntity().GetId();
+    asn().oid = GetEntity().GetId();
     asn().mission = mission_.GetId();
     CommitTo( asn().parametres );
     CommitTo( asn().order_context );

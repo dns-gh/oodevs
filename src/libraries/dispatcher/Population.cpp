@@ -27,7 +27,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Population::Population( Model& model, const ASN1T_MsgPopulationCreation& msg )
     : model_           ( model )
-    , nID_             ( msg.oid_population )
+    , nID_             ( msg.oid )
     , nType_           ( msg.type_population )
     , strName_         ( msg.nom )
     , side_            ( model.GetSides().Get( msg.oid_camp ) )
@@ -75,8 +75,8 @@ void Population::Update( const ASN1T_MsgPopulationUpdate& msg )
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationConcentrationCreation& msg )
 {
-    bool create = ! concentrations_.Find( msg.oid_concentration );
-    PopulationConcentration& concentration = concentrations_.Create( model_, msg.oid_concentration, *this, msg );
+    bool create = ! concentrations_.Find( msg.oid );
+    PopulationConcentration& concentration = concentrations_.Create( model_, msg.oid, *this, msg );
     StartSynchronisation( concentration, create );
     concentration.Update( msg );
 }
@@ -87,7 +87,7 @@ void Population::Update( const ASN1T_MsgPopulationConcentrationCreation& msg )
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationConcentrationUpdate&  msg )
 {
-    concentrations_.Get( msg.oid_concentration ).Update( msg );
+    concentrations_.Get( msg.oid ).Update( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ void Population::Update( const ASN1T_MsgPopulationConcentrationUpdate&  msg )
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationConcentrationDestruction& msg )
 {
-    concentrations_.Destroy( msg.oid_concentration );
+    concentrations_.Destroy( msg.oid );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,8 +105,8 @@ void Population::Update( const ASN1T_MsgPopulationConcentrationDestruction& msg 
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationFlowCreation& msg )
 {
-    bool create = ! flows_.Find( msg.oid_flux );
-    PopulationFlow& flow = flows_.Create( model_, msg.oid_flux, *this, msg );
+    bool create = ! flows_.Find( msg.oid );
+    PopulationFlow& flow = flows_.Create( model_, msg.oid, *this, msg );
     StartSynchronisation( flow, create );
     flow.Update( msg );
 }
@@ -117,7 +117,7 @@ void Population::Update( const ASN1T_MsgPopulationFlowCreation& msg )
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationFlowUpdate& msg )
 {
-    flows_.Get( msg.oid_flux ).Update( msg );
+    flows_.Get( msg.oid ).Update( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +126,7 @@ void Population::Update( const ASN1T_MsgPopulationFlowUpdate& msg )
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationFlowDestruction& msg )
 {
-    flows_.Destroy( msg.oid_flux );
+    flows_.Destroy( msg.oid );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,7 +162,7 @@ void Population::SendCreation( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationCreation asn;
 
-    asn().oid_population  = nID_;
+    asn().oid             = nID_;
     asn().oid_camp        = side_.GetID();
     asn().type_population = nType_;
     asn().nom             = strName_.c_str();
@@ -181,7 +181,7 @@ void Population::SendFullUpdate( Publisher_ABC& publisher ) const
 
         asn().m.etat_dominationPresent = 1;
 
-        asn().oid_population  = nID_;
+        asn().oid             = nID_;
         asn().etat_domination = nDominationState_;
 
         asn.Send( publisher );

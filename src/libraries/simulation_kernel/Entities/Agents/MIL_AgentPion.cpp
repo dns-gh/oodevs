@@ -584,7 +584,7 @@ void MIL_AgentPion::SendCreation() const
     assert( pType_ );
 
     NET_ASN_MsgUnitCreation asnMsg;
-    asnMsg().oid_pion     = GetID();
+    asnMsg().oid          = GetID();
     asnMsg().type_pion    = pType_->GetID();
     asnMsg().nom          = strName_.c_str(); // !! pointeur sur const char*
     asnMsg().oid_automate = GetAutomate().GetID();    
@@ -956,7 +956,7 @@ void MIL_AgentPion::ChangeSuperior( MIL_Automate& newAutomate )
     GetRole< DEC_RolePion_Decision >().NotifyAutomateChanged(); //$$$ à gicler quand myself.automate_ sera remplacé par une fonction DEC
 
     NET_ASN_MsgUnitChangeSuperior asnMsg;
-    asnMsg().oid_pion     = GetID();
+    asnMsg().oid          = GetID();
     asnMsg().oid_automate = newAutomate.GetID();
     asnMsg.Send();
 }

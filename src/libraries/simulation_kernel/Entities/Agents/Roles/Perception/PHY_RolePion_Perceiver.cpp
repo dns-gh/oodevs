@@ -1223,7 +1223,7 @@ bool PHY_RolePion_Perceiver::HasDelayedPerceptions() const
 void PHY_RolePion_Perceiver::SendDebugState() const
 {
     NET_ASN_MsgUnitVisionCones asn;
-    asn().unit_oid = pPion_->GetID();
+    asn().oid = pPion_->GetID();
     asn().elongation = GetRole< PHY_RolePion_Posture >().GetElongationFactor();
     asn().cones.n = surfacesAgent_.size();
     asn().cones.elem = asn().cones.n ? new ASN1T_VisionCone[ asn().cones.n ] : 0;

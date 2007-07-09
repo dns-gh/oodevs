@@ -53,10 +53,10 @@ void AgentsModel::Purge()
 // -----------------------------------------------------------------------------
 void AgentsModel::CreateAutomat( const ASN1T_MsgAutomatCreation& asnMsg )
 {
-    if( !Resolver< Automat_ABC >::Find( asnMsg.oid_automate ) )
+    if( !Resolver< Automat_ABC >::Find( asnMsg.oid ) )
     {
         Automat_ABC* pAgent = agentFactory_.Create( asnMsg );
-        Resolver< Automat_ABC >::Register( asnMsg.oid_automate, *pAgent );
+        Resolver< Automat_ABC >::Register( asnMsg.oid, *pAgent );
     }
 }
 
@@ -84,10 +84,10 @@ kernel::Automat_ABC* AgentsModel::FindAutomat( unsigned long id )
 // -----------------------------------------------------------------------------
 void AgentsModel::CreateAgent( const ASN1T_MsgUnitCreation& asnMsg )
 {
-    if( !Resolver< Agent_ABC >::Find( asnMsg.oid_pion ) )
+    if( !Resolver< Agent_ABC >::Find( asnMsg.oid ) )
     {
         Agent_ABC* pAgent = agentFactory_.Create( asnMsg );
-        Resolver< Agent_ABC >::Register( asnMsg.oid_pion, *pAgent );
+        Resolver< Agent_ABC >::Register( asnMsg.oid, *pAgent );
     }
 }
 
@@ -139,10 +139,10 @@ Entity_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
 // -----------------------------------------------------------------------------
 void AgentsModel::CreatePopulation( const ASN1T_MsgPopulationCreation& asnMsg )
 {
-    if( !Resolver< Population_ABC >::Find( asnMsg.oid_population ) )
+    if( !Resolver< Population_ABC >::Find( asnMsg.oid ) )
     {
         Population_ABC* popu = agentFactory_.Create( asnMsg );
-        Resolver< Population_ABC >::Register( asnMsg.oid_population, *popu );
+        Resolver< Population_ABC >::Register( asnMsg.oid, *popu );
     }
 }
 

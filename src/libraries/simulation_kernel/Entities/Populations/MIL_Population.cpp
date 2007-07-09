@@ -959,7 +959,7 @@ void MIL_Population::OnReceiveMsgResurrect( const ASN1T_MagicActionPopulationRes
 void MIL_Population::SendCreation() const
 {
     NET_ASN_MsgPopulationCreation asnMsg;
-    asnMsg().oid_population  = nID_;
+    asnMsg().oid             = nID_;
     asnMsg().type_population = pType_->GetID();
     asnMsg().oid_camp        = pArmy_->GetID();
     asnMsg().nom             = strName_.c_str(); // !! pointeur sur const char*   
@@ -985,7 +985,7 @@ void MIL_Population::SendFullState()
     assert( pDecision_ );
 
     NET_ASN_MsgPopulationUpdate asnMsg;
-    asnMsg().oid_population = nID_;   
+    asnMsg().oid = nID_;   
     pDecision_->SendFullState( asnMsg );
     asnMsg.Send();
 
@@ -1019,7 +1019,7 @@ void MIL_Population::UpdateNetwork()
     if( pDecision_->HasStateChanged() )
     {
         NET_ASN_MsgPopulationUpdate asnMsg;
-        asnMsg().oid_population = nID_;   
+        asnMsg().oid = nID_;   
         pDecision_->SendChangedState( asnMsg );
         asnMsg.Send();
     }

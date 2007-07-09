@@ -32,7 +32,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Agent::Agent( Model& model, const ASN1T_MsgUnitCreation& msg )
     : model_                        ( model )
-    , nID_                          ( msg.oid_pion )
+    , nID_                          ( msg.oid )
     , nType_                        ( msg.type_pion )
     , strName_                      ( msg.nom )
     , pAutomat_                     ( &model.GetAutomats().Get( msg.oid_automate ) )
@@ -333,7 +333,7 @@ void Agent::Update( const ASN1T_MsgUnitOrder& asnMsg )
 void Agent::SendCreation( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientUnitCreation asn;
-    asn().oid_pion      = nID_;
+    asn().oid           = nID_;
     asn().type_pion     = nType_;
     asn().nom           = strName_.c_str(); // !! pointeur sur const char*
     asn().oid_automate  = pAutomat_->GetID();
@@ -350,7 +350,7 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
     { // Attributes $$$
         AsnMsgSimToClientUnitAttributes asn;
 
-        asn().oid_pion = nID_;     
+        asn().oid = nID_;     
 
         asn().m.dotation_eff_materielPresent = 1;
         asn().m.dotation_eff_personnelPresent = 1;
@@ -503,6 +503,6 @@ void Agent::SendSpecialUpdate( Publisher_ABC& publisher ) const
     AsnMsgSimToClientUnitChangeSuperiorAck ack;
     ack().error_code   = EnumChangeHierarchyErrorCode::no_error;
     ack().oid_automate = pAutomat_->GetID();
-    ack().oid_pion     = nID_;
+    ack().oid          = nID_;
     ack.Send( publisher );
 }

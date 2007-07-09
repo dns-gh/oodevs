@@ -26,7 +26,7 @@ EnumPopulationAttitude ::= ENUMERATED
 
 MsgPopulationCreation ::= SEQUENCE
 {
-    oid-population  OID,
+    oid             OID,
     type-population PopulationType,
     nom             VisibleString,
     oid-camp        OID    
@@ -34,7 +34,7 @@ MsgPopulationCreation ::= SEQUENCE
 
 MsgPopulationUpdate ::= SEQUENCE
 {
-    oid-population  OID,
+    oid             OID,
     etat-domination Percentage OPTIONAL
 }
 
@@ -44,14 +44,14 @@ MsgPopulationUpdate ::= SEQUENCE
 
 MsgPopulationConcentrationCreation ::= SEQUENCE
 {
-    oid-concentration OID,
+    oid               OID,
     oid-population    OID,
     position          CoordUTM
 }
 
 MsgPopulationConcentrationUpdate ::= SEQUENCE
 {
-    oid-concentration   OID,
+    oid                 OID,
     oid-population      OID,
     
     nb-humains-vivants  INTEGER                OPTIONAL,
@@ -61,7 +61,7 @@ MsgPopulationConcentrationUpdate ::= SEQUENCE
 
 MsgPopulationConcentrationDestruction ::= SEQUENCE
 {
-    oid-concentration OID,
+    oid               OID,
     oid-population    OID
 }
 
@@ -71,13 +71,13 @@ MsgPopulationConcentrationDestruction ::= SEQUENCE
 
 MsgPopulationFlowCreation ::= SEQUENCE
 {
-    oid-flux        OID,
+    oid             OID,
     oid-population  OID
 }
 
 MsgPopulationFlowUpdate ::= SEQUENCE
 {
-    oid-flux            OID,
+    oid                 OID,
     oid-population      OID,
     itineraire          Path             OPTIONAL, -- Path de la tête
     flux                Path             OPTIONAL,
@@ -90,7 +90,7 @@ MsgPopulationFlowUpdate ::= SEQUENCE
 
 MsgPopulationFlowDestruction ::= SEQUENCE
 {
-    oid-flux        OID,
+    oid             OID,
     oid-population  OID
 }
 

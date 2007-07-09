@@ -435,7 +435,7 @@ void DEC_Knowledge_Agent::SendChangedState()
     assert( pKnowledgeGroup_ );
 
     NET_ASN_MsgUnitKnowledgeUpdate asnMsg;
-    asnMsg().oid_connaissance      = nID_;
+    asnMsg().oid                   = nID_;
     asnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
     
     if( bRelevanceUpdated_ )
@@ -479,7 +479,7 @@ void DEC_Knowledge_Agent::SendFullState()
     assert( pKnowledgeGroup_ );
 
     NET_ASN_MsgUnitKnowledgeUpdate asnMsg;
-    asnMsg().oid_connaissance      = nID_;
+    asnMsg().oid                   = nID_;
     asnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
     
     asnMsg().m.pertinencePresent = 1;
@@ -556,7 +556,7 @@ void DEC_Knowledge_Agent::SendMsgCreation() const
     assert( pAgentKnown_ );
 
     NET_ASN_MsgUnitKnowledgeCreation asnMsg;
-    asnMsg().oid_connaissance      = nID_;
+    asnMsg().oid                   = nID_;
     asnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
     asnMsg().oid_unite_reelle      = pAgentKnown_->GetID();    
     asnMsg().type_unite            = pAgentKnown_->GetType().GetID();
@@ -572,7 +572,7 @@ void DEC_Knowledge_Agent::SendMsgDestruction() const
     assert( pKnowledgeGroup_ );
     
     NET_ASN_MsgUnitKnowledgeDestruction asnMsg;
-    asnMsg().oid_connaissance      = nID_;
+    asnMsg().oid                   = nID_;
     asnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
     asnMsg.Send();
 }

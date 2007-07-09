@@ -374,7 +374,7 @@ void DEC_AgentFunctions::Trace( DIA_Call_ABC& call, const MIL_AgentPion& callerA
 {
     std::string message( call.GetParameter( 0 ).ToString() );
     NET_ASN_MsgTrace msg;
-    msg().unit_id = callerAgent.GetID();
+    msg().oid     = callerAgent.GetID();
     msg().message = message.c_str();
     msg.Send();
 }
@@ -389,9 +389,9 @@ void DEC_AgentFunctions::DecisionalState( DIA_Call_ABC& call, const MIL_AgentPio
     std::string value( call.GetParameter( 1 ).ToString() );
 
     NET_ASN_MsgDecisionalState msg;
-    msg().unit_id = callerAgent.GetID();
-    msg().key     = key.c_str();
-    msg().value   = value.c_str();
+    msg().oid   = callerAgent.GetID();
+    msg().key   = key.c_str();
+    msg().value = value.c_str();
     msg.Send();
 }
 
@@ -421,7 +421,7 @@ void DEC_AgentFunctions::DebugDrawPoints( DIA_Call_ABC& call, const MIL_AgentPio
     assert( pPoints );
 
     NET_ASN_MsgDebugPoints asn;
-    asn().unit_id = callerAgent.GetID();
+    asn().oid = callerAgent.GetID();
     NET_ASN_Tools::WriteCoordinates( *pPoints, asn().coordinates );
     asn.Send();
     NET_ASN_Tools::Delete( asn().coordinates );
@@ -439,7 +439,7 @@ void DEC_AgentFunctions::DebugDrawPoint( DIA_Call_ABC& call, const MIL_AgentPion
     assert( pPoint );
 
     NET_ASN_MsgDebugPoints asn;
-    asn().unit_id = callerAgent.GetID();
+    asn().oid = callerAgent.GetID();
     asn().coordinates.n = 1;
     ASN1T_CoordUTM coord;
     NET_ASN_Tools::WritePoint( *pPoint, coord );

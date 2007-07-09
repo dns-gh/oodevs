@@ -142,7 +142,7 @@ EnumFireAvailability ::= ENUMERATED
 
 MsgUnitCreation ::= SEQUENCE
 {
-    oid-pion        Unit,
+    oid             Unit,
     type-pion       UnitType,
     nom             VisibleString,
     oid-automate    Automat,
@@ -151,7 +151,7 @@ MsgUnitCreation ::= SEQUENCE
 
 MsgUnitAttributes ::= SEQUENCE
 {
-    oid-pion                      Unit,
+    oid                           Unit,
 
     dotation-eff-personnel        SEQUENCE OF HumanDotations     OPTIONAL, -- Dotations effectives du pion DELTA
     dotation-eff-materiel         SEQUENCE OF EquipmentDotations    OPTIONAL, -- DELTA
@@ -207,7 +207,7 @@ MsgUnitAttributes ::= SEQUENCE
 
 MsgUnitEnvironmentType ::= SEQUENCE
 {
-    oid-pion    Unit,
+    oid         Unit,
     area        INTEGER( 0..255 ), 
     left        INTEGER( 0..255 ),
     right       INTEGER( 0..255 ),
@@ -276,7 +276,7 @@ MagicActionPartialRecovery ::= SEQUENCE
 
 MsgUnitMagicAction ::= SEQUENCE
 {
-    oid         OID,  -- oid de l'unité
+    oid     OID,  -- oid de l'unité
     action  CHOICE
     {
         move-to                     MagicActionMoveTo,
@@ -319,20 +319,20 @@ MsgUnitCreationRequestAck ::= EnumUnitErrorCode
 
 MsgUnitPathFind ::= SEQUENCE
 {
-    oid-pion    OID,
+    oid         OID,
     itineraire  Path
 }
 
 MsgUnitChangeSuperiorAck ::= SEQUENCE
 {
-    oid-pion     Unit,
+    oid          Unit,
     oid-automate Automat,
     error-code   EnumChangeHierarchyErrorCode
 }
 
 MsgUnitChangeSuperior ::= SEQUENCE
 {
-    oid-pion     Unit,
+    oid          Unit,
     oid-automate Automat
 }
 
@@ -346,14 +346,14 @@ VisionCone ::= SEQUENCE
 
 MsgUnitVisionCones ::= SEQUENCE
 {
-    unit-oid     Unit,
+    oid          Unit,
     cones        SEQUENCE OF VisionCone,
     elongation   REAL
 }
 
 MsgUnitDetection ::= SEQUENCE
 {
-    unit-oid            Unit,
+    oid                 Unit,
     detected-unit-oid   Unit,
     current-visibility  EnumUnitVisibility,
     max-visibility      EnumUnitVisibility
@@ -361,14 +361,14 @@ MsgUnitDetection ::= SEQUENCE
 
 MsgObjectDetection ::= SEQUENCE
 {
-    unit-oid            Unit,
-    object-oid          OID,
-    visibility          EnumUnitVisibility
+    oid        Unit,
+    object-oid OID,
+    visibility EnumUnitVisibility
 }
 
 MsgPopulationConcentrationDetection ::= SEQUENCE
 {
-    unit-oid            Unit,
+    oid                 Unit,
     population-oid      OID,
     concentration-oid   OID,
     visibility          EnumUnitVisibility
@@ -376,10 +376,10 @@ MsgPopulationConcentrationDetection ::= SEQUENCE
 
 MsgPopulationFlowDetection ::= SEQUENCE
 {
-    unit-oid            Unit,
-    population-oid      OID,
-    flow-oid            OID,
-    visible-flow        Path
+    oid            Unit,
+    population-oid OID,
+    flow-oid       OID,
+    visible-flow   Path
 }
 
 END -- Unit

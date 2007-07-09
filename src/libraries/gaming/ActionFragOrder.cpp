@@ -91,7 +91,7 @@ void ActionFragOrder::Publish( Publisher_ABC& publisher ) const
     // $$$$ SBO 2007-06-26: check engaged/disengaged
 
     ASN_MsgFragOrder asn;
-    asn().oid_unite_executante = GetEntity().GetId();
+    asn().oid = GetEntity().GetId();
     asn().frag_order = GetType().GetId();
     CommitTo( asn().parametres );
     asn.Send( publisher );

@@ -29,7 +29,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Automat::Automat( Model& model, const ASN1T_MsgAutomatCreation& msg )
     : model_            ( model )
-    , nID_              ( msg.oid_automate )
+    , nID_              ( msg.oid )
     , nType_            ( msg.type_automate )
     , strName_          ( msg.nom )
     , side_             ( model.GetSides     ().Get( msg.oid_camp ) )
@@ -182,7 +182,7 @@ void Automat::Update( const ASN1T_MsgAutomatOrder& asnMsg )
 void Automat::SendCreation( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientAutomatCreation asn;
-    asn().oid_automate            = nID_;
+    asn().oid                     = nID_;
     asn().type_automate           = nType_;
     asn().nom                     = strName_.c_str(); // !! pointeur sur const char*
     asn().oid_camp                = side_.GetID();
@@ -211,7 +211,7 @@ void Automat::SendFullUpdate( Publisher_ABC& publisher ) const
         asn().m.combat_de_rencontrePresent = 1;
         asn().m.etat_operationnelPresent = 1;
         asn().m.roePresent = 1;
-        asn().oid_automate = nID_;
+        asn().oid = nID_;
         asn().etat_automate = nAutomatState_;
         asn().rapport_de_force = nForceRatioState_;
         asn().combat_de_rencontre = nCloseCombatState_;
@@ -222,7 +222,7 @@ void Automat::SendFullUpdate( Publisher_ABC& publisher ) const
 
     {
         AsnMsgSimToClientAutomatChangeLogisticLinks asn;
-        asn().oid_automate = nID_;
+        asn().oid  = nID_;
         if( pTC2_ )
         {
             asn().m.oid_tc2Present = 1;
@@ -271,7 +271,7 @@ void Automat::SendSpecialUpdate( Publisher_ABC& publisher ) const
 {
     AsnMsgSimToClientAutomatChangeKnowledgeGroupAck ack;
     ack().error_code = EnumChangeHierarchyErrorCode::no_error;
-    ack().oid_automate = nID_;
+    ack().oid = nID_;
     ack().oid_camp = side_.GetID();
     ack().oid_groupe_connaissance = pKnowledgeGroup_->GetID();
     ack.Send( publisher );

@@ -102,15 +102,15 @@ MissionParameters ::= SEQUENCE OF MissionParameter
 --
 MsgUnitOrder ::= SEQUENCE
 {
-    oid-unite-executante    Unit,
-    order-context           OrderContext,
-    mission                 OID,
-    parametres              MissionParameters
+    oid             Unit,
+    order-context   OrderContext,
+    mission         OID,
+    parametres      MissionParameters
 }
 MsgUnitOrderAck ::= SEQUENCE
 {
-    oid-unite-executante    Unit,
-    error-code				EnumOrderErrorCode
+    oid         Unit,
+    error-code	EnumOrderErrorCode
 }
 
 --
@@ -123,16 +123,16 @@ EnumAutomatOrderFormation ::= ENUMERATED
 }
 MsgAutomatOrder ::= SEQUENCE
 {
-    oid-unite-executante    Automat,
-    order-context           OrderContext,
-    mission                 OID,
-    parametres              MissionParameters,
-    formation               EnumAutomatOrderFormation
+    oid           Automat,
+    order-context OrderContext,
+    mission       OID,
+    parametres    MissionParameters,
+    formation     EnumAutomatOrderFormation
 }
 MsgAutomatOrderAck ::= SEQUENCE
 {
-    oid-unite-executante    Unit,
-    error-code		        EnumOrderErrorCode
+    oid         Automat,
+    error-code	EnumOrderErrorCode
 }
 
 --
@@ -140,14 +140,14 @@ MsgAutomatOrderAck ::= SEQUENCE
 --
 MsgPopulationOrder ::= SEQUENCE
 {
-    oid-unite-executante Population,
-    mission              OID,
-    parametres           MissionParameters
+    oid         Population,
+    mission     OID,
+    parametres  MissionParameters
 }
 MsgPopulationOrderAck ::= SEQUENCE
 {
-    oid-unite-executante Population,
-    error-code		     EnumOrderErrorCode
+    oid         Population,
+    error-code  EnumOrderErrorCode
 }
 
 --
@@ -155,14 +155,14 @@ MsgPopulationOrderAck ::= SEQUENCE
 --
 MsgFragOrder ::= SEQUENCE
 {
-    oid-unite-executante    OID,
-    frag-order              OID,
-    parametres              MissionParameters
+    oid         OID,
+    frag-order  OID,
+    parametres  MissionParameters
 }
 MsgFragOrderAck ::= SEQUENCE
 {
-    oid-unite-executante OID,
-    error-code           EnumOrderErrorCode
+    oid         OID,
+    error-code  EnumOrderErrorCode
 }
 
 -- CR
@@ -177,7 +177,7 @@ EnumReportType ::= ENUMERATED
 
 MsgReport ::= SEQUENCE
 {
-    unit-id    OID, -- Automat, pion ou population    
+    oid        OID, -- Automat, pion ou population    
     cr         OID,
     type       EnumReportType,
     parametres MissionParameters
@@ -185,21 +185,21 @@ MsgReport ::= SEQUENCE
 
 MsgTrace ::= SEQUENCE
 {
-    unit-id    OID, -- Automat, pion ou population 
-    message    VisibleString
+    oid     OID, -- Automat, pion ou population 
+    message VisibleString
 }
 
 MsgDecisionalState ::= SEQUENCE
 {
-    unit-id    OID, -- Automat, pion ou population 
-    key        VisibleString,
-    value      VisibleString
+    oid    OID, -- Automat, pion ou population 
+    key    VisibleString,
+    value  VisibleString
 }
 
 MsgDebugPoints ::= SEQUENCE
 {
-    unit-id       OID, -- Automat, pion ou population 
-    coordinates   CoordUTMList
+    oid         OID, -- Automat, pion ou population 
+    coordinates CoordUTMList
 }
 
 END -- Order
