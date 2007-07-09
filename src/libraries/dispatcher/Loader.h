@@ -10,10 +10,6 @@
 #ifndef __Loader_h_
 #define __Loader_h_
 
-#include "game_asn/Asn.h"
-#include "Frames.h"
-#include <vector>
-
 namespace tools
 {
     class InputBinaryWrapper;
@@ -23,6 +19,7 @@ namespace dispatcher
 {
     class Config;
     class ReplayModel_ABC;
+    class MessageLoader;
 
 // =============================================================================
 /** @class  Loader
@@ -56,33 +53,17 @@ private:
     Loader& operator=( const Loader& ); //!< Assignement operator
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::vector< Frame >    T_Frames;
-    typedef std::vector< KeyFrame > T_KeyFrames;
-    //@}
-
     //! @name Helpers
     //@{
-    void LoadIndex( const std::string& file );
-    void LoadKeyIndex( const std::string& file );
-    void LoadSimToClientMessage( std::ifstream& input, unsigned count );
-    void LoadSimToClientMessage( tools::InputBinaryWrapper& input );
-    void LoadKeyFrame( unsigned frame );
     bool RequiresKeyFrame( unsigned frame );
     //@}
 
 private:
     //! @name Member data
     //@{
-    ReplayModel_ABC& model_;
-    T_Frames frames_;
-    T_KeyFrames keyFrames_;
-    std::ifstream updates_;
-    std::ifstream keys_;
+    ReplayModel_ABC&               model_;
+    std::auto_ptr< MessageLoader > loader_;
     unsigned currentFrame_;
-
-    ASN1OCTET buffer_[100000];
     //@}
 };
 
