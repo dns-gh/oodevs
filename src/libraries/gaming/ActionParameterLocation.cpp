@@ -99,7 +99,6 @@ void ActionParameterLocation::Draw( const geometry::Point2f& where, const Viewpo
 void ActionParameterLocation::DisplayInToolTip( Displayer_ABC& displayer ) const
 {
     displayer.Display( "", GetName() );
-    ActionParameter< QString >::DisplayInToolTip( displayer );
 }
 
 // -----------------------------------------------------------------------------

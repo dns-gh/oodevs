@@ -33,6 +33,11 @@ public:
     virtual ~ActionParameterLocation();
     //@}
 
+    //! @name Accessors
+    //@{
+    virtual geometry::Point2f GetPosition() const;
+    //@}
+
     //! @name Operations
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
@@ -40,9 +45,9 @@ public:
 
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
-
     void CommitTo( ASN1T_Location& asn ) const;
     void Clean( ASN1T_Location& asn ) const;
+
     virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
     //@}
 
@@ -55,7 +60,6 @@ private:
 
     //! @name Helpers
     //@{
-    virtual geometry::Point2f GetPosition() const;
     virtual void Serialize( xml::xostream& xos ) const;
     //@}
 };

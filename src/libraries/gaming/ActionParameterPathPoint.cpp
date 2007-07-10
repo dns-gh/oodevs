@@ -44,16 +44,6 @@ ActionParameterPathPoint::~ActionParameterPathPoint()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionParameterPathPoint::DisplayInToolTip
-// Created: SBO 2007-05-15
-// -----------------------------------------------------------------------------
-void ActionParameterPathPoint::DisplayInToolTip( kernel::Displayer_ABC& displayer ) const
-{
-    displayer.Display( "", GetName() );
-    ActionParameterLocation::DisplayInToolTip( displayer );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ActionParameterPathPoint::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------

@@ -51,6 +51,13 @@ public:
     virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
     //@}
 
+protected:
+    //! @name Operations
+    //@{
+    virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
+    virtual geometry::Point2f GetPosition() const;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{

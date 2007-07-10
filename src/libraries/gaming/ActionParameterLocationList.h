@@ -44,6 +44,12 @@ public:
     void Clean( ASN1T_LocationList& asn ) const;
     //@}
 
+protected:
+    //! @name Operations
+    //@{
+    virtual void DisplayTooltip( const kernel::GlTools_ABC& tools ) const;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{

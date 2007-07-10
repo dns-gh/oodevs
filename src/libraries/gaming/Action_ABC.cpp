@@ -96,6 +96,9 @@ void Action_ABC::Draw( const geometry::Point2f& where, const kernel::Viewport_AB
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Draw( where, viewport, tools );
+
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->DisplayTooltip( tools );
 }
 
 // -----------------------------------------------------------------------------

@@ -50,6 +50,12 @@ public:
     virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
     //@}
 
+protected:
+    //! @name Operations
+    //@{
+    virtual void DisplayTooltip( const kernel::GlTools_ABC& tools ) const;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -65,6 +71,7 @@ private:
     virtual void VisitPoint  ( const geometry::Point2f& ) {}
     void AddPoints( const ASN1T_Location& asn );
     void ReadPoint( xml::xistream& xis );
+    void AddPoint( const geometry::Point2f& p, unsigned i, unsigned count );
     //@}
 
 private:

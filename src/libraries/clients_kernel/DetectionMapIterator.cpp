@@ -105,8 +105,8 @@ void DetectionMapIterator::Increment()
 // -----------------------------------------------------------------------------
 Vector2f DetectionMapIterator::ComputeIncrement()
 {
-    float xDelta = ( ( xIncrease_ > 0 ) ? cellSize_*.5f : -cellSize_*.5f ) - xOffset_;
-    float yDelta = ( ( yIncrease_ > 0 ) ? cellSize_*.5f : -cellSize_*.5f ) - yOffset_;
+    float xDelta = ( ( xIncrease_ > 0 ) ? cellSize_*.51f : -cellSize_*.51f ) - xOffset_;
+    float yDelta = ( ( yIncrease_ > 0 ) ? cellSize_*.51f : -cellSize_*.51f ) - yOffset_;
     horizontalLine_ = ( xIncrease_ == 0 )
         || ( ( yIncrease_ != 0 ) && ( yDelta / yIncrease_ < xDelta / xIncrease_ ) );
     return horizontalLine_ ? 

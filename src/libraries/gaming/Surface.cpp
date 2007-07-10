@@ -27,30 +27,18 @@ using namespace kernel;
 // Name: Surface constructor
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-Surface::Surface( const Agent_ABC& agent, const ASN1T_VisionCone& message, const kernel::CoordinateConverter_ABC& converter, const DetectionMap& map, const Resolver_ABC< SensorType, QString >& resolver )
-    : agent_( agent )
-    , map_( map )
+Surface::Surface( const Agent_ABC& agent, const ASN1T_VisionCone& message, const kernel::CoordinateConverter_ABC& converter, const DetectionMap& map, const Resolver_ABC< SensorType, QString >& resolver, float elongation )
+    : map_( map )
     , origin_( converter.ConvertToXY( message.origin ) )
-    , height_( message.height )
+    , height_( message.height + agent.Get< Positions >().GetHeight() )
     , sensorType_( resolver.Get( message.sensor ) )
-    , elongation_( 1 )
+    , elongation_( elongation )
     , distanceModificator_( 1 )
 {
     sectors_.reserve( message.directions.n );
     for( uint i = 0; i < message.directions.n; ++i )
         sectors_.push_back( Sector( origin_, message.directions.elem[i], sensorType_.GetAngle() ) );
-    distanceModificator_ = elongation_ * sensorType_.GetDistanceModificator( agent_ );
-    maxRadius_ = sensorType_.GetMaxDistance( distanceModificator_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Surface::SetElongation
-// Created: AGE 2006-04-27
-// -----------------------------------------------------------------------------
-void Surface::SetElongation( float elongation )
-{
-    elongation_ = elongation;
-    distanceModificator_ = elongation_ * sensorType_.GetDistanceModificator( agent_ );
+    distanceModificator_ = elongation_ * sensorType_.GetDistanceModificator( agent );
     maxRadius_ = sensorType_.GetMaxDistance( distanceModificator_ );
 }
 
@@ -145,10 +133,7 @@ bool Surface::IsInSector( const geometry::Point2f& point ) const
 // -----------------------------------------------------------------------------
 E_PerceptionResult Surface::ComputePerception( const geometry::Point2f& point ) const
 {
-    distanceModificator_ = elongation_ * sensorType_.GetDistanceModificator( agent_ );
-    maxRadius_ = sensorType_.GetMaxDistance( distanceModificator_ );
-
-    VisionLine line( map_, origin_, point, height_ + agent_.Get< Positions >().GetHeight() );
+    VisionLine line( map_, origin_, point, height_ );
     float skyrock = std::numeric_limits< float >::infinity();
     while( ! line.IsDone() && skyrock > 0 )
     {

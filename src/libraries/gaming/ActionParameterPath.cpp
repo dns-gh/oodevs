@@ -88,16 +88,7 @@ ActionParameterPath::~ActionParameterPath()
 void ActionParameterPath::AddPoints( const ASN1T_Location& asn )
 {
     for( unsigned int i = 0; i < asn.coordinates.n; ++i )
-    {
-        Point pt;
-        pt.AddPoint( converter_.ConvertToXY( asn.coordinates.elem[i] ) );
-        QString label;
-        if( i + 1 == asn.coordinates.n )
-            label = tools::translate( "ActionParameter", "Destination" );
-        else
-            label = tools::translate( "ActionParameter", "Way point %1" ).arg( i + 1 );
-        AddParameter( *new ActionParameterPathPoint( OrderParameter( label, "pathpoint", false ), converter_, pt ) );
-    }
+        AddPoint( converter_.ConvertToXY( asn.coordinates.elem[i] ), i, asn.coordinates.n );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,16 +99,22 @@ void ActionParameterPath::VisitLines( const T_PointVector& points )
 {
     unsigned int i = 0;
     for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
-    {
-        Point pt;
-        pt.AddPoint( *it );
-        QString label;
-        if( ++i == points.size() )
-            label = tools::translate( "ActionParameter", "Destination" );
-        else
-            label = tools::translate( "ActionParameter", "Way point %1" ).arg( i );
-        AddParameter( *new ActionParameterPathPoint( OrderParameter( label, "pathpoint", false ), converter_, pt ) );
-    }
+        AddPoint( *it, i++, points.size() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterPath::AddPoint
+// Created: AGE 2007-07-10
+// -----------------------------------------------------------------------------
+void ActionParameterPath::AddPoint( const geometry::Point2f& p, unsigned i, unsigned count )
+{
+    Point pt; pt.AddPoint( p );
+    QString label;
+    if( i + 1 == count )
+        label = tools::translate( "ActionParameter", "Destination" );
+    else
+        label = tools::translate( "ActionParameter", "Way point %1" ).arg( i + 1 );
+    AddParameter( *new ActionParameterPathPoint( OrderParameter( label, "pathpoint", false ), converter_, pt ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -198,4 +195,15 @@ void ActionParameterPath::Accept( ActionParameterVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
     ActionParameter< QString >::Accept( visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterPath::DisplayTooltip
+// Created: AGE 2007-07-10
+// -----------------------------------------------------------------------------
+void ActionParameterPath::DisplayTooltip( const kernel::GlTools_ABC& tools ) const
+{
+    ActionParameter< QString >::DisplayTooltip( tools );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->DisplayTooltip( tools );
 }

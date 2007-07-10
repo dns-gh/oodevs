@@ -31,7 +31,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
     void CommitTo( ASN1T_CoordUTM& asn ) const;
     virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
     //@}

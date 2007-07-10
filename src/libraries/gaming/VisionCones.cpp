@@ -152,11 +152,13 @@ void VisionCones::CancelCurrent()
 void VisionCones::Update() const
 {
     // $$$$ SBO 2007-03-20: threaded version disabled
-    Updater updater( *const_cast< VisionCones* >( this ) );
-    updater.Process();
-    updater.Commit();
-//    std::auto_ptr< WorkerTask_ABC > task( new Updater( *const_cast< VisionCones* >( this ) ) );
-//    workers_.Enqueue( task );
+//    Updater updater( *const_cast< VisionCones* >( this ) );
+//    updater.Process();
+//    updater.Commit();
+
+    // $$$$ AGE 2007-07-09: threaded version enabled
+    std::auto_ptr< WorkerTask_ABC > task( new Updater( *const_cast< VisionCones* >( this ) ) );
+    workers_.Enqueue( task );
 }
 
 // -----------------------------------------------------------------------------

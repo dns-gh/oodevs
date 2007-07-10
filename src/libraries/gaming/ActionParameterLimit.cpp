@@ -97,3 +97,21 @@ void ActionParameterLimit::Accept( ActionParameterVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLimit::GetPosition
+// Created: AGE 2007-07-10
+// -----------------------------------------------------------------------------
+geometry::Point2f ActionParameterLimit::GetPosition() const
+{
+    return location_->GetPosition();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLimit::DisplayInToolTip
+// Created: AGE 2007-07-10
+// -----------------------------------------------------------------------------
+void ActionParameterLimit::DisplayInToolTip( kernel::Displayer_ABC& displayer ) const
+{
+    displayer.Display( "", GetName() );
+}

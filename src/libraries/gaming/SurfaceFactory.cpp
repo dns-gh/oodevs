@@ -41,9 +41,7 @@ SurfaceFactory::~SurfaceFactory()
 // -----------------------------------------------------------------------------
 Surface* SurfaceFactory::CreateSurface( const Agent_ABC& agent, const ASN1T_VisionCone& input, float elongation )
 {
-    Surface* result = new Surface( agent, input, converter_, map_, resolver_ );
-    result->SetElongation( elongation );
-    return result;
+    return new Surface( agent, input, converter_, map_, resolver_, elongation );
 }
 
 // -----------------------------------------------------------------------------

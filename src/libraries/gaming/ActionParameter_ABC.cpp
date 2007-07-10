@@ -60,15 +60,23 @@ QString ActionParameter_ABC::GetType() const
 // -----------------------------------------------------------------------------
 void ActionParameter_ABC::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    if( !toolTip_.get() )
-    {
-        std::auto_ptr< kernel::GlTooltip_ABC > tooltip( tools.CreateTooltip() );
-        const_cast< ActionParameter_ABC* >( this )->toolTip_ = tooltip;
-    }
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         const geometry::Point2f point = GetPosition();
         it->second->Draw( point.IsZero() ? where : point, viewport, tools );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter_ABC::DisplayTooltip
+// Created: AGE 2007-07-10
+// -----------------------------------------------------------------------------
+void ActionParameter_ABC::DisplayTooltip( const kernel::GlTools_ABC& tools ) const
+{
+    if( !toolTip_.get() )
+    {
+        std::auto_ptr< kernel::GlTooltip_ABC > tooltip( tools.CreateTooltip() );
+        const_cast< ActionParameter_ABC* >( this )->toolTip_ = tooltip;
     }
     DisplayInToolTip( *toolTip_ );
     toolTip_->Draw( GetPosition() );

@@ -125,3 +125,14 @@ void ActionParameterObstacleList::Clean( ASN1T_MissionParameter& asn ) const
     }
     delete asn.value.u.plannedWorkList;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterObstacleList::DisplayTooltip
+// Created: AGE 2007-07-10
+// -----------------------------------------------------------------------------
+void ActionParameterObstacleList::DisplayTooltip( const kernel::GlTools_ABC& tools ) const
+{
+    ActionParameter< QString >::DisplayTooltip( tools );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->DisplayTooltip( tools );
+}

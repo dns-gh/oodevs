@@ -119,3 +119,14 @@ void ActionParameterLimaList::Clean( ASN1T_OrderContext& asn ) const
         delete[] asn.limas.elem;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLimaList::DisplayTooltip
+// Created: AGE 2007-07-10
+// -----------------------------------------------------------------------------
+void ActionParameterLimaList::DisplayTooltip( const kernel::GlTools_ABC& tools ) const
+{
+    ActionParameter< QString >::DisplayTooltip( tools );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->DisplayTooltip( tools );
+}

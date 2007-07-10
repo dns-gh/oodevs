@@ -36,13 +36,12 @@ class Surface
 public:
     //! @name Constructor/Destructor
     //@{
-             Surface( const kernel::Agent_ABC& agent, const ASN1T_VisionCone& message, const kernel::CoordinateConverter_ABC& converter, const kernel::DetectionMap& map, const kernel::Resolver_ABC< kernel::SensorType, QString >& resolver );
+             Surface( const kernel::Agent_ABC& agent, const ASN1T_VisionCone& message, const kernel::CoordinateConverter_ABC& converter, const kernel::DetectionMap& map, const kernel::Resolver_ABC< kernel::SensorType, QString >& resolver, float elongation );
     virtual ~Surface();
     //@}
 
     //! @name Operations
     //@{
-    void SetElongation( float elongation );
     void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     void Initialize( VisionMap& map );
     void Update( VisionMap& map );
@@ -73,7 +72,6 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::Agent_ABC& agent_;
     const kernel::DetectionMap& map_;
     geometry::Point2f origin_;
     float height_;

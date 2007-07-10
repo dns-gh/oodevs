@@ -42,6 +42,12 @@ public:
     virtual void Clean( ASN1T_OrderContext& asn ) const;
     //@}
 
+protected:
+    //! @name Operations
+    //@{
+    virtual void DisplayTooltip( const kernel::GlTools_ABC& tools ) const;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{

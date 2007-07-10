@@ -146,3 +146,14 @@ void ActionParameterLocationList::Clean( ASN1T_LocationList& asn ) const
         delete[] asn.elem;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLocationList::DisplayTooltip
+// Created: AGE 2007-07-10
+// -----------------------------------------------------------------------------
+void ActionParameterLocationList::DisplayTooltip( const kernel::GlTools_ABC& tools ) const
+{
+    ActionParameter< QString >::DisplayTooltip( tools );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->DisplayTooltip( tools );
+}
