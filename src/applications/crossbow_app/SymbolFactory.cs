@@ -34,7 +34,7 @@ namespace crossbow
             return pPoint;
         }
 
-        public ISpatialReference SpacialReference
+        public ISpatialReference SpatialReference
         {
             get
             {
@@ -71,7 +71,7 @@ namespace crossbow
             pFEGraphic.Style.UseFonts = true;
             // IMPORTANT: when using CachedGraphic.Draw method, TTFs are rebuilt each .Draw() call so
             // adversely affects performance (but provide better text quality, flexibility/customizability)
-            ((ICachedGraphicStyle)pFEGraphic.Style).UseGDI = true;
+            //((ICachedGraphicStyle)pFEGraphic.Style).UseGDI = true;
             // pFEGraphic.Style.FriendlyLine.Width = 1.5;
             pFEGraphic.ForceElement = CreateForceElement(stSymbolID, stName);
             return (ICachedGraphic)pFEGraphic;

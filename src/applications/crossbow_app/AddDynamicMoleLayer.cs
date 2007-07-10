@@ -127,47 +127,36 @@ namespace crossbow
                     IGxDataset gxDs = element as IGxDataset;                    
                     if (gxDs != null)
                     {
-                        // ICompositeLayer layer = SetupCompositeLayer(gxDs, element);
-                        
-                        IDataset ds = gxDs.Dataset;
-                        DynamicMoleLayer layer = new DynamicMoleLayer();                        
-                        layer.Name = element.Name;
-                        layer.Selectable = true;
-                        layer.FeatureClass = ds as IFeatureClass;
-                        
+                        ILayer layer = CreateLayerGroup(element.Name, gxDs.Dataset as IFeatureClass);
                         IMxDocument mxDocument = Tools.GetMxDocument(m_application);
-                        mxDocument.AddLayer(layer as ILayer);
-                        //add items to the layer
-                        layer.Connect();
-                        mxDocument.ActiveView.Refresh();                        
+                        mxDocument.AddLayer(layer);
+                        mxDocument.ActiveView.Refresh();
                     }
                 }
             }
         }
         #endregion
 
-        ICompositeLayer SetupCompositeLayer(IGxDataset gxDs, IGxObject element)
+        ILayer CreateLayerGroup(string name, IFeatureClass featureClass)
         {
-            ICompositeGraphicsLayer composite = new CompositeGraphicsLayerClass();
-            IGraphicsContainer      graphicsContainer = composite as IGraphicsContainer;            
-            IDataset                ds = gxDs.Dataset;
+            IGroupLayer group = new GroupLayerClass();
 
             // IComposite Layer
-            ILayer layer = (ILayer)composite;
-            layer.Name = element.Name;
+            ILayer layer = (ILayer)group;
+            layer.Name = name;
 
             IFeatureLayer featureLayer = new FeatureLayerClass();
-            featureLayer.Name = element.Name;
-            featureLayer.Visible = false;
-            featureLayer.FeatureClass = ds as IFeatureClass;
-                        
+            featureLayer.Name = layer.Name + " - Features";
+            featureLayer.FeatureClass = featureClass;
+
             DynamicMoleLayer dynamicLayer = new DynamicMoleLayer();
-            dynamicLayer.Name = element.Name;
-            dynamicLayer.FeatureClass = ds as IFeatureClass;
-            
-            composite.AddLayer(dynamicLayer.Name + " - Dynamics", dynamicLayer as IFeatureLayer );
-            composite.AddLayer(featureLayer.Name + " - Features", featureLayer);
-            return composite as ICompositeLayer;
+            dynamicLayer.Initialize(m_application);
+            dynamicLayer.Name = layer.Name + " - Dynamics";
+            dynamicLayer.FeatureClass = featureClass;
+
+            group.Add(featureLayer);
+            group.Add(dynamicLayer);
+            return group as ILayer;
         }
 
         private void EnableDynamicDisplay()

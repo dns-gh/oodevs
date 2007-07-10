@@ -198,6 +198,5 @@ namespace crossbow
         #endregion
 
         private System.Windows.Forms.TreeView m_pSymbolTree;
-        // private System.Windows.Forms.Label labelPlaceholder;        
     }
 }
