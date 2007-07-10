@@ -76,6 +76,7 @@ Client::~Client()
 // -----------------------------------------------------------------------------
 bool Client::CheckRights( const ASN1T_MsgsClientToSim& asnMsg ) const
 {
+
     if( !pProfile_ )
         return false;
 
