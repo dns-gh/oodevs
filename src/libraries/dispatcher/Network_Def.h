@@ -26,20 +26,6 @@ static enum
 
     eMsgClientToMiddle                         = 4,
     eMsgMiddleToClient                         = 5,
-
-    eMsgEnableUnitVisionCones                  = 1000,
-    eMsgDisableUnitVisionCones                 = 1001,
-    eMsgUnitMagicAction                        = 1002,
-    eMsgEnableProfiling                        = 1003,
-    eMsgDisableProfiling                       = 1004,
-    eMsgUnitVisionCones                        = 1005,
-    eMsgProfilingValues                        = 1008,
-    eMsgUnitInterVisibility                    = 1009,
-    eMsgObjectInterVisibility                  = 1010,
-    eMsgPopulationConcentrationInterVisibility = 1011,
-    eMsgPopulationFlowInterVisibility          = 1012,
-    eMsgDebugDrawPoints                        = 1015,
-    eMsgEnvironmentType                        = 1016,
 };
 //@}
 

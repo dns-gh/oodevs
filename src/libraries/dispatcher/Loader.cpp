@@ -57,7 +57,7 @@ void Loader::SkipToFrame( unsigned frame )
     if( requiresKeyFrame )
     {
         model_.StartSynchronisation();
-        loader_->LoadKeyFrame( frame, model_ );
+        currentFrame_ = loader_->LoadKeyFrame( frame, model_ );
     }
     while( currentFrame_+1 < frame && Tick() )
         ;
