@@ -153,56 +153,56 @@ MsgUnitAttributes ::= SEQUENCE
 {
     oid                           Unit,
 
-    dotation-eff-personnel        SEQUENCE OF HumanDotations     OPTIONAL, -- Dotations effectives du pion DELTA
-    dotation-eff-materiel         SEQUENCE OF EquipmentDotations    OPTIONAL, -- DELTA
-    dotation-eff-ressource        SEQUENCE OF ResourceDotations     OPTIONAL, -- DELTA
+    dotation-eff-personnel        SEQUENCE OF HumanDotations      OPTIONAL, -- Dotations effectives du pion DELTA
+    dotation-eff-materiel         SEQUENCE OF EquipmentDotations  OPTIONAL, -- DELTA
+    dotation-eff-ressource        SEQUENCE OF ResourceDotations   OPTIONAL, -- DELTA
     equipements-pretes            SEQUENCE OF LentEquipment       OPTIONAL, -- FULL
-    equipements-empruntes         SEQUENCE OF BorrowedEquipment    OPTIONAL, -- FULL
+    equipements-empruntes         SEQUENCE OF BorrowedEquipment   OPTIONAL, -- FULL
 
-    position                      CoordUTM                          OPTIONAL,
+    position                      CoordUTM                        OPTIONAL,
     direction                     Heading                         OPTIONAL, -- en degrés
-    hauteur                       Height                           OPTIONAL, -- hauteur d'un pion 3D par rapport au sol en mètres
+    hauteur                       Height                          OPTIONAL, -- hauteur d'un pion 3D par rapport au sol en mètres
     vitesse                       Speed                           OPTIONAL, -- en km/h
     etat-operationnel-brut        FreePercentage                  OPTIONAL,
-    pions-renforcant              UnitList                         OPTIONAL,
-    pion-renforce                 Unit                             OPTIONAL, -- '0' quand pas en renfort
-    mort                          BOOLEAN                           OPTIONAL,
-    neutralise                    BOOLEAN                           OPTIONAL,
-    mode-furtif-actif             BOOLEAN                           OPTIONAL,
-    embarque                      BOOLEAN                           OPTIONAL,
-    transporteurs-disponibles     BOOLEAN                           OPTIONAL,
+    pions-renforcant              UnitList                        OPTIONAL,
+    pion-renforce                 Unit                            OPTIONAL, -- '0' quand pas en renfort
+    mort                          BOOLEAN                         OPTIONAL,
+    neutralise                    BOOLEAN                         OPTIONAL,
+    mode-furtif-actif             BOOLEAN                         OPTIONAL,
+    embarque                      BOOLEAN                         OPTIONAL,
+    transporteurs-disponibles     BOOLEAN                         OPTIONAL,
 
-    posture-old                   EnumUnitPosture                   OPTIONAL,
-    posture-new                   EnumUnitPosture                   OPTIONAL,
-    posture-pourcentage           Percentage                       OPTIONAL,
+    posture-old                   EnumUnitPosture                 OPTIONAL,
+    posture-new                   EnumUnitPosture                 OPTIONAL,
+    posture-pourcentage           Percentage                      OPTIONAL,
 
-    etat-installation             Percentage                       OPTIONAL,
+    etat-installation             Percentage                      OPTIONAL,
 
-    en-tenue-de-protection-nbc    BOOLEAN                           OPTIONAL,
-    contamine-par-agents-nbc      ListOID                           OPTIONAL,          -- ID d'agents chimiques - Cf. MOS/IDClasses.xml
-    etat-contamination            Percentage                       OPTIONAL,
+    en-tenue-de-protection-nbc    BOOLEAN                         OPTIONAL,
+    contamine-par-agents-nbc      ListOID                         OPTIONAL,          -- ID d'agents chimiques - Cf. MOS/IDClasses.xml
+    etat-contamination            Percentage                      OPTIONAL,
 
-    communications-brouillees     BOOLEAN                           OPTIONAL,
-    silence-radio                 BOOLEAN                           OPTIONAL,
-    radar-actif                   BOOLEAN                           OPTIONAL,
+    communications-brouillees     BOOLEAN                         OPTIONAL,
+    silence-radio                 BOOLEAN                         OPTIONAL,
+    radar-actif                   BOOLEAN                         OPTIONAL,
 
-    pions-transportes             UnitList                         OPTIONAL,
-    pion-transporteur             Unit                             OPTIONAL, -- '0' quand aucun transporteur
+    pions-transportes             UnitList                        OPTIONAL,
+    pion-transporteur             Unit                            OPTIONAL, -- '0' quand aucun transporteur
 
-    rapport-de-force              EnumForceRatioStatus                    OPTIONAL,
-    combat-de-rencontre           EnumMeetingEngagementStatus           OPTIONAL,
-    etat-operationnel             EnumOperationalStatus              OPTIONAL,
+    rapport-de-force              EnumForceRatioStatus            OPTIONAL,
+    combat-de-rencontre           EnumMeetingEngagementStatus     OPTIONAL,
+    etat-operationnel             EnumOperationalStatus           OPTIONAL,
     disponibilite-au-tir-indirect EnumFireAvailability            OPTIONAL,
-    roe                           EnumRoe                           OPTIONAL,
-    roe-population                EnumPopulationRoe                 OPTIONAL,
+    roe                           EnumRoe                         OPTIONAL,
+    roe-population                EnumPopulationRoe               OPTIONAL,
 
-    fatigue                       EnumUnitTiredness                   OPTIONAL,
-    moral                         EnumUnitMorale                     OPTIONAL,
-    experience                    EnumUnitExperience                OPTIONAL,
+    fatigue                       EnumUnitTiredness               OPTIONAL,
+    moral                         EnumUnitMorale                  OPTIONAL,
+    experience                    EnumUnitExperience              OPTIONAL,
 
-    rendu                         Team                              OPTIONAL, -- '0' quand pas rendu
-    prisonnier                    BOOLEAN                           OPTIONAL,
-    refugie-pris-en-compte        BOOLEAN                           OPTIONAL
+    rendu                         Team                            OPTIONAL, -- '0' quand pas rendu
+    prisonnier                    BOOLEAN                         OPTIONAL,
+    refugie-pris-en-compte        BOOLEAN                         OPTIONAL
 }
 
 MsgUnitEnvironmentType ::= SEQUENCE
@@ -230,8 +230,8 @@ MagicActionEquipmentRecovery        ::= NULL
 MagicActionRessourcesRecovery       ::= NULL
 MagicActionChangeHumanFactors       ::= SEQUENCE
 {
-    fatigue    EnumUnitTiredness    OPTIONAL,
-    moral      EnumUnitMorale      OPTIONAL,
+    fatigue    EnumUnitTiredness  OPTIONAL,
+    moral      EnumUnitMorale     OPTIONAL,
     experience EnumUnitExperience OPTIONAL
 }
 
@@ -267,11 +267,11 @@ StockRecovery ::= SEQUENCE
 
 MagicActionPartialRecovery ::= SEQUENCE
 {
-    equipements SEQUENCE OF EquipmentRecovery        OPTIONAL,
-    personnels  SEQUENCE OF HumanRecovery         OPTIONAL,
-    dotations   SEQUENCE OF DotationRecovery          OPTIONAL,
-    munitions   SEQUENCE OF AmmunitionDotationRecovery  OPTIONAL,
-    stocks      SEQUENCE OF StockRecovery             OPTIONAL
+    equipements SEQUENCE OF EquipmentRecovery          OPTIONAL,
+    personnels  SEQUENCE OF HumanRecovery              OPTIONAL,
+    dotations   SEQUENCE OF DotationRecovery           OPTIONAL,
+    munitions   SEQUENCE OF AmmunitionDotationRecovery OPTIONAL,
+    stocks      SEQUENCE OF StockRecovery              OPTIONAL
 }
 
 MsgUnitMagicAction ::= SEQUENCE
