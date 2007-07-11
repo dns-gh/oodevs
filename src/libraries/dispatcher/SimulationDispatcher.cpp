@@ -73,8 +73,6 @@ bool SimulationDispatcher::IsNotDestruction( const ASN1T_MsgsSimToClient& asnMsg
 // -----------------------------------------------------------------------------
 void SimulationDispatcher::Receive( const ASN1T_MsgsSimToClient& asnMsg )
 {
-    model_.Update( asnMsg );
-
     if( synching_ && IsNotDestruction( asnMsg ) )
         return;
 

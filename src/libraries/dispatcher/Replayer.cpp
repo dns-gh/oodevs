@@ -21,15 +21,31 @@
 
 using namespace dispatcher;
 
+namespace 
+{
+    boost::shared_ptr< Model > CreateModel( CompositeMessageHandler& handler )
+    {
+        boost::shared_ptr< Model > result( new Model() );
+        handler.Add( result );
+        return result;
+    }
+    boost::shared_ptr< SimulationDispatcher > CreateSimulation( Publisher_ABC& publisher, Model& model, CompositeMessageHandler& handler )
+    {
+        boost::shared_ptr< SimulationDispatcher > result( new SimulationDispatcher( publisher, model ) );
+        handler.Add( result );
+        return result;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Replayer constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
 Replayer::Replayer( const Config& config, const std::string& records )
-    : model_           ( new Model() )
+    : model_           ( CreateModel( handler_ ) )
     , clientsNetworker_( new ClientsNetworker( *this, config ) )
-    , simulation_      ( new SimulationDispatcher( *clientsNetworker_, *model_ ) )
-    , loader_          ( new Loader( *simulation_, config, records ) )
+    , simulation_      ( CreateSimulation( *clientsNetworker_, *model_, handler_ ) )
+    , loader_          ( new Loader( *simulation_, handler_, config, records ) )
     , facade_          ( new LoaderFacade( *clientsNetworker_, *loader_ ) )
     , profiles_        ( new ProfileManager( *model_, *clientsNetworker_, config ) )
 {

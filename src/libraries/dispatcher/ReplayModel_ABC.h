@@ -10,9 +10,6 @@
 #ifndef __ReplayModel_ABC_h_
 #define __ReplayModel_ABC_h_
 
-#include "game_asn/Asn.h"
-#include "MessageHandler_ABC.h"
-
 namespace dispatcher
 {
 
@@ -22,7 +19,7 @@ namespace dispatcher
 */
 // Created: AGE 2007-07-05
 // =============================================================================
-class ReplayModel_ABC : public MessageHandler_ABC
+class ReplayModel_ABC
 {
 
 public:
@@ -34,7 +31,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg ) = 0;
     virtual void StartSynchronisation() = 0;
     virtual void EndSynchronisation() = 0;
     //@}

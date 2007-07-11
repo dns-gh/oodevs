@@ -12,6 +12,7 @@
 #include "ReplayModel_ABC.h"
 #include "Publisher_ABC.h"
 #include "MessageLoader.h"
+#include "MessageHandler_ABC.h"
 
 using namespace dispatcher;
 
@@ -19,8 +20,9 @@ using namespace dispatcher;
 // Name: Loader constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-Loader::Loader( ReplayModel_ABC& model, const Config& config, const std::string& records )
+Loader::Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Config& config, const std::string& records )
     : model_       ( model )
+    , handler_     ( handler )
     , loader_      ( new MessageLoader( config, records ) )
     , currentFrame_( 0 )
 {
@@ -57,7 +59,7 @@ void Loader::SkipToFrame( unsigned frame )
     if( requiresKeyFrame )
     {
         model_.StartSynchronisation();
-        currentFrame_ = loader_->LoadKeyFrame( frame, model_ );
+        currentFrame_ = loader_->LoadKeyFrame( frame, handler_ );
     }
     while( currentFrame_+1 < frame && Tick() )
         ;
@@ -74,7 +76,7 @@ void Loader::SkipToFrame( unsigned frame )
 // -----------------------------------------------------------------------------
 bool Loader::Tick()
 {
-    if( loader_->LoadFrame( currentFrame_, model_ ) )
+    if( loader_->LoadFrame( currentFrame_, handler_ ) )
     {
         ++currentFrame_;
         return true;

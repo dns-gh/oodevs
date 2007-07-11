@@ -36,6 +36,7 @@ Dispatcher::Dispatcher( const Config& config )
     handler_.Add( boost::shared_ptr< MessageHandler_ABC >( new SimulationDispatcher( *pClientsNetworker_, *pModel_ ) ) );
     handler_.Add( pProfileManager_ );
     handler_.Add( pClientsNetworker_ );
+    handler_.Add( pModel_ );
     if( config.RecorderEnabled() )
         handler_.Add( boost::shared_ptr< MessageHandler_ABC >( new SaverFacade( *pModel_, config_ ) ) );
 }

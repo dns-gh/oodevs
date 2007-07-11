@@ -19,6 +19,7 @@ namespace dispatcher
 {
     class Config;
     class ReplayModel_ABC;
+    class MessageHandler_ABC;
     class MessageLoader;
 
 // =============================================================================
@@ -33,7 +34,7 @@ class Loader
 public:
     //! @name Constructors/Destructor
     //@{
-             Loader( ReplayModel_ABC& model, const Config& config, const std::string& records );
+             Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Config& config, const std::string& records );
     virtual ~Loader();
     //@}
 
@@ -62,6 +63,7 @@ private:
     //! @name Member data
     //@{
     ReplayModel_ABC&               model_;
+    MessageHandler_ABC&            handler_;
     std::auto_ptr< MessageLoader > loader_;
     unsigned currentFrame_;
     //@}

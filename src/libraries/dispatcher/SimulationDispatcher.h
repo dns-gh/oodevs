@@ -10,8 +10,8 @@
 #ifndef __SimulationDispatcher_h_
 #define __SimulationDispatcher_h_
 
-#include "game_asn/Asn.h"
 #include "ReplayModel_ABC.h"
+#include "MessageHandler_ABC.h"
 
 namespace dispatcher
 {
@@ -24,7 +24,7 @@ namespace dispatcher
 */
 // Created: AGE 2007-04-10
 // =============================================================================
-class SimulationDispatcher : public ReplayModel_ABC
+class SimulationDispatcher : public ReplayModel_ABC, public MessageHandler_ABC
 {
 
 public:

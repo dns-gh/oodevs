@@ -10,7 +10,9 @@
 #ifndef __Replayer_h_
 #define __Replayer_h_
 
+#include "CompositeMessageHandler.h"
 #include <memory>
+#include <boost/shared_ptr.hpp>
 
 namespace dispatcher
 {
@@ -60,12 +62,13 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< Model >                model_;
-    std::auto_ptr< ClientsNetworker >     clientsNetworker_;
-    std::auto_ptr< SimulationDispatcher > simulation_;
-    std::auto_ptr< Loader >               loader_;
-    std::auto_ptr< LoaderFacade >         facade_;
-    std::auto_ptr< ProfileManager >       profiles_;
+    CompositeMessageHandler                   handler_;
+    boost::shared_ptr< Model >                model_;
+    std::auto_ptr< ClientsNetworker >         clientsNetworker_;
+    boost::shared_ptr< SimulationDispatcher > simulation_;
+    std::auto_ptr< Loader >                   loader_;
+    std::auto_ptr< LoaderFacade >             facade_;
+    std::auto_ptr< ProfileManager >           profiles_;
     //@}
 };
 

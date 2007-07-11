@@ -11,6 +11,7 @@
 #define __ReplayModel_h_
 
 #include "dispatcher/ReplayModel_ABC.h"
+#include "dispatcher/MessageHandler_ABC.h"
 #include <fstream>
 #include <map>
 
@@ -20,7 +21,7 @@
 */
 // Created: AGE 2007-07-05
 // =============================================================================
-class ReplayModel : public dispatcher::ReplayModel_ABC
+class ReplayModel : public dispatcher::ReplayModel_ABC, public dispatcher::MessageHandler_ABC
 {
 
 public:
