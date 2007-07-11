@@ -20,7 +20,6 @@
 #define __GenObject_h_
 
 #include "Types.h"
-#include "Messages/ASN_Types.h"
 
 namespace TEST {
 

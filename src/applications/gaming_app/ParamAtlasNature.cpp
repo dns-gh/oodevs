@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "ParamAtlasNature.h"
 #include "moc_ParamAtlasNature.cpp"
-#include "game_asn/Asn.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionParameterAtlasNature.h"
 #include "gaming/AtlasNatures.h"
@@ -60,30 +59,9 @@ void ParamAtlasNature::BuildInterface( QWidget* parent )
 
 // -----------------------------------------------------------------------------
 // Name: ParamAtlasNature::CommitTo
-// Created: SBO 2007-03-14
+// Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-void ParamAtlasNature::CommitTo( ASN1T_MissionParameter& asn ) const
-{
-    asn.null_value = 0;
-    asn.value.t = T_MissionParameter_value_atlasNature;
-    asn.value.u.atlasNature = new ASN1T_AtlasNature();
-    nature_.CommitTo( *asn.value.u.atlasNature );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamAtlasNature::Clean
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamAtlasNature::Clean( ASN1T_MissionParameter& asn ) const
-{
-    delete asn.value.u.atlasNature;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamAtlasNature::CommitTo
-// Created: SBO 2007-03-19
-// -----------------------------------------------------------------------------
-void ParamAtlasNature::CommitTo( Action_ABC& action ) const
+void ParamAtlasNature::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     action.AddParameter( *new ActionParameterAtlasNature( parameter_, nature_ ) );
 }

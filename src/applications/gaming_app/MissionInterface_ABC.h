@@ -10,7 +10,6 @@
 #ifndef __MissionInterface_ABC_h_
 #define __MissionInterface_ABC_h_
 
-#include "game_asn/Asn.h"
 #include "ParamComboBox.h"
 
 namespace kernel
@@ -58,11 +57,6 @@ protected:
     const kernel::Entity_ABC& GetEntity() const;
     void CreateTitle( const QString& title );
     void CreateOkCancelButtons();
-    void CommitTo( ASN1T_MissionParameters& asn ) const;
-    void CommitTo( ASN1T_OrderContext& asn ) const;
-    void Clean( ASN1T_MissionParameters& asn ) const;
-    void Clean( ASN1T_OrderContext& asn ) const;
-
     void CommitTo( Action_ABC& action ) const;
     //@}
 

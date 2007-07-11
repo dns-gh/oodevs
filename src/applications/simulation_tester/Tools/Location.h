@@ -21,7 +21,6 @@
 
 #include "Types.h"
 #include "Position.h"
-#include "Messages/ASN_Types.h"
 
 namespace TEST {
 

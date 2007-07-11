@@ -30,7 +30,7 @@ class MOS_ASN_Msg##ASNMSG                                                       
 public:                                                                             \
     void Send( unsigned long nCtx = 0 )                                             \
     {                                                                               \
-        ASN1T_MsgsInSim globalAsnMsg;                                               \
+        ASN1T_MsgsClientToSim globalAsnMsg;                                               \
                                                                                     \
         globalAsnMsg.context            = nCtx;                                     \
         globalAsnMsg.msg.t              = T_MsgsInSim_msg_msg_##ASNVAR;             \
@@ -54,7 +54,7 @@ class MOS_ASN_Msg##ASNMSG                                                       
 public:                                                                             \
     void Send( unsigned long nCtx = 0 )                                             \
     {                                                                               \
-        ASN1T_MsgsInSim    globalAsnMsg;                                            \
+        ASN1T_MsgsClientToSim    globalAsnMsg;                                            \
                                                                                     \
         globalAsnMsg.context            = nCtx;                                     \
         globalAsnMsg.msg.t              = T_MsgsInSim_msg_msg_##ASNVAR;             \
@@ -78,7 +78,7 @@ class MOS_ASN_Msg##ASNMSG                                                       
 public:                                                                             \
     void Send( unsigned long nCtx = 0 )                                             \
     {                                                                               \
-        ASN1T_MsgsInSim    globalAsnMsg;                                            \
+        ASN1T_MsgsClientToSim    globalAsnMsg;                                            \
                                                                                     \
         globalAsnMsg.context = nCtx;                                                \
         globalAsnMsg.msg.t   = T_MsgsInSim_msg_msg_##ASNVAR;                        \

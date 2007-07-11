@@ -10,7 +10,6 @@
 #ifndef __LimitParameter_h_
 #define __LimitParameter_h_
 
-#include "game_asn/Asn.h"
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
@@ -55,11 +54,8 @@ public:
     virtual bool CheckValidity();
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void BuildInterface( QWidget* parent );
-    void CommitTo( ASN1T_Line& asn ) const;
-    void Clean( ASN1T_Line& asn ) const;
     bool IsSet() const;
-    virtual void CommitTo( Action_ABC& action ) const;
-    void CommitTo( ActionParameter_ABC& parameter ) const;
+    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
     //@}
 
 private slots:

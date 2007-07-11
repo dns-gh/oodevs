@@ -10,7 +10,6 @@
 #ifndef __ParamPoint_h_
 #define __ParamPoint_h_
 
-#include "game_asn/Asn.h"
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 
@@ -47,9 +46,7 @@ public:
     //@{
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
-    virtual void CommitTo( Action_ABC& action ) const;
+    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
     virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
     virtual void BuildInterface( QWidget* parent );
     //@}

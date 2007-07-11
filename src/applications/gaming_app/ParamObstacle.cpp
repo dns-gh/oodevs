@@ -151,58 +151,9 @@ bool ParamObstacle::CheckValidity()
 
 // -----------------------------------------------------------------------------
 // Name: ParamObstacle::CommitTo
-// Created: SBO 2007-03-15
-// -----------------------------------------------------------------------------
-void ParamObstacle::CommitTo( ASN1T_MissionParameter& asn ) const
-{
-    if( ! typeCombo_ )
-        InterfaceNotInitialized();
-    ASN1T_PlannedWork*& object = asn.value.u.plannedWork = new ASN1T_PlannedWork();
-    asn.null_value = 0;
-    asn.value.t = T_MissionParameter_value_plannedWork;
-    CommitTo( *object );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamObstacle::CommitTo
-// Created: SBO 2007-03-15
-// -----------------------------------------------------------------------------
-void ParamObstacle::CommitTo( ASN1T_PlannedWork& object ) const
-{
-    const kernel::ObjectType* type = typeCombo_->GetValue();
-    if( !type )
-        return;
-    object.type          = (ASN1T_EnumObjectType)type->id_;
-    object.type_obstacle = (ASN1T_EnumObstacleType)obstacleTypeCombo_->GetValue();
-    switch( type->id_ )
-    {
-    case EnumObjectType::zone_minee_lineaire:
-    case EnumObjectType::zone_minee_par_dispersion:
-        density_->CommitTo( object.densite );
-        break;
-    case EnumObjectType::camp_prisonniers:
-    case EnumObjectType::camp_refugies:
-        tc2_->CommitTo( object.tc2 );
-        break;
-    };
-    location_->CommitTo( object.position );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamObstacle::Clean
-// Created: SBO 2007-03-15
-// -----------------------------------------------------------------------------
-void ParamObstacle::Clean( ASN1T_MissionParameter& asn ) const
-{
-    location_->Clean( asn.value.u.plannedWork->position );
-    delete asn.value.u.plannedWork;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamObstacle::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamObstacle::CommitTo( Action_ABC& action ) const
+void ParamObstacle::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     const kernel::ObjectType* type = typeCombo_->GetValue();
     if( !type )
@@ -223,33 +174,6 @@ void ParamObstacle::CommitTo( Action_ABC& action ) const
         param->AddParameter( *new ActionParameterObstacleType( OrderParameter( tr( "Obstacle type" ), "obstacletype", false ), obstacleTypeCombo_->GetValue() ) );
     location_->CommitTo( *param );
     action.AddParameter( *param.release() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamObstacle::CommitTo
-// Created: SBO 2007-04-26
-// -----------------------------------------------------------------------------
-void ParamObstacle::CommitTo( ActionParameter_ABC& parameter ) const
-{
-    const kernel::ObjectType* type = typeCombo_->GetValue();
-    if( !type ) // $$$$ SBO 2007-04-26: 
-        return;
-    std::auto_ptr< ActionParameterObstacle > param( new ActionParameterObstacle( parameter_, *type ) );
-    location_->CommitTo( *param );
-    switch( type->id_ )
-    {
-    case EnumObjectType::zone_minee_lineaire:
-    case EnumObjectType::zone_minee_par_dispersion:
-        density_->CommitTo( *param );
-        break;
-    case EnumObjectType::camp_prisonniers:
-    case EnumObjectType::camp_refugies:
-        tc2_->CommitTo( *param );
-        break;
-    };
-    if( type->CanBeReservedObstacle() )
-        param->AddParameter( *new ActionParameterObstacleType( OrderParameter( tr( "Obstacle type" ), "obstacletype", false ), obstacleTypeCombo_->GetValue() ) );
-    parameter.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

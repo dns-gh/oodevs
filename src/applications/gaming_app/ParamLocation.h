@@ -10,7 +10,6 @@
 #ifndef __ParamLocation_h_
 #define __ParamLocation_h_
 
-#include "game_asn/Asn.h"
 #include "Param_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/ShapeHandler_ABC.h"
@@ -55,12 +54,17 @@ public:
     virtual void Handle( kernel::Location_ABC& location );
     void SetShapeFilter( bool point, bool line, bool polygon, bool circle );
 
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
-    virtual void CommitTo( Action_ABC& action ) const;
-    void CommitTo( ASN1T_Location& asn ) const;
-    void Clean( ASN1T_Location& asn ) const;
-    void CommitTo( ActionParameter_ABC& parameter ) const;
+    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    template< typename T >
+    T* CreateParameter() const
+    {
+        return new T( parameter_, converter_, *location_ );
+    }
     //@}
 
 private:

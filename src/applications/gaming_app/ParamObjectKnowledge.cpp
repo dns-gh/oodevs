@@ -67,42 +67,12 @@ void ParamObjectKnowledge::NotifyContextMenu( const Object_ABC& entity, ContextM
 
 // -----------------------------------------------------------------------------
 // Name: ParamObjectKnowledge::CommitTo
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamObjectKnowledge::CommitTo( ASN1T_MissionParameter& asn ) const
-{
-    asn.value.t = T_MissionParameter_value_objectKnowledge;
-    EntityParameter< ObjectKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.objectKnowledge );
-    asn.null_value = asn.value.u.objectKnowledge ? 0 : 1;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamObjectKnowledge::CommitTo
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void ParamObjectKnowledge::CommitTo( ASN1T_ObjectKnowledge& asn ) const
-{
-    EntityParameter< ObjectKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamObjectKnowledge::CommitTo
-// Created: SBO 2007-05-23
-// -----------------------------------------------------------------------------
-void ParamObjectKnowledge::CommitTo( Action_ABC& action ) const
+void ParamObjectKnowledge::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     std::auto_ptr< ActionParameterEntity< ObjectKnowledge_ABC > > param( new ActionParameterObjectKnowledge( parameter_ ) );
     EntityParameter< ObjectKnowledge_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: ParamObjectKnowledge::CommitTo
-// Created: SBO 2007-05-23
-// -----------------------------------------------------------------------------
-void ParamObjectKnowledge::CommitTo( ActionParameter_ABC& param ) const
-{
-    std::auto_ptr< ActionParameterEntity< ObjectKnowledge_ABC > > parameter( new ActionParameterObjectKnowledge( parameter_ ) );
-    EntityParameter< ObjectKnowledge_ABC >::CommitTo( *parameter );
-    param.AddParameter( *parameter.release() );
-}

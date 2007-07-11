@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "ParamLimits.h"
 #include "LimitParameter.h"
-#include "game_asn/Asn.h"
 #include "clients_kernel/OrderParameter.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionParameterLimits.h"
@@ -94,31 +93,9 @@ void ParamLimits::BuildInterface( QWidget* parent )
 
 // -----------------------------------------------------------------------------
 // Name: ParamLimits::CommitTo
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamLimits::CommitTo( ASN1T_OrderContext& asn ) const
-{
-    asn.m.limite_gauchePresent = limit1_->IsSet();
-    asn.m.limite_droitePresent = limit2_->IsSet();
-    limit1_->CommitTo( asn.limite_gauche );
-    limit2_->CommitTo( asn.limite_droite );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLimits::Clean
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamLimits::Clean( ASN1T_OrderContext& asn ) const
-{
-    limit1_->Clean( asn.limite_gauche );
-    limit2_->Clean( asn.limite_droite );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLimits::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamLimits::CommitTo( Action_ABC& action ) const
+void ParamLimits::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     std::auto_ptr< ActionParameter_ABC > param( new ActionParameterLimits( parameter_ ) );
     limit1_->CommitTo( *param );

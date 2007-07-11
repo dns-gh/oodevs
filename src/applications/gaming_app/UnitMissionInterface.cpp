@@ -46,18 +46,9 @@ UnitMissionInterface::~UnitMissionInterface()
 // -----------------------------------------------------------------------------
 void UnitMissionInterface::Publish()
 {
-    if( model_.IsRecording() )
-    {
-        Action_ABC* action = model_.CreateAction( GetEntity(), mission_ );
-        CommitTo( *action );
-    }
-
-    ASN_MsgUnitOrder asn;
-    asn().oid = GetEntity().GetId();
-    asn().mission = mission_.GetId();
-    CommitTo( asn().parametres );
-    CommitTo( asn().order_context );
-    asn.Send( publisher_ );
-    Clean( asn().parametres );
-    Clean( asn().order_context );
+    Action_ABC* action = model_.CreateAction( GetEntity(), mission_ );
+    CommitTo( *action );
+    action->Publish( publisher_ );
+    if( ! model_.IsRecording() )
+        model_.Destroy( *action );
 }

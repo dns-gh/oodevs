@@ -48,6 +48,7 @@ public:
     //@{
     Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission );
     Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder );
+    void Destroy( const Action_ABC& action );
     void Purge();
     void Load( const std::string& filename );
     void Save( const std::string& filename ) const;

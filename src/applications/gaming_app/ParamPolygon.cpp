@@ -9,6 +9,8 @@
 
 #include "gaming_app_pch.h"
 #include "ParamPolygon.h"
+#include "gaming/Action_ABC.h"
+#include "gaming/ActionParameterPolygon.h"
 
 using namespace kernel;
 
@@ -33,23 +35,9 @@ ParamPolygon::~ParamPolygon()
 
 // -----------------------------------------------------------------------------
 // Name: ParamPolygon::CommitTo
-// Created: SBO 2007-03-14
+// Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-void ParamPolygon::CommitTo( ASN1T_MissionParameter& asn ) const
+void ParamPolygon::CommitTo( ActionParameterContainer_ABC& action ) const
 {
-    asn.value.t = T_MissionParameter_value_polygon;
-    asn.value.u.polygon = new ASN1T_Location();
-    ParamLocation::CommitTo( *asn.value.u.polygon );
-    asn.null_value = asn.value.u.polygon->coordinates.n ? 0 : 1;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamPolygon::Clean
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamPolygon::Clean( ASN1T_MissionParameter& asn ) const
-{
-    if( asn.value.u.polygon )
-        delete[] asn.value.u.polygon->coordinates.elem;
-    delete asn.value.u.polygon;
+    action.AddParameter( *CreateParameter< ActionParameterPolygon >() );
 }

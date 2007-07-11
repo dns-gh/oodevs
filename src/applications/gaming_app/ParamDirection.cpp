@@ -53,29 +53,9 @@ void ParamDirection::BuildInterface( QWidget* parent )
 
 // -----------------------------------------------------------------------------
 // Name: ParamDirection::CommitTo
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamDirection::CommitTo( ASN1T_MissionParameter& asn ) const
-{
-    asn.null_value = 0;
-    asn.value.t = T_MissionParameter_value_heading;
-    asn.value.u.heading = value_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamDirection::CommitTo
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamDirection::CommitTo( ASN1T_OrderContext& asn ) const
-{
-    asn.direction_dangereuse = value_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamDirection::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamDirection::CommitTo( Action_ABC& action ) const
+void ParamDirection::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     action.AddParameter( *new ActionParameterDirection( parameter_, value_ ) );
 }

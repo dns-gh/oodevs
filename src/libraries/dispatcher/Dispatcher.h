@@ -44,7 +44,6 @@ public:
     //! @name Accessors
     //@{
     Model&               GetModel              () const;
-    ClientsNetworker&    GetClientsNetworker   () const;
     SimulationNetworker& GetSimulationNetworker() const;
     ProfileManager&      GetProfileManager     () const;
     //@}

@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "AutomateMissionInterface.h"
 #include "MissionInterfaceBuilder.h"
-#include "gaming/ASN_Messages.h"
 #include "gaming/ActionsModel.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/MissionType.h"
@@ -46,19 +45,9 @@ AutomateMissionInterface::~AutomateMissionInterface()
 // -----------------------------------------------------------------------------
 void AutomateMissionInterface::Publish()
 {
-    if( model_.IsRecording() )
-    {
-        Action_ABC* action = model_.CreateAction( GetEntity(), mission_ );
-        CommitTo( *action );
-    }
-
-    ASN_MsgAutomatOrder asn;
-    asn().oid = GetEntity().GetId();
-    asn().mission = mission_.GetId();
-    asn().formation = (ASN1T_EnumAutomatOrderFormation)EnumAutomatOrderFormation::deux_echelons; // $$$$ SBO 2007-03-15: move to order.parameters
-    CommitTo( asn().order_context );
-    CommitTo( asn().parametres );
-    asn.Send( publisher_ );
-    Clean( asn().order_context );
-    Clean( asn().parametres );
+    Action_ABC* action = model_.CreateAction( GetEntity(), mission_ );
+    CommitTo( *action );
+    action->Publish( publisher_ );
+    if( ! model_.IsRecording() )
+        model_.Destroy( *action );
 }

@@ -14,7 +14,6 @@
 #include "clients_gui/ValuedListItem.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionParameterMaintenancePriorities.h"
-#include "game_asn/Asn.h"
 #include "icons.h"
 
 using namespace kernel;
@@ -71,38 +70,9 @@ void ParamEquipmentList::BuildInterface( QWidget* parent )
 
 // -----------------------------------------------------------------------------
 // Name: ParamEquipmentList::CommitTo
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamEquipmentList::CommitTo( ASN1T_MissionParameter& asn ) const
-{
-    asn.value.t = T_MissionParameter_value_logMaintenancePriorities;
-    ASN1T_LogMaintenancePriorities*& list = asn.value.u.logMaintenancePriorities = new ASN1T_LogMaintenancePriorities();
-    list->n = list_->childCount();
-    asn.null_value = list->n ? 0 : 1;
-    if( asn.null_value )
-        return;
-    list->elem = new ASN1T_EquipmentType[ list->n ];
-    QListViewItemIterator it( list_ );
-    for( unsigned int i = 0; i < list->n && it.current(); ++i, ++it )
-        list->elem[i] = static_cast< const ValuedListItem* >( *it )->GetValue< EquipmentType >()->GetId();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamEquipmentList::Clean
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamEquipmentList::Clean( ASN1T_MissionParameter& asn ) const
-{
-    if( asn.value.u.logMaintenancePriorities )
-        delete[] asn.value.u.logMaintenancePriorities->elem;
-    delete asn.value.u.logMaintenancePriorities;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamEquipmentList::CommitTo
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void ParamEquipmentList::CommitTo( Action_ABC& action ) const
+void ParamEquipmentList::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     std::auto_ptr< ActionParameterMaintenancePriorities > param( new ActionParameterMaintenancePriorities( parameter_ ) );
     for( QListViewItemIterator it( list_ ); it.current(); ++it )

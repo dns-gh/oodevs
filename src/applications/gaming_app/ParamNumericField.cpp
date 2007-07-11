@@ -83,40 +83,11 @@ bool ParamNumericField::CheckValidity()
 
 // -----------------------------------------------------------------------------
 // Name: ParamNumericField::CommitTo
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamNumericField::CommitTo( ASN1T_MissionParameter& asn ) const
-{
-    asn.null_value = 0;
-    asn.value.t = T_MissionParameter_value_aReal;
-    asn.value.u.aReal = pEdit_->text().toFloat();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamNumericField::CommitTo
-// Created: SBO 2007-03-15
-// -----------------------------------------------------------------------------
-void ParamNumericField::CommitTo( ASN1REAL& asn ) const
-{
-    asn = pEdit_->text().toFloat();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamNumericField::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamNumericField::CommitTo( Action_ABC& action ) const
+void ParamNumericField::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     action.AddParameter( *new ActionParameterNumeric( parameter_, pEdit_->text().toFloat() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamNumericField::CommitTo
-// Created: SBO 2007-04-26
-// -----------------------------------------------------------------------------
-void ParamNumericField::CommitTo( ActionParameter_ABC& parameter ) const
-{
-    parameter.AddParameter( *new ActionParameterNumeric( parameter_, pEdit_->text().toFloat() ) );
 }
 
 // -----------------------------------------------------------------------------

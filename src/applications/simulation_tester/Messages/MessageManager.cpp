@@ -55,16 +55,12 @@ MessageManager::MessageManager( Workspace& workspace, NetworkManager& networkMan
     , bIsInitialized_ ( false )
     , messageService_ ( *this, networkManager.GetDINEngine(), DIN_ConnectorGuest() )
 {
-    messageService_.RegisterReceivedMessage( eMsgInit                 , *this, & MessageManager::OnReceiveMsgInit                  );
-
-    messageService_.RegisterReceivedMessage( eMsgKnowledgeGroup       , *this, & MessageManager::OnReceiveMsgKnowledgeGroup        );
-    messageService_.RegisterReceivedMessage( eMsgArmy                 , *this, & MessageManager::OnReceiveMsgTeam                  );
-    
-    messageService_.RegisterReceivedMessage( eMsgEnvironmentType      , *this, & MessageManager::OnReceiveMsgPawnTerrainType       );
-
-    messageService_.RegisterReceivedMessage( eMsgDebugDrawPoints      , *this, & MessageManager::OnReceiveMsgDebugDrawPoints       );
-
-	messageService_.RegisterReceivedMessage( eMsgOutSim               , *this, & MessageManager::OnReceiveMsgOutSim                );
+    messageService_.RegisterReceivedMessage( eMsgInit            , *this, & MessageManager::OnReceiveMsgInit                  );
+    messageService_.RegisterReceivedMessage( eMsgKnowledgeGroup  , *this, & MessageManager::OnReceiveMsgKnowledgeGroup        );
+    messageService_.RegisterReceivedMessage( eMsgArmy            , *this, & MessageManager::OnReceiveMsgTeam                  );
+    messageService_.RegisterReceivedMessage( eMsgEnvironmentType , *this, & MessageManager::OnReceiveMsgPawnTerrainType       );
+    messageService_.RegisterReceivedMessage( eMsgDebugDrawPoints , *this, & MessageManager::OnReceiveMsgDebugDrawPoints       );
+	messageService_.RegisterReceivedMessage( eMsgOutSim          , *this, & MessageManager::OnReceiveMsgOutSim                );
 	
     messageService_.SetCbkOnError( & MessageManager::OnError );
 }
@@ -128,7 +124,7 @@ DIN::DIN_BufferedMessage MessageManager::BuildMessage()
 // Name: MessageManager::SendMsgInSim
 // Created: NLD 2003-02-24
 //-----------------------------------------------------------------------------
-void MessageManager::SendMsgInSim( ASN1T_MsgsInSim& asnMsg )
+void MessageManager::SendMsgInSim( ASN1T_MsgsClientToSim& asnMsg )
 {
 	if ( !workspace_.GetNetworkManager().IsConnected() )
         return;

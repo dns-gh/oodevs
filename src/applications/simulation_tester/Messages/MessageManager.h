@@ -20,7 +20,6 @@
 #define __MessageManager_h_
 
 #include "Types.h"
-#include "Messages/ASN_Types.h"
 #include "Workspace.h"
 
 namespace DIN
@@ -51,30 +50,14 @@ public:
     //@{
     static enum  
     {
-        eMsgOutSim                                 = 0,
-        eMsgInSim                                  = 1,
+        eMsgSimToClient       = 0,
+        eMsgClientToSim       = 1,
 
-        eMsgOutClient                              = 2,
-        eMsgInClient                               = 3,
+        eMsgSimToMiddle       = 2,
+        eMsgMiddleToSim       = 3,
 
-        eMsgEnableUnitVisionCones                  = 1000,
-        eMsgDisableUnitVisionCones                 = 1001,
-        eMsgUnitMagicAction                        = 1002,
-        eMsgEnableProfiling                        = 1003,
-        eMsgDisableProfiling                       = 1004,
-        eMsgUnitVisionCones                        = 1005,
-        eMsgTrace                                  = 1006,
-        eMsgInit                                   = 1007,
-        eMsgProfilingValues                        = 1008,
-        eMsgUnitInterVisibility                    = 1009,
-        eMsgObjectInterVisibility                  = 1010,
-        eMsgPopulationConcentrationInterVisibility = 1011,
-        eMsgPopulationFlowInterVisibility          = 1012,
-        eMsgKnowledgeGroup                         = 1013,
-        eMsgArmy                                   = 1014,
-        eMsgDebugDrawPoints                        = 1015,
-        eMsgEnvironmentType                        = 1016,
-        eMsgPopulationCollision                    = 1017
+        eMsgClientToMiddle    = 4,
+        eMsgMiddleToClient    = 5
     };
     //@}
 
@@ -92,8 +75,7 @@ public:
 
 	//! @name Message management
 	//@{
-	void SendMsgInSim          ( ASN1T_MsgsInSim& asnMsg );
-    void SendMsgDebugDrawPoints( DIN::DIN_BufferedMessage& msg );
+	void SendMsgInSim          ( ASN1T_MsgsClientToSim& asnMsg );
 	//@}
 
 	//! @name Message
@@ -115,7 +97,7 @@ private:
 	void OnReceiveMsgOutSim                   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     // Control
-    void OnReceiveMsgControlInformation                 ( const ASN1T_MsgControlInformation& asnMsg );
+    void OnReceiveMsgControlInformation          ( const ASN1T_MsgControlInformation& asnMsg );
     void OnReceiveMsgControlBeginTick            ( const ASN1T_MsgControlBeginTick& asnMsg );
     void OnReceiveMsgControlEndTick              ( const ASN1T_MsgControlEndTick& asnMsg );
     void OnReceiveMsgControlChangeTimeFactorAck  ( const ASN1T_MsgControlChangeTimeFactorAck& asnMsg );
@@ -124,8 +106,6 @@ private:
 
     //! @name Entities
     //@{
-    void OnReceiveMsgKnowledgeGroup           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgTeam                     ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgAutomatCreation          ( const ASN1T_MsgAutomatCreation& asnMsg );
 	void OnReceiveMsgPawnCreation             ( const ASN1T_MsgUnitCreation& asnMsg );
     void OnReceiveMsgUnitAttributes           ( const ASN1T_MsgUnitAttributes& asnMsg );
@@ -184,8 +164,6 @@ private:
 
     // pathfind and terrain type
     void OnReceiveMsgPawnPathFind             ( const ASN1T_MsgUnitPathFind& asnMsg            );
-    void OnReceiveMsgPawnTerrainType          ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgDebugDrawPoints          ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     // communication/orders
     void OnReceiveMsgAutomatOrderAck         ( const ASN1T_MsgAutomatOrderAck& asnMsg, unsigned int nCtx );

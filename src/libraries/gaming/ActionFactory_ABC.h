@@ -49,6 +49,7 @@ public:
 
     virtual Action_ABC* CreateAction( const ASN1T_MsgUnitOrder& message ) const = 0;
     virtual Action_ABC* CreateAction( const ASN1T_MsgAutomatOrder& message ) const = 0;
+    virtual Action_ABC* CreateAction( const ASN1T_MsgPopulationOrder& message ) const = 0;
 
     virtual Action_ABC* CreateAction( xml::xistream& xis ) const = 0;
     //@}

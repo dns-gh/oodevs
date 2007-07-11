@@ -29,6 +29,7 @@ public:
     virtual void Visit( const OrderParameterValue& value ) = 0;
 };
 
+
 // =============================================================================
 /** @class  OrderParameter
     @brief  OrderParameter

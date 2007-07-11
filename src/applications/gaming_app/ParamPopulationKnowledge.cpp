@@ -51,20 +51,9 @@ void ParamPopulationKnowledge::NotifyContextMenu( const Population_ABC& entity, 
 
 // -----------------------------------------------------------------------------
 // Name: ParamPopulationKnowledge::CommitTo
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamPopulationKnowledge::CommitTo( ASN1T_MissionParameter& asn ) const
-{
-    asn.value.t = T_MissionParameter_value_populationKnowledge;
-    EntityParameter< PopulationKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.populationKnowledge );
-    asn.null_value = asn.value.u.populationKnowledge ? 0 : 1;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamPopulationKnowledge::CommitTo
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void ParamPopulationKnowledge::CommitTo( Action_ABC& action ) const
+void ParamPopulationKnowledge::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     std::auto_ptr< ActionParameterEntity< PopulationKnowledge_ABC > > param( new ActionParameterPopulationKnowledge( parameter_ ) );
     EntityParameter< PopulationKnowledge_ABC >::CommitTo( *param );

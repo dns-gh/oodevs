@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "ParamBool.h"
 #include "moc_ParamBool.cpp"
-#include "game_asn/Asn.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionParameterBool.h"
 #include "clients_kernel/OrderParameter.h"
@@ -50,20 +49,9 @@ void ParamBool::BuildInterface( QWidget* parent )
 
 // -----------------------------------------------------------------------------
 // Name: ParamBool::CommitTo
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamBool::CommitTo( ASN1T_MissionParameter& asn ) const
-{
-    asn.null_value = 0;
-    asn.value.t = T_MissionParameter_value_aBool;
-    asn.value.u.aBool = value_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamBool::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamBool::CommitTo( Action_ABC& action ) const
+void ParamBool::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     action.AddParameter( *new ActionParameterBool( parameter_, value_ ) );
 }

@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "ParamLimaList.h"
 #include "moc_ParamLimaList.cpp"
-#include "ParamVisitor_ABC.h"
 #include "LimaParameter.h"
 #include "gaming/Lima.h"
 #include "gaming/Tools.h"
@@ -54,104 +53,14 @@ void ParamLimaList::BuildInterface( QWidget* parent )
     ListParameter::BuildInterface( parent );
 }
 
-namespace
-{
-    class AsnSerializer : public ParamVisitor_ABC
-    {
-    public:
-        AsnSerializer( ASN1T_LimasOrder& list )
-            : list_( list )
-            , index_( 0 )
-        {}
-
-        virtual void Visit( const Param_ABC& param )
-        {
-            if( index_ < list_.n )
-                static_cast< const LimaParameter& >( param ).CommitTo( list_.elem[index_++] );
-        }
-
-    private:
-        ASN1T_LimasOrder& list_;
-        unsigned int index_;
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLimaList::CommitTo
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamLimaList::CommitTo( ASN1T_OrderContext& asn ) const
-{
-    asn.limas.n = Count();
-    asn.limas.elem = 0;
-    if( !asn.limas.n )
-        return;
-    asn.limas.elem = new ASN1T_LimaOrder[asn.limas.n];
-    AsnSerializer serializer( asn.limas );
-    Accept( serializer );
-}
-
-namespace
-{
-    class AsnCleaner : public ParamVisitor_ABC
-    {
-    public:
-        AsnCleaner( ASN1T_LimasOrder& list )
-            : list_( list )
-            , index_( 0 )
-        {}
-
-        virtual void Visit( const Param_ABC& param )
-        {
-            if( index_ < list_.n )
-                static_cast< const LimaParameter& >( param ).Clean( list_.elem[index_++] );
-        }
-
-    private:
-        ASN1T_LimasOrder& list_;
-        unsigned int index_;
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLimaList::Clean
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamLimaList::Clean( ASN1T_OrderContext& asn ) const
-{
-    AsnCleaner serializer( asn.limas );
-    Accept( serializer );
-    delete[] asn.limas.elem;
-}
-
-namespace
-{
-    class ActionSerializer : public ParamVisitor_ABC
-    {
-    public:
-        ActionSerializer( ActionParameter_ABC& parent )
-            : parent_( parent )
-        {}
-
-        virtual void Visit( const Param_ABC& param )
-        {
-            static_cast< const LimaParameter& >( param ).CommitTo( parent_ );
-        }
-
-    private:
-        ActionParameter_ABC& parent_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: ParamLimaList::CommitTo
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-void ParamLimaList::CommitTo( Action_ABC& action ) const
+void ParamLimaList::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     std::auto_ptr< ActionParameter_ABC > param( new ActionParameterLimaList( parameter_ ) );
-    ActionSerializer serializer( *param );
-    Accept( serializer );
+    CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }
 

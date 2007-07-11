@@ -86,39 +86,9 @@ void ParamPoint::Draw( const geometry::Point2f& /*point*/, const kernel::Viewpor
 
 // -----------------------------------------------------------------------------
 // Name: ParamPoint::CommitTo
-// Created: AGE 2006-03-31
-// -----------------------------------------------------------------------------
-void ParamPoint::CommitTo( ASN1T_MissionParameter& asn ) const
-{
-    asn.value.t = T_MissionParameter_value_point;
-    ASN1T_Point*& point = asn.value.u.point = new ASN1T_Point();
-    if( !pPosLabel_ )
-        InterfaceNotInitialized();
-    asn.null_value = pPosLabel_->text() == "---" ? 1 : 0;
-    if( asn.null_value )
-        return;
-    point->type             = EnumLocationType::point;
-    point->coordinates.n    = 1;
-    point->coordinates.elem = new ASN1T_CoordUTM[1];
-    point->coordinates.elem[0] = converter_.ConvertToMgrs( paramPoint_ ).c_str();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamPoint::Clean
-// Created: SBO 2007-03-16
-// -----------------------------------------------------------------------------
-void ParamPoint::Clean( ASN1T_MissionParameter& asn ) const
-{
-    if( asn.value.u.point )
-        delete[] asn.value.u.point->coordinates.elem;
-    delete asn.value.u.point;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamPoint::CommitTo
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-void ParamPoint::CommitTo( Action_ABC& action ) const
+void ParamPoint::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     kernel::Point point;
     point.AddPoint( paramPoint_ );

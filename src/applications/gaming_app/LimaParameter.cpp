@@ -124,33 +124,7 @@ void LimaParameter::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, k
 // Name: LimaParameter::CommitTo
 // Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
-void LimaParameter::CommitTo( ASN1T_LimaOrder& asn ) const
-{
-    int count = 0;
-    for( unsigned int i = 0; i < functions_->count(); ++i )
-        count += functions_->isSelected( i ) ? 1 : 0;
-    asn.fonctions.n = count;
-    asn.fonctions.elem = new ASN1T_EnumLimaType[asn.fonctions.n];
-    for( unsigned int i = 0, j = 0; i < functions_->count(); ++i )
-        if( functions_->isSelected( i ) )
-            asn.fonctions.elem[j++] = ASN1T_EnumLimaType( i );
-    lima_->CopyTo( asn.lima );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimaParameter::Clean
-// Created: SBO 2007-05-02
-// -----------------------------------------------------------------------------
-void LimaParameter::Clean( ASN1T_LimaOrder& asn ) const
-{
-    delete[] asn.fonctions.elem;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimaParameter::CommitTo
-// Created: SBO 2007-05-02
-// -----------------------------------------------------------------------------
-void LimaParameter::CommitTo( ActionParameter_ABC& parameter ) const
+void LimaParameter::CommitTo( ActionParameterContainer_ABC& parameter ) const
 {
     kernel::Lines lines;
     lima_->CopyTo( lines );

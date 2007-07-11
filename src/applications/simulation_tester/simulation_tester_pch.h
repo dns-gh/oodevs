@@ -27,7 +27,4 @@
 #include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/MT_Assert.h"
 
-
-#include "Messages/ASN_Types.h"
-
 #endif // __TIC_Pch_h_

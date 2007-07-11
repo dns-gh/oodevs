@@ -46,16 +46,9 @@ FragmentaryOrderInterface::~FragmentaryOrderInterface()
 // -----------------------------------------------------------------------------
 void FragmentaryOrderInterface::Publish()
 {
-    if( model_.IsRecording() )
-    {
-        Action_ABC* action = model_.CreateAction( GetEntity(), fragOrder_ );
-        CommitTo( *action );
-    }
-
-    ASN_MsgFragOrder asn;
-    asn().oid = GetEntity().GetId();
-    asn().frag_order = fragOrder_.GetId();
-    CommitTo( asn().parametres );
-    asn.Send( publisher_ );
-    Clean( asn().parametres );
+    Action_ABC* action = model_.CreateAction( GetEntity(), fragOrder_ );
+    CommitTo( *action );
+    action->Publish( publisher_ );
+    if( ! model_.IsRecording() )
+        model_.Destroy( *action );
 }

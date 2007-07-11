@@ -105,67 +105,11 @@ bool ParamLocation::CheckValidity()
 
 // -----------------------------------------------------------------------------
 // Name: ParamLocation::CommitTo
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamLocation::CommitTo( ASN1T_MissionParameter& asn ) const
-{
-    if( ! pLabel_ )
-        InterfaceNotInitialized();
-    asn.value.t = T_MissionParameter_value_location;
-    asn.value.u.location = new ASN1T_Location();
-    CommitTo( *asn.value.u.location );
-    asn.null_value = asn.value.u.location->coordinates.n ? 0 : 1;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLocation::Clean
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamLocation::Clean( ASN1T_MissionParameter& asn ) const
-{
-    if( asn.value.u.location )
-        Clean( *asn.value.u.location );
-    delete asn.value.u.location;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLocation::CommitTo
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamLocation::CommitTo( ASN1T_Location& asn ) const
-{
-    if( location_ )
-    {
-        LocationSerializer serializer( converter_ );
-        serializer.Serialize( *location_, asn );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLocation::Clean
-// Created: SBO 2007-05-25
-// -----------------------------------------------------------------------------
-void ParamLocation::Clean( ASN1T_Location& asn ) const
-{
-    delete[] asn.coordinates.elem;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLocation::CommitTo
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-void ParamLocation::CommitTo( Action_ABC& action ) const
+void ParamLocation::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     action.AddParameter( *new ActionParameterLocation( parameter_, converter_, *location_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLocation::CommitTo
-// Created: SBO 2007-04-26
-// -----------------------------------------------------------------------------
-void ParamLocation::CommitTo( ActionParameter_ABC& parameter ) const
-{
-    parameter.AddParameter( *new ActionParameterLocation( parameter_, converter_, *location_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -174,6 +118,7 @@ void ParamLocation::CommitTo( ActionParameter_ABC& parameter ) const
 // -----------------------------------------------------------------------------
 void ParamLocation::Handle( Location_ABC& location )
 {
+    // $$$$ AGE 2007-07-11: auto_ptr
     delete location_;
     location_ = &location;
     if( location.IsValid() )
@@ -197,7 +142,7 @@ void ParamLocation::SetShapeFilter( bool point, bool line, bool polygon, bool ci
 // Name: ParamLocation::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamLocation::Draw( const geometry::Point2f& , const Viewport_ABC& extent, const GlTools_ABC& tools ) const
+void ParamLocation::Draw( const geometry::Point2f& , const Viewport_ABC& , const GlTools_ABC& tools ) const
 {
     if( location_ )
         location_->Draw( tools );

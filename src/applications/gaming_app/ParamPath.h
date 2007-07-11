@@ -10,9 +10,9 @@
 #ifndef __ParamPath_h_
 #define __ParamPath_h_
 
-#include "game_asn/Asn.h"
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/OrderParameter.h"
 #include "clients_gui/ShapeHandler_ABC.h"
 #include "LocationSerializer.h"
 
@@ -23,7 +23,6 @@ namespace kernel
     class Location_ABC;
     class Positions;
     struct Nothing;
-    class OrderParameter;
 }
 
 namespace gui
@@ -41,7 +40,7 @@ class ActionParameter_ABC;
 // Created: APE 2004-03-25
 // =============================================================================
 class ParamPath : public QObject, public Param_ABC
-                , public kernel::ContextMenuObserver_ABC< kernel::Nothing >
+                , public kernel::ContextMenuObserver_ABC< kernel::Nothing > // $$$$ AGE 2007-07-11: geometry::Point2d
                 , private gui::ShapeHandler_ABC
 {
     Q_OBJECT;
@@ -50,7 +49,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              ParamPath( QObject* parent, const kernel::OrderParameter& parameter, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent );
-             ParamPath( QObject* parent, const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent, bool optional );
     virtual ~ParamPath();
     //@}
 
@@ -59,13 +57,9 @@ public:
     virtual void BuildInterface( QWidget* parent );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
     virtual void NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& );
     virtual void Handle( kernel::Location_ABC& location );
-    void CommitTo( ASN1T_Path& destination ) const;
-    virtual void CommitTo( Action_ABC& action ) const;
-    virtual void CommitTo( ActionParameter_ABC& parameter ) const;
+    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
     //@}
 
 private slots:
@@ -84,7 +78,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::OrderParameter* parameter_;
+    kernel::OrderParameter parameter_;
     const kernel::CoordinateConverter_ABC& converter_;
     gui::ParametersLayer& layer_;
     const kernel::Entity_ABC& entity_;

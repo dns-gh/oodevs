@@ -33,6 +33,7 @@ class ActionFactory_ABC;
 class MissionParameters : public kernel::Extension_ABC
                         , public kernel::Updatable_ABC< ASN1T_MsgUnitOrder >
                         , public kernel::Updatable_ABC< ASN1T_MsgAutomatOrder >
+                        , public kernel::Updatable_ABC< ASN1T_MsgPopulationOrder >
                         , public kernel::Resolver< Action_ABC >
                         , public kernel::Drawable_ABC
 {
@@ -61,6 +62,9 @@ private:
     //@{
     virtual void DoUpdate( const ASN1T_MsgUnitOrder& message );
     virtual void DoUpdate( const ASN1T_MsgAutomatOrder& message );
+    virtual void DoUpdate( const ASN1T_MsgPopulationOrder& message );
+    template< typename T >
+    void UpdateMessage( const T& message );
     //@}
 
 private:

@@ -10,7 +10,6 @@
 #ifndef __ParamNumericField_h_
 #define __ParamNumericField_h_
 
-#include "game_asn/Asn.h"
 #include "Param_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 
@@ -44,10 +43,7 @@ public:
     virtual void BuildInterface( QWidget* parent );
 
     virtual bool CheckValidity();
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void CommitTo( Action_ABC& action ) const;
-    void CommitTo( ASN1REAL& asn ) const;
-    void CommitTo( ActionParameter_ABC& parameter ) const;
+    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
 
     void SetLimits( float min, float max );
     //@}

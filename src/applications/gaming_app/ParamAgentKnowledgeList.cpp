@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "ParamAgentKnowledgeList.h"
 #include "ParamAgentKnowledge.h"
-#include "ParamVisitor_ABC.h"
 #include "gaming/ActionParameterAgentKnowledgeList.h"
 #include "gaming/AgentKnowledge_ABC.h"
 #include "gaming/AgentKnowledgeConverter_ABC.h"
@@ -70,72 +69,13 @@ void ParamAgentKnowledgeList::NotifyContextMenu( const Agent_ABC& entity, Contex
         EntityListParameter< AgentKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
 }
 
-namespace
-{
-    struct AsnSerializer : public ParamVisitor_ABC
-    {
-        explicit AsnSerializer( ASN1T_UnitKnowledgeList& list ) : list_( list ), index_( 0 ) {}
-        virtual void Visit( const Param_ABC& param )
-        {
-            if( index_ < list_.n )
-                static_cast< const ParamAgentKnowledge& >( param ).CommitTo( list_.elem[index_++] );
-        }
-
-        ASN1T_UnitKnowledgeList& list_;
-        unsigned int index_;
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamAgentKnowledgeList::CommitTo
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamAgentKnowledgeList::CommitTo( ASN1T_MissionParameter& asn ) const
-{
-    ASN1T_UnitKnowledgeList*& list = asn.value.u.unitKnowledgeList = new ASN1T_UnitKnowledgeList();
-    asn.value.t = T_MissionParameter_value_unitKnowledgeList;
-    list->n = Count();
-    asn.null_value = list->n ? 0 : 1;
-    if( asn.null_value )
-        return;
-    list->elem = new ASN1T_UnitKnowledge[ list->n ];
-    AsnSerializer serializer( *list );
-    Accept( serializer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamAgentKnowledgeList::Clean
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamAgentKnowledgeList::Clean( ASN1T_MissionParameter& asn ) const
-{
-    if( asn.value.u.unitKnowledgeList )
-        delete[] asn.value.u.unitKnowledgeList->elem;
-    delete asn.value.u.unitKnowledgeList;
-}
-
-namespace
-{
-    struct ActionSerializer : public ParamVisitor_ABC
-    {
-        explicit ActionSerializer( ActionParameter_ABC& parent ) : parent_( parent ) {}
-        virtual void Visit( const Param_ABC& param )
-        {
-            static_cast< const ParamAgentKnowledge& >( param ).CommitTo( parent_ );
-        }
-
-        ActionParameter_ABC& parent_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: ParamAgentKnowledgeList::CommitTo
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void ParamAgentKnowledgeList::CommitTo( Action_ABC& action ) const
+void ParamAgentKnowledgeList::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     std::auto_ptr< ActionParameter_ABC > param( new ActionParameterAgentKnowledgeList( parameter_ ) );
-    ActionSerializer serializer( *param );
-    Accept( serializer );
+    CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

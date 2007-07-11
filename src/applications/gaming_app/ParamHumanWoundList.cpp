@@ -12,7 +12,6 @@
 #include "moc_ParamHumanWoundList.cpp"
 #include "clients_gui/ValuedListItem.h"
 #include "clients_kernel/OrderParameter.h"
-#include "game_asn/Asn.h"
 #include "gaming/tools.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionParameterMedicalPriorities.h"
@@ -71,38 +70,9 @@ void ParamHumanWoundList::BuildInterface( QWidget* parent )
 
 // -----------------------------------------------------------------------------
 // Name: ParamHumanWoundList::CommitTo
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamHumanWoundList::CommitTo( ASN1T_MissionParameter& asn ) const
-{
-    asn.value.t = T_MissionParameter_value_logMedicalPriorities;
-    ASN1T_LogMedicalPriorities*& list = asn.value.u.logMedicalPriorities = new ASN1T_LogMedicalPriorities();
-    list->n = list_->childCount();
-    asn.null_value = list->n ? 0 : 1;
-    if( asn.null_value )
-        return;
-    list->elem = new ASN1T_EnumHumanWound[ list->n ];
-    QListViewItemIterator it( list_ );
-    for( unsigned int i = 0; i < list->n && it.current(); ++i, ++it )
-        list->elem[i] = ASN1T_EnumHumanWound( it.current()->text( 0 ).toUInt() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamHumanWoundList::Clean
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamHumanWoundList::Clean( ASN1T_MissionParameter& asn ) const
-{
-    if( asn.value.u.logMedicalPriorities )
-        delete[] asn.value.u.logMedicalPriorities->elem;
-    delete asn.value.u.logMedicalPriorities;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamHumanWoundList::CommitTo
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void ParamHumanWoundList::CommitTo( Action_ABC& action ) const
+void ParamHumanWoundList::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     std::auto_ptr< ActionParameterMedicalPriorities > param( new ActionParameterMedicalPriorities( parameter_ ) );
     for( QListViewItemIterator it( list_ ); it.current(); ++it )

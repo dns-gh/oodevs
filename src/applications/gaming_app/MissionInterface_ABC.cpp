@@ -149,51 +149,6 @@ void MissionInterface_ABC::AddOrderContext( Param_ABC& parameter )
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC::CommitTo
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CommitTo( ASN1T_MissionParameters& asn ) const
-{
-    asn.n = parameters_.size();
-    asn.elem = new ASN1T_MissionParameter[asn.n];
-    unsigned int i = 0;
-    for( CIT_Parameters it = parameters_.begin() ; it != parameters_.end(); ++it, ++i )
-        (*it)->CommitTo( asn.elem[i] );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CommitTo
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CommitTo( ASN1T_OrderContext& asn ) const
-{
-    for( CIT_Parameters it = orderContext_.begin() ; it != orderContext_.end(); ++it )
-        (*it)->CommitTo( asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::Clean
-// Created: SBO 2007-03-15
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::Clean( ASN1T_MissionParameters& asn ) const
-{
-    unsigned int i = 0;
-    for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it, ++i )
-        (*it)->Clean( asn.elem[i] );
-    delete[] asn.elem;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::Clean
-// Created: SBO 2007-03-15
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::Clean( ASN1T_OrderContext& asn ) const
-{
-    for( CIT_Parameters it = orderContext_.begin(); it != orderContext_.end(); ++it )
-        (*it)->Clean( asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CommitTo( Action_ABC& action ) const

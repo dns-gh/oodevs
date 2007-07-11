@@ -81,34 +81,6 @@ bool LimitParameter::IsSet() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: LimitParameter::CommitTo
-// Created: SBO 2006-11-14
-// -----------------------------------------------------------------------------
-void LimitParameter::CommitTo( ASN1T_Line& asn ) const
-{
-    if( ! pLabel_ )
-        InterfaceNotInitialized();
-    asn.coordinates.n = 0;
-    asn.coordinates.elem = 0;
-    if( ! selected_ )
-    {
-        if( optional_ )
-            return;
-        throw std::runtime_error( "Limit not set!" );
-    }
-    selected_->CopyTo( asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitParameter::Clean
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void LimitParameter::Clean( ASN1T_Line& asn ) const
-{
-    delete[] asn.coordinates.elem;
-}
-
-// -----------------------------------------------------------------------------
 // Name: LimitParameter::NotifyContextMenu
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
@@ -172,18 +144,9 @@ void LimitParameter::Draw( const geometry::Point2f& point, const Viewport_ABC& v
 
 // -----------------------------------------------------------------------------
 // Name: LimitParameter::CommitTo
-// Created: SBO 2007-04-26
-// -----------------------------------------------------------------------------
-void LimitParameter::CommitTo( Action_ABC& ) const
-{
-    throw std::runtime_error( "Limit parameter not allowed outside order context" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitParameter::CommitTo
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-void LimitParameter::CommitTo( ActionParameter_ABC& parameter ) const
+void LimitParameter::CommitTo( ActionParameterContainer_ABC& parameter ) const
 {
     if( !selected_ )
         return;

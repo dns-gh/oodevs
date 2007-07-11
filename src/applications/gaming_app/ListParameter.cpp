@@ -11,7 +11,6 @@
 #include "ListParameter.h"
 #include "moc_ListParameter.cpp"
 #include "clients_gui/ValuedListItem.h"
-#include "ParamVisitor_ABC.h"
 
 using namespace gui;
 
@@ -231,10 +230,10 @@ unsigned int ListParameter::Count() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ListParameter::Accept
-// Created: SBO 2007-04-27
+// Name: ListParameter::CommitChildrenTo
+// Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-void ListParameter::Accept( ParamVisitor_ABC& visitor ) const
+void ListParameter::CommitChildrenTo( ActionParameterContainer_ABC& parent ) const
 {
     if( !list_ )
         return;
@@ -242,7 +241,7 @@ void ListParameter::Accept( ParamVisitor_ABC& visitor ) const
     for( unsigned int i = 0; it.current(); ++it, ++i )
     {
         ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
-        visitor.Visit( *item->GetValue< Param_ABC >() );
+        item->GetValue< Param_ABC >()->CommitTo( parent );
     }
 }
 

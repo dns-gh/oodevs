@@ -37,8 +37,7 @@ public:
     //@{
     virtual void BuildInterface( QWidget* parent );
     void AddItem( const QString& name, T value );
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void CommitTo( Action_ABC& action ) const;
+    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
     T GetValue() const;
     //@}
 
@@ -115,22 +114,10 @@ void ParamComboBox<T>::AddItem( const QString& name, T value )
 
 // -----------------------------------------------------------------------------
 // Name: ParamComboBox::CommitTo
-// Created: SBO 2007-03-15
-// -----------------------------------------------------------------------------
-template< typename T >
-void ParamComboBox<T>::CommitTo( ASN1T_MissionParameter& asn ) const
-{
-    asn.null_value = 0;
-    asn.value.t = T_MissionParameter_value_enumeration;
-    asn.value.u.enumeration = comboBox_->count() ? comboBox_->GetValue() : T( 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamComboBox::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
 template< typename T >
-void ParamComboBox<T>::CommitTo( Action_ABC& action ) const
+void ParamComboBox<T>::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     action.AddParameter( *new ActionParameterEnumeration( parameter_, GetValue() ) );
 }

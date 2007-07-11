@@ -10,7 +10,6 @@
 #ifndef __ParamObstacle_h_
 #define __ParamObstacle_h_
 
-#include "game_asn/Asn.h"
 #include "Param_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/OrderParameter.h"
@@ -56,12 +55,8 @@ public:
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void BuildInterface( QWidget* parent );
     virtual bool CheckValidity();
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
-    virtual void CommitTo( Action_ABC& action ) const;
 
-    void CommitTo( ASN1T_PlannedWork& object ) const;
-    void CommitTo( ActionParameter_ABC& parameter ) const;
+    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
     //@}
 
 signals:

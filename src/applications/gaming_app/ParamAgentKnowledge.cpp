@@ -64,42 +64,11 @@ void ParamAgentKnowledge::NotifyContextMenu( const Agent_ABC& entity, ContextMen
 
 // -----------------------------------------------------------------------------
 // Name: ParamAgentKnowledge::CommitTo
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamAgentKnowledge::CommitTo( ASN1T_MissionParameter& asn ) const
-{
-    asn.value.t = T_MissionParameter_value_unitKnowledge;
-    EntityParameter< AgentKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.unitKnowledge );
-    asn.null_value = asn.value.u.unitKnowledge ? 0 : 1;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamAgentKnowledge::CommitTo
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void ParamAgentKnowledge::CommitTo( ASN1T_UnitKnowledge& asn ) const
-{
-    EntityParameter< AgentKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamAgentKnowledge::CommitTo
-// Created: SBO 2007-05-23
-// -----------------------------------------------------------------------------
-void ParamAgentKnowledge::CommitTo( Action_ABC& action ) const
+void ParamAgentKnowledge::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     std::auto_ptr< ActionParameterEntity< AgentKnowledge_ABC > > param( new ActionParameterAgentKnowledge( parameter_ ) );
     EntityParameter< AgentKnowledge_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamAgentKnowledge::CommitTo
-// Created: SBO 2007-05-23
-// -----------------------------------------------------------------------------
-void ParamAgentKnowledge::CommitTo( ActionParameter_ABC& param ) const
-{
-    std::auto_ptr< ActionParameterEntity< AgentKnowledge_ABC > > parameter( new ActionParameterAgentKnowledge( parameter_ ) );
-    EntityParameter< AgentKnowledge_ABC >::CommitTo( *parameter );
-    param.AddParameter( *parameter.release() );
 }

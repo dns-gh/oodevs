@@ -31,31 +31,13 @@ using namespace gui;
 ParamPath::ParamPath( QObject* parent, const OrderParameter& parameter, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& entity )
     : QObject( parent )
     , Param_ABC( parameter.GetName() )
-    , parameter_( &parameter )
+    , parameter_( parameter )
     , converter_( converter )
     , layer_( layer )
     , entity_( entity )
     , pLabel_( 0 )
     , location_( 0 )
     , optional_( parameter.IsOptional() )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamPath constructor
-// Created: SBO 2007-04-25
-// -----------------------------------------------------------------------------
-ParamPath::ParamPath( QObject* parent, const QString& name, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& entity, bool optional )
-    : QObject( parent )
-    , Param_ABC( name )
-    , parameter_( 0 )
-    , converter_( converter )
-    , layer_( layer )
-    , entity_( entity )
-    , pLabel_( 0 )
-    , location_( 0 )
-    , optional_( optional )
 {
     // NOTHING
 }
@@ -110,61 +92,11 @@ bool ParamPath::CheckValidity()
 
 // -----------------------------------------------------------------------------
 // Name: ParamPath::CommitTo
-// Created: SBO 2007-03-15
-// -----------------------------------------------------------------------------
-void ParamPath::CommitTo( ASN1T_MissionParameter& asn ) const
-{
-    if( ! pLabel_ )
-        InterfaceNotInitialized();
-    asn.value.t = T_MissionParameter_value_path;
-    asn.value.u.path = new ASN1T_Path();
-    CommitTo( *asn.value.u.path );
-    asn.null_value = asn.value.u.path->coordinates.n ? 0 : 1;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamPath::Clean
-// Created: SBO 2007-03-15
-// -----------------------------------------------------------------------------
-void ParamPath::Clean( ASN1T_MissionParameter& asn ) const
-{
-    if( asn.value.u.path )
-        delete[] asn.value.u.path->coordinates.elem;
-    delete asn.value.u.path;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamPath::CommitTo
-// Created: SBO 2006-06-28
-// -----------------------------------------------------------------------------
-void ParamPath::CommitTo( ASN1T_Path& destination ) const
-{
-    if( location_ )
-    {
-        LocationSerializer serializer( converter_ );
-        serializer.Serialize( *location_, destination );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamPath::CommitTo
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-void ParamPath::CommitTo( Action_ABC& action ) const
+void ParamPath::CommitTo( ActionParameterContainer_ABC& action ) const
 {
-    if( !parameter_ )
-        throw std::runtime_error( "OrderParameter not defined" );
-    std::auto_ptr< ActionParameterPath > param( new ActionParameterPath( *parameter_, converter_, *location_ ) );
-    action.AddParameter( *param.release() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamPath::CommitTo
-// Created: SBO 2007-04-26
-// -----------------------------------------------------------------------------
-void ParamPath::CommitTo( ActionParameter_ABC& parameter ) const
-{
-    parameter.AddParameter( *new ActionParameterPath( OrderParameter( GetName(), "path", false ), converter_, *location_ ) );
+    action.AddParameter( *new ActionParameterPath( parameter_, converter_, *location_ ) );
 }
 
 // -----------------------------------------------------------------------------

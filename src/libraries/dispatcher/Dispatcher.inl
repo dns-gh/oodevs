@@ -21,16 +21,6 @@ Model& Dispatcher::GetModel() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Dispatcher::GetClientsNetworker
-// Created: NLD 2006-10-05
-// -----------------------------------------------------------------------------
-inline
-ClientsNetworker& Dispatcher::GetClientsNetworker() const
-{
-    return *pClientsNetworker_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Dispatcher::GetSimulationNetworker
 // Created: NLD 2007-01-30
 // -----------------------------------------------------------------------------

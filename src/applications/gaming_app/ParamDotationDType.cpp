@@ -54,20 +54,9 @@ void ParamDotationDType::BuildInterface( QWidget* parent )
 
 // -----------------------------------------------------------------------------
 // Name: ParamDotationDType::CommitTo
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void ParamDotationDType::CommitTo( ASN1T_MissionParameter& asn ) const
-{
-    asn.null_value = 0;
-    asn.value.t = T_MissionParameter_value_dotationType;
-    asn.value.u.dotationType = GetValue();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamDotationDType::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void ParamDotationDType::CommitTo( Action_ABC& action ) const
+void ParamDotationDType::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     action.AddParameter( *new ActionParameterDotationType( parameter_, GetValue(), resolver_ ) );
 }

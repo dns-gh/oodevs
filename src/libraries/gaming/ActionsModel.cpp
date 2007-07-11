@@ -68,6 +68,16 @@ Action_ABC* ActionsModel::CreateAction( const kernel::Entity_ABC& target, const 
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::Destroy
+// Created: AGE 2007-07-11
+// -----------------------------------------------------------------------------
+void ActionsModel::Destroy( const Action_ABC& action )
+{
+    Remove( action.GetId() );
+    delete &action;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::Load
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------

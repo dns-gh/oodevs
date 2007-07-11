@@ -12,7 +12,6 @@
 
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "game_asn/Asn.h"
 
 namespace kernel
 {
@@ -48,9 +47,7 @@ public:
     virtual void BuildInterface( QWidget* parent );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
 
-    void CommitTo( ASN1T_LimaOrder& lima ) const;
-    void Clean( ASN1T_LimaOrder& lima ) const;
-    void CommitTo( ActionParameter_ABC& parameter ) const;
+    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
     //@}
 
 public slots:

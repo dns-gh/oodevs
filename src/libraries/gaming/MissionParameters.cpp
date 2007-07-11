@@ -36,10 +36,11 @@ MissionParameters::~MissionParameters()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameters::DoUpdate
-// Created: SBO 2006-11-13
+// Name: MissionParameters::UpdateMessage
+// Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-void MissionParameters::DoUpdate( const ASN1T_MsgUnitOrder& message )
+template< typename T >
+void MissionParameters::UpdateMessage( const T& message )
 {
     if( message.mission == 0 )
         return;
@@ -51,16 +52,29 @@ void MissionParameters::DoUpdate( const ASN1T_MsgUnitOrder& message )
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameters::DoUpdate
+// Created: SBO 2006-11-13
+// -----------------------------------------------------------------------------
+void MissionParameters::DoUpdate( const ASN1T_MsgUnitOrder& message )
+{
+    UpdateMessage( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionParameters::DoUpdate
 // Created: SBO 2006-11-20
 // -----------------------------------------------------------------------------
 void MissionParameters::DoUpdate( const ASN1T_MsgAutomatOrder& message )
 {
-    if( message.mission == 0 )
-        return;
+    UpdateMessage( message );
+}
 
-    Action_ABC* action = factory_.CreateAction( message );
-    Register( action->GetId(), *action );
-    controller_.Update( *this );
+// -----------------------------------------------------------------------------
+// Name: MissionParameters::DoUpdate
+// Created: AGE 2007-07-11
+// -----------------------------------------------------------------------------
+void MissionParameters::DoUpdate( const ASN1T_MsgPopulationOrder& message )
+{
+    UpdateMessage( message );
 }
 
 // -----------------------------------------------------------------------------

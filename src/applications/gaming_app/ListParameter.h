@@ -12,7 +12,7 @@
 
 #include "Param_ABC.h"
 
-class ParamVisitor_ABC;
+class ActionParameter_ABC;
 
 // =============================================================================
 /** @class  ListParameter
@@ -43,7 +43,7 @@ protected:
     //! @name Operations
     //@{
     unsigned int Count() const;
-    void Accept( ParamVisitor_ABC& visitor ) const;
+    void CommitChildrenTo( ActionParameterContainer_ABC& parent ) const;
     void Select( const Param_ABC& param );
     virtual void DeleteElement( Param_ABC& param );
     void EnableCreation( bool enabled );

@@ -20,7 +20,6 @@
 #define __ASN_Tools_h_
 
 #include "Types.h"
-#include "Messages/ASN_Types.h"
 #include "Tools/Position.h"
 #include "Tools/Path.h"
 #include "Tools/Location.h"

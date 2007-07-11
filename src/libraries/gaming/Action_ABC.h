@@ -13,7 +13,7 @@
 #include "game_asn/asn.h"
 #include "clients_kernel/Extendable.h"
 #include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "ActionParameterContainer_ABC.h"
 
 namespace kernel
 {
@@ -30,7 +30,6 @@ namespace xml
     class xostream;
 }
 
-class ActionParameter_ABC;
 class Publisher_ABC;
 
 // =============================================================================
@@ -40,7 +39,7 @@ class Publisher_ABC;
 // Created: SBO 2007-03-12
 // =============================================================================
 class Action_ABC : public kernel::Extendable< kernel::Extension_ABC >
-                 , public kernel::Resolver< ActionParameter_ABC >
+                 , public ActionParameterContainer_ABC
 {
 
 public:

@@ -7,38 +7,33 @@
 //
 // *****************************************************************************
 
-#ifndef __ParamVisitor_ABC_h_
-#define __ParamVisitor_ABC_h_
+#ifndef __ActionParameterContainer_ABC_h_
+#define __ActionParameterContainer_ABC_h_
 
-class Param_ABC;
+#include "clients_kernel/Resolver.h"
+
+class ActionParameter_ABC;
 
 // =============================================================================
-/** @class  ParamVisitor_ABC
-    @brief  ParamVisitor_ABC
+/** @class  ActionParameterContainer_ABC
+    @brief  Action parameter container definition
 */
-// Created: SBO 2007-04-27
+// Created: AGE 2007-07-11
 // =============================================================================
-class ParamVisitor_ABC
+class ActionParameterContainer_ABC : public kernel::Resolver< ActionParameter_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamVisitor_ABC() {}
-    virtual ~ParamVisitor_ABC() {}
+             ActionParameterContainer_ABC() {};
+    virtual ~ActionParameterContainer_ABC() {};
     //@}
 
     //! @name Operations
     //@{
-    virtual void Visit( const Param_ABC& param ) = 0;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ParamVisitor_ABC( const ParamVisitor_ABC& );            //!< Copy constructor
-    ParamVisitor_ABC& operator=( const ParamVisitor_ABC& ); //!< Assignment operator
+    virtual void AddParameter( ActionParameter_ABC& parameter ) = 0;
     //@}
 };
 
-#endif // __ParamVisitor_ABC_h_
+#endif // __ActionParameterContainer_ABC_h_

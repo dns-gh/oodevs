@@ -10,7 +10,6 @@
 #ifndef __ParamPathList_h_
 #define __ParamPathList_h_
 
-#include "game_asn/Asn.h"
 #include "ListParameter.h"
 
 namespace kernel
@@ -44,9 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
-    virtual void CommitTo( Action_ABC& action ) const;
+    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
     //@}
 
 private:

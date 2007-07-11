@@ -11,6 +11,7 @@
 #include "ActionFactory.h"
 #include "ActionAgentMission.h"
 #include "ActionAutomatMission.h"
+#include "ActionPopulationMission.h"
 #include "ActionFragOrder.h"
 #include "Model.h"
 #include "AgentsModel.h"
@@ -18,6 +19,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/OrderParameter.h"
@@ -64,8 +66,10 @@ Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const Mission
         action.reset( new ActionAgentMission( target, mission, controllers_.controller_, true ) );
     else if( model_.agents_.FindAutomat( target.GetId() ) )
         action.reset( new ActionAutomatMission( target, mission, controllers_.controller_, true ) );
+    else if( model_.agents_.FindPopulation( target.GetId() ) )
+        action.reset( new ActionPopulationMission( target, mission, controllers_.controller_, true ) );
     else
-        return 0;
+        throw std::runtime_error( __FUNCTION__ );
 
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Polish();
@@ -115,6 +119,22 @@ Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgAutomatOrder& message ) 
     AddOrderContext( *action, mission, message.order_context );
     return action.release();
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateAction
+// Created: AGE 2007-07-11
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgPopulationOrder& message ) const
+{
+    const MissionType& mission = missions_.Get( message.mission );
+    std::auto_ptr< Action_ABC > action( new ActionPopulationMission( model_.agents_.GetPopulation( message.oid ), mission, controllers_.controller_, false ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Polish();
+
+    AddParameters( *action, mission, message.parametres );
+    return action.release();
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateAction

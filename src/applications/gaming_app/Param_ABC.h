@@ -20,9 +20,7 @@ namespace kernel
     class Viewport_ABC;
 }
 
-class Action_ABC;
-struct ASN1T_MissionParameter;
-struct ASN1T_OrderContext;
+class ActionParameterContainer_ABC;
 
 // =============================================================================
 /** @class  Param_ABC
@@ -47,12 +45,7 @@ public:
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void BuildInterface( QWidget* parent ) = 0;
     virtual bool CheckValidity();
-
-    virtual void CommitTo( ASN1T_MissionParameter& ) const {};
-    virtual void Clean   ( ASN1T_MissionParameter& ) const {};
-    virtual void CommitTo( ASN1T_OrderContext& ) const {};
-    virtual void Clean   ( ASN1T_OrderContext& ) const {};
-    virtual void CommitTo( Action_ABC& ) const {};
+    virtual void CommitTo( ActionParameterContainer_ABC& ) const = 0;
     //@}
 
     //! @name Accessors

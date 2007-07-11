@@ -43,9 +43,7 @@ public:
     virtual void RegisterIn( kernel::ActionController& controller );
     virtual bool CheckValidity();
     virtual void BuildInterface( QWidget* parent );
-    virtual void CommitTo( ASN1T_OrderContext& asn ) const;
-    virtual void Clean( ASN1T_OrderContext& asn ) const;
-    virtual void CommitTo( Action_ABC& action ) const;
+    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
     //@}
 
 private:

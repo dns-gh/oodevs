@@ -12,7 +12,6 @@
 #include "ParamLocation.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionParameterPointList.h"
-#include "ParamVisitor_ABC.h"
 
 using namespace kernel;
 
@@ -36,89 +35,14 @@ ParamPointList::~ParamPointList()
     // NOTHING
 }
 
-namespace
-{
-    class AsnSerializer : public ParamVisitor_ABC
-    {
-    public:
-        AsnSerializer( ASN1T_PointList& list )
-            : list_( list )
-            , index_( 0 )
-        {}
-
-        virtual void Visit( const Param_ABC& param )
-        {
-            if( index_ < list_.n )
-                static_cast< const ParamLocation& >( param ).CommitTo( list_.elem[index_++] );
-        }
-
-    private:
-        ASN1T_PointList& list_;
-        unsigned int index_;
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamPointList::CommitTo
-// Created: SBO 2007-03-15
-// -----------------------------------------------------------------------------
-void ParamPointList::CommitTo( ASN1T_MissionParameter& asn ) const
-{
-    ASN1T_PointList*& list = asn.value.u.pointList = new ASN1T_PointList();
-    asn.value.t = T_MissionParameter_value_pointList;
-    list->n = Count();
-    asn.null_value = list->n ? 0 : 1;
-    if( asn.null_value )
-        return;
-    list->elem = new ASN1T_Point[ list->n ];
-    AsnSerializer serializer( *list );
-    Accept( serializer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamPointList::Clean
-// Created: SBO 2007-03-15
-// -----------------------------------------------------------------------------
-void ParamPointList::Clean( ASN1T_MissionParameter& asn ) const
-{
-    if( asn.value.u.pointList )
-    {
-        for( unsigned int i = 0; i < asn.value.u.pointList->n; ++i )
-            delete[] asn.value.u.pointList->elem[i].coordinates.elem;
-        delete[] asn.value.u.pointList->elem;
-    }
-    delete asn.value.u.pointList;
-}
-
-
-namespace
-{
-    class ActionSerializer : public ParamVisitor_ABC
-    {
-    public:
-        ActionSerializer( ActionParameter_ABC& parent )
-            : parent_( parent )
-        {}
-
-        virtual void Visit( const Param_ABC& param )
-        {
-            static_cast< const ParamLocation& >( param ).CommitTo( parent_ );
-        }
-
-    private:
-        ActionParameter_ABC& parent_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: ParamPointList::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void ParamPointList::CommitTo( Action_ABC& action ) const
+void ParamPointList::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     std::auto_ptr< ActionParameter_ABC > param( new ActionParameterPointList( parameter_ ) );
-    ActionSerializer serializer( *param );
-    Accept( serializer );
+    CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }
 

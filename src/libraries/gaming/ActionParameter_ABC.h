@@ -10,8 +10,8 @@
 #ifndef __ActionParameter_ABC_h_
 #define __ActionParameter_ABC_h_
 
-#include "clients_kernel/Resolver.h"
 #include "game_asn/Asn.h"
+#include "ActionParameterContainer_ABC.h"
 
 namespace kernel
 {
@@ -32,7 +32,7 @@ class ActionParameterVisitor_ABC;
 */
 // Created: SBO 2007-03-12
 // =============================================================================
-class ActionParameter_ABC : public kernel::Resolver< ActionParameter_ABC >
+class ActionParameter_ABC : public ActionParameterContainer_ABC
 {
 
 public:
@@ -58,7 +58,7 @@ public:
 
     virtual void Serialize( xml::xostream& xos ) const;
 
-    void AddParameter( ActionParameter_ABC& parameter );
+    virtual void AddParameter( ActionParameter_ABC& parameter );
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void CommitTo( ASN1T_OrderContext& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
