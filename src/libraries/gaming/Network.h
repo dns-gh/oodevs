@@ -19,11 +19,6 @@ class Model;
 class Simulation;
 class Profile;
 
-namespace kernel
-{
-    class Controllers;
-}
-
 namespace DIN
 {
     class DIN_Link;
@@ -44,7 +39,7 @@ class Network : public tools::thread::Thread
 public:
     //! @name Constructors/Destructor
     //@{
-             Network( kernel::Controllers& controllers, Simulation& simu, Profile& profile );
+             Network( Simulation& simu, Profile& profile );
     virtual ~Network();
     //@}
 

@@ -63,6 +63,7 @@
 #include "gaming/StaticModel.h"
 #include "gaming/Profile.h"
 #include "gaming/ProfileFilter.h"
+#include "gaming/VisionConesToggler.h"
 
 #include "clients_gui/DisplayToolbar.h"
 #include "clients_gui/GlSelector.h"
@@ -139,6 +140,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     lighting_ = new LightingProxy( this );
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_ );
     new Dialogs( this, controllers, model_, staticModel, publisher, profile );
+    new VisionConesToggler( controllers, publisher, this );
 
     glProxy_ = new GlProxy();
     strategy_ = new ColorStrategy( controllers, *glProxy_ );

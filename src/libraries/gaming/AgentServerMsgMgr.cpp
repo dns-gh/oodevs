@@ -33,14 +33,12 @@
 #include "DIN_InputDeepCopy.h"
 #include "LogTools.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Controllers.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/FourStateOption.h"
+
 
 #include <ctime>
 
@@ -67,24 +65,18 @@ static enum
 // Name: AgentServerMsgMgr constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-AgentServerMsgMgr::AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine& engine, Simulation& simu, Profile& profile, boost::mutex& mutex )
-    : controllers_     ( controllers )
-    , simulation_      ( simu )
+AgentServerMsgMgr::AgentServerMsgMgr( DIN::DIN_Engine& engine, Simulation& simu, Profile& profile, boost::mutex& mutex )
+    : simulation_      ( simu )
     , profile_         ( profile )
     , session_         ( 0 )
     , mutex_           ( mutex )
     , msgRecorder_     ( 0 )
-    , needsVisionCones_( false )
-    , needsVisionSurfaces_( false )
 {
     pMessageService_ = new DIN_MessageServiceUserCbk< AgentServerMsgMgr >( *this, engine, DIN_ConnectorGuest(), "Msgs MOS Server -> Agent_ABC Server" );
 
-    pMessageService_->RegisterReceivedMessage( eMsgSimToClient                           , *this, & AgentServerMsgMgr::OnReceiveMsgSimToClient );
-    pMessageService_->RegisterReceivedMessage( eMsgMiddleToClient                        , *this, & AgentServerMsgMgr::OnReceiveMsgMiddleToClient );
-//eMsgEnvironmentType // $$$$ AGE 2006-05-03:
+    pMessageService_->RegisterReceivedMessage( eMsgSimToClient      , *this, & AgentServerMsgMgr::OnReceiveMsgSimToClient );
+    pMessageService_->RegisterReceivedMessage( eMsgMiddleToClient   , *this, & AgentServerMsgMgr::OnReceiveMsgMiddleToClient );
     pMessageService_->SetCbkOnError( & AgentServerMsgMgr::OnError );
-
-    controllers_.Register( *this );
 }
 
 //-----------------------------------------------------------------------------
@@ -93,7 +85,6 @@ AgentServerMsgMgr::AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine&
 //-----------------------------------------------------------------------------
 AgentServerMsgMgr::~AgentServerMsgMgr()
 {
-    controllers_.Unregister( *this );
     delete pMessageService_;
 }
 
@@ -234,34 +225,6 @@ void AgentServerMsgMgr::Send( unsigned int id, DIN::DIN_BufferedMessage& message
     boost::mutex::scoped_lock locker( mutex_ );
     if( session_ )
         pMessageService_->Send( *session_, id, message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::ToggleVisionCones
-// Created: AGE 2006-05-02
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::ToggleVisionCones()
-{
-    if( session_ )
-    {
-        ASN_MsgControlToggleVisionCones msg;
-        msg() = needsVisionSurfaces_ || needsVisionCones_;
-        msg.Send( *this );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OptionChanged
-// Created: AGE 2006-05-02
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OptionChanged( const std::string& name, const OptionVariant& value )
-{
-    bool* pDummy = ( name == "VisionCones" ? &needsVisionCones_ : ( name == "VisionSurfaces" ? &needsVisionSurfaces_ : 0 ) );
-    if( pDummy )
-    {
-        *pDummy = value.To< FourStateOption >().IsSet( true, true );
-        ToggleVisionCones();
-    }
 }
 
 // -----------------------------------------------------------------------------

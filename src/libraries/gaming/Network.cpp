@@ -30,11 +30,11 @@ static const unsigned int magicCookie_ = 10;
 // Name: Network constructor
 // Created: AGE 2006-02-08
 // -----------------------------------------------------------------------------
-Network::Network( kernel::Controllers& controllers, Simulation& simu, Profile& profile )
+Network::Network( Simulation& simu, Profile& profile )
     : simu_      ( simu )
     , profile_   ( profile )
     , engine_    ( new DIN::DIN_Engine() )
-    , manager_   ( new AgentServerMsgMgr( controllers, *engine_, simu, profile, mutex_ ) )
+    , manager_   ( new AgentServerMsgMgr( *engine_, simu, profile, mutex_ ) )
     , session_   ( 0 )
     , terminated_( false )
 {

@@ -12,7 +12,6 @@
 
 #include "clients_kernel/Types.h"
 #include "game_asn/Asn.h"
-
 #include "DIN/DIN_Engine.h"
 #include "DIN/DIN_Link.h"
 #include "DIN/DIN_Input.h"
@@ -20,7 +19,6 @@
 #include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
 #include "DIN/ConnectionService/DIN_ConnectionServiceServerUserCbk.h"
 #include "DIN/ConnectionService/DIN_ConnectionServiceClientUserCbk.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
 #include "Publisher_ABC.h"
 
 #include "boost/thread/mutex.hpp"
@@ -28,7 +26,6 @@
 namespace kernel
 {
     class Agent_ABC;
-    class Controllers;
 }
 
 class AgentServerController;
@@ -46,15 +43,13 @@ namespace DIN
 //=============================================================================
 // Created: NLD 2002-07-12
 //=============================================================================
-class AgentServerMsgMgr : public kernel::Observer_ABC
-                        , public kernel::OptionsObserver_ABC
-                        , public Publisher_ABC
+class AgentServerMsgMgr : public Publisher_ABC
 {
    
 public:
     //! @name Constructor/Destructor
     //@{
-             AgentServerMsgMgr( kernel::Controllers& controllers, DIN::DIN_Engine& engine, Simulation& simu, Profile& profile, boost::mutex& mutex ); 
+             AgentServerMsgMgr( DIN::DIN_Engine& engine, Simulation& simu, Profile& profile, boost::mutex& mutex ); 
     virtual ~AgentServerMsgMgr();
     //@}
 
@@ -258,10 +253,6 @@ private:
     void Send( unsigned int id, DIN::DIN_BufferedMessage& message );
     typedef void ( AgentServerMsgMgr::* T_Callback ) ( DIN::DIN_Input& input );
     void Enqueue( DIN::DIN_Input& input, T_Callback function );
-
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    void ToggleVisionCones();
-
     Model& GetModel() const;
     //@}
 
@@ -278,7 +269,6 @@ private:
     //@}
     
 private:
-    kernel::Controllers& controllers_;
     Model*               model_;
     Simulation&          simulation_;
     Profile&             profile_;
@@ -296,8 +286,6 @@ private:
     T_Inputs workingInputs_; // network thread only
     T_Inputs buffer_;        // shared
     T_Inputs pendingInputs_; // main thread only
-
-    bool needsVisionCones_, needsVisionSurfaces_;
 };
 
 #endif // __AgentServerMsgMgr_h_

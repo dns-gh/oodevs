@@ -85,7 +85,7 @@ void Application::Initialize( int argc, char** argv )
     simulation_  = new Simulation( controllers_->controller_  );
     profile_     = new Profile( *controllers_ );
     workers_     = new Workers();
-    network_     = new Network( *controllers_, *simulation_, *profile_ );
+    network_     = new Network( *simulation_, *profile_ );
     RcEntityResolver_ABC* rcResolver = new RcEntityResolver( this, *controllers_ );
     staticModel_ = new StaticModel( *controllers_, *rcResolver );
     model_       = new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *rcResolver );
