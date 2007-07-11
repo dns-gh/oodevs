@@ -41,7 +41,7 @@ TimelineActionItem::TimelineActionItem( const TimelineItem_ABC& parent, kernel::
 // -----------------------------------------------------------------------------
 TimelineActionItem::~TimelineActionItem()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

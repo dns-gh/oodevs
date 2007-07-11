@@ -425,7 +425,7 @@ void MainWindow::Close()
 // -----------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
     delete selector_;
 }
 

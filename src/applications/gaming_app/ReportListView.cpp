@@ -59,7 +59,7 @@ ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, cons
 // -----------------------------------------------------------------------------
 ReportListView::~ReportListView()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

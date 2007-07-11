@@ -22,8 +22,8 @@ namespace gui
 // Created: AGE 2006-02-23
 // =============================================================================
 class CheckBoxDisplayer : public kernel::Displayer_ABC
-                        , public kernel::Caller< bool >
-                        , public kernel::Caller< kernel::ValueNotSet >
+                        , public tools::Caller< bool >
+                        , public tools::Caller< kernel::ValueNotSet >
 {
 
 public:

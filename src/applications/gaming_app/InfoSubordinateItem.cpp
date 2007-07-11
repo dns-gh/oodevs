@@ -34,7 +34,7 @@ InfoSubordinateItem::InfoSubordinateItem( QIconView* parent, kernel::Controllers
 // -----------------------------------------------------------------------------
 InfoSubordinateItem::~InfoSubordinateItem()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

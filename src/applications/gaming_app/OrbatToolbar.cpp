@@ -68,7 +68,7 @@ OrbatToolbar::OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, P
 // -----------------------------------------------------------------------------
 OrbatToolbar::~OrbatToolbar()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 

@@ -62,7 +62,7 @@ StatusBar::StatusBar( QStatusBar* parent, const DetectionMap& detection, const C
 // -----------------------------------------------------------------------------
 StatusBar::~StatusBar()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

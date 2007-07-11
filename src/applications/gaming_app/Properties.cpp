@@ -51,7 +51,7 @@ Properties::Properties( QWidget* parent, Controllers& controllers )
 // -----------------------------------------------------------------------------
 Properties::~Properties()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
     delete &factory_;
     delete &tableItemDisplayer_;
 }

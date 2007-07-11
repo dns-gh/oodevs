@@ -76,7 +76,7 @@ OptionsPanel::OptionsPanel( QWidget* pParent, Controllers& controllers )
 // -----------------------------------------------------------------------------
 OptionsPanel::~OptionsPanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -412,7 +412,7 @@ bool MainWindow::SaveAs()
 // -----------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
     delete glProxy_;
     delete modelBuilder_;
 }

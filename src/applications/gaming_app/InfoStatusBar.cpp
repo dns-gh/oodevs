@@ -47,7 +47,7 @@ InfoStatusBar::InfoStatusBar( QWidget* parent, kernel::Controllers& controllers 
 // -----------------------------------------------------------------------------
 InfoStatusBar::~InfoStatusBar()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -76,7 +76,7 @@ DrawerPanel::DrawerPanel( QWidget* parent, DrawerLayer& layer, kernel::GlTools_A
 // -----------------------------------------------------------------------------
 DrawerPanel::~DrawerPanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
     // $$$$ SBO 2007-03-22: renderer ?
     delete &factory_;
     delete &model_;

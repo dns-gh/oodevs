@@ -41,7 +41,7 @@ Param_ABC::~Param_ABC()
 void Param_ABC::RemoveFromController()
 {
     if( controller_ )
-        controller_->Remove( *this );
+        controller_->Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

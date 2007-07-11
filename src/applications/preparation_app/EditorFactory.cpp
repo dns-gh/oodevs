@@ -44,7 +44,7 @@ EditorFactory::EditorFactory( kernel::Controllers& controllers, Model& model, co
 // -----------------------------------------------------------------------------
 EditorFactory::~EditorFactory()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

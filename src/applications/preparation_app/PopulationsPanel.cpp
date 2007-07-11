@@ -32,7 +32,7 @@ PopulationsPanel::PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel,
 // -----------------------------------------------------------------------------
 PopulationsPanel::~PopulationsPanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

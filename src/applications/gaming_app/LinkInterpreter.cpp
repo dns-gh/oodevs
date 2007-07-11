@@ -32,7 +32,7 @@ LinkInterpreter::LinkInterpreter( QObject* parent, Controllers& controllers )
 // -----------------------------------------------------------------------------
 LinkInterpreter::~LinkInterpreter()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

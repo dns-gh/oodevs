@@ -41,7 +41,7 @@ FormationModel::~FormationModel()
 {
     delete &levels_;
     Purge();
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
     
 // -----------------------------------------------------------------------------

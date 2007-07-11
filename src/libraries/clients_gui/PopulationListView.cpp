@@ -54,7 +54,7 @@ PopulationListView::PopulationListView( QWidget* pParent, Controllers& controlle
 // -----------------------------------------------------------------------------
 PopulationListView::~PopulationListView()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

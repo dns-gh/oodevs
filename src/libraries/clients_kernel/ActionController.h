@@ -10,7 +10,7 @@
 #ifndef __ActionController_h_
 #define __ActionController_h_
 
-#include "InterfaceContainer.h"
+#include "tools/InterfaceContainer.h"
 #include "Observer_ABC.h"
 #include "SelectionObserver_ABC.h"
 #include "ActivationObserver_ABC.h"
@@ -26,7 +26,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-16
 // =============================================================================
-class ActionController : private InterfaceContainer< Observer_ABC >
+class ActionController : private tools::InterfaceContainer< Observer_ABC >
 {
 
 public:
@@ -38,8 +38,8 @@ public:
 
     //! @name Operations
     //@{
-    void Register( Observer_ABC& observer );
-    void Remove  ( Observer_ABC& observer );
+    void Register  ( Observer_ABC& observer );
+    void Unregister( Observer_ABC& observer );
     //@}
 
     //! @name Operations

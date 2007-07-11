@@ -30,7 +30,7 @@ EntityPanel::EntityPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
 // -----------------------------------------------------------------------------
 EntityPanel::~EntityPanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

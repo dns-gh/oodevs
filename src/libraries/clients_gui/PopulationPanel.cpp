@@ -54,7 +54,7 @@ PopulationPanel::PopulationPanel( QWidget* parent, PanelStack_ABC& panel, Contro
 // -----------------------------------------------------------------------------
 PopulationPanel::~PopulationPanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
     delete display_;
 }
 

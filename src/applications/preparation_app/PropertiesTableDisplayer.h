@@ -27,10 +27,10 @@ class DotationsItem;
 // Created: SBO 2006-10-27
 // =============================================================================
 class PropertiesTableDisplayer : public gui::TableItemDisplayer
-                               , public kernel::Caller< kernel::Karma >
-                               , public kernel::Caller< Enum_PopulationAttitude >
-                               , public kernel::Caller< Enum_ObstacleType >
-                               , public kernel::Caller< DotationsItem >
+                               , public tools::Caller< kernel::Karma >
+                               , public tools::Caller< Enum_PopulationAttitude >
+                               , public tools::Caller< Enum_ObstacleType >
+                               , public tools::Caller< DotationsItem >
 {
 
 public:

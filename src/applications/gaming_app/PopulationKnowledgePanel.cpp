@@ -92,7 +92,7 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_
 // -----------------------------------------------------------------------------
 PopulationKnowledgePanel::~PopulationKnowledgePanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
     delete display_;
 }
 

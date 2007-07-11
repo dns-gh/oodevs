@@ -39,7 +39,7 @@ CampPrototype_ABC::CampPrototype_ABC( QWidget* parent, Controllers& controllers 
 // -----------------------------------------------------------------------------
 CampPrototype_ABC::~CampPrototype_ABC()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

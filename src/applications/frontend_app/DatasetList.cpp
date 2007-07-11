@@ -29,7 +29,7 @@ DatasetList::DatasetList( QWidget* parent, kernel::Controllers& controllers )
 // -----------------------------------------------------------------------------
 DatasetList::~DatasetList()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

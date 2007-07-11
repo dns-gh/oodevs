@@ -91,7 +91,7 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
 // -----------------------------------------------------------------------------
 ChangeLogisticLinksDialog::~ChangeLogisticLinksDialog()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

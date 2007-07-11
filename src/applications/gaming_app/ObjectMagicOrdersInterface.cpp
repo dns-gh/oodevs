@@ -39,7 +39,7 @@ ObjectMagicOrdersInterface::ObjectMagicOrdersInterface( QWidget* parent, Control
 // -----------------------------------------------------------------------------
 ObjectMagicOrdersInterface::~ObjectMagicOrdersInterface()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -43,16 +43,16 @@ ActionController::~ActionController()
 // -----------------------------------------------------------------------------
 void ActionController::Register( Observer_ABC& observer )
 {
-    InterfaceContainer< Observer_ABC >::Register( observer );
+    tools::InterfaceContainer< Observer_ABC >::Register( observer );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionController::Remove
+// Name: ActionController::Unregister
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void ActionController::Remove( Observer_ABC& observer )
+void ActionController::Unregister( Observer_ABC& observer )
 {
-    InterfaceContainer< Observer_ABC >::Remove( observer );
+    tools::InterfaceContainer< Observer_ABC >::Unregister( observer );
 }
 
 // -----------------------------------------------------------------------------

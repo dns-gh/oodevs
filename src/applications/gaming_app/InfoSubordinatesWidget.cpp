@@ -46,7 +46,7 @@ InfoSubordinatesWidget::InfoSubordinatesWidget( QWidget* parent, kernel::Control
 // -----------------------------------------------------------------------------
 InfoSubordinatesWidget::~InfoSubordinatesWidget()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

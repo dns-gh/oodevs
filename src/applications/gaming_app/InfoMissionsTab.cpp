@@ -41,7 +41,7 @@ InfoMissionsTab::InfoMissionsTab( QTabWidget* parent, kernel::Controllers& contr
 // -----------------------------------------------------------------------------
 InfoMissionsTab::~InfoMissionsTab()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
     delete sub_;
 }
 

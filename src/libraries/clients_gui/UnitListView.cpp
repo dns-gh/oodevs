@@ -43,7 +43,7 @@ UnitListView::UnitListView( QWidget* parent, Controllers& controllers, const Age
 // -----------------------------------------------------------------------------
 UnitListView::~UnitListView()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

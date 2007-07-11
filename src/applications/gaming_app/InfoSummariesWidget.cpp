@@ -39,7 +39,7 @@ InfoSummariesWidget::InfoSummariesWidget( QWidget* parent, Controllers& controll
 // -----------------------------------------------------------------------------
 InfoSummariesWidget::~InfoSummariesWidget()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

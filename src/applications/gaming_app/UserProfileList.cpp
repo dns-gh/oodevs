@@ -42,7 +42,7 @@ UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, ker
 // -----------------------------------------------------------------------------
 UserProfileList::~UserProfileList()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

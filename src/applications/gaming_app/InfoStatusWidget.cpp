@@ -112,7 +112,7 @@ InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& contro
 // -----------------------------------------------------------------------------
 InfoStatusWidget::~InfoStatusWidget()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

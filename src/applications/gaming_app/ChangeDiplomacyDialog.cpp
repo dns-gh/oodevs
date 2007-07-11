@@ -78,7 +78,7 @@ ChangeDiplomacyDialog::ChangeDiplomacyDialog( QWidget* parent, Controllers& cont
 // -----------------------------------------------------------------------------
 ChangeDiplomacyDialog::~ChangeDiplomacyDialog()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

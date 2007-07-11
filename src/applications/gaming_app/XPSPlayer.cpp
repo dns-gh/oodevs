@@ -33,7 +33,7 @@ XPSPlayer::XPSPlayer( QObject* parent, kernel::Controllers& controllers )
 XPSPlayer::~XPSPlayer()
 {
     if( player_->IsValid() )
-        controllers_.Remove( *this );
+        controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -68,7 +68,7 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel:
 // -----------------------------------------------------------------------------
 WeatherPanel::~WeatherPanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

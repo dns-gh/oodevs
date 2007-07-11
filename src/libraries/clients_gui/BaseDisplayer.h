@@ -45,26 +45,26 @@ namespace gui
 // Created: AGE 2006-02-09
 // =============================================================================
 class BaseDisplayer : public kernel::Displayer_ABC
-                    , public kernel::Caller< bool >
-                    , public kernel::Caller< QTime >
-                    , public kernel::Caller< kernel::Population_ABC>
-                    , public kernel::Caller< kernel::PopulationConcentration_ABC >
-                    , public kernel::Caller< kernel::Agent_ABC >
-                    , public kernel::Caller< kernel::Automat_ABC >
-                    , public kernel::Caller< kernel::Object_ABC >
-                    , public kernel::Caller< kernel::Team_ABC >
-                    , public kernel::Caller< kernel::Entity_ABC >
-                    , public kernel::Caller< kernel::DotationType >
-                    , public kernel::Caller< kernel::EquipmentType >
-                    , public kernel::Caller< kernel::NBCAgent >
-                    , public kernel::Caller< kernel::ComponentType >
-                    , public kernel::Caller< kernel::BreakdownType >
-                    , public kernel::Caller< kernel::Mission >
-                    , public kernel::Caller< kernel::AgentType >
-                    , public kernel::Caller< kernel::AutomatType >
-                    , public kernel::Caller< kernel::PopulationType >
-                    , public kernel::Caller< kernel::ObjectType >
-                    , public kernel::Caller< kernel::KnowledgeGroupType >
+                    , public tools::Caller< bool >
+                    , public tools::Caller< QTime >
+                    , public tools::Caller< kernel::Population_ABC>
+                    , public tools::Caller< kernel::PopulationConcentration_ABC >
+                    , public tools::Caller< kernel::Agent_ABC >
+                    , public tools::Caller< kernel::Automat_ABC >
+                    , public tools::Caller< kernel::Object_ABC >
+                    , public tools::Caller< kernel::Team_ABC >
+                    , public tools::Caller< kernel::Entity_ABC >
+                    , public tools::Caller< kernel::DotationType >
+                    , public tools::Caller< kernel::EquipmentType >
+                    , public tools::Caller< kernel::NBCAgent >
+                    , public tools::Caller< kernel::ComponentType >
+                    , public tools::Caller< kernel::BreakdownType >
+                    , public tools::Caller< kernel::Mission >
+                    , public tools::Caller< kernel::AgentType >
+                    , public tools::Caller< kernel::AutomatType >
+                    , public tools::Caller< kernel::PopulationType >
+                    , public tools::Caller< kernel::ObjectType >
+                    , public tools::Caller< kernel::KnowledgeGroupType >
 {
 
 public:

@@ -39,8 +39,8 @@ public:
 
     //! @name Operations
     //@{
-    void Register( Observer_ABC& observer );
-    void Remove  ( Observer_ABC& observer );
+    void Register  ( Observer_ABC& observer );
+    void Unregister( Observer_ABC& observer );
 
     void Change( const std::string& name, const OptionVariant& value );
     const OptionVariant& GetOption( const std::string& name, const OptionVariant& defaultValue );

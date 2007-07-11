@@ -35,7 +35,7 @@ AgentKnowledgeConverter::AgentKnowledgeConverter( Controllers& controllers )
 // -----------------------------------------------------------------------------
 AgentKnowledgeConverter::~AgentKnowledgeConverter()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

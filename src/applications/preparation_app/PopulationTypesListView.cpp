@@ -38,7 +38,7 @@ PopulationTypesListView::PopulationTypesListView( QWidget* parent, kernel::Contr
 // -----------------------------------------------------------------------------
 PopulationTypesListView::~PopulationTypesListView()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

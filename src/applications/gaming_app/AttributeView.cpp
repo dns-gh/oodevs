@@ -52,7 +52,7 @@ AttributeView::AttributeView( QWidget* parent, Controllers& controllers, const E
 // -----------------------------------------------------------------------------
 AttributeView::~AttributeView()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

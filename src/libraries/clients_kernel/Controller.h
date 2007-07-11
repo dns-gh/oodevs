@@ -10,7 +10,7 @@
 #ifndef __Controller_h_
 #define __Controller_h_
 
-#include "InterfaceContainer.h"
+#include "tools/InterfaceContainer.h"
 #include "ElementObserver_ABC.h"
 #include "ControllerObserver_ABC.h"
 #include "Observer_ABC.h"
@@ -25,7 +25,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Controller : private InterfaceContainer< Observer_ABC >
+class Controller : private tools::InterfaceContainer< Observer_ABC >
 {
 
 public:
@@ -37,8 +37,8 @@ public:
 
     //! @name Operations
     //@{
-    void Register( Observer_ABC& observer );
-    void Remove  ( Observer_ABC& observer );
+    void Register  ( Observer_ABC& observer );
+    void Unregister( Observer_ABC& observer );
 
     template< typename T >
     void Create( const T& extension ) {

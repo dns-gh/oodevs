@@ -83,7 +83,7 @@ public:
     
     virtual ~OptionMenu()
     {
-        options_.Remove( *this );
+        options_.Unregister( *this );
     };
     //@}
 

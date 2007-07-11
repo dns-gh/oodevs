@@ -118,7 +118,7 @@ LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::LogisticCon
 template< typename ConcreteDisplayer, typename Consign, typename Extension >
 LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::~LogisticConsignsWidget_ABC()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
     delete logDisplay_;
 }
 

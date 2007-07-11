@@ -69,7 +69,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const St
 // -----------------------------------------------------------------------------
 MissionPanel::~MissionPanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
     delete interfaceBuilder_;
 }
 

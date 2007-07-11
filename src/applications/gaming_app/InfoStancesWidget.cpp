@@ -48,7 +48,7 @@ InfoStancesWidget::InfoStancesWidget( QWidget* parent, kernel::Controllers& cont
 // -----------------------------------------------------------------------------
 InfoStancesWidget::~InfoStancesWidget()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

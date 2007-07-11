@@ -131,7 +131,7 @@ InfoDialog< Extension >::InfoDialog( QWidget* parent, kernel::Controllers& contr
 template< typename Extension >
 InfoDialog< Extension >::~InfoDialog()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

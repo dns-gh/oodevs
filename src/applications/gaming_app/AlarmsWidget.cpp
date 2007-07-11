@@ -61,7 +61,7 @@ AlarmsWidget::AlarmsWidget( QWidget* parent, kernel::Controllers& controllers, c
 // -----------------------------------------------------------------------------
 AlarmsWidget::~AlarmsWidget()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

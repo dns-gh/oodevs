@@ -43,7 +43,7 @@ TeamsModel::TeamsModel( Controllers& controllers, TeamFactory_ABC& factory )
 // -----------------------------------------------------------------------------
 TeamsModel::~TeamsModel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
  
 // -----------------------------------------------------------------------------

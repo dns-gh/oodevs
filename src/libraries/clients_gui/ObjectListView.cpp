@@ -55,7 +55,7 @@ ObjectListView::ObjectListView( QWidget* pParent, Controllers& controllers, Item
 // -----------------------------------------------------------------------------
 ObjectListView::~ObjectListView()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

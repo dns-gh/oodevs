@@ -25,7 +25,7 @@ namespace gui
 // Created: AGE 2006-02-09
 // =============================================================================
 class LabelDisplayer : public BaseDisplayer
-                     , public kernel::Caller< kernel::Styles::Style >
+                     , public tools::Caller< kernel::Styles::Style >
 {
 
 public:

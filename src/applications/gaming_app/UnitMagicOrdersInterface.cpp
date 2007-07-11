@@ -57,7 +57,7 @@ UnitMagicOrdersInterface::UnitMagicOrdersInterface( QWidget* parent, kernel::Con
 // -----------------------------------------------------------------------------
 UnitMagicOrdersInterface::~UnitMagicOrdersInterface()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +137,7 @@ void UnitMagicOrdersInterface::Handle( kernel::Location_ABC& location )
 {
     if( magicMove_ && location.IsValid() )
         location.Accept( *this );
-    controllers_.Remove( *magicMoveLocation_ );
+    controllers_.Unregister( *magicMoveLocation_ );
     magicMove_ = false;
 }
 

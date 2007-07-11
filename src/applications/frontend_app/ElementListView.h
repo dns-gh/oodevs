@@ -83,7 +83,7 @@ ElementListView< Element >::ElementListView( QWidget* parent, kernel::Controller
 template< typename Element >
 ElementListView< Element >::~ElementListView()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

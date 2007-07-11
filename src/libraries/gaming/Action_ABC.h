@@ -11,7 +11,7 @@
 #define __Action_ABC_h_
 
 #include "game_asn/asn.h"
-#include "clients_kernel/Extendable.h"
+#include "tools/Extendable.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "ActionParameterContainer_ABC.h"
 
@@ -38,7 +38,7 @@ class Publisher_ABC;
 */
 // Created: SBO 2007-03-12
 // =============================================================================
-class Action_ABC : public kernel::Extendable< kernel::Extension_ABC >
+class Action_ABC : public tools::Extendable< kernel::Extension_ABC >
                  , public ActionParameterContainer_ABC
 {
 

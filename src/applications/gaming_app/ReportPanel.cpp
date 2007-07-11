@@ -40,7 +40,7 @@ ReportPanel::ReportPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& c
 // -----------------------------------------------------------------------------
 ReportPanel::~ReportPanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

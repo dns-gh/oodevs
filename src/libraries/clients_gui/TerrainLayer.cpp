@@ -45,7 +45,7 @@ TerrainLayer::TerrainLayer( Controllers& controllers, const GlTools_ABC& tools, 
 // -----------------------------------------------------------------------------
 TerrainLayer::~TerrainLayer()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

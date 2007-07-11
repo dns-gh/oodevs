@@ -203,7 +203,7 @@ void LogisticSupplyRecompletionDialog::closeEvent( QCloseEvent * )
 // -----------------------------------------------------------------------------
 LogisticSupplyRecompletionDialog::~LogisticSupplyRecompletionDialog()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

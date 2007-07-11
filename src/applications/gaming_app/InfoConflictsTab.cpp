@@ -33,7 +33,7 @@ InfoConflictsTab::InfoConflictsTab( QTabWidget* parent, kernel::Controllers& con
 // -----------------------------------------------------------------------------
 InfoConflictsTab::~InfoConflictsTab()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

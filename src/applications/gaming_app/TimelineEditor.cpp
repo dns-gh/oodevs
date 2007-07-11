@@ -43,7 +43,7 @@ TimelineEditor::TimelineEditor( QWidget* parent, QCanvas* canvas, Controllers& c
 // -----------------------------------------------------------------------------
 TimelineEditor::~TimelineEditor()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -127,7 +127,7 @@ InfoEventsWidget::InfoEventsWidget( QWidget* parent, kernel::Controllers& contro
 // -----------------------------------------------------------------------------
 InfoEventsWidget::~InfoEventsWidget()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

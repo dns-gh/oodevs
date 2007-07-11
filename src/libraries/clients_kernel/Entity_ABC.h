@@ -10,8 +10,8 @@
 #ifndef __Entity_ABC_h_
 #define __Entity_ABC_h_
 
-#include "Extendable.h"
-#include "InterfaceContainer.h"
+#include "tools/Extendable.h"
+#include "tools/InterfaceContainer.h"
 #include "Updatable_ABC.h"
 #include "Extension_ABC.h"
 
@@ -36,8 +36,8 @@ namespace kernel
 */
 // Created: AGE 2006-02-07
 // =============================================================================
-class Entity_ABC : public Extendable< Extension_ABC >
-                 , public InterfaceContainer< Extension_ABC >
+class Entity_ABC : public tools::Extendable< Extension_ABC >
+                 , public tools::InterfaceContainer< Extension_ABC >
 {
 
 public:
@@ -56,6 +56,12 @@ public:
 
     //! @name Operations
     //@{
+    template< typename T >
+    void Attach( T& extension )
+    {
+        tools::Extendable< Extension_ABC >::Attach( extension );
+        AddExtension( extension );
+    }
     virtual void Select( ActionController& controller ) const = 0;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const = 0;
     virtual void Activate( ActionController& controller ) const = 0;
@@ -70,7 +76,7 @@ public:
 
     void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const;
 
-    InterfaceContainer< Extension_ABC >& Interface() const;
+    tools::InterfaceContainer< Extension_ABC >& Interface() const;
     //@}
 
 protected:
@@ -89,7 +95,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void AddExtension( Extension_ABC& ext );
+    void AddExtension( Extension_ABC& ext );
     //@}
 
 private:

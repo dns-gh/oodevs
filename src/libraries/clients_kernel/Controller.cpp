@@ -36,14 +36,14 @@ Controller::~Controller()
 // -----------------------------------------------------------------------------
 void Controller::Register( Observer_ABC& observer )
 {
-    InterfaceContainer< Observer_ABC >::Register( observer );
+    tools::InterfaceContainer< Observer_ABC >::Register( observer );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Controller::Remove
+// Name: Controller::Unregister
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Controller::Remove( Observer_ABC& observer )
+void Controller::Unregister( Observer_ABC& observer )
 {
-    InterfaceContainer< Observer_ABC >::Remove( observer );
+    tools::InterfaceContainer< Observer_ABC >::Unregister( observer );
 }

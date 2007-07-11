@@ -49,7 +49,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, frontend::Networker& n
 // -----------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

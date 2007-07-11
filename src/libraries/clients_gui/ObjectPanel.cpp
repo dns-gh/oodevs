@@ -41,7 +41,7 @@ ObjectPanel::ObjectPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& c
 // -----------------------------------------------------------------------------
 ObjectPanel::~ObjectPanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
     delete display_;
 }
 

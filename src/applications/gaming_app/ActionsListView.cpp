@@ -50,7 +50,7 @@ ActionsListView::ActionsListView( QWidget* parent, kernel::Controllers& controll
 // -----------------------------------------------------------------------------
 ActionsListView::~ActionsListView()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
     delete sub_;
 }
 

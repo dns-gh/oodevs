@@ -23,9 +23,9 @@ class ObjectKnowledge_ABC;
 // Created: SBO 2007-03-28
 // =============================================================================
 class GamingListItemDisplayer : public gui::ListItemDisplayer
-                              , public kernel::Caller< AgentKnowledge_ABC >
-                              , public kernel::Caller< PopulationKnowledge_ABC >
-                              , public kernel::Caller< ObjectKnowledge_ABC >
+                              , public tools::Caller< AgentKnowledge_ABC >
+                              , public tools::Caller< PopulationKnowledge_ABC >
+                              , public tools::Caller< ObjectKnowledge_ABC >
 {
 
 public:

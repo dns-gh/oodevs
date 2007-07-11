@@ -69,7 +69,7 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
 // -----------------------------------------------------------------------------
 LocationEditorToolbar::~LocationEditorToolbar()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

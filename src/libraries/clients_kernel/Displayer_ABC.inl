@@ -93,7 +93,7 @@ template< typename T >
 inline
 void Displayer_ABC::AddToDisplay( const T& element )
 {
-    VirtualTemplate< Displayer_ABC >::Call( element );
+    tools::VirtualTemplate< Displayer_ABC >::Call( element );
 }
 
 

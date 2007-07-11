@@ -42,7 +42,7 @@ AgentResourcesPanel::AgentResourcesPanel( QWidget* parent, PanelStack_ABC& panel
 // -----------------------------------------------------------------------------
 AgentResourcesPanel::~AgentResourcesPanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -51,7 +51,7 @@ Spy::Spy( QWidget* parent, Controllers& controllers )
 // -----------------------------------------------------------------------------
 Spy::~Spy()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

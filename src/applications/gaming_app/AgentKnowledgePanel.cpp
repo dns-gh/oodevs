@@ -84,7 +84,7 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
 // -----------------------------------------------------------------------------
 AgentKnowledgePanel::~AgentKnowledgePanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
     delete display_;
 }
 

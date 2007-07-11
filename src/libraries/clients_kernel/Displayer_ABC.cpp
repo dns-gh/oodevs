@@ -17,7 +17,7 @@ using namespace kernel;
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
 Displayer_ABC::Displayer_ABC()
-    : VirtualTemplate< Displayer_ABC > ( this )
+    : tools::VirtualTemplate< Displayer_ABC > ( this )
 {
     // NOTHING
 }

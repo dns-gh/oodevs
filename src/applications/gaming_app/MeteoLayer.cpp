@@ -33,7 +33,7 @@ MeteoLayer::MeteoLayer( Controllers& controllers, const GlTools_ABC& tools )
 // -----------------------------------------------------------------------------
 MeteoLayer::~MeteoLayer()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

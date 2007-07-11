@@ -83,7 +83,7 @@ SafePointer< T >::SafePointer( kernel::Controllers& controllers, const T* elemen
 template< typename T >
 SafePointer< T >::~SafePointer()
 {
-    controllers_->Remove( *this );
+    controllers_->Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

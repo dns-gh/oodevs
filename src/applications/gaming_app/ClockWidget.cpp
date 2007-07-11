@@ -68,7 +68,7 @@ ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, con
 // -----------------------------------------------------------------------------
 ClockWidget::~ClockWidget()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

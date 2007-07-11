@@ -82,7 +82,7 @@ LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* par
 // -----------------------------------------------------------------------------
 LogisticSupplyChangeQuotasDialog::~LogisticSupplyChangeQuotasDialog()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

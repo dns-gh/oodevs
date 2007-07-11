@@ -81,7 +81,7 @@ PopulationMagicOrdersInterface::PopulationMagicOrdersInterface( QWidget* parent,
 // -----------------------------------------------------------------------------
 PopulationMagicOrdersInterface::~PopulationMagicOrdersInterface()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,7 +114,7 @@ void PopulationMagicOrdersInterface::Handle( Location_ABC& location )
 {
     if( magicMove_ && location.IsValid() )
         location.Accept( *this );
-    controllers_.Remove( *magicMoveLocation_ );
+    controllers_.Unregister( *magicMoveLocation_ );
     magicMove_ = false;
 }
 

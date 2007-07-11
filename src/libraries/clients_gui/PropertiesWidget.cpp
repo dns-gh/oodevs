@@ -61,7 +61,7 @@ PropertiesWidget::PropertiesWidget( Controller& controller, PropertiesWidget* pa
 // -----------------------------------------------------------------------------
 PropertiesWidget::~PropertiesWidget()
 {
-    controller_.Remove( *this );
+    controller_.Unregister( *this );
 }
 
 namespace 

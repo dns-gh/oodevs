@@ -33,7 +33,7 @@ RasterLayer::RasterLayer( kernel::Controller& controller )
 // -----------------------------------------------------------------------------
 RasterLayer::~RasterLayer()
 {
-    controller_.Remove( *this );
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

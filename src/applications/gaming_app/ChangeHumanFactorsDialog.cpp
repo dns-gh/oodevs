@@ -82,7 +82,7 @@ ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controller
 // -----------------------------------------------------------------------------
 ChangeHumanFactorsDialog::~ChangeHumanFactorsDialog()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

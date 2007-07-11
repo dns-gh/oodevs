@@ -92,7 +92,7 @@ AgentStatePanel::AgentStatePanel( QWidget* parent, PanelStack_ABC& panel, Contro
 // -----------------------------------------------------------------------------
 AgentStatePanel::~AgentStatePanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

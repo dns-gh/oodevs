@@ -93,7 +93,7 @@ AgentServerMsgMgr::AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine&
 //-----------------------------------------------------------------------------
 AgentServerMsgMgr::~AgentServerMsgMgr()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
     delete pMessageService_;
 }
 

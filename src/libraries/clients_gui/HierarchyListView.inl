@@ -29,7 +29,7 @@ HierarchyListView< H >::HierarchyListView( QWidget* pParent, kernel::Controllers
 template< typename H >
 HierarchyListView< H >::~HierarchyListView()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

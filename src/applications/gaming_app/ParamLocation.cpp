@@ -74,7 +74,7 @@ void ParamLocation::BuildInterface( QWidget* parent )
 void ParamLocation::RemoveFromController()
 {
     if( controller_ )
-        controller_->Remove( *creator_ );
+        controller_->Unregister( *creator_ );
     Param_ABC::RemoveFromController();
 }
 

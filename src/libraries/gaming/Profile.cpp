@@ -43,7 +43,7 @@ Profile::Profile( Controllers& controllers )
 // -----------------------------------------------------------------------------
 Profile::~Profile()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

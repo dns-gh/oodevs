@@ -99,7 +99,7 @@ ResourcesListView_ABC< ConcreteDisplayer, Extension >::ResourcesListView_ABC( QW
 template< typename ConcreteDisplayer, typename Extension >
 ResourcesListView_ABC< ConcreteDisplayer, Extension >::~ResourcesListView_ABC()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

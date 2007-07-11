@@ -38,7 +38,7 @@ LogisticSuperiorEditor< Superior >::LogisticSuperiorEditor( QWidget* parent, ker
 template< typename Superior >
 LogisticSuperiorEditor< Superior >::~LogisticSuperiorEditor()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
     
 // -----------------------------------------------------------------------------

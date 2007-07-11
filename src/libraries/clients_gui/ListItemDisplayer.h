@@ -24,8 +24,8 @@ namespace gui
 // Created: AGE 2006-02-22
 // =============================================================================
 class ListItemDisplayer : public BaseDisplayer
-                        , public kernel::Caller< QColor >
-                        , public kernel::Caller< kernel::Styles::Style >
+                        , public tools::Caller< QColor >
+                        , public tools::Caller< kernel::Styles::Style >
 {
 
 public:

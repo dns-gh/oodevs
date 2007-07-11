@@ -43,7 +43,7 @@ TemplatesPanel::~TemplatesPanel()
     catch( ... )
     {
     }
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

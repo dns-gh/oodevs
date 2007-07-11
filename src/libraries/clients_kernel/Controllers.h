@@ -35,8 +35,8 @@ public:
 
     //! @name Operations
     //@{
-    void Register( Observer_ABC& observer );
-    void Remove  ( Observer_ABC& observer );
+    void Register  ( Observer_ABC& observer );
+    void Unregister( Observer_ABC& observer );
     void Update  ( Observer_ABC& observer );
     //@}
 

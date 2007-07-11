@@ -27,11 +27,11 @@ namespace gui
 // Created: AGE 2006-02-23
 // =============================================================================
 class SpinBoxDisplayer : public kernel::Displayer_ABC
-                       , public kernel::Caller< double >
-                       , public kernel::Caller< float >
-                       , public kernel::Caller< int >
-                       , public kernel::Caller< kernel::Unit >
-                       , public kernel::Caller< kernel::ValueNotSet >
+                       , public tools::Caller< double >
+                       , public tools::Caller< float >
+                       , public tools::Caller< int >
+                       , public tools::Caller< kernel::Unit >
+                       , public tools::Caller< kernel::ValueNotSet >
 {
 
 public:

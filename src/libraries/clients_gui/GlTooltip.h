@@ -30,11 +30,11 @@ namespace gui
 // =============================================================================
 class GlTooltip : public kernel::GlTooltip_ABC
                 , public NoLinkDisplayer
-                , public kernel::Caller< QColor >
-                , public kernel::Caller< kernel::Styles::Style >
-                , public kernel::Caller< E_OperationalStatus >
-                , public kernel::Caller< E_ForceRatioStatus >
-                , public kernel::Caller< E_MeetingEngagementStatus >
+                , public tools::Caller< QColor >
+                , public tools::Caller< kernel::Styles::Style >
+                , public tools::Caller< E_OperationalStatus >
+                , public tools::Caller< E_ForceRatioStatus >
+                , public tools::Caller< E_MeetingEngagementStatus >
 {
 
 public:

@@ -36,7 +36,7 @@ RcEntityResolver::RcEntityResolver( QObject* parent, kernel::Controllers& contro
 // -----------------------------------------------------------------------------
 RcEntityResolver::~RcEntityResolver()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

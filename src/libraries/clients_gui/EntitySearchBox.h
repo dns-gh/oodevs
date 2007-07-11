@@ -75,7 +75,7 @@ EntitySearchBox< Entity >::EntitySearchBox( QWidget* pParent, kernel::Controller
 template< typename Entity >
 EntitySearchBox< Entity >::~EntitySearchBox()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

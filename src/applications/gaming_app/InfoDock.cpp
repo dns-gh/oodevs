@@ -35,7 +35,7 @@ InfoDock::InfoDock( QWidget* parent, kernel::Controllers& controllers, const ker
 // -----------------------------------------------------------------------------
 InfoDock::~InfoDock()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

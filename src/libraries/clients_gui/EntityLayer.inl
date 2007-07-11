@@ -38,7 +38,7 @@ EntityLayer< ConcreteEntity >::EntityLayer( kernel::Controllers& controllers, co
 template< typename ConcreteEntity >
 EntityLayer< ConcreteEntity >::~EntityLayer()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

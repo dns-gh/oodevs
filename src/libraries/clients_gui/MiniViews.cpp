@@ -48,7 +48,7 @@ MiniViews::MiniViews( QMainWindow* parent, Controllers& controllers )
 // -----------------------------------------------------------------------------
 MiniViews::~MiniViews()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

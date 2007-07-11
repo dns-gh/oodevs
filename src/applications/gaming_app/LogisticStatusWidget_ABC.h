@@ -97,7 +97,7 @@ LogisticStatusWidget_ABC< Extension >::LogisticStatusWidget_ABC( QWidget* parent
 template< typename Extension >
 LogisticStatusWidget_ABC< Extension >::~LogisticStatusWidget_ABC()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
     delete display_;
 }
 

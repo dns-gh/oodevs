@@ -38,7 +38,7 @@ PropertiesPanel::PropertiesPanel( QWidget* parent, gui::PanelStack_ABC& panel, k
 // -----------------------------------------------------------------------------
 PropertiesPanel::~PropertiesPanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
     delete &tableItemDisplayer_;
 }
     

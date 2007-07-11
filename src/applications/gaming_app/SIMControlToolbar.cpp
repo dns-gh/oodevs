@@ -150,7 +150,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
 //-----------------------------------------------------------------------------
 SIMControlToolbar::~SIMControlToolbar()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 //-----------------------------------------------------------------------------

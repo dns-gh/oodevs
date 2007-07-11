@@ -41,7 +41,7 @@ ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& con
 // -----------------------------------------------------------------------------
 ReplayerToolbar::~ReplayerToolbar()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

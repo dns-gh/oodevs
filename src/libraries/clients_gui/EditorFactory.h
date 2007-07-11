@@ -22,13 +22,13 @@ namespace gui
 // Created: SBO 2006-10-18
 // =============================================================================
 class EditorFactory : public kernel::EditorFactory_ABC
-                    , public kernel::Caller< QString* >
-                    , public kernel::Caller< double* >
-                    , public kernel::Caller< float* >
-                    , public kernel::Caller< int* >
-                    , public kernel::Caller< unsigned int* >
-                    , public kernel::Caller< bool* >
-                    , public kernel::Caller< kernel::Unit* >
+                    , public tools::Caller< QString* >
+                    , public tools::Caller< double* >
+                    , public tools::Caller< float* >
+                    , public tools::Caller< int* >
+                    , public tools::Caller< unsigned int* >
+                    , public tools::Caller< bool* >
+                    , public tools::Caller< kernel::Unit* >
 {
 
 public:

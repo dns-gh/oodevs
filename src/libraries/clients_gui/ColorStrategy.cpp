@@ -47,7 +47,7 @@ ColorStrategy::ColorStrategy( Controllers& controllers, GlTools_ABC& tools )
 // -----------------------------------------------------------------------------
 ColorStrategy::~ColorStrategy()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

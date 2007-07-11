@@ -49,7 +49,7 @@ FireResultListView::FireResultListView( QWidget* parent, kernel::Controllers& co
 // -----------------------------------------------------------------------------
 FireResultListView::~FireResultListView()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
     delete subDisplayer_;
 }
 

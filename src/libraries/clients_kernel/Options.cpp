@@ -54,10 +54,10 @@ void Options::Register( Observer_ABC& o )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Options::Remove
+// Name: Options::Unregister
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Options::Remove( Observer_ABC& o )
+void Options::Unregister( Observer_ABC& o )
 {
     OptionsObserver_ABC* observer = dynamic_cast< OptionsObserver_ABC* >( &o );
     T_Observers::iterator it = std::find( observers_.begin(), observers_.end(), observer );

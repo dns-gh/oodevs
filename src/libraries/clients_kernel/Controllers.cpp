@@ -50,14 +50,14 @@ void Controllers::Register( Observer_ABC& observer )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Controllers::Remove
+// Name: Controllers::Unregister
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
-void Controllers::Remove( Observer_ABC& observer )
+void Controllers::Unregister( Observer_ABC& observer )
 {
-    options_.Remove( observer );
-    controller_.Remove( observer );
-    actions_.Remove( observer );
+    options_.Unregister( observer );
+    controller_.Unregister( observer );
+    actions_.Unregister( observer );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,6 +66,6 @@ void Controllers::Remove( Observer_ABC& observer )
 // -----------------------------------------------------------------------------
 void Controllers::Update( Observer_ABC& observer )
 {
-    Remove( observer );
-    Register( observer );
+    Unregister( observer );
+    Register  ( observer );
 }

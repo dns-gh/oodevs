@@ -61,7 +61,7 @@ UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& con
 // -----------------------------------------------------------------------------
 UnitsPanel::~UnitsPanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

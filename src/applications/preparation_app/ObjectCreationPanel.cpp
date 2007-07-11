@@ -38,7 +38,7 @@ ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, PanelStack_ABC& panel
 // -----------------------------------------------------------------------------
 ObjectCreationPanel::~ObjectCreationPanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

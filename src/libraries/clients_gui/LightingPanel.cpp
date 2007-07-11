@@ -62,7 +62,7 @@ LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting, kernel::
 // -----------------------------------------------------------------------------
 LightingPanel::~LightingPanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

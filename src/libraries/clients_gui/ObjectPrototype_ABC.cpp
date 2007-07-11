@@ -149,7 +149,7 @@ void ObjectPrototype_ABC::FillObjectTypes()
 void ObjectPrototype_ABC::hideEvent( QHideEvent* )
 {
     if( locationCreator_ )
-        controllers_.Remove( *locationCreator_ );
+        controllers_.Unregister( *locationCreator_ );
 }
     
 // -----------------------------------------------------------------------------

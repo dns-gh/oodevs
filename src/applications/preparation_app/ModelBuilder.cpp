@@ -51,7 +51,7 @@ ModelBuilder::ModelBuilder( Controllers& controllers, Model& model )
 // -----------------------------------------------------------------------------
 ModelBuilder::~ModelBuilder()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

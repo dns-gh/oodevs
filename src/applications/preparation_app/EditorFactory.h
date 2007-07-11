@@ -40,17 +40,17 @@ class DotationsItem;
 class EditorFactory : public gui::EditorFactory
                     , public kernel::Observer_ABC
                     , public kernel::SelectionObserver< kernel::Entity_ABC >
-                    , public kernel::Caller< TC2* >
-                    , public kernel::Caller< MaintenanceSuperior* >
-                    , public kernel::Caller< MedicalSuperior* >
-                    , public kernel::Caller< SupplySuperior* >
-                    , public kernel::Caller< kernel::KnowledgeGroupType** >
-                    , public kernel::Caller< kernel::Karma** >
-                    , public kernel::Caller< kernel::NBCAgent** >
-                    , public kernel::Caller< std::vector< kernel::NBCAgent* >* >
-                    , public kernel::Caller< Enum_PopulationAttitude* >
-                    , public kernel::Caller< Enum_ObstacleType* >
-                    , public kernel::Caller< DotationsItem** >
+                    , public tools::Caller< TC2* >
+                    , public tools::Caller< MaintenanceSuperior* >
+                    , public tools::Caller< MedicalSuperior* >
+                    , public tools::Caller< SupplySuperior* >
+                    , public tools::Caller< kernel::KnowledgeGroupType** >
+                    , public tools::Caller< kernel::Karma** >
+                    , public tools::Caller< kernel::NBCAgent** >
+                    , public tools::Caller< std::vector< kernel::NBCAgent* >* >
+                    , public tools::Caller< Enum_PopulationAttitude* >
+                    , public tools::Caller< Enum_ObstacleType* >
+                    , public tools::Caller< DotationsItem** >
 {
 
 public:

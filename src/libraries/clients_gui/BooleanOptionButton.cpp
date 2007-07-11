@@ -37,7 +37,7 @@ BooleanOptionButton::BooleanOptionButton( const QIconSet& iconSet, const QString
 // -----------------------------------------------------------------------------
 BooleanOptionButton::~BooleanOptionButton()
 {
-    options_.Remove( *this );
+    options_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

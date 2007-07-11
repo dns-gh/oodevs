@@ -86,7 +86,7 @@ ProfilingPanel::ProfilingPanel( QWidget* parent, kernel::Controllers& controller
 // -----------------------------------------------------------------------------
 ProfilingPanel::~ProfilingPanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 namespace

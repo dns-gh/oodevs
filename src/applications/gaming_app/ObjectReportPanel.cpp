@@ -39,7 +39,7 @@ ObjectReportPanel::ObjectReportPanel( QWidget* parent, PanelStack_ABC& panel, Co
 // -----------------------------------------------------------------------------
 ObjectReportPanel::~ObjectReportPanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

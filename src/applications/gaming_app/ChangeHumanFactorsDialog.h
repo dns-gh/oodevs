@@ -42,9 +42,9 @@ class ChangeHumanFactorsDialog : public QDialog
                                , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                                , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                                , public kernel::NullDisplayer
-                               , public kernel::Caller< E_UnitTiredness >
-                               , public kernel::Caller< E_UnitMorale >
-                               , public kernel::Caller< E_UnitExperience >
+                               , public tools::Caller< E_UnitTiredness >
+                               , public tools::Caller< E_UnitMorale >
+                               , public tools::Caller< E_UnitExperience >
 {
     Q_OBJECT
 public:

@@ -34,7 +34,7 @@ GridLayer::GridLayer( Controllers& controllers, GlTools_ABC& tools )
 // -----------------------------------------------------------------------------
 GridLayer::~GridLayer()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

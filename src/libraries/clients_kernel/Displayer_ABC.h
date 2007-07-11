@@ -10,7 +10,7 @@
 #ifndef __Displayer_ABC_h_
 #define __Displayer_ABC_h_
 
-#include "VirtualTemplate.h"
+#include "tools/VirtualTemplate.h"
 
 class QString;
 
@@ -23,9 +23,9 @@ namespace kernel
 */
 // Created: AGE 2006-02-21
 // =============================================================================
-class Displayer_ABC : public VirtualTemplate< Displayer_ABC > 
+class Displayer_ABC : public tools::VirtualTemplate< Displayer_ABC > 
 {
-    friend VirtualTemplate< Displayer_ABC >;
+    friend tools::VirtualTemplate< Displayer_ABC >;
 
 public:
     //! @name Constructors/Destructor

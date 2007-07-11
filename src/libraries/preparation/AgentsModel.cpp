@@ -47,7 +47,7 @@ AgentsModel::AgentsModel( Controllers& controllers, AgentFactory_ABC& agentFacto
 AgentsModel::~AgentsModel()
 {
     Purge();
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 

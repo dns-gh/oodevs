@@ -45,7 +45,7 @@ EventToolbar::EventToolbar( QMainWindow* pParent, Controllers& controllers, cons
 // -----------------------------------------------------------------------------
 EventToolbar::~EventToolbar()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -37,7 +37,7 @@ InfoReportsTab::InfoReportsTab( QTabWidget* parent, kernel::Controllers& control
 // -----------------------------------------------------------------------------
 InfoReportsTab::~InfoReportsTab()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

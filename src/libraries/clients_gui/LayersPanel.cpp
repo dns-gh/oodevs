@@ -62,7 +62,7 @@ LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers )
 // -----------------------------------------------------------------------------
 LayersPanel::~LayersPanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

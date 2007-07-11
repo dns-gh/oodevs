@@ -44,7 +44,7 @@ TacticalLineFactory::TacticalLineFactory( Controllers& controllers, const Coordi
 // -----------------------------------------------------------------------------
 TacticalLineFactory::~TacticalLineFactory()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

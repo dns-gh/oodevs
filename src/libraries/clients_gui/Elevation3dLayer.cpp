@@ -47,7 +47,7 @@ Elevation3dLayer::Elevation3dLayer( Controller& controller, const DetectionMap& 
 // -----------------------------------------------------------------------------
 Elevation3dLayer::~Elevation3dLayer()
 {
-    controller_.Remove( *this );
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

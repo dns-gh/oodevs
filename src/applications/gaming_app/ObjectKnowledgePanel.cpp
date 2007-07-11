@@ -93,7 +93,7 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
 // -----------------------------------------------------------------------------
 ObjectKnowledgePanel::~ObjectKnowledgePanel()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
     delete display_;
 }
 

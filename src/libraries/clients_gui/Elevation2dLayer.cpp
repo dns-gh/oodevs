@@ -52,7 +52,7 @@ Elevation2dLayer::Elevation2dLayer( Controller& controller, const DetectionMap& 
 // -----------------------------------------------------------------------------
 Elevation2dLayer::~Elevation2dLayer()
 {
-    controller_.Remove( *this );
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

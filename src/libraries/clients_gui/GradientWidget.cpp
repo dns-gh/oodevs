@@ -68,7 +68,7 @@ GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preference
 // -----------------------------------------------------------------------------
 GradientWidget::~GradientWidget()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

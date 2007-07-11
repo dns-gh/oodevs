@@ -42,7 +42,7 @@ GlToolsBase::GlToolsBase( Controllers& controllers )
 // -----------------------------------------------------------------------------
 GlToolsBase::~GlToolsBase()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
     for( CIT_Icons it = icons_.begin(); it != icons_.end(); ++it )
         glDeleteTextures( 1, & it->second );
     glDeleteLists( billboard_, 1 );

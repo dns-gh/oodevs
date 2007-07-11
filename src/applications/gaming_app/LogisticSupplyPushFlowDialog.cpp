@@ -79,7 +79,7 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
 // -----------------------------------------------------------------------------
 LogisticSupplyPushFlowDialog::~LogisticSupplyPushFlowDialog()
 {
-    controllers_.Remove( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

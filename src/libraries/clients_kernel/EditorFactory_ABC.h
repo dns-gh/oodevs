@@ -10,7 +10,7 @@
 #ifndef __EditorFactory_ABC_h_
 #define __EditorFactory_ABC_h_
 
-#include "VirtualTemplate.h"
+#include "tools/VirtualTemplate.h"
 #include "Units.h"
 
 class QWidget;
@@ -24,9 +24,9 @@ namespace kernel
 */
 // Created: SBO 2006-10-18
 // =============================================================================
-class EditorFactory_ABC : public VirtualTemplate< EditorFactory_ABC >
+class EditorFactory_ABC : public tools::VirtualTemplate< EditorFactory_ABC >
 {
-    friend VirtualTemplate< EditorFactory_ABC >;
+    friend tools::VirtualTemplate< EditorFactory_ABC >;
 
 public:
     //! @name Constructors/Destructor
@@ -41,7 +41,7 @@ public:
     QWidget* CreateEditor( QWidget* parent, T* value )
     {
         BeginEditor( parent );
-        VirtualTemplate< EditorFactory_ABC >::Call( value );
+        tools::VirtualTemplate< EditorFactory_ABC >::Call( value );
         return EndEditor();
     }
     //@}
@@ -67,8 +67,8 @@ private:
     template< typename T >
     void Call( kernel::UnitedValue< T >* value )
     {
-        VirtualTemplate< EditorFactory_ABC >::Call( &value->unit_ );
-        VirtualTemplate< EditorFactory_ABC >::Call( &value->value_ );
+        tools::VirtualTemplate< EditorFactory_ABC >::Call( &value->unit_ );
+        tools::VirtualTemplate< EditorFactory_ABC >::Call( &value->value_ );
     }
     //@}
 };

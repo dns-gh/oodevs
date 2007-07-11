@@ -31,7 +31,7 @@ namespace gui
 // =============================================================================
 class PropertiesTable : public QTable
                       , public kernel::Displayer_ABC
-                      , public kernel::Caller< kernel::Property_ABC* >
+                      , public tools::Caller< kernel::Property_ABC* >
 {
     Q_OBJECT;
 

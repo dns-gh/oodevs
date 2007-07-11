@@ -30,7 +30,7 @@ ObjectKnowledgeConverter::ObjectKnowledgeConverter( Controllers& controller )
 // -----------------------------------------------------------------------------
 ObjectKnowledgeConverter::~ObjectKnowledgeConverter()
 {
-    controller_.Remove( *this );
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
