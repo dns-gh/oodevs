@@ -103,7 +103,7 @@ void SensorType::InitializeAngle( xml::xistream& xis )
             >> attribute( "unite", unit )
             >> attribute( "balayage", bScanningAllowed_ )
         >> end();
-    if ( !::stricmp( unit.c_str(), "degre" ) )
+    if ( !::_stricmp( unit.c_str(), "degre" ) )
         rAngle_ *= ( std::acos( -1.f ) / 180.f );
 }
 

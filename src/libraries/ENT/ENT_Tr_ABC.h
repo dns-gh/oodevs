@@ -61,7 +61,7 @@ public:
         for( uint i = 0; ; ++i )
         {
             const std::string& sCurrentName = conv[i].simname_;
-            if( sCurrentName.empty() || !::stricmp( sCurrentName.c_str(), str.c_str() ) )
+            if( sCurrentName.empty() || !::_stricmp( sCurrentName.c_str(), str.c_str() ) )
                 return conv[i].type_;
         }
         // Unreachable

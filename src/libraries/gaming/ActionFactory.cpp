@@ -234,10 +234,10 @@ Action_ABC* ActionFactory::CreateMission( xml::xistream& xis ) const
 
     Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
     xis >> start( "parameters" )
-            >> list( "parameter", *this, ReadParameter, *action, it, *target )
+            >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target )
         >> end()
         >> start( "context" )
-            >> list( "parameter", *this, ReadParameter, *action, it, *target )
+            >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target )
         >> end();
     if( it.HasMoreElements() )
         throw std::runtime_error( tools::translate( "ActionFactory", "Parameter mismatch: too few parameters provided." ).ascii() );
@@ -266,7 +266,7 @@ Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis ) const
 
     Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
     xis >> start( "parameters" )
-            >> list( "parameter", *this, ReadParameter, *action, it, *target )
+            >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target )
         >> end();
     if( it.HasMoreElements() )
         throw std::runtime_error( tools::translate( "ActionFactory", "Parameter mismatch: too few parameters provided." ).ascii() );

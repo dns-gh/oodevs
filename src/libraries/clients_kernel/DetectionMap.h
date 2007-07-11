@@ -30,9 +30,9 @@ public:
     //@{
     struct Environment
     {
-        bool          IsInTown() const    { return data_ & town_; };
-        bool          IsInForest() const  { return data_ & forest_; };
-        unsigned char MeteoEffect() const { return data_ & meteoMask_; };
+        bool          IsInTown() const    { return ( data_ & town_ ) != 0; };
+        bool          IsInForest() const  { return ( data_ & forest_ ) != 0; };
+        unsigned char MeteoEffect() const { return ( data_ & meteoMask_ ) != 0; };
         short         ElevationDelta() const { return IsInTown() ? 20 : ( IsInForest() ? 10 : 0 ); };
 
         static const unsigned char town_      = 0x80;

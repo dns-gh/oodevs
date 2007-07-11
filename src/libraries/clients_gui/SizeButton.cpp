@@ -33,7 +33,7 @@ SizeButton::SizeButton( QWidget* parent /*= 0*/, const char* name /*= 0*/, float
     setText( name );
     QPopupMenu* menu = new QPopupMenu( this );
     setPopupDelay( 1 );
-    slider_ = new QSlider( 0, 20, 1, 0, Qt::Orientation::Horizontal, menu );
+    slider_ = new QSlider( 0, 20, 1, 0, Qt::Horizontal, menu );
     slider_->setTickmarks( QSlider::Below );
     slider_->setTickInterval( 2 );
     

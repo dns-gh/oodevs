@@ -150,7 +150,7 @@ short DetectionMapIterator::Altitude() const
         alpha = ( cellSize_ *.5f - yOffset_ ) / cellSize_;
         next = *map_.Data( currentCell_.first, nextY );
     }
-    return alpha *  base + ( 1 - alpha ) * next;
+    return short( alpha *  base + ( 1 - alpha ) * next );
 }
 
 // -----------------------------------------------------------------------------
