@@ -99,7 +99,6 @@ namespace crossbow
             m_pSymbolTree.ImageList = new System.Windows.Forms.ImageList();
             m_pSymbolTree.ImageList.ImageSize = new Size(32, 32);
 
-            ESRI.ArcGIS.ArcMapUI.IMxDocument mxDocument = Tools.GetMxDocument(m_application);
             IFeatureWorkspace pWorkspace = Tools.RetrieveWorkspace(pLayer);
             ICursor pCursor = GetCursor(pWorkspace.OpenTable("Formations"));
             if (pCursor != null)

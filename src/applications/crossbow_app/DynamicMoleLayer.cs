@@ -28,7 +28,7 @@ namespace crossbow
         {
             public ICachedGraphic graphic;
             public IDynamicGlyph glyph;
-            public float sizeRatio;
+            public float aspectRatio; // glyph.width / glyph.height
         };
 
         private IApplication                    m_application = null;
@@ -40,6 +40,7 @@ namespace crossbow
         private Timer                           m_updateTimer;
         private double                          m_symbolSize = 0;
         private IDynamicGlyph                   m_selectionGlyph = null;
+        private IEnvelope                       m_selectionEnvelope = null;
         
         // IFeatureLayer attributes
         private String m_displayField = "name"; // $$$$ SBO 2007-07-09: Symbol_ID ?
@@ -125,31 +126,29 @@ namespace crossbow
             IPoint position = feature.Shape as IPoint;
             position.Project(transformation.SpatialReference);
 
-            double zoom = symbol.sizeRatio * transformation.FromPoints(symbol.graphic.Size) / transformation.FittedBounds.Width;
-
+            float zoom = 1 / symbol.aspectRatio;
             properties.set_DynamicGlyph(esriDynamicSymbolType.esriDSymbolMarker, symbol.glyph);
-            properties.SetScale(esriDynamicSymbolType.esriDSymbolMarker, (float)zoom, (float)zoom);
+            properties.SetScale(esriDynamicSymbolType.esriDSymbolMarker, zoom, zoom);
             if (IsSelected(feature))
             {
+                IEnvelope envelope = position.Envelope.Envelope;
+                double selectionHalfSize = transformation.FromPoints(m_symbolSize) * zoom / 2;
+                envelope.Expand(selectionHalfSize, selectionHalfSize, false);
+                if (m_selectionGlyph == null)
                 {
-                    IEnvelope envelope = new EnvelopeClass();
-                    envelope = position.Envelope.Envelope;
-                    float width = 0, height = 0;
-                    symbol.glyph.QueryDimensions(ref width, ref height);
-                    width = (float)(transformation.FromPoints(width) * zoom);
-                    height = (float)(transformation.FromPoints(height) * zoom);
-                    envelope.Expand(width / 2, height / 2, false);
-                    if (m_selectionGlyph == null)
-                    {
-                        IDynamicGlyphFactory factory = dynamicDisplay as IDynamicGlyphFactory;
-                        m_selectionGlyph = factory.get_DynamicGlyph(1, esriDynamicGlyphType.esriDGlyphLine, 8);
-                    }
-                    properties.set_DynamicGlyph(esriDynamicSymbolType.esriDSymbolLine, m_selectionGlyph);
-                    properties.SetColor(esriDynamicSymbolType.esriDSymbolFill, 0.6f, 0.75f, 1.0f, 0.8f);
-                    properties.SetColor(esriDynamicSymbolType.esriDSymbolLine, 0.25f, 0.5f, 0.75f, 1.0f);
-                    dynamicDisplay.DrawRectangle(envelope);
+                    IDynamicGlyphFactory factory = dynamicDisplay as IDynamicGlyphFactory;
+                    m_selectionGlyph = factory.get_DynamicGlyph(1, esriDynamicGlyphType.esriDGlyphLine, 8);
                 }
-                //properties.SetColor(esriDynamicSymbolType.esriDSymbolMarker, 0, 0, 0, 0.2f);
+                properties.set_DynamicGlyph(esriDynamicSymbolType.esriDSymbolLine, m_selectionGlyph);
+                properties.SetColor(esriDynamicSymbolType.esriDSymbolFill, 0.6f, 0.75f, 1.0f, 0.8f);
+                properties.SetColor(esriDynamicSymbolType.esriDSymbolLine, 0.25f, 0.5f, 0.75f, 1.0f);
+                dynamicDisplay.DrawRectangle(envelope);
+                if (m_selectionEnvelope != null)
+                {
+                    properties.SetColor(esriDynamicSymbolType.esriDSymbolFill, 1.0f, 0.75f, 0.6f, 0.8f);
+                    properties.SetColor(esriDynamicSymbolType.esriDSymbolLine, 0.75f, 0.5f, 0.25f, 1.0f);
+                    dynamicDisplay.DrawRectangle(m_selectionEnvelope);
+                }
             }
 
             compoundMarker.DrawCompoundMarker4(position, "", "", (string)feature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eName]), "");
@@ -187,15 +186,15 @@ namespace crossbow
 
         private DynamicElement BuildSymbol(IDisplay display, IDynamicDisplay dynamicDisplay, String symbolId)
         {
-            const int size = 64;            
-            DynamicElement element = new DynamicElement();            
+            const int size = 72;
+            DynamicElement element = new DynamicElement();
             element.graphic = m_symbolFactory.CreateGraphics(symbolId, "");
-            element.glyph = m_symbolFactory.CreateDynamicGlyph(display, dynamicDisplay, element.graphic, size);
+            element.glyph = SymbolFactory.CreateDynamicGlyph(display, dynamicDisplay, element.graphic, 256, size);
 
             float width = 0, height = 0;
             element.glyph.QueryDimensions(ref width, ref height);
-            element.sizeRatio = (float)size / width;
-            m_symbolSize = width;
+            element.aspectRatio = height != 0 ? width / height : 1.0f;
+            m_symbolSize = 72; // width;
             return element;
         }
         #endregion
@@ -204,7 +203,7 @@ namespace crossbow
         void SetupTimer(double msec)
         {
             m_updateTimer = new Timer(msec);
-            m_updateTimer.Enabled = true;
+            m_updateTimer.Enabled = false;
             m_updateTimer.Elapsed += new ElapsedEventHandler(OnLayerUpdateEvent);
         }
         
@@ -309,7 +308,7 @@ namespace crossbow
 
         public new ISpatialReference SpatialReference
         {
-            set { }
+            set { value = base.SpatialReference; }
         }
 
         #endregion
@@ -374,6 +373,7 @@ namespace crossbow
                 symbolHeight = (symbolHeight > envelope.Height) ? symbolHeight - envelope.Height : envelope.Height - symbolHeight;
                 envelope.Expand(symbolWidth / 2, symbolHeight / 2, false);
                 spatialFilter.Geometry = envelope;
+                m_selectionEnvelope = envelope;
             }
 
             esriSelectionOption option = justOne ? esriSelectionOption.esriSelectionOptionOnlyOne : esriSelectionOption.esriSelectionOptionNormal;

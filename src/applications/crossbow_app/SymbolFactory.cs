@@ -22,13 +22,12 @@ namespace crossbow
             IMoleCoreHelper moleHelper = new MoleCoreHelperClass();
             IForceElement2525BRenderer renderer = (IForceElement2525BRenderer)moleHelper.ForceElementRenderer;
             m_pGraphicFactory = renderer.GraphicFactory;
-            m_SpatialReference = null;
         }
         
-        IPoint CreatePoint( double x, double y )
+        private IPoint CreatePoint( double x, double y )
         {
             IPoint pPoint = new PointClass();
-            pPoint.PutCoords(1.0, 1.0);
+            pPoint.PutCoords(x, y);
             if (m_SpatialReference != null)
                 pPoint.SpatialReference = m_SpatialReference;
             return pPoint;
@@ -46,26 +45,26 @@ namespace crossbow
             }
         }
 
-        public IForceElement CreateForceElement(string stSymbolID, string stName)
+        private IForceElement CreateForceElement(string symbolId, string stName)
         {                        
             IForceElement   pForceElement = new ForceElementClass();
             
             // Initialize position
             pForceElement.Shape = CreatePoint(1.0, 1.0);
             // register symbol id            
-            pForceElement.MessageString = stSymbolID;
-            pForceElement.PropertySet.SetProperty( "Symbol_ID", stSymbolID );
+            pForceElement.MessageString = symbolId;
+            pForceElement.PropertySet.SetProperty( "Symbol_ID", symbolId );
             pForceElement.PropertySet.SetProperty( "Name", stName );
             pForceElement.PropertySet.SetProperty( "Info", "" );
             return pForceElement;    
         }
     
         // Create mole graphic with no scale
-        public ICachedGraphic CreateGraphics(string stSymbolID, string stName)
+        public ICachedGraphic CreateGraphics(string symbolId, string stName)
         {
             IFEGraphic pFEGraphic;
             
-            pFEGraphic = m_pGraphicFactory.Make(stSymbolID);
+            pFEGraphic = m_pGraphicFactory.Make(symbolId);
             pFEGraphic.Style.FrameOption = moleStyleFrameEnum.moleStyleFrameOn;
             pFEGraphic.Style.FillOption = moleStyleFillEnum.moleStyleFillSolid;
             pFEGraphic.Style.UseFonts = true;
@@ -73,54 +72,48 @@ namespace crossbow
             // adversely affects performance (but provide better text quality, flexibility/customizability)
             //((ICachedGraphicStyle)pFEGraphic.Style).UseGDI = true;
             // pFEGraphic.Style.FriendlyLine.Width = 1.5;
-            pFEGraphic.ForceElement = CreateForceElement(stSymbolID, stName);
+            pFEGraphic.ForceElement = CreateForceElement(symbolId, stName);
             return (ICachedGraphic)pFEGraphic;
         }
         
         // Create Mole unit with the rigth scale
-        public ICachedGraphic CreateMoleUnit(IDisplay pDisplay, string stSymbolID, string stName, double size)
+        private ICachedGraphic CreateMoleUnit(string symbolId, string name, double size)
         {
-            ICachedGraphic pGraphic = CreateGraphics(stSymbolID, stName);
+            ICachedGraphic pGraphic = CreateGraphics(symbolId, name);
             pGraphic.Size = size;
             return pGraphic;
         }
 
-        // Export Picture from mole unit graphic
-        public stdole.IPictureDisp CreatePicture(IDisplay pDisplay, ICachedGraphic pGraphic, int size)
-        {
-            ICreateBitmap pBitmap = (ICreateBitmap)pGraphic;
-            IColor bgColor = Tools.MakeColor(255, 255, 255);
-            return pBitmap.DrawToPicture(pDisplay, size, size, 1.2, bgColor);
-        }
-
         // Export Bitmap from mole unit graphic
-        public System.Drawing.Bitmap CreateBitmap(IDisplay pDisplay, ICachedGraphic pGraphic, int size)
+        private static System.Drawing.Bitmap CreateBitmap(IDisplay pDisplay, ICachedGraphic pGraphic, int size)
         {
-            ICreateBitmap   pBitmap = (ICreateBitmap)pGraphic;
-            IColor          bgColor = Tools.MakeColor(255, 255, 255);
-            int             hDIB = pBitmap.DrawToDIB(pDisplay, size, size, 1.2, bgColor);
-            System.IntPtr   iPtr = new IntPtr(hDIB);
+            ICreateBitmap pBitmap = pGraphic as ICreateBitmap;
+            IColor        bgColor = Tools.MakeColor(255, 255, 255);
+            int           hDIB = pBitmap.DrawToDIB(pDisplay, size, size, 1.2, bgColor);
+            System.IntPtr iPtr = new IntPtr(hDIB);
 
             return System.Drawing.Bitmap.FromHbitmap(iPtr);
         }
 
         // Create mole dynamic glyph
-        public IDynamicGlyph CreateDynamicGlyph(IDisplay pDisplay, IDynamicDisplay pDynamicDisplay, ICachedGraphic pGraphic, int size)
+        // textureSize in pixels
+        // glyphSize in points
+        public static IDynamicGlyph CreateDynamicGlyph(IDisplay pDisplay, IDynamicDisplay pDynamicDisplay, ICachedGraphic pGraphic, int textureSize, int glyphSize)
         {
             ICreateBitmap pBitmap = pGraphic as ICreateBitmap;
             IPictureMarkerSymbol pMarker = new PictureMarkerSymbolClass();
             IColor bgColor = Tools.MakeColor(255, 255, 255);
             IDynamicGlyphFactory pFactory = pDynamicDisplay.DynamicGlyphFactory as IDynamicGlyphFactory;
 
-            pMarker.Picture = pBitmap.DrawToPicture(pDisplay, size, size, 1.2, bgColor);
+            pMarker.Picture = pBitmap.DrawToPicture(pDisplay, textureSize, textureSize, 1, bgColor);
             pMarker.BitmapTransparencyColor = bgColor;
-            pMarker.Size = size;            
+            pMarker.Size = glyphSize;
             return pFactory.CreateDynamicGlyph(pMarker as ISymbol);
         }
 
-        public System.Drawing.Bitmap GetSymbol(IDisplay pDisplay, string stSymbolID, string stName, int size)
+        public System.Drawing.Bitmap GetSymbol(IDisplay pDisplay, string symbolId, string stName, int size)
         {
-            ICachedGraphic pGraphic = CreateMoleUnit( pDisplay, stSymbolID, stName, 0.5);
+            ICachedGraphic pGraphic = CreateMoleUnit(symbolId, stName, 0.5);
             return CreateBitmap(pDisplay, pGraphic, size);
         }
     }

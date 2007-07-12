@@ -140,9 +140,7 @@ namespace crossbow
         ILayer CreateLayerGroup(string name, IFeatureClass featureClass)
         {
             IGroupLayer group = new GroupLayerClass();
-
-            // IComposite Layer
-            ILayer layer = (ILayer)group;
+            ILayer layer = group as ILayer;
             layer.Name = name;
 
             IFeatureLayer featureLayer = new FeatureLayerClass();

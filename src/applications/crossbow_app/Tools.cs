@@ -112,15 +112,15 @@ namespace crossbow
             IMap map = activeView.FocusMap;
             ILayer layer = map.get_Layer( index );
             if (layer is IFeatureLayer)
-                return (IFeatureLayer)layer;
+                return layer as IFeatureLayer;
             else if (layer is ICompositeLayer)
             {
-                ICompositeLayer composite = (ICompositeLayer)(layer);                
+                ICompositeLayer composite = layer as ICompositeLayer;
                 for (int i = 0; i < composite.Count - 1; ++i)
                 {
                     layer = composite.get_Layer(i);
                     if (layer is IFeatureLayer)
-                        return (IFeatureLayer)layer;
+                        return layer as IFeatureLayer;
                 }
             }
             return null;
@@ -135,7 +135,7 @@ namespace crossbow
                 IDataset pDataset = null;
                 if ( pLayer is IDynamicLayerDataset )
                 {
-                    IDynamicLayerDataset dataset = (IDynamicLayerDataset)pLayer;
+                    IDynamicLayerDataset dataset = pLayer as IDynamicLayerDataset;
                     pDataset = dataset.Dataset;
                 }
                 else
@@ -165,11 +165,11 @@ namespace crossbow
         #region "Create IColor from RGB components"
         public static ESRI.ArcGIS.Display.IColor MakeColor(short red, short green, short blue)
         {
-            ESRI.ArcGIS.Display.RgbColor color = new ESRI.ArcGIS.Display.RgbColor();
+            ESRI.ArcGIS.Display.IRgbColor color = new ESRI.ArcGIS.Display.RgbColorClass();
             color.Red = red;
             color.Green = green;
             color.Blue = blue;
-            return color;
+            return color as ESRI.ArcGIS.Display.IColor;
         }
         #endregion
     }

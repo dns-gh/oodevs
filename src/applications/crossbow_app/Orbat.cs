@@ -18,7 +18,6 @@ namespace crossbow
     public interface IOrbat
     {
         void Load();
-        void Update();
         void Unload();
     }
 
@@ -28,9 +27,9 @@ namespace crossbow
     public partial class Orbat : UserControl, IDockableWindowDef, IOrbat
     {
         private IApplication m_application;        
-        private SymbolFactory m_pSymbolFactory;
-        private IDisplay m_SimpleDisplay;
-        private bool m_IsLoaded;
+        private SymbolFactory m_pSymbolFactory = new SymbolFactory();
+        private IDisplay m_SimpleDisplay = new SimpleDisplayClass();
+        private bool m_IsLoaded = false;
 
         #region COM Registration Function(s)
         [ComRegisterFunction()]
@@ -87,45 +86,14 @@ namespace crossbow
 
         public Orbat()
         {
-            m_IsLoaded = false;
-            m_SimpleDisplay = new SimpleDisplayClass();
-            m_pSymbolFactory = new SymbolFactory();
             m_Fields = new FieldsProperty();            
             InitializeComponent();
         }
 
-        ~Orbat()
-        {
-            m_SimpleDisplay = null;
-            m_pSymbolFactory = null;
-            m_Fields = null;
-        }
-
-        #region IOrbat Members
-        void IOrbat.Load()
-        {
-            if (!m_IsLoaded)
-                SetupOrbatCommand();
-            m_IsLoaded = true;
-        }
-
-        void IOrbat.Unload()
-        {
-            // SetupOrbatCommand();
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        void IOrbat.Update()
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-        #endregion
-
-        
 
         #region IDockableWindowDef Members
 
-        string IDockableWindowDef.Caption
+        public string Caption
         {
             get
             {
@@ -134,35 +102,42 @@ namespace crossbow
             }
         }
 
-        int IDockableWindowDef.ChildHWND
+        public int ChildHWND
         {
             get { return this.Handle.ToInt32(); }
         }
 
-        string IDockableWindowDef.Name
+        public void OnCreate(object hook)
         {
-            get
-            {
-                //TODO: Replace with any non-localizable string
-                return this.Name;
-            }
+            m_application = hook as IApplication;
         }
 
-        void IDockableWindowDef.OnCreate(object hook)
-        {
-            m_application = hook as IApplication;            
-        }
-
-        void IDockableWindowDef.OnDestroy()
+        public void OnDestroy()
         {
             //TODO: Release resources and call dispose of any ActiveX control initialized
         }
 
-        object IDockableWindowDef.UserData
+        public object UserData
         {
             get { return this; }
         }
 
-        #endregion           
+        #endregion
+
+        #region IOrbat Members
+
+        public new void Load()
+        {
+            if (!m_IsLoaded)
+                SetupOrbatCommand();
+            m_IsLoaded = true;
+        }
+
+        public void Unload()
+        {
+            // $$$$ SBO 2007-07-11: cleaning...
+        }
+
+        #endregion
     }
 }
