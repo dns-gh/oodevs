@@ -37,7 +37,8 @@ DecisionalState::~DecisionalState()
 // -----------------------------------------------------------------------------
 void DecisionalState::Clear()
 {
-    decisionalInfos_.clear();
+    for( std::map< std::string, std::string >::iterator it = decisionalInfos_.begin(); it != decisionalInfos_.end(); ++it )
+        it->second.clear();
 }
 
 // -----------------------------------------------------------------------------
