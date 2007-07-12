@@ -40,6 +40,15 @@ void CompositeMessageHandler::Add( boost::shared_ptr< MessageHandler_ABC > handl
 }
 
 // -----------------------------------------------------------------------------
+// Name: CompositeMessageHandler::Add
+// Created: AGE 2007-07-12
+// -----------------------------------------------------------------------------
+void CompositeMessageHandler::Add( MessageHandler_ABC* handler )
+{
+    Add( boost::shared_ptr< MessageHandler_ABC >( handler ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: CompositeMessageHandler::Receive
 // Created: AGE 2007-07-09
 // -----------------------------------------------------------------------------

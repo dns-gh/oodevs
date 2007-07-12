@@ -13,6 +13,7 @@
 #include "game_asn/Asn.h"
 #include "Frames.h"
 #include <vector>
+#include <fstream>
 
 namespace tools
 {

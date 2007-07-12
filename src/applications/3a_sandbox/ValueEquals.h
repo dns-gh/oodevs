@@ -7,52 +7,49 @@
 //
 // *****************************************************************************
 
-#ifndef __ReplayModel_h_
-#define __ReplayModel_h_
+#ifndef __ValueEquals_h_
+#define __ValueEquals_h_
 
-#include "dispatcher/MessageHandler_ABC.h"
-#include <fstream>
-#include <map>
+#include "ValueHolder_ABC.h"
 
 // =============================================================================
-/** @class  ReplayModel
-    @brief  ReplayModel
+/** @class  ValueEquals
+    @brief  ValueEquals
 */
-// Created: AGE 2007-07-05
+// Created: AGE 2007-07-12
 // =============================================================================
-class ReplayModel : public dispatcher::MessageHandler_ABC
+class ValueEquals : public ValueHolder_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayModel();
-    virtual ~ReplayModel();
+             ValueEquals( ValueHolder_ABC& holder, float expected )
+                 : holder_( holder )
+                 , expected_( expected ) {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void OnReceive( const ASN1T_MsgsSimToClient& asnMsg );
+    virtual float GetValue() const
+    {
+        return holder_.GetValue() == expected_ ? 1.f : 0.f;
+    }
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ReplayModel( const ReplayModel& );            //!< Copy constructor
-    ReplayModel& operator=( const ReplayModel& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    std::ofstream& GetArchive( unsigned int type );
+    ValueEquals( const ValueEquals& );            //!< Copy constructor
+    ValueEquals& operator=( const ValueEquals& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    ASN1OCTET aASNEncodeBuffer_[100000];
-    std::map< unsigned int, std::ofstream* > archives_;
+    ValueHolder_ABC& holder_;
+    float expected_;
     //@}
 };
 
-#endif // __ReplayModel_h_
+#endif // __ValueEquals_h_

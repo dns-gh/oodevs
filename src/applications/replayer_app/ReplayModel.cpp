@@ -45,24 +45,6 @@ void ReplayModel::OnReceive( const ASN1T_MsgsSimToClient& asnMsg )
     output.Write( (const char*)asnPEREncodeBuffer.GetMsgPtr(), asnPEREncodeBuffer.GetMsgLen() );
     archive.flush();
 }
-    
-// -----------------------------------------------------------------------------
-// Name: ReplayModel::StartSynchronisation
-// Created: AGE 2007-07-05
-// -----------------------------------------------------------------------------
-void ReplayModel::StartSynchronisation()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ReplayModel::EndSynchronisation
-// Created: AGE 2007-07-05
-// -----------------------------------------------------------------------------
-void ReplayModel::EndSynchronisation()
-{
-    // NOTHING
-}
 
 // -----------------------------------------------------------------------------
 // Name: ReplayModel::GetArchive

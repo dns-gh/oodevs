@@ -36,6 +36,7 @@ public:
     //! @name Operations
     //@{
     void Add( boost::shared_ptr< MessageHandler_ABC > handler );
+    void Add( MessageHandler_ABC* handler );
 
     virtual void Receive( const ASN1T_MsgsSimToClient& message );
     //@}

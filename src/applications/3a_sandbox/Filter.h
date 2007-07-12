@@ -7,52 +7,51 @@
 //
 // *****************************************************************************
 
-#ifndef __ReplayModel_h_
-#define __ReplayModel_h_
+#ifndef __Filter_h_
+#define __Filter_h_
 
-#include "dispatcher/MessageHandler_ABC.h"
-#include <fstream>
-#include <map>
+#include "MessageHandler_ABC.h"
+#include "ValueHolder_ABC.h"
 
 // =============================================================================
-/** @class  ReplayModel
-    @brief  ReplayModel
+/** @class  Filter
+    @brief  Filter
 */
-// Created: AGE 2007-07-05
+// Created: AGE 2007-07-12
 // =============================================================================
-class ReplayModel : public dispatcher::MessageHandler_ABC
+class Filter : public MessageHandler_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayModel();
-    virtual ~ReplayModel();
+             Filter( const ValueHolder_ABC& value, MessageHandler_ABC& forward )
+                 : value_  ( value )
+                 , forward_( forward ) {} 
     //@}
 
     //! @name Operations
     //@{
-    virtual void OnReceive( const ASN1T_MsgsSimToClient& asnMsg );
+    virtual void Receive( const ASN1T_MsgsSimToClient& message )
+    {
+        if( value_.GetValue() )
+            forward_.Receive( message );
+    }
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ReplayModel( const ReplayModel& );            //!< Copy constructor
-    ReplayModel& operator=( const ReplayModel& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    std::ofstream& GetArchive( unsigned int type );
+    Filter( const Filter& );            //!< Copy constructor
+    Filter& operator=( const Filter& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    ASN1OCTET aASNEncodeBuffer_[100000];
-    std::map< unsigned int, std::ofstream* > archives_;
+    const ValueHolder_ABC& value_;
+    MessageHandler_ABC& forward_;
     //@}
 };
 
-#endif // __ReplayModel_h_
+#endif // __Filter_h_
