@@ -12,7 +12,7 @@
 
 #include "ValueHolder_ABC.h"
 #include "ValueHandler_ABC.h"
-#include "MessageHandler_ABC.h"
+#include "dispatcher/MessageHandler_ABC.h"
 
 // =============================================================================
 /** @class  ValueHandlerTrigger
@@ -20,7 +20,7 @@
 */
 // Created: AGE 2007-07-12
 // =============================================================================
-class ValueHandlerTrigger : public MessageHandler_ABC
+class ValueHandlerTrigger : public dispatcher::MessageHandler_ABC
 {
 
 public:

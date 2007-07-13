@@ -21,9 +21,12 @@ struct name                                                              \
         { return float( attributes.member ); }                           \
 };
 
-MAKE_EXTRACTOR( OpState, etat_operationnel_brut );
-MAKE_EXTRACTOR( Heading, direction );
-MAKE_EXTRACTOR( Speed,   vitesse );
+namespace extractors
+{
+    MAKE_EXTRACTOR( OpState, etat_operationnel_brut );
+    MAKE_EXTRACTOR( Heading, direction );
+    MAKE_EXTRACTOR( Speed,   vitesse );
+}
 
 // =============================================================================
 /** @class  AttributeExtractor

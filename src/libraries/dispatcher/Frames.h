@@ -35,7 +35,7 @@ public:
 
     //! @name Member data
     //@{
-    unsigned offset_, count_;
+    unsigned offset_, size_;
     //@}
 };
 

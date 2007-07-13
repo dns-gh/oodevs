@@ -11,7 +11,7 @@
 #define __ValueExtractor_ABC_h_
 
 #include "ValueHolder_ABC.h"
-#include "MessageHandler_ABC.h"
+#include "dispatcher/MessageHandler_ABC.h"
 
 // =============================================================================
 /** @class  ValueExtractor_ABC
@@ -19,7 +19,7 @@
 */
 // Created: AGE 2007-07-12
 // =============================================================================
-class ValueExtractor_ABC : public ValueHolder_ABC, public MessageHandler_ABC
+class ValueExtractor_ABC : public ValueHolder_ABC, public dispatcher::MessageHandler_ABC
 {
 
 public:

@@ -66,9 +66,9 @@ private:
     //@{
     void LoadIndex( const std::string& file );
     void LoadKeyIndex( const std::string& file );
-    void LoadSimToClientMessage( std::ifstream& input, unsigned count, MessageHandler_ABC& handler );
-    void LoadSimToClientMessage( tools::InputBinaryWrapper& input, MessageHandler_ABC& handler );
+    void LoadSimToClientMessage( const unsigned char*& input, MessageHandler_ABC& handler );
     void LoadKeyFrame( unsigned frame );
+    void Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler );
     //@}
 
 private:

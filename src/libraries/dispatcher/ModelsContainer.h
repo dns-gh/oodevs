@@ -10,6 +10,8 @@
 #ifndef __ModelsContainer_h_
 #define __ModelsContainer_h_
 
+#include <map>
+
 namespace dispatcher 
 {
     class Model;

@@ -15,7 +15,10 @@
 #include "dispatcher/Config.h"
 #include "dispatcher/MessageLoader.h"
 #include "dispatcher/CompositeMessageHandler.h"
+#include "dispatcher/Model.h"
+#include "dispatcher/SaverFacade.h"
 #include <iostream>
+#include <ctime>
 
 namespace
 {
@@ -34,6 +37,75 @@ namespace
         }
         std::vector< float > values_;
     };
+
+    struct MessageCounter : public dispatcher::MessageHandler_ABC
+    {
+        MessageCounter() : count_( 0 ) {}
+        virtual void Receive( const ASN1T_MsgsSimToClient& ) {
+            ++count_;
+        }
+        unsigned count_;
+    };
+
+    void Analyse( const dispatcher::Config& config, const std::string& record, dispatcher::CompositeMessageHandler& handler )
+    {
+        boost::shared_ptr< MessageCounter > counter( new MessageCounter() );
+        handler.Add( counter );
+        dispatcher::MessageLoader loader( config, record );
+        loader.LoadKeyFrame( 0, handler );
+
+        clock_t start = clock();
+
+        unsigned i = 0;
+        while( loader.LoadFrame( i, handler ) )
+            ++i;
+
+        clock_t end = clock();
+
+        std::cout << "Analysed " 
+                    << i << " frames, " 
+                    << counter->count_ << " messages in " 
+                    << float( end - start ) / float( CLOCKS_PER_SEC ) << "s" << std::endl;
+    }
+
+    void Test3a( const dispatcher::Config& config, const std::string& record )
+    {
+        ValueHandler output;
+        dispatcher::CompositeMessageHandler composite;
+        ValueEqualsExtractor< UnitIdExtractor > unitIdExtractor( 111 );
+        AttributeExtractor< extractors::Speed > valueExtractor;
+        composite.Add( new MessageFilter( unitIdExtractor, unitIdExtractor, valueExtractor ) );
+        composite.Add( new Ticker( valueExtractor, output ) );
+
+        Analyse( config, record, composite );
+
+        output.Dump();
+    }
+
+    void GenerateVolume( const dispatcher::Config& config, const std::string& record )
+    {
+        boost::shared_ptr< dispatcher::Model > model( new dispatcher::Model() );
+        boost::shared_ptr< dispatcher::SaverFacade > saver( new dispatcher::SaverFacade( *model, config ) );
+
+        dispatcher::CompositeMessageHandler composite;
+        composite.Add( model );
+        composite.Add( saver );
+
+        dispatcher::MessageLoader loader( config, record );
+        loader.LoadKeyFrame( 0, composite );
+        for( unsigned count = 0; count < 1000; ++count )
+        {
+            unsigned i = 0;
+            while( loader.LoadFrame( i, composite ) )
+                ++i;
+        }
+    }
+}
+
+namespace 
+{
+    const char* base = "20070713T100644";
+    const char* huge = "20070713T101624";
 }
 
 int main( int argc, char* argv[] )
@@ -41,24 +113,8 @@ int main( int argc, char* argv[] )
     dispatcher::Config config;
     config.Parse( argc, argv );
 
-    ValueHandler output;
-
-    dispatcher::CompositeMessageHandler composite;
-    
-    ValueEqualsExtractor< UnitIdExtractor > unitIdExtractor( 111 );
-    AttributeExtractor< Speed > valueExtractor;
-
-    composite.Add( new MessageFilter( unitIdExtractor, unitIdExtractor, valueExtractor ) );
-    composite.Add( new Ticker( valueExtractor, output ) );
-
-    dispatcher::MessageLoader loader( config, "20070712T125753" );
-
-    loader.LoadKeyFrame( 0, composite );
-    unsigned i = 0;
-    while( loader.LoadFrame( i, composite ) )
-        ++i;
-
-    output.Dump();
+    Test3a( config, huge );
+//    GenerateVolume( config, base );
 
     return 0;
 }

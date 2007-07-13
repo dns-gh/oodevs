@@ -99,6 +99,7 @@ void Saver::SaveKeyFrame( const Savable_ABC& message )
 // -----------------------------------------------------------------------------
 void Saver::Flush()
 {
+    current_.size_ = long( update_.tellp() ) - current_.offset_;
     tools::OutputBinaryWrapper wrapper( index_ );
     wrapper << current_;
     current_.Reset();
@@ -110,7 +111,6 @@ void Saver::Flush()
 // -----------------------------------------------------------------------------
 void Saver::SaveUpdateMessage( const Savable_ABC& message )
 {
-    ++current_.count_;
     tools::OutputBinaryWrapper wrapper( update_ );
     message.Serialize( wrapper );
 }

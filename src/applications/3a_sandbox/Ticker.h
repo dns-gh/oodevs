@@ -10,7 +10,7 @@
 #ifndef __Ticker_h_
 #define __Ticker_h_
 
-#include "MessageHandler_ABC.h"
+#include "dispatcher/MessageHandler_ABC.h"
 #include "MessageFilter.h"
 #include "ValueEqualsExtractor.h"
 #include "ValueHandlerTrigger.h"
@@ -22,7 +22,7 @@
 */
 // Created: AGE 2007-07-12
 // =============================================================================
-class Ticker : public MessageHandler_ABC
+class Ticker : public dispatcher::MessageHandler_ABC
 {
 
 public:

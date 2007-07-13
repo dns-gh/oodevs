@@ -10,7 +10,7 @@
 #ifndef __ValueEqualsExtractor_h_
 #define __ValueEqualsExtractor_h_
 
-#include "MessageHandler_ABC.h"
+#include "dispatcher/MessageHandler_ABC.h"
 #include "ValueEquals.h"
 
 // =============================================================================
@@ -20,7 +20,7 @@
 // Created: AGE 2007-07-12
 // =============================================================================
 template< typename Extractor >
-class ValueEqualsExtractor : public ValueEquals, public MessageHandler_ABC
+class ValueEqualsExtractor : public ValueEquals, public dispatcher::MessageHandler_ABC
 {
 
 public:

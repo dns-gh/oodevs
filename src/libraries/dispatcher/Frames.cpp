@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
 Frame::Frame()
-    : offset_( 0 ), count_( 0 )
+    : offset_( 0 ), size_( 0 )
 {
     // NOTHING
 }
@@ -29,7 +29,7 @@ Frame::Frame()
 void Frame::Reset( unsigned offset /*= 0*/ )
 {
     offset_ = offset;
-    count_ = 0;
+    size_ = 0;
 }
 
 // -----------------------------------------------------------------------------

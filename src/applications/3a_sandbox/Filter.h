@@ -10,7 +10,7 @@
 #ifndef __Filter_h_
 #define __Filter_h_
 
-#include "MessageHandler_ABC.h"
+#include "dispatcher/MessageHandler_ABC.h"
 #include "ValueHolder_ABC.h"
 
 // =============================================================================
@@ -19,7 +19,7 @@
 */
 // Created: AGE 2007-07-12
 // =============================================================================
-class Filter : public MessageHandler_ABC
+class Filter : public dispatcher::MessageHandler_ABC
 {
 
 public:

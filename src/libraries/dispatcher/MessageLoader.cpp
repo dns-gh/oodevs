@@ -49,13 +49,8 @@ bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& han
 {
     if( frameNumber >= frames_.size() )
         return false;
-
     const Frame& current = frames_[ frameNumber ];
-    if( current.count_ )
-    {
-        updates_.seekg( current.offset_ );
-        LoadSimToClientMessage( updates_, current.count_, handler );
-    }
+    Load( updates_, current.offset_, current.size_, handler );
     return true;
 }
 
@@ -66,17 +61,66 @@ bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& han
 unsigned int MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& handler )
 {
     unsigned key = frameNumber / 100;
-
     if( key >= keyFrames_.size() )
         key = keyFrames_.size() - 1;
     const KeyFrame& keyFrame = keyFrames_[ key ];
-    keys_.seekg( keyFrame.offset_ );
 
-    tools::InputBinaryWrapper input( keys_ );
-    while( keys_.tellg() < keyFrame.offset_ + keyFrame.size_ )
-        LoadSimToClientMessage( input, handler ); 
+    Load( keys_, keyFrame.offset_, keyFrame.size_, handler );
 
     return keyFrame.frameNumber_;
+}
+
+namespace
+{
+    struct Buffer
+    {
+         Buffer( unsigned size, std::ifstream& in )
+            : data_( new unsigned char[size] )
+        {
+            in.read( (char*)data_, size );
+        }
+        ~Buffer()
+        { 
+            delete[] data_;
+        }
+        unsigned char* data_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageLoader::Load
+// Created: AGE 2007-07-13
+// -----------------------------------------------------------------------------
+void MessageLoader::Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler )
+{
+    in.seekg( from );
+
+    Buffer buffer( size, in );
+    unsigned char* current = buffer.data_;
+    while( current < buffer.data_ + size )
+        LoadSimToClientMessage( current, handler );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageLoader::LoadSimToClientMessage
+// Created: AGE 2007-07-13
+// -----------------------------------------------------------------------------
+void MessageLoader::LoadSimToClientMessage( const unsigned char*& input, MessageHandler_ABC& handler )
+{
+    unsigned messageSize = *reinterpret_cast< const unsigned* >( input );
+    input += sizeof( unsigned );
+
+    ASN1T_MsgsSimToClient message;
+    ASN1PERDecodeBuffer decoder( input, messageSize, TRUE );
+    ASN1C_MsgsSimToClient ctrl( decoder, message );
+    if( ctrl.Decode() != ASN_OK )
+    {
+        decoder.PrintErrorInfo();
+        throw std::runtime_error( "ASN fussé" );
+    }
+    handler.Receive( message );
+
+    input += messageSize;
 }
 
 // -----------------------------------------------------------------------------
@@ -107,38 +151,6 @@ void MessageLoader::LoadKeyIndex( const std::string& file )
         keyFrames_.push_back( KeyFrame() );
         input >> keyFrames_.back();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MessageLoader::LoadSimToClientMessage
-// Created: AGE 2007-07-09
-// -----------------------------------------------------------------------------
-void MessageLoader::LoadSimToClientMessage( std::ifstream& inputStream, unsigned count, MessageHandler_ABC& handler )
-{
-    tools::InputBinaryWrapper input( inputStream );
-    while( count-- )
-        LoadSimToClientMessage( input, handler );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MessageLoader::LoadSimToClientMessage
-// Created: AGE 2007-07-09
-// -----------------------------------------------------------------------------
-void MessageLoader::LoadSimToClientMessage( tools::InputBinaryWrapper& input, MessageHandler_ABC& handler )
-{
-    unsigned size;
-    input >> size;
-    input.Read( (char*)buffer_, size );
-
-    ASN1T_MsgsSimToClient message;
-    ASN1PERDecodeBuffer decoder( buffer_, sizeof( buffer_ ), TRUE );
-    ASN1C_MsgsSimToClient ctrl( decoder, message );
-    if( ctrl.Decode() != ASN_OK )
-    {
-        decoder.PrintErrorInfo();
-        throw std::runtime_error( "ASN fussé" );
-    }
-    handler.Receive( message );
 }
 
 // -----------------------------------------------------------------------------
