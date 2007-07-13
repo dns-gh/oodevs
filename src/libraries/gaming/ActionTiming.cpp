@@ -23,10 +23,8 @@ ActionTiming::ActionTiming( kernel::Controller& controller, const Simulation& si
     : controller_( controller )
     , simulation_( simulation )
     , owner_( owner )
-    , startDay_( simulation.GetDay() )
-    , startTime_( simulation.GetTime() )
     , enabled_( true )
-    , time_( 0 )
+    , time_( simulation_.GetCurrentTick() )
 {
     // NOTHING
 }
@@ -39,12 +37,9 @@ ActionTiming::ActionTiming( xml::xistream& xis, kernel::Controller& controller, 
     : controller_( controller )
     , simulation_( simulation )
     , owner_( owner )
-    , startDay_( simulation.GetDay() )
-    , startTime_( simulation.GetTime() )
     , enabled_( true )
-    , time_( 0 )
 {
-    // NOTHING
+    xis >> attribute( "time", time_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,23 +52,12 @@ ActionTiming::~ActionTiming()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionTiming::SetStart
-// Created: SBO 2007-06-19
-// -----------------------------------------------------------------------------
-void ActionTiming::SetStart( xml::xistream& xis )
-{
-    std::string date;
-    xis >> xml::attribute( "startdate", date );
-    // $$$$ SBO 2007-06-19: 
-}
-
-// -----------------------------------------------------------------------------
 // Name: ActionTiming::Serialize
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
 void ActionTiming::Serialize( xml::xostream& xos ) const
 {
-    
+    xos << attribute( "time", time_ );
 }
 
 // -----------------------------------------------------------------------------

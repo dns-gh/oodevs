@@ -10,8 +10,15 @@
 #ifndef __ActionsToolbar_h_
 #define __ActionsToolbar_h_
 
+namespace kernel
+{
+    class Controllers;
+}
+
 class ActionsModel;
+class ActionsScheduler;
 class Publisher_ABC;
+class Simulation;
 
 // =============================================================================
 /** @class  ActionsToolbar
@@ -26,7 +33,7 @@ class ActionsToolbar : public QHBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsToolbar( QWidget* parent, ActionsModel& actions, Publisher_ABC& publisher );
+             ActionsToolbar( QWidget* parent, ActionsModel& actions, kernel::Controllers& controllers, Publisher_ABC& publisher, const Simulation& simulation );
     virtual ~ActionsToolbar();
     //@}
 
@@ -50,7 +57,7 @@ private:
     //! @name Member data
     //@{
     ActionsModel& actions_;
-    Publisher_ABC& publisher_;
+    std::auto_ptr< ActionsScheduler > scheduler_;
     QToolButton*  loadBtn_;
     QToolButton*  recordBtn_;
     QToolButton*  playBtn_;

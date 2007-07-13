@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ActionsToolbar.h"
 #include "moc_ActionsToolbar.cpp"
+#include "gaming/ActionsScheduler.h"
 #include "gaming/ActionsModel.h"
 #include "gaming/Action_ABC.h"
 #include "clients_gui/resources.h"
@@ -18,10 +19,10 @@
 // Name: ActionsToolbar constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, Publisher_ABC& publisher )
+ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, kernel::Controllers& controllers, Publisher_ABC& publisher, const Simulation& simulation )
     : QHBox( parent )
     , actions_( actions )
-    , publisher_( publisher )
+    , scheduler_( new ActionsScheduler( controllers, simulation, actions, publisher ) )
     , pixRecord_( MAKE_PIXMAP( recrec ) )
     , pixStop_( MAKE_PIXMAP( recstop ) )
 {
@@ -83,12 +84,7 @@ void ActionsToolbar::Record()
 // -----------------------------------------------------------------------------
 void ActionsToolbar::Play()
 {
-    kernel::Iterator< const Action_ABC& > it( actions_.CreateIterator() );
-    while( it.HasMoreElements() )
-    {
-        const Action_ABC& action = it.NextElement();
-        action.Publish( publisher_ );
-    }
+    scheduler_->Start();
 }
 
 // -----------------------------------------------------------------------------
@@ -102,8 +98,10 @@ void ActionsToolbar::Load()
         return;
     try
     {
+        scheduler_->Stop();
         actions_.Load( filename.ascii() );
         playBtn_->setDisabled( false );
+        saveBtn_->setDisabled( false );
     }
     catch( std::exception& e )
     {

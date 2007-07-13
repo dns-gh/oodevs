@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "Action_ABC.h"
 #include "ActionParameter_ABC.h"
+#include "ActionTiming.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -138,6 +139,9 @@ void Action_ABC::Serialize( xml::xostream& xos ) const
             xos << end();
         }
     xos << end();
+
+    if( const ActionTiming* extension = Retrieve< ActionTiming >() ) // $$$$ SBO 2007-07-13: Serializable_ABC ? might be overkill...
+        extension->Serialize( xos );
 }
 
 // -----------------------------------------------------------------------------

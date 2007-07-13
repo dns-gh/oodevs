@@ -231,7 +231,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pMissionPanel_->hide();
 
     // Actions panel
-    ActionsPanel* actionsPanel = new ActionsPanel( this, controllers_, *factory, model_.actions_, publisher );
+    ActionsPanel* actionsPanel = new ActionsPanel( this, controllers_, *factory, model_.actions_, publisher, simulation );
     moveDockWindow( actionsPanel, Qt::DockRight );
     setDockEnabled( actionsPanel, Qt::DockTop, false );
     actionsPanel->hide();

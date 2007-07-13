@@ -46,7 +46,6 @@ public:
     //! @name Operations
     //@{
     void ToggleEnabled();
-    void SetStart( xml::xistream& xis );
     void Serialize( xml::xostream& xos ) const;
     void Shift( long shift );
     //@}
@@ -65,18 +64,12 @@ private:
     ActionTiming& operator=( const ActionTiming& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
     const Simulation& simulation_;
     const Action_ABC& owner_;
-    int startDay_;
-    int startTime_;
     bool enabled_;
     unsigned long time_;
     //@}

@@ -22,6 +22,7 @@ namespace gui
 
 class ActionsModel;
 class Publisher_ABC;
+class Simulation;
 
 // =============================================================================
 /** @class  ActionsPanel
@@ -35,7 +36,7 @@ class ActionsPanel : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ActionsModel& actions, Publisher_ABC& publisher );
+             ActionsPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ActionsModel& actions, Publisher_ABC& publisher, const Simulation& simulation );
     virtual ~ActionsPanel();
     //@}
 
