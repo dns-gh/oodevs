@@ -72,44 +72,47 @@ namespace
     {
         ValueHandler output;
         dispatcher::CompositeMessageHandler composite;
-        ValueEqualsExtractor< UnitIdExtractor > unitIdExtractor( 111 );
-        AttributeExtractor< extractors::Speed > valueExtractor;
+        ValueEqualsExtractor< UnitIdExtractor > unitIdExtractor( 10 );
+//        AttributeExtractor< extractors::Heading > valueExtractor;
+        AttributeExtractor< extractors::Humans > valueExtractor( 
+            extractors::Humans( EnumHumanRank::mdr, &ASN1T_HumanDotations::nb_operationnels ) );
         composite.Add( new MessageFilter( unitIdExtractor, unitIdExtractor, valueExtractor ) );
         composite.Add( new Ticker( valueExtractor, output ) );
 
         Analyse( config, record, composite );
 
-//        output.Dump();
+        output.Dump();
     }
 }
 
-//#include "dispatcher/Model.h"
-//#include "dispatcher/SaverFacade.h"
-//namespace
-//{
-//    void GenerateVolume( const dispatcher::Config& config, const std::string& record )
-//    {
-//        boost::shared_ptr< dispatcher::Model > model( new dispatcher::Model() );
-//        boost::shared_ptr< dispatcher::SaverFacade > saver( new dispatcher::SaverFacade( *model, config ) );
-//
-//        dispatcher::CompositeMessageHandler composite;
-//        composite.Add( model );
-//        composite.Add( saver );
-//
-//        dispatcher::MessageLoader loader( config, record );
-//        loader.LoadKeyFrame( 0, composite );
-//        for( unsigned count = 0; count < 10000; ++count )
-//        {
-//            unsigned i = 0;
-//            while( loader.LoadFrame( i, composite ) )
-//                ++i;
-//        }
-//    }
-//}
+#include "dispatcher/Model.h"
+#include "dispatcher/SaverFacade.h"
+namespace
+{
+    void GenerateVolume( const dispatcher::Config& config, const std::string& record )
+    {
+        boost::shared_ptr< dispatcher::Model > model( new dispatcher::Model() );
+        boost::shared_ptr< dispatcher::SaverFacade > saver( new dispatcher::SaverFacade( *model, config ) );
+
+        dispatcher::CompositeMessageHandler composite;
+        composite.Add( model );
+        composite.Add( saver );
+
+        dispatcher::MessageLoader loader( config, record );
+        loader.LoadKeyFrame( 0, composite );
+        for( unsigned count = 0; count < 1000; ++count )
+        {
+            unsigned i = 0;
+            while( loader.LoadFrame( i, composite ) )
+                ++i;
+        }
+    }
+}
 
 namespace 
 {
     const char* base = "20070713T100644";
+    const char* big  = "20070713T130947";
     const char* huge = "20070713T112811";
 }
 
@@ -118,7 +121,7 @@ int main( int argc, char* argv[] )
     dispatcher::Config config;
     config.Parse( argc, argv );
 
-    Test3a( config, huge );
+    Test3a( config, big );
 //    GenerateVolume( config, base );
 
     return 0;
