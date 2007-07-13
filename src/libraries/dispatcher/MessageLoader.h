@@ -12,8 +12,10 @@
 
 #include "game_asn/Asn.h"
 #include "Frames.h"
+//#include "tools/thread/ThreadPool.h"
 #include <vector>
 #include <fstream>
+#include <boost/shared_ptr.hpp>
 
 namespace tools
 {
@@ -24,6 +26,7 @@ namespace dispatcher
 {
     class Config;
     class MessageHandler_ABC;
+    struct Buffer;
 
 // =============================================================================
 /** @class  MessageLoader
@@ -45,6 +48,7 @@ public:
     //@{
     bool         LoadFrame   ( unsigned int frameNumber, MessageHandler_ABC& handler );
     unsigned int LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& handler );
+    void Synchronize();
 
     unsigned int GetTickNumber() const;
     //@}
@@ -66,9 +70,9 @@ private:
     //@{
     void LoadIndex( const std::string& file );
     void LoadKeyIndex( const std::string& file );
-    void LoadSimToClientMessage( const unsigned char*& input, MessageHandler_ABC& handler );
-    void LoadKeyFrame( unsigned frame );
     void Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler );
+    void LoadBuffer( const boost::shared_ptr< Buffer >& buffer, MessageHandler_ABC& handler );
+    void LoadSimToClientMessage( const unsigned char*& input, MessageHandler_ABC& handler );
     //@}
 
 private:
@@ -78,7 +82,9 @@ private:
     T_KeyFrames keyFrames_;
     std::ifstream updates_;
     std::ifstream keys_;
-    ASN1OCTET buffer_[100000];
+
+//    tools::thread::ThreadPool disk_;
+//    tools::thread::ThreadPool cpu_;
     //@}
 };
 

@@ -14,7 +14,9 @@
 #include "Config.h"
 #include "tools/InputBinaryStream.h"
 #include "tools/AsnMessageDecoder.h"
-#include "boost/filesystem/operations.hpp"
+#include "tools/thread/BarrierCommand.h"
+#include <boost/filesystem/operations.hpp>
+#include <boost/bind.hpp>
 namespace bfs = boost::filesystem;
 using namespace dispatcher;
 
@@ -23,6 +25,8 @@ using namespace dispatcher;
 // Created: AGE 2007-07-09
 // -----------------------------------------------------------------------------
 MessageLoader::MessageLoader( const Config& config, const std::string& records )
+//    : disk_( 1 )
+//    , cpu_ ( 1 )
 {
     const bfs::path dir( config.GetRecorderDirectory( records ), bfs::native );
 
@@ -51,6 +55,7 @@ bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& han
         return false;
     const Frame& current = frames_[ frameNumber ];
     Load( updates_, current.offset_, current.size_, handler );
+//    disk_.Enqueue( boost::bind( &MessageLoader::Load, this, boost::ref( updates_ ), current.offset_, current.size_, boost::ref( handler ) ) );
     return true;
 }
 
@@ -70,12 +75,32 @@ unsigned int MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandl
     return keyFrame.frameNumber_;
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: MessageLoader::Synchronize
+// Created: AGE 2007-07-13
+// -----------------------------------------------------------------------------
+void MessageLoader::Synchronize()
+{
+//    {
+//        tools::thread::BarrierCommand barrier;
+//        disk_.Enqueue( barrier.command() );
+//        barrier.wait();
+//    }
+//
+//    {
+//        tools::thread::BarrierCommand barrier;
+//        cpu_.Enqueue( barrier.command() );
+//        barrier.wait();
+//    }
+}
+
+namespace dispatcher
 {
     struct Buffer
     {
          Buffer( unsigned size, std::ifstream& in )
             : data_( new unsigned char[size] )
+            , size_( size )
         {
             in.read( (char*)data_, size );
         }
@@ -84,6 +109,7 @@ namespace
             delete[] data_;
         }
         unsigned char* data_;
+        unsigned size_;
     };
 }
 
@@ -94,10 +120,19 @@ namespace
 void MessageLoader::Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler )
 {
     in.seekg( from );
+    boost::shared_ptr< Buffer > buffer( new Buffer( size, in ) );
+    LoadBuffer( buffer, handler );
+//    cpu_.Enqueue( boost::bind( &MessageLoader::LoadBuffer, this, buffer, boost::ref( handler ) ) );
+}
 
-    Buffer buffer( size, in );
-    unsigned char* current = buffer.data_;
-    while( current < buffer.data_ + size )
+// -----------------------------------------------------------------------------
+// Name: MessageLoader::LoadBuffer
+// Created: AGE 2007-07-13
+// -----------------------------------------------------------------------------
+void MessageLoader::LoadBuffer( const boost::shared_ptr< Buffer >& buffer, MessageHandler_ABC& handler )
+{
+    unsigned char* current = buffer->data_;
+    while( current < buffer->data_ + buffer->size_ )
         LoadSimToClientMessage( current, handler );
 }
 

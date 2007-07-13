@@ -15,8 +15,6 @@
 #include "dispatcher/Config.h"
 #include "dispatcher/MessageLoader.h"
 #include "dispatcher/CompositeMessageHandler.h"
-#include "dispatcher/Model.h"
-#include "dispatcher/SaverFacade.h"
 #include <iostream>
 #include <ctime>
 
@@ -60,6 +58,8 @@ namespace
         while( loader.LoadFrame( i, handler ) )
             ++i;
 
+        loader.Synchronize();
+
         clock_t end = clock();
 
         std::cout << "Analysed " 
@@ -79,33 +79,38 @@ namespace
 
         Analyse( config, record, composite );
 
-        output.Dump();
-    }
-
-    void GenerateVolume( const dispatcher::Config& config, const std::string& record )
-    {
-        boost::shared_ptr< dispatcher::Model > model( new dispatcher::Model() );
-        boost::shared_ptr< dispatcher::SaverFacade > saver( new dispatcher::SaverFacade( *model, config ) );
-
-        dispatcher::CompositeMessageHandler composite;
-        composite.Add( model );
-        composite.Add( saver );
-
-        dispatcher::MessageLoader loader( config, record );
-        loader.LoadKeyFrame( 0, composite );
-        for( unsigned count = 0; count < 1000; ++count )
-        {
-            unsigned i = 0;
-            while( loader.LoadFrame( i, composite ) )
-                ++i;
-        }
+//        output.Dump();
     }
 }
+
+//#include "dispatcher/Model.h"
+//#include "dispatcher/SaverFacade.h"
+//namespace
+//{
+//    void GenerateVolume( const dispatcher::Config& config, const std::string& record )
+//    {
+//        boost::shared_ptr< dispatcher::Model > model( new dispatcher::Model() );
+//        boost::shared_ptr< dispatcher::SaverFacade > saver( new dispatcher::SaverFacade( *model, config ) );
+//
+//        dispatcher::CompositeMessageHandler composite;
+//        composite.Add( model );
+//        composite.Add( saver );
+//
+//        dispatcher::MessageLoader loader( config, record );
+//        loader.LoadKeyFrame( 0, composite );
+//        for( unsigned count = 0; count < 10000; ++count )
+//        {
+//            unsigned i = 0;
+//            while( loader.LoadFrame( i, composite ) )
+//                ++i;
+//        }
+//    }
+//}
 
 namespace 
 {
     const char* base = "20070713T100644";
-    const char* huge = "20070713T101624";
+    const char* huge = "20070713T112811";
 }
 
 int main( int argc, char* argv[] )

@@ -13,7 +13,7 @@ generatedDir=$inputDir/generated
 
 mkdir $tmpDir
 for file in $inputDir/*.asn; do
-    ../bin/asn1c.exe $file -c++ -per -trace -print `basename ${file} .asn`Print.cpp -o $tmpDir -I $inputDir
+    ../bin/asn1c.exe $file -c++ -per -compact -print `basename ${file} .asn`Print.cpp -o $tmpDir -I $inputDir
 done
 
 # get different files ignoring header (generation date) and retrieve it has a list of files
