@@ -59,7 +59,7 @@ ActionFactory::~ActionFactory()
 // Name: ActionFactory::CreateAction
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const MissionType& mission ) const
+Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const MissionType& mission, unsigned long startTime ) const
 {
     std::auto_ptr< Action_ABC > action;
     if( model_.agents_.FindAgent( target.GetId() ) ) 
@@ -71,7 +71,7 @@ Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const Mission
     else
         throw std::runtime_error( __FUNCTION__ );
 
-    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, startTime, *action ) );
     action->Polish();
     return action.release();
 }
@@ -80,10 +80,10 @@ Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const Mission
 // Name: ActionFactory::CreateAction
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const FragOrderType& fragOrder ) const
+Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const FragOrderType& fragOrder, unsigned long startTime ) const
 {
     std::auto_ptr< Action_ABC > action( new ActionFragOrder( target, fragOrder, controllers_.controller_, true ) );
-    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, startTime, *action ) );
     action->Polish();
     return action.release();
 }
@@ -229,7 +229,7 @@ Action_ABC* ActionFactory::CreateMission( xml::xistream& xis ) const
     else
         throw std::runtime_error( tools::translate( "ActionFactory", "Mission's entity '%1' not found." ).arg( id ).ascii() );
 
-    action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTiming( xis, controllers_.controller_, *action ) );
     action->Polish();
 
     Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
@@ -261,7 +261,7 @@ Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis ) const
         throw std::runtime_error( tools::translate( "ActionFactory", "Frag order's entity '%1' not found." ).arg( id ).ascii() );
     action.reset( new ActionFragOrder( xis, controllers_.controller_, fragOrders_, *target ) );
 
-    action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTiming( xis, controllers_.controller_, *action ) );
     action->Polish();
 
     Iterator< const OrderParameter& > it = action->GetType().CreateIterator();

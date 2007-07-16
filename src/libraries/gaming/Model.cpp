@@ -68,7 +68,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , fires_( *new FiresModel( agents_, agents_ ) )
     , weather_( *new WeatherModel( controllers, *this ) )
     , profiles_( *new UserProfilesModel( userProfileFactory_ ) )
-    , actions_( *new ActionsModel( actionFactory_ ) )
+    , actions_( *new ActionsModel( actionFactory_, simulation ) )
 {
     // NOTHING
 }

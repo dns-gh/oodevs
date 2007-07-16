@@ -17,14 +17,26 @@ using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ActionTiming constructor
+// Created: SBO 2007-07-16
+// -----------------------------------------------------------------------------
+ActionTiming::ActionTiming( kernel::Controller& controller, unsigned long startTime, const Action_ABC& owner )
+    : controller_( controller )
+    , owner_( owner )
+    , enabled_( true )
+    , time_( startTime )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionTiming constructor
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
 ActionTiming::ActionTiming( kernel::Controller& controller, const Simulation& simulation, const Action_ABC& owner )
     : controller_( controller )
-    , simulation_( simulation )
     , owner_( owner )
     , enabled_( true )
-    , time_( simulation_.GetCurrentTick() )
+    , time_( simulation.GetCurrentTick() )
 {
     // NOTHING
 }
@@ -33,9 +45,8 @@ ActionTiming::ActionTiming( kernel::Controller& controller, const Simulation& si
 // Name: ActionTiming constructor
 // Created: SBO 2007-06-28
 // -----------------------------------------------------------------------------
-ActionTiming::ActionTiming( xml::xistream& xis, kernel::Controller& controller, const Simulation& simulation, const Action_ABC& owner )
+ActionTiming::ActionTiming( xml::xistream& xis, kernel::Controller& controller, const Action_ABC& owner )
     : controller_( controller )
-    , simulation_( simulation )
     , owner_( owner )
     , enabled_( true )
 {

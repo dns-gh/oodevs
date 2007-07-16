@@ -11,6 +11,7 @@
 #include "ActionsModel.h"
 #include "Action_ABC.h"
 #include "ActionFactory_ABC.h"
+#include "Simulation.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -20,9 +21,11 @@ using namespace kernel;
 // Name: ActionsModel constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionsModel::ActionsModel( ActionFactory_ABC& factory )
-    : factory_( factory )
+ActionsModel::ActionsModel( ActionFactory_ABC& factory, const Simulation& simulation )
+    : simulation_( simulation )
+    , factory_( factory )
     , isRecording_( false )
+    , recordingStartTime_( 0 )
 {
     // NOTHING
 }
@@ -52,7 +55,8 @@ void ActionsModel::Purge()
 // -----------------------------------------------------------------------------
 Action_ABC* ActionsModel::CreateAction( const Entity_ABC& target, const MissionType& mission )
 {
-    Action_ABC* action = factory_.CreateAction( target, mission );
+    const unsigned long startTime = isRecording_ ? std::max< long >( 0, simulation_.GetCurrentTick() - recordingStartTime_ ) : 0;
+    Action_ABC* action = factory_.CreateAction( target, mission, startTime );
     Register( action->GetId(), *action );
     return action;
 }
@@ -63,7 +67,8 @@ Action_ABC* ActionsModel::CreateAction( const Entity_ABC& target, const MissionT
 // -----------------------------------------------------------------------------
 Action_ABC* ActionsModel::CreateAction( const Entity_ABC& target, const FragOrderType& fragOrder )
 {
-    Action_ABC* action = factory_.CreateAction( target, fragOrder );
+    const unsigned long startTime = isRecording_ ? std::max< long >( 0, simulation_.GetCurrentTick() - recordingStartTime_ ) : 0;
+    Action_ABC* action = factory_.CreateAction( target, fragOrder, startTime );
     Register( action->GetId(), *action );
     return action;
 }
@@ -142,4 +147,6 @@ bool ActionsModel::IsRecording() const
 void ActionsModel::ToggleRecording()
 {
     isRecording_ = !isRecording_;
+    if( isRecording_ )
+        recordingStartTime_ = simulation_.GetCurrentTick();
 }

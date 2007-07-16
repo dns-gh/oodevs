@@ -101,7 +101,10 @@ void TimelineActionItem::Update()
 void TimelineActionItem::draw( QPainter& painter )
 {
     Update();
-
+    if( isSelected() )
+        setZ( parentItem_.z() - 99 );
+    else
+        setZ( parentItem_.z() - 100 );
     const QPalette::ColorGroup colorGroup = isSelected() ? QPalette::Active : QPalette::Inactive;
     const QPen oldPen = painter.pen();
     painter.fillRect( rect(), palette_.color( colorGroup, QColorGroup::Background ) );

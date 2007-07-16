@@ -27,6 +27,7 @@ namespace xml
 
 class Action_ABC;
 class ActionFactory_ABC;
+class Simulation;
 
 // =============================================================================
 /** @class  ActionsModel
@@ -40,7 +41,7 @@ class ActionsModel : public kernel::Resolver< Action_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionsModel( ActionFactory_ABC& factory );
+             ActionsModel( ActionFactory_ABC& factory, const Simulation& simulation );
     virtual ~ActionsModel();
     //@}
 
@@ -72,8 +73,10 @@ private:
 private:
     //! @name Member data
     //@{
+    const Simulation& simulation_;
     ActionFactory_ABC& factory_;
     bool isRecording_;
+    unsigned long recordingStartTime_;
     //@}
 };
 

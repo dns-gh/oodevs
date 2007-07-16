@@ -38,8 +38,9 @@ class ActionTiming : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
+             ActionTiming( kernel::Controller& controller, unsigned long startTime, const Action_ABC& owner );
              ActionTiming( kernel::Controller& controller, const Simulation& simulation, const Action_ABC& owner );
-             ActionTiming( xml::xistream& xis, kernel::Controller& controller, const Simulation& simulation, const Action_ABC& owner );
+             ActionTiming( xml::xistream& xis, kernel::Controller& controller, const Action_ABC& owner );
     virtual ~ActionTiming();
     //@}
 
@@ -68,7 +69,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const Simulation& simulation_;
     const Action_ABC& owner_;
     bool enabled_;
     unsigned long time_;

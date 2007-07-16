@@ -109,15 +109,21 @@ void TimelineEditor::Update()
 void TimelineEditor::mousePressEvent( QMouseEvent* event )
 {
     setFocus();
-    ClearSelection();
     grabPoint_ = ConvertToContent( event->pos() );
     QCanvasItemList list = canvas()->collisions( grabPoint_ );
+    if( list.empty() )
+    {
+        ClearSelection();
+        return;
+    }
     for( QCanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
         if( TimelineItem_ABC* item = dynamic_cast< TimelineItem_ABC* >( *it ) )
-        {
-            SetSelected( *item ); // $$$$ SBO 2007-07-02: rotate through selection...
-            break;;
-        }
+            if( item != selectedItem_ )
+            {
+                ClearSelection();
+                SetSelected( *item );
+                return;
+            }
 }
 
 // -----------------------------------------------------------------------------
