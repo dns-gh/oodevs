@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "TimelineEditor.h"
 #include "moc_TimelineEditor.cpp"
+#include "TimelineMarker.h"
 #include "TimelineRuler.h"
 #include "TimelineEntityItem.h"
 #include "TimelineActionItem.h"
@@ -23,12 +24,12 @@ using namespace kernel;
 // Name: TimelineEditor constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineEditor::TimelineEditor( QWidget* parent, QCanvas* canvas, Controllers& controllers, ActionsModel& actions )
+TimelineEditor::TimelineEditor( QWidget* parent, QCanvas* canvas, Controllers& controllers, ActionsScheduler& scheduler )
     : QCanvasView( canvas, parent )
     , controllers_( controllers )
-    , actions_( actions )
-    , selectedAction_( 0 )
+    , selectedItem_( 0 )
 {
+    new TimelineMarker( this, scheduler );
     lines_.push_back( new TimelineRuler( canvas, this ) );
     controllers_.Register( *this );
 
@@ -112,15 +113,10 @@ void TimelineEditor::mousePressEvent( QMouseEvent* event )
     grabPoint_ = ConvertToContent( event->pos() );
     QCanvasItemList list = canvas()->collisions( grabPoint_ );
     for( QCanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
-        if( TimelineActionItem* item = dynamic_cast< TimelineActionItem* >( *it ) )
+        if( TimelineItem_ABC* item = dynamic_cast< TimelineItem_ABC* >( *it ) )
         {
             SetSelected( *item ); // $$$$ SBO 2007-07-02: rotate through selection...
             break;;
-        }
-        else if( dynamic_cast< TimelineEntityItem* >( *it ) )
-        {
-            // $$$$ SBO 2007-07-05: ?
-            break;
         }
 }
 
@@ -130,13 +126,13 @@ void TimelineEditor::mousePressEvent( QMouseEvent* event )
 // -----------------------------------------------------------------------------
 void TimelineEditor::mouseMoveEvent( QMouseEvent* event )
 {
-    if( !selectedAction_ )
+    if( !selectedItem_ )
         return;
     if( event->state() | Qt::LeftButton )
     {
         const QPoint position = ConvertToContent( event->pos() );
-        selectedAction_->Shift( position.x() - grabPoint_.x() );
-        ensureVisible( selectedAction_->x(), selectedAction_->y() );
+        selectedItem_->Shift( position.x() - grabPoint_.x() );
+        ensureVisible( selectedItem_->x(), selectedItem_->y() );
         grabPoint_ = position;
     }
 }
@@ -147,14 +143,14 @@ void TimelineEditor::mouseMoveEvent( QMouseEvent* event )
 // -----------------------------------------------------------------------------
 void TimelineEditor::keyPressEvent( QKeyEvent* event )
 {
-    if( !selectedAction_ )
+    if( !selectedItem_ )
         return;
     if( event->key() == Qt::Key_Delete )
-        selectedAction_->setVisible( false );
+        selectedItem_->setVisible( false );
     else if( event->key() == Qt::Key_Left || event->key() == Qt::Key_Right )
     {
         const short sign = event->key() == Qt::Key_Left ? -1 : 1;
-        selectedAction_->Shift( sign * ( ( event->state() & Qt::ShiftButton ) ? 100 : 5 ) ); // $$$$ SBO 2007-07-05: ruler.getPageStep / ruler.getTickStep
+        selectedItem_->Shift( sign * ( ( event->state() & Qt::ShiftButton ) ? 100 : 5 ) ); // $$$$ SBO 2007-07-05: ruler.getPageStep / ruler.getTickStep
     }
 }
 
@@ -182,17 +178,17 @@ void TimelineEditor::ClearSelection()
     QCanvasItemList list = canvas()->allItems();
     for( QCanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
         (*it)->setSelected( false );
-    selectedAction_ = 0;
+    selectedItem_ = 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: TimelineEditor::SetSelected
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-void TimelineEditor::SetSelected( TimelineActionItem& item )
+void TimelineEditor::SetSelected( TimelineItem_ABC& item )
 {
     item.setSelected( true );
-    selectedAction_ = &item;
+    selectedItem_ = &item;
 }
 
 // -----------------------------------------------------------------------------

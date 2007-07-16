@@ -64,6 +64,7 @@
 #include "gaming/Profile.h"
 #include "gaming/ProfileFilter.h"
 #include "gaming/VisionConesToggler.h"
+#include "gaming/ActionsScheduler.h"
 
 #include "clients_gui/DisplayToolbar.h"
 #include "clients_gui/GlSelector.h"
@@ -231,12 +232,13 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pMissionPanel_->hide();
 
     // Actions panel
-    ActionsPanel* actionsPanel = new ActionsPanel( this, controllers_, *factory, model_.actions_, publisher, simulation );
+    ActionsScheduler* scheduler = new ActionsScheduler( this, controllers_, simulation, model_.actions_, publisher );
+    ActionsPanel* actionsPanel = new ActionsPanel( this, controllers_, *factory, model_.actions_, *scheduler );
     moveDockWindow( actionsPanel, Qt::DockRight );
     setDockEnabled( actionsPanel, Qt::DockTop, false );
     actionsPanel->hide();
 
-    TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_.actions_ );
+    TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, *scheduler );
     moveDockWindow( timelinePanel, Qt::DockTop );
     timelinePanel->hide();
 

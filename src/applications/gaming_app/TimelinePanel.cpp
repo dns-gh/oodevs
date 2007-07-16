@@ -15,14 +15,14 @@
 // Name: TimelinePanel constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, ActionsModel& actions )
+TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, ActionsScheduler& scheduler )
     : QDockWindow( parent )
 {
     setResizeEnabled( true );
     setCaption( tr( "Actions timeline" ) );
     setCloseMode( QDockWindow::Always );
     QVBox* box = new QVBox( this );
-    new TimelineWidget( box, controllers, actions );
+    new TimelineWidget( box, controllers, scheduler );
     setWidget( box );
 }
 

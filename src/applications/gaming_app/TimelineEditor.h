@@ -21,9 +21,9 @@ namespace kernel
 
 class ActionsModel;
 class Action_ABC;
+class ActionsScheduler;
 class TimelineItem_ABC;
 class TimelineEntityItem;
-class TimelineActionItem;
 
 // =============================================================================
 /** @class  TimelineEditor
@@ -41,7 +41,7 @@ class TimelineEditor : public QCanvasView
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineEditor( QWidget* parent, QCanvas* canvas, kernel::Controllers& controllers, ActionsModel& actions );
+             TimelineEditor( QWidget* parent, QCanvas* canvas, kernel::Controllers& controllers, ActionsScheduler& scheduler );
     virtual ~TimelineEditor();
     //@}
 
@@ -73,7 +73,7 @@ private:
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
 
     void ClearSelection();
-    void SetSelected( TimelineActionItem& item );
+    void SetSelected( TimelineItem_ABC& item );
     QPoint ConvertToContent( const QPoint& point ) const;
     //@}
 
@@ -88,11 +88,10 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    ActionsModel&        actions_;
     T_EntityItems        items_;
     T_Lines              lines_;
     QTimer*              updateTimer_;
-    TimelineActionItem*  selectedAction_;
+    TimelineItem_ABC*    selectedItem_;
     QPoint               grabPoint_;
     //@}
 };

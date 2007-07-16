@@ -7,51 +7,53 @@
 //
 // *****************************************************************************
 
-#ifndef __TimelineWidget_h_
-#define __TimelineWidget_h_
+#ifndef __TimelineMarker_h_
+#define __TimelineMarker_h_
 
-namespace kernel
-{
-    class Controllers;
-}
+#include "TimelineItem_ABC.h"
 
 class ActionsScheduler;
 
 // =============================================================================
-/** @class  TimelineWidget
-    @brief  TimelineWidget
+/** @class  TimelineMarker
+    @brief  TimelineMarker
 */
-// Created: SBO 2007-07-04
+// Created: SBO 2007-07-16
 // =============================================================================
-class TimelineWidget : public QHBox
+class TimelineMarker : public TimelineItem_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineWidget( QWidget* parent, kernel::Controllers& controllers, ActionsScheduler& scheduler );
-    virtual ~TimelineWidget();
+             TimelineMarker( QCanvasView* view, ActionsScheduler& scheduler );
+    virtual ~TimelineMarker();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Shift( long shift );
+    virtual void Update();
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    TimelineWidget( const TimelineWidget& );            //!< Copy constructor
-    TimelineWidget& operator=( const TimelineWidget& ); //!< Assignment operator
+    TimelineMarker( const TimelineMarker& );            //!< Copy constructor
+    TimelineMarker& operator=( const TimelineMarker& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
+    virtual void draw( QPainter& painter );
     //@}
 
 private:
     //! @name Member data
     //@{
+    QCanvasView& view_;
+    ActionsScheduler& scheduler_;
     //@}
 };
 
-#endif // __TimelineWidget_h_
+#endif // __TimelineMarker_h_

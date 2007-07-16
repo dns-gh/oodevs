@@ -32,6 +32,7 @@ public:
     //! @name Operations
     //@{
     virtual void Update() = 0;
+    virtual void Shift( long ) {};
     void SetOverlayed( bool overlayed );
     bool IsOverlayed() const;
     //@}

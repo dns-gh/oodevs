@@ -19,10 +19,11 @@
 // Name: ActionsToolbar constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, kernel::Controllers& controllers, Publisher_ABC& publisher, const Simulation& simulation )
+ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, ActionsScheduler& scheduler )
     : QHBox( parent )
     , actions_( actions )
-    , scheduler_( new ActionsScheduler( controllers, simulation, actions, publisher ) )
+    , scheduler_( scheduler )
+    , pixStart_( MAKE_PIXMAP( recplay ) )
     , pixRecord_( MAKE_PIXMAP( recrec ) )
     , pixStop_( MAKE_PIXMAP( recstop ) )
 {
@@ -43,7 +44,7 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, kernel::
 
     playBtn_ = new QToolButton( this );
     playBtn_->setAutoRaise( true );
-    playBtn_->setPixmap( MAKE_PIXMAP( recplay ) );
+    playBtn_->setPixmap( pixStart_ );
     playBtn_->setDisabled( true );
 
     recordBtn_ = new QToolButton( this );
@@ -84,7 +85,8 @@ void ActionsToolbar::Record()
 // -----------------------------------------------------------------------------
 void ActionsToolbar::Play()
 {
-    scheduler_->Start();
+    scheduler_.Start();
+    playBtn_->setPixmap( scheduler_.IsRunning() ? pixStop_ : pixStart_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +100,8 @@ void ActionsToolbar::Load()
         return;
     try
     {
-        scheduler_->Stop();
+        scheduler_.Stop();
+        playBtn_->setPixmap( pixStart_ );
         actions_.Load( filename.ascii() );
         playBtn_->setDisabled( false );
         saveBtn_->setDisabled( false );

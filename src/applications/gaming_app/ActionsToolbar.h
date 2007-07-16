@@ -33,7 +33,7 @@ class ActionsToolbar : public QHBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsToolbar( QWidget* parent, ActionsModel& actions, kernel::Controllers& controllers, Publisher_ABC& publisher, const Simulation& simulation );
+             ActionsToolbar( QWidget* parent, ActionsModel& actions, ActionsScheduler& scheduler );
     virtual ~ActionsToolbar();
     //@}
 
@@ -57,12 +57,12 @@ private:
     //! @name Member data
     //@{
     ActionsModel& actions_;
-    std::auto_ptr< ActionsScheduler > scheduler_;
+    ActionsScheduler& scheduler_;
     QToolButton*  loadBtn_;
     QToolButton*  recordBtn_;
     QToolButton*  playBtn_;
     QToolButton*  saveBtn_;
-    QPixmap       pixRecord_, pixStop_;
+    QPixmap       pixStart_, pixRecord_, pixStop_;
     //@}
 };
 

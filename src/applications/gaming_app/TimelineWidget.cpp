@@ -50,10 +50,10 @@ namespace
 // Name: TimelineWidget constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineWidget::TimelineWidget( QWidget* parent, kernel::Controllers& controllers, ActionsModel& actions )
+TimelineWidget::TimelineWidget( QWidget* parent, kernel::Controllers& controllers, ActionsScheduler& scheduler )
     : QHBox( parent )
 {
-    new TimelineEditor( parent, new TimelineCanvas(), controllers, actions );
+    new TimelineEditor( parent, new TimelineCanvas(), controllers, scheduler );
 }
 
 // -----------------------------------------------------------------------------

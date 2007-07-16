@@ -42,8 +42,8 @@ public:
     //! @name Operations
     //@{
     virtual void Update();
+    virtual void Shift( long shift );
     virtual void setVisible( bool visible );
-    void Shift( long shift );
     //@}
 
 private:

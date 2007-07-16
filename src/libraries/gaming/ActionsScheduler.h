@@ -28,14 +28,15 @@ class Simulation;
 */
 // Created: SBO 2007-07-13
 // =============================================================================
-class ActionsScheduler : public kernel::Observer_ABC
+class ActionsScheduler : public QObject
+                       , public kernel::Observer_ABC
                        , public kernel::ElementObserver_ABC< Simulation::sStartTick >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsScheduler( kernel::Controllers& controllers, const Simulation& simulation, const ActionsModel& actions, Publisher_ABC& publisher );
+             ActionsScheduler( QObject* parent, kernel::Controllers& controllers, const Simulation& simulation, const ActionsModel& actions, Publisher_ABC& publisher );
     virtual ~ActionsScheduler();
     //@}
 
@@ -43,6 +44,9 @@ public:
     //@{
     void Start();
     void Stop();
+    bool IsRunning() const;
+    unsigned long GetCurrentTime() const;
+    void Shift( long shift );
     //@}
 
 private:
@@ -64,8 +68,10 @@ private:
     const Simulation& simulation_;
     const ActionsModel& actions_;
     Publisher_ABC& publisher_;
-    unsigned long startTime_;
+    unsigned long currentTime_;
+    unsigned long lastTick_;
     bool running_;
+    bool paused_;
     //@}
 };
 

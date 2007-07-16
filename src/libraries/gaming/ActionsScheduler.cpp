@@ -21,13 +21,16 @@ using namespace kernel;
 // Name: ActionsScheduler constructor
 // Created: SBO 2007-07-13
 // -----------------------------------------------------------------------------
-ActionsScheduler::ActionsScheduler( Controllers& controllers, const Simulation& simulation, const ActionsModel& actions, Publisher_ABC& publisher )
-    : controllers_( controllers )
+ActionsScheduler::ActionsScheduler( QObject* parent, Controllers& controllers, const Simulation& simulation, const ActionsModel& actions, Publisher_ABC& publisher )
+    : QObject( parent )
+    , controllers_( controllers )
     , simulation_( simulation )
     , actions_( actions )
     , publisher_( publisher )
-    , startTime_( 0 )
+    , currentTime_( 0 )
+    , lastTick_( 0 )
     , running_( false )
+    , paused_( false )
 {
     controllers_.Register( *this );
 }
@@ -47,8 +50,13 @@ ActionsScheduler::~ActionsScheduler()
 // -----------------------------------------------------------------------------
 void ActionsScheduler::Start()
 {
-    startTime_ = simulation_.GetCurrentTick();
-    running_ = true;
+    if( running_ )
+        paused_ = !paused_;
+    else
+    {
+        lastTick_ = simulation_.GetCurrentTick();
+        running_ = true;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +65,17 @@ void ActionsScheduler::Start()
 // -----------------------------------------------------------------------------
 void ActionsScheduler::Stop()
 {
+    paused_ = false;
     running_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsScheduler::IsRunning
+// Created: SBO 2007-07-16
+// -----------------------------------------------------------------------------
+bool ActionsScheduler::IsRunning() const
+{
+    return running_ && !paused_;
 }
 
 // -----------------------------------------------------------------------------
@@ -66,16 +84,35 @@ void ActionsScheduler::Stop()
 // -----------------------------------------------------------------------------
 void ActionsScheduler::NotifyUpdated( const Simulation::sStartTick& )
 {
-    if( !running_ || simulation_.GetCurrentTick() < startTime_ )
+    int interval = simulation_.GetCurrentTick() - lastTick_; // $$$$ SBO 2007-07-16: should provide replayer time-shifting compatibility
+    lastTick_ = simulation_.GetCurrentTick();
+    if( !running_ || paused_ || currentTime_ + interval < 0 )
         return;
-    unsigned long currentTime = simulation_.GetCurrentTick() - startTime_;
-
+    currentTime_ += interval;
     Iterator< const Action_ABC& > it( actions_.CreateIterator() );
     while( it.HasMoreElements() )
     {
         const Action_ABC& action = it.NextElement();
         if( const ActionTiming* timing = action.Retrieve< ActionTiming >() )
-            if( timing->IsEnabled() && timing->GetTime() == currentTime )
+            if( timing->IsEnabled() && timing->GetTime() == currentTime_ )
                 action.Publish( publisher_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsScheduler::GetCurrentTime
+// Created: SBO 2007-07-16
+// -----------------------------------------------------------------------------
+unsigned long ActionsScheduler::GetCurrentTime() const
+{
+    return currentTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsScheduler::Shift
+// Created: SBO 2007-07-16
+// -----------------------------------------------------------------------------
+void ActionsScheduler::Shift( long shift )
+{
+    currentTime_ = std::max< long >( 0, long( currentTime_ ) + shift );
 }
