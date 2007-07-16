@@ -54,6 +54,8 @@ void TimelineActionItem::NotifyUpdated( const ActionTiming& timing )
     {
         setX( parentItem_.width() + timing.GetTime() ); // $$$$ SBO 2007-07-05: 
         setVisible( timing.IsEnabled() );
+        if( x() + rect().width() > canvas()->width() )
+            canvas()->resize( x() + rect().width(), canvas()->height() );
     }
 }
 

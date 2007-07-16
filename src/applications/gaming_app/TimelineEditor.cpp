@@ -134,7 +134,17 @@ void TimelineEditor::mouseMoveEvent( QMouseEvent* event )
         selectedItem_->Shift( position.x() - grabPoint_.x() );
         ensureVisible( selectedItem_->x(), selectedItem_->y() );
         grabPoint_ = position;
+        setCursor( QCursor::sizeHorCursor );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineEditor::mouseReleaseEvent
+// Created: SBO 2007-07-16
+// -----------------------------------------------------------------------------
+void TimelineEditor::mouseReleaseEvent( QMouseEvent* event )
+{
+    setCursor( QCursor::arrowCursor );
 }
 
 // -----------------------------------------------------------------------------
