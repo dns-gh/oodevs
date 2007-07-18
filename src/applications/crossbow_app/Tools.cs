@@ -6,44 +6,40 @@ namespace crossbow
 {
     static class Tools
     {
-        #region "Get MxDocument from ArcMap"
-        // ArcGIS Snippet Title: 
-        // Get MxDocument from ArcMap
-        //
-        // Add the following references to the project:
-        // ESRI.ArcGIS.ArcMapUI
-        // ESRI.ArcGIS.Framework
-        // ESRI.ArcGIS.System
-        // 
-        // Intended ArcGIS Products for this snippet:
-        // ArcGIS Desktop
-        //
-        // Required ArcGIS Extensions:
-        // (NONE)
-        //
-        // Notes:
-        // This snippet is intended to be inserted at the base level of a Class.
-        // It is not intended to be nested within an existing Method.
-        //
-        // Use the following XML documentation comments to use this snippet:
-        /// <summary>Get MxDocument from ArcMap.</summary>
-        ///
-        /// <param name="application">An IApplication interface that is the ArcMap application.</param>
-        /// 
-        /// <returns>An IMxDocument interface.</returns>
-        /// 
-        /// <remarks></remarks>
-        public static IMxDocument GetMxDocument(ESRI.ArcGIS.Framework.IApplication application)
+        static private ESRI.ArcGIS.Framework.IApplication m_application = null;
+        static private bool m_dynamicDisplayEnabled = false;
+
+        #region "Initialization"
+        public static void Initialize(ESRI.ArcGIS.Framework.IApplication application)
         {
+            m_application = application;
+        }
+        #endregion
 
-            if (application == null)
+        #region "Enable dynamic display"
+        public static void EnableDynamicDisplay()
+        {
+            if (m_dynamicDisplayEnabled)
+                return;
+            IMxDocument mxDocument = Tools.GetMxDocument();
+            IDynamicMap map = mxDocument.FocusMap as IDynamicMap;
+            if (map == null)
+                throw new System.Exception("Dynamic display not supported");
+            if (!map.DynamicMapEnabled)
             {
-                return null;
+                map.DynamicMapEnabled = true;
+                mxDocument.ActiveView.Refresh();
             }
-            IMxDocument mxDocument = ((IMxDocument)(application.Document)); // Explicit Cast
+            m_dynamicDisplayEnabled = map.DynamicMapEnabled;
+        }
+        #endregion
 
-            return mxDocument;
-
+        #region "Get MxDocument"
+        public static IMxDocument GetMxDocument()
+        {
+            if (m_application == null)
+                return null;
+            return (IMxDocument)m_application.Document;
         }
         #endregion
         
@@ -116,11 +112,42 @@ namespace crossbow
             else if (layer is ICompositeLayer)
             {
                 ICompositeLayer composite = layer as ICompositeLayer;
-                for (int i = 0; i < composite.Count - 1; ++i)
+                for (int i = 0; i < composite.Count; ++i)
                 {
                     layer = composite.get_Layer(i);
                     if (layer is IFeatureLayer)
                         return layer as IFeatureLayer;
+                }
+            }
+            return null;
+        }
+        #endregion
+
+        #region "Get FeatureClass from Class Id"
+        public static IFeatureClass GetFeatureClassFromId(int featureClassId)
+        {
+            ESRI.ArcGIS.Carto.IActiveView activeView = GetMxDocument().ActiveView;
+            if (activeView == null)
+                return null;
+            IMap map = activeView.FocusMap;
+            for (int i = 0; i < map.LayerCount; ++i)
+            {
+                ILayer layer = map.get_Layer(i);
+                if (layer is IFeatureLayer)
+                {
+                    IFeatureLayer featureLayer = layer as IFeatureLayer;
+                    if (featureLayer.FeatureClass.FeatureClassID == featureClassId)
+                        return featureLayer.FeatureClass;
+                }
+                else if (layer is ICompositeLayer)
+                {
+                    ICompositeLayer composite = layer as ICompositeLayer;
+                    for (int j = 0; j < composite.Count; ++j)
+                    {
+                        IFeatureLayer featureLayer = composite.get_Layer(j) as IFeatureLayer;
+                        if (featureLayer != null && featureLayer.FeatureClass != null && featureLayer.FeatureClass.FeatureClassID == featureClassId)
+                            return featureLayer.FeatureClass;
+                    }
                 }
             }
             return null;

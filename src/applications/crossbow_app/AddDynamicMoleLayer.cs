@@ -107,6 +107,7 @@ namespace crossbow
                 base.m_enabled = true;
             else
                 base.m_enabled = false;
+            Tools.Initialize(m_application);
         }
 
         /// <summary>
@@ -120,7 +121,6 @@ namespace crossbow
             IEnumGxObject selection;
             if (openDialog.DoModalOpen(0, out selection))
             {
-                EnableDynamicDisplay();
                 IGxObject element;
                 while( (element = selection.Next()) != null )
                 {
@@ -128,7 +128,7 @@ namespace crossbow
                     if (gxDs != null)
                     {
                         ILayer layer = CreateLayerGroup(element.Name, gxDs.Dataset as IFeatureClass);
-                        IMxDocument mxDocument = Tools.GetMxDocument(m_application);
+                        IMxDocument mxDocument = Tools.GetMxDocument();
                         mxDocument.AddLayer(layer);
                         mxDocument.ActiveView.Refresh();
                     }
@@ -148,26 +148,12 @@ namespace crossbow
             featureLayer.FeatureClass = featureClass;
 
             DynamicMoleLayer dynamicLayer = new DynamicMoleLayer();
-            dynamicLayer.Initialize(m_application);
             dynamicLayer.Name = layer.Name + " - Dynamics";
             dynamicLayer.FeatureClass = featureClass;
 
             group.Add(featureLayer);
             group.Add(dynamicLayer);
             return group as ILayer;
-        }
-
-        private void EnableDynamicDisplay()
-        {
-            IMxDocument mxDocument = Tools.GetMxDocument(m_application);
-            IDynamicMap map = mxDocument.FocusMap as IDynamicMap;
-            if (map == null)
-                throw new System.Exception("Dynamic display not supported");
-            if (!map.DynamicMapEnabled)
-            {
-                map.DynamicMapEnabled = true;
-                mxDocument.ActiveView.Refresh();
-            }
         }
     }
 }

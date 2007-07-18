@@ -180,7 +180,7 @@ namespace crossbow
         /// </summary>
         public void SetupOrbatCommand()
         {
-            ESRI.ArcGIS.ArcMapUI.IMxDocument mxDocument = Tools.GetMxDocument(m_application);
+            ESRI.ArcGIS.ArcMapUI.IMxDocument mxDocument = Tools.GetMxDocument();
             IFeatureLayer pLayer = Tools.GetIFeatureLayerFromLayerName(mxDocument.ActiveView, "UnitForces");
             
             if (pLayer != null)

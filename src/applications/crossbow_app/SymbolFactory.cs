@@ -45,35 +45,23 @@ namespace crossbow
             }
         }
 
-        private IForceElement CreateForceElement(string symbolId, string stName)
+        private IForceElement CreateForceElement(string symbolId, string name)
         {                        
-            IForceElement   pForceElement = new ForceElementClass();
-            
-            // Initialize position
+            IForceElement pForceElement = new ForceElementClass();
             pForceElement.Shape = CreatePoint(1.0, 1.0);
-            // register symbol id            
             pForceElement.MessageString = symbolId;
-            pForceElement.PropertySet.SetProperty( "Symbol_ID", symbolId );
-            pForceElement.PropertySet.SetProperty( "Name", stName );
-            pForceElement.PropertySet.SetProperty( "Info", "" );
+            pForceElement.PropertySet.SetProperty("Symbol_ID", symbolId);
+            pForceElement.PropertySet.SetProperty("Name", name);
+            pForceElement.PropertySet.SetProperty("Info", "");
             return pForceElement;    
         }
     
         // Create mole graphic with no scale
-        public ICachedGraphic CreateGraphics(string symbolId, string stName)
+        public ICachedGraphic CreateGraphics(string symbolId, string name)
         {
-            IFEGraphic pFEGraphic;
-            
-            pFEGraphic = m_pGraphicFactory.Make(symbolId);
-            pFEGraphic.Style.FrameOption = moleStyleFrameEnum.moleStyleFrameOn;
-            pFEGraphic.Style.FillOption = moleStyleFillEnum.moleStyleFillSolid;
-            pFEGraphic.Style.UseFonts = true;
-            // IMPORTANT: when using CachedGraphic.Draw method, TTFs are rebuilt each .Draw() call so
-            // adversely affects performance (but provide better text quality, flexibility/customizability)
-            //((ICachedGraphicStyle)pFEGraphic.Style).UseGDI = true;
-            // pFEGraphic.Style.FriendlyLine.Width = 1.5;
-            pFEGraphic.ForceElement = CreateForceElement(symbolId, stName);
-            return (ICachedGraphic)pFEGraphic;
+            IFEGraphic pFEGraphic = m_pGraphicFactory.Make(symbolId);
+            pFEGraphic.ForceElement = CreateForceElement(symbolId, name);
+            return pFEGraphic as ICachedGraphic;
         }
         
         // Create Mole unit with the rigth scale

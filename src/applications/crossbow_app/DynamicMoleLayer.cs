@@ -7,6 +7,7 @@ using ESRI.ArcGIS.ADF.BaseClasses;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
@@ -31,9 +32,9 @@ namespace crossbow
             public float aspectRatio; // glyph.width / glyph.height
         };
 
-        private IApplication                    m_application = null;
         private bool                            m_selectable = true;
         private IFeatureClass                   m_featureClass = null;
+        private int                             m_featureClassId = -1;
         private System.Collections.Hashtable    m_elements = new System.Collections.Hashtable();
         private SymbolFactory                   m_symbolFactory = new SymbolFactory();
         private FieldsProperty                  m_Fields = new FieldsProperty();
@@ -60,7 +61,6 @@ namespace crossbow
             IRgbColor color = new RgbColorClass();
             color.Red = 255; color.Green = 0; color.Blue = 0;
             m_selectionColor = color;
-
             SetupTimer(100);
         }
 
@@ -68,31 +68,85 @@ namespace crossbow
         {
             Disconnect();
         }
-
-        public void Initialize(IApplication application)
-        {
-            m_application = application;
-        }
         #endregion
 
         #region BaseDynamicLayer overriden
+        void ILayer.Draw(esriDrawPhase DrawPhase, IDisplay Display, ITrackCancel TrackCancel)
+        {
+            Tools.EnableDynamicDisplay();
+        }
+
         public override void DrawDynamicLayer(esriDynamicDrawPhase dynamicDrawPhase, IDisplay display, IDynamicDisplay dynamicDisplay)
         {
             try
             {
-                //make sure that the current drawphase if immediate. In this sample there is no use of the
-                //compiled drawPhase. Use the esriDDPCompiled drawPhase in order to draw semi-static items (items
-                //whose update rate is lower than the display update rate).
                 if( dynamicDisplay == null || display == null || dynamicDrawPhase != esriDynamicDrawPhase.esriDDPImmediate )
                     return;
                 
                 if( this.m_visible )
                     DrawFeatureClass(display, dynamicDisplay);
+                base.m_bIsImmediateDirty = true;
             }
             catch( Exception ex )
             {
                 System.Diagnostics.Trace.WriteLine(ex);
             }
+        }
+        #endregion
+
+        #region IPersistVariant overriden
+        public override UID ID
+        {
+            get
+            {
+                UID id = new UIDClass();
+                id.Value = "crossbow.DynamicMoleLayer";
+                return id;
+            }
+        }
+
+        public override void Load(IVariantStream Stream)
+        {
+            base.Load(Stream);
+            m_selectable = (bool)Stream.Read();
+            m_featureClassId = (int)Stream.Read(); m_featureClass = null;
+            //m_elements = Stream.Read() as System.Collections.Hashtable;
+            //m_symbolFactory = Stream.Read() as SymbolFactory;
+            //m_Fields = Stream.Read() as FieldsProperty;
+            //m_updateTimer = Stream.Read() as Timer;
+            m_symbolSize = (double)Stream.Read();
+            //m_selectionGlyph = Stream.Read() as IDynamicGlyph;
+            //m_selectionEnvelope = Stream.Read() as IEnvelope;
+            m_displayField = Stream.Read() as String;
+            m_scaleSymbols = (bool)Stream.Read();
+            //m_selectionSet = Stream.Read() as ISelectionSet;
+            m_bufferDistance = (double)Stream.Read();
+            //m_combinationMethod = (esriSelectionResultEnum)Stream.Read();
+            //m_selectionColor = Stream.Read() as IColor;
+            //m_selectionSymbol = Stream.Read() as ISymbol;
+            //m_useSelectionSymbol = (bool)Stream.Read();
+        }
+
+        public override void Save(IVariantStream Stream)
+        {
+            base.Save(Stream);
+            Stream.Write(m_selectable);
+            Stream.Write(m_featureClassId);
+            //Stream.Write(m_elements);
+            //Stream.Write(m_symbolFactory);
+            //Stream.Write(m_Fields);
+            //Stream.Write(m_updateTimer);
+            Stream.Write(m_symbolSize);
+            //Stream.Write(m_selectionGlyph);
+            //Stream.Write(m_selectionEnvelope);
+            Stream.Write(m_displayField);
+            Stream.Write(m_scaleSymbols);
+            //Stream.Write(m_selectionSet);
+            Stream.Write(m_bufferDistance);
+            //Stream.Write(m_combinationMethod);
+            //Stream.Write(m_selectionColor);
+            //Stream.Write(m_selectionSymbol);
+            //Stream.Write(m_useSelectionSymbol);
         }
 
         #endregion
@@ -101,7 +155,15 @@ namespace crossbow
         private void DrawFeatureClass(IDisplay display, IDynamicDisplay dynamicDisplay)
         {
             if (m_featureClass == null)
-                return;
+                if (m_featureClassId == -1)
+                    return;
+                else
+                {
+                    FeatureClass = Tools.GetFeatureClassFromId(m_featureClassId);
+                    if (FeatureClass == null)
+                        return;
+                }
+
             IFeatureCursor cursor = m_featureClass.Search(null, false);
             IFeature feature = cursor.NextFeature();
             while (feature != null)
@@ -120,13 +182,15 @@ namespace crossbow
             IDynamicSymbolProperties properties     = dynamicDisplay as IDynamicSymbolProperties;
             IDynamicCompoundMarker   compoundMarker = dynamicDisplay as IDynamicCompoundMarker;
 
-            IMxDocument mxDocument = Tools.GetMxDocument(m_application);
+            IMxDocument mxDocument = Tools.GetMxDocument();
             IDisplayTransformation transformation = mxDocument.ActiveView.ScreenDisplay.DisplayTransformation;
 
             IPoint position = feature.Shape as IPoint;
             position.Project(transformation.SpatialReference);
 
-            float zoom = 1 / symbol.aspectRatio;
+            float factor = 0.75f * (float)transformation.FromPoints(m_symbolSize) / (float)transformation.VisibleBounds.Width;
+
+            float zoom = factor * 1 / symbol.aspectRatio;
             properties.set_DynamicGlyph(esriDynamicSymbolType.esriDSymbolMarker, symbol.glyph);
             properties.SetScale(esriDynamicSymbolType.esriDSymbolMarker, zoom, zoom);
             if (IsSelected(feature))
@@ -143,14 +207,13 @@ namespace crossbow
                 properties.SetColor(esriDynamicSymbolType.esriDSymbolFill, 0.6f, 0.75f, 1.0f, 0.8f);
                 properties.SetColor(esriDynamicSymbolType.esriDSymbolLine, 0.25f, 0.5f, 0.75f, 1.0f);
                 dynamicDisplay.DrawRectangle(envelope);
-                if (m_selectionEnvelope != null)
+                if (m_selectionEnvelope != null) // $$$$ SBO 2007-07-17: debug
                 {
-                    properties.SetColor(esriDynamicSymbolType.esriDSymbolFill, 1.0f, 0.75f, 0.6f, 0.8f);
-                    properties.SetColor(esriDynamicSymbolType.esriDSymbolLine, 0.75f, 0.5f, 0.25f, 1.0f);
+                    properties.SetColor(esriDynamicSymbolType.esriDSymbolFill, 1.0f, 0.75f, 0.6f, 0.5f);
+                    properties.SetColor(esriDynamicSymbolType.esriDSymbolLine, 0.75f, 0.5f, 0.25f, 0.8f);
                     dynamicDisplay.DrawRectangle(m_selectionEnvelope);
                 }
             }
-
             compoundMarker.DrawCompoundMarker4(position, "", "", (string)feature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eName]), "");
             properties.SetColor(esriDynamicSymbolType.esriDSymbolMarker, 1, 1, 1, 1);
         }
@@ -186,7 +249,7 @@ namespace crossbow
 
         private DynamicElement BuildSymbol(IDisplay display, IDynamicDisplay dynamicDisplay, String symbolId)
         {
-            const int size = 72;
+            const int size = 256;
             DynamicElement element = new DynamicElement();
             element.graphic = m_symbolFactory.CreateGraphics(symbolId, "");
             element.glyph = SymbolFactory.CreateDynamicGlyph(display, dynamicDisplay, element.graphic, 256, size);
@@ -194,7 +257,7 @@ namespace crossbow
             float width = 0, height = 0;
             element.glyph.QueryDimensions(ref width, ref height);
             element.aspectRatio = height != 0 ? width / height : 1.0f;
-            m_symbolSize = 72; // width;
+            m_symbolSize = size; // width;
             return element;
         }
         #endregion
@@ -248,8 +311,12 @@ namespace crossbow
             set
             {
                 m_featureClass = value;
-                m_selectable = true;
-                m_Fields.SetupTacticalElementFields(m_featureClass);
+                if (m_featureClass != null)
+                {
+                    m_featureClassId = m_featureClass.FeatureClassID;
+                    m_selectable = true;
+                    m_Fields.SetupTacticalElementFields(m_featureClass);
+                }
             }
         }
 
@@ -291,6 +358,8 @@ namespace crossbow
 
         public IFeatureCursor Search(IQueryFilter queryFilter, bool recycling)
         {
+            if (m_featureClass == null)
+                return null;
             return m_featureClass.Search(queryFilter, recycling);
         }
 
@@ -308,9 +377,8 @@ namespace crossbow
 
         public new ISpatialReference SpatialReference
         {
-            set { value = base.SpatialReference; }
+            set { m_spatialRef = value; }
         }
-
         #endregion
 
         #region IDataset Members
@@ -363,11 +431,12 @@ namespace crossbow
         {
             if (Filter is ISpatialFilter)
             {
-                ISpatialFilter spatialFilter = Filter as ISpatialFilter;
+                IDisplayTransformation transformation = Tools.GetMxDocument().ActiveView.ScreenDisplay.DisplayTransformation;
+                double symbolSize = transformation.FromPoints(m_symbolSize);
+                double symbolWidth = 0.75 * symbolSize * symbolSize / (float)transformation.VisibleBounds.Width;
+                double symbolHeight = 0.75 * symbolSize * symbolSize / (float)transformation.VisibleBounds.Height;
 
-                IMxDocument mxDocument = Tools.GetMxDocument(m_application);
-                double symbolWidth = mxDocument.ActiveView.ScreenDisplay.DisplayTransformation.FromPoints(m_symbolSize);
-                double symbolHeight = symbolWidth;
+                ISpatialFilter spatialFilter = Filter as ISpatialFilter;
                 IEnvelope envelope = spatialFilter.Geometry.Envelope;
                 symbolWidth  = (symbolWidth > envelope.Width) ? symbolWidth - envelope.Width : envelope.Width - symbolWidth;
                 symbolHeight = (symbolHeight > envelope.Height) ? symbolHeight - envelope.Height : envelope.Height - symbolHeight;

@@ -168,7 +168,7 @@ namespace crossbow
         public void OnSelectionChanged(object sender, System.EventArgs e)
         {
             System.String filter = m_teamCombo.SelectedItem.ToString();
-            IMxDocument mxDocument = Tools.GetMxDocument(m_application);
+            IMxDocument mxDocument = Tools.GetMxDocument();
             ESRI.ArcGIS.Carto.IFeatureLayer layer = Tools.GetIFeatureLayerFromLayerName(mxDocument.ActiveView, "UnitForces");
             if (layer != null)
             {
