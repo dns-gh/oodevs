@@ -60,9 +60,9 @@ private:
 
     //! @name Events
     //@{
-    virtual void mousePressEvent( QMouseEvent* event );
-    virtual void mouseReleaseEvent( QMouseEvent* event );
-    virtual void mouseMoveEvent( QMouseEvent* event );
+    virtual void contentsMousePressEvent( QMouseEvent* event );
+    virtual void contentsMouseReleaseEvent( QMouseEvent* event );
+    virtual void contentsMouseMoveEvent( QMouseEvent* event );
     virtual void keyPressEvent( QKeyEvent* event );
     virtual void resizeEvent( QResizeEvent* event );
     //@}

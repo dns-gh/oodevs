@@ -32,7 +32,8 @@ public:
     //! @name Operations
     //@{
     virtual void Update() = 0;
-    virtual void Shift( long ) {};
+    virtual void Shift( long shift );
+    virtual void DisplayToolTip( QWidget* parent ) const; // $$$$ SBO 2007-07-19: make a displayer maybe...
     void SetOverlayed( bool overlayed );
     bool IsOverlayed() const;
     //@}

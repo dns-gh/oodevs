@@ -44,6 +44,7 @@ public:
     virtual void Update();
     virtual void Shift( long shift );
     virtual void setVisible( bool visible );
+    virtual void DisplayToolTip( QWidget* parent ) const;
     //@}
 
 private:

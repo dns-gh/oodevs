@@ -16,6 +16,7 @@
 #include "TimelineActionItem.h"
 #include "gaming/Action_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "icons.h"
 #include <qpainter.h>
 
 using namespace kernel;
@@ -29,13 +30,17 @@ TimelineEditor::TimelineEditor( QWidget* parent, QCanvas* canvas, Controllers& c
     , controllers_( controllers )
     , selectedItem_( 0 )
 {
+    // initialize some elements needed in action tooltips
+    QMimeSourceFactory::defaultFactory()->setPixmap( "mission", MAKE_PIXMAP( mission ) );
+
+    viewport()->setMouseTracking( true );
     new TimelineMarker( this, scheduler );
     lines_.push_back( new TimelineRuler( canvas, this ) );
     controllers_.Register( *this );
 
     updateTimer_ = new QTimer( this );
     connect( updateTimer_, SIGNAL( timeout()), SLOT( Update() ) );
-    updateTimer_->start(0);
+    updateTimer_->start( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,6 +49,7 @@ TimelineEditor::TimelineEditor( QWidget* parent, QCanvas* canvas, Controllers& c
 // -----------------------------------------------------------------------------
 TimelineEditor::~TimelineEditor()
 {
+    QMimeSourceFactory::defaultFactory()->setData( "mission", 0 );
     controllers_.Unregister( *this );
 }
 
@@ -103,13 +109,13 @@ void TimelineEditor::Update()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineEditor::mousePressEvent
+// Name: TimelineEditor::contentsMousePressEvent
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-void TimelineEditor::mousePressEvent( QMouseEvent* event )
+void TimelineEditor::contentsMousePressEvent( QMouseEvent* event )
 {
     setFocus();
-    grabPoint_ = ConvertToContent( event->pos() );
+    grabPoint_ = event->pos();
     QCanvasItemList list = canvas()->collisions( grabPoint_ );
     if( list.empty() )
     {
@@ -127,28 +133,33 @@ void TimelineEditor::mousePressEvent( QMouseEvent* event )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineEditor::mouseMoveEvent
-// Created: SBO 2007-07-04
+// Name: TimelineEditor::contentsMouseMoveEvent
+// Created: SBO 2007-07-19
 // -----------------------------------------------------------------------------
-void TimelineEditor::mouseMoveEvent( QMouseEvent* event )
+void TimelineEditor::contentsMouseMoveEvent( QMouseEvent* event )
 {
-    if( !selectedItem_ )
-        return;
-    if( event->state() | Qt::LeftButton )
+    if( selectedItem_ && ( event->state() & Qt::LeftButton ) )
     {
-        const QPoint position = ConvertToContent( event->pos() );
-        selectedItem_->Shift( position.x() - grabPoint_.x() );
+        selectedItem_->Shift( event->pos().x() - grabPoint_.x() );
         ensureVisible( selectedItem_->x(), selectedItem_->y() );
-        grabPoint_ = position;
+        grabPoint_ = event->pos();
         setCursor( QCursor::sizeHorCursor );
     }
+    QCanvasItemList list = canvas()->collisions( event->pos() );
+    if( list.empty() )
+    {
+        QToolTip::remove( this );
+        return;
+    }
+    if( const TimelineItem_ABC* item = dynamic_cast< const TimelineItem_ABC* >( *list.begin() ) )
+        item->DisplayToolTip( this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineEditor::mouseReleaseEvent
+// Name: TimelineEditor::contentsMouseReleaseEvent
 // Created: SBO 2007-07-16
 // -----------------------------------------------------------------------------
-void TimelineEditor::mouseReleaseEvent( QMouseEvent* event )
+void TimelineEditor::contentsMouseReleaseEvent( QMouseEvent* )
 {
     setCursor( QCursor::arrowCursor );
 }

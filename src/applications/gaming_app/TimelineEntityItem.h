@@ -41,6 +41,7 @@ public:
     void AddAction( const Action_ABC& action );
     void RemoveAction( const Action_ABC& action );
     void Update();
+    virtual void DisplayToolTip( QWidget* parent ) const;
     //@}
 
 private:

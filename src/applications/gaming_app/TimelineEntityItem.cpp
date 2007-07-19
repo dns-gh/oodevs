@@ -93,3 +93,17 @@ void TimelineEntityItem::draw( QPainter& painter )
     painter.fillRect( rect().left(), rect().top() + 1, rect().width(), rect().height() - 2, fillColor );
     painter.drawText( rect(), Qt::AlignLeft | Qt::AlignVCenter, " " + entity_.GetName() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: TimelineEntityItem::DisplayToolTip
+// Created: SBO 2007-07-19
+// -----------------------------------------------------------------------------
+void TimelineEntityItem::DisplayToolTip( QWidget* parent ) const
+{
+    QString tip = QString( "<nobr><b>%1 - [%2]</b></nobr>" ).arg( entity_.GetName(), QString::number( entity_.GetId() ) );
+    if( QToolTip::textFor( parent ) != tip )
+    {
+        QToolTip::remove( parent );
+        QToolTip::add( parent, tip );
+    }
+}
