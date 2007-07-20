@@ -14,7 +14,7 @@ using ESRI.ArcGIS.Geometry;
 
 namespace crossbow
 {
-    partial class DynamicMoleLayer
+    public partial class DynamicMoleLayer
     {
         // IFeatureSelection attributes
         private IEnumerator             m_FeatureEnumerator = null;

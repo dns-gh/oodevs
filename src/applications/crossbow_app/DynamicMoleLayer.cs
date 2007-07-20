@@ -140,7 +140,6 @@ namespace crossbow
                 
                 if( this.m_visible )
                     DrawFeatureClass(display, dynamicDisplay);
-                base.m_bIsImmediateDirty = true;
             }
             catch( Exception ex )
             {
@@ -218,7 +217,6 @@ namespace crossbow
                     if (FeatureClass == null)
                         return;
                 }
-
             IFeatureCursor cursor = m_featureClass.Search(null, false);
             IFeature feature = cursor.NextFeature();
             while (feature != null)
@@ -226,6 +224,7 @@ namespace crossbow
                 DrawFeature(display, dynamicDisplay, feature);
                 feature = cursor.NextFeature();
             }
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(cursor);
         }
        
         public IDynamicGlyph UpdateGlyphSelection(IDynamicGlyphFactory factory)
