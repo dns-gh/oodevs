@@ -61,11 +61,6 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
     }
     
     const Object& obj = static_cast< const Object& >( entity );
-    /*
-    bool Object::IsReservedObstacle() const
-    IsReservedObstacleActivated
-    */
-
     if( obj.IsReservedObstacle() )
     {
         if( obj.IsReservedObstacleActivated() ) 

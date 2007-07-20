@@ -55,8 +55,7 @@ private slots:
     void OnEnableVariable( bool );
     void OnEnableHillshade( bool );
     void OnHillShadeDirection( int );
-    void OnMinus();
-    void OnPlus();
+    void OnStrengthChanged( int value );
     //@}
 
 private:

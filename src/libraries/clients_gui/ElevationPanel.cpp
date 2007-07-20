@@ -54,14 +54,11 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel
         hsDial_->setMaximumSize( 50, 50 );
 
         new QLabel( tr( "Strength" ), hsBox_ );
-        QHBox* buttonGroup = new QHBox( hsBox_ );
-        QPushButton* minus = new QPushButton( "-", buttonGroup );
-        QPushButton* plus  = new QPushButton( "+", buttonGroup );
+        QSlider* slider = new QSlider( 1, 50, 1, 1, Qt::Horizontal, hsBox_ );
 
         connect( hsBox_, SIGNAL( toggled( bool ) ), SLOT( OnEnableHillshade( bool ) ) );
         connect( hsDial_, SIGNAL( valueChanged( int ) ), SLOT( OnHillShadeDirection( int ) ) );
-        connect( minus, SIGNAL( clicked() ), SLOT( OnMinus() ) );
-        connect( plus,  SIGNAL( clicked() ), SLOT( OnPlus() ) );
+        connect( slider, SIGNAL( valueChanged( int ) ), SLOT( OnStrengthChanged( int ) ) );
     }
 }
 
@@ -136,21 +133,11 @@ void ElevationPanel::OnHillShadeDirection( int value )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ElevationPanel::OnMinus
-// Created: AGE 2007-07-02
+// Name: ElevationPanel::OnStrengthChanged
+// Created: SBO 2007-07-20
 // -----------------------------------------------------------------------------
-void ElevationPanel::OnMinus()
+void ElevationPanel::OnStrengthChanged( int value )
 {
-    strengthHs_ *= 0.9f;
-    OnEnableHillshade( enableHs_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ElevationPanel::OnPlus
-// Created: AGE 2007-07-02
-// -----------------------------------------------------------------------------
-void ElevationPanel::OnPlus()
-{
-    strengthHs_ *= 1.1f;
+    strengthHs_ = pow( 1.1f, value );
     OnEnableHillshade( enableHs_ );
 }
