@@ -1,6 +1,8 @@
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geodatabase;
+using ESRI.ArcGIS.esriSystem;
+using ESRI.ArcGIS.Framework;
 
 namespace crossbow
 {
@@ -12,7 +14,8 @@ namespace crossbow
         #region "Initialization"
         public static void Initialize(ESRI.ArcGIS.Framework.IApplication application)
         {
-            m_application = application;
+            if (application != null)
+                m_application = application;
         }
         #endregion
 
@@ -42,7 +45,17 @@ namespace crossbow
             return (IMxDocument)m_application.Document;
         }
         #endregion
-        
+
+        #region Get CSword Extension
+        public static CSwordExtension GetCSwordExtension(IApplication app)
+        {
+            IExtension extension = app.FindExtensionByName("crossbow.CSwordExtension");
+            if (extension != null)                
+                return extension as CSwordExtension;
+            return null;
+        }
+        #endregion
+
         #region "Get Index Number from Layer Name"
         // ArcGIS Snippet Title: 
         // Get Index Number from Layer Name
@@ -180,12 +193,33 @@ namespace crossbow
         #endregion
 
         #region "Get value of specified feature field"
-        public static System.String GetFieldValueByName( ESRI.ArcGIS.Geodatabase.IFeature feature, System.String fieldName )
+        public static string GetFeatureValue(IFeature feature, string fieldName)
         {
             int index = feature.Fields.FindField(fieldName);
             if (index < 0 )
                 return null;
-            return (System.String)feature.get_Value(index);
+            return feature.get_Value(index) as string;
+        }
+        public static void SetValue<T>(IRow row, string field, T value)
+        {
+            int id = row.Fields.FindField(field);
+            if (id >= 0 && row.Fields.get_Field(id).Editable)
+                row.set_Value(id, value);
+            else
+                throw new System.IndexOutOfRangeException();
+        
+        }
+        public static T GetValue<T>(IRow row, string field)
+        {
+            int id = row.Fields.FindField(field);
+            if (id >= 0)
+            {
+                object res = row.get_Value(id);
+                return (T)res;
+            }
+            else
+                throw new System.IndexOutOfRangeException();
+
         }
         #endregion
 

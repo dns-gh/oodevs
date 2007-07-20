@@ -8,7 +8,7 @@ namespace crossbow
     class FieldsProperty
     {        
         public enum EnumFields { eOID, eParentOID, eName, eSymbol, eFormationOID };
-        
+                
         private int[] m_formationFields;
         private int[] m_tacticalElementFields;
 
@@ -30,7 +30,6 @@ namespace crossbow
                 return m_formationFields;
             }            
         }
-
         public int[] Element
         {
             get

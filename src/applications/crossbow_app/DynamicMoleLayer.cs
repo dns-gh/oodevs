@@ -23,13 +23,47 @@ namespace crossbow
     [Guid("e5798908-98b7-466f-9eee-43e58516f700")]
     [ClassInterface(ClassInterfaceType.None)]
     [ProgId("crossbow.DynamicMoleLayer")]
-    public class DynamicMoleLayer : BaseDynamicLayer, IFeatureLayer, IFeatureSelection, IDynamicLayerDataset
+    public partial class DynamicMoleLayer : BaseDynamicLayer, IFeatureLayer, IFeatureSelection, IEnumFeature, IDynamicLayerDataset
     {
-        private class DynamicElement
+        private class DynamicElement : IDynamicElement
         {
-            public ICachedGraphic graphic;
-            public IDynamicGlyph glyph;
-            public float aspectRatio; // glyph.width / glyph.height
+            private ICachedGraphic graphic;
+            private IDynamicGlyph glyph;
+            private float aspectRatio; // glyph.width / glyph.height
+
+            public ICachedGraphic CachedGraphic
+            {
+                get
+                {
+                    return graphic;
+                }
+                set 
+                {
+                    graphic = value;
+                }
+            }
+            public IDynamicGlyph Glyph
+            {
+                get
+                {
+                    return glyph;
+                }
+                set
+                {
+                    glyph = value;
+                }
+            }
+            public float Ratio
+            {
+                get
+                {
+                    return aspectRatio;
+                }
+                set
+                {
+                    aspectRatio = value;
+                }
+            }
         };
 
         private bool                            m_selectable = true;
@@ -37,6 +71,7 @@ namespace crossbow
         private int                             m_featureClassId = -1;
         private System.Collections.Hashtable    m_elements = new System.Collections.Hashtable();
         private SymbolFactory                   m_symbolFactory = new SymbolFactory();
+	    private OrderManager 			        m_orderManager = null;
         private FieldsProperty                  m_Fields = new FieldsProperty();
         private Timer                           m_updateTimer;
         private double                          m_symbolSize = 0;
@@ -46,21 +81,14 @@ namespace crossbow
         // IFeatureLayer attributes
         private String m_displayField = "name"; // $$$$ SBO 2007-07-09: Symbol_ID ?
         private bool m_scaleSymbols = false;
-
-        // IFeatureSelection attributes
-        private ISelectionSet m_selectionSet;
-        private double m_bufferDistance = 0;
-        private esriSelectionResultEnum m_combinationMethod = esriSelectionResultEnum.esriSelectionResultNew;
-        private IColor m_selectionColor = null;
-        private ISymbol m_selectionSymbol = null;
-        private bool m_useSelectionSymbol = false;
+        
+        private IDocumentEvents_OnContextMenuEventHandler m_ContextMenu;
 
         #region class constructor/destructor
-        public DynamicMoleLayer() : base()
+        public DynamicMoleLayer()
+            : base()
         {
-            IRgbColor color = new RgbColorClass();
-            color.Red = 255; color.Green = 0; color.Blue = 0;
-            m_selectionColor = color;
+            m_selectionColor = Tools.MakeColor(255, 0, 0);
             SetupTimer(100);
         }
 
@@ -70,12 +98,39 @@ namespace crossbow
         }
         #endregion
 
+        public void Initialize(IApplication app)
+        {
+            CSwordExtension extension = Tools.GetCSwordExtension(app);
+            m_orderManager = extension.OrderManager;
+            SetupEvents();
+        }
+
         #region BaseDynamicLayer overriden
         void ILayer.Draw(esriDrawPhase DrawPhase, IDisplay Display, ITrackCancel TrackCancel)
         {
             Tools.EnableDynamicDisplay();
         }
 
+        private void SetupEvents()
+        {
+            IMxDocument mxDocument = Tools.GetMxDocument();
+            m_ContextMenu = new IDocumentEvents_OnContextMenuEventHandler(OnContextMenuEvent);
+            ((IDocumentEvents_Event)mxDocument).OnContextMenu += m_ContextMenu;
+        }
+
+        private void OnContextMenuEvent(int x, int y, out bool result)
+        {
+            if (m_selectionSet.Count >= 1)
+            {
+                m_orderManager.OpenContextMenu(this, x, y);
+                result = true;
+            }
+            else
+                result = false;
+        }
+        #endregion
+
+        #region BaseDynamicLayer overriden
         public override void DrawDynamicLayer(esriDynamicDrawPhase dynamicDrawPhase, IDisplay display, IDynamicDisplay dynamicDisplay)
         {
             try
@@ -172,60 +227,50 @@ namespace crossbow
                 feature = cursor.NextFeature();
             }
         }
+       
+        public IDynamicGlyph UpdateGlyphSelection(IDynamicGlyphFactory factory)
+        {
+            if (m_selectionGlyph == null)                            
+                m_selectionGlyph = factory.get_DynamicGlyph(1, esriDynamicGlyphType.esriDGlyphLine, 8);            
+            return m_selectionGlyph;
+        }
+        public IEnvelope Enveloppe
+        {
+            get
+            {
+                return m_selectionEnvelope;
+            }            
+        }
 
         private void DrawFeature(IDisplay display, IDynamicDisplay dynamicDisplay, IFeature feature)
         {
-            DynamicElement symbol = GetSymbol(display, dynamicDisplay, feature);
+            IDynamicElement symbol = GetSymbol(display, dynamicDisplay, feature);
             if (symbol == null)
                 return;
+            IDynamicSymbolProperties    properties = dynamicDisplay as IDynamicSymbolProperties;
+            IMxDocument mxDocument = Tools.GetMxDocument();            
+            IDisplayTransformation      transformation = mxDocument.ActiveView.ScreenDisplay.DisplayTransformation;
+            
+            feature.Shape.Project(transformation.SpatialReference);
 
-            IDynamicSymbolProperties properties     = dynamicDisplay as IDynamicSymbolProperties;
-            IDynamicCompoundMarker   compoundMarker = dynamicDisplay as IDynamicCompoundMarker;
-
-            IMxDocument mxDocument = Tools.GetMxDocument();
-            IDisplayTransformation transformation = mxDocument.ActiveView.ScreenDisplay.DisplayTransformation;
-
-            IPoint position = feature.Shape as IPoint;
-            position.Project(transformation.SpatialReference);
-
+            FeatureDrawer_ABC drawer = FeatureDrawerFactory.Create(this, feature);
             float factor = 0.75f * (float)transformation.FromPoints(m_symbolSize) / (float)transformation.VisibleBounds.Width;
-
-            float zoom = factor * 1 / symbol.aspectRatio;
-            properties.set_DynamicGlyph(esriDynamicSymbolType.esriDSymbolMarker, symbol.glyph);
-            properties.SetScale(esriDynamicSymbolType.esriDSymbolMarker, zoom, zoom);
-            if (IsSelected(feature))
-            {
-                IEnvelope envelope = position.Envelope.Envelope;
-                double selectionHalfSize = transformation.FromPoints(m_symbolSize) * zoom / 2;
-                envelope.Expand(selectionHalfSize, selectionHalfSize, false);
-                if (m_selectionGlyph == null)
-                {
-                    IDynamicGlyphFactory factory = dynamicDisplay as IDynamicGlyphFactory;
-                    m_selectionGlyph = factory.get_DynamicGlyph(1, esriDynamicGlyphType.esriDGlyphLine, 8);
-                }
-                properties.set_DynamicGlyph(esriDynamicSymbolType.esriDSymbolLine, m_selectionGlyph);
-                properties.SetColor(esriDynamicSymbolType.esriDSymbolFill, 0.6f, 0.75f, 1.0f, 0.8f);
-                properties.SetColor(esriDynamicSymbolType.esriDSymbolLine, 0.25f, 0.5f, 0.75f, 1.0f);
-                dynamicDisplay.DrawRectangle(envelope);
-                if (m_selectionEnvelope != null) // $$$$ SBO 2007-07-17: debug
-                {
-                    properties.SetColor(esriDynamicSymbolType.esriDSymbolFill, 1.0f, 0.75f, 0.6f, 0.5f);
-                    properties.SetColor(esriDynamicSymbolType.esriDSymbolLine, 0.75f, 0.5f, 0.25f, 0.8f);
-                    dynamicDisplay.DrawRectangle(m_selectionEnvelope);
-                }
-            }
-            compoundMarker.DrawCompoundMarker4(position, "", "", (string)feature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eName]), "");
+            if ( drawer != null )
+                drawer.InitializeDisplay(symbol, factor, properties);            
+            if ( IsSelected(feature) )
+                drawer.DrawEnvelope(dynamicDisplay,             transformation.FromPoints(m_symbolSize), properties);
+            drawer.Draw(dynamicDisplay, m_Fields);
             properties.SetColor(esriDynamicSymbolType.esriDSymbolMarker, 1, 1, 1, 1);
         }
 
         private bool IsSelected(IFeature feature)
         {
             if (m_selectionSet == null)
-                return false;
+                return false;            
             IEnumIDs ids = m_selectionSet.IDs;
             ids.Reset();
             int id = ids.Next();
-            while( id != -1 )
+            while (id != -1)
             {
                 if (id == feature.OID)
                     return true;
@@ -234,10 +279,10 @@ namespace crossbow
             return false;
         }
 
-        private DynamicElement GetSymbol(IDisplay display, IDynamicDisplay dynamicDisplay, IFeature feature)
+        private IDynamicElement GetSymbol(IDisplay display, IDynamicDisplay dynamicDisplay, IFeature feature)
         {
-            String symbolId = Tools.GetFieldValueByName(feature, "Symbol_ID");
-            DynamicElement element = (DynamicElement)m_elements[symbolId];
+            string symbolId = Tools.GetFeatureValue(feature, "Symbol_ID");
+            IDynamicElement element = (IDynamicElement)m_elements[symbolId];
             if (element != null)
                 return element;
             if (m_symbolFactory.SpatialReference == null)
@@ -247,21 +292,21 @@ namespace crossbow
             return element;
         }
 
-        private DynamicElement BuildSymbol(IDisplay display, IDynamicDisplay dynamicDisplay, String symbolId)
+        private IDynamicElement BuildSymbol(IDisplay display, IDynamicDisplay dynamicDisplay, String symbolId)
         {
             const int size = 256;
             DynamicElement element = new DynamicElement();
-            element.graphic = m_symbolFactory.CreateGraphics(symbolId, "");
-            element.glyph = SymbolFactory.CreateDynamicGlyph(display, dynamicDisplay, element.graphic, 256, size);
+            element.CachedGraphic = m_symbolFactory.CreateGraphics(symbolId, "");
+            element.Glyph = SymbolFactory.CreateDynamicGlyph(display, dynamicDisplay, element.CachedGraphic, 256, size);
 
             float width = 0, height = 0;
-            element.glyph.QueryDimensions(ref width, ref height);
-            element.aspectRatio = height != 0 ? width / height : 1.0f;
+            element.Glyph.QueryDimensions(ref width, ref height);
+            element.Ratio = height != 0 ? width / height : 1.0f;
             m_symbolSize = size; // width;
-            return element;
+            return (IDynamicElement)element;
         }
         #endregion
-        
+
         #region Timer methods
         void SetupTimer(double msec)
         {
@@ -269,7 +314,7 @@ namespace crossbow
             m_updateTimer.Enabled = false;
             m_updateTimer.Elapsed += new ElapsedEventHandler(OnLayerUpdateEvent);
         }
-        
+
         public void Connect()
         {
             m_updateTimer.Enabled = true;
@@ -379,149 +424,6 @@ namespace crossbow
         {
             set { m_spatialRef = value; }
         }
-        #endregion
-
-        #region IDataset Members
-        public IDataset Dataset
-        {
-            get
-            {
-                return m_featureClass as IDataset;
-            }
-        }
-        #endregion    
-            
-        #region IFeatureSelection Members
-
-        public void Add(IFeature Feature)
-        {
-            m_selectionSet.Add(Feature.OID);
-        }
-
-        public double BufferDistance
-        {
-            get
-            {
-                return m_bufferDistance;
-            }
-            set
-            {
-                m_bufferDistance = value;
-            }
-        }
-
-        public void Clear()
-        {
-            
-        }
-
-        public esriSelectionResultEnum CombinationMethod
-        {
-            get
-            {
-                return m_combinationMethod;
-            }
-            set
-            {
-                m_combinationMethod = value;
-            }
-        }
-
-        public void SelectFeatures(IQueryFilter Filter, esriSelectionResultEnum Method, bool justOne)
-        {
-            if (Filter is ISpatialFilter)
-            {
-                IDisplayTransformation transformation = Tools.GetMxDocument().ActiveView.ScreenDisplay.DisplayTransformation;
-                double symbolSize = transformation.FromPoints(m_symbolSize);
-                double symbolWidth = 0.75 * symbolSize * symbolSize / (float)transformation.VisibleBounds.Width;
-                double symbolHeight = 0.75 * symbolSize * symbolSize / (float)transformation.VisibleBounds.Height;
-
-                ISpatialFilter spatialFilter = Filter as ISpatialFilter;
-                IEnvelope envelope = spatialFilter.Geometry.Envelope;
-                symbolWidth  = (symbolWidth > envelope.Width) ? symbolWidth - envelope.Width : envelope.Width - symbolWidth;
-                symbolHeight = (symbolHeight > envelope.Height) ? symbolHeight - envelope.Height : envelope.Height - symbolHeight;
-                envelope.Expand(symbolWidth / 2, symbolHeight / 2, false);
-                spatialFilter.Geometry = envelope;
-                m_selectionEnvelope = envelope;
-            }
-
-            esriSelectionOption option = justOne ? esriSelectionOption.esriSelectionOptionOnlyOne : esriSelectionOption.esriSelectionOptionNormal;
-            ISelectionSet result = m_featureClass.Select(Filter, esriSelectionType.esriSelectionTypeHybrid, option, Dataset.Workspace);
-            switch (Method)
-            {
-                case esriSelectionResultEnum.esriSelectionResultAdd:
-                    m_selectionSet.Combine(result, esriSetOperation.esriSetUnion, out m_selectionSet);
-                    break;
-                case esriSelectionResultEnum.esriSelectionResultAnd:
-                    m_selectionSet.Combine(result, esriSetOperation.esriSetIntersection, out m_selectionSet);
-                    break;
-                case esriSelectionResultEnum.esriSelectionResultNew:
-                    m_selectionSet = result;
-                    break;
-                case esriSelectionResultEnum.esriSelectionResultSubtract:
-                    m_selectionSet.Combine(result, esriSetOperation.esriSetDifference, out m_selectionSet);
-                    break;
-                case esriSelectionResultEnum.esriSelectionResultXOR:
-                    m_selectionSet.Combine(result, esriSetOperation.esriSetSymDifference, out m_selectionSet);
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public void SelectionChanged()
-        {
-            //throw new Exception("The method or operation is not implemented.");
-        }
-
-        public IColor SelectionColor
-        {
-            get
-            {
-                return m_selectionColor;
-            }
-            set
-            {
-                m_selectionColor = value;
-            }
-        }
-
-        public ISelectionSet SelectionSet
-        {
-            get
-            {
-                return m_selectionSet;
-            }
-            set
-            {
-                m_selectionSet = value;
-            }
-        }
-
-        public ISymbol SelectionSymbol
-        {
-            get
-            {
-                return m_selectionSymbol;
-            }
-            set
-            {
-                m_selectionSymbol = value;
-            }
-        }
-
-        public bool SetSelectionSymbol
-        {
-            get
-            {
-                return m_useSelectionSymbol;
-            }
-            set
-            {
-                m_useSelectionSymbol = value;
-            }
-        }
-
         #endregion
     }
 }

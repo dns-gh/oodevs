@@ -121,8 +121,7 @@ namespace crossbow
                 int oid = (int)pFeature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eOID]);
                 string symbol = (string)pFeature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eSymbol]);
                 string name = (string)pFeature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eName]);
-
-                // m_pSymbolTree.Nodes.Insert(m_pSymbolTree.Nodes.IndexOfKey(stOIDFormation), oid.ToString(), name, symbol);
+                
                 node[0].Nodes.Add(oid.ToString(), name, symbol);
                 pFeature = pCursor.NextFeature();
             }
