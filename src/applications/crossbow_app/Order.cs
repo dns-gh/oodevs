@@ -37,8 +37,8 @@ namespace crossbow
         }
         
         public Order( IMissionForm handler )
-        {            
-            m_handler = handler;            
+        {
+            m_handler = handler;                        
         }
 
         public void OnCreate(OrderFactory factory)

@@ -85,14 +85,21 @@ namespace crossbow
             cmdBar.Popup(x, y);
         }
 
+        static private UID getTypeUid(Type type)
+        {
+            UID uid = new UIDClass();
+            uid.Value = "{" + type.GUID.ToString() + "}";
+            return uid;
+        }
+
         void BuildMissionContextMenu(ICommandBar cmdBar)
         {
             object Missing = Type.Missing;
             ICommandBar cmdSubMenu = cmdBar.CreateMenu("Missions", ref Missing);
-            
-            UID menuUID = new UID();
+
+            UID menuUID = new UIDClass();            
             menuUID.Value = "crossbow.MissionOrder_ArmorAttack";
-            cmdSubMenu.Add(menuUID, ref Missing);
+            cmdSubMenu.Add(menuUID, ref Missing);            
             menuUID.Value = "crossbow.MissionOrder_ArmorSupport";            
             cmdSubMenu.Add(menuUID, ref Missing);
             menuUID.Value = "crossbow.MissionOrder_ArmorHold";

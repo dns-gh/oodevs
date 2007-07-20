@@ -34,7 +34,7 @@ namespace crossbow
         public void Register(MissionOrderForm handler)
         {
             m_order = new Order(handler);
-            m_order.OID = Tools.GetValue<int>(m_selectedFeature, "Public_OID");
+            m_order.OID = Tools.GetValue<int>(m_selectedFeature, "Public_OID");            
             m_order.OnCreate(m_orderFactory);            
         }
 
@@ -47,6 +47,7 @@ namespace crossbow
         void UpdateSelection(IFeatureSelection selection)
         {
             IEnumFeature pEnumFeature = selection as IEnumFeature;
+            pEnumFeature.Reset();
             m_selectedFeature = pEnumFeature.Next();
         }
         

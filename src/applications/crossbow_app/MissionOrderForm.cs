@@ -20,8 +20,9 @@ namespace crossbow
     {
         private OrderManager m_orderManager;
         
-        public MissionOrderForm(IApplication app)
+        public MissionOrderForm(string name, IApplication app)
         {
+            OrderName = name;
             InitializeExtension(app);
             InitializeComponent();
             UnitName = m_orderManager.SelectionName();

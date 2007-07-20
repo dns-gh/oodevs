@@ -189,14 +189,16 @@ namespace crossbow
         public IFeature Next()
         {
             if (m_FeatureEnumerator == null)
-                Reset();
+                Reset();            
             IFeature current = m_FeatureEnumerator.Current as IFeature;
-            m_FeatureEnumerator.MoveNext();
+            m_FeatureEnumerator.MoveNext();            
             return current;
         }
-
+        
         public void Reset()
         {
+            if (m_FeatureEnumerator != null)
+                m_FeatureEnumerator = null;
             m_FeatureEnumerator = m_featureSelection.GetEnumerator();
             m_FeatureEnumerator.MoveNext();
         }

@@ -93,8 +93,7 @@ namespace crossbow
         /// </summary>
         public override void OnClick()
         {
-            MissionOrderForm form = new MissionOrderForm(m_application);
-            form.OrderName = m_name;
+            MissionOrderForm form = new MissionOrderForm(m_name, m_application);            
             form.Show();
         }
 
@@ -103,7 +102,7 @@ namespace crossbow
     #endregion
 
     #region Armor - To Attack
-    [Guid("B8A3F756-A59A-4ca4-A21D-D712577EADE7")]
+        [Guid("B8A3F756-A59A-4ca4-A21D-D712577EADE7")]
         [ClassInterface(ClassInterfaceType.None)]
         [ProgId("crossbow.MissionOrder_ArmorAttack")] 
         public sealed class MissionOrder_ArmorAttack : MissionOrderCommand

@@ -94,7 +94,8 @@ namespace crossbow
                 return;
             Tools.Initialize(m_application);
             m_orderFactory = new OrderFactory(Tools.GetMxDocument());
-            m_orderManager = new OrderManager(m_orderFactory);
+            m_orderFactory.OnCreate();
+            m_orderManager = new OrderManager(m_orderFactory);            
         }
 
         public OrderManager OrderManager

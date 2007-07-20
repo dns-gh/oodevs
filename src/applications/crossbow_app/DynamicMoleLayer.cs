@@ -255,8 +255,8 @@ namespace crossbow
             IDynamicElement symbol = GetSymbol(display, dynamicDisplay, feature);
             if (symbol == null)
                 return;
-            IDynamicSymbolProperties    properties = dynamicDisplay as IDynamicSymbolProperties;
-            IMxDocument mxDocument = Tools.GetMxDocument();            
+            IMxDocument                 mxDocument = Tools.GetMxDocument();
+            IDynamicSymbolProperties    properties = dynamicDisplay as IDynamicSymbolProperties;            
             IDisplayTransformation      transformation = mxDocument.ActiveView.ScreenDisplay.DisplayTransformation;
             
             feature.Shape.Project(transformation.SpatialReference);
