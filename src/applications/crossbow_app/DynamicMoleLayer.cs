@@ -162,6 +162,11 @@ namespace crossbow
         public override void Load(IVariantStream Stream)
         {
             base.Load(Stream);
+            m_extensions = new System.Collections.ArrayList();
+            int count = (int)Stream.Read();
+            for (int i = 0; i < count; ++i)
+                m_extensions.Add( Stream.Read() );
+
             m_selectable = (bool)Stream.Read();
             m_featureClassId = (int)Stream.Read(); m_featureClass = null;
             //m_elements = Stream.Read() as System.Collections.Hashtable;
@@ -184,6 +189,10 @@ namespace crossbow
         public override void Save(IVariantStream Stream)
         {
             base.Save(Stream);
+            Stream.Write(m_extensions.Count);
+            for( int i = 0; i < m_extensions.Count; ++i )
+                Stream.Write(m_extensions[i]);
+
             Stream.Write(m_selectable);
             Stream.Write(m_featureClassId);
             //Stream.Write(m_elements);
@@ -224,7 +233,7 @@ namespace crossbow
                 DrawFeature(display, dynamicDisplay, feature);
                 feature = cursor.NextFeature();
             }
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(cursor);
+            cursor = null;
         }
        
         public IDynamicGlyph UpdateGlyphSelection(IDynamicGlyphFactory factory)
