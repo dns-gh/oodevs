@@ -1,88 +1,57 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Framework;
-using ESRI.ArcGIS.SystemUI;
 using ESRI.ArcGIS.esriSystem;
-using ESRI.ArcGIS.Geodatabase;
-using ESRI.ArcGIS.Carto;
 
 namespace crossbow
 {
-    public class OrderFactory
+    public interface IParameterFactory
     {
-        private IMxDocument m_mxDocument;
-        private System.Collections.Hashtable m_model = new System.Collections.Hashtable();
+        void CreateParameters(Order order);
+    }
+
+    public class OrderFactory : IParameterFactory
+    {
+        private class OrderParametersDefinition : Dictionary<string, string> {} //--> name, type
+
+        private Dictionary<string, OrderParametersDefinition> m_model = new Dictionary<string, OrderParametersDefinition>();
         private FieldsProperty m_Fields = new FieldsProperty();
 
-        private class ModelParameters
+        public OrderFactory()
         {
-            private System.Collections.Hashtable parameters = new System.Collections.Hashtable();
-
-            public ModelParameters()
-            {
-            }
-
-            public void Register(string name, string typeID)
-            {
-                parameters.Add(name, typeID);
-            }
-
-            public void Run(Order order)
-            {
-                System.Collections.IDictionaryEnumerator it = parameters.GetEnumerator();
-                while ( it.MoveNext() )                
-                    order.RegisterParameter(it.Key.ToString(), it.Value.ToString());                
-            }
-        }
-        private class ModelMission
-        {
+            Initialize();
         }
 
-        public OrderFactory(IMxDocument mxDocument)
+        private void Initialize()
         {
-            m_mxDocument = mxDocument;
-        }
-
-        public void OnCreate()
-        {
-            m_model.Add("Armor - To attack", new ModelParameters());
-
+            m_model.Add("Armor - To attack", new OrderParametersDefinition());
             {
-                ModelParameters param = new ModelParameters();
-                param.Register("Deployment area", "shape");
+                OrderParametersDefinition param = new OrderParametersDefinition();
+                param.Add("Deployment area", "shape");
                 m_model.Add("Armor - To hold", param);
             }
             {
-                ModelParameters param = new ModelParameters();
-                param.Register("Unit", "automat");
+                OrderParametersDefinition param = new OrderParametersDefinition();
+                param.Add("Unit", "automat");
                 m_model.Add("Armor - To support (dynamic)", param);
             }
             {
-                ModelParameters param = new ModelParameters();
-                param.Register("Position to deny", "point");
-                param.Register("Obstacle erection", "bool");
+                OrderParametersDefinition param = new OrderParametersDefinition();
+                param.Add("Position to deny", "point");
+                param.Add("Obstacle erection", "bool");
                 m_model.Add("Infantery - To deny", param);
             }
-            m_model.Add("Infantery - To reconnoiter", new ModelParameters());
+            m_model.Add("Infantery - To reconnoiter", new OrderParametersDefinition());
         }
 
-        public void OpenMissionContextMenu(int x, int y)
+        public void CreateMissionContextMenu(ICommandBar menu)
         {
-            IDocument doc = (IDocument)m_mxDocument;
-            ICommandBar cmdBar = doc.CommandBars.Create("Menu", esriCmdBarType.esriCmdBarTypeShortcutMenu);
-
-            BuildMissionContextMenu(cmdBar);            
-            cmdBar.Popup(x, y);
+            BuildMissionContextMenu(menu);
         }
 
-        public void OpenMissionParameterContextMenu(int x, int y)
+        public void CreateMissionParameterContextMenu(ICommandBar menu)
         {
-            IDocument doc = (IDocument)m_mxDocument;
-            ICommandBar cmdBar = doc.CommandBars.Create("Menu", esriCmdBarType.esriCmdBarTypeShortcutMenu);
-            
-            cmdBar.Popup(x, y);
+            // $$$$ SBO 2007-07-23: TODO!
         }
 
         static private UID getTypeUid(Type type)
@@ -92,30 +61,29 @@ namespace crossbow
             return uid;
         }
 
-        void BuildMissionContextMenu(ICommandBar cmdBar)
+        void BuildMissionContextMenu(ICommandBar menu)
         {
             object Missing = Type.Missing;
-            ICommandBar cmdSubMenu = cmdBar.CreateMenu("Missions", ref Missing);
+            ICommandBar subMenu = menu.CreateMenu("Missions", ref Missing);
 
             UID menuUID = new UIDClass();            
             menuUID.Value = "crossbow.MissionOrder_ArmorAttack";
-            cmdSubMenu.Add(menuUID, ref Missing);            
-            menuUID.Value = "crossbow.MissionOrder_ArmorSupport";            
-            cmdSubMenu.Add(menuUID, ref Missing);
+            subMenu.Add(menuUID, ref Missing);            
+            menuUID.Value = "crossbow.MissionOrder_ArmorSupport";
+            subMenu.Add(menuUID, ref Missing);
             menuUID.Value = "crossbow.MissionOrder_ArmorHold";
-            cmdSubMenu.Add(menuUID, ref Missing);
+            subMenu.Add(menuUID, ref Missing);
             menuUID.Value = "crossbow.MissionOrder_InfanteryReconnoiter";
-            cmdSubMenu.Add(menuUID, ref Missing);
+            subMenu.Add(menuUID, ref Missing);
             menuUID.Value = "crossbow.MissionOrder_InfanteryDeny";
-            cmdSubMenu.Add(menuUID, ref Missing);
+            subMenu.Add(menuUID, ref Missing);
         }
 
-        public void BuildParameters(Order order)
+        public virtual void CreateParameters(Order order)
         {
-            ModelParameters parameters = (ModelParameters)m_model[order.Name];
-            
-            if (parameters != null)
-                parameters.Run(order);            
+            if (m_model.ContainsKey(order.Name))
+                foreach (KeyValuePair<string, string> definition in m_model[order.Name])
+                    order.RegisterParameter(new OrderParameter(definition.Key.ToString(), definition.Value.ToString()));
         }
     }
 }

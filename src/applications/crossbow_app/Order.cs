@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
-using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Framework;
 
@@ -9,11 +6,10 @@ namespace crossbow
 {
     public class Order
     {
-        private IFeature m_selectedFeature;
         private ParameterLimits m_limits = new ParameterLimits();
         private ParameterLimas m_limas = new ParameterLimas();
         private ParameterDirection m_direction = new ParameterDirection();
-        private System.Collections.Hashtable m_parameters = new System.Collections.Hashtable();
+        private Dictionary<string, IOrderParameter> m_parameters = new Dictionary<string, IOrderParameter>();
         private IMissionForm m_handler = null;
         private int m_OID;
 
@@ -21,6 +17,8 @@ namespace crossbow
         {
             get
             {
+                if (m_handler == null)
+                    return "";
                 return m_handler.OrderName;
             }
         }
@@ -35,46 +33,42 @@ namespace crossbow
                 m_OID = value;
             }
         }
-        
-        public Order( IMissionForm handler )
+
+        public Order(int id, IMissionForm handler, IParameterFactory factory)
         {
-            m_handler = handler;                        
+            OID = id;
+            m_handler = handler;
+            factory.CreateParameters(this);
         }
 
-        public void OnCreate(OrderFactory factory)
+        public void RegisterParameter(IOrderParameter parameter)
         {
-            factory.BuildParameters(this);
-        }
-
-        public void RegisterParameter(string name, string typeID)
-        {
-            OrderParameter param = new OrderParameter(name, typeID);                        
-            
-            m_handler.BindParameter(param);
-            m_parameters.Add(name, param);
+            m_handler.BindParameter(parameter);
+            m_parameters.Add(parameter.Name, parameter);
         }
 
         public void OnContextMenu(ICommandBar menu, int x, int y, IFeature selected)
         {
             m_limits.OnContextMenu(menu, x, y, selected);
             m_limas.OnContextMenu(menu, x, y, selected);
-
-            foreach (object obj in m_parameters )
-                ((IOrderParameter)obj).OnContextMenu(menu, x, y, selected);    
+            foreach (KeyValuePair<string, IOrderParameter> param in m_parameters)
+                param.Value.OnContextMenu(menu, x, y, selected);
         }
 
         public void Serialize(IFeatureWorkspace featureWorkspace)
         {
-            ITable table = featureWorkspace.OpenTable("OrdersParameters");
+            ITable table = featureWorkspace.OpenTable("OrdersParameters"); // $$$$ SBO 2007-07-20: keep it maybe...
             m_limits.Serialize(table, m_OID);
             m_limas.Serialize(table, m_OID);
 
-            foreach (object obj in m_parameters)
-                ((IOrderParameter)obj).Serialize(table, m_OID);
+            foreach (KeyValuePair<string, IOrderParameter> param in m_parameters)
+                param.Value.Serialize(table, m_OID);
+            table = null;
         }
 
         public void Execute()
         {
+            // $$$$ SBO 2007-07-23: TODO!
         }
 
     }

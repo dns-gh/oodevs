@@ -47,12 +47,11 @@ namespace crossbow
         #endregion
 
         #region Get CSword Extension
-        public static CSwordExtension GetCSwordExtension(IApplication app)
+        public static CSwordExtension GetCSwordExtension()
         {
-            IExtension extension = app.FindExtensionByName("crossbow.CSwordExtension");
-            if (extension != null)                
-                return extension as CSwordExtension;
-            return null;
+            if (m_application == null)
+                return null;
+            return (CSwordExtension)m_application.FindExtensionByName("crossbow.CSwordExtension");
         }
         #endregion
 
@@ -200,26 +199,20 @@ namespace crossbow
                 return null;
             return feature.get_Value(index) as string;
         }
+
         public static void SetValue<T>(IRow row, string field, T value)
         {
             int id = row.Fields.FindField(field);
             if (id >= 0 && row.Fields.get_Field(id).Editable)
                 row.set_Value(id, value);
-            else
-                throw new System.IndexOutOfRangeException();
-        
         }
+
         public static T GetValue<T>(IRow row, string field)
         {
             int id = row.Fields.FindField(field);
             if (id >= 0)
-            {
-                object res = row.get_Value(id);
-                return (T)res;
-            }
-            else
-                throw new System.IndexOutOfRangeException();
-
+                return (T)row.get_Value(id);
+            return default(T);
         }
         #endregion
 

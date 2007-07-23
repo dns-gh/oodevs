@@ -8,7 +8,7 @@ namespace crossbow
 {
     class FeatureDrawerFactory
     {
-        static public FeatureDrawer_ABC Create(DynamicMoleLayer layer, IFeature feature)
+        static public IFeatureDrawer Create(DynamicMoleLayer layer, IFeature feature)
         {
             switch (feature.Shape.GeometryType)
             {

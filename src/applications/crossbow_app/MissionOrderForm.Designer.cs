@@ -28,7 +28,7 @@ namespace crossbow
         /// </summary>
         private void InitializeComponent()
         {
-            this.m_ParamterTree = new System.Windows.Forms.TreeView();
+            this.m_ParameterTree = new System.Windows.Forms.TreeView();
             this.m_Execute = new System.Windows.Forms.Button();
             this.m_Cancel = new System.Windows.Forms.Button();
             this.m_OrderBox = new System.Windows.Forms.GroupBox();
@@ -45,12 +45,12 @@ namespace crossbow
             ((System.ComponentModel.ISupportInitialize)(this.m_Direction)).BeginInit();
             this.SuspendLayout();
             // 
-            // m_ParamterTree
+            // m_ParameterTree
             // 
-            this.m_ParamterTree.Location = new System.Drawing.Point(6, 91);
-            this.m_ParamterTree.Name = "m_ParamterTree";
-            this.m_ParamterTree.Size = new System.Drawing.Size(295, 220);
-            this.m_ParamterTree.TabIndex = 0;
+            this.m_ParameterTree.Location = new System.Drawing.Point(6, 91);
+            this.m_ParameterTree.Name = "m_ParameterTree";
+            this.m_ParameterTree.Size = new System.Drawing.Size(295, 220);
+            this.m_ParameterTree.TabIndex = 0;
             // 
             // m_Execute
             // 
@@ -109,7 +109,7 @@ namespace crossbow
             this.m_ParametersBox.Controls.Add(this.label3);
             this.m_ParametersBox.Controls.Add(this.label4);
             this.m_ParametersBox.Controls.Add(this.m_Direction);
-            this.m_ParametersBox.Controls.Add(this.m_ParamterTree);
+            this.m_ParametersBox.Controls.Add(this.m_ParameterTree);
             this.m_ParametersBox.Location = new System.Drawing.Point(14, 71);
             this.m_ParametersBox.Name = "m_ParametersBox";
             this.m_ParametersBox.Size = new System.Drawing.Size(313, 320);
@@ -199,7 +199,7 @@ namespace crossbow
 
         #endregion
 
-        private System.Windows.Forms.TreeView m_ParamterTree;
+        private System.Windows.Forms.TreeView m_ParameterTree;
         private System.Windows.Forms.Button m_Execute;
         private System.Windows.Forms.Button m_Cancel;
         private System.Windows.Forms.GroupBox m_OrderBox;

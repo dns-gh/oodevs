@@ -12,39 +12,56 @@ namespace crossbow
 {
     public class OrderManager
     {
-        private OrderFactory m_orderFactory;        
-        private IFeature m_selectedFeature = null;
-        private Order m_order = null;
+        private OrderFactory m_orderFactory = null;
+        private IFeature     m_selectedFeature = null;
+        private Order        m_order = null;
 
-        public OrderManager(OrderFactory orderFactory)
+        public OrderManager()
         {
-            m_orderFactory = orderFactory;
+            Initialize();
         }
 
-        public void OpenContextMenu(IFeatureSelection selection, int x, int y)
+        private void Initialize()
         {
-            UpdateSelection(selection);
+            IMxDocument doc = Tools.GetMxDocument();
+            if (doc == null)
+                return;
+            m_orderFactory = new OrderFactory();
+            ((IDocumentEvents_Event)doc).OnContextMenu += new IDocumentEvents_OnContextMenuEventHandler(OnContextMenu);
+            //((IFeatureLayerSelectionEvents_Event)doc.FocusMap.get_Layer(0)).FeatureLayerSelectionChanged += new IFeatureLayerSelectionEvents_FeatureLayerSelectionChangedEventHandler(OnFeatureSelectionChanged);
+        }
 
-            if (m_order == null && selection.SelectionSet.Count == 1)
-                m_orderFactory.OpenMissionContextMenu(x, y);
+        private void OnFeatureSelectionChanged()
+        {
+            IMxDocument doc = Tools.GetMxDocument();
+            if(doc == null)
+                return;
+            UpdateSelection(doc.FocusMap.FeatureSelection);
+        }
+
+        private void OnContextMenu(int x, int y, out bool handled)
+        {
+            OnFeatureSelectionChanged();
+
+            handled = m_selectedFeature != null;
+            if (!handled)
+                return;
+            IDocument doc = Tools.GetMxDocument() as IDocument;
+            ICommandBar menu = doc.CommandBars.Create("Menu", esriCmdBarType.esriCmdBarTypeShortcutMenu);
+            if (m_order == null)
+                m_orderFactory.CreateMissionContextMenu(menu);
             else
-                m_orderFactory.OpenMissionParameterContextMenu(x, y);
+                m_orderFactory.CreateMissionParameterContextMenu(menu);
+            if (menu.Count > 0)
+                menu.Popup(0, 0);
         }
 
-        public void Register(MissionOrderForm handler)
+        public void BindUI(IMissionForm form)
         {
-            m_order = new Order(handler);
-            m_order.OID = Tools.GetValue<int>(m_selectedFeature, "Public_OID");            
-            m_order.OnCreate(m_orderFactory);            
+            m_order = new Order(Tools.GetValue<int>(m_selectedFeature, "Public_OID"), form, m_orderFactory);
         }
-
-        public object GetValue(IFeature feature, string name)
-        {            
-            return feature.get_Value(feature.Fields.FindField(name));
-        }
-         
         
-        void UpdateSelection(IFeatureSelection selection)
+        private void UpdateSelection(ISelection selection)
         {
             IEnumFeature pEnumFeature = selection as IEnumFeature;
             pEnumFeature.Reset();

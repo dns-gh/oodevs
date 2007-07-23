@@ -63,12 +63,9 @@ namespace crossbow
         #endregion
         #endregion
         
-        private IApplication m_application;
-        private OrderFactory m_orderFactory = null;
         private OrderManager m_orderManager = null;
 
         #region IExtension Members
-
         /// <summary>
         /// Name of extension. Do not exceed 31 characters
         /// </summary>
@@ -83,19 +80,15 @@ namespace crossbow
         public void Shutdown()
         {
             m_orderManager = null;
-            m_orderFactory = null;
-            m_application = null;
         }
 
         public void Startup(ref object initializationData)
         {
-            m_application = initializationData as IApplication;
-            if (m_application == null)
+            IApplication app = initializationData as IApplication;
+            if (app == null)
                 return;
-            Tools.Initialize(m_application);
-            m_orderFactory = new OrderFactory(Tools.GetMxDocument());
-            m_orderFactory.OnCreate();
-            m_orderManager = new OrderManager(m_orderFactory);            
+            Tools.Initialize(app);
+            m_orderManager = new OrderManager();
         }
 
         public OrderManager OrderManager

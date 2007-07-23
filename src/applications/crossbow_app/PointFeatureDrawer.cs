@@ -6,7 +6,7 @@ using ESRI.ArcGIS.Geometry;
 
 namespace crossbow
 {
-    sealed class PointFeatureDrawer : FeatureDrawer_ABC
+    sealed class PointFeatureDrawer : IFeatureDrawer
     {
         private IFeature m_feature;
         private IPoint m_position;
@@ -20,14 +20,15 @@ namespace crossbow
             m_position = feature.Shape as IPoint;
         }
 
-        public override void InitializeDisplay(IDynamicElement symbol, float factor, IDynamicSymbolProperties properties)
+        #region IFeatureDrawer implementation
+        public void InitializeDisplay(IDynamicElement symbol, float factor, IDynamicSymbolProperties properties)
         {
             m_zoom = factor * 1 / symbol.Ratio;
             properties.set_DynamicGlyph(esriDynamicSymbolType.esriDSymbolMarker, symbol.Glyph);
             properties.SetScale(esriDynamicSymbolType.esriDSymbolMarker, m_zoom, m_zoom);
         }
 
-        public override void DrawEnvelope(IDynamicDisplay dynamicDisplay, double fromPoint, IDynamicSymbolProperties properties)
+        public void DrawEnvelope(IDynamicDisplay dynamicDisplay, double fromPoint, IDynamicSymbolProperties properties)
         {
             IEnvelope envelope = m_position.Envelope.Envelope;
 
@@ -49,10 +50,11 @@ namespace crossbow
             }
         }
 
-        public override void Draw(IDynamicDisplay dynamicDisplay, FieldsProperty m_Fields)
+        public void Draw(IDynamicDisplay dynamicDisplay, FieldsProperty m_Fields)
         {
             IDynamicCompoundMarker compoundMarker = dynamicDisplay as IDynamicCompoundMarker;
             compoundMarker.DrawCompoundMarker4(m_position, "", "", (string)m_feature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eName]), "");
         }
+        #endregion
     }
 }

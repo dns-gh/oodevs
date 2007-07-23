@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using ESRI.ArcGIS.Geodatabase;
 
 namespace crossbow
 {
-    class FieldsProperty
+    public class FieldsProperty
     {        
         public enum EnumFields { eOID, eParentOID, eName, eSymbol, eFormationOID };
                 
@@ -16,10 +14,6 @@ namespace crossbow
         {
             m_formationFields = new int[4];
             m_tacticalElementFields = new int[5];
-        }
-
-        ~FieldsProperty()
-        {
         }
 
         #region accessors

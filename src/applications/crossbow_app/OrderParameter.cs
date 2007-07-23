@@ -9,20 +9,13 @@ namespace crossbow
 {
     public sealed class OrderParameter : IOrderParameter
     {
-        private OrderManager m_orderManager;
-        private string m_typeID;
+        private string m_type;
         private string m_name;
-        private object m_param;
                 
-        public OrderParameter(string name, string typeID)
+        public OrderParameter(string name, string type)
         {
             m_name = name;
-            m_typeID = typeID;
-        }
-
-        public void OnCreate(OrderManager hook)
-        {
-            m_orderManager = hook;
+            m_type = type;
         }
 
         public void Serialize(ITable table, int oid)

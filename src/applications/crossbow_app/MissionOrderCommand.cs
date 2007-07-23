@@ -51,7 +51,8 @@ namespace crossbow
         #endregion
         #endregion
 
-        private IApplication m_application;
+        private IApplication m_application = null;
+
         public MissionOrderCommand( string category, string name )
         {            
             base.m_category = category; //localizable text
@@ -69,7 +70,8 @@ namespace crossbow
             {
                 System.Diagnostics.Trace.WriteLine(ex.Message, "Invalid Bitmap");
             }
-        }        
+        }
+
         #region Overriden Class Methods
         /// <summary>
         /// Occurs when this command is created
@@ -93,7 +95,7 @@ namespace crossbow
         /// </summary>
         public override void OnClick()
         {
-            MissionOrderForm form = new MissionOrderForm(m_name, m_application);            
+            MissionOrderForm form = new MissionOrderForm(m_name);
             form.Show();
         }
 

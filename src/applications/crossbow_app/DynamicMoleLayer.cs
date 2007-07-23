@@ -71,7 +71,6 @@ namespace crossbow
         private int                             m_featureClassId = -1;
         private System.Collections.Hashtable    m_elements = new System.Collections.Hashtable();
         private SymbolFactory                   m_symbolFactory = new SymbolFactory();
-	    private OrderManager 			        m_orderManager = null;
         private FieldsProperty                  m_Fields = new FieldsProperty();
         private Timer                           m_updateTimer;
         private double                          m_symbolSize = 0;
@@ -82,11 +81,8 @@ namespace crossbow
         private String m_displayField = "name"; // $$$$ SBO 2007-07-09: Symbol_ID ?
         private bool m_scaleSymbols = false;
         
-        private IDocumentEvents_OnContextMenuEventHandler m_ContextMenu;
-
         #region class constructor/destructor
         public DynamicMoleLayer()
-            : base()
         {
             m_selectionColor = Tools.MakeColor(255, 0, 0);
             SetupTimer(100);
@@ -98,35 +94,10 @@ namespace crossbow
         }
         #endregion
 
-        public void Initialize(IApplication app)
-        {
-            CSwordExtension extension = Tools.GetCSwordExtension(app);
-            m_orderManager = extension.OrderManager;
-            SetupEvents();
-        }
-
-        #region BaseDynamicLayer overriden
+        #region ILayer overriden
         void ILayer.Draw(esriDrawPhase DrawPhase, IDisplay Display, ITrackCancel TrackCancel)
         {
             Tools.EnableDynamicDisplay();
-        }
-
-        private void SetupEvents()
-        {
-            IMxDocument mxDocument = Tools.GetMxDocument();
-            m_ContextMenu = new IDocumentEvents_OnContextMenuEventHandler(OnContextMenuEvent);
-            ((IDocumentEvents_Event)mxDocument).OnContextMenu += m_ContextMenu;
-        }
-
-        private void OnContextMenuEvent(int x, int y, out bool result)
-        {
-            if (m_selectionSet.Count >= 1)
-            {
-                m_orderManager.OpenContextMenu(this, x, y);
-                result = true;
-            }
-            else
-                result = false;
         }
         #endregion
 
@@ -137,7 +108,6 @@ namespace crossbow
             {
                 if( dynamicDisplay == null || display == null || dynamicDrawPhase != esriDynamicDrawPhase.esriDDPImmediate )
                     return;
-                
                 if( this.m_visible )
                     DrawFeatureClass(display, dynamicDisplay);
             }
@@ -169,21 +139,10 @@ namespace crossbow
 
             m_selectable = (bool)Stream.Read();
             m_featureClassId = (int)Stream.Read(); m_featureClass = null;
-            //m_elements = Stream.Read() as System.Collections.Hashtable;
-            //m_symbolFactory = Stream.Read() as SymbolFactory;
-            //m_Fields = Stream.Read() as FieldsProperty;
-            //m_updateTimer = Stream.Read() as Timer;
             m_symbolSize = (double)Stream.Read();
-            //m_selectionGlyph = Stream.Read() as IDynamicGlyph;
-            //m_selectionEnvelope = Stream.Read() as IEnvelope;
             m_displayField = Stream.Read() as String;
             m_scaleSymbols = (bool)Stream.Read();
-            //m_selectionSet = Stream.Read() as ISelectionSet;
             m_bufferDistance = (double)Stream.Read();
-            //m_combinationMethod = (esriSelectionResultEnum)Stream.Read();
-            //m_selectionColor = Stream.Read() as IColor;
-            //m_selectionSymbol = Stream.Read() as ISymbol;
-            //m_useSelectionSymbol = (bool)Stream.Read();
         }
 
         public override void Save(IVariantStream Stream)
@@ -195,21 +154,10 @@ namespace crossbow
 
             Stream.Write(m_selectable);
             Stream.Write(m_featureClassId);
-            //Stream.Write(m_elements);
-            //Stream.Write(m_symbolFactory);
-            //Stream.Write(m_Fields);
-            //Stream.Write(m_updateTimer);
             Stream.Write(m_symbolSize);
-            //Stream.Write(m_selectionGlyph);
-            //Stream.Write(m_selectionEnvelope);
             Stream.Write(m_displayField);
             Stream.Write(m_scaleSymbols);
-            //Stream.Write(m_selectionSet);
             Stream.Write(m_bufferDistance);
-            //Stream.Write(m_combinationMethod);
-            //Stream.Write(m_selectionColor);
-            //Stream.Write(m_selectionSymbol);
-            //Stream.Write(m_useSelectionSymbol);
         }
 
         #endregion
@@ -261,7 +209,7 @@ namespace crossbow
             
             feature.Shape.Project(transformation.SpatialReference);
 
-            FeatureDrawer_ABC drawer = FeatureDrawerFactory.Create(this, feature);
+            IFeatureDrawer drawer = FeatureDrawerFactory.Create(this, feature);
             float factor = 0.75f * (float)transformation.FromPoints(m_symbolSize) / (float)transformation.VisibleBounds.Width;
             if ( drawer != null )
                 drawer.InitializeDisplay(symbol, factor, properties);            

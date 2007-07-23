@@ -1,19 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using ESRI.ArcGIS.Geodatabase;
+using ESRI.ArcGIS.Framework;
 
 namespace crossbow
 {
-    public sealed class ParameterDirection
+    public sealed class ParameterDirection : IOrderParameter
     {
-        private OrderManager m_orderManager;
         private int m_direction;
-
-        public void OnCreate(OrderManager hook)
-        {
-            m_orderManager = hook;
-        }
 
         public void Serialize(ITable table, int id)
         {            
@@ -24,6 +16,11 @@ namespace crossbow
             Tools.SetValue(row, "context", true);
             Tools.SetValue(row, "ParamValue", m_direction);
             row.Store();
+        }
+
+        public void OnContextMenu(ICommandBar cmd, int x, int y, IFeature selected)
+        {
+            // NOTHING
         }
 
         public string Name

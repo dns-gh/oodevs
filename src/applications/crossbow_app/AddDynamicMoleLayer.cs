@@ -70,10 +70,7 @@ namespace crossbow
         #endregion
 
         private IApplication m_application;
-        private IMxDocument m_mxDocument;
-
-        // private IActiveViewEvents_SelectionChangedEventHandler m_SelectionChanged;
-        
+       
         public AddDynamicMoleLayer()
         {
             base.m_category = "CSword"; //localizable text
@@ -150,7 +147,6 @@ namespace crossbow
             featureLayer.FeatureClass = featureClass;
 
             DynamicMoleLayer dynamicLayer = new DynamicMoleLayer();
-            dynamicLayer.Initialize(m_application);
             dynamicLayer.Name = layer.Name + " - Dynamics";
             dynamicLayer.FeatureClass = featureClass;
 
@@ -160,14 +156,15 @@ namespace crossbow
         }
 
         private void EnableDynamicDisplay()
-        {            
-            IDynamicMap map = m_mxDocument.FocusMap as IDynamicMap;
+        {
+            IMxDocument mxDocument = Tools.GetMxDocument();
+            IDynamicMap map = mxDocument.FocusMap as IDynamicMap;
             if (map == null)
                 throw new System.Exception("Dynamic display not supported");
             if (!map.DynamicMapEnabled)
             {
                 map.DynamicMapEnabled = true;
-                m_mxDocument.ActiveView.Refresh();
+                mxDocument.ActiveView.Refresh();
             }
         }       
     }

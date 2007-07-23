@@ -18,28 +18,25 @@ namespace crossbow
 
     public partial class MissionOrderForm : Form, IMissionForm
     {
-        private OrderManager m_orderManager;
-        
-        public MissionOrderForm(string name, IApplication app)
+        private OrderManager m_orderManager = null;
+
+        public MissionOrderForm(string name)
         {
             OrderName = name;
-            InitializeExtension(app);
-            InitializeComponent();
-            UnitName = m_orderManager.SelectionName();
-        }
 
-        #region Get CSword Extension
-        private void InitializeExtension(IApplication app)
-        {            
-            CSwordExtension extension = Tools.GetCSwordExtension(app);
+            CSwordExtension extension = Tools.GetCSwordExtension();
             m_orderManager = extension.OrderManager;
-            m_orderManager.Register(this);
-        }
-        #endregion
+            m_orderManager.BindUI(this);
 
+            InitializeComponent();
+            m_UnitName.Text = m_orderManager.SelectionName();
+        }
+
+        #region IMissionForm implementation
         public void BindParameter(IOrderParameter param)
         {
-            m_ParamterTree.Nodes.Add(param.Name);
+            if (m_ParameterTree != null) // $$$$ SBO 2007-07-23: 
+                m_ParameterTree.Nodes.Add(param.Name);
         }
         
         public string OrderName
@@ -54,17 +51,6 @@ namespace crossbow
                 base.Text = value;
             }
         }
-        public string UnitName
-        {
-            get
-            {
-                return m_UnitName.Text;
-            }
-
-            set
-            {
-                m_UnitName.Text = value;
-            }
-        }
+        #endregion
     }
 }
