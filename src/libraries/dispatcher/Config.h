@@ -47,6 +47,8 @@ public:
           std::string    GetProfilesFile               () const;
     const std::string&   GetNetworkSimulationParameters() const;
           unsigned short GetNetworkClientsParameters   () const;
+    const std::string&   GetPhysicalFile() const;
+          std::string    BuildPhysicalChildFile( const std::string& file ) const;
     const PluginConfig&  GetPluginConfig( const std::string& name ) const;
     //@}
 
@@ -65,6 +67,7 @@ private:
     std::string    profiles_;
     std::string    networkSimulationParameters_;
     unsigned short networkClientsParameters_;
+    std::string    physical_;
     T_Plugins      plugins_;
 };
 

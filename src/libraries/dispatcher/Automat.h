@@ -47,6 +47,7 @@ public:
     //@{
     unsigned long                GetID    () const;
     ModelRefsContainer< Agent >& GetAgents();
+    bool IsEngaged() const;
     //@}
 
     //! @name Main

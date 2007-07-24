@@ -20,4 +20,16 @@ unsigned long Agent::GetID() const
     return nID_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Agent::GetAutomat
+// Created: SBO 2007-07-24
+// -----------------------------------------------------------------------------
+inline
+const Automat& Agent::GetAutomat() const
+{
+    if( !pAutomat_ )
+        throw std::runtime_error( "Agent automat not set" );
+    return *pAutomat_;
+}
+
 }

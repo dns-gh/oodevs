@@ -35,6 +35,11 @@ public:
     virtual ~TacticalLine_ABC();
     //@}
 
+    //! @name Operations
+    //@{
+    void Send( ASN1T_Location& asn ) const;
+    //@}
+
 protected:
     //! @name Operations
     //@{

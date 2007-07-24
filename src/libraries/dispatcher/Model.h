@@ -83,7 +83,11 @@ public:
     //! @name Accessors
     //@{
           ModelsContainer< Side           >& GetSides          ();
+    const ModelsContainer< Side           >& GetSides          () const;
           ModelsContainer< KnowledgeGroup >& GetKnowledgeGroups();
+    const ModelsContainer< KnowledgeGroup >& GetKnowledgeGroups() const;
+          ModelsContainer< AgentKnowledge >& GetAgentKnowledges();
+    const ModelsContainer< AgentKnowledge >& GetAgentKnowledges() const;
           ModelsContainer< Formation      >& GetFormations     ();
     const ModelsContainer< Formation      >& GetFormations     () const;
           ModelsContainer< Automat        >& GetAutomats       ();
@@ -91,7 +95,10 @@ public:
           ModelsContainer< Agent          >& GetAgents         ();
     const ModelsContainer< Agent          >& GetAgents         () const;
           ModelsContainer< Object         >& GetObjects        ();
+    const ModelsContainer< Object         >& GetObjects        () const;
           ModelsContainer< Population     >& GetPopulations    ();
+    const ModelsContainer< Limit          >& GetLimits         () const;
+    const ModelsContainer< Lima           >& GetLimas          () const;
     //@}
 
 private:

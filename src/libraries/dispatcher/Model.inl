@@ -21,6 +21,16 @@ ModelsContainer< Side >& Model::GetSides()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ModelsContainer< Side >& Model::GetSides
+// Created: JCR 2007-05-15
+// -----------------------------------------------------------------------------
+inline
+const ModelsContainer< Side >& Model::GetSides() const
+{
+    return sides_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ModelsContainer< KnowledgeGroup > Model::GetKnowledgeGroups
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
@@ -28,6 +38,37 @@ inline
 ModelsContainer< KnowledgeGroup >& Model::GetKnowledgeGroups()
 {
     return knowledgeGroups_;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ModelsContainer< KnowledgeGroup > Model::GetKnowledgeGroups
+// Created: NLD 2006-09-25
+// -----------------------------------------------------------------------------
+inline
+const ModelsContainer< KnowledgeGroup >& Model::GetKnowledgeGroups() const
+{
+    return knowledgeGroups_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelsContainer< AgentKnowledge > Model::GetAgentKnowledges
+// Created: NLD 2006-09-25
+// -----------------------------------------------------------------------------
+inline
+ModelsContainer< AgentKnowledge >& Model::GetAgentKnowledges()
+{
+    return agentKnowledges_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelsContainer< AgentKnowledge >& Model::GetAgentKnowledges
+// Created: JCR 2007-05-15
+// -----------------------------------------------------------------------------
+inline
+const ModelsContainer< AgentKnowledge >& Model::GetAgentKnowledges() const
+{
+    return agentKnowledges_;
 }
 
 // -----------------------------------------------------------------------------
@@ -101,6 +142,16 @@ ModelsContainer< Object >& Model::GetObjects()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ModelsContainer< Object >& Model::GetObjects
+// Created: NLD 2006-09-29
+// -----------------------------------------------------------------------------
+inline
+const ModelsContainer< Object >& Model::GetObjects() const
+{
+    return objects_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: }ModelsContainer< Population >& Model::GetPopulations
 // Created: NLD 2006-10-03
 // -----------------------------------------------------------------------------
@@ -108,6 +159,26 @@ inline
 ModelsContainer< Population >& Model::GetPopulations()
 {
     return populations_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelsContainer< Limit>& Model::GetLimits
+// Created: SBO 2007-06-01
+// -----------------------------------------------------------------------------
+inline
+const ModelsContainer< Limit >& Model::GetLimits() const
+{
+    return limits_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelsContainer< Lima >& Model::GetLimas
+// Created: SBO 2007-06-06
+// -----------------------------------------------------------------------------
+inline
+const ModelsContainer< Lima >& Model::GetLimas() const
+{
+    return limas_;
 }
 
 }

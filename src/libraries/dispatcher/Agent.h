@@ -68,6 +68,7 @@ public:
     //! @name Accessors
     //@{
     unsigned long GetID() const;
+    const Automat& GetAutomat() const;
     //@}
 
 private:

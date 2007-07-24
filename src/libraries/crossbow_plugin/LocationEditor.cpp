@@ -3,41 +3,40 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-namespace dispatcher 
-{
+#include "crossbow_plugin_pch.h"
+#include "LocationEditor.h"
+
+using namespace crossbow;
 
 // -----------------------------------------------------------------------------
-// Name: Automat::GetID
-// Created: NLD 2006-09-25
+// Name: LocationEditor::LocationEditor
+// Created: JCR 2007-05-23
 // -----------------------------------------------------------------------------
-inline
-unsigned long Automat::GetID() const
+LocationEditor::LocationEditor( ScopeEditor& scope, ISpatialReferencePtr spSpatialReference )
+    : GeometryEditor( spSpatialReference )
+    , scope_ ( scope )
 {
-    return nID_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModelRefsContainer< Agent >& Automat::GetAgents
-// Created: NLD 2006-09-26
+// Name: LocationEditor::~LocationEditor
+// Created: JCR 2007-05-23
 // -----------------------------------------------------------------------------
-inline
-ModelRefsContainer< Agent >& Automat::GetAgents()
+LocationEditor::~LocationEditor()
 {
-    return agents_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::IsEngaged
-// Created: SBO 2007-07-24
+// Name: LocationEditor::CreateGeometry
+// Created: JCR 2007-05-23
 // -----------------------------------------------------------------------------
-inline
-bool Automat::IsEngaged() const
+void LocationEditor::CreateGeometry( IFeatureBufferPtr spBuffer, const ASN1T_Location& asn )
 {
-    return nAutomatState_ == EnumAutomatMode::embraye;
-}
-
+    // $$$$ JCR 2007-05-23: TODO
 }
