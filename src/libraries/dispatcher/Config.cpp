@@ -9,19 +9,20 @@
 
 #include "dispatcher_pch.h"
 #include "Config.h"
+#include "PluginConfig.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4244 )
 #include <boost/program_options.hpp>
 #include <boost/filesystem/path.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
 #include "xeumeuleu/xml.h"
 
 namespace po = boost::program_options;
-namespace bpt = boost::posix_time;
 namespace bfs = boost::filesystem;
+
 using namespace dispatcher;
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: Config constructor
@@ -56,22 +57,32 @@ void Config::Parse( int argc, char** argv )
 {
     tools::GeneralConfig::Parse( argc, argv );
 
-    xml::xifstream xisExercise( GetExerciseFile() );
-    xisExercise >> xml::start( "exercise" )
-                    >> xml::start( "profiles" )
-                        >> xml::attribute( "file", profiles_ );
+    xifstream xisExercise( GetExerciseFile() );
+    xisExercise >> start( "exercise" )
+                    >> start( "profiles" )
+                        >> attribute( "file", profiles_ );
 
     int port;
     xml::xifstream xisGame( GetGameFile() );
-    xisGame >> xml::start( "config" )
-                >> xml::start( "dispatcher" )
-                    >> xml::start( "network" )
-                        >> xml::attribute( "client", networkSimulationParameters_ )
-                        >> xml::attribute( "server", port )
-                    >> xml::end()
-                    >> xml::start( "recorder" )
-                        >> xml::attribute( "enabled", bRecorderEnabled_ );
+    xisGame >> start( "config" )
+                >> start( "dispatcher" )
+                    >> start( "network" )
+                        >> attribute( "client", networkSimulationParameters_ )
+                        >> attribute( "server", port )
+                    >> end()
+                    >> start( "plugins" )
+                        >> list( "plugin", *this, &Config::ReadPlugin );
     networkClientsParameters_ = unsigned short( port );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::ReadPlugin
+// Created: SBO 2007-07-24
+// -----------------------------------------------------------------------------
+void Config::ReadPlugin( xml::xistream& xis )
+{
+    std::auto_ptr< PluginConfig > plugin( new PluginConfig( xis ) );
+    plugins_[plugin->GetName()] = plugin.release();
 }
 
 // =============================================================================
@@ -105,29 +116,13 @@ unsigned short Config::GetNetworkClientsParameters() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::RecorderEnabled
-// Created: NLD 2007-05-10
+// Name: Config::GetPluginConfig
+// Created: SBO 2007-07-24
 // -----------------------------------------------------------------------------
-bool Config::RecorderEnabled() const
+const PluginConfig& Config::GetPluginConfig( const std::string& name ) const
 {
-    return bRecorderEnabled_;
+    T_Plugins::const_iterator it = plugins_.find( name );
+    if( it == plugins_.end() )
+        throw std::runtime_error( "Unable to find configuration information for plugin: " + name );
+    return *it->second;
 }
-
-// -----------------------------------------------------------------------------
-// Name: Config::GetRecorderDirectory
-// Created: NLD 2007-05-10
-// -----------------------------------------------------------------------------
-std::string Config::GetRecorderDirectory( const std::string& records ) const
-{
-    return BuildGameChildFile( ( bfs::path( "records", bfs::native ) / bfs::path( records, bfs::native ) ).native_file_string() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Config::GenerateRecorderDirectory
-// Created: NLD 2007-05-10
-// -----------------------------------------------------------------------------
-std::string Config::GenerateRecorderDirectory() const
-{
-    return GetRecorderDirectory( bpt::to_iso_string( bpt::second_clock::local_time() ) );
-}
-

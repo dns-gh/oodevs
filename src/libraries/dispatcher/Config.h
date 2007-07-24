@@ -11,9 +11,16 @@
 #define __Config_h_
 
 #include "tools/GeneralConfig.h"
+#include <map>
+
+namespace xml
+{
+    class xistream;
+}
 
 namespace dispatcher
 {
+    class PluginConfig;
 
 // =============================================================================
 /** @class  Config
@@ -40,17 +47,25 @@ public:
           std::string    GetProfilesFile               () const;
     const std::string&   GetNetworkSimulationParameters() const;
           unsigned short GetNetworkClientsParameters   () const;
-          bool           RecorderEnabled               () const;
+    const PluginConfig&  GetPluginConfig( const std::string& name ) const;
+    //@}
 
-          std::string    GetRecorderDirectory          ( const std::string& records ) const;
-          std::string    GenerateRecorderDirectory     () const;
+private:
+    //! @name Types
+    //@{
+    typedef std::map< std::string, const PluginConfig* > T_Plugins;
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadPlugin( xml::xistream& xis );
     //@}
 
 private:
     std::string    profiles_;
     std::string    networkSimulationParameters_;
     unsigned short networkClientsParameters_;
-    bool           bRecorderEnabled_;
+    T_Plugins      plugins_;
 };
 
 }

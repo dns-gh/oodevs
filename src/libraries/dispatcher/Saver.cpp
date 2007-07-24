@@ -11,16 +11,29 @@
 #include "Saver.h"
 #include "Savable_ABC.h"
 #include "Config.h"
+#include "PluginConfig.h"
 #include "tools/OutputBinaryWrapper.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #pragma warning( push )
 #pragma warning( disable: 4127 )
 #include <boost/filesystem/convenience.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
 
 namespace bfs = boost::filesystem;
+namespace bpt = boost::posix_time;
 
 using namespace dispatcher;
+
+namespace
+{
+    std::string GenerateOutputDirectory( const Config& config )
+    {
+        const std::string directory = config.GetPluginConfig( "recorder" ).GetParameter( "directory" );
+        const std::string datetime = bpt::to_iso_string( bpt::second_clock::local_time() );
+        return config.BuildGameChildFile( ( bfs::path( directory, bfs::native ) / bfs::path( datetime, bfs::native ) ).native_file_string() );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: Saver constructor
@@ -29,7 +42,7 @@ using namespace dispatcher;
 Saver::Saver( const Config& config )
     : frameCount_( 0 )
 {
-    const bfs::path recorderDirectory( config.GenerateRecorderDirectory(), bfs::native );
+    const bfs::path recorderDirectory( GenerateOutputDirectory( config ), bfs::native );
 
     MT_LOG_INFO_MSG( "Recorder enabled - data stored in " << recorderDirectory.native_file_string() );
 

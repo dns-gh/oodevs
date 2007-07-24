@@ -12,6 +12,7 @@
 #include "Config.h"
 #include "MessageHandler_ABC.h"
 #include "Config.h"
+#include "PluginConfig.h"
 #include "tools/InputBinaryStream.h"
 #include "tools/AsnMessageDecoder.h"
 #include "tools/thread/BarrierCommand.h"
@@ -19,6 +20,15 @@
 #include <boost/bind.hpp>
 namespace bfs = boost::filesystem;
 using namespace dispatcher;
+
+namespace
+{
+    std::string BuildInputDirectory( const Config& config, const std::string& records )
+    {
+        const std::string directory = config.GetPluginConfig( "recorder" ).GetParameter( "directory" );
+        return config.BuildGameChildFile( ( bfs::path( directory, bfs::native ) / bfs::path( records, bfs::native ) ).native_file_string() );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: MessageLoader constructor
@@ -28,7 +38,7 @@ MessageLoader::MessageLoader( const Config& config, const std::string& records )
 //    : disk_( 1 )
 //    , cpu_ ( 1 )
 {
-    const bfs::path dir( config.GetRecorderDirectory( records ), bfs::native );
+    const bfs::path dir( BuildInputDirectory( config, records ), bfs::native );
 
     LoadIndex   ( ( dir / "index" ).string() );
     LoadKeyIndex( ( dir / "keyindex" ).string() );
