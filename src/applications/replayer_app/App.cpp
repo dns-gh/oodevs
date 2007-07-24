@@ -11,6 +11,7 @@
 #include "dispatcher/Replayer.h"
 #include "MT/MT_Logger/MT_Logger_Lib.h"
 #include "dispatcher/Loader.h"
+#include "dispatcher/PluginConfig.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4244 )
@@ -84,6 +85,12 @@ namespace
         }
         return result;
     }
+
+    std::string BuildRecordsDirectory( const Config& config, const std::string& records )
+    {
+        const std::string directory = config.GetPluginConfig( "recorder" ).GetParameter( "directory" );
+        return config.BuildGameChildFile( ( bfs::path( directory, bfs::native ) / bfs::path( records, bfs::native ) ).native_file_string() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -93,7 +100,7 @@ namespace
 void App::CreateReplayer()
 {
     std::vector< bfs::path > records;
-    const bfs::path recordsRoot = bfs::path( config_.GetRecorderDirectory( "." ), bfs::native );
+    const bfs::path recordsRoot = bfs::path( BuildRecordsDirectory( config_, "." ), bfs::native );
     if( ! bfs::exists( recordsRoot ) )
         throw std::runtime_error( "No record to replay" );
 
