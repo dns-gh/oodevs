@@ -51,8 +51,7 @@ namespace crossbow
         #endregion
         #endregion
 
-        private IApplication m_application = null;
-
+        private IApplication m_application;
         public MissionOrderCommand( string category, string name )
         {            
             base.m_category = category; //localizable text
@@ -95,8 +94,8 @@ namespace crossbow
         /// </summary>
         public override void OnClick()
         {
-            MissionOrderForm form = new MissionOrderForm(m_name);
-            form.Show();
+            // MissionOrderForm form = new MissionOrderForm(m_name, m_application);            
+            // form.Show();
         }
 
         #endregion

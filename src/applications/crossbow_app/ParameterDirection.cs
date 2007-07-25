@@ -1,3 +1,4 @@
+using System;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Framework;
 
@@ -18,10 +19,16 @@ namespace crossbow
             row.Store();
         }
 
-        public void OnContextMenu(ICommandBar cmd, int x, int y, IFeature selected)
+        public void OnContextMenu(MultiItemSelectionMenu cmd, int x, int y, IFeature selected)
         {
-            // NOTHING
+            throw new Exception("Direction.OnContextMenu should not be here.");
         }
+
+        public void SetValue(string value)
+        {
+        }
+
+        public void Visit(Visitor_ABC visitor) {}
 
         public string Name
         {

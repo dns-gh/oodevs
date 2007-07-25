@@ -10,35 +10,25 @@ using ESRI.ArcGIS.esriSystem;
 
 namespace crossbow
 {
-    public interface IMissionForm
+    public interface IMissionObserver
     {
-        string OrderName { get; }
-        void BindParameter(IOrderParameter param);        
+        void NotifyCreated(IOrder order);
+        void NotifyUpdated(IOrder order, IOrderParameter param);
+        void NotifyDeleted(IOrder order);
     }
 
-    public partial class MissionOrderForm : Form, IMissionForm
+    public partial class MissionOrderForm : Form, IMissionObserver
     {
-        private OrderManager m_orderManager = null;
-
-        public MissionOrderForm(string name)
-        {
-            OrderName = name;
-
-            CSwordExtension extension = Tools.GetCSwordExtension();
-            m_orderManager = extension.OrderManager;
-            m_orderManager.BindUI(this);
-
-            InitializeComponent();
-            m_UnitName.Text = m_orderManager.SelectionName();
-        }
-
-        #region IMissionForm implementation
-        public void BindParameter(IOrderParameter param)
-        {
-            if (m_ParameterTree != null) // $$$$ SBO 2007-07-23: 
-                m_ParameterTree.Nodes.Add(param.Name);
-        }
+        private IController m_controller;
         
+        public MissionOrderForm(IController controller)
+        {
+            m_controller = controller;
+            InitializeComponent();            
+            controller.Register(this);
+        }
+
+        #region IMissionForm implementation     
         public string OrderName
         {
             get
@@ -50,6 +40,110 @@ namespace crossbow
             {
                 base.Text = value;
             }
+        }
+        #endregion
+
+        public string UnitName
+        {
+            get
+            {
+                return m_UnitName.Text;
+            }
+
+            set
+            {
+                m_UnitName.Text = value;
+            }
+        }        
+
+        #region IMissionObserver Members
+        public void NotifyCreated(IOrder order)
+        {
+            OrderName = order.Name;
+            m_UnitName.Text = order.Target;
+            if (!Visible)
+                Show();
+        }
+
+        #region Visitors
+        sealed class LimitsVisitor : Visitor_ABC
+        {
+            TextBox m_limit1;
+            TextBox m_limit2;
+
+            public LimitsVisitor(TextBox limit1, TextBox limit2) 
+            {
+                m_limit1 = limit1;
+                m_limit1.Text = "";
+                m_limit2 = limit2;
+                m_limit2.Text = "";
+            }
+            public override void Accept(string key, string value, object img)
+            {
+                if (m_limit1.Text == "")
+                    m_limit1.Text = value;
+                else
+                    m_limit2.Text = value;
+            }            
+        }
+        sealed class LimasVisitor : Visitor_ABC
+        {
+            System.Windows.Forms.TreeNode m_nodes;
+            public LimasVisitor(TreeNodeCollection nodes, string name)
+            {
+                System.Windows.Forms.TreeNode[] node = nodes.Find(name, true);
+                if (node.Length == 0)
+                    m_nodes = nodes.Add(name);
+                else
+                    m_nodes = node[0];
+                
+            }
+            public override void Accept(string key, string value, object img)
+            {                
+                System.Windows.Forms.TreeNode[] node = m_nodes.Nodes.Find(key, false);
+                if (node.Length != 0)
+                    m_nodes.Nodes.Remove(node[0]);
+                m_nodes.Nodes.Add(key, value);                
+            }
+        }
+        sealed class ParameterVisitor : Visitor_ABC
+        {
+            TreeNodeCollection m_nodes;
+            public ParameterVisitor(TreeNodeCollection nodes)
+            {
+                m_nodes = nodes;
+            }
+            public override void Accept(string key, string value, object img)
+            {
+                System.Windows.Forms.TreeNode[] node = m_nodes.Find(key, false);
+                if (node.Length == 0)
+                    m_nodes.Add(key, value);
+                // 
+            }
+        }
+
+        /*
+         * Build the right visitor accord to param type
+         */
+        Visitor_ABC GetVisitor(IOrderParameter param)
+        {
+            if (param is ParameterLimits)
+                return new LimitsVisitor(m_Limit1, m_Limit2);
+            if (param is ParameterLimas)
+                return new LimasVisitor(m_ParameterTree.Nodes, param.Name);
+            return new ParameterVisitor(m_ParameterTree.Nodes);
+        }
+        #endregion
+
+        public void NotifyUpdated(IOrder order, IOrderParameter param)
+        {
+            Visitor_ABC visitor = GetVisitor(param);
+            param.Visit(visitor);
+        }
+
+        public void NotifyDeleted(IOrder order)
+        {
+            Hide();            
         }
         #endregion
     }

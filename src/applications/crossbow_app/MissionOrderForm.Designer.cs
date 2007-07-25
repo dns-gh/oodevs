@@ -185,15 +185,15 @@ namespace crossbow
         }
 
         void OnExecuteClick(object sender, System.EventArgs e)
-        {
-            // TODO JCR $$$$: Fill parameters
-            m_orderManager.Execute();
+        {            
+            m_controller.Send(this);
+            m_controller.Remove(this);
             base.Close();
         }
 
         void OnCancelClick(object sender, System.EventArgs e)
-        {
-            m_orderManager.Cancel();
+        {            
+            m_controller.Remove(this);
             base.Close();            
         }
 

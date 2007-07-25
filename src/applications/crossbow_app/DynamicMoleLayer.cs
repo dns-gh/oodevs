@@ -214,7 +214,7 @@ namespace crossbow
             if ( drawer != null )
                 drawer.InitializeDisplay(symbol, factor, properties);            
             if ( IsSelected(feature) )
-                drawer.DrawEnvelope(dynamicDisplay,             transformation.FromPoints(m_symbolSize), properties);
+                drawer.DrawEnvelope(dynamicDisplay, transformation.FromPoints(m_symbolSize), properties);
             drawer.Draw(dynamicDisplay, m_Fields);
             properties.SetColor(esriDynamicSymbolType.esriDSymbolMarker, 1, 1, 1, 1);
         }
@@ -222,7 +222,7 @@ namespace crossbow
         private bool IsSelected(IFeature feature)
         {
             if (m_selectionSet == null)
-                return false;            
+                return false;
             IEnumIDs ids = m_selectionSet.IDs;
             ids.Reset();
             int id = ids.Next();

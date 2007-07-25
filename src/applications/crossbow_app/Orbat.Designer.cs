@@ -92,7 +92,7 @@ namespace crossbow
         }
 
         /// <summary>
-        /// Load and initialize symbol tree
+        /// Load and initialize symbol tree with image initialization
         /// </summary>
         void SetupSymbols(IFeatureLayer pLayer)
         {

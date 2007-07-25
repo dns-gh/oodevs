@@ -3,6 +3,8 @@ using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
+using ESRI.ArcGIS.Geometry;
+using ESRI.ArcGIS.MilitaryAnalyst;
 
 namespace crossbow
 {
@@ -226,5 +228,20 @@ namespace crossbow
             return color as ESRI.ArcGIS.Display.IColor;
         }
         #endregion
+    
+        #region Geometry tools
+        static public string ConvertMapToMGRS(IPoint point)
+        {
+            ISpatialReferenceFactory    sp = new SpatialReferenceEnvironment();
+            IGeographicCoordinateSystem gcs = sp.CreateGeographicCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
+
+            ICoordinateTool converter = new CoordinateToolClass();
+            IPoint datum = new PointClass();
+            IPoint wgs = new PointClass();
+            string dms = "", utm = "", mgrs = "";
+            converter.ConvertLocation(point, 1, "WGS 1984 (WGS84)", "WGS 1984 (WGS84)", ref wgs, ref datum, ref dms, ref utm, ref mgrs);
+            return mgrs;
+        }
+        #endregion       
     }
 }
