@@ -149,6 +149,7 @@ namespace crossbow
             DynamicMoleLayer dynamicLayer = new DynamicMoleLayer();
             dynamicLayer.Name = layer.Name + " - Dynamics";
             dynamicLayer.FeatureClass = featureClass;
+            dynamicLayer.Connect();
 
             group.Add(featureLayer);
             group.Add(dynamicLayer);

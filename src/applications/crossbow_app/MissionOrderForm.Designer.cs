@@ -40,9 +40,13 @@ namespace crossbow
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.m_Direction = new System.Windows.Forms.TrackBar();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.m_OrderBox.SuspendLayout();
             this.m_ParametersBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.m_Direction)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // m_ParameterTree
@@ -54,7 +58,7 @@ namespace crossbow
             // 
             // m_Execute
             // 
-            this.m_Execute.Location = new System.Drawing.Point(195, 397);
+            this.m_Execute.Location = new System.Drawing.Point(195, 558);
             this.m_Execute.Name = "m_Execute";
             this.m_Execute.Size = new System.Drawing.Size(63, 27);
             this.m_Execute.TabIndex = 1;
@@ -64,7 +68,7 @@ namespace crossbow
             // 
             // m_Cancel
             // 
-            this.m_Cancel.Location = new System.Drawing.Point(264, 397);
+            this.m_Cancel.Location = new System.Drawing.Point(264, 558);
             this.m_Cancel.Name = "m_Cancel";
             this.m_Cancel.Size = new System.Drawing.Size(63, 27);
             this.m_Cancel.TabIndex = 2;
@@ -104,6 +108,9 @@ namespace crossbow
             // 
             // m_ParametersBox
             // 
+            this.m_ParametersBox.Controls.Add(this.dataGridView1);
+            this.m_ParametersBox.Controls.Add(this.flowLayoutPanel1);
+            this.m_ParametersBox.Controls.Add(this.tableLayoutPanel1);
             this.m_ParametersBox.Controls.Add(this.m_Limit2);
             this.m_ParametersBox.Controls.Add(this.m_Limit1);
             this.m_ParametersBox.Controls.Add(this.label3);
@@ -112,7 +119,7 @@ namespace crossbow
             this.m_ParametersBox.Controls.Add(this.m_ParameterTree);
             this.m_ParametersBox.Location = new System.Drawing.Point(14, 71);
             this.m_ParametersBox.Name = "m_ParametersBox";
-            this.m_ParametersBox.Size = new System.Drawing.Size(313, 320);
+            this.m_ParametersBox.Size = new System.Drawing.Size(313, 481);
             this.m_ParametersBox.TabIndex = 4;
             this.m_ParametersBox.TabStop = false;
             this.m_ParametersBox.Text = "Parameters";
@@ -164,11 +171,41 @@ namespace crossbow
             this.m_Direction.TabIndex = 1;
             this.m_Direction.TickFrequency = 15;
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 317);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(295, 31);
+            this.tableLayoutPanel1.TabIndex = 8;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(6, 354);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(294, 59);
+            this.flowLayoutPanel1.TabIndex = 9;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(6, 419);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(294, 56);
+            this.dataGridView1.TabIndex = 10;
+            // 
             // MissionOrderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(334, 430);
+            this.ClientSize = new System.Drawing.Size(334, 597);
             this.Controls.Add(this.m_ParametersBox);
             this.Controls.Add(this.m_OrderBox);
             this.Controls.Add(this.m_Cancel);
@@ -180,6 +217,7 @@ namespace crossbow
             this.m_ParametersBox.ResumeLayout(false);
             this.m_ParametersBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.m_Direction)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -211,5 +249,8 @@ namespace crossbow
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }

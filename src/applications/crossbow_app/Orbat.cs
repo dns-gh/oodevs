@@ -84,6 +84,7 @@ namespace crossbow
         public Orbat()
         {            
             InitializeComponent();
+            InitializeEvents();
         }
         
         #region IDockableWindowDef Members
@@ -91,9 +92,8 @@ namespace crossbow
         public string Caption
         {
             get
-            {
-                //TODO: Replace with locale-based initial title bar caption
-                return "My C# Dockable Window";
+            {                
+                return "Order of Battle";
             }
         }
 

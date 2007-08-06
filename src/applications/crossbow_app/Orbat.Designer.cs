@@ -1,6 +1,8 @@
 using System;
 using System.Drawing;
+using System.Windows.Forms;
 using ESRI.ArcGIS.esriSystem;
+using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Carto;
@@ -13,6 +15,7 @@ namespace crossbow
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+        
 
         /// <summary> 
         /// Clean up any resources being used.
@@ -54,10 +57,47 @@ namespace crossbow
             this.Name = "Orbat";
             this.Size = new System.Drawing.Size(340, 580);
             this.ResumeLayout(false);
+        }
 
+        private void InitializeEvents()
+        {
+            m_pSymbolTree.MouseClick += new MouseEventHandler(m_pSymbolTree_MouseClick);
+            // m_pSymbolTree.GetNodeAt
+        }
+
+        private void SelectFeature(TreeNode node)
+        {
+            ESRI.ArcGIS.ArcMapUI.IMxDocument mxDocument = Tools.GetMxDocument();
+            IFeatureLayer pLayer = Tools.GetIFeatureLayerFromLayerName(mxDocument.ActiveView, "UnitForces");
+            
+            if (pLayer != null)
+            {
+                IFeatureSelection selection = (IFeatureSelection)pLayer;
+                IQueryFilter filter = new QueryFilterClass();
+                filter.WhereClause = "Public_OID=" + node.Name;
+                selection.SelectFeatures(filter, esriSelectionResultEnum.esriSelectionResultNew, true);
+                // pLayer.Search(filter, true);
+            }
+        }
+
+        private void m_pSymbolTree_MouseClick(object sender, MouseEventArgs e)
+        {
+            bool handled = false;
+
+            if (e.Button == MouseButtons.Left)                            
+                SelectFeature(m_pSymbolTree.GetNodeAt(e.X, e.Y));            
+            if (e.Button == MouseButtons.Right)
+                Tools.GetCSwordExtension().OrderManager.OnContextMenu(e.X, e.Y, out handled);
+        }
+               
+
+        #endregion
+        #region Mouse event
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+                    
         }
         #endregion
-
         #region SymbolTree processing
         /// <summary>
         /// Build Image list

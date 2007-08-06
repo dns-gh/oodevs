@@ -19,7 +19,7 @@ namespace crossbow
         {
             IRow row = table.CreateRow();
             Tools.SetValue<int>(row, "order_id", id);
-            Tools.SetValue<string>(row, "name", "limit");
+            Tools.SetValue<string>(row, "name", "limits");
             Tools.SetValue<bool>(row, "context", true);
             Tools.SetValue<string>(row, "ParamValue", m_limits.first + ";" + m_limits.second);
             row.Store();

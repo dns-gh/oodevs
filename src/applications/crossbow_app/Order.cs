@@ -13,7 +13,7 @@ namespace crossbow
     }
 
     public class Order : IOrder
-    {
+    {        
         private ParameterLimits m_limits = new ParameterLimits();
         private ParameterLimas m_limas = new ParameterLimas();
         private ParameterDirection m_direction = new ParameterDirection();
@@ -79,15 +79,61 @@ namespace crossbow
                 param.Value.OnContextMenu(menu, x, y, selected);
         }
 
+        /*
+         * Enable IFeatureWorkspace edition during instance life
+         */
+        class ScopeLockEditor
+        {
+            IWorkspaceEdit m_edit;
+
+            public ScopeLockEditor(IFeatureWorkspace featureWorkspace)
+            {
+                m_edit = (IWorkspaceEdit)featureWorkspace;                
+            }
+            public void Lock()
+            {
+                m_edit.StartEditing(false);
+                m_edit.StartEditOperation();
+            }
+            public void Unlock()
+            {
+                m_edit.StopEditOperation();
+                m_edit.StopEditing(true);
+            }
+        }
+
         public void Serialize(IFeatureWorkspace featureWorkspace)
         {
+            // ScopeLockEditor editor = new ScopeLockEditor(featureWorkspace);
+
+            IWorkspace wks = (IWorkspace)featureWorkspace;
+            System.Console.Write(wks.PathName);
+            // editor.Lock();
+            int id = SerializeOrder(featureWorkspace);
+            SerializeParameters(featureWorkspace, id);
+            // editor.Unlock();
+        }
+
+        int SerializeOrder(IFeatureWorkspace featureWorkspace)
+        {
+            ITable table = featureWorkspace.OpenTable("Orders"); // $$$$ SBO 2007-07-20: keep it maybe...                
+            IRow row = table.CreateRow();
+            Tools.SetValue<int>(row, "target_id", m_OID);
+            Tools.SetValue<string>(row, "OrderName", m_name);
+            Tools.SetValue<bool>(row, "processed", false);
+            row.Store();
+            return row.OID;
+        }
+
+        void SerializeParameters(IFeatureWorkspace featureWorkspace, int orderId)
+        {
             ITable table = featureWorkspace.OpenTable("OrdersParameters"); // $$$$ SBO 2007-07-20: keep it maybe...
-            
-            m_limits.Serialize(table, m_OID);
-            m_limas.Serialize(table, m_OID);
+
+            m_limits.Serialize(table, orderId);
+            m_limas.Serialize(table, orderId);
+            m_direction.Serialize(table, orderId);
             foreach (KeyValuePair<string, IOrderParameter> param in m_parameters)
-                param.Value.Serialize(table, m_OID);
-            table = null;
+                param.Value.Serialize(table, orderId);            
         }
     }
 }

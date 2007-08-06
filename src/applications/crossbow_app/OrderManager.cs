@@ -54,21 +54,20 @@ namespace crossbow
             //((IFeatureLayerSelectionEvents_Event)doc.FocusMap.get_Layer(0)).FeatureLayerSelectionChanged += new IFeatureLayerSelectionEvents_FeatureLayerSelectionChangedEventHandler(OnFeatureSelectionChanged);
         }
 
-        private void OnFeatureSelectionChanged()
+        private bool OnFeatureSelectionChanged()
         {
             IMxDocument doc = Tools.GetMxDocument();
             if(doc == null)
-                return;
+                return false;            
             UpdateSelection(doc.FocusMap.FeatureSelection);
+            return m_order != null || m_targetFeature != null && m_targetFeature.Class.FindField("Public_OID") > 0;
         }
 
-        private void OnContextMenu(int x, int y, out bool handled)
+        public void OnContextMenu(int x, int y, out bool handled)
         {
             try
             {
-                OnFeatureSelectionChanged();
-
-                handled = m_targetFeature != null;
+                handled = OnFeatureSelectionChanged();
                 if (!handled)
                     return;
                 IDocument doc = Tools.GetMxDocument() as IDocument;

@@ -1,5 +1,6 @@
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
@@ -45,6 +46,12 @@ namespace crossbow
             if (m_application == null)
                 return null;
             return (IMxDocument)m_application.Document;
+        }
+        public static IAppDisplay GetDisplay()
+        {
+            if (m_application == null)
+                return null;
+            return ((IMxApplication)m_application).Display;
         }
         #endregion
 
@@ -187,34 +194,63 @@ namespace crossbow
             return null;
         }
         
-        public static IFeatureWorkspace OpenWorkspace(ESRI.ArcGIS.Carto.IActiveView activeView, System.String name)
+        public static IFeatureWorkspace OpenWorkspace(ESRI.ArcGIS.Carto.IActiveView activeView, string name)
         {
             return RetrieveWorkspace(Tools.GetIFeatureLayerFromLayerName(activeView, name));            
         }
         #endregion
 
-        #region "Get value of specified feature field"
-        public static string GetFeatureValue(IFeature feature, string fieldName)
+        #region "Data manipulation"
+        public static void SetValue<T>(IRowBuffer row, string field, T value)
         {
-            int index = feature.Fields.FindField(fieldName);
-            if (index < 0 )
-                return null;
-            return feature.get_Value(index) as string;
+            try
+            {
+                int id = row.Fields.FindField(field);
+                if (id >= 0 && row.Fields.get_Field(id).Editable)
+                    row.set_Value(id, value);
+            }
+            catch (System.Exception e)
+            {
+                System.Console.Write(e.Message);
+            }
         }
-
         public static void SetValue<T>(IRow row, string field, T value)
         {
-            int id = row.Fields.FindField(field);
-            if (id >= 0 && row.Fields.get_Field(id).Editable)
-                row.set_Value(id, value);
+            try
+            {
+                int id = row.Fields.FindField(field);
+                if (id >= 0 && row.Fields.get_Field(id).Editable)
+                    row.set_Value(id, value);
+            }
+            catch (System.Exception e)
+            {
+                System.Console.Write(e.Message);
+            }
         }
 
         public static T GetValue<T>(IRow row, string field)
-        {
+        {            
             int id = row.Fields.FindField(field);
             if (id >= 0)
                 return (T)row.get_Value(id);
             return default(T);
+        }
+
+        // $$$$ JCR: extract UnitForces
+        public static void Store(string table, IGeometry value)
+        {
+            try
+            {
+                IFeatureWorkspace ws = OpenWorkspace(GetMxDocument().ActiveView, "UnitForces");
+                IFeatureClass features = ws.OpenFeatureClass(table);
+                IFeature feature = features.CreateFeature();
+                feature.Shape = value;
+                feature.Store();
+            }
+            catch (System.Exception e)
+            {
+                System.Console.Write(e.Message);
+            }
         }
         #endregion
 
@@ -230,7 +266,18 @@ namespace crossbow
         #endregion
     
         #region Geometry tools
-        static public string ConvertMapToMGRS(IPoint point)
+        static public IPoint Create(int x, int y)
+        {
+            IDisplay display = GetDisplay();
+            IPoint point = GetDisplay().DisplayTransformation.ToMapPoint(x, y);            
+            point.Project(display.DisplayTransformation.SpatialReference);    
+            return point;
+        }
+        static public string ConvertToMGRS(int x, int y)
+        {
+            return ConvertToMGRS(Create(x, y));
+        }
+        static public string ConvertToMGRS(IPoint point)
         {
             ISpatialReferenceFactory    sp = new SpatialReferenceEnvironment();
             IGeographicCoordinateSystem gcs = sp.CreateGeographicCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
@@ -242,6 +289,6 @@ namespace crossbow
             converter.ConvertLocation(point, 1, "WGS 1984 (WGS84)", "WGS 1984 (WGS84)", ref wgs, ref datum, ref dms, ref utm, ref mgrs);
             return mgrs;
         }
-        #endregion       
+        #endregion
     }
 }

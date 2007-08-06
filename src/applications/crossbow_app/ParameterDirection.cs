@@ -6,7 +6,7 @@ namespace crossbow
 {
     public sealed class ParameterDirection : IOrderParameter
     {
-        private int m_direction;
+        private int m_direction = 0;
 
         public void Serialize(ITable table, int id)
         {            

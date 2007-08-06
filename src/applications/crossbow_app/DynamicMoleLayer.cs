@@ -85,7 +85,7 @@ namespace crossbow
         public DynamicMoleLayer()
         {
             m_selectionColor = Tools.MakeColor(255, 0, 0);
-            SetupTimer(100);
+            SetupTimer(100);            
         }
 
         ~DynamicMoleLayer()
@@ -237,7 +237,7 @@ namespace crossbow
 
         private IDynamicElement GetSymbol(IDisplay display, IDynamicDisplay dynamicDisplay, IFeature feature)
         {
-            string symbolId = Tools.GetFeatureValue(feature, "Symbol_ID");
+            string symbolId = Tools.GetValue<string>(feature, "Symbol_ID");
             IDynamicElement element = (IDynamicElement)m_elements[symbolId];
             if (element != null)
                 return element;
@@ -248,7 +248,7 @@ namespace crossbow
             return element;
         }
 
-        private IDynamicElement BuildSymbol(IDisplay display, IDynamicDisplay dynamicDisplay, String symbolId)
+        private IDynamicElement BuildSymbol(IDisplay display, IDynamicDisplay dynamicDisplay, string symbolId)
         {
             const int size = 256;
             DynamicElement element = new DynamicElement();

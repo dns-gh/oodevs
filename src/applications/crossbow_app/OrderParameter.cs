@@ -5,6 +5,7 @@ using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
+using ESRI.ArcGIS.Carto;
 
 namespace crossbow
 {
@@ -13,6 +14,8 @@ namespace crossbow
     {        
         abstract class Type_ABC
         {
+            protected const string m_OrderShapeName = "OrderParameterShapes";
+
             bool m_selected;
             public bool Selected
             {
@@ -22,23 +25,36 @@ namespace crossbow
                 }
                 set
                 {
-                    m_selected = value;
+                    m_selected = value;                    
                 }
             }
 
             public abstract void OnContextMenu(int x, int y, IFeature selected);
+            public abstract void OnSelect();
             public abstract string GetValue();
         };
 
         sealed class TypePoint : Type_ABC
         {
+            int m_x;
+            int m_y;
             IPoint m_point;
 
             public override void OnContextMenu(int x, int y, IFeature selected)
             {
+                m_x = x;
+                m_y = y;                
+            }
+            public override void OnSelect()
+            {
+                m_point = Tools.Create(m_x, m_y);                
+                if (m_point != null)
+                    Tools.Store(m_OrderShapeName, m_point);
             }
             public override string GetValue()
             {
+                if (m_point != null)
+                    return Tools.ConvertToMGRS(m_point);
                 return "";
             }
         }
@@ -48,7 +64,20 @@ namespace crossbow
             IPointCollection m_polygon;
 
             public override void OnContextMenu(int x, int y, IFeature selected)
+            {               
+            }
+            public override void OnSelect()
             {
+                m_polygon = null;
+                IRubberBand rubber = new RubberPolygonClass();
+                m_polygon = (IPointCollection)rubber.TrackNew(Tools.GetDisplay(), null);
+                if (m_polygon != null)
+                {
+                    ISpatialReference spRef = ((IGeometry)m_polygon).SpatialReference;
+                    if (spRef == null)
+                        ((IGeometry)m_polygon).SpatialReference = Tools.GetDisplay().DisplayTransformation.SpatialReference;
+                    Tools.Store(m_OrderShapeName, (IGeometry)m_polygon);
+                }                
             }
             public override string GetValue()
             {
@@ -60,7 +89,7 @@ namespace crossbow
                         IPoint point = m_polygon.get_Point(i);
                         if (value.Length > 0)
                             value += ";";
-                        value += Tools.ConvertMapToMGRS(point);
+                        value += Tools.ConvertToMGRS(point);
                     }            
                 }
                 return value;
@@ -75,6 +104,7 @@ namespace crossbow
             {
                 m_agent = selected;
             }
+            public override void OnSelect() {}
             public override string GetValue()
             {
                 if (m_agent != null)
@@ -91,6 +121,7 @@ namespace crossbow
             {
                 m_state = !m_state;
             }
+            public override void OnSelect() {}
             public override string GetValue()
             {
                 return m_state.ToString();
@@ -99,15 +130,27 @@ namespace crossbow
 
         sealed class TypePath : Type_ABC
         {
-            IFeature m_feature;
+            IPolyline m_path;
 
             public override void OnContextMenu(int x, int y, IFeature selected)
+            {                
+            }
+            public override void OnSelect() 
             {
-                m_feature = selected;
+                if (m_path == null)
+                {
+                    IRubberBand rubber = new RubberLineClass();                    
+                    m_path = (IPolyline)rubber.TrackNew(Tools.GetDisplay(), null);
+                    if (m_path != null)
+                        Tools.Store(m_OrderShapeName, m_path);
+                }
             }
             public override string GetValue()
             {
-                return "";
+                string value = "";
+                if (m_path != null)                
+                    value = Tools.ConvertToMGRS(m_path.FromPoint) + ";" + Tools.ConvertToMGRS(m_path.ToPoint);                    
+                return value;
             }
         }
 
@@ -153,6 +196,7 @@ namespace crossbow
         public void SetValue(string value)
         {
             m_type.Selected = true;
+            m_type.OnSelect();
         }
 
         public void Visit(Visitor_ABC visitor)
