@@ -19,22 +19,28 @@ using namespace crossbow;
 // Name: StatusListener constructor
 // Created: JCR 2007-06-13
 // -----------------------------------------------------------------------------
-StatusListener::StatusListener( Connector& connector, dispatcher::Publisher_ABC& publisher )
-    : publisher_ ( publisher )
-    , status_ ( eResumed )
-{
+StatusListener::StatusListener( Connector& connector )
+    : status_ ( eResumed )
+{    
     ITablePtr   spTable;
     ICursorPtr  spCursor;
 
-    spTable = connector.GetTable( "SimulationProperties" );
-    spTable->FindField( CComBSTR( L"PropertyValue" ), &lFieldValue_ );
-    
-    IQueryFilterPtr spQueryFilter;
-    spQueryFilter.CreateInstance( CLSID_QueryFilter );
-    spQueryFilter->put_WhereClause( CComBSTR( L"Property=Status" ) );    
-    if( FAILED( spTable->Search( spQueryFilter, false, &spCursor ) ) )
-        throw std::runtime_error( "Search failed" ); // $$$$ SBO 2007-05-30:     
-    spCursor->NextRow( &spRow_ );    
+    try
+    {
+        spTable = connector.GetTable( "SimulationProperties" );
+        spTable->FindField( CComBSTR( L"PropertyValue" ), &lFieldValue_ );
+        
+        IQueryFilterPtr spQueryFilter;
+        spQueryFilter.CreateInstance( CLSID_QueryFilter );
+        spQueryFilter->put_WhereClause( CComBSTR( L"Property=Status" ) );
+        if( FAILED( spTable->Search( spQueryFilter, false, &spCursor ) ) )
+            throw std::runtime_error( "Search failed" ); // $$$$ SBO 2007-05-30:
+        spCursor->NextRow( &spRow_ );
+    }
+    catch ( std::exception& e )
+    {
+        spRow_ = (IRowPtr)0;
+    }
 }
     
 // -----------------------------------------------------------------------------
@@ -64,13 +70,13 @@ namespace
 // Name: StatusListener::Listen
 // Created: JCR 2007-06-13
 // -----------------------------------------------------------------------------
-void StatusListener::Listen()
+void StatusListener::Listen( dispatcher::Publisher_ABC& publisher )
 {
     if ( spRow_ )
     {
         CComVariant value;
         spRow_->get_Value( lFieldValue_, &value );        
-        ProcessStatus( GetString( value ) );
+        ProcessStatus( publisher, GetString( value ) );
     }
 }
 
@@ -78,17 +84,17 @@ void StatusListener::Listen()
 // Name: StatusListener::ProcessStatus
 // Created: JCR 2007-06-13
 // -----------------------------------------------------------------------------
-void StatusListener::ProcessStatus( const std::string& status )
+void StatusListener::ProcessStatus( dispatcher::Publisher_ABC& publisher, const std::string& status )
 {
     switch ( status_ )
     {
     case eResumed:
         if ( status == "paused" ) 
-            Pause();
+            Pause( publisher );
         break;
     case ePaused:
         if ( status == "resumed" )
-            Resume();
+            Resume( publisher );
         break;
     }
 }
@@ -97,10 +103,10 @@ void StatusListener::ProcessStatus( const std::string& status )
 // Name: StatusListener::Pause
 // Created: JCR 2007-06-13
 // -----------------------------------------------------------------------------
-void StatusListener::Pause()
+void StatusListener::Pause( dispatcher::Publisher_ABC& publisher )
 {
     dispatcher::AsnMsgClientToSimControlPause asn;
-    asn.Send( publisher_ );
+    asn.Send( publisher );
     status_ = ePaused;
 }
     
@@ -108,9 +114,9 @@ void StatusListener::Pause()
 // Name: StatusListener::Resume
 // Created: JCR 2007-06-13
 // -----------------------------------------------------------------------------
-void StatusListener::Resume()
+void StatusListener::Resume( dispatcher::Publisher_ABC& publisher )
 {
     dispatcher::AsnMsgClientToSimControlResume asn;
-    asn.Send( publisher_ );
+    asn.Send( publisher );
     status_ = eResumed;
 }

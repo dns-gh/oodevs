@@ -11,6 +11,8 @@
 #define __ConnectorFacade_h_
 
 #include "game_asn/Asn.h"
+#include "dispatcher/MessageHandler_ABC.h"
+#include <list>
 
 namespace kernel
 {
@@ -36,19 +38,20 @@ namespace crossbow
 */
 // Created: JCR 2007-04-30
 // =============================================================================
-class ConnectorFacade
+class ConnectorFacade : public dispatcher::MessageHandler_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ConnectorFacade( const dispatcher::Model& model, const dispatcher::Config& config, dispatcher::Publisher_ABC& simulation );
+             ConnectorFacade( const dispatcher::Model& model, const dispatcher::Config& config, dispatcher::Publisher_ABC& client );
     virtual ~ConnectorFacade();
     //@}
 
     //! @name Operations
-    //@{
-    void Update( const ASN1T_MsgsSimToClient& asn );
+    //@{ 
+    virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg );
+            void Send( dispatcher::Publisher_ABC& publisher ) const;
     //@}
 
 private:
@@ -59,8 +62,7 @@ private:
     //@}
 
     //! @name 
-    //@{
-    void ListenDatabaseEvents();
+    //@{    
     void UpdateCurrentState();
     void UpdateOnTick( const ASN1T_MsgsSimToClient& asn );
     bool IsRelevant( const ASN1T_MsgsSimToClient& asn ) const;
@@ -72,6 +74,7 @@ private:
     typedef boost::shared_ptr< Listener_ABC >   T_SharedListener;
     typedef std::list< T_SharedListener >       T_ListenerList;
     typedef T_ListenerList::iterator            IT_ListenerList;
+    typedef T_ListenerList::const_iterator      CIT_ListenerList;
     //@}
 
 private:
@@ -82,6 +85,7 @@ private:
     std::auto_ptr< Connector >          connector_;
     T_ListenerList                      listeners_;
     bool                                bLoaded_;
+    dispatcher::Publisher_ABC&          simulation_;
     //@}
 };
 

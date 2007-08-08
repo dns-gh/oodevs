@@ -79,7 +79,10 @@ void Config::Parse( int argc, char** argv )
                         >> attribute( "server", port )
                     >> end()
                     >> start( "plugins" )
-                        >> list( "plugin", *this, &Config::ReadPlugin );
+                        >> list( "plugin", *this, &Config::ReadPlugin )
+                    >> end()
+                >> end()
+            >> end();
     networkClientsParameters_ = unsigned short( port );
 }
 

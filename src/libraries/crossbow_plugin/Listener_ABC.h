@@ -10,6 +10,11 @@
 #ifndef __Listener_ABC_h_
 #define __Listener_ABC_h_
 
+namespace dispatcher
+{
+    class Publisher_ABC;
+}
+
 namespace crossbow
 {
 
@@ -30,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Listen() = 0;
+    virtual void Listen( dispatcher::Publisher_ABC& publisher ) = 0;
     //@}
 };
 

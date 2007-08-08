@@ -75,7 +75,7 @@ void ModelWalker::Visit( ModelDataVisitor_ABC& visitor, Entity_ABC& entity )
 void ModelWalker::WalkTo( const ASN1T_MsgUnitCreation& asn )
 {
     if( ! visitor_->Accept( asn ) )
-        visitor_->Visit( model_.GetAutomats().Get( asn.oid ) );
+        visitor_->Visit( model_.GetAutomats().Get( asn.oid_automate ) );
 }
 
 // -----------------------------------------------------------------------------

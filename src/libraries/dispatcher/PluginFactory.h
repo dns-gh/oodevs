@@ -1,4 +1,4 @@
-// *****************************************************************************
+    // *****************************************************************************
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
@@ -15,6 +15,7 @@ namespace dispatcher
     class Config;
     class Model;
     class CompositeMessageHandler;
+    class SimulationNetworker;
 
 // =============================================================================
 /** @class  PluginFactory
@@ -28,7 +29,7 @@ class PluginFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             PluginFactory( const Config& config, Model& model );
+             PluginFactory( const Config& config, Model& model, SimulationNetworker& simulation );
     virtual ~PluginFactory();
     //@}
 
@@ -44,15 +45,12 @@ private:
     PluginFactory& operator=( const PluginFactory& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
     const Config& config_;
     Model& model_;
+    SimulationNetworker& simulation_;
     //@}
 };
 

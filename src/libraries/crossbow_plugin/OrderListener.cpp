@@ -19,8 +19,8 @@ using namespace crossbow;
 // Name: OrderListener constructor
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
-OrderListener::OrderListener( Connector& connector, Publisher_ABC& simulation, const kernel::OrderTypes& types, const Model& model )
-    : dispatcher_   ( new OrderDispatcher( connector, simulation, types, model ) )
+OrderListener::OrderListener( Connector& connector, const kernel::OrderTypes& types, const Model& model )
+    : dispatcher_   ( new OrderDispatcher( connector, types, model ) )
     , table_        ( connector.GetTable( "Orders" ) )
     , waitingOrdersFilter_()
     , cursor_       ()
@@ -37,36 +37,48 @@ OrderListener::~OrderListener()
 {
     waitingOrdersFilter_.Release();
 }
-
+/*
+namespace 
+{
+    class RunCursor
+    {
+        RunCursor( ICursorPtr cursor ) : cursor_ ( cursor ) {}
+        
+        template< Functor > void Apply( OrderListener& listener, Functor& func )
+        {
+            IRowPtr row;
+            cursor_->NextRow( &row );
+            while( row != 0 )
+            {
+                listener.func();                
+                
+                ProcessOrder( row );
+                cursor_->NextRow( &row );
+            }
+        }
+    private:
+        ICursorPtr cursor_;
+    };
+}
+*/
 // -----------------------------------------------------------------------------
 // Name: OrderListener::Listen
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
-void OrderListener::Listen()
+void OrderListener::Listen( Publisher_ABC& publisher )
 {
+    IRowPtr row;
     HRESULT res = table_->Search( waitingOrdersFilter_, false, &cursor_ );
     if( FAILED( res ) )
         throw std::runtime_error( "Search failed" ); // $$$$ SBO 2007-05-30: 
-    IRowPtr row;
+    
     cursor_->NextRow( &row );
     while( row != 0 )
     {
-        ProcessOrder( row );
+        dispatcher_->Dispatch( publisher, row );
+        MarkProcessed( row );
         cursor_->NextRow( &row );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: OrderListener::ProcessOrder
-// Created: SBO 2007-05-30
-// -----------------------------------------------------------------------------
-void OrderListener::ProcessOrder( IRowPtr row ) const
-{
-    long oid;
-    row->get_OID( &oid );
-    std::cout << "Executing order: " << oid << std::endl;
-    dispatcher_->Dispatch( row );
-    MarkProcessed( row );
+    }    
 }
 
 // -----------------------------------------------------------------------------

@@ -383,7 +383,7 @@ std::string SymbolEditor::ExtractCode( const std::string& symbol ) const
 // -----------------------------------------------------------------------------
 std::string SymbolEditor::BuildSymbol( const std::string& symbol ) const
 {
-    std::string result;
+    std::string result( symbol.size(), '*' );
     std::transform( symbol.begin(), symbol.end(), result.begin(), toupper );
     std::replace( result.begin(), result.end(), '*', '-' );
     return result;

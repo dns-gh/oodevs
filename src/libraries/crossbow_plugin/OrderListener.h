@@ -41,13 +41,13 @@ class OrderListener : public Listener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderListener( Connector& connector, dispatcher::Publisher_ABC& simulation, const kernel::OrderTypes& types, const dispatcher::Model& model );
+             OrderListener( Connector& connector, const kernel::OrderTypes& types, const dispatcher::Model& model );
     virtual ~OrderListener();
     //@}
 
     //! @name Operations
     //@{
-    void Listen();
+    void Listen( dispatcher::Publisher_ABC& publisher );
     //@}
 
 private:
@@ -58,8 +58,7 @@ private:
     //@}
 
     //! @name Helpers
-    //@{
-    void ProcessOrder( IRowPtr row ) const;
+    //@{    
     void MarkProcessed( IRowPtr row ) const;
     //@}
 

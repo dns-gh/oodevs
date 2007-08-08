@@ -29,9 +29,10 @@ ConnectorFacade::ConnectorFacade( const dispatcher::Model& model, const dispatch
     , orderTypes_( new kernel::OrderTypes( config ) )
     , connector_ ( new Connector( config, *types_, *types_,  model ) )
     , bLoaded_   ( false )
+    , simulation_( simulation )
 {
-    listeners_.push_back( T_SharedListener( new OrderListener( *connector_, simulation, *orderTypes_, model ) ) );
-    listeners_.push_back( T_SharedListener( new StatusListener( *connector_, simulation ) ) );
+    listeners_.push_back( T_SharedListener( new OrderListener( *connector_, *orderTypes_, model ) ) );
+    listeners_.push_back( T_SharedListener( new StatusListener( *connector_) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +84,7 @@ bool ConnectorFacade::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
 // Name: ConnectorFacade::Update
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
-void ConnectorFacade::Update( const ASN1T_MsgsSimToClient& asnMsg )
+void ConnectorFacade::Receive( const ASN1T_MsgsSimToClient& asnMsg )
 {
     if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_end )
         UpdateCurrentState();
@@ -99,8 +100,8 @@ void ConnectorFacade::UpdateOnTick( const ASN1T_MsgsSimToClient& asnMsg )
 {
     if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_begin_tick )
     {
-        connector_->Lock();
-        ListenDatabaseEvents();
+        connector_->Lock();        
+        Send( simulation_ ); // $$$$ JCR 2007-08-02: Push it out of here ...
     }
     else if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
         connector_->Unlock();
@@ -109,14 +110,14 @@ void ConnectorFacade::UpdateOnTick( const ASN1T_MsgsSimToClient& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConnectorFacade::ListenDatabaseEvents
-// Created: JCR 2007-06-14
+// Name: ConnectorFacade::Send
+// Created: JCR 2007-08-01
 // -----------------------------------------------------------------------------
-void ConnectorFacade::ListenDatabaseEvents()
+void ConnectorFacade::Send( dispatcher::Publisher_ABC& publisher ) const
 {
-    for( IT_ListenerList it = listeners_.begin(); it != listeners_.end(); ++it )
+    for( CIT_ListenerList it = listeners_.begin(); it != listeners_.end(); ++it )
         if( *it )
-            (*it)->Listen();
+            (*it)->Listen( publisher );
 }
 
 // -----------------------------------------------------------------------------

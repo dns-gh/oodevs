@@ -26,9 +26,8 @@ using namespace crossbow;
 // Name: OrderDispatcher constructor
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-OrderDispatcher::OrderDispatcher( Connector& connector, dispatcher::Publisher_ABC& publisher, const OrderTypes& types, const dispatcher::Model& model )
-    : publisher_( publisher )
-    , types_( types )
+OrderDispatcher::OrderDispatcher( Connector& connector, const OrderTypes& types, const dispatcher::Model& model )
+    : types_( types )
     , model_( model )
     , paramTable_( connector.GetTable( "OrdersParameters" ) )
     , serializer_( new OrderParameterSerializer( model ) )
@@ -87,13 +86,13 @@ namespace
 // Name: OrderDispatcher::Dispatch
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::Dispatch( const IRowPtr& row )
+void OrderDispatcher::Dispatch( dispatcher::Publisher_ABC& publisher, const IRowPtr& row )
 {
     const unsigned long id = GetTargetId( row );
     if( const dispatcher::Agent* agent = model_.GetAgents().Find( id ) )
-        DispatchMission( *agent, row );
+        DispatchMission( publisher, *agent, row );
     else if( const dispatcher::Automat* automat = model_.GetAutomats().Find( id ) )
-        DispatchMission( *automat, row );
+        DispatchMission( publisher, *automat, row );
     else
         std::cerr << "Unable to retrieve target id" << std::endl;
      // $$$$ SBO 2007-05-31: else: throw or something
@@ -103,18 +102,18 @@ void OrderDispatcher::Dispatch( const IRowPtr& row )
 // Name: OrderDispatcher::DispatchMission
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::DispatchMission( const dispatcher::Agent& agent, const IRowPtr& row )
+void OrderDispatcher::DispatchMission( dispatcher::Publisher_ABC& publisher, const dispatcher::Agent& agent, const IRowPtr& row )
 {
     if( agent.GetAutomat().IsEngaged() )
     {
-        DispatchMission( agent.GetAutomat(), row );
+        DispatchMission( publisher, agent.GetAutomat(), row );
         return;
     }
 
     const OrderType* type = GetAgentMission( row );
     if( !type )
     {
-        DispatchFragOrder( agent.GetID(), row );
+        DispatchFragOrder( publisher, agent.GetID(), row );
         return;
     }
 
@@ -126,7 +125,7 @@ void OrderDispatcher::DispatchMission( const dispatcher::Agent& agent, const IRo
     asn().mission = type->GetId();
     SetParameters( asn().parametres, orderId, *type );
     SetOrderContext( asn().order_context, orderId );
-    asn.Send( publisher_ );
+    asn.Send( publisher );
     CleanParameters( asn().parametres );
     CleanOrderContext( asn().order_context );
 }
@@ -135,12 +134,12 @@ void OrderDispatcher::DispatchMission( const dispatcher::Agent& agent, const IRo
 // Name: OrderDispatcher::DispatchMission
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::DispatchMission( const dispatcher::Automat& automat, const IRowPtr& row )
+void OrderDispatcher::DispatchMission( dispatcher::Publisher_ABC& publisher, const dispatcher::Automat& automat, const IRowPtr& row )
 {
     const OrderType* type = GetAutomatMission( row );
     if( !type )
     {
-        DispatchFragOrder( automat.GetID(), row );
+        DispatchFragOrder( publisher, automat.GetID(), row );
         return;
     }
 
@@ -153,7 +152,7 @@ void OrderDispatcher::DispatchMission( const dispatcher::Automat& automat, const
     SetParameters( asn().parametres, orderId, *type );
     SetOrderContext( asn().order_context, orderId );
     asn().formation = EnumAutomatOrderFormation::deux_echelons; // $$$$ SBO 2007-06-01:
-    asn.Send( publisher_ );
+    asn.Send( publisher );
     CleanParameters( asn().parametres );
     CleanOrderContext( asn().order_context );
 }
@@ -162,7 +161,7 @@ void OrderDispatcher::DispatchMission( const dispatcher::Automat& automat, const
 // Name: OrderDispatcher::DispatchFragOrder
 // Created: SBO 2007-06-07
 // -----------------------------------------------------------------------------
-void OrderDispatcher::DispatchFragOrder( unsigned long targetId, const IRowPtr& row )
+void OrderDispatcher::DispatchFragOrder( dispatcher::Publisher_ABC& publisher, unsigned long targetId, const IRowPtr& row )
 {
     const OrderType* type = types_.FindFragOrder( GetString( GetFieldValue( row, "OrderName" ) ) );
     if( !type )
@@ -172,7 +171,7 @@ void OrderDispatcher::DispatchFragOrder( unsigned long targetId, const IRowPtr& 
     asn().oid = targetId;
     asn().frag_order = type->GetId();
     asn().parametres.n = 0; // $$$$ SBO 2007-06-07: parameters not supported !
-    asn.Send( publisher_ );
+    asn.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------

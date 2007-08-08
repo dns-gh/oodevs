@@ -44,13 +44,13 @@ class OrderDispatcher
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderDispatcher( Connector& connector, dispatcher::Publisher_ABC& publisher, const kernel::OrderTypes& types, const dispatcher::Model& model );
+             OrderDispatcher( Connector& connector, const kernel::OrderTypes& types, const dispatcher::Model& model );
     virtual ~OrderDispatcher();
     //@}
 
     //! @name Operations
     //@{
-    void Dispatch( const IRowPtr& row );
+    void Dispatch( dispatcher::Publisher_ABC& publisher, const IRowPtr& row );
     //@}
 
 private:
@@ -62,9 +62,9 @@ private:
 
     //! @name Helpers
     //@{
-    void DispatchMission( const dispatcher::Agent& agent, const IRowPtr& row );
-    void DispatchMission( const dispatcher::Automat& automat, const IRowPtr& row );
-    void DispatchFragOrder( unsigned long targetId, const IRowPtr& row );
+    void DispatchMission( dispatcher::Publisher_ABC& publisher, const dispatcher::Agent& agent, const IRowPtr& row );
+    void DispatchMission( dispatcher::Publisher_ABC& publisher, const dispatcher::Automat& automat, const IRowPtr& row );
+    void DispatchFragOrder( dispatcher::Publisher_ABC& publisher, unsigned long targetId, const IRowPtr& row );
 
     unsigned long GetTargetId( const IRowPtr& row ) const;
     const kernel::OrderType* GetAgentMission( const IRowPtr& row ) const;
@@ -80,8 +80,7 @@ private:
 
 private:
     //! @name Member data
-    //@{
-    dispatcher::Publisher_ABC& publisher_;
+    //@{    
     const kernel::OrderTypes& types_;
     const dispatcher::Model& model_;
     ITablePtr paramTable_;

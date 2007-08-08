@@ -30,7 +30,7 @@ Simulation::Simulation( MessageHandler_ABC& handler, DIN_MessageService_ABC& mes
     : Server_ABC ( messageService, link )
     , handler_   ( handler )
 {
-    AsnMsgMiddleToSimCtrlClientAnnouncement().Send( *this );
+    AsnMsgMiddleToSimCtrlClientAnnouncement().Send( *this );    
 }
 
 //-----------------------------------------------------------------------------

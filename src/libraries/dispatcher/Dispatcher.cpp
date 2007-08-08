@@ -37,7 +37,7 @@ Dispatcher::Dispatcher( const Config& config )
     handler_.Add( pClientsNetworker_ );
     handler_.Add( pModel_ );
 
-    PluginFactory factory( config_, *pModel_ );
+    PluginFactory factory( config_, *pModel_, *pSimulationNetworker_ );
     factory.RegisterPlugins( handler_ );
 }
 

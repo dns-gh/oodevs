@@ -35,14 +35,13 @@ class StatusListener : public Listener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             StatusListener( Connector& connector, dispatcher::Publisher_ABC& simulation );
+             StatusListener( Connector& connector );
     virtual ~StatusListener();
     //@}
 
     //! @name Operations
-    //@{
-    // void Send( const ASN1T_MsgsSimToClient& msg );
-    void Listen();
+    //@{    
+    virtual void Listen( dispatcher::Publisher_ABC& publisher );
     //@}
 
 private:
@@ -57,9 +56,9 @@ private:
     
     //! @name Helpers
     //@{
-    void ProcessStatus( const std::string& status );
-    void Pause();
-    void Resume();
+    void ProcessStatus( dispatcher::Publisher_ABC& publisher, const std::string& status );
+    void Pause( dispatcher::Publisher_ABC& publisher );
+    void Resume( dispatcher::Publisher_ABC& publisher );
     //@}
 
 private:
@@ -71,8 +70,7 @@ private:
 
     //! @name Member data
     //@{
-    E_Status status_;
-    dispatcher::Publisher_ABC& publisher_;
+    E_Status status_;    
     //@}
 };
 
