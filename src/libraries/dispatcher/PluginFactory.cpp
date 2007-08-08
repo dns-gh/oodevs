@@ -48,6 +48,8 @@ void PluginFactory::RegisterPlugins( CompositeMessageHandler& handler ) const
 {
     if( config_.GetPluginConfig( "recorder" ).IsEnabled() )
         handler.Add( new SaverFacade( model_, config_ ) );
+#ifdef CROSSBOW_PLUGIN // $$$$ JCR 2007-08-08: for build server purpose - does not include <com and atl> components
     if( config_.GetPluginConfig( "crossbow" ).IsEnabled() )
         handler.Add( new crossbow::ConnectorFacade( model_, config_, simulation_ ) );
+#endif
 }
