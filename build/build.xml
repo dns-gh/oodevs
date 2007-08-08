@@ -153,7 +153,14 @@ BLOCK "VarFileInfo"
     <target name="library.ENT" description="build ENT static library">
         <build-lib name="ENT" depends="qt" pattern="lib${ant.project.name}_ENT-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
-
+<!--
+    <target name="library.dispatcher.plugin.crossbow" description="build dispatcher static library" depends="library.MT_Tools,library.tools,library.game_asn">
+        <build-lib name="crossbow_plugin" pattern="lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix}" suffix="-gd">
+            <includepath path="${include.dir}/ASN"/>
+            <includepath path="${include.dir}/esri"/>
+        </build-lib>
+    </target>
+-->
     <target name="library.dispatcher" description="build dispatcher static library" depends="library.MT_Tools,library.tools,library.game_asn">
         <build-lib name="dispatcher" pattern="lib${ant.project.name}_dispatcher-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/ASN"/>
