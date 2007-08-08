@@ -96,6 +96,13 @@ namespace crossbow
             pMarker.Picture = pBitmap.DrawToPicture(pDisplay, textureSize, textureSize, 1, bgColor);
             pMarker.BitmapTransparencyColor = bgColor;
             pMarker.Size = glyphSize;
+
+            IDynamicGlyph glyph = pFactory.CreateDynamicGlyph(pMarker as ISymbol);
+            float width = 0, height = 0;
+            glyph.QueryDimensions(ref width, ref height);
+            float ratio = height != 0 ? width / height : 1.0f;
+            // $$$$ SBO 2007-08-08: hack to handle difference of size between command-post/leveled units...
+            pMarker.Size = glyphSize / ratio;
             return pFactory.CreateDynamicGlyph(pMarker as ISymbol);
         }
 

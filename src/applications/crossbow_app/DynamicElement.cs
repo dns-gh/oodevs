@@ -8,6 +8,5 @@ namespace crossbow
     {
         ICachedGraphic CachedGraphic { get; }
         IDynamicGlyph Glyph { get; }
-        float Ratio { get; }
     }    
 }

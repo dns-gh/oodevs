@@ -29,7 +29,6 @@ namespace crossbow
         {
             private ICachedGraphic graphic;
             private IDynamicGlyph glyph;
-            private float aspectRatio; // glyph.width / glyph.height
 
             public ICachedGraphic CachedGraphic
             {
@@ -51,17 +50,6 @@ namespace crossbow
                 set
                 {
                     glyph = value;
-                }
-            }
-            public float Ratio
-            {
-                get
-                {
-                    return aspectRatio;
-                }
-                set
-                {
-                    aspectRatio = value;
                 }
             }
         };
@@ -250,15 +238,14 @@ namespace crossbow
 
         private IDynamicElement BuildSymbol(IDisplay display, IDynamicDisplay dynamicDisplay, string symbolId)
         {
-            const int size = 256;
+            const int size = 64;
             DynamicElement element = new DynamicElement();
             element.CachedGraphic = m_symbolFactory.CreateGraphics(symbolId, "");
-            element.Glyph = SymbolFactory.CreateDynamicGlyph(display, dynamicDisplay, element.CachedGraphic, 256, size);
+            element.Glyph = SymbolFactory.CreateDynamicGlyph(display, dynamicDisplay, element.CachedGraphic, 100, size);
 
             float width = 0, height = 0;
             element.Glyph.QueryDimensions(ref width, ref height);
-            element.Ratio = height != 0 ? width / height : 1.0f;
-            m_symbolSize = size; // width;
+            m_symbolSize = width; // $$$$ SBO 2007-08-08: keep each symbol width/height to be more accurate
             return (IDynamicElement)element;
         }
         #endregion

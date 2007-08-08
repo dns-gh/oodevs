@@ -85,12 +85,10 @@ namespace crossbow
             IDisplayTransformation transformation = Tools.GetMxDocument().ActiveView.ScreenDisplay.DisplayTransformation;
             
             double symbolSize = transformation.FromPoints(m_symbolSize);
-            double symbolWidth = 0.75 * symbolSize * symbolSize / (float)transformation.VisibleBounds.Width;
-            double symbolHeight = 0.75 * symbolSize * symbolSize / (float)transformation.VisibleBounds.Height;
             
             IEnvelope envelope = spatialFilter.Geometry.Envelope;
-            symbolWidth = (symbolWidth > envelope.Width) ? symbolWidth - envelope.Width : envelope.Width - symbolWidth;
-            symbolHeight = (symbolHeight > envelope.Height) ? symbolHeight - envelope.Height : envelope.Height - symbolHeight;
+            double symbolWidth = (symbolSize > envelope.Width) ? symbolSize - envelope.Width : envelope.Width - symbolSize;
+            double symbolHeight = (symbolSize > envelope.Height) ? symbolSize - envelope.Height : envelope.Height - symbolSize;
             envelope.Expand(symbolWidth / 2, symbolHeight / 2, false);
             spatialFilter.Geometry = envelope;
             m_selectionEnvelope = envelope;
