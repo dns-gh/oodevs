@@ -4,7 +4,6 @@
     <!-- reshacker : http://angusj.com/resourcehacker/-->
 
     <import file="//install/masa/common/dev/common/poney/poney.xml"/>
-    
 
    <!--
     ============================================================================
@@ -18,17 +17,17 @@
     <property name="version.major" value="1"/>
     <property name="version.minor" value="5"/>
     <property name="version.product" value="C-Sword"/>
-    
-    <macrodef name="generation-version-resource">        
+
+    <macrodef name="generation-version-resource">
         <attribute name="file"/>
-        
+
         <sequential>
             <tstamp>
                 <format property="currentyear" pattern="yyyy"/>
             </tstamp>
             <basename property="filename" file="@{file}"/>
             <echo file="version.rc">
-1 VERSIONINFO 
+1 VERSIONINFO
 FILEVERSION     ${version.major},${version.minor},0,${version.svn}
 PRODUCTVERSION  ${version.major},${version.minor},0,${version.svn}
 FILEOS 0x4
@@ -38,7 +37,7 @@ BLOCK "StringFileInfo"
 {
 	BLOCK "040C04B0"
 	{
-	    VALUE "CompanyName", "MASA-SCI"
+	  VALUE "CompanyName", "MASA-SCI"
 		VALUE "FileDescription", "${version.product}"
 		VALUE "FileVersion", "${version.major}.${version.minor}.0.${version.svn}"
 		VALUE "InternalName", "${version.product}"
@@ -56,15 +55,15 @@ BLOCK "VarFileInfo"
 }
             </echo>
             <exec executable="rc.exe" failonerror="true">
-                <arg value="version.rc"/>           
+                <arg value="version.rc"/>
             </exec>
             <exec executable="reshacker.exe">
                 <arg line="-addoverwrite @{file}, @{file}, version.res, versioninfo,1,"/>
-            </exec>  
+            </exec>
             <delete file="version.rc"/>
             <delete file="version.res"/>
         </sequential>
-    </macrodef>   
+    </macrodef>
 
     <!--
     ============================================================================
@@ -158,7 +157,6 @@ BLOCK "VarFileInfo"
         <build-lib name="crossbow_plugin" pattern="lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/ASN"/>
             <includepath path="${include.dir}/esri"/>
-            <!--includepath path="${libraries.dir}/plugin_crossbow"/-->
         </build-lib>
     </target>
 
@@ -266,7 +264,7 @@ BLOCK "VarFileInfo"
             <linkerarg value="/LARGEADDRESSAWARE"/>   <!-- Executable can access 3GiB instead of 2GiB -->
         </build-app>
     </target>
-    
+
     <target name="application.replayer_app" description="build CSword replayer executable" depends="library.dispatcher">
         <build-app name="replayer_app" subsystem="console" depends="mt,din,dia3,terrain,boost,xeumeuleu"
                    libs="tools,asn1per,paranoia
@@ -460,7 +458,7 @@ BLOCK "VarFileInfo"
         <generation-version-resource file="${out.dir}/release/applications/simulation_app/simulation_app.exe"/>
         <generation-version-resource file="${out.dir}/release/applications/replayer_app/replayer_app.exe"/>
 -->
-        
+
         <zip destfile="${run.dir}/symbols.pak">
             <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
         </zip>
@@ -480,8 +478,8 @@ BLOCK "VarFileInfo"
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/adaptation_app/"  includes="*.exe"/>
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/gaming_app"       includes="*.exe *.pdb *.qm"/>
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/preparation_app"  includes="*.exe *.pdb"/>
-            <zipfileset prefix="applications" dir="${out.dir}/release/applications/simulation_app"   includes="*.exe *.pdb"/>            
-            <zipfileset prefix="applications" dir="${out.dir}/release/applications/replayer_app"     includes="*.exe"/>            
+            <zipfileset prefix="applications" dir="${out.dir}/release/applications/simulation_app"   includes="*.exe *.pdb"/>
+            <zipfileset prefix="applications" dir="${out.dir}/release/applications/replayer_app"     includes="*.exe"/>
             <zipfileset prefix="applications" dir="${libraries.dir}/clients_gui"                     includes="*.qm"/>
             <zipfileset prefix="applications" dir="${libraries.dir}/clients_kernel"                  includes="*.qm"/>
             <zipfileset prefix="applications" dir="${libraries.dir}/gaming"                          includes="*.qm"/>
@@ -535,7 +533,7 @@ BLOCK "VarFileInfo"
     <target name="installer" description="create the installer">
         <nsis todir="${dist.dir}/current"/>
     </target>
-    
+
     <!--
     ============================================================================
       configure
