@@ -17,7 +17,7 @@ namespace crossbow
     public partial class DynamicMoleLayer
     {
         // IFeatureSelection attributes
-        private IEnumerator             m_FeatureEnumerator = null;
+        private IEnumerator             m_featureEnumerator = null;
         private ArrayList               m_featureSelection = new ArrayList();
         private ISelectionSet           m_selectionSet;
         private double                  m_bufferDistance = 0;
@@ -69,29 +69,28 @@ namespace crossbow
             }
         }
 
-        public void SelectFeatures(IQueryFilter Filter, esriSelectionResultEnum Method, bool justOne)
+        public void SelectFeatures(IQueryFilter Filter, esriSelectionResultEnum method, bool justOne)
         {
-            if (Filter is ISpatialFilter)            
+            if (Filter is ISpatialFilter)
                 UpdateEnveloppe(Filter as ISpatialFilter);
-            
+
             esriSelectionOption option = justOne ? esriSelectionOption.esriSelectionOptionOnlyOne : esriSelectionOption.esriSelectionOptionNormal;
             ISelectionSet result = m_featureClass.Select(Filter, esriSelectionType.esriSelectionTypeHybrid, option, Dataset.Workspace);
-            UpdateSelection(result, Method);
+            UpdateSelection(result, method);
             UpdateFeatureSelection();
         }
 
         private void UpdateEnveloppe(ISpatialFilter spatialFilter)
         {
             IDisplayTransformation transformation = Tools.GetMxDocument().ActiveView.ScreenDisplay.DisplayTransformation;
-            
-            double symbolSize = transformation.FromPoints(m_symbolSize);
-            
+
+            double symbolSize = transformation.FromPoints(64);
+
             IEnvelope envelope = spatialFilter.Geometry.Envelope;
             double symbolWidth = (symbolSize > envelope.Width) ? symbolSize - envelope.Width : envelope.Width - symbolSize;
             double symbolHeight = (symbolSize > envelope.Height) ? symbolSize - envelope.Height : envelope.Height - symbolSize;
             envelope.Expand(symbolWidth / 2, symbolHeight / 2, false);
             spatialFilter.Geometry = envelope;
-            m_selectionEnvelope = envelope;
         }
 
         private void UpdateSelection(ISelectionSet result, esriSelectionResultEnum Method)
@@ -186,18 +185,18 @@ namespace crossbow
         #region IEnumFeature Members
         public IFeature Next()
         {
-            if (m_FeatureEnumerator == null)
+            if (m_featureEnumerator == null)
                 Reset();
-            if ( m_FeatureEnumerator.MoveNext() )
-                return m_FeatureEnumerator.Current as IFeature;            
+            if ( m_featureEnumerator.MoveNext() )
+                return m_featureEnumerator.Current as IFeature;            
             return null;
         }
         
         public void Reset()
         {
-            if (m_FeatureEnumerator != null)
-                m_FeatureEnumerator = null;
-            m_FeatureEnumerator = m_featureSelection.GetEnumerator();            
+            if (m_featureEnumerator != null)
+                m_featureEnumerator = null;
+            m_featureEnumerator = m_featureSelection.GetEnumerator();            
         }
         #endregion
     }    

@@ -6,33 +6,12 @@ using ESRI.ArcGIS.Geometry;
 
 namespace crossbow
 {
-    sealed class PolylineFeatureDrawer : IFeatureDrawer
+    sealed class PolylineFeatureDrawer
     {
-        private IFeature m_feature;
-        private IPolyline m_position;
-        private DynamicMoleLayer m_layer;
-
-        public PolylineFeatureDrawer(DynamicMoleLayer layer, IFeature feature)
+        #region Drawing methods
+        public static void Draw(IDynamicDisplay dynamicDisplay, IDynamicElement element, IFeature feature, bool selected)
         {
-            m_layer = layer;
-            m_feature = feature;
-            m_position = feature.Shape as IPolyline;
-        }
-
-        #region IFeatureDrawer implementation
-        public void InitializeDisplay(IDynamicElement symbol, float factor, IDynamicSymbolProperties properties)
-        {
-            // $$$$ SBO 2007-07-23: TODO!
-        }
-
-        public void DrawEnvelope(IDynamicDisplay dynamicDisplay, double fromPoint, IDynamicSymbolProperties properties)
-        {
-            // $$$$ SBO 2007-07-23: TODO!
-        }
-
-        public void Draw(IDynamicDisplay dynamicDisplay, FieldsProperty m_Fields)
-        {
-            dynamicDisplay.DrawPolyline(m_position as IPointCollection);
+            dynamicDisplay.DrawPolyline(feature.Shape as IPointCollection);
         }
         #endregion
     }

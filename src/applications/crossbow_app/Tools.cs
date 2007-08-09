@@ -236,6 +236,14 @@ namespace crossbow
             return default(T);
         }
 
+        public static T GetValue<T>(IFeature feature, string field)
+        {
+            int id = feature.Fields.FindField(field);
+            if (id >= 0)
+                return (T)feature.get_Value(id);
+            return default(T);
+        }
+
         // $$$$ JCR: extract UnitForces
         public static void Store(string table, IGeometry value)
         {

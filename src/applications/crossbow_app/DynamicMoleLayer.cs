@@ -25,35 +25,6 @@ namespace crossbow
     [ProgId("crossbow.DynamicMoleLayer")]
     public partial class DynamicMoleLayer : BaseDynamicLayer, IFeatureLayer, IFeatureSelection, IEnumFeature, IDynamicLayerDataset
     {
-        private class DynamicElement : IDynamicElement
-        {
-            private ICachedGraphic graphic;
-            private IDynamicGlyph glyph;
-
-            public ICachedGraphic CachedGraphic
-            {
-                get
-                {
-                    return graphic;
-                }
-                set 
-                {
-                    graphic = value;
-                }
-            }
-            public IDynamicGlyph Glyph
-            {
-                get
-                {
-                    return glyph;
-                }
-                set
-                {
-                    glyph = value;
-                }
-            }
-        };
-
         private bool                            m_selectable = true;
         private IFeatureClass                   m_featureClass = null;
         private int                             m_featureClassId = -1;
@@ -61,9 +32,6 @@ namespace crossbow
         private SymbolFactory                   m_symbolFactory = new SymbolFactory();
         private FieldsProperty                  m_Fields = new FieldsProperty();
         private Timer                           m_updateTimer;
-        private double                          m_symbolSize = 0;
-        private IDynamicGlyph                   m_selectionGlyph = null;
-        private IEnvelope                       m_selectionEnvelope = null;
         
         // IFeatureLayer attributes
         private String m_displayField = "name"; // $$$$ SBO 2007-07-09: Symbol_ID ?
@@ -127,7 +95,6 @@ namespace crossbow
 
             m_selectable = (bool)Stream.Read();
             m_featureClassId = (int)Stream.Read(); m_featureClass = null;
-            m_symbolSize = (double)Stream.Read();
             m_displayField = Stream.Read() as String;
             m_scaleSymbols = (bool)Stream.Read();
             m_bufferDistance = (double)Stream.Read();
@@ -142,7 +109,6 @@ namespace crossbow
 
             Stream.Write(m_selectable);
             Stream.Write(m_featureClassId);
-            Stream.Write(m_symbolSize);
             Stream.Write(m_displayField);
             Stream.Write(m_scaleSymbols);
             Stream.Write(m_bufferDistance);
@@ -171,40 +137,13 @@ namespace crossbow
             }
             cursor = null;
         }
-       
-        public IDynamicGlyph UpdateGlyphSelection(IDynamicGlyphFactory factory)
-        {
-            if (m_selectionGlyph == null)                            
-                m_selectionGlyph = factory.get_DynamicGlyph(1, esriDynamicGlyphType.esriDGlyphLine, 8);            
-            return m_selectionGlyph;
-        }
-        public IEnvelope Enveloppe
-        {
-            get
-            {
-                return m_selectionEnvelope;
-            }            
-        }
 
         private void DrawFeature(IDisplay display, IDynamicDisplay dynamicDisplay, IFeature feature)
         {
             IDynamicElement symbol = GetSymbol(display, dynamicDisplay, feature);
             if (symbol == null)
                 return;
-            IMxDocument                 mxDocument = Tools.GetMxDocument();
-            IDynamicSymbolProperties    properties = dynamicDisplay as IDynamicSymbolProperties;            
-            IDisplayTransformation      transformation = mxDocument.ActiveView.ScreenDisplay.DisplayTransformation;
-            
-            feature.Shape.Project(transformation.SpatialReference);
-
-            IFeatureDrawer drawer = FeatureDrawerFactory.Create(this, feature);
-            float factor = 0.75f * (float)transformation.FromPoints(m_symbolSize) / (float)transformation.VisibleBounds.Width;
-            if ( drawer != null )
-                drawer.InitializeDisplay(symbol, factor, properties);            
-            if ( IsSelected(feature) )
-                drawer.DrawEnvelope(dynamicDisplay, transformation.FromPoints(m_symbolSize), properties);
-            drawer.Draw(dynamicDisplay, m_Fields);
-            properties.SetColor(esriDynamicSymbolType.esriDSymbolMarker, 1, 1, 1, 1);
+            FeatureDrawer.Draw(dynamicDisplay, symbol, feature, IsSelected(feature));
         }
 
         private bool IsSelected(IFeature feature)
@@ -231,22 +170,9 @@ namespace crossbow
                 return element;
             if (m_symbolFactory.SpatialReference == null)
                 m_symbolFactory.SpatialReference = display.DisplayTransformation.SpatialReference;
-            element = BuildSymbol(display, dynamicDisplay, symbolId); // throw something
+            element = m_symbolFactory.CreateElement(display, dynamicDisplay, feature, symbolId); // throw something
             m_elements[symbolId] = element;
             return element;
-        }
-
-        private IDynamicElement BuildSymbol(IDisplay display, IDynamicDisplay dynamicDisplay, string symbolId)
-        {
-            const int size = 64;
-            DynamicElement element = new DynamicElement();
-            element.CachedGraphic = m_symbolFactory.CreateGraphics(symbolId, "");
-            element.Glyph = SymbolFactory.CreateDynamicGlyph(display, dynamicDisplay, element.CachedGraphic, 100, size);
-
-            float width = 0, height = 0;
-            element.Glyph.QueryDimensions(ref width, ref height);
-            m_symbolSize = width; // $$$$ SBO 2007-08-08: keep each symbol width/height to be more accurate
-            return (IDynamicElement)element;
         }
         #endregion
 
