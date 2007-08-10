@@ -6,74 +6,6 @@
 // SIM CONTROL
 //=============================================================================
 
-//-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::StopSim
-// Created: NLD 2002-09-05
-//-----------------------------------------------------------------------------
-inline
-bool MIL_AgentServer::StopSim()
-{
-    if( nSimState_ == eSimStopped )
-        return false;
-
-    nSimState_ = eSimStopped;
-    MT_Timer_ABC::Stop();
-    MT_LOG_INFO_MSG( "Simulation stopped" );
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::PauseSim
-// Created: NLD 2002-09-09
-//-----------------------------------------------------------------------------
-inline
-bool MIL_AgentServer::PauseSim()
-{
-    if( nSimState_ != eSimRunning )
-        return false;
-
-    nSimState_ = eSimPaused;
-    MT_Timer_ABC::Stop();
-    MT_LOG_INFO_MSG( "Simulation paused" );
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::ResumeSim
-// Created: NLD 2002-09-09
-//-----------------------------------------------------------------------------
-inline
-bool MIL_AgentServer::ResumeSim()
-{
-    if( nSimState_ != eSimPaused )
-        return false;
-
-    nSimState_ = eSimRunning;
-    MT_Timer_ABC::Start( MT_TimeSpan( (int)( 1000 * nTimeStepDuration_ / nTimeFactor_ ) ) );
-    MT_LOG_INFO_MSG( "Simulation resumed" );
-    return true;
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::SetTimeFactor
-// Created: NLD 2002-09-13
-//-----------------------------------------------------------------------------
-inline
-bool MIL_AgentServer::SetTimeFactor( uint nTimeFactor )
-{
-    if( nTimeFactor == 0 )
-        return false;
-
-    nTimeFactor_ = nTimeFactor;
-    if( nSimState_ != eSimRunning )
-        return true;
-
-    MT_Timer_ABC::Start( MT_TimeSpan( (int)( 1000 * nTimeStepDuration_ / nTimeFactor_ ) ) );
-    MT_LOG_INFO_MSG( MT_FormatString( "Time factor set to %d", nTimeFactor_ ).c_str() )
-    return true;
-}
-
 //=============================================================================
 // ACCESSORS
 //=============================================================================
@@ -86,16 +18,6 @@ inline
 uint MIL_AgentServer::GetSimStartTime() const
 {
     return nSimStartTime_;
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetTimeFactor
-// Created: NLD 2003-03-06
-//-----------------------------------------------------------------------------
-inline
-uint MIL_AgentServer::GetTimeFactor() const
-{
-    return nTimeFactor_;
 }
 
 // -----------------------------------------------------------------------------
@@ -225,11 +147,20 @@ uint MIL_AgentServer::GetCurrentTimeStepRealTime() const
     return nCurrentTimeStepRealTime_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetCurrentTick
+// Created: AGE 2007-08-10
+// -----------------------------------------------------------------------------
+inline
+unsigned int MIL_AgentServer::GetCurrentTick() const
+{
+    return nCurrentTimeStep_;
+}
 
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::GetCurrentTimeStep
-// Created: JVT 02-08-02
-//-----------------------------------------------------------------------------
+// Created: AGE 2007-08-10
+// -----------------------------------------------------------------------------
 inline
 uint MIL_AgentServer::GetCurrentTimeStep() const
 {

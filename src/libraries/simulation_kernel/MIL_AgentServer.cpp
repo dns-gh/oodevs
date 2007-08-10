@@ -75,7 +75,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         pEntityManager_     = new MIL_EntityManager    ();
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
         pEntityManager_->ReadODB( config_ );
-        ResumeSim();
+        Resume();
     }
 
     if( pFederate_ )
@@ -133,7 +133,7 @@ void MIL_AgentServer::ReadStaticData()
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation tick duration : %d seconds", nTimeStepDuration_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );    
         
-    pAgentServer_ = new NET_AgentServer();
+    pAgentServer_ = new NET_AgentServer( config_, *this );
 
     MIL_IDManager::Initialize( config_ );
     ReadTerData();
@@ -380,7 +380,7 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
 
     nSimState_ = eSimPaused;
     if( nSimState == eSimRunning )
-        ResumeSim();
+        Resume();
 }
 
 // -----------------------------------------------------------------------------
@@ -392,3 +392,102 @@ void MIL_AgentServer::WriteODB( MT_XXmlOutputArchive& archive ) const
     assert( pEntityManager_ );
     pEntityManager_->WriteODB( archive );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::SendControlInformation
+// Created: AGE 2007-08-10
+// -----------------------------------------------------------------------------
+void MIL_AgentServer::SendControlInformation() const
+{
+    NET_ASN_MsgControlInformation message;
+    message().current_tick         = GetCurrentTimeStep();
+	message().tick_duration        = GetTimeStepDuration();
+    message().time_factor          = nTimeFactor_;
+    message().status               = (ASN1T_EnumSimulationState)GetSimState();
+    message().checkpoint_frequency = GetCheckPointManager().GetCheckPointFrequency();
+    message().send_vision_cones    = GetAgentServer().MustSendUnitVisionCones();
+    message().profiling_enabled    = GetProfilerManager().IsProfilingEnabled();
+    message.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::Stop
+// Created: AGE 2007-08-10
+// -----------------------------------------------------------------------------
+void MIL_AgentServer::Stop()
+{
+    NET_ASN_MsgControlStopAck msg;
+    if( nSimState_ == eSimStopped )
+        msg() = EnumControlErrorCode::error_not_started;
+    else
+    {
+        nSimState_ = eSimStopped;
+        MT_Timer_ABC::Stop();
+        MT_LOG_INFO_MSG( "Simulation stopped" );
+        msg() = EnumControlErrorCode::no_error;
+    }
+    msg.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::Pause
+// Created: AGE 2007-08-10
+// -----------------------------------------------------------------------------
+void MIL_AgentServer::Pause()
+{
+    NET_ASN_MsgControlPauseAck msg;
+    if( nSimState_ != eSimRunning )
+        msg() = EnumControlErrorCode::error_already_paused;
+    else
+    {
+        nSimState_ = eSimPaused;
+        MT_Timer_ABC::Stop();
+        MT_LOG_INFO_MSG( "Simulation paused" );
+        msg() = EnumControlErrorCode::no_error;
+    }
+    msg.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::Resume
+// Created: AGE 2007-08-10
+// -----------------------------------------------------------------------------
+void MIL_AgentServer::Resume()
+{
+    NET_ASN_MsgControlResumeAck msg;
+    if( nSimState_ != eSimPaused )
+        msg() = EnumControlErrorCode::error_not_paused;
+    else
+    {
+        nSimState_ = eSimRunning;
+        MT_Timer_ABC::Start( MT_TimeSpan( (int)( 1000 * nTimeStepDuration_ / nTimeFactor_ ) ) );
+        MT_LOG_INFO_MSG( "Simulation resumed" );
+        msg() = EnumControlErrorCode::no_error;
+    }
+    msg.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::SetTimeFactor
+// Created: AGE 2007-08-10
+// -----------------------------------------------------------------------------
+void MIL_AgentServer::SetTimeFactor( unsigned timeFactor )
+{
+    NET_ASN_MsgControlChangeTimeFactorAck msg;
+    if( timeFactor == 0 )
+        msg().error_code = EnumControlErrorCode::error_invalid_time_factor;
+    else
+    {
+        nTimeFactor_ = timeFactor;
+        if( nSimState_ == eSimRunning )
+        {
+            MT_Timer_ABC::Start( MT_TimeSpan( (int)( 1000 * nTimeStepDuration_ / nTimeFactor_ ) ) );
+            MT_LOG_INFO_MSG( MT_FormatString( "Time factor set to %d", nTimeFactor_ ).c_str() )
+        }
+        msg().error_code = EnumControlErrorCode::no_error;
+    }
+    msg().time_factor = nTimeFactor_;
+    msg.Send();
+}
+
+    

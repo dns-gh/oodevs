@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 #include "DIN/ConnectionService/DIN_ConnectionServiceServerUserCbk.h"
-class NET_AgentServer;
+class NET_AS_MOSServerMsgMgr;
 
 //=============================================================================
 // Created: NLD 2002-07-12
@@ -34,7 +34,7 @@ public:
 
     //! @name Constructor/Destructor
     //@{
-    explicit NET_AS_MOSServerConnectionMgr( NET_AgentServer& agentServer );
+             NET_AS_MOSServerConnectionMgr( DIN::DIN_Engine& engine, NET_AS_MOSServerMsgMgr& messageManager, unsigned short port );
     virtual ~NET_AS_MOSServerConnectionMgr();
     //@}
 
@@ -66,7 +66,8 @@ private:
     //@}
 
 private:
-    NET_AgentServer& agentServer_;
+    NET_AS_MOSServerMsgMgr& messageManager_;
+    unsigned short port_;
     DIN::DIN_ConnectionServiceServerUserCbk< NET_AS_MOSServerConnectionMgr > connectionService_;
 
     // Server

@@ -16,7 +16,7 @@
 
 #include "MIL_AgentServer.h"
 #include "Network/NET_AgentServer.h"
-#include "Network/NET_AS_MOSServerMsgMgr.h"
+#include "Network/NET_Publisher_ABC.h"
 #include "game_asn/Asn.h"
 
 //=============================================================================

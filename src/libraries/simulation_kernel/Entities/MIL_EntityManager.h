@@ -21,6 +21,7 @@ namespace DIN
     class DIN_Input;
 }
 
+class MIL_Time_ABC;
 class MIL_EffectManager;
 class MIL_ObjectManager;
 class MIL_Army;
@@ -76,8 +77,8 @@ public:
     //@}
 
 public:
-     MIL_EntityManager();
-    ~MIL_EntityManager();
+             MIL_EntityManager();
+    virtual ~MIL_EntityManager();
 
     static void Initialize( MIL_Config& config );
 
@@ -213,6 +214,7 @@ private:
     //@}
 
 private:
+    const MIL_Time_ABC& time_;
     MIL_EffectManager& effectManager_;
     MIL_ObjectManager* pObjectManager_;
 

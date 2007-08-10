@@ -41,17 +41,6 @@ NET_AS_MOSServerConnectionMgr& NET_AgentServer::GetConnectionMgr() const
     return *pConnectionMgr_;
 }
 
-//-----------------------------------------------------------------------------
-// Name: NET_AgentServer::GetMessageMgr
-// Created: NLD 2002-07-08
-//-----------------------------------------------------------------------------
-inline
-NET_AS_MOSServerMsgMgr& NET_AgentServer::GetMessageMgr() const
-{
-    assert( pMsgMgr_ );
-    return *pMsgMgr_;
-}
-
 // -----------------------------------------------------------------------------
 // Name: NET_AgentServer::MustSendUnitVisionCones
 // Created: NLD 2003-10-24

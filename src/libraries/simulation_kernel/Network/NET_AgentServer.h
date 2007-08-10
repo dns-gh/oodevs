@@ -19,6 +19,9 @@
 
 class NET_AS_MOSServerConnectionMgr;
 class NET_AS_MOSServerMsgMgr;
+class NET_Publisher_ABC;
+class MIL_Config;
+class MIL_Time_ABC;
 
 //=============================================================================
 // Created: NLD 2002-07-12
@@ -28,8 +31,8 @@ class NET_AgentServer : public tools::thread::Thread
     MT_COPYNOTALLOWED( NET_AgentServer );
 
 public:
-     NET_AgentServer();
-    ~NET_AgentServer();
+             NET_AgentServer( const MIL_Config& config, const MIL_Time_ABC& time );
+    virtual ~NET_AgentServer();
 
     //-------------------------------------------------------------------------
     /** @name Main methods */
@@ -47,7 +50,8 @@ public:
     uint16                        GetPortAS_MOS() const;
 
     NET_AS_MOSServerConnectionMgr& GetConnectionMgr () const;
-    NET_AS_MOSServerMsgMgr&        GetMessageMgr    () const;
+    NET_AS_MOSServerMsgMgr&        GetConcreteMessageMgr() const;
+    NET_Publisher_ABC&             GetMessageMgr() const;
 
     bool                           MustInitUnitVisionCones   () const;
     bool                           MustSendUnitVisionCones   () const;
@@ -71,7 +75,7 @@ private:
     //@}
 
 private:
-
+    const MIL_Time_ABC&             time_;
     DIN::DIN_Engine                 dinEngine_;
     MT_CriticalSection              dinEngineCriticalSection_;
     bool                            bThreaded_;
@@ -79,8 +83,8 @@ private:
     bool                            bTerminated_;
 
     // Managers
-    NET_AS_MOSServerConnectionMgr*  pConnectionMgr_;
     NET_AS_MOSServerMsgMgr*         pMsgMgr_;
+    NET_AS_MOSServerConnectionMgr*  pConnectionMgr_;
 
     // Debug network properties
     uint                            nUnitVisionConesChangeTimeStep_;

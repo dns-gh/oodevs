@@ -139,7 +139,8 @@ void MIL_EntityManager::Initialize( MIL_Config& config )
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
 MIL_EntityManager::MIL_EntityManager()
-    : effectManager_                ( *new MIL_EffectManager() )
+    : time_                         ( MIL_AgentServer::GetWorkspace() )
+    , effectManager_                ( *new MIL_EffectManager() )
     , pObjectManager_               (  new MIL_ObjectManager() )
     , nRandomBreakdownsNextTimeStep_( 0  )
     , rKnowledgesTime_              ( 0. )
@@ -700,7 +701,7 @@ void MIL_EntityManager::UpdateStates()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::PreprocessRandomBreakdowns()
 {
-    const uint nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const uint nCurrentTimeStep = time_.GetCurrentTick();
     if( nRandomBreakdownsNextTimeStep_ > nCurrentTimeStep )
         return;
 

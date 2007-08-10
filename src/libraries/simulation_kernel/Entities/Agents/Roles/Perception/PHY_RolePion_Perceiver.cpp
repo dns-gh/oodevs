@@ -44,7 +44,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_Perception.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
-#include "Network/NET_AS_MOSServerMsgMgr.h"
+#include "Network/NET_Publisher_ABC.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
 

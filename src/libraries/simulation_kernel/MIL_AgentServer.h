@@ -8,9 +8,10 @@
 #include "MIL.h"
 
 #include "Tools/MIL_Config.h"
-
+#include "Network/NET_Simulation_ABC.h"
 #include "MT/MT_Time/MT_Timer_ABC.h"
 #include "MT/MT_Time/MT_TimerManager.h"
+#include "MIL_Time_ABC.h"
 
 class MIL_TacticalLineManager;
 class MIL_Agent_ABC;
@@ -30,6 +31,8 @@ class MT_XXmlOutputArchive;
 // Last modified: JVT 03-12-15
 //*****************************************************************************
 class MIL_AgentServer : public MT_Timer_ABC
+                      , public NET_Simulation_ABC
+                      , public MIL_Time_ABC
 {
 	MT_COPYNOTALLOWED( MIL_AgentServer )
 
@@ -46,8 +49,8 @@ public:
     //@}
 
 public:
-     MIL_AgentServer( MIL_Config& config );
-    ~MIL_AgentServer();
+    explicit MIL_AgentServer( MIL_Config& config );
+    virtual ~MIL_AgentServer();
 
     //! @name Checkpoints
     //@{
@@ -59,10 +62,11 @@ public:
 
     //! @name Simulation management
     //@{
-    bool StopSim  ();
-    bool ResetSim ();
-    bool PauseSim ();
-    bool ResumeSim();
+    virtual void SendControlInformation() const;
+    virtual void Stop();
+    virtual void Pause();
+    virtual void Resume();
+    virtual void SetTimeFactor( unsigned timeFactor );
     //@}
 
     //! @name Simulation main loop
@@ -100,11 +104,9 @@ public:
     uint GetCurrentTimeStepRealTime() const; // En secondes depuis 01/01/1970
     uint GetSimTime                () const; // En secondes depuis le démarrage de la SIM
 
-    uint GetCurrentTimeStep () const;
+    virtual unsigned int GetCurrentTick() const;
+    uint GetCurrentTimeStep() const; // $$$$ AGE 2007-08-10: degager
     uint GetTimeStepDuration() const; 
-
-    uint GetTimeFactor() const;
-    bool SetTimeFactor( uint nTimeFactor );
     //@}
 
 private:  

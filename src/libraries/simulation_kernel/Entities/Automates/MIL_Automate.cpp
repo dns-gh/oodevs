@@ -37,7 +37,7 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
-#include "Network/NET_AS_MOSServerMsgMgr.h"
+#include "Network/NET_Publisher_ABC.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AsnException.h"

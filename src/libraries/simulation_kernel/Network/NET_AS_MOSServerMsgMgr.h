@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "NET_ASN_MessageController.h"
+#include "NET_Publisher_ABC.h"
 #include "game_asn/Asn.h"
 #include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
 
@@ -21,18 +22,19 @@ NET_ASN_GENERATE_MESSAGE_CONTROLLER( MsgsClientToSim )
 NET_ASN_GENERATE_MESSAGE_CONTROLLER( MsgsMiddleToSim )
 
 class NET_AgentServer;
+class NET_Simulation_ABC;
 
 //=============================================================================
 // Created: NLD 2002-07-12
 // Last Modified : JVT 02-10-10
 //=============================================================================
-class NET_AS_MOSServerMsgMgr
+class NET_AS_MOSServerMsgMgr : public NET_Publisher_ABC
 {
     MT_COPYNOTALLOWED( NET_AS_MOSServerMsgMgr );
 
 public:
 
-    explicit NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer ); 
+             NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer, NET_Simulation_ABC& simulation ); 
     virtual ~NET_AS_MOSServerMsgMgr();
 
     //! @name Service activation 
@@ -49,7 +51,7 @@ public:
     
     //! @name Message sending
     //@{
-    void Send( ASN1T_MsgsSimToClient& asnMsg );
+    virtual void Send( ASN1T_MsgsSimToClient& asnMsg );
     //@}
 
     //! @name Callback Handling
@@ -72,12 +74,7 @@ private:
     //@{     
     void OnReceiveMsgClientToSim           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgMiddleToSim           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-
     void OnReceiveMsgCtrlClientAnnouncement( DIN::DIN_Link& linkFrom );
-    void OnReceiveMsgCtrlStop              ();
-    void OnReceiveMsgCtrlPause             ();
-    void OnReceiveMsgCtrlResume            ();
-    void OnReceiveMsgCtrlChangeTimeFactor  ( const ASN1T_MsgControlChangeTimeFactor& asnMsg );
     //@}
 
     //! @name Types
@@ -97,6 +94,8 @@ private:
     
 private:
     NET_AgentServer& agentServer_;
+    NET_Simulation_ABC& simulation_;
+
     DIN::DIN_MessageServiceUserCbk< NET_AS_MOSServerMsgMgr > messageService_;
 
     // ASN

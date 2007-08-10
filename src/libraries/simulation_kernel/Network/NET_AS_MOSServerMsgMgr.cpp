@@ -18,6 +18,7 @@
 #include "NET_AS_MOSServerConnectionMgr.h"
 #include "NET_ASN_Messages.h"
 #include "NET_AgentServer.h"
+#include "NET_Simulation_ABC.h"
 #include "Entities/Orders/MIL_TacticalLineManager.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Meteo/PHY_MeteoDataManager.h"
@@ -45,8 +46,9 @@ static enum
 // Name: NET_AS_MOSServerMsgMgr constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-NET_AS_MOSServerMsgMgr::NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer )
+NET_AS_MOSServerMsgMgr::NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer, NET_Simulation_ABC& simulation )
     : agentServer_   ( agentServer )
+    , simulation_    ( simulation )
     , messageService_( *this, agentServer.GetDINEngine(), DIN_ConnectorHost() )
 {
     messageService_.RegisterReceivedMessage( eMsgClientToSim           , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgClientToSim            );
@@ -165,87 +167,18 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlClientAnnouncement( DIN::DIN_Link& 
     MT_LOG_INFO_MSG( MT_FormatString( "Announcement from client %s", linkFrom.GetRemoteAddress().GetAddressAsString().c_str() ) );
 
     agentServer_.GetConnectionMgr().AddConnection( linkFrom );
-    
-    MIL_AgentServer& workspace = MIL_AgentServer::GetWorkspace();
 
-    // ASN Ctrl info message
-    NET_ASN_MsgControlInformation asnMsgControlInformation;  
-    asnMsgControlInformation().current_tick         = workspace.GetCurrentTimeStep();
-	asnMsgControlInformation().tick_duration        = workspace.GetTimeStepDuration();
-    asnMsgControlInformation().time_factor          = workspace.GetTimeFactor();
-    asnMsgControlInformation().status               = (ASN1T_EnumSimulationState)MIL_AgentServer::GetWorkspace().GetSimState();
-    asnMsgControlInformation().checkpoint_frequency = workspace.GetCheckPointManager().GetCheckPointFrequency();
-    asnMsgControlInformation().send_vision_cones    = workspace.GetAgentServer().MustSendUnitVisionCones();
-    asnMsgControlInformation().profiling_enabled    = workspace.GetProfilerManager().IsProfilingEnabled();
-    asnMsgControlInformation.Send();
+    simulation_.SendControlInformation();
 
     NET_ASN_MsgControlSendCurrentStateBegin asnMsgStateBegin;
     asnMsgStateBegin.Send();
     
+    MIL_AgentServer& workspace = MIL_AgentServer::GetWorkspace();
     workspace.GetEntityManager      ().SendStateToNewClient();
     workspace.GetTacticalLineManager().SendStateToNewClient();
     
     NET_ASN_MsgControlSendCurrentStateEnd asnMsgStateEnd;
     asnMsgStateEnd.Send();
-}
-
-//-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlStop
-// Created: NLD 2003-02-26
-//-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlStop()
-{
-    NET_ASN_MsgControlStopAck msg;
-    if( MIL_AgentServer::GetWorkspace().StopSim() )
-        msg() = EnumControlErrorCode::no_error;
-    else
-        msg() = EnumControlErrorCode::error_not_started;
-    msg.Send();
-}
-
-//-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlPause
-// Created: NLD 2003-02-26
-//-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlPause()
-{
-    NET_ASN_MsgControlPauseAck msg;
-    if( MIL_AgentServer::GetWorkspace().PauseSim() )
-        msg() = EnumControlErrorCode::no_error;
-    else
-        msg() = EnumControlErrorCode::error_already_paused;
-    msg.Send();
-}
-
-//-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlResume
-// Created: NLD 2003-02-26
-//-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlResume()
-{
-    NET_ASN_MsgControlResumeAck msg;
-    if( MIL_AgentServer::GetWorkspace().ResumeSim() )
-        msg() = EnumControlErrorCode::no_error;
-    else
-        msg() = EnumControlErrorCode::error_not_paused;
-    msg.Send();
-}
-
-//-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlChangeTimeFactor
-// Created: NLD 2003-02-26
-//-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlChangeTimeFactor( const ASN1T_MsgControlChangeTimeFactor& asnMsg )
-{
-    NET_ASN_MsgControlChangeTimeFactorAck msg;
-
-    if( MIL_AgentServer::GetWorkspace().SetTimeFactor( asnMsg ) )
-        msg().error_code = EnumControlErrorCode::no_error;
-    else
-        msg().error_code = EnumControlErrorCode::error_invalid_time_factor;
-
-    msg().time_factor = MIL_AgentServer::GetWorkspace().GetTimeFactor();
-    msg.Send();
 }
 
 //-----------------------------------------------------------------------------
@@ -362,10 +295,10 @@ void NET_AS_MOSServerMsgMgr::DoUpdate( const T_MessageClientToSimControllerVecto
         uint nCtx = asnMsg.context;
         switch( asnMsg.msg.t )
         {
-            case T_MsgsClientToSim_msg_msg_control_stop                       : OnReceiveMsgCtrlStop              (); break;
-            case T_MsgsClientToSim_msg_msg_control_pause                      : OnReceiveMsgCtrlPause             (); break;
-            case T_MsgsClientToSim_msg_msg_control_resume                     : OnReceiveMsgCtrlResume            (); break;
-            case T_MsgsClientToSim_msg_msg_control_change_time_factor         : OnReceiveMsgCtrlChangeTimeFactor  ( asnMsg.msg.u.msg_control_change_time_factor ); break;
+            case T_MsgsClientToSim_msg_msg_control_stop                       : simulation_.Stop(); break;
+            case T_MsgsClientToSim_msg_msg_control_pause                      : simulation_.Pause(); break;
+            case T_MsgsClientToSim_msg_msg_control_resume                     : simulation_.Resume(); break;
+            case T_MsgsClientToSim_msg_msg_control_change_time_factor         : simulation_.SetTimeFactor( asnMsg.msg.u.msg_control_change_time_factor ); break;
             case T_MsgsClientToSim_msg_msg_control_global_meteo               : workspace.GetMeteoDataManager     ().OnReceiveMsgGlobalMeteo                 ( *asnMsg.msg.u.msg_control_global_meteo                      ); break;
             case T_MsgsClientToSim_msg_msg_control_local_meteo                : workspace.GetMeteoDataManager     ().OnReceiveMsgLocalMeteo                  ( *asnMsg.msg.u.msg_control_local_meteo                       ); break;
             case T_MsgsClientToSim_msg_msg_control_checkpoint_save_now        : workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSaveNow           ( *asnMsg.msg.u.msg_control_checkpoint_save_now               ); break;

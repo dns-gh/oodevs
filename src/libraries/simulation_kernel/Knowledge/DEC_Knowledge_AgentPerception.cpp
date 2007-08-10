@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_AgentPerception.h"
 
-#include "Network/NET_AS_MOSServerMsgMgr.h"
+#include "Network/NET_Publisher_ABC.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"

@@ -15,9 +15,10 @@
 
 #include "NET_AS_MOSServerConnectionMgr.h"
 #include "NET_AS_MOSServerMsgMgr.h"
-#include "MIL_AgentServer.h"
+#include "Tools/MIL_Config.h"
 #include "DIN/DIN_EventManager.h"
 #include "tools/win32/Win32Exception.h"
+#include "MIL_AgentServer.h"
 
 using namespace NEK;
 using namespace DIN;
@@ -27,13 +28,14 @@ using namespace tools::thread;
 // Name: NET_AgentServer constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-NET_AgentServer::NET_AgentServer()
-    : dinEngine_                     (  )
-    , bThreaded_                     ( MIL_AgentServer::GetWorkspace().GetConfig().IsThreadedNetwork() )
-    , nPortAS_MOS_                   ( MIL_AgentServer::GetWorkspace().GetConfig().GetNetworkPort() )
+NET_AgentServer::NET_AgentServer( const MIL_Config& config, const MIL_Time_ABC& time )
+    : time_                          ( time )
+    , dinEngine_                     ()
+    , bThreaded_                     ( config.IsThreadedNetwork() )
+    , nPortAS_MOS_                   ( config.GetNetworkPort() )
     , bTerminated_                   ( false )
-    , pConnectionMgr_                ( new NET_AS_MOSServerConnectionMgr( *this ) )
-    , pMsgMgr_                       ( new NET_AS_MOSServerMsgMgr       ( *this ) )
+    , pMsgMgr_                       ( new NET_AS_MOSServerMsgMgr( *this, MIL_AgentServer::GetWorkspace() ) )
+    , pConnectionMgr_                ( new NET_AS_MOSServerConnectionMgr( dinEngine_, *pMsgMgr_, nPortAS_MOS_ ) )
     , nUnitVisionConesChangeTimeStep_( 0 )
     , bSendUnitVisionCones_          ( false )
 {
@@ -129,7 +131,7 @@ void NET_AgentServer::Run()
 // -----------------------------------------------------------------------------
 void NET_AgentServer::SetMustSendUnitVisionCones( bool bEnable )
 {
-    nUnitVisionConesChangeTimeStep_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    nUnitVisionConesChangeTimeStep_ = time_.GetCurrentTick();
     bSendUnitVisionCones_           = bEnable;
 }
 
@@ -139,7 +141,7 @@ void NET_AgentServer::SetMustSendUnitVisionCones( bool bEnable )
 // -----------------------------------------------------------------------------
 bool NET_AgentServer::MustInitUnitVisionCones() const
 {
-    return bSendUnitVisionCones_ && MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() == nUnitVisionConesChangeTimeStep_ + 1;
+    return bSendUnitVisionCones_ && time_.GetCurrentTick() == nUnitVisionConesChangeTimeStep_ + 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -172,3 +174,22 @@ void NET_AgentServer::OnUnexpected()
     MT_LOG_ERROR_MSG( "Unknown exception caught in network thread" );
 }
 
+// -----------------------------------------------------------------------------
+// Name: NET_AgentServer::GetMessageMgr
+// Created: AGE 2007-08-10
+// -----------------------------------------------------------------------------
+NET_Publisher_ABC& NET_AgentServer::GetMessageMgr() const
+{
+    assert( pMsgMgr_ );
+    return *pMsgMgr_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_AgentServer::GetConcreteMessageMgr
+// Created: AGE 2007-08-10
+// -----------------------------------------------------------------------------
+NET_AS_MOSServerMsgMgr& NET_AgentServer::GetConcreteMessageMgr() const
+{
+    assert( pMsgMgr_ );
+    return *pMsgMgr_;
+}
