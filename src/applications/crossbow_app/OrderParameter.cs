@@ -58,7 +58,6 @@ namespace crossbow
                 return "";
             }
         }
-
         sealed class TypePolygon : Type_ABC
         {
             IPointCollection m_polygon;
@@ -70,7 +69,7 @@ namespace crossbow
             {
                 m_polygon = null;
                 IRubberBand rubber = new RubberPolygonClass();
-                m_polygon = (IPointCollection)rubber.TrackNew(Tools.GetDisplay(), null);
+                m_polygon = rubber.TrackNew(Tools.GetDisplay(), null) as IPointCollection;                
                 if (m_polygon != null)
                 {
                     ISpatialReference spRef = ((IGeometry)m_polygon).SpatialReference;
@@ -86,7 +85,7 @@ namespace crossbow
                 {
                     for (int i = 0; i < m_polygon.PointCount; ++i)
                     {
-                        IPoint point = m_polygon.get_Point(i);
+                        IPoint point = m_polygon.get_Point(i);                        
                         if (value.Length > 0)
                             value += ";";
                         value += Tools.ConvertToMGRS(point);
@@ -95,7 +94,6 @@ namespace crossbow
                 return value;
             }
         }
-
         sealed class TypeAgent : Type_ABC
         {
             IFeature m_agent;
@@ -112,7 +110,6 @@ namespace crossbow
                 return "";
             }
         }
-
         sealed class TypeBool : Type_ABC
         {
             bool m_state = false;
@@ -127,7 +124,6 @@ namespace crossbow
                 return m_state.ToString();
             }
         }
-
         sealed class TypePath : Type_ABC
         {
             IPolyline m_path;
@@ -142,7 +138,12 @@ namespace crossbow
                     IRubberBand rubber = new RubberLineClass();                    
                     m_path = (IPolyline)rubber.TrackNew(Tools.GetDisplay(), null);
                     if (m_path != null)
+                    {
+                        ISpatialReference spRef = m_path.SpatialReference;
+                        if (spRef == null)
+                            m_path.SpatialReference = Tools.GetDisplay().DisplayTransformation.SpatialReference;
                         Tools.Store(m_OrderShapeName, m_path);
+                    }
                 }
             }
             public override string GetValue()
@@ -199,17 +200,23 @@ namespace crossbow
             m_type.OnSelect();
         }
 
-        public void Visit(Visitor_ABC visitor)
+        public void NotifyUpdate(IMissionObserver observer)
         {
-            object missing = Type.Missing;
-            visitor.Accept(m_name, m_type.GetValue(), missing);
+            observer.Update(this);
         }
-        
+
         public string Name
         {
             get
             {
                 return m_name;
+            }
+        }
+        public string Value
+        {
+            get
+            {
+                return m_type.GetValue();
             }
         }
     }

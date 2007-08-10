@@ -10,15 +10,7 @@ using ESRI.ArcGIS.Carto;
 
 namespace crossbow
 {    
-    public interface IController
-    {
-        void Register(IMissionObserver observer);        
-        void Send(IMissionObserver observer);
-        void Remove(IMissionObserver observer);
-        void Update(IOrder element, IOrderParameter param);        
-    }
-
-    public class OrderManager : IController
+    public class OrderHandler
     {
         class Selection
         {
@@ -34,69 +26,49 @@ namespace crossbow
         };
 
         private OrderFactory m_orderFactory;        
-        private IFeature m_targetFeature = null;
-        private Order m_order = null;
+        private IFeature m_targetFeature;
         private Selection m_selection;
-        private IMissionObserver m_observer;
+        private Order m_order;
 
-        public OrderManager()
+        public IFeature TargetFeature
         {
-            Initialize();
-        }
-
-        private void Initialize()
-        {
-            IMxDocument doc = Tools.GetMxDocument();
-            if (doc == null)
-                return;
-            m_orderFactory = new OrderFactory(this);
-            ((IDocumentEvents_Event)doc).OnContextMenu += new IDocumentEvents_OnContextMenuEventHandler(OnContextMenu);
-            //((IFeatureLayerSelectionEvents_Event)doc.FocusMap.get_Layer(0)).FeatureLayerSelectionChanged += new IFeatureLayerSelectionEvents_FeatureLayerSelectionChangedEventHandler(OnFeatureSelectionChanged);
-        }
-
-        private bool OnFeatureSelectionChanged()
-        {
-            IMxDocument doc = Tools.GetMxDocument();
-            if(doc == null)
-                return false;            
-            UpdateSelection(doc.FocusMap.FeatureSelection);
-            return m_order != null || m_targetFeature != null && m_targetFeature.Class.FindField("Public_OID") > 0;
-        }
-
-        public void OnContextMenu(int x, int y, out bool handled)
-        {
-            try
+            get
             {
-                handled = OnFeatureSelectionChanged();
-                if (!handled)
-                    return;
-                IDocument doc = Tools.GetMxDocument() as IDocument;
-                ICommandBar menu = doc.CommandBars.Create("Menu", esriCmdBarType.esriCmdBarTypeShortcutMenu);
-                if (m_order != null)
-                    m_selection = new Selection(x, y);
-                m_orderFactory.BuildMissionContextMenu(menu);
-                if (menu.Count > 0)
-                    menu.Popup(0, 0);
-            }
-            catch (Exception e)
-            {
-                System.Console.Write("OnContextMenu throws :" + e.Message);
-                handled = false;
+                return m_targetFeature;
             }
         }
 
-        public void Update(MultiItemSelectionMenu menu)
+        public OrderHandler(OrderFactory orderFactory)
         {
-            if (m_order == null)
-                m_orderFactory.BuildMissionContextMenu(menu);
-            else
-                m_orderFactory.BuildMissionParameterContextMenu(menu, m_selection.X, m_selection.Y, m_order, m_targetFeature);
+            m_orderFactory = orderFactory;            
         }
 
-        public void CreateOrder(string name)
+        public void Register(Order order)
         {
-            m_orderFactory.CreateOrder(name, m_targetFeature, out m_order);            
+            m_order = order;            
         }
+
+        public void Release()
+        {
+            m_order = null;
+        }
+
+        public bool OnFeatureSelectionChanged(IMxDocument mxDocument, int x, int y)
+        {            
+            if (mxDocument == null)            
+                return false;
+            UpdateSelection(mxDocument.FocusMap.FeatureSelection);
+            if (m_order != null)
+                m_selection = new Selection(x, y);
+            return m_order != null || (m_targetFeature != null && m_targetFeature.Class.FindField("Public_OID") > 0); // m_order.NeedContextMenu()
+        }
+                
+        public bool OnContextMenu(MultiItemSelectionMenu menu)
+        {
+            if (m_order != null)
+                m_order.OnContextMenu(menu, m_selection.X, m_selection.Y, m_targetFeature);
+            return m_order != null;
+        }        
 
         public void SelectParameter(IOrderParameter param, string value)
         {
@@ -105,41 +77,12 @@ namespace crossbow
             m_order.SelectParameter(param, value);
             m_selection = null;
         }
-
-        public void Register(IMissionObserver observer)
-        {
-            m_observer = observer;
-            if (m_order != null)
-                m_observer.NotifyCreated(m_order);
-        }
-
-        public void Update(IOrder element, IOrderParameter param)
-        {
-            if (m_observer != null)
-                m_observer.NotifyUpdated(element, param);
-        }        
-
-        public void Remove(IMissionObserver observer)
-        {
-            if (m_observer != null)
-                m_observer.NotifyDeleted(m_order);
-            m_order = null;
-        }
               
         private void UpdateSelection(ISelection selection)
         {
             IEnumFeature pEnumFeature = selection as IEnumFeature;
             pEnumFeature.Reset();
             m_targetFeature = pEnumFeature.Next();
-        }
-
-        public void Send(IMissionObserver observer)
-        {
-            ESRI.ArcGIS.ArcMapUI.IMxDocument mxDocument = Tools.GetMxDocument();
-            IFeatureLayer                    pLayer = Tools.GetIFeatureLayerFromLayerName(mxDocument.ActiveView, "UnitForces");
-            IFeatureWorkspace                workspace = Tools.RetrieveWorkspace(pLayer);
-            if (workspace != null)
-                m_order.Serialize(workspace);            
         }
 
         public string CurrentMessage

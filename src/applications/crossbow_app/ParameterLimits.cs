@@ -42,13 +42,11 @@ namespace crossbow
                 m_limits.first = Tools.GetValue<int>(m_potential, "Public_OID");
             if (value == "Set limit 2")
                 m_limits.second = Tools.GetValue<int>(m_potential, "Public_OID");
-        }
+        }        
 
-        public void Visit(Visitor_ABC visitor)
+        public void NotifyUpdate(IMissionObserver observer)
         {
-            object missing = Type.Missing;
-            visitor.Accept("Limit1", m_limits.first.ToString(), missing);
-            visitor.Accept("Limit2", m_limits.second.ToString(), missing);
+            observer.Update(this, m_limits.first.ToString(), m_limits.second.ToString());
         }
 
         public string Name

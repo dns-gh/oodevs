@@ -47,12 +47,11 @@ namespace crossbow
             if (m_potential != null)
                 m_limas[Tools.GetValue<int>(m_potential, "Public_OID")] = value;
         }
-
-        public void Visit(Visitor_ABC visitor)
+        
+        public void NotifyUpdate(IMissionObserver observer)
         {
-            object missing = Type.Missing;
             foreach (System.Collections.Generic.KeyValuePair<int, string> elt in m_limas)
-                visitor.Accept(elt.Key.ToString(), elt.Value, missing);            
+                observer.Update(this, elt.Key.ToString(), elt.Value);            
         }
 
         public string Name

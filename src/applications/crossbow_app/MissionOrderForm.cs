@@ -12,20 +12,22 @@ namespace crossbow
 {
     public interface IMissionObserver
     {
-        void NotifyCreated(IOrder order);
-        void NotifyUpdated(IOrder order, IOrderParameter param);
-        void NotifyDeleted(IOrder order);
+        void Update(ParameterLimits param, string limit1, string limit2);
+        void Update(ParameterLimas param, string key, string value);
+        void Update(OrderParameter param);
     }
 
     public partial class MissionOrderForm : Form, IMissionObserver
     {
-        private IController m_controller;
-        
-        public MissionOrderForm(IController controller)
-        {
-            m_controller = controller;
-            InitializeComponent();            
-            controller.Register(this);
+        private IOrder m_order;
+
+        public MissionOrderForm(IOrder order)
+        {            
+            InitializeComponent();
+            m_order = order;
+            OrderName = m_order.Name;
+            UnitName = m_order.Target + " - [" + m_order.OID + "]";
+            Show();
         }
 
         #region IMissionForm implementation     
@@ -41,8 +43,6 @@ namespace crossbow
                 base.Text = value;
             }
         }
-        #endregion
-
         public string UnitName
         {
             get
@@ -55,95 +55,27 @@ namespace crossbow
                 m_UnitName.Text = value;
             }
         }        
-
-        #region IMissionObserver Members
-        public void NotifyCreated(IOrder order)
-        {
-            OrderName = order.Name;
-            m_UnitName.Text = order.Target;
-            if (!Visible)
-                Show();
-        }
-
-        #region Visitors
-        sealed class LimitsVisitor : Visitor_ABC
-        {
-            TextBox m_limit1;
-            TextBox m_limit2;
-
-            public LimitsVisitor(TextBox limit1, TextBox limit2) 
-            {
-                m_limit1 = limit1;
-                m_limit1.Text = "";
-                m_limit2 = limit2;
-                m_limit2.Text = "";
-            }
-            public override void Accept(string key, string value, object img)
-            {
-                if (m_limit1.Text == "")
-                    m_limit1.Text = value;
-                else
-                    m_limit2.Text = value;
-            }            
-        }
-        sealed class LimasVisitor : Visitor_ABC
-        {
-            System.Windows.Forms.TreeNode m_nodes;
-            public LimasVisitor(TreeNodeCollection nodes, string name)
-            {
-                System.Windows.Forms.TreeNode[] node = nodes.Find(name, true);
-                if (node.Length == 0)
-                    m_nodes = nodes.Add(name);
-                else
-                    m_nodes = node[0];
-                
-            }
-            public override void Accept(string key, string value, object img)
-            {                
-                System.Windows.Forms.TreeNode[] node = m_nodes.Nodes.Find(key, false);
-                if (node.Length != 0)
-                    m_nodes.Nodes.Remove(node[0]);
-                m_nodes.Nodes.Add(key, value);                
-            }
-        }
-        sealed class ParameterVisitor : Visitor_ABC
-        {
-            TreeNodeCollection m_nodes;
-            public ParameterVisitor(TreeNodeCollection nodes)
-            {
-                m_nodes = nodes;
-            }
-            public override void Accept(string key, string value, object img)
-            {
-                System.Windows.Forms.TreeNode[] node = m_nodes.Find(key, false);
-                if (node.Length == 0)
-                    m_nodes.Add(key, value);
-                // 
-            }
-        }
-
-        /*
-         * Build the right visitor accord to param type
-         */
-        Visitor_ABC GetVisitor(IOrderParameter param)
-        {
-            if (param is ParameterLimits)
-                return new LimitsVisitor(m_Limit1, m_Limit2);
-            if (param is ParameterLimas)
-                return new LimasVisitor(m_ParameterTree.Nodes, param.Name);
-            return new ParameterVisitor(m_ParameterTree.Nodes);
-        }
         #endregion
-
-        public void NotifyUpdated(IOrder order, IOrderParameter param)
+               
+        #region IMissionObserver Members                        
+        public void Update(ParameterLimits param, string limit1, string limit2)
         {
-            Visitor_ABC visitor = GetVisitor(param);
-            param.Visit(visitor);
+            m_Limit1.Text = limit1;
+            m_Limit2.Text = limit2;
         }
 
-        public void NotifyDeleted(IOrder order)
+        public void Update(ParameterLimas param, string key, string value)
+        {            
+            System.Windows.Forms.TreeNode[] node = m_ParameterTree.Nodes.Find(key, false);
+            if (node.Length == 0)
+                m_ParameterTree.Nodes.Add(key, value);
+        }
+
+        public void Update(OrderParameter param)
         {
-            Hide();            
+            System.Windows.Forms.TreeNode[] node = m_ParameterTree.Nodes.Find(param.Name, false);
+            if (node.Length == 0)
+                m_ParameterTree.Nodes.Add(param.Name, param.Value);
         }
         #endregion
     }

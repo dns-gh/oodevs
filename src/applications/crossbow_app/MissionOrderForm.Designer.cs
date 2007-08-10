@@ -17,6 +17,7 @@ namespace crossbow
             {
                 components.Dispose();
             }
+            m_order.Release();
             base.Dispose(disposing);
         }
 
@@ -218,21 +219,19 @@ namespace crossbow
             this.m_ParametersBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.m_Direction)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.ResumeLayout(false);
-
+            this.ResumeLayout(false);            
         }
 
         void OnExecuteClick(object sender, System.EventArgs e)
-        {            
-            m_controller.Send(this);
-            m_controller.Remove(this);
-            base.Close();
+        {
+            m_order.Validate();            
+            Close();
         }
 
         void OnCancelClick(object sender, System.EventArgs e)
-        {            
-            m_controller.Remove(this);
-            base.Close();            
+        {
+            m_order.Release();
+            Close();
         }
 
         #endregion

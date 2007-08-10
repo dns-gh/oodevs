@@ -14,12 +14,12 @@ namespace crossbow
     public class MultiItemSelectionMenu : IMultiItem
     {     
         private System.Collections.ArrayList m_items = new System.Collections.ArrayList();
-        protected OrderManager m_orderManager;
+        protected OrderFactory m_factory;
 
         public MultiItemSelectionMenu()
         {            
             CSwordExtension extension = Tools.GetCSwordExtension();
-            m_orderManager = extension.OrderManager;            
+            m_factory = extension.OrderFactory;            
         }
 
         #region COM Registration Function(s)
@@ -76,7 +76,7 @@ namespace crossbow
 
         public string Caption
         {
-            get { return m_orderManager.CurrentMessage; }
+            get { return m_factory.OrderHandler.CurrentMessage; }
         }
 
         public int HelpContextID
@@ -91,7 +91,7 @@ namespace crossbow
 
         public string Message
         {
-            get { return m_orderManager.CurrentMessage; }
+            get { return m_factory.OrderHandler.CurrentMessage; }
         }
 
         public string Name
@@ -105,16 +105,16 @@ namespace crossbow
             {
                 System.Collections.Generic.KeyValuePair<string, IOrderParameter> item = (System.Collections.Generic.KeyValuePair<string, IOrderParameter>)m_items[index];
                 if (item.Value == null)
-                    m_orderManager.CreateOrder(item.Key);
+                    m_factory.CreateOrder(item.Key);
                 else
-                    m_orderManager.SelectParameter(item.Value, item.Key);
+                    m_factory.OrderHandler.SelectParameter(item.Value, item.Key);
             }
         }
 
         public int OnPopup(object hook)
         {
             m_items.Clear();
-            m_orderManager.Update(this);
+            m_factory.OnContextMenu(this);
             return m_items.Count;
         }
 

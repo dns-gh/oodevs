@@ -106,7 +106,13 @@ namespace crossbow
             if (hook is IMxApplication)
                 base.m_enabled = true;
             else
-                base.m_enabled = false;            
+                base.m_enabled = false;
+            ((IDocumentEvents_Event)Tools.GetMxDocument()).OnContextMenu += new IDocumentEvents_OnContextMenuEventHandler(OnContextMenuHandler);
+        }
+
+        private void OnContextMenuHandler(int x, int y, out bool handled)
+        {
+            Tools.GetCSwordExtension().OrderFactory.OnContextMenu(x, y, out handled);
         }
 
         /// <summary>
@@ -155,18 +161,5 @@ namespace crossbow
             group.Add(dynamicLayer);
             return group as ILayer;
         }
-
-        private void EnableDynamicDisplay()
-        {
-            IMxDocument mxDocument = Tools.GetMxDocument();
-            IDynamicMap map = mxDocument.FocusMap as IDynamicMap;
-            if (map == null)
-                throw new System.Exception("Dynamic display not supported");
-            if (!map.DynamicMapEnabled)
-            {
-                map.DynamicMapEnabled = true;
-                mxDocument.ActiveView.Refresh();
-            }
-        }       
     }
 }

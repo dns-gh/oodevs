@@ -63,7 +63,7 @@ namespace crossbow
         #endregion
         #endregion
         
-        private OrderManager m_orderManager = null;
+        private OrderFactory m_orderFactory = null;
 
         #region IExtension Members
         /// <summary>
@@ -79,7 +79,7 @@ namespace crossbow
 
         public void Shutdown()
         {
-            m_orderManager = null;
+            m_orderFactory = null;
         }
 
         public void Startup(ref object initializationData)
@@ -88,17 +88,16 @@ namespace crossbow
             if (app == null)
                 return;
             Tools.Initialize(app);
-            m_orderManager = new OrderManager();
+            m_orderFactory = new OrderFactory();
         }
 
-        public OrderManager OrderManager
+        public OrderFactory OrderFactory
         {
             get
             {
-                return m_orderManager;
+                return m_orderFactory;
             }
-        }
-
+        }        
         #endregion
     }
 }

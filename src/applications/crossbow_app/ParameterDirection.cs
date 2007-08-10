@@ -26,10 +26,14 @@ namespace crossbow
 
         public void SetValue(string value)
         {
+            m_direction = int.Parse(value);
         }
 
-        public void Visit(Visitor_ABC visitor) {}
-
+        public void NotifyUpdate(IMissionObserver observer)
+        {
+            // $$$$
+        }
+    
         public string Name
         {
             get

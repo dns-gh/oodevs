@@ -9,7 +9,10 @@ namespace crossbow
         string Name { get; }
         string Target { get; }
         int OID { get; }
+        void RegisterParameter(IOrderParameter parameter);
         void OnContextMenu(MultiItemSelectionMenu menu, int x, int y, IFeature selected);
+        void Validate();
+        void Release();
     }
 
     public class Order : IOrder
@@ -17,12 +20,14 @@ namespace crossbow
         private ParameterLimits m_limits = new ParameterLimits();
         private ParameterLimas m_limas = new ParameterLimas();
         private ParameterDirection m_direction = new ParameterDirection();
-        private Dictionary<string, IOrderParameter> m_parameters = new Dictionary<string, IOrderParameter>();
-        private IController m_controller;
+        private Dictionary<string, IOrderParameter> m_parameters = new Dictionary<string, IOrderParameter>();        
         private int m_OID;
         private string m_name;
         private string m_target;
 
+        private IMissionObserver m_observer;
+        private OrderHandler m_handler;
+        private IFeature m_feature;
         public string Name
         {
             get
@@ -49,26 +54,29 @@ namespace crossbow
             }
         }
 
-        public Order(string name, IFeature feature, IParameterFactory factory, IController controller)
+        public Order(string name, OrderHandler handler, IParameterFactory factory)
         {
+            m_handler = handler;
+            m_feature = handler.TargetFeature;
             m_name = name;
-            m_OID = Tools.GetValue<int>(feature, "Public_OID");
-            m_target = Tools.GetValue<string>(feature, "Name");
-            m_controller = controller;
-            factory.CreateParameters(this);
+            m_OID = Tools.GetValue<int>(m_feature, "Public_OID");
+            m_target = Tools.GetValue<string>(m_feature, "Name");            
+            m_observer = new MissionOrderForm(this);
+            factory.CreateParameters(this);            
+            m_handler.Register(this);
         }
 
         public void RegisterParameter(IOrderParameter parameter)
         {
             m_parameters.Add(parameter.Name, parameter);
-            m_controller.Update(this, parameter);
+            parameter.NotifyUpdate(m_observer);
         }
 
         public void SelectParameter(IOrderParameter parameter, string value)
         {
             System.Console.Write("SelectParameter[ " + parameter.ToString() + "]:" + value);
             parameter.SetValue(value);
-            m_controller.Update(this, parameter);
+            parameter.NotifyUpdate(m_observer);
         }
 
         public void OnContextMenu(MultiItemSelectionMenu menu, int x, int y, IFeature selected)
@@ -100,6 +108,18 @@ namespace crossbow
                 m_edit.StopEditOperation();
                 m_edit.StopEditing(true);
             }
+        }
+
+        public void Validate()
+        {
+            IFeatureWorkspace workspace = Tools.RetrieveWorkspace(m_feature.Table);
+            if (workspace != null)
+                Serialize(workspace);
+        }
+
+        public void Release()
+        {
+            m_handler.Release();
         }
 
         public void Serialize(IFeatureWorkspace featureWorkspace)

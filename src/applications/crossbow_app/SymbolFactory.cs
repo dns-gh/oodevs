@@ -60,7 +60,7 @@ namespace crossbow
         {
             DynamicForceElement element = new DynamicForceElement();
             element.CachedGraphic = CreateForceElementGraphics(symbolId, "");
-            element.Glyph = CreateDynamicGlyph(display, dynamicDisplay, element.CachedGraphic, 100, 64);
+            element.Glyph = CreateDynamicGlyph(display, dynamicDisplay, element.CachedGraphic, 128, 64);
             return element as IDynamicElement;
         }
 

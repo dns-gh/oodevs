@@ -61,8 +61,7 @@ namespace crossbow
 
         private void InitializeEvents()
         {
-            m_pSymbolTree.MouseClick += new MouseEventHandler(m_pSymbolTree_MouseClick);
-            // m_pSymbolTree.GetNodeAt
+            m_pSymbolTree.MouseClick += new MouseEventHandler(m_pSymbolTree_MouseClick);            
         }
 
         private void SelectFeature(TreeNode node)
@@ -87,7 +86,7 @@ namespace crossbow
             if (e.Button == MouseButtons.Left)                            
                 SelectFeature(m_pSymbolTree.GetNodeAt(e.X, e.Y));            
             if (e.Button == MouseButtons.Right)
-                Tools.GetCSwordExtension().OrderManager.OnContextMenu(e.X, e.Y, out handled);
+                Tools.GetCSwordExtension().OrderFactory.OnContextMenu(e.X, e.Y, out handled);
         }
                
 

@@ -181,7 +181,7 @@ namespace crossbow
             if (pLayer != null)
             {                
                 IDataset pDataset = null;
-                if ( pLayer is IDynamicLayerDataset )
+                if (pLayer is IDynamicLayerDataset)
                 {
                     IDynamicLayerDataset dataset = pLayer as IDynamicLayerDataset;
                     pDataset = dataset.Dataset;
@@ -193,7 +193,15 @@ namespace crossbow
             }
             return null;
         }
-        
+
+        public static IFeatureWorkspace RetrieveWorkspace(ITable table)
+        {            
+            IDataset dataset = table as IDataset;
+            if (dataset != null)
+                return (IFeatureWorkspace)dataset.Workspace;
+            return null;
+        }
+
         public static IFeatureWorkspace OpenWorkspace(ESRI.ArcGIS.Carto.IActiveView activeView, string name)
         {
             return RetrieveWorkspace(Tools.GetIFeatureLayerFromLayerName(activeView, name));            
@@ -287,14 +295,21 @@ namespace crossbow
         }
         static public string ConvertToMGRS(IPoint point)
         {
-            ISpatialReferenceFactory    sp = new SpatialReferenceEnvironment();
+            ISpatialReferenceFactory    sp = new SpatialReferenceEnvironment();            
             IGeographicCoordinateSystem gcs = sp.CreateGeographicCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
-
             ICoordinateTool converter = new CoordinateToolClass();
             IPoint datum = new PointClass();
             IPoint wgs = new PointClass();
-            string dms = "", utm = "", mgrs = "";
-            converter.ConvertLocation(point, 1, "WGS 1984 (WGS84)", "WGS 1984 (WGS84)", ref wgs, ref datum, ref dms, ref utm, ref mgrs);
+            string dms = "", utm = "", mgrs = "";            
+            try
+            {
+                point.Project(gcs); // Project point to WGS
+                converter.ConvertLocation(point, 1, "WGS 1984 (WGS84)", "WGS 1984 (WGS84)", ref wgs, ref datum, ref dms, ref utm, ref mgrs);
+            }
+            catch (System.Exception e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
             return mgrs;
         }
         #endregion

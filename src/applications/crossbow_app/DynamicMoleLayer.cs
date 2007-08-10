@@ -142,7 +142,7 @@ namespace crossbow
         {
             IDynamicElement symbol = GetSymbol(display, dynamicDisplay, feature);
             if (symbol == null)
-                return;
+                return;            
             FeatureDrawer.Draw(dynamicDisplay, symbol, feature, IsSelected(feature));
         }
 
