@@ -11,7 +11,7 @@ namespace crossbow
 {
     static class Tools
     {
-        static private ESRI.ArcGIS.Framework.IApplication m_application = null;
+        static private ESRI.ArcGIS.Framework.IApplication m_application;
         static private bool m_dynamicDisplayEnabled = false;
 
         #region "Initialization"
