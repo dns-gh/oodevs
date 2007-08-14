@@ -13,20 +13,21 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.MOLE;
 
-namespace crossbow
+namespace Crossbow
 {
     public interface IDynamicLayerDataset
     {
         IDataset Dataset { get; }
     }
 
+    [ComVisible(true)]
     [Guid("e5798908-98b7-466f-9eee-43e58516f700")]
     [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("crossbow.DynamicMoleLayer")]
-    public partial class DynamicMoleLayer : BaseDynamicLayer, IFeatureLayer, IFeatureSelection, IEnumFeature, IDynamicLayerDataset
+    [ProgId("Crossbow.DynamicMoleLayer")]
+    public partial class DynamicMoleLayer : BaseDynamicLayer, IFeatureLayer, IFeatureSelection, IEnumFeature, IDynamicLayerDataset, IDisposable
     {
         private bool                            m_selectable = true;
-        private IFeatureClass                   m_featureClass = null;
+        private IFeatureClass                   m_featureClass;
         private int                             m_featureClassId = -1;
         private System.Collections.Hashtable    m_elements = new System.Collections.Hashtable();
         private SymbolFactory                   m_symbolFactory = new SymbolFactory();
@@ -35,7 +36,7 @@ namespace crossbow
         
         // IFeatureLayer attributes
         private String m_displayField = "name"; // $$$$ SBO 2007-07-09: Symbol_ID ?
-        private bool m_scaleSymbols = false;
+        private bool m_scaleSymbols;
         
         #region class constructor/destructor
         public DynamicMoleLayer()
@@ -46,30 +47,30 @@ namespace crossbow
 
         ~DynamicMoleLayer()
         {
-            Disconnect();
+            Dispose(false);
         }
         #endregion
 
         #region ILayer overriden
-        void ILayer.Draw(esriDrawPhase DrawPhase, IDisplay Display, ITrackCancel TrackCancel)
+        public override void Draw(esriDrawPhase DrawPhase, IDisplay Display, ITrackCancel TrackCancel)
         {
             Tools.EnableDynamicDisplay();
         }
         #endregion
 
         #region BaseDynamicLayer overriden
-        public override void DrawDynamicLayer(esriDynamicDrawPhase dynamicDrawPhase, IDisplay display, IDynamicDisplay dynamicDisplay)
+        public override void DrawDynamicLayer(esriDynamicDrawPhase DynamicDrawPhase, IDisplay Display, IDynamicDisplay DynamicDisplay)
         {
             try
             {
-                if( dynamicDisplay == null || display == null || dynamicDrawPhase != esriDynamicDrawPhase.esriDDPImmediate )
+                if( DynamicDisplay == null || Display == null || DynamicDrawPhase != esriDynamicDrawPhase.esriDDPImmediate )
                     return;
                 if( this.m_visible )
-                    DrawFeatureClass(display, dynamicDisplay);
+                    DrawFeatureClass(Display, DynamicDisplay);
             }
             catch( Exception ex )
             {
-                System.Diagnostics.Trace.WriteLine(ex);
+                System.Diagnostics.Trace.WriteLine(ex.Message);
             }
         }
         #endregion
@@ -80,13 +81,15 @@ namespace crossbow
             get
             {
                 UID id = new UIDClass();
-                id.Value = "crossbow.DynamicMoleLayer";
+                id.Value = "Crossbow.DynamicMoleLayer";
                 return id;
             }
         }
 
         public override void Load(IVariantStream Stream)
         {
+            if (Stream == null)
+                return;
             base.Load(Stream);
             m_extensions = new System.Collections.ArrayList();
             int count = (int)Stream.Read();
@@ -102,6 +105,8 @@ namespace crossbow
 
         public override void Save(IVariantStream Stream)
         {
+            if (Stream == null)
+                return;
             base.Save(Stream);
             Stream.Write(m_extensions.Count);
             for( int i = 0; i < m_extensions.Count; ++i )
@@ -165,13 +170,13 @@ namespace crossbow
         private IDynamicElement GetSymbol(IDisplay display, IDynamicDisplay dynamicDisplay, IFeature feature)
         {
             string symbolId = Tools.GetValue<string>(feature, "Symbol_ID");
-            IDynamicElement element = (IDynamicElement)m_elements[symbolId];
+            IDynamicElement element = (IDynamicElement)m_elements[feature.OID];
             if (element != null)
                 return element;
             if (m_symbolFactory.SpatialReference == null)
                 m_symbolFactory.SpatialReference = display.DisplayTransformation.SpatialReference;
             element = m_symbolFactory.CreateElement(display, dynamicDisplay, feature, symbolId); // throw something
-            m_elements[symbolId] = element;
+            m_elements[feature.OID] = element;
             return element;
         }
         #endregion
@@ -293,6 +298,26 @@ namespace crossbow
         {
             set { m_spatialRef = value; }
         }
+        #endregion
+
+        #region IDisposable Members
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                Disconnect();
+                m_updateTimer.Dispose();
+            }
+        }
+
         #endregion
     }
 }

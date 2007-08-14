@@ -4,16 +4,17 @@ using ESRI.ArcGIS.MOLE;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 
-namespace crossbow
+namespace Crossbow
 {
-    sealed class PointFeatureDrawer
+    static class PointFeatureDrawer
     {
-        static private IDynamicGlyph m_selectionGlyph = null;
+        static private IDynamicGlyph m_selectionGlyph;
 
         #region Drawing method
         public static void Draw(IDynamicDisplay dynamicDisplay, IDynamicElement element, IFeature feature, bool selected)
         {
             IPoint position = feature.Shape as IPoint;
+            position.Project(Tools.GetMxDocument().ActiveView.ScreenDisplay.DisplayTransformation.SpatialReference);
             IDynamicSymbolProperties properties = dynamicDisplay as IDynamicSymbolProperties;
             if (selected)
                 DrawEnvelope(dynamicDisplay, element, position, properties);

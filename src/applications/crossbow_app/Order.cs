@@ -1,32 +1,33 @@
+using System;
 using System.Collections.Generic;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Framework;
 
-namespace crossbow
+namespace Crossbow
 {
-    public interface IOrder 
+    public interface IOrder : IDisposable
     {
         string Name { get; }
         string Target { get; }
-        int OID { get; }
+        int Id { get; }
         void RegisterParameter(IOrderParameter parameter);
         void OnContextMenu(MultiItemSelectionMenu menu, int x, int y, IFeature selected);
         void Validate();
-        void Release();
     }
 
     public class Order : IOrder
-    {        
+    {
+        private bool m_disposed;
         private ParameterLimits m_limits = new ParameterLimits();
         private ParameterLimas m_limas = new ParameterLimas();
         private ParameterDirection m_direction = new ParameterDirection();
         private Dictionary<string, IOrderParameter> m_parameters = new Dictionary<string, IOrderParameter>();        
-        private int m_OID;
+        private int m_Id;
         private string m_name;
         private string m_target;
-
-        private IMissionObserver m_observer;
         private OrderHandler m_handler;
+
+        private MissionOrderForm m_orderForm;
         private IFeature m_feature;
         public string Name
         {
@@ -42,15 +43,15 @@ namespace crossbow
                 return m_target;
             }
         }
-        public int OID
+        public int Id
         {
             get
             {
-                return m_OID;
+                return m_Id;
             }
             set
             {
-                m_OID = value;
+                m_Id = value;
             }
         }
 
@@ -59,24 +60,30 @@ namespace crossbow
             m_handler = handler;
             m_feature = handler.TargetFeature;
             m_name = name;
-            m_OID = Tools.GetValue<int>(m_feature, "Public_OID");
-            m_target = Tools.GetValue<string>(m_feature, "Name");            
-            m_observer = new MissionOrderForm(this);
+            m_Id = Tools.GetValue<int>(m_feature, "Public_OID");
+            m_target = Tools.GetValue<string>(m_feature, "Name");
+            m_orderForm = new MissionOrderForm(this);
             factory.CreateParameters(this);            
-            m_handler.Register(this);
+        }
+
+        ~Order()
+        {
+            Dispose(false);
         }
 
         public void RegisterParameter(IOrderParameter parameter)
         {
             m_parameters.Add(parameter.Name, parameter);
-            parameter.NotifyUpdate(m_observer);
+            parameter.NotifyUpdate(m_orderForm);
         }
 
         public void SelectParameter(IOrderParameter parameter, string value)
         {
+            if (parameter == null)
+                return;
             System.Console.Write("SelectParameter[ " + parameter.ToString() + "]:" + value);
             parameter.SetValue(value);
-            parameter.NotifyUpdate(m_observer);
+            parameter.NotifyUpdate(m_orderForm);
         }
 
         public void OnContextMenu(MultiItemSelectionMenu menu, int x, int y, IFeature selected)
@@ -117,11 +124,6 @@ namespace crossbow
                 Serialize(workspace);
         }
 
-        public void Release()
-        {
-            m_handler.Release();
-        }
-
         public void Serialize(IFeatureWorkspace featureWorkspace)
         {
             // ScopeLockEditor editor = new ScopeLockEditor(featureWorkspace);
@@ -138,7 +140,7 @@ namespace crossbow
         {
             ITable table = featureWorkspace.OpenTable("Orders"); // $$$$ SBO 2007-07-20: keep it maybe...                
             IRow row = table.CreateRow();
-            Tools.SetValue<int>(row, "target_id", m_OID);
+            Tools.SetValue<int>(row, "target_id", m_Id);
             Tools.SetValue<string>(row, "OrderName", m_name);
             Tools.SetValue<bool>(row, "processed", false);
             row.Store();
@@ -155,5 +157,28 @@ namespace crossbow
             foreach (KeyValuePair<string, IOrderParameter> param in m_parameters)
                 param.Value.Serialize(table, orderId);            
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!m_disposed)
+            {
+                m_disposed = true;
+                if (disposing)
+                    GC.SuppressFinalize(this);
+                if (m_orderForm != null)
+                    m_orderForm.Dispose();
+                if (m_handler != null)
+                    m_handler.Reset();
+            }
+        }
+
+        #endregion
     }
 }

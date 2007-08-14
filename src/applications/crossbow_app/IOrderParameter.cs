@@ -5,14 +5,14 @@ using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Framework;
 
-namespace crossbow
+namespace Crossbow
 {    
     public interface IOrderParameter
     {
         string Name { get; }
         void OnContextMenu(MultiItemSelectionMenu menu, int x, int y, IFeature selected);
         void SetValue(string value);        
-        void Serialize(ITable table, int oid);
+        void Serialize(ITable table, int id);
         void NotifyUpdate(IMissionObserver observer);
     }
 }

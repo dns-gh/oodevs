@@ -2,7 +2,7 @@ using System;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Framework;
 
-namespace crossbow
+namespace Crossbow
 {
     public sealed class ParameterLimits : IOrderParameter
     {
@@ -27,7 +27,7 @@ namespace crossbow
 
         public void OnContextMenu(MultiItemSelectionMenu menu, int x, int y, IFeature selected)
         {
-            if (selected == null || selected.Class.AliasName != "BoundaryLimits")
+            if (menu == null || selected == null || selected.Class.AliasName != "BoundaryLimits")
                 return;
             m_potential = selected;
             menu.Add("Set limit 1", this);
@@ -46,7 +46,8 @@ namespace crossbow
 
         public void NotifyUpdate(IMissionObserver observer)
         {
-            observer.Update(this, m_limits.first.ToString(), m_limits.second.ToString());
+            if (observer != null)
+                observer.Update(this, m_limits.first.ToString(), m_limits.second.ToString());
         }
 
         public string Name

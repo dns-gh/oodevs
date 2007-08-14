@@ -2,12 +2,12 @@ using System;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Framework;
 
-namespace crossbow
+namespace Crossbow
 {
     public sealed class ParameterLimas : IOrderParameter
     {        
-        public System.Collections.Generic.Dictionary<int,string> m_limas = new System.Collections.Generic.Dictionary<int,string>();
-        public IFeature m_potential;
+        private System.Collections.Generic.Dictionary<int,string> m_limas = new System.Collections.Generic.Dictionary<int,string>();
+        private IFeature m_potential;
 
         public void Serialize(ITable table, int id)
         {
@@ -15,7 +15,7 @@ namespace crossbow
                 SerializeLima(table, id, elt.Key + ";" + elt.Value );
         }
 
-        public void SerializeLima(ITable table, int id, string value)
+        public static void SerializeLima(ITable table, int id, string value)
         {
             IRow row = table.CreateRow();
             Tools.SetValue<int>( row, "order_id", id );
@@ -27,7 +27,7 @@ namespace crossbow
 
         public void OnContextMenu(MultiItemSelectionMenu menu, int x, int y, IFeature selected)
         {
-            if (selected == null || selected.Class.AliasName != "TacticalLines")
+            if (menu == null || selected == null || selected.Class.AliasName != "TacticalLines")
                 return;
             menu.Add("LD", this);
             menu.Add("LCA", this);

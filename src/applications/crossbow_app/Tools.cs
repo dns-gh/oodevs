@@ -7,12 +7,12 @@ using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.MilitaryAnalyst;
 
-namespace crossbow
+namespace Crossbow
 {
     static class Tools
     {
         static private ESRI.ArcGIS.Framework.IApplication m_application;
-        static private bool m_dynamicDisplayEnabled = false;
+        static private bool m_dynamicDisplayEnabled;
 
         #region "Initialization"
         public static void Initialize(ESRI.ArcGIS.Framework.IApplication application)
@@ -55,12 +55,12 @@ namespace crossbow
         }
         #endregion
 
-        #region Get CSword Extension
+        #region "Get CSword Extension"
         public static CSwordExtension GetCSwordExtension()
         {
             if (m_application == null)
                 return null;
-            return (CSwordExtension)m_application.FindExtensionByName("crossbow.CSwordExtension");
+            return (CSwordExtension)m_application.FindExtensionByName("Crossbow.CSwordExtension");
         }
         #endregion
 
@@ -128,18 +128,19 @@ namespace crossbow
                 return null;
             IMap map = activeView.FocusMap;
             ILayer layer = map.get_Layer( index );
-            if (layer is IFeatureLayer)
-                return layer as IFeatureLayer;
-            else if (layer is ICompositeLayer)
-            {
-                ICompositeLayer composite = layer as ICompositeLayer;
-                for (int i = 0; i < composite.Count; ++i)
+
+            IFeatureLayer featureLayer = layer as IFeatureLayer;
+            if (featureLayer != null)
+                return featureLayer;
+
+            ICompositeLayer compositeLayer = layer as ICompositeLayer;
+            if (compositeLayer != null)
+                for (int i = 0; i < compositeLayer.Count; ++i)
                 {
-                    layer = composite.get_Layer(i);
-                    if (layer is IFeatureLayer)
-                        return layer as IFeatureLayer;
+                    featureLayer = compositeLayer.get_Layer(i) as IFeatureLayer;
+                    if (featureLayer != null)
+                        return featureLayer;
                 }
-            }
             return null;
         }
         #endregion
@@ -154,21 +155,23 @@ namespace crossbow
             for (int i = 0; i < map.LayerCount; ++i)
             {
                 ILayer layer = map.get_Layer(i);
-                if (layer is IFeatureLayer)
+                IFeatureLayer featureLayer = layer as IFeatureLayer;
+                if (featureLayer != null)
                 {
-                    IFeatureLayer featureLayer = layer as IFeatureLayer;
                     if (featureLayer.FeatureClass.FeatureClassID == featureClassId)
                         return featureLayer.FeatureClass;
+                    continue;
                 }
-                else if (layer is ICompositeLayer)
+                else
                 {
                     ICompositeLayer composite = layer as ICompositeLayer;
-                    for (int j = 0; j < composite.Count; ++j)
-                    {
-                        IFeatureLayer featureLayer = composite.get_Layer(j) as IFeatureLayer;
-                        if (featureLayer != null && featureLayer.FeatureClass != null && featureLayer.FeatureClass.FeatureClassID == featureClassId)
-                            return featureLayer.FeatureClass;
-                    }
+                    if (composite != null)
+                        for (int j = 0; j < composite.Count; ++j)
+                        {
+                            featureLayer = composite.get_Layer(j) as IFeatureLayer;
+                            if (featureLayer != null && featureLayer.FeatureClass != null && featureLayer.FeatureClass.FeatureClassID == featureClassId)
+                                return featureLayer.FeatureClass;
+                        }
                 }
             }
             return null;
@@ -176,22 +179,14 @@ namespace crossbow
         #endregion
 
         #region "Retrieve Current Workspace"
-        public static IFeatureWorkspace RetrieveWorkspace(IFeatureLayer pLayer)
-        {            
-            if (pLayer != null)
-            {                
-                IDataset pDataset = null;
-                if (pLayer is IDynamicLayerDataset)
-                {
-                    IDynamicLayerDataset dataset = pLayer as IDynamicLayerDataset;
-                    pDataset = dataset.Dataset;
-                }
-                else
-                    pDataset = (IDataset)pLayer;
-                if ( pDataset != null )
-                    return (IFeatureWorkspace)pDataset.Workspace;
-            }
-            return null;
+        public static IFeatureWorkspace RetrieveWorkspace(IFeatureLayer layer)
+        {
+            if (layer == null)
+                return null;
+            IDynamicLayerDataset dynamicLayerDataset = layer as IDynamicLayerDataset;
+            if (dynamicLayerDataset != null)
+                return (IFeatureWorkspace)dynamicLayerDataset.Dataset.Workspace;
+            return (IFeatureWorkspace)((IDataset)layer).Workspace;
         }
 
         public static IFeatureWorkspace RetrieveWorkspace(ITable table)
@@ -209,19 +204,6 @@ namespace crossbow
         #endregion
 
         #region "Data manipulation"
-        public static void SetValue<T>(IRowBuffer row, string field, T value)
-        {
-            try
-            {
-                int id = row.Fields.FindField(field);
-                if (id >= 0 && row.Fields.get_Field(id).Editable)
-                    row.set_Value(id, value);
-            }
-            catch (System.Exception e)
-            {
-                System.Console.Write(e.Message);
-            }
-        }
         public static void SetValue<T>(IRow row, string field, T value)
         {
             try
@@ -234,14 +216,6 @@ namespace crossbow
             {
                 System.Console.Write(e.Message);
             }
-        }
-
-        public static T GetValue<T>(IRow row, string field)
-        {            
-            int id = row.Fields.FindField(field);
-            if (id >= 0)
-                return (T)row.get_Value(id);
-            return default(T);
         }
 
         public static T GetValue<T>(IFeature feature, string field)
@@ -277,21 +251,17 @@ namespace crossbow
             color.Red = red;
             color.Green = green;
             color.Blue = blue;
-            return color as ESRI.ArcGIS.Display.IColor;
+            return (ESRI.ArcGIS.Display.IColor)color;
         }
         #endregion
     
-        #region Geometry tools
-        static public IPoint Create(int x, int y)
+        #region "Geometry tools"
+        static public IPoint MakePoint(int x, int y)
         {
             IDisplay display = GetDisplay();
             IPoint point = GetDisplay().DisplayTransformation.ToMapPoint(x, y);            
             point.Project(display.DisplayTransformation.SpatialReference);    
             return point;
-        }
-        static public string ConvertToMGRS(int x, int y)
-        {
-            return ConvertToMGRS(Create(x, y));
         }
         static public string ConvertToMGRS(IPoint point)
         {

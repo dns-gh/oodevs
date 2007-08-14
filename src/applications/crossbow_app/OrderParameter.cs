@@ -7,7 +7,7 @@ using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.Carto;
 
-namespace crossbow
+namespace Crossbow
 {
     
     public sealed class OrderParameter : IOrderParameter
@@ -47,7 +47,7 @@ namespace crossbow
             }
             public override void OnSelect()
             {
-                m_point = Tools.Create(m_x, m_y);                
+                m_point = Tools.MakePoint(m_x, m_y);                
                 if (m_point != null)
                     Tools.Store(m_OrderShapeName, m_point);
             }
@@ -80,18 +80,18 @@ namespace crossbow
             }
             public override string GetValue()
             {
-                string value = "";
-                if (m_polygon != null)
+                if (m_polygon == null || m_polygon.PointCount == 0)
+                    return "";
+                int count = m_polygon.PointCount;
+                StringBuilder builder = new StringBuilder(count * 15 + (count - 1));
+                for (int i = 0; i < count; ++i)
                 {
-                    for (int i = 0; i < m_polygon.PointCount; ++i)
-                    {
-                        IPoint point = m_polygon.get_Point(i);                        
-                        if (value.Length > 0)
-                            value += ";";
-                        value += Tools.ConvertToMGRS(point);
-                    }            
+                    IPoint point = m_polygon.get_Point(i);
+                    if (builder.Length > 0)
+                        builder.Append(";");
+                    builder.Append(Tools.ConvertToMGRS(point));
                 }
-                return value;
+                return builder.ToString();
             }
         }
         sealed class TypeAgent : Type_ABC
@@ -112,7 +112,7 @@ namespace crossbow
         }
         sealed class TypeBool : Type_ABC
         {
-            bool m_state = false;
+            bool m_state;
 
             public override void OnContextMenu(int x, int y, IFeature selected)
             {
@@ -175,11 +175,11 @@ namespace crossbow
             m_type.Selected = false;
         }
 
-        public void Serialize(ITable table, int oid)
+        public void Serialize(ITable table, int id)
         {
             IRow row = table.CreateRow();
             
-            Tools.SetValue(row, "order_id", oid);
+            Tools.SetValue(row, "order_id", id);
             Tools.SetValue(row, "name", m_name);
             Tools.SetValue(row, "context", false);
             Tools.SetValue(row, "ParamValue", m_type.GetValue());
@@ -188,7 +188,8 @@ namespace crossbow
 
         public void OnContextMenu(MultiItemSelectionMenu menu, int x, int y, IFeature selected)
         {
-            object Missing = Type.Missing;
+            if (menu == null)
+                return;
 
             menu.Add(Name, this);
             m_type.OnContextMenu(x, y, selected);
@@ -202,7 +203,8 @@ namespace crossbow
 
         public void NotifyUpdate(IMissionObserver observer)
         {
-            observer.Update(this);
+            if (observer != null)
+                observer.Update(this);
         }
 
         public string Name

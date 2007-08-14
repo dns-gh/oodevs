@@ -2,11 +2,11 @@ using System;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Framework;
 
-namespace crossbow
+namespace Crossbow
 {
     public sealed class ParameterDirection : IOrderParameter
     {
-        private int m_direction = 0;
+        private int m_direction;
 
         public void Serialize(ITable table, int id)
         {            
@@ -19,7 +19,7 @@ namespace crossbow
             row.Store();
         }
 
-        public void OnContextMenu(MultiItemSelectionMenu cmd, int x, int y, IFeature selected)
+        public void OnContextMenu(MultiItemSelectionMenu menu, int x, int y, IFeature selected)
         {
             throw new Exception("Direction.OnContextMenu should not be here.");
         }
@@ -31,7 +31,7 @@ namespace crossbow
 
         public void NotifyUpdate(IMissionObserver observer)
         {
-            // $$$$
+            // $$$$ SBO 2007-08-13: 
         }
     
         public string Name

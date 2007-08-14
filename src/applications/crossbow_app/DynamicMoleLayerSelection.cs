@@ -12,19 +12,19 @@ using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 
-namespace crossbow
+namespace Crossbow
 {
     public partial class DynamicMoleLayer
     {
         // IFeatureSelection attributes
-        private IEnumerator             m_featureEnumerator = null;
+        private IEnumerator             m_featureEnumerator;
         private ArrayList               m_featureSelection = new ArrayList();
         private ISelectionSet           m_selectionSet;
-        private double                  m_bufferDistance = 0;
+        private double                  m_bufferDistance;
         private esriSelectionResultEnum m_combinationMethod = esriSelectionResultEnum.esriSelectionResultNew;
-        private IColor                  m_selectionColor = null;
-        private ISymbol                 m_selectionSymbol = null;
-        private bool                    m_useSelectionSymbol = false;
+        private IColor                  m_selectionColor;
+        private ISymbol                 m_selectionSymbol;
+        private bool                    m_useSelectionSymbol;
 
         #region IDataset Members
         public IDataset Dataset
@@ -39,6 +39,8 @@ namespace crossbow
         #region IFeatureSelection Members
         public void Add(IFeature Feature)
         {
+            if (Feature == null)
+                return;
             m_featureSelection.Add(Feature);
             m_selectionSet.Add(Feature.OID);
         }
@@ -69,18 +71,19 @@ namespace crossbow
             }
         }
 
-        public void SelectFeatures(IQueryFilter Filter, esriSelectionResultEnum method, bool justOne)
+        public void SelectFeatures(IQueryFilter Filter, esriSelectionResultEnum Method, bool justOne)
         {
-            if (Filter is ISpatialFilter)
-                UpdateEnveloppe(Filter as ISpatialFilter);
+            ISpatialFilter spatialFilter = Filter as ISpatialFilter;
+            if (spatialFilter != null)
+                UpdateEnveloppe(spatialFilter);
 
             esriSelectionOption option = justOne ? esriSelectionOption.esriSelectionOptionOnlyOne : esriSelectionOption.esriSelectionOptionNormal;
             ISelectionSet result = m_featureClass.Select(Filter, esriSelectionType.esriSelectionTypeHybrid, option, Dataset.Workspace);
-            UpdateSelection(result, method);
+            UpdateSelection(result, Method);
             UpdateFeatureSelection();
         }
 
-        private void UpdateEnveloppe(ISpatialFilter spatialFilter)
+        private static void UpdateEnveloppe(ISpatialFilter spatialFilter)
         {
             IDisplayTransformation transformation = Tools.GetMxDocument().ActiveView.ScreenDisplay.DisplayTransformation;
 
@@ -169,6 +172,7 @@ namespace crossbow
                 m_selectionSymbol = value;
             }
         }
+        
         public bool SetSelectionSymbol
         {
             get

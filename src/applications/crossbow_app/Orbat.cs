@@ -13,7 +13,7 @@ using ESRI.ArcGIS.ADF.CATIDs;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geodatabase;
 
-namespace crossbow
+namespace Crossbow
 {
     public interface IOrbat
     {
@@ -23,13 +23,12 @@ namespace crossbow
 
     [Guid("02a14a61-dd9f-493e-80be-7927ae8a5bac")]
     [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("crossbow.Orbat")]
+    [ProgId("Crossbow.Orbat")]
     public partial class Orbat : UserControl, IDockableWindowDef, IOrbat
     {
-        private IApplication m_application;        
         private SymbolFactory m_pSymbolFactory = new SymbolFactory();
         private IDisplay m_SimpleDisplay = new SimpleDisplayClass();
-        private bool m_IsLoaded = false;
+        private bool m_loaded;
         private FieldsProperty m_Fields = new FieldsProperty();
 
         #region COM Registration Function(s)
@@ -104,7 +103,7 @@ namespace crossbow
 
         public void OnCreate(object hook)
         {
-            m_application = hook as IApplication;
+
         }
 
         public void OnDestroy()
@@ -123,9 +122,9 @@ namespace crossbow
 
         public new void Load()
         {
-            if (!m_IsLoaded)
+            if (!m_loaded)
                 SetupOrbatCommand();
-            m_IsLoaded = true;
+            m_loaded = true;
         }
 
         public void Unload()

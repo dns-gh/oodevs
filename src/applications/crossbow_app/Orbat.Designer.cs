@@ -7,9 +7,9 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Carto;
 
-namespace crossbow
+namespace Crossbow
 {
-    partial class Orbat
+    sealed partial class Orbat
     {
         /// <summary> 
         /// Required designer variable.
@@ -64,7 +64,7 @@ namespace crossbow
             m_pSymbolTree.MouseClick += new MouseEventHandler(m_pSymbolTree_MouseClick);            
         }
 
-        private void SelectFeature(TreeNode node)
+        private static void SelectFeature(TreeNode node)
         {
             ESRI.ArcGIS.ArcMapUI.IMxDocument mxDocument = Tools.GetMxDocument();
             IFeatureLayer pLayer = Tools.GetIFeatureLayerFromLayerName(mxDocument.ActiveView, "UnitForces");
@@ -81,12 +81,10 @@ namespace crossbow
 
         private void m_pSymbolTree_MouseClick(object sender, MouseEventArgs e)
         {
-            bool handled = false;
-
             if (e.Button == MouseButtons.Left)                            
                 SelectFeature(m_pSymbolTree.GetNodeAt(e.X, e.Y));            
             if (e.Button == MouseButtons.Right)
-                Tools.GetCSwordExtension().OrderFactory.OnContextMenu(e.X, e.Y, out handled);
+                Tools.GetCSwordExtension().OrderHandler.OnContextMenu(e.X, e.Y);
         }
                
 
@@ -102,12 +100,12 @@ namespace crossbow
         /// Build Image list
         /// </summary>
         /// <param name="pCursor"></param>
-        void InitializeSymbolOnCursor(IDisplay pDisplay, ICursor pCursor, int[] mFields)
+        void InitializeSymbolOnCursor(IDisplay pDisplay, ICursor pCursor, int symbolFieldIndex)
         {
             IRow pRow = pCursor.NextRow();
             while (pRow != null)
             {
-                string symbolID = (string)pRow.get_Value(mFields[(int)FieldsProperty.EnumFields.eSymbol]);                
+                string symbolID = (string)pRow.get_Value(symbolFieldIndex);
                 Image pImage = (Image)m_pSymbolFactory.GetSymbol(pDisplay, symbolID, "", 32);
                 m_pSymbolTree.ImageList.Images.Add(symbolID, pImage);
                 pRow = pCursor.NextRow();                
@@ -119,7 +117,7 @@ namespace crossbow
         /// </summary>        
         /// <param name="pTable">IFeatureClass or ITable</param>
         /// <returns></returns>
-        ICursor GetCursor(ITable pTable)
+        private static ICursor GetCursor(ITable pTable)
         {
             ICursor pCursor;
             IQueryFilter pQueryFilter = new QueryFilterClass();
@@ -141,10 +139,10 @@ namespace crossbow
             IFeatureWorkspace pWorkspace = Tools.RetrieveWorkspace(pLayer);
             ICursor pCursor = GetCursor(pWorkspace.OpenTable("Formations"));
             if (pCursor != null)
-                InitializeSymbolOnCursor(m_SimpleDisplay, pCursor, m_Fields.Formation);
+                InitializeSymbolOnCursor(m_SimpleDisplay, pCursor, m_Fields.GetFormationFieldIndex(FieldsProperty.EnumFields.eSymbol));
             pCursor = GetCursor((ITable)pLayer.FeatureClass);
             if (pCursor != null)
-                InitializeSymbolOnCursor(m_SimpleDisplay, pCursor, m_Fields.Element);
+                InitializeSymbolOnCursor(m_SimpleDisplay, pCursor, m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eSymbol));
         }
 
         private void RunAgentCursorOnSubordinate(IFeatureClass pFeatureClass, string stOIDFormation, string stOIDParent)
@@ -157,9 +155,9 @@ namespace crossbow
             System.Windows.Forms.TreeNode[] node = m_pSymbolTree.Nodes.Find(stOIDFormation, true);
             while (pFeature != null)
             {
-                int oid = (int)pFeature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eOID]);
-                string symbol = (string)pFeature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eSymbol]);
-                string name = (string)pFeature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eName]);
+                int oid = (int)pFeature.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eOID));
+                string symbol = (string)pFeature.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eSymbol));
+                string name = (string)pFeature.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eName));
                 
                 node[0].Nodes.Add(oid.ToString(), name, symbol);
                 pFeature = pCursor.NextFeature();
@@ -175,11 +173,10 @@ namespace crossbow
             IFeature pFeature = pCursor.NextFeature();
             while (pFeature != null)
             {
-                int oid = (int)pFeature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eOID]);
-                int oidParent = (int)pFeature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eParentOID]);
-                int formation = (int)pFeature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eFormationOID]);
-                string name = (string)pFeature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eName]);
-                string symbol = (string)pFeature.get_Value(m_Fields.Element[(int)FieldsProperty.EnumFields.eSymbol]);
+                int oid = (int)pFeature.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eOID));
+                int oidParent = (int)pFeature.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eParentOID));
+                string name = (string)pFeature.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eName));
+                string symbol = (string)pFeature.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eSymbol));
 
                 System.Windows.Forms.TreeNode[] node = m_pSymbolTree.Nodes.Find(oidParent.ToString(), true);
                 node[0].Nodes.Add(oid.ToString(), name, symbol);                
@@ -197,10 +194,10 @@ namespace crossbow
             
             while (pRow != null)
             {
-                int oid = (int)pRow.get_Value(m_Fields.Formation[(int)FieldsProperty.EnumFields.eOID]);
-                int oidParent = (int)pRow.get_Value(m_Fields.Formation[(int)FieldsProperty.EnumFields.eParentOID]);
-                string name = (string)pRow.get_Value(m_Fields.Formation[(int)FieldsProperty.EnumFields.eName]);
-                string symbolID = (string)pRow.get_Value(m_Fields.Formation[(int)FieldsProperty.EnumFields.eSymbol]);
+                int oid = (int)pRow.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eOID));
+                int oidParent = (int)pRow.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eParentOID));
+                string name = (string)pRow.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eName));
+                string symbolID = (string)pRow.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eSymbol));
 
                 if (oidParent > 0 && oidParent < 4472872)
                 {

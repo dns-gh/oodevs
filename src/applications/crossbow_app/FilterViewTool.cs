@@ -5,18 +5,20 @@ using ESRI.ArcGIS.ADF.BaseClasses;
 using ESRI.ArcGIS.ADF.CATIDs;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.ArcMapUI;
+using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.SystemUI;
 using System.Windows.Forms;
 
-namespace crossbow
+namespace Crossbow
 {
     /// <summary>
     /// Summary description for FilterViewTool.
     /// </summary>
+    [ComVisible(true)]
     [Guid("f44a3523-8fae-4fd8-9895-fa0bde4efff5")]
     [ClassInterface(ClassInterfaceType.None)]
     [ProgId("csword.FilterViewTool")]
-    public sealed class FilterViewTool : BaseCommand, IToolControl
+    public class FilterViewTool : BaseCommand, IToolControl, IDisposable
     {
         #region COM Registration Function(s)
         [ComRegisterFunction()]
@@ -68,7 +70,6 @@ namespace crossbow
         #endregion
         #endregion
 
-        private IApplication m_application;
         private System.Windows.Forms.ComboBox m_teamCombo;
 
         public FilterViewTool()
@@ -89,6 +90,11 @@ namespace crossbow
             }
         }
 
+        ~FilterViewTool()
+        {
+            Dispose(false);
+        }
+
         #region Overriden Class Methods
 
         /// <summary>
@@ -97,13 +103,8 @@ namespace crossbow
         /// <param name="hook">Instance of the application</param>
         public override void OnCreate(object hook)
         {
-            m_application = hook as IApplication;
-
             //Disable if it is not ArcMap
-            if (hook is IMxApplication)
-                base.m_enabled = true;
-            else
-                base.m_enabled = false;
+            base.m_enabled = hook is IMxApplication;
             InitControl();
         }
 
@@ -165,11 +166,11 @@ namespace crossbow
             m_teamCombo.SelectedIndex = index;
         }
 
-        public void OnSelectionChanged(object sender, System.EventArgs e)
+        private void OnSelectionChanged(object sender, System.EventArgs e)
         {
-            System.String filter = m_teamCombo.SelectedItem.ToString();
+            string filter = m_teamCombo.SelectedItem.ToString();
             IMxDocument mxDocument = Tools.GetMxDocument();
-            ESRI.ArcGIS.Carto.IFeatureLayer layer = Tools.GetIFeatureLayerFromLayerName(mxDocument.ActiveView, "UnitForces");
+            IFeatureLayer layer = Tools.GetIFeatureLayerFromLayerName(mxDocument.ActiveView, "UnitForces");
             if (layer != null)
             {
                 FilterLayer(layer, filter);
@@ -177,12 +178,33 @@ namespace crossbow
             }
         }
 
-        public void FilterLayer(ESRI.ArcGIS.Carto.IFeatureLayer layer, System.String filter)
+        public void FilterLayer(IFeatureLayer layer, string filter)
         {
-            ESRI.ArcGIS.Carto.IFeatureLayerDefinition definition = (ESRI.ArcGIS.Carto.IFeatureLayerDefinition)(layer);
+            if (layer == null)
+                return;
+            IFeatureLayerDefinition definition = (IFeatureLayerDefinition)layer;
             definition.DefinitionExpression = "";
-            if( filter != "All" )
+            if (filter != "All" && filter.Length > 0)
                 definition.DefinitionExpression = "Symbol_ID like '?" + filter[0] + "*'";
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                m_teamCombo.Dispose();
+                base.m_bitmap.Dispose();
+            }
+        }
+
+        #endregion
     }
 }

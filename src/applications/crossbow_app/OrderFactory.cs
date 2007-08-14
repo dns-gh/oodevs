@@ -7,7 +7,7 @@ using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.SystemUI;
 using ESRI.ArcGIS.ArcMapUI;
 
-namespace crossbow
+namespace Crossbow
 {
     public interface IParameterFactory
     {
@@ -19,22 +19,10 @@ namespace crossbow
         private class OrderParametersDefinition : Dictionary<string, string> {} //--> name, type
 
         private Dictionary<string, OrderParametersDefinition> m_model = new Dictionary<string, OrderParametersDefinition>();
-        private FieldsProperty m_Fields = new FieldsProperty();
-        private OrderHandler m_handler;
 
         public OrderFactory()
         {
-            m_handler = new OrderHandler(this);
-            
-            InitializeModel();            
-        }
-
-        public OrderHandler OrderHandler
-        {
-            get
-            {
-                return m_handler;
-            }
+            InitializeModel();
         }
 
         private void InitializeModel()
@@ -60,40 +48,32 @@ namespace crossbow
             m_model.Add("Infantry - To reconnoiter", new OrderParametersDefinition());
         }
 
-        public void BuildMissionContextMenu(ICommandBar menu)
+        public static void BuildMissionContextMenu(ICommandBar menu)
         {
-            object Missing = Type.Missing;
+            if (menu == null)
+                return;
 
             UID uid = new UIDClass();
-            uid.Value = "crossbow.MultiItemSelectionMenu";
+            uid.Value = "Crossbow.MultiItemSelectionMenu";
+            object Missing = Type.Missing;
             menu.Add(uid, ref Missing);
         }
 
-        public void OnContextMenu(int x, int y, out bool handled)
+        public bool OnContextMenu(int x, int y)
         {
             try
             {
-                IMxDocument mxDocument = Tools.GetMxDocument();
-
-                handled = m_handler.OnFeatureSelectionChanged(mxDocument, x, y);
-                if (!handled)
-                    return;
-                ICommandBar menu = ((IDocument)mxDocument).CommandBars.Create("Menu", esriCmdBarType.esriCmdBarTypeShortcutMenu);
+                ICommandBar menu = ((IDocument)Tools.GetMxDocument()).CommandBars.Create("Menu", esriCmdBarType.esriCmdBarTypeShortcutMenu);
                 BuildMissionContextMenu(menu);
                 if (menu.Count > 0)
                     menu.Popup(0, 0);
+                return true;
             }
             catch (Exception e)
             {
                 System.Console.Write("OnContextMenu throws :" + e.Message);
-                handled = false;
+                return false;
             }
-        }
-
-        public void OnContextMenu(MultiItemSelectionMenu menu)
-        {
-            if (!m_handler.OnContextMenu(menu))
-                BuildMissionContextMenu(menu);
         }
 
         public void BuildMissionContextMenu(MultiItemSelectionMenu menu)
@@ -102,9 +82,9 @@ namespace crossbow
                 menu.Add(elt.Key.ToString());
         }
         
-        public void CreateOrder(string name)
+        public Order CreateOrder(string name, OrderHandler handler)
         {
-            m_handler.Register(new Order(name, m_handler, this));
+            return new Order(name, handler, this);
         }
 
         public virtual void CreateParameters(IOrder order)

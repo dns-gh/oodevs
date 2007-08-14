@@ -10,14 +10,15 @@ using ESRI.ArcGIS.CatalogUI;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
 
-namespace crossbow
+namespace Crossbow
 {
     /// <summary>
     /// Summary description for AddDynamicMoleLayer.
     /// </summary>
+    [ComVisible(true)]
     [Guid("603d8bfc-14b0-4a37-a42a-de1f5c7b4156")]
     [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("crossbow.AddDynamicMoleLayer")]
+    [ProgId("Crossbow.AddDynamicMoleLayer")]
     public sealed class AddDynamicMoleLayer : BaseCommand
     {
         #region COM Registration Function(s)
@@ -69,8 +70,6 @@ namespace crossbow
         #endregion
         #endregion
 
-        private IApplication m_application;
-       
         public AddDynamicMoleLayer()
         {
             base.m_category = "CSword"; //localizable text
@@ -101,7 +100,6 @@ namespace crossbow
             if (hook == null)
                 return;
 
-            m_application = hook as IApplication;
             //Disable if it is not ArcMap
             if (hook is IMxApplication)
                 base.m_enabled = true;
@@ -112,7 +110,7 @@ namespace crossbow
 
         private void OnContextMenuHandler(int x, int y, out bool handled)
         {
-            Tools.GetCSwordExtension().OrderFactory.OnContextMenu(x, y, out handled);
+            handled = Tools.GetCSwordExtension().OrderHandler.OnContextMenu(x, y);
         }
 
         /// <summary>
@@ -142,7 +140,7 @@ namespace crossbow
         }
         #endregion
 
-        ILayer CreateLayerGroup(string name, IFeatureClass featureClass)
+        private static ILayer CreateLayerGroup(string name, IFeatureClass featureClass)
         {
             IGroupLayer group = new GroupLayerClass();
             ILayer layer = group as ILayer;
@@ -151,14 +149,15 @@ namespace crossbow
             IFeatureLayer featureLayer = new FeatureLayerClass();
             featureLayer.Name = layer.Name + " - Features";
             featureLayer.FeatureClass = featureClass;
-
-            DynamicMoleLayer dynamicLayer = new DynamicMoleLayer();
-            dynamicLayer.Name = layer.Name + " - Dynamics";
-            dynamicLayer.FeatureClass = featureClass;
-            dynamicLayer.Connect();
-
             group.Add(featureLayer);
-            group.Add(dynamicLayer);
+
+            using (DynamicMoleLayer dynamicLayer = new DynamicMoleLayer())
+            {
+                dynamicLayer.Name = layer.Name + " - Dynamics";
+                dynamicLayer.FeatureClass = featureClass;
+                dynamicLayer.Connect();
+                group.Add(dynamicLayer);
+            }
             return group as ILayer;
         }
     }

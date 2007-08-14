@@ -6,11 +6,12 @@ using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.ADF.CATIDs;
 
-namespace crossbow
+namespace Crossbow
 {
+    [ComVisible(true)]
     [Guid("1810c551-42e8-4530-bfe0-0fb91d0f634f")]
     [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("crossbow.CSwordExtension")]
+    [ProgId("Crossbow.CSwordExtension")]
     public class CSwordExtension : IExtension
     {
         #region COM Registration Function(s)
@@ -63,7 +64,7 @@ namespace crossbow
         #endregion
         #endregion
         
-        private OrderFactory m_orderFactory = null;
+        private OrderHandler m_orderHandler;
 
         #region IExtension Members
         /// <summary>
@@ -79,7 +80,7 @@ namespace crossbow
 
         public void Shutdown()
         {
-            m_orderFactory = null;
+            m_orderHandler = null;
         }
 
         public void Startup(ref object initializationData)
@@ -88,14 +89,14 @@ namespace crossbow
             if (app == null)
                 return;
             Tools.Initialize(app);
-            m_orderFactory = new OrderFactory();
+            m_orderHandler = new OrderHandler();
         }
 
-        public OrderFactory OrderFactory
+        public OrderHandler OrderHandler
         {
             get
             {
-                return m_orderFactory;
+                return m_orderHandler;
             }
         }        
         #endregion

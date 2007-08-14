@@ -3,12 +3,14 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.ArcMapUI;
 
-namespace crossbow
+namespace Crossbow
 {
-    public class FeatureDrawer
+    static class FeatureDrawer
     {
         public static void Draw(IDynamicDisplay display, IDynamicElement element, IFeature feature, bool selected)
-        {                   
+        {
+            if (feature == null)
+                return;
             feature.Shape.Project(Tools.GetMxDocument().ActiveView.ScreenDisplay.DisplayTransformation.SpatialReference);
 
             switch (feature.Shape.GeometryType)

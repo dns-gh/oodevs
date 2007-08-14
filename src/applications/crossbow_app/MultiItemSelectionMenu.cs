@@ -5,21 +5,22 @@ using ESRI.ArcGIS.ADF.CATIDs;
 using ESRI.ArcGIS.SystemUI;
 using ESRI.ArcGIS.Framework;
 
-namespace crossbow
+namespace Crossbow
 {
     #region MultiItemSelectionMenu
+    [ComVisible(true)]
     [Guid("1909EFBF-A5DF-470e-A60C-4450FEEAB33D")]
     [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("crossbow.MultiItemSelectionMenu")]
+    [ProgId("Crossbow.MultiItemSelectionMenu")]
     public class MultiItemSelectionMenu : IMultiItem
     {     
         private System.Collections.ArrayList m_items = new System.Collections.ArrayList();
-        protected OrderFactory m_factory;
+        private OrderHandler m_orderProxy;
 
         public MultiItemSelectionMenu()
         {            
             CSwordExtension extension = Tools.GetCSwordExtension();
-            m_factory = extension.OrderFactory;            
+            m_orderProxy = extension.OrderHandler;            
         }
 
         #region COM Registration Function(s)
@@ -69,14 +70,14 @@ namespace crossbow
 
         public void Add(string name, IOrderParameter value)
         {
-            m_items.Add(new System.Collections.Generic.KeyValuePair<string, IOrderParameter>(name, value));
+            m_items.Add(new KeyValuePair<string, IOrderParameter>(name, value));
         }
 
         #region IMultiItem Members
 
         public string Caption
         {
-            get { return m_factory.OrderHandler.CurrentMessage; }
+            get { return m_orderProxy.CurrentMessage; }
         }
 
         public int HelpContextID
@@ -91,7 +92,7 @@ namespace crossbow
 
         public string Message
         {
-            get { return m_factory.OrderHandler.CurrentMessage; }
+            get { return m_orderProxy.CurrentMessage; }
         }
 
         public string Name
@@ -103,18 +104,18 @@ namespace crossbow
         {
             if (index >= 0 && index < m_items.Count)
             {
-                System.Collections.Generic.KeyValuePair<string, IOrderParameter> item = (System.Collections.Generic.KeyValuePair<string, IOrderParameter>)m_items[index];
+                KeyValuePair<string, IOrderParameter> item = (KeyValuePair<string, IOrderParameter>)m_items[index];
                 if (item.Value == null)
-                    m_factory.CreateOrder(item.Key);
+                    m_orderProxy.CreateOrder(item.Key);
                 else
-                    m_factory.OrderHandler.SelectParameter(item.Value, item.Key);
+                    m_orderProxy.SelectParameter(item.Value, item.Key);
             }
         }
 
         public int OnPopup(object hook)
         {
             m_items.Clear();
-            m_factory.OnContextMenu(this);
+            m_orderProxy.OnContextMenu(this);
             return m_items.Count;
         }
 
@@ -125,7 +126,7 @@ namespace crossbow
 
         public string get_ItemCaption(int index)
         {
-            return ((System.Collections.Generic.KeyValuePair<string, IOrderParameter>)m_items[index]).Key;
+            return ((KeyValuePair<string, IOrderParameter>)m_items[index]).Key;
         }
 
         public bool get_ItemChecked(int index)

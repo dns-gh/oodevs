@@ -7,15 +7,16 @@ using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Display;
 
-namespace crossbow
+namespace Crossbow
 {
     /// <summary>
     /// Summary description for dockable window toggle command
     /// </summary>
+    [ComVisible(true)]
     [Guid("3ea5717a-2554-4839-9daf-667305a11285")]
     [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("crossbow.CommandOrbatCommand")]
-    public sealed class OrbatCommand : BaseCommand
+    [ProgId("Crossbow.CommandOrbatCommand")]
+    public class OrbatCommand : BaseCommand, IDisposable
     {
         #region COM Registration Function(s)
         [ComRegisterFunction()]
@@ -67,7 +68,6 @@ namespace crossbow
         #endregion
         #endregion
 
-        private IApplication m_application;
         private IDockableWindow m_dockableWindow;
         private const string DockableWindowGuid = "{02a14a61-dd9f-493e-80be-7927ae8a5bac}";
        
@@ -93,6 +93,11 @@ namespace crossbow
             }
         }
 
+        ~OrbatCommand()
+        {
+            Dispose(false);
+        }
+
         #region Overriden Class Methods
         /// <summary>
         /// Occurs when this command is created
@@ -100,16 +105,10 @@ namespace crossbow
         /// <param name="hook">Instance of the application</param>
         public override void OnCreate(object hook)
         {
-            if (hook != null)
-                m_application = hook as IApplication;
-
-            if (m_application != null)
-            {
-                SetupDockableWindow();                
-                base.m_enabled = m_dockableWindow != null;
-            }
-            else
-                base.m_enabled = false;            
+            IApplication application = hook as IApplication;
+            if (application != null)
+                SetupDockableWindow(application as IDockableWindowManager);                
+            base.m_enabled = m_dockableWindow != null;
         }
 
         /// <summary>
@@ -144,18 +143,30 @@ namespace crossbow
         }
         #endregion
 
-        private void SetupDockableWindow()
+        private void SetupDockableWindow(IDockableWindowManager dockWindowManager)
         {
-            if (m_dockableWindow == null)
+            if (m_dockableWindow == null && dockWindowManager != null)
             {
-                IDockableWindowManager dockWindowManager = m_application as IDockableWindowManager;
-                if (dockWindowManager != null)
-                {
-                    UID windowID = new UIDClass();
-                    windowID.Value = DockableWindowGuid;
-                    m_dockableWindow = dockWindowManager.GetDockableWindow(windowID);
-                }
+                UID windowID = new UIDClass();
+                windowID.Value = DockableWindowGuid;
+                m_dockableWindow = dockWindowManager.GetDockableWindow(windowID);
             }
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing)
+                base.m_bitmap.Dispose();
+        }
+
+        #endregion
     }
 }

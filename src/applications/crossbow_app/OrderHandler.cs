@@ -8,11 +8,11 @@ using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Carto;
 
-namespace crossbow
+namespace Crossbow
 {    
     public class OrderHandler
     {
-        class Selection
+        private class Selection
         {
             int m_x;
             int m_y;
@@ -25,10 +25,15 @@ namespace crossbow
             public int Y { get { return m_y; } }            
         };
 
-        private OrderFactory m_orderFactory;        
         private IFeature m_targetFeature;
         private Selection m_selection;
         private Order m_order;
+        private OrderFactory m_orderFactory;
+
+        public OrderHandler()
+        {
+            m_orderFactory = new OrderFactory();
+        }
 
         public IFeature TargetFeature
         {
@@ -38,18 +43,11 @@ namespace crossbow
             }
         }
 
-        public OrderHandler(OrderFactory orderFactory)
+        public void Reset()
         {
-            m_orderFactory = orderFactory;            
-        }
-
-        public void Register(Order order)
-        {
-            m_order = order;            
-        }
-
-        public void Release()
-        {
+            if (m_order == null)
+                return;
+            m_order.Dispose();
             m_order = null;
         }
 
@@ -63,12 +61,25 @@ namespace crossbow
             return m_order != null || (m_targetFeature != null && m_targetFeature.Class.FindField("Public_OID") > 0); // m_order.NeedContextMenu()
         }
                 
-        public bool OnContextMenu(MultiItemSelectionMenu menu)
+        public void OnContextMenu(MultiItemSelectionMenu menu)
         {
             if (m_order != null)
                 m_order.OnContextMenu(menu, m_selection.X, m_selection.Y, m_targetFeature);
-            return m_order != null;
-        }        
+            else
+                m_orderFactory.BuildMissionContextMenu(menu);
+        }
+
+        public bool OnContextMenu(int x, int y)
+        {
+            if (!OnFeatureSelectionChanged(Tools.GetMxDocument(), x, y))
+                return false;
+            return m_orderFactory.OnContextMenu(x, y); // $$$$ SBO 2007-08-13: 
+        }
+
+        public void CreateOrder(string name)
+        {
+            m_order = m_orderFactory.CreateOrder(name, this);
+        }
 
         public void SelectParameter(IOrderParameter param, string value)
         {

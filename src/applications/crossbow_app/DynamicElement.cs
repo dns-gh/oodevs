@@ -4,7 +4,7 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.MOLE;
 
-namespace crossbow
+namespace Crossbow
 {
     public interface IDynamicElement
     {
@@ -41,7 +41,8 @@ namespace crossbow
             set
             {
                 m_glyph = value;
-                m_glyph.QueryDimensions(ref m_width, ref m_height);
+                if (m_glyph != null)
+                    m_glyph.QueryDimensions(ref m_width, ref m_height);
             }
         }
         public float Width
