@@ -7,6 +7,7 @@
 #include "MIL_AgentServer.h"
 
 #include "Entities/MIL_EntityManager.h"
+#include "Entities/Effects/MIL_EffectManager.h"
 #include "Decision/DEC_Workspace.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Entities/Orders/MIL_TacticalLineManager.h"
@@ -48,6 +49,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , nSimTime_                ( 0 )
     , nCurrentTimeStepRealTime_( 0 )
     , nSimStartTime_           ( MIL_Tools::GetRealTime() )
+    , pEffectManager_          ( new MIL_EffectManager() )
     , pEntityManager_          ( 0 )
     , pWorkspaceDIA_           ( 0 )
     , pMeteoDataManager_       ( 0 )
@@ -72,7 +74,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     else
     {
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
-        pEntityManager_     = new MIL_EntityManager    ();
+        pEntityManager_     = new MIL_EntityManager    ( *this, *pEffectManager_, *pProfilerMgr_, pFederate_ );
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
         pEntityManager_->ReadODB( config_ );
         Resume();
@@ -133,14 +135,14 @@ void MIL_AgentServer::ReadStaticData()
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation tick duration : %d seconds", nTimeStepDuration_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );    
         
-    pAgentServer_ = new NET_AgentServer( config_, *this );
+    pAgentServer_ = new NET_AgentServer( config_, *this, *this );
 
     MIL_IDManager::Initialize( config_ );
     ReadTerData();
     pMeteoDataManager_ = new PHY_MeteoDataManager( config_ );
     pWorkspaceDIA_     = new DEC_Workspace       ( config_ );
 
-    MIL_EntityManager::Initialize( config_ );
+    MIL_EntityManager::Initialize( config_, *this, *pEffectManager_ );
 
     if( !config_.IsDataTestMode() )
         pPathFindManager_ = new DEC_PathFind_Manager( config_ );

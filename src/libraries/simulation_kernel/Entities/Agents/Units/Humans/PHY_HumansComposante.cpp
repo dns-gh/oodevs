@@ -25,13 +25,13 @@ BOOST_CLASS_EXPORT_GUID( PHY_HumansComposante, "PHY_HumansComposante" )
 // Name: PHY_HumansComposante constructor
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-PHY_HumansComposante::PHY_HumansComposante( PHY_ComposantePion& composante, uint nNbrMdr )
+PHY_HumansComposante::PHY_HumansComposante( const MIL_Time_ABC& time, PHY_ComposantePion& composante, uint nNbrMdr )
     : pComposante_     ( &composante )
     , humans_          ()
     , nNbrUsableHumans_( 0 )
 {
     while ( nNbrMdr-- )
-        humans_.push_back( new PHY_Human( *this ) );
+        humans_.push_back( new PHY_Human( time, *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,6 +43,7 @@ PHY_HumansComposante::PHY_HumansComposante()
     , humans_          ()
     , nNbrUsableHumans_( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -51,6 +52,7 @@ PHY_HumansComposante::PHY_HumansComposante()
 // -----------------------------------------------------------------------------
 PHY_HumansComposante::~PHY_HumansComposante()
 {
+    // NOTHING
 }
 
 // =============================================================================

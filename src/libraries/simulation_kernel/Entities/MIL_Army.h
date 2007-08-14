@@ -63,9 +63,9 @@ public:
     //@}
 
 public:
-     MIL_Army( uint nID, MIL_InputArchive& archive );
-     MIL_Army();
-    ~MIL_Army();
+             MIL_Army( MIL_EntityManager& manager, uint nID, MIL_InputArchive& archive );
+             MIL_Army();
+    virtual ~MIL_Army();
 
     //! @name CheckPoints
     //@{
@@ -150,6 +150,7 @@ private:
     //@}
 
 private:
+    MIL_EntityManager&  manager_;
     const uint          nID_;
           std::string   strName_;
           E_Diplomacy   nType_;

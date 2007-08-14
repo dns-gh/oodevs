@@ -9,7 +9,6 @@
 //
 // *****************************************************************************
 
-#include "MIL_AgentServer.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h" 
 
 // -----------------------------------------------------------------------------
@@ -219,16 +218,6 @@ void PHY_RolePion_Composantes::DestroyAllComposantes()
 {
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         (**it).ReinitializeState( PHY_ComposanteState::dead_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::IsNeutralized
-// Created: NLD 2004-10-12
-// -----------------------------------------------------------------------------
-inline
-bool PHY_RolePion_Composantes::IsNeutralized() const
-{
-    return nNeutralizationEndTimeStep_ >= MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
 }
 
 // =============================================================================

@@ -32,12 +32,10 @@
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationType.h"
-#include "Entities/MIL_EntityManager.h"
 #include "simulation_terrain/TER_PopulationConcentration_ABC.h"
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
-#include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
 
 MT_Random PHY_WeaponDataType_DirectFire::randomGenerator_;
@@ -46,8 +44,9 @@ MT_Random PHY_WeaponDataType_DirectFire::randomGenerator_;
 // Name: PHY_WeaponDataType_DirectFire constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_WeaponDataType_DirectFire::PHY_WeaponDataType_DirectFire( const PHY_WeaponType& weaponType, MIL_InputArchive& archive )
-    : weaponType_( weaponType )
+PHY_WeaponDataType_DirectFire::PHY_WeaponDataType_DirectFire( MIL_EffectManager& manager, const PHY_WeaponType& weaponType, MIL_InputArchive& archive )
+    : manager_   ( manager )
+    , weaponType_( weaponType )
     , phs_       ( PHY_Volume::GetVolumes().size(), MT_InterpolatedFunction< MT_Float >( 0., 0. ) )
 {
     archive.Section( "PHs" );
@@ -286,7 +285,7 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& firer, MIL_Agent_ABC& t
     }
 
     MIL_Effect_DirectFirePion* pEffect = new MIL_Effect_DirectFirePion( weaponType_.GetDotationCategory(), target, compTarget, fireResult );
-    MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect );
+    manager_.Register( *pEffect );
 
 
     // handle direct-indirect fire on populations
@@ -301,7 +300,7 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& firer, MIL_Agent_ABC& t
     {
         MIL_PopulationConcentration* pElement = static_cast< MIL_PopulationConcentration* >( *itConcentration );
         MIL_Effect_DirectFirePopulation* pEffect = new MIL_Effect_DirectFirePopulation( *pElement, 1, fireResult );
-        MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect );
+        manager_.Register( *pEffect );
     }
 
     TER_PopulationFlow_ABC::T_PopulationFlowVector flows;
@@ -311,7 +310,7 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& firer, MIL_Agent_ABC& t
     {
         MIL_PopulationFlow* pElement = static_cast< MIL_PopulationFlow* >( *itFlow );
         MIL_Effect_DirectFirePopulation* pEffect = new MIL_Effect_DirectFirePopulation( *pElement, 1, fireResult );
-        MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect );
+        manager_.Register( *pEffect );
     }
 }
 
@@ -330,5 +329,5 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& firer, MIL_PopulationEl
             ++nHit;
 
     MIL_Effect_DirectFirePopulation* pEffect = new MIL_Effect_DirectFirePopulation( target, nHit, fireResult );
-    MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect );
+    manager_.Register( *pEffect );
 }

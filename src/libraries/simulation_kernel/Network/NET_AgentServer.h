@@ -22,6 +22,7 @@ class NET_AS_MOSServerMsgMgr;
 class NET_Publisher_ABC;
 class MIL_Config;
 class MIL_Time_ABC;
+class NET_Simulation_ABC;
 
 //=============================================================================
 // Created: NLD 2002-07-12
@@ -31,7 +32,7 @@ class NET_AgentServer : public tools::thread::Thread
     MT_COPYNOTALLOWED( NET_AgentServer );
 
 public:
-             NET_AgentServer( const MIL_Config& config, const MIL_Time_ABC& time );
+             NET_AgentServer( const MIL_Config& config, const MIL_Time_ABC& time, NET_Simulation_ABC& simulation );
     virtual ~NET_AgentServer();
 
     //-------------------------------------------------------------------------

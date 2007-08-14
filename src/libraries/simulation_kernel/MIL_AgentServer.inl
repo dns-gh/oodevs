@@ -52,6 +52,17 @@ NET_AgentServer& MIL_AgentServer::GetAgentServer() const
 	return *pAgentServer_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetEffectManager
+// Created: AGE 2007-08-13
+// -----------------------------------------------------------------------------
+inline
+MIL_EffectManager& MIL_AgentServer::GetEffectManager() const
+{
+    assert( pEffectManager_ );
+	return *pEffectManager_;
+}
+
 //-----------------------------------------------------------------------------
 // Name: MIL_AgentServer::GetTacticalLineManager
 // Created: NLD 2002-08-08
@@ -165,6 +176,16 @@ inline
 uint MIL_AgentServer::GetCurrentTimeStep() const
 {
     return nCurrentTimeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetTickDuration
+// Created: AGE 2007-08-13
+// -----------------------------------------------------------------------------
+inline
+unsigned int MIL_AgentServer::GetTickDuration() const
+{
+    return nTimeStepDuration_;
 }
 
 //-----------------------------------------------------------------------------

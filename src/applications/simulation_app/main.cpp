@@ -226,7 +226,7 @@ int Run( uint nArgc, char* pArgv[] )
 //-----------------------------------------------------------------------------
 int main( uint nArgc, char* pArgv[] )
 {
-     __try
+    __try
     {
         return Run( nArgc, pArgv );
     }

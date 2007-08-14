@@ -15,8 +15,6 @@
 #include "MIL.h"
 
 class PHY_WeaponType;
-class PHY_WeaponData_DirectFire;
-class PHY_WeaponData_IndirectFire;
 class PHY_Composante_ABC;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
@@ -25,7 +23,7 @@ class MIL_Effect_IndirectFire;
 class PHY_FireResults_ABC;
 class PHY_DotationCategory;
 class PHY_ComposanteType_ABC;
-class PHY_RolePion_Dotations;
+class MIL_Time_ABC;
 
 // =============================================================================
 // @class  PHY_Weapon
@@ -36,8 +34,8 @@ class PHY_Weapon
     MT_COPYNOTALLOWED( PHY_Weapon )
 
 public:
-     PHY_Weapon( const PHY_WeaponType& type, bool bMajor );
-    ~PHY_Weapon();
+             PHY_Weapon( const MIL_Time_ABC& time, const PHY_WeaponType& type, bool bMajor );
+    virtual ~PHY_Weapon();
 
     //! @name Accessors
     //@{
@@ -68,6 +66,7 @@ private:
     //@}
 
 private:
+    const MIL_Time_ABC&   time_;
     const PHY_WeaponType& type_;
     const bool            bMajor_;
 

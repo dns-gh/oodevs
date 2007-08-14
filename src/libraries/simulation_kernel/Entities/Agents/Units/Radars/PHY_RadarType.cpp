@@ -35,7 +35,7 @@ uint                          PHY_RadarType::nNextID_ = 0;
 // Name: PHY_RadarType::Initialize
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-void PHY_RadarType::Initialize( MIL_InputArchive& archive )
+void PHY_RadarType::Initialize( MIL_InputArchive& archive, const MIL_Time_ABC& time )
 {
     archive.BeginList( "Radars" );
 
@@ -55,7 +55,7 @@ void PHY_RadarType::Initialize( MIL_InputArchive& archive )
         const PHY_RadarType*& pRadarType = radarTypes_[ strRadarName ];
         if( pRadarType )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Radar already exists", archive.GetContext() );
-        pRadarType = new PHY_RadarType( strRadarName, *pType, archive );
+        pRadarType = new PHY_RadarType( strRadarName, *pType, time, archive );
 
         archive.EndSection(); // Senseur
     }
@@ -81,10 +81,11 @@ void PHY_RadarType::Terminate()
 // Name: PHY_RadarType constructor
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-PHY_RadarType::PHY_RadarType( const std::string& strName, const PHY_RadarClass& radarClass, MIL_InputArchive& archive )
+PHY_RadarType::PHY_RadarType( const std::string& strName, const PHY_RadarClass& radarClass, const MIL_Time_ABC& time, MIL_InputArchive& archive )
     : nID_                  ( nNextID_++ )
     , strName_              ( strName )
     , class_                ( radarClass )
+    , time_                 ( time )
     , rRadius_              ( 0. )
     , rMinHeight_           ( -std::numeric_limits< MT_Float >::max() )
     , rMaxHeight_           (  std::numeric_limits< MT_Float >::max() )
@@ -253,7 +254,7 @@ bool PHY_RadarType::CanAcquire( const MIL_AgentPion& perceiver, const MIL_Agent_
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_RadarType::ComputeAcquisitionLevel( const MIL_Agent_ABC& target, uint nFirstAcquisitionTimeStep ) const
 {
-    const uint nTimePerceived = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() - nFirstAcquisitionTimeStep;
+    const uint nTimePerceived = time_.GetCurrentTick() - nFirstAcquisitionTimeStep;
     if( target.IsPC() )
     {
         if( nTimePerceived >= rPcIdentificationTime_ )

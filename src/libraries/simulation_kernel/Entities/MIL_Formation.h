@@ -14,6 +14,8 @@
 
 class MIL_Army;
 class PHY_NatureLevel;
+class MIL_EntityManager;
+class MIL_TacticalLineManager;
 
 // =============================================================================
 /** @class  MIL_Formation
@@ -26,9 +28,9 @@ class MIL_Formation
 public:
     //! @name Constructors/Destructor
     //@{
-     MIL_Formation( uint nID, MIL_Army& army, MIL_InputArchive& archive, MIL_Formation* pParent = 0 );
-     MIL_Formation();
-    ~MIL_Formation();
+             MIL_Formation( MIL_EntityManager& manager, MIL_TacticalLineManager& tacticalLines, unsigned int nID, MIL_Army& army, MIL_InputArchive& archive, MIL_Formation* pParent = 0 );
+             MIL_Formation();
+    virtual ~MIL_Formation();
     //@}
 
     //! @name CheckPoints
@@ -70,7 +72,7 @@ private:
 
     //! @name Tools
     //@{
-    void InitializeSubordinates( MIL_InputArchive& archive );
+    void InitializeSubordinates( MIL_EntityManager& manager, MIL_TacticalLineManager& tacticalLines, MIL_InputArchive& archive );
     //@}
 
 private:

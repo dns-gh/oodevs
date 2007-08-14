@@ -27,6 +27,7 @@ class DEC_KnowledgeBlackBoard_AgentPion;
 class DEC_KS_AgentQuerier;
 class DEC_RolePion_Decision;
 class HLA_UpdateFunctor;
+class MIL_EntityManager;
 
 // =============================================================================
 // @class  MIL_AgentPion
@@ -38,9 +39,9 @@ class MIL_AgentPion : public MIL_Agent_ABC
     MT_COPYNOTALLOWED( MIL_AgentPion )
 
 public:
-    MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive );    // Pion dans ODB
-    MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ); // Creation dynamique (convois, ...)
-    MIL_AgentPion();
+             MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive );    // Pion dans ODB
+             MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ); // Creation dynamique (convois, ...)
+             MIL_AgentPion();
     virtual ~MIL_AgentPion();
 
     //! @name CheckPoints
@@ -114,7 +115,7 @@ public:
     void OnReceiveMsgUnitMagicAction  ( const ASN1T_MsgUnitMagicAction&    msg );
     void OnReceiveMsgOrder            ( const ASN1T_MsgUnitOrder&          msg ); 
     void OnReceiveMsgFragOrder        ( const ASN1T_MsgFragOrder&          msg );
-    void OnReceiveMsgChangeSuperior   ( const ASN1T_MsgUnitChangeSuperior& msg );
+    void OnReceiveMsgChangeSuperior   ( const MIL_EntityManager& manager, const ASN1T_MsgUnitChangeSuperior& msg );
     void OnReceiveMagicSurrender      ();
     void OnReceiveMagicCancelSurrender();
     void OnReceiveMsgMagicMove        ( const MT_Vector2D& vPosition ); // Magic move automate

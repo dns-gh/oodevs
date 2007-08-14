@@ -21,6 +21,7 @@
 #include "Entities/Objects/MIL_NbcAgent.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MIL_AgentServer.h"
+#include "MIL_Singletons.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_Human, "PHY_Human" )
 
@@ -28,8 +29,9 @@ BOOST_CLASS_EXPORT_GUID( PHY_Human, "PHY_Human" )
 // Name: PHY_Human constructor
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
-PHY_Human::PHY_Human( PHY_HumansComposante& composante )
-    : pComposante_    ( &composante )
+PHY_Human::PHY_Human( const MIL_Time_ABC& time, PHY_HumansComposante& composante )
+    : time_           ( time )
+    , pComposante_    ( &composante )
     , pRank_          ( &PHY_HumanRank::militaireDuRang_ )
     , pWound_         ( &PHY_HumanWound::notWounded_     )
     , bMentalDiseased_( false )
@@ -46,7 +48,8 @@ PHY_Human::PHY_Human( PHY_HumansComposante& composante )
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
 PHY_Human::PHY_Human( const PHY_Human& rhs )
-    : pComposante_    ( 0                    )
+    : time_           ( rhs.time_            )
+    , pComposante_    ( 0                    )
     , pRank_          ( rhs.pRank_           )
     , pWound_         ( rhs.pWound_          )
     , bMentalDiseased_( rhs.bMentalDiseased_ )
@@ -55,6 +58,7 @@ PHY_Human::PHY_Human( const PHY_Human& rhs )
     , pMedicalState_  ( rhs.pMedicalState_   )
     , nDeathTimeStep_ ( rhs.nDeathTimeStep_  )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +66,8 @@ PHY_Human::PHY_Human( const PHY_Human& rhs )
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_Human::PHY_Human()
-    : pComposante_    ( 0 )
+    : time_           ( MIL_Singletons::GetTime() )
+    , pComposante_    ( 0 )
     , pRank_          ( 0 )
     , pWound_         ( 0 )
     , bMentalDiseased_( false )
@@ -321,7 +326,7 @@ bool PHY_Human::SetWound( const PHY_HumanWound& newWound )
     else if( *pWound_ == PHY_HumanWound::notWounded_ )
         nDeathTimeStep_ = std::numeric_limits< uint >::max();
     else
-        nDeathTimeStep_ = std::min( nDeathTimeStep_, MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + pWound_->GetLifeExpectancy() );
+        nDeathTimeStep_ = std::min( nDeathTimeStep_, time_.GetCurrentTick() + pWound_->GetLifeExpectancy() );
     
     NotifyHumanChanged( oldHumanState );   
 
@@ -408,7 +413,7 @@ void PHY_Human::Update()
 {
     assert( pComposante_ );
 
-    if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nDeathTimeStep_ )
+    if( time_.GetCurrentTick() >= nDeathTimeStep_ )
     {
         MIL_Report::E_EngineReport nReportID;
         if( !pMedicalState_ )

@@ -55,7 +55,7 @@ public:
     //! @name Operations
     //@{
     bool Join( const std::string& strFederationName );
-    void Register( MIL_AgentPion& agent );
+    void Register  ( MIL_AgentPion& agent );
     void Register  ( MIL_RealObject_ABC& object );
     void Unregister( MIL_RealObject_ABC& object );
 

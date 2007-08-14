@@ -29,6 +29,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AsnException.h"
 #include "Tools/MIL_IDManager.h"
+#include "MIL_Singletons.h"
 
 MT_Converter< std::string, MIL_Army::E_Diplomacy > MIL_Army::diplomacyConverter_( eUnknown );
 
@@ -63,8 +64,9 @@ void MIL_Army::Terminate()
 // Name: MIL_Army constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Army::MIL_Army( uint nID, MIL_InputArchive& archive )
-    : nID_                 ( nID )
+MIL_Army::MIL_Army( MIL_EntityManager& manager, uint nID, MIL_InputArchive& archive )
+    : manager_             ( manager )
+    , nID_                 ( nID )
     , strName_             ()
     , nType_               ( eUnknown )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_Army( *this ) )
@@ -92,9 +94,10 @@ MIL_Army::MIL_Army( uint nID, MIL_InputArchive& archive )
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
 MIL_Army::MIL_Army()
-    : strName_()
+    : manager_( MIL_Singletons::GetEntityManager() )
     , nID_    ( (uint)-1 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -250,7 +253,7 @@ void MIL_Army::InitializeDiplomacy( MIL_InputArchive& archive )
         if( nDiplomacy == eUnknown )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown diplomacy relation between armies", archive.GetContext() );
 
-        MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( nTeam );
+        MIL_Army* pArmy = manager_.FindArmy( nTeam );
         if( !pArmy )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown army", archive.GetContext() );
 
@@ -307,7 +310,7 @@ void MIL_Army::InitializeTactical( MIL_InputArchive& archive )
         {
             uint nID;
             archive.ReadAttribute( "id", nID );
-            MIL_AgentServer::GetWorkspace().GetEntityManager().CreateFormation( nID, *this, archive ); // Auto-registration
+            manager_.CreateFormation( nID, *this, archive ); // Auto-registration
             archive.EndList(); // formation
         }
     }
@@ -334,7 +337,7 @@ void MIL_Army::InitializeObjects( MIL_InputArchive& archive )
             if( !pType )
                 throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type", archive.GetContext() );
 
-            MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( *pType, nID, *this, archive ); // Auto-registration
+            manager_.CreateObject( *pType, nID, *this, archive ); // Auto-registration
             archive.EndSection(); // object
         }
     }
@@ -355,7 +358,7 @@ void MIL_Army::InitializeLogistic( MIL_InputArchive& archive )
         uint nID;
         archive.ReadAttribute( "id", nID );
     
-        MIL_Automate* pSuperior = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nID );
+        MIL_Automate* pSuperior = manager_.FindAutomate( nID );
         if( !pSuperior )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automat", archive.GetContext() );
         if( pSuperior->GetArmy() != *this )
@@ -371,7 +374,7 @@ void MIL_Army::InitializeLogistic( MIL_InputArchive& archive )
             std::string strLink;
             archive.ReadAttribute( "id", nSubordinateID );
 
-            MIL_Automate* pSubordinate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nSubordinateID );
+            MIL_Automate* pSubordinate = manager_.FindAutomate( nSubordinateID );
             if( !pSubordinate )
                 throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automat", archive.GetContext() );
             if( pSubordinate->GetArmy() != *this )
@@ -408,7 +411,7 @@ void MIL_Army::InitializePopulations( MIL_InputArchive& archive )
         if( !pPopulationType )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown population type", archive.GetContext() );
 
-        MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePopulation( *pPopulationType, MIL_IDManager::populations_.ConvertSimIDToMosID( nID ), *this, archive ); // Auto-registration
+        manager_.CreatePopulation( *pPopulationType, MIL_IDManager::populations_.ConvertSimIDToMosID( nID ), *this, archive ); // Auto-registration
         archive.EndSection(); // population
     }
     archive.EndList(); // populations
@@ -643,7 +646,7 @@ void MIL_Army::SendKnowledge() const
 // -----------------------------------------------------------------------------
 void MIL_Army::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomacy& asnMsg )
 {
-    MIL_Army* pArmy2 = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asnMsg.oid_camp2 );
+    MIL_Army* pArmy2 = manager_.FindArmy( asnMsg.oid_camp2 );
     if( !pArmy2 || *pArmy2 == *this )
         throw NET_AsnException< ASN1T_EnumChangeDiplomacyErrorCode >( EnumChangeDiplomacyErrorCode::error_invalid_camp );
 

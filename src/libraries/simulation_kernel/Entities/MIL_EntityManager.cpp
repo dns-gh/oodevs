@@ -71,6 +71,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "HLA/HLA_Federate.h"
 #include "Network/NET_AsnException.h"
+#include "MIL_Singletons.h"
 
 BOOST_CLASS_EXPORT_GUID( MIL_EntityManager, "MIL_EntityManager" )
 
@@ -78,7 +79,7 @@ BOOST_CLASS_EXPORT_GUID( MIL_EntityManager, "MIL_EntityManager" )
 // Name: MIL_EntityManager::Initialize
 // Created: JVT 2005-03-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::Initialize( MIL_Config& config )
+void MIL_EntityManager::Initialize( MIL_Config& config, const MIL_Time_ABC& time, MIL_EffectManager& effects )
 {
     // Static types
     PHY_ComposanteState          ::Initialize();
@@ -117,9 +118,9 @@ void MIL_EntityManager::Initialize( MIL_Config& config )
     InitializeType< MIL_VirtualObjectType          >( phyArchive, config, "Objets"              );
     InitializeType< PHY_BreakdownType              >( phyArchive, config, "Pannes"              );
     InitializeType< PHY_LauncherType               >( phyArchive, config, "Lanceurs"            );
-    InitializeType< PHY_WeaponType                 >( phyArchive, config, "Armements"           );
-    InitializeSensors( phyArchive, config );
-    InitializeType< PHY_ComposanteTypePion         >( phyArchive, config, "Composantes"         );
+    InitializeWeapons    ( phyArchive, config, time, effects );
+    InitializeSensors    ( phyArchive, config, time );
+    InitializeComposantes( phyArchive, config, time );
     InitializeType< MIL_AgentTypePion              >( phyArchive, config, "Pions"               );
     InitializeType< MIL_AutomateType               >( phyArchive, config, "Automates"           );
     InitializeType< MIL_KnowledgeGroupType         >( phyArchive, config, "GroupesConnaissance" );
@@ -138,9 +139,11 @@ void MIL_EntityManager::Initialize( MIL_Config& config )
 // Name: MIL_EntityManager constructor
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
-MIL_EntityManager::MIL_EntityManager()
-    : time_                         ( MIL_AgentServer::GetWorkspace() )
-    , effectManager_                ( *new MIL_EffectManager() )
+MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, HLA_Federate* hla )
+    : time_                         ( time )
+    , profilerManager_              ( profiler )
+    , hla_                          ( hla )
+    , effectManager_                ( effects )
     , pObjectManager_               (  new MIL_ObjectManager() )
     , nRandomBreakdownsNextTimeStep_( 0  )
     , rKnowledgesTime_              ( 0. )
@@ -151,13 +154,37 @@ MIL_EntityManager::MIL_EntityManager()
     , rEffectsTime_                 ( 0. )
     , rStatesTime_                  ( 0. )
 {
+    // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager constructor
+// Created: AGE 2007-08-13
+// -----------------------------------------------------------------------------
+MIL_EntityManager::MIL_EntityManager()
+    : time_                         ( MIL_Singletons::GetTime() )
+    , profilerManager_              ( MIL_Singletons::GetProfiler() )
+    , hla_                          ( MIL_Singletons::GetHla() )
+    , effectManager_                ( MIL_Singletons::GetEffectManager() )
+    , pObjectManager_               (  new MIL_ObjectManager() )
+    , nRandomBreakdownsNextTimeStep_( 0  )
+    , rKnowledgesTime_              ( 0. )
+    , rAutomatesDecisionTime_       ( 0. )
+    , rPionsDecisionTime_           ( 0. )
+    , rPopulationsDecisionTime_     ( 0. )
+    , rActionsTime_                 ( 0. )
+    , rEffectsTime_                 ( 0. )
+    , rStatesTime_                  ( 0. )
+{
+    // NOTHING
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::InitializeSensors
 // Created: NLD 2004-11-05
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::InitializeSensors( MIL_InputArchive& archive, MIL_Config& config )
+void MIL_EntityManager::InitializeSensors( MIL_InputArchive& archive, MIL_Config& config, const MIL_Time_ABC& time )
 {
     MT_LOG_INFO_MSG( "Initializing sensor types" );
 
@@ -173,7 +200,7 @@ void MIL_EntityManager::InitializeSensors( MIL_InputArchive& archive, MIL_Config
     PHY_PerceptionRecoSurveillance::Initialize( archiveType );
     PHY_PerceptionFlyingShell     ::Initialize( archiveType );
     PHY_SensorType                ::Initialize( archiveType );
-    PHY_RadarType                 ::Initialize( archiveType );
+    PHY_RadarType                 ::Initialize( archiveType, time );
     archiveType.EndSection(); // Capteurs
 
     archiveType.Close();
@@ -218,6 +245,44 @@ void MIL_EntityManager::InitializeType( MIL_InputArchive& archive, MIL_Config& c
     config.AddFileToCRC( strFile );
 
     T::Initialize( archiveType );
+
+    archiveType.Close();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::InitializeComposantes
+// Created: AGE 2007-08-13
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::InitializeComposantes( MIL_InputArchive& archive, MIL_Config& config, const MIL_Time_ABC& time )
+{
+    std::string strFile;
+    archive.ReadField( "Composantes", strFile );
+    strFile = config.BuildPhysicalChildFile( strFile );
+
+    MIL_InputArchive archiveType;
+    archiveType.Open( strFile );
+    config.AddFileToCRC( strFile );
+
+    PHY_ComposanteTypePion::Initialize( time, archiveType );
+
+    archiveType.Close();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::InitializeWeapons
+// Created: AGE 2007-08-13
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::InitializeWeapons( MIL_InputArchive& archive, MIL_Config& config, const MIL_Time_ABC& time, MIL_EffectManager& effects )
+{
+    std::string strFile;
+    archive.ReadField( "Armements", strFile );
+    strFile = config.BuildPhysicalChildFile( strFile );
+
+    MIL_InputArchive archiveType;
+    archiveType.Open( strFile );
+    config.AddFileToCRC( strFile );
+
+    PHY_WeaponType::Initialize( effects, time, archiveType );
 
     archiveType.Close();
 }
@@ -281,7 +346,6 @@ MIL_EntityManager::~MIL_EntityManager()
     PHY_MedicalResourcesAlarms    ::Terminate();
     MIL_LimaFunction              ::Terminate();
         
-    delete &effectManager_;
     delete pObjectManager_;
 }
 
@@ -318,7 +382,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     odbArchive.Close();
 
     // Check automate composition
-    if( MIL_AgentServer::GetWorkspace().GetConfig().CheckAutomateComposition() )
+    if( config.CheckAutomateComposition() )
     {
         for( CIT_AutomateMap it = automates_.begin(); it != automates_.end(); ++it )
         {
@@ -378,7 +442,7 @@ void MIL_EntityManager::InitializeArmies( MIL_InputArchive& archive )
         if( pArmy )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Army already exists", archive.GetContext() );
         
-        pArmy = new MIL_Army( nID, archive );
+        pArmy = new MIL_Army( *this, nID, archive );
         archive.EndSection(); // side
     }
     archive.EndList(); // sides
@@ -393,7 +457,7 @@ MIL_Formation& MIL_EntityManager::CreateFormation( uint nID, MIL_Army& army, MIL
     MIL_Formation*& pFormation = formations_[ nID ];
     if( pFormation )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Formation using this id already exists", archive.GetContext() );
-    pFormation = new MIL_Formation( nID, army, archive, pParent );
+    pFormation = new MIL_Formation( *this, MIL_AgentServer::GetWorkspace().GetTacticalLineManager(), nID, army, archive, pParent );
     return *pFormation;
 }
 
@@ -426,8 +490,8 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, uin
     pPion = &type.InstanciatePion( nID, automate, archive );
     pPion->ReadOverloading( archive );
 
-    if( MIL_AgentServer::GetWorkspace().GetHLAFederate() )
-        MIL_AgentServer::GetWorkspace().GetHLAFederate()->Register( *pPion );
+    if( hla_ )
+        hla_->Register( *pPion );
     // $$$ Network
     return *pPion;
 }
@@ -442,8 +506,8 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
     assert( pions_[ pion.GetID() ] == 0 );
     pions_[ pion.GetID() ] = &pion;
 
-    if( MIL_AgentServer::GetWorkspace().GetHLAFederate() )
-        MIL_AgentServer::GetWorkspace().GetHLAFederate()->Register( pion );
+    if( hla_ )
+        hla_->Register( pion );
 
     pion.SendCreation ();
     pion.SendFullState();
@@ -582,7 +646,7 @@ void MIL_EntityManager::UpdateKnowledges()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::UpdateDecisions()
 {
-    if( MIL_AgentServer::GetWorkspace().GetProfilerManager().IsProfilingEnabled() )
+    if( profilerManager_.IsProfilingEnabled() )
     {
         MT_Profiler decisionUpdateProfiler;
 
@@ -591,7 +655,7 @@ void MIL_EntityManager::UpdateDecisions()
         {
             decisionUpdateProfiler.Start();
             itAutomate->second->UpdateDecision();
-            MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( *itAutomate->second, decisionUpdateProfiler.Stop() );
+            profilerManager_.NotifyDecisionUpdated( *itAutomate->second, decisionUpdateProfiler.Stop() );
         }
         rAutomatesDecisionTime_ = profiler_.Stop();
 
@@ -600,7 +664,7 @@ void MIL_EntityManager::UpdateDecisions()
         {
             decisionUpdateProfiler.Start();
             itPion->second->UpdateDecision();
-            MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( *itPion->second, decisionUpdateProfiler.Stop() );
+            profilerManager_.NotifyDecisionUpdated( *itPion->second, decisionUpdateProfiler.Stop() );
         }
         rPionsDecisionTime_ = profiler_.Stop();
 
@@ -609,7 +673,7 @@ void MIL_EntityManager::UpdateDecisions()
         {
             decisionUpdateProfiler.Start();
             itPopulation->second->UpdateDecision();
-            MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( *itPopulation->second, decisionUpdateProfiler.Stop() );
+            profilerManager_.NotifyDecisionUpdated( *itPopulation->second, decisionUpdateProfiler.Stop() );
         }
         rPopulationsDecisionTime_ = profiler_.Stop();
     }
@@ -706,7 +770,7 @@ void MIL_EntityManager::PreprocessRandomBreakdowns()
         return;
 
     while( nRandomBreakdownsNextTimeStep_ <= nCurrentTimeStep )
-        nRandomBreakdownsNextTimeStep_ += ( 3600 * 24 / MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
+        nRandomBreakdownsNextTimeStep_ += ( 3600 * 24 / time_.GetTickDuration() );
 
     for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
         itPion->second->PreprocessRandomBreakdowns( nRandomBreakdownsNextTimeStep_ );
@@ -1070,7 +1134,7 @@ void MIL_EntityManager::OnReceiveMsgUnitChangeSuperior( const ASN1T_MsgUnitChang
         MIL_AgentPion* pPion = FindAgentPion( asnMsg.oid );
         if( !pPion )
             throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_pion );
-        pPion->OnReceiveMsgChangeSuperior( asnMsg );
+        pPion->OnReceiveMsgChangeSuperior( *this, asnMsg );
     }
     catch( NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >& e )
     {

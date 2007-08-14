@@ -20,6 +20,7 @@ class MIL_AutomateLOG;
 class PHY_HumanRank;
 class PHY_HumansComposante;
 class PHY_MedicalHumanState;
+class MIL_Time_ABC;
 
 //$$$ Clarifier l'interface (trop de trucs différents pour trop de fonctionnalités proches) (Log vs Magic vs attrition)
 
@@ -41,7 +42,7 @@ public:
     //@}
 
 public:
-     PHY_Human( PHY_HumansComposante& composante );
+     PHY_Human( const MIL_Time_ABC& time, PHY_HumansComposante& composante );
      PHY_Human( const PHY_Human& rhs );
      PHY_Human();
     ~PHY_Human();
@@ -115,6 +116,7 @@ private:
     //@}
 
 private:
+    const MIL_Time_ABC&          time_;
           PHY_HumansComposante*  pComposante_;
     const PHY_HumanRank*         pRank_;
     const PHY_HumanWound*        pWound_;

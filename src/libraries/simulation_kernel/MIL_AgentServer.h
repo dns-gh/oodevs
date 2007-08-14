@@ -13,6 +13,7 @@
 #include "MT/MT_Time/MT_TimerManager.h"
 #include "MIL_Time_ABC.h"
 
+class MIL_EffectManager;
 class MIL_TacticalLineManager;
 class MIL_Agent_ABC;
 class MIL_CheckPointManager;
@@ -78,6 +79,7 @@ public:
     //! @name Accessors
     //@{ 
     MIL_EntityManager&       GetEntityManager      () const;
+    MIL_EffectManager&       GetEffectManager      () const;
 	DEC_Workspace&	         GetWorkspaceDIA       () const;
 	NET_AgentServer&         GetAgentServer        () const;
     MIL_TacticalLineManager& GetTacticalLineManager() const;
@@ -105,8 +107,9 @@ public:
     uint GetSimTime                () const; // En secondes depuis le démarrage de la SIM
 
     virtual unsigned int GetCurrentTick() const;
+    virtual unsigned int GetTickDuration() const;
     uint GetCurrentTimeStep() const; // $$$$ AGE 2007-08-10: degager
-    uint GetTimeStepDuration() const; 
+    uint GetTimeStepDuration() const;  // $$$$ AGE 2007-08-13: degager
     //@}
 
 private:  
@@ -141,6 +144,7 @@ private:
     uint nCurrentTimeStepRealTime_; // NB : The real time is stored once at the beginning of the tick
     uint nSimStartTime_;            // The time (in seconds from the 01/01/1970) when the sim was started
 
+    MIL_EffectManager*           pEffectManager_;
     MIL_EntityManager*           pEntityManager_;
     DEC_Workspace*	             pWorkspaceDIA_;
     PHY_MeteoDataManager*        pMeteoDataManager_;

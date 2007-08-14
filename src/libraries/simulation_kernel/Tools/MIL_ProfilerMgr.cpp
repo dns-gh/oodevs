@@ -22,8 +22,7 @@
 // Created: AML 03-05-21
 //-----------------------------------------------------------------------------
 MIL_ProfilerMgr::MIL_ProfilerMgr( bool bEnabled )
-    : tickDurationProfiler_( )
-    , bEnabled_            ( bEnabled )
+    : bEnabled_( bEnabled )
 {
     if( bEnabled_ )
         MT_LOG_INFO_MSG( "Profiling mode enabled at startup time : dec functions profiled" )

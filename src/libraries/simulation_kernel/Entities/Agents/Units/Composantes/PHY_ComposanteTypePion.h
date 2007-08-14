@@ -41,6 +41,7 @@ class PHY_Breakdown;
 class PHY_BreakdownType;
 class PHY_RolePion_Composantes;
 class MIL_AgentPion;
+class MIL_Time_ABC;
 
 // =============================================================================
 // @class  PHY_ComposanteTypePion
@@ -51,12 +52,12 @@ class PHY_ComposanteTypePion : public PHY_ComposanteType_ABC
     MT_COPYNOTALLOWED( PHY_ComposanteTypePion )
 
 public:
-             PHY_ComposanteTypePion( const std::string& strName, MIL_InputArchive& archive );
+             PHY_ComposanteTypePion( const MIL_Time_ABC& time, const std::string& strName, MIL_InputArchive& archive );
     virtual ~PHY_ComposanteTypePion();
 
     //! @name Static initialization
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( const MIL_Time_ABC& time, MIL_InputArchive& archive );
     static void Terminate ();
 
     static const PHY_ComposanteTypePion* Find( const std::string& strName );
@@ -255,6 +256,7 @@ private:
     //@}
 
 private:
+    const MIL_Time_ABC&          time_;
     const PHY_Speeds             speeds_;
           MT_Float               rMaxSlope_;
     const PHY_DotationCapacities dotationCapacities_;         

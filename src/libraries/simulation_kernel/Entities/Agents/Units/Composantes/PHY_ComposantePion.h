@@ -41,7 +41,7 @@ class PHY_MaintenanceComposanteState;
 class PHY_MedicalHumanState;
 class PHY_Human;
 class DEC_Knowledge_AgentComposante;
-
+class MIL_Time_ABC;
 
 // =============================================================================
 // @class  PHY_ComposantePion
@@ -52,9 +52,9 @@ class PHY_ComposantePion : public PHY_Composante_ABC
     MT_COPYNOTALLOWED( PHY_ComposantePion )
 
 public:
-     PHY_ComposantePion( const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, uint nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy );
-     PHY_ComposantePion();
-    ~PHY_ComposantePion();
+             PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, uint nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy );
+             PHY_ComposantePion();
+    virtual ~PHY_ComposantePion();
 
     //! @name CheckPoints
     //@{
@@ -232,6 +232,7 @@ private:
     //@}
 
 private:
+    const MIL_Time_ABC&             time_;
           PHY_RolePion_Composantes* pRole_;
     const PHY_ComposanteState*      pState_;
     const PHY_ComposanteTypePion*   pType_;

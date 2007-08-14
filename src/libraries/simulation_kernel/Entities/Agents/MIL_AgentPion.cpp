@@ -885,9 +885,9 @@ void MIL_AgentPion::OnReceiveMagicCancelSurrender()
 // Name: MIL_AgentPion::OnReceiveMsgChangeSuperior
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgChangeSuperior( const ASN1T_MsgUnitChangeSuperior& asnMsg )
+void MIL_AgentPion::OnReceiveMsgChangeSuperior( const MIL_EntityManager& manager, const ASN1T_MsgUnitChangeSuperior& asnMsg )
 {
-    MIL_Automate* pNewAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( asnMsg.oid_automate );
+    MIL_Automate* pNewAutomate = manager.FindAutomate( asnMsg.oid_automate );
     if( !pNewAutomate )
         throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate );
 

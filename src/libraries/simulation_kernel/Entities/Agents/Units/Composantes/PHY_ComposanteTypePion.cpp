@@ -64,7 +64,7 @@ bool PHY_ComposanteTypePion::sNTICapability::CanRepair( const PHY_Breakdown& bre
 // Name: PHY_ComposanteTypePion::Initialize
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::Initialize( MIL_InputArchive& archive )
+void PHY_ComposanteTypePion::Initialize( const MIL_Time_ABC& time, MIL_InputArchive& archive )
 {
     MT_LOG_INFO_MSG( "Initializing composante types" );
 
@@ -81,7 +81,7 @@ void PHY_ComposanteTypePion::Initialize( MIL_InputArchive& archive )
         if( pComposanteType )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Composante type '%s' already registered", strComposanteType.c_str() ), archive.GetContext() );
 
-        pComposanteType = new PHY_ComposanteTypePion( strComposanteType, archive );
+        pComposanteType = new PHY_ComposanteTypePion( time, strComposanteType, archive );
 
         if( !ids_.insert( pComposanteType->GetMosID() ).second )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Composante ID already used", archive.GetContext() );
@@ -111,8 +111,9 @@ void PHY_ComposanteTypePion::Terminate()
 // Created: NLD 2004-08-04
 // Modified: JVT 2004-10-20
 // -----------------------------------------------------------------------------
-PHY_ComposanteTypePion::PHY_ComposanteTypePion( const std::string& strName, MIL_InputArchive& archive )
+PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const std::string& strName, MIL_InputArchive& archive )
     : PHY_ComposanteType_ABC                     ( strName, archive )
+    , time_                                      ( time )
     , speeds_                                    ( archive )
     , rMaxSlope_                                 ( 1. )
     , dotationCapacities_                        ( "Contenance", archive )
@@ -711,7 +712,7 @@ void PHY_ComposanteTypePion::InitializeLogistic( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 PHY_ComposantePion& PHY_ComposanteTypePion::InstanciateComposante( PHY_RolePion_Composantes& role, uint nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy ) const
 {
-    return *new PHY_ComposantePion( *this, role, nNbrHumanInCrew, bMajor, bLoadable, bCanBePartOfConvoy );
+    return *new PHY_ComposantePion( time_, *this, role, nNbrHumanInCrew, bMajor, bLoadable, bCanBePartOfConvoy );
 }
 
 // -----------------------------------------------------------------------------

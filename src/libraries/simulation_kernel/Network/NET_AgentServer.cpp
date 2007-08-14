@@ -28,13 +28,13 @@ using namespace tools::thread;
 // Name: NET_AgentServer constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-NET_AgentServer::NET_AgentServer( const MIL_Config& config, const MIL_Time_ABC& time )
+NET_AgentServer::NET_AgentServer( const MIL_Config& config, const MIL_Time_ABC& time, NET_Simulation_ABC& simulation )
     : time_                          ( time )
     , dinEngine_                     ()
     , bThreaded_                     ( config.IsThreadedNetwork() )
     , nPortAS_MOS_                   ( config.GetNetworkPort() )
     , bTerminated_                   ( false )
-    , pMsgMgr_                       ( new NET_AS_MOSServerMsgMgr( *this, MIL_AgentServer::GetWorkspace() ) )
+    , pMsgMgr_                       ( new NET_AS_MOSServerMsgMgr( *this, simulation ) )
     , pConnectionMgr_                ( new NET_AS_MOSServerConnectionMgr( dinEngine_, *pMsgMgr_, nPortAS_MOS_ ) )
     , nUnitVisionConesChangeTimeStep_( 0 )
     , bSendUnitVisionCones_          ( false )

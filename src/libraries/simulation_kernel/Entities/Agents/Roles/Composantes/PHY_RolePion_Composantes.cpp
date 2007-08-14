@@ -38,6 +38,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Hla/HLA_UpdateFunctor.h"
+#include "MIL_AgentServer.h"
 
 MT_Float PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_             = 0.;
 MT_Float PHY_RolePion_Composantes::rOpStateWeightMajorComposante_                = 0.;
@@ -1720,4 +1721,13 @@ void PHY_RolePion_Composantes::NotifyReleased()
         if( composante.GetState().IsUsable() )
             composante.ReinitializeState( PHY_ComposanteState::undamaged_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::IsNeutralized
+// Created: NLD 2004-10-12
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Composantes::IsNeutralized() const
+{
+    return nNeutralizationEndTimeStep_ >= MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
 }

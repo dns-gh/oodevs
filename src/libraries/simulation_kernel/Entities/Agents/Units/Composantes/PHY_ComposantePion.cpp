@@ -38,6 +38,7 @@
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Actions/PHY_FireDamages_Agent.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "MIL_Singletons.h"
 
 MT_Random PHY_ComposantePion::random_;
 MT_Float  PHY_ComposantePion::rOpStateWeightHumans_ = 0.;
@@ -48,8 +49,9 @@ BOOST_CLASS_EXPORT_GUID( PHY_ComposantePion, "PHY_ComposantePion" )
 // Name: PHY_ComposantePion constructor
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
-PHY_ComposantePion::PHY_ComposantePion( const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, uint nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy )
+PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, uint nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy )
     : PHY_Composante_ABC           ( )
+    , time_                        ( time )
     , pState_                      ( &PHY_ComposanteState::undamaged_ )
     , pRole_                       ( &role              )
     , pType_                       ( &type              )
@@ -62,7 +64,7 @@ PHY_ComposantePion::PHY_ComposantePion( const PHY_ComposanteTypePion& type, PHY_
     , pMaintenanceState_           ( 0 )
     , nRandomBreakdownNextTimeStep_( 0 )
     , pRandomBreakdownState_       ( 0 )
-    , pHumans_                     ( new PHY_HumansComposante( *this, nNbrHumanInCrew ) )
+    , pHumans_                     ( new PHY_HumansComposante( time, *this, nNbrHumanInCrew ) )
 {
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );   
     pType_->InstanciateSensors( std::back_inserter( sensors_ ) );
@@ -77,6 +79,7 @@ PHY_ComposantePion::PHY_ComposantePion( const PHY_ComposanteTypePion& type, PHY_
 // -----------------------------------------------------------------------------
 PHY_ComposantePion::PHY_ComposantePion()
     : PHY_Composante_ABC           ()
+    , time_                        ( MIL_Singletons::GetTime() )
     , pRole_                       ( 0 )
     , pState_                      ( 0 )
     , pType_                       ( 0 )
@@ -93,6 +96,7 @@ PHY_ComposantePion::PHY_ComposantePion()
     , nRandomBreakdownNextTimeStep_()
     , pRandomBreakdownState_       ( 0 )    
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -596,12 +600,12 @@ void PHY_ComposantePion::PreprocessRandomBreakdowns( uint nEndDayTimeStep )
     if ( pType_->GetProtection().CanRandomlyBreaksDownEva() )
     {
         pRandomBreakdownState_        = &PHY_ComposanteState::repairableWithEvacuation_;
-        nRandomBreakdownNextTimeStep_ = random_.rand32_oo( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep(), nEndDayTimeStep ); 
+        nRandomBreakdownNextTimeStep_ = random_.rand32_oo( time_.GetCurrentTick(), nEndDayTimeStep ); 
     }
     else if ( pType_->GetProtection().CanRandomlyBreaksDownNeva() )
     {
         pRandomBreakdownState_        = &PHY_ComposanteState::repairableWithoutEvacuation_;
-        nRandomBreakdownNextTimeStep_ = random_.rand32_oo( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep(), nEndDayTimeStep );
+        nRandomBreakdownNextTimeStep_ = random_.rand32_oo( time_.GetCurrentTick(), nEndDayTimeStep );
     }
 }
 
@@ -634,7 +638,7 @@ void PHY_ComposantePion::ManageEndMaintenance()
         if( *pState_ == PHY_ComposanteState::repairableWithoutEvacuation_ )
         {
             assert( pType_ );
-            nAutoRepairTimeStep_ = std::max( nAutoRepairTimeStep_, MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + pType_->GetProtection().GetNeutralizationTime() );
+            nAutoRepairTimeStep_ = std::max( nAutoRepairTimeStep_, time_.GetCurrentTick() + pType_->GetProtection().GetNeutralizationTime() );
         }
     }
 }
@@ -750,7 +754,7 @@ void PHY_ComposantePion::Repair()
 void PHY_ComposantePion::Update()
 {
     // Réparation automatique
-    if( *pState_ == PHY_ComposanteState::repairableWithoutEvacuation_ && MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nAutoRepairTimeStep_ )
+    if( *pState_ == PHY_ComposanteState::repairableWithoutEvacuation_ && time_.GetCurrentTick() >= nAutoRepairTimeStep_ )
     {                
         assert( pType_ );
         MIL_Report::PostEvent( pRole_->GetPion(), MIL_Report::eReport_EquipementRepairedInPlace, *pType_ );
@@ -759,7 +763,7 @@ void PHY_ComposantePion::Update()
     }
 
     // Panne aléatoire
-    if( pRandomBreakdownState_ && nRandomBreakdownNextTimeStep_ == MIL_AgentServer::GetWorkspace().GetCurrentTimeStep()  )
+    if( pRandomBreakdownState_ && nRandomBreakdownNextTimeStep_ == time_.GetCurrentTick()  )
     {
         if( *pState_ == PHY_ComposanteState::undamaged_ )
             ReinitializeState( *pRandomBreakdownState_ );

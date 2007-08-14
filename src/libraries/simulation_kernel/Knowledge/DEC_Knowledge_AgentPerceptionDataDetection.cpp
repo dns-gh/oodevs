@@ -22,6 +22,7 @@
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/MIL_Army.h"
+#include "MIL_AgentServer.h"
 
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 

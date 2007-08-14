@@ -28,13 +28,11 @@ class MIL_ProfilerMgr
     MT_COPYNOTALLOWED( MIL_ProfilerMgr );
 
 public:
-      MIL_ProfilerMgr( bool bEnabled );
-     ~MIL_ProfilerMgr();
+    explicit MIL_ProfilerMgr( bool bEnabled );
+    virtual ~MIL_ProfilerMgr();
 
     //! @name Main
     //@{
-    void EnableProfiling   ();
-    void DisableProfiling  ();
     bool IsProfilingEnabled() const;
     //@}
 
@@ -67,7 +65,7 @@ private:
     //@}
 
 private:
-    bool                         bEnabled_;
+    const bool                   bEnabled_;
     T_DecFunctionProfilingVector decFunctionProfilingVector_;
     MT_Profiler                  tickDurationProfiler_;  
     std::ofstream                decFunctionsFile_;

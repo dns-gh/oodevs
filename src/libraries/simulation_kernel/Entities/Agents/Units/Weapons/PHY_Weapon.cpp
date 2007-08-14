@@ -27,18 +27,20 @@
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Weapon constructor
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-PHY_Weapon::PHY_Weapon( const PHY_WeaponType& type, bool bMajor )
-    : type_                   ( type )
+PHY_Weapon::PHY_Weapon( const MIL_Time_ABC& time, const PHY_WeaponType& type, bool bMajor )
+    : time_                   ( time )
+    , type_                   ( type )
     , bMajor_                 ( bMajor )
     , nNbrAmmoFiredFromLoader_( 0 )
-    , rNextTimeStepToFire_    ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    , rNextTimeStepToFire_    ( time_.GetCurrentTick() )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -47,6 +49,7 @@ PHY_Weapon::PHY_Weapon( const PHY_WeaponType& type, bool bMajor )
 // -----------------------------------------------------------------------------
 PHY_Weapon::~PHY_Weapon()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +121,7 @@ MT_Float PHY_Weapon::GetDangerosity( const MIL_AgentPion& firer, const MIL_Agent
 // -----------------------------------------------------------------------------
 bool PHY_Weapon::IsReady() const
 {
-    return (uint)rNextTimeStepToFire_ <= MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    return (uint)rNextTimeStepToFire_ <= time_.GetCurrentTick();
 }
 
 // -----------------------------------------------------------------------------
@@ -162,7 +165,7 @@ bool PHY_Weapon::DirectFire( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Co
     assert( type_.CanDirectFire() && IsReady() );
 
           bool bHasFired        = false;
-    const uint nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const uint nCurrentTimeStep = time_.GetCurrentTick();
     const uint nNextTimeStep    = nCurrentTimeStep + 1;
     if( rNextTimeStepToFire_ < (float)nCurrentTimeStep )
         rNextTimeStepToFire_ = nCurrentTimeStep;
@@ -206,7 +209,7 @@ bool PHY_Weapon::DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC& ta
 {
     assert( type_.CanDirectFire() && IsReady() );
 
-    const uint nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const uint nCurrentTimeStep = time_.GetCurrentTick();
     const uint nNextTimeStep    = nCurrentTimeStep + 1;
     if( rNextTimeStepToFire_ < (float)nCurrentTimeStep )
         rNextTimeStepToFire_ = nCurrentTimeStep;
@@ -236,7 +239,7 @@ bool PHY_Weapon::IndirectFire( MIL_AgentPion& firer, MIL_Effect_IndirectFire& ef
     assert( type_.GetDotationCategory() == effect.GetIndirectDotationCategory().GetDotationCategory() );
     
     bool bHasFired = false;
-    const uint nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const uint nCurrentTimeStep = time_.GetCurrentTick();
     const uint nNextTimeStep    = nCurrentTimeStep + 1;
     if( rNextTimeStepToFire_ < (float)nCurrentTimeStep )
         rNextTimeStepToFire_ = nCurrentTimeStep;

@@ -30,6 +30,7 @@ class PHY_Composante_ABC;
 class PHY_ComposanteType_ABC;
 class PHY_FireResults_ABC;
 class MIL_PopulationElement_ABC;
+class MIL_EffectManager;
 
 // =============================================================================
 // @class  PHY_WeaponDataType_DirectFire
@@ -40,7 +41,7 @@ class PHY_WeaponDataType_DirectFire
     MT_COPYNOTALLOWED( PHY_WeaponDataType_DirectFire )
 
 public:
-    PHY_WeaponDataType_DirectFire( const PHY_WeaponType& weaponType, MIL_InputArchive& archive );
+             PHY_WeaponDataType_DirectFire( MIL_EffectManager& manager, const PHY_WeaponType& weaponType, MIL_InputArchive& archive );
     virtual ~PHY_WeaponDataType_DirectFire();
 
     //! @name Operations
@@ -73,13 +74,16 @@ private:
     MT_Float GetMaxDistanceForPH( MT_Float rPH, const PHY_RolePion_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture, const PHY_Volume& targetVolume ) const;
     MT_Float GetMinDistanceForPH( MT_Float rPH, const PHY_RolePion_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture, const PHY_Volume& targetVolume ) const;
 
-
     void     InitializePH       ( const PHY_Volume& volume, MIL_InputArchive& archive );
     //@}
 
 private:
+    //! @name Member data
+    //@{
+    MIL_EffectManager&    manager_;
     const PHY_WeaponType& weaponType_;
           T_PhVector      phs_;
+    //@}
 
 private:
     static MT_Random randomGenerator_;

@@ -40,7 +40,7 @@ PHY_WeaponType::T_WeaponTypeMap PHY_WeaponType::weaponTypes_;
 // Name: PHY_WeaponType::Initialize
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::Initialize( MIL_InputArchive& archive )
+void PHY_WeaponType::Initialize( MIL_EffectManager& manager, const MIL_Time_ABC& time, MIL_InputArchive& archive )
 {
     MT_LOG_INFO_MSG( "Initializing weapon types" );
 
@@ -61,7 +61,7 @@ void PHY_WeaponType::Initialize( MIL_InputArchive& archive )
         if ( pWeaponType )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Weapon %s/%s already registered", strLauncher.c_str(), strAmmunition.c_str() ), archive.GetContext() );
 
-        pWeaponType = new PHY_WeaponType( strLauncher, strAmmunition, archive );
+        pWeaponType = new PHY_WeaponType( manager, time, strLauncher, strAmmunition, archive );
 
         archive.EndSection(); // Armement
     }
@@ -87,8 +87,9 @@ void PHY_WeaponType::Terminate()
 // Name: PHY_WeaponType constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_WeaponType::PHY_WeaponType( const std::string& strLauncher, const std::string& strAmmunition, MIL_InputArchive& archive )
-    : pLauncherType_      ( PHY_LauncherType::FindLauncherType( strLauncher ) )
+PHY_WeaponType::PHY_WeaponType( MIL_EffectManager& manager, const MIL_Time_ABC& time, const std::string& strLauncher, const std::string& strAmmunition, MIL_InputArchive& archive )
+    : time_               ( time )
+    , pLauncherType_      ( PHY_LauncherType::FindLauncherType( strLauncher ) )
     , pDotationCategory_  ( PHY_DotationType::FindDotationCategory( strAmmunition ) )
     , nNbrAmmoPerBurst_   ( 1 )
     , rBurstDuration_     ( 1. )
@@ -110,7 +111,7 @@ PHY_WeaponType::PHY_WeaponType( const std::string& strLauncher, const std::strin
     rBurstDuration_      = MIL_Tools::ConvertSecondsToSim( rBurstDuration_     );
     rReloadingDuration_  = MIL_Tools::ConvertSecondsToSim( rReloadingDuration_ );
     
-    InitializeDirectFireData  ( archive );
+    InitializeDirectFireData  ( manager, archive );
     InitializeIndirectFireData( archive );
 
     strName_ = pLauncherType_->GetName() + "/" + pDotationCategory_->GetName();
@@ -133,7 +134,7 @@ PHY_WeaponType::~PHY_WeaponType()
 // Name: PHY_WeaponType::InitializeDirectFireData
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::InitializeDirectFireData( MIL_InputArchive& archive )
+void PHY_WeaponType::InitializeDirectFireData( MIL_EffectManager& manager, MIL_InputArchive& archive )
 {
     pDirectFireData_ = 0;
     
@@ -148,7 +149,7 @@ void PHY_WeaponType::InitializeDirectFireData( MIL_InputArchive& archive )
     if ( !pDotationCategory_->CanBeUsedForDirectFire() )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Associated ammunition can not direct fire", archive.GetContext() );
 
-    pDirectFireData_ = new PHY_WeaponDataType_DirectFire( *this, archive );
+    pDirectFireData_ = new PHY_WeaponDataType_DirectFire( manager, *this, archive );
     archive.EndSection(); // Direct
 }
 
@@ -185,7 +186,7 @@ void PHY_WeaponType::InitializeIndirectFireData( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 PHY_Weapon& PHY_WeaponType::InstanciateWeapon( bool bMajor ) const
 {
-    return *new PHY_Weapon( *this, bMajor );
+    return *new PHY_Weapon( time_, *this, bMajor );
 }
 
 

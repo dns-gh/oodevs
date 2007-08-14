@@ -14,7 +14,6 @@
 #include "NET_AS_MOSServerConnectionMgr.h"
 
 #include "NET_AS_MOSServerMsgMgr.h"
-#include "MIL_AgentServer.h"
 
 using namespace DIN;
 using namespace NEK;

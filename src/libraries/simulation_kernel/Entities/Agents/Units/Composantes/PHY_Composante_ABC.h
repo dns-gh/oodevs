@@ -16,7 +16,6 @@
 
 class PHY_ComposanteType_ABC;
 
-
 // =============================================================================
 // @class  PHY_Composante_ABC
 // Created: JVT 2004-08-03

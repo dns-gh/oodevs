@@ -62,28 +62,6 @@ void MIL_ProfilerMgr::NotifyDecFunctionCalled( const T& agent, const std::string
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ProfilerMgr::EnableProfiling
-// Created: NLD 2005-03-15
-// -----------------------------------------------------------------------------
-inline
-void MIL_ProfilerMgr::EnableProfiling()
-{       
-    MT_LOG_INFO_MSG( "Profiling enabled" );
-    bEnabled_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ProfilerMgr::DisableProfiling
-// Created: NLD 2005-03-15
-// -----------------------------------------------------------------------------
-inline
-void MIL_ProfilerMgr::DisableProfiling()
-{
-    MT_LOG_INFO_MSG( "Profiling disabled" );
-    bEnabled_ = false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_ProfilerMgr::IsProfilingEnabled
 // Created: NLD 2005-03-15
 // -----------------------------------------------------------------------------

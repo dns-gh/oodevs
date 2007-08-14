@@ -18,6 +18,7 @@ class PHY_RadarClass;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
 class PHY_PerceptionLevel;
+class MIL_Time_ABC;
 
 // =============================================================================
 // @class  PHY_RadarType
@@ -30,7 +31,7 @@ class PHY_RadarType
 public:
     //! @name Manager
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( MIL_InputArchive& archive, const MIL_Time_ABC& time );
     static void Terminate ();
 
     static const PHY_RadarType* Find( const std::string& strType );
@@ -59,7 +60,7 @@ private:
     //@}
 
 private:
-     PHY_RadarType( const std::string& strName, const PHY_RadarClass& type, MIL_InputArchive& archive );
+     PHY_RadarType( const std::string& strName, const PHY_RadarClass& type, const MIL_Time_ABC& time, MIL_InputArchive& archive );
     ~PHY_RadarType();
 
     //! @name Init
@@ -72,6 +73,7 @@ private:
 private:
     const std::string     strName_;
     const PHY_RadarClass& class_;
+    const MIL_Time_ABC&   time_;
     const uint            nID_;
 
     // Range

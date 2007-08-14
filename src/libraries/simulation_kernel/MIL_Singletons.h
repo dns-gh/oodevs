@@ -7,30 +7,33 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_Time_ABC_h_
-#define __MIL_Time_ABC_h_
+#ifndef __MIL_Singletons_h_
+#define __MIL_Singletons_h_
+
+class MIL_Time_ABC;
+class MIL_EntityManager;
+class HLA_Federate;
+class MIL_ProfilerMgr;
+class MIL_EffectManager;
 
 // =============================================================================
-/** @class  MIL_Time_ABC
-    @brief  Time definition
+/** @class  MIL_Singletons
+    @brief  Crappy wrapper around singletons
 */
-// Created: AGE 2007-08-10
+// Created: AGE 2007-08-13
 // =============================================================================
-class MIL_Time_ABC
+class MIL_Singletons
 {
 
 public:
-    //! @name Constructors/Destructor
-    //@{
-             MIL_Time_ABC() {};
-    virtual ~MIL_Time_ABC() {};
-    //@}
-
     //! @name Operations
     //@{
-    virtual unsigned int GetCurrentTick() const = 0;
-    virtual unsigned int GetTickDuration() const = 0;
+    static MIL_Time_ABC&      GetTime();
+    static MIL_EntityManager& GetEntityManager();
+    static HLA_Federate*      GetHla();
+    static MIL_ProfilerMgr&   GetProfiler();
+    static MIL_EffectManager& GetEffectManager();
     //@}
 };
 
-#endif // __MIL_Time_ABC_h_
+#endif // __MIL_Singletons_h_

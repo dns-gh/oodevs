@@ -27,7 +27,6 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "PHY_RoleAction_Objects_DataComputer.h"
 #include "PHY_RoleAction_Objects_CapabilityComputer.h"
-#include "MIL_AgentServer.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Objects, "PHY_RoleAction_Objects" )
 

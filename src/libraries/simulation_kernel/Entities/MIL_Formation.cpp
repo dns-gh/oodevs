@@ -18,13 +18,12 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Network/NET_ASN_Messages.h"
-#include "MIL_AgentServer.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Formation constructor
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
-MIL_Formation::MIL_Formation( uint nID, MIL_Army& army, MIL_InputArchive& archive, MIL_Formation* pParent )
+MIL_Formation::MIL_Formation( MIL_EntityManager& manager, MIL_TacticalLineManager& tacticalLines, uint nID, MIL_Army& army, MIL_InputArchive& archive, MIL_Formation* pParent )
     : nID_       ( nID )
     , pArmy_     ( &army )
     , pParent_   ( pParent )
@@ -35,7 +34,7 @@ MIL_Formation::MIL_Formation( uint nID, MIL_Army& army, MIL_InputArchive& archiv
 {
     std::string strLevel;
     archive.ReadAttribute( "name", strName_ );
-    archive.ReadAttribute( "level", strLevel );    
+    archive.ReadAttribute( "level", strLevel );
 
     pLevel_ = PHY_NatureLevel::Find( strLevel );
     if( !pLevel_ )
@@ -46,7 +45,7 @@ MIL_Formation::MIL_Formation( uint nID, MIL_Army& army, MIL_InputArchive& archiv
     else
         pArmy_->RegisterFormation( *this );
 
-    InitializeSubordinates( archive );   
+    InitializeSubordinates( manager, tacticalLines, archive );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +80,7 @@ MIL_Formation::~MIL_Formation()
 // Name: MIL_Formation::InitializeSubordinates
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
-void MIL_Formation::InitializeSubordinates( MIL_InputArchive& archive )
+void MIL_Formation::InitializeSubordinates( MIL_EntityManager& manager, MIL_TacticalLineManager& tacticalLines, MIL_InputArchive& archive )
 {
     assert( pArmy_ );
     while( archive.NextListElement() )
@@ -91,11 +90,11 @@ void MIL_Formation::InitializeSubordinates( MIL_InputArchive& archive )
         if( strElement == "formation" )
         {
             archive.BeginList( "formation" );
-        
+
             uint nID;
             archive.ReadAttribute( "id", nID );
 
-            MIL_AgentServer::GetWorkspace().GetEntityManager().CreateFormation( nID, *pArmy_, archive, this ); // Auto-registration
+            manager.CreateFormation( nID, *pArmy_, archive, this ); // Auto-registration
             archive.EndList(); // formation
         }
         else if( strElement == "automat" )
@@ -104,7 +103,7 @@ void MIL_Formation::InitializeSubordinates( MIL_InputArchive& archive )
 
             uint        nID;
             std::string strType;
-            
+
             archive.ReadAttribute( "id"  , nID     );
             archive.ReadAttribute( "type", strType );
 
@@ -112,19 +111,19 @@ void MIL_Formation::InitializeSubordinates( MIL_InputArchive& archive )
             if( !pAutomateType )
                 throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automat type", archive.GetContext() );
 
-            MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomate( *pAutomateType, nID, *this, archive ); // Auto-registration
+            manager.CreateAutomate( *pAutomateType, nID, *this, archive ); // Auto-registration
             archive.EndList(); // automat
         }
         else if( strElement == "limit" )
         {
             archive.BeginList( "limit" );
-            MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLimit( *this, archive );
+            tacticalLines.CreateLimit( *this, archive );
             archive.EndList(); // limit
         }
         else if( strElement == "lima" )
         {
             archive.BeginList( "lima" );
-            MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLima( *this, archive );
+            tacticalLines.CreateLima( *this, archive );
             archive.EndList(); // lima
         }
     }
@@ -248,5 +247,5 @@ void MIL_Formation::SendFullState() const
         (**it).SendFullState();
 
     for( CIT_AutomateSet it = automates_.begin(); it != automates_.end(); ++it )
-        (**it).SendFullState();    
+        (**it).SendFullState();
 }

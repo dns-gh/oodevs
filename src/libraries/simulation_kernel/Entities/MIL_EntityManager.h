@@ -16,11 +16,6 @@
 
 #include "MT_Tools/MT_Profiler.h"
 
-namespace DIN
-{
-    class DIN_Input;
-}
-
 class MIL_Time_ABC;
 class MIL_EffectManager;
 class MIL_ObjectManager;
@@ -28,7 +23,6 @@ class MIL_Army;
 class MIL_AgentPion;
 class MIL_Automate;
 class MIL_Formation;
-class MIL_VirtualObject_ABC;
 class MIL_AgentTypePion;
 class MIL_RealObject_ABC;
 class MIL_RealObjectType;
@@ -42,6 +36,8 @@ class MIL_NuageNBC;
 class MIL_ZoneMineeParDispersion;
 class TER_Localisation;
 class MIL_Config;
+class MIL_ProfilerMgr;
+class MIL_Time_ABC;
 
 class HLA_Federate;
 
@@ -77,10 +73,11 @@ public:
     //@}
 
 public:
+             MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, HLA_Federate* hla );
              MIL_EntityManager();
     virtual ~MIL_EntityManager();
 
-    static void Initialize( MIL_Config& config );
+    static void Initialize( MIL_Config& config, const MIL_Time_ABC& time, MIL_EffectManager& effects );
 
     //! @name Factory
     //@{
@@ -192,9 +189,11 @@ private:
     //@{
     // Types
     template < typename T > 
-    static void InitializeType   ( MIL_InputArchive& archive, MIL_Config& config, const std::string& strSection );
-    static void InitializeMedical( MIL_InputArchive& archive, MIL_Config& config );
-    static void InitializeSensors( MIL_InputArchive& archive, MIL_Config& config );
+    static void InitializeType       ( MIL_InputArchive& archive, MIL_Config& config, const std::string& strSection );
+    static void InitializeMedical    ( MIL_InputArchive& archive, MIL_Config& config );
+    static void InitializeComposantes( MIL_InputArchive& archive, MIL_Config& config, const MIL_Time_ABC& time );
+    static void InitializeWeapons    ( MIL_InputArchive& archive, MIL_Config& config, const MIL_Time_ABC& time, MIL_EffectManager& effects );
+    static void InitializeSensors    ( MIL_InputArchive& archive, MIL_Config& config, const MIL_Time_ABC& time );
 
     // ODB
     void InitializeArmies     ( MIL_InputArchive& archive );
@@ -215,8 +214,10 @@ private:
 
 private:
     const MIL_Time_ABC& time_;
-    MIL_EffectManager& effectManager_;
-    MIL_ObjectManager* pObjectManager_;
+    HLA_Federate*       hla_;
+    MIL_ProfilerMgr&    profilerManager_;
+    MIL_EffectManager&  effectManager_;
+    MIL_ObjectManager*  pObjectManager_;
 
     T_ArmyMap       armies_;
     T_FormationMap  formations_;

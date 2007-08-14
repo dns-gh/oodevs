@@ -30,6 +30,8 @@ class PHY_ComposanteType_ABC;
 class PHY_Composante_ABC;
 class PHY_FireResults_ABC;
 class PHY_RolePion_Dotations;
+class MIL_Time_ABC;
+class MIL_EffectManager;
 
 // =============================================================================
 // @class  PHY_WeaponType
@@ -42,7 +44,7 @@ class PHY_WeaponType
 public:
     //! @name Manager
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( MIL_EffectManager& manager, const MIL_Time_ABC& time, MIL_InputArchive& archive );
     static void Terminate ();
 
     static const PHY_WeaponType* FindWeaponType( const std::string& strLauncher, const std::string& strAmmunition );
@@ -99,16 +101,17 @@ private:
     //@}
 
 private:
-     PHY_WeaponType( const std::string& strLauncher, const std::string& strAmmunition, MIL_InputArchive& archive );
+     PHY_WeaponType( MIL_EffectManager& manager, const MIL_Time_ABC& time, const std::string& strLauncher, const std::string& strAmmunition, MIL_InputArchive& archive );
     ~PHY_WeaponType();
 
     //! @name Initialization
     //@{
-    void InitializeDirectFireData  ( MIL_InputArchive& archive );
+    void InitializeDirectFireData  ( MIL_EffectManager& manager, MIL_InputArchive& archive );
     void InitializeIndirectFireData( MIL_InputArchive& archive );
     //@}
 
 private:
+    const MIL_Time_ABC&         time_;
     const PHY_LauncherType*     pLauncherType_;
     const PHY_DotationCategory* pDotationCategory_;
           std::string           strName_;
