@@ -89,12 +89,7 @@ namespace Crossbow
                
 
         #endregion
-        #region Mouse event
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-                    
-        }
-        #endregion
+        
         #region SymbolTree processing
         /// <summary>
         /// Build Image list

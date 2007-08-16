@@ -88,7 +88,7 @@ namespace Crossbow
                 System.Diagnostics.Trace.WriteLine(ex.Message, "Invalid Bitmap");
             }
         }
-
+        
         #region Overriden Class Methods
 
         /// <summary>
@@ -97,22 +97,10 @@ namespace Crossbow
         /// <param name="hook">Instance of the application</param>
         public override void OnCreate(object hook)
         {
-            if (hook == null)
-                return;
-
-            //Disable if it is not ArcMap
-            if (hook is IMxApplication)
-                base.m_enabled = true;
-            else
-                base.m_enabled = false;
-            ((IDocumentEvents_Event)Tools.GetMxDocument()).OnContextMenu += new IDocumentEvents_OnContextMenuEventHandler(OnContextMenuHandler);
+            base.m_enabled = hook != null && hook is IMxApplication;
         }
-
-        private void OnContextMenuHandler(int x, int y, out bool handled)
-        {
-            handled = Tools.GetCSwordExtension().OrderHandler.OnContextMenu(x, y);
-        }
-
+        
+        
         /// <summary>
         /// Occurs when this command is clicked
         /// </summary>

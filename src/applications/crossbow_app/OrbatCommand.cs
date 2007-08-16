@@ -81,9 +81,6 @@ namespace Crossbow
 
             try
             {
-                //
-                // TODO: change bitmap name if necessary
-                //
                 string bitmapResourceName = GetType().Name + ".bmp";
                 base.m_bitmap = new Bitmap(GetType(), bitmapResourceName);
             }

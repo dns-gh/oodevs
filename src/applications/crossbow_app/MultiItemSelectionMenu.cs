@@ -14,15 +14,6 @@ namespace Crossbow
     [ProgId("Crossbow.MultiItemSelectionMenu")]
     public class MultiItemSelectionMenu : IMultiItem
     {     
-        private System.Collections.ArrayList m_items = new System.Collections.ArrayList();
-        private OrderHandler m_orderProxy;
-
-        public MultiItemSelectionMenu()
-        {            
-            CSwordExtension extension = Tools.GetCSwordExtension();
-            m_orderProxy = extension.OrderHandler;            
-        }
-
         #region COM Registration Function(s)
         [ComRegisterFunction()]
         [ComVisible(false)]
@@ -62,7 +53,16 @@ namespace Crossbow
 
         #endregion
         #endregion
-        
+
+        private System.Collections.ArrayList m_items = new System.Collections.ArrayList();
+        private OrderHandler m_orderProxy;
+
+        public MultiItemSelectionMenu()
+        {
+            CSwordExtension extension = Tools.GetCSwordExtension();
+            m_orderProxy = extension.OrderHandler;
+        }
+
         public void Add(string name)
         {
            Add(name, null);

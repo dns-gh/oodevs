@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
+using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.ADF.CATIDs;
@@ -65,6 +66,7 @@ namespace Crossbow
         #endregion
         
         private OrderHandler m_orderHandler;
+        private IDocumentEvents_OnContextMenuEventHandler m_contextMenuEvent;
 
         #region IExtension Members
         /// <summary>
@@ -90,15 +92,28 @@ namespace Crossbow
                 return;
             Tools.Initialize(app);
             m_orderHandler = new OrderHandler();
+            SetupEvents();
         }
 
+        private void SetupEvents()
+        {
+            IDocumentEvents_Event eventHandler = (IDocumentEvents_Event)( Tools.GetMxDocument() );
+            m_contextMenuEvent = new IDocumentEvents_OnContextMenuEventHandler(OnContextMenuHandler);
+            eventHandler.OnContextMenu += m_contextMenuEvent;
+        }
+
+        private void OnContextMenuHandler(int x, int y, out bool handled)
+        {
+            handled = m_orderHandler.OnContextMenu(x, y);
+        }
+        
         public OrderHandler OrderHandler
         {
             get
             {
                 return m_orderHandler;
             }
-        }        
+        }
         #endregion
     }
 }

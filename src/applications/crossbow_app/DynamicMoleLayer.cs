@@ -156,7 +156,7 @@ namespace Crossbow
         {
             IDynamicElement symbol = GetSymbol(display, dynamicDisplay, feature);
             if (symbol == null)
-                return;            
+                return;
             FeatureDrawer.Draw(dynamicDisplay, symbol, feature, IsSelected(feature));
         }
 
@@ -309,8 +309,7 @@ namespace Crossbow
             set { m_spatialRef = value; }
         }
         #endregion
-
-
+        
         #region IDisposable Members
 
         public override void Dispose()
