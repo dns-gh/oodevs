@@ -15,8 +15,8 @@ namespace Crossbow
     [ComVisible(true)]
     [Guid("3ea5717a-2554-4839-9daf-667305a11285")]
     [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("Crossbow.CommandOrbatCommand")]
-    public class OrbatCommand : BaseCommand, IDisposable
+    [ProgId("CSword.OrbatCommand")]
+    public class OrbatCommand : BaseCommand
     {
         #region COM Registration Function(s)
         [ComRegisterFunction()]
@@ -76,8 +76,8 @@ namespace Crossbow
             base.m_category = "CSword"; //localizable text
             base.m_caption = "Show/Hide Orbat";  //localizable text
             base.m_message = "Command toggles dockable Orbat";  //localizable text 
-            base.m_toolTip = "Toggle Dockable Orbat (C#)";  //localizable text 
-            base.m_name = "DeveloperTemplate_OrbatCommand";   //unique id, non-localizable (e.g. "MyCategory_ArcMapCommand")
+            base.m_toolTip = "Toggle Dockable Orbat";  //localizable text 
+            base.m_name = "CSword_OrbatCommand";   //unique id, non-localizable (e.g. "MyCategory_ArcMapCommand")
 
             try
             {
@@ -91,11 +91,6 @@ namespace Crossbow
             {
                 System.Diagnostics.Trace.WriteLine(ex.Message, "Invalid Bitmap");
             }
-        }
-
-        ~OrbatCommand()
-        {
-            Dispose(false);
         }
 
         #region Overriden Class Methods
@@ -152,21 +147,5 @@ namespace Crossbow
                 m_dockableWindow = dockWindowManager.GetDockableWindow(windowID);
             }
         }
-
-        #region IDisposable Members
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposing)
-                base.m_bitmap.Dispose();
-        }
-
-        #endregion
     }
 }

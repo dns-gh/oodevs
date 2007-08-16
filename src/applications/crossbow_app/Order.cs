@@ -163,19 +163,17 @@ namespace Crossbow
         public void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool user_call)
         {
             if (!m_disposed)
             {
                 m_disposed = true;
-                if (disposing)
-                    GC.SuppressFinalize(this);
-                if (m_orderForm != null)
+                if (user_call)
                     m_orderForm.Dispose();
-                if (m_handler != null)
-                    m_handler.Reset();
+                m_handler.Reset();
             }
         }
 

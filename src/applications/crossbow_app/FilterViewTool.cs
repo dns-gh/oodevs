@@ -17,7 +17,7 @@ namespace Crossbow
     [ComVisible(true)]
     [Guid("f44a3523-8fae-4fd8-9895-fa0bde4efff5")]
     [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("csword.FilterViewTool")]
+    [ProgId("CSword.FilterView")]
     public class FilterViewTool : BaseCommand, IToolControl, IDisposable
     {
         #region COM Registration Function(s)
@@ -71,6 +71,7 @@ namespace Crossbow
         #endregion
 
         private System.Windows.Forms.ComboBox m_teamCombo;
+        private bool m_disposed;
 
         public FilterViewTool()
         {
@@ -196,12 +197,13 @@ namespace Crossbow
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool user_call)
         {
-            if (!disposing)
+            if (!m_disposed)
             {
-                m_teamCombo.Dispose();
-                base.m_bitmap.Dispose();
+                m_disposed = true;
+                if (user_call)
+                    m_teamCombo.Dispose();
             }
         }
 

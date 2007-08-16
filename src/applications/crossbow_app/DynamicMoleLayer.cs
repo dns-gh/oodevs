@@ -33,6 +33,7 @@ namespace Crossbow
         private SymbolFactory                   m_symbolFactory = new SymbolFactory();
         private FieldsProperty                  m_Fields = new FieldsProperty();
         private Timer                           m_updateTimer;
+        private bool m_disposed;
         
         // IFeatureLayer attributes
         private String m_displayField = "name"; // $$$$ SBO 2007-07-09: Symbol_ID ?
@@ -42,7 +43,7 @@ namespace Crossbow
         public DynamicMoleLayer()
         {
             m_selectionColor = Tools.MakeColor(255, 0, 0);
-            SetupTimer(100);            
+            SetupTimer(100);
         }
 
         ~DynamicMoleLayer()
@@ -55,6 +56,14 @@ namespace Crossbow
         public override void Draw(esriDrawPhase DrawPhase, IDisplay Display, ITrackCancel TrackCancel)
         {
             Tools.EnableDynamicDisplay();
+        }
+
+        public override bool Valid
+        {
+            get
+            {
+                return m_featureClass != null;
+            }
         }
         #endregion
 
@@ -74,7 +83,7 @@ namespace Crossbow
             }
         }
         #endregion
-
+        
         #region IPersistVariant overriden
         public override UID ID
         {
@@ -185,18 +194,19 @@ namespace Crossbow
         void SetupTimer(double msec)
         {
             m_updateTimer = new Timer(msec);
-            m_updateTimer.Enabled = false;
             m_updateTimer.Elapsed += new ElapsedEventHandler(OnLayerUpdateEvent);
         }
 
         public void Connect()
         {
-            m_updateTimer.Enabled = true;
+            if (m_updateTimer != null)
+                m_updateTimer.Start();
         }
 
         public void Disconnect()
         {
-            m_updateTimer.Enabled = false;
+            if (m_updateTimer != null)
+                m_updateTimer.Stop();
         }
 
         /// <summary>
@@ -300,22 +310,24 @@ namespace Crossbow
         }
         #endregion
 
+
         #region IDisposable Members
 
         public override void Dispose()
         {
-            base.Dispose();
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool user_call)
         {
-            if (!disposing)
+            if (!m_disposed)
             {
-                Disconnect();
-                m_updateTimer.Dispose();
+                if (user_call)
+                    m_updateTimer.Dispose();
+                m_disposed = true;
             }
+            base.Dispose();
         }
 
         #endregion

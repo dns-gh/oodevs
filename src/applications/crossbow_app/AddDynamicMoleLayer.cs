@@ -18,7 +18,7 @@ namespace Crossbow
     [ComVisible(true)]
     [Guid("603d8bfc-14b0-4a37-a42a-de1f5c7b4156")]
     [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("Crossbow.AddDynamicMoleLayer")]
+    [ProgId("CSword.AddDynamicMoleLayer")]
     public sealed class AddDynamicMoleLayer : BaseCommand
     {
         #region COM Registration Function(s)
@@ -140,7 +140,7 @@ namespace Crossbow
         }
         #endregion
 
-        private static ILayer CreateLayerGroup(string name, IFeatureClass featureClass)
+        private ILayer CreateLayerGroup(string name, IFeatureClass featureClass)
         {
             IGroupLayer group = new GroupLayerClass();
             ILayer layer = group as ILayer;
@@ -151,8 +151,9 @@ namespace Crossbow
             featureLayer.FeatureClass = featureClass;
             group.Add(featureLayer);
 
-            using (DynamicMoleLayer dynamicLayer = new DynamicMoleLayer())
+            //using (DynamicMoleLayer dynamicLayer = new DynamicMoleLayer())
             {
+                DynamicMoleLayer dynamicLayer = new DynamicMoleLayer();
                 dynamicLayer.Name = layer.Name + " - Dynamics";
                 dynamicLayer.FeatureClass = featureClass;
                 dynamicLayer.Connect();
