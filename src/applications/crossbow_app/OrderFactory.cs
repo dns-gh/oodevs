@@ -20,8 +20,9 @@ namespace Crossbow
 
         private Dictionary<string, OrderParametersDefinition> m_model = new Dictionary<string, OrderParametersDefinition>();
 
-        public OrderFactory()
+        public OrderFactory(WorkspaceConfiguration config)
         {
+            // $$$$ SBO 2007-08-17: use config.ExerciseFile
             InitializeModel();
         }
 

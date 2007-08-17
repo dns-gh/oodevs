@@ -128,7 +128,7 @@ namespace Crossbow
         }
         #endregion
 
-        private ILayer CreateLayerGroup(string name, IFeatureClass featureClass)
+        private static ILayer CreateLayerGroup(string name, IFeatureClass featureClass)
         {
             IGroupLayer group = new GroupLayerClass();
             ILayer layer = group as ILayer;
@@ -139,14 +139,11 @@ namespace Crossbow
             featureLayer.FeatureClass = featureClass;
             group.Add(featureLayer);
 
-            //using (DynamicMoleLayer dynamicLayer = new DynamicMoleLayer())
-            {
-                DynamicMoleLayer dynamicLayer = new DynamicMoleLayer();
-                dynamicLayer.Name = layer.Name + " - Dynamics";
-                dynamicLayer.FeatureClass = featureClass;
-                dynamicLayer.Connect();
-                group.Add(dynamicLayer);
-            }
+            DynamicMoleLayer dynamicLayer = new DynamicMoleLayer();
+            dynamicLayer.Name = layer.Name + " - Dynamics";
+            dynamicLayer.FeatureClass = featureClass;
+            dynamicLayer.Connect();
+            group.Add(dynamicLayer);
             return group as ILayer;
         }
     }

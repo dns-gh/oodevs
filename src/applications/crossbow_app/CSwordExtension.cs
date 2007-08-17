@@ -64,9 +64,12 @@ namespace Crossbow
 
         #endregion
         #endregion
-        
+
+        private WorkspaceConfiguration m_config = new WorkspaceConfiguration();
         private OrderHandler m_orderHandler;
+
         private IDocumentEvents_OnContextMenuEventHandler m_contextMenuEvent;
+        private WorkspaceConfiguration_ConfigurationLoadedEventHandler m_configLoadedEvent;
 
         #region IExtension Members
         /// <summary>
@@ -91,20 +94,32 @@ namespace Crossbow
             if (app == null)
                 return;
             Tools.Initialize(app);
-            m_orderHandler = new OrderHandler();
             SetupEvents();
         }
 
         private void SetupEvents()
         {
-            IDocumentEvents_Event eventHandler = (IDocumentEvents_Event)( Tools.GetMxDocument() );
-            m_contextMenuEvent = new IDocumentEvents_OnContextMenuEventHandler(OnContextMenuHandler);
-            eventHandler.OnContextMenu += m_contextMenuEvent;
+            {
+                m_configLoadedEvent = new WorkspaceConfiguration_ConfigurationLoadedEventHandler(OnConfigurationLoadedHandler);
+                m_config.ConfigurationLoaded += m_configLoadedEvent;
+            }
+            {
+                m_contextMenuEvent = new IDocumentEvents_OnContextMenuEventHandler(OnContextMenuHandler);
+                ((IDocumentEvents_Event)(Tools.GetMxDocument())).OnContextMenu += m_contextMenuEvent;
+            }
+        }
+
+        private void OnConfigurationLoadedHandler()
+        {
+            if (m_orderHandler == null)
+                m_orderHandler = new OrderHandler(m_config);
         }
 
         private void OnContextMenuHandler(int x, int y, out bool handled)
         {
-            handled = m_orderHandler.OnContextMenu(x, y);
+            handled = false;
+            if (m_orderHandler != null)
+                handled = m_orderHandler.OnContextMenu(x, y);
         }
         
         public OrderHandler OrderHandler
@@ -112,6 +127,14 @@ namespace Crossbow
             get
             {
                 return m_orderHandler;
+            }
+        }
+
+        public WorkspaceConfiguration Config
+        {
+            get
+            {
+                return m_config;
             }
         }
         #endregion

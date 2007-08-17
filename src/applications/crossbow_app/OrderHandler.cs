@@ -30,9 +30,9 @@ namespace Crossbow
         private Order m_order;
         private OrderFactory m_orderFactory;
 
-        public OrderHandler()
+        public OrderHandler(WorkspaceConfiguration config)
         {
-            m_orderFactory = new OrderFactory();
+            m_orderFactory = new OrderFactory(config);
         }
 
         public IFeature TargetFeature

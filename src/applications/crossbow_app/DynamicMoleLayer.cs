@@ -50,6 +50,7 @@ namespace Crossbow
         {
             Dispose(false);
         }
+
         #endregion
 
         #region ILayer overriden
@@ -309,7 +310,7 @@ namespace Crossbow
             set { m_spatialRef = value; }
         }
         #endregion
-        
+
         #region IDisposable Members
 
         public override void Dispose()

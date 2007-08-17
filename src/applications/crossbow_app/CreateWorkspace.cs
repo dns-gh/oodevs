@@ -1,19 +1,20 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Drawing;
 using System.Runtime.InteropServices;
-using ESRI.ArcGIS.ADF.CATIDs;
 using ESRI.ArcGIS.ADF.BaseClasses;
+using ESRI.ArcGIS.ADF.CATIDs;
+using ESRI.ArcGIS.ArcMapUI;
 
 namespace Crossbow
 {
     /// <summary>
-    /// Summary description for CSwordBar.
+    /// Summary description for CreateWorkspace.
     /// </summary>
-    [Guid("666b9717-13e0-47d0-a388-7b3b7b581342")]
+    [ComVisible(true)]
+    [Guid("987e32aa-8556-4e83-aa40-02c799ee734b")]
     [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("CSword.CSwordBar")]
-    public sealed class CSwordBar : BaseToolbar
+    [ProgId("CSword.CreateWorkspace")]
+    public sealed class CreateWorkspace : BaseCommand
     {
         #region COM Registration Function(s)
         [ComRegisterFunction()]
@@ -48,7 +49,8 @@ namespace Crossbow
         private static void ArcGISCategoryRegistration(Type registerType)
         {
             string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
-            MxCommandBars.Register(regKey);
+            MxCommands.Register(regKey);
+
         }
         /// <summary>
         /// Required method for ArcGIS Component Category unregistration -
@@ -57,33 +59,54 @@ namespace Crossbow
         private static void ArcGISCategoryUnregistration(Type registerType)
         {
             string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
-            MxCommandBars.Unregister(regKey);
+            MxCommands.Unregister(regKey);
         }
 
         #endregion
         #endregion
 
-        public CSwordBar()
+        private WorkspaceConfigurationForm m_workspaceConfigurationForm;
+
+        public CreateWorkspace()
         {
-            AddItem("CSword.CreateWorkspace");
-            AddItem("CSword.AddDynamicMoleLayer");
-            AddItem("CSword.OrbatCommand");
-            AddItem("CSword.FilterView");
+            base.m_category = "CSword"; //localizable text
+            base.m_caption = "Create CSword workspace";  //localizable text
+            base.m_message = "Create CSword workspace";  //localizable text 
+            base.m_toolTip = "Create CSword workspace";  //localizable text 
+            base.m_name = "CSword_CreateWorkspace";   //unique id, non-localizable (e.g. "MyCategory_MyCommand")
+
+            try
+            {
+                string bitmapResourceName = GetType().Name + ".bmp";
+                base.m_bitmap = new Bitmap(GetType(), bitmapResourceName);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.WriteLine(ex.Message, "Invalid Bitmap");
+            }
         }
 
-        public override string Caption
+        #region Overriden Class Methods
+
+        /// <summary>
+        /// Occurs when this command is created
+        /// </summary>
+        /// <param name="hook">Instance of the application</param>
+        public override void OnCreate(object hook)
         {
-            get
-            {
-                return "CSwordBar";
-            }
+            base.m_enabled = hook != null && hook is IMxApplication;
         }
-        public override string Name
+
+        /// <summary>
+        /// Occurs when this command is clicked
+        /// </summary>
+        public override void OnClick()
         {
-            get
-            {
-                return "CSwordBar";
-            }
+            if (m_workspaceConfigurationForm == null)
+                m_workspaceConfigurationForm = new WorkspaceConfigurationForm(Tools.GetCSwordExtension().Config);
+            m_workspaceConfigurationForm.Show();
         }
+
+        #endregion
     }
 }

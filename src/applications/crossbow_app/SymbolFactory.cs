@@ -131,8 +131,21 @@ namespace Crossbow
             return null;
         }
 
-        private static ITacticalElement CreateMoleTacticalElement(IFeature feature, string symbolId)
+        private ITacticalElement CreateMoleTacticalElement(IFeature feature, string symbolId)
         {
+            /*
+            IConstructTacticalElement constructor = m_tacticalElementRenderer as IConstructTacticalElement;
+            IGraphicDefSet definitions = m_tacticalElementRenderer as IGraphicDefSet;
+            IGraphicDef definition = definitions.GraphicDefSet.Next;
+
+            ITacticalElement element = constructor.ReturnSampleElement(mole2525BAffiliationsEnum.moleAffiliationFriend,
+                                                                       mole2525BEchelonsEnum.moleEchelonDivision,
+                                                                       graphicDef,
+                                                                       envelope,
+                                                                       Tools.MakePoint(1,1),
+                                                                       false);
+            return element;
+             */
             ITacticalElement element = new TacticalElementClass();
             element.Shape = feature.Shape;
             element.MessageString = symbolId;
