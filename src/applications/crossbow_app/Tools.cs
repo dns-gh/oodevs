@@ -15,7 +15,7 @@ namespace Crossbow
         static private bool m_dynamicDisplayEnabled;
 
         #region "Initialization"
-        public static void Initialize(ESRI.ArcGIS.Framework.IApplication application)
+        public static void Initialize(IApplication application)
         {
             if (application != null)
                 m_application = application;
@@ -119,8 +119,10 @@ namespace Crossbow
         #endregion
                 
         #region "Get FeatureLayer from Layer Name"
-        public static IFeatureLayer GetIFeatureLayerFromLayerName(ESRI.ArcGIS.Carto.IActiveView activeView, System.String name)
+        public static IFeatureLayer GetIFeatureLayerFromLayerName(string name)
         {
+            IMxDocument doc = GetMxDocument();
+            IActiveView activeView = doc.ActiveView;
             if (activeView == null || name == null)
                 return null;
             int index = GetIndexNumberOfLayerName(activeView, name);
@@ -197,9 +199,9 @@ namespace Crossbow
             return null;
         }
 
-        public static IFeatureWorkspace OpenWorkspace(ESRI.ArcGIS.Carto.IActiveView activeView, string name)
+        public static IFeatureWorkspace OpenWorkspace(string name)
         {
-            return RetrieveWorkspace(Tools.GetIFeatureLayerFromLayerName(activeView, name));            
+            return RetrieveWorkspace(Tools.GetIFeatureLayerFromLayerName(name));            
         }
         #endregion
 
@@ -218,20 +220,19 @@ namespace Crossbow
             }
         }
 
-        public static T GetValue<T>(IFeature feature, string field)
+        public static T GetValue<T>(IRow row, string field)
         {
-            int id = feature.Fields.FindField(field);
+            int id = row.Fields.FindField(field);
             if (id >= 0)
-                return (T)feature.get_Value(id);
+                return (T)row.get_Value(id);
             return default(T);
         }
 
-        // $$$$ JCR: extract UnitForces
         public static void Store(string table, IGeometry value)
         {
             try
             {
-                IFeatureWorkspace ws = OpenWorkspace(GetMxDocument().ActiveView, "UnitForces");
+                IFeatureWorkspace ws = OpenWorkspace(Tools.GetCSwordExtension().Config.LayersConfiguration.Units);
                 IFeatureClass features = ws.OpenFeatureClass(table);
                 IFeature feature = features.CreateFeature();
                 feature.Shape = value;

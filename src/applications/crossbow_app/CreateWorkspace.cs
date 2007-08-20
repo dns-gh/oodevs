@@ -14,7 +14,7 @@ namespace Crossbow
     [Guid("987e32aa-8556-4e83-aa40-02c799ee734b")]
     [ClassInterface(ClassInterfaceType.None)]
     [ProgId("CSword.CreateWorkspace")]
-    public sealed class CreateWorkspace : BaseCommand
+    public class CreateWorkspace : BaseCommand, IDisposable
     {
         #region COM Registration Function(s)
         [ComRegisterFunction()]
@@ -66,6 +66,7 @@ namespace Crossbow
         #endregion
 
         private WorkspaceConfigurationForm m_workspaceConfigurationForm;
+        private bool m_disposed;
 
         public CreateWorkspace()
         {
@@ -84,6 +85,11 @@ namespace Crossbow
             {
                 System.Diagnostics.Trace.WriteLine(ex.Message, "Invalid Bitmap");
             }
+        }
+
+        ~CreateWorkspace()
+        {
+            Dispose(false);
         }
 
         #region Overriden Class Methods
@@ -105,6 +111,26 @@ namespace Crossbow
             if (m_workspaceConfigurationForm == null)
                 m_workspaceConfigurationForm = new WorkspaceConfigurationForm(Tools.GetCSwordExtension().Config);
             m_workspaceConfigurationForm.Show();
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool usercall)
+        {
+            if (!m_disposed)
+            {
+                m_disposed = true;
+                if (usercall)
+                    m_workspaceConfigurationForm.Dispose();
+            }
         }
 
         #endregion

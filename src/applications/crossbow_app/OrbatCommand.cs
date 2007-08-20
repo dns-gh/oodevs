@@ -109,28 +109,19 @@ namespace Crossbow
         public override void OnClick()
         {
             if (m_dockableWindow == null)
-                return;            
-            if (m_dockableWindow.IsVisible())
-            {                
-                m_dockableWindow.Show(false);
-                // IOrbat orbat = (IOrbat)dockWndDef.UserData;
-            }
-            else
-            {
-                IOrbat orbat = (IOrbat)m_dockableWindow.UserData;
-                if (orbat != null)
-                    orbat.Load();
-                m_dockableWindow.Show(true);
-            }
-
-            base.m_checked = m_dockableWindow.IsVisible();
+                return;
+            bool visible = m_dockableWindow.IsVisible();
+            if (!visible)
+                ((IOrbat)m_dockableWindow.UserData).OnLoad();
+            m_dockableWindow.Show(!visible);
+            base.m_checked = visible;
         }
 
         public override bool Checked
         {
             get
             {
-                return m_dockableWindow != null && m_dockableWindow.IsVisible();
+                return base.m_checked && m_dockableWindow != null && m_dockableWindow.IsVisible();
             }
         }
         #endregion

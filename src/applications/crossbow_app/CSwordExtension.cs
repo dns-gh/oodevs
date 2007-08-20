@@ -69,7 +69,7 @@ namespace Crossbow
         private OrderHandler m_orderHandler;
 
         private IDocumentEvents_OnContextMenuEventHandler m_contextMenuEvent;
-        private WorkspaceConfiguration_ConfigurationLoadedEventHandler m_configLoadedEvent;
+        private EventHandler m_configLoadedEvent;
 
         #region IExtension Members
         /// <summary>
@@ -100,7 +100,7 @@ namespace Crossbow
         private void SetupEvents()
         {
             {
-                m_configLoadedEvent = new WorkspaceConfiguration_ConfigurationLoadedEventHandler(OnConfigurationLoadedHandler);
+                m_configLoadedEvent = new EventHandler(OnConfigurationLoadedHandler);
                 m_config.ConfigurationLoaded += m_configLoadedEvent;
             }
             {
@@ -109,7 +109,7 @@ namespace Crossbow
             }
         }
 
-        private void OnConfigurationLoadedHandler()
+        private void OnConfigurationLoadedHandler(object sender, EventArgs e)
         {
             if (m_orderHandler == null)
                 m_orderHandler = new OrderHandler(m_config);

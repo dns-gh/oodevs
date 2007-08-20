@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using System.ComponentModel;
-using ESRI.ArcGIS.Geodatabase;
 using System.Globalization;
+using ESRI.ArcGIS.Geodatabase;
 
 namespace Crossbow
 {
@@ -37,8 +38,6 @@ namespace Crossbow
     }
     #endregion
 
-    public delegate void WorkspaceConfiguration_ConfigurationLoadedEventHandler();
-
     #region WorkspaceConfiguration
     public sealed class WorkspaceConfiguration
     {
@@ -46,11 +45,11 @@ namespace Crossbow
         private string m_exerciseFile;
         private string m_workspaceFile;
 
-        public event WorkspaceConfiguration_ConfigurationLoadedEventHandler ConfigurationLoaded;
+        public event EventHandler ConfigurationLoaded;
 
         public void NotifyLoaded()
         {
-            ConfigurationLoaded.Invoke();
+            ConfigurationLoaded(this, EventArgs.Empty);
         }
 
         public string ExerciseFile
@@ -90,22 +89,22 @@ namespace Crossbow
     #region LayersConfiguration
     public sealed class LayersConfiguration
     {
-        private string m_unitForces;
-        private string m_tacticalLines;
+        private string m_units  = "UnitForces";
+        private string m_limits = "TacticalLines";
 
         [DescriptionAttribute("Layer containing units")]
         [CategoryAttribute("Layer bindings")]
         [TypeConverterAttribute(typeof(FeatureLayerList))]
         [DefaultValue("UnitForces")]
-        public string UnitForces
+        public string Units
         {
             get
             {
-                return m_unitForces;
+                return m_units;
             }
             set
             {
-                m_unitForces = value;
+                m_units = value;
             }
         }
 
@@ -113,15 +112,15 @@ namespace Crossbow
         [CategoryAttribute("Layer bindings")]
         [TypeConverterAttribute(typeof(FeatureLayerList))]
         [DefaultValue("TacticalLines")]
-        public string TacticalLines
+        public string Limits
         {
             get
             {
-                return m_tacticalLines;
+                return m_limits;
             }
             set
             {
-                m_tacticalLines = value;
+                m_limits = value;
             }
         }
     }

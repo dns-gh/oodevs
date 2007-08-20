@@ -10,6 +10,7 @@ namespace Crossbow
     /// <summary>
     /// Summary description for CSwordBar.
     /// </summary>
+    [ComVisible(true)]
     [Guid("666b9717-13e0-47d0-a388-7b3b7b581342")]
     [ClassInterface(ClassInterfaceType.None)]
     [ProgId("CSword.CSwordBar")]

@@ -171,7 +171,7 @@ namespace Crossbow
         {
             string filter = m_teamCombo.SelectedItem.ToString();
             IMxDocument mxDocument = Tools.GetMxDocument();
-            IFeatureLayer layer = Tools.GetIFeatureLayerFromLayerName(mxDocument.ActiveView, "UnitForces");
+            IFeatureLayer layer = Tools.GetIFeatureLayerFromLayerName(Tools.GetCSwordExtension().Config.LayersConfiguration.Units);
             if (layer != null)
             {
                 FilterLayer(layer, filter);
@@ -197,12 +197,12 @@ namespace Crossbow
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool user_call)
+        protected virtual void Dispose(bool usercall)
         {
             if (!m_disposed)
             {
                 m_disposed = true;
-                if (user_call)
+                if (usercall)
                     m_teamCombo.Dispose();
             }
         }

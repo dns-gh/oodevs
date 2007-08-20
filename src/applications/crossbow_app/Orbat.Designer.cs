@@ -15,7 +15,7 @@ namespace Crossbow
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-        
+        private IFeatureLayer m_featureLayer;
 
         /// <summary> 
         /// Clean up any resources being used.
@@ -38,55 +38,59 @@ namespace Crossbow
         /// </summary>
         private void InitializeComponent()
         {
-            // this.labelPlaceholder = new System.Windows.Forms.Label();
-            this.m_pSymbolTree = new System.Windows.Forms.TreeView();
-            this.SuspendLayout();            
+            this.m_symbolTree = new System.Windows.Forms.TreeView();
+            this.SuspendLayout();
             // 
-            // m_pSymbolTree
+            // m_symbolTree
             // 
-            this.m_pSymbolTree.Location = new System.Drawing.Point(0, 0);
-            this.m_pSymbolTree.Name = "m_pSymbolTree";
-            this.m_pSymbolTree.Size = new System.Drawing.Size(340, 580);
-            this.m_pSymbolTree.TabIndex = 0;
+            this.m_symbolTree.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.m_symbolTree.ItemHeight = 32;
+            this.m_symbolTree.Location = new System.Drawing.Point(0, 0);
+            this.m_symbolTree.Name = "m_symbolTree";
+            this.m_symbolTree.ShowRootLines = false;
+            this.m_symbolTree.Size = new System.Drawing.Size(340, 580);
+            this.m_symbolTree.TabIndex = 0;
             // 
             // Orbat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(m_pSymbolTree);
+            this.Controls.Add(this.m_symbolTree);
             this.Name = "Orbat";
             this.Size = new System.Drawing.Size(340, 580);
             this.ResumeLayout(false);
+
         }
 
         private void InitializeEvents()
         {
-            m_pSymbolTree.MouseClick += new MouseEventHandler(m_pSymbolTree_MouseClick);            
+            m_symbolTree.MouseClick += new MouseEventHandler(OnSymbolTreeNodeClicked);
         }
 
-        private static void SelectFeature(TreeNode node)
+        private void SelectFeature(TreeNode node)
         {
-            ESRI.ArcGIS.ArcMapUI.IMxDocument mxDocument = Tools.GetMxDocument();
-            IFeatureLayer pLayer = Tools.GetIFeatureLayerFromLayerName(mxDocument.ActiveView, "UnitForces");
-            
-            if (pLayer != null)
+            if (m_featureLayer != null)
             {
-                IFeatureSelection selection = (IFeatureSelection)pLayer;
+                IFeatureSelection selection = (IFeatureSelection)m_featureLayer;
                 IQueryFilter filter = new QueryFilterClass();
                 filter.WhereClause = "Public_OID=" + node.Name;
                 selection.SelectFeatures(filter, esriSelectionResultEnum.esriSelectionResultNew, true);
-                // pLayer.Search(filter, true);
+                // m_featureLayer.Search(filter, true);
             }
         }
 
-        private void m_pSymbolTree_MouseClick(object sender, MouseEventArgs e)
+        private void OnSymbolTreeNodeClicked(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)                            
-                SelectFeature(m_pSymbolTree.GetNodeAt(e.X, e.Y));            
+            SelectFeature(m_symbolTree.GetNodeAt(e.X, e.Y));
             if (e.Button == MouseButtons.Right)
-                Tools.GetCSwordExtension().OrderHandler.OnContextMenu(e.X, e.Y);
+            {
+                OrderHandler handler = Tools.GetCSwordExtension().OrderHandler;
+                if (handler != null)
+                    handler.OnContextMenu(e.X, e.Y);
+            }
         }
-               
 
         #endregion
         
@@ -94,17 +98,24 @@ namespace Crossbow
         /// <summary>
         /// Build Image list
         /// </summary>
-        /// <param name="pCursor"></param>
-        void InitializeSymbolOnCursor(IDisplay pDisplay, ICursor pCursor, int symbolFieldIndex)
+        /// <param name="table"></param>
+        void BuildTableSymbols(ITable table)
         {
-            IRow pRow = pCursor.NextRow();
-            while (pRow != null)
+            if (table == null)
+                return;
+            ICursor cursor = GetCursor(table);
+            if (cursor == null)
+                return;
+            for (IRow row = cursor.NextRow(); row != null; row = cursor.NextRow())
             {
-                string symbolID = (string)pRow.get_Value(symbolFieldIndex);
-                Image pImage = (Image)m_pSymbolFactory.GetSymbol(pDisplay, symbolID, "", 32);
-                m_pSymbolTree.ImageList.Images.Add(symbolID, pImage);
-                pRow = pCursor.NextRow();                
+                string symbolID = Tools.GetValue<string>(row, "Symbol_ID");
+                if (!m_symbolTree.ImageList.Images.ContainsKey(symbolID))
+                {
+                    Image image = (Image)m_pSymbolFactory.GetSymbol(m_SimpleDisplay, symbolID, "", 32);
+                    m_symbolTree.ImageList.Images.Add(symbolID, image);
+                }
             }
+            cursor = null;
         }
 
         /// <summary>
@@ -117,7 +128,6 @@ namespace Crossbow
             ICursor pCursor;
             IQueryFilter pQueryFilter = new QueryFilterClass();
             pQueryFilter.SubFields = "distinct (Symbol_ID)";
-
             pCursor = pTable.Search(pQueryFilter, false);
             pQueryFilter = null;
             return pCursor;
@@ -126,18 +136,14 @@ namespace Crossbow
         /// <summary>
         /// Load and initialize symbol tree with image initialization
         /// </summary>
-        void SetupSymbols(IFeatureLayer pLayer)
+        void BuildSymbols(ITable table)
         {
-            m_pSymbolTree.ImageList = new System.Windows.Forms.ImageList();
-            m_pSymbolTree.ImageList.ImageSize = new Size(32, 32);
-
-            IFeatureWorkspace pWorkspace = Tools.RetrieveWorkspace(pLayer);
-            ICursor pCursor = GetCursor(pWorkspace.OpenTable("Formations"));
-            if (pCursor != null)
-                InitializeSymbolOnCursor(m_SimpleDisplay, pCursor, m_Fields.GetFormationFieldIndex(FieldsProperty.EnumFields.eSymbol));
-            pCursor = GetCursor((ITable)pLayer.FeatureClass);
-            if (pCursor != null)
-                InitializeSymbolOnCursor(m_SimpleDisplay, pCursor, m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eSymbol));
+            if (m_symbolTree.ImageList == null)
+            {
+                m_symbolTree.ImageList = new ImageList();
+                m_symbolTree.ImageList.ImageSize = new Size(32, 32);
+            }
+            BuildTableSymbols(table);
         }
 
         private void RunAgentCursorOnSubordinate(IFeatureClass pFeatureClass, string stOIDFormation, string stOIDParent)
@@ -147,16 +153,18 @@ namespace Crossbow
 
             IFeatureCursor pCursor = pFeatureClass.Search(pQueryFilter, false);
             IFeature pFeature = pCursor.NextFeature();
-            System.Windows.Forms.TreeNode[] node = m_pSymbolTree.Nodes.Find(stOIDFormation, true);
+            TreeNode[] node = m_symbolTree.Nodes.Find(stOIDFormation, true);
             while (pFeature != null)
             {
-                int oid = (int)pFeature.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eOID));
-                string symbol = (string)pFeature.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eSymbol));
-                string name = (string)pFeature.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eName));
+                int oid = Tools.GetValue<int>(pFeature, "Public_OID");
+                string symbol = Tools.GetValue<string>(pFeature, "Symbol_ID");
+                string name = Tools.GetValue<string>(pFeature, "Name");
                 
-                node[0].Nodes.Add(oid.ToString(), name, symbol);
+                TreeNode newNode = node[0].Nodes.Add(oid.ToString(), name, symbol);
+                newNode.SelectedImageKey = symbol;
                 pFeature = pCursor.NextFeature();
             }
+            pCursor = null;
         }
 
         private void RunAgentCursor(IFeatureClass pFeatureClass)
@@ -168,64 +176,64 @@ namespace Crossbow
             IFeature pFeature = pCursor.NextFeature();
             while (pFeature != null)
             {
-                int oid = (int)pFeature.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eOID));
-                int oidParent = (int)pFeature.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eParentOID));
-                string name = (string)pFeature.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eName));
-                string symbol = (string)pFeature.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eSymbol));
+                int oid = Tools.GetValue<int>(pFeature, "Public_OID");
+                int oidParent = Tools.GetValue<int>(pFeature, "Parent_OID");
+                string name = Tools.GetValue<string>(pFeature, "Name");
+                string symbol = Tools.GetValue<string>(pFeature, "Symbol_ID");
 
-                System.Windows.Forms.TreeNode[] node = m_pSymbolTree.Nodes.Find(oidParent.ToString(), true);
-                node[0].Nodes.Add(oid.ToString(), name, symbol);                
+                TreeNode[] node = m_symbolTree.Nodes.Find(oidParent.ToString(), true);
+                TreeNode newNode = node[0].Nodes.Add(oid.ToString(), name, symbol);
+                newNode.SelectedImageKey = symbol;
                 RunAgentCursorOnSubordinate(pFeatureClass, oidParent.ToString(), oid.ToString());
                 pFeature = pCursor.NextFeature();
             }
+            pQueryFilter = null;
+            pCursor = null;
         }
 
-        private void UpdateFormation(IFeatureLayer pLayer)
+        private void UpdateFormation(ITable table)
         {
-            IFeatureWorkspace pWorkspace = Tools.RetrieveWorkspace(pLayer);
-            ITable pTable = pWorkspace.OpenTable("Formations");
-            ICursor pCursor = pTable.Search(null, false);
-            IRow    pRow = pCursor.NextRow();
-            
+            ICursor pCursor = table.Search(null, false);
+            IRow pRow = pCursor.NextRow();
             while (pRow != null)
             {
-                int oid = (int)pRow.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eOID));
-                int oidParent = (int)pRow.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eParentOID));
-                string name = (string)pRow.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eName));
-                string symbolID = (string)pRow.get_Value(m_Fields.GetElementFieldIndex(FieldsProperty.EnumFields.eSymbol));
+                int oidParent = Tools.GetValue<int>(pRow, "Parent_OID");
+                int oid = Tools.GetValue<int>(pRow, "Public_OID");
+                string name = Tools.GetValue<string>(pRow, "Name");
+                string symbolID = Tools.GetValue<string>(pRow, "Symbol_ID");
 
+                TreeNodeCollection parentNode = m_symbolTree.Nodes;
                 if (oidParent > 0 && oidParent < 4472872)
-                {
-                    System.Windows.Forms.TreeNode[] node = m_pSymbolTree.Nodes.Find(oidParent.ToString(), true);
-                    node[0].Nodes.Add(oid.ToString(), name, symbolID);
-                }
-                else
-                    m_pSymbolTree.Nodes.Add(oid.ToString(), name, symbolID);
+                    parentNode = m_symbolTree.Nodes.Find(oidParent.ToString(), true)[0].Nodes;
+                TreeNode newNode = parentNode.Add(oid.ToString(), name, symbolID);
+                newNode.SelectedImageKey = symbolID;
                 pRow = pCursor.NextRow();
             }
+            pCursor = null;
         }
 
         /// <summary>
         /// Setup orbat inner parameters
         /// </summary>
-        public void SetupOrbatCommand()
+        public void LoadLayer(string layerName)
         {
-            ESRI.ArcGIS.ArcMapUI.IMxDocument mxDocument = Tools.GetMxDocument();
-            IFeatureLayer pLayer = Tools.GetIFeatureLayerFromLayerName(mxDocument.ActiveView, "UnitForces");
-            
-            if (pLayer != null)
-            {
-                IFeatureWorkspace pWorkspace = Tools.RetrieveWorkspace(pLayer);
-                m_Fields.SetupFormationFields(pWorkspace.OpenTable("Formations"));
-                m_Fields.SetupTacticalElementFields(pLayer.FeatureClass);
-                SetupSymbols(pLayer);
-
-                UpdateFormation(pLayer);
-                RunAgentCursor(pLayer.FeatureClass);
-            }
+            IFeatureLayer layer = Tools.GetIFeatureLayerFromLayerName(layerName);
+            if (layer == null || layer == m_featureLayer)
+                return;
+            m_featureLayer = layer;
+            IFeatureWorkspace workspace = Tools.RetrieveWorkspace(m_featureLayer);
+            ITable formationTable = workspace.OpenTable("Formations");
+            m_symbolTree.BeginUpdate();
+            BuildSymbols(formationTable);
+            BuildSymbols(m_featureLayer.FeatureClass as ITable);
+            UpdateFormation(formationTable);
+            RunAgentCursor(m_featureLayer.FeatureClass);
+            m_symbolTree.EndUpdate();
+            formationTable = null;
         }
         #endregion
 
-        private System.Windows.Forms.TreeView m_pSymbolTree;
+        private TreeView m_symbolTree;
+
     }
 }

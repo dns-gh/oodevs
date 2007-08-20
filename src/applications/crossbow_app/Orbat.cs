@@ -12,15 +12,18 @@ using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.ADF.CATIDs;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geodatabase;
+using ESRI.ArcGIS.ArcMapUI;
+using ESRI.ArcGIS.Carto;
 
 namespace Crossbow
 {
     public interface IOrbat
     {
-        void Load();
-        void Unload();
+        void OnLoad();
+        void OnUnload();
     }
 
+    [ComVisible(true)]
     [Guid("02a14a61-dd9f-493e-80be-7927ae8a5bac")]
     [ClassInterface(ClassInterfaceType.None)]
     [ProgId("Crossbow.Orbat")]
@@ -120,14 +123,12 @@ namespace Crossbow
 
         #region IOrbat Members
 
-        public new void Load()
+        public void OnLoad()
         {
-            if (!m_loaded)
-                SetupOrbatCommand();
-            m_loaded = true;
+            LoadLayer(Tools.GetCSwordExtension().Config.LayersConfiguration.Units);
         }
 
-        public void Unload()
+        public void OnUnload()
         {
             // $$$$ SBO 2007-07-11: cleaning...
         }

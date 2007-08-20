@@ -75,7 +75,7 @@ namespace Crossbow
             {
                 if( DynamicDisplay == null || Display == null || DynamicDrawPhase != esriDynamicDrawPhase.esriDDPImmediate )
                     return;
-                if( this.m_visible )
+                if( Visible )
                     DrawFeatureClass(Display, DynamicDisplay);
             }
             catch( Exception ex )
@@ -319,11 +319,11 @@ namespace Crossbow
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool user_call)
+        protected virtual void Dispose(bool usercall)
         {
             if (!m_disposed)
             {
-                if (user_call)
+                if (usercall)
                     m_updateTimer.Dispose();
                 m_disposed = true;
             }

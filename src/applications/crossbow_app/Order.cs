@@ -166,12 +166,12 @@ namespace Crossbow
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool user_call)
+        protected virtual void Dispose(bool usercall)
         {
             if (!m_disposed)
             {
                 m_disposed = true;
-                if (user_call)
+                if (usercall)
                     m_orderForm.Dispose();
                 m_handler.Reset();
             }

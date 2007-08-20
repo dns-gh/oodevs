@@ -56,6 +56,9 @@ namespace Crossbow
             // 
             // m_ParameterTree
             // 
+            this.m_ParameterTree.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.m_ParameterTree.CheckBoxes = true;
             this.m_ParameterTree.FullRowSelect = true;
             this.m_ParameterTree.Location = new System.Drawing.Point(6, 91);
@@ -65,6 +68,7 @@ namespace Crossbow
             // 
             // m_Execute
             // 
+            this.m_Execute.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.m_Execute.Location = new System.Drawing.Point(195, 558);
             this.m_Execute.Name = "m_Execute";
             this.m_Execute.Size = new System.Drawing.Size(63, 27);
@@ -75,6 +79,8 @@ namespace Crossbow
             // 
             // m_Cancel
             // 
+            this.m_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.m_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.m_Cancel.Location = new System.Drawing.Point(264, 558);
             this.m_Cancel.Name = "m_Cancel";
             this.m_Cancel.Size = new System.Drawing.Size(63, 27);
@@ -85,6 +91,8 @@ namespace Crossbow
             // 
             // m_OrderBox
             // 
+            this.m_OrderBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.m_OrderBox.Controls.Add(this.m_UnitName);
             this.m_OrderBox.Controls.Add(this.label1);
             this.m_OrderBox.Location = new System.Drawing.Point(11, 6);
@@ -96,6 +104,8 @@ namespace Crossbow
             // 
             // m_UnitName
             // 
+            this.m_UnitName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.m_UnitName.Enabled = false;
             this.m_UnitName.Location = new System.Drawing.Point(68, 21);
             this.m_UnitName.Name = "m_UnitName";
@@ -115,6 +125,9 @@ namespace Crossbow
             // 
             // m_ParametersBox
             // 
+            this.m_ParametersBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.m_ParametersBox.Controls.Add(this.dataGridView1);
             this.m_ParametersBox.Controls.Add(this.flowLayoutPanel1);
             this.m_ParametersBox.Controls.Add(this.tableLayoutPanel1);
@@ -135,6 +148,8 @@ namespace Crossbow
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(6, 419);
             this.dataGridView1.Name = "dataGridView1";
@@ -143,6 +158,8 @@ namespace Crossbow
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.Location = new System.Drawing.Point(6, 354);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(294, 59);
@@ -150,6 +167,8 @@ namespace Crossbow
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -163,6 +182,8 @@ namespace Crossbow
             // 
             // m_Limit2
             // 
+            this.m_Limit2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.m_Limit2.Enabled = false;
             this.m_Limit2.Location = new System.Drawing.Point(65, 44);
             this.m_Limit2.Name = "m_Limit2";
@@ -173,6 +194,8 @@ namespace Crossbow
             // 
             // m_Limit1
             // 
+            this.m_Limit1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.m_Limit1.Enabled = false;
             this.m_Limit1.Location = new System.Drawing.Point(65, 16);
             this.m_Limit1.Name = "m_Limit1";
@@ -201,6 +224,7 @@ namespace Crossbow
             // 
             // m_Direction
             // 
+            this.m_Direction.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.m_Direction.Location = new System.Drawing.Point(220, 19);
             this.m_Direction.Maximum = 360;
             this.m_Direction.Name = "m_Direction";
