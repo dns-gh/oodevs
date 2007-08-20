@@ -65,7 +65,7 @@ namespace Crossbow
         #endregion
         #endregion
 
-        private WorkspaceConfigurationForm m_workspaceConfigurationForm;
+        private WorkspaceConfigurationForm m_form;
         private bool m_disposed;
 
         public CreateWorkspace()
@@ -100,7 +100,20 @@ namespace Crossbow
         /// <param name="hook">Instance of the application</param>
         public override void OnCreate(object hook)
         {
-            base.m_enabled = hook != null && hook is IMxApplication;
+            if (hook != null && hook is IMxApplication)
+            {
+                m_form = new WorkspaceConfigurationForm(Tools.GetCSwordExtension().Config); // $$$$ SBO 2007-08-20: bof bof...
+                m_enabled = m_form != null;
+                if (m_enabled)
+                    Tools.GetCSwordExtension().Config.ConfigurationLoaded += new EventHandler(Config_ConfigurationLoaded);
+            }
+            else
+                m_enabled = false;
+        }
+
+        void Config_ConfigurationLoaded(object sender, EventArgs e)
+        {
+            WorkspaceBuilder.Build((WorkspaceConfiguration)sender);
         }
 
         /// <summary>
@@ -108,9 +121,8 @@ namespace Crossbow
         /// </summary>
         public override void OnClick()
         {
-            if (m_workspaceConfigurationForm == null)
-                m_workspaceConfigurationForm = new WorkspaceConfigurationForm(Tools.GetCSwordExtension().Config);
-            m_workspaceConfigurationForm.Show();
+            if (m_form != null)
+                m_form.Show();
         }
 
         #endregion
@@ -128,8 +140,8 @@ namespace Crossbow
             if (!m_disposed)
             {
                 m_disposed = true;
-                if (usercall)
-                    m_workspaceConfigurationForm.Dispose();
+                if (usercall && m_form != null && !m_form.IsDisposed)
+                    m_form.Dispose();
             }
         }
 

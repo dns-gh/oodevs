@@ -90,7 +90,8 @@ namespace Crossbow
     public sealed class LayersConfiguration
     {
         private string m_units  = "UnitForces";
-        private string m_limits = "TacticalLines";
+        private string m_limits = "BoundaryLimits";
+        private string m_limas = "TacticalLines";
 
         [DescriptionAttribute("Layer containing units")]
         [CategoryAttribute("Layer bindings")]
@@ -112,6 +113,22 @@ namespace Crossbow
         [CategoryAttribute("Layer bindings")]
         [TypeConverterAttribute(typeof(FeatureLayerList))]
         [DefaultValue("TacticalLines")]
+        public string Limas
+        {
+            get
+            {
+                return m_limas;
+            }
+            set
+            {
+                m_limas = value;
+            }
+        }
+
+        [DescriptionAttribute("Layer containing boundary limits")]
+        [CategoryAttribute("Layer bindings")]
+        [TypeConverterAttribute(typeof(FeatureLayerList))]
+        [DefaultValue("BoundaryLimits")]
         public string Limits
         {
             get

@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using ESRI.ArcGIS.ADF.BaseClasses;
+using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.ADF.CATIDs;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.esriSystem;
@@ -97,10 +98,18 @@ namespace Crossbow
         /// <param name="hook">Instance of the application</param>
         public override void OnCreate(object hook)
         {
-            IApplication application = hook as IApplication;
-            if (application != null)
-                SetupDockableWindow(application as IDockableWindowManager);                
-            base.m_enabled = m_dockableWindow != null;
+            if (hook != null && hook is IMxApplication)
+            {
+                CreateDockableWindow(hook as IDockableWindowManager);
+                Tools.GetCSwordExtension().Config.ConfigurationLoaded += new EventHandler(Config_ConfigurationLoaded);
+            }
+            m_enabled = false;
+        }
+
+        void Config_ConfigurationLoaded(object sender, EventArgs e)
+        {
+            if (m_dockableWindow != null)
+                m_enabled = true;
         }
 
         /// <summary>
@@ -108,7 +117,7 @@ namespace Crossbow
         /// </summary>
         public override void OnClick()
         {
-            if (m_dockableWindow == null)
+            if (!Enabled || m_dockableWindow == null)
                 return;
             bool visible = m_dockableWindow.IsVisible();
             if (!visible)
@@ -126,7 +135,7 @@ namespace Crossbow
         }
         #endregion
 
-        private void SetupDockableWindow(IDockableWindowManager dockWindowManager)
+        private void CreateDockableWindow(IDockableWindowManager dockWindowManager)
         {
             if (m_dockableWindow == null && dockWindowManager != null)
             {

@@ -15,16 +15,22 @@ namespace Crossbow
         private ISpatialReference m_spatialReference;
         private IForceElement2525BRenderer m_forceElementRenderer;
         private ITacticalGraphicRenderer m_tacticalElementRenderer;
+        private IMoleCoreHelper m_moleHelper = new MoleCoreHelperClass();
 
         #region Factory initialization / configuration
         public SymbolFactory()
         {
-            IMoleCoreHelper moleHelper = new MoleCoreHelperClass();
-            m_forceElementRenderer = (IForceElement2525BRenderer)moleHelper.ForceElementRenderer;
+            m_forceElementRenderer = (IForceElement2525BRenderer)m_moleHelper.ForceElementRenderer;
             m_tacticalElementRenderer = new TacticalGraphic2525BRendererClass();
             m_tacticalElementRenderer.UsesAffiliationColor = true;
         }
-        
+
+        ~SymbolFactory()
+        {
+            m_moleHelper.ReleaseForceElementRenderer();
+            m_moleHelper.ReleaseTacticalGraphicRenderers();
+        }
+
         public ISpatialReference SpatialReference
         {
             get
