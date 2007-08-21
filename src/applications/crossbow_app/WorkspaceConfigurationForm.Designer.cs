@@ -46,6 +46,8 @@ namespace Crossbow
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.exerciseFileButton);
             this.groupBox1.Controls.Add(this.exerciseFileText);
             this.groupBox1.Controls.Add(this.label1);
@@ -58,6 +60,7 @@ namespace Crossbow
             // 
             // exerciseFileButton
             // 
+            this.exerciseFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.exerciseFileButton.Location = new System.Drawing.Point(371, 22);
             this.exerciseFileButton.Name = "exerciseFileButton";
             this.exerciseFileButton.Size = new System.Drawing.Size(75, 23);
@@ -68,6 +71,8 @@ namespace Crossbow
             // 
             // exerciseFileText
             // 
+            this.exerciseFileText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.exerciseFileText.Location = new System.Drawing.Point(82, 22);
             this.exerciseFileText.Name = "exerciseFileText";
             this.exerciseFileText.Size = new System.Drawing.Size(289, 20);
@@ -90,6 +95,9 @@ namespace Crossbow
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.layersGrid);
             this.groupBox2.Controls.Add(this.databaseButton);
             this.groupBox2.Controls.Add(this.databaseText);
@@ -103,6 +111,9 @@ namespace Crossbow
             // 
             // layersGrid
             // 
+            this.layersGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.layersGrid.Location = new System.Drawing.Point(19, 46);
             this.layersGrid.Name = "layersGrid";
             this.layersGrid.Size = new System.Drawing.Size(427, 249);
@@ -110,6 +121,7 @@ namespace Crossbow
             // 
             // databaseButton
             // 
+            this.databaseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.databaseButton.Location = new System.Drawing.Point(371, 20);
             this.databaseButton.Name = "databaseButton";
             this.databaseButton.Size = new System.Drawing.Size(75, 23);
@@ -120,6 +132,8 @@ namespace Crossbow
             // 
             // databaseText
             // 
+            this.databaseText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.databaseText.Location = new System.Drawing.Point(82, 20);
             this.databaseText.Name = "databaseText";
             this.databaseText.Size = new System.Drawing.Size(289, 20);
@@ -136,6 +150,7 @@ namespace Crossbow
             // 
             // okButton
             // 
+            this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.Location = new System.Drawing.Point(328, 390);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(76, 24);
@@ -146,6 +161,7 @@ namespace Crossbow
             // 
             // cancelButton
             // 
+            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancelButton.Location = new System.Drawing.Point(404, 390);
             this.cancelButton.Name = "cancelButton";
@@ -167,6 +183,7 @@ namespace Crossbow
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "WorkspaceConfigurationForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "CSword Workspace Configuration";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

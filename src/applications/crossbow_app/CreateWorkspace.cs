@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using ESRI.ArcGIS.ADF.BaseClasses;
 using ESRI.ArcGIS.ADF.CATIDs;
 using ESRI.ArcGIS.ArcMapUI;
+using ESRI.ArcGIS.Framework;
 
 namespace Crossbow
 {
@@ -122,7 +123,7 @@ namespace Crossbow
         public override void OnClick()
         {
             if (m_form != null)
-                m_form.Show();
+                m_form.ShowDialog();
         }
 
         #endregion
