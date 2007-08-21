@@ -82,7 +82,7 @@ void SymbolEditor::Write( IFeaturePtr spFeature, const ASN1T_MsgLimaCreation& ms
         walker.WalkTo( visitor, msg.tactical_line );
         UpdateAffiliation( symbol, visitor.GetSide() );
     }
-    UpdateFunction( symbol, "GL----" );
+    UpdateFunction( symbol, "GLP---" );
     // Fire support, coordination line UpdateFunction( symbol, "OLF---" );
     // line of departure UpdateFunction( symbol, "OLT---" );
     // line of contact UpdateFunction( symbol, "OLC---" );
