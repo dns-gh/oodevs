@@ -51,6 +51,10 @@ namespace Crossbow
             ICachedGraphicFeatureLayer cgLayer = (ICachedGraphicFeatureLayer)new TacticalGraphicLayerClass();
             cgLayer.FeatureLayer = featureLayer as IGeoFeatureLayer;
 
+            ITacticalGraphicLayer tgLayer = (ITacticalGraphicLayer)cgLayer;
+            tgLayer.TextSize = 0.006;
+            tgLayer.UseAffiliationColor = true;
+
             ICacheRendererCollection renderers = (ICacheRendererCollection)cgLayer;
             ICacheRenderer renderer = new TacticalGraphic2525BRendererClass();
             renderers.AddRenderer(ref renderer, 0);
