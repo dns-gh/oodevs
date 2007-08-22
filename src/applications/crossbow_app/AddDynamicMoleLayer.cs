@@ -133,13 +133,13 @@ namespace Crossbow
             IGroupLayer group = new GroupLayerClass();
             ILayer layer = group as ILayer;
             layer.Name = name;
-
+            
             IFeatureLayer featureLayer = new FeatureLayerClass();
             featureLayer.Name = layer.Name + " - Features";
             featureLayer.FeatureClass = featureClass;
             group.Add(featureLayer);
 
-            DynamicMoleLayer dynamicLayer = new DynamicMoleLayer();
+            DynamicMoleLayer dynamicLayer = new DynamicMoleLayer(Tools.GetCSwordExtension().SymbolFactory);
             dynamicLayer.Name = layer.Name + " - Dynamics";
             dynamicLayer.FeatureClass = featureClass;
             dynamicLayer.Connect();

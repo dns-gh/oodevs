@@ -1,7 +1,4 @@
 using System;
-//using System.Collections.Generic;
-//using System.Text;
-using System.Runtime.InteropServices;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.MOLE;
 using ESRI.ArcGIS.Geometry;
@@ -12,25 +9,19 @@ namespace Crossbow
 {
     public class SymbolFactory
     {
-        private ISpatialReference m_spatialReference;
+        private ISpatialReference          m_spatialReference;
         private IForceElement2525BRenderer m_forceElementRenderer;
-        private ITacticalGraphicRenderer m_tacticalElementRenderer;
-        private IMoleCoreHelper m_moleHelper = new MoleCoreHelperClass();
+        private ITacticalGraphicRenderer   m_tacticalElementRenderer;
 
         #region Factory initialization / configuration
         public SymbolFactory()
         {
+            IMoleCoreHelper m_moleHelper = new MoleCoreHelperClass();
             m_forceElementRenderer = (IForceElement2525BRenderer)m_moleHelper.ForceElementRenderer;
             m_tacticalElementRenderer = new TacticalGraphic2525BRendererClass();
             m_tacticalElementRenderer.UsesAffiliationColor = true;
         }
-
-        ~SymbolFactory()
-        {
-            m_moleHelper.ReleaseForceElementRenderer();
-            m_moleHelper.ReleaseTacticalGraphicRenderers();
-        }
-
+        
         public ISpatialReference SpatialReference
         {
             get
@@ -139,19 +130,6 @@ namespace Crossbow
 
         private ITacticalElement CreateMoleTacticalElement(IFeature feature, string symbolId)
         {
-            /*
-            IConstructTacticalElement constructor = m_tacticalElementRenderer as IConstructTacticalElement;
-            IGraphicDefSet definitions = m_tacticalElementRenderer as IGraphicDefSet;
-            IGraphicDef definition = definitions.GraphicDefSet.Next;
-
-            ITacticalElement element = constructor.ReturnSampleElement(mole2525BAffiliationsEnum.moleAffiliationFriend,
-                                                                       mole2525BEchelonsEnum.moleEchelonDivision,
-                                                                       graphicDef,
-                                                                       envelope,
-                                                                       Tools.MakePoint(1,1),
-                                                                       false);
-            return element;
-             */
             ITacticalElement element = new TacticalElementClass();
             element.Shape = feature.Shape;
             element.MessageString = symbolId;

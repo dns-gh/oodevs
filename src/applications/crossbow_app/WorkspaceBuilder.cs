@@ -26,7 +26,7 @@ namespace Crossbow
             IFeatureLayer featureLayer = (IGeoFeatureLayer)BuildFeatureLayer(workspace, name);
             if (featureLayer == null)
                 return null;
-            DynamicMoleLayer dynamicLayer = new DynamicMoleLayer();
+            DynamicMoleLayer dynamicLayer = new DynamicMoleLayer(Tools.GetCSwordExtension().SymbolFactory);
             dynamicLayer.FeatureClass = featureLayer.FeatureClass;
             dynamicLayer.Connect();
 

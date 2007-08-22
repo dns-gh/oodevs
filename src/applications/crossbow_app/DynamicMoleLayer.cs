@@ -1,6 +1,6 @@
 using System;
 using System.Timers;
-using System.Collections.Generic;
+using System.Collections;
 using System.Text;
 using System.Runtime.InteropServices;
 using ESRI.ArcGIS.ADF.BaseClasses;
@@ -26,22 +26,22 @@ namespace Crossbow
     [ProgId("Crossbow.DynamicMoleLayer")]
     public partial class DynamicMoleLayer : BaseDynamicLayer, IFeatureLayer, IFeatureSelection, IEnumFeature, IDynamicLayerDataset, IDisposable
     {
-        private bool                            m_selectable = true;
-        private IFeatureClass                   m_featureClass;
-        private int                             m_featureClassId = -1;
-        private System.Collections.Hashtable    m_elements = new System.Collections.Hashtable();
-        private SymbolFactory                   m_symbolFactory = new SymbolFactory();
-        private FieldsProperty                  m_Fields = new FieldsProperty();
-        private Timer                           m_updateTimer;
-        private bool m_disposed;
+        private bool            m_selectable = true;
+        private IFeatureClass   m_featureClass;
+        private int             m_featureClassId = -1;
+        private Hashtable       m_elements = new Hashtable();
+        private SymbolFactory   m_symbolFactory;
+        private Timer           m_updateTimer;
+        private bool            m_disposed;
         
         // IFeatureLayer attributes
         private String m_displayField = "name"; // $$$$ SBO 2007-07-09: Symbol_ID ?
         private bool m_scaleSymbols;
         
         #region class constructor/destructor
-        public DynamicMoleLayer()
+        public DynamicMoleLayer(SymbolFactory symbolFactory)
         {
+            m_symbolFactory = symbolFactory;
             m_selectionColor = Tools.MakeColor(255, 0, 0);
             SetupTimer(100);
         }
@@ -54,16 +54,11 @@ namespace Crossbow
         #endregion
 
         #region ILayer overriden
-        public override void Draw(esriDrawPhase DrawPhase, IDisplay Display, ITrackCancel TrackCancel)
-        {
-            Tools.EnableDynamicDisplay();
-        }
-
         public override bool Valid
         {
             get
             {
-                return m_featureClass != null;
+                return base.Valid && !m_disposed && m_featureClass != null && m_symbolFactory != null;
             }
         }
         #endregion
@@ -73,12 +68,12 @@ namespace Crossbow
         {
             try
             {
-                if( DynamicDisplay == null || Display == null || DynamicDrawPhase != esriDynamicDrawPhase.esriDDPImmediate )
+                if (!Valid || DynamicDisplay == null || Display == null || DynamicDrawPhase != esriDynamicDrawPhase.esriDDPImmediate)
                     return;
-                if( Visible )
+                if (Visible)
                     DrawFeatureClass(Display, DynamicDisplay);
             }
-            catch( Exception ex )
+            catch (Exception ex)
             {
                 System.Diagnostics.Trace.WriteLine(ex.Message);
             }
@@ -245,7 +240,6 @@ namespace Crossbow
                 {
                     m_featureClassId = m_featureClass.FeatureClassID;
                     m_selectable = true;
-                    m_Fields.SetupTacticalElementFields(m_featureClass);
                 }
             }
         }

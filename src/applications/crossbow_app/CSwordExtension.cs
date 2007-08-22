@@ -67,8 +67,12 @@ namespace Crossbow
 
         private WorkspaceConfiguration m_config = new WorkspaceConfiguration();
         private OrderHandler m_orderHandler;
+        private SymbolFactory m_symbolFactory = new SymbolFactory();
 
         private IDocumentEvents_OnContextMenuEventHandler m_contextMenuEvent;
+        private IDocumentEvents_NewDocumentEventHandler   m_newDocumentEvent;
+        private IDocumentEvents_OpenDocumentEventHandler  m_openDocumentEvent;
+        private IDocumentEvents_CloseDocumentEventHandler m_closeDocumentEvent;
         private EventHandler m_configLoadedEvent;
 
         #region IExtension Members
@@ -86,6 +90,7 @@ namespace Crossbow
         public void Shutdown()
         {
             m_orderHandler = null;
+            m_symbolFactory = null;
         }
 
         public void Startup(ref object initializationData)
@@ -104,6 +109,12 @@ namespace Crossbow
                 m_config.ConfigurationLoaded += m_configLoadedEvent;
             }
             {
+                m_newDocumentEvent = new IDocumentEvents_NewDocumentEventHandler(OnNewDocumentHandler);
+                ((IDocumentEvents_Event)(Tools.GetMxDocument())).NewDocument += m_newDocumentEvent;
+                m_openDocumentEvent = new IDocumentEvents_OpenDocumentEventHandler(OnOpenDocumentHandler);
+                ((IDocumentEvents_Event)(Tools.GetMxDocument())).OpenDocument += m_openDocumentEvent;
+                m_closeDocumentEvent = new IDocumentEvents_CloseDocumentEventHandler(OnCloseDocumentHandler);
+                ((IDocumentEvents_Event)(Tools.GetMxDocument())).CloseDocument += m_closeDocumentEvent;
                 m_contextMenuEvent = new IDocumentEvents_OnContextMenuEventHandler(OnContextMenuHandler);
                 ((IDocumentEvents_Event)(Tools.GetMxDocument())).OnContextMenu += m_contextMenuEvent;
             }
@@ -113,6 +124,21 @@ namespace Crossbow
         {
             if (m_orderHandler == null)
                 m_orderHandler = new OrderHandler(m_config);
+        }
+
+        private void OnNewDocumentHandler()
+        {
+            Tools.EnableDynamicDisplay(true);
+        }
+
+        private void OnOpenDocumentHandler()
+        {
+            Tools.EnableDynamicDisplay(true);
+        }
+
+        private void OnCloseDocumentHandler()
+        {
+            Tools.EnableDynamicDisplay(false);
         }
 
         private void OnContextMenuHandler(int x, int y, out bool handled)
@@ -135,6 +161,14 @@ namespace Crossbow
             get
             {
                 return m_config;
+            }
+        }
+
+        public SymbolFactory SymbolFactory
+        {
+            get
+            {
+                return m_symbolFactory;
             }
         }
         #endregion

@@ -23,17 +23,17 @@ namespace Crossbow
         #endregion
 
         #region "Enable dynamic display"
-        public static void EnableDynamicDisplay()
+        public static void EnableDynamicDisplay(bool enable)
         {
-            if (m_dynamicDisplayEnabled)
+            if (m_dynamicDisplayEnabled == enable)
                 return;
             IMxDocument mxDocument = Tools.GetMxDocument();
             IDynamicMap map = mxDocument.FocusMap as IDynamicMap;
             if (map == null)
                 throw new System.Exception("Dynamic display not supported");
-            if (!map.DynamicMapEnabled)
+            if (map.DynamicMapEnabled != enable)
             {
-                map.DynamicMapEnabled = true;
+                map.DynamicMapEnabled = enable;
                 mxDocument.ActiveView.Refresh();
             }
             m_dynamicDisplayEnabled = map.DynamicMapEnabled;
