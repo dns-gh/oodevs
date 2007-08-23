@@ -328,7 +328,7 @@ void ADN_Composantes_Data::NTIInfos::WriteArchive( xml::xostream& output )
 {
     if( ! bIsPresent_.GetData() )
         return;
-    output << xml::start( "reparing" );
+    output << xml::start( "repairing" );
     output << xml::attribute( "category", strName_ );
     if( bHasMaxRepairTime_.GetData() )
         output << xml::attribute( "max-reparation-time", maxRepairTime_ );

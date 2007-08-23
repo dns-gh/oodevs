@@ -33,7 +33,6 @@ ADN_Automata_Data::UnitInfos::UnitInfos()
     BindExistenceTo( &ptrUnit_ );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: UnitInfos::GetNodeName
 // Created: APE 2004-12-02
@@ -42,7 +41,6 @@ std::string ADN_Automata_Data::UnitInfos::GetNodeName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: UnitInfos::GetItemName
@@ -91,9 +89,9 @@ void ADN_Automata_Data::UnitInfos::WriteArchive( xml::xostream& output, const AD
     output << xml::start( "unit" )
              << xml::attribute( "type", ptrUnit_.GetData()->strName_ );
     if( min_.GetData() != 0 )
-        output << xml::attribute( "min", min_ );
+        output << xml::attribute( "min-occurs", min_ );
     if( max_.GetData() >= 0 )
-        output << xml::attribute( "max", max_ );
+        output << xml::attribute( "max-occurs", max_ );
     if( ptrUnit_ == pc )
         output << xml::attribute( "command-post", true );
     output << xml::end();
