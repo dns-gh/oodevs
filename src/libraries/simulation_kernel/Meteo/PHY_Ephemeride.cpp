@@ -11,6 +11,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_Ephemeride.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 //-----------------------------------------------------------------------------
 // Name: PHY_Ephemeride::UpdateNight
@@ -39,44 +42,44 @@ bool PHY_Ephemeride::UpdateNight()
 // Name: PHY_Ephemeride constructor
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-PHY_Ephemeride::PHY_Ephemeride( MIL_InputArchive& archive )
+PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
     : pNightBase_( 0 )
     , bIsNight_  ( false )
 {
-    archive.Section( "Ephemeride" );
+    xis >> start( "Ephemeride" );
 
     std::string strVal;
 
     // HeureLeverSoleil
-    archive.ReadField( "HeureLeverSoleil", strVal );
+    xis >> content( "HeureLeverSoleil", strVal );
     char tmp = 0;
     {
         std::istringstream strTmp( strVal );
         strTmp >> sunriseTime_.first >> tmp >> sunriseTime_.second;
     }
     if ( tmp != 'h' || sunriseTime_.first < 0 || sunriseTime_.first > 23 || sunriseTime_.second < 0 || sunriseTime_.second > 59 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Bad time format (use 00h00)", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Bad time format (use 00h00)" ); // $$$$ ABL 2007-07-27: error context
 
     // HeureCoucherSoleil
-    archive.ReadField( "HeureCoucherSoleil", strVal );
+    xis >> content( "HeureCoucherSoleil", strVal );
     tmp = 0;
     {
         std::istringstream strTmp( strVal );
         strTmp >> sunsetTime_.first >> tmp >> sunsetTime_.second;
     }
     if ( tmp != 'h' || sunsetTime_.first < 0 || sunsetTime_.first > 23 || sunsetTime_.second < 0 || sunsetTime_.second > 59 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Bad time format (use 00h00)", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Bad time format (use 00h00)" ); // $$$$ ABL 2007-07-27: error context
 
     // Lune
-    archive.ReadField( "Lune", strVal );
+    xis >> content( "Lune", strVal );
     pNightBase_ = PHY_Lighting::FindLighting( strVal );
     if( !pNightBase_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown lighting '%s'", strVal.c_str() ), archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown lighting '%s'", strVal.c_str() ) ); // $$$$ ABL 2007-07-27: error context
 
-    archive.EndSection(); // Ephemeride
+    xis >> end();
 
     if( sunriseTime_ >= sunsetTime_  )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Sunrise time should be before sunset time", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Sunrise time should be before sunset time" ); // $$$$ ABL 2007-07-27: error context
     UpdateNight();
 }
 

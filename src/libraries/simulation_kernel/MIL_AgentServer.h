@@ -6,13 +6,16 @@
 #define __MIL_AgentServer_h_
 
 #include "MIL.h"
-
 #include "Tools/MIL_Config.h"
 #include "Network/NET_Simulation_ABC.h"
 #include "MT/MT_Time/MT_Timer_ABC.h"
 #include "MT/MT_Time/MT_TimerManager.h"
 #include "MIL_Time_ABC.h"
 
+namespace xml
+{
+    class xostream;
+}
 class MIL_EffectManager;
 class MIL_TacticalLineManager;
 class MIL_Agent_ABC;
@@ -25,7 +28,6 @@ class PHY_MeteoDataManager;
 class MIL_ProfilerMgr;
 class HLA_Federate;
 class ProcessMonitor;
-class MT_XXmlOutputArchive;
 
 //*****************************************************************************
 // Created: DFT 02-02-28
@@ -35,7 +37,7 @@ class MIL_AgentServer : public MT_Timer_ABC
                       , public NET_Simulation_ABC
                       , public MIL_Time_ABC
 {
-	MT_COPYNOTALLOWED( MIL_AgentServer )
+    MT_COPYNOTALLOWED( MIL_AgentServer )
 
 public:
     //! @name Type
@@ -56,9 +58,9 @@ public:
     //! @name Checkpoints
     //@{
     void save( MIL_CheckPointOutArchive& ) const;
-    void load( MIL_CheckPointInArchive& );    
+    void load( MIL_CheckPointInArchive& );
 
-    void WriteODB( MT_XXmlOutputArchive& archive ) const;
+    void WriteODB( xml::xostream& xos ) const;
     //@}
 
     //! @name Simulation management
@@ -73,29 +75,29 @@ public:
     //! @name Simulation main loop
     //@{
     E_SimState Update     ();
-	void       MainSimLoop();
+    void       MainSimLoop();
     //@}
 
     //! @name Accessors
-    //@{ 
+    //@{
     MIL_EntityManager&       GetEntityManager      () const;
     MIL_EffectManager&       GetEffectManager      () const;
-	DEC_Workspace&	         GetWorkspaceDIA       () const;
-	NET_AgentServer&         GetAgentServer        () const;
+    DEC_Workspace&           GetWorkspaceDIA       () const;
+    NET_AgentServer&         GetAgentServer        () const;
     MIL_TacticalLineManager& GetTacticalLineManager() const;
     DEC_PathFind_Manager&    GetPathFindManager    () const;
     PHY_MeteoDataManager&    GetMeteoDataManager   () const;
     MIL_ProfilerMgr&         GetProfilerManager    () const;
     MIL_CheckPointManager&   GetCheckPointManager  () const;
     MT_TimerManager&         GetTimerManager       ();
-    HLA_Federate*            GetHLAFederate        () const;               
+    HLA_Federate*            GetHLAFederate        () const;
     E_SimState               GetSimState           () const;
     MIL_Config&              GetConfig             ();
     //@}
 
     //! @name Workspace management
     //@{
-	static MIL_AgentServer& GetWorkspace    ();
+    static MIL_AgentServer& GetWorkspace    ();
     static void             CreateWorkspace ( MIL_Config& config );
     static void             DestroyWorkspace();
     //@}
@@ -112,7 +114,7 @@ public:
     uint GetTimeStepDuration() const;  // $$$$ AGE 2007-08-13: degager
     //@}
 
-private:  
+private:
     //! @name
     //@{
     void ReadStaticData();
@@ -131,7 +133,7 @@ private:
     void SendMsgBeginTick() const;
     void SendMsgEndTick  () const;
     //@}
-      
+
 private:
     E_SimState nSimState_;
 
@@ -146,7 +148,7 @@ private:
 
     MIL_EffectManager*           pEffectManager_;
     MIL_EntityManager*           pEntityManager_;
-    DEC_Workspace*	             pWorkspaceDIA_;
+    DEC_Workspace*                 pWorkspaceDIA_;
     PHY_MeteoDataManager*        pMeteoDataManager_;
 
     MT_TimerManager              timerManager_;
@@ -160,13 +162,12 @@ private:
     ProcessMonitor*              pProcessMonitor_;
 
     long lastStep_;
-    
+
 private:
-	static MIL_AgentServer*      pTheAgentServer_;
+    static MIL_AgentServer*      pTheAgentServer_;
 };
 
 #include "MIL_AgentServer.inl"
 
 
 #endif // __MIL_AgentServer_h_
-

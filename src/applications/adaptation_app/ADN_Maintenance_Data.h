@@ -15,7 +15,7 @@
 #include "ADN_Enums.h"
 #include "ADN_AvailabilityWarning.h"
 
-class ADN_XmlInput_Helper;
+class xml::xistream;
 
 
 // =============================================================================
@@ -42,8 +42,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Int  nIdx_; 
@@ -69,8 +69,10 @@ public:
     //@}
 
 private:
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void WriteArchive( MT_OutputArchive_ABC& output );
+    void ReadArchive( xml::xistream& input );
+    void ReadWorkingScheme( xml::xistream& input );
+    void ReadAvailabilityAlert( xml::xistream& input );
+    void WriteArchive( xml::xostream& output );
 
 public:
     T_WorkingSchemeInfo_Vector vWorkingSchemes_;

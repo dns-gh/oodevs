@@ -9,6 +9,11 @@
 
 #include "game_asn/Asn.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_Config;
 class PHY_RawVisionData;
 class PHY_Ephemeride;
@@ -56,6 +61,11 @@ private:
     void UnregisterMeteo( PHY_Meteo& meteo );
     //@}
 
+    //! @name Helpers
+    //@{
+    void ReadPatchLocal( xml::xistream& xis );
+    //@}
+
 private:
     //! @name Types
     //@{
@@ -66,8 +76,8 @@ private:
 private:
     //! @name Init
     //@{
-    void InitializeGlobalMeteo( MIL_InputArchive& archive );
-    void InitializeLocalMeteos( MIL_InputArchive& archive );
+    void InitializeGlobalMeteo( xml::xistream& xis );
+    void InitializeLocalMeteos( xml::xistream& xis );
     //@}
 
 private:

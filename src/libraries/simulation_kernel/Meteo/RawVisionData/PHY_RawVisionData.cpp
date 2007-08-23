@@ -18,8 +18,10 @@
 
 #include "MT_Tools/MT_Rect.h"
 #include "MT_Tools/MT_Ellipse.h"
+#include "xeumeuleu/xml.h"
+#include "tools/InputBinaryStream.h"
 
-	  PHY_RawVisionData::sCell PHY_RawVisionData::emptyCell_;
+      PHY_RawVisionData::sCell PHY_RawVisionData::emptyCell_;
 const PHY_Meteo*               PHY_RawVisionData::sCell::pGlobalMeteo_;
 
 
@@ -56,14 +58,10 @@ PHY_RawVisionData::PHY_RawVisionData( PHY_Meteo& globalMeteo, MIL_Config& config
 {
     MT_LOG_INFO_MSG( "Initializing vision data" );
 
-    MIL_InputArchive terrainArchive;
-
-    terrainArchive.Open( config.GetTerrainFile() );
-    terrainArchive.Section( "Terrain" );
+    xml::xifstream xis( config.GetTerrainFile() );
     std::string strRawVisionDirectory;
-    terrainArchive.ReadField( "RawVision", strRawVisionDirectory );
-    terrainArchive.EndSection(); // Terrain
-    terrainArchive.Close();
+    xis >> xml::start( "Terrain" )
+        >> xml::content( "RawVision", strRawVisionDirectory );
 
     std::string detection = config.BuildTerrainChildFile( strRawVisionDirectory + "/detection.dat" );
     MIL_AgentServer::GetWorkspace().GetConfig().AddFileToCRC( detection );
@@ -203,14 +201,11 @@ void PHY_RawVisionData::UnregisterWeatherEffect( const MT_Ellipse& surface, cons
 //-----------------------------------------------------------------------------
 bool PHY_RawVisionData::Read( const std::string& strFile )
 {
-    MT_FlatBinaryInputArchive archive;
-    if ( !archive.Open( strFile ) )
+    tools::InputBinaryStream archive( strFile.c_str() );
+    if ( !archive )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot open file %s", strFile.c_str() ) );
 
-    if (   !archive.ReadField( "rCellSize_", rCellSize_ )
-        || !archive.ReadField( "nNbrRow_"  , nNbrRow_ )
-        || !archive.ReadField( "nNbrCol_"  , nNbrCol_ )
-       )
+    if ( ! ( archive >> rCellSize_ >> nNbrRow_ >> nNbrCol_ ) )
        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Error reading file %s", strFile.c_str() ) );
 
     assert( !ppCells_ );
@@ -225,7 +220,8 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
         {
             pTmp->pMeteo   = 0;
             pTmp->pEffects = 0;
-            if ( !archive.ReadData( 4, (char*)pTmp++ ) )
+            archive.Read( (char*)pTmp++, 4 );
+            if ( !archive )
                 throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Error reading file %s", strFile.c_str() ) );
         }
     }

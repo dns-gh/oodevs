@@ -18,6 +18,11 @@
 #include "boost/thread/mutex.hpp"
 #include "boost/thread/condition.hpp"
 
+namespace xml
+{
+    class xistream;
+}
+
 class DEC_Path_ABC;
 class TER_PathFinderThread;
 class MIL_Config;

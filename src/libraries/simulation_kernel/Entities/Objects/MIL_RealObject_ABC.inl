@@ -121,7 +121,7 @@ uint MIL_RealObject_ABC::GetID() const
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
 inline
-void MIL_RealObject_ABC::WriteSpecificAttributes( MT_XXmlOutputArchive& /*archive*/ ) const
+void MIL_RealObject_ABC::WriteSpecificAttributes( xml::xostream& xos ) const
 {
     // NOTHING
 }

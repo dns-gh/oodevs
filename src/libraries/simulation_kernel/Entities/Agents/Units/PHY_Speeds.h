@@ -21,6 +21,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_RoleAction_Moving;
 
 // =============================================================================
@@ -35,7 +40,7 @@ class PHY_Speeds
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_Speeds( MIL_InputArchive& archive );
+             PHY_Speeds( xml::xistream& xis );
              PHY_Speeds( const PHY_RoleAction_Moving& role );
     virtual ~PHY_Speeds();
     //@}
@@ -61,8 +66,9 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadArchive( MIL_InputArchive& archive );
-    void CheckInitialization( MIL_InputArchive& archive );
+    void ReadSpeed          ( xml::xistream& xis );
+    void ReadTerrain        ( xml::xistream& xis );
+    void CheckInitialization( xml::xistream& xis );
     MT_Float& SpeedFor( const TerrainData& data );
     void GenerateMasks();
     //@}

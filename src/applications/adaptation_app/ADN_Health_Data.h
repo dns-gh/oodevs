@@ -15,7 +15,7 @@
 #include "ADN_Enums.h"
 #include "ADN_AvailabilityWarning.h"
 
-class ADN_XmlInput_Helper;
+class xml::xistream;
 
 
 // =============================================================================
@@ -37,8 +37,8 @@ public:
     public:
         WoundInfo();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         E_DoctorSkills  nType_;
@@ -64,8 +64,10 @@ public:
     //@}
 
 private:
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void WriteArchive( MT_OutputArchive_ABC& output );
+    void ReadArchive( xml::xistream& input );
+    void ReadInjury ( xml::xistream& input );
+    void ReadResourceAvailability ( xml::xistream& input );
+    void WriteArchive( xml::xostream& output );
 
 public:
     ADN_Type_Time   diagnosticTime_;

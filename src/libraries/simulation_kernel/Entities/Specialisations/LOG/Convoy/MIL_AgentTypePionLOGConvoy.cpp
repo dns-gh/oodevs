@@ -14,12 +14,16 @@
 #include "MIL_AgentTypePionLOGConvoy.h"
 #include "MIL_AgentPionLOGConvoy.h"
 
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGConvoy constructor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AgentTypePionLOGConvoy::MIL_AgentTypePionLOGConvoy( const std::string& strName, MIL_InputArchive& archive )
-    : MIL_AgentTypePionLOG_ABC( strName, archive )
+MIL_AgentTypePionLOGConvoy::MIL_AgentTypePionLOGConvoy( const std::string& strName, xml::xistream& xis )
+    : MIL_AgentTypePionLOG_ABC( strName, xis )
 { 
     // $$$ ?? Checker que le type ne contient aucun equipement ?
 }
@@ -41,9 +45,9 @@ MIL_AgentTypePionLOGConvoy::~MIL_AgentTypePionLOGConvoy()
 // Name: MIL_AgentTypePionLOGConvoy::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_AgentTypePionLOGConvoy::InstanciatePion( uint nID, MIL_Automate& automate, MIL_InputArchive& archive ) const
+MIL_AgentPion& MIL_AgentTypePionLOGConvoy::InstanciatePion( uint nID, MIL_Automate& automate, xml::xistream& xis ) const
 {
-    return *new MIL_AgentPionLOGConvoy( *this, nID, automate, archive );
+    return *new MIL_AgentPionLOGConvoy( *this, nID, automate, xis );
 }
 
 // -----------------------------------------------------------------------------

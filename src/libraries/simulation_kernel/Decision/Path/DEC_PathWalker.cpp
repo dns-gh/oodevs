@@ -238,7 +238,7 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
                 // A - C - B ( Le point C ajouté entre A et B contient les mêmes objets que de A -> B)
                 if( itMoveStep != moveStepSet.begin() )
                 {
-				    IT_MoveStepSet itPrevMoveStep = itMoveStep;
+                    IT_MoveStepSet itPrevMoveStep = itMoveStep;
                     itMoveStep->objectsToNextPointSet_ = (--itPrevMoveStep)->objectsToNextPointSet_;
                 }
             }
@@ -256,7 +256,7 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
             {
                 itPrevMoveStep->objectsToNextPointSet_.insert( &object );
                 bInsideObjectOnPrevPoint = true;
-				itPrevMoveStep->ponctualObjectsOnSet_.erase( &object ); // This is not yet a ponctual object
+                itPrevMoveStep->ponctualObjectsOnSet_.erase( &object ); // This is not yet a ponctual object
             }
             else
             {
@@ -284,7 +284,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
     // Prise en compte des objets ponctuels se trouvant sur le 'move step'
     for( itObject = itCurMoveStep->ponctualObjectsOnSet_.begin(); itObject != itCurMoveStep->ponctualObjectsOnSet_.end(); ++itObject )
     {
-		MIL_Object_ABC& object = **itObject;
+        MIL_Object_ABC& object = **itObject;
 
         MT_Float rSpeedWithinObject = movingEntity_.GetSpeedWithReinforcement( environment_, object );
    
@@ -355,7 +355,7 @@ bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D&
 //    bool bFirstMove = ( vNewPos_.Distance( (*path.GetResult().begin())->GetPos() ) <= 10. );    
     bool bFirstMove = ( (float)vNewPos_.rX_ == (float)(*path.GetResult().begin())->GetPos().rX_ && (float)vNewPos_.rY_ == (float)(*path.GetResult().begin())->GetPos().rY_ );
 
-	sMoveStepCmp  cmp( vNewPos_ );
+    sMoveStepCmp  cmp( vNewPos_ );
     T_MoveStepSet moveStepSet( cmp ); 
    
     ComputeObjectsCollision( vNewPos_, vNewPosTmp, moveStepSet );

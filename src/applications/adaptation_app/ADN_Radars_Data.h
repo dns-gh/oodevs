@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-05-03 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Radars_Data.h $
-// $Author: Nld $
-// $Modtime: 3/05/05 14:43 $
-// $Revision: 1 $
-// $Workfile: ADN_Radars_Data.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Radars_Data_h_
 #define __ADN_Radars_Data_h_
@@ -26,7 +17,6 @@
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_DataTreeNode_ABC.h"
-
 
 // =============================================================================
 /** @class  ADN_Radars_Data
@@ -48,8 +38,9 @@ public:
         DetectTimes();
         ~DetectTimes();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input, bool bHq );
+        void ReadAcquisitionTime( xml::xistream& input, bool bHq );
+        void WriteArchive( xml::xostream& output, bool bHq );
 
     public:
         ADN_Type_Bool  bDetectTime_;
@@ -74,8 +65,10 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void ReadDetectableActivity( xml::xistream& input );
+        
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_String strName_;
@@ -112,8 +105,9 @@ public:
     RadarInfos* FindRadar( const std::string& strName );
 
 public:
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void WriteArchive( MT_OutputArchive_ABC& output );
+    void ReadArchive( xml::xistream& input );
+    void ReadRadar( xml::xistream& input );
+    void WriteArchive( xml::xostream& output );
 
 public:
     T_RadarInfos_Vector  vRadars_;

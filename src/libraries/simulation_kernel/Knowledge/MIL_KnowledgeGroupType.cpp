@@ -14,36 +14,51 @@
 #include "MIL_KnowledgeGroupType.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Tools/MIL_Tools.h"
+#include "tools/xmlcodecs.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 MIL_KnowledgeGroupType::T_KnowledgeGroupTypeMap MIL_KnowledgeGroupType::knowledgeGroupTypes_;
 uint                                            MIL_KnowledgeGroupType::nNextID_ = 0;
+
+struct MIL_KnowledgeGroupType::LoadingWrapper
+{
+    void ReadKnowledgeGroup( xml::xistream& xis )
+    {
+        MIL_KnowledgeGroupType::ReadKnowledgeGroup( xis );
+    }
+};
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroupType::Initialize
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroupType::Initialize( MIL_InputArchive& archive )
+void MIL_KnowledgeGroupType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing knowledge groups types" );
+    LoadingWrapper loader;
 
-    archive.BeginList( "GroupesConnaissance" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "GroupeConnaissance" );
-    
-        std::string strName;
-        std::string strType;
+    xis >> start( "knowledge-groups" )
+            >> list( "knowledge-group", loader, &LoadingWrapper::ReadKnowledgeGroup )
+        >> end();
+}
 
-        archive.ReadAttribute( "nom", strName );
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroupType::ReadKnowledgeGroup
+// Created: ABL 2007-07-23
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroupType::ReadKnowledgeGroup( xml::xistream& xis )
+{
+    std::string strName;
+    std::string strType;
 
-        const MIL_KnowledgeGroupType*& pType = knowledgeGroupTypes_[ strName ];
-        if( pType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Type already defined", archive.GetContext() );
-        pType = new MIL_KnowledgeGroupType( strName, archive );
+    xis >> attribute( "name", strName );
 
-        archive.EndSection(); // GroupeConnaissance
-    }
-    archive.EndList(); // GroupesConnaissance
+    const MIL_KnowledgeGroupType*& pType = knowledgeGroupTypes_[ strName ];
+    if( pType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Type already defined" ); // $$$$ ABL 2007-07-23: error context
+    pType = new MIL_KnowledgeGroupType( strName, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +80,7 @@ void MIL_KnowledgeGroupType::Terminate()
 // Name: MIL_KnowledgeGroupType constructor
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, MIL_InputArchive& archive )
+MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml::xistream& xis )
     : strName_                                      ( strName )
     , nID_                                          ( nNextID_++ )
     , rKnowledgeAgentMaxLifeTime_                   ( 0. )
@@ -74,28 +89,37 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, MIL_
     , rKnowledgePopulationMaxLifeTime_              ( 0. )
 {
     // Connaissances agent
-    archive.Section( "ConnaissancesAgent" );
+    xis >> start( "unit-knowledge" );
 
-    archive.ReadTimeField( "DureeDeVieMax", rKnowledgeAgentMaxLifeTime_, CheckValueGreater( 0. ) );
+    tools::ReadTimeAttribute( xis, "max-lifetime", rKnowledgeAgentMaxLifeTime_ );
+    if( rKnowledgeAgentMaxLifeTime_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit-knowledge: max-lifetime <= 0" );
     rKnowledgeAgentMaxLifeTime_ = MIL_Tools::ConvertSecondsToSim( rKnowledgeAgentMaxLifeTime_ );
 
-    uint nTmp;
-    archive.ReadField( "DistanceMaxEntreUniteReelleEtUniteConnue", nTmp, CheckValueGreater( (uint)0 ) );
+    uint nTmp = std::numeric_limits< unsigned int >::max();
+    xis >> optional() >> attribute( "max-unit-to-knowledge-distance", nTmp );
+    if( nTmp <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit-knowledge: max-unit-to-knowledge-distance <= 0" );
     rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_ = MIL_Tools::ConvertMeterToSim( nTmp );
 
-    archive.ReadTimeField( "TempsInterpolation", rKnowledgeAgentExtrapolationTime_, CheckValueGreater( 0. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
+    if( tools::ReadTimeAttribute(xis, "interpolation-time", rKnowledgeAgentExtrapolationTime_ ) )
+        if( rKnowledgeAgentExtrapolationTime_ <= 0 )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit-knowledge: interpolation-time <= 0" );
     rKnowledgeAgentExtrapolationTime_ = std::max( 1., MIL_Tools::ConvertSecondsToSim( rKnowledgeAgentExtrapolationTime_ ) );
     // JVT : 1 car lorsque l'on perd de vue une unité, on veux au moins que l'emplacement de la connaissance soit celle au pas de temps suivant le non vu
 
-    archive.EndSection(); // ConnaissancesAgent
+    xis >> end();
 
     // Connaissances population
-    archive.Section( "ConnaissancesPopulation" );
+    xis >> start( "population-knowledge" );
 
-    archive.ReadTimeField( "DureeDeVieMax", rKnowledgePopulationMaxLifeTime_, CheckValueGreater( 0. ) );
+    tools::ReadTimeAttribute( xis, "max-lifetime", rKnowledgePopulationMaxLifeTime_ );
+    if( rKnowledgePopulationMaxLifeTime_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population-knowledge: max-lifetime <= 0" );
+
     rKnowledgePopulationMaxLifeTime_ = MIL_Tools::ConvertSecondsToSim( rKnowledgePopulationMaxLifeTime_ );
 
-    archive.EndSection(); // ConnaissancesPopulation
+    xis >> end();
 }
 
 // -----------------------------------------------------------------------------
@@ -104,6 +128,7 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, MIL_
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroupType::~MIL_KnowledgeGroupType()
 {
+    // NOTHING
 }
 
 // =============================================================================
@@ -114,7 +139,7 @@ MIL_KnowledgeGroupType::~MIL_KnowledgeGroupType()
 // Name: MIL_KnowledgeGroupType::InstanciateKnowledgeGroup
 // Created: NLD 2004-11-15
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup& MIL_KnowledgeGroupType::InstanciateKnowledgeGroup( uint nID, MIL_Army& army, MIL_InputArchive& archive ) const
+MIL_KnowledgeGroup& MIL_KnowledgeGroupType::InstanciateKnowledgeGroup( uint nID, MIL_Army& army ) const
 {
-    return *new MIL_KnowledgeGroup( *this, nID, army, archive );
+    return *new MIL_KnowledgeGroup( *this, nID, army );
 }

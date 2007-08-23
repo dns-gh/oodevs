@@ -8,36 +8,49 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_SupplyResourcesAlarms.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 PHY_SupplyResourcesAlarms::T_LevelSet PHY_SupplyResourcesAlarms::convoyTransporterResourcesLevels_;
+
+struct PHY_SupplyResourcesAlarms::LoadingWrapper
+{
+    void ReadResourceAvailabilityAlert ( xml::xistream& xis )
+    {
+        PHY_SupplyResourcesAlarms::ReadResourceAvailabilityAlert( xis );
+    }
+};
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyResourcesAlarms::Initialize
 // Created: NLD 2006-08-02
 // -----------------------------------------------------------------------------
-void PHY_SupplyResourcesAlarms::Initialize( MIL_InputArchive& archive )
+void PHY_SupplyResourcesAlarms::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing supply resources alarms" );
+    LoadingWrapper loader;
 
-    archive.Section( "Ravitaillement" );
-    archive.Section( "AlertesDisponibiliteMoyens" );
-    
-    archive.BeginList( "AlertesDisponibiliteVecteurs" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "AlerteDisponibiliteVecteurs" );
-        MT_Float rRatio;
-        archive.ReadAttribute( "pourcentageMoyensDisponibles", rRatio, CheckValueBound( 0., 100. ) );
-        rRatio /= 100.;
-        convoyTransporterResourcesLevels_.insert( rRatio );
-        archive.EndSection(); // AlerteDisponibiliteVecteurs 
-    }
-    archive.EndList(); // AlertesDisponibiliteVecteurs
+    xis >> start( "supply" )
+            >> start( "resource-availability-alerts" )
+                >> list( "resource-availability-alert", loader, &LoadingWrapper::ReadResourceAvailabilityAlert )
+            >> end()
+        >> end();
+}
 
-    archive.EndSection(); // AlertesDisponibiliteMoyens
-    archive.EndSection(); // Ravitaillement
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyResourcesAlarms::ReadResourceAvailabilityAlert
+// Created: ABL 2007-07-24
+// -----------------------------------------------------------------------------
+void PHY_SupplyResourcesAlarms::ReadResourceAvailabilityAlert( xml::xistream& xis )
+{
+    MT_Float rRatio;
+    xis >> attribute( "availability-threshold", rRatio );
+    if( rRatio < 0 || rRatio > 100 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "resource-availabilty-alert: availability-threshold not in [0..100]" );
+    rRatio /= 100.;
+    convoyTransporterResourcesLevels_.insert( rRatio );
 }
 
 // -----------------------------------------------------------------------------

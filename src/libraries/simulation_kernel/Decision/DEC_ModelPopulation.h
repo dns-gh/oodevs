@@ -16,6 +16,11 @@
 
 #include "DEC_Model_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_PopulationMissionType;
 
 // =============================================================================
@@ -26,7 +31,7 @@ class DEC_ModelPopulation : public DEC_Model_ABC< MIL_PopulationMissionType >
     MT_COPYNOTALLOWED( DEC_ModelPopulation );
 
 public:
-    DEC_ModelPopulation( const DEC_Workspace& decWorkspace, const std::string& strName, MIL_InputArchive& input, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strArchivePath );
+    DEC_ModelPopulation( const DEC_Workspace& decWorkspace, const std::string& strName, xml::xistream& xis, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strArchivePath );
     virtual ~DEC_ModelPopulation();
 };
 

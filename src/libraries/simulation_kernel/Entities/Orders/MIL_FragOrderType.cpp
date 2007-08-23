@@ -10,6 +10,9 @@
 #include "simulation_kernel_pch.h"
 
 #include "MIL_FragOrderType.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 MIL_FragOrderType::T_MissionIDMap   MIL_FragOrderType::missionIDs_;
 MIL_FragOrderType::T_MissionNameMap MIL_FragOrderType::missionNames_;
@@ -18,36 +21,49 @@ MIL_FragOrderType::T_MissionNameMap MIL_FragOrderType::missionNames_;
 // FACTORY
 // =============================================================================
 
+struct MIL_FragOrderType::LoadingWrapper
+{
+    void ReadFragorder( xml::xistream& xis )
+    {
+        MIL_FragOrderType::ReadFragorder( xis );
+    }
+};
+
 //-----------------------------------------------------------------------------
 // Name: MIL_FragOrderType::Initialize
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-void MIL_FragOrderType::Initialize( MIL_InputArchive& archive )
+void MIL_FragOrderType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing frag orders types" );
+
+    LoadingWrapper loader;
     
-    archive.Section( "missions" );
-    archive.BeginList( "fragorders" );
-    while( archive.NextListElement() )
-    {
-        archive.BeginList( "fragorder" );
-        uint nID;
-        archive.ReadAttribute( "id", nID );
+    xis >> start( "missions" )
+            >> start( "fragorders" )
+                >> list( "fragorder", loader, &LoadingWrapper::ReadFragorder )
+            >> end()
+        >> end();
+}
 
-        const MIL_FragOrderType*& pMission = missionIDs_[ nID ];
-        if( pMission )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Frag order already defined", archive.GetContext() );
-        pMission = new MIL_FragOrderType( nID, archive );
+// -----------------------------------------------------------------------------
+// Name: MIL_FragOrderType::ReadFragorder
+// Created: ABL 2007-07-25
+// -----------------------------------------------------------------------------
+void MIL_FragOrderType::ReadFragorder( xml::xistream& xis )
+{
+    uint nID;
+    xis >> attribute( "id", nID );
 
-        const MIL_FragOrderType*& pMissionName = missionNames_[ pMission->GetName() ];
-        if( pMissionName )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat mission name already defined", archive.GetContext() );
-        pMissionName = pMission;
+    const MIL_FragOrderType*& pMission = missionIDs_[ nID ];
+    if( pMission )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Frag order already defined" ); // $$$$ ABL 2007-07-25: error context
+    pMission = new MIL_FragOrderType( nID, xis );
 
-        archive.EndList(); // fragorder
-    }
-    archive.EndList(); // fragorders
-    archive.EndSection(); // missions
+    const MIL_FragOrderType*& pMissionName = missionNames_[ pMission->GetName() ];
+    if( pMissionName )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat mission name already defined" ); // $$$$ ABL 2007-07-25: error context
+    pMissionName = pMission;
 }
 
 // =============================================================================
@@ -58,13 +74,13 @@ void MIL_FragOrderType::Initialize( MIL_InputArchive& archive )
 // Name: MIL_FragOrderType constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_FragOrderType::MIL_FragOrderType( uint nID, MIL_InputArchive& archive )
-    : MIL_OrderType_ABC        ( nID, archive )   
+MIL_FragOrderType::MIL_FragOrderType( uint nID, xml::xistream& xis )
+    : MIL_OrderType_ABC        ( nID, xis )   
     , bAvailableWithoutMission_( false )
     , bAvailableForAllMissions_( false )
 {
-    archive.ReadAttribute( "available-without-mission", bAvailableWithoutMission_, MIL_InputArchive::eNothing );
-    archive.ReadAttribute( "available-for-all-mission", bAvailableForAllMissions_, MIL_InputArchive::eNothing );
+    xis >> optional() >> attribute( "available-without-mission", bAvailableWithoutMission_ )
+        >> optional() >> attribute( "available-for-all-mission", bAvailableForAllMissions_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -73,6 +89,7 @@ MIL_FragOrderType::MIL_FragOrderType( uint nID, MIL_InputArchive& archive )
 //-----------------------------------------------------------------------------
 MIL_FragOrderType::~MIL_FragOrderType()
 {
+    // NOTHING
 }
 
 

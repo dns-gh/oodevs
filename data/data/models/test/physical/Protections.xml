@@ -1,68 +1,60 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Protections>
-
-  <Protection nom="CharLourd" type="materiel">
-    <Neutralisation tempsMoyen="300s" variance="60s"/>
-    <ProbabilitePanneAleatoire EVA="8" NEVA="0"/>
-    <EffetsAttritionSurHumains>
-      <EffetAttritionSurHumains etatEquipement="ReparableAvecEvacuation" pourcentageBlesses="60" pourcentageMorts="15"/>
-      <EffetAttritionSurHumains etatEquipement="ReparableSurPlace" pourcentageBlesses="40" pourcentageMorts="10"/>
-      <EffetAttritionSurHumains etatEquipement="Detruit" pourcentageBlesses="75" pourcentageMorts="15"/>
-    </EffetsAttritionSurHumains>
-  </Protection>
-
-  <Protection nom="CharMoyen" type="materiel">
-    <Neutralisation tempsMoyen="600s" variance="180s"/>
-    <ProbabilitePanneAleatoire EVA="8" NEVA="0"/>
-    <EffetsAttritionSurHumains>
-      <EffetAttritionSurHumains etatEquipement="ReparableAvecEvacuation" pourcentageBlesses="60" pourcentageMorts="15"/>
-      <EffetAttritionSurHumains etatEquipement="ReparableSurPlace" pourcentageBlesses="40" pourcentageMorts="10"/>
-      <EffetAttritionSurHumains etatEquipement="Detruit" pourcentageBlesses="75" pourcentageMorts="15"/>
-    </EffetsAttritionSurHumains>
-  </Protection>
-
-  <Protection nom="BlindeLeger" type="materiel">
-    <Neutralisation tempsMoyen="900s" variance="180s"/>
-    <ProbabilitePanneAleatoire EVA="4" NEVA="0"/>
-    <EffetsAttritionSurHumains>
-      <EffetAttritionSurHumains etatEquipement="ReparableAvecEvacuation" pourcentageBlesses="60" pourcentageMorts="15"/>
-      <EffetAttritionSurHumains etatEquipement="ReparableSurPlace" pourcentageBlesses="40" pourcentageMorts="10"/>
-      <EffetAttritionSurHumains etatEquipement="Detruit" pourcentageBlesses="75" pourcentageMorts="15"/>
-    </EffetsAttritionSurHumains>
-  </Protection>
-
-  <Protection nom="TransportBlinde" type="materiel">
-    <Neutralisation tempsMoyen="1200s" variance="600s"/>
-    <ProbabilitePanneAleatoire EVA="4" NEVA="0"/>
-    <EffetsAttritionSurHumains>
-      <EffetAttritionSurHumains etatEquipement="ReparableAvecEvacuation" pourcentageBlesses="60" pourcentageMorts="15"/>
-      <EffetAttritionSurHumains etatEquipement="ReparableSurPlace" pourcentageBlesses="40" pourcentageMorts="10"/>
-      <EffetAttritionSurHumains etatEquipement="Detruit" pourcentageBlesses="75" pourcentageMorts="15"/>
-    </EffetsAttritionSurHumains>
-  </Protection>
-
-  <Protection nom="Aeronef" type="materiel">
-    <Neutralisation tempsMoyen="900s" variance="180s"/>
-    <ProbabilitePanneAleatoire EVA="4" NEVA="0"/>
-    <EffetsAttritionSurHumains>
-      <EffetAttritionSurHumains etatEquipement="ReparableAvecEvacuation" pourcentageBlesses="60" pourcentageMorts="15"/>
-      <EffetAttritionSurHumains etatEquipement="ReparableSurPlace" pourcentageBlesses="40" pourcentageMorts="10"/>
-      <EffetAttritionSurHumains etatEquipement="Detruit" pourcentageBlesses="75" pourcentageMorts="15"/>
-    </EffetsAttritionSurHumains>
-  </Protection>
-
-  <Protection nom="VehiculeNonProtege" type="materiel">
-    <Neutralisation tempsMoyen="1200s" variance="600s"/>
-    <ProbabilitePanneAleatoire EVA="4" NEVA="0"/>
-    <EffetsAttritionSurHumains>
-      <EffetAttritionSurHumains etatEquipement="ReparableAvecEvacuation" pourcentageBlesses="60" pourcentageMorts="15"/>
-      <EffetAttritionSurHumains etatEquipement="ReparableSurPlace" pourcentageBlesses="40" pourcentageMorts="10"/>
-      <EffetAttritionSurHumains etatEquipement="Detruit" pourcentageBlesses="75" pourcentageMorts="15"/>
-    </EffetsAttritionSurHumains>
-  </Protection>
-
-  <Protection nom="Combattant" type="humain">
-    <Neutralisation tempsMoyen="300s" variance="420s"/>
-  </Protection>
-
-</Protections>
+<protections>
+  <protection name="CharLourd" type="materiel">
+    <neutralization average-time="300s" variance="60s"/>
+    <random-breakdown-probability eva="8" neva="0"/>
+    <attrition-effects>
+      <attrition-effect dead-percentage="15" equipment-state="ReparableAvecEvacuation" injured-percentage="60"/>
+      <attrition-effect dead-percentage="10" equipment-state="ReparableSurPlace" injured-percentage="40"/>
+      <attrition-effect dead-percentage="15" equipment-state="Detruit" injured-percentage="75"/>
+    </attrition-effects>
+  </protection>
+  <protection name="CharMoyen" type="materiel">
+    <neutralization average-time="600s" variance="180s"/>
+    <random-breakdown-probability eva="8" neva="0"/>
+    <attrition-effects>
+      <attrition-effect dead-percentage="15" equipment-state="ReparableAvecEvacuation" injured-percentage="60"/>
+      <attrition-effect dead-percentage="10" equipment-state="ReparableSurPlace" injured-percentage="40"/>
+      <attrition-effect dead-percentage="15" equipment-state="Detruit" injured-percentage="75"/>
+    </attrition-effects>
+  </protection>
+  <protection name="BlindeLeger" type="materiel">
+    <neutralization average-time="900s" variance="180s"/>
+    <random-breakdown-probability eva="4" neva="0"/>
+    <attrition-effects>
+      <attrition-effect dead-percentage="15" equipment-state="ReparableAvecEvacuation" injured-percentage="60"/>
+      <attrition-effect dead-percentage="10" equipment-state="ReparableSurPlace" injured-percentage="40"/>
+      <attrition-effect dead-percentage="15" equipment-state="Detruit" injured-percentage="75"/>
+    </attrition-effects>
+  </protection>
+  <protection name="TransportBlinde" type="materiel">
+    <neutralization average-time="1200s" variance="600s"/>
+    <random-breakdown-probability eva="4" neva="0"/>
+    <attrition-effects>
+      <attrition-effect dead-percentage="15" equipment-state="ReparableAvecEvacuation" injured-percentage="60"/>
+      <attrition-effect dead-percentage="10" equipment-state="ReparableSurPlace" injured-percentage="40"/>
+      <attrition-effect dead-percentage="15" equipment-state="Detruit" injured-percentage="75"/>
+    </attrition-effects>
+  </protection>
+  <protection name="Aeronef" type="materiel">
+    <neutralization average-time="900s" variance="180s"/>
+    <random-breakdown-probability eva="4" neva="0"/>
+    <attrition-effects>
+      <attrition-effect dead-percentage="15" equipment-state="ReparableAvecEvacuation" injured-percentage="60"/>
+      <attrition-effect dead-percentage="10" equipment-state="ReparableSurPlace" injured-percentage="40"/>
+      <attrition-effect dead-percentage="15" equipment-state="Detruit" injured-percentage="75"/>
+    </attrition-effects>
+  </protection>
+  <protection name="VehiculeNonProtege" type="materiel">
+    <neutralization average-time="1200s" variance="600s"/>
+    <random-breakdown-probability eva="4" neva="0"/>
+    <attrition-effects>
+      <attrition-effect dead-percentage="15" equipment-state="ReparableAvecEvacuation" injured-percentage="60"/>
+      <attrition-effect dead-percentage="10" equipment-state="ReparableSurPlace" injured-percentage="40"/>
+      <attrition-effect dead-percentage="15" equipment-state="Detruit" injured-percentage="75"/>
+    </attrition-effects>
+  </protection>
+  <protection name="Combattant" type="humain">
+    <neutralization average-time="300s" variance="420s"/>
+  </protection>
+</protections>

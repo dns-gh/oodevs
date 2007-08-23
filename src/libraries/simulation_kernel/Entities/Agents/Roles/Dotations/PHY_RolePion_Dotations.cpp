@@ -27,6 +27,9 @@
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Dotations, "PHY_RolePion_Dotations" )
 
@@ -150,9 +153,9 @@ void PHY_RolePion_Dotations::save( MIL_CheckPointOutArchive& file, const uint ) 
 // Name: PHY_RolePion_Dotations::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::WriteODB( MT_XXmlOutputArchive& archive ) const
+void PHY_RolePion_Dotations::WriteODB( xml::xostream& xos ) const
 {
-    pDotations_->WriteODB( archive );
+    pDotations_->WriteODB( xos );
 }
 
 // =============================================================================
@@ -162,10 +165,10 @@ void PHY_RolePion_Dotations::WriteODB( MT_XXmlOutputArchive& archive ) const
 // Name: PHY_RolePion_Dotations::ReadOverloading
 // Created: NLD 2004-08-17
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::ReadOverloading( MIL_InputArchive& archive )
+void PHY_RolePion_Dotations::ReadOverloading( xml::xistream& xis )
 {
     assert( pDotations_ );
-    pDotations_->ReadValues( archive );
+    pDotations_->ReadValues( xis );
 }
 
 // -----------------------------------------------------------------------------

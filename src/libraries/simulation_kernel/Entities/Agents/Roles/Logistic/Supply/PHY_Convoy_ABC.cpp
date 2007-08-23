@@ -21,6 +21,22 @@
 #include "Entities/Orders/MIL_PionMissionType.h"
 #include "Tools/MIL_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
+#include "tools/xmlcodecs.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+
+struct PHY_Convoy_ABC::LoadingWrapper
+{
+    void ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< MT_Float >& data, std::pair< uint, MT_Float >& upperBound )
+    {
+        PHY_Convoy_ABC::ReadInterpolatedTime( xis, data, upperBound );
+    }
+    void ReadSpeedModifier( xml::xistream& xis, std::pair< uint, MT_Float >& upperBound )
+    {
+        PHY_Convoy_ABC::ReadSpeedModifier( xis, upperBound );
+    }
+};
 
       MT_InterpolatedFunction< MT_Float > PHY_Convoy_ABC::formingTime_;
       MT_InterpolatedFunction< MT_Float > PHY_Convoy_ABC::loadingTime_;
@@ -39,130 +55,143 @@ BOOST_CLASS_EXPORT_GUID( PHY_Convoy_ABC, "PHY_Convoy_ABC" )
 // Name: PHY_Convoy_ABC::Initialize
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-void PHY_Convoy_ABC::Initialize( MIL_InputArchive& archive )
+void PHY_Convoy_ABC::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing convoys" );
 
-    archive.Section( "Ravitaillement" );
-    archive.Section( "Convois" );
+    xis >> start( "supply" )
+            >> start( "convoys" );
 
-    InitializeConvoyUnitType( archive );
-    InitializeConvoyMission ( archive );
+    InitializeConvoyUnitType( xis );
+    InitializeConvoyMission ( xis );
 
-    InitializeInterpolatedTime ( archive, "TempsConstitution"      , formingTime_          );
-    InitializeInterpolatedTime ( archive, "TempsChargement"        , loadingTime_          );
-    InitializeInterpolatedTime ( archive, "TempsDechargement"      , unloadingTime_        );
-    InitializeSpeedModificators( archive );
+    InitializeInterpolatedTime ( xis, "constitution-times", formingTime_   );
+    InitializeInterpolatedTime ( xis, "loading-times"     , loadingTime_   );
+    InitializeInterpolatedTime ( xis, "unloading-times"   , unloadingTime_ );
+    InitializeSpeedModificators( xis );
    
-    archive.EndSection(); // Convois
-    archive.EndSection(); // Ravitaillement
+    xis     >> end()
+        >> end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Convoy_ABC::InitializeConvoyUnitType
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------
-void PHY_Convoy_ABC::InitializeConvoyUnitType( MIL_InputArchive& archive )
+void PHY_Convoy_ABC::InitializeConvoyUnitType( xml::xistream& xis )
 {
-    archive.Section( "TypeUnite" );
     std::string strConvoyAgentType;
-    archive.ReadAttribute( "nom", strConvoyAgentType );
+    xis >> attribute( "unit-type", strConvoyAgentType );
 
     pConvoyAgentType_ = MIL_AgentTypePion::Find( strConvoyAgentType );
     if( !pConvoyAgentType_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown type for convoy", archive.GetContext() );
-
-    archive.EndSection(); // TypeUnite
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown type for convoy" ); // $$$$ ABL 2007-07-24: error context
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Convoy_ABC::InitializeConvoyMission
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------
-void PHY_Convoy_ABC::InitializeConvoyMission( MIL_InputArchive& archive )
+void PHY_Convoy_ABC::InitializeConvoyMission( xml::xistream& xis )
 {
-    archive.Section( "Mission" );
     std::string strMission;
-    archive.ReadAttribute( "nom", strMission );
+    xis >> attribute( "mission", strMission );
 
     pConvoyMissionType_ = MIL_PionMissionType::Find( strMission );
     if( !pConvoyMissionType_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid mission name for convoy", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid mission name for convoy" ); // $$$$ ABL 2007-07-24: error context
 
     assert( pConvoyAgentType_ );
     if( !pConvoyAgentType_->GetModel().IsMissionAvailable( *pConvoyMissionType_ ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Convoy type pion cannot receive convoy mission", archive.GetContext() );
-
-    archive.EndSection(); // Mission
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Convoy type pion cannot receive convoy mission" ); // $$$$ ABL 2007-07-24: error context
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Convoy_ABC::InitializeInterpolatedTime
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------
-void PHY_Convoy_ABC::InitializeInterpolatedTime( MIL_InputArchive& archive, const std::string& strTagName, MT_InterpolatedFunction< MT_Float >& data )
+void PHY_Convoy_ABC::InitializeInterpolatedTime( xml::xistream& xis, const std::string& strTagName, MT_InterpolatedFunction< MT_Float >& data )
 {
     data.AddNewPoint( 0., 0. );
-    uint     nMaxNbrCamions         = 0;
-    MT_Float rTimeWhenMaxNbrCamions = 0.;
+    LoadingWrapper loader;
 
-    archive.BeginList( strTagName );
-    while( archive.NextListElement() )
+    std::pair< uint, MT_Float > upperBound( 0, 0.f );
+    xis >> start( strTagName )
+            >> list( "unit-time", loader, &LoadingWrapper::ReadInterpolatedTime, data, upperBound )
+        >> end();
+
+    data.SetAfterValue( upperBound.second );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::ReadTime
+// Created: ABL 2007-07-24
+// -----------------------------------------------------------------------------
+void PHY_Convoy_ABC::ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< MT_Float >& data, std::pair< uint, MT_Float >& upperBound )
+{
+    uint     nNbrCamions;
+    MT_Float rTime;
+
+    xis >> attribute( "truck-count", nNbrCamions );
+    if( nNbrCamions <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "time: truck-count <= 0" );
+
+    tools::ReadTimeAttribute( xis, "time", rTime );
+    if( rTime <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "time: time <= 0" );
+    rTime = MIL_Tools::ConvertSecondsToSim( rTime );
+
+    data.AddNewPoint( nNbrCamions, rTime );
+
+    if( nNbrCamions >= upperBound.first )
     {
-        archive.Section( "Temps" );
-
-        uint     nNbrCamions;
-        MT_Float rTime;
-
-        archive.ReadAttribute( "nbCamions", nNbrCamions, CheckValueGreater( 0  ) );
-        archive.ReadTime     (              rTime      , CheckValueGreater( 0. ) );
-        rTime = MIL_Tools::ConvertSecondsToSim( rTime );
-
-        data.AddNewPoint( nNbrCamions, rTime ); 
-
-        if( nNbrCamions >= nMaxNbrCamions )
-        {
-            rTimeWhenMaxNbrCamions = rTime;
-            nMaxNbrCamions         = nNbrCamions;
-        }
-        archive.EndSection(); // Temps
-    }   
-    archive.EndList(); // strTagName
-    data.SetAfterValue( rTimeWhenMaxNbrCamions );
+        upperBound.first = nNbrCamions;
+        upperBound.second = rTime;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Convoy_ABC::InitializeSpeedModificators
 // Created: NLD 2007-02-05
 // -----------------------------------------------------------------------------
-void PHY_Convoy_ABC::InitializeSpeedModificators( MIL_InputArchive& archive )
+void PHY_Convoy_ABC::InitializeSpeedModificators( xml::xistream& xis )
 {
     coefSpeedModificator_.AddNewPoint( 0., 0. );
-    uint     nMaxNbrCamions          = 0;
-    MT_Float rValueWhenMaxNbrCamions = 0.;
+    LoadingWrapper loader;
 
-    archive.BeginList( "CoefModificationVitesse" );
-    while( archive.NextListElement() )
+    std::pair< uint, MT_Float > upperBound( 0, 0.f );
+
+    xis >> start( "speed-modifiers" )
+            >> list( "speed-modifier", loader, &LoadingWrapper::ReadSpeedModifier, upperBound )
+        >> end();
+
+    coefSpeedModificator_.SetAfterValue( upperBound.second );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::ReadSpeedModifier
+// Created: ABL 2007-07-24
+// -----------------------------------------------------------------------------
+void PHY_Convoy_ABC::ReadSpeedModifier( xml::xistream& xis, std::pair< uint, MT_Float >& upperBound )
+{
+    uint     nNbrCamions;
+    MT_Float rValue;
+
+    xis >> attribute( "truck-count", nNbrCamions )
+        >> attribute( "value", rValue );
+
+    if( nNbrCamions <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "speed-modifier: truck-count <= 0" );
+    if( rValue <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "speed-modifier: value <= 0" );
+
+    coefSpeedModificator_.AddNewPoint( nNbrCamions, rValue ); 
+
+    if( nNbrCamions >= upperBound.first )
     {
-        archive.Section( "Coef" );
-
-        uint     nNbrCamions;
-        MT_Float rValue;
-
-        archive.ReadAttribute( "nbCamions", nNbrCamions, CheckValueGreater( 0  ) );
-        archive.Read         (              rValue      , CheckValueGreater( 0. ) );
-
-        coefSpeedModificator_.AddNewPoint( nNbrCamions, rValue ); 
-
-        if( nNbrCamions >= nMaxNbrCamions )
-        {
-            rValueWhenMaxNbrCamions = rValue;
-            nMaxNbrCamions          = nNbrCamions;
-        }
-        archive.EndSection(); // Temps
-    }   
-    archive.EndList(); // CoefModificationVitesse
-    coefSpeedModificator_.SetAfterValue( rValueWhenMaxNbrCamions );
+        upperBound.first = nNbrCamions;
+        upperBound.second = rValue;
+    }
 }
 
 // -----------------------------------------------------------------------------

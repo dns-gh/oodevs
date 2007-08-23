@@ -13,9 +13,14 @@
 #define __PHY_RolePion_Dotations_h_
 
 #include "MIL.h"
-
 #include "PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
+
+namespace xml
+{
+    class xostream;
+    class xistream;
+}
 
 class MIL_AgentPion;
 class PHY_DotationCapacities;
@@ -49,12 +54,12 @@ public:
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
 
-    void WriteODB( MT_XXmlOutputArchive& archive ) const;
+    void WriteODB( xml::xostream& xos ) const;
     //@}
     
     //! @name External operations
     //@{
-    void ReadOverloading              ( MIL_InputArchive& archive );
+    void ReadOverloading              ( xml::xistream& xis );
     void RegisterDotationsCapacities  ( const PHY_DotationCapacities& capacities );
     void UnregisterDotationsCapacities( const PHY_DotationCapacities& capacities );
 

@@ -19,7 +19,7 @@
 #include "ADN_Equipement_Data.h"
 #include "ADN_DataTreeNode_ABC.h"
 
-class ADN_XmlInput_Helper;
+class xml::xistream;
 
 
 //*****************************************************************************
@@ -43,8 +43,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Enum< E_Location, eNbrLocation > nLocation_;
@@ -82,8 +82,8 @@ public:
         PopulationAttritionInfos();
         ~PopulationAttritionInfos();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Double rSurface_;
@@ -104,8 +104,11 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive         ( xml::xistream& input );
+        void ReadSensiblePosition( xml::xistream& input );
+        void ReadDotation        ( const std::string& type, xml::xistream& input );
+        void ReadUnitAttrition   ( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Enum< E_ObjectType, eNbrObjectType > nObjectType_;
@@ -176,8 +179,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Categories_Data::SizeInfos> ptrSize_;
@@ -194,15 +197,17 @@ public:
 
     void            FilesNeeded(T_StringList& l) const;
     void            Reset();
-    void            SaveAttritionInfos( MT_OutputArchive_ABC& output );
+    void            SaveAttritionInfos( xml::xostream& output );
 
 
     T_ObjectsInfos_Vector& GetObjectInfos();
     ObjectInfos*           FindObject( const std::string& strName );
 
 private:
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void WriteArchive( MT_OutputArchive_ABC& output );
+    void ReadArchive( xml::xistream& input );
+    void ReadObject ( xml::xistream& input );
+    void ReadShotPercentage( xml::xistream& input );
+    void WriteArchive( xml::xostream& output );
 
 private:
     T_ObjectsInfos_Vector     vObjectInfos_;

@@ -19,20 +19,18 @@ using namespace xml;
 // Name: DotationType constructor
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-DotationType::DotationType( const std::string& dotationName, xistream& xis )
-    : name_( dotationName.c_str() )
-    , nameId_( tools::DotationFamilyFromString( dotationName ) )
-    , gaz_( name_ == "carburant" ) // $$$$ AGE 2006-04-10: 
-    , ammunition_( name_ == "munition" )
-    , dType_( false )
+DotationType::DotationType( xistream& xis )
+    : dType_( false )
 {
-    int id;
-    std::string category;
-    xis >> attribute( "nom", category )
-        >> list( "TrancheD", *this, &DotationType::ReadDType )
-        >> content( "MosID", id );
-    category_ = category.c_str();
-    id_ = id;
+    std::string name, category;
+    xis >> attribute( "id", id_ )
+        >> attribute( "name", name )
+        >> attribute( "category", category )
+        >> optional() >> attribute( "d-type", dType_ );
+    name_ = name.c_str(); category_ = category.c_str();
+    nameId_ = tools::DotationFamilyFromString( name_.ascii() );
+    gaz_        = ( name_ == "carburant" );
+    ammunition_ = ( name_ == "munition" );
 }
     
 // -----------------------------------------------------------------------------
@@ -42,15 +40,6 @@ DotationType::DotationType( const std::string& dotationName, xistream& xis )
 DotationType::~DotationType()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: DotationType::ReadDType
-// Created: SBO 2006-08-09
-// -----------------------------------------------------------------------------
-void DotationType::ReadDType( xml::xistream& )
-{
-    dType_ = true;
 }
 
 // -----------------------------------------------------------------------------

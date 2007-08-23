@@ -1,145 +1,51 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Populations>
-
-  <Effets>
-    <TempsRechargement densitePopulation="2" modificateur="2"/>
-  </Effets>
-
-  <Population nom="test1">
-    <MosID>0</MosID>
-    <ModeleDecisionnel>Test</ModeleDecisionnel>
-    <DensiteConcentration>2</DensiteConcentration>
-    <DensiteNominaleDeplacement>4</DensiteNominaleDeplacement>
-    <VitesseDeplacement>60</VitesseDeplacement>
-    <Effets>
-      <Ralentissement>
-        <Attitudes>
-          <Attitude nom="calme">
-            <VolumesPions>
-              <VolumePion densitePopulation="0.9" nom="Gros" vitesseMaximale="41"/>
-              <VolumePion densitePopulation="0.9" nom="Petit" vitesseMaximale="42"/>
-            </VolumesPions>
-          </Attitude>
-          <Attitude nom="agitee">
-            <VolumesPions>
-              <VolumePion densitePopulation="0.9" nom="Gros" vitesseMaximale="31"/>
-              <VolumePion densitePopulation="0.9" nom="Moyen" vitesseMaximale="33"/>
-              <VolumePion densitePopulation="0.9" nom="Petit" vitesseMaximale="32"/>
-            </VolumesPions>
-          </Attitude>
-          <Attitude nom="excitee">
-            <VolumesPions/>
-          </Attitude>
-          <Attitude nom="agressive">
-            <VolumesPions>
-              <VolumePion densitePopulation="0.9" nom="Gros" vitesseMaximale="21"/>
-              <VolumePion densitePopulation="0.9" nom="Petit" vitesseMaximale="22"/>
-            </VolumesPions>
-          </Attitude>
-        </Attitudes>
-      </Ralentissement>
-      <Tir>
-        <Tireur>
-          <Attitudes>
-            <Attitude nom="calme">
-              <Intensite densitePopulation="2" intensite="0.01"/>
-              <ProtectionsPions>
-                <ProtectionPion nom="CharLourd">
-                  <Destruction>0.1</Destruction>
-                  <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
-                  <ReparableSansEvacuation>0.5</ReparableSansEvacuation>
-                </ProtectionPion>
-                <ProtectionPion nom="BlindeLeger">
-                  <Destruction>0.2</Destruction>
-                  <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
-                  <ReparableSansEvacuation>0.4</ReparableSansEvacuation>
-                </ProtectionPion>
-              </ProtectionsPions>
-            </Attitude>
-            <Attitude nom="agitee">
-              <Intensite densitePopulation="2" intensite="0.05"/>
-              <ProtectionsPions>
-                <ProtectionPion nom="CharLourd">
-                  <Destruction>0.1</Destruction>
-                  <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
-                  <ReparableSansEvacuation>0.5</ReparableSansEvacuation>
-                </ProtectionPion>
-                <ProtectionPion nom="BlindeLeger">
-                  <Destruction>0.2</Destruction>
-                  <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
-                  <ReparableSansEvacuation>0.4</ReparableSansEvacuation>
-                </ProtectionPion>
-              </ProtectionsPions>
-            </Attitude>
-            <Attitude nom="agressive">
-              <Intensite densitePopulation="2" intensite="0.9"/>
-              <ProtectionsPions>
-                <ProtectionPion nom="CharLourd">
-                  <Destruction>0.1</Destruction>
-                  <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
-                  <ReparableSansEvacuation>0.5</ReparableSansEvacuation>
-                </ProtectionPion>
-                <ProtectionPion nom="BlindeLeger">
-                  <Destruction>0.8</Destruction>
-                  <ReparableAvecEvacuation>0.1</ReparableAvecEvacuation>
-                  <ReparableSansEvacuation>0.1</ReparableSansEvacuation>
-                </ProtectionPion>
-              </ProtectionsPions>
-            </Attitude>
-          </Attitudes>
-        </Tireur>
-        <Cible>
-          <ReglesEngagementTireur>
-            <RegleEngagementTireur nom="emploi force interdit">
-              <SurfaceAttrition>0.1</SurfaceAttrition>
-              <PH>0</PH>
-            </RegleEngagementTireur>
-            <RegleEngagementTireur nom="dispersion par moyens de defense actifs">
-              <SurfaceAttrition>0.1</SurfaceAttrition>
-              <PH>0.2</PH>
-            </RegleEngagementTireur>
-            <RegleEngagementTireur nom="armes letales autorisees">
-              <SurfaceAttrition>0.5</SurfaceAttrition>
-              <PH>0.8</PH>
-            </RegleEngagementTireur>
-          </ReglesEngagementTireur>
-        </Cible>
-      </Tir>
-    </Effets>
-  </Population>
-
-  <Population nom="test2">
-    <MosID>1</MosID>
-    <ModeleDecisionnel>Test</ModeleDecisionnel>
-    <DensiteConcentration>2</DensiteConcentration>
-    <DensiteNominaleDeplacement>20</DensiteNominaleDeplacement>
-    <VitesseDeplacement>24</VitesseDeplacement>
-    <Effets>
-      <Ralentissement>
-        <Attitudes>
-          <Attitude nom="calme">
-            <VolumesPions/>
-          </Attitude>
-          <Attitude nom="agitee">
-            <VolumesPions/>
-          </Attitude>
-          <Attitude nom="excitee">
-            <VolumesPions/>
-          </Attitude>
-          <Attitude nom="agressive">
-            <VolumesPions/>
-          </Attitude>
-        </Attitudes>
-      </Ralentissement>
-      <Tir>
-        <Tireur>
-          <Attitudes/>
-        </Tireur>
-        <Cible>
-          <ReglesEngagementTireur/>
-        </Cible>
-      </Tir>
-    </Effets>
-  </Population>
-
-</Populations>
+<populations>
+  <reloading-time-effect modifier="2" population-density="2"/>
+  <population concentration-density="2" decisional-model="Test" id="0" moving-base-density="4" moving-speed="60" name="test1">
+    <slowing-effects>
+      <slowing-effect population-attitude="calme">
+        <unit max-speed="41" population-density="0.9" unit-size="Gros"/>
+        <unit max-speed="42" population-density="0.9" unit-size="Petit"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="agitee">
+        <unit max-speed="31" population-density="0.9" unit-size="Gros"/>
+        <unit max-speed="33" population-density="0.9" unit-size="Moyen"/>
+        <unit max-speed="32" population-density="0.9" unit-size="Petit"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="excitee"/>
+      <slowing-effect population-attitude="agressive">
+        <unit max-speed="21" population-density="0.9" unit-size="Gros"/>
+        <unit max-speed="22" population-density="0.9" unit-size="Petit"/>
+      </slowing-effect>
+    </slowing-effects>
+    <attrition-effects>
+      <attrition-effect intensity="0.01" population-attitude="calme" population-density="2">
+        <unit destruction="0.1" protection="CharLourd" repairable-with-evacuation="0.4" repairable-without-evacuation="0.5"/>
+        <unit destruction="0.2" protection="BlindeLeger" repairable-with-evacuation="0.4" repairable-without-evacuation="0.4"/>
+      </attrition-effect>
+      <attrition-effect intensity="0.05" population-attitude="agitee" population-density="2">
+        <unit destruction="0.1" protection="CharLourd" repairable-with-evacuation="0.4" repairable-without-evacuation="0.5"/>
+        <unit destruction="0.2" protection="BlindeLeger" repairable-with-evacuation="0.4" repairable-without-evacuation="0.4"/>
+      </attrition-effect>
+      <attrition-effect intensity="0.9" population-attitude="agressive" population-density="2">
+        <unit destruction="0.1" protection="CharLourd" repairable-with-evacuation="0.4" repairable-without-evacuation="0.5"/>
+        <unit destruction="0.8" protection="BlindeLeger" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+      </attrition-effect>
+    </attrition-effects>
+    <unit-fire-effects>
+      <unit attrition-surface="0.1" ph="0" rule-of-engagment="emploi force interdit"/>
+      <unit attrition-surface="0.1" ph="0.2" rule-of-engagment="dispersion par moyens de defense actifs"/>
+      <unit attrition-surface="0.5" ph="0.8" rule-of-engagment="armes letales autorisees"/>
+    </unit-fire-effects>
+  </population>
+  <population concentration-density="2" decisional-model="Test" id="1" moving-base-density="20" moving-speed="24" name="test2">
+    <slowing-effects>
+      <slowing-effect population-attitude="calme"/>
+      <slowing-effect population-attitude="agitee"/>
+      <slowing-effect population-attitude="excitee"/>
+      <slowing-effect population-attitude="agressive"/>
+    </slowing-effects>
+    <attrition-effects/>
+    <unit-fire-effects/>
+  </population>
+</populations>

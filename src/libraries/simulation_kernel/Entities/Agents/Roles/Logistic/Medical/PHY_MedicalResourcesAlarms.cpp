@@ -8,62 +8,64 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_MedicalResourcesAlarms.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 PHY_MedicalResourcesAlarms::T_LevelSet PHY_MedicalResourcesAlarms::evacuationResourcesLevels_;
 PHY_MedicalResourcesAlarms::T_LevelSet PHY_MedicalResourcesAlarms::collectionResourcesLevels_;
 PHY_MedicalResourcesAlarms::T_LevelSet PHY_MedicalResourcesAlarms::doctorsResourcesLevels_;
 
+struct PHY_MedicalResourcesAlarms::LoadingWrapper
+{
+    void ReadResourceLevel( xml::xistream& xis )
+    {
+        PHY_MedicalResourcesAlarms::ReadResourceLevel( xis );
+    }
+};
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalResourcesAlarms::Initialize
 // Created: NLD 2006-08-02
 // -----------------------------------------------------------------------------
-void PHY_MedicalResourcesAlarms::Initialize( MIL_InputArchive& archive )
+void PHY_MedicalResourcesAlarms::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing medical resources alarms" );
 
-    archive.Section( "Sante" );
-    archive.Section( "AlertesDisponibiliteMoyens" );
-    
-    archive.BeginList( "AlertesDisponibiliteMoyensReleve" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "AlerteDisponibiliteMoyensReleve" );
-        MT_Float rRatio;
-        archive.ReadAttribute( "pourcentageMoyensDisponibles", rRatio, CheckValueBound( 0., 100. ) );
-        rRatio /= 100.;
+    LoadingWrapper loader;
+
+    xis >> start( "health" )
+            >> start( "resource-availability-alerts" )
+                >> list( "resource-availability-alert", loader, &LoadingWrapper::ReadResourceLevel )
+            >> end()
+        >> end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalResourcesAlarms::ReadResourceLevel
+// Created: ABL 2007-07-24
+// -----------------------------------------------------------------------------
+void PHY_MedicalResourcesAlarms::ReadResourceLevel( xml::xistream& xis )
+{
+    MT_Float rRatio;
+    std::string resourceType;
+    xis >> attribute( "resource", resourceType )
+        >> attribute( "availability-threshold", rRatio );
+
+    if( rRatio < 0 || rRatio > 100 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "resource-availability-alert: availability-treshold not in [0..100]" );
+
+    rRatio /= 100.;
+
+    if( resourceType == "relieve" )
         evacuationResourcesLevels_.insert( rRatio );
-        archive.EndSection(); // AlerteDisponibiliteMoyensReleve 
-    }
-    archive.EndList(); // AlertesDisponibiliteMoyensReleve
-
-    archive.BeginList( "AlertesDisponibiliteMoyensRamassage" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "AlerteDisponibiliteMoyensRamassage" );
-        MT_Float rRatio;
-        archive.ReadAttribute( "pourcentageMoyensDisponibles", rRatio, CheckValueBound( 0., 100. ) );
-        rRatio /= 100.;
+    else if( resourceType == "collection" )
         collectionResourcesLevels_.insert( rRatio );
-        archive.EndSection(); // AlertesDisponibiliteMoyensRamassage 
-    }
-    archive.EndList(); // AlertesDisponibiliteMoyensRamassage
-
-    archive.BeginList( "AlertesDisponibiliteMedecins" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "AlerteDisponibiliteMedecins" );
-        MT_Float rRatio;
-        archive.ReadAttribute( "pourcentageMoyensDisponibles", rRatio, CheckValueBound( 0., 100. ) );
-        rRatio /= 100.;
+    else if( resourceType == "doctor" )
         doctorsResourcesLevels_.insert( rRatio );
-        archive.EndSection(); // AlerteDisponibiliteMedecins 
-    }
-    archive.EndList(); // AlertesDisponibiliteMedecins
-
-    archive.EndSection(); // AlertesDisponibiliteMoyens
-    archive.EndSection(); // Sante
+    else
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "resource-availability: unknow resource" );
 }
 
 // -----------------------------------------------------------------------------

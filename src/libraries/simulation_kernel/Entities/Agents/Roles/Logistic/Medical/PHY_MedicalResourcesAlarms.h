@@ -12,6 +12,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 // Created: NLD 2006-08-02
 // =============================================================================
@@ -20,7 +25,7 @@ class PHY_MedicalResourcesAlarms
 public:
     //! @name Initialization
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( xml::xistream& xis );
     static void Terminate ();
     //@}
 
@@ -36,6 +41,11 @@ private:
     //@{
     typedef std::set< MT_Float >       T_LevelSet;
     typedef T_LevelSet::const_iterator CIT_LevelSet;
+    //@}
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadResourceLevel( xml::xistream& xis );
     //@}
 
 private:

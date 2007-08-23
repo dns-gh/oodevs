@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_Protection;
 class PHY_Volume;
 class MIL_Agent_ABC;
@@ -27,7 +32,7 @@ class PHY_ComposanteType_ABC
     MT_COPYNOTALLOWED( PHY_ComposanteType_ABC )
 
 public:
-             PHY_ComposanteType_ABC( const std::string& strName, MIL_InputArchive& archive );
+             PHY_ComposanteType_ABC( const std::string& strName, xml::xistream& xis );
     virtual ~PHY_ComposanteType_ABC();
 
     //! @name Accessors

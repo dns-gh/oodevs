@@ -1,172 +1,132 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Modeles>
-
-  <Pions>
-    <Modele nom="Test ALAT">
-      <DIAType>T_Pion</DIAType>
-      <File>For Tests\Tests\Pion ALAT\Files.hal</File>
-      <Missions>
-        <Mission nom="Test Move To">
-          <OrdresConduite>
-            <OrdreConduite nom="Attendre Se Poster"/>
-          </OrdresConduite>
-        </Mission>
-        <Mission nom="Test Change Posture"/>
-        <Mission nom="Test Create Object"/>
-        <Mission nom="Test Destroy Object"/>
-        <Mission nom="Test Create Bypass"/>
-        <Mission nom="Test Reinforce"/>
-        <Mission nom="Test Heliporter"/>
-      </Missions>
-    </Modele>
-    <Modele nom="Test LOG">
-      <DIAType>T_Pion</DIAType>
-      <File>For Tests\Tests\Pion LOG\Files.hal</File>
-      <Missions>
-        <Mission nom="Test Move To"/>
-        <Mission nom="Test Create Bypass"/>
-        <Mission nom="LOG Convoyer"/>
-        <Mission nom="LOG Preparer Bascule"/>
-        <Mission nom="LOG Renforcer"/>
-        <Mission nom="LOG Traiter Blesses">
-          <OrdresConduite>
-            <OrdreConduite nom="Modifier Priorites Blesses"/>
-            <OrdreConduite nom="Modifier Priorites Tactiques Blesses"/>
-          </OrdresConduite>
-        </Mission>
-        <Mission nom="LOG Trier Blesses">
-          <OrdresConduite>
-            <OrdreConduite nom="Modifier Priorites Blesses"/>
-            <OrdreConduite nom="Modifier Priorites Tactiques Blesses"/>
-          </OrdresConduite>
-        </Mission>
-        <Mission nom="LOG Trier Et Traiter Blesses">
-          <OrdresConduite>
-            <OrdreConduite nom="Modifier Priorites Blesses"/>
-            <OrdreConduite nom="Modifier Priorites Tactiques Blesses"/>
-          </OrdresConduite>
-        </Mission>
-        <Mission nom="LOG Se Deployer">
-          <OrdresConduite>
-            <OrdreConduite nom="Modifier Priorites Reparations"/>
-            <OrdreConduite nom="Modifier Priorites Blesses"/>
-            <OrdreConduite nom="Modifier Priorites Tactiques Reparations"/>
-            <OrdreConduite nom="Modifier Priorites Tactiques Blesses"/>
-            <OrdreConduite nom="Modifier Regime Travail Maintenance"/>
-            <OrdreConduite nom="Pion Renforcer En VSRAM"/>
-            <OrdreConduite nom="Pion Reprendre Aux Ordres VSRAM"/>
-            <OrdreConduite nom="Pion Renforcer En Remorqueurs"/>
-            <OrdreConduite nom="Pion Reprendre Aux Ordres Remorqueurs"/>
-          </OrdresConduite>
-        </Mission>
-      </Missions>
-    </Modele>
-    <Modele nom="Test">
-      <DIAType>T_Pion</DIAType>
-      <File>For Tests\Tests\Pion\Files.hal</File>
-      <Missions>
-        <Mission nom="Test Move To">
-          <OrdresConduite>
-            <OrdreConduite nom="Attendre Se Poster"/>
-            <OrdreConduite nom="Changer Position Debarquement"/>
-            <OrdreConduite nom="Pion Activer Obstacle"/>
-          </OrdresConduite>
-        </Mission>
-        <Mission nom="Test All"/>
-        <Mission nom="Test Change Posture"/>
-        <Mission nom="Test Create Object"/>
-        <Mission nom="Test Destroy Object"/>
-        <Mission nom="Test Create Bypass"/>
-        <Mission nom="Test Reinforce"/>
-        <Mission nom="Test Fire"/>
-        <Mission nom="LOG Trier Blesses"/>
-        <Mission nom="Canaliser Populations"/>
-        <Mission nom="Prendre En Compte Prisonniers"/>
-        <Mission nom="Orienter Refugies"/>
-      </Missions>
-    </Modele>
-    <Modele nom="Test 2">
-      <DIAType>T_Pion</DIAType>
-      <File>For Tests\Tests\Pion\Files.hal</File>
-      <Missions>
-        <Mission nom="Test Move To">
-          <OrdresConduite>
-            <OrdreConduite nom="Attendre Se Poster"/>
-          </OrdresConduite>
-        </Mission>
-        <Mission nom="Test Change Posture"/>
-        <Mission nom="Test Create Object"/>
-        <Mission nom="Test Destroy Object"/>
-        <Mission nom="Test Create Bypass"/>
-        <Mission nom="Test Reinforce"/>
-        <Mission nom="Test Fire"/>
-      </Missions>
-    </Modele>
-    <Modele nom="NBC Test">
-      <DIAType>T_Pion</DIAType>
-      <File>For Tests\Tests\Pion NBC\Files.hal</File>
-      <Missions>
-        <Mission nom="Test Move To">
-          <OrdresConduite>
-            <OrdreConduite nom="Attendre Se Poster"/>
-          </OrdresConduite>
-        </Mission>
-        <Mission nom="Test Change Posture"/>
-        <Mission nom="Test Create Object"/>
-        <Mission nom="Test Destroy Object"/>
-        <Mission nom="Test Create Bypass"/>
-        <Mission nom="Test Reinforce"/>
-        <Mission nom="Test Fire"/>
-      </Missions>
-    </Modele>
-    <Modele nom="RENS Test">
-      <DIAType>T_Pion</DIAType>
-      <File>For Tests\Tests\Pion RENS\Files.hal</File>
-      <Missions>
-        <Mission nom="Test Move To">
-          <OrdresConduite>
-            <OrdreConduite nom="Attendre Se Poster"/>
-          </OrdresConduite>
-        </Mission>
-        <Mission nom="Test Change Posture"/>
-        <Mission nom="Test Create Object"/>
-        <Mission nom="Test Destroy Object"/>
-        <Mission nom="Test Create Bypass"/>
-        <Mission nom="Test Reinforce"/>
-        <Mission nom="Test Fire"/>
-      </Missions>
-    </Modele>
-    <Modele nom="REFUGIE Test">
-      <DIAType>T_Pion</DIAType>
-      <File>For Tests\Tests\Pion REFUGIE\Files.hal</File>
-      <Missions>
-        <Mission nom="Test Move To"/>
-      </Missions>
-    </Modele>
-  </Pions>
-
-  <Automates>
-    <Modele nom="Test">
-      <DIAType>T_Automate</DIAType>
-      <File>For Tests\Tests\Automate\Files.hal</File>
-      <Missions>
-        <Mission nom="Test Move To"/>
-        <Mission nom="GEN Realiser Travaux"/>
-        <Mission nom="GEN Retablir Itineraires"/>
-        <Mission nom="LOG Se Deployer"/>
-      </Missions>
-    </Modele>
-  </Automates>
-
-  <Populations>
-    <Modele nom="Test">
-      <DIAType>T_Population</DIAType>
-      <File>For Tests\Tests\Population\Files.hal</File>
-      <Missions>
-        <Mission nom="Faire Mouvement"/>
-        <Mission nom="Commettre Exactions"/>
-      </Missions>
-    </Modele>
-  </Populations>
-
-</Modeles>
+<models>
+  <units>
+    <unit dia-type="T_Pion" file="For Tests\Tests\Pion ALAT\Files.hal" name="Test ALAT">
+      <missions>
+        <mission name="Test Move To">
+          <fragorder name="Attendre Se Poster"/>
+        </mission>
+        <mission name="Test Change Posture"/>
+        <mission name="Test Create Object"/>
+        <mission name="Test Destroy Object"/>
+        <mission name="Test Create Bypass"/>
+        <mission name="Test Reinforce"/>
+        <mission name="Test Heliporter"/>
+      </missions>
+    </unit>
+    <unit dia-type="T_Pion" file="For Tests\Tests\Pion LOG\Files.hal" name="Test LOG">
+      <missions>
+        <mission name="Test Move To"/>
+        <mission name="Test Create Bypass"/>
+        <mission name="LOG Convoyer"/>
+        <mission name="LOG Preparer Bascule"/>
+        <mission name="LOG Renforcer"/>
+        <mission name="LOG Traiter Blesses">
+          <fragorder name="Modifier Priorites Blesses"/>
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+        </mission>
+        <mission name="LOG Trier Blesses">
+          <fragorder name="Modifier Priorites Blesses"/>
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+        </mission>
+        <mission name="LOG Trier Et Traiter Blesses">
+          <fragorder name="Modifier Priorites Blesses"/>
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+        </mission>
+        <mission name="LOG Se Deployer">
+          <fragorder name="Modifier Priorites Reparations"/>
+          <fragorder name="Modifier Priorites Blesses"/>
+          <fragorder name="Modifier Priorites Tactiques Reparations"/>
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Modifier Regime Travail Maintenance"/>
+          <fragorder name="Pion Renforcer En VSRAM"/>
+          <fragorder name="Pion Reprendre Aux Ordres VSRAM"/>
+          <fragorder name="Pion Renforcer En Remorqueurs"/>
+          <fragorder name="Pion Reprendre Aux Ordres Remorqueurs"/>
+        </mission>
+      </missions>
+    </unit>
+    <unit dia-type="T_Pion" file="For Tests\Tests\Pion\Files.hal" name="Test">
+      <missions>
+        <mission name="Test Move To">
+          <fragorder name="Attendre Se Poster"/>
+          <fragorder name="Changer Position Debarquement"/>
+          <fragorder name="Pion Activer Obstacle"/>
+        </mission>
+        <mission name="Test All"/>
+        <mission name="Test Change Posture"/>
+        <mission name="Test Create Object"/>
+        <mission name="Test Destroy Object"/>
+        <mission name="Test Create Bypass"/>
+        <mission name="Test Reinforce"/>
+        <mission name="Test Fire"/>
+        <mission name="LOG Trier Blesses"/>
+        <mission name="Canaliser Populations"/>
+        <mission name="Prendre En Compte Prisonniers"/>
+        <mission name="Orienter Refugies"/>
+      </missions>
+    </unit>
+    <unit dia-type="T_Pion" file="For Tests\Tests\Pion\Files.hal" name="Test 2">
+      <missions>
+        <mission name="Test Move To">
+          <fragorder name="Attendre Se Poster"/>
+        </mission>
+        <mission name="Test Change Posture"/>
+        <mission name="Test Create Object"/>
+        <mission name="Test Destroy Object"/>
+        <mission name="Test Create Bypass"/>
+        <mission name="Test Reinforce"/>
+        <mission name="Test Fire"/>
+      </missions>
+    </unit>
+    <unit dia-type="T_Pion" file="For Tests\Tests\Pion NBC\Files.hal" name="NBC Test">
+      <missions>
+        <mission name="Test Move To">
+          <fragorder name="Attendre Se Poster"/>
+        </mission>
+        <mission name="Test Change Posture"/>
+        <mission name="Test Create Object"/>
+        <mission name="Test Destroy Object"/>
+        <mission name="Test Create Bypass"/>
+        <mission name="Test Reinforce"/>
+        <mission name="Test Fire"/>
+      </missions>
+    </unit>
+    <unit dia-type="T_Pion" file="For Tests\Tests\Pion RENS\Files.hal" name="RENS Test">
+      <missions>
+        <mission name="Test Move To">
+          <fragorder name="Attendre Se Poster"/>
+        </mission>
+        <mission name="Test Change Posture"/>
+        <mission name="Test Create Object"/>
+        <mission name="Test Destroy Object"/>
+        <mission name="Test Create Bypass"/>
+        <mission name="Test Reinforce"/>
+        <mission name="Test Fire"/>
+      </missions>
+    </unit>
+    <unit dia-type="T_Pion" file="For Tests\Tests\Pion REFUGIE\Files.hal" name="REFUGIE Test">
+      <missions>
+        <mission name="Test Move To"/>
+      </missions>
+    </unit>
+  </units>
+  <automats>
+    <automat dia-type="T_Automate" file="For Tests\Tests\Automate\Files.hal" name="Test">
+      <missions>
+        <mission name="Test Move To"/>
+        <mission name="GEN Realiser Travaux"/>
+        <mission name="GEN Retablir Itineraires"/>
+        <mission name="LOG Se Deployer"/>
+      </missions>
+    </automat>
+  </automats>
+  <populations>
+    <population dia-type="T_Population" file="For Tests\Tests\Population\Files.hal" name="Test">
+      <missions>
+        <mission name="Faire Mouvement"/>
+        <mission name="Commettre Exactions"/>
+      </missions>
+    </population>
+  </populations>
+</models>

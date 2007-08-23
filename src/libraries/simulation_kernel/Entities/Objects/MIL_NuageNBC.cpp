@@ -29,6 +29,10 @@
 
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+
 BOOST_CLASS_EXPORT_GUID( MIL_NuageNBC, "MIL_NuageNBC" )
 
 //-----------------------------------------------------------------------------
@@ -58,7 +62,7 @@ MIL_NuageNBC::MIL_NuageNBC()
 //-----------------------------------------------------------------------------
 MIL_NuageNBC::~MIL_NuageNBC()
 {
-	if( pNbcAgent_ )
+    if( pNbcAgent_ )
         delete pNbcAgent_;
 }
 
@@ -85,15 +89,15 @@ void MIL_NuageNBC::serialize( Archive& file, const uint )
 // Name: MIL_NuageNBC::WriteSpecificAttributes
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void MIL_NuageNBC::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
+void MIL_NuageNBC::WriteSpecificAttributes( xml::xostream& xos ) const
 {
     assert( pNbcAgent_ );
 
-    archive.Section( "specific-attributes" );
-    archive.Section( "nbc-agent" );
-    archive.WriteAttribute( "type", pNbcAgent_->GetType().GetName() );
-    archive.EndSection(); // nbc-agent
-    archive.EndSection(); // specific-attributes
+    xos << start( "specific-attributes" )
+            << start( "nbc-agent" )
+            << attribute( "type", pNbcAgent_->GetType().GetName() )
+            << end()
+        << end();
 }
 
 //=============================================================================
@@ -131,25 +135,25 @@ void MIL_NuageNBC::Initialize( const TER_Localisation& localisation, const MIL_N
 // Created: NLD 2003-07-21
 // Modified: JVT 2004-10-28
 //-----------------------------------------------------------------------------
-void MIL_NuageNBC::Initialize( MIL_InputArchive& archive )
+void MIL_NuageNBC::Initialize( xml::xistream& xis )
 {
-    MIL_RealObject_ABC::Initialize( archive );
+    MIL_RealObject_ABC::Initialize( xis );
 
     if( !GetLocalisation().WasACircle() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Localisation of object type 'NuageNBC' MUST be a circle", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Localisation of object type 'NuageNBC' MUST be a circle" ); // $$$$ ABL 2007-07-10: error context
 
-    archive.Section( "specific-attributes" );
-    archive.Section( "nbc-agent" );
+    xis >> start( "specific-attributes" )
+            >> start( "nbc-agent" );
 
     std::string strNbcAgentType_;
-    archive.ReadAttribute( "type", strNbcAgentType_ );
+    xis >> attribute( "type", strNbcAgentType_ );
     const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( strNbcAgentType_ );
     if( !pNbcAgentType )
-        throw MT_ScipioException( "MIL_ZoneNBC::Initialize", __FILE__, __LINE__, MT_FormatString( "Unknown 'AgentNBC' '%s' for NBC object '%d'", strNbcAgentType_.c_str(), GetID() ), archive.GetContext() );
+        throw MT_ScipioException( "MIL_ZoneNBC::Initialize", __FILE__, __LINE__, MT_FormatString( "Unknown 'AgentNBC' '%s' for NBC object '%d'", strNbcAgentType_.c_str(), GetID() ) ); // $$$$ ABL 2007-07-10: error context
     pNbcAgent_ = new MIL_NbcAgent( *pNbcAgentType, MIL_NbcAgent::eGas );
 
-    archive.EndSection(); // nbc-agent
-    archive.EndSection(); // specific-attributes
+    xis >> end()
+        >> end();
 
     vOrigin_              = GetLocalisation().GetCircleCenter();
     rCurrentCircleRadius_ = GetLocalisation().GetCircleRadius();

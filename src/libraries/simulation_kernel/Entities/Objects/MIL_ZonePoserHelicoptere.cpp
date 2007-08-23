@@ -42,7 +42,7 @@ MIL_ZonePoserHelicoptere::MIL_ZonePoserHelicoptere()
 //-----------------------------------------------------------------------------
 MIL_ZonePoserHelicoptere::~MIL_ZonePoserHelicoptere()
 {
-	
+    
 }
 
 // =============================================================================

@@ -52,26 +52,6 @@ std::string MIL_Tools::ConvertCoordSimToMos( const MT_Vector2D& vSimPos )
 }
 
 
-//-----------------------------------------------------------------------------
-// Name: MIL_Tools::GetMeterByPixel
-// Created: JVT 02-08-08
-//-----------------------------------------------------------------------------
-inline
-MT_Float MIL_Tools::GetMeterPerPixel()
-{
-    return TER_World::GetWorld().GetMeterPerPixel();
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Tools::GetMeterSquarePerPixelSquare
-// Created: NLD 2003-10-17
-// -----------------------------------------------------------------------------
-inline
-MT_Float MIL_Tools::GetMeterSquarePerPixelSquare()
-{
-    return TER_World::GetWorld().GetMeterSquarePerPixelSquare();
-}
 
 //-----------------------------------------------------------------------------
 // Name: MIL_Tools::ConvertSpeedMosToSim
@@ -80,7 +60,7 @@ MT_Float MIL_Tools::GetMeterSquarePerPixelSquare()
 inline
 MT_Float MIL_Tools::ConvertSpeedMosToSim( MT_Float v )
 {
-    static MT_Float rConvertionFactor = 1000. / GetMeterPerPixel() * MIL_AgentServer::GetWorkspace().GetTimeStepDuration() / 3600.;
+    static MT_Float rConvertionFactor = 1000. * MIL_AgentServer::GetWorkspace().GetTimeStepDuration() / 3600.;
     // conversion des vitesses de Km/H en pixel/deltaT
     return v * rConvertionFactor;
 }
@@ -93,7 +73,7 @@ MT_Float MIL_Tools::ConvertSpeedMosToSim( MT_Float v )
 inline
 MT_Float MIL_Tools::ConvertSpeedSimToMos( MT_Float v )
 {
-    static MT_Float rConvertionFactor = 3600. / MIL_AgentServer::GetWorkspace().GetTimeStepDuration() * GetMeterPerPixel() / 1000.;
+    static MT_Float rConvertionFactor = 3600. / MIL_AgentServer::GetWorkspace().GetTimeStepDuration() / 1000.;
 
     // conversion des vitesses de pixel/deltaT en Km/H
     return v * rConvertionFactor;
@@ -146,7 +126,7 @@ MT_Float MIL_Tools::ConvertSimToMinutes( MT_Float v ) // deltaT -> m
 inline
 MT_Float MIL_Tools::ConvertMeterSquareToSim( MT_Float rValue ) // m² => px²
 {
-    return rValue / GetMeterSquarePerPixelSquare();
+    return rValue;
 }
 
 // -----------------------------------------------------------------------------
@@ -156,7 +136,7 @@ MT_Float MIL_Tools::ConvertMeterSquareToSim( MT_Float rValue ) // m² => px²
 inline
 float MIL_Tools::ConvertSimToMeterSquare( MT_Float rValue ) // px² => m²
 {
-    return (float)( rValue * GetMeterSquarePerPixelSquare() );
+    return (float)( rValue );
 }
 
 
@@ -167,7 +147,7 @@ float MIL_Tools::ConvertSimToMeterSquare( MT_Float rValue ) // px² => m²
 inline
 MT_Float MIL_Tools::ConvertMeterToSim( MT_Float rValue )
 {
-    return rValue / GetMeterPerPixel();
+    return rValue;
 }
 
 // -----------------------------------------------------------------------------
@@ -177,7 +157,7 @@ MT_Float MIL_Tools::ConvertMeterToSim( MT_Float rValue )
 inline
 float MIL_Tools::ConvertSimToMeter( MT_Float rValue )
 {
-    return (float)( rValue * GetMeterPerPixel() );
+    return (float)( rValue  );
 }
 
 //-----------------------------------------------------------------------------

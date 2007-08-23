@@ -13,9 +13,14 @@
 #define __MIL_Automate_h_
 
 #include "MIL.h"
-
 #include "Entities/Actions/PHY_Actor.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
+
+namespace xml
+{
+    class xostream;
+    class xistream;
+}
 
 class MIL_Formation;
 class MIL_AutomateType;
@@ -59,7 +64,7 @@ public:
     //@}
 
 public:
-             MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formation& formation, MIL_InputArchive& archive );
+             MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formation& formation, xml::xistream& xis );
              MIL_Automate();
     virtual ~MIL_Automate();
 
@@ -70,14 +75,14 @@ public:
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
 
-            void WriteODB             ( MT_XXmlOutputArchive& archive ) const;
-    virtual void WriteLogisticLinksODB( MT_XXmlOutputArchive& archive ) const;
+            void WriteODB             ( xml::xostream& xos ) const;
+    virtual void WriteLogisticLinksODB( xml::xostream& xos ) const;
     //@}
 
     //! @name Initialize
     //@{
-            void ReadOverloading ( MIL_InputArchive& archive );
-    virtual void ReadLogisticLink( MIL_AutomateLOG& superior, MIL_InputArchive& archive );
+                    void ReadOverloading ( xml::xistream& xis );
+            virtual void ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& xis );
     //@}
 
     //! @name Accessors
@@ -191,7 +196,13 @@ protected:
 private:
     //! @name Tools
     //@{
-    void InitializeSubordinates( MIL_InputArchive& archive );
+    void InitializeSubordinates( xml::xistream& xis );
+    //@}
+    //! @name Helpers
+    //@{
+    void ReadUnit   ( xml::xistream& xis );
+    void CreateLimit( xml::xistream& xis );
+    void CreateLima ( xml::xistream& xis );
     //@}
 
 protected:

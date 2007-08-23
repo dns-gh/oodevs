@@ -67,13 +67,17 @@
 
 #include "Tools/MIL_Tools.h"
 
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPion, "MIL_AgentPion" )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive )
+MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis )
     : MIL_Agent_ABC            ( nID )
     , PHY_Actor                ()
     , pType_                   ( &type )
@@ -83,7 +87,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Autom
     , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , orderManager_            ( *new MIL_PionOrderManager( *this ) )
 {
-    Initialize( archive );
+    Initialize( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -230,24 +234,23 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
 // Name: MIL_AgentPion::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::WriteODB( MT_XXmlOutputArchive& archive ) const
+void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
 {
     assert( pType_ );
 
-    archive.Section( "unit" );
+    xos << start( "unit" )
+            << attribute( "id", GetID() )
+            << attribute( "name", strName_ )
+            << attribute( "type", pType_->GetName() )
+            << attribute( "command-post", bIsPC_ )
+            << attribute( "position", MIL_Tools::ConvertCoordSimToMos( GetRole< PHY_RolePion_Location >().GetPosition() ) );
 
-    archive.WriteAttribute( "id"          , GetID() );
-    archive.WriteAttribute( "name"        , strName_ );
-    archive.WriteAttribute( "type"        , pType_->GetName());
-    archive.WriteAttribute( "command-post", bIsPC_ );
-    archive.WriteAttribute( "position"    , MIL_Tools::ConvertCoordSimToMos( GetRole< PHY_RolePion_Location >().GetPosition() ) );
-
-    GetRole< PHY_RolePion_Composantes >().WriteODB( archive ); // Equipements
-    GetRole< PHY_RolePion_Humans      >().WriteODB( archive ); // Personnels
-    GetRole< PHY_RolePion_Dotations   >().WriteODB( archive ); // Dotations
-    GetRole< PHY_RolePion_Supply      >().WriteODB( archive ); // Stocks
+    GetRole< PHY_RolePion_Composantes >().WriteODB( xos ); // Equipements
+    GetRole< PHY_RolePion_Humans      >().WriteODB( xos ); // Personnels
+    GetRole< PHY_RolePion_Dotations   >().WriteODB( xos ); // Dotations
+    GetRole< PHY_RolePion_Supply      >().WriteODB( xos ); // Stocks
        
-    archive.EndSection(); // unit
+    xos << end();// unit
 }
 
 // -----------------------------------------------------------------------------
@@ -299,17 +302,17 @@ void MIL_AgentPion::Initialize( const MT_Vector2D& vPosition )
 // Name: MIL_AgentPion::Initialize
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::Initialize( MIL_InputArchive& archive )
+void MIL_AgentPion::Initialize( xml::xistream& xis )
 {
-    archive.ReadAttribute( "command-post", bIsPC_, MIL_InputArchive::eNothing );
+    xis >> optional() >> attribute( "command-post", bIsPC_ );
 
     // Position - $$$ DEGEU
     std::string strPosition;
-    archive.ReadAttribute( "position", strPosition );
+    xis >> attribute( "position", strPosition );
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( strPosition, vPosTmp );
 
-    archive.ReadField( "name", strName_, MIL_InputArchive::eNothing );
+    xis >> optional() >> content( "name", strName_ );
     Initialize( vPosTmp );
 }
 
@@ -317,13 +320,13 @@ void MIL_AgentPion::Initialize( MIL_InputArchive& archive )
 // Name: MIL_AgentPion::ReadOverloading
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::ReadOverloading( MIL_InputArchive& archive )
+void MIL_AgentPion::ReadOverloading( xml::xistream& xis )
 {
     // Dotations overloaded by ODB
-    GetRole< PHY_RolePion_Composantes  >().ReadOverloading( archive ); // Composantes + humans
-    GetRole< PHY_RolePion_Dotations    >().ReadOverloading( archive );
-    GetRole< PHY_RolePion_HumanFactors >().ReadOverloading( archive ); 
-    GetRole< PHY_RolePion_Supply       >().ReadOverloading( archive );
+    GetRole< PHY_RolePion_Composantes  >().ReadOverloading( xis ); // Composantes + humans
+    GetRole< PHY_RolePion_Dotations    >().ReadOverloading( xis );
+    GetRole< PHY_RolePion_HumanFactors >().ReadOverloading( xis ); 
+    GetRole< PHY_RolePion_Supply       >().ReadOverloading( xis );
 }
 
 // -----------------------------------------------------------------------------

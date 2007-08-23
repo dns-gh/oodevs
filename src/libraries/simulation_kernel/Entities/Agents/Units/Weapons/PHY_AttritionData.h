@@ -16,6 +16,11 @@
 
 #include "MT_Tools/MT_Random.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_ComposanteState;
 
 // =============================================================================
@@ -25,10 +30,10 @@ class PHY_ComposanteState;
 class PHY_AttritionData
 {
 public:
-     PHY_AttritionData();
-     PHY_AttritionData( MIL_InputArchive& archive );
-     PHY_AttritionData( const PHY_AttritionData& rhs );
-    ~PHY_AttritionData();
+              PHY_AttritionData();
+     explicit PHY_AttritionData( xml::xistream& xis );
+              PHY_AttritionData( const PHY_AttritionData& rhs );
+             ~PHY_AttritionData();
 
     //! @name Operations
     //@{

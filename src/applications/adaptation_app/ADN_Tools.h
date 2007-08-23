@@ -55,8 +55,6 @@ public:
 
 
 public:
-    static uint CountElementsInList( MT_InputArchive_ABC& input, const std::string& strListName, const std::string& strElementName );
-
     static std::string Replace( const std::string& str, char cSrc, char cDst );
     static bool CaselessCompare( const std::string& str1, const std::string& str2 );
 

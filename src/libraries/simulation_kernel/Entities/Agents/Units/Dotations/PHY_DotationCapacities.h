@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_DotationType;
 class PHY_DotationCategory;
 class PHY_DotationCapacity;
@@ -28,7 +33,7 @@ class PHY_DotationCapacities
     MT_COPYNOTALLOWED( PHY_DotationCapacities )
 
 public:
-     PHY_DotationCapacities( const std::string& strParentTagName, MIL_InputArchive& archive );
+     PHY_DotationCapacities( const std::string& strParentTagName, xml::xistream& xis );
     ~PHY_DotationCapacities();
 
     //! @name Operations
@@ -47,7 +52,12 @@ private:
 private:
     //! @name Init
     //@{
-    void ReadDotationCategories( MIL_InputArchive& archive, const PHY_DotationType& dotationType );
+    void ReadDotationCategories( xml::xistream& xis, const PHY_DotationType& dotationType );
+    //@}
+    //! @name Helpers
+    //@{
+    void ReadCategory( xml::xistream& xis );
+    void ReadDotation( xml::xistream& xis, const PHY_DotationType& dotationType );
     //@}
 
 private:

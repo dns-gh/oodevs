@@ -17,6 +17,11 @@
 #include "MT_Tools/MT_InterpolatedFunction.h"
 #include "MT_Tools/MT_Random.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_Volume;
 class PHY_Posture;
 class PHY_Protection;
@@ -41,7 +46,7 @@ class PHY_WeaponDataType_DirectFire
     MT_COPYNOTALLOWED( PHY_WeaponDataType_DirectFire )
 
 public:
-             PHY_WeaponDataType_DirectFire( MIL_EffectManager& manager, const PHY_WeaponType& weaponType, MIL_InputArchive& archive );
+             PHY_WeaponDataType_DirectFire( MIL_EffectManager& manager, const PHY_WeaponType& weaponType, xml::xistream& xis );
     virtual ~PHY_WeaponDataType_DirectFire();
 
     //! @name Operations
@@ -74,9 +79,12 @@ private:
     MT_Float GetMaxDistanceForPH( MT_Float rPH, const PHY_RolePion_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture, const PHY_Volume& targetVolume ) const;
     MT_Float GetMinDistanceForPH( MT_Float rPH, const PHY_RolePion_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture, const PHY_Volume& targetVolume ) const;
 
-    void     InitializePH       ( const PHY_Volume& volume, MIL_InputArchive& archive );
+    void     InitializePH       ( xml::xistream& xis );
     //@}
-
+    //! @name Helpers
+    //@{
+    void ReadHitProbability( xml::xistream& xis, MT_InterpolatedFunction< MT_Float >& phFunction );
+    //@}
 private:
     //! @name Member data
     //@{

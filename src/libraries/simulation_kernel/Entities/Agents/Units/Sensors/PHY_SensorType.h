@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_SensorTypeObject;
 class PHY_SensorTypeAgent;
 class PHY_Sensor;
@@ -29,7 +34,7 @@ class PHY_SensorType
 public:
     //! @name Manager
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( xml::xistream& xis );
     static void Terminate ();
 
     static const PHY_SensorType* FindSensorType( const std::string& strType );
@@ -57,8 +62,16 @@ private:
     //@}
 
 private:
-     PHY_SensorType( const std::string& strName, MIL_InputArchive& archive );
+     PHY_SensorType( const std::string& strName, xml::xistream& xis );
     ~PHY_SensorType();
+
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadSensor  ( xml::xistream& xis );
+    void newSensorTypeAgent ( xml::xistream& xis );
+    void newSensorTypeObject( xml::xistream& xis );
+    //@}
     
 private:
     const uint                  nID_;

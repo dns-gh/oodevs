@@ -21,26 +21,6 @@ TER_World& TER_World::GetWorld()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_World::GetMeterPerPixel
-// Created: AGE 2005-01-31
-// -----------------------------------------------------------------------------
-inline
-MT_Float TER_World::GetMeterPerPixel() const
-{
-    return pCoordinateManager_->GetMeterPerPixel();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::GetMeterSquarePerPixelSquare
-// Created: AGE 2005-01-31
-// -----------------------------------------------------------------------------
-inline
-MT_Float TER_World::GetMeterSquarePerPixelSquare() const
-{
-    return pCoordinateManager_->GetMeterSquarePerPixelSquare();
-}
-
-// -----------------------------------------------------------------------------
 // Name: TER_World::GetWeldValue
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------

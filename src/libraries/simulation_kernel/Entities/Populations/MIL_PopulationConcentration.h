@@ -24,6 +24,11 @@
 #include "MIL_PopulationElement_ABC.h"
 #include "simulation_terrain/TER_PopulationConcentration_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_Population;
 class MIL_PopulationFlow;
 class MIL_PopulationAttitude;
@@ -39,7 +44,7 @@ class MIL_PopulationConcentration : public MIL_PopulationElement_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     MIL_PopulationConcentration( MIL_Population& population, MIL_InputArchive& archive );
+    MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis );
      MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position );
      MIL_PopulationConcentration();
     ~MIL_PopulationConcentration();

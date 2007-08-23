@@ -19,6 +19,9 @@
 #include "HLA/AttributeIdentifier.h"
 #include "HLA/Deserializer.h"
 #include "HLA/HLA_UpdateFunctor.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 BOOST_CLASS_EXPORT_GUID( MIL_ItineraireLogistique, "MIL_ItineraireLogistique" )
 
@@ -52,7 +55,7 @@ MIL_ItineraireLogistique::MIL_ItineraireLogistique()
 //-----------------------------------------------------------------------------
 MIL_ItineraireLogistique::~MIL_ItineraireLogistique()
 {
-	
+    
 }
 
 // =============================================================================
@@ -78,17 +81,15 @@ void MIL_ItineraireLogistique::serialize( Archive& file, const uint )
 // Name: MIL_ItineraireLogistique::WriteSpecificAttributes
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void MIL_ItineraireLogistique::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
+void MIL_ItineraireLogistique::WriteSpecificAttributes( xml::xostream& xos ) const
 {
-    archive.Section( "specific-attributes" );
-
-    archive.WriteField( "max-weight", rWeightSupported_ );
-    archive.WriteField( "width"     , rWidth_           );
-    archive.WriteField( "length"    , rLength_          );
-    archive.WriteField( "flow"      , rFlow_            );
-    archive.WriteField( "equipped"  , bEquipped_        );
-
-    archive.EndSection(); // specific-attributes
+    xos << start( "specific-attributes" )
+            << content( "max-weight", rWeightSupported_ )
+            << content( "width"     , rWidth_ )
+            << content( "length"    , rLength_ )
+            << content( "flow"      , rFlow_ )
+            << content( "equipped"  , bEquipped_ )
+        << end(); // specific-attributes
 }
 
 // =============================================================================
@@ -128,17 +129,26 @@ bool MIL_ItineraireLogistique::Initialize( const MIL_ObstacleType& obstacleType,
 // Name: MIL_ItineraireLogistique::Initialize
 // Created: NLD 2003-07-21
 //-----------------------------------------------------------------------------
-void MIL_ItineraireLogistique::Initialize( MIL_InputArchive& archive )
+void MIL_ItineraireLogistique::Initialize( xml::xistream& xis )
 {
-    MIL_RealObject_ABC::Initialize( archive );   
+    MIL_RealObject_ABC::Initialize( xis );
 
-    archive.Section( "specific-attributes" );
-    archive.ReadField( "max-weight", rWeightSupported_, CheckValueGreater( 0. ) );
-    archive.ReadField( "width"     , rWidth_          , CheckValueGreater( 0. ) );
-    archive.ReadField( "length"    , rLength_         , CheckValueGreater( 0. ) );
-    archive.ReadField( "flow"      , rFlow_           , CheckValueGreater( 0. ) );
-    archive.ReadField( "equipped"  , bEquipped_        );
-    archive.EndSection(); // specific-attributes
+    xis >> start( "specific-attributes" )
+            >> content( "max-weight", rWeightSupported_ )
+            >> content( "width", rWidth_ )
+            >> content( "length", rLength_ )
+            >> content( "flow", rFlow_ )
+            >> content( "equipped", bEquipped_ )
+        >> end();
+
+    if( rWeightSupported_ <= 0. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "max-weight is not greater than 0" ); // $$$$ ABL 2007-07-09: xsd!
+    if( rWidth_ <= 0. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "width is not greater than 0" ); // $$$$ ABL 2007-07-09: xsd!
+    if( rLength_ <= 0. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "length is not greater than 0" ); // $$$$ ABL 2007-07-09: xsd!
+    if( rFlow_ <= 0. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "flow is not greater than 0" ); // $$$$ ABL 2007-07-09: xsd!
 
     TransformLocalisation();
 }

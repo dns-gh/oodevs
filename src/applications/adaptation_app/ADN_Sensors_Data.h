@@ -44,8 +44,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
     
     public:
         ADN_TypePtr_InVector_ABC<ADN_Categories_Data::SizeInfos>       ptrSize_;
@@ -98,8 +98,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         E_TimeCategory      eType_;
@@ -137,8 +137,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         E_SensorWeatherModifiers       eType_;
@@ -176,8 +176,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         E_VisionObject      eType_;
@@ -215,8 +215,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         E_UnitPosture       eType_;
@@ -254,8 +254,8 @@ public:
         std::string GetItemName();
         void        CopyFrom( PopulationInfos& populationInfo );
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
     
     public:
         ADN_Type_String strName_;
@@ -279,8 +279,9 @@ public:
 
         TargetInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void ReadPosture( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Objects_Data::ObjectInfos>   ptrObject_;
@@ -323,8 +324,19 @@ public:
     
         SensorInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void ReadBaseDistance( xml::xistream& input );
+        void ReadObject( xml::xistream& input );
+        void ReadObjectDetection( xml::xistream& input );
+        void ReadUnitDetection( xml::xistream& input );
+        void ReadSize( xml::xistream& input );
+        void ReadPrecipitation( xml::xistream& input );
+        void ReadVisibility( xml::xistream& input );
+        void ReadSourcePosture( xml::xistream& input );
+        void ReadTargetPosture( xml::xistream& input );
+        void ReadTerrain( xml::xistream& input );
+        void ReadItem( const std::string& name, xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
     
     public:
         ADN_Type_String                         strName_;
@@ -362,8 +374,9 @@ public:
         ALATInfos();
         ~ALATInfos();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void ReadTime( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Time surveyTimes_[eNbrVisionObjects-1];
@@ -378,8 +391,8 @@ public:
         CobraInfos();
         ~CobraInfos();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Double rRange_;
@@ -403,8 +416,9 @@ public:
     CobraInfos& GetCobraInfos();
 
 private:
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void WriteArchive( MT_OutputArchive_ABC& output );
+    void ReadSensor( xml::xistream& input );
+    void ReadArchive( xml::xistream& input );
+    void WriteArchive( xml::xostream& output );
 
 public:
     T_SensorsInfos_Vector  vSensors_;

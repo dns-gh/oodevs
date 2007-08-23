@@ -38,8 +38,8 @@ MIL_Limit::MIL_Limit( const ASN1T_MsgLimitCreationRequest& asn )
 // Name: MIL_Limit constructor
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-MIL_Limit::MIL_Limit( const MIL_Automate& automateBroadcasted, MIL_InputArchive& archive )
-    : MIL_TacticalLine_ABC( automateBroadcasted, archive )
+MIL_Limit::MIL_Limit( const MIL_Automate& automateBroadcasted, xml::xistream& xis )
+    : MIL_TacticalLine_ABC( automateBroadcasted, xis )
 {
     SendMsg< NET_ASN_MsgLimitCreation >();
 }
@@ -48,8 +48,8 @@ MIL_Limit::MIL_Limit( const MIL_Automate& automateBroadcasted, MIL_InputArchive&
 // Name: MIL_Limit constructor
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-MIL_Limit::MIL_Limit( const MIL_Formation& formationBroadcasted, MIL_InputArchive& archive )
-    : MIL_TacticalLine_ABC( formationBroadcasted, archive )
+MIL_Limit::MIL_Limit( const MIL_Formation& formationBroadcasted, xml::xistream& xis )
+    : MIL_TacticalLine_ABC( formationBroadcasted, xis )
 {
     SendMsg< NET_ASN_MsgLimitCreation >();            
 }

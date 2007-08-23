@@ -20,7 +20,7 @@ using namespace kernel;
 KnowledgeGroupType::KnowledgeGroupType( xml::xistream& xis )
 {
     std::string name;
-    xis >> xml::attribute( "nom", name );
+    xis >> xml::attribute( "name", name );
     name_ = name.c_str();
 }
     

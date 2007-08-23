@@ -14,7 +14,7 @@
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
 inline
-const MIL_AgentTypePion* MIL_AgentTypePionLOGConvoy::Create( const std::string& strName, MIL_InputArchive& archive )
+const MIL_AgentTypePion* MIL_AgentTypePionLOGConvoy::Create( const std::string& strName, xml::xistream& xis )
 {
-    return new MIL_AgentTypePionLOGConvoy( strName, archive );
+    return new MIL_AgentTypePionLOGConvoy( strName, xis );
 }

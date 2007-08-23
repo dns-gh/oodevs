@@ -15,6 +15,9 @@
 
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // =============================================================================
 // MANAGER
@@ -22,32 +25,43 @@
 
 PHY_LauncherType::T_LauncherTypeMap PHY_LauncherType::launcherTypes_;
 
+struct PHY_LauncherType::LoadingWrapper
+{
+    void ReadLauncher( xml::xistream& xis )
+    {
+        PHY_LauncherType::ReadLauncher( xis );
+    }
+};
+
 // -----------------------------------------------------------------------------
 // Name: PHY_LauncherType::Initialize
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-void PHY_LauncherType::Initialize( MIL_InputArchive& archive )
+void PHY_LauncherType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing launcher types" );
 
-    archive.BeginList( "Lanceurs" );
+    LoadingWrapper loader;
 
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Lanceur" );
+    xis >> start( "launchers" )
+            >> list( "launcher", loader, &LoadingWrapper::ReadLauncher )
+        >> end();
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_LauncherType::ReadLauncher
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_LauncherType::ReadLauncher( xml::xistream& xis )
+{
         std::string strLauncherName;
-        archive.ReadAttribute( "nom", strLauncherName );
+        xis >> attribute( "name", strLauncherName );
 
         const PHY_LauncherType*& pLauncherType = launcherTypes_[ strLauncherName ];
         if ( pLauncherType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Launcher type already registered", archive.GetContext() );
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Launcher type already registered" ); // $$$$ ABL 2007-07-20: error context
 
-        pLauncherType = new PHY_LauncherType( strLauncherName, archive );
-
-        archive.EndSection();
-    }
-    archive.EndList(); // Lanceurs
+        pLauncherType = new PHY_LauncherType( strLauncherName, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,14 +83,14 @@ void PHY_LauncherType::Terminate()
 // Name: PHY_LauncherType constructor
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-PHY_LauncherType::PHY_LauncherType( const std::string& strName, MIL_InputArchive& archive )
+PHY_LauncherType::PHY_LauncherType( const std::string& strName, xml::xistream& xis )
     : strName_       ( strName )
     , bDirectFire_   ( false )
     , bIndirectFire_ ( false )
     , phModificators_( PHY_Posture::GetPostures().size() )
 {
-    InitializeForDirectFire  ( archive );
-    InitializeForIndirectFire( archive );
+    InitializeForDirectFire  ( xis );
+    InitializeForIndirectFire( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,62 +106,63 @@ PHY_LauncherType::~PHY_LauncherType()
 // Name: PHY_LauncherType::InitializeForIndirectFire
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void PHY_LauncherType::InitializeForIndirectFire( MIL_InputArchive& archive )
+void PHY_LauncherType::InitializeForIndirectFire( xml::xistream& xis )
 {
-    if ( !archive.Section( "Indirect", MIL_InputArchive::eNothing ) )
-        return;
-    bIndirectFire_ = true;
-    archive.EndSection(); // Indirect
+    bIndirectFire_ = false;
+    xis >> optional()
+        >> attribute( "indirect-fire", bIndirectFire_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_LauncherType::InitializeForDirectFire
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void PHY_LauncherType::InitializeForDirectFire( MIL_InputArchive& archive )
+void PHY_LauncherType::InitializeForDirectFire( xml::xistream& xis )
 {
-    if( !archive.Section( "Direct", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> list( "ph-modifiers", *this, &PHY_LauncherType::ReadDirect );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_LauncherType::ReadDirect
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_LauncherType::ReadDirect( xml::xistream& xis )
+{
 
     bDirectFire_ = true;
-
-    archive.Section( "ModificateursPH" );
-
     const PHY_Posture::T_PostureMap& postures = PHY_Posture::GetPostures();
-    for ( PHY_Posture::CIT_PostureMap itPostureSource = postures.begin(); itPostureSource != postures.end(); ++itPostureSource )
-    {
-        const PHY_Posture& postureSource = *itPostureSource->second;
-        if( !postureSource.CanModifyPH() )
-            continue;
+    std::string postureType;
 
-        std::stringstream strSectionSource;
-        strSectionSource << "TireurEn" << postureSource.GetName();
-        archive.Section( strSectionSource.str() );
+    xis >> attribute( "posture", postureType );
+    PHY_Posture::CIT_PostureMap it = postures.find( postureType );
+    const PHY_Posture& postureSource = *it->second;
+    if( !postureSource.CanModifyPH() )
+        return;
 
-        for ( PHY_Posture::CIT_PostureMap itPostureTarget = postures.begin(); itPostureTarget != postures.end(); ++itPostureTarget )
-        {
-            const PHY_Posture& postureTarget = *itPostureTarget->second;
-            if( !postureTarget.CanModifyPH() )
-                continue;
+    xis >> list( "ph-modifier", *this, &PHY_LauncherType::ReadModifier, postureSource );
+}
 
-            std::stringstream strSectionTarget;
-            strSectionTarget << "CibleEn" << postureTarget.GetName();
-            archive.Section( strSectionTarget.str() );
+// -----------------------------------------------------------------------------
+// Name: PHY_LauncherType::ReadModifier
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_LauncherType::ReadModifier( xml::xistream& xis, const PHY_Posture& postureSource )
+{
+    const PHY_Posture::T_PostureMap& postures = PHY_Posture::GetPostures();
+    std::string targetType;
+    xis >> attribute( "target-posture", targetType );
+    PHY_Posture::CIT_PostureMap it = postures.find( targetType );
+    const PHY_Posture& postureTarget = *it->second;
+    if( !postureTarget.CanModifyPH() )
+        return;
 
-            MT_Float rModificatorValue;
+    MT_Float rModificatorValue;
+    xis >> attribute( "value", rModificatorValue );
 
-            archive.Read( rModificatorValue, CheckValueBound( 0., 1. ) );
+    if( rModificatorValue < 0 || rModificatorValue > 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "target-posture: value not in [0..1]" );
 
-            RegisterPHModificator( postureSource, postureTarget, rModificatorValue );
-
-            archive.EndSection(); // CibleEnXXX
-        }
-        archive.EndSection(); // TireurEnXXX
-    }
-
-    archive.EndSection(); // ModificateursPH
-    
-    archive.EndSection(); // Direct
+    RegisterPHModificator( postureSource, postureTarget, rModificatorValue );
 }
 
 // -----------------------------------------------------------------------------

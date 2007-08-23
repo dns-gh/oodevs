@@ -21,14 +21,12 @@ using namespace xml;
 PopulationType::PopulationType( xml::xistream& xis, const Resolver_ABC< DecisionalModel, QString >& modelResolver )
 {
     std::string model, name;
-    int id;
-    xis >> attribute( "nom", name )
-            >> content( "MosID", id )
-            >> content( "ModeleDecisionnel", model );
-    id_ = id; model_ = & modelResolver.Get( model.c_str() );
+    xis >> attribute( "name", name )
+        >> attribute( "id", id_ )
+        >> attribute( "decisional-model", model )
+        >> attribute( "concentration-density", density_ );
+    model_ = & modelResolver.Get( model.c_str() );
     name_ = name.c_str();
-    
-    xis >> content( "DensiteConcentration", density_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -20,6 +20,9 @@
 
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager constructor
@@ -163,17 +166,25 @@ const std::string MIL_CheckPointManager::BuildCheckPointName()
 // -----------------------------------------------------------------------------
 void MIL_CheckPointManager::CreateMetaData( const std::string& strFileName, const std::string& strCheckPointName, const boost::crc_32_type::value_type& nDataCRC, const boost::crc_32_type::value_type& nCRCCRC )
 {
-    MT_XXmlOutputArchive metaDataArchive;
-    metaDataArchive.Section( "CheckPoint" );
-    metaDataArchive.WriteField( "Nom", strCheckPointName );
-    metaDataArchive.Section( "CRC" );
-    metaDataArchive.WriteField( "Configuration", nCRCCRC );
-    metaDataArchive.WriteField( "Sauvegarde", nDataCRC );
-    metaDataArchive.EndSection(); // CRC
-    metaDataArchive.EndSection(); // CheckPoint
-
-    if ( !metaDataArchive.WriteToFile( strFileName ) )
+    try
+    {
+        xml::xofstream xos( strFileName );
+        xos << start( "checkpoint" )
+                << content( "name", strCheckPointName )
+                << start( "crc" )
+                    << start( "configuration" )
+                        << xml::attribute( "crc", nCRCCRC )
+                    << end()
+                    << start( "save" )
+                        << xml::attribute( "crc", nDataCRC )
+                    << end()
+                << end()
+            << end();
+    }
+    catch( ... )
+    {
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Can't create file '%s'", strFileName.c_str() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -200,31 +211,33 @@ boost::crc_32_type::value_type MIL_CheckPointManager::CreateData( const std::str
     return MIL_Tools::ComputeCRC( strFileName );
 }
 
+namespace
+{
+    struct CrcChecker
+    {
+        void ReadCrc( xml::xistream& xis )
+        {
+            std::string                    strFileName;
+            boost::crc_32_type::value_type nCRC;
+            xis >> xml::attribute( "name", strFileName )
+                >> xml::attribute( "crc", nCRC );
+            if( MIL_Tools::ComputeCRC( strFileName ) != nCRC )
+                throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ ,
+                    "Checkpoint can not be loaded - File '" + strFileName + "' has changed since the checkpoint creation" );
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager::CheckFilesCRC
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 void MIL_CheckPointManager::CheckFilesCRC( const MIL_Config& config )
 {
-    MIL_InputArchive archive;
-    
-    archive.Open( config.BuildCheckpointChildFile( "CRCs.xml" ) );
-
-    archive.BeginList( "Fichiers" );
-    while ( archive.NextListElement() )
-    {
-        std::string                    strFileName;
-        boost::crc_32_type::value_type nCRC;
-        
-        archive.Section( "Fichier" );
-        archive.ReadAttribute( "nom", strFileName );
-        archive.Read( nCRC );
-        archive.EndSection();
-        
-        if( MIL_Tools::ComputeCRC( strFileName ) != nCRC )
-            throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ , MT_FormatString( "Checkpoint can not be loaded - File '%s' has changed since the checkpoint creation", strFileName.c_str() ) );
-    }
-    archive.EndList();    
+    CrcChecker checker;
+    xml::xifstream xis( "CRCs.xml" );
+    xis >> xml::start( "files" )
+        >> xml::list( "file", checker, &CrcChecker::ReadCrc );
 }
 
 // -----------------------------------------------------------------------------
@@ -233,21 +246,22 @@ void MIL_CheckPointManager::CheckFilesCRC( const MIL_Config& config )
 // -----------------------------------------------------------------------------
 void MIL_CheckPointManager::CheckCRC( const MIL_Config& config )
 {
-    MIL_InputArchive                metaDatas;
+    xml::xifstream xis( config.BuildCheckpointChildFile( "MetaData.xml" ) );
+
     boost::crc_32_type::value_type  nCRC;
-    
-    metaDatas.Open( config.BuildCheckpointChildFile( "MetaData.xml" ) );
-    metaDatas.Section( "CheckPoint" );
-    metaDatas.Section( "CRC" );
-    metaDatas.ReadField( "Configuration", nCRC );
-    
+    xis >> xml::start( "checkpoint" )
+        >> xml::start( "crc" )
+        >> xml::start( "configuration" )
+            >> xml::attribute( "crc", nCRC )
+        >> xml::end();
+            
     if( MIL_Tools::ComputeCRC( config.BuildCheckpointChildFile( "CRCs.xml" ) ) != nCRC )
         throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ , "Checkpoint can not be loaded - File 'CRCs.xml' has changed since the checkpoint creation" );
 
     CheckFilesCRC( config );
 
-    metaDatas.ReadField( "Sauvegarde", nCRC );
-    
+    xis >> xml::start( "save" )
+            >> xml::attribute( "crc", nCRC );
     if( MIL_Tools::ComputeCRC( config.BuildCheckpointChildFile( "data" ) ) != nCRC )
         throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ , "Checkpoint can not be loaded - File 'data' has changed since the checkpoint creation" );
 }
@@ -286,9 +300,14 @@ bool MIL_CheckPointManager::SaveOrbatCheckPoint( const std::string& name )
 {
     try
     {
-        MT_XXmlOutputArchive backupArchive;
-        MIL_AgentServer::GetWorkspace().WriteODB( backupArchive );
-        backupArchive.WriteToFile( MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "orbat.xml", name ) );
+        xml::xofstream xos( MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "orbat.xml", name ) );
+        MIL_AgentServer::GetWorkspace().WriteODB( xos );
+    }
+    catch( xml::exception& e )
+    {
+        _clearfp();
+        MT_LOG_ERROR_MSG( MT_FormatString( "Can't save backup checkpoint ( %s )", e.what() ) );
+        return false;
     }
     catch( ... )
     {

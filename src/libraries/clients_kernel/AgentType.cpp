@@ -26,19 +26,17 @@ AgentType::AgentType( xml::xistream& xis, const Resolver_ABC< ComponentType, QSt
     : nature_( 0 )
 {
     std::string modelName, name, type;
-    int id;
-    xis >> attribute( "nom", name )
+    xis >> attribute( "name", name )
         >> attribute( "type", type )
-        >> content( "MosID", id )
-        >> content(  "ModeleDecisionnel", modelName );
+        >> attribute( "id", id_ )
+        >> attribute(  "decisional-model", modelName );
     name_ = name.c_str();
     type_ = type.c_str();
-    id_ = id;
     model_ = & modelResolver.Get( modelName.c_str() );
 
     std::auto_ptr< AgentNature > nature( new AgentNature( xis ) );
-    xis >> start( "Equipements" )
-        >> list( "Equipement", *this, &AgentType::ReadEquipment, componentResolver )
+    xis >> start( "equipments" )
+        >> list( "equipment", *this, &AgentType::ReadEquipment, componentResolver )
         >> end();
     symbol_      = symbolFactory.CreateSymbol( nature->GetNature() );
     levelSymbol_ = symbolFactory.CreateLevelSymbol( nature->GetLevel() );
@@ -62,7 +60,7 @@ AgentType::~AgentType()
 void AgentType::ReadEquipment( xml::xistream& xis, const Resolver_ABC< ComponentType, QString >& resolver )
 {
     std::string name;
-    xis >> attribute( "nom", name );
+    xis >> attribute( "type", name );
     equipments_.push_back( & resolver.Get( name.c_str() ) );
 }
 

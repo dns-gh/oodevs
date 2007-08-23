@@ -15,14 +15,18 @@
 
 #include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RolePionLOG_Maintenance.h"
 
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGMaintenance, "MIL_AgentPionLOGMaintenance" )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOGMaintenance constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive )
-    : MIL_AgentPionLOG_ABC( type, nID, automate, archive )
+MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis )
+    : MIL_AgentPionLOG_ABC( type, nID, automate, xis )
 {
     RegisterRole< PHY_RolePionLOG_Maintenance >( *this );
 }

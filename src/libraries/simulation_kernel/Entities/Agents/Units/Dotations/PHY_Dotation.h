@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_DotationCategory;
 class PHY_DotationGroup;
 class PHY_DotationCapacity;
@@ -56,7 +61,7 @@ public:
     MT_Float GetValue() const;
     MT_Float Consume ( MT_Float rValue );
 
-    void     ReadValue( MIL_InputArchive& archive );
+    void     ReadValue( xml::xistream& xis );
     void     Resupply ( MT_Float rFactor = 1. );
 
     bool     HasReachedSupplyThreshold() const;

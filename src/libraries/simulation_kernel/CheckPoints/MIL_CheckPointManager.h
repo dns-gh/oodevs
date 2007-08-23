@@ -13,7 +13,6 @@
 #define __MIL_CheckPointManager_h_
 
 #include "MIL.h"
-
 #include "game_asn/Asn.h"
 
 #pragma warning ( push )
@@ -22,6 +21,11 @@
 #pragma warning ( pop )
 
 #include <queue>
+
+namespace xml
+{
+    class xostream;
+}
 
 class MIL_Config;
 
@@ -35,7 +39,7 @@ class MIL_CheckPointManager
 public:
               MIL_CheckPointManager();
      explicit MIL_CheckPointManager( const MIL_Config& config );
-    ~MIL_CheckPointManager();
+             ~MIL_CheckPointManager();
 
     //! @name Main
     //@{

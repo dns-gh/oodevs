@@ -15,14 +15,18 @@
 
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
 
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGMedical, "MIL_AgentPionLOGMedical" )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOGMedical constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive )
-    : MIL_AgentPionLOG_ABC( type, nID, automate, archive )
+MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis )
+    : MIL_AgentPionLOG_ABC( type, nID, automate, xis )
 {
     RegisterRole< PHY_RolePionLOG_Medical >( *this );  
 }

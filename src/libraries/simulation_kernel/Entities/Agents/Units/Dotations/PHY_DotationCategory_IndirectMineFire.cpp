@@ -18,24 +18,27 @@
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/Objects/MIL_ZoneMineeParDispersion.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire::Create
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
-PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectMineFire::Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, MIL_InputArchive& archive )
+PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectMineFire::Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
 {
-    return *new PHY_DotationCategory_IndirectMineFire( type, dotationCategory, archive );
+    return *new PHY_DotationCategory_IndirectMineFire( type, dotationCategory, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectMineFire constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_DotationCategory_IndirectMineFire::PHY_DotationCategory_IndirectMineFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, MIL_InputArchive& archive )
-    : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, archive )
+PHY_DotationCategory_IndirectMineFire::PHY_DotationCategory_IndirectMineFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
+    : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, xis )
 {
-    archive.ReadField( "NombreMines", nNbrObjects_ );
+    xis >> attribute( "mine-count", nNbrObjects_ );
 }
 
 // -----------------------------------------------------------------------------

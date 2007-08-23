@@ -23,8 +23,6 @@
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_DataException.h"
-#include "ADN_Xml_Exception.h"
-#include "ADN_XmlInput_Helper.h"
 
 
 // -----------------------------------------------------------------------------
@@ -80,29 +78,25 @@ ADN_Weapons_Data::PhInfos* ADN_Weapons_Data::PhInfos::CreateCopy()
 // Name: PhInfos::ReadArchive
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
-void ADN_Weapons_Data::PhInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Weapons_Data::PhInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "PH" );
-    input.ReadAttribute( "dist", nDistance_ );
     double rPerc;
-    input.Read( rPerc );
-    rPerc_ = rPerc * 100.0;
-    input.EndSection();
+    input >> xml::attribute( "distance", nDistance_ )
+          >> xml::attribute( "percentage", rPerc );
+    rPerc_ = rPerc * 100.;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PhInfos::WriteArchive
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
-void ADN_Weapons_Data::PhInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Weapons_Data::PhInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "PH" );
-    output.WriteAttribute( "dist", nDistance_.GetData() );
-    output << rPerc_.GetData() / 100.0;
-    output.EndSection();
+    output << xml::start( "hit-probability" )
+            << xml::attribute( "distance", nDistance_ )
+            << xml::attribute( "percentage", rPerc_.GetData() / 100.0 )
+           << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PhSizeInfos::PhSizeInfos
@@ -118,7 +112,6 @@ ADN_Weapons_Data::PhSizeInfos::PhSizeInfos( ADN_Categories_Data::SizeInfos* ptr 
     vPhs_.SetParentNode( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PhSizeInfos::~PhSizeInfos
 // Created: APE 2004-11-22
@@ -127,7 +120,6 @@ ADN_Weapons_Data::PhSizeInfos::~PhSizeInfos()
 {
     vPhs_.Reset();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PhSizeInfos::GetNodeName
@@ -139,7 +131,6 @@ std::string ADN_Weapons_Data::PhSizeInfos::GetNodeName()
     return strResult + ptrSize_.GetData()->GetData();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PhSizeInfos::GetItemName
 // Created: APE 2004-11-22
@@ -149,40 +140,38 @@ std::string ADN_Weapons_Data::PhSizeInfos::GetItemName()
     return std::string();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Weapons_Data::PhSizeInfos::ReadHp
+// Created: AGE 2007-08-17
+// -----------------------------------------------------------------------------
+void ADN_Weapons_Data::PhSizeInfos::ReadHp( xml::xistream& input )
+{
+    std::auto_ptr<PhInfos> spNew( new PhInfos() );
+    spNew->ReadArchive( input );
+    vPhs_.AddItem( spNew.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: PhSizeInfos::ReadArchive
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
-void ADN_Weapons_Data::PhSizeInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Weapons_Data::PhSizeInfos::ReadArchive( xml::xistream& input )
 {
-    std::string strSection = std::string("VolumeCible") + ptrSize_.GetData()->GetData();
-    input.BeginList( strSection );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<PhInfos> spNew( new PhInfos() );
-        spNew->ReadArchive( input );
-        vPhs_.AddItem( spNew.release() );
-    }
-    input.EndList();
+    input >> xml::list( "hit-probability", *this, &ADN_Weapons_Data::PhSizeInfos::ReadHp );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PhSizeInfos::WriteArchive
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
-void ADN_Weapons_Data::PhSizeInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Weapons_Data::PhSizeInfos::WriteArchive( xml::xostream& output )
 {
-    std::string strSection = std::string("VolumeCible") + ptrSize_.GetData()->GetData();
-    output.BeginList( strSection, vPhs_.size() );
+    output << xml::start( "hit-probabilities" )
+            << xml::attribute( "target", *ptrSize_.GetData() );
     for( IT_PhInfosVector it = vPhs_.begin(); it != vPhs_.end(); ++it )
-    {
         (*it)->WriteArchive( output );
-    }
-    output.EndList();
+    output << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: WeaponInfos::WeaponInfos
@@ -208,7 +197,6 @@ ADN_Weapons_Data::WeaponInfos::WeaponInfos()
     BindExistenceTo( &ptrAmmunition_ );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: WeaponInfos::GetNodeName
 // Created: APE 2004-11-22
@@ -218,7 +206,6 @@ std::string ADN_Weapons_Data::WeaponInfos::GetNodeName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: WeaponInfos::GetItemName
 // Created: APE 2004-11-22
@@ -227,7 +214,6 @@ std::string ADN_Weapons_Data::WeaponInfos::GetItemName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: WeaponInfos::CreateCopy
@@ -250,9 +236,7 @@ ADN_Weapons_Data::WeaponInfos* ADN_Weapons_Data::WeaponInfos::CreateCopy()
         PhSizeInfos& phSizeInfo = * phs_[n];
         PhSizeInfos& phSizeInfoCopy = * pCopy->phs_[n];
         for( IT_PhInfosVector it = phSizeInfo.vPhs_.begin(); it != phSizeInfo.vPhs_.end(); ++it )
-        {
             phSizeInfoCopy.vPhs_.AddItem( (*it)->CreateCopy() );
-        }
     }
 
     pCopy->bIndirect_ = bIndirect_.GetData();
@@ -263,118 +247,101 @@ ADN_Weapons_Data::WeaponInfos* ADN_Weapons_Data::WeaponInfos::CreateCopy()
     return pCopy;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Weapons_Data::WeaponInfos::ReadTargetSize
+// Created: AGE 2007-08-17
+// -----------------------------------------------------------------------------
+void ADN_Weapons_Data::WeaponInfos::ReadTargetSize( xml::xistream& input )
+{
+    bDirect_ = true;
+    std::string target = xml::attribute< std::string >( input, "target" );
+    IT_PhSizeInfosVector itPhSizeInfo = std::find_if( phs_.begin(), phs_.end(), PhSizeInfos::Cmp( target ));
+    if( itPhSizeInfo != phs_.end() )
+        (*itPhSizeInfo)->ReadArchive( input );
+}
 
 // -----------------------------------------------------------------------------
 // Name: WeaponInfos::ReadArchive
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
-void ADN_Weapons_Data::WeaponInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Weapons_Data::WeaponInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Armement" );
-
-    std::string strLauncher;
-    std::string strAmmunition;
-    input.ReadAttribute( "lanceur", strLauncher );
-    input.ReadAttribute( "munition", strAmmunition );
+    std::string strLauncher, strAmmunition;
+    input >> xml::attribute( "launcher", strLauncher )
+          >> xml::attribute( "munition", strAmmunition );
 
     ADN_Launchers_Data::LauncherInfos* pLauncher = ADN_Workspace::GetWorkspace().GetLaunchers().GetData().FindLauncher( strLauncher );
     if( !pLauncher )
-        input.ThrowError( MT_FormatString( "Armement lanceur '%s' / dotation '%s' : type de lanceur invalide", strLauncher.c_str(), strAmmunition.c_str() ) );
-
+        throw ADN_DataException( "WeaponInfos", "Armement lanceur '" + strLauncher + "' / dotation '" + strAmmunition + "' : type de lanceur invalide" );
     ptrLauncher_ = pLauncher;
 
     ADN_Equipement_Data::CategoryInfo* pAmmo = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( "munition", strAmmunition );
     if( !pAmmo )
-        input.ThrowError( MT_FormatString( "Armement lanceur '%s' / dotation '%s' : type de dotation invalide", strLauncher.c_str(), strAmmunition.c_str() ) );
-
-    assert( pAmmo != 0 );
+        throw ADN_DataException( "WeaponInfos", "Armement lanceur '" + strLauncher + "' / dotation '" + strAmmunition + "' : type de dotation invalide" );
     ptrAmmunition_ = (ADN_Equipement_Data::AmmoCategoryInfo*)pAmmo;
 
     strName_ = strLauncher + " & " + strAmmunition;
+    input >> xml::start( "burst" )
+            >> xml::attribute( "munition", nRoundsPerBurst_ )
+            >> xml::attribute( "duration", burstDuration_ )
+          >> xml::end()
+          >> xml::start( "reloading" )
+            >> xml::attribute( "munition", nRoundsPerReload_ )
+            >> xml::attribute( "duration", reloadDuration_ )
+          >> xml::end();
+    input >> xml::optional() 
+          >> xml::start( "direct-fire" )
+            >> xml::list( "hit-probabilities", *this, &ADN_Weapons_Data::WeaponInfos::ReadTargetSize )
+          >> xml::end()
+          >> xml::optional() 
+          >> xml::start( "indirect-fire" )
+            >> xml::attribute( "average-speed", rAverageSpeed_ )
+            >> xml::attribute( "min-range",     rMinRange_ )
+            >> xml::attribute( "max-range",     rMaxRange_ )
+          >> xml::end();
 
-    input.ReadField( "NbrMunitionParRafale", nRoundsPerBurst_ );
-    input.ReadField( "DureeRafale", burstDuration_ );
-    input.ReadField( "NbrMunitionsParRechargement", nRoundsPerReload_ );
-    input.ReadField( "DureeRechargement", reloadDuration_ );
-
-    if( input.Section( "Direct", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bDirect_ = true;
-        input.Section( "PHs" );
-        ADN_Categories_Data::T_SizeInfos_Vector& sizeInfos = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos();
-        for( ADN_Categories_Data::IT_SizeInfos_Vector it = sizeInfos.begin(); it != sizeInfos.end(); ++it )
-        {
-            IT_PhSizeInfosVector itPhSizeInfo = std::find_if( phs_.begin(), phs_.end(), PhSizeInfos::CmpRef(*it));
-            assert( itPhSizeInfo != phs_.end() );
-            (*itPhSizeInfo)->ReadArchive( input );
-        }
-
-        input.EndSection(); // PHs
-        input.EndSection(); // Direct
-    }
-
-    if( input.Section( "Indirect", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bIndirect_ = true;
-        input.ReadField( "VitesseMoyenne", rAverageSpeed_ );
-        input.ReadField( "PorteeMin", rMinRange_ );
-        input.ReadField( "PorteeMax", rMaxRange_ );
-        input.EndSection(); // Indirect
-    }
-
-    input.EndSection(); // Armement
+    bIndirect_ = rMaxRange_ != .0;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: WeaponInfos::WriteArchive
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
-void ADN_Weapons_Data::WeaponInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Weapons_Data::WeaponInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Armement" );
-
-    output.WriteAttribute( "lanceur", ptrLauncher_.GetData()->strName_.GetData() );
-    output.WriteAttribute( "munition", ptrAmmunition_.GetData()->strName_.GetData() );
-
-    //$$$$$
-
-    output.WriteField( "NbrMunitionParRafale", nRoundsPerBurst_.GetData() );
-    output.WriteField( "DureeRafale", burstDuration_.GetData() );
-    output.WriteField( "NbrMunitionsParRechargement", nRoundsPerReload_.GetData() );
-    output.WriteField( "DureeRechargement", reloadDuration_.GetData() );
+    output << xml::start( "weapon-system" )
+            << xml::attribute( "launcher", ptrLauncher_  .GetData()->strName_ )
+            << xml::attribute( "munition", ptrAmmunition_.GetData()->strName_ )
+           << xml::start( "burst" )
+            << xml::attribute( "munition", nRoundsPerBurst_ )
+            << xml::attribute( "duration", burstDuration_ )
+           << xml::end()
+           << xml::start( "reloading" )
+            << xml::attribute( "munition", nRoundsPerReload_ )
+            << xml::attribute( "duration", reloadDuration_ )
+           << xml::end();
 
     if( bDirect_.GetData() )
     {
-        output.Section( "Direct" );
-        output.Section( "PHs" );
-        ADN_Categories_Data::T_SizeInfos_Vector& sizeInfos = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos();
-        for( ADN_Categories_Data::IT_SizeInfos_Vector it = sizeInfos.begin(); it != sizeInfos.end(); ++it )
-        {
-            IT_PhSizeInfosVector itPhSizeInfo = std::find_if( phs_.begin(), phs_.end(), PhSizeInfos::CmpRef(*it));
-            assert( itPhSizeInfo != phs_.end() );
-            (*itPhSizeInfo)->WriteArchive( output );
-        }
-
-        output.EndSection(); // PHs
-        output.EndSection(); // Direct
+        output << xml::start( "direct-fire" );
+        for( IT_PhSizeInfosVector it = phs_.begin(); it != phs_.end(); ++it )
+            (*it)->WriteArchive( output );
+        output << xml::end();
     }
 
     if( bIndirect_.GetData() )
     {
-        output.Section( "Indirect" );
-        output.WriteField( "VitesseMoyenne", rAverageSpeed_.GetData() );
-
         if( rMaxRange_.GetData() < rMinRange_.GetData() )
             throw ADN_DataException( tr( "Data errror" ).ascii(), tr( "In the indirect fire parameters of weapon %1, the max range is inferior to min range." ).arg( strName_.GetData().c_str() ).ascii() );
 
-        output.WriteField( "PorteeMin", rMinRange_.GetData() );
-        output.WriteField( "PorteeMax", rMaxRange_.GetData() );
-
-        output.EndSection(); // Indirect
+        output << xml::start( "indirect-fire" )
+                << xml::attribute( "average-speed", rAverageSpeed_ )
+                << xml::attribute( "min-range",     rMinRange_ )
+                << xml::attribute( "max-range",     rMaxRange_ )
+               << xml::end();
     }
 
-    output.EndSection(); // Armement
+    output << xml::end();
 }
 
 
@@ -422,33 +389,35 @@ void ADN_Weapons_Data::Reset()
 // Name: ADN_Weapons_Data::ReadArchive
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
-void ADN_Weapons_Data::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Weapons_Data::ReadArchive( xml::xistream& input )
 {
-    input.BeginList( "Armements" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<WeaponInfos> spNew( new WeaponInfos() );
-        spNew->ReadArchive( input );
-        weapons_.AddItem( spNew.release() );
-    }
-    input.EndList(); // Armements
+    input >> xml::start( "weapons" )
+            >> xml::list( "weapon-system", *this, &ADN_Weapons_Data::ReadWeapon )
+           >> xml::end();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Weapons_Data::ReadWeapon
+// Created: AGE 2007-08-17
+// -----------------------------------------------------------------------------
+void ADN_Weapons_Data::ReadWeapon( xml::xistream& input )
+{
+    std::auto_ptr<WeaponInfos> spNew( new WeaponInfos() );
+    spNew->ReadArchive( input );
+    weapons_.AddItem( spNew.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_Data::WriteArchive
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
-void ADN_Weapons_Data::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Weapons_Data::WriteArchive( xml::xostream& output )
 {
-    output.BeginList( "Armements", weapons_.size() );
+    output << xml::start( "weapons" );
     for( IT_WeaponInfosVector it = weapons_.begin(); it != weapons_.end(); ++it )
-    {
         (*it)->WriteArchive( output );
-    }
-    output.EndSection();
+    output << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_Data::GetWeaponThatUse

@@ -16,6 +16,9 @@
 
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Tools/MIL_Tools.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_VirtualObjectType_ControlZone constructor
@@ -40,35 +43,36 @@ MIL_VirtualObjectType_ControlZone::~MIL_VirtualObjectType_ControlZone()
 // Name: MIL_VirtualObjectType_ControlZone::Read
 // Created: NLD 2004-10-26
 // -----------------------------------------------------------------------------
-void MIL_VirtualObjectType_ControlZone::Read( MIL_InputArchive& archive )
+void MIL_VirtualObjectType_ControlZone::Read( xml::xistream& xis )
 {
     vUnitDensityFirePercentage_.clear();
     vUnitDensityFirePercentage_.resize( PHY_Volume::GetVolumes().size(), 0. );
 
-    archive.BeginList( "PourcentagesTirParHumainParHectare" );
-    while ( archive.NextListElement() )
-    {
-        archive.Section( "Pourcentage" );
+    xis >> list( "shot-percentage-per-human-per-hectare", *this, &MIL_VirtualObjectType_ControlZone::ReadPercentage );
+    bInitialized_ = true;
+}
 
+// -----------------------------------------------------------------------------
+// Name: MIL_VirtualObjectType_ControlZone::ReadPercentage
+// Created: ABL 2007-07-19
+// -----------------------------------------------------------------------------
+void MIL_VirtualObjectType_ControlZone::ReadPercentage( xml::xistream& xis )
+{
         std::string strVolume;
-        archive.ReadAttribute( "volume", strVolume );
+        xis >> attribute( "volume", strVolume );
         const PHY_Volume* pVolume = PHY_Volume::FindVolume( strVolume );
         if ( !pVolume )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown volume name", archive.GetContext() );
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown volume name" ); // $$$$ ABL 2007-07-19: error context
 
         MT_Float rUnitDensityFirePercentage;
-        archive.Read( rUnitDensityFirePercentage, CheckValueBound( 0., 100. ) );
+        xis >> attribute( "percentage", rUnitDensityFirePercentage );
+        if( rUnitDensityFirePercentage < 0 || rUnitDensityFirePercentage > 100 )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "percentage not in [0..100]" );
         
         rUnitDensityFirePercentage *= 10000.;                                                          // hectare => m2
         rUnitDensityFirePercentage = MIL_Tools::ConvertMeterSquareToSim( rUnitDensityFirePercentage ); // m2 => px2
        
         vUnitDensityFirePercentage_[ pVolume->GetID() ] = rUnitDensityFirePercentage / 100.;
-
-        archive.EndSection(); // Pourcentage
-    }
-    archive.EndList(); // PourcentagesTirParHumainParHectare
-
-    bInitialized_ = true;
 }
 
 // -----------------------------------------------------------------------------

@@ -14,7 +14,7 @@
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
 inline
-const MIL_AgentTypePion* MIL_AgentTypePionNBC::Create( const std::string& strName, MIL_InputArchive& archive )
+const MIL_AgentTypePion* MIL_AgentTypePionNBC::Create( const std::string& strName, xml::xistream& xis )
 {
-    return new MIL_AgentTypePionNBC( strName, archive );
+    return new MIL_AgentTypePionNBC( strName, xis );
 }

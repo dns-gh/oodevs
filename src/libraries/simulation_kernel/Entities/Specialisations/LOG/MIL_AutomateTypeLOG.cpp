@@ -16,12 +16,16 @@
 #include "Decision/Functions/DEC_LogisticFunctions.h"
 #include "Decision/DEC_Tools.h"
 
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateTypeLOG constructor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AutomateTypeLOG::MIL_AutomateTypeLOG( const std::string& strName, MIL_InputArchive& archive )
-    : MIL_AutomateType( strName, archive )
+MIL_AutomateTypeLOG::MIL_AutomateTypeLOG( const std::string& strName, xml::xistream& xis )
+    : MIL_AutomateType( strName, xis )
 {    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMaintenanceEnableSystem            , "DEC_Maintenance_ActiverChaine"             );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMaintenanceDisableSystem           , "DEC_Maintenance_DesactiverChaine"          );
@@ -72,7 +76,7 @@ bool MIL_AutomateTypeLOG::IsLogistic() const
 // Name: MIL_AutomateTypeLOG::InstanciateAutomate
 // Created: NLD 2004-12-27
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateTypeLOG::InstanciateAutomate( uint nID, MIL_Formation& formation, MIL_InputArchive& archive ) const
+MIL_Automate& MIL_AutomateTypeLOG::InstanciateAutomate( uint nID, MIL_Formation& formation, xml::xistream& xis ) const
 {
-    return *new MIL_AutomateLOG( *this, nID, formation, archive );
+    return *new MIL_AutomateLOG( *this, nID, formation, xis );
 }

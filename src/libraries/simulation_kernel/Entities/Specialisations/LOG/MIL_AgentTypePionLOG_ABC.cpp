@@ -18,15 +18,17 @@
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Actions/ConvoySupply/PHY_ActionConvoyLoad.h"
 #include "Entities/Agents/Actions/ConvoySupply/PHY_ActionConvoyUnload.h"
-
 #include <functional>
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOG_ABC constructor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AgentTypePionLOG_ABC::MIL_AgentTypePionLOG_ABC( const std::string& strName, MIL_InputArchive& archive )
-    : MIL_AgentTypePion( strName, archive )
+MIL_AgentTypePionLOG_ABC::MIL_AgentTypePionLOG_ABC( const std::string& strName, xml::xistream& xis )
+    : MIL_AgentTypePion( strName, xis )
 { 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMaintenanceEnableSystem            , "DEC_Maintenance_ActiverChaine"             );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMaintenanceDisableSystem           , "DEC_Maintenance_DesactiverChaine"          );

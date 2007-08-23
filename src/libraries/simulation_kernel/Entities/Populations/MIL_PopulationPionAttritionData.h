@@ -23,6 +23,11 @@
 
 #include "Entities/Agents/Units/Weapons/PHY_AttritionData.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_PopulationAttitude;
 class PHY_Protection;
 
@@ -40,7 +45,7 @@ public:
 
     //! @name Initialization
     //@{
-    void Initialize( MIL_InputArchive& archive );
+    void Initialize( xml::xistream& xis );
     //@}
 
     //! @name Accessors
@@ -48,7 +53,7 @@ public:
     const PHY_AttritionData& GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection ) const;
           MT_Float           GetPH           ( const MIL_PopulationAttitude& attitude, MT_Float rDensity ) const;
     //@}
-
+    
 private:
     //! @name Copy/Assignement
     //@{
@@ -58,7 +63,7 @@ private:
 
     //! @name Initialization
     //@{
-    void ReadAttitudeData( const MIL_PopulationAttitude& attitude, MIL_InputArchive& archive );
+    void ReadAttitudeData( const MIL_PopulationAttitude& attitude, xml::xistream& xis );
     //@}
 
 private:
@@ -77,6 +82,12 @@ private:
     };
 
     typedef std::vector< sAttritionData > T_AttitudeAttritionDataVector; // Per attitude
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadAttritionEffect    ( xml::xistream& xis );
+    void ReadAttritionUnitEffect( xml::xistream& xis, sAttritionData& attitudeData );
     //@}
 
 private:

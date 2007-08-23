@@ -15,7 +15,7 @@
 #include "ADN_Units_Data.h"
 #include "ADN_AvailabilityWarning.h"
 
-class ADN_XmlInput_Helper;
+class xml::xistream;
 
 
 // =============================================================================
@@ -43,8 +43,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( const std::string& strSection, ADN_XmlInput_Helper& input );
-        void WriteArchive( const std::string& strSection, MT_OutputArchive_ABC& output );
+        void ReadArchive( const std::string& attribute, xml::xistream& input );
+        void WriteArchive( const std::string& section, const std::string& attribute, xml::xostream& output );
 
     public:
         ADN_Type_Int  nNbrTrucks_;
@@ -72,8 +72,13 @@ public:
     //@}
 
 private:
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void WriteArchive( MT_OutputArchive_ABC& output );
+    void ReadArchive( xml::xistream& input );
+    void ReadConstitutionTime( xml::xistream& input );
+    void ReadLoadingTime( xml::xistream& input );
+    void ReadUnloadingTime( xml::xistream& input );
+    void ReadSpeedModifier( xml::xistream& input );
+    void ReadResourceAvailability( xml::xistream& input );
+    void WriteArchive( xml::xostream& output );
 
 public:
     ADN_TypePtr_InVector_ABC<ADN_Units_Data::UnitInfos> ptrUnit_;

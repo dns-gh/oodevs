@@ -20,9 +20,6 @@
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 
-#include "ADN_Xml_Exception.h"
-#include "ADN_XmlInput_Helper.h"
-
 // =============================================================================
 // OrderInfos
 // =============================================================================
@@ -54,29 +51,25 @@ std::string ADN_Models_Data::OrderInfos::GetItemName()
 // Name: OrderInfos::ReadArchive
 // Created: APE 2004-12-01
 // -----------------------------------------------------------------------------
-void ADN_Models_Data::OrderInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Models_Data::OrderInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "OrdreConduite" );
-    input.ReadAttribute( "nom", strName_ );
+    input >> xml::attribute( "name", strName_ );
     ADN_Missions_Data::FragOrder* fragOrder = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindFragOrder( strName_.GetData() );
     if( !fragOrder )
         throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Invalid frag order: " ).append( strName_.GetData().c_str() ).ascii() );
     fragOrder_ = fragOrder;
-    input.EndSection(); // OrdreConduite
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: OrderInfos::WriteArchive
 // Created: APE 2004-12-01
 // -----------------------------------------------------------------------------
-void ADN_Models_Data::OrderInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Models_Data::OrderInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "OrdreConduite" );
-    output.WriteAttribute( "nom", fragOrder_.GetData()->strName_.GetData() );
-    output.EndSection(); // OrdreConduite
+    output << xml::start( "fragorder" )
+            << xml::attribute( "name", fragOrder_.GetData()->strName_ )
+           << xml::end();
 }
-
 
 // =============================================================================
 // MissionInfos
@@ -96,7 +89,6 @@ ADN_Models_Data::MissionInfos::MissionInfos( ADN_Missions_Data::T_Mission_Vector
     vOrders_.SetParentNode( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MissionInfos::~MissionInfos
 // Created: AGN 2003-12-03
@@ -105,7 +97,6 @@ ADN_Models_Data::MissionInfos::~MissionInfos()
 {
     vOrders_.Reset();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MissionInfos::GetItemName
@@ -116,7 +107,6 @@ std::string ADN_Models_Data::MissionInfos::GetItemName()
     return strName_.GetData();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MissionInfos::GetNodeName
 // Created: AGN 2004-05-14
@@ -126,7 +116,6 @@ std::string ADN_Models_Data::MissionInfos::GetNodeName()
     std::string strResult( "de la mission " );
     return strResult + mission_.GetNodeName();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MissionInfos::CreateCopy
@@ -149,53 +138,43 @@ ADN_Models_Data::MissionInfos* ADN_Models_Data::MissionInfos::CreateCopy()
     return pMission;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::MissionInfos::ReadFragOrder
+// Created: AGE 2007-08-17
+// -----------------------------------------------------------------------------
+void ADN_Models_Data::MissionInfos::ReadFragOrder( xml::xistream& input )
+{
+    std::auto_ptr< OrderInfos > spNew( new OrderInfos() );
+    spNew->ReadArchive( input );
+    vOrders_.AddItem( spNew.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MissionInfos::ReadArchive
 // Created: APE 2004-12-01
 // -----------------------------------------------------------------------------
-void ADN_Models_Data::MissionInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Models_Data::MissionInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Mission" );
-    input.ReadAttribute( "nom", strName_ );
-
+    input >> xml::attribute( "name", strName_ );
     ADN_Missions_Data::Mission* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( mission_.GetVector(), strName_.GetData() );
     if( !mission )
         throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Invalid mission: " ).append( strName_.GetData().c_str() ).ascii() );
     mission_ = mission;
-    if( input.BeginList( "OrdresConduite", ADN_XmlInput_Helper::eNothing ) )
-    {
-        while( input.NextListElement() )
-        {
-            std::auto_ptr< OrderInfos > spNew( new OrderInfos() );
-            spNew->ReadArchive( input );
-            vOrders_.AddItem( spNew.release() );
-        }
-        input.EndList(); // OrdresConduite
-    }
-    input.EndSection(); // Mission
+    input >> xml::list( "fragorder", *this, &ADN_Models_Data::MissionInfos::ReadFragOrder );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MissionInfos::WriteArchive
 // Created: APE 2004-12-01
 // -----------------------------------------------------------------------------
-void ADN_Models_Data::MissionInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Models_Data::MissionInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Mission" );
-    output.WriteAttribute( "nom", mission_.GetData()->strName_.GetData() );
-
-    if( ! vOrders_.empty() )
-    {
-        output.BeginList( "OrdresConduite", vOrders_.size() );
-        for( IT_OrderInfos_Vector it = vOrders_.begin(); it != vOrders_.end(); ++it )
-            (*it)->WriteArchive( output );
-        output.EndList(); // OrdresConduite
-    }
-    output.EndSection(); // Mission
+    output << xml::start( "mission" )
+            << xml::attribute( "name", mission_.GetData()->strName_ );
+    for( IT_OrderInfos_Vector it = vOrders_.begin(); it != vOrders_.end(); ++it )
+        (*it)->WriteArchive( output );
+    output << xml::end();
 }
-
 
 // =============================================================================
 // 
@@ -239,7 +218,6 @@ ADN_Models_Data::ModelInfos::ModelInfos( ADN_Missions_Data::T_Mission_Vector& mi
     vMissions_.SetItemTypeName( "une mission" );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ModelInfos::ModelInfos
 // Created: AGN 2003-11-27
@@ -248,7 +226,6 @@ ADN_Models_Data::ModelInfos::~ModelInfos()
 {
     vMissions_.Reset();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ModelInfos::GetNodeName
@@ -260,7 +237,6 @@ std::string ADN_Models_Data::ModelInfos::GetNodeName()
     return strResult + strName_.GetData();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ModelInfos::GetItemName
 // Created: AGN 2004-05-18
@@ -269,7 +245,6 @@ std::string ADN_Models_Data::ModelInfos::GetItemName()
 {
     return strName_.GetData();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ModelInfos::CreateCopy
@@ -291,53 +266,50 @@ ADN_Models_Data::ModelInfos* ADN_Models_Data::ModelInfos::CreateCopy()
     return pNewInfo;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::ModelInfos::ReadMission
+// Created: AGE 2007-08-17
+// -----------------------------------------------------------------------------
+void ADN_Models_Data::ModelInfos::ReadMission( xml::xistream& input )
+{
+    std::auto_ptr<MissionInfos> spNew( new MissionInfos( missions_ ) );
+    spNew->ReadArchive( input );
+    vMissions_.AddItem( spNew.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ModelInfos::ReadArchive
 // Created: APE 2004-12-01
 // -----------------------------------------------------------------------------
-void ADN_Models_Data::ModelInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Models_Data::ModelInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Modele" );
-    input.ReadAttribute( "nom", strName_ );
-    input.ReadField( "DIAType", strDiaType_ );
-    input.ReadField( "File", strFile_ );
-    input.BeginList( "Missions" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<MissionInfos> spNew( new MissionInfos( missions_ ) );
-        spNew->ReadArchive( input );
-        vMissions_.AddItem( spNew.release() );
-    }
-    input.EndList(); // Missions
-    input.EndSection(); // Modele
+    input >> xml::attribute( "name", strName_ )
+          >> xml::attribute( "dia-type", strDiaType_ )
+          >> xml::attribute( "file", strFile_ )
+          >> xml::start( "missions" )
+            >> xml::list( "mission", *this, &ADN_Models_Data::ModelInfos::ReadMission )
+          >> xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ModelInfos::WriteArchive
 // Created: APE 2004-12-01
 // -----------------------------------------------------------------------------
-void ADN_Models_Data::ModelInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Models_Data::ModelInfos::WriteArchive( const std::string& type, xml::xostream& output )
 {
-    output.Section( "Modele" );
-    output.WriteAttribute( "nom", strName_.GetData() );
-    output.WriteField( "DIAType", strDiaType_.GetData() );
-
-    // For some reason, the users want this with backslashes.
     std::string strFileName = strFile_.GetData();
     strFileName = ADN_Tools::Replace( strFileName, '/', '\\' );
-    output.WriteField( "File", strFileName );
 
-    output.BeginList( "Missions", vMissions_.size() );
+    output << xml::start( type )
+            <<  xml::attribute( "name", strName_ )
+            <<  xml::attribute( "dia-type", strDiaType_ )
+            <<  xml::attribute( "file", strFileName )
+            <<  xml::start( "missions" );
     for( IT_MissionInfos_Vector it = vMissions_.begin(); it != vMissions_.end(); ++it )
-    {
         (*it)->WriteArchive( output );
-    }
-    output.EndList(); // Missions
-    output.EndSection(); // Modele
+    output << xml::end()
+        << xml::end();
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Models_Data constructor
@@ -350,7 +322,6 @@ ADN_Models_Data::ADN_Models_Data()
     vPopulationModels_.SetItemTypeName( "un modèle" );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Models_Data destructor
 // Created: JDY 03-07-24
@@ -359,7 +330,6 @@ ADN_Models_Data::~ADN_Models_Data()
 {
     Reset();
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Models_Data::Reset
@@ -372,7 +342,6 @@ void ADN_Models_Data::Reset()
     vPopulationModels_.Reset();
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Models_Data::FilesNeeded
 // Created: JDY 03-09-08
@@ -382,68 +351,76 @@ void ADN_Models_Data::FilesNeeded(T_StringList& files) const
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szModels_.GetData() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::ReadUnit
+// Created: AGE 2007-08-17
+// -----------------------------------------------------------------------------
+void ADN_Models_Data::ReadUnit( xml::xistream& input )
+{
+    std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions() ) );
+    spNew->ReadArchive( input );
+    vUnitModels_.AddItem( spNew.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::ReadAutomat
+// Created: AGE 2007-08-17
+// -----------------------------------------------------------------------------
+void ADN_Models_Data::ReadAutomat( xml::xistream& input )
+{
+    std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissions() ) );
+    spNew->ReadArchive( input );
+    vAutomataModels_.AddItem( spNew.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::ReadPopulation
+// Created: AGE 2007-08-17
+// -----------------------------------------------------------------------------
+void ADN_Models_Data::ReadPopulation( xml::xistream& input )
+{
+    std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions() ) );
+    spNew->ReadArchive( input );
+    vPopulationModels_.AddItem( spNew.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Models_Data::ReadArchive
 // Created: APE 2004-12-01
 // -----------------------------------------------------------------------------
-void ADN_Models_Data::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Models_Data::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Modeles" );
-
-    input.BeginList( "Pions" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions() ) );
-        spNew->ReadArchive( input );
-        vUnitModels_.AddItem( spNew.release() );
-    }
-    input.EndList(); // Pions
-
-    input.BeginList( "Automates" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissions() ) );
-        spNew->ReadArchive( input );
-        vAutomataModels_.AddItem( spNew.release() );
-    }
-    input.EndList(); // Automates
-
-    input.BeginList( "Populations" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions() ) );
-        spNew->ReadArchive( input );
-        vPopulationModels_.AddItem( spNew.release() );
-    }
-    input.EndList(); // Populations
-
-    input.EndSection();
+    input >> xml::start( "models" )
+            >> xml::start( "units" )
+                >> xml::list( "unit", *this, &ADN_Models_Data::ReadUnit )
+            >> xml::end()
+            >> xml::start( "automats" )
+                >> xml::list( "automat", *this, &ADN_Models_Data::ReadAutomat )
+            >> xml::end()
+            >> xml::start( "populations" )
+                >> xml::list( "population", *this, &ADN_Models_Data::ReadPopulation )
+            >> xml::end()
+          >> xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Models_Data::WriteArchive
 // Created: APE 2004-12-01
 // -----------------------------------------------------------------------------
-void ADN_Models_Data::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Models_Data::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Modeles" );
-
-    output.BeginList( "Pions", vUnitModels_.size() );
+    output << xml::start( "models" )
+            << xml::start( "units" );
     for( IT_ModelInfos_Vector it1 = vUnitModels_.begin(); it1 != vUnitModels_.end(); ++it1 )
-        (*it1)->WriteArchive( output );
-    output.EndList(); // Pions
-
-    output.BeginList( "Automates", vAutomataModels_.size() );
+        (*it1)->WriteArchive( "unit", output );
+    output << xml::end()
+            << xml::start( "automats" );
     for( IT_ModelInfos_Vector it2 = vAutomataModels_.begin(); it2 != vAutomataModels_.end(); ++it2 )
-        (*it2)->WriteArchive( output );
-    output.EndList(); // Automates
-
-    output.BeginList( "Populations", vPopulationModels_.size() );
+        (*it2)->WriteArchive( "automat", output );
+    output << xml::end()
+            << xml::start( "populations" );
     for( IT_ModelInfos_Vector it2 = vPopulationModels_.begin(); it2 != vPopulationModels_.end(); ++it2 )
-        (*it2)->WriteArchive( output );
-    output.EndList(); // Populations
-
-    output.EndSection();
+        (*it2)->WriteArchive( "population", output );
+    output << xml::end()
+          << xml::end();
 }

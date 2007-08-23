@@ -13,13 +13,16 @@
 
 #include "Decision/DEC_Tools.h"
 #include "Network/NET_AsnException.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_MissionType_ABC constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_MissionType_ABC::MIL_MissionType_ABC( uint nID, MIL_InputArchive& archive )
-    : MIL_OrderType_ABC( nID, archive )
+MIL_MissionType_ABC::MIL_MissionType_ABC( uint nID, xml::xistream& xis )
+    : MIL_OrderType_ABC( nID, xis )
 {
 }
 

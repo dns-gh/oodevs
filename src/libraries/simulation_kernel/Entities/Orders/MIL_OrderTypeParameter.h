@@ -12,6 +12,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_OrderType_ABC;
 class DEC_KnowledgeResolver_ABC;
 class MIL_ParameterType_ABC;
@@ -27,7 +32,7 @@ class MIL_OrderTypeParameter
 public:   
     //! @name Constructors/Destructor
     //@{
-             MIL_OrderTypeParameter( const MIL_OrderType_ABC& orderType, MIL_InputArchive& archive );
+             MIL_OrderTypeParameter( const MIL_OrderType_ABC& orderType, xml::xistream& xis );
     virtual ~MIL_OrderTypeParameter();
     //@}
 

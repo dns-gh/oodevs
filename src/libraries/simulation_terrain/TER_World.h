@@ -36,8 +36,6 @@ class TER_ObjectManager;
 class TER_PopulationManager;
 class TER_CoordinateManager;
 class TER_PathFindManager;
-template< typename T > class MT_InputArchive_Logger;
-class MT_XXmlInputArchive;
 class TER_PathFinderThread;
 class MT_Rect;
 
@@ -75,8 +73,6 @@ public:
     void MosToSimMgrsCoord( const std::string& strMgrs, MT_Vector2D& pos ) const;
     void SimToMosMgrsCoord( const MT_Vector2D& pos, std::string& strMgrs ) const;
 
-    MT_Float GetMeterPerPixel() const; // $$$$ AGE 2005-01-31: 
-    MT_Float GetMeterSquarePerPixelSquare() const;
     MT_Float GetWeldValue() const;
     MT_Float GetWidth    () const;
     MT_Float GetHeight   () const;

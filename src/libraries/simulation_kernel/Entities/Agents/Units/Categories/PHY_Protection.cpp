@@ -13,7 +13,11 @@
 
 #include "PHY_Protection.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
+#include "tools/xmlcodecs.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 PHY_Protection::T_ProtectionMap PHY_Protection::protections_;
 uint                            PHY_Protection::nNextID_;
@@ -27,40 +31,49 @@ PHY_Protection::T_HumanEffect::T_HumanEffect()
     : rDeadRatio_   ( 0. )
     , rWoundedRatio_( 0. )
 {
-
+    // NOTHING
 }
 
 // =============================================================================
 // STATIC INITIALIZATION (MANAGER)
 // =============================================================================
 
+struct PHY_Protection::LoadingWrapper
+{
+    void ReadProtection( xml::xistream& xis )
+    {
+        PHY_Protection::ReadProtection( xis );
+    }
+};
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Protection::Initialize
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-void PHY_Protection::Initialize( MIL_InputArchive& archive )
+void PHY_Protection::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing protections" );
 
-    // Initialisation des composantes
-    archive.BeginList( "Protections" );
+    LoadingWrapper loader;
+    xis >> start( "protections" )
+            >> list( "protection", loader, &LoadingWrapper::ReadProtection )
+        >> end();
+}
 
-    while ( archive.NextListElement() )
-    {
-        archive.Section( "Protection" );
+// -----------------------------------------------------------------------------
+// Name: PHY_Protection::ReadProtection
+// Created: ABL 2007-07-18
+// -----------------------------------------------------------------------------
+void PHY_Protection::ReadProtection( xml::xistream& xis )
+{
+    std::string strProtection;
+    xis >> attribute( "name", strProtection );
+    
+    const PHY_Protection*& pProtection = protections_[ strProtection ];
+    if( pProtection )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Protection already defined" ); // $$$$ _RC_ ABL 2007-07-18: error context
 
-        std::string strProtection;
-        archive.ReadAttribute( "nom", strProtection );
-
-        const PHY_Protection*& pProtection = protections_[ strProtection ];
-        if( pProtection )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Protection already defined", archive.GetContext() );
-
-        pProtection = new PHY_Protection( strProtection, archive );
-
-        archive.EndSection(); // Protection
-    }
-    archive.EndList(); // Protections
+     pProtection = new PHY_Protection( strProtection, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +95,7 @@ void PHY_Protection::Terminate()
 // Name: PHY_Protection constructor
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-PHY_Protection::PHY_Protection( const std::string& strName, MIL_InputArchive& archive )
+PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
     : strName_                  ( strName )
     , nID_                      ( nNextID_++ )
     , neutralizationTime_       ( )
@@ -90,22 +103,22 @@ PHY_Protection::PHY_Protection( const std::string& strName, MIL_InputArchive& ar
     , rBreakdownProbabilityNeva_( 0. )
     , attritionEffectsOnHumans_ ( PHY_ComposanteState::GetNbrStates(), T_HumanEffect() )
 {
-    std::string strType;
-    archive.ReadAttribute( "type", strType );
-    if( sCaseInsensitiveEqual()( strType, "humain" ) )
-        nType_ = eHuman;
-    else
-        nType_ = eMaterial;
+    std::string type;
+    xis >> attribute( "type", type );
+    nType_ = sCaseInsensitiveEqual()( type, "humain" ) ? eHuman : eMaterial;
 
-    archive.Section( "Neutralisation" );
-    MT_Float rTimeVal;
-    MT_Float rVariance;   
-    archive.ReadTimeAttribute( "tempsMoyen", rTimeVal, CheckValueGreaterOrEqual( 0. ) );
-    archive.ReadTimeAttribute( "variance", rVariance );
-    rTimeVal            = MIL_Tools::ConvertSecondsToSim( rTimeVal );
-    rVariance           = fabs( MIL_Tools::ConvertSecondsToSim( rVariance ) );
-    neutralizationTime_ = MT_GaussianRandom( rTimeVal, rVariance );
-    archive.EndSection(); // Neutralisation
+    std::string timeString, varianceString;
+    xis >> start( "neutralization" )
+            >> attribute( "average-time", timeString )
+            >> attribute( "variance", varianceString )
+        >> end();
+
+    MT_Float timeVal, variance;
+    if( ! tools::DecodeTime( timeString, timeVal ) || timeVal < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "average-time not defined or < 0" );
+    if( ! tools::DecodeTime( varianceString, variance ) )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "variance is not defined" );
+    neutralizationTime_ = MT_GaussianRandom( timeVal, fabs( variance ) );
 
     if( nType_ == eHuman )
     {
@@ -121,40 +134,50 @@ PHY_Protection::PHY_Protection( const std::string& strName, MIL_InputArchive& ar
     }
     else
     {
-        archive.Section( "ProbabilitePanneAleatoire" );
-        archive.ReadAttribute( "EVA" , rBreakdownProbabilityEva_ , CheckValueBound( 0., 100. ) );
-        archive.ReadAttribute( "NEVA", rBreakdownProbabilityNeva_, CheckValueBound( 0., 100. ) );
+        xis >> start( "random-breakdown-probability" )
+                >> attribute( "eva", rBreakdownProbabilityEva_ )
+                >> attribute( "neva", rBreakdownProbabilityNeva_ )
+            >> end();
+
+        if( rBreakdownProbabilityEva_ < 0 || rBreakdownProbabilityEva_ > 100 )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "random-breakdown-probability eva not in [0..100]" );
+        if( rBreakdownProbabilityNeva_ < 0 || rBreakdownProbabilityNeva_ > 100 )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "random-breakdown-probability neva not in [0..100]" );
         rBreakdownProbabilityEva_  /= 100.;
         rBreakdownProbabilityNeva_ /= 100.;
-        archive.EndSection(); // ProbabilitePanneAleatoire
 
-        archive.BeginList( "EffetsAttritionSurHumains" );
-        while( archive.NextListElement() )
-        {
-            archive.Section( "EffetAttritionSurHumains" );
-            
-            std::string strState;
-            archive.ReadAttribute( "etatEquipement", strState );
-
-            const PHY_ComposanteState* pComposanteState = PHY_ComposanteState::Find( strState );
-            if( !pComposanteState )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown composante state", archive.GetContext() );
-
-            assert( attritionEffectsOnHumans_.size() > pComposanteState->GetID() );
-
-            T_HumanEffect& data = attritionEffectsOnHumans_[ pComposanteState->GetID() ];
-
-            MT_Float rTmp;
-            archive.ReadAttribute( "pourcentageBlesses", rTmp, CheckValueBound( 0., 100. ) );
-            data.rWoundedRatio_ = rTmp / 100.;
-                
-            archive.ReadAttribute( "pourcentageMorts"  , rTmp, CheckValueBound( 0., 100. ) );
-            data.rDeadRatio_ = rTmp / 100.;
-       
-            archive.EndSection(); // EffetAttritionSurHumains
-        }
-        archive.EndList(); // EffetsAttritionSurHumains
+        xis >> start( "attrition-effects" )
+                >> list( "attrition-effect", *this, &PHY_Protection::ReadAttrition )
+            >> end();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Protection::ReadAttrition
+// Created: ABL 2007-07-18
+// -----------------------------------------------------------------------------
+void PHY_Protection::ReadAttrition( xml::xistream& xis )
+{
+    std::string state;
+    xis >> attribute( "equipment-state", state );
+    const PHY_ComposanteState* pComposanteState = PHY_ComposanteState::Find( state );
+    if( !pComposanteState )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown composante state" ); // $$$$ _RC_ ABL 2007-07-18: error context
+
+    assert( attritionEffectsOnHumans_.size() > pComposanteState->GetID() );
+
+    T_HumanEffect& data = attritionEffectsOnHumans_[ pComposanteState->GetID() ];
+
+    MT_Float rTmp;
+    xis >> attribute( "injured-percentage", rTmp );
+    if( rTmp < 0 || rTmp > 100 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "injured-percentage not in [0..100]" );
+    data.rWoundedRatio_ = rTmp / 100.;
+        
+    xis >> attribute( "dead-percentage", rTmp );
+    if( rTmp < 0 || rTmp > 100 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dead-percentage not in [0..100]" );
+    data.rDeadRatio_ = rTmp / 100.;
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +186,7 @@ PHY_Protection::PHY_Protection( const std::string& strName, MIL_InputArchive& ar
 // -----------------------------------------------------------------------------
 PHY_Protection::~PHY_Protection()
 {
-
+    // NOTHING
 }
 
 // =============================================================================

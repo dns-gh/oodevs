@@ -23,7 +23,7 @@
 #include "ADN_Types.h"
 //#include "ADN_Enums.h"
 
-class ADN_XmlInput_Helper;
+class xml::xistream;
 
 
 // =============================================================================
@@ -47,8 +47,8 @@ public:
     public:
         AgentGroupInfo();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Time   maxLifetime_;
@@ -66,8 +66,8 @@ public:
     public:
         PopulationGroupInfo();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Time   maxLifetime_;
@@ -87,8 +87,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_String     strName_;
@@ -116,8 +116,9 @@ public:
     //@}
 
 private:
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void WriteArchive( MT_OutputArchive_ABC& output );
+    void ReadArchive( xml::xistream& input );
+    void ReadKnowledgeGroup( xml::xistream& input );
+    void WriteArchive( xml::xostream& output );
 
 public:
     T_GroupInfoVector vGroups_;

@@ -42,9 +42,9 @@ const PHY_IndirectFireDotationClass* PHY_IndirectFireDotationClass::Find( const 
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
 inline
-PHY_DotationCategory_IndirectFire_ABC& PHY_IndirectFireDotationClass::InstanciateDotationCategory( const PHY_DotationCategory& dotationCategory, MIL_InputArchive& archive ) const
+PHY_DotationCategory_IndirectFire_ABC& PHY_IndirectFireDotationClass::InstanciateDotationCategory( const PHY_DotationCategory& dotationCategory, xml::xistream& xis ) const
 {
-    return typeInstancier_( *this, dotationCategory, archive );
+    return typeInstancier_( *this, dotationCategory, xis );
 }
 
 // -----------------------------------------------------------------------------

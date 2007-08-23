@@ -11,8 +11,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_RapFor_ABC.h"
-
 #include "Tools/MIL_Tools.h"
+#include "tools/xmlcodecs.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 const MT_Float DEC_Knowledge_RapFor_ABC::rRapForBoundMin_                        = 0.2;
 const MT_Float DEC_Knowledge_RapFor_ABC::rRapForBoundMax_                        = 5.0;
@@ -26,15 +29,15 @@ const MT_Float DEC_Knowledge_RapFor_ABC::rRapForBoundMax_                       
 // Name: DEC_Knowledge_RapFor_ABC::Initialize
 // Created: NLD 2004-11-25
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_RapFor_ABC::Initialize( MIL_InputArchive& archive )
+      void DEC_Knowledge_RapFor_ABC::Initialize( xml::xistream& xis )
 {
     // Rapport de force
-    archive.Section( "RapportDeForce" );
+    xis >> start( "force-ratio" );
     MT_Float rTmp;
-    archive.ReadTimeField( "TempsDeRemonteeParDefaut", rTmp );
+    tools::ReadTimeAttribute( xis, "default-feedback-time", rTmp );
     rTmp                                    = MIL_Tools::ConvertSecondsToSim       ( rTmp );
     rRapForIncreasePerTimeStepDefaultValue_ = ComputeRapForIncreasePerTimeStepValue( rTmp );
-    archive.EndSection();
+    xis >> end();
 }
 
 // =============================================================================

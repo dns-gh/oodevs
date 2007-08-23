@@ -17,7 +17,7 @@
 #include "ADN_TypePtr_InVector_ABC.h"
 #include "ADN_Enums.h"
 
-class ADN_XmlInput_Helper;
+class xml::xistream;
 
 // =============================================================================
 /** @class  ADN_AiEngine_Data
@@ -40,8 +40,8 @@ public:
     void FilesNeeded(T_StringList& l) const;
 
 private:
-    void ReadArchive( ADN_XmlInput_Helper& );
-    void WriteArchive( MT_OutputArchive_ABC& );
+    void ReadArchive( xml::xistream& );
+    void WriteArchive( xml::xostream& );
 
 public:
     ADN_Type_Double rPertinenceMaxDecrease_;
@@ -50,7 +50,7 @@ public:
     ADN_Type_Double rMinorEquipmentWeight_;
     ADN_Type_Double rMajorEquipmentWeight_;
     ADN_Type_Double rHumanWeight_;
-    ADN_Type_Double rDefaultFeedbackTime_;
+    ADN_Type_Time rDefaultFeedbackTime_;
 };
 
 

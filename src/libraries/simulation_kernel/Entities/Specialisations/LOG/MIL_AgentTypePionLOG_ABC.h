@@ -16,6 +16,11 @@
 
 #include "Entities/Agents/MIL_AgentTypePion.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 // @class  MIL_AgentTypePionType
 // Created: JVT 2004-08-03
@@ -25,7 +30,7 @@ class MIL_AgentTypePionLOG_ABC : public MIL_AgentTypePion
     MT_COPYNOTALLOWED( MIL_AgentTypePionLOG_ABC )
 
 public:
-    MIL_AgentTypePionLOG_ABC( const std::string& strName, MIL_InputArchive& archive );
+    MIL_AgentTypePionLOG_ABC( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePionLOG_ABC();
 };
 

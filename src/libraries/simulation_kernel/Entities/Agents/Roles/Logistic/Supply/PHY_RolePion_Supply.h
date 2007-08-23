@@ -13,8 +13,13 @@
 #define __PHY_RolePion_Supply_h_
 
 #include "MIL.h"
-
 #include "PHY_RoleInterface_Supply.h"
+
+namespace xml
+{
+    class xostream;
+    class xistream;
+}
 
 class PHY_DotationStock;
 class MIL_Automate;
@@ -40,7 +45,7 @@ public:
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
-    virtual void WriteODB( MT_XXmlOutputArchive& archive ) const;
+    virtual void WriteODB( xml::xostream& xos ) const;
     //@}
     
     //! @name Operations
@@ -52,7 +57,7 @@ public:
 
     //! @name Init
     //@{
-    virtual void ReadOverloading( MIL_InputArchive& archive );
+    virtual void ReadOverloading( xml::xistream& xis );
     //@}
 
     //! @name Main

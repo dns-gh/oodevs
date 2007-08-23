@@ -11,6 +11,7 @@
 #include "MT/MT_Logger/MT_ConsoleLogger.h"
 #include "MT/MT_Logger/MT_FileLogger.h"
 #include "paranoia/ParanoiaFacade.h"
+#include "xeumeuleu/exception.h"
 
 #include <commctrl.h>
 #include <new.h>
@@ -200,7 +201,7 @@ int Run( uint nArgc, char* pArgv[] )
                << "Message : " << exception.GetInfo()    << std::endl;
         MessageBox( 0, strMsg.str().c_str(), "Scipio - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
     }
-    catch( MT_ArchiveLogger_Exception& exception )
+    catch( xml::exception& exception )
     {
         MessageBox ( 0, exception.what(), "Scipio - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
     }

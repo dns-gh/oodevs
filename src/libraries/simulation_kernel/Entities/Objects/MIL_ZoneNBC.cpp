@@ -28,6 +28,10 @@
 #include "HLA/Deserializer.h"
 #include "HLA/HLA_UpdateFunctor.h"
 
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+
 BOOST_CLASS_EXPORT_GUID( MIL_ZoneNBC, "MIL_ZoneNBC" )
 
 //-----------------------------------------------------------------------------
@@ -57,7 +61,7 @@ MIL_ZoneNBC::MIL_ZoneNBC()
 //-----------------------------------------------------------------------------
 MIL_ZoneNBC::~MIL_ZoneNBC()
 {
-	if( pNbcAgent_ )
+    if( pNbcAgent_ )
         delete pNbcAgent_;
 }
 
@@ -81,14 +85,14 @@ void MIL_ZoneNBC::serialize( Archive& file, const uint )
 // Name: MIL_ZoneNBC::WriteSpecificAttributes
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void MIL_ZoneNBC::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
+void MIL_ZoneNBC::WriteSpecificAttributes( xml::xostream& xos ) const
 {
     assert( pNbcAgent_ );
-    archive.Section( "specific-attributes" );
-    archive.Section( "nbc-agent" );
-    archive.WriteAttribute( "type", pNbcAgent_->GetType().GetName() );
-    archive.EndSection(); // nbc-agent
-    archive.EndSection(); // specific-attributes
+    xos << start( "specific-attributes" )
+            << start( "nbc-agent" )
+            << attribute( "type", pNbcAgent_->GetType().GetName() )
+            << end()
+        << end();
 }
 
 //=============================================================================
@@ -121,25 +125,26 @@ bool MIL_ZoneNBC::Initialize( const MIL_ObstacleType& obstacleType, DIA_Paramete
 // Name: MIL_ZoneNBC::Initialize
 // Created: NLD 2003-07-21
 //-----------------------------------------------------------------------------
-void MIL_ZoneNBC::Initialize( MIL_InputArchive& archive )
+void MIL_ZoneNBC::Initialize( xml::xistream& xis )
 {
-    MIL_RealObject_ABC::Initialize( archive );
+    MIL_RealObject_ABC::Initialize( xis );
 
     if( !GetLocalisation().WasACircle() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Localisation of object type 'ZoneNBC' MUST be a circle", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Localisation of object type 'ZoneNBC' MUST be a circle" ); // $$$$ ABL 2007-07-09: error context
 
-    archive.Section( "specific-attributes" );
-    archive.Section( "nbc-agent" );
+    xis >> start( "specific-attributes" )
+            >> start( "nbc-agent" );
 
     std::string strNbcAgentType_;
-    archive.ReadAttribute( "type", strNbcAgentType_ );
+    xis >> attribute( "type", strNbcAgentType_ );
 
     const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( strNbcAgentType_ );
     if( !pNbcAgentType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown 'AgentNBC' '%s' for NBC object '%d'", strNbcAgentType_.c_str(), GetID() ), archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown 'AgentNBC' '%s' for NBC object '%d'", strNbcAgentType_.c_str(), GetID() ) ); // $$$$ ABL 2007-07-09: error context
 
-    archive.EndSection(); // nbc-agent
-    archive.EndSection(); // specific-attributes
+    xis >> end()
+        >> end();
+
 
     pNbcAgent_ = new MIL_NbcAgent( *pNbcAgentType, MIL_NbcAgent::eLiquid );
     CreateCloud();

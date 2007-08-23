@@ -12,7 +12,6 @@
 
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
-#include "ADN_XmlInput_Helper.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 #include "ADN_DataException.h"
@@ -58,14 +57,10 @@ std::string ADN_Supply_Data::ConvoyInfo< T >::GetItemName()
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
 template< typename T >
-void ADN_Supply_Data::ConvoyInfo< T >::ReadArchive( const std::string& strSection, ADN_XmlInput_Helper& input )
+void ADN_Supply_Data::ConvoyInfo< T >::ReadArchive( const std::string& value, xml::xistream& input )
 {
-    input.Section( strSection );
-    input.ReadAttribute( "nbCamions", nNbrTrucks_ );
-    T::BaseType tmp;
-    input.Read( tmp );
-    value_ = tmp;
-    input.EndSection(); // strSection
+    input >> xml::attribute( "truck-count", nNbrTrucks_ )
+          >> xml::attribute( value, value_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,12 +68,12 @@ void ADN_Supply_Data::ConvoyInfo< T >::ReadArchive( const std::string& strSectio
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
 template< typename T >
-void ADN_Supply_Data::ConvoyInfo< T >::WriteArchive( const std::string& strSection, MT_OutputArchive_ABC& output )
+void ADN_Supply_Data::ConvoyInfo< T >::WriteArchive( const std::string& section, const std::string& attribute, xml::xostream& output )
 {
-    output.Section( strSection );
-    output.WriteAttribute( "nbCamions", nNbrTrucks_.GetData() );
-    output << value_.GetData();
-    output.EndSection(); // strSection
+    output << xml::start( section )
+            << xml::attribute( "truck-count", nNbrTrucks_ )
+            << xml::attribute( attribute, value_ )
+           << xml::end();
 }
 
 
@@ -118,7 +113,6 @@ void ADN_Supply_Data::FilesNeeded( T_StringList& vFiles ) const
     vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSupply_.GetData() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Supply_Data::Reset
 // Created: APE 2005-03-22
@@ -132,150 +126,155 @@ void ADN_Supply_Data::Reset()
     vVectorWarnings_      .Reset();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Supply_Data::ReadArchive
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-void ADN_Supply_Data::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Supply_Data::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Ravitaillement" );
-    input.Section( "Convois" );
-
-    input.BeginList( "TempsConstitution" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr< ConvoyInfo< ADN_Type_Time > > spNew( new ConvoyInfo< ADN_Type_Time >( "1s" ) );
-        spNew->ReadArchive( "Temps", input );
-        vConvoySetupInfos_.AddItem( spNew.release() );
-    }
-    vConvoySetupInfos_.AddItem( 0 );  // Signals the end of the vector, allows certain parts of the gui to update.
-    input.EndList(); // TempsConstitution 
-
-    input.BeginList( "TempsChargement" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr< ConvoyInfo< ADN_Type_Time > > spNew( new ConvoyInfo< ADN_Type_Time >( "1s" ) );
-        spNew->ReadArchive( "Temps", input );
-        vConvoyLoadingInfos_.AddItem( spNew.release() );
-    }
+    std::string strUnit, supplyMission;
+    input >> xml::start( "supply" )
+            >> xml::start( "convoys" )
+                >> xml::attribute( "unit-type", strUnit )
+                >> xml::attribute( "mission", supplyMission )
+                >> xml::start( "constitution-times" )
+                    >> xml::list( "unit-time", *this, &ADN_Supply_Data::ReadConstitutionTime )
+                >> xml::end()
+                >> xml::start( "loading-times" )
+                    >> xml::list( "unit-time", *this, &ADN_Supply_Data::ReadLoadingTime )
+                >> xml::end()
+                >> xml::start( "unloading-times" )
+                    >> xml::list( "unit-time", *this, &ADN_Supply_Data::ReadUnloadingTime )
+                >> xml::end()
+                >> xml::start( "speed-modifiers" )
+                    >> xml::list( "speed-modifier", *this, &ADN_Supply_Data::ReadSpeedModifier )
+                >> xml::end()
+            >> xml::end();
+    vConvoySetupInfos_.AddItem( 0 );
     vConvoyLoadingInfos_.AddItem( 0 );
-    input.EndList(); // TempsChargement 
-
-    input.BeginList( "TempsDechargement" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr< ConvoyInfo< ADN_Type_Time > > spNew( new ConvoyInfo< ADN_Type_Time >( "1s" ) );
-        spNew->ReadArchive( "Temps", input );
-        vConvoyUnloadingInfos_.AddItem( spNew.release() );
-    }
     vConvoyUnloadingInfos_.AddItem( 0 );
-    input.EndList(); // TempsDechargement
-
-    input.BeginList( "CoefModificationVitesse" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr< ConvoyInfo< ADN_Type_Double > > spNew( new ConvoyInfo< ADN_Type_Double >( 1 ) );
-        spNew->ReadArchive( "Coef", input );
-        vConvoySpeedModificatorInfos_.AddItem( spNew.release() );
-    }
     vConvoySpeedModificatorInfos_.AddItem( 0 );
-    input.EndList(); // CoefModificationVitesse
 
-    input.Section( "TypeUnite" );
-    std::string strUnit;
-    input.ReadAttribute( "nom", strUnit );
     ADN_Units_Data::UnitInfos* pUnit = ADN_Workspace::GetWorkspace().GetUnits().GetData().FindUnit( strUnit );
     if( pUnit == 0 )
-        input.ThrowError( tr( "Unit '%1' does not exist." ).arg( strUnit.c_str() ).ascii() );
+        throw ADN_DataException( "ADN_Supply_Data", tr( "Unit '%1' does not exist." ).arg( strUnit.c_str() ).ascii() );
     ptrUnit_ = pUnit;
-    input.EndSection(); // TypeUnite
 
-    input.Section( "Mission" );
-    std::string supplyMission;
-    input.ReadAttribute( "nom", supplyMission );
     ADN_Missions_Data::T_Mission_Vector& missions = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions();
     ADN_Missions_Data::Mission* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( missions, supplyMission );
     if( mission == 0 )
-        input.ThrowError( tr( "Mission '%1' does not exist." ).arg( supplyMission.c_str() ).ascii() );
+        throw ADN_DataException( "ADN_Supply_Data", tr( "Mission '%1' does not exist." ).arg( supplyMission.c_str() ).ascii() );
     ptrSupplyMission_ = mission;
-    input.EndSection(); // Mission
 
-    input.EndSection(); // Convois
+    input >> xml::start( "resource-availability-alerts" )
+            >> xml::list( "resource-availability-alert", *this, &ADN_Supply_Data::ReadResourceAvailability )
+          >> xml::end()
+        >> xml::end();
 
-    input.Section( "AlertesDisponibiliteMoyens" );
-        input.BeginList( "AlertesDisponibiliteVecteurs" );
-        while( input.NextListElement() )
-        {
-            std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
-            pNew->ReadArchive( input, "AlerteDisponibiliteVecteurs" );
-            vVectorWarnings_.AddItem( pNew.release() );
-        }
-        vVectorWarnings_.AddItem( 0 );
-        input.EndList();
-    input.EndSection();
-
-    input.EndSection(); // Ravitaillement
+    vVectorWarnings_.AddItem( 0 );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Supply_Data::ReadResourceAvailability
+// Created: AGE 2007-08-16
+// -----------------------------------------------------------------------------
+void ADN_Supply_Data::ReadResourceAvailability( xml::xistream& input )
+{
+    std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
+    pNew->ReadArchive( input );
+    vVectorWarnings_.AddItem( pNew.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Supply_Data::ReadConstitutionTime
+// Created: AGE 2007-08-16
+// -----------------------------------------------------------------------------
+void ADN_Supply_Data::ReadConstitutionTime( xml::xistream& input )
+{
+    std::auto_ptr< ConvoyInfo< ADN_Type_Time > > spNew( new ConvoyInfo< ADN_Type_Time >( "1s" ) );
+    spNew->ReadArchive( "time", input );
+    vConvoySetupInfos_.AddItem( spNew.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Supply_Data::ReadLoadingTime
+// Created: AGE 2007-08-16
+// -----------------------------------------------------------------------------
+void ADN_Supply_Data::ReadLoadingTime( xml::xistream& input )
+{
+    std::auto_ptr< ConvoyInfo< ADN_Type_Time > > spNew( new ConvoyInfo< ADN_Type_Time >( "1s" ) );
+    spNew->ReadArchive( "time", input );
+    vConvoyLoadingInfos_.AddItem( spNew.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Supply_Data::ReadUnloadingTime
+// Created: AGE 2007-08-16
+// -----------------------------------------------------------------------------
+void ADN_Supply_Data::ReadUnloadingTime( xml::xistream& input )
+{
+    std::auto_ptr< ConvoyInfo< ADN_Type_Time > > spNew( new ConvoyInfo< ADN_Type_Time >( "1s" ) );
+    spNew->ReadArchive( "time", input );
+    vConvoyUnloadingInfos_.AddItem( spNew.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Supply_Data::ReadSpeedModifier
+// Created: AGE 2007-08-16
+// -----------------------------------------------------------------------------
+void ADN_Supply_Data::ReadSpeedModifier( xml::xistream& input )
+{
+    std::auto_ptr< ConvoyInfo< ADN_Type_Double > > spNew( new ConvoyInfo< ADN_Type_Double >( 1 ) );
+    spNew->ReadArchive( "value", input );
+    vConvoySpeedModificatorInfos_.AddItem( spNew.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Supply_Data::WriteArchive
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-void ADN_Supply_Data::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Supply_Data::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Ravitaillement" );
-    output.Section( "Convois" );
-
-    {
-        output.BeginList( "TempsConstitution", vConvoySetupInfos_.size() );
-        for( IT_ConvoyTimeInfoVector it = vConvoySetupInfos_.begin(); it != vConvoySetupInfos_.end(); ++it )
-            (*it)->WriteArchive( "Temps", output );
-        output.EndList(); // TempsConstitution
-    }
-    {
-        output.BeginList( "TempsChargement", vConvoyLoadingInfos_.size() );
-        for( IT_ConvoyTimeInfoVector it = vConvoyLoadingInfos_.begin(); it != vConvoyLoadingInfos_.end(); ++it )
-            (*it)->WriteArchive( "Temps", output );
-        output.EndList(); // TempsChargement
-    }
-    {
-        output.BeginList( "TempsDechargement", vConvoyUnloadingInfos_.size() );
-        for( IT_ConvoyTimeInfoVector it = vConvoyUnloadingInfos_.begin(); it != vConvoyUnloadingInfos_.end(); ++it )
-            (*it)->WriteArchive( "Temps", output );
-        output.EndList(); // TempsDechargement
-    }
-    {
-        output.BeginList( "CoefModificationVitesse", vConvoySpeedModificatorInfos_.size() );
-        for( IT_ConvoyDoubleInfoVector it = vConvoySpeedModificatorInfos_.begin(); it != vConvoySpeedModificatorInfos_.end(); ++it )
-            (*it)->WriteArchive( "Coef", output );
-        output.EndList(); // CoefModificationVitesse
-    }
-
     if( ptrUnit_.GetData() == 0 )
         throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Convoy unit undefined." ).ascii() );
 
     if( ptrUnit_.GetData()->eTypeId_.GetData() != eAgentTypePionLOGConvoi )
         throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Convoy unit is not of type 'Pion LOG Convoi'." ).ascii() );
 
+    output << xml::start( "supply" )
+            << xml::start( "convoys" )
+                << xml::attribute( "unit-type", ptrUnit_.GetData()->strName_ )
+                << xml::attribute( "mission", ptrSupplyMission_.GetData()->strName_ );
+    {
+        output << xml::start( "constitution-times" );
+        for( IT_ConvoyTimeInfoVector it = vConvoySetupInfos_.begin(); it != vConvoySetupInfos_.end(); ++it )
+            (*it)->WriteArchive( "unit-time", "time", output );
+        output << xml::end();
+    }
+    {
+        output << xml::start( "loading-times" );
+        for( IT_ConvoyTimeInfoVector it = vConvoyLoadingInfos_.begin(); it != vConvoyLoadingInfos_.end(); ++it )
+            (*it)->WriteArchive( "unit-time", "time", output );
+        output << xml::end();
+    }
+    {
+        output << xml::start( "unloading-times" );
+        for( IT_ConvoyTimeInfoVector it = vConvoyUnloadingInfos_.begin(); it != vConvoyUnloadingInfos_.end(); ++it )
+            (*it)->WriteArchive( "unit-time", "time", output );
+        output << xml::end();
+    }
+    {
+        output << xml::start( "speed-modifiers" );
+        for( IT_ConvoyDoubleInfoVector it = vConvoySpeedModificatorInfos_.begin(); it != vConvoySpeedModificatorInfos_.end(); ++it )
+            (*it)->WriteArchive( "speed-modifier", "value", output );
+        output << xml::end();
+    }
+    output << xml::end();
 
-    output.Section( "TypeUnite" );
-    output.WriteAttribute( "nom", ptrUnit_.GetData()->strName_.GetData() );
-    output.EndSection(); // TypeUnite
+    output << xml::start( "resource-availability-alerts" );
+    for( IT_AvailabilityWarning_Vector it = vVectorWarnings_.begin(); it != vVectorWarnings_.end(); ++it )
+        (*it)->WriteArchive( output );
+    output << xml::end();
 
-    output.Section( "Mission" );
-    output.WriteAttribute( "nom", ptrSupplyMission_.GetData()->strName_.GetData() );
-    output.EndSection(); // Mission
-
-    output.EndSection(); // Convois
-
-    output.Section( "AlertesDisponibiliteMoyens" );
-        output.BeginList( "AlertesDisponibiliteVecteurs", vVectorWarnings_.size() );
-        for( IT_AvailabilityWarning_Vector it = vVectorWarnings_.begin(); it != vVectorWarnings_.end(); ++it )
-            (*it)->WriteArchive( output, "AlerteDisponibiliteVecteurs" );
-        output.EndList();
-    output.EndSection();
-
-    output.EndSection(); // Ravitaillement
+    output << xml::end();
 }

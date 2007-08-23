@@ -15,6 +15,11 @@
 #include "PHY_Perception_ABC.h"
 #include "simulation_terrain/TER_Localisation.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 // @class  PHY_PerceptionRecoSurveillance
 // Created: JVT 2004-10-21
@@ -30,7 +35,7 @@ public:
 
     //! @name Initialization
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( xml::xistream& xis );
     //@}
 
     //! @name Add/Remove Points
@@ -73,6 +78,12 @@ private:
     typedef std::vector< sReco* >        T_RecoVector;
     typedef T_RecoVector::iterator       IT_RecoVector;
     typedef T_RecoVector::const_iterator CIT_RecoVector;
+    //@}
+
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadAlatTime( xml::xistream& xis );
     //@}
 
 private:

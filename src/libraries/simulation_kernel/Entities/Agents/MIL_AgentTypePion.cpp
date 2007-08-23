@@ -76,6 +76,10 @@
  
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
+#include "tools/xmlcodecs.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 MIL_AgentTypePion::T_PionTypeAllocatorMap  MIL_AgentTypePion::pionTypeAllocators_;
 MIL_AgentTypePion::T_PionTypeMap           MIL_AgentTypePion::pionTypes_;
@@ -84,16 +88,24 @@ MIL_AgentTypePion::T_PionTypeMap           MIL_AgentTypePion::pionTypes_;
 // Name: MIL_AgentTypePion::Create
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-const MIL_AgentTypePion* MIL_AgentTypePion::Create( const std::string& strName, MIL_InputArchive& archive )
+const MIL_AgentTypePion* MIL_AgentTypePion::Create( const std::string& strName, xml::xistream& xis )
 {
-    return new MIL_AgentTypePion( strName, archive );
+    return new MIL_AgentTypePion( strName, xis );
 }
+
+struct MIL_AgentTypePion::LoadingWrapper
+{
+    void ReadUnit( xml::xistream& xis )
+    {
+        MIL_AgentTypePion::ReadUnit( xis );
+    }
+};
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePion::Initialize
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePion::Initialize( MIL_InputArchive& archive )
+void MIL_AgentTypePion::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing agent types" );
 
@@ -120,34 +132,39 @@ void MIL_AgentTypePion::Initialize( MIL_InputArchive& archive )
     pionTypeAllocators_[ "Pion ASY"                    ] = &MIL_AgentTypePionASY            ::Create;
     pionTypeAllocators_[ "Pion REFUGIE"                ] = &MIL_AgentTypePionREFUGIE        ::Create; 
 
+    
+    LoadingWrapper loader;
+    
+    xis >> start( "units" )
+            >> list( "unit", loader, &LoadingWrapper::ReadUnit )
+        >> end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePion::ReadUnit
+// Created: ABL 2007-07-23
+// -----------------------------------------------------------------------------
+void MIL_AgentTypePion::ReadUnit( xml::xistream& xis )
+{   
     std::set< uint > ids_;
-    archive.BeginList( "Pions" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Unite" );
-    
-        std::string strName;
-        std::string strType;
+    std::string strName;
+    std::string strType;
 
-        archive.ReadAttribute( "nom", strName );
-        archive.ReadAttribute( "type", strType );
+    xis >> attribute( "name", strName )
+        >> attribute( "type", strType );
 
-        CIT_PionTypeAllocatorMap itPionAllocator = pionTypeAllocators_.find( strType );
-        if( itPionAllocator == pionTypeAllocators_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown pion type", archive.GetContext() );
+    CIT_PionTypeAllocatorMap itPionAllocator = pionTypeAllocators_.find( strType );
+    if( itPionAllocator == pionTypeAllocators_.end() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown pion type" ); // $$$$ ABL 2007-07-23: error context
 
-        const MIL_AgentTypePion*& pType = pionTypes_[ strName ];
-        if( pType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pion type already defined", archive.GetContext() );
+    const MIL_AgentTypePion*& pType = pionTypes_[ strName ];
+    if( pType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pion type already defined" ); // $$$$ ABL 2007-07-23: error context
 
-        pType = (*itPionAllocator->second)( strName, archive );
+    pType = (*itPionAllocator->second)( strName, xis );
 
-        if( !ids_.insert( pType->GetID() ).second )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pion type ID already used", archive.GetContext() );
-    
-        archive.EndSection(); // Unite
-    }
-    archive.EndList(); // Pions
+    if( !ids_.insert( pType->GetID() ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pion type ID already used" ); // $$$$ ABL 2007-07-23: error context
 }
 
 // -----------------------------------------------------------------------------
@@ -169,17 +186,17 @@ void MIL_AgentTypePion::Terminate()
 // Name: MIL_AgentTypePion constructor
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, MIL_InputArchive& archive )
-    : MIL_AgentType_ABC               ( strName, archive )
+MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, xml::xistream& xis )
+    : MIL_AgentType_ABC               ( strName, xis )
     , pDIAFunctionTable_              ( new DIA_FunctionTable< MIL_AgentPion >() )
     , rDistanceAvantLimas_            ( 0. )
     , rRapForIncreasePerTimeStepValue_( DEC_Knowledge_RapFor_ABC::GetRapForIncreasePerTimeStepDefaultValue() )
 {
-    pUnitType_ = new PHY_UnitType( archive );
+    pUnitType_ = new PHY_UnitType( xis );
 
-    InitializeRapFor              ( archive );
-    InitializeDistancesAvantPoints( archive );
-    InitializeModel               ( archive );
+    InitializeRapFor              ( xis );
+    InitializeDistancesAvantPoints( xis );
+    InitializeModel               ( xis );
     InitializeDiaFunctions        ();    
 }
 
@@ -197,75 +214,78 @@ MIL_AgentTypePion::~MIL_AgentTypePion()
 // Name: MIL_AgentTypePion::InitializeDistancesAvantPoints
 // Created: AGN 03-03-19
 //-----------------------------------------------------------------------------
-void MIL_AgentTypePion::InitializeDistancesAvantPoints( MIL_InputArchive& archive )
+void MIL_AgentTypePion::InitializeDistancesAvantPoints( xml::xistream& xis )
 {
-    if( !archive.BeginList( "DistancesAvantPoints", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> optional()
+            >> start( "distance-before-points" )
+                >> list( "distance-before-point", *this, &MIL_AgentTypePion::ReadPoint )
+            >> end();
+}
 
-    while( archive.NextListElement() )
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePion::ReadPoint
+// Created: ABL 2007-07-23
+// -----------------------------------------------------------------------------
+void MIL_AgentTypePion::ReadPoint( xml::xistream& xis )
+{
+    std::string strTypePoint;
+    xis >> attribute( "type", strTypePoint );
+
+    // Cas particulier : limas ( point n'appartenant pas à TER ! )
+    if ( sCaseInsensitiveEqual()( strTypePoint, "lima" ) )
     {
-        archive.Section( "Point" );
-
-        std::string strTypePoint;
-        archive.ReadAttribute( "type", strTypePoint );
-
-        // Cas particulier : limas ( point n'appartenant pas à TER ! )
-        if ( sCaseInsensitiveEqual()( strTypePoint, "lima" ) )
-        {
-            archive.Read( rDistanceAvantLimas_ );
-            rDistanceAvantLimas_ = MIL_Tools::ConvertMeterToSim( rDistanceAvantLimas_ );
-        }
-        else
-        {
-            const TerrainData nType = MIL_Tools::ConvertLandType( strTypePoint );
-            
-            if( nType.Area() == 0xFF )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown land type", archive.GetContext() );
-
-            if( distancesAvantPoints_.find( nType ) != distancesAvantPoints_.end() )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown 'distance avant point'", archive.GetContext() );
-        
-            MT_Float& rDistance = distancesAvantPoints_[ nType ];
-            archive.Read( rDistance );
-            rDistance = MIL_Tools::ConvertMeterToSim( rDistance );
-        }
-        
-        archive.EndSection(); // Point
+        xis >> attribute( "value", rDistanceAvantLimas_ );
+        rDistanceAvantLimas_ = MIL_Tools::ConvertMeterToSim( rDistanceAvantLimas_ );
     }
+    else
+    {
+        const TerrainData nType = MIL_Tools::ConvertLandType( strTypePoint );
+        
+        if( nType.Area() == 0xFF )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown land type" ); // $$$$ ABL 2007-07-23: error context
 
-    archive.EndList(); // DistancesAvantPoints
+        if( distancesAvantPoints_.find( nType ) != distancesAvantPoints_.end() )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown 'distance avant point'" ); // $$$$ ABL 2007-07-23: error context
+
+        MT_Float& rDistance = distancesAvantPoints_[ nType ];
+        xis >> attribute( "value", rDistance );
+        rDistance = MIL_Tools::ConvertMeterToSim( rDistance );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePion::InitializeRapFor
 // Created: NLD 2004-11-25
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePion::InitializeRapFor( MIL_InputArchive& archive )
+void MIL_AgentTypePion::InitializeRapFor( xml::xistream& xis )
 {
-    if( !archive.Section( "RapportDeForce", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> list( "force-ratio", *this, &MIL_AgentTypePion::ReadFeedback );
+}
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePion::ReadFeedback
+// Created: ABL 2007-07-23
+// -----------------------------------------------------------------------------
+void MIL_AgentTypePion::ReadFeedback( xml::xistream& xis )
+{
     MT_Float rTimeTmp;
-    if( archive.ReadTimeField( "TempsDeRemontee", rTimeTmp, MIL_InputArchive::eNothing ) )
-    {
-        rTimeTmp                         = MIL_Tools::ConvertSecondsToSim( rTimeTmp );
-        rRapForIncreasePerTimeStepValue_ = DEC_Knowledge_RapFor_ABC::ComputeRapForIncreasePerTimeStepValue( rTimeTmp );
-    }
-    archive.EndSection(); // RapportDeForce
+    tools::ReadTimeAttribute( xis, "feedback-time", rTimeTmp );
+    rTimeTmp                         = MIL_Tools::ConvertSecondsToSim( rTimeTmp );
+    rRapForIncreasePerTimeStepValue_ = DEC_Knowledge_RapFor_ABC::ComputeRapForIncreasePerTimeStepValue( rTimeTmp );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePion::InitializeModel
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePion::InitializeModel( MIL_InputArchive& archive )
+void MIL_AgentTypePion::InitializeModel( xml::xistream& xis )
 {
     std::string strModel;
-    archive.ReadField( "ModeleDecisionnel", strModel );
+    xis >> attribute( "decisional-model", strModel );
 
     pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPion( strModel );
     if( !pModel_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown pawn model", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown pawn model" ); // $$$$ ABL 2007-07-23: error context
 }
 
 // -----------------------------------------------------------------------------
@@ -464,9 +484,9 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::GetType                          < MIL_AgentPion >, "DEC_ConnaissanceObjet_Type"                              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth       < MIL_AgentPion >, "DEC_ConnaissanceObjet_LargeurSiteFranchissement"         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsSiteFranchissementBanksToFitOut< MIL_AgentPion >, "DEC_ConnaissanceObjet_BergesAAmenagerSiteFranchissement" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::Recon											 , "DEC_ConnaissanceObjet_Reconnaitre"                       );    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::Recon                                             , "DEC_ConnaissanceObjet_Reconnaitre"                       );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsRecon                          < MIL_AgentPion >, "DEC_ConnaissanceObjet_EstReconnu"                        );    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::CanBeOccupied 									 , "DEC_ConnaissanceObjet_PeutEtreOccupe"                    ); 
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::CanBeOccupied                                      , "DEC_ConnaissanceObjet_PeutEtreOccupe"                    ); 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::CanBeAnimated                                     , "DEC_ConnaissanceObjet_PeutEtreAnime"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsLogisticRouteEquipped          < MIL_AgentPion >, "DEC_ConnaissanceObjet_ItineraireLogEstEquipe"            ); 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::DamageObject                                      , "DEC_ConnaissanceObjet_Degrader"                          );
@@ -476,7 +496,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     // Population knowledges accessors
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::GetDominationState           < MIL_AgentPion >, "DEC_ConnaissancePopulation_Domination"                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::GetAttitude                  < MIL_AgentPion >, "DEC_ConnaissancePopulation_Attitude"                     );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::Recon										 , "DEC_ConnaissancePopulation_Reconnaitre"                  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::Recon                                         , "DEC_ConnaissancePopulation_Reconnaitre"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::IsRecon                      < MIL_AgentPion >, "DEC_ConnaissancePopulation_EstReconnu"                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::IsPerceivedByAgent                            , "DEC_ConnaissancePopulation_EstPercueParUnite"            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::GetDangerosity                                , "DEC_ConnaissancePopulation_Dangerosite"                  );
@@ -645,9 +665,9 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
 // Name: MIL_AgentTypePion::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_AgentTypePion::InstanciatePion( uint nID, MIL_Automate& automate, MIL_InputArchive& archive ) const
+MIL_AgentPion& MIL_AgentTypePion::InstanciatePion( uint nID, MIL_Automate& automate, xml::xistream& xis ) const
 {
-    return *new MIL_AgentPion( *this, nID, automate, archive );
+    return *new MIL_AgentPion( *this, nID, automate, xis );
 }
 
 // -----------------------------------------------------------------------------

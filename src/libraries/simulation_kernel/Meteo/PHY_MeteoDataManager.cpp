@@ -16,6 +16,9 @@
 #include "Network/NET_ASN_Tools.h"
 
 #include "Tools/MIL_Tools.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 //-----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager constructor
@@ -33,18 +36,16 @@ PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
 
     std::string fileName = config.GetWeatherFile();
 
-    MIL_InputArchive archive;
-    archive.Open( fileName );
+    xml::xifstream xisWeather( fileName );
     config.AddFileToCRC( fileName );
 
-    archive.Section( "Meteo" );
-    pEphemeride_  = new PHY_Ephemeride( archive );
-    InitializeGlobalMeteo( archive );
+    xisWeather >> start( "Meteo" );
+    pEphemeride_  = new PHY_Ephemeride( xisWeather );
+    InitializeGlobalMeteo( xisWeather );
     pRawData_     = new PHY_RawVisionData( *pGlobalMeteo_, config );
-    InitializeLocalMeteos( archive );
+    InitializeLocalMeteos( xisWeather );
 
-    archive.EndSection(); // Meteo
-    archive.Close();
+    xisWeather >> end();
 }
 
 //-----------------------------------------------------------------------------
@@ -65,47 +66,45 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
 // Name: PHY_MeteoDataManager::InitializeGlobalMeteo
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::InitializeGlobalMeteo( MIL_InputArchive& archive )
+void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 {
-    archive.Section( "MeteoGlobale" );
-    pGlobalMeteo_ = new PHY_Meteo( archive, *pEphemeride_ );
+    xis >> start( "MeteoGlobale" );
+    pGlobalMeteo_ = new PHY_Meteo( xis, *pEphemeride_ );
     pGlobalMeteo_->IncRef();
     RegisterMeteo( *pGlobalMeteo_ );
-    archive.EndSection(); // MeteoGlobale
+    xis >> end();
 }
 
 //-----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager::InitializeLocalMeteos
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
-void PHY_MeteoDataManager::InitializeLocalMeteos( MIL_InputArchive& archive )
+void PHY_MeteoDataManager::InitializeLocalMeteos( xml::xistream& xis )
 {
-    // Initialisation des météos locales
-    if ( !archive.BeginList( "PatchsLocaux", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> optional() >> start( "PatchsLocaux" )
+                          >> list( "PatchLocal", *this, &PHY_MeteoDataManager::ReadPatchLocal )
+                      >> end();
+}
 
-    assert( pRawData_ );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "PatchLocal" );
+// -----------------------------------------------------------------------------
+// Name: PHY_MeteoDataManager::ReadPatchLocal
+// Created: ABL 2007-07-27
+// -----------------------------------------------------------------------------
+void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
+{
+    std::string strPos;
+    MT_Vector2D vUpLeft;
+    MT_Vector2D vDownRight;
 
-        std::string strPos;
-        MT_Vector2D vUpLeft;
-        MT_Vector2D vDownRight;
+    xis >> attribute( "hautGauche", strPos );
+    MIL_Tools::ConvertCoordMosToSim( strPos, vUpLeft );
 
-        archive.ReadAttribute( "hautGauche", strPos );
-        MIL_Tools::ConvertCoordMosToSim( strPos, vUpLeft );
+    xis >> attribute( "basDroit", strPos );
+    MIL_Tools::ConvertCoordMosToSim( strPos, vDownRight );
 
-        archive.ReadAttribute( "basDroit", strPos );
-        MIL_Tools::ConvertCoordMosToSim( strPos, vDownRight );
-
-        PHY_Meteo* pMeteo = new PHY_Meteo( archive, *pEphemeride_ );
-        RegisterMeteo( *pMeteo );
-        pRawData_->RegisterMeteoPatch( vUpLeft, vDownRight, pMeteo );
-
-        archive.EndSection();
-    }
-    archive.EndList(); // PatchsLocaux
+    PHY_Meteo* pMeteo = new PHY_Meteo( xis, *pEphemeride_ );
+    RegisterMeteo( *pMeteo );
+    pRawData_->RegisterMeteoPatch( vUpLeft, vDownRight, pMeteo );
 }
 
 // =============================================================================

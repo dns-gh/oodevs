@@ -10,6 +10,11 @@
 #ifndef __AGR_Enumeration_h_
 #define __AGR_Enumeration_h_
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  AGR_Enumeration
     @brief  AGR_Enumeration
@@ -28,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    void Read( MT_InputArchive_ABC& input );
+    void Read( xml::xistream& xis );
     //@}
 
     //! @name Accessors
@@ -48,6 +53,7 @@ private:
     //! @name Helpers
     //@{
     std::string HumanName( const std::string& strValue ) const;
+    void ReadValue( xml::xistream& xis );
     //@}
 
 private:

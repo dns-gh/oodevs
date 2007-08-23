@@ -18,36 +18,39 @@
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeObject constructor
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-PHY_SensorTypeObject::PHY_SensorTypeObject( const PHY_SensorType& type, MIL_InputArchive& archive )
+PHY_SensorTypeObject::PHY_SensorTypeObject( const PHY_SensorType& type, xml::xistream& xis )
     : type_        ( type )
     , objectData_  ( MIL_RealObjectType::GetObjectTypes().size() )
     , rMaxDistance_( 0. )
 {
-    archive.BeginList( "Objets" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Objet" );
+    xis >> list( "object", *this, &PHY_SensorTypeObject::ReadObject );
+}
 
-        std::string strType;
-        archive.ReadAttribute( "type", strType );
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeObject::ReadObject
+// Created: ABL 2007-07-25
+// -----------------------------------------------------------------------------
+void PHY_SensorTypeObject::ReadObject( xml::xistream& xis )
+{
+    std::string strType;
+    xis >> attribute( "type", strType );
 
-        const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( strType );
-        if( !pObjectType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type", archive.GetContext() );
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( strType );
+    if( !pObjectType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type" ); // $$$$ ABL 2007-07-25: error context
 
-        assert( objectData_.size() > pObjectType->GetID() );
-        const PHY_SensorTypeObjectData* pObjectData = new PHY_SensorTypeObjectData( archive );
-        objectData_[ pObjectType->GetID() ] = pObjectData;
-        rMaxDistance_ = std::max( rMaxDistance_, pObjectData->GetMaxDistance() );
-
-        archive.EndSection(); // Objet
-    }    
-    archive.EndList(); // Objets
+    assert( objectData_.size() > pObjectType->GetID() );
+    const PHY_SensorTypeObjectData* pObjectData = new PHY_SensorTypeObjectData( xis );
+    objectData_[ pObjectType->GetID() ] = pObjectData;
+    rMaxDistance_ = std::max( rMaxDistance_, pObjectData->GetMaxDistance() );
 }
 
 // -----------------------------------------------------------------------------

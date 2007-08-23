@@ -22,6 +22,10 @@
 #include "simulation_terrain/TER_PathfinderThread.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
+#include "tools/xmlcodecs.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager constructor
@@ -32,27 +36,30 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
     , rDistanceThreshold_     ( 0. )
     , treatedRequests_        ( 0 )
 {
-    MIL_InputArchive phyArchive;
-    phyArchive.Open( config.GetPhysicalFile() );
-    phyArchive.Section( "physical" );
+    xml::xifstream xis( config.GetPhysicalFile() );
+    xis >> start( "physical" );
     
     std::string strPathFindFile;
-    phyArchive.ReadField( "PathFinder", strPathFindFile );
+    xis >> start( "pathfinder" )
+            >> attribute( "file", strPathFindFile )
+        >> end();
     strPathFindFile = config.BuildPhysicalChildFile( strPathFindFile );
 
-    MIL_InputArchive pathFindArchive;
-    pathFindArchive.Open( strPathFindFile );
+    xml::xifstream xisPathfind( strPathFindFile );
     config.AddFileToCRC( strPathFindFile );
 
-    pathFindArchive.Section( "Pathfind" );
+    xisPathfind >> start( "pathfind" )
+                    >> start( "configuration" )
+                        >> attribute( "distance-threshold", rDistanceThreshold_ );
+    if( tools::ReadTimeAttribute( xis, "max-calculation-time", nMaxComputationDuration_ ) && nMaxComputationDuration_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "pathfind configuartion : max-calculation-time w<= 0" );
 
-    pathFindArchive.Section( "Config" );
-    pathFindArchive.ReadField    ( "DistanceThreshold", rDistanceThreshold_ );
-    pathFindArchive.ReadTimeField( "TempsMaxCalcul"   , nMaxComputationDuration_, CheckValueGreater( 0 ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
-    pathFindArchive.EndSection(); // Config
+    xisPathfind     >> end();
 
     DEC_PathType   ::Initialize();
-    DEC_PathFactory::Initialize( pathFindArchive );
+    DEC_PathFactory::Initialize( xisPathfind );
+
+    xisPathfind >> end();
 
     MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", config.GetPathFinderThreads() ) );
     for( int i = 0; i < config.GetPathFinderThreads(); ++i )

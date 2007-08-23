@@ -44,7 +44,7 @@ DEC_PathPoint::DEC_PathPoint( const MT_Vector2D& vPos, const TerrainData& nObjec
 //-----------------------------------------------------------------------------
 DEC_PathPoint::~DEC_PathPoint()
 {
-	// NOTHING
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

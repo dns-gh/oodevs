@@ -14,9 +14,9 @@
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
 inline
-const MIL_AgentTypePion* MIL_AgentTypePionASY::Create( const std::string& strName, MIL_InputArchive& archive )
+const MIL_AgentTypePion* MIL_AgentTypePionASY::Create( const std::string& strName, xml::xistream& xis )
 {
-    return new MIL_AgentTypePionASY( strName, archive );
+    return new MIL_AgentTypePionASY( strName, xis );
 }
 
 // -----------------------------------------------------------------------------

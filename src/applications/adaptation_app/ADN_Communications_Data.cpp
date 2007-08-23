@@ -21,8 +21,6 @@
 
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
-#include "ADN_XmlInput_Helper.h"
-#include "ADN_Xml_Exception.h"
 #include "ADN_Tools.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
@@ -71,27 +69,26 @@ void ADN_Communications_Data::Reset()
 // Name: ADN_Communications_Data::ReadArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Communications_Data::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Communications_Data::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Communications" );
-    input.Section( "ImpactCoupureCommunications" );
-    input.ReadField( "CoefModificationVitesse", rSpeedModifier_ );
-    input.ReadField( "CoefModificationTempsRechargement", rReloadModifier_ );
-    input.EndSection(); // Communications
-    input.EndSection(); // CoefModificationTempsRechargement
+    input >> xml::start( "communications" )
+            >> xml::start( "communication-breakdown" )
+                >> xml::attribute( "speed-modifier", rSpeedModifier_ )
+                >> xml::attribute( "reloading-time-modifier", rReloadModifier_ )
+            >> xml::end()
+          >> xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Communications_Data::WriteArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Communications_Data::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Communications_Data::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Communications" );
-    output.Section( "ImpactCoupureCommunications" );
-    output.WriteField( "CoefModificationVitesse", rSpeedModifier_.GetData() );
-    output.WriteField( "CoefModificationTempsRechargement", rReloadModifier_.GetData() );
-    output.EndSection(); // Communications
-    output.EndSection(); // CoefModificationTempsRechargement
+    output << xml::start( "communications" )
+            << xml::start( "communication-breakdown" )
+                << xml::attribute( "speed-modifier", rSpeedModifier_ )
+                << xml::attribute( "reloading-time-modifier", rReloadModifier_ )
+            << xml::end()
+          << xml::end();
 }

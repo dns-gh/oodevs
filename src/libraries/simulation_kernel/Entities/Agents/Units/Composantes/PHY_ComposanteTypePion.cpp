@@ -28,8 +28,11 @@
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "PHY_ComposanteTypeObjectData.h"
-
 #include "Tools/MIL_Tools.h"
+#include "tools/xmlcodecs.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 PHY_ComposanteTypePion::T_ComposanteTypeMap PHY_ComposanteTypePion::composantesTypes_;
 MT_Random                                   PHY_ComposanteTypePion::randomGenerator_;
@@ -37,6 +40,14 @@ MT_Random                                   PHY_ComposanteTypePion::randomGenera
 // =============================================================================
 // STATIC INITIALIZATION (MANAGER)
 // =============================================================================
+
+struct PHY_ComposanteTypePion::LoadingWrapper
+{
+    void ReadElement( xml::xistream& xis, const MIL_Time_ABC& time )
+    {
+        PHY_ComposanteTypePion::ReadElement( xis , time);
+    }
+};
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::sNTICapability::CanRepair
@@ -64,31 +75,33 @@ bool PHY_ComposanteTypePion::sNTICapability::CanRepair( const PHY_Breakdown& bre
 // Name: PHY_ComposanteTypePion::Initialize
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::Initialize( const MIL_Time_ABC& time, MIL_InputArchive& archive )
+void PHY_ComposanteTypePion::Initialize( const MIL_Time_ABC& time, xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing composante types" );
 
+    LoadingWrapper loader;
+
+    xis >> start( "elements" )
+            >> list( "element", loader, &LoadingWrapper::ReadElement, time )
+        >> end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadElement
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadElement( xml::xistream& xis, const MIL_Time_ABC& time )
+{
     std::set< uint > ids_;
-    archive.BeginList( "Composantes" );
-    while ( archive.NextListElement() )
-    {
-        archive.Section( "Composante" );
+    std::string strComposanteType;
+    xis >> attribute( "name", strComposanteType );
+    PHY_ComposanteTypePion*& pComposanteType = composantesTypes_[ strComposanteType ];
+    if( pComposanteType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Composante type '%s' already registered", strComposanteType.c_str() ) ); // $$$$ ABL 2007-07-20: error context
+    pComposanteType = new PHY_ComposanteTypePion( time, strComposanteType, xis );
 
-        std::string strComposanteType;
-        archive.ReadAttribute( "nom", strComposanteType );
-
-        PHY_ComposanteTypePion*& pComposanteType = composantesTypes_[ strComposanteType ];
-        if( pComposanteType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Composante type '%s' already registered", strComposanteType.c_str() ), archive.GetContext() );
-
-        pComposanteType = new PHY_ComposanteTypePion( time, strComposanteType, archive );
-
-        if( !ids_.insert( pComposanteType->GetMosID() ).second )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Composante ID already used", archive.GetContext() );
-
-        archive.EndSection(); // Composante
-    }
-    archive.EndList(); // Composantes
+    if( !ids_.insert( pComposanteType->GetMosID() ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Composante ID already used" ); // $$$$ ABL 2007-07-20: error context
 }
 
 // -----------------------------------------------------------------------------
@@ -111,12 +124,12 @@ void PHY_ComposanteTypePion::Terminate()
 // Created: NLD 2004-08-04
 // Modified: JVT 2004-10-20
 // -----------------------------------------------------------------------------
-PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const std::string& strName, MIL_InputArchive& archive )
-    : PHY_ComposanteType_ABC                     ( strName, archive )
+PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const std::string& strName, xml::xistream& xis )
+    : PHY_ComposanteType_ABC                     ( strName, xis )
     , time_                                      ( time )
-    , speeds_                                    ( archive )
+    , speeds_                                    ( xis )
     , rMaxSlope_                                 ( 1. )
-    , dotationCapacities_                        ( "Contenance", archive )
+    , dotationCapacities_                        ( "composition", xis )
     , objectData_                                ( MIL_RealObjectType::GetObjectTypes().size(), 0 )
     , consumptions_                              ( PHY_ConsumptionType::GetConsumptionTypes().size(), 0 )
     , rNbrHumansLoadedPerTimeStep_               ( 0. )
@@ -151,18 +164,23 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     , rStockTransporterWeightCapacity_           ( 0. )
     , rStockTransporterVolumeCapacity_           ( 0. )
 {
-    archive.ReadField( "DeniveleMaximum", rMaxSlope_, CheckValueBound( 0., 1. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
+    xis >> optional()
+            >> attribute( "max-slope", rMaxSlope_ )
+        >> attribute( "weight", rWeight_ );
 
-    InitializeWeapons                ( archive );
-    InitializeSensors                ( archive );
-    InitializeRadars                 ( archive );
-    InitializeTransport              ( archive );
-    InitializeObjects                ( archive );
-    InitializeConsumptions           ( archive );
-    InitializeLogistic               ( archive );
-    InitializeBreakdownTypes         ( archive );
+    if( rMaxSlope_ < 0 || rMaxSlope_ > 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "element: max-slope not in [0..1]" );
+    if( rWeight_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "element: weight <= 0" );
 
-    archive.ReadField( "Poids", rWeight_, CheckValueGreater( 0. ) );
+    InitializeWeapons       ( xis );
+    InitializeSensors       ( xis );
+    InitializeRadars        ( xis );
+    InitializeTransport     ( xis );
+    InitializeObjects       ( xis );
+    InitializeConsumptions  ( xis );
+    InitializeLogistic      ( xis );
+    InitializeBreakdownTypes( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -184,140 +202,119 @@ PHY_ComposanteTypePion::~PHY_ComposanteTypePion()
 // Name: PHY_ComposanteTypePion::InitializeBreakdownTypes
 // Created: JVT 2005-04-26
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::InitializeBreakdownTypes( MIL_InputArchive& archive )
-{
+void PHY_ComposanteTypePion::InitializeBreakdownTypes( xml::xistream& xis )
+{   
     if( GetProtection().IsHuman() )
-    {
-        if( archive.Section( "Pannes", MIL_InputArchive::eNothing ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "A human composante can't have breakdowns ( type='%s', protection='%s')", GetName().c_str(), GetProtection().GetName().c_str() ), archive.GetContext() );
         return;
-    }
 
-    archive.Section( "Pannes" );
-    InitializeRandomBreakdownTypes   ( archive );
-    InitializeAttritionBreakdownTypes( archive );    
-    archive.EndSection(); // Pannes
+    attritionBreakdownTypeProbabilities_.clear();
+    randomBreakdownTypeProbabilities_.clear();
+    xis >> start( "breakdowns" )
+            >> list( "breakdown", *this, &PHY_ComposanteTypePion::InitializeBreakdown );
+    xis >> end();
+
+    if( randomBreakdownTypeProbabilities_.empty()
+        || std::fabs( 1. - randomBreakdownTypeProbabilities_.back().rProbabilityBound_ ) > 0.01 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Total probability of random breakdowns is less than 100%" ) ); // $$$$ ABL 2007-07-20: error context
+    if( attritionBreakdownTypeProbabilities_.empty()
+        || std::fabs( 1. - attritionBreakdownTypeProbabilities_.back().rProbabilityBound_  ) > 0.01 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Total probability of attrition breakdowns is less than 100%" ) ); // $$$$ ABL 2007-07-20: error context
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::InitializeBreakdown
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::InitializeBreakdown( xml::xistream& xis )
+{
+    std::string breakdownType;
+    xis >> attribute( "origin", breakdownType );
+    if( breakdownType == "random" )
+        InitializeRandomBreakdownTypes( xis );
+    if( breakdownType == "attrition" )
+        InitializeAttritionBreakdownTypes( xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::InitializeRandomBreakdownTypes
 // Created: JVT 2005-04-26
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::InitializeRandomBreakdownTypes( MIL_InputArchive& archive )
+void PHY_ComposanteTypePion::InitializeRandomBreakdownTypes( xml::xistream& xis )
 {
-    randomBreakdownTypeProbabilities_.clear();
+    std::string strBuf;
+    xis >> attribute( "type", strBuf );
+    const PHY_BreakdownType* pType = PHY_BreakdownType::Find( strBuf );
+    if ( !pType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown breakdown type '%s'", strBuf.c_str() ) ); // $$$$ ABL 2007-07-20: error context
     
-    archive.BeginList( "PannesAleatoires" );
-    
-    MT_Float rTotalProb = 0.;
-    while ( archive.NextListElement() )
-    {
-        archive.Section( "Panne" );
-        
-        std::string strBuf;
-        
-        archive.ReadAttribute( "nom", strBuf );
-        
-        const PHY_BreakdownType* pType = PHY_BreakdownType::Find( strBuf );
-        
-        if ( !pType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown breakdown type '%s'", strBuf.c_str() ), archive.GetContext() );
+    MT_Float rPercentage;
+    xis >> attribute( "percentage", rPercentage );
+    if( rPercentage < 0 || rPercentage > 100 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "random breakdown: percentage not in [0..100]" );
 
-        MT_Float rPercentage;
-        
-        archive.ReadAttribute( "pourcentage", rPercentage,  CheckValueBound( 0., 100. ) );
-        rTotalProb  += rPercentage;
-        
-        if ( rTotalProb > 100. )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Total probability of breakdows is greater than 100%" ), archive.GetContext() );
-        
-        randomBreakdownTypeProbabilities_.push_back( sBreakdownTypeProbability( *pType, rTotalProb * 0.01 ) );
-        
-        archive.EndSection(); // Panne
-    }
-    
-    if ( rTotalProb != 100. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Total probability of random breakdowns is less than 100%" ), archive.GetContext() );
-    
-    archive.EndList(); // PannesAleatoires
+    rPercentage *= 0.01;
+    if( !randomBreakdownTypeProbabilities_.empty() )
+        rPercentage += randomBreakdownTypeProbabilities_.back().rProbabilityBound_;
+    randomBreakdownTypeProbabilities_.push_back( sBreakdownTypeProbability( *pType, rPercentage ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::InitializeAttritionBreakdownTypes
 // Created: JVT 2005-04-26
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::InitializeAttritionBreakdownTypes( MIL_InputArchive& archive )
+void PHY_ComposanteTypePion::InitializeAttritionBreakdownTypes( xml::xistream& xis )
 {
-    attritionBreakdownTypeProbabilities_.clear();
-    
-    archive.BeginList( "PannesAttritions" );
-    
-    MT_Float rTotalProb = 0.;
-    while ( archive.NextListElement() )
-    {
-        archive.Section( "Panne" );
-        
-        std::string strBuf;
-        
-        archive.ReadAttribute( "nom", strBuf );
-        
-        const PHY_BreakdownType* pType = PHY_BreakdownType::Find( strBuf );
-        
-        if ( !pType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown breakdown type '%s'", strBuf.c_str() ), archive.GetContext() );
+    std::string strBuf;
+    xis >> attribute( "type", strBuf );
+    const PHY_BreakdownType* pType = PHY_BreakdownType::Find( strBuf );
+    if ( !pType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown breakdown type '%s'", strBuf.c_str() ) ); // $$$$ ABL 2007-07-23: error context
 
-        MT_Float rPercentage;
-        
-        archive.ReadAttribute( "pourcentage", rPercentage,  CheckValueBound( 0., 100. ) );
-        
-        rTotalProb += rPercentage;
-        
-        if ( rTotalProb > 100. )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Total probability of breakdows is greater than 100%" ), archive.GetContext() );
-            
-        attritionBreakdownTypeProbabilities_.push_back( sBreakdownTypeProbability( *pType, rTotalProb * 0.01 ) );
+    MT_Float rPercentage;
+    xis >> attribute( "percentage", rPercentage );
+    if( rPercentage < 0 || rPercentage > 100 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "attrition breakdown: percentage not in [0..100]" );
 
-        archive.EndSection(); // Panne
-    }
-
-    if ( rTotalProb != 100. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Total probability of attrition breakdowns is less than 100%" ), archive.GetContext() );
-
-    archive.EndList(); // PannesAttritions
+    rPercentage *= 0.01;
+    if( !attritionBreakdownTypeProbabilities_.empty() )
+        rPercentage += attritionBreakdownTypeProbabilities_.back().rProbabilityBound_;
+    attritionBreakdownTypeProbabilities_.push_back( sBreakdownTypeProbability( *pType, rPercentage ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::InitializeWeapons
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::InitializeWeapons( MIL_InputArchive& archive )
+void PHY_ComposanteTypePion::InitializeWeapons( xml::xistream& xis )
 {
-    archive.BeginList( "Armements" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Armement" );
+    xis >> start( "weapon-systems" )
+            >> list( "weapon-system", *this, &PHY_ComposanteTypePion::ReadWeaponSystem )
+        >> end();
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadWeaponSystem
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadWeaponSystem( xml::xistream& xis )
+{
         std::string strLauncher;
         std::string strAmmunition;
         bool        bMajor = false;
 
-        archive.ReadAttribute( "lanceur"  , strLauncher );
-        archive.ReadAttribute( "munition", strAmmunition );
-        archive.ReadAttribute( "majeur"  , bMajor, MIL_InputArchive::eNothing );
+        xis >> attribute( "launcher", strLauncher )
+            >> attribute( "munition", strAmmunition )
+            >> optional()
+                >> attribute( "major", bMajor );
 
         const PHY_WeaponType* pWeaponType = PHY_WeaponType::FindWeaponType( strLauncher, strAmmunition );
         if( !pWeaponType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown weapon type (%s, %s)", strLauncher.c_str(), strAmmunition.c_str() ), archive.GetContext() );
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown weapon type (%s, %s)", strLauncher.c_str(), strAmmunition.c_str() ) ); // $$$$ ABL 2007-07-20: error context
 
         if( weaponTypes_.find( pWeaponType ) != weaponTypes_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Weapon type %s,%s already initialized", strLauncher.c_str(), strAmmunition.c_str() ), archive.GetContext() );
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Weapon type %s,%s already initialized", strLauncher.c_str(), strAmmunition.c_str() ) ); // $$$$ ABL 2007-07-20: error context
             
         weaponTypes_[ pWeaponType ] = bMajor;
-
-        archive.EndSection(); // Armement
-    }
-
-    archive.EndList(); // Armements
 }
 
 // -----------------------------------------------------------------------------
@@ -325,34 +322,14 @@ void PHY_ComposanteTypePion::InitializeWeapons( MIL_InputArchive& archive )
 // Created: NLD 2004-08-09
 // Modified: JVT 2004-10-20
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::InitializeSensors( MIL_InputArchive& archive )
+void PHY_ComposanteTypePion::InitializeSensors( xml::xistream& xis )
 {
     rSensorRotationAngle_ = std::numeric_limits< MT_Float >::max();
 
-    archive.BeginList( "Senseurs" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Senseur" );
-
-        std::string strSensor;
-        archive.Read( strSensor );
-
-        const PHY_SensorType* pSensorType = PHY_SensorType::FindSensorType( strSensor );
-        if( !pSensorType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown sensor type '%s'", strSensor.c_str() ), archive.GetContext() );
-
-        if( sensorTypes_.find( pSensorType ) != sensorTypes_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Sensor type '%s' already defined", strSensor.c_str() ), archive.GetContext() );
-
-        archive.ReadAttribute( "hauteur", sensorTypes_[ pSensorType ] );
-
-        if( pSensorType->GetTypeAgent() )
-            rSensorRotationAngle_ = std::min( rSensorRotationAngle_, pSensorType->GetTypeAgent()->GetAngle() );
-
-        archive.EndSection(); // Senseur
-    }
-    archive.EndList(); // Senseurs
-
+    xis >> start( "sensors" )
+            >> list( "sensor", *this, &PHY_ComposanteTypePion::ReadSensor )
+        >> end();
+    
     if ( rSensorRotationAngle_ == std::numeric_limits< MT_Float >::max() )
         rSensorRotationAngle_ = 0.;
     else
@@ -360,122 +337,160 @@ void PHY_ComposanteTypePion::InitializeSensors( MIL_InputArchive& archive )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadSensor
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadSensor( xml::xistream& xis )
+{
+        std::string strSensor;
+        xis >> attribute( "type", strSensor );
+
+        const PHY_SensorType* pSensorType = PHY_SensorType::FindSensorType( strSensor );
+        if( !pSensorType )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown sensor type '%s'", strSensor.c_str() ) ); // $$$$ ABL 2007-07-20: error context
+
+        if( sensorTypes_.find( pSensorType ) != sensorTypes_.end() )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Sensor type '%s' already defined", strSensor.c_str() ) ); // $$$$ ABL 2007-07-20: error context
+
+        xis >> attribute( "height", sensorTypes_[ pSensorType ] );
+
+        if( pSensorType->GetTypeAgent() )
+            rSensorRotationAngle_ = std::min( rSensorRotationAngle_, pSensorType->GetTypeAgent()->GetAngle() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::InitializeRadars
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::InitializeRadars( MIL_InputArchive& archive )
+void PHY_ComposanteTypePion::InitializeRadars( xml::xistream& xis )
 {
-    if( !archive.BeginList( "Radars", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> optional()
+            >> start( "radars" )
+                >> list( "radar", *this, &PHY_ComposanteTypePion::ReadRadar )
+            >> end();
+}
 
-    while( archive.NextListElement() )
-    {
-        std::string strRadar;
-        archive.Section( "Radar" );
-        
-        archive.Read( strRadar );
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadRadar
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadRadar( xml::xistream& xis )
+{
+    std::string strRadar;
+    xis >> attribute( "type", strRadar );
 
-        const PHY_RadarType* pRadarType = PHY_RadarType::Find( strRadar );
-        if( !pRadarType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown radar type", archive.GetContext() );
+    const PHY_RadarType* pRadarType = PHY_RadarType::Find( strRadar );
+    if( !pRadarType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown radar type" ); // $$$$ ABL 2007-07-20: error context
 
-        if( radarTypes_.find( pRadarType ) != radarTypes_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Radar type already defined", archive.GetContext() );
-        radarTypes_.insert( pRadarType );
-
-        archive.EndSection(); // Radar
-    }
-    archive.EndList(); // Radars
+    if( radarTypes_.find( pRadarType ) != radarTypes_.end() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Radar type already defined" ); // $$$$ ABL 2007-07-20: error context
+    radarTypes_.insert( pRadarType );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::InitializeTransport
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::InitializeTransport( MIL_InputArchive& archive )
+void PHY_ComposanteTypePion::InitializeTransport( xml::xistream& xis )
 {
-    archive.Section( "Transport" );
+    xis >> start( "transports" )
+            >> list( "crew", *this, &PHY_ComposanteTypePion::ReadTransportCrew )
+            >> list( "unit", *this, &PHY_ComposanteTypePion::ReadTransportUnit )
+        >> end();
+}
 
-    archive.Section( "Personnel" );
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadTransportCrew
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadTransportCrew( xml::xistream& xis )
+{
+    if( !tools::ReadTimeAttribute( xis, "man-boarding-time", rNbrHumansLoadedPerTimeStep_ ) || rNbrHumansLoadedPerTimeStep_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "crew: man-boarding-time < 0" );
+    if( !tools::ReadTimeAttribute( xis, "man-unloading-time", rNbrHumansUnloadedPerTimeStep_ ) || rNbrHumansUnloadedPerTimeStep_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "crew: man-unloading-time < 0" );
 
-    if( archive.Section( "Temps", MIL_InputArchive::eNothing ) )
-    {
-        archive.ReadTimeField( "TempsEmbarquementParHomme", rNbrHumansLoadedPerTimeStep_  , CheckValueGreater( 0. ) );
-        archive.ReadTimeField( "TempsDebarquementParHomme", rNbrHumansUnloadedPerTimeStep_, CheckValueGreater( 0. ) );
+    rNbrHumansLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansLoadedPerTimeStep_   );
+    rNbrHumansUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansUnloadedPerTimeStep_ );
+}
 
-        rNbrHumansLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansLoadedPerTimeStep_   );
-        rNbrHumansUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansUnloadedPerTimeStep_ );
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadTransportUnit
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadTransportUnit( xml::xistream& xis )
+{
+    xis >> attribute( "capacity", rPionTransporterWeightCapacity_ );
+    if( rPionTransporterWeightCapacity_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit: capacity <= 0" );
+    if( !tools::ReadTimeAttribute( xis, "ton-loading-time", rPionTransporterWeightLoadedPerTimeStep_ )
+      || rPionTransporterWeightLoadedPerTimeStep_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit: ton-loading-time <= 0" );
+    rPionTransporterWeightLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightLoadedPerTimeStep_   );
 
-        archive.EndSection(); // Temps
-    }
-
-    archive.EndSection(); // Personnel
-
-    if( archive.Section( "Pion", MIL_InputArchive::eNothing ) )
-    {
-        archive.ReadField( "Capacite", rPionTransporterWeightCapacity_, CheckValueGreater( 0. ) );
-
-        archive.Section( "Temps" );
-        archive.ReadTimeField( "TempsChargementParTonne"  , rPionTransporterWeightLoadedPerTimeStep_  , CheckValueGreater( 0. ) );
-        archive.ReadTimeField( "TempsDechargementParTonne", rPionTransporterWeightUnloadedPerTimeStep_, CheckValueGreater( 0. ) );
-
-        rPionTransporterWeightLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightLoadedPerTimeStep_   );
-        rPionTransporterWeightUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightUnloadedPerTimeStep_ );
-
-        archive.EndSection(); // Temps
-        archive.EndSection(); // Pion
-    }
-
-    archive.EndSection(); // Transport
+    if( !tools::ReadTimeAttribute( xis, "ton-unloading-time", rPionTransporterWeightUnloadedPerTimeStep_ )
+      || rPionTransporterWeightUnloadedPerTimeStep_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit: ton-unloading-time <= 0" );
+    rPionTransporterWeightUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightUnloadedPerTimeStep_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::InitializeObjects
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::InitializeObjects( MIL_InputArchive& archive )
+void PHY_ComposanteTypePion::InitializeObjects( xml::xistream& xis )
 {
-    archive.BeginList( "Objets" );
+    xis >> start( "objects" )
+            >> list( "object", *this, &PHY_ComposanteTypePion::ReadObject )
+        >> end();
+}
 
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Objet" );
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadObject
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadObject( xml::xistream& xis )
+{
+    std::string strType;
+    xis >> attribute( "type", strType );
 
-        std::string strType;
-        archive.ReadAttribute( "type", strType );
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( strType );
+    if( !pObjectType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown object type '%s'", strType.c_str() ) ); // $$$$ ABL 2007-07-20: error context
 
-        const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( strType );
-        if( !pObjectType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown object type '%s'", strType.c_str() ), archive.GetContext() );
+    assert( objectData_.size() > pObjectType->GetID() );
+    const PHY_ComposanteTypeObjectData*& pObject = objectData_[ pObjectType->GetID() ];
+    if( pObject )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Object type '%s' already instanciated", strType.c_str() ) ); // $$$$ ABL 2007-07-20: error context
 
-        assert( objectData_.size() > pObjectType->GetID() );
-        const PHY_ComposanteTypeObjectData*& pObject = objectData_[ pObjectType->GetID() ];
-        if( pObject )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Object type '%s' already instanciated", strType.c_str() ), archive.GetContext() );
-
-        pObject = new PHY_ComposanteTypeObjectData( *pObjectType, archive );
-        
-        archive.EndSection(); // Objet
-    }
-    archive.EndList(); // objets
+    pObject = new PHY_ComposanteTypeObjectData( *pObjectType, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::InitializeConsumptions
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::InitializeConsumptions( MIL_InputArchive& archive )
+void PHY_ComposanteTypePion::InitializeConsumptions( xml::xistream& xis )
 {
-    archive.Section( "Consommations" );
+    xis >> start( "consumptions" )
+            >> list( "consumption", *this, &PHY_ComposanteTypePion::ReadConsumption )
+        >> end();
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadConsumption
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadConsumption( xml::xistream& xis )
+{
     const PHY_ConsumptionType::T_ConsumptionTypeMap& consumptionTypes = PHY_ConsumptionType::GetConsumptionTypes();
-    for ( PHY_ConsumptionType::CIT_ConsumptionTypeMap it = consumptionTypes.begin(); it != consumptionTypes.end(); ++it )
-    {
-        const PHY_ConsumptionType& consumptionType = *it->second;
-        consumptions_[ consumptionType.GetID() ] = new PHY_DotationConsumptions( consumptionType.GetName(), archive );
-    }
+    std::string typeName;
+    xis >> attribute( "status", typeName );
 
-    archive.EndSection(); // Consommations
+    PHY_ConsumptionType::CIT_ConsumptionTypeMap it = consumptionTypes.find( typeName );
+    const PHY_ConsumptionType& consumptionType = *it->second;
+    consumptions_[ consumptionType.GetID() ] = new PHY_DotationConsumptions( consumptionType.GetName(), xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -483,83 +498,107 @@ void PHY_ComposanteTypePion::InitializeConsumptions( MIL_InputArchive& archive )
 // Created: NLD 2004-12-21
 // Modified: JVT 2005-02-03
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::InitializeLogisticMaintenance( MIL_InputArchive& archive )
+void PHY_ComposanteTypePion::InitializeLogisticMaintenance( xml::xistream& xis )
+{
+    xis >> list( "maintenance-functions", *this, &PHY_ComposanteTypePion::ReadMaintenance );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadMaintenance
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadMaintenance( xml::xistream& xis )
 {
     rHaulerLoadingTime_    = 0.;
     rHaulerUnloadingTime_  = 0.;
     rHaulerWeightCapacity_ = 0.;
-
-    if( !archive.Section( "Maintenance", MIL_InputArchive::eNothing ) )
-        return;
-
-    if( archive.Section( "Remorqueur", MIL_InputArchive::eNothing ) )
-    {
-        archive.ReadField    ( "Capacite"         , rHaulerWeightCapacity_ , CheckValueGreater       ( 0. ) );
-        archive.ReadTimeField( "TempsChargement"  , rHaulerLoadingTime_    , CheckValueGreaterOrEqual( 0. ) );
-        archive.ReadTimeField( "TempsDechargement", rHaulerUnloadingTime_  , CheckValueGreaterOrEqual( 0. ) );
-
-        rHaulerLoadingTime_   = MIL_Tools::ConvertSecondsToSim( rHaulerLoadingTime_ );
-        rHaulerUnloadingTime_ = MIL_Tools::ConvertSecondsToSim( rHaulerUnloadingTime_ );
-
-        archive.EndSection(); // Remorqueur
-    }
-
+    
     ntiCapabilities_.clear();
+
+    xis >> list( "towing", *this, &PHY_ComposanteTypePion::ReadTowing )
+        >> list( "repairing", *this, &PHY_ComposanteTypePion::ReadRepairing );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadRepairing
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadRepairing( xml::xistream& xis )
+{
     const PHY_MaintenanceLevel::T_MaintenanceLevelMap& maintenanceLevels = PHY_MaintenanceLevel::GetMaintenanceLevels();
-    for( PHY_MaintenanceLevel::CIT_MaintenanceLevelMap it = maintenanceLevels.begin(); it != maintenanceLevels.end(); ++it )
+    std::string maintenanceType;
+
+    xis >> attribute( "category", maintenanceType );
+
+    PHY_MaintenanceLevel::CIT_MaintenanceLevelMap it = maintenanceLevels.find( maintenanceType );
+    const PHY_MaintenanceLevel& maintenanceLevel = *it->second;
+
+    sNTICapability ntiCapability( maintenanceLevel );
+
+    std::string types;
+    xis >> attribute( "type", types );
+    std::stringstream stream( types );
+    std::string type;
+    while( std::getline( stream, type, ',' ) )
     {
-        const PHY_MaintenanceLevel& maintenanceLevel = *it->second;
-
-        if( !archive.Section( maintenanceLevel.GetName(), MIL_InputArchive::eNothing ) )
-            continue;
-
-        sNTICapability ntiCapability( maintenanceLevel );
-
-        MT_Float rTime;
-        if ( archive.ReadTimeAttribute( "tempsMaxReparation", rTime, CheckValueGreater( 0. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing ) )
-            ntiCapability.nMaxTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rTime );
-
-        if( archive.Section( "EA", MIL_InputArchive::eNothing ) )
-        {
+        if( type == "EA" )
             ntiCapability.bElectronic_ = true;
-            archive.EndSection(); // EA
-        }
-
-        if( archive.Section( "M", MIL_InputArchive::eNothing ) )
-        {
-            ntiCapability.bMobility_ = true;
-            archive.EndSection(); // M
-        }
-        
-        if( !ntiCapability.bMobility_ && !ntiCapability.bElectronic_ )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "NTI has not 'EA' nor 'M'", archive.GetContext() );
-
-        if( !ntiCapabilities_.insert( ntiCapability ).second )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "NTI already defined", archive.GetContext() );
-
-        archive.EndSection(); // NTIx
+        if( type == "M" )
+            ntiCapability.bMobility_   = true;
     }
 
-    archive.EndSection(); // Maintenance
+    MT_Float rTime = 0;
+    if( tools::ReadTimeAttribute( xis, "max-reparation-time", rTime ) )
+    {
+        if( rTime <= 0 )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "category: max-reparation-time <= 0" );
+        ntiCapability.nMaxTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rTime ); // $$$$ ABL 2007-07-23: tick/seconds...
+    }
+    
+    if( !ntiCapability.bMobility_ && !ntiCapability.bElectronic_ )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "NTI has not 'EA' nor 'M'" ); // $$$$ ABL 2007-07-20: error context
+
+    if( !ntiCapabilities_.insert( ntiCapability ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "NTI already defined" ); // $$$$ ABL 2007-07-20: error context
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadTowing
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadTowing( xml::xistream& xis )
+{
+    xis >> attribute( "capacity", rHaulerWeightCapacity_ );
+    tools::ReadTimeAttribute( xis, "loading-time", rHaulerLoadingTime_ );
+    tools::ReadTimeAttribute( xis, "unloading-time", rHaulerUnloadingTime_ );
+
+    if( rHaulerWeightCapacity_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "towing: capacity <= 0" );
+    if( rHaulerLoadingTime_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "towing: loading-time" );
+
+    rHaulerLoadingTime_   = MIL_Tools::ConvertSecondsToSim( rHaulerLoadingTime_ );
+    rHaulerUnloadingTime_ = MIL_Tools::ConvertSecondsToSim( rHaulerUnloadingTime_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::ReadWoundCapabilities
 // Created: NLD 2007-02-05
 // -----------------------------------------------------------------------------
-bool PHY_ComposanteTypePion::ReadWoundCapabilities( MIL_InputArchive& archive, T_WoundCapabilityVector& container ) const
+bool PHY_ComposanteTypePion::ReadWoundCapabilities( xml::xistream& xis, T_WoundCapabilityVector& container, const std::string attributeName ) const
 {
     bool bHasCapability = false;
-    const PHY_HumanWound::T_HumanWoundMap& wounds = PHY_HumanWound::GetHumanWounds();
-    for( PHY_HumanWound::CIT_HumanWoundMap itWound = wounds.begin(); itWound != wounds.end(); ++itWound )
-    {
-        if( archive.Section( itWound->second->GetName(), MIL_InputArchive::eNothing ) )
+
+    std::string strWounds;
+    xis >> optional() >> attribute( attributeName, strWounds );
+    std::stringstream stream( strWounds );
+    std::string wound;
+    while( std::getline( stream, wound, ',' ) )
+        if( const PHY_HumanWound* pWound = PHY_HumanWound::Find( wound ) )
         {
             bHasCapability = true;
-            container[ itWound->second->GetID() ] = true;                    
-            archive.EndSection();
+            container[ pWound->GetID() ] = true;
         }
-    }
     return bHasCapability;
 }
 
@@ -568,137 +607,138 @@ bool PHY_ComposanteTypePion::ReadWoundCapabilities( MIL_InputArchive& archive, T
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
 //$$$ A splitter
-void PHY_ComposanteTypePion::InitializeLogisticMedical( MIL_InputArchive& archive )
+void PHY_ComposanteTypePion::InitializeLogisticMedical( xml::xistream& xis )
 {
-    if( !archive.Section( "Sante", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> optional()
+            >> start( "health-functions" )
+                >> list( "caring", *this, &PHY_ComposanteTypePion::ReadCaring )
+                >> list( "collecting", *this, &PHY_ComposanteTypePion::ReadCollecting )
+                >> list( "relieving", *this, &PHY_ComposanteTypePion::ReadRelieving )
+            >> end();
+}
 
-    if( archive.Section( "Medecin", MIL_InputArchive::eNothing  ) )
-    {
-        bCanDiagnoseHumans_ = true;
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadRelieving
+// Created: ABL 2007-07-23
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadRelieving( xml::xistream& xis )
+{
+    ReadWoundCapabilities( xis, woundEvacuationCapabilities_, "wounded-transport" );
 
-        if( archive.Section( "Tri", MIL_InputArchive::eNothing  ) )
-        {
-            bCanSortHumans_ = true;
-            archive.EndSection(); // MedecinBlessures
-        }
-        if( archive.Section( "SoinNBC", MIL_InputArchive::eNothing  ) )
-        {
-            bCanHealContaminated_ = true;
-            archive.EndSection(); // MedecinNBC
-        }
-        if( archive.Section( "SoinReacMental", MIL_InputArchive::eNothing  ) )
-        {
-            bCanHealMentalDiseases_ = true;
-            archive.EndSection(); // MedecinReacMental
-        }
-        if( archive.Section( "SoinBlessures", MIL_InputArchive::eNothing  ) )
-        {
-            bCanHealWounds_ = ReadWoundCapabilities( archive, woundHealingCapabilities_ );
-            archive.EndSection(); // SoinBlessures
-        }       
-        archive.EndSection(); // Medecin
-    }
+    xis >> optional()
+            >> attribute( "nbc-transport", bCanEvacuateContaminated_ )
+        >> optional()
+            >> attribute( "reac-mental-transport", bCanEvacuateMentalDiseases_ )
+        >> attribute( "capacity", nAmbulanceEvacuationCapacity_ );
 
-    if( archive.Section( "AmbulanceRamassage", MIL_InputArchive::eNothing ) )
-    {
-        archive.Section( "TransportBlessures" );
-        ReadWoundCapabilities( archive, woundCollectionCapabilities_ );
-        archive.EndSection(); // TransportBlessures
+    tools::ReadTimeAttribute( xis, "man-loading-time", rNbrHumansLoadedForEvacuationPerTimeStep_ );
+    tools::ReadTimeAttribute( xis, "man-unloading-time", rNbrHumansUnloadedForEvacuationPerTimeStep_ );
 
-        if( archive.Section( "TransportNBC", MIL_InputArchive::eNothing  ) )
-        {
-            bCanCollectContaminated_ = true;
-            archive.EndSection(); // MedecinNBC
-        }
-        if( archive.Section( "TransportReacMental", MIL_InputArchive::eNothing  ) )
-        {
-            bCanCollectMentalDiseases_ = true;
-            archive.EndSection(); // MedecinReacMental
-        }
+    if( nAmbulanceEvacuationCapacity_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "relieving: capacity <= 0" );
+    if( rNbrHumansLoadedForEvacuationPerTimeStep_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "relieving: man-loading-time <= 0" );
+    if( rNbrHumansUnloadedForEvacuationPerTimeStep_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "relieving: man-unloading-time <= 0" );
 
-        archive.ReadField    ( "Capacite"                  , nAmbulanceCollectionCapacity_              , CheckValueGreater( 0  ) );
-        archive.ReadTimeField( "TempsChargementParHumain"  , rNbrHumansLoadedForCollectionPerTimeStep_  , CheckValueGreater( 0. ) );
-        archive.ReadTimeField( "TempsDechargementParHumain", rNbrHumansUnloadedForCollectionPerTimeStep_, CheckValueGreater( 0. ) );
+    rNbrHumansLoadedForEvacuationPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansLoadedForEvacuationPerTimeStep_   );
+    rNbrHumansUnloadedForEvacuationPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansUnloadedForEvacuationPerTimeStep_ );
+}
 
-        rNbrHumansLoadedForCollectionPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansLoadedForCollectionPerTimeStep_   );
-        rNbrHumansUnloadedForCollectionPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansUnloadedForCollectionPerTimeStep_ );
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadCollecting
+// Created: ABL 2007-07-23
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadCollecting( xml::xistream& xis )
+{
+    ReadWoundCapabilities( xis, woundCollectionCapabilities_, "wounded-transport" );
 
-        archive.EndSection(); // AmbulanceReleve
-    }
+    xis >> optional()
+            >> attribute( "nbc-transport", bCanCollectContaminated_ )
+        >> optional()
+            >> attribute( "reac-mental-transport", bCanCollectMentalDiseases_ )
+        >> attribute( "capacity", nAmbulanceCollectionCapacity_ );
 
-    if( archive.Section( "AmbulanceReleve", MIL_InputArchive::eNothing ) )
-    {
-        archive.Section( "TransportBlessures" );
-        ReadWoundCapabilities( archive, woundEvacuationCapabilities_ );
-        archive.EndSection(); // TransportBlessures
+    tools::ReadTimeAttribute( xis, "man-loading-time", rNbrHumansLoadedForCollectionPerTimeStep_ );
+    tools::ReadTimeAttribute( xis, "man-unloading-time", rNbrHumansUnloadedForCollectionPerTimeStep_ );
 
-        if( archive.Section( "TransportNBC", MIL_InputArchive::eNothing  ) )
-        {
-            bCanEvacuateContaminated_ = true;
-            archive.EndSection(); // MedecinNBC
-        }
-        if( archive.Section( "TransportReacMental", MIL_InputArchive::eNothing  ) )
-        {
-            bCanEvacuateMentalDiseases_ = true;
-            archive.EndSection(); // MedecinReacMental
-        }
+    if( nAmbulanceCollectionCapacity_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "collecting: capacity <= 0" );
+    if( rNbrHumansLoadedForCollectionPerTimeStep_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "collecting: man-loading-time <= 0" );
+    if( rNbrHumansUnloadedForCollectionPerTimeStep_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "collecting: man-unloading-time <= 0" );
 
-        archive.ReadField    ( "Capacite"                  , nAmbulanceEvacuationCapacity_              , CheckValueGreater( 0  ) );
-        archive.ReadTimeField( "TempsChargementParHumain"  , rNbrHumansLoadedForEvacuationPerTimeStep_  , CheckValueGreater( 0. ) );
-        archive.ReadTimeField( "TempsDechargementParHumain", rNbrHumansUnloadedForEvacuationPerTimeStep_, CheckValueGreater( 0. ) );
+    rNbrHumansLoadedForCollectionPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansLoadedForCollectionPerTimeStep_   );
+    rNbrHumansUnloadedForCollectionPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansUnloadedForCollectionPerTimeStep_ );
+}
 
-        rNbrHumansLoadedForEvacuationPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansLoadedForEvacuationPerTimeStep_   );
-        rNbrHumansUnloadedForEvacuationPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansUnloadedForEvacuationPerTimeStep_ );
-
-        archive.EndSection(); // AmbulanceRamassage
-    }
-
-    archive.EndSection(); // Sante
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadCaring
+// Created: ABL 2007-07-23
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadCaring( xml::xistream& xis )
+{
+    bCanDiagnoseHumans_ = true;
+    xis >> optional()
+            >> attribute( "sorting", bCanSortHumans_ )
+        >> optional()
+            >> attribute( "nbc", bCanHealContaminated_ )
+        >> optional()
+            >> attribute( "psychiatry", bCanHealMentalDiseases_ );
+    bCanHealWounds_ = ReadWoundCapabilities( xis, woundHealingCapabilities_, "caring" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::InitializeLogisticSupply
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::InitializeLogisticSupply( MIL_InputArchive& archive )
+void PHY_ComposanteTypePion::InitializeLogisticSupply( xml::xistream& xis )
 {
-    if( !archive.Section( "Ravitaillement", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> optional()
+            >> start( "supply-functions" )
+                >> list( "carrying", *this, PHY_ComposanteTypePion::ReadSupply )
+            >> end();
+}
 
-    if( archive.Section( "Transporteur", MIL_InputArchive::eNothing ) )
-    {
-        std::string strNature;
-        archive.ReadField( "NatureTransportee", strNature );
-        pStockTransporterNature_ = PHY_DotationNature::Find( strNature );
-        if( !pStockTransporterNature_ )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unkown dotation nature", archive.GetContext() );
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadSupply
+// Created: ABL 2007-07-23
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadSupply( xml::xistream& xis )
+{
+    std::string strNature;
+    xis >> attribute( "nature", strNature )
+        >> attribute( "mass", rStockTransporterWeightCapacity_ )
+        >> attribute( "volume", rStockTransporterVolumeCapacity_ );
 
-        archive.Section( "Capacite" );
-        archive.ReadField( "Masse" , rStockTransporterWeightCapacity_, CheckValueGreater( 0. ) );
-        archive.ReadField( "Volume", rStockTransporterVolumeCapacity_, CheckValueGreater( 0. ) );
-        archive.EndSection(); // Capacite
-
-        archive.EndSection(); // Transporteur
-    }
-
-    archive.EndSection(); // Ravitaillement
+    pStockTransporterNature_ = PHY_DotationNature::Find( strNature );
+    if( !pStockTransporterNature_ )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unkown dotation nature" ); // $$$$ ABL 2007-07-23: error context
+    if( rStockTransporterWeightCapacity_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "supply: mass <= 0" );
+    if( rStockTransporterVolumeCapacity_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "supply: volume <= 0" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::InitializeLogistic
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::InitializeLogistic( MIL_InputArchive& archive )
+void PHY_ComposanteTypePion::InitializeLogistic( xml::xistream& xis )
 {
-    if( !archive.Section( "FonctionsLogistiques", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> list( "logistic-functions", *this, &PHY_ComposanteTypePion::ReadLogistic );
+}
 
-    InitializeLogisticMaintenance( archive );
-    InitializeLogisticMedical    ( archive );
-    InitializeLogisticSupply     ( archive );
-
-    archive.EndSection(); // FonctionsLogistiques
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadLogistic
+// Created: ABL 2007-07-23
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadLogistic( xml::xistream& xis )
+{
+    InitializeLogisticMaintenance( xis );
+    InitializeLogisticMedical    ( xis );
+    InitializeLogisticSupply     ( xis );
 }
 
 

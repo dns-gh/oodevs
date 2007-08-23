@@ -64,12 +64,12 @@ private:
     void ReadObjectType( xml::xistream& xis );
     void ReadDotations( const std::string& dotations );
     void ReadDotation( xml::xistream& xis );
-    void ReadCategory( xml::xistream& xis, const std::string& name );
     void ReadEquipments( const std::string& equipments );
     void ReadEquipment( xml::xistream& xis );
     void ReadNBC( const std::string& nbc );
     void ReadNBCAgent( xml::xistream& xis );
     void ReadBreakdowns( const std::string& breakdowns );
+    void ReadBreakdownCategory( xml::xistream& xis );
     void ReadBreakdown( xml::xistream& xis );
     //@}
 };

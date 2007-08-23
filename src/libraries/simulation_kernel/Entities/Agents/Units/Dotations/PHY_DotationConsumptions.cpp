@@ -16,61 +16,41 @@
 #include "PHY_DotationType.h"
 #include "PHY_DotationConsumption.h"
 #include "PHY_DotationGroupContainer.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationConsumptions constructor
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-PHY_DotationConsumptions::PHY_DotationConsumptions( const std::string& strParentTagName, MIL_InputArchive& archive )
+PHY_DotationConsumptions::PHY_DotationConsumptions( const std::string& strParentTagName, xml::xistream& xis )
 {
-if( !archive.BeginList( strParentTagName, MIL_InputArchive::eNothing ) )
-        return;
-
-    while ( archive.NextListElement() )
-    {
-        archive.Section( "Dotation" );
-
-        std::string strDotationType;
-        archive.ReadAttribute( "nom", strDotationType );
-
-        const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( strDotationType );
-        if( !pDotationType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type", archive.GetContext() );
-       
-        ReadDotationCategories( archive, *pDotationType );
-    
-        archive.EndSection(); // Dotation
-    }
-    archive.EndList(); // Contenance
+    xis >> list( "dotation", *this, &PHY_DotationConsumptions::ReadDotation );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationConsumptions::ReadDotationCategories
-// Created: NLD 2004-09-30
+// Name: PHY_DotationConsumptions::ReadDotation
+// Created: ABL 2007-07-20
 // -----------------------------------------------------------------------------
-void PHY_DotationConsumptions::ReadDotationCategories( MIL_InputArchive& archive, const PHY_DotationType& dotationType )
+void PHY_DotationConsumptions::ReadDotation( xml::xistream& xis )
 {
-    archive.BeginList( "Categories" );
+    std::string category, name;
+    xis >> attribute( "category", category )
+        >> attribute( "name", name );
 
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Categorie" );
-        
-        std::string strCategoryName;
-        archive.ReadAttribute( "nom", strCategoryName );
+    const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( category );
+    if( !pDotationType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type " + category ); // $$$$ ABL 2007-07-20: error context
 
-        const PHY_DotationCategory* pDotationCategory = dotationType.FindDotationCategory( strCategoryName );
-        if ( !pDotationCategory )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation category", archive.GetContext() );
+    const PHY_DotationCategory* pDotationCategory = pDotationType->FindDotationCategory( name );
+    if ( !pDotationCategory )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation category" ); // $$$$ ABL 2007-07-20: error context
 
-        PHY_DotationConsumption*& pDotation = dotationConsumptions_[ pDotationCategory ];
-        if ( pDotation )        
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Dotation category already defined", archive.GetContext() );
-        pDotation = new PHY_DotationConsumption( *pDotationCategory, archive );
-
-        archive.EndSection(); // Categorie
-    }
-    archive.EndList(); // Categories    
+    PHY_DotationConsumption*& pDotation = dotationConsumptions_[ pDotationCategory ];
+    if ( pDotation )        
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Dotation category already defined" ); // $$$$ ABL 2007-07-20: error context
+    pDotation = new PHY_DotationConsumption( *pDotationCategory, xis );
 }
 
 // -----------------------------------------------------------------------------

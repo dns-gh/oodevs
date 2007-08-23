@@ -38,8 +38,8 @@ MIL_Lima::MIL_Lima( const ASN1T_MsgLimaCreationRequest& asn )
 // Name: MIL_Lima constructor
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-MIL_Lima::MIL_Lima( const MIL_Automate& automateBroadcasted, MIL_InputArchive& archive )
-    : MIL_TacticalLine_ABC( automateBroadcasted, archive )
+MIL_Lima::MIL_Lima( const MIL_Automate& automateBroadcasted, xml::xistream& xis )
+    : MIL_TacticalLine_ABC( automateBroadcasted, xis )
 {
     SendMsg< NET_ASN_MsgLimaCreation >();
 }
@@ -48,8 +48,8 @@ MIL_Lima::MIL_Lima( const MIL_Automate& automateBroadcasted, MIL_InputArchive& a
 // Name: MIL_Lima constructor
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-MIL_Lima::MIL_Lima( const MIL_Formation& formationBroadcasted, MIL_InputArchive& archive )
-    : MIL_TacticalLine_ABC( formationBroadcasted, archive )
+MIL_Lima::MIL_Lima( const MIL_Formation& formationBroadcasted, xml::xistream& xis )
+    : MIL_TacticalLine_ABC( formationBroadcasted, xis )
 {
     SendMsg< NET_ASN_MsgLimaCreation >();            
 }

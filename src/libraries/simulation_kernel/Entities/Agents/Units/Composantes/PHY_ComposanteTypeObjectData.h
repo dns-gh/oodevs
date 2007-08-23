@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_RealObject_ABC;
 class MIL_RealObjectType;
 class PHY_ConsumptionType;
@@ -25,7 +30,7 @@ class PHY_ConsumptionType;
 class PHY_ComposanteTypeObjectData
 {
 public:
-     PHY_ComposanteTypeObjectData( const MIL_RealObjectType& objectType, MIL_InputArchive& archive );
+     PHY_ComposanteTypeObjectData( const MIL_RealObjectType& objectType, xml::xistream& xis );
     ~PHY_ComposanteTypeObjectData();
 
     //! @name Accessors

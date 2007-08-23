@@ -18,16 +18,13 @@
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 
-#include "ADN_XmlInput_Helper.h"
-#include "ADN_Xml_Exception.h"
-
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 
 #include <sstream>
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 //-----------------------------------------------------------------------------
@@ -50,11 +47,10 @@ ADN_Units_Data::ComposanteInfos::ComposanteInfos()
     bMajor_.SetDataName( "la primauté" );
     bMajor_.SetParentNode( *this );
     bConveyor_.SetDataName( "hein ?" ); //XXX
-    bConveyor_.SetParentNode( *this );    
+    bConveyor_.SetParentNode( *this );
     nNbrHumanInCrew_.SetDataName( "Comprends pas ..." );
-    nNbrHumanInCrew_.SetParentNode( *this );    
+    nNbrHumanInCrew_.SetParentNode( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ComposanteInfos::GetNodeName
@@ -66,7 +62,6 @@ std::string ADN_Units_Data::ComposanteInfos::GetNodeName()
     return strResult + GetItemName();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ComposanteInfos::GetItemName
 // Created: AGN 2004-05-18
@@ -76,7 +71,6 @@ std::string ADN_Units_Data::ComposanteInfos::GetItemName()
     return ptrComposante_.GetData()->strName_.GetData();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ComposanteInfos::CreateCopy
 // Created: APE 2005-02-14
@@ -84,73 +78,56 @@ std::string ADN_Units_Data::ComposanteInfos::GetItemName()
 ADN_Units_Data::ComposanteInfos* ADN_Units_Data::ComposanteInfos::CreateCopy()
 {
     ComposanteInfos* pCopy = new ComposanteInfos();
-
     pCopy->ptrComposante_ = ptrComposante_.GetData();
     pCopy->bMajor_ = bMajor_.GetData();
     pCopy->bLoadable_ = bLoadable_.GetData();
     pCopy->bConveyor_ = bConveyor_.GetData();
     pCopy->nNbrHumanInCrew_ = nNbrHumanInCrew_.GetData();
     pCopy->nNb_ = nNb_.GetData();
-
     return pCopy;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ComposanteInfos::ReadArchive
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::ComposanteInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Units_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Equipement" );
-
     std::string strName;
-    std::string strMain;
-    std::string strProperty;
-
-    input.ReadAttribute( "nom", strName );
+    input >> xml::attribute( "type", strName )
+          >> xml::attribute( "count", nNb_ )
+          >> xml::optional() >> xml::attribute( "major", bMajor_ )
+          >> xml::optional() >> xml::attribute( "crew", nNbrHumanInCrew_ )
+          >> xml::optional() >> xml::attribute( "convoyer", bConveyor_ )
+          >> xml::optional() >> xml::attribute( "loadable", bLoadable_ );
     ADN_Composantes_Data::ComposanteInfos* pComposante = ADN_Workspace::GetWorkspace().GetComposantes().GetData().FindComposante( strName );
     if( pComposante == 0 )
-        input.ThrowError( tr( "Composante %1 does not exist." ).ascii() );
+        throw ADN_DataException( "ComposanteInfos", tr( "Composante %1 does not exist." ).arg( strName.c_str() ).ascii() );
     ptrComposante_ = pComposante;
-
-    input.ReadAttribute( "majeur", bMajor_, ADN_XmlInput_Helper::eNothing );
-    input.ReadAttribute( "embarquable", bLoadable_, ADN_XmlInput_Helper::eNothing );
-    input.ReadAttribute( "convoyeur", bConveyor_, ADN_XmlInput_Helper::eNothing );
-    input.ReadAttribute( "equipage", nNbrHumanInCrew_, ADN_XmlInput_Helper::eNothing );
-
-    int nNbr;
-    input.Read( nNbr );
-    nNb_ = nNbr;
-
-    input.EndSection(); // Equipement
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ComposanteInfos::WriteArchive
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::ComposanteInfos::WriteArchive( MT_OutputArchive_ABC& output, bool bIsAutonomous )
+void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output, bool bIsAutonomous )
 {
-    output.Section( "Equipement" );
-    output.WriteAttribute( "nom", ptrComposante_.GetData()->strName_.GetData() );
-
-    if( bMajor_.GetData() )
-        output.WriteAttribute( "majeur", "true" );
-    if( bLoadable_.GetData() )
-        output.WriteAttribute( "embarquable", "true" );
-    if( bConveyor_.GetData() )
-        output.WriteAttribute( "convoyeur", "true" );
-    
-    output.WriteAttribute( "equipage", nNbrHumanInCrew_.GetData() );
     if( !bIsAutonomous && nNbrHumanInCrew_.GetData() == 0 )
         throw ADN_DataException( "Mauvaises données dans les catégories",
             "Il existe un pion dont un equipement a un équipage vide." );
 
-    output << nNb_.GetData();
+    output << xml::start( "equipment" )
+            << xml::attribute( "type", ptrComposante_.GetData()->strName_ )
+            << xml::attribute( "count", nNb_ )
+            << xml::attribute( "crew", nNbrHumanInCrew_ );
 
-    output.EndSection(); // Equipement
+    if( bMajor_.GetData() )
+        output << xml::attribute( "major", bMajor_ );
+    if( bConveyor_.GetData() )
+        output << xml::attribute( "convoyer", bConveyor_ );
+    if( bLoadable_.GetData() )
+        output << xml::attribute( "loadable", bLoadable_ );
+    output << xml::end();
 }
 
 // =============================================================================
@@ -179,7 +156,7 @@ std::string ADN_Units_Data::StockLogThresholdInfos::GetNodeName()
 {
     return std::string();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_Data::StockLogThresholdInfos::GetItemName
 // Created: SBO 2006-01-10
@@ -193,29 +170,28 @@ std::string ADN_Units_Data::StockLogThresholdInfos::GetItemName()
 // Name: ADN_Units_Data::StockLogThresholdInfos::ReadArchive
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::StockLogThresholdInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Units_Data::StockLogThresholdInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "SeuilLogistique" );
     std::string strCategory;
-    input.ReadAttribute( "categorie", strCategory );
+    input >> xml::attribute( "category", strCategory )
+          >> xml::attribute( "threshold", rLogThreshold_ );
+
     E_StockCategory eCategory = ADN_Tr::ConvertToStockCategory( strCategory );
     if( eCategory == (E_StockCategory)-1 )
-        input.ThrowError( MT_FormatString( "La category de stock '%s' est invalide", strCategory.c_str() ) );
+        throw ADN_DataException( "StockLogThresholdInfos", "La category de stock '" + strCategory + "' est invalide" );
     eCategory_ = eCategory;
-    input.ReadAttribute( "seuil", rLogThreshold_ );
-    input.EndSection(); // SeuilLogistique
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_Data::StockLogThresholdInfos::WriteArchive
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::StockLogThresholdInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Units_Data::StockLogThresholdInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "SeuilLogistique" );
-    output.WriteAttribute( "categorie", ADN_Tr::ConvertFromStockCategory( eCategory_.GetData() ) );
-    output.WriteAttribute( "seuil"    , rLogThreshold_.GetData() );
-    output.EndSection(); // SeuilLogistique
+    output << xml::start( "stock" )
+            << xml::attribute( "category", ADN_Tr::ConvertFromStockCategory( eCategory_.GetData() ) )
+            << xml::attribute( "threshold", rLogThreshold_ )
+           << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -252,7 +228,7 @@ std::string ADN_Units_Data::StockInfos::GetNodeName()
 {
     return std::string();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_Data::StockInfos::GetItemName
 // Created: SBO 2006-01-10
@@ -263,38 +239,37 @@ std::string ADN_Units_Data::StockInfos::GetItemName()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::StockInfos::ReadStock
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::StockInfos::ReadStock( xml::xistream& input )
+{
+    std::auto_ptr< StockLogThresholdInfos > spNew( new StockLogThresholdInfos() );
+    spNew->ReadArchive( input );
+    vLogThresholds_.AddItem( spNew.release() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Units_Data::StockInfos::ReadArchive
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::StockInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Units_Data::StockInfos::ReadArchive( xml::xistream& input )
 {
-    if( input.BeginList( "SeuilsLogistiques", ADN_XmlInput_Helper::eNothing ) )
-    {
-        while( input.NextListElement() )
-        {
-            std::auto_ptr< StockLogThresholdInfos > spNew( new StockLogThresholdInfos() );
-            spNew->ReadArchive( input );
-            vLogThresholds_.AddItem( spNew.release() );
-        }
-        input.EndList(); // SeuilsLogistiques
-    }
+    input >> xml::optional() >> xml::start( "stocks" )
+            >> xml::list( "stock", *this, &ADN_Units_Data::StockInfos::ReadStock )
+          >> xml::end();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_Data::StockInfos::WriteArchive
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::StockInfos::WriteArchive( const std::string& strName, MT_OutputArchive_ABC& output )
+void ADN_Units_Data::StockInfos::WriteArchive( const std::string& strName, xml::xostream& output )
 {
-    output.Section( strName );
-    if( vLogThresholds_.size() != 0 )
-    {
-        output.Section( "SeuilsLogistiques" );
-        for( IT_StockLogThresholdInfos_Vector it = vLogThresholds_.begin(); it != vLogThresholds_.end(); ++it )
-            (*it)->WriteArchive( output );
-        output.EndSection(); // SeuilsLogistiques
-    }
-    output.EndSection(); // strName
+    output << xml::start( strName );
+    for( IT_StockLogThresholdInfos_Vector it = vLogThresholds_.begin(); it != vLogThresholds_.end(); ++it )
+        (*it)->WriteArchive( output );
+    output << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -323,7 +298,6 @@ ADN_Units_Data::PointInfos::PointInfos()
     nDistance_.SetParentNode( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PointInfos::GetNodeName
 // Created: AGN 2004-05-14
@@ -334,7 +308,6 @@ std::string ADN_Units_Data::PointInfos::GetNodeName()
     return strResult + ADN_Tr::ConvertFromKeyPoint( nTypeTerrain_, ENT_Tr_ABC::eToTr );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PointInfos::GetItemName
 // Created: AGN 2004-05-18
@@ -343,7 +316,6 @@ std::string ADN_Units_Data::PointInfos::GetItemName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PointInfos::CreateCopy
@@ -357,42 +329,32 @@ ADN_Units_Data::PointInfos* ADN_Units_Data::PointInfos::CreateCopy()
     return pCopy;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PointInfos::ReadArchive
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::PointInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Units_Data::PointInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Point" );
-
     std::string strType;
-    input.ReadAttribute( "type", strType );
-
+    input >> xml::attribute( "type", strType )
+          >> xml::attribute( "value", nDistance_ );
     nTypeTerrain_ = ADN_Tr::ConvertToKeyPoint( strType );
-
-    int nDistance;
-    input.Read( nDistance );
-    nDistance_ = nDistance;
-
-    input.EndSection(); // Point
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PointInfos::WriteArchive
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::PointInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Units_Data::PointInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Point" );
-    output.WriteAttribute( "type", ADN_Tr::ConvertFromKeyPoint( nTypeTerrain_ ) );
-    output << nDistance_.GetData();
-    output.EndSection(); // Point
+    output << xml::start( "distance-before-point" )
+            << xml::attribute( "type", ADN_Tr::ConvertFromKeyPoint( nTypeTerrain_ ) )
+            << xml::attribute( "value", nDistance_ )
+          << xml::end();
 }
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 //-----------------------------------------------------------------------------
@@ -407,7 +369,6 @@ ADN_Units_Data::PostureInfos::PostureInfos(const E_UnitPosture& nPosture)
     timeToActivate_.SetDataName( "le délai de mise en posture" );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PostureInfos::GetNodeName
 
@@ -418,7 +379,6 @@ std::string ADN_Units_Data::PostureInfos::GetNodeName()
     return ENT_Tr::ConvertFromUnitPosture( nPosture_, ENT_Tr_ABC::eToTr );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PostureInfos::GetItemName
 // Created: AGN 2004-05-18
@@ -428,37 +388,29 @@ std::string ADN_Units_Data::PostureInfos::GetItemName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PostureInfos::ReadArchive
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::PostureInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Units_Data::PostureInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( ADN_Tools::ComputePostureScriptName( nPosture_ ) );
-
-    std::string strTmp;
-    input.Read( strTmp );
-    timeToActivate_ = strTmp;
-
-    input.EndSection();
+    input >> xml::attribute( "setup-time", timeToActivate_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PostureInfos::WriteArchive
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::PostureInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Units_Data::PostureInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( ADN_Tools::ComputePostureScriptName( nPosture_ ) );
-    output << timeToActivate_.GetData();
-    output.EndSection();
+    output << xml::start( "posture" )
+            << xml::attribute( "name", ADN_Tools::ComputePostureScriptName( nPosture_ ) )
+            << xml::attribute( "setup-time", timeToActivate_ )
+           << xml::end();
 }
 
-
 // =============================================================================
-// 
+//
 // =============================================================================
 
 //-----------------------------------------------------------------------------
@@ -531,7 +483,6 @@ ADN_Units_Data::UnitInfos::UnitInfos()
         vPostures_.AddItem( new PostureInfos((E_UnitPosture)i) );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Units_Data::UnitInfos
 // Created: JDY 03-07-28
@@ -543,7 +494,6 @@ ADN_Units_Data::UnitInfos::~UnitInfos()
     vPointInfos_.Reset();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_Data::GetNodeName
 // Created: AGN 2004-05-14
@@ -554,7 +504,6 @@ std::string ADN_Units_Data::UnitInfos::GetNodeName()
     return strResult + strName_.GetData();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_Data::GetItemName
 // Created: AGN 2004-05-18
@@ -563,7 +512,6 @@ std::string ADN_Units_Data::UnitInfos::GetItemName()
 {
     return strName_.GetData();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_Data::CreateCopy
@@ -612,252 +560,223 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     return pCopy;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::UnitInfos::ReadEquipment
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::UnitInfos::ReadEquipment( xml::xistream& input )
+{
+    std::auto_ptr<ComposanteInfos> spNew( new ComposanteInfos() );
+    spNew->ReadArchive( input );
+    vComposantes_.AddItem( spNew.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::UnitInfos::ReadCrew
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::UnitInfos::ReadCrew( xml::xistream& input )
+{
+    std::string type;
+    input >> xml::attribute( "type", type );
+    if( type == "Officier" )
+        input >> xml::attribute( "count", nNbOfficer_ );
+    else if( type == "SousOfficier" )
+        input >> xml::attribute( "count", nNbNCOfficer_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::UnitInfos::ReadPosture
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::UnitInfos::ReadPosture( xml::xistream& input )
+{
+    std::string posture = xml::attribute< std::string >( input, "name" );
+    IT_PostureInfos_Vector itPosture = std::find_if( vPostures_.begin(), vPostures_.end(), PostureInfos::Cmp( posture ) );
+    if( itPosture != vPostures_.end() )
+        (*itPosture)->ReadArchive( input );
+    else
+        throw ADN_DataException( "UnitInfos", "Unknown posture " + posture );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::UnitInfos::ReadPointDistance
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::UnitInfos::ReadPointDistance( xml::xistream& input )
+{
+    std::auto_ptr<PointInfos> spNew( new PointInfos() );
+    spNew->ReadArchive( input );
+    vPointInfos_.AddItem( spNew.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: UnitInfos::ReadArchive
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::UnitInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Unite" );
+    std::string strType, strModel;
+    input >> xml::attribute( "name", strName_ )
+        >> xml::attribute( "type", strType )
+        >> xml::attribute( "decisional-model", strModel );
 
-    input.ReadAttribute( "nom", strName_ );
-
-    std::string strType;
-    input.ReadAttribute( "type", strType );
     eTypeId_ = ADN_Tr::ConvertToAgentTypePion( strType );
     if( eTypeId_ == (E_AgentTypePion)-1 )
-        input.ThrowError( MT_FormatString( "Le type d'unité '%s' est invalide", strType.c_str() ) );
-
-    std::string strModel;
-    input.ReadField( "ModeleDecisionnel", strModel );
+        throw ADN_DataException( "UnitInfos", "Le type d'unité '" + strType + "' est invalide" );
     ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindUnitModel( strModel );
     if( !pModel )
-        throw ADN_DataException( "Donnée invalide", MT_FormatString( "Modele '%s' inconnu - réferencé par le pion '%s'", strModel.c_str(), strName_.GetData().c_str() ), "" );
+        throw ADN_DataException( "Donnée invalide", "Modele '" + strModel + "' inconnu - réferencé par le pion '" + strName_.GetData() + "'" );
     ptrModel_ = pModel;
 
-    input.Section( "Nature" );
-    std::string strTmp;
+    std::string level, atlas;
+    input >> xml::start( "nature" )
+            >> xml::attribute( "level", level )
+            >> xml::attribute( "atlas-nature", atlas )
+            >> xml::attribute( "nature", strNature_ )
+          >> xml::end();
 
-    // Niveau
-    input.Section( "Niveau" );
-    input.ReadAttribute( "type", strTmp );
-
-    E_NatureLevel eNatureLevelType = ENT_Tr::ConvertToNatureLevel( strTmp );
+    E_NatureLevel eNatureLevelType = ENT_Tr::ConvertToNatureLevel( level );
     if( eNatureLevelType == (E_NatureLevel)-1 )
-        input.ThrowError( MT_FormatString( "Le niveau hiéarchique '%s' est invalide.", strTmp.c_str() ) );
+        throw ADN_DataException( "UnitInfos", "Le niveau hiéarchique '" + level + "' est invalide." );
     eNatureLevel_=eNatureLevelType;
 
-    input.EndSection(); // Niveau
-
-    input.Section( "QualificatifAtlas" );
-    input.ReadAttribute( "type", strTmp );
-
-    E_NatureAtlasType eNatureAtlasType = ADN_Tr::ConvertToNatureAtlasType( strTmp );
+    E_NatureAtlasType eNatureAtlasType = ADN_Tr::ConvertToNatureAtlasType( atlas );
     if( eNatureAtlasType == (E_NatureAtlasType)-1 )
-        input.ThrowError( MT_FormatString( "Le qualificatif ATLAS '%s' est invalide", strTmp.c_str() ) );
+        throw ADN_DataException( "UnitInfos", "Le qualificatif ATLAS '" + atlas + "' est invalide" );
     eNatureAtlas_=eNatureAtlasType;
-    input.EndSection(); // QualificatifAtlas
 
-    input.Section( "Nature" );
-    input.ReadAttribute( "type", strTmp );
-    strNature_ = strTmp;
-    input.EndSection(); // Nature
-        
-    input.EndSection(); // Nature
-
-    input.BeginList( "Equipements" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<ComposanteInfos> spNew( new ComposanteInfos() );
-        spNew->ReadArchive( input );
-        vComposantes_.AddItem( spNew.release() );
-    }
-    input.EndList(); // Equipements
-
-    if( input.Section( "RepartitionDuCommandement", ADN_XmlInput_Helper::eNothing ) )
-    {
-        input.ReadField( "Officier", nNbOfficer_, ADN_XmlInput_Helper::eNothing );
-        input.ReadField( "SousOfficier", nNbNCOfficer_, ADN_XmlInput_Helper::eNothing );
-        input.EndSection(); // RepartitionDuCommandement
-    }
-
-    bTC1_ = contenancesTC1_.ReadArchive( "ContenanceTC1", input, true );
-    // $$$$ SBO 2006-01-03: Hack to reset TC1 normalized consumptions...
+    input >> xml::start( "equipments" )
+            >> xml::list( "equipment", *this, &ADN_Units_Data::UnitInfos::ReadEquipment )
+          >> xml::end()
+          >> xml::start( "crew-ranks" )
+            >> xml::list( "crew-rank", *this, &ADN_Units_Data::UnitInfos::ReadCrew )
+          >> xml::end()
+          >> xml::optional() >> xml::start( "logistics" )
+            >> xml::list( "category", contenancesTC1_, &ADN_Composantes_Data::DotationInfos::ReadCategory )
+          >> xml::end();
+    bTC1_ = ! contenancesTC1_.categories_.empty();
     for( ADN_Composantes_Data::T_CategoryInfos_Vector::iterator it = contenancesTC1_.categories_.begin(); it != contenancesTC1_.categories_.end(); ++it )
         (*it)->rNormalizedConsumption_ = 0.;
 
-    bStock_ = input.Section( "Stocks", ADN_XmlInput_Helper::eNothing );
-    if( bStock_.GetData() )
-    {
-        stocks_.ReadArchive( input );
-        input.EndSection(); // Stocks
-    }
+    stocks_.ReadArchive( input );
 
-    input.Section( "TempsMiseEnPosture" );
-    for( IT_PostureInfos_Vector itPosture = vPostures_.begin(); itPosture != vPostures_.end(); ++itPosture )
-    {
-        (*itPosture)->ReadArchive( input );
-    }
-    input.EndSection(); // TempsMiseEnPosture
+    input >> xml::start( "postures" )
+            >> xml::list( "posture", *this, &ADN_Units_Data::UnitInfos::ReadPosture )
+          >> xml::end();
 
-    if( input.Section( "Installation", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bInstallationDelay_ = true;
-        input.ReadField( "DelaiInstallation", installationDelay_ );
-        input.ReadField( "DelaiDesinstallation", uninstallationDelay_ );
-        input.EndSection();
-    }
+    input >> xml::optional() 
+            >> xml::start( "setup" )
+                >> xml::attribute( "installation-time", installationDelay_ )
+                >> xml::attribute( "uninstallation-time", uninstallationDelay_ )
+            >> xml::end();
+    bInstallationDelay_ = installationDelay_ != "0s" || uninstallationDelay_ != "0s";
+    input >> xml::start( "nbc" )
+            >> xml::attribute( "decontamination-delay", decontaminationDelay_ )
+          >> xml::end()
+          >> xml::optional() >> xml::start( "distance-before-points" )
+            >> xml::list( "distance-before-point", *this, &ADN_Units_Data::UnitInfos::ReadPointDistance )
+          >> xml::end()
+          >> xml::optional() >> xml::start( "drill-blow" )
+            >> xml::attribute( "width", rProbeWidth_ )
+            >> xml::attribute( "length", rProbeLength_ )
+          >> xml::end()
+          >> xml::optional() >> xml::start( "force-ratio" )
+            >> xml::attribute( "feedback-time", strengthRatioFeedbackTime_ )
+          >> xml::end();
+    bProbe_ = rProbeWidth_ != 0. || rProbeLength_ != 0.;
+    bStrengthRatioFeedbackTime_ = strengthRatioFeedbackTime_ != "0s";
 
-    input.ReadField( "DelaiDecontaminationNBC", decontaminationDelay_ );
-
-
-    if( input.BeginList( "DistancesAvantPoints", ADN_XmlInput_Helper::eNothing ) )
-    {
-        while( input.NextListElement() )
-        {
-            std::auto_ptr<PointInfos> spNew( new PointInfos() );
-            spNew->ReadArchive( input );
-            vPointInfos_.AddItem( spNew.release() );
-        }
-        input.EndList(); // DistancesAvantPoints
-    }
-
-    if( input.Section( "CoupDeSonde", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bProbe_ = true;
-        input.ReadField( "Largeur", rProbeWidth_ );
-        input.ReadField( "Longueur", rProbeLength_ );
-        input.EndSection();
-    }
-
-    if( input.Section( "RapportDeForce", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bStrengthRatioFeedbackTime_ = true;
-        input.ReadField( "TempsDeRemontee", strengthRatioFeedbackTime_ );
-        input.EndSection(); // RapportDeForce
-    }
-
-    if( input.Section( "PeutVoler", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bCanFly_ = true;
-        input.EndSection();
-    }
-
-    if( input.Section( "EstAutonome", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bIsAutonomous_ = true;
-        input.EndSection();
-    }
-
-    input.EndSection(); // Unite
+    input >> xml::optional() >> xml::attribute( "can-fly", bCanFly_ );
+    input >> xml::optional() >> xml::attribute( "is-autonomous", bIsAutonomous_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: UnitInfos::WriteArchive
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::UnitInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Unite" );
+    output << xml::start( "unit" )
+            << xml::attribute( "name", strName_ )
+            << xml::attribute( "type", ADN_Tr::ConvertFromAgentTypePion( eTypeId_.GetData() ) )
+            << xml::attribute( "decisional-model", ptrModel_.GetData()->strName_ )
+            << xml::attribute( "id", nMosId_ );
 
-    output.WriteAttribute( "nom", strName_.GetData() );
-    output.WriteAttribute( "type", ADN_Tr::ConvertFromAgentTypePion( eTypeId_.GetData() ) );
-    output.WriteField( "MosID", nMosId_.GetData() );
-    output.WriteField( "ModeleDecisionnel", ptrModel_.GetData()->strName_.GetData() );
+    output << xml::start( "nature" )
+            << xml::attribute( "level", ENT_Tr::ConvertFromNatureLevel( eNatureLevel_.GetData() ) )
+            << xml::attribute( "atlas-nature", ADN_Tr::ConvertFromNatureAtlasType( eNatureAtlas_.GetData() ) )
+            << xml::attribute( "nature", strNature_ )
+          << xml::end();
 
-    // nature
-    output.Section("Nature");
-
-    // Niveau
-    output.Section( "Niveau" );
-    output.WriteAttribute( "type", ENT_Tr::ConvertFromNatureLevel(eNatureLevel_.GetData()) );
-    output.EndSection(); // Niveau
-
-    // atlas
-    output.Section( "QualificatifAtlas" );
-    output.WriteAttribute( "type", ADN_Tr::ConvertFromNatureAtlasType( eNatureAtlas_.GetData() ) );
-    output.EndSection(); // QualificatifAtlas
-
-    output.Section( "Nature" );
-    output.WriteAttribute( "type", strNature_.GetData() );
-    output.EndSection(); // CapaciteMission
-
-    output.EndSection(); //Nature
-
-    output.BeginList( "Equipements", vComposantes_.size() );
+    output << xml::start( "equipments" );
     for( IT_ComposanteInfos_Vector itComposante = vComposantes_.begin(); itComposante != vComposantes_.end(); ++itComposante )
-    {
         (*itComposante)->WriteArchive( output, bIsAutonomous_.GetData() );
-    }
-    output.EndList(); // Equipements
+    output << xml::end();
 
-    output.Section( "RepartitionDuCommandement" );
-    output.WriteField( "Officier", nNbOfficer_.GetData() );
-    output.WriteField( "SousOfficier", nNbNCOfficer_.GetData() );
-    output.EndSection(); // RepartitionDuCommandement
+    output << xml::start( "crew-ranks" )
+            << xml::start( "crew-rank" ) 
+             << xml::attribute( "type", "Officier" )
+             << xml::attribute( "count", nNbOfficer_ )
+            << xml::end()
+            << xml::start( "crew-rank" ) 
+             << xml::attribute( "type", "SousOfficier" )
+             << xml::attribute( "count", nNbNCOfficer_ )
+            << xml::end()
+           << xml::end();
 
     if( bTC1_.GetData() )
-        contenancesTC1_.WriteArchive( "ContenanceTC1", output );
-    if( bStock_.GetData() )
-        stocks_.WriteArchive( "Stocks", output );
-
-    output.Section( "TempsMiseEnPosture" );
-    for( IT_PostureInfos_Vector itPosture = vPostures_.begin(); itPosture != vPostures_.end(); ++itPosture )
     {
-        (*itPosture)->WriteArchive( output );
+        output << xml::start( "logistics" );
+        contenancesTC1_.WriteArchive( output );
+        output << xml::end();
     }
-    output.EndSection(); // TempsMiseEnPosture
+
+    if( bStock_.GetData() )
+        stocks_.WriteArchive( "stocks", output );
+
+    output << xml::start( "postures" );
+    for( IT_PostureInfos_Vector itPosture = vPostures_.begin(); itPosture != vPostures_.end(); ++itPosture )
+        (*itPosture)->WriteArchive( output );
+    output << xml::end();
 
     if( bInstallationDelay_.GetData() )
-    {
-        output.Section( "Installation" );
-        output.WriteField( "DelaiInstallation", installationDelay_.GetData() );
-        output.WriteField( "DelaiDesinstallation", uninstallationDelay_.GetData() );
-        output.EndSection(); // Installation
-    }
+        output << xml::start( "setup" )
+                << xml::attribute( "installation-time", installationDelay_ )
+                << xml::attribute( "uninstallation-time", uninstallationDelay_ )
+               << xml::end();
 
-    output.WriteField( "DelaiDecontaminationNBC", decontaminationDelay_.GetData() );
+    output << xml::start( "nbc" ) 
+            << xml::attribute(  "decontamination-delay", decontaminationDelay_ )
+           << xml::end();
 
     if( ! vPointInfos_.empty() )
     {
-        output.BeginList( "DistancesAvantPoints", vPointInfos_.size() );
+        output << xml::start( "distance-before-points" );
         for( IT_PointInfos_Vector itPoint = vPointInfos_.begin(); itPoint != vPointInfos_.end(); ++itPoint )
             (*itPoint)->WriteArchive( output );
-        output.EndList(); // DistancesAvantPoints
+        output << xml::end();
     }
 
     if( bProbe_.GetData() )
-    {
-        output.Section( "CoupDeSonde" );
-        output.WriteField( "Largeur", rProbeWidth_.GetData() );
-        output.WriteField( "Longueur", rProbeLength_.GetData() );
-        output.EndSection(); // CoupDeSonde
-    }
+        output << xml::start( "drill-blow" )
+                << xml::attribute( "width", rProbeWidth_ )
+                << xml::attribute( "length", rProbeLength_ )
+               << xml::end();
 
     if( bStrengthRatioFeedbackTime_.GetData() )
-    {
-        output.Section( "RapportDeForce" );
-        output.WriteField( "TempsDeRemontee", strengthRatioFeedbackTime_.GetData() );
-        output.EndSection(); // RapportDeForce
-    }
+        output << xml::start( "force-ratio" )
+                << xml::attribute( "feedback-time", strengthRatioFeedbackTime_ )
+               << xml::end();
 
     if( bCanFly_.GetData() )
-    {
-        output.Section( "PeutVoler" );
-        output.EndSection();
-    }
+        output << xml::attribute( "can-fly", bCanFly_ );
 
     if( bIsAutonomous_.GetData() )
-    {
-        output.Section( "EstAutonome" );
-        output.EndSection();
-    }
+        output << xml::attribute( "is-autonomous", bIsAutonomous_ );
 
-    output.EndSection(); // Unite
+    output << xml::end();
 }
-
 
 // =============================================================================
 //
@@ -873,7 +792,6 @@ ADN_Units_Data::ADN_Units_Data()
 {
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Units_Data destructor
 // Created: JDY 03-07-24
@@ -882,7 +800,6 @@ ADN_Units_Data::~ADN_Units_Data()
 {
     Reset();
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Units_Data::Reset
@@ -894,7 +811,6 @@ void ADN_Units_Data::Reset()
     vUnits_.Reset();
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Munitions_Data::FilesNeeded
 // Created: JDY 03-09-08
@@ -903,7 +819,6 @@ void ADN_Units_Data::FilesNeeded(T_StringList& files) const
 {
     files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUnits_.GetData());
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_Data::GetNextId
@@ -914,43 +829,40 @@ int ADN_Units_Data::GetNextId()
     return nNextId_++;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::ReadUnit
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::ReadUnit( xml::xistream& input )
+{
+    std::auto_ptr<UnitInfos> spNew( new UnitInfos() );
+    spNew->ReadArchive( input );
+    vUnits_.AddItem( spNew.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_Data::ReadArchive
 // Created: APE 2004-12-01
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Units_Data::ReadArchive( xml::xistream& input )
 {
-    input.BeginList( "Pions" );
-
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<UnitInfos> spNew( new UnitInfos() );
-        spNew->ReadArchive( input );
-        vUnits_.AddItem( spNew.release() );
-    }
-    vUnits_.AddItem( 0 );  // Signals the end of the vector, allows certain parts of the gui to update.
-
-    input.EndList(); // Pions
+    input >> xml::start( "units" )
+            >> xml::list( "unit", *this, &ADN_Units_Data::ReadUnit )
+          >> xml::end();
+    vUnits_.AddItem( 0 );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_Data::WriteArchive
 // Created: APE 2004-12-01
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Units_Data::WriteArchive( xml::xostream& output )
 {
-    output.BeginList( "Pions", vUnits_.size() );
-
+    output << xml::start( "units" );
     for( IT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )
-    {
         (*it)->WriteArchive( output );
-    }
-
-    output.EndList(); // Pions
+    output << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_Data::GetUnitsThatUse

@@ -55,13 +55,11 @@ private:
 private:
     //! @name 
     //@{
-    void InitializePopulationFactors   ( xml::xistream& xis );
     void InitializeDistances           ( xml::xistream& xis );
-    void InitializePostureSourceFactors( xml::xistream& xis );
-    void InitializeWeatherFactors      ( xml::xistream& xis );
-    void InitializeLightingFactors     ( xml::xistream& xis );
     void InitializeEnvironnementFactors( xml::xistream& xis );
+    void ReadEnvironnementFactor       ( xml::xistream& xis );
     void InitializeAngle               ( xml::xistream& xis );
+    void ReadDistance                  ( xml::xistream& xis );
 
     float GetPostureSourceFactor    ( const Agent_ABC& agent ) const;
     float ComputeEnvironementFactor ( bool inForest, bool inTown, bool inGround ) const;

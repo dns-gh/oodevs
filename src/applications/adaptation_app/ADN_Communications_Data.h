@@ -22,7 +22,7 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
 
-class ADN_XmlInput_Helper;
+class xml::xistream;
 
 
 // =============================================================================
@@ -49,8 +49,8 @@ public:
     //@}
 
 private:
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void WriteArchive( MT_OutputArchive_ABC& output );
+    void ReadArchive( xml::xistream& input );
+    void WriteArchive( xml::xostream& output );
 
 public:
     ADN_Type_Double rSpeedModifier_;

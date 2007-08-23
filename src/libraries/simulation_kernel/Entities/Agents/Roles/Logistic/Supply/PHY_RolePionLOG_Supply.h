@@ -13,8 +13,13 @@
 #define __PHY_RolePionLOG_Supply_h_
 
 #include "MIL.h"
-
 #include "PHY_RolePion_Supply.h"
+
+namespace xml
+{
+    class xistream;
+    class xostream;
+}
 
 class MIL_AgentPionLOG_ABC;
 class PHY_DotationStockContainer;
@@ -36,12 +41,12 @@ public:
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
-    virtual void WriteODB( MT_XXmlOutputArchive& archive ) const;
+    virtual void WriteODB( xml::xostream& xos ) const;
     //@}
     
     //! @name Init
     //@{
-    virtual void ReadOverloading( MIL_InputArchive& archive );
+    virtual void ReadOverloading( xml::xistream& xis );
     //@}
 
     //! @name Accessors

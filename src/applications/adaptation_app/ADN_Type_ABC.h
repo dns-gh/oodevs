@@ -16,7 +16,6 @@
 #include "ADN_DataTreeNode_ABC.h"
 #include <iostream>
 
-
 //*****************************************************************************
 // Created: JDY 03-07-02
 //*****************************************************************************
@@ -91,16 +90,6 @@ private:
     std::string strDataName_;
     T val_;
 };
-
-
-template< typename T >
-MT_InputStream_ABC& operator>>( MT_InputStream_ABC& os, ADN_Type_ABC<T>& value )
-{
-    T tmp;
-    os >> tmp;
-    value = tmp;
-    return os;
-}
 
 template< typename T >
 std::ostream& operator<<( std::ostream& os, ADN_Type_ABC<T>& value )

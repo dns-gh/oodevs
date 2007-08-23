@@ -14,6 +14,12 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xostream;
+    class xistream;
+}
+
 class PHY_DotationCategory;
 class PHY_Dotation;
 class PHY_DotationType;
@@ -50,12 +56,12 @@ public:
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
 
-    void WriteODB( MT_XXmlOutputArchive& archive ) const;
+    void WriteODB( xml::xostream& xos ) const;
     //@}
     
     //! @name Init
     //@{
-    void ReadValues( MIL_InputArchive& archive, const PHY_DotationCategory& category ); //$$$ A VIRER
+    void ReadValues( xml::xistream& xis, const PHY_DotationCategory& category ); //$$$ A VIRER
     //@}
 
     //! @name Operations

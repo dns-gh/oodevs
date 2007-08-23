@@ -15,13 +15,16 @@
 #include "Decision/Functions/DEC_KnowledgeObjectFunctions.h"
 #include "Decision/Functions/DEC_AgentFunctions.h"
 #include "Decision/DEC_Tools.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionNBC constructor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AgentTypePionNBC::MIL_AgentTypePionNBC( const std::string& strName, MIL_InputArchive& archive )
-    : MIL_AgentTypePion( strName, archive )
+MIL_AgentTypePionNBC::MIL_AgentTypePionNBC( const std::string& strName, xml::xistream& xis )
+    : MIL_AgentTypePion( strName, xis )
 {
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::DecontaminateZone, "DEC_DecontaminerZone"     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions          ::SelfDecontaminate, "DEC_Agent_SeDecontaminer" );

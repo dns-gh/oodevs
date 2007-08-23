@@ -13,9 +13,7 @@
 #define __PHY_RolePion_Composantes_h_
 
 #include "MIL.h"
-
 #include "PHY_RoleInterface_Composantes.h"
-
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 
 class NET_ASN_MsgUnitAttributes;
@@ -34,6 +32,12 @@ class PHY_FireDamages_Agent;
 class PHY_MaintenanceComposanteState;
 class PHY_MedicalHumanState;
 class HLA_UpdateFunctor;
+
+namespace xml
+{
+    class xostream;
+    class xistream;
+}
 
 // =============================================================================
 // @class  PHY_RolePion_Composantes
@@ -66,12 +70,12 @@ public:
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
-    void WriteODB( MT_XXmlOutputArchive& archive ) const;
+    void WriteODB( xml::xostream& xos ) const;
     //@}
 
     //! @name Init
     //@{
-    void ReadOverloading( MIL_InputArchive& archive );
+    void ReadOverloading( xml::xistream& xis );
     //@}
 
     //! @name Operations 
@@ -270,8 +274,8 @@ private:
     //@{
     void DistributeCommanders      ();
     void DistributeHumanWounds     ( const PHY_HumanRank& rank, const PHY_HumanWound& wound, uint nNbr, CIT_ComposantePionVector& itCurrentComp );
-    void ReadHumansOverloading     ( MIL_InputArchive& archive );
-    void ReadComposantesOverloading( MIL_InputArchive& archive );
+    void ReadHumansOverloading     ( xml::xistream& xis );
+    void ReadComposantesOverloading( xml::xistream& xis );
     //@}
 
     //! @name Tools
@@ -283,6 +287,14 @@ private:
     void UpdateDataWhenComposanteAdded  ( const PHY_ComposanteState& state, T_ComposanteTypeProperties& properties );
 
     void SendLoans( NET_ASN_MsgUnitAttributes& asn ) const;
+    //@}
+    //! @name Helpers
+    //@{
+    void ReadEquipements( xml::xistream& xis );
+    void ReadEquipement ( xml::xistream& xis );
+    void ReadPersonnels ( xml::xistream& xis );
+    void ReadPersonnel  ( xml::xistream& xis );
+
     //@}
 
 private:

@@ -21,7 +21,7 @@
 #include "MT_Tools/MT_Version.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Profiler.h"
-#include "MT/MT_XmlTools/MT_XXmlInputArchive.h"
+#include "xeumeuleu/exception.h"
 
 bool SIM_App::bCrashWithCoreDump_ = false;
 bool SIM_App::bUserInterrupt_     = false;
@@ -175,7 +175,7 @@ int SIM_App::Test()
     {
         std::cerr << Wrap( exception.GetInfo(), prefix ) << std::endl;
     }
-    catch( MT_ArchiveLogger_Exception& exception )
+    catch( xml::exception& exception )
     {
         std::cerr << Wrap( exception.what(), prefix ) << std::endl;
     }

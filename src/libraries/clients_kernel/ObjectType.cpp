@@ -27,9 +27,9 @@ ObjectType::ObjectType( xistream& xis, unsigned long id )
     xpm_ = TypeIcon();
     std::string name;
     xis >> attribute( "type", name )
-        >> content( "PeutEtreObstacleDeManoeuvre", canBeReservedObstacle_ )
-        >> content( "PeutEtreValorise", canBeValorized_ )
-        >> content( "PeutEtreContourne", canBeBypassed_ );
+        >> attribute( "can-be-maneuver-obstacle", canBeReservedObstacle_ )
+        >> attribute( "can-be-developed", canBeValorized_ )
+        >> attribute( "can-be-bypassed", canBeBypassed_ );
     name_ = name.c_str();
 }
 

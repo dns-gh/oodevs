@@ -21,7 +21,6 @@
 
 #include "ENT/ENT_Tr.h"
 #include "ADN_Connector_ABC.h"
-#include "ADN_Xml_Exception.h"
 
 
 //-----------------------------------------------------------------------------
@@ -70,31 +69,6 @@ bool ADN_Tools::CopyFileToFile( const std::string& strSrc, const std::string& st
     CreatePathToFile( strDest );
     return (bool)::CopyFile( strSrc.c_str(), strDest.c_str(), false );
 }
-
-
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Tools::CountElementsInList
-// Created: NLD 2003-11-12
-// -----------------------------------------------------------------------------
-uint ADN_Tools::CountElementsInList( MT_InputArchive_ABC& input, const std::string& strListName, const std::string& strElementName )
-{
-    uint nNbElt = 0;
-    if( ! input.BeginList( strListName ) )
-        throw ADN_Xml_Exception( "", input.RetrieveLastError()->GetInfo() );
-
-    while ( input.NextListElement() )
-    {
-        if( !input.Section( strElementName ) )
-            throw ADN_Xml_Exception( "", input.RetrieveLastError()->GetInfo() );
-        input.EndSection();
-        ++nNbElt;
-    }
-        
-    input.EndList();
-    return nNbElt;
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Tools::CaselessCompare

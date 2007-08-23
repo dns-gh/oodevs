@@ -15,6 +15,9 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 MT_Float PHY_RolePion_Communications::rCoefSpeedModificator_         = 0.;
 MT_Float PHY_RolePion_Communications::rCoefReloadingTimeModificator_ = 0.;
@@ -25,14 +28,19 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Communications, "PHY_RolePion_Communicatio
 // Name: PHY_RolePion_Communications::Initialize
 // Created: NLD 2004-11-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Communications::Initialize( MIL_InputArchive& archive )
+void PHY_RolePion_Communications::Initialize( xml::xistream& xis )
 {
-    archive.Section( "Communications" );
-    archive.Section( "ImpactCoupureCommunications" );
-    archive.ReadField( "CoefModificationVitesse"          , rCoefSpeedModificator_        , CheckValueGreaterOrEqual( 0. ) );    
-    archive.ReadField( "CoefModificationTempsRechargement", rCoefReloadingTimeModificator_, CheckValueGreater       ( 0. ) );
-    archive.EndSection(); // ImpactCoupureCommunications
-    archive.EndSection(); // Communications
+    xis >> start( "communications" )
+            >> start( "communication-breakdown" )
+                >> attribute( "speed-modifier", rCoefSpeedModificator_ )
+                >> attribute( "reloading-time-modifier", rCoefReloadingTimeModificator_ )
+            >> end()
+        >> end();
+
+    if( rCoefSpeedModificator_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "communication-breakdown: speed-modifier < 0" );
+    if( rCoefReloadingTimeModificator_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "communication-breakdown: reloading-time-modifier <= 0" );
 }
 
 // -----------------------------------------------------------------------------

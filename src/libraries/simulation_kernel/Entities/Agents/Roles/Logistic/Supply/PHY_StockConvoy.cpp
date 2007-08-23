@@ -20,6 +20,9 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Orders/MIL_PionMissionType.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 BOOST_CLASS_EXPORT_GUID( PHY_StockConvoy, "PHY_StockConvoy" )
 

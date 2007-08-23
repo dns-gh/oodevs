@@ -20,6 +20,9 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Tools/MIL_Tools.h"
 #include "MIL_AgentServer.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 MT_Float PHY_PerceptionFlyingShell::rRadius_ = 0;
 
@@ -27,16 +30,15 @@ MT_Float PHY_PerceptionFlyingShell::rRadius_ = 0;
 // Name: PHY_PerceptionFlyingShell::Initialize
 // Created: NLD 2007-02-13
 // -----------------------------------------------------------------------------
-void PHY_PerceptionFlyingShell::Initialize( MIL_InputArchive& archive )
+void PHY_PerceptionFlyingShell::Initialize( xml::xistream& xis )
 {
-    archive.Section( "RadarCOBRA" );
-    archive.Section( "Portee" );
+    xis >> start( "cobra-radar" )
+            >> attribute( "action-range", rRadius_ )
+        >> end();
     
-    archive.ReadField( "RayonAction", rRadius_, CheckValueGreaterOrEqual( 0. ) );
+    if( rRadius_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "cobra-radar: action-range < 0" );
     rRadius_ = MIL_Tools::ConvertMeterToSim( rRadius_ );
-
-    archive.EndSection(); // Portee
-    archive.EndSection(); // RadarCOBRA
 }
 
 
@@ -47,6 +49,7 @@ void PHY_PerceptionFlyingShell::Initialize( MIL_InputArchive& archive )
 PHY_PerceptionFlyingShell::PHY_PerceptionFlyingShell( PHY_RolePion_Perceiver& perceiver )
     : PHY_Perception_ABC( perceiver )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

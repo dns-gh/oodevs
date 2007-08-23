@@ -14,13 +14,16 @@
 #include "MIL_AgentTypePionCIRCULATION.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/Functions/DEC_KnowledgeObjectFunctions.h"
+#include "xeumeuleu/xml.H"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionCIRCULATION constructor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AgentTypePionCIRCULATION::MIL_AgentTypePionCIRCULATION( const std::string& strName, MIL_InputArchive& archive )
-    : MIL_AgentTypePion( strName, archive )
+MIL_AgentTypePionCIRCULATION::MIL_AgentTypePionCIRCULATION( const std::string& strName, xml::xistream& xis )
+    : MIL_AgentTypePion( strName, xis )
 {
     
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::EquipLogisticRoute, "DEC_Circulation_EquiperItineraireLogistique"      );

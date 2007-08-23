@@ -21,12 +21,15 @@
 #include "Tools/MIL_Tools.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include <algorithm>
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Speeds constructor
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
-PHY_Speeds::PHY_Speeds( MIL_InputArchive& archive )
+PHY_Speeds::PHY_Speeds( xml::xistream& xis )
     : rMaxSpeed_                ( -1. )
     , rBaseSpeed_               ( -1. )
     , rAreaSpeeds_              ( new MT_Float[ 8  ] ) // $$$$ AGE 2005-02-03: Use a vector
@@ -42,8 +45,10 @@ PHY_Speeds::PHY_Speeds( MIL_InputArchive& archive )
     std::fill( rBorderSpeeds_, rBorderSpeeds_ + 8, -1. );
     std::fill( rLinearSpeeds_, rLinearSpeeds_ + 11, -1. );
 
-    ReadArchive( archive );
-    CheckInitialization( archive );
+    xis >> optional()
+        >> list( "speeds", *this, &PHY_Speeds::ReadSpeed );
+
+    CheckInitialization( xis );
     GenerateMasks();
 }
 
@@ -95,40 +100,49 @@ PHY_Speeds::~PHY_Speeds()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Speeds::ReadArchive
-// Created: AGE 2005-02-03
+// Name: PHY_Speeds::ReadSpeed
+// Created: ABL 2007-07-23
 // -----------------------------------------------------------------------------
-void PHY_Speeds::ReadArchive( MIL_InputArchive& archive )
+void PHY_Speeds::ReadSpeed( xml::xistream& xis )
 {
-    archive.BeginList( "Vitesses" );
-    archive.ReadAttribute( "maximum", rMaxSpeed_, CheckValueGreater( 0. ) );
+    xis >> attribute( "max", rMaxSpeed_ );
+    if( rMaxSpeed_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "speeds: max <= 0" );
+
     rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ );
+    xis >> list( "speed", *this, &PHY_Speeds::ReadTerrain );
+}
 
-    while ( archive.NextListElement() )
-    {
-        std::string strTerrainType;
+// -----------------------------------------------------------------------------
+// Name: PHY_Speeds::ReadTerrain
+// Created: ABL 2007-07-23
+// -----------------------------------------------------------------------------
+void PHY_Speeds::ReadTerrain( xml::xistream& xis )
+{
+    std::string strTerrainType;
 
-        archive.Section( "Terrain" );
-        archive.ReadAttribute( "type", strTerrainType );
+    xis >> attribute( "terrain", strTerrainType );
 
-        const TerrainData data = MIL_Tools::ConvertLandType( strTerrainType );
-        if( data.Area() == 0xFF )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown terrain type '" + strTerrainType + "'", archive.GetContext() );
-        MT_Float& speed = SpeedFor( data );
-        archive.Read( speed, CheckValueGreaterOrEqual( 0. ) );
+    const TerrainData data = MIL_Tools::ConvertLandType( strTerrainType );
+    if( data.Area() == 0xFF )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown terrain type '" + strTerrainType + "'" ); // $$$$ ABL 2007-07-23: error context
 
-        speed = MIL_Tools::ConvertSpeedMosToSim( speed );
-        rMaxSpeed_ = std::max( rMaxSpeed_, speed );
-        archive.EndSection(); // Terrain
-    }
-    archive.EndList(); // Vitesses
+    MT_Float& speed = SpeedFor( data );
+
+    xis >> attribute( "value", speed );
+
+    if( speed < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "speed: terrain < 0" );
+
+    speed = MIL_Tools::ConvertSpeedMosToSim( speed );
+    rMaxSpeed_ = std::max( rMaxSpeed_, speed );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Speeds::CheckInitialization
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
-void PHY_Speeds::CheckInitialization( MIL_InputArchive& archive )
+void PHY_Speeds::CheckInitialization( xml::xistream& xis )
 {
     for( unsigned nOffset = 0; nOffset < 8; ++nOffset )
     {
@@ -164,7 +178,7 @@ void PHY_Speeds::CheckInitialization( MIL_InputArchive& archive )
         
     }
     if( rMaxSpeed_ == 0. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Composante's max speed is 0 km/h ...", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Composante's max speed is 0 km/h ..." ); // $$$$ ABL 2007-07-23: error context
 }
 
 // -----------------------------------------------------------------------------

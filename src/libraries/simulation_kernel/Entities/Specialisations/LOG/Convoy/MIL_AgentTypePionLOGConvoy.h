@@ -16,6 +16,11 @@
 
 #include "Entities/Specialisations/LOG/MIL_AgentTypePionLOG_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 // @class  MIL_AgentTypePionType
 // Created: JVT 2004-08-03
@@ -25,17 +30,17 @@ class MIL_AgentTypePionLOGConvoy : public MIL_AgentTypePionLOG_ABC
     MT_COPYNOTALLOWED( MIL_AgentTypePionLOGConvoy )
 
 public:
-    MIL_AgentTypePionLOGConvoy( const std::string& strName, MIL_InputArchive& archive );
+    MIL_AgentTypePionLOGConvoy( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePionLOGConvoy();
 
     //! @name Instanciation
     //@{
-    virtual MIL_AgentPion& InstanciatePion( uint nID, MIL_Automate& automate, MIL_InputArchive& archive ) const;
+    virtual MIL_AgentPion& InstanciatePion( uint nID, MIL_Automate& automate, xml::xistream& xis ) const;
     virtual MIL_AgentPion& InstanciatePion( uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ) const; 
     //@}
 
 public:
-    static const MIL_AgentTypePion* Create( const std::string& strName, MIL_InputArchive& archive );
+    static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
 };
 
 #include "MIL_AgentTypePionLOGConvoy.inl"

@@ -16,6 +16,9 @@
 #include "PHY_SensorTypeAgent.h"
 #include "PHY_SensorTypeObject.h"
 #include "PHY_Sensor.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 PHY_SensorType::T_SensorTypeMap PHY_SensorType::sensorTypes_;
 uint                            PHY_SensorType::nNextID_ = 0;
@@ -24,30 +27,40 @@ uint                            PHY_SensorType::nNextID_ = 0;
 // MANAGER
 // =============================================================================
 
+struct PHY_SensorType::LoadingWrapper
+{
+    void ReadSensor( xml::xistream& xis )
+    {
+        PHY_SensorType::ReadSensor( xis );
+    }
+};
+
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorType::Initialize
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-void PHY_SensorType::Initialize( MIL_InputArchive& archive )
+void PHY_SensorType::Initialize( xml::xistream& xis )
 {
-    archive.BeginList( "Senseurs" );
+    LoadingWrapper loader;
 
-    while ( archive.NextListElement() )
-    {
-        archive.Section( "Senseur" );
+    xis >> start( "sensors" )
+            >> list( "sensor", loader, &LoadingWrapper::ReadSensor )
+        >> end();
+}
 
-        std::string strSensorName;
-        archive.ReadAttribute( "nom", strSensorName );
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorType::ReadSensor
+// Created: ABL 2007-07-25
+// -----------------------------------------------------------------------------
+void PHY_SensorType::ReadSensor( xml::xistream& xis )
+{
+    std::string strSensorName;
+    xis >> attribute( "name", strSensorName );
 
-        const PHY_SensorType*& pSensorType = sensorTypes_[ strSensorName ];
-        if( pSensorType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown sensor type", archive.GetContext() );
-        pSensorType = new PHY_SensorType( strSensorName, archive );
-
-        archive.EndSection(); // Senseur
-    }
-
-    archive.EndList(); // Senseurs
+    const PHY_SensorType*& pSensorType = sensorTypes_[ strSensorName ];
+    if( pSensorType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown sensor type" ); // $$$$ ABL 2007-07-25: "error context
+    pSensorType = new PHY_SensorType( strSensorName, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,23 +81,32 @@ void PHY_SensorType::Terminate()
 // Name: PHY_SensorType constructor
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-PHY_SensorType::PHY_SensorType( const std::string& strName, MIL_InputArchive& archive )
+PHY_SensorType::PHY_SensorType( const std::string& strName, xml::xistream& xis )
     : nID_        ( nNextID_++ )
     , strName_    ( strName )
     , pTypeObject_( 0 )
     , pTypeAgent_ ( 0 )
 {
-    if ( archive.Section( "DetectionAgents", MIL_InputArchive::eNothing ) )
-    {
-        pTypeAgent_ = new PHY_SensorTypeAgent( *this, archive );
-        archive.EndSection(); // DetectionAgents
-    }
+    xis >> list( "unit-detection", *this, &PHY_SensorType::newSensorTypeAgent )
+        >> list( "object-detection", *this, &PHY_SensorType::newSensorTypeObject );
+}
 
-    if ( archive.Section( "DetectionObjets", MIL_InputArchive::eNothing ) )
-    {
-        pTypeObject_ = new PHY_SensorTypeObject( *this, archive );
-        archive.EndSection(); // DetectionObjets
-    }
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorType::newSensorTypeAgent
+// Created: ABL 2007-07-25
+// -----------------------------------------------------------------------------
+void PHY_SensorType::newSensorTypeAgent( xml::xistream& xis )
+{
+    pTypeAgent_ = new PHY_SensorTypeAgent( *this, xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorType::newSensorTypeObject
+// Created: ABL 2007-07-25
+// -----------------------------------------------------------------------------
+void PHY_SensorType::newSensorTypeObject( xml::xistream& xis )
+{
+    pTypeObject_ = new PHY_SensorTypeObject( *this, xis );
 }
 
 // -----------------------------------------------------------------------------

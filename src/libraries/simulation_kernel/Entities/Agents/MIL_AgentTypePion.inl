@@ -111,14 +111,14 @@ bool MIL_AgentTypePion::operator==( const MIL_AgentTypePion& rhs ) const
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
 template< typename T >
-MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, MIL_InputArchive& archive, T* )
-    : MIL_AgentType_ABC( strName, archive )
+MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, xml::xistream& xis, T* )
+    : MIL_AgentType_ABC( strName, xis )
     , pDIAFunctionTable_( new DIA_FunctionTable< MIL_AgentPion >() )
 {
-    pUnitType_ = new T( archive );
+    pUnitType_ = new T( xis );
 
-    InitializeRapFor              ( archive );
-    InitializeDistancesAvantPoints( archive );
-    InitializeModel               ( archive );
+    InitializeRapFor              ( xis );
+    InitializeDistancesAvantPoints( xis );
+    InitializeModel               ( xis );
     InitializeDiaFunctions        ();
 }

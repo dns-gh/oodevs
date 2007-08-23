@@ -12,6 +12,12 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xostream;
+    class xistream;
+}
+
 class MIL_Army;
 class PHY_NatureLevel;
 class MIL_EntityManager;
@@ -28,7 +34,7 @@ class MIL_Formation
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Formation( MIL_EntityManager& manager, MIL_TacticalLineManager& tacticalLines, unsigned int nID, MIL_Army& army, MIL_InputArchive& archive, MIL_Formation* pParent = 0 );
+             MIL_Formation( MIL_EntityManager& manager, MIL_TacticalLineManager& tacticalLines, unsigned int nID, MIL_Army& army, xml::xistream& xis, MIL_Formation* pParent = 0 );
              MIL_Formation();
     virtual ~MIL_Formation();
     //@}
@@ -39,8 +45,8 @@ public:
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
 
-    void WriteODB             ( MT_XXmlOutputArchive& archive ) const;
-    void WriteLogisticLinksODB( MT_XXmlOutputArchive& archive ) const;
+    void WriteODB             ( xml::xostream& xos ) const;
+    void WriteLogisticLinksODB( xml::xostream& xos ) const;
     //@}
 
     //! @name Hierarchy
@@ -72,7 +78,9 @@ private:
 
     //! @name Tools
     //@{
-    void InitializeSubordinates( MIL_EntityManager& manager, MIL_TacticalLineManager& tacticalLines, MIL_InputArchive& archive );
+    void InitializeSubordinates( MIL_EntityManager& manager, MIL_TacticalLineManager& tacticalLines, xml::xistream& xis );
+    void CreateLimit( xml::xistream& xis, MIL_TacticalLineManager& tacticalLines );
+    void CreateLima ( xml::xistream& xis, MIL_TacticalLineManager& tacticalLines );
     //@}
 
 private:

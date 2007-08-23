@@ -59,9 +59,11 @@ private:
 
     //! @name Helpers
     //@{
-    void Read( MT_XXmlInputArchive& input, const std::string& strModuleName );
-    void ReadImport( MT_XXmlInputArchive& input, const std::string& strModuleName );
-    void ReadSimpleType( MT_XXmlInputArchive& input, const std::string& strModuleName );
+    void Read( xml::xistream& xis );
+    void ReadElement( const std::string& type, xml::xistream& xis );
+    void ReadImport( xml::xistream& xis );
+    void ReadSimpleType( xml::xistream& xis );
+    void ReadSimpleTypeElement( const std::string& type, xml::xistream& xis, const std::string& strTypeName );
     //@}
 
 private:

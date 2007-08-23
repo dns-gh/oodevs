@@ -64,8 +64,6 @@
 #include "ADN_DialogLog.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_MainWindow.h"
-#include "ADN_Xml_Exception.h"
-#include "MT_Tools/MT_ScipioException.h"
 
 #include "qtundo.h"
 
@@ -333,20 +331,6 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
         dirInfos.SetWorkingDirectory( szOldWorkDir ); // $$$$ NLD 2007-01-15: needed ???
         pProgressIndicator_->Reset();
         throw;
-    }
-    catch( MT_ScipioException& exception)
-    {
-        // an error occured . show message box
-        // and set working directory as old one
-        std::stringstream strMsg;
-        strMsg << "Context : "     << exception.GetContext()     << std::endl
-               << "File : "        << exception.GetFile()        << std::endl
-               << "Line : "        << exception.GetLine()        << std::endl
-               << "Message : "     << exception.GetMsg()         << std::endl
-               << "Description : " << exception.GetDescription() << std::endl;          
-        dirInfos.SetWorkingDirectory( szOldWorkDir ); // $$$$ NLD 2007-01-15: needed ???
-        pProgressIndicator_->Reset();
-        throw ADN_Xml_Exception( "Scipio - Adaptation Tool - Saving error", strMsg.str().c_str() );
     }
     
     /////////////////////////////////////

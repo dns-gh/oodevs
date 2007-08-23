@@ -186,8 +186,9 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
                 QString strText;
                 if( pUnitInfos != 0 )
                 {
-                    strText = tr( "%1 x %2 x %3 [ %4 ]" );
-                    strText = strText.arg( pUnitInfos->strNbrRegExp_.GetData().c_str() )
+                    strText = tr( "(%1..%2) x %3 x %4 [ %5 ]" );
+                    strText = strText.arg( pUnitInfos->min_.GetData() )
+                                     .arg( pUnitInfos->max_.GetData() )
                                      .arg( (*it3)->nNb_.GetData() )
                                      .arg( (*it3)->ptrComposante_.GetData()->strName_.GetData().c_str() )
                                      .arg( (*it3)->nNbrHumanInCrew_.GetData() );
@@ -206,12 +207,14 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
             QString strText;
             if( pUnitInfos != 0 )
             {
-                strText = tr( "%1 x %2 [ %3/%4/%5 ]" );
-                strText = strText.arg( pUnitInfos->strNbrRegExp_.GetData().c_str(), unit.strName_.GetData().c_str() )
+                strText = tr( "(%1..%2) x %3 [ %4/%5/%6 ]" );
+                strText = strText.arg( pUnitInfos->min_.GetData() )
+                                 .arg( pUnitInfos->max_.GetData() )
+                                 .arg( unit.strName_.GetData().c_str() )
                                  .arg( pUnit->nNbOfficer_.GetData() )
                                  .arg( pUnit->nNbNCOfficer_.GetData() )
                                  .arg( nTroops - pUnit->nNbOfficer_.GetData() - pUnit->nNbNCOfficer_.GetData() );
-                uint nNbUnit = QString( pUnitInfos->strNbrRegExp_.GetData().c_str() ).toUInt();
+                uint nNbUnit = pUnitInfos->min_.GetData();
                 nAutoOfficer   += nNbUnit * pUnit->nNbOfficer_.GetData();
                 nAutoNCOfficer += nNbUnit * pUnit->nNbNCOfficer_.GetData();
                 nAutoTroops    += nNbUnit * ( nTroops - pUnit->nNbOfficer_.GetData() - pUnit->nNbNCOfficer_.GetData() );

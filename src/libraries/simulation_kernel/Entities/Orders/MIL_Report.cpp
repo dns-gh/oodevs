@@ -12,10 +12,13 @@
 #include "simulation_kernel_pch.h"
 
 #include "MIL_Report.h"
-
 #include "MIL_ParameterType_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+
 
 // =============================================================================
 // FACTORY
@@ -24,29 +27,26 @@
 MIL_Report::T_ReportMap      MIL_Report::reports_;
 MIL_Report::T_DiaEventVector MIL_Report::diaEvents_( MIL_Report::eNbrReport, "" );
 
+struct MIL_Report::LoadingWrapper
+{
+    void ReadReport( xml::xistream& xis )
+    {
+        MIL_Report::ReadReport( xis );
+    }
+};
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Report::Initialize
 // Created: NLD 2006-12-06
 // -----------------------------------------------------------------------------
-void MIL_Report::Initialize( MIL_InputArchive& archive )
+void MIL_Report::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing reports types" );
 
-    archive.BeginList( "reports" );
-    while( archive.NextListElement() )
-    {
-        archive.BeginList( "report" );
-        uint nID;
-        archive.ReadAttribute( "id", nID );
-
-        const MIL_Report*& pReport = reports_[ nID ];
-        if( pReport )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Report id already defined", archive.GetContext() );
-        pReport = new MIL_Report( nID, archive );
-
-        archive.EndList(); // report
-    }
-    archive.EndList(); // reports
+    LoadingWrapper loader;
+    xis >> start( "reports" )
+            >> list( "report", loader, &LoadingWrapper::ReadReport )
+        >> end();
 
     diaEvents_[ eReport_ReAvailableAfterRepairation                 ] = "EVT_RC_ANouveauDisponibleApresReparation";                
     diaEvents_[ eReport_EquipementRepairedInPlace                   ] = "EVT_RC_MaterielRepareSurPlace";                           
@@ -109,6 +109,21 @@ void MIL_Report::Initialize( MIL_InputArchive& archive )
     diaEvents_[ eReport_ConvoyTransporterResourcesLevelReached      ] = "EVT_RC_AlerteDisponibiliteVecteurs";                      
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Report::ReadReport
+// Created: ABL 2007-07-18
+// -----------------------------------------------------------------------------
+void MIL_Report::ReadReport( xml::xistream& xis )
+{
+    uint id;
+    xis >> attribute( "id", id );
+
+    const MIL_Report*& pReport = reports_[ id ];
+    if( pReport )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Report id already defined" ); // $$$$ ABL 2007-07-18: error context
+    pReport = new MIL_Report( id, xis );
+}
+
 // =============================================================================
 // INSTANCE
 // =============================================================================
@@ -117,25 +132,27 @@ void MIL_Report::Initialize( MIL_InputArchive& archive )
 // Name: MIL_Report constructor
 // Created: NLD 2006-12-06
 // -----------------------------------------------------------------------------
-MIL_Report::MIL_Report( uint nID, MIL_InputArchive& archive )
-    : nID_       ( nID )
+MIL_Report::MIL_Report( uint id, xml::xistream& xis )
+    : nID_       ( id )
     , strMessage_()
 {
-    archive.ReadAttribute( "message", strMessage_ );
+    xis >> attribute( "message", strMessage_ );
+    xis >> list( "parameter", *this, &MIL_Report::ReadParameter );
+}
 
-    while( archive.NextListElement() )
-    {
-        archive.Section( "parameter" );
+// -----------------------------------------------------------------------------
+// Name: MIL_Report::ReadParameter
+// Created: ABL 2007-07-18
+// -----------------------------------------------------------------------------
+void MIL_Report::ReadParameter( xml::xistream& xis )
+{
+    std::string strType;
+    xis >> attribute( "type", strType );
+    const MIL_ParameterType_ABC* pParameter = MIL_ParameterType_ABC::Find( strType );
+    if( !pParameter )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown parameter type" ); // $$$$ _RC_ ABL 2007-07-18: error context
 
-        std::string strType;
-        archive.ReadAttribute( "type", strType );
-        const MIL_ParameterType_ABC* pParameter = MIL_ParameterType_ABC::Find( strType );
-        if( !pParameter )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown parameter type", archive.GetContext() );
-
-        parameters_.push_back( pParameter );
-        archive.EndSection(); // parameter
-    }
+    parameters_.push_back( pParameter );
 }
 
 // -----------------------------------------------------------------------------

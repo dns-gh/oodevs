@@ -39,7 +39,7 @@ public:
     //! @name Accessors
     //@{
     MT_Float GetWidth() const;
-	bool	 IsBanksToFitOut() const;
+    bool     IsBanksToFitOut() const;
     //@}
 
 private:

@@ -15,6 +15,9 @@
 
 #include "PHY_DotationCategory.h"
 #include "PHY_DotationLogisticType.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 PHY_DotationType PHY_DotationType::munition_ ( "munition" , eMunition , EnumDotationFamily::munition , PHY_DotationLogisticType::uniteFeuSansTD_ );
 PHY_DotationType PHY_DotationType::carburant_( "carburant", eCarburant, EnumDotationFamily::carburant, PHY_DotationLogisticType::uniteEssence_   );
@@ -28,14 +31,22 @@ PHY_DotationType::T_DotationTypeMap       PHY_DotationType::dotationTypes_;
 PHY_DotationType::T_DotationCategoryIDMap PHY_DotationType::dotationCategorieIDs_;
 
 //=============================================================================
-// STATIC INITIALIZATION 
+// STATIC INITIALIZATION
 //=============================================================================
+
+struct PHY_DotationType::LoadingWrapper
+{
+    void ReadDotation( xml::xistream& xis )
+    {
+        PHY_DotationType::ReadDotation( xis );
+    }
+};
 
 //-----------------------------------------------------------------------------
 // Name: PHY_DotationType::Initialize
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
-void PHY_DotationType::Initialize( MIL_InputArchive& archive )
+void PHY_DotationType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing dotation types" );
 
@@ -47,32 +58,30 @@ void PHY_DotationType::Initialize( MIL_InputArchive& archive )
     dotationTypes_[ piece_    .GetName() ] = &piece_;
     dotationTypes_[ ration_   .GetName() ] = &ration_;
 
-    archive.BeginList( "Dotations" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Dotation" );
+    LoadingWrapper loader;
 
-        std::string strTypeName;
-        archive.ReadAttribute( "nom", strTypeName );
+    xis >> start( "dotations" )
+            >> list( "dotation", loader, &LoadingWrapper::ReadDotation )
+        >> end();
+}
 
-        CIT_DotationTypeMap it = dotationTypes_.find( strTypeName );
-        if( it == dotationTypes_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid dotation type name", archive.GetContext() );
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationType::ReadDotation
+// Created: ABL 2007-07-19
+// -----------------------------------------------------------------------------
+void PHY_DotationType::ReadDotation( xml::xistream& xis )
+{
+    std::string strTypeName;
+    std::string strCategoryName;
 
-        archive.BeginList( "Categories" );
-        while( archive.NextListElement() )
-        {
-            archive.Section( "Categorie" );
-            std::string strCategoryName;
-            archive.ReadAttribute( "nom", strCategoryName );
-            const_cast< PHY_DotationType& >( *it->second ).RegisterDotationCategory( strCategoryName, archive );
-            archive.EndSection(); // Categorie
-        }
-        archive.EndList(); // Categories
+    xis >> attribute( "name", strTypeName )
+        >> attribute( "category", strCategoryName );
 
-        archive.EndSection(); // Dotation
-    }
-    archive.EndList(); // Dotations
+    CIT_DotationTypeMap it = dotationTypes_.find( strTypeName );
+    if( it == dotationTypes_.end() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid dotation type name" ); // $$$$ ABL 2007-07-19: error context
+
+    const_cast< PHY_DotationType& >( *it->second ).RegisterDotationCategory( strCategoryName, xis );
 }
 
 //-----------------------------------------------------------------------------
@@ -87,7 +96,7 @@ void PHY_DotationType::Terminate()
 }
 
 //=============================================================================
-// 
+//
 //=============================================================================
 
 //-----------------------------------------------------------------------------
@@ -100,24 +109,25 @@ PHY_DotationType::PHY_DotationType( const std::string& strName, E_DotationType n
     , nAsnID_             ( nAsnID )
     , defaultLogisticType_( defaultLogisticType )
     , dotationCategories_ ()
-{   
+{
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
 // Name: PHY_DotationType::Initialize
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
-void PHY_DotationType::RegisterDotationCategory( const std::string& strCategoryName, MIL_InputArchive& archive )
+void PHY_DotationType::RegisterDotationCategory( const std::string& strCategoryName, xml::xistream& xis )
 {
     const PHY_DotationCategory*& pCategory = dotationCategories_[ strCategoryName ];
     if( pCategory )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Dotation category '%s' already registered", strCategoryName.c_str() ), archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Dotation category '%s' already registered", strCategoryName.c_str() ) ); // $$$$ ABL 2007-07-19: error context
 
-    pCategory = new PHY_DotationCategory( *this, strCategoryName, archive );
+    pCategory = new PHY_DotationCategory( *this, strCategoryName, xis );
 
     const PHY_DotationCategory*& pCategoryID = dotationCategorieIDs_[ pCategory->GetMosID() ];
     if( pCategoryID )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Dotation category ID already registered", strCategoryName.c_str() ), archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Dotation category ID already registered", strCategoryName.c_str() ) ); // $$$$ ABL 2007-07-19: error context
     pCategoryID = pCategory;
 }
 
@@ -136,7 +146,7 @@ PHY_DotationType::~PHY_DotationType()
 const PHY_DotationCategory* PHY_DotationType::InternalFindDotationCategory( uint nID ) const
 {
     for( CIT_DotationCategoryMap it = dotationCategories_.begin(); it != dotationCategories_.end(); ++it )
-    { 
+    {
         if( it->second->GetMosID() == nID )
             return it->second;
     }

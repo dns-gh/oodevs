@@ -14,7 +14,7 @@
 // Created: NLD 2004-12-27
 // -----------------------------------------------------------------------------
 inline
-const MIL_AutomateType* MIL_AutomateTypeLOG::Create( const std::string& strName, MIL_InputArchive& archive )
+const MIL_AutomateType* MIL_AutomateTypeLOG::Create( const std::string& strName, xml::xistream& xis )
 {
-    return new MIL_AutomateTypeLOG( strName, archive );
+    return new MIL_AutomateTypeLOG( strName, xis );
 }

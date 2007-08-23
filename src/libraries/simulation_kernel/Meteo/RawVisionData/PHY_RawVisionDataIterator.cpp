@@ -57,33 +57,33 @@ void PHY_RawVisionDataIterator::AlignFirstPointOnGrid()
 
     assert( rLenght_ > 0. );
 
-	rRemainingLength_ -= rLenght_;
+    rRemainingLength_ -= rLenght_;
 
-	// condition de fin
-	if ( rRemainingLength_ < rIteratorEpsilon )
+    // condition de fin
+    if ( rRemainingLength_ < rIteratorEpsilon )
     {
         if ( rRemainingLength_ < 0. )
         { // arrivée sur le dernier point qui se trouve entre 2 axes
-		    if ( eIteratorState_ == eRunning )
-		    { // placement correct du dernier point
-			    vOutPoint_.rX_ += rRemainingLength_ / rDl_;
-			    rLenght_       += rRemainingLength_;
-    		    vOutPoint_.rY_  = rA0_ * vOutPoint_.rX_ + rB0_;
-			    
-			    eIteratorState_ = eLastPoint;
+            if ( eIteratorState_ == eRunning )
+            { // placement correct du dernier point
+                vOutPoint_.rX_ += rRemainingLength_ / rDl_;
+                rLenght_       += rRemainingLength_;
+                vOutPoint_.rY_  = rA0_ * vOutPoint_.rX_ + rB0_;
+                
+                eIteratorState_ = eLastPoint;
 
-			    assert ( rLenght_ > 0. );
-		    }
-		    else
+                assert ( rLenght_ > 0. );
+            }
+            else
             { // fin de validité de l'itérateur
-			    eIteratorState_ = eEnd;
+                eIteratorState_ = eEnd;
                 return;
-		    }
-	    }
+            }
+        }
         else
         { // arrivée sur le dernier point ( qui se trouve sur un axe )
-		    rRemainingLength_ = -1;
-		    eIteratorState_   = eLastPoint;
+            rRemainingLength_ = -1;
+            eIteratorState_   = eLastPoint;
         }
     }
 
@@ -122,7 +122,7 @@ PHY_RawVisionDataIterator::PHY_RawVisionDataIterator( const MT_Vector3D& vBeginP
     , bSwapOffset_      ()
     , nCellColOffset_   ()
     , nCellRowOffset_   ()
-	, eIteratorState_   ( eRunning )
+    , eIteratorState_   ( eRunning )
     , rLenght_          ()
     , rRemainingLength_ ()
     , rAlreadyUsedDX_   ()
@@ -140,7 +140,7 @@ PHY_RawVisionDataIterator::PHY_RawVisionDataIterator( const MT_Vector3D& vBeginP
 
     if ( rDx == 0 && rDy == 0 )  // -> vBeginPos == vEndPos
     {
-		eIteratorState_ = eEnd;
+        eIteratorState_ = eEnd;
         return;
     }
 
@@ -166,8 +166,8 @@ PHY_RawVisionDataIterator::PHY_RawVisionDataIterator( const MT_Vector3D& vBeginP
 
     ToAlgorithmSpace( vOutPoint_.rX_, vOutPoint_.rY_ );
 
-	rAlreadyUsedDX_ = ( vOutPoint_.rX_ -= ( nCellColOffset_ = (int)floor( vOutPoint_.rX_ ) ) );
-	vOutPoint_.rY_ -= ( nCellRowOffset_ = (int)floor( vOutPoint_.rY_ ) );
+    rAlreadyUsedDX_ = ( vOutPoint_.rX_ -= ( nCellColOffset_ = (int)floor( vOutPoint_.rX_ ) ) );
+    vOutPoint_.rY_ -= ( nCellRowOffset_ = (int)floor( vOutPoint_.rY_ ) );
 
     assert( vOutPoint_.rX_ >= 0. && vOutPoint_.rX_ < 1. );
     assert( vOutPoint_.rY_ >= 0. && vOutPoint_.rY_ < 1. );
@@ -177,7 +177,7 @@ PHY_RawVisionDataIterator::PHY_RawVisionDataIterator( const MT_Vector3D& vBeginP
     rB0_ = vOutPoint_.rY_ - rA0_ * vOutPoint_.rX_;
     rB1_ = vOutPoint_.rX_ - rA1_ * vOutPoint_.rY_;
     
-	rRemainingLength_ = rDl_ * rDx / rCellSize;
+    rRemainingLength_ = rDl_ * rDx / rCellSize;
 
     // Calcul des coefficients d'environnement initiaux
     // rDx est utilisé ici pour stocker le rGroundCoeff initial
@@ -211,10 +211,10 @@ PHY_RawVisionDataIterator::PHY_RawVisionDataIterator( const MT_Vector3D& vBeginP
     //-------------------------------------------------------------------x----------
 PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++ ()
 {
-	if( End() )
+    if( End() )
         return *this;
 
-	int nCellXOffset = 0;
+    int nCellXOffset = 0;
     int nCellYOffset = 0;
     
     MT_Float rNextY = rA0_ * (MT_Float)( nNextCellCol_ + 1 ) + rB0_;
@@ -224,8 +224,8 @@ PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++ ()
     // calcul du coefficient de barycentre sur l'arrête                             -> rNextY
     if ( fabs( rNextY - ++nNextCellRow_ ) < rIteratorEpsilon )
     {
-		nCellXOffset    = 1;
-		nCellYOffset    = 1;
+        nCellXOffset    = 1;
+        nCellYOffset    = 1;
         vOutPoint_.rX_  = ++nNextCellCol_;
         vOutPoint_.rY_  = nNextCellRow_;
         rLenght_        = rDl_ * ( 1. - rAlreadyUsedDX_ );
@@ -260,33 +260,33 @@ PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++ ()
     assert( rNextY >= 0. );
     assert( rNextY < 1. );
 
-	rRemainingLength_ -= rLenght_;
+    rRemainingLength_ -= rLenght_;
 
-	// condition de fin
-	if ( rRemainingLength_ < rIteratorEpsilon )
+    // condition de fin
+    if ( rRemainingLength_ < rIteratorEpsilon )
     {
         if ( rRemainingLength_ < 0. )
         { // arrivée sur le dernier point qui se trouve entre 2 axes
-		    if ( eIteratorState_ == eRunning )
-		    { // placement correct du dernier point
-			    vOutPoint_.rX_ += rRemainingLength_ / rDl_;
-			    rLenght_       += rRemainingLength_;
-    		    vOutPoint_.rY_  = rA0_ * vOutPoint_.rX_ + rB0_;
-			    
-			    eIteratorState_ = eLastPoint;
+            if ( eIteratorState_ == eRunning )
+            { // placement correct du dernier point
+                vOutPoint_.rX_ += rRemainingLength_ / rDl_;
+                rLenght_       += rRemainingLength_;
+                vOutPoint_.rY_  = rA0_ * vOutPoint_.rX_ + rB0_;
+                
+                eIteratorState_ = eLastPoint;
 
-			    assert ( rLenght_ > 0. );
-		    }
-		    else
+                assert ( rLenght_ > 0. );
+            }
+            else
             { // fin de validité de l'itérateur
-			    eIteratorState_ = eEnd;
-			    return *this;
-		    }
-	    }
+                eIteratorState_ = eEnd;
+                return *this;
+            }
+        }
         else
         { // arrivée sur le dernier point ( qui se trouve sur un axe )
-		    rRemainingLength_ = -1;
-		    eIteratorState_   = eLastPoint;
+            rRemainingLength_ = -1;
+            eIteratorState_   = eLastPoint;
         }
     }
 

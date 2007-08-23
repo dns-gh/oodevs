@@ -14,13 +14,16 @@
 #include "MIL_AutomateTypeREFUGIE.h"
 #include "Decision/DEC_ModelAutomate.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateTypeREFUGIE constructor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AutomateTypeREFUGIE::MIL_AutomateTypeREFUGIE( const std::string& strName, MIL_InputArchive& archive )
-    : MIL_AutomateType( strName, archive )
+MIL_AutomateTypeREFUGIE::MIL_AutomateTypeREFUGIE( const std::string& strName, xml::xistream& xis )
+    : MIL_AutomateType( strName, xis )
 {
 }
 

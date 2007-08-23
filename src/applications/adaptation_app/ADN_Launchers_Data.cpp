@@ -16,8 +16,6 @@
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_DataException.h"
-#include "ADN_Xml_Exception.h"
-#include "ADN_XmlInput_Helper.h"
 #include "ENT/ENT_Tr.h"
 #include <memory.h>
 
@@ -72,7 +70,6 @@ std::string ADN_Launchers_Data::LauncherInfos::GetNodeName()
     return strResult + strName_.GetData();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: LauncherInfos::GetItemName
 // Created: AGN 2004-05-18
@@ -82,92 +79,71 @@ std::string ADN_Launchers_Data::LauncherInfos::GetItemName()
     return strName_.GetData();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Launchers_Data::LauncherInfos::ReadPosture
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Launchers_Data::LauncherInfos::ReadPosture( xml::xistream& input )
+{
+    bDirect_ = true;
+    const std::string posture = xml::attribute< std::string >( input, "posture" );
+    input >> xml::list( "ph-modifier", *this, &ADN_Launchers_Data::LauncherInfos::ReadPh, posture );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Launchers_Data::LauncherInfos::ReadPh
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Launchers_Data::LauncherInfos::ReadPh( xml::xistream& input, const std::string& posture )
+{
+    const std::string targetPosture = xml::attribute< std::string >( input, "target-posture" );
+    int fire = -1, target = -1;
+    for( int iPosture =0; iPosture < eNbrUnitPosture; ++iPosture )
+    {
+        const std::string current = ADN_Tools::ComputePostureScriptName( (E_UnitPosture)iPosture );
+        if( posture == current )       fire   = iPosture;
+        if( targetPosture == current ) target = iPosture;
+    }
+    tabModifs_.Get( fire, target ) = xml::attribute< double >( input, "value" ) * 100;
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Launchers_Data::ReadArchive
 // Created: APE 2004-11-17
 // -----------------------------------------------------------------------------
-void ADN_Launchers_Data::LauncherInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Launchers_Data::LauncherInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Lanceur" );
-    input.ReadAttribute( "nom", strName_ );
-
-    if( input.Section( "Direct", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bDirect_ = true;
-        input.Section( "ModificateursPH" );
-
-        for( int iPostureTireur = 0; iPostureTireur < eNbrUnitPosture; ++iPostureTireur )
-        {
-            std::string szPostureTireur = "TireurEn" + ADN_Tools::ComputePostureScriptName((E_UnitPosture)iPostureTireur);
-            input.Section( szPostureTireur );
-
-            for( int iPostureCible=0; iPostureCible< eNbrUnitPosture;++iPostureCible)
-            {
-                std::string szPostureCible = "CibleEn" + ADN_Tools::ComputePostureScriptName((E_UnitPosture)iPostureCible);
-
-                double rModifier;
-                input.ReadField( szPostureCible, rModifier );
-                tabModifs_.Get(iPostureTireur,iPostureCible) = rModifier * 100;
-            }
-
-            input.EndSection();    // TireurEn...
-
-        }
-        input.EndSection();  // ModificateursPH
-        input.EndSection();  // Direct
-    }
-
-    if( input.Section( "Indirect", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bIndirect_ = true;
-        input.EndSection();
-    }
-
-    input.EndSection(); // Lanceur
+    input >> xml::attribute( "name", strName_ )
+          >> xml::optional() >> xml::attribute( "indirect-fire", bIndirect_ )
+          >> xml::list( "ph-modifiers", *this, &ADN_Launchers_Data::LauncherInfos::ReadPosture );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LauncherInfos::WriteArchive
 // Created: APE 2004-11-17
 // -----------------------------------------------------------------------------
-void ADN_Launchers_Data::LauncherInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Launchers_Data::LauncherInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Lanceur" );
-    output.WriteAttribute( "nom", strName_.GetData() );
-
+    output << xml::start( "launcher" )
+           << xml::attribute( "name", strName_ );
     if( bDirect_.GetData() == true )
-    {
-        output.Section( "Direct" );
-        output.Section( "ModificateursPH" );
-
         for( int iPostureTireur=0; iPostureTireur< eNbrUnitPosture;++iPostureTireur)
         {
-            std::string szPostureTireur= "TireurEn" + ADN_Tools::ComputePostureScriptName((E_UnitPosture)iPostureTireur);
-            output.Section( szPostureTireur );
-
+            output << xml::start( "ph-modifiers" )
+                    << xml::attribute( "posture", ADN_Tools::ComputePostureScriptName((E_UnitPosture)iPostureTireur) );
             for( int iPostureCible=0; iPostureCible< eNbrUnitPosture;++iPostureCible)
             {
-                std::string strPostureCible= "CibleEn" + ADN_Tools::ComputePostureScriptName((E_UnitPosture)iPostureCible);
-                double rModifier = tabModifs_.Get(iPostureTireur,iPostureCible).GetData() / 100.0;
-                output.WriteField( strPostureCible, rModifier );
+                output << xml::start( "ph-modifier" )
+                        << xml::attribute( "target-posture", ADN_Tools::ComputePostureScriptName((E_UnitPosture)iPostureCible) )
+                        << xml::attribute( "value", tabModifs_.Get(iPostureTireur,iPostureCible).GetData() / 100.0 )
+                       << xml::end();
             }
-
-            output.EndSection();    // TireurEn...
-
+            output << xml::end();
         }
-        output.EndSection();  // ModificateursPH
-        output.EndSection();  // Direct
-    }
-
     if( bIndirect_.GetData() == true )
-    {
-        output.Section( "Indirect" );
-        output.EndSection();
-    }
+        output << xml::attribute( "indirect-fire", bIndirect_ );
 
-    output.EndSection(); // Lanceur
+    output << xml::end();
 }
 
 
@@ -179,12 +155,8 @@ ADN_Launchers_Data::LauncherInfos* ADN_Launchers_Data::LauncherInfos::CreateCopy
 {
     LauncherInfos* pCopy = new LauncherInfos();
     for( uint i = 0; i < eNbrUnitPosture; ++i )
-    {
         for( uint j = 0; j < eNbrUnitPosture; ++j )
-        {
             pCopy->tabModifs_.Get( i, j ) = tabModifs_.Get( i, j ).GetData();
-        }
-    }
     pCopy->bDirect_ = this->bDirect_.GetData();
     pCopy->bIndirect_ = this->bIndirect_.GetData();
     return pCopy;
@@ -220,7 +192,6 @@ void ADN_Launchers_Data::FilesNeeded(T_StringList& files) const
     files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szLaunchers_.GetData());
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Launchers_Data::Reset
 // Created: JDY 03-07-11
@@ -230,35 +201,36 @@ void ADN_Launchers_Data::Reset()
     vLaunchers_.Reset();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Launchers_Data::ReadLauncher
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Launchers_Data::ReadLauncher( xml::xistream& input )
+{
+    std::auto_ptr<LauncherInfos> spNew( new LauncherInfos() );
+    spNew->ReadArchive( input );
+    vLaunchers_.AddItem( spNew.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Launchers_Data::ReadArchive
 // Created: APE 2004-11-17
 // -----------------------------------------------------------------------------
-void ADN_Launchers_Data::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Launchers_Data::ReadArchive( xml::xistream& input )
 {
-    input.BeginList( "Lanceurs" );
-
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<LauncherInfos> spNew( new LauncherInfos() );
-        spNew->ReadArchive( input );
-        vLaunchers_.AddItem( spNew.release() );
-    }
-    input.EndList();    // Lanceurs
+    input >> xml::start( "launchers" )
+            >> xml::list( "launcher", *this, &ADN_Launchers_Data::ReadLauncher )
+          >> xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Launchers_Data::WriteArchive
 // Created: APE 2004-11-17
 // -----------------------------------------------------------------------------
-void ADN_Launchers_Data::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Launchers_Data::WriteArchive( xml::xostream& output )
 {
-    output.BeginList( "Lanceurs", vLaunchers_.size() );
+    output << xml::start( "launchers" );
     for( T_LauncherInfos_Vector::iterator it = vLaunchers_.begin(); it != vLaunchers_.end(); ++it )
-    {
         (*it)->WriteArchive( output );
-    }
-    output.EndList();    // Lanceurs
+    output << xml::end();
 }

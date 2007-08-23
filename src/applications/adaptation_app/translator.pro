@@ -156,7 +156,6 @@ ADN_Weapons_PhTable.cpp \
 ADN_Wizard_ABC.inl \
 ADN_Wizard_FirstPage_Default.inl \
 ADN_Workspace.cpp \
-ADN_Xml_Exception.cpp \
 GQ_PlotData.cpp \
 GQ_PlotToolTip.cpp \
 qtundo.cpp \

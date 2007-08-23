@@ -37,21 +37,20 @@ AGR_Enumeration::~AGR_Enumeration()
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Enumeration::Read
-/** @param  input 
-*/
 // Created: AGN 2004-04-26
 // -----------------------------------------------------------------------------
-void AGR_Enumeration::Read( MT_InputArchive_ABC& input )
+void AGR_Enumeration::Read( xml::xistream& xis )
 {
-    while( input.NextListElement() )
-    {
-        input.Section( "xsd:enumeration" );
-        std::string strValue;
-        input.ReadAttribute( "value", strValue );
-        assert( std::find( valueList_.begin(), valueList_.end(), strValue ) == valueList_.end() );
-        valueList_.push_back( strValue );
-        input.EndSection(); // xsd:enumeration
-    }
+    xis >> xml::list( "xsd:enumeration", *this, &AGR_Enumeration::ReadValue );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Enumeration::ReadValue
+// Created: AGE 2007-08-23
+// -----------------------------------------------------------------------------
+void AGR_Enumeration::ReadValue( xml::xistream& xis )
+{
+    valueList_.push_back( xml::attribute< std::string >( xis, "value" ) );
 }
 
 // -----------------------------------------------------------------------------

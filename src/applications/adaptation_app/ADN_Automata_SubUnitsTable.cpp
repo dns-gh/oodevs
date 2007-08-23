@@ -47,20 +47,20 @@ public:
     void AddSubItems( int i, void* pObj )
     {
         assert( pObj );
-        ADN_TableItem_String* pItemName = new ADN_TableItem_String( &tab_, pObj, QTableItem::Never );
-        ADN_TableItem_String* pItemCountRegExp = new ADN_TableItem_String( &tab_, pObj );
-        pItemCountRegExp->SetAlignment( Qt::AlignRight );
+        ADN_TableItem_String* pItemName  = new ADN_TableItem_String( &tab_, pObj, QTableItem::Never );
+        ADN_TableItem_Int* pItemMinCount = new ADN_TableItem_Int( &tab_, pObj );
+        ADN_TableItem_Int* pItemMaxCount = new ADN_TableItem_Int( &tab_, pObj );
         // Add a new row.
         tab_.setItem( i, 0, pItemName );
-        tab_.setItem( i, 1, pItemCountRegExp ); 
-
+        tab_.setItem( i, 1, pItemMinCount ); 
+        tab_.setItem( i, 2, pItemMaxCount ); 
 
         // connect items & datas
         pItemName->GetConnector().Connect( &static_cast<UnitInfos*>(pObj)->ptrUnit_.GetData()->strName_ );
-        pItemCountRegExp->GetConnector().Connect( &static_cast<UnitInfos*>(pObj)->strNbrRegExp_ );
+        pItemMinCount->GetConnector().Connect( &static_cast<UnitInfos*>(pObj)->min_ );
+        pItemMaxCount->GetConnector().Connect( &static_cast<UnitInfos*>(pObj)->max_ );
     }
 };
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_SubUnitsTable constructor
@@ -81,14 +81,16 @@ ADN_Automata_SubUnitsTable::ADN_Automata_SubUnitsTable( QWidget* pParent )
     // Hide the vertical header.
     verticalHeader()->hide();
 
-    // Setup 2 columns.
-    setNumCols( 2 );
+    // Setup 3 columns.
+    setNumCols( 3 );
     setNumRows( 0 );
     setColumnStretchable( 0, true );
     setColumnStretchable( 1, true );
+    setColumnStretchable( 2, true );
 
-    horizontalHeader()->setLabel(0, tr( "Name" ) );
-    horizontalHeader()->setLabel(1, tr( "Nbr" ) );
+    horizontalHeader()->setLabel( 0, tr( "Name" ) );
+    horizontalHeader()->setLabel( 1, tr( "Min Nbr" ) );
+    horizontalHeader()->setLabel( 2, tr( "Max Nbr" ) );
 
     // Create the connector.
     pConnector_ = new ADN_Connector_SubUnitTable( *this );

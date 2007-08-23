@@ -10,6 +10,8 @@
 #ifndef __xmlcodecs_h_
 #define __xmlcodecs_h_
 
+#include "xeumeuleu/xml.h"
+
 namespace tools
 {
     template< typename T >
@@ -32,6 +34,14 @@ namespace tools
                 return false;
         }
         return true;
+    }
+
+    template< typename T >
+    bool ReadTimeAttribute( xml::xistream& xis, const std::string& name, T& time )
+    {
+        std::string timeString;
+        xis >> optional() >> attribute( name, timeString );
+        return DecodeTime( timeString, time );
     }
 }
 

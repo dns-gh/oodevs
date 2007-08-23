@@ -14,7 +14,7 @@
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
 
-class ADN_XmlInput_Helper;
+class xml::xistream;
 
 // =============================================================================
 /** @class  ADN_Missions_Data
@@ -42,8 +42,8 @@ public:
         std::string GetItemName();
         MissionParameterValue* CreateCopy();
 
-        void ReadArchive ( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output, unsigned int id );
+        void ReadArchive ( xml::xistream& input );
+        void WriteArchive( xml::xostream& output, unsigned int id );
 
     public:
         ADN_Type_String name_;
@@ -64,8 +64,9 @@ public:
         std::string GetItemName();
         MissionParameter* CreateCopy();
 
-        void ReadArchive ( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive ( xml::xistream& input );
+        void ReadValue   ( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_String                                                   strName_;
@@ -94,8 +95,9 @@ public:
         std::string GetItemName();
         Mission* CreateCopy();
 
-        void ReadArchive ( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output, const std::string& type );
+        void ReadArchive ( xml::xistream& input );
+        void ReadParameter( xml::xistream& input );
+        void WriteArchive( xml::xostream& output, const std::string& type, unsigned long id );
 
     public:
         ADN_Type_String           strName_;
@@ -126,8 +128,9 @@ public:
         std::string GetItemName();
         FragOrder* CreateCopy();
 
-        void ReadArchive ( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive ( xml::xistream& input );
+        void ReadParameter( xml::xistream& input );
+        void WriteArchive( xml::xostream& output, unsigned long id );
 
     public:
         ADN_Type_String           strName_;
@@ -164,9 +167,10 @@ public:
     //@}
 
 private:
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void ReadMiscMission( ADN_XmlInput_Helper& input, const std::string& name, ADN_TypePtr_InVector_ABC< Mission >& ptrMission );
-    void WriteArchive( MT_OutputArchive_ABC& output );
+    void ReadArchive( xml::xistream& input );
+    void ReadFragOrder( xml::xistream& input );
+    void ReadMission( xml::xistream& input, T_Mission_Vector& missions, const bool& automat );
+    void WriteArchive( xml::xostream& output );
 
 public:
     T_Mission_Vector   unitMissions_;

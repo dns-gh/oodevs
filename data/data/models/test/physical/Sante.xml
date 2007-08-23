@@ -1,32 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Sante>
-
-  <TempsDiagnostique>600s</TempsDiagnostique>
-
-  <TempsTri>600s</TempsTri>
-
-  <CategoriesBlesse>
-    <UE esperanceVie="3600s" pourcentage="5" tempsRepos="12m" tempsSoin="18000s"/>
-    <U1 esperanceVie="28800s" pourcentage="25" tempsRepos="12m" tempsSoin="1800s"/>
-    <U2 esperanceVie="14400s" pourcentage="30" tempsRepos="2m" tempsSoin="3600s"/>
-    <U3 esperanceVie="7200s" pourcentage="40" tempsRepos="12m" tempsSoin="18000s"/>
-  </CategoriesBlesse>
-
-  <ReacMental pourcentage="50" tempsRepos="2m" tempsSoin="1080s"/>
-
-  <Contamines tempsRepos="13m" tempsSoin="720s"/>
-
-  <AlertesDisponibiliteMoyens>
-    <AlertesDisponibiliteMoyensReleve>
-      <AlerteDisponibiliteMoyensReleve pourcentageMoyensDisponibles="75"/>
-    </AlertesDisponibiliteMoyensReleve>
-    <AlertesDisponibiliteMoyensRamassage>
-      <AlerteDisponibiliteMoyensRamassage pourcentageMoyensDisponibles="25"/>
-      <AlerteDisponibiliteMoyensRamassage pourcentageMoyensDisponibles="75"/>
-    </AlertesDisponibiliteMoyensRamassage>
-    <AlertesDisponibiliteMedecins>
-      <AlerteDisponibiliteMedecins pourcentageMoyensDisponibles="15"/>
-    </AlertesDisponibiliteMedecins>
-  </AlertesDisponibiliteMoyens>
-
-</Sante>
+<health>
+  <times diagnosis-time="600s" sorting-time="600s"/>
+  <injuries>
+    <injury caring-time="18000s" category="UE" life-expectancy="3600s" percentage="5" resting-time="12m"/>
+    <injury caring-time="1800s" category="U1" life-expectancy="28800s" percentage="25" resting-time="12m"/>
+    <injury caring-time="3600s" category="U2" life-expectancy="14400s" percentage="30" resting-time="2m"/>
+    <injury caring-time="18000s" category="U3" life-expectancy="7200s" percentage="40" resting-time="12m"/>
+    <injury caring-time="1080s" category="mental" percentage="50" resting-time="2m"/>
+    <injury caring-time="720s" category="contaminated" resting-time="13m"/>
+  </injuries>
+  <resource-availability-alerts>
+    <resource-availability-alert availability-threshold="75" resource="relieve"/>
+    <resource-availability-alert availability-threshold="25" resource="collection"/>
+    <resource-availability-alert availability-threshold="75" resource="collection"/>
+    <resource-availability-alert availability-threshold="15" resource="doctor"/>
+  </resource-availability-alerts>
+</health>

@@ -12,13 +12,16 @@
 #include "simulation_kernel_pch.h"
 
 #include "MIL_AgentTypePionMILICE.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionMILICE constructor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AgentTypePionMILICE::MIL_AgentTypePionMILICE( const std::string& strName, MIL_InputArchive& archive )
-    : MIL_AgentTypePion( strName, archive )
+MIL_AgentTypePionMILICE::MIL_AgentTypePionMILICE( const std::string& strName, xml::xistream& xis )
+    : MIL_AgentTypePion( strName, xis )
 {
 }
 

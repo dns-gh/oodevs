@@ -20,27 +20,12 @@ using namespace kernel;
 // Created: AGE 2006-09-05
 // -----------------------------------------------------------------------------
 AutomatComposition::AutomatComposition( xml::xistream& input, const Resolver_ABC< AgentType, QString >& agentResolver )
-    : type_( agentResolver.Get( ReadType( input ) ) ) 
+    : type_( agentResolver.Get( xml::attribute< std::string >( input, "type" ).c_str() ) )
     , min_( 0 )
-    , max_( 0 )
+    , max_( std::numeric_limits< unsigned >::max() )
 {
-    std::string quantity;
-    input >> quantity;
-    QString q = quantity.c_str();
-
-    if( q == "+" || q == "*" )
-    {
-        min_ = ( q == "+" ) ? 1 : 0;
-        max_ = std::numeric_limits< unsigned int >::max();
-    }
-    else
-    {
-        QStringList minMax = QStringList::split( "..", q );
-        if( ! minMax.isEmpty() )
-            max_ = min_ = minMax[0].toUInt();
-        if( minMax.size() >= 2 )
-            max_ = minMax[1].toUInt();
-    }
+    input >> xml::optional() >> xml::attribute( "min-occurs", min_ )
+          >> xml::optional() >> xml::attribute( "max-occurs", max_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,17 +35,6 @@ AutomatComposition::AutomatComposition( xml::xistream& input, const Resolver_ABC
 AutomatComposition::~AutomatComposition()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatComposition::ReadType
-// Created: AGE 2006-09-05
-// -----------------------------------------------------------------------------
-QString AutomatComposition::ReadType( xml::xistream& input )
-{
-    std::string name;
-    input >> xml::attribute( "nom", name );
-    return name.c_str();
 }
 
 // -----------------------------------------------------------------------------

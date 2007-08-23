@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <missions>
-
   <units>
     <mission dia-behavior="MIS_Pion_LOG_SeDeployer" dia-type="T_Mission_Pion_LOG_SeDeployer" id="1" name="LOG Se Deployer">
       <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="true" type="Point"/>
@@ -208,7 +207,6 @@
       <parameter dia-name="dotationType_" name="dotationType" optional="false" type="DotationType"/>
     </mission>
   </units>
-
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_RealiserTravaux" dia-type="T_Mission_Automate_GEN_RealiserTravaux" id="25" mrt-dia-behavior="MIS_Automate_MRT_GEN_RealiserTravaux" name="GEN Realiser Travaux">
       <parameter dia-name="travaux_" name="Travaux" optional="false" type="GenObjectList"/>
@@ -231,7 +229,6 @@
       <parameter dia-name="campRefugies_" name="Camp refugies" optional="false" type="ObjectKnowledge"/>
     </mission>
   </automats>
-
   <populations>
     <mission dia-behavior="MIS_Population_FaireMouvement" dia-type="T_Mission_Population_FaireMouvement" id="31" name="Faire Mouvement">
       <parameter dia-name="destination_" name="Destination" optional="false" type="Point"/>
@@ -243,7 +240,6 @@
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
     </mission>
   </populations>
-
   <fragorders>
     <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_MettreTenueNBC" id="34" name="Mettre Tenue NBC"/>
     <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_EnleverTenueNBC" id="35" name="Enlever Tenue NBC"/>
@@ -397,5 +393,4 @@
       </parameter>
     </fragorder>
   </fragorders>
-
 </missions>

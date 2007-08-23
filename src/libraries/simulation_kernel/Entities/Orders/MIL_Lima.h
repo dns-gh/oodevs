@@ -25,8 +25,8 @@ class MIL_Lima : public MIL_TacticalLine_ABC
 public:
     MIL_Lima();
     MIL_Lima( const ASN1T_MsgLimaCreationRequest& asn );
-    MIL_Lima( const MIL_Automate& automateBroadcasted  , MIL_InputArchive& archive );
-    MIL_Lima( const MIL_Formation& formationBroadcasted, MIL_InputArchive& archive );
+    MIL_Lima( const MIL_Automate& automateBroadcasted  , xml::xistream& xis );
+    MIL_Lima( const MIL_Formation& formationBroadcasted, xml::xistream& xis );
     virtual ~MIL_Lima();
 
     //! @name CheckPoints

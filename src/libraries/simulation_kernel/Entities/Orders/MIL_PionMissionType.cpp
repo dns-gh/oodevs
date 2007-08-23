@@ -10,6 +10,9 @@
 #include "simulation_kernel_pch.h"
 
 #include "MIL_PionMissionType.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 MIL_PionMissionType::T_MissionIDMap   MIL_PionMissionType::missionIDs_;
 MIL_PionMissionType::T_MissionIDMap   MIL_PionMissionType::missionDiaIDs_;
@@ -19,41 +22,54 @@ MIL_PionMissionType::T_MissionNameMap MIL_PionMissionType::missionNames_;
 // FACTORY
 // =============================================================================
 
+struct MIL_PionMissionType::LoadingWrapper
+{
+    void ReadMission( xml::xistream& xis )
+    {
+        MIL_PionMissionType::ReadMission( xis );
+    }
+};
+
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMissionType::Initialize
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-void MIL_PionMissionType::Initialize( MIL_InputArchive& archive )
+void MIL_PionMissionType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing pion mission types" );
+
+    LoadingWrapper loader;
     
-    archive.Section( "missions" );
-    archive.BeginList( "units" );
-    while( archive.NextListElement() )
-    {
-        archive.BeginList( "mission" );
-        uint nID;
-        archive.ReadAttribute( "id", nID );
+    xis >> start( "missions" )
+            >> start( "units" )
+                >> list( "mission", loader, &LoadingWrapper::ReadMission )
+            >> end()
+        >> end();
+}
 
-        const MIL_PionMissionType*& pMission = missionIDs_[ nID ];
-        if( pMission )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unit mission id already defined", archive.GetContext() );
-        pMission = new MIL_PionMissionType( nID, archive );
+// -----------------------------------------------------------------------------
+// Name: MIL_PionMissionType::ReadMission
+// Created: ABL 2007-07-26
+// -----------------------------------------------------------------------------
+void MIL_PionMissionType::ReadMission( xml::xistream& xis )
+{
+    uint nID;
+    xis >> attribute( "id", nID );
 
-        const MIL_PionMissionType*& pMissionDiaID = missionDiaIDs_[ pMission->GetDIAType().GetDebugId() ];
-        if( pMissionDiaID )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unit mission DIA ID already defined", archive.GetContext() );
-        pMissionDiaID = pMission;       
+    const MIL_PionMissionType*& pMission = missionIDs_[ nID ];
+    if( pMission )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unit mission id already defined" ); // $$$$ ABL 2007-07-26: error context
+    pMission = new MIL_PionMissionType( nID, xis );
 
-        const MIL_PionMissionType*& pMissionName = missionNames_[ pMission->GetName() ];
-        if( pMissionName )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unit mission name already defined", archive.GetContext() );
-        pMissionName = pMission;
+    const MIL_PionMissionType*& pMissionDiaID = missionDiaIDs_[ pMission->GetDIAType().GetDebugId() ];
+    if( pMissionDiaID )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unit mission DIA ID already defined" ); // $$$$ ABL 2007-07-26: error context
+    pMissionDiaID = pMission;       
 
-        archive.EndList(); // mission
-    }
-    archive.EndList(); // units
-    archive.EndSection(); // missions
+    const MIL_PionMissionType*& pMissionName = missionNames_[ pMission->GetName() ];
+    if( pMissionName )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unit mission name already defined" ); // $$$$ ABL 2007-07-26: error context
+    pMissionName = pMission;
 }
 
 // =============================================================================
@@ -64,11 +80,11 @@ void MIL_PionMissionType::Initialize( MIL_InputArchive& archive )
 // Name: MIL_PionMissionType constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_PionMissionType::MIL_PionMissionType( uint nID, MIL_InputArchive& archive )
-    : MIL_MissionType_ABC( nID, archive )
+MIL_PionMissionType::MIL_PionMissionType( uint nID, xml::xistream& xis )
+    : MIL_MissionType_ABC( nID, xis )
     , strDIABehavior_    ()
 {
-    archive.ReadAttribute( "dia-behavior", strDIABehavior_ );
+    xis >> attribute( "dia-behavior", strDIABehavior_ );
 }
 
 //-----------------------------------------------------------------------------

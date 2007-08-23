@@ -15,6 +15,10 @@
 
 #include "Network/NET_ASN_Messages.h"
 
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_HumanFactors, "PHY_RolePion_HumanFactors" )
 
 // -----------------------------------------------------------------------------
@@ -104,36 +108,61 @@ void PHY_RolePion_HumanFactors::save( MIL_CheckPointOutArchive& file, const uint
 // Name: PHY_RolePion_HumanFactors::ReadOverloading
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-void PHY_RolePion_HumanFactors::ReadOverloading( MIL_InputArchive& archive )
+void PHY_RolePion_HumanFactors::ReadOverloading( xml::xistream& xis )
 {
-    if( !archive.Section( "FacteursHumains", MIL_InputArchive::eNothing ) )
-        return;
-
-    std::string strTmp;
-    if( archive.ReadField( "Fatigue", strTmp ) )
-    {
-        pTiredness_ = PHY_Tiredness::Find( strTmp );
-        if( !pTiredness_ )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown tiredness type", archive.GetContext() );
-    }
-
-    if( archive.ReadField( "Moral", strTmp ) )
-    {
-        pMorale_ = PHY_Morale::Find( strTmp );
-        if( !pMorale_)
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown morale type", archive.GetContext() );
-    }
-
-    if( archive.ReadField( "Experience", strTmp ) )
-    {
-        pExperience_ = PHY_Experience::Find( strTmp );
-        if( !pExperience_ )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown experience type", archive.GetContext() );
-    }
-
-    archive.EndSection(); // FacteursHumains
+    xis >> list( "FacteursHumains", *this, &PHY_RolePion_HumanFactors::ReadFacteursHumains );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_HumanFactors::ReadFacteursHumains
+// Created: ABL 2007-07-10
+// -----------------------------------------------------------------------------
+void PHY_RolePion_HumanFactors::ReadFacteursHumains( xml::xistream& xis )
+{
+
+    xis >> list( "Fatigue", *this, &PHY_RolePion_HumanFactors::ReadFatigue )
+        >> list( "Moral", *this, &PHY_RolePion_HumanFactors::ReadMoral )
+        >> list( "Experience", *this, &PHY_RolePion_HumanFactors::ReadExperience );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_HumanFactors::ReadFatigue
+// Created: ABL 2007-07-10
+// -----------------------------------------------------------------------------
+void PHY_RolePion_HumanFactors::ReadFatigue( xml::xistream& xis )
+{
+    std::string strTmp;
+    xis >> strTmp;
+    pTiredness_ = PHY_Tiredness::Find( strTmp );
+    if( !pTiredness_ )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown tiredness type" ); // $$$$ ABL 2007-07-10: error context
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_HumanFactors::ReadMoral
+// Created: ABL 2007-07-10
+// -----------------------------------------------------------------------------
+void PHY_RolePion_HumanFactors::ReadMoral( xml::xistream& xis )
+{
+    std::string strTmp;
+    xis >> strTmp;
+    pMorale_ = PHY_Morale::Find( strTmp );
+    if( !pMorale_)
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown morale type" ); // $$$$ ABL 2007-07-10: error context
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_HumanFactors::ReadExperience
+// Created: ABL 2007-07-10
+// -----------------------------------------------------------------------------
+void PHY_RolePion_HumanFactors::ReadExperience( xml::xistream& xis )
+{
+    std::string strTmp;
+    xis >> strTmp;
+    pExperience_ = PHY_Experience::Find( strTmp );
+    if( !pExperience_ )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown experience type" ); // $$$$ ABL 2007-07-10: error context
+}
 // =============================================================================
 // NETWORK
 // =============================================================================

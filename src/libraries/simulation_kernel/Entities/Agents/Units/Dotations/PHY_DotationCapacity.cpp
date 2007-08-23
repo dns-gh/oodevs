@@ -12,19 +12,29 @@
 #include "simulation_kernel_pch.h"
 
 #include "PHY_DotationCapacity.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCapacity constructor
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-PHY_DotationCapacity::PHY_DotationCapacity( const PHY_DotationCategory& category, MIL_InputArchive& archive )
+PHY_DotationCapacity::PHY_DotationCapacity( const PHY_DotationCategory& category, xml::xistream& xis )
     : category_        ( category )
     , rCapacity_       ( 0. )
     , rSupplyThreshold_( 0. )
 {
-    archive.ReadAttribute( "contenance", rCapacity_, CheckValueGreater( 0. ) );
     float rSupplyThresholdPercentage;
-    archive.ReadAttribute( "seuilLogistique", rSupplyThresholdPercentage, CheckValueBound( 0., 100. ) );
+
+    xis >> attribute( "capacity", rCapacity_ )
+        >> attribute( "logistic-threshold", rSupplyThresholdPercentage );
+
+    if( rCapacity_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dotation: capacity <= 0" );
+    if( rSupplyThresholdPercentage < 0 || rSupplyThresholdPercentage > 100 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dotation: logistic-threshold not in [0..100]" );
+
     rSupplyThreshold_ = (float)( rCapacity_ * rSupplyThresholdPercentage / 100. );
 }
 

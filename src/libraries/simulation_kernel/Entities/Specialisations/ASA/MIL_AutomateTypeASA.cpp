@@ -15,13 +15,16 @@
 
 #include "Decision/Functions/DEC_GeometryFunctions.h"
 #include "Decision/DEC_Tools.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateTypeASA constructor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AutomateTypeASA::MIL_AutomateTypeASA( const std::string& strName, MIL_InputArchive& archive )
-    : MIL_AutomateType( strName, archive )
+MIL_AutomateTypeASA::MIL_AutomateTypeASA( const std::string& strName, xml::xistream& xis )
+    : MIL_AutomateType( strName, xis )
 {
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputePosDeploiementASAOmni,         "DEC_Geometrie_PosDeploiementASAOmni"      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputePosDeploiementASANasse,        "DEC_Geometrie_PosDeploiementMistralNasse" );

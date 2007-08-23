@@ -16,6 +16,11 @@
 
 #include "Entities/Agents/MIL_AgentTypePion.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 // @class  MIL_AgentTypePionType
 // Created: JVT 2004-08-03
@@ -25,11 +30,11 @@ class MIL_AgentTypePionALAT : public MIL_AgentTypePion
     MT_COPYNOTALLOWED( MIL_AgentTypePionALAT )
 
 public:
-    MIL_AgentTypePionALAT( const std::string& strName, MIL_InputArchive& archive );
+    MIL_AgentTypePionALAT( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePionALAT();
 
 public:
-    static const MIL_AgentTypePion* Create( const std::string& strName, MIL_InputArchive& archive );
+    static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
 };
 
 #include "MIL_AgentTypePionALAT.inl"

@@ -13,10 +13,19 @@
 #define __MIL_EntityManager_h_
 
 #include "MIL.h"
-
 #include "MT_Tools/MT_Profiler.h"
 
-class MIL_Time_ABC;
+namespace xml
+{
+    class xostream;
+    class xistream;
+}
+
+namespace DIN
+{
+    class DIN_Input;
+}
+
 class MIL_EffectManager;
 class MIL_ObjectManager;
 class MIL_Army;
@@ -81,13 +90,13 @@ public:
 
     //! @name Factory
     //@{
-    MIL_Population& CreatePopulation( const MIL_PopulationType& type, uint nID, MIL_Army& army, MIL_InputArchive& archive );
-    MIL_Formation&  CreateFormation ( uint nID, MIL_Army& army, MIL_InputArchive& archive, MIL_Formation* pParent = 0 );
-    MIL_Automate&   CreateAutomate  ( const MIL_AutomateType&  type, uint nID, MIL_Formation& formation, MIL_InputArchive& archive );
-    MIL_AgentPion&  CreatePion      ( const MIL_AgentTypePion& type, uint nID, MIL_Automate&  automate , MIL_InputArchive& archive );
+    void CreateFormation ( xml::xistream& xis, MIL_Army& army, MIL_Formation* parent = 0 );
+    void CreateAutomat   ( xml::xistream& xis, MIL_Formation& formation );
+    void CreatePopulation( xml::xistream& xis, MIL_Army& army );
+    MIL_AgentPion&  CreatePion      ( const MIL_AgentTypePion& type, uint nID, MIL_Automate&  automate , xml::xistream& xis );
     MIL_AgentPion&  CreatePion      ( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
 
-    MIL_RealObject_ABC&         CreateObject                       ( const MIL_RealObjectType& type, uint nID, MIL_Army& army, MIL_InputArchive& archive ); 
+    void                        CreateObject                       ( xml::xistream& xis, MIL_Army& army ); 
     MIL_RealObject_ABC*         CreateObject                       ( MIL_Army& army, const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint nCurrentParamIdx );
     MIL_RealObject_ABC*         CreateObject                       ( const MIL_RealObjectType& type, MIL_Army& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
     MIL_NuageNBC&               CreateObjectNuageNBC               ( MIL_Army& army, const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgentType );
@@ -162,7 +171,7 @@ public:
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
 
-    void WriteODB( MT_XXmlOutputArchive& archive ) const;
+    void WriteODB( xml::xostream& xos ) const;
     //@}
     
 private:
@@ -179,9 +188,6 @@ private:
 
     typedef std::map< uint, MIL_Population* > T_PopulationMap;
     typedef T_PopulationMap::const_iterator   CIT_PopulationMap;
-    
-    typedef std::vector< MIL_AgentPion* >  T_PionVector;
-    typedef T_PionVector::reverse_iterator RIT_PionVector;
     //@}
 
 private:
@@ -189,16 +195,18 @@ private:
     //@{
     // Types
     template < typename T > 
-    static void InitializeType       ( MIL_InputArchive& archive, MIL_Config& config, const std::string& strSection );
-    static void InitializeMedical    ( MIL_InputArchive& archive, MIL_Config& config );
-    static void InitializeComposantes( MIL_InputArchive& archive, MIL_Config& config, const MIL_Time_ABC& time );
-    static void InitializeWeapons    ( MIL_InputArchive& archive, MIL_Config& config, const MIL_Time_ABC& time, MIL_EffectManager& effects );
-    static void InitializeSensors    ( MIL_InputArchive& archive, MIL_Config& config, const MIL_Time_ABC& time );
+    static void InitializeType       ( xml::xistream& xis, MIL_Config& config, const std::string& strSection );
+    static void InitializeMedical    ( xml::xistream& xis, MIL_Config& config );
+    static void InitializeComposantes( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time );
+    static void InitializeWeapons    ( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time, MIL_EffectManager& effects );
+    static void InitializeSensors    ( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time );
 
     // ODB
-    void InitializeArmies     ( MIL_InputArchive& archive );
-    void InitializeDiplomacy  ( MIL_InputArchive& archive );
-    void InitializePopulations( MIL_InputArchive& archive );
+    void InitializeArmies     ( xml::xistream& xis );
+    void InitializeDiplomacy  ( xml::xistream& xis );
+    void InitializePopulations( xml::xistream& xis );
+    void ReadArmy             ( xml::xistream& xis );
+    void ReadDiplomacy        ( xml::xistream& xis );
     //@}
 
     //! @name Update

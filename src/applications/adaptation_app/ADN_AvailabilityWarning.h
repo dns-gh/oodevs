@@ -18,8 +18,8 @@ class ADN_AvailabilityWarning;
 typedef ADN_Type_Vector_ABC< ADN_AvailabilityWarning >  T_AvailabilityWarning_Vector;
 typedef T_AvailabilityWarning_Vector::iterator         IT_AvailabilityWarning_Vector;
 
-class ADN_XmlInput_Helper;
-class MT_OutputArchive_ABC;
+class xml::xistream;
+class xml::xostream;
 
 // =============================================================================
 /** @class  ADN_AvailabilityWarning
@@ -44,8 +44,9 @@ public:
     virtual std::string GetNodeName();
     std::string GetItemName();
 
-    void ReadArchive( ADN_XmlInput_Helper& input, const std::string& fieldName );
-    void WriteArchive( MT_OutputArchive_ABC& output, const std::string& fieldName );
+    void ReadArchive( xml::xistream& input );
+    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output, const std::string& attribute, const std::string& value );
     //@}
 
 private:

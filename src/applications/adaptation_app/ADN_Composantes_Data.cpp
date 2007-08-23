@@ -15,8 +15,6 @@
 #include "ADN_Project_Data.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
-#include "ADN_XmlInput_Helper.h"
-#include "ADN_Xml_Exception.h"
 #include "ADN_Tr.h"
 #include "ADN_Breakdowns_Data.h"
 #include "ADN_DataException.h"
@@ -80,90 +78,67 @@ void ADN_Composantes_Data::AmbulanceInfos::CopyFrom( AmbulanceInfos& src )
 // Name: AmbulanceInfos::ReadArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::AmbulanceInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Composantes_Data::AmbulanceInfos::ReadArchive( xml::xistream& input )
 {
-    input.ReadField( "Capacite", rCapacity_ );
-    input.ReadField( "TempsChargementParHumain", loadTimePerPerson_ );
-    input.ReadField( "TempsDechargementParHumain", unloadTimePerPerson_ );
+    std::string woundedTransport;
+    input >> xml::attribute( "capacity", rCapacity_ )
+          >> xml::attribute( "man-loading-time", loadTimePerPerson_ )
+          >> xml::attribute( "man-unloading-time", unloadTimePerPerson_ )
+          >> xml::optional() >> xml::attribute( "wounded-transport", woundedTransport )
+          >> xml::optional() >> xml::attribute( "nbc-transport", bTransportNBC_ )
+          >> xml::optional() >> xml::attribute( "reac-mental-transport", bTransportShock_ );
 
-    if( input.Section( "TransportBlessures", ADN_XmlInput_Helper::eNothing ) )
+    for( int n = 0; n < eNbrDoctorSkills; ++n )
     {
-        for( int n = 0; n < eNbrDoctorSkills; ++n )
-        {
-            if( input.Section( ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n ), ADN_XmlInput_Helper::eNothing ) )
-            {
-                transportSkills_[n] = true;
-                input.EndSection();
-            }
-        }
-        input.EndSection(); // TransportBlessures
-    }
-    if( input.Section( "TransportNBC", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bTransportNBC_ = true;
-        input.EndSection(); // TransportNBC
-    }
-    if( input.Section( "TransportReacMental", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bTransportShock_ = true;
-        input.EndSection(); // TransportReacMental
+        const std::string skill = ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n );
+        transportSkills_[n] = woundedTransport.find( skill ) != std::string::npos;
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AmbulanceInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::AmbulanceInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Composantes_Data::AmbulanceInfos::WriteArchive( const std::string& section, xml::xostream& output )
 {
-    output.WriteField( "Capacite", rCapacity_.GetData() );
-    output.WriteField( "TempsChargementParHumain", loadTimePerPerson_.GetData() );
-    output.WriteField( "TempsDechargementParHumain", unloadTimePerPerson_.GetData() );
-
-    output.Section( "TransportBlessures" );
+    std::string woundedTransports;
     for( int n = 0; n < eNbrDoctorSkills; ++n )
-    {
         if( transportSkills_[n].GetData() )
         {
-            output.Section( ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n ) );
-            output.EndSection();
+            if( ! woundedTransports.empty() )
+                woundedTransports += ", ";
+            woundedTransports += ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n );
         }
-    }
-    output.EndSection(); // SoinBlessures
-    
+    output << xml::start( section ) 
+            << xml::attribute( "capacity", rCapacity_ )
+            << xml::attribute( "man-loading-time", loadTimePerPerson_ )
+            << xml::attribute( "man-unloading-time", unloadTimePerPerson_ )
+            << xml::attribute( "wounded-transport", woundedTransports );
+
     if( bTransportNBC_.GetData() )
-    {
-        output.Section( "TransportNBC" );
-        output.EndSection(); // SoinNBC
-    }
+        output << xml::attribute( "nbc-transport", bTransportNBC_ );
     if( bTransportShock_.GetData() )
-    {
-        output.Section( "TransportReacMental" );
-        output.EndSection(); // SoinReacMental
-    }
-
+        output << xml::attribute( "reac-mental-transport", bTransportShock_ );
+    output << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LogHealthInfos::LogHealthInfos
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
 ADN_Composantes_Data::LogHealthInfos::LogHealthInfos()
-: ADN_DataTreeNode_ABC  ()
-, bIsAmbulance_         ( false )
-, bIsAmbulanceReleve_   ( false )
-, bIsDoctor_            ( false )
-, bIsSortingDoctor_     ( false )
-, bIsCuringDoctor_      ( false )
-, bCuresNBC_            ( false )
-, bCuresShock_          ( false )
+    : ADN_DataTreeNode_ABC  ()
+    , bIsAmbulance_         ( false )
+    , bIsAmbulanceReleve_   ( false )
+    , bIsDoctor_            ( false )
+    , bIsSortingDoctor_     ( false )
+    , bIsCuringDoctor_      ( false )
+    , bCuresNBC_            ( false )
+    , bCuresShock_          ( false )
 {
     for( int n = 0; n < eNbrDoctorSkills; ++n )
         doctorSkills_[n] = false;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LogHealthInfos::GetNodeName
@@ -174,7 +149,6 @@ std::string ADN_Composantes_Data::LogHealthInfos::GetNodeName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: LogHealthInfos::GetItemName
 // Created: APE 2005-03-11
@@ -183,7 +157,6 @@ std::string ADN_Composantes_Data::LogHealthInfos::GetItemName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LogHealthInfos::CopyFrom
@@ -205,118 +178,85 @@ void ADN_Composantes_Data::LogHealthInfos::CopyFrom( LogHealthInfos& src )
     ambulanceReleveInfos_.CopyFrom( src.ambulanceReleveInfos_ );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::LogHealthInfos::ReadInfo
+// Created: AGE 2007-08-20
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::LogHealthInfos::ReadInfo( const std::string& type, xml::xistream& input )
+{
+    if( type == "collecting" )
+    {
+        bIsAmbulance_ = true;
+        ambulanceInfos_.ReadArchive( input );
+    } else if( type == "relieving" )
+    {
+        bIsAmbulanceReleve_ = true;
+        ambulanceReleveInfos_.ReadArchive( input );
+    } else if( type == "caring" )
+    {
+        bIsDoctor_ = true;
+        std::string caring;
+        input >> xml::optional() >> xml::attribute( "sorting", bIsSortingDoctor_ )
+              >> xml::optional() >> xml::attribute( "nbc", bCuresNBC_ )
+              >> xml::optional() >> xml::attribute( "psychiatry", bCuresShock_ )
+              >> xml::optional() >> xml::attribute( "caring", caring );
+        bIsCuringDoctor_ = ! caring.empty();
+        for( int n = 0; n < eNbrDoctorSkills; ++n )
+        {
+            const std::string skill = ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n );
+            doctorSkills_[n] = caring.find( skill ) != std::string::npos;
+        }
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: LogHealthInfos::ReadArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::LogHealthInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Composantes_Data::LogHealthInfos::ReadArchive( xml::xistream& input )
 {
-    if( input.Section( "AmbulanceRamassage", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bIsAmbulance_ = true;
-        ambulanceInfos_.ReadArchive( input );
-        input.EndSection(); // AmbulanceRamassage
-    }
-    if( input.Section( "AmbulanceReleve", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bIsAmbulanceReleve_ = true;
-        ambulanceReleveInfos_.ReadArchive( input );
-        input.EndSection(); // AmbulanceReleve
-    }
-
-    if( input.Section( "Medecin", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bIsDoctor_ = true;
-        if( input.Section( "Tri", ADN_XmlInput_Helper::eNothing ) )
-        {
-            bIsSortingDoctor_ = true;
-            input.EndSection(); // Tri
-        }
-        if( input.Section( "SoinBlessures", ADN_XmlInput_Helper::eNothing ) )
-        {
-            bIsCuringDoctor_ = true;
-            for( int n = 0; n < eNbrDoctorSkills; ++n )
-            {
-                if( input.Section( ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n ), ADN_XmlInput_Helper::eNothing ) )
-                {
-                    doctorSkills_[n] = true;
-                    input.EndSection();
-                }
-            }
-            input.EndSection(); // SoinBlessures
-        }
-        if( input.Section( "SoinNBC", ADN_XmlInput_Helper::eNothing ) )
-        {
-            bCuresNBC_ = true;
-            input.EndSection(); // SoinNBC
-        }
-        if( input.Section( "SoinReacMental", ADN_XmlInput_Helper::eNothing ) )
-        {
-            bCuresShock_ = true;
-            input.EndSection(); // SoinReacMental
-        }
-
-        input.EndSection(); // Medecin
-    }
+    input >> xml::list( *this, &ADN_Composantes_Data::LogHealthInfos::ReadInfo );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogHealthInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::LogHealthInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Composantes_Data::LogHealthInfos::WriteArchive( xml::xostream& output )
 {
+    output << xml::start( "health-functions" );
     if( bIsAmbulance_.GetData() )
-    {
-        output.Section( "AmbulanceRamassage" );
-        ambulanceInfos_.WriteArchive( output );
-        output.EndSection(); // AmbulanceRamassage
-    }
+        ambulanceInfos_.WriteArchive( "collecting", output );
 
     if( bIsAmbulanceReleve_.GetData() )
-    {
-        output.Section( "AmbulanceReleve" );
-        ambulanceReleveInfos_.WriteArchive( output );
-        output.EndSection(); // AmbulanceReleve
-    }
+        ambulanceReleveInfos_.WriteArchive( "relieving", output );
 
     if( bIsDoctor_.GetData() )
     {
-        output.Section( "Medecin" );
+        output << xml::start( "caring" );
         if( bIsSortingDoctor_.GetData() )
-        {
-            output.Section( "Tri" );
-            output.EndSection(); // Tri
-        }
+            output << xml::attribute( "sorting", true );
         if( bIsCuringDoctor_.GetData() )
         {
-            output.Section( "SoinBlessures" );
+            std::string caring;
             for( int n = 0; n < eNbrDoctorSkills; ++n )
-            {
                 if( doctorSkills_[n].GetData() )
                 {
-                    output.Section( ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n ) );
-                    output.EndSection();
+                    if( ! caring.empty() )
+                        caring += ", ";
+                    caring += ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n );
                 }
-            }
-            output.EndSection(); // SoinBlessures
+            output << xml::attribute( "caring", caring );
         }
         if( bCuresNBC_.GetData() )
-        {
-            output.Section( "SoinNBC" );
-            output.EndSection(); // SoinNBC
-        }
+            output << xml::attribute( "nbc", true );
         if( bCuresShock_.GetData() )
-        {
-            output.Section( "SoinReacMental" );
-            output.EndSection(); // SoinReacMental
-        }
-
-        output.EndSection(); // Medecin
+            output << xml::attribute( "psychiatry", true );
+    
+        output << xml::end();
     }
+    output << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: NTIInfos::NTIInfos
@@ -333,7 +273,6 @@ ADN_Composantes_Data::NTIInfos::NTIInfos( const std::string& strName )
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: NTIInfos::GetNodeName
 // Created: APE 2005-03-11
@@ -343,7 +282,6 @@ std::string ADN_Composantes_Data::NTIInfos::GetNodeName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: NTIInfos::GetItemName
 // Created: APE 2005-03-11
@@ -352,7 +290,6 @@ std::string ADN_Composantes_Data::NTIInfos::GetItemName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: NTIInfos::CopyFrom
@@ -367,82 +304,62 @@ void ADN_Composantes_Data::NTIInfos::CopyFrom( NTIInfos& src )
     bCanRepairM_ = src.bCanRepairM_.GetData();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: NTIInfos::ReadArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::NTIInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Composantes_Data::NTIInfos::ReadArchive( xml::xistream& input )
 {
-    if( ! input.Section( strName_, ADN_XmlInput_Helper::eNothing ) )
-        return;
-
     bIsPresent_ = true;
+    std::string type;
+    input >> xml::optional() >> xml::attribute( "max-reparation-time", maxRepairTime_ )
+          >> xml::optional() >> xml::attribute( "type", type );
 
-    if( input.ReadAttribute( "tempsMaxReparation", maxRepairTime_, ADN_XmlInput_Helper::eNothing ) )
-        bHasMaxRepairTime_ = true;
-
-    if( input.Section( "EA", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bCanRepairEA_ = true;
-        input.EndSection(); // EA
-    }
-
-    if( input.Section( "M", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bCanRepairM_ = true;
-        input.EndSection(); // M
-    }
-    input.EndSection();
+    bHasMaxRepairTime_ = maxRepairTime_ != "0s";
+    bCanRepairEA_ = type.find( "EA" ) != std::string::npos;
+    bCanRepairM_  = type.find( "M"  ) != std::string::npos;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: NTIInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::NTIInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Composantes_Data::NTIInfos::WriteArchive( xml::xostream& output )
 {
     if( ! bIsPresent_.GetData() )
         return;
-
-    output.Section( strName_ );
-
+    output << xml::start( "reparing" );
+    output << xml::attribute( "category", strName_ );
     if( bHasMaxRepairTime_.GetData() )
-        output.WriteAttribute( "tempsMaxReparation", maxRepairTime_.GetData() );
-
-    if( bCanRepairEA_.GetData() )
-    {
-        output.Section( "EA" ),
-            output.EndSection(); // EA
-    }
-
-    if( bCanRepairM_.GetData() )
-    {
-        output.Section( "M" );
-        output.EndSection(); // M
-    }
-    output.EndSection();
+        output << xml::attribute( "max-reparation-time", maxRepairTime_ );
+    std::string type;
+    if( bCanRepairEA_.GetData() && bCanRepairM_.GetData() )
+        type = "EA, M";
+    else if( bCanRepairEA_.GetData() )
+        type = "EA";
+    else if( bCanRepairM_.GetData() )
+        type = "M";
+    if( ! type.empty() )
+        output << xml::attribute( "type", type );
+    output << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LogMaintenanceInfos::LogMaintenanceInfos
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
 ADN_Composantes_Data::LogMaintenanceInfos::LogMaintenanceInfos()
-: ADN_DataTreeNode_ABC()
-, bIsTower_           ( false )
-, rCapacity_          ( 0 )
-, loadTime_           ( "0s" )
-, unloadTime_         ( "0s" )
-, NTI1Infos_          ( "NTI1" )
-, NTI2Infos_          ( "NTI2" )
-, NTI3Infos_          ( "NTI3" )
+    : ADN_DataTreeNode_ABC()
+    , bIsTower_           ( false )
+    , rCapacity_          ( 0 )
+    , loadTime_           ( "0s" )
+    , unloadTime_         ( "0s" )
+    , NTI1Infos_          ( "NTI1" )
+    , NTI2Infos_          ( "NTI2" )
+    , NTI3Infos_          ( "NTI3" )
 {
 }
 
-//
 // -----------------------------------------------------------------------------
 // Name: LogMaintenanceInfos::GetNodeName
 // Created: APE 2005-03-11
@@ -452,7 +369,6 @@ std::string ADN_Composantes_Data::LogMaintenanceInfos::GetNodeName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: LogMaintenanceInfos::GetItemName
 // Created: APE 2005-03-11
@@ -461,7 +377,6 @@ std::string ADN_Composantes_Data::LogMaintenanceInfos::GetItemName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LogMaintenanceInfos::CopyFrom
@@ -479,46 +394,60 @@ void ADN_Composantes_Data::LogMaintenanceInfos::CopyFrom( LogMaintenanceInfos& s
     NTI3Infos_.CopyFrom( src.NTI3Infos_ );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::LogMaintenanceInfos::ReadInfo
+// Created: AGE 2007-08-20
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::LogMaintenanceInfos::ReadInfo( const std::string& type, xml::xistream& input )
+{
+    if( type == "towing" )
+    {
+        bIsTower_ = true;
+        input >> xml::attribute( "capacity", rCapacity_ )
+              >> xml::attribute( "loading-time", loadTime_ )
+              >> xml::attribute( "unloading-time", unloadTime_ );
+    } else if( type == "repairing" )
+    {
+        std::string category;
+        input >> xml::attribute( "category", category );
+        if( category == "NTI1" )
+            NTI1Infos_.ReadArchive( input );
+        else if( category == "NTI2" )
+            NTI2Infos_.ReadArchive( input );
+        else if( category == "NTI3" )
+            NTI3Infos_.ReadArchive( input );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: LogMaintenanceInfos::ReadArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::LogMaintenanceInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Composantes_Data::LogMaintenanceInfos::ReadArchive( xml::xistream& input )
 {
-    if( input.Section( "Remorqueur", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bIsTower_ = true;
-        input.ReadField( "Capacite", rCapacity_ );
-        input.ReadField( "TempsChargement", loadTime_ );
-        input.ReadField( "TempsDechargement", unloadTime_ );
-        input.EndSection(); // Remorqueur
-    }
-    NTI1Infos_.ReadArchive( input );
-    NTI2Infos_.ReadArchive( input );
-    NTI3Infos_.ReadArchive( input );
+    input >> xml::list( *this, &ADN_Composantes_Data::LogMaintenanceInfos::ReadInfo );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LogMaintenanceInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::LogMaintenanceInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Composantes_Data::LogMaintenanceInfos::WriteArchive( xml::xostream& output )
 {
+    output << xml::start( "maintenance-functions" );
     if( bIsTower_.GetData() )
     {
-        output.Section( "Remorqueur" );
-        output.WriteField( "Capacite", rCapacity_.GetData() );
-        output.WriteField( "TempsChargement", loadTime_.GetData() );
-        output.WriteField( "TempsDechargement", unloadTime_.GetData() );
-        output.EndSection();
+        output << xml::start( "towing" )
+                << xml::attribute( "capacity", rCapacity_ )
+                << xml::attribute( "loading-time", loadTime_ )
+                << xml::attribute( "unloading-time", unloadTime_ )
+               << xml::end();
     }
     NTI1Infos_.WriteArchive( output );
     NTI2Infos_.WriteArchive( output );
     NTI3Infos_.WriteArchive( output );
+    output << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LogSupplyInfos::LogSupplyInfos
@@ -533,7 +462,6 @@ ADN_Composantes_Data::LogSupplyInfos::LogSupplyInfos()
 {
     BindExistenceTo( &ptrDotationNature_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LogSupplyInfos::GetNodeName
@@ -553,7 +481,6 @@ std::string ADN_Composantes_Data::LogSupplyInfos::GetItemName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: LogSupplyInfos::CopyFrom
 // Created: APE 2005-03-24
@@ -570,47 +497,40 @@ void ADN_Composantes_Data::LogSupplyInfos::CopyFrom( LogSupplyInfos& src )
 // Name: LogSupplyInfos::ReadArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::LogSupplyInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Composantes_Data::LogSupplyInfos::ReadArchive( xml::xistream& input )
 {
-    if( input.Section( "Transporteur", ADN_XmlInput_Helper::eNothing ) )
+    std::string strNature;
+    input >> xml::optional()
+          >> xml::start( "carrying" )
+            >> xml::attribute( "mass", rWeight_ )
+            >> xml::attribute( "volume", rVolume_ )
+            >> xml::attribute( "nature", strNature )
+          >> xml::end();
+    if( !strNature.empty() )
     {
         bIsCarrier_ = true;
-
-        input.Section( "Capacite" );
-        input.ReadField( "Masse", rWeight_ );
-        input.ReadField( "Volume", rVolume_ );
-        input.EndSection(); // Capacite
-
-        std::string strNature;
-        input.ReadField( "NatureTransportee", strNature );
         ADN_Categories_Data::DotationNatureInfos* pNature = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindDotationNature( strNature );
         if( !pNature )
-            input.ThrowError( "La nature de dotation : " + strNature + " n'existe pas." );
+            throw ADN_DataException( "LogSupplyInfos", "La nature de dotation : " + strNature + " n'existe pas." );
         ptrDotationNature_ = pNature;
-
-        input.EndSection(); // Transporteur
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LogSupplyInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::LogSupplyInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Composantes_Data::LogSupplyInfos::WriteArchive( xml::xostream& output )
 {
+    output << xml::start( "supply-functions" );
     if( bIsCarrier_.GetData() )
-    {
-        output.Section( "Transporteur" );
-        output.Section( "Capacite" );
-        output.WriteField( "Masse" , rWeight_.GetData() );
-        output.WriteField( "Volume", rVolume_.GetData() );
-        output.EndSection();
-        output.WriteField( "NatureTransportee", ptrDotationNature_.GetData()->GetData() );
-        output.EndSection(); // Transporteur
-    }
+        output << xml::start( "carrying" )
+                << xml::attribute( "mass", rWeight_ )
+                << xml::attribute( "volume", rVolume_ )
+                << xml::attribute( "nature", ptrDotationNature_.GetData()->GetData() )
+               << xml::end();
+    output << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LogInfos::LogInfos
@@ -624,7 +544,6 @@ ADN_Composantes_Data::LogInfos::LogInfos()
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: LogInfos::GetNodeName
 // Created: APE 2005-03-11
@@ -634,7 +553,6 @@ std::string ADN_Composantes_Data::LogInfos::GetNodeName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: LogInfos::GetItemName
 // Created: APE 2005-03-11
@@ -643,7 +561,6 @@ std::string ADN_Composantes_Data::LogInfos::GetItemName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LogInfos::CopyFrom
@@ -660,76 +577,54 @@ void ADN_Composantes_Data::LogInfos::CopyFrom( LogInfos& src )
     supplyInfos_.CopyFrom( src.supplyInfos_ );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::LogInfos::ReadLogisticFunction
+// Created: AGE 2007-08-20
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::LogInfos::ReadLogisticFunction( const std::string& type, xml::xistream& input )
+{
+    if( type == "supply-functions" ) {
+        bHasSupplyInfos_ = true;
+        supplyInfos_.ReadArchive( input );
+    } else if( type == "health-functions" ) {
+        bHasHealthInfos_ = true;
+        healthInfos_.ReadArchive( input );
+    } else if( type == "maintenance-functions" ) {
+        bHasMaintenanceInfos_ = true;
+        maintenanceInfos_.ReadArchive( input );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: LogInfos::ReadArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::LogInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Composantes_Data::LogInfos::ReadArchive( xml::xistream& input )
 {
-    if( ! input.Section( "FonctionsLogistiques", ADN_XmlInput_Helper::eNothing ) )
-        return;
-
-    if( input.Section( "Sante", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bHasHealthInfos_ = true;
-        healthInfos_.ReadArchive( input );
-        input.EndSection(); // Sante
-    }
-
-    if( input.Section( "Maintenance", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bHasMaintenanceInfos_ = true;
-        maintenanceInfos_.ReadArchive( input );
-        input.EndSection(); // Maintenance
-    }
-
-    if( input.Section( "Ravitaillement", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bHasSupplyInfos_ = true;
-        supplyInfos_.ReadArchive( input );
-        input.EndSection(); // Ravitaillement
-    }
-
-    input.EndSection(); // FonctionsLogistiques
+    input >> xml::optional() 
+            >> xml::start( "logistic-functions" )
+                >> xml::list( *this, &ADN_Composantes_Data::LogInfos::ReadLogisticFunction )
+            >> xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LogInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::LogInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Composantes_Data::LogInfos::WriteArchive( xml::xostream& output )
 {
     if( ! bHasHealthInfos_.GetData() && ! bHasMaintenanceInfos_.GetData() && ! bHasSupplyInfos_.GetData() )
         return;
 
-    output.Section( "FonctionsLogistiques" );
-
+    output << xml::start( "logistic-functions" );
     if( bHasHealthInfos_.GetData() )
-    {
-        output.Section( "Sante" );
         healthInfos_.WriteArchive( output );
-        output.EndSection(); // Sante
-    }
-
     if( bHasMaintenanceInfos_.GetData() )
-    {
-        output.Section( "Maintenance" );
         maintenanceInfos_.WriteArchive( output );
-        output.EndSection(); // Maintenance
-    }
-
     if( bHasSupplyInfos_.GetData() )
-    {
-        output.Section( "Ravitaillement" );
         supplyInfos_.WriteArchive( output );
-        output.EndSection(); // Ravitaillement
-    }
-
-    output.EndSection(); // FonctionsLogistiques
+    output << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: BreakdownInfos::BreakdownInfos
@@ -743,7 +638,6 @@ ADN_Composantes_Data::BreakdownInfos::BreakdownInfos()
     BindExistenceTo( &ptrBreakdown_ );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: BreakdownInfos::GetNodeName
 // Created: APE 2005-04-27
@@ -753,7 +647,6 @@ std::string ADN_Composantes_Data::BreakdownInfos::GetNodeName()
     return std::string( "" );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: BreakdownInfos::GetItemName
 // Created: APE 2005-04-27
@@ -762,7 +655,6 @@ std::string ADN_Composantes_Data::BreakdownInfos::GetItemName()
 {
     return std::string( "" );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: BreakdownInfos::CreateCopy
@@ -777,42 +669,34 @@ ADN_Composantes_Data::BreakdownInfos* ADN_Composantes_Data::BreakdownInfos::Crea
     return pCopy;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: BreakdownInfos::ReadArchive
 // Created: APE 2005-04-27
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::BreakdownInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Composantes_Data::BreakdownInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Panne" );
     std::string strName;
-    input.ReadAttribute( "nom", strName );
-
+    input >> xml::attribute( "type", strName )
+          >> xml::attribute( "percentage", rPercentage_ );
     ADN_Breakdowns_Data::BreakdownInfo* pBreakdown = ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().FindBreakdown( strName );
     if( pBreakdown == 0 )
-        input.ThrowError( tr( "Breakdown %1 does not exist." ).arg( strName.c_str() ).ascii() );
-
+        throw ADN_DataException( "BreakdownInfos", tr( "Breakdown %1 does not exist." ).arg( strName.c_str() ).ascii() );
     ptrBreakdown_ = pBreakdown;
     ptrBreakdown_.SetVector( ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().vBreakdowns_ );
-    //ptrBreakdown_.SetVector( pBreakdown->nti_.vBreakdowns_ );
-
-    input.ReadAttribute( "pourcentage", rPercentage_ );
-    input.EndSection(); // Panne
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: BreakdownInfos::WriteArchive
 // Created: APE 2005-04-27
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::BreakdownInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Composantes_Data::BreakdownInfos::WriteArchive( const std::string& origin, xml::xostream& output )
 {
-    output.Section( "Panne" );
-    output.WriteAttribute( "nom", ptrBreakdown_.GetData()->strName_.GetData() );
-    output.WriteAttribute( "pourcentage", rPercentage_.GetData() );
-    output.EndSection(); // Panne
+    output << xml::start( "breakdown" )
+            << xml::attribute( "origin", origin )
+            << xml::attribute( "type", ptrBreakdown_.GetData()->strName_ )
+            << xml::attribute( "percentage", rPercentage_ )
+           << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: BreakdownGroupInfos::BreakdownGroupInfos
@@ -841,7 +725,6 @@ std::string ADN_Composantes_Data::BreakdownGroupInfos::GetNodeName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: BreakdownGroupInfos::GetItemName
 // Created: APE 2005-04-27
@@ -850,7 +733,6 @@ std::string ADN_Composantes_Data::BreakdownGroupInfos::GetItemName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: BreakdownGroupInfos::CopyFrom
@@ -864,43 +746,47 @@ void ADN_Composantes_Data::BreakdownGroupInfos::CopyFrom( BreakdownGroupInfos& s
         vBreakdowns_.AddItem( (*it)->CreateCopy() );
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: BreakdownGroupInfos::ReadArchive
-// Created: APE 2005-04-27
+// Name: ADN_Composantes_Data::BreakdownGroupInfos::ReadBreakdown
+// Created: AGE 2007-08-20
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::BreakdownGroupInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Composantes_Data::BreakdownGroupInfos::ReadBreakdown( xml::xistream& input )
 {
-    input.BeginList( strName_ );
-    while( input.NextListElement() )
+    if( xml::attribute< std::string >( input, "origin" ) == strName_ )
     {
         std::auto_ptr<BreakdownInfos> spNew( new BreakdownInfos() );
         spNew->ReadArchive( input );
         vBreakdowns_.AddItem( spNew.release() );
     }
-    input.EndList();
 }
 
+// -----------------------------------------------------------------------------
+// Name: BreakdownGroupInfos::ReadArchive
+// Created: APE 2005-04-27
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::BreakdownGroupInfos::ReadArchive( xml::xistream& input )
+{
+    input >> xml::optional() 
+          >> xml::start( "breakdowns" )
+            >> xml::list( "breakdown", *this, &ADN_Composantes_Data::BreakdownGroupInfos::ReadBreakdown )
+          >> xml::end();
+}
 
 // -----------------------------------------------------------------------------
 // Name: BreakdownGroupInfos::WriteArchive
 // Created: APE 2005-04-27
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::BreakdownGroupInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Composantes_Data::BreakdownGroupInfos::WriteArchive( xml::xostream& output )
 {
     double rSum = 0.0;
     for( IT_BreakdownInfos_Vector it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
         rSum += (*it)->rPercentage_.GetData();
-
     if( rSum != 100.0 )
         throw ADN_DataException( tr( "Data error" ).ascii(), tr( "The sum of breakdown odds for composante x is not equal to 100." ).ascii() );
 
-    output.BeginList( strName_, vBreakdowns_.size() );
     for( IT_BreakdownInfos_Vector it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
-        (*it)->WriteArchive( output );
-    output.EndList();
+        (*it)->WriteArchive( strName_, output );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: SpeedInfos::SpeedInfos
@@ -914,7 +800,6 @@ ADN_Composantes_Data::SpeedInfos::SpeedInfos( E_Location nTypeTerrain )
     rSpeed_.SetParentNode( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: SpeedInfos::GetNodeName
 // Created: AGN 2004-05-14
@@ -925,7 +810,6 @@ std::string ADN_Composantes_Data::SpeedInfos::GetNodeName()
     return strResult + ADN_Tr::ConvertFromLocation( nTypeTerrain_, ENT_Tr_ABC::eToTr );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: SpeedInfos::GetItemName
 // Created: AGN 2004-05-18
@@ -935,31 +819,26 @@ std::string ADN_Composantes_Data::SpeedInfos::GetItemName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: SpeedInfos::ReadArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::SpeedInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Composantes_Data::SpeedInfos::ReadArchive( xml::xistream& input )
 {
-    double rSpeed;
-    input.Read( rSpeed );
-    rSpeed_ = rSpeed;
+    input >> xml::attribute( "value", rSpeed_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: SpeedInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::SpeedInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Composantes_Data::SpeedInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Terrain" );
-    output.WriteAttribute( "type", ADN_Tr::ConvertFromLocation( nTypeTerrain_ ) );
-    output << rSpeed_.GetData();
-    output.EndSection(); // Terrain
+    output << xml::start( "speed" )
+            << xml::attribute( "terrain", ADN_Tr::ConvertFromLocation( nTypeTerrain_ ) )
+            << xml::attribute( "value", rSpeed_ )
+           << xml::end();
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: SensorInfos::SensorInfos
@@ -971,11 +850,9 @@ ADN_Composantes_Data::SensorInfos::SensorInfos()
 ,   rHeight_(0)
 {
     BindExistenceTo(&ptrSensor_);
-
     rHeight_.SetDataName( "la hauteur" );
     rHeight_.SetParentNode( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: SensorInfos::GetNodeName
@@ -987,7 +864,6 @@ std::string ADN_Composantes_Data::SensorInfos::GetNodeName()
     return strResult + ptrSensor_.GetData()->strName_.GetData().c_str();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: SensorInfos::GetItemName
 // Created: AGN 2004-05-18
@@ -996,7 +872,6 @@ std::string ADN_Composantes_Data::SensorInfos::GetItemName()
 {
     return ptrSensor_.GetData()->strName_.GetData().c_str();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: SensorInfos::CreateCopy
@@ -1010,36 +885,30 @@ ADN_Composantes_Data::SensorInfos* ADN_Composantes_Data::SensorInfos::CreateCopy
     return pCopy;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: SensorInfos::ReadArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::SensorInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Composantes_Data::SensorInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Senseur" );
-    input.ReadAttribute( "hauteur", rHeight_ );
-    std::string strName;
-    input.Read( strName );
-    ADN_Sensors_Data::SensorInfos* pSensor = ADN_Workspace::GetWorkspace().GetSensors().GetData().FindSensor( strName );
-    
+    std::string type;
+    input >> xml::attribute( "height", rHeight_ )
+          >> xml::attribute( "type", type );
+    ADN_Sensors_Data::SensorInfos* pSensor = ADN_Workspace::GetWorkspace().GetSensors().GetData().FindSensor( type );
     ptrSensor_ = pSensor;
-    input.EndSection(); // Senseur
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: SensorInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::SensorInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Composantes_Data::SensorInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Senseur" );
-    output.WriteAttribute( "hauteur", rHeight_.GetData() );
-    output << ptrSensor_.GetData()->strName_.GetData();
-    output.EndSection(); // Senseur
+    output << xml::start( "sensor" )
+            << xml::attribute( "height", rHeight_ )
+            << xml::attribute( "type", ptrSensor_.GetData()->strName_ )
+           << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: RadarInfos::RadarInfos
@@ -1062,7 +931,6 @@ std::string ADN_Composantes_Data::RadarInfos::GetNodeName()
     return std::string( "" );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: RadarInfos::GetItemName
 // Created: APE 2005-05-03
@@ -1071,7 +939,6 @@ std::string ADN_Composantes_Data::RadarInfos::GetItemName()
 {
     return std::string( "" );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: RadarInfos::CreateCopy
@@ -1089,36 +956,27 @@ ADN_Composantes_Data::RadarInfos* ADN_Composantes_Data::RadarInfos::CreateCopy()
 // Name: RadarInfos::ReadArchive
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::RadarInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Composantes_Data::RadarInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Radar" ); 
     std::string strRadarName;
-    input.Read( strRadarName );
-
+    input >> xml::attribute( "type", strRadarName );
     ADN_Radars_Data::RadarInfos* pRadar = ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_.FindRadar( strRadarName );
     if( pRadar == 0 )
-        input.ThrowError( tr( "Radar %1 does not exist." ).arg( strRadarName.c_str() ).ascii() );
-
+        throw ADN_DataException( "RadarInfos", tr( "Radar %1 does not exist." ).arg( strRadarName.c_str() ).ascii() );
     ptrRadar_ = pRadar;
     strName_ = strRadarName;
-
-    input.EndSection(); // Radar
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: RadarInfos::WriteArchive
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::RadarInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Composantes_Data::RadarInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Radar" );
-    output << ptrRadar_.GetData()->strName_.GetData();
-    output.EndSection(); //Radar
+    output << xml::start( "radar" )
+            << xml::attribute( "type", ptrRadar_.GetData()->strName_ )
+           << xml::end();
 }
-
-
-
 
 //-----------------------------------------------------------------------------
 // Name: WeaponInfos::WeaponInfos
@@ -1130,7 +988,6 @@ ADN_Composantes_Data::WeaponInfos::WeaponInfos()
 {
     BindExistenceTo(&ptrWeapon_);
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: WeaponInfos::WeaponInfos
@@ -1144,8 +1001,6 @@ ADN_Composantes_Data::WeaponInfos::WeaponInfos( ADN_Weapons_Data::WeaponInfos& w
     BindExistenceTo(&ptrWeapon_);
 }
 
-
-
 // -----------------------------------------------------------------------------
 // Name: WeaponInfos::GetNodeName
 // Created: AGN 2004-05-14
@@ -1156,7 +1011,6 @@ std::string ADN_Composantes_Data::WeaponInfos::GetNodeName()
     return strResult + ptrWeapon_.GetData()->GetNodeName();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: WeaponInfos::GetItemName
 // Created: AGN 2004-05-18
@@ -1165,7 +1019,6 @@ std::string ADN_Composantes_Data::WeaponInfos::GetItemName()
 {
     return ((ADN_Weapons_Data::WeaponInfos*)ptrWeapon_.GetData())->ptrLauncher_.GetData()->strName_.GetData();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: WeaponInfos::CreateCopy
@@ -1179,43 +1032,33 @@ ADN_Composantes_Data::WeaponInfos* ADN_Composantes_Data::WeaponInfos::CreateCopy
     return pCopy;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: WeaponInfos::ReadArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::WeaponInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Composantes_Data::WeaponInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Armement" );
-
-    std::string strLauncher;
-    std::string strAmmunition;
-    input.ReadAttribute( "lanceur", strLauncher );
-    input.ReadAttribute( "munition", strAmmunition );
+    std::string strLauncher, strAmmunition;
+    input >> xml::attribute( "launcher", strLauncher )
+          >> xml::attribute( "munition", strAmmunition );
     ADN_Weapons_Data::WeaponInfos* pWeapon = ADN_Workspace::GetWorkspace().GetWeapons().GetData().FindWeapon( strLauncher, strAmmunition );
     if( !pWeapon )
-        throw ADN_Xml_Exception( input.GetContext(), "Aucun armement correspondant au lanceur \"" + strLauncher + "\" et aux munitions \"" + strAmmunition + "\" n'existe." );
+        throw ADN_DataException( "WeaponInfos", "Aucun armement correspondant au lanceur '" + strLauncher + "' et aux munitions '" + strAmmunition + "' n'existe." );
     ptrWeapon_ = pWeapon;
     strName_ = pWeapon->strName_.GetData();
-
-    input.EndSection(); // Armement
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: WeaponInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::WeaponInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Composantes_Data::WeaponInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Armement" );
-
-    output.WriteAttribute( "lanceur", ptrWeapon_.GetData()->ptrLauncher_.GetData()->strName_.GetData() );
-    output.WriteAttribute( "munition", ptrWeapon_.GetData()->ptrAmmunition_.GetData()->strName_.GetData() );
-
-    output.EndSection();
+    output << xml::start( "weapon-system" )
+            << xml::attribute( "launcher", ptrWeapon_.GetData()->ptrLauncher_.GetData()->strName_ )
+            << xml::attribute( "munition", ptrWeapon_.GetData()->ptrAmmunition_.GetData()->strName_ )
+           << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: CategoryInfos::CategoryInfos
@@ -1230,10 +1073,8 @@ ADN_Composantes_Data::CategoryInfos::CategoryInfos( ADN_Equipement_Data::Dotatio
 , rNbr_         ( 0 )
 
 {
-    //    BindExistenceTo( &ptrDotation_ );
     BindExistenceTo( &ptrCategory_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: CategoryInfos::GetNodeName
@@ -1244,7 +1085,6 @@ std::string ADN_Composantes_Data::CategoryInfos::GetNodeName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: CategoryInfos::GetItemName
 // Created: APE 2004-12-29
@@ -1253,7 +1093,6 @@ std::string ADN_Composantes_Data::CategoryInfos::GetItemName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: CategoryInfos::CreateCopy
@@ -1270,44 +1109,36 @@ ADN_Composantes_Data::CategoryInfos* ADN_Composantes_Data::CategoryInfos::Create
     return pCopy;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: CategoryInfos::ReadArchive
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::CategoryInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Composantes_Data::CategoryInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Categorie" );
-
     std::string strCategory;
-    input.ReadAttribute( "nom", strCategory );
+    input >> xml::attribute( "name", strCategory )
+          >> xml::attribute( "capacity", rNbr_ )
+          >> xml::attribute( "logistic-threshold", rLogThreshold_ )
+          >> xml::optional() >> xml::attribute( "normalized-consumption", rNormalizedConsumption_ );
     ADN_Equipement_Data::CategoryInfo* pCat = ptrDotation_.GetData()->FindCategory( strCategory );
     if( !pCat )
-        throw ADN_Xml_Exception( input.GetContext(), "La catégorie \"" + strCategory + "\" n'existe pas." );
+        throw ADN_DataException( "CategoryInfos", "La catégorie \"" + strCategory + "\" n'existe pas." );
     ptrCategory_ = pCat;
-
-    input.ReadAttribute( "contenance", rNbr_ );
-    input.ReadAttribute( "seuilLogistique", rLogThreshold_ );
-    input.ReadAttribute( "consommationNormalisee", rNormalizedConsumption_, ADN_XmlInput_Helper::eNothing );
-
-    input.EndSection(); // Categorie
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: CategoryInfos::WriteArchive
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::CategoryInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Composantes_Data::CategoryInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Categorie" );
-    output.WriteAttribute( "nom", ptrCategory_.GetData()->strName_.GetData() );
-    output.WriteAttribute( "contenance", rNbr_.GetData() );
-    output.WriteAttribute( "seuilLogistique", rLogThreshold_.GetData() );
-    output.WriteAttribute( "consommationNormalisee", rNormalizedConsumption_.GetData() );
-    output.EndSection(); // Categorie
+    output << xml::start( "dotation" )
+            << xml::attribute( "name", ptrCategory_.GetData()->strName_ )
+            << xml::attribute( "capacity", rNbr_ )
+            << xml::attribute( "logistic-threshold", rLogThreshold_ )
+            << xml::attribute( "normalized-consumption", rNormalizedConsumption_ )
+           << xml::end();
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: DotationInfos::DotationInfos
@@ -1319,21 +1150,14 @@ ADN_Composantes_Data::DotationInfos::DotationInfos()
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DotationInfos::GetNodeName
 // Created: AGN 2004-05-14
 // -----------------------------------------------------------------------------
 std::string ADN_Composantes_Data::DotationInfos::GetNodeName()
 {
-    /*
-    std::string strResult( ENT_Tr::ConvertFromTypeDotation( eTypeDotation_.GetData(), ENT_Tr_ABC::eToTr ) );
-    if( eTypeDotation_.GetData() == eTypeDotation_Munition )
-    strResult += " " + ptrMunition_.GetData()->strName_.GetData();
-    return strResult;*/
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DotationInfos::GetItemName
@@ -1343,7 +1167,6 @@ std::string ADN_Composantes_Data::DotationInfos::GetItemName()
 {
     return GetNodeName();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DotationInfos::CreateCopy
@@ -1355,75 +1178,63 @@ void ADN_Composantes_Data::DotationInfos::CopyFrom( ADN_Composantes_Data::Dotati
         categories_.AddItem( (*it)->CreateCopy() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::DotationInfos::ReadCategory
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::DotationInfos::ReadCategory( xml::xistream& input )
+{
+    std::string name = xml::attribute< std::string >( input, "name" );
+    E_DotationFamily family = ENT_Tr::ConvertToDotationFamily( name );
+    ADN_Equipement_Data::DotationInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( family );
+
+    input >> xml::list( "dotation", *this, &ADN_Composantes_Data::DotationInfos::ReadDotation, dotation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::DotationInfos::ReadDotation
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::DotationInfos::ReadDotation( xml::xistream& input, ADN_Equipement_Data::DotationInfos& dotation )
+{
+    std::auto_ptr< CategoryInfos > pInfo( new CategoryInfos( dotation ) );
+    pInfo->ReadArchive( input );
+    categories_.AddItem( pInfo.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DotationInfos::ReadArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-bool ADN_Composantes_Data::DotationInfos::ReadArchive( const std::string& strListName, ADN_XmlInput_Helper& input, bool bOptionnal )
+void ADN_Composantes_Data::DotationInfos::ReadArchive( xml::xistream& input )
 {
-    if( ! input.BeginList( strListName, bOptionnal ? ADN_XmlInput_Helper::eNothing : ADN_XmlInput_Helper::eThrow ) )
-        return false;
-
-    while( input.NextListElement() )
-    {
-        input.Section( "Dotation" );
-
-        // Read the dotation name and find the corresponding equipement dotation.
-        std::string strDotation;
-        input.ReadAttribute( "nom", strDotation );
-        E_DotationFamily nTypeDotation = ENT_Tr::ConvertToDotationFamily( strDotation );
-        assert( nTypeDotation != -1 );
-
-        ADN_Equipement_Data::DotationInfos* pDotation = & ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( nTypeDotation );
-
-        // Read the categories.
-        input.BeginList( "Categories" );
-        while( input.NextListElement() )
-        {
-            std::auto_ptr<CategoryInfos> spNew( new CategoryInfos( *pDotation ) );
-            spNew->ReadArchive( input );
-            categories_.AddItem( spNew.release() );
-        }
-        input.EndList(); // Categories
-        input.EndSection(); // Dotation
-    }
-
-    input.EndList(); // Contenance
-    return true;
+    input >> xml::list( "category", *this, &ADN_Composantes_Data::DotationInfos::ReadCategory );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DotationInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::DotationInfos::WriteArchive( const std::string& strListName, MT_OutputArchive_ABC& output )
+void ADN_Composantes_Data::DotationInfos::WriteArchive( xml::xostream& output )
 {
-    if( categories_.empty() )
-    {
-        output.Section( strListName );
-        output.EndSection();
-        return;
-    }
-    output.BeginList( strListName, eNbrDotationFamily );
     for( uint n = 0; n < eNbrDotationFamily; ++n )
     {
-        output.Section( "Dotation" );
-        ADN_Equipement_Data::DotationInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( (E_DotationFamily)n );
-        output.WriteAttribute( "nom", dotation.strName_.GetData() );
-        output.BeginList( "Categories", categories_.size() );
+        bool entered = false;
         for( IT_CategoryInfos_Vector it = categories_.begin(); it != categories_.end(); ++it )
-        {
-            if( (*it)->ptrDotation_.GetData() == &dotation )
+            if( (*it)->ptrDotation_.GetData()->nType_ == E_DotationFamily( n ) )
+            {
+                if( !entered )
+                {
+                    output << xml::start( "category" )
+                            << xml::attribute( "name", (*it)->ptrDotation_.GetData()->strName_ );
+                    entered = true;
+                }
                 (*it)->WriteArchive( output );
-        }
-        output.EndList(); // Categories
-        output.EndSection(); // Dotation
+            }
+        if( entered )
+            output << xml::end();
     }
-    output.EndList(); // Contenance
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ObjectInfos::ObjectInfos
@@ -1432,12 +1243,12 @@ void ADN_Composantes_Data::DotationInfos::WriteArchive( const std::string& strLi
 ADN_Composantes_Data::ObjectInfos::ObjectInfos()
 : ADN_Ref_ABC()
 , ptrObject_(ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(),0)
-, initialBuildTime_         ( "0s" )
-, initialDestructionTime_   ( "0s" )
-, coeffBuildTime_           ( "0s" )
-, coeffDestructionTime_     ( "0s" )
-, valorizationTime_         ( "0s" )
-, devalorizationTime_       ( "0s" )
+, initialBuildTime_         ( "-1s" )
+, initialDestructionTime_   ( "-1s" )
+, coeffBuildTime_           ( "-1s" )
+, coeffDestructionTime_     ( "-1s" )
+, valorizationTime_         ( "-1s" )
+, devalorizationTime_       ( "-1s" )
 , rCoeffCirc_               ( 0 )
 , rSpeedCirc_               ( 0 )
 , rSpeedNotCirc_            ( 0 )
@@ -1473,7 +1284,6 @@ ADN_Composantes_Data::ObjectInfos::ObjectInfos()
     rSpeedNotCirc_.SetParentNode( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ObjectInfos::GetNodeName
 // Created: AGN 2004-05-14
@@ -1484,7 +1294,6 @@ std::string ADN_Composantes_Data::ObjectInfos::GetNodeName()
     return strResult + ptrObject_.GetData()->strName_.GetData();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ObjectInfos::GetItemName
 // Created: AGN 2004-05-18
@@ -1493,7 +1302,6 @@ std::string ADN_Composantes_Data::ObjectInfos::GetItemName()
 {
     return ptrObject_.GetData()->strName_.GetData();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ObjectInfos::CreateCopy
@@ -1527,69 +1335,68 @@ ADN_Composantes_Data::ObjectInfos* ADN_Composantes_Data::ObjectInfos::CreateCopy
     return pCopy;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ObjectInfos::ReadArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::ObjectInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Composantes_Data::ObjectInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Objet" );
-
     std::string strName;
-    input.ReadAttribute( "type", strName );
+    input >> xml::attribute( "type", strName );
     ADN_Objects_Data::ObjectInfos* pObject = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( strName );
-
     if( !pObject )
-        throw ADN_Xml_Exception( input.GetContext(), "Type d'objet invalide" );
-
+        throw ADN_DataException( "ObjectInfos", "Type d'objet '" + strName + "' invalide" );
     ptrObject_ = pObject;
 
-    bInitialBuildTime_       = input.ReadField( "TempsInitialConstruction", initialBuildTime_, ADN_XmlInput_Helper::eNothing );
-    bInitialDestructionTime_ = input.ReadField( "TempsInitialDestruction", initialDestructionTime_, ADN_XmlInput_Helper::eNothing );
-    bCoeffBuildTime_         = input.ReadField( "TempsConstructionCoef", coeffBuildTime_, ADN_XmlInput_Helper::eNothing );
-    bCoeffDestructionTime_   = input.ReadField( "TempsDestructionCoef", coeffDestructionTime_, ADN_XmlInput_Helper::eNothing );
-    bValorizationTime_       = input.ReadField( "TempsValorisation", valorizationTime_, ADN_XmlInput_Helper::eNothing );
-    bDevalorizationTime_     = input.ReadField( "TempsDevalorisation", devalorizationTime_, ADN_XmlInput_Helper::eNothing );
-    bCoeffCircTime_          = input.ReadField( "CoefGainContournement", rCoeffCirc_, ADN_XmlInput_Helper::eNothing );
-    bSpeedCirc_              = input.ReadField( "VitesseNonContourne", rSpeedCirc_, ADN_XmlInput_Helper::eNothing );
-    bSpeedNotCirc_           = input.ReadField( "VitesseContourne", rSpeedNotCirc_, ADN_XmlInput_Helper::eNothing );
+    input >> xml::optional() >> xml::attribute( "initial-construction-time", initialBuildTime_ )
+          >> xml::optional() >> xml::attribute( "initial-destruction-time", initialDestructionTime_ )
+          >> xml::optional() >> xml::attribute( "construction-time-factor", coeffBuildTime_ )
+          >> xml::optional() >> xml::attribute( "destruction-time-factor", coeffDestructionTime_ )
+          >> xml::optional() >> xml::attribute( "valorization-time", valorizationTime_ )
+          >> xml::optional() >> xml::attribute( "devalorization-time", devalorizationTime_ )
+          >> xml::optional() >> xml::attribute( "bypass-gain-factor", rCoeffCirc_ )
+          >> xml::optional() >> xml::attribute( "non-bypassed-speed", rSpeedCirc_ )
+          >> xml::optional() >> xml::attribute( "bypassed-speed", rSpeedNotCirc_ );
 
-    input.EndSection(); // Objet
+    bInitialBuildTime_          = initialBuildTime_ != "-1s";
+    bInitialDestructionTime_    = initialDestructionTime_ != "-1s";
+    bCoeffBuildTime_            = coeffBuildTime_ != "-1s";
+    bCoeffDestructionTime_      = coeffDestructionTime_ != "-1s";
+    bValorizationTime_          = valorizationTime_ != "-1s";
+    bDevalorizationTime_        = devalorizationTime_ != "-1s";
+    bCoeffCircTime_             = rCoeffCirc_ != 0;
+    bSpeedCirc_                 = rSpeedCirc_ != 0;
+    bSpeedNotCirc_              = rSpeedNotCirc_ != 0;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ObjectInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::ObjectInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Composantes_Data::ObjectInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Objet" );
-    output.WriteAttribute( "type", ptrObject_.GetData()->strName_.GetData() );
-
+    output << xml::start( "object" )
+            << xml::attribute( "type", ptrObject_.GetData()->strName_ );
     if( bInitialBuildTime_.GetData() )
-        output.WriteField( "TempsInitialConstruction", initialBuildTime_.GetData() );
+        output << xml::attribute( "initial-construction-time", initialBuildTime_ );
     if( bInitialDestructionTime_.GetData() )
-        output.WriteField( "TempsInitialDestruction", initialDestructionTime_.GetData() );
+        output << xml::attribute( "initial-destruction-time", initialDestructionTime_ );
     if( bCoeffBuildTime_.GetData() )
-        output.WriteField( "TempsConstructionCoef", coeffBuildTime_.GetData() );
+        output << xml::attribute( "construction-time-factor", coeffBuildTime_ );
     if( bCoeffDestructionTime_.GetData() )
-        output.WriteField( "TempsDestructionCoef", coeffDestructionTime_.GetData() );
+        output << xml::attribute( "destruction-time-factor", coeffDestructionTime_ );
     if( bValorizationTime_.GetData() )
-        output.WriteField( "TempsValorisation", valorizationTime_.GetData() );
+        output << xml::attribute( "valorization-time", valorizationTime_ );
     if( bDevalorizationTime_.GetData() )
-        output.WriteField( "TempsDevalorisation", devalorizationTime_.GetData() );
+        output << xml::attribute( "devalorization-time", devalorizationTime_ );
     if( bCoeffCircTime_.GetData() )
-        output.WriteField( "CoefGainContournement", rCoeffCirc_.GetData() );
+        output << xml::attribute( "bypass-gain-factor", rCoeffCirc_ );
     if( bSpeedCirc_.GetData() )
-        output.WriteField( "VitesseNonContourne", rSpeedCirc_.GetData() );
+        output << xml::attribute( "non-bypassed-speed", rSpeedCirc_ );
     if( bSpeedNotCirc_.GetData() )
-        output.WriteField( "VitesseContourne", rSpeedNotCirc_.GetData() );
-
-    output.EndSection(); // Objet
+        output << xml::attribute( "bypassed-speed", rSpeedNotCirc_ );
+    output << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ConsumptionItem::ConsumptionItem
@@ -1603,7 +1410,6 @@ ADN_Composantes_Data::ConsumptionItem::ConsumptionItem( E_ConsumptionType nConsu
     this->BindExistenceTo( &ptrCategory_ );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ConsumptionItem::GetNodeName
 // Created: APE 2004-11-26
@@ -1613,7 +1419,6 @@ std::string ADN_Composantes_Data::ConsumptionItem::GetNodeName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ConsumptionItem::GetItemName
 // Created: APE 2004-11-26
@@ -1622,7 +1427,6 @@ std::string ADN_Composantes_Data::ConsumptionItem::GetItemName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ConsumptionItem::CreateCopy
@@ -1635,28 +1439,27 @@ ADN_Composantes_Data::ConsumptionItem* ADN_Composantes_Data::ConsumptionItem::Cr
     return pCopy;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ConsumptionItem::ReadArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::ConsumptionItem::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Composantes_Data::ConsumptionItem::ReadArchive( xml::xistream& input )
 {
-    double nUsed;
-    input.Read( nUsed );
-    nQuantityUsedPerHour_ = nUsed;
+    input >> xml::attribute( "value", nQuantityUsedPerHour_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ConsumptionItem::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::ConsumptionItem::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Composantes_Data::ConsumptionItem::WriteArchive( xml::xostream& output )
 {
-    output << nQuantityUsedPerHour_.GetData();
+    output << xml::start( "dotation" )
+            << xml::attribute( "category", ptrCategory_.GetData()->parentDotation_.strName_ )
+            << xml::attribute( "name", ptrCategory_.GetData()->strName_ )
+            << xml::attribute( "value", nQuantityUsedPerHour_ )
+           << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ConsumptionsInfos::ConsumptionsInfos
@@ -1665,7 +1468,6 @@ void ADN_Composantes_Data::ConsumptionItem::WriteArchive( MT_OutputArchive_ABC& 
 ADN_Composantes_Data::ConsumptionsInfos::ConsumptionsInfos()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ConsumptionsInfos::GetNodeName
@@ -1696,99 +1498,72 @@ void ADN_Composantes_Data::ConsumptionsInfos::CopyFrom( ConsumptionsInfos& sourc
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::ConsumptionsInfos::ReadConsumption
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::ConsumptionsInfos::ReadConsumption( xml::xistream& input )
+{
+    std::string status;
+    input >> xml::attribute( "status", status );
+    E_ConsumptionType type = ADN_Tr::ConvertToConsumptionType( status );
+    if( type == E_ConsumptionType( -1 ) )
+        throw ADN_DataException( "ConsumptionsInfos", "Invalid consumption '" + status + "'" );
+    input >> xml::list( "dotation", *this, &ADN_Composantes_Data::ConsumptionsInfos::ReadDotation, type );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::ConsumptionsInfos::ReadDotation
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::ConsumptionsInfos::ReadDotation( xml::xistream& input, const E_ConsumptionType& type )
+{
+    std::string category, name;
+    input >> xml::attribute( "category", category )
+          >> xml::attribute( "name", name );
+    ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( category, name );
+    if( !pCategory )
+        throw ADN_DataException( "ConsumptionsInfos", "Type de dotation invalide" );
+    std::auto_ptr<ConsumptionItem> spNew( new ConsumptionItem( type, *pCategory ) );
+    spNew->ReadArchive( input );
+    vConsumptions_.AddItem( spNew.release() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ConsumptionsInfos::ReadArchive
 // Created: APE 2005-01-25
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::ConsumptionsInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Composantes_Data::ConsumptionsInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Consommations" );
-
-    for( int nType = 0; nType < eNbrConsumptionType; ++nType )
-    {
-        input.BeginList( ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)nType ) );
-
-        while( input.NextListElement() )
-        {
-            input.Section( "Dotation" );
-            std::string strDotationName;
-            input.ReadAttribute( "nom", strDotationName );
-
-            input.BeginList( "Categories" );
-            while( input.NextListElement() )
-            {
-                input.Section( "Categorie" );
-                std::string strCategoryName;
-                input.ReadAttribute( "nom", strCategoryName );
-
-                ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( strDotationName, strCategoryName );
-                if( !pCategory )
-                    throw ADN_Xml_Exception( input.GetContext(), "Type de dotation invalide" );
-
-                std::auto_ptr<ConsumptionItem> spNew( new ConsumptionItem( (E_ConsumptionType)nType, *pCategory ) );
-                spNew->ReadArchive( input );
-                vConsumptions_.AddItem( spNew.release() );
-
-                input.EndSection(); // Categorie
-            }
-            input.EndList(); // Categories
-            input.EndSection(); // Dotation
-        }
-
-        input.EndList(); // ArretMoteur & cie
-    }
-
-    input.EndSection(); // Consommations
+    input >> xml::start( "consumptions" )
+            >> xml::list( "consumption", *this, &ADN_Composantes_Data::ConsumptionsInfos::ReadConsumption )
+          >> xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ConsumptionsInfos::WriteArchive
 // Created: APE 2005-01-25
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::ConsumptionsInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Composantes_Data::ConsumptionsInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Consommations" );
-
+    output << xml::start( "consumptions" );
     for( int nType = 0; nType < eNbrConsumptionType; ++nType )
     {
-        std::vector<ConsumptionItem*> vConsumptionTypeItems;
+        bool entered = false;
         for( IT_ConsumptionItem_Vector it = vConsumptions_.begin(); it != vConsumptions_.end(); ++it )
-        {
             if( (*it)->nConsumptionType_ == nType )
-                vConsumptionTypeItems.push_back( *it );
-        }
-
-        output.Section( ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)nType ) );
-
-        for( int nDotationType = 0; nDotationType < eNbrDotationFamily; ++nDotationType )
-        {
-            std::vector<ConsumptionItem*> vDotationItems;
-            for( std::vector<ConsumptionItem*>::iterator it2 = vConsumptionTypeItems.begin(); it2 != vConsumptionTypeItems.end(); ++it2 )
             {
-                if( (*it2)->ptrCategory_.GetData()->parentDotation_.nType_ == nDotationType )
-                    vDotationItems.push_back( *it2 );
+                if( ! entered )
+                {
+                    output << xml::start( "consumption" )
+                            << xml::attribute( "status", ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)nType ) );
+                    entered = true;
+                }
+                (*it)->WriteArchive( output );
             }
-
-            if( vDotationItems.empty() )
-                continue;
-
-            output.Section( "Dotation" );
-            output.WriteAttribute( "nom", ENT_Tr::ConvertFromDotationFamily( (E_DotationFamily)nDotationType ) );
-            output.BeginList( "Categories", vDotationItems.size() );
-            for( std::vector<ConsumptionItem*>::iterator it3 = vDotationItems.begin(); it3 != vDotationItems.end(); ++it3 )
-            {
-                output.Section( "Categorie" );
-                output.WriteAttribute( "nom", (*it3)->ptrCategory_.GetData()->strName_.GetData() );
-                output << (*it3)->nQuantityUsedPerHour_.GetData();
-                output.EndSection(); // Categorie
-            }
-            output.EndList(); // Categories
-            output.EndSection(); // Dotation
-        }
-
-        output.EndSection(); // ConsumptionType
+        if( entered )
+            output << xml::end();
     }
-    output.EndSection(); // Consumptions
+    output << xml::end();
 }
 
 
@@ -1821,8 +1596,8 @@ ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
 , embarkingTimePerTon_( "0s" )
 , disembarkingTimePerTon_( "0s" )
 , rMaxSpeed_( 0 )
-, attritionBreakdowns_( "PannesAttritions" )
-, randomBreakdowns_   ( "PannesAleatoires" )
+, attritionBreakdowns_( "attrition" )
+, randomBreakdowns_   ( "random" )
 , bMaxSlope_( false )
 , rMaxSlope_( 60 )
 {
@@ -1856,8 +1631,6 @@ ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
     }
 }
 
-
-
 //-----------------------------------------------------------------------------
 // Name: ComposanteInfos::ComposanteInfos
 // Created: JDY 03-07-18
@@ -1877,7 +1650,6 @@ ADN_Composantes_Data::ComposanteInfos::~ComposanteInfos()
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ComposanteInfos::GetNodeName
 // Created: AGN 2004-05-14
@@ -1888,7 +1660,6 @@ std::string ADN_Composantes_Data::ComposanteInfos::GetNodeName()
     return strResult + strName_.GetData();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ComposanteInfos::GetItemName
 // Created: AGN 2004-05-18
@@ -1897,7 +1668,6 @@ std::string ADN_Composantes_Data::ComposanteInfos::GetItemName()
 {
     return strName_.GetData();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ComposanteInfos::CreateCopy
@@ -1963,227 +1733,223 @@ ADN_Composantes_Data::ComposanteInfos* ADN_Composantes_Data::ComposanteInfos::Cr
     return pCopy;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::ComposanteInfos::ReadSpeed
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::ComposanteInfos::ReadSpeed( xml::xistream& input )
+{
+    std::string strLocation;
+    input >> xml::attribute( "terrain", strLocation );
+    E_Location nLocation = ADN_Tr::ConvertToLocation( strLocation );
+    vSpeeds_.at( nLocation )->ReadArchive( input );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::ComposanteInfos::ReadSensor
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::ComposanteInfos::ReadSensor( xml::xistream& input )
+{
+    std::auto_ptr<SensorInfos> spNew( new SensorInfos() );
+    spNew->ReadArchive( input );
+    vSensors_.AddItem( spNew.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::ComposanteInfos::ReadRadar
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::ComposanteInfos::ReadRadar( xml::xistream& input )
+{
+    std::auto_ptr<RadarInfos> spNew( new RadarInfos() );
+    spNew->ReadArchive( input );
+    vRadars_.AddItem( spNew.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::ComposanteInfos::ReadWeapon
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::ComposanteInfos::ReadWeapon( xml::xistream& input )
+{
+    std::auto_ptr<WeaponInfos> spNew( new WeaponInfos() );
+    spNew->ReadArchive( input );
+    vWeapons_.AddItem( spNew.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::ComposanteInfos::ReadObject
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::ComposanteInfos::ReadObject( xml::xistream& input )
+{
+    std::auto_ptr<ObjectInfos> spNew( new ObjectInfos() );
+    spNew->ReadArchive( input );
+    vObjects_.AddItem( spNew.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ComposanteInfos::ReadArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::ComposanteInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Composante" );
-    input.ReadAttribute( "Commentaire", strAdditionalComments_ );
-    input.ReadAttribute( "nom", strName_ );
+    input >> xml::attribute( "comment", strAdditionalComments_ )
+          >> xml::attribute( "name", strName_ );
 
     strCodeEMAT6_ = strName_.GetData();
     strCodeEMAT8_ = strName_.GetData();
     strCodeLFRIL_ = strName_.GetData();
     strCodeNNO_ = strName_.GetData();
+    input >> xml::optional() >> xml::attribute( "codeEMAT6", strCodeEMAT6_ )
+          >> xml::optional() >> xml::attribute( "codeEMAT8", strCodeEMAT8_ )
+          >> xml::optional() >> xml::attribute( "codeLFRIL", strCodeLFRIL_ )
+          >> xml::optional() >> xml::attribute( "codeNNO",   strCodeNNO_   );
 
-    input.ReadField( "CodeEMAT6", strCodeEMAT6_, ADN_XmlInput_Helper::eNothing );
-    input.ReadField( "CodeEMAT8", strCodeEMAT8_, ADN_XmlInput_Helper::eNothing );
-    input.ReadField( "CodeLFRIL", strCodeLFRIL_, ADN_XmlInput_Helper::eNothing );
-    input.ReadField( "CodeNNO", strCodeNNO_    , ADN_XmlInput_Helper::eNothing );
+    std::string strArmor, strSize;
+    input >> xml::attribute( "protection", strArmor )
+          >> xml::attribute( "size", strSize )
+          >> xml::attribute( "weight", rWeight_ );
 
-    std::string strArmor;
-    input.ReadField( "Protection", strArmor );
-    ADN_Categories_Data::ArmorInfos* pArmor = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindArmor( strArmor );
-    assert( pArmor != 0 );
-    ptrArmor_ = pArmor;
+    ptrArmor_ = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindArmor( strArmor );
+    ptrSize_ = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindSize( strSize );
+    if( ! ptrArmor_.GetData() || ! ptrSize_.GetData() )
+        throw ADN_DataException( "ComposanteInfos", "Unknown composante size or armor" );
 
-    std::string strSize;
-    input.ReadField( "Volume", strSize );
-    ADN_Categories_Data::SizeInfos* pSize = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindSize( strSize );
-    assert( pSize != 0 );
-    ptrSize_ = pSize;
+    input >> xml::start( "speeds" )
+            >> xml::attribute( "max", rMaxSpeed_ )
+            >> xml::list( "speed", *this, &ADN_Composantes_Data::ComposanteInfos::ReadSpeed )
+          >> xml::end();
 
-    input.BeginList( "Vitesses" );
-    input.ReadAttribute( "maximum", rMaxSpeed_ );
-    while( input.NextListElement() )
-    {
-        input.Section( "Terrain" );
-        std::string strLocation;
-        input.ReadAttribute( "type", strLocation );
-        E_Location nLocation = ADN_Tr::ConvertToLocation( strLocation );
-        vSpeeds_[nLocation]->ReadArchive( input );
-        input.EndSection(); // Terrain
-    }
-    input.EndList(); // Vitesses
+    input >> xml::start( "composition" );
+    dotations_.ReadArchive( input );
+    input >> xml::end();
 
-    dotations_.ReadArchive( "Contenance", input );
+    input >> xml::start( "sensors" )
+            >> xml::list( "sensor", *this, &ADN_Composantes_Data::ComposanteInfos::ReadSensor )
+          >> xml::end();
 
-    input.BeginList( "Senseurs" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<SensorInfos> spNew( new SensorInfos() );
-        spNew->ReadArchive( input );
-        vSensors_.AddItem( spNew.release() );
-    }
-    input.EndList(); // Senseurs
-
-    if( input.BeginList( "Radars", ADN_XmlInput_Helper::eNothing ) )
-    {
-        while( input.NextListElement() )
-        {
-            std::auto_ptr<RadarInfos> spNew( new RadarInfos() );
-            spNew->ReadArchive( input );
-            vRadars_.AddItem( spNew.release() );
-        }
-        input.EndList(); // Radars
-    }
-
-    input.Section( "Transport" );
-    input.Section( "Personnel" );
-    if( input.Section( "Temps", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bTroopEmbarkingTimes_ = true;
-        input.ReadField( "TempsEmbarquementParHomme", embarkingTimePerPerson_ );
-        input.ReadField( "TempsDebarquementParHomme", disembarkingTimePerPerson_ );
-        input.EndSection(); // Temps
-    }
-    input.EndSection(); // Personnel
-
-    if( input.Section( "Pion", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bCanCarryCargo_ = true;
-        input.ReadField( "Capacite", rWeightTransportCapacity_ );
-        input.Section( "Temps" );
-        input.ReadField( "TempsChargementParTonne", embarkingTimePerTon_ );
-        input.ReadField( "TempsDechargementParTonne", disembarkingTimePerTon_ );
-        input.EndSection(); // Temps
-        input.EndSection(); // Pion
-    }
-    input.EndSection(); // Transport
-
-    input.ReadField( "Poids", rWeight_ );
+    input >> xml::optional() >> xml::start( "radars" )
+            >> xml::list( "radar", *this, &ADN_Composantes_Data::ComposanteInfos::ReadRadar )
+          >> xml::end();
+        
+    input >> xml::start( "transports" )
+            >> xml::optional() 
+            >> xml::start( "crew" )
+                >> xml::attribute( "man-boarding-time", embarkingTimePerPerson_ )
+                >> xml::attribute( "man-unloading-time", disembarkingTimePerPerson_ )
+            >> xml::end()
+            >> xml::optional() 
+            >> xml::start( "unit" )
+                >> xml::attribute( "capacity", rWeightTransportCapacity_ )
+                >> xml::attribute( "ton-loading-time", embarkingTimePerTon_ )
+                >> xml::attribute( "ton-unloading-time", disembarkingTimePerTon_ )
+            >> xml::end()
+          >> xml::end();
+    bTroopEmbarkingTimes_ = embarkingTimePerPerson_ != "0s" || disembarkingTimePerPerson_ != "0s";
+    bCanCarryCargo_ = rWeightTransportCapacity_ != 0.;
 
     consumptions_.ReadArchive( input );
 
-    input.BeginList( "Armements" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<WeaponInfos> spNew( new WeaponInfos() );
-        spNew->ReadArchive( input );
-        vWeapons_.AddItem( spNew.release() );
-    }
-    input.EndList(); // Armements
-
-    input.BeginList( "Objets" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<ObjectInfos> spNew( new ObjectInfos() );
-        spNew->ReadArchive( input );
-        vObjects_.AddItem( spNew.release() );
-    }
-    input.EndList(); // Objets
+    input >> xml::start( "weapon-systems" )
+            >> xml::list( "weapon-system", *this, &ADN_Composantes_Data::ComposanteInfos::ReadWeapon )
+          >> xml::end()
+          >> xml::start( "objects" )
+            >> xml::list( "object", *this, &ADN_Composantes_Data::ComposanteInfos::ReadObject )
+          >> xml::end();
 
     logInfos_.ReadArchive( input );
 
-    if( input.Section( "Pannes", ADN_XmlInput_Helper::eNothing ) )
-    {
-        randomBreakdowns_.ReadArchive( input );
-        attritionBreakdowns_.ReadArchive( input );
-        input.EndSection(); // Pannes
-    }
+    randomBreakdowns_.ReadArchive( input );
+    attritionBreakdowns_.ReadArchive( input );
 
-    if( input.ReadField( "DeniveleMaximum", rMaxSlope_, ADN_XmlInput_Helper::eNothing ) )
+    input >> xml::optional() >> xml::attribute( "max-slope", rMaxSlope_ );
+    if( rMaxSlope_ != 60. )
     {
         bMaxSlope_ = true;
-        double rTmp = rMaxSlope_.GetData() * 100.0;
-        rMaxSlope_ = rTmp; // display percentage
+        rMaxSlope_ =  rMaxSlope_.GetData() * 100.0;
     }
-
-    input.EndSection(); // Composante
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ComposanteInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::ComposanteInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Composante" );
-    output.WriteAttribute( "Commentaire", strAdditionalComments_.GetData() );
-    output.WriteAttribute( "nom", strName_.GetData() );
-    output.WriteField( "MosID", nMosId_.GetData() );
-    output.WriteField( "CodeEMAT6", strCodeEMAT6_.GetData() );
-    output.WriteField( "CodeEMAT8", strCodeEMAT8_.GetData() );
-    output.WriteField( "CodeLFRIL", strCodeLFRIL_.GetData() );
-    output.WriteField( "CodeNNO", strCodeNNO_.GetData() );
+    output << xml::start( "element" )
+            << xml::attribute( "comment", strAdditionalComments_ )
+            << xml::attribute( "name", strName_ )
+            << xml::attribute( "id", nMosId_ )
+            << xml::attribute( "codeEMAT6", strCodeEMAT6_ )
+            << xml::attribute( "codeEMAT8", strCodeEMAT8_ )
+            << xml::attribute( "codeLFRIL", strCodeLFRIL_ )
+            << xml::attribute( "codeNNO",   strCodeNNO_   )
+            << xml::attribute( "protection", ptrArmor_.GetData()->strName_ )
+            << xml::attribute( "size", *ptrSize_.GetData() )
+            << xml::attribute( "weight", rWeight_ );
 
-    output.WriteField( "Protection", ptrArmor_.GetData()->strName_.GetData() );
-    output.WriteField( "Volume", ptrSize_.GetData()->GetData() );
-
-    output.BeginList( "Vitesses", vSpeeds_.size() );
-    output.WriteAttribute( "maximum", rMaxSpeed_.GetData() );
+    output << xml::start( "speeds" )
+            << xml::attribute( "max", rMaxSpeed_ );
     for( IT_SpeedInfos_Vector itSpeed = vSpeeds_.begin(); itSpeed != vSpeeds_.end(); ++itSpeed )
         (*itSpeed)->WriteArchive( output );
-    output.EndList(); // Vitesses
+    output << xml::end();
 
-    dotations_.WriteArchive( "Contenance", output );
+    output << xml::start( "composition" );
+    dotations_.WriteArchive( output );
+    output << xml::end();
 
-    output.BeginList( "Armements", vWeapons_.size() );
-    for( IT_WeaponInfos_Vector itWeapon = vWeapons_.begin(); itWeapon != vWeapons_.end(); ++itWeapon )
-        (*itWeapon)->WriteArchive( output );
-    output.EndList(); // Armements
-
-    output.Section( "Transport" );
-    output.Section( "Personnel" );
-
-    if( bTroopEmbarkingTimes_.GetData() )
-    {
-        output.Section( "Temps" );
-        output.WriteField( "TempsEmbarquementParHomme", embarkingTimePerPerson_.GetData() );
-        output.WriteField( "TempsDebarquementParHomme", disembarkingTimePerPerson_.GetData() );
-        output.EndSection(); // Temps
-    }
-    output.EndSection(); // Personnel
-
-    if( bCanCarryCargo_.GetData() )
-    {
-        output.Section( "Pion" );
-        output.WriteField( "Capacite", rWeightTransportCapacity_.GetData() );
-        output.Section( "Temps" );
-        output.WriteField( "TempsChargementParTonne", embarkingTimePerTon_.GetData() );
-        output.WriteField( "TempsDechargementParTonne", disembarkingTimePerTon_.GetData() );
-        output.EndSection(); // Temps
-        output.EndSection(); // Pion
-    }
-    output.EndSection(); // Transport
-
-    output.BeginList( "Senseurs", vSensors_.size() );
+    output << xml::start( "sensors" );
     for( IT_SensorInfos_Vector itSensor = vSensors_.begin(); itSensor != vSensors_.end(); ++itSensor )
         (*itSensor)->WriteArchive( output );
-    output.EndList(); // Senseurs
+    output << xml::end();
 
-    output.BeginList( "Radars", vRadars_.size() );
+    output << xml::start( "radars" );
     for( IT_RadarInfos_Vector itRadar = vRadars_.begin(); itRadar != vRadars_.end(); ++itRadar )
         (*itRadar)->WriteArchive( output );
-    output.EndList(); // Radars
+    output << xml::end();
 
-    output.WriteField( "Poids", rWeight_.GetData() );
+    output << xml::start( "transports" );
+    if( bTroopEmbarkingTimes_.GetData() )
+        output << xml::start( "crew" )
+                << xml::attribute( "man-boarding-time", embarkingTimePerPerson_ )
+                << xml::attribute( "man-unloading-time", disembarkingTimePerPerson_ )
+            << xml::end();
+    if( bCanCarryCargo_.GetData() )
+        output << xml::start( "unit" )
+                << xml::attribute( "capacity", rWeightTransportCapacity_ )
+                << xml::attribute( "ton-loading-time", embarkingTimePerTon_ )
+                << xml::attribute( "ton-unloading-time", disembarkingTimePerTon_ )
+               << xml::end();
+    output << xml::end();
 
     consumptions_.WriteArchive( output );
 
-    output.BeginList( "Objets", vObjects_.size() );
+    output << xml::start( "weapon-systems" );
+    for( IT_WeaponInfos_Vector itWeapon = vWeapons_.begin(); itWeapon != vWeapons_.end(); ++itWeapon )
+        (*itWeapon)->WriteArchive( output );
+    output << xml::end();
+
+    output << xml::start( "objects" );
     for( IT_ObjectInfos_Vector itObject = vObjects_.begin(); itObject != vObjects_.end(); ++itObject )
         (*itObject)->WriteArchive( output );
-    output.EndList(); // Objets
+    output << xml::end();
 
     logInfos_.WriteArchive( output );
 
-    if( ptrArmor_.GetData()->nType_ == eProtectionType_Material )
+    if( ! attritionBreakdowns_.vBreakdowns_.empty() || !attritionBreakdowns_.vBreakdowns_.empty() )
     {
-        output.Section( "Pannes" );
+        output << xml::start( "breakdowns" );
         randomBreakdowns_.WriteArchive( output );
         attritionBreakdowns_.WriteArchive( output );
-        output.EndSection(); // Pannes
+        output << xml::end();
     }
 
     if( bMaxSlope_.GetData() )
-        output.WriteField( "DeniveleMaximum", rMaxSlope_.GetData() / 100.0 );
+        output << xml::attribute( "max-slope", rMaxSlope_.GetData() / 100.0 );
 
-    output.EndSection(); // Composante
+    output << xml::end();
 }
 
 //=============================================================================
@@ -2203,7 +1969,6 @@ ADN_Composantes_Data::ADN_Composantes_Data()
     vComposantes_.SetItemTypeName( "une composante" );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_Data destructor
 // Created: JDY 03-07-17
@@ -2213,7 +1978,6 @@ ADN_Composantes_Data::~ADN_Composantes_Data()
     Reset();
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Munitions_Data::FilesNeeded
 // Created: JDY 03-09-08
@@ -2222,7 +1986,6 @@ void ADN_Composantes_Data::FilesNeeded(T_StringList& files) const
 {
     files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szComponents_.GetData());
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_Data::Reset
@@ -2234,37 +1997,39 @@ void ADN_Composantes_Data::Reset()
     vComposantes_.Reset();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::ReadElement
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::ReadElement( xml::xistream& input )
+{
+    std::auto_ptr<ComposanteInfos> spNew( new ComposanteInfos() );
+    spNew->ReadArchive( input );
+    vComposantes_.AddItem( spNew.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_Data::ReadArchive
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Composantes_Data::ReadArchive( xml::xistream& input )
 {
-    input.BeginList( "Composantes" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<ComposanteInfos> spNew( new ComposanteInfos() );
-        spNew->ReadArchive( input );
-        vComposantes_.AddItem( spNew.release() );
-    }
-    input.EndList(); // Composantes
+    input >> xml::start( "elements" )
+            >> xml::list( "element", *this, &ADN_Composantes_Data::ReadElement )
+          >> xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_Data::WriteArchive
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Composantes_Data::WriteArchive( xml::xostream& output )
 {
-    output.BeginList( "Composantes", vComposantes_.size() );
-
+    output << xml::start( "elements" );
     for( IT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
         (*it)->WriteArchive( output );
-    output.EndList();
+    output << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_Data::GetNextId
@@ -2274,7 +2039,6 @@ int ADN_Composantes_Data::GetNextId()
 {
     return nNextId_++;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_Data::GetComposantesThatUse

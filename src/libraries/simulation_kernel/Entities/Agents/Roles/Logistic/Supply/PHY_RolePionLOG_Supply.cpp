@@ -24,6 +24,9 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_ASN_Messages.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOG_Supply, "PHY_RolePionLOG_Supply" )
 
@@ -84,12 +87,12 @@ void PHY_RolePionLOG_Supply::serialize( Archive& file, const uint )
 // Name: PHY_RolePionLOG_Supply::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Supply::WriteODB( MT_XXmlOutputArchive& archive ) const
+void PHY_RolePionLOG_Supply::WriteODB( xml::xostream& xos ) const
 {
-    PHY_RolePion_Supply::WriteODB( archive );
+    PHY_RolePion_Supply::WriteODB( xos );
 
     assert( pStocks_ );
-    pStocks_->WriteODB( archive );
+    pStocks_->WriteODB( xos );
 }
 
 // =============================================================================
@@ -100,10 +103,10 @@ void PHY_RolePionLOG_Supply::WriteODB( MT_XXmlOutputArchive& archive ) const
 // Name: PHY_RolePionLOG_Supply::ReadOverloading
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Supply::ReadOverloading( MIL_InputArchive& archive )
+void PHY_RolePionLOG_Supply::ReadOverloading( xml::xistream& xis )
 {
     assert( pStocks_ );
-    pStocks_->ReadValues( archive );
+    pStocks_->ReadValues( xis );
 }
 
 // =============================================================================

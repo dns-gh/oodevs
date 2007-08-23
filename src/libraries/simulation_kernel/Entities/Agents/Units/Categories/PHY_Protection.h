@@ -17,6 +17,11 @@
 #include "MT_Tools/MT_GaussianRandom.h"
 #include "MT_Tools/MT_Random.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_ComposanteState;
 
 // =============================================================================
@@ -37,7 +42,7 @@ public:
 public:
     //! @name Manager
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( xml::xistream& xis );
     static void Terminate ();
 
     static const T_ProtectionMap& GetProtections();
@@ -51,8 +56,6 @@ public:
           uint         GetNeutralizationTime() const;
           MT_Float     GetHumanDeadRatio    ( const PHY_ComposanteState& composanteState ) const;
           MT_Float     GetHumanWoundedRatio ( const PHY_ComposanteState& composanteState ) const;
-
-//          MT_Float     GetHumanWoundFactor  ( 
           bool         IsHuman              () const;
     //@}
 
@@ -63,8 +66,18 @@ public:
     //@}
 
 private:
-     PHY_Protection( const std::string& strName, MIL_InputArchive& archive );
+    //! @name Constructor/Destructor
+    //@{
+     PHY_Protection( const std::string& strName, xml::xistream& xis );
     ~PHY_Protection();
+    //@}
+
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadProtection( xml::xistream& xis );
+    void ReadAttrition ( xml::xistream& xis );
+    //@}
 
 private:
     //! @name Types
@@ -87,6 +100,8 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const std::string    strName_;
           uint           nID_;
           E_Type         nType_;
@@ -95,6 +110,7 @@ private:
           MT_Float       rBreakdownProbabilityNeva_;
 
     mutable MT_GaussianRandom neutralizationTime_;
+    //@}
 
 private:
     static T_ProtectionMap protections_;

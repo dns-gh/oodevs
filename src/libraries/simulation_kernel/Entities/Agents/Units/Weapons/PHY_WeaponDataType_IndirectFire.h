@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xostream;
+}
+
 class PHY_WeaponType;
 class PHY_FireResults_ABC;
 class MIL_Effect_IndirectFire;
@@ -28,7 +33,7 @@ class PHY_WeaponDataType_IndirectFire
     MT_COPYNOTALLOWED( PHY_WeaponDataType_IndirectFire )
 
 public:
-             PHY_WeaponDataType_IndirectFire( const PHY_WeaponType& weaponType, MIL_InputArchive& archive );
+             PHY_WeaponDataType_IndirectFire( const PHY_WeaponType& weaponType, xml::xistream& xis );
     virtual ~PHY_WeaponDataType_IndirectFire();
 
     //! @name Accessors

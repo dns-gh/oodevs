@@ -42,7 +42,7 @@ public:
     //@{
     unsigned long GetId();
     QString GetName() const;
-    AgentType* GetTypePC() const;
+    const AgentType* GetTypePC() const;
     std::string GetSymbol() const;
     const DecisionalModel& GetDecisionalModel() const;
     Iterator< const AutomatComposition& > CreateIterator() const;
@@ -80,7 +80,7 @@ private:
     std::string symbol_;
 
     DecisionalModel* model_;
-    AgentType* pcType_;
+    const AgentType* pcType_;
     T_UnitConstitution units_;
     //@}
 };

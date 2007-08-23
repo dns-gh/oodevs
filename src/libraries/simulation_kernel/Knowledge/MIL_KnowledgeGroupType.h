@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_KnowledgeGroup;
 class MIL_Army;
 
@@ -26,12 +31,12 @@ class MIL_KnowledgeGroupType
     MT_COPYNOTALLOWED( MIL_KnowledgeGroupType )
 
 public:
-     MIL_KnowledgeGroupType( const std::string& strName, MIL_InputArchive& archive );
+    MIL_KnowledgeGroupType( const std::string& strName, xml::xistream& xis );
     ~MIL_KnowledgeGroupType();
 
     //! @name Manager
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( xml::xistream& xis );
     static void Terminate ();
 
     static const MIL_KnowledgeGroupType* FindType( const std::string& strName );
@@ -40,7 +45,7 @@ public:
 
     //! @name Instanciation
     //@{
-    MIL_KnowledgeGroup& InstanciateKnowledgeGroup( uint nID, MIL_Army& army, MIL_InputArchive& archive ) const;
+    MIL_KnowledgeGroup& InstanciateKnowledgeGroup( uint nID, MIL_Army& army ) const;
     //@}
 
     //! @name Accessors
@@ -58,6 +63,12 @@ private:
     //@{
     typedef std::map< std::string, const MIL_KnowledgeGroupType*, sCaseInsensitiveLess > T_KnowledgeGroupTypeMap;
     typedef T_KnowledgeGroupTypeMap::const_iterator                                      CIT_KnowledgeGroupTypeMap;
+    //@}
+
+    //! @name Helper
+    //@{
+    struct LoadingWrapper;
+    static void ReadKnowledgeGroup( xml::xistream& xis );
     //@}
 
 private:

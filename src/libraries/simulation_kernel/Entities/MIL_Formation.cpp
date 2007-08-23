@@ -18,12 +18,15 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Network/NET_ASN_Messages.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Formation constructor
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
-MIL_Formation::MIL_Formation( MIL_EntityManager& manager, MIL_TacticalLineManager& tacticalLines, uint nID, MIL_Army& army, MIL_InputArchive& archive, MIL_Formation* pParent )
+MIL_Formation::MIL_Formation( MIL_EntityManager& manager, MIL_TacticalLineManager& tacticalLines, uint nID, MIL_Army& army, xml::xistream& xis, MIL_Formation* pParent )
     : nID_       ( nID )
     , pArmy_     ( &army )
     , pParent_   ( pParent )
@@ -33,19 +36,19 @@ MIL_Formation::MIL_Formation( MIL_EntityManager& manager, MIL_TacticalLineManage
     , automates_ ()
 {
     std::string strLevel;
-    archive.ReadAttribute( "name", strName_ );
-    archive.ReadAttribute( "level", strLevel );
+    xis >> attribute( "name", strName_ )
+        >> attribute( "level", strLevel );
 
     pLevel_ = PHY_NatureLevel::Find( strLevel );
     if( !pLevel_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown level", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown level" ); // $$$$ ABL 2007-07-09: error context
 
     if( pParent )
         pParent_->RegisterFormation( *this );
     else
         pArmy_->RegisterFormation( *this );
 
-    InitializeSubordinates( manager, tacticalLines, archive );
+    InitializeSubordinates( manager, tacticalLines, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,6 +64,7 @@ MIL_Formation::MIL_Formation()
     , formations_()
     , automates_ ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -78,55 +82,33 @@ MIL_Formation::~MIL_Formation()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Formation::InitializeSubordinates
-// Created: NLD 2006-10-11
+// Created: AGE 2007-08-22
 // -----------------------------------------------------------------------------
-void MIL_Formation::InitializeSubordinates( MIL_EntityManager& manager, MIL_TacticalLineManager& tacticalLines, MIL_InputArchive& archive )
+void MIL_Formation::InitializeSubordinates( MIL_EntityManager& manager, MIL_TacticalLineManager& tacticalLines, xml::xistream& xis )
 {
     assert( pArmy_ );
-    while( archive.NextListElement() )
-    {
-        std::string strElement = archive.GetCurrentElementName();
+    xis >> list( "formation", manager, &MIL_EntityManager::CreateFormation, *pArmy_, this )
+        >> list( "automat"  , manager, &MIL_EntityManager::CreateAutomat, *this )
+        >> list( "limit"    , *this,   &MIL_Formation::CreateLimit, tacticalLines )
+        >> list( "lima"     , *this,   &MIL_Formation::CreateLima,  tacticalLines );
+}
 
-        if( strElement == "formation" )
-        {
-            archive.BeginList( "formation" );
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::CreateLimit
+// Created: AGE 2007-08-23
+// -----------------------------------------------------------------------------
+void MIL_Formation::CreateLimit( xml::xistream& xis, MIL_TacticalLineManager& tacticalLines )
+{
+    tacticalLines.CreateLimit( xis, *this );
+}
 
-            uint nID;
-            archive.ReadAttribute( "id", nID );
-
-            manager.CreateFormation( nID, *pArmy_, archive, this ); // Auto-registration
-            archive.EndList(); // formation
-        }
-        else if( strElement == "automat" )
-        {
-            archive.BeginList( "automat" );
-
-            uint        nID;
-            std::string strType;
-
-            archive.ReadAttribute( "id"  , nID     );
-            archive.ReadAttribute( "type", strType );
-
-            const MIL_AutomateType* pAutomateType = MIL_AutomateType::FindAutomateType( strType );
-            if( !pAutomateType )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automat type", archive.GetContext() );
-
-            manager.CreateAutomate( *pAutomateType, nID, *this, archive ); // Auto-registration
-            archive.EndList(); // automat
-        }
-        else if( strElement == "limit" )
-        {
-            archive.BeginList( "limit" );
-            tacticalLines.CreateLimit( *this, archive );
-            archive.EndList(); // limit
-        }
-        else if( strElement == "lima" )
-        {
-            archive.BeginList( "lima" );
-            tacticalLines.CreateLima( *this, archive );
-            archive.EndList(); // lima
-        }
-    }
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::CreateLima
+// Created: AGE 2007-08-23
+// -----------------------------------------------------------------------------
+void MIL_Formation::CreateLima( xml::xistream& xis, MIL_TacticalLineManager& tacticalLines )
+{
+    tacticalLines.CreateLima( xis, *this );
 }
 
 // =============================================================================
@@ -174,35 +156,35 @@ void MIL_Formation::save( MIL_CheckPointOutArchive& file, const uint ) const
 // Name: MIL_Formation::WriteODB
 // Created: NLD 2006-10-18
 // -----------------------------------------------------------------------------
-void MIL_Formation::WriteODB( MT_XXmlOutputArchive& archive ) const
+void MIL_Formation::WriteODB( xml::xostream& xos ) const
 {
     assert( pLevel_ );
 
-    archive.Section( "formation" );
-    archive.WriteAttribute( "id", nID_ );
-    archive.WriteAttribute( "level", pLevel_->GetName() );
-    archive.WriteAttribute( "name", strName_ );
+    xos << start( "formation" )
+            << attribute( "id", nID_ )
+            << attribute( "level", pLevel_->GetName() )
+            << attribute( "name", strName_ );
 
     for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
-        (**it).WriteODB( archive );
+        (**it).WriteODB( xos );
 
     for( CIT_AutomateSet it = automates_.begin(); it != automates_.end(); ++it )
-        (**it).WriteODB( archive );
+        (**it).WriteODB( xos );
 
-    archive.EndSection(); // formation
+    xos << end(); // formation
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Formation::WriteLogisticLinksODB
 // Created: NLD 2006-10-19
 // -----------------------------------------------------------------------------
-void MIL_Formation::WriteLogisticLinksODB( MT_XXmlOutputArchive& archive ) const
+void MIL_Formation::WriteLogisticLinksODB( xml::xostream& xos ) const
 {
     for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
-        (**it).WriteLogisticLinksODB( archive );
+        (**it).WriteLogisticLinksODB( xos );
 
     for( CIT_AutomateSet it = automates_.begin(); it != automates_.end(); ++it )
-        (**it).WriteLogisticLinksODB( archive );
+        (**it).WriteLogisticLinksODB( xos );
 }
 
 // =============================================================================

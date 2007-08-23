@@ -53,11 +53,6 @@ private:
     AutomatComposition& operator=( const AutomatComposition& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    static QString ReadType( xml::xistream& input );
-    //@}
-
 private:
     //! @name Member data
     //@{

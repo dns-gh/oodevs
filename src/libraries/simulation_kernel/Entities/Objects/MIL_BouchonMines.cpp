@@ -16,6 +16,9 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Knowledge/DEC_Knowledge_ObjectBouchonMines.h"
 #include "Tools/MIL_Tools.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 BOOST_CLASS_EXPORT_GUID( MIL_BouchonMines, "MIL_BouchonMines" )
 
@@ -72,9 +75,9 @@ void MIL_BouchonMines::serialize( Archive& file, const uint )
 // Name: MIL_BouchonMines::WriteSpecificAttributes
 // Created: NLD 2007-02-06
 // -----------------------------------------------------------------------------
-void MIL_BouchonMines::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
+void MIL_BouchonMines::WriteSpecificAttributes( xml::xostream& xos ) const
 {
-    archive.WriteField( "activity-time", nMinesActivityTime_ );
+    xos << content( "activity-time", nMinesActivityTime_ );
  }
 
 //=============================================================================
@@ -98,10 +101,13 @@ bool MIL_BouchonMines::Initialize( const MIL_ObstacleType& obstacleType, DIA_Par
 // Name: MIL_BouchonMines::Initialize
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-void MIL_BouchonMines::Initialize( MIL_InputArchive& archive )
+void MIL_BouchonMines::Initialize( xml::xistream& xis )
 {
-    MIL_RealObject_ABC::Initialize( archive );
-    archive.ReadField( "activity-time", nMinesActivityTime_, CheckValueGreaterOrEqual( 0  ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
+    MIL_RealObject_ABC::Initialize( xis );
+    xis >> optional() >>content( "activity-time", nMinesActivityTime_ );
+
+    if( nMinesActivityTime_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "nMinesActivityTime_ is not greater or equal than 0" );
 }
 
 // -----------------------------------------------------------------------------

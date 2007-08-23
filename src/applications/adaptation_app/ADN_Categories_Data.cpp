@@ -16,8 +16,6 @@
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_DataException.h"
 #include "ADN_Tools.h"
-#include "ADN_XmlInput_Helper.h"
-#include "ADN_Xml_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Tr.h"
@@ -49,26 +47,28 @@ std::string ADN_Categories_Data::AttritionEffectOnHuman::GetItemName()
 // Name: AttritionEffectOnHuman::ReadArchive
 // Created: SBO 2006-07-28
 // -----------------------------------------------------------------------------
-void ADN_Categories_Data::AttritionEffectOnHuman::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Categories_Data::AttritionEffectOnHuman::ReadArchive( xml::xistream& input )
 {
-    input.Section( "EffetAttritionSurHumains" );
-    input.ReadAttribute( "etatEquipement", nEquipmentState_, ADN_Tr::ConvertToEquipmentState, ADN_XmlInput_Helper::eThrow );
-    input.ReadAttribute( "pourcentageBlesses", nInjuredPercentage_ );
-    input.ReadAttribute( "pourcentageMorts", nDeadPercentage_ );
-    input.EndSection();
+    std::string equipment;
+    input >> xml::attribute( "equipment-state", equipment )
+          >> xml::attribute( "injured-percentage", nInjuredPercentage_ )
+          >> xml::attribute( "dead-percentage", nDeadPercentage_ );
+    nEquipmentState_ = ADN_Tr::ConvertToEquipmentState( equipment );
+    if( nEquipmentState_ == E_EquipmentState( -1 ) )
+        throw ADN_DataException( "AttritionEffectOnHuman", "Unknown state + '" + equipment + "'" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AttritionEffectOnHuman::WriteArchive
 // Created: SBO 2006-07-28
 // -----------------------------------------------------------------------------
-void ADN_Categories_Data::AttritionEffectOnHuman::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Categories_Data::AttritionEffectOnHuman::WriteArchive( xml::xostream& output )
 {
-    output.Section( "EffetAttritionSurHumains" );
-    output.WriteAttribute( "etatEquipement", ADN_Tr::ConvertFromEquipmentState( nEquipmentState_.GetData() ) );
-    output.WriteAttribute( "pourcentageBlesses", nInjuredPercentage_.GetData() );
-    output.WriteAttribute( "pourcentageMorts", nDeadPercentage_.GetData() );
-    output.EndSection();
+    output << xml::start( "attrition-effect" )
+            << xml::attribute( "equipment-state", ADN_Tr::ConvertFromEquipmentState( nEquipmentState_.GetData() ) )
+            << xml::attribute( "injured-percentage", nInjuredPercentage_ )
+            << xml::attribute( "dead-percentage", nDeadPercentage_ )
+           << xml::end();
 }
 
 // =============================================================================
@@ -90,86 +90,85 @@ ADN_Categories_Data::ArmorInfos::ArmorInfos()
     strName_.SetParentNode( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ArmorInfos::ReadArchive
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-void ADN_Categories_Data::ArmorInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Categories_Data::ArmorInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Protection" );
-    input.ReadAttribute( "nom", strName_ );
-    input.ReadAttribute( "type", nType_, ADN_Tr::ConvertToProtectionType, ADN_XmlInput_Helper::eThrow );
+    std::string type;
+    input >> xml::attribute( "name", strName_ )
+          >> xml::attribute( "type", type );
+    nType_ = ADN_Tr::ConvertToProtectionType( type );
+    if( nType_ == E_ProtectionType( -1 ) )
+        throw ADN_DataException( "ArmorInfos", __FUNCTION__ );
 
-    input.Section( "Neutralisation" );
-    input.ReadAttribute( "tempsMoyen", neutralizationAverageTime_ );
-    input.ReadAttribute( "variance", neutralizationVariance_ );
-    input.EndSection(); // Neutralisation
+    input >> xml::start( "neutralization" )
+            >> xml::attribute( "average-time", neutralizationAverageTime_ )
+            >> xml::attribute( "variance", neutralizationVariance_ )
+          >> xml::end();
 
     if( nType_ != eProtectionType_Human )
     {
-        input.Section( "ProbabilitePanneAleatoire" );
-        input.ReadAttribute( "EVA", rBreakdownEVA_ );
-        input.ReadAttribute( "NEVA", rBreakdownNEVA_ );
-        input.EndSection(); // ProbabilitePanneAleatoire
-
-        input.BeginList( "EffetsAttritionSurHumains" );
-        while( input.NextListElement() )
-        {
-            AttritionEffectOnHuman* pNewEffect = new AttritionEffectOnHuman();
-            pNewEffect->ReadArchive( input );
-            vAttritionEffects_.AddItem( pNewEffect );
-        }
-        input.EndList(); // EffetsAttritionSurHumains
+        input >> xml::start( "random-breakdown-probability" )
+                >> xml::attribute( "eva", rBreakdownEVA_ )
+                >> xml::attribute( "neva", rBreakdownNEVA_ )
+              >> xml::end()
+              >> xml::start( "attrition-effects" )
+                >> xml::list( "attrition-effect", *this, &ADN_Categories_Data::ArmorInfos::ReadAttrition )
+              >> xml::end();
     }
-
-    input.EndSection(); // Protection
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Categories_Data::ArmorInfos::ReadAttrition
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Categories_Data::ArmorInfos::ReadAttrition( xml::xistream& input )
+{
+    AttritionEffectOnHuman* pNewEffect = new AttritionEffectOnHuman();
+    pNewEffect->ReadArchive( input );
+    vAttritionEffects_.AddItem( pNewEffect );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ArmorInfos::WriteArchive
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-void ADN_Categories_Data::ArmorInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Categories_Data::ArmorInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Protection" );
-
     if( strName_.GetData().empty() )
         throw ADN_DataException( "Mauvaises données dans les catégories",
         "Il existe une ou plusieurs catégories de blindage dont le nom n'est pas valide." );
 
-    output.WriteAttribute( "nom", trim( strName_.GetData() ) );
-    output.WriteAttribute( "type", ADN_Tr::ConvertFromProtectionType( nType_.GetData() ) );
-
-    // override xml archive values if Human
     if( nType_ == eProtectionType_Human )
     {
         rBreakdownEVA_  = 0.;
         rBreakdownNEVA_ = 0.;
     }
 
-    output.Section( "Neutralisation" );
-    output.WriteAttribute( "tempsMoyen", neutralizationAverageTime_.GetData() );
-    output.WriteAttribute( "variance",   neutralizationVariance_.GetData() );
-    output.EndSection(); // Neutralisation
+    output << xml::start( "protection" )
+            << xml::attribute( "name", trim( strName_.GetData() ) )
+            << xml::attribute( "type", ADN_Tr::ConvertFromProtectionType( nType_.GetData() ) );
 
-    if( nType_.GetData() != eProtectionType_Human )
+    output << xml::start( "neutralization" )
+            << xml::attribute( "average-time", neutralizationAverageTime_ )
+            << xml::attribute( "variance", neutralizationVariance_ )
+          << xml::end();
+
+    if( nType_ != eProtectionType_Human )
     {
-        output.Section( "ProbabilitePanneAleatoire" );
-        output.WriteAttribute( "EVA", rBreakdownEVA_.GetData() );
-        output.WriteAttribute( "NEVA", rBreakdownNEVA_.GetData() );
-        output.EndSection(); // ProbabilitePanneAleatoire
-
-        output.BeginList( "EffetsAttritionSurHumains", vAttritionEffects_.size() );
+        output << xml::start( "random-breakdown-probability" )
+                << xml::attribute( "eva", rBreakdownEVA_ )
+                << xml::attribute( "neva", rBreakdownNEVA_ )
+               << xml::end()
+               << xml::start( "attrition-effects" );
         for( IT_AttritionEffectOnHuman_Vector it = vAttritionEffects_.begin(); it != vAttritionEffects_.end(); ++it )
             (*it)->WriteArchive( output );
-        output.EndList(); // EffetsAttritionSurHumains
+        output << xml::end();
     }
-
-    output.EndSection(); // Protection
+    output << xml::end();
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Categories_Data constructor
@@ -189,7 +188,6 @@ ADN_Categories_Data::ADN_Categories_Data()
     vDotationNatures_.SetItemTypeName( "la nature de dotation" );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Categories_Data destructor
 // Created: JDY 03-08-27
@@ -198,7 +196,6 @@ ADN_Categories_Data::~ADN_Categories_Data()
 {
     Reset();
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Categories_Data::FilesNeeded
@@ -211,7 +208,6 @@ void ADN_Categories_Data::FilesNeeded(T_StringList& files) const
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData() );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Categories_Data::Reset
 // Created: JDY 03-08-27
@@ -223,79 +219,27 @@ void ADN_Categories_Data::Reset()
     vDotationNatures_.Reset();
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Categories_Data::Load
 // Created: JDY 03-08-27
 //-----------------------------------------------------------------------------
 void ADN_Categories_Data::Load()
 {
-    // Open and read the armors file.
-    ADN_XmlInput_Helper armorsInput;
-
     std::string szArmorsFile= ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
                       + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData();
-
-    if ( !armorsInput.Open( szArmorsFile, ADN_XmlInput_Helper::eNothing ) )
-        throw ADN_OpenFile_Exception( szArmorsFile );
-
-    try
-    {
-        ReadArmors( armorsInput );
-    }
-    catch( ADN_Xml_Exception& xmlException )
-    {
-        throw ADN_Xml_Exception( szArmorsFile, xmlException.GetContext(), xmlException.GetErrorMessage() );
-    }
-    catch( MT_ArchiveLogger_Exception& xmlException )
-    {
-        throw ADN_DataException( "", xmlException.what() );
-    }
-
-    // Open and read the sizes file.
-    ADN_XmlInput_Helper sizesInput;
+    xml::xifstream armorsInput( szArmorsFile );
+    ReadArmors( armorsInput );
 
     std::string szSizesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
         + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData();
-
-    if ( !sizesInput.Open( szSizesFile, ADN_XmlInput_Helper::eNothing ) )
-        throw ADN_OpenFile_Exception( szSizesFile );
-
-    try
-    {
-        ReadSizes( sizesInput );
-    }
-    catch( ADN_Xml_Exception& xmlException )
-    {
-        throw ADN_Xml_Exception( szSizesFile, xmlException.GetContext(), xmlException.GetErrorMessage() );
-    }
-    catch( MT_ArchiveLogger_Exception& xmlException )
-    {
-        throw ADN_DataException( "", xmlException.what() );
-    }
-
-    // Open and read the dotation nature file.
-    ADN_XmlInput_Helper dotationNaturesInput;
+    xml::xifstream sizesInput( szSizesFile );
+    ReadSizes( sizesInput );
 
     std::string szDotationNaturesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
         + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData();
-
-    if ( !dotationNaturesInput.Open( szDotationNaturesFile, ADN_XmlInput_Helper::eNothing ) )
-        throw ADN_OpenFile_Exception( szDotationNaturesFile );
-    try
-    {
-        ReadDotationNatures( dotationNaturesInput );
-    }
-    catch( ADN_Xml_Exception& xmlException )
-    {
-        throw ADN_Xml_Exception( szDotationNaturesFile, xmlException.GetContext(), xmlException.GetErrorMessage() );
-    }
-    catch( MT_ArchiveLogger_Exception& xmlException )
-    {
-        throw ADN_DataException( "", xmlException.what() );
-    }
+    xml::xifstream dotationNaturesInput( szDotationNaturesFile );
+    ReadDotationNatures( dotationNaturesInput );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Categories_Data::Save
@@ -303,41 +247,28 @@ void ADN_Categories_Data::Load()
 //-----------------------------------------------------------------------------
 void ADN_Categories_Data::Save()
 {
-    // Save the armors data.
-    MT_XXmlOutputArchive armorOutput;
-    WriteArmors( armorOutput );
+    {
+        std::string szArmorFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() 
+            + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData();
+        ADN_Tools::CreatePathToFile( szArmorFile );
+        xml::xofstream armorOutput( szArmorFile );
+        WriteArmors( armorOutput );
+    }
 
-    // Write the file.
-    std::string szArmorFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() 
-        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData();
-
-    ADN_Tools::CreatePathToFile( szArmorFile );
-    if( ! armorOutput.WriteToFile( szArmorFile ) )
-        throw ADN_SaveFile_Exception( szArmorFile );
-
-    // Save the sizes data.
-    MT_XXmlOutputArchive sizesOutput;
-    WriteSizes( sizesOutput );
-
-    // Write the file.
-    std::string szSizesFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() 
-        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData();
-
-    ADN_Tools::CreatePathToFile( szSizesFile );
-    if( ! sizesOutput.WriteToFile( szSizesFile ) )
-        throw ADN_SaveFile_Exception( szSizesFile );
-
-    // Save the dotation nature data.
-    MT_XXmlOutputArchive naturesOutput;
-    WriteDotationNatures( naturesOutput );
-
-    // Write the file.
-    std::string szNaturesFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() 
-        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData();
-
-    ADN_Tools::CreatePathToFile( szNaturesFile );
-    if( ! naturesOutput.WriteToFile( szNaturesFile ) )
-        throw ADN_SaveFile_Exception( szNaturesFile );
+    {
+        std::string szSizesFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() 
+            + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData();
+        ADN_Tools::CreatePathToFile( szSizesFile );
+        xml::xofstream sizeOutput( szSizesFile );
+        WriteSizes( sizeOutput );
+    }
+    {
+        std::string szNaturesFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() 
+            + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData();
+        ADN_Tools::CreatePathToFile( szNaturesFile );
+        xml::xofstream naturesOutput( szNaturesFile );
+        WriteDotationNatures( naturesOutput );
+    }
 }
 
 
@@ -388,83 +319,88 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Categories_Data::ReadVolume
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Categories_Data::ReadVolume( xml::xistream& input )
+{
+    std::string strName = xml::attribute< std::string >( input, "name" );
+    T_SizeInfos_Vector::iterator foundSize = std::find_if( vSizes_.begin(), vSizes_.end(), ADN_String_Cmp( strName ) );
+    if( foundSize != vSizes_.end() )
+        throw ADN_DataException( "ReadVolume", "La catégorie de taille '" + strName + "' est définie plusieurs fois dans le fichier." );
+
+    SizeInfos* pNewArmor = new SizeInfos(strName);
+    pNewArmor->SetDataName( "le nom de la catégorie de volume" );
+    vSizes_.AddItem( pNewArmor );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Categories_Data::ReadSizes
 // Created: AGN 2004-07-01
 // -----------------------------------------------------------------------------
-void ADN_Categories_Data::ReadSizes( ADN_XmlInput_Helper& input )
+void ADN_Categories_Data::ReadSizes( xml::xistream& input )
 {
-    // Read the sizes.
-    input.BeginList( "Volumes" );
-    while( input.NextListElement() )
-    {
-        input.Section( "Volume" );
-
-        std::string strName;
-        input.Read( strName );
-
-        T_SizeInfos_Vector::iterator foundSize = std::find_if( vSizes_.begin(), vSizes_.end(), ADN_String_Cmp( strName ) );
-        if( foundSize != vSizes_.end() )
-            input.ThrowError( MT_FormatString( "La catégorie de taille %s est définie plusieurs fois dans le fichier.", strName.c_str() ).c_str() );
-
-        SizeInfos* pNewArmor = new SizeInfos(strName);
-        pNewArmor->SetDataName( "le nom de la catégorie de volume" );
-        vSizes_.AddItem( pNewArmor );
-
-        input.EndSection(); // Volume
-    }
-    input.EndList(); // Volumes
+    input >> xml::start( "volumes" )
+            >> xml::list( "volume", *this, &ADN_Categories_Data::ReadVolume )
+          >> xml::end();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Categories_Data::ReadProtection
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Categories_Data::ReadProtection( xml::xistream& input )
+{
+    std::auto_ptr<ArmorInfos> spNewArmor( new ArmorInfos() );
+    spNewArmor->ReadArchive( input );
+    vArmors_.AddItem( spNewArmor.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Categories_Data::ReadArmors
 // Created: APE 2004-11-09
 // -----------------------------------------------------------------------------
-void ADN_Categories_Data::ReadArmors( ADN_XmlInput_Helper& input )
+void ADN_Categories_Data::ReadArmors( xml::xistream& input )
 {
-    input.BeginList( "Protections" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<ArmorInfos> spNewArmor( new ArmorInfos() );
-        spNewArmor->ReadArchive( input );
-        vArmors_.AddItem( spNewArmor.release() );
-    }
-    input.EndList();    // Protections
+    input >> xml::start( "protections" )
+            >> xml::list( "protection", *this, &ADN_Categories_Data::ReadProtection )
+          >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Categories_Data::ReadNature
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Categories_Data::ReadNature( xml::xistream& input )
+{
+    std::string strName;
+    input >> xml::attribute( "type", strName );
+    T_DotationNatureInfos_Vector::iterator found = std::find_if( vDotationNatures_.begin(), vDotationNatures_.end(), ADN_String_Cmp( strName ) );
+    if( found != vDotationNatures_.end() )
+        throw ADN_DataException( "ReadNature", "La nature de dotation '" + strName + "' est définie plusieurs fois dans le fichier." );
+
+    DotationNatureInfos* pNew = new DotationNatureInfos( strName );
+    pNew->SetDataName( "le nom de la nature de dotation" );
+    vDotationNatures_.AddItem( pNew );
+    
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Categories_Data::ReadDotationNatures
 // Created: SBO 2006-03-23
 // -----------------------------------------------------------------------------
-void ADN_Categories_Data::ReadDotationNatures( ADN_XmlInput_Helper& input )
+void ADN_Categories_Data::ReadDotationNatures( xml::xistream& input )
 {
-    // Read the dotation natures.
-    input.BeginList( "Natures" );
-    while( input.NextListElement() )
-    {
-        input.Section( "Nature" );
-
-        std::string strName;
-        input.Read( strName );
-
-        T_DotationNatureInfos_Vector::iterator found = std::find_if( vDotationNatures_.begin(), vDotationNatures_.end(), ADN_String_Cmp( strName ) );
-        if( found != vDotationNatures_.end() )
-            input.ThrowError( MT_FormatString( "La nature de dotation %s est définie plusieurs fois dans le fichier.", strName.c_str() ).c_str() );
-
-        DotationNatureInfos* pNew = new DotationNatureInfos( strName );
-        pNew->SetDataName( "le nom de la nature de dotation" );
-        vDotationNatures_.AddItem( pNew );
-
-        input.EndSection(); // Nature
-    }
-    input.EndList(); // Natures
+    input >> xml::start( "natures" )
+            >> xml::list( "nature", *this, &ADN_Categories_Data::ReadNature )
+          >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Categories_Data::WriteSizes
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-void ADN_Categories_Data::WriteSizes( MT_OutputArchive_ABC& output )
+void ADN_Categories_Data::WriteSizes( xml::xostream& output )
 {
     // Check the sizes data for duplicates.
     if( HasDuplicates( vSizes_, StringExtractor() ) )
@@ -472,29 +408,24 @@ void ADN_Categories_Data::WriteSizes( MT_OutputArchive_ABC& output )
         "Il existe une ou plusieurs catégories de taille avec le même nom.",
         "Assurez vous qu'il n'y a pas de doublons dans l'onglet 'Catégories'" );
 
-    // Write the data.
-    output.BeginList( "Volumes", vSizes_.size() );
+    output << xml::start( "volumes" );
     for( T_SizeInfos_Vector::const_iterator itSize = vSizes_.begin(); itSize != vSizes_.end(); ++itSize )
     {
-        output.Section( "Volume" );
-
         if( (*itSize)->GetData().empty() )
-            throw ADN_DataException( "Mauvaises données dans les catégories",
-            "Il existe une ou plusieurs catégories de taille dont le nom n'est pas valide." );
+            throw ADN_DataException( "Mauvaises données dans les catégories", "Il existe une ou plusieurs catégories de taille dont le nom n'est pas valide." );
+        output << xml::start( "volume" )
+                << xml::attribute( "name", trim( (*itSize)->GetData() ) )
+               << xml::end();
 
-        output << trim( (*itSize)->GetData() );
-
-        output.EndSection(); // Volume
     }
-    output.EndSection();    // Volumes
+    output << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Categories_Data::WriteArmors
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-void ADN_Categories_Data::WriteArmors( MT_OutputArchive_ABC& output )
+void ADN_Categories_Data::WriteArmors( xml::xostream& output )
 {
     // Check the armors data for duplicates.
     if( HasDuplicates( vArmors_, ArmorExtractor() ) )
@@ -502,19 +433,17 @@ void ADN_Categories_Data::WriteArmors( MT_OutputArchive_ABC& output )
         "Il existe une ou plusieurs catégories de blindage avec le même nom.",
         "Assurez vous qu'il n'y a pas de doublons dans l'onglet 'Catégories'" );
 
-    // Write the data.
-    output.BeginList( "Protections", vArmors_.size() );
+    output << xml::start( "protections" );
     for( T_ArmorInfos_Vector::const_iterator itArmor = vArmors_.begin(); itArmor != vArmors_.end(); ++itArmor )
         (*itArmor)->WriteArchive( output );
-    output.EndList();    // Protections
-
+    output << xml::end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Categories_Data::WriteDotationNatures
 // Created: SBO 2006-03-23
 // -----------------------------------------------------------------------------
-void ADN_Categories_Data::WriteDotationNatures( MT_OutputArchive_ABC& output )
+void ADN_Categories_Data::WriteDotationNatures( xml::xostream& output )
 {
     // Check the dotation natures for duplicates.
     if( HasDuplicates( vDotationNatures_, StringExtractor() ) )
@@ -522,19 +451,15 @@ void ADN_Categories_Data::WriteDotationNatures( MT_OutputArchive_ABC& output )
         "Il existe une ou plusieurs nature de dotation avec le même nom.",
         "Assurez vous qu'il n'y a pas de doublons dans l'onglet 'Catégories'" );
 
-    // Write the data.
-    output.BeginList( "Natures", vDotationNatures_.size() );
+    output << xml::start( "natures" );
     for( T_DotationNatureInfos_Vector::const_iterator it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
     {
-        output.Section( "Nature" );
-
         if( (*it)->GetData().empty() )
             throw ADN_DataException( "Mauvaises données dans les catégories",
             "Il existe une ou plusieurs nature de dotation dont le nom n'est pas valide." );
-
-        output << trim( (*it)->GetData() );
-
-        output.EndSection(); // Nature
+        output << xml::start( "nature" )
+                << xml::attribute( "type", trim( (*it)->GetData() ) )
+               << xml::end();
     }
-    output.EndSection();    // Natures
+    output << xml::end();
 }

@@ -17,12 +17,16 @@
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Tools/MIL_Tools.h"
+#include "tools/xmlcodecs.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypeObjectData constructor
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( const MIL_RealObjectType& objectType, MIL_InputArchive& archive )
+PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( const MIL_RealObjectType& objectType, xml::xistream& xis )
     : rTimeBaseConstruction_      ( std::numeric_limits< MT_Float >::max() )
     , rTimeBaseDestruction_       ( std::numeric_limits< MT_Float >::max() )
     , rTimeConstructionCoef_      ( 1 )
@@ -34,40 +38,26 @@ PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( const MIL_RealObject
     , rSpeedWithinWhenBypassed_   ( objectType.GetDefaultSpeedWhenBypassed   () )
     , pConsumptionMode_           ( 0 )
 {
-    MT_Float rTmp;
-    if( archive.ReadTimeField( "TempsInitialConstruction", rTmp, CheckValueGreaterOrEqual( 0. ), MIL_InputArchive::eNothing, MIL_InputArchive::eNothing ) ) 
-        rTimeBaseConstruction_ = rTmp;
-    if( archive.ReadTimeField( "TempsInitialDestruction", rTmp, CheckValueGreaterOrEqual( 0. ), MIL_InputArchive::eNothing, MIL_InputArchive::eNothing ) ) 
-        rTimeBaseDestruction_ = rTmp;
-    if( archive.ReadTimeField( "TempsValorisation", rTmp, CheckValueGreaterOrEqual( 0. ), MIL_InputArchive::eNothing, MIL_InputArchive::eNothing ) ) 
-        rTimeMining_ = rTmp;
-    if( archive.ReadTimeField( "TempsDevalorisation", rTmp, CheckValueGreaterOrEqual( 0. ), MIL_InputArchive::eNothing, MIL_InputArchive::eNothing ) ) 
-        rTimeDemining_ = rTmp;
-    if( archive.ReadTimeField( "TempsConstructionCoef", rTmp, CheckValueGreaterOrEqual( 0. ), MIL_InputArchive::eNothing, MIL_InputArchive::eNothing ) ) 
-        rTimeConstructionCoef_ = rTmp;
-    if( archive.ReadTimeField( "TempsDestructionCoef", rTmp, CheckValueGreaterOrEqual( 0. ), MIL_InputArchive::eNothing, MIL_InputArchive::eNothing ) ) 
-        rTimeDestructionCoef_ = rTmp;
-    if( archive.ReadField( "CoefGainContournement", rTmp, CheckValueGreaterOrEqual( 0. ), MIL_InputArchive::eNothing, MIL_InputArchive::eNothing ) ) 
-        rCoefTimeBypass_ = rTmp;
+    std::string strConsumptionMode = "";
+    tools::ReadTimeAttribute( xis, "initial-construction-time", rTimeBaseConstruction_       );
+    tools::ReadTimeAttribute( xis, "initial-destruction-time" , rTimeBaseDestruction_        );
+    tools::ReadTimeAttribute( xis, "valorization-time"        , rTimeMining_                 );
+    tools::ReadTimeAttribute( xis, "devalorization-time"      , rTimeDemining_               );
+    tools::ReadTimeAttribute( xis, "construction-time-factor" , rTimeConstructionCoef_       );
+    tools::ReadTimeAttribute( xis, "destruction-time-factor"  , rTimeDestructionCoef_        );
+    tools::ReadTimeAttribute( xis, "bypass-gain-factor"       , rCoefTimeBypass_             );
+    tools::ReadTimeAttribute( xis, "non-bypassed-speed"       , rSpeedWithinWhenNotBypassed_ );
+    tools::ReadTimeAttribute( xis, "bypassed-speed"           , rSpeedWithinWhenBypassed_    );
 
-    if ( archive.ReadField( "VitesseNonContourne", rSpeedWithinWhenNotBypassed_, MIL_InputArchive::eNothing ) )
-    {
-        if ( rSpeedWithinWhenNotBypassed_ < 0 )
-            rSpeedWithinWhenNotBypassed_ = std::numeric_limits< MT_Float >::max();
-        else
-            rSpeedWithinWhenNotBypassed_ = MIL_Tools::ConvertSpeedMosToSim( rSpeedWithinWhenNotBypassed_  );
-    }
+    if ( rSpeedWithinWhenNotBypassed_ < 0 )
+        rSpeedWithinWhenNotBypassed_ = std::numeric_limits< MT_Float >::max();
 
-    if ( archive.ReadField( "VitesseContourne", rSpeedWithinWhenBypassed_, MIL_InputArchive::eNothing ) )
-    {
-        if ( rSpeedWithinWhenBypassed_ < 0 )
-            rSpeedWithinWhenBypassed_ = std::numeric_limits< MT_Float >::max();
-        else
-            rSpeedWithinWhenBypassed_ = MIL_Tools::ConvertSpeedMosToSim( rSpeedWithinWhenBypassed_  );
-    }   
+    if ( rSpeedWithinWhenBypassed_ < 0 )
+        rSpeedWithinWhenBypassed_ = std::numeric_limits< MT_Float >::max();
 
-    std::string strConsumptionMode;
-    if ( archive.ReadField( "ModeConsommation", strConsumptionMode, MIL_InputArchive::eNothing ) )
+    xis >> optional() >> attribute( "consumption-mode", strConsumptionMode );
+
+    if ( strConsumptionMode != "" )
     {
         pConsumptionMode_ = PHY_ConsumptionType::FindConsumptionType( strConsumptionMode );
         if( !pConsumptionMode_ )

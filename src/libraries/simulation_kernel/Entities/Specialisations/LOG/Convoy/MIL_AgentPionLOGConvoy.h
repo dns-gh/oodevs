@@ -13,8 +13,13 @@
 #define __MIL_AgentPionLOGConvoy_h_
 
 #include "MIL.h"
-
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
+
+namespace xml
+{
+    class xostream;
+    class xistream;
+}
 
 // =============================================================================
 // @class  MIL_AgentPionType
@@ -25,7 +30,7 @@ class MIL_AgentPionLOGConvoy : public MIL_AgentPionLOG_ABC
     MT_COPYNOTALLOWED( MIL_AgentPionLOGConvoy )
 
 public:
-             MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive );
+             MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis );
              MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition );
              MIL_AgentPionLOGConvoy();
     virtual ~MIL_AgentPionLOGConvoy();
@@ -37,7 +42,7 @@ public:
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
 
-    virtual void WriteODB( MT_XXmlOutputArchive& archive ) const;
+    virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 };
 

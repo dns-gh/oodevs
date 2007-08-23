@@ -30,6 +30,20 @@ ObjectTypes::ObjectTypes()
     // NOTHING
 }
 
+namespace
+{
+    struct FileReader
+    {
+        FileReader( xml::xistream& xis ) : xis_( &xis ) {}
+        const FileReader& Read( const std::string& tag, std::string& file ) const
+        {
+            *xis_ >> start( tag ) >> attribute( "file", file ) >> end();
+            return *this;
+        }
+        xml::xistream* xis_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: ObjectTypes::Load
 // Created: AGE 2006-04-28
@@ -40,12 +54,13 @@ void ObjectTypes::Load( const ExerciseConfig& config )
 
     xml::xifstream scipio( config.GetPhysicalFile() );
     std::string dotations, equipments, nbc, pannes, objects;
-    scipio >> start( "physical" )
-                >> content( "Dotations", dotations )
-                >> content( "Composantes", equipments )
-                >> content( "NBC", nbc )
-                >> content( "Pannes", pannes )
-                >> content( "Objets", objects );
+    scipio >> start( "physical" );
+    FileReader( scipio )
+        .Read( "dotations", dotations )
+        .Read( "components", equipments )
+        .Read( "nbc", nbc )
+        .Read( "breakdowns", pannes )
+        .Read( "objects", objects );
    
     ReadObjectTypes( config.BuildPhysicalChildFile( objects ) );
     ReadDotations( config.BuildPhysicalChildFile( dotations ) );
@@ -83,9 +98,9 @@ ObjectTypes::~ObjectTypes()
 void ObjectTypes::ReadObjectTypes( const std::string& objects )
 {
     xifstream xis( objects );
-    xis >> start( "Objets" )
-        >> start( "ObjetsReels" )
-        >> list ( "Objet", *this, &ObjectTypes::ReadObjectType );
+    xis >> start( "objects" )
+        >> start( "real-objects" )
+        >> list ( "object", *this, &ObjectTypes::ReadObjectType );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,8 +122,8 @@ void ObjectTypes::ReadObjectType( xml::xistream& xis )
 void ObjectTypes::ReadDotations( const std::string& dotations )
 {
     xifstream xis( dotations );
-    xis >> start( "Dotations" )
-        >> list( "Dotation", *this, &ObjectTypes::ReadDotation );
+    xis >> start( "dotations" )
+        >> list( "dotation", *this, &ObjectTypes::ReadDotation );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,20 +132,7 @@ void ObjectTypes::ReadDotations( const std::string& dotations )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadDotation( xml::xistream& xis )
 {
-    std::string dotationName;
-    xis >> attribute( "nom", dotationName )
-        >> start( "Categories" )
-            >> list( "Categorie", *this, &ObjectTypes::ReadCategory, dotationName )
-        >> end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectTypes::ReadCategory
-// Created: AGE 2006-02-21
-// -----------------------------------------------------------------------------
-void ObjectTypes::ReadCategory( xml::xistream& xis, const std::string& name )
-{
-    DotationType* dotation = new DotationType( name.c_str(), xis );
+    DotationType* dotation = new DotationType( xis );
     Resolver2< DotationType >::Register( dotation->GetId(), dotation->GetCategory(), *dotation );
 }
 
@@ -141,8 +143,8 @@ void ObjectTypes::ReadCategory( xml::xistream& xis, const std::string& name )
 void ObjectTypes::ReadEquipments( const std::string& equipments )
 {
     xifstream xis( equipments );
-    xis >> start( "Composantes" )
-        >> list( "Composante", *this, &ObjectTypes::ReadEquipment );
+    xis >> start( "elements" )
+        >> list( "element", *this, &ObjectTypes::ReadEquipment );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,9 +164,9 @@ void ObjectTypes::ReadEquipment( xml::xistream& xis )
 void ObjectTypes::ReadNBC( const std::string& nbc )
 {
     xifstream xis( nbc );
-    xis >> start( "NBC" )
-            >> start( "AgentsNBC" )
-                >> list( "AgentNBC", *this, &ObjectTypes::ReadNBCAgent );
+    xis >> start( "nbc" )
+            >> start( "agents" )
+                >> list( "agent", *this, &ObjectTypes::ReadNBCAgent );
 }
 
 // -----------------------------------------------------------------------------
@@ -184,18 +186,17 @@ void ObjectTypes::ReadNBCAgent( xml::xistream& xis )
 void ObjectTypes::ReadBreakdowns( const std::string& breakdowns )
 {
     xifstream xis( breakdowns );
-    xis >> start( "Pannes" )
-            >> start( "Types" )
-                >> start( "NTI1" )
-                    >> list( "Panne", *this, &ObjectTypes::ReadBreakdown )
-                >> end()
-                >> start( "NTI2" )
-                    >> list( "Panne", *this, &ObjectTypes::ReadBreakdown )
-                >> end()
-                >> start( "NTI3" )
-                    >> list( "Panne", *this, &ObjectTypes::ReadBreakdown )
-                >> end();
+    xis >> start( "breakdowns" )
+        >> list( "category", *this, &ObjectTypes::ReadBreakdownCategory );
+}
 
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadBreakdownCategory
+// Created: AGE 2007-08-16
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadBreakdownCategory( xml::xistream& xis )
+{
+    xis >> list( "breakdown", *this, &ObjectTypes::ReadBreakdown );
 }
 
 // -----------------------------------------------------------------------------

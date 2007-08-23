@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Volumes>
-
-  <Volume>Gros</Volume>
-
-  <Volume>Moyen</Volume>
-
-  <Volume>Petit</Volume>
-
-  <Volume>Personnel</Volume>
-
-</Volumes>
+<volumes>
+  <volume name="Gros"/>
+  <volume name="Moyen"/>
+  <volume name="Petit"/>
+  <volume name="Personnel"/>
+</volumes>

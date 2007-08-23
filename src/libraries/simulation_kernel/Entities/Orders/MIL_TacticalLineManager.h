@@ -56,12 +56,13 @@ public:
 
     //! @name Operations
     //@{
-          void           CreateLimit     ( const MIL_Formation& formation, MIL_InputArchive& archive );
-          void           CreateLimit     ( const MIL_Automate&  automate , MIL_InputArchive& archive );
-          void           CreateLima      ( const MIL_Formation& formation, MIL_InputArchive& archive );
-          void           CreateLima      ( const MIL_Automate&  automate , MIL_InputArchive& archive );
+    void CreateLimit( xml::xistream& xis, const MIL_Formation& formation );
+    void CreateLimit( xml::xistream& xis, const MIL_Automate&  automate  );
+    void CreateLima( xml::xistream& xis, const MIL_Formation& formation );
+    void CreateLima( xml::xistream& xis, const MIL_Automate&  automate  );
+
     const TER_LimitData& CreateLimitData ( const T_PointVector& points );
-          void           DestroyLimitData( const TER_LimitData& data );   
+    void  DestroyLimitData( const TER_LimitData& data );   
     //@}
 
 private:

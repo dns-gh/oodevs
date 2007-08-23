@@ -16,6 +16,11 @@
 
 #include "Entities/Automates/MIL_AutomateType.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 // @class  MIL_AutomateType
 // Created: JVT 2004-08-03
@@ -25,7 +30,7 @@ class MIL_AutomateTypeLOG : public MIL_AutomateType
     MT_COPYNOTALLOWED( MIL_AutomateTypeLOG )
 
 public:
-    MIL_AutomateTypeLOG( const std::string& strName, MIL_InputArchive& archive );
+    MIL_AutomateTypeLOG( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AutomateTypeLOG();
 
     //! @name Accessors
@@ -35,12 +40,12 @@ public:
 
     //! @name Instanciation
     //@{
-    virtual MIL_Automate& InstanciateAutomate( uint nID, MIL_Formation& formation, MIL_InputArchive& archive ) const;
+    virtual MIL_Automate& InstanciateAutomate( uint nID, MIL_Formation& formation, xml::xistream& xis ) const;
     //@}
 
     //! @name Main
     //@{
-    static const MIL_AutomateType* Create( const std::string& strName, MIL_InputArchive& archive );
+    static const MIL_AutomateType* Create( const std::string& strName, xml::xistream& xis );
     //@}
 };
 

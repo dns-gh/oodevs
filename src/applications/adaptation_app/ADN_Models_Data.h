@@ -18,7 +18,7 @@
 #include "ADN_Tools.h"
 #include "ADN_Missions_Data.h"
 
-class ADN_XmlInput_Helper;
+class xml::xistream;
 
 //*****************************************************************************
 // Created: JDY 03-07-24
@@ -39,8 +39,8 @@ public:
         
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_TypePtr_InVector_ABC< ADN_Missions_Data::FragOrder > fragOrder_;
@@ -67,8 +67,9 @@ public:
 
         MissionInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void ReadFragOrder( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_TypePtr_InVector_ABC< ADN_Missions_Data::Mission > mission_;
@@ -106,8 +107,9 @@ public:
 
         ModelInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void ReadMission( xml::xistream& input );
+        void WriteArchive( const std::string& type, xml::xostream& output );
 
     public:
         ADN_Missions_Data::T_Mission_Vector& missions_;
@@ -139,8 +141,12 @@ public:
     ModelInfos*             FindPopulationModel( const std::string& strName );
 
 private:
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void WriteArchive( MT_OutputArchive_ABC& output );
+    void ReadArchive( xml::xistream& input );
+    void ReadAutomat( xml::xistream& input );
+    void ReadPopulation( xml::xistream& input );
+    void ReadUnit( xml::xistream& input );
+    
+    void WriteArchive( xml::xostream& output );
 
 private:
     T_ModelInfos_Vector     vUnitModels_;

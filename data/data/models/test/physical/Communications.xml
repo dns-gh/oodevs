@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Communications>
-
-  <ImpactCoupureCommunications>
-    <CoefModificationVitesse>0.2</CoefModificationVitesse>
-    <CoefModificationTempsRechargement>1.5</CoefModificationTempsRechargement>
-  </ImpactCoupureCommunications>
-
-</Communications>
+<communications>
+  <communication-breakdown reloading-time-modifier="1.5" speed-modifier="0.2"/>
+</communications>

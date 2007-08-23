@@ -20,6 +20,9 @@
 #include "PHY_Dotation.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Network/NET_ASN_Messages.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 BOOST_CLASS_EXPORT_GUID( PHY_DotationGroupContainer, "PHY_DotationGroupContainer" )
 
@@ -144,42 +147,49 @@ void PHY_DotationGroupContainer::serialize( Archive& file, const uint )
 // Name: PHY_DotationGroupContainer::ReadValues
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::ReadValues( MIL_InputArchive& archive )
+void PHY_DotationGroupContainer::ReadValues( xml::xistream& xis )
 {
-    if ( !archive.BeginList( "dotations", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> list( "dotations", *this, &PHY_DotationGroupContainer::ReadDotations );
+}
 
-    while( archive.NextListElement() )
-    {
-        std::string strType;
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::ReadDotations
+// Created: ABL 2007-07-10
+// -----------------------------------------------------------------------------
+void PHY_DotationGroupContainer::ReadDotations( xml::xistream& xis )
+{
+    xis >> list( "dotation", *this, &PHY_DotationGroupContainer::ReadDotation );
+}
 
-        archive.Section( "dotation" );
-        archive.ReadAttribute( "name", strType );
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::ReadDotation
+// Created: ABL 2007-07-10
+// -----------------------------------------------------------------------------
+void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis )
+{
+    std::string strType;
+    xis >> attribute( "name", strType );
+    const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
+    if( !pDotationCategory )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type" ); // $$$$ ABL 2007-07-10: error context
 
-        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
-        if( !pDotationCategory )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type", archive.GetContext() );
+    PHY_DotationGroup* pGroup = GetDotationGroup( pDotationCategory->GetType() ); //$$$$$ TEMPORAIRE : merger PHY_DotationGroupContainer et PHY_DotationGroup
+    if( !pGroup )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Dotation type cannot be overloaded: not in types" ); // $$$$ ABL 2007-07-10: error context
 
-        PHY_DotationGroup* pGroup = GetDotationGroup( pDotationCategory->GetType() ); //$$$$$ TEMPORAIRE : merger PHY_DotationGroupContainer et PHY_DotationGroup
-        if( !pGroup )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Dotation type cannot be overloaded: not in types", archive.GetContext() );
-
-        pGroup->ReadValues( archive, *pDotationCategory );
-        archive.EndSection(); // dotation
-    }
-    archive.EndList(); // dotations
+    pGroup->ReadValues( xis, *pDotationCategory );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::WriteODB( MT_XXmlOutputArchive& archive ) const
+void PHY_DotationGroupContainer::WriteODB( xml::xostream& xos ) const
 {
-    archive.Section( "dotations" );
+    xos << start( "dotations" );
     for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
-        it->second->WriteODB( archive );
-    archive.EndSection(); // dotations
+        it->second->WriteODB( xos );
+    xos << end(); // dotations
 }
 
 // =============================================================================

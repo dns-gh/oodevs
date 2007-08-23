@@ -23,18 +23,16 @@ ComponentType::ComponentType( xml::xistream& xis )
     , hasMedical_( false )
     , hasSupply_( false )
 {
-    int id;
     std::string name;
-    xis >> attribute( "nom", name )
-            >> content( "MosID", id );
-    id_ = id;
+    xis >> attribute( "name", name )
+        >> attribute( "id", id_ );
     name_ = name.c_str();
 
     xis >> optional() 
-        >> start( "FonctionsLogistiques" )
-                >> list( "Maintenance",    *this, &ComponentType::ReadPresence, hasMaintenance_ )
-                >> list( "Sante",		   *this, &ComponentType::ReadPresence, hasMedical_ )
-                >> list( "Ravitaillement", *this, &ComponentType::ReadPresence, hasSupply_ );
+        >> start( "logistic-functions" )
+                >> list( "maintenance-functions", *this, &ComponentType::ReadPresence, hasMaintenance_ )
+                >> list( "health-functions",      *this, &ComponentType::ReadPresence, hasMedical_ )
+                >> list( "supply-functions",      *this, &ComponentType::ReadPresence, hasSupply_ );
 }
 
 // -----------------------------------------------------------------------------

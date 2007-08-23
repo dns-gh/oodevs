@@ -40,6 +40,9 @@
 #include "HLA/HLA_UpdateFunctor.h"
 #include "HLA/Deserializer.h"
 #include "HLA/AttributeIdentifier.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 MT_Random MIL_RealObject_ABC::random_;
 
@@ -51,8 +54,8 @@ MIL_RealObject_ABC::MIL_RealObject_ABC( const MIL_RealObjectType& type, uint nID
     : MIL_Object_ABC                     ( army )
     , pType_                             ( &type )
     , pObstacleType_                     ( 0 )
-    , rSizeCoef_                         ( 0. ) 
-    , nFullNbrDotationForConstruction_   ( type.GetNbrDotationForConstruction() ) 
+    , rSizeCoef_                         ( 0. )
+    , nFullNbrDotationForConstruction_   ( type.GetNbrDotationForConstruction() )
     , nFullNbrDotationForMining_         ( type.GetNbrDotationForMining      () )
     , nCurrentNbrDotationForConstruction_( 0 )
     , nCurrentNbrDotationForMining_      ( 0 )
@@ -84,7 +87,7 @@ MIL_RealObject_ABC::MIL_RealObject_ABC()
     : MIL_Object_ABC                     ()
     , pType_                             ( 0 )
     , pObstacleType_                     ( 0 )
-    , rSizeCoef_                         ( 0. ) 
+    , rSizeCoef_                         ( 0. )
     , nFullNbrDotationForConstruction_   ( 0 )
     , nFullNbrDotationForMining_         ( 0 )
     , nCurrentNbrDotationForConstruction_( 0 )
@@ -178,7 +181,7 @@ void MIL_RealObject_ABC::load( MIL_CheckPointInArchive& file, const uint )
          >> rExitingPopulationDensity_;
 
     InitializeAvoidanceLocalisation();
-    if ( pType_->GetIDManager().IsMosIDValid( nID_ ) )
+    if( pType_->GetIDManager().IsMosIDValid( nID_ ) )
     {
         bool bOut = pType_->GetIDManager().LockMosID( nID_ );
         assert( bOut );
@@ -221,7 +224,7 @@ void MIL_RealObject_ABC::save( MIL_CheckPointOutArchive& file, const uint ) cons
 // Name: MIL_RealObject_ABC::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void MIL_RealObject_ABC::WriteODB( MT_XXmlOutputArchive& archive ) const
+void MIL_RealObject_ABC::WriteODB( xml::xostream& xos ) const
 {
     assert( pType_ );
 
@@ -229,25 +232,24 @@ void MIL_RealObject_ABC::WriteODB( MT_XXmlOutputArchive& archive ) const
     if( *pType_ == MIL_RealObjectType::nuageNBC_ )
         return;
 
-    archive.Section( "object" );
-
-    archive.WriteAttribute( "id"      , nID_ );
-    archive.WriteAttribute( "name"    , strName_ );
-    archive.WriteAttribute( "type"    , pType_  ->GetName() );
+    xos << start( "object" )
+            << attribute( "id"  , nID_ )
+            << attribute( "name", strName_ )
+            << attribute( "type", pType_->GetName() );
 
     if( pType_->CanBeReservedObstacle() )
     {
         assert( pObstacleType_ );
-        archive.WriteAttribute( "obstacle-type", pObstacleType_->GetName() );
+        xos << attribute( "obstacle-type", pObstacleType_->GetName() );
         if( pObstacleType_->CouldBeActivated() )
-            archive.WriteAttribute( "reserved-obstacle-activated", bReservedObstacleActivated_ );
+            xos << attribute( "reserved-obstacle-activated", bReservedObstacleActivated_ );
     }
-    
-    GetLocalisation().Write( archive );
 
-    WriteSpecificAttributes( archive );
+    GetLocalisation().Write( xos );
 
-    archive.EndSection(); // object
+    WriteSpecificAttributes( xos );
+
+    xos << end(); // object
 }
 
 //=============================================================================
@@ -262,7 +264,7 @@ inline
 void MIL_RealObject_ABC::InitializeAvoidanceLocalisation()
 {
     assert( pType_ );
-    if ( pType_->GetAvoidanceDistance() == 0. )
+    if( pType_->GetAvoidanceDistance() == 0. )
         avoidanceLocalisation_.Reset();
     else
     {
@@ -293,23 +295,23 @@ void MIL_RealObject_ABC::InitializeCommon( const TER_Localisation& localisation 
 // Name: MIL_RealObject_ABC::Initialize
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-void MIL_RealObject_ABC::Initialize( MIL_InputArchive& archive )
+void MIL_RealObject_ABC::Initialize( xml::xistream& xis )
 {
     std::string strName;
-    archive.ReadAttribute( "name", strName_, MIL_InputArchive::eNothing );
+    xis >> optional() >> attribute( "name", strName_ );
     if( pType_->CanBeReservedObstacle() )
     {
         std::string strObstacleTypeName;
-        archive.ReadAttribute( "obstacle-type", strObstacleTypeName );
+        xis >> attribute( "obstacle-type", strObstacleTypeName );
         pObstacleType_ = MIL_ObstacleType::Find( strObstacleTypeName );
         if( !pObstacleType_ )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown obstacle type", archive.GetContext() ); 
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown obstacle type" );  // $$$$ ABL 2007-07-09: error context
         if( pObstacleType_->CouldBeActivated() )
-            archive.ReadAttribute( "reserved-obstacle-activated", bReservedObstacleActivated_ );
+            xis >> attribute( "reserved-obstacle-activated", bReservedObstacleActivated_ );
     }
 
     TER_Localisation localisation;
-    localisation.Read( archive );
+    localisation.Read( xis );
 
     InitializeCommon( localisation );
 }
@@ -320,12 +322,12 @@ void MIL_RealObject_ABC::Initialize( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::Initialize( const ASN1T_MagicActionCreateObject& asn )
 {
-    assert( pType_ );    
-    TER_Localisation localisation; 
+    assert( pType_ );
+    TER_Localisation localisation;
     if( !NET_ASN_Tools::ReadLocation( asn.location, localisation ) )
         return EnumObjectErrorCode::error_invalid_specific_attributes;
 
-    if( asn.m.namePresent ) 
+    if( asn.m.namePresent )
         strName_ = asn.name;
 
     if( pType_->CanBeReservedObstacle() )
@@ -357,7 +359,7 @@ bool MIL_RealObject_ABC::Initialize( const MIL_ObstacleType& obstacleType, DIA_P
         pObstacleType_              = &obstacleType;
         bReservedObstacleActivated_ = false;
     }
-        
+
     assert( DEC_Tools::CheckTypeLocalisation( diaParameters[ nCurrentParamIdx ] ) );
 
     const TER_Localisation* pLocalisation = diaParameters[ nCurrentParamIdx++ ].ToUserPtr( pLocalisation );
@@ -425,7 +427,7 @@ void MIL_RealObject_ABC::SendCreation()
     asn().name = strName_.c_str();
     asn().type = pType_->GetAsnID();
     asn().team = GetArmy().GetID();
-    
+
     NET_ASN_Tools::WriteLocation( GetLocalisation(), asn().location );
 
     if( pObstacleType_ )
@@ -453,7 +455,7 @@ void MIL_RealObject_ABC::SendCreation()
 
     asn().m.specific_attributesPresent = 0;
     WriteSpecificAttributes( asn );
-    
+
     asn.Send();
 
     NET_ASN_Tools::Delete( asn().location );
@@ -586,7 +588,7 @@ ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::OnReceiveMagicActionUpdate( const 
         ChangeMiningPercentage( asn.mining_percentage / 100. );
         NotifyAttributeUpdated( eAttrUpdate_MiningPercentage );
     }
-        
+
     if( asn.m.bypass_construction_percentagePresent )
     {
         rBypassPercentage_ = asn.bypass_construction_percentage / 100.;
@@ -635,7 +637,7 @@ void MIL_RealObject_ABC::Deserialize( const AttributeIdentifier& attributeID, De
     }
     else if( attributeID == "completion" )
     {
-        // $$$$ AGE 2005-02-24: Ca sux ! 
+        // $$$$ AGE 2005-02-24: Ca sux !
         // $$$$ AGE 2005-02-24: Rajouter un champ dans le FSOM
         double rConstruction;
         deserializer >> rConstruction;
@@ -647,7 +649,7 @@ void MIL_RealObject_ABC::Deserialize( const AttributeIdentifier& attributeID, De
                 bPrepared_ = true;
                 NotifyAttributeUpdated( eAttrUpdate_Prepared );
             }*/
-            
+
         }
         else
         {
@@ -776,7 +778,7 @@ MT_Float MIL_RealObject_ABC::ApplySpeedPolicy( MT_Float rAgentSpeedWithinObject,
 void MIL_RealObject_ABC::ApplyAttrition( MIL_Agent_ABC& target )
 {
     assert( pType_ );
-    
+
     PHY_ObjectExplosionFireResult fireResult( *this );
     target.GetRole< PHY_RoleInterface_Composantes >().ApplyExplosion( *pType_, fireResult );
 
@@ -796,7 +798,7 @@ void MIL_RealObject_ABC::ApplyAttrition( MIL_PopulationElement_ABC& target )
     assert( pType_ );
 
     if( pType_->GetPopulationAttritionSurface() > 0. ) //$$$
-    {   
+    {
         PHY_ObjectExplosionFireResult fireResult( *this );
         target.ApplyExplosion( *pType_, fireResult );
 
@@ -813,7 +815,7 @@ void MIL_RealObject_ABC::ApplyAttrition( MIL_PopulationElement_ABC& target )
 // Created: NLD 2006-03-08
 // -----------------------------------------------------------------------------
 MT_Float MIL_RealObject_ABC::GetExitingPopulationDensity() const
-{   
+{
     if( IsMarkedForDestruction() || rConstructionPercentage_ == 0 || ( IsReservedObstacle() && !bReservedObstacleActivated_ ) )
         return std::numeric_limits< MT_Float >::max();
 
@@ -879,7 +881,7 @@ void MIL_RealObject_ABC::Destroy( MT_Float rDeltaPercentage )
     assert( rDeltaPercentage >= 0. );
     rConstructionPercentage_            = std::max( 0., std::min( 1., rConstructionPercentage_ - rDeltaPercentage ) );
     nCurrentNbrDotationForConstruction_ = (uint)( rConstructionPercentage_ * nFullNbrDotationForConstruction_ );
-    NotifyAttributeUpdated( eAttrUpdate_ConstructionPercentage );    
+    NotifyAttributeUpdated( eAttrUpdate_ConstructionPercentage );
     if( rConstructionPercentage_ <= 0. )
         MarkForDestruction();
     if( pView_ )
@@ -898,7 +900,7 @@ void MIL_RealObject_ABC::Destroy()
     // All the knowledges associated to this object MUST be destroyed (for all the teams ..)
     const MIL_EntityManager::T_ArmyMap& armies = MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies();
     for( MIL_EntityManager::CIT_ArmyMap itArmy = armies.begin(); itArmy != armies.end(); ++itArmy )
-        itArmy->second->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *this );   
+        itArmy->second->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -923,7 +925,7 @@ void MIL_RealObject_ABC::Mine( MT_Float rDeltaPercentage )
 void MIL_RealObject_ABC::Mine()
 {
     assert( pType_ );
-    
+
     if( pType_->CanBeMined() )
         ChangeMiningPercentage( 1. );
 }
@@ -1005,7 +1007,7 @@ void MIL_RealObject_ABC::UpdateLocalisation( const TER_Localisation& newLocalisa
 void MIL_RealObject_ABC::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     MIL_Object_ABC::ProcessAgentInside( agent );
-    agent.GetRole< PHY_RoleInterface_Location >().NotifyObjectCollision( *this ); 
+    agent.GetRole< PHY_RoleInterface_Location >().NotifyObjectCollision( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -1015,7 +1017,7 @@ void MIL_RealObject_ABC::ProcessAgentInside( MIL_Agent_ABC& agent )
 void MIL_RealObject_ABC::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
 {
     MIL_Object_ABC::ProcessAgentMovingInside( agent );
-    agent.GetRole< PHY_RoleInterface_Location >().NotifyObjectCollision( *this ); 
+    agent.GetRole< PHY_RoleInterface_Location >().NotifyObjectCollision( *this );
 }
 
 // =============================================================================
@@ -1030,5 +1032,3 @@ DEC_Knowledge_Object& MIL_RealObject_ABC::CreateKnowledge( const MIL_Army& teamK
 {
     return *new DEC_Knowledge_Object( teamKnowing, *this );
 }
-
-

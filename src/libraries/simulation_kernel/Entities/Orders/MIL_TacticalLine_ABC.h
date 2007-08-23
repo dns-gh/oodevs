@@ -14,6 +14,11 @@
 
 #include "game_asn/Asn.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_Formation;
 class MIL_Automate;
 
@@ -28,8 +33,8 @@ class MIL_TacticalLine_ABC
 public:
     MIL_TacticalLine_ABC();
     MIL_TacticalLine_ABC( const ASN1T_TacticalLine& asn );
-    MIL_TacticalLine_ABC( const MIL_Automate& automateBroadcasted  , MIL_InputArchive& archive );
-    MIL_TacticalLine_ABC( const MIL_Formation& formationBroadcasted, MIL_InputArchive& archive );
+    MIL_TacticalLine_ABC( const MIL_Automate& automateBroadcasted  , xml::xistream& xis );
+    MIL_TacticalLine_ABC( const MIL_Formation& formationBroadcasted, xml::xistream& xis );
     virtual ~MIL_TacticalLine_ABC();
 
     //! @name CheckPoints
@@ -47,7 +52,7 @@ public:
 protected:
     //! @name Initialization
     //@{
-    void Initialize( MIL_InputArchive& archive );
+    void Initialize( xml::xistream& xis );
     //@}
 
     //! @name Network
@@ -55,6 +60,12 @@ protected:
     void Serialize              ( ASN1T_TacticalLine& asn ) const;
     void CleanAfterSerialization( ASN1T_TacticalLine& asn ) const;
     void Update                 ( const ASN1T_TacticalLine& asn );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void ReadPoint( xml::xistream& xis, T_PointVector& points ) const;
     //@}
 
 private:

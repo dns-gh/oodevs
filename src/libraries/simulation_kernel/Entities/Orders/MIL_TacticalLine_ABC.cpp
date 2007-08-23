@@ -19,6 +19,9 @@
 #include "Entities/MIL_Formation.h"
 #include "Entities/MIL_EntityManager.h"
 #include "MIL_AgentServer.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_TacticalLine_ABC constructor
@@ -55,28 +58,28 @@ MIL_TacticalLine_ABC::MIL_TacticalLine_ABC( const ASN1T_TacticalLine& asn )
 // Name: MIL_TacticalLine_ABC constructµor
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-MIL_TacticalLine_ABC::MIL_TacticalLine_ABC( const MIL_Automate& automateBroadcasted, MIL_InputArchive& archive )
+MIL_TacticalLine_ABC::MIL_TacticalLine_ABC( const MIL_Automate& automateBroadcasted, xml::xistream& xis )
     : nID_                  ( MIL_IDManager::limits_.GetFreeSimID() )
     , strName_              ()
     , pFormationBroadcasted_( 0 )
     , pAutomateBroadcasted_ ( &automateBroadcasted )
     , line_                 ()
 {
-    Initialize( archive );
+    Initialize( xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_TacticalLine_ABC constructor
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-MIL_TacticalLine_ABC::MIL_TacticalLine_ABC( const MIL_Formation& formationBroadcasted, MIL_InputArchive& archive )
+MIL_TacticalLine_ABC::MIL_TacticalLine_ABC( const MIL_Formation& formationBroadcasted, xml::xistream& xis )
     : nID_                  ( MIL_IDManager::limits_.GetFreeSimID() )
     , strName_              ()
     , pFormationBroadcasted_( &formationBroadcasted )
     , pAutomateBroadcasted_ ( 0 )
     , line_                 ()
 {
-    Initialize( archive );
+    Initialize( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,23 +94,27 @@ MIL_TacticalLine_ABC::~MIL_TacticalLine_ABC()
 // Name: MIL_TacticalLine_ABC::Initialize
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void MIL_TacticalLine_ABC::Initialize( MIL_InputArchive& archive )
+void MIL_TacticalLine_ABC::Initialize( xml::xistream& xis )
 {
-    archive.ReadAttribute( "name", strName_ );
     T_PointVector points;
-    while( archive.NextListElement() )
-    {
-        archive.Section( "point" );
-        std::string strPoint;
-        archive.Read( strPoint );
-        MT_Vector2D vPosTmp;
-        MIL_Tools::ConvertCoordMosToSim( strPoint, vPosTmp );
-        points.push_back( vPosTmp );
-        archive.EndSection(); // point
-    }
+    xis >> attribute( "name", strName_ )
+        >> list( "point", *this, &MIL_TacticalLine_ABC::ReadPoint, points );
     if( points.size() < 2 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid tactical line geometry" );
     line_.Reset( TER_Localisation::eLine, points );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_TacticalLine_ABC::ReadPoint
+// Created: ABL 2007-07-09
+// -----------------------------------------------------------------------------
+void MIL_TacticalLine_ABC::ReadPoint( xml::xistream& xis, T_PointVector& points ) const
+{
+    std::string point;
+    xis >> point;
+    MT_Vector2D pos;
+    MIL_Tools::ConvertCoordMosToSim( point, pos );
+    points.push_back( pos );
 }
 
 // =============================================================================

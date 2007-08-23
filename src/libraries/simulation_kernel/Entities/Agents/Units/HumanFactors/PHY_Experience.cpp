@@ -12,41 +12,60 @@
 #include "simulation_kernel_pch.h"
 
 #include "PHY_Experience.h"
+#include "xeumeuleu/xml.h"
 
-PHY_Experience::T_ExperienceMap PHY_Experience::experiences_;
+using namespace xml;
 
 // =============================================================================
 // STATIC INITIALIZATION (MANAGER)
 // =============================================================================
 
+PHY_Experience::T_ExperienceMap PHY_Experience::experiences_;
+
 const PHY_Experience PHY_Experience::conscrit_   ( "Conscrit"   , eConscrit   , EnumUnitExperience::conscrit   , 1.);
 const PHY_Experience PHY_Experience::experimente_( "Experimente", eExperimente, EnumUnitExperience::experimente, 1.);
 const PHY_Experience PHY_Experience::veteran_    ( "Veteran"    , eVeteran    , EnumUnitExperience::veteran    , 1. );
+
+struct PHY_Experience::LoadingWrapper
+{
+    void ReadExperience( xml::xistream& xis )
+    {
+        PHY_Experience::ReadExperience( xis );
+    }
+};
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Experience::Initialize
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void PHY_Experience::Initialize( MIL_InputArchive& archive )
+void PHY_Experience::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing experiences" );
+    
+    LoadingWrapper loader;
+    xis >> start( "humans-factors" )
+            >> start( "experience-factor" )
+                >> list( "modifier", loader, &LoadingWrapper::ReadExperience )
+            >> end()
+        >> end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Experience::ReadExperience
+// Created: ABL 2007-07-18
+// -----------------------------------------------------------------------------
+void PHY_Experience::ReadExperience( xml::xistream& xis )
+{
     experiences_[ conscrit_    .GetName() ] = &conscrit_;
     experiences_[ experimente_ .GetName() ] = &experimente_;
     experiences_[ veteran_     .GetName() ] = &veteran_;
 
-    archive.Section( "FacteursHumains" );
-    archive.Section( "Experience" );
-
-    for( CIT_ExperienceMap it = experiences_.begin(); it != experiences_.end(); ++it )
-    {
-        PHY_Experience& experience = const_cast< PHY_Experience& >( *it->second );
-        archive.Section( experience.GetName() );
-        experience.Read( archive );
-        archive.EndSection(); // experience.GetName()
-    }
-
-    archive.EndSection(); // Experience
-    archive.EndSection(); // FacteursHumains
+    std::string type;
+    xis >> attribute( "state", type );
+    T_ExperienceMap::iterator it = experiences_.find( type );
+    if( it == experiences_.end() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Undefined experience state" );
+    const_cast< PHY_Experience* >( it->second )->Read( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,6 +96,7 @@ PHY_Experience::PHY_Experience( const std::string& strName, E_ExperienceType nTy
     , rCoefPostureTimeModificator_   ( 1. )
     , rCoefSensorDistanceModificator_( 1. )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -85,18 +105,29 @@ PHY_Experience::PHY_Experience( const std::string& strName, E_ExperienceType nTy
 // -----------------------------------------------------------------------------
 PHY_Experience::~PHY_Experience()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Experience::Read
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-void PHY_Experience::Read( MIL_InputArchive& archive )
+void PHY_Experience::Read( xml::xistream& xis )
 {
-    archive.ReadField( "CoefModificationVitesseMax"        , rCoefMaxSpeedModificator_      , CheckValueGreater( 0. ) );
-    archive.ReadField( "CoefModificationTempsRechargement" , rCoefReloadingTimeModificator_ , CheckValueGreater( 0. ) );
-    archive.ReadField( "CoefModificationPH"                , rCoefPhModificator_            , CheckValueGreater( 0. ) );
-    archive.ReadField( "CoefModificationTempsMiseEnPosture", rCoefPostureTimeModificator_   , CheckValueGreater( 0. ) );
-    archive.ReadField( "CoefModificationDistanceCapteurs"  , rCoefSensorDistanceModificator_, CheckValueGreater( 0. ) );
+    xis >> attribute( "max-speed", rCoefMaxSpeedModificator_ )
+        >> attribute( "loading-time", rCoefReloadingTimeModificator_ )
+        >> attribute( "ph", rCoefPhModificator_ )
+        >> attribute( "posture-setup-time", rCoefPostureTimeModificator_ )
+        >> attribute( "sensor-distance", rCoefSensorDistanceModificator_ );
+
+    if( rCoefMaxSpeedModificator_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "max-speed <= 0" );
+    if( rCoefReloadingTimeModificator_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "loading-time <= 0" );
+    if( rCoefPhModificator_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "ph <= 0" );
+    if( rCoefPostureTimeModificator_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "posture-setup-time <= 0" );
+    if( rCoefSensorDistanceModificator_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "sensor-distance <= 0" );
 }

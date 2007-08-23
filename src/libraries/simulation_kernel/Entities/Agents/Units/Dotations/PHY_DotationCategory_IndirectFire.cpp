@@ -28,6 +28,9 @@
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 MT_Random PHY_DotationCategory_IndirectFire::random_;
 
@@ -35,35 +38,44 @@ MT_Random PHY_DotationCategory_IndirectFire::random_;
 // Name: PHY_DotationCategory_IndirectFire::Create
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
-PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectFire::Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, MIL_InputArchive& archive )
+PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectFire::Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
 {
-    return *new PHY_DotationCategory_IndirectFire( type, dotationCategory, archive );
+    return *new PHY_DotationCategory_IndirectFire( type, dotationCategory, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_DotationCategory_IndirectFire::PHY_DotationCategory_IndirectFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, MIL_InputArchive& archive )
-    : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, archive )
+PHY_DotationCategory_IndirectFire::PHY_DotationCategory_IndirectFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
+    : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, xis )
     , phs_                                 ( PHY_Posture::GetPostures().size(), 1. )
 {
-    archive.ReadField( "CoefficientNeutralisation", rNeutralizationCoef_, CheckValueGreaterOrEqual( 1. ) );
+    xis >> attribute( "neutralization-ratio", rNeutralizationCoef_ );
+    if( rNeutralizationCoef_ < 1. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "neutralization-ratio < 1" );
 
     if( !dotationCategory.HasAttritions() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Dotation has no attritions defined", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Dotation has no attritions defined" ); // $$$$ ABL 2007-07-19: error context
 
-    archive.Section( "PHs" );
-    archive.Section( "PostureCible" );
+    xis >> list( "ph", *this, &PHY_DotationCategory_IndirectFire::ReadPh );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory_IndirectFire::ReadPh
+// Created: ABL 2007-07-19
+// -----------------------------------------------------------------------------
+void PHY_DotationCategory_IndirectFire::ReadPh( xml::xistream& xis )
+{
     const PHY_Posture::T_PostureMap& postures = PHY_Posture::GetPostures();
-    for( PHY_Posture::CIT_PostureMap it = postures.begin(); it != postures.end(); ++it )
-    {
-        const PHY_Posture& posture = *it->second;    
-        assert( phs_.size() > posture.GetID() );
-        archive.ReadField( posture.GetName(), phs_[ posture.GetID() ] );
-    }
-    archive.EndSection(); // PostureCible
-    archive.EndSection(); // PHs
+    std::string postureType;
+
+    xis >> attribute( "target-posture", postureType );
+
+    PHY_Posture::CIT_PostureMap it = postures.find( postureType );
+    const PHY_Posture& posture = *it->second;
+    assert( phs_.size() > posture.GetID() );
+    xis >> attribute( "value", phs_[ posture.GetID() ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,6 +84,7 @@ PHY_DotationCategory_IndirectFire::PHY_DotationCategory_IndirectFire( const PHY_
 // -----------------------------------------------------------------------------
 PHY_DotationCategory_IndirectFire::~PHY_DotationCategory_IndirectFire()
 {
+    // NOTHING
 }
 
 // =============================================================================

@@ -14,6 +14,11 @@
 
 #include "MIL_OrderType_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  MIL_MissionType_ABC
     @brief  MIL_MissionType_ABC
@@ -25,7 +30,7 @@ class MIL_FragOrderType : public MIL_OrderType_ABC
 public:
     //! @name Factory
     //@{
-    static void                      Initialize( MIL_InputArchive& archive );
+    static void                      Initialize( xml::xistream& xis );
     static const MIL_FragOrderType*  Find      ( uint nID );
     static const MIL_FragOrderType*  Find      ( const std::string& strName );
     //@}
@@ -39,8 +44,14 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-             MIL_FragOrderType( uint nID, MIL_InputArchive& archive );
+    MIL_FragOrderType( uint nID, xml::xistream& xis );
     virtual ~MIL_FragOrderType();
+    //@}
+
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadFragorder( xml::xistream& xis );
     //@}
 
 private:

@@ -15,6 +15,10 @@
 #include "PHY_MaintenanceLevel.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Tools/MIL_Tools.h"
+#include "Tools/xmlcodecs.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 PHY_BreakdownType::T_BreakdownMap PHY_BreakdownType::breakdowns_;
 uint                              PHY_BreakdownType::nDiagnosticTime_ = 0;
@@ -22,6 +26,18 @@ uint                              PHY_BreakdownType::nDiagnosticTime_ = 0;
 // =============================================================================
 // STATIC INITIALIZATION (MANAGER)
 // =============================================================================
+
+struct PHY_BreakdownType::LoadingWrapper
+{
+    void ReadCategory( xml::xistream& xis )
+    {
+        PHY_BreakdownType::ReadCategory( xis );
+    }
+    void ReadBreakdown( xml::xistream& xis, const PHY_MaintenanceLevel& maintenanceLevel )
+    {
+        PHY_BreakdownType::ReadBreakdown( xis, maintenanceLevel );
+    }
+};
 
 // -----------------------------------------------------------------------------
 // Name: PHY_BreakdownType::ConvertType
@@ -41,49 +57,64 @@ PHY_BreakdownType::E_Type PHY_BreakdownType::ConvertType( const std::string& str
 // Name: PHY_BreakdownType::Initialize
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void PHY_BreakdownType::Initialize( MIL_InputArchive& archive )
+void PHY_BreakdownType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing breakdown types" );
 
-    archive.Section( "Pannes" );
     MT_Float rTimeVal;
-    archive.ReadTimeField( "TempsDiagnostique", rTimeVal, CheckValueGreaterOrEqual( 0. ) );
+    std::string timeVal;
+    LoadingWrapper loader;
+    xis >> start( "breakdowns" )
+            >> start( "diagnosis" )
+                >> attribute( "time", timeVal )
+            >> end();
+    if( ! tools::DecodeTime( timeVal, rTimeVal ) || rTimeVal < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "diagnosis: time < 0" );
     nDiagnosticTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rTimeVal );
+    xis >> list( "category", loader, &LoadingWrapper::ReadCategory )
+        >> end();
+}
 
-    archive.Section( "Types" );
-    std::set< uint > ids_;
+// -----------------------------------------------------------------------------
+// Name: PHY_BreakdownType::ReadCategory
+// Created: ABL 2007-07-19
+// -----------------------------------------------------------------------------
+void PHY_BreakdownType::ReadCategory( xml::xistream& xis )
+{
     const PHY_MaintenanceLevel::T_MaintenanceLevelMap& maintenanceLevels = PHY_MaintenanceLevel::GetMaintenanceLevels();
-    for( PHY_MaintenanceLevel::CIT_MaintenanceLevelMap it = maintenanceLevels.begin(); it != maintenanceLevels.end(); ++it )
-    {
-        const PHY_MaintenanceLevel& maintenanceLevel = *it->second;
-        archive.BeginList( maintenanceLevel.GetName() );
+    std::string categoryType;
+    xis >> attribute( "name", categoryType );
 
-        while( archive.NextListElement() )
-        {
-            archive.Section( "Panne" );
-            std::string strBreakdown;
-            std::string strType;
-            archive.ReadAttribute( "nom" , strBreakdown );
-            archive.ReadAttribute( "type", strType );
+    PHY_MaintenanceLevel::CIT_MaintenanceLevelMap it = maintenanceLevels.find( categoryType );
+    const PHY_MaintenanceLevel& maintenanceLevel = *it->second;
 
-            const E_Type nType = ConvertType( strType );
-            if( nType == eUnknown )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unkown breakdown type", archive.GetContext() );
+    LoadingWrapper loader;
+    xis >> list( "breakdown", loader, &LoadingWrapper::ReadBreakdown, maintenanceLevel );
+}
 
-            const PHY_BreakdownType*& pBreakdown = breakdowns_[ strBreakdown ];
-            if( pBreakdown )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Breakdown already exists", archive.GetContext() );
+// -----------------------------------------------------------------------------
+// Name: PHY_BreakdownType::ReadBreakdown
+// Created: ABL 2007-07-19
+// -----------------------------------------------------------------------------
+void PHY_BreakdownType::ReadBreakdown( xml::xistream& xis, const PHY_MaintenanceLevel& maintenanceLevel )
+{
+    std::set< uint > ids_;
+    std::string strBreakdown;
+    std::string strType;
+    xis >> attribute( "name", strBreakdown )
+        >> attribute( "type", strType );
 
-            pBreakdown = new PHY_BreakdownType( strBreakdown, maintenanceLevel, nType, archive );       
-            if( !ids_.insert( pBreakdown->GetID() ).second )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Breakdown ID already used", archive.GetContext() );
-            
-            archive.EndSection(); // Panne
-        }
-        archive.EndList(); // NTIx
-    }    
-    archive.EndSection(); // Types 
-    archive.EndSection(); // Pannes
+    const E_Type nType = ConvertType( strType );
+    if( nType == eUnknown )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unkown breakdown type" ); // $$$$ ABL 2007-07-20: error context
+
+    const PHY_BreakdownType*& pBreakdown = breakdowns_[ strBreakdown ];
+    if( pBreakdown )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Breakdown already exists" ); // $$$$ ABL 2007-07-20: error context
+
+    pBreakdown = new PHY_BreakdownType( strBreakdown, maintenanceLevel, nType, xis );
+    if( !ids_.insert( pBreakdown->GetID() ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Breakdown ID already used" ); // $$$$ ABL 2007-07-20: error context
 }
 
 // -----------------------------------------------------------------------------
@@ -105,46 +136,50 @@ void PHY_BreakdownType::Terminate()
 // Name: PHY_BreakdownType constructor
 // Created: NLD 2004-12-20
 // -----------------------------------------------------------------------------
-PHY_BreakdownType::PHY_BreakdownType( const std::string& strName, const PHY_MaintenanceLevel& maintenanceLevel, E_Type nType, MIL_InputArchive& archive )
+PHY_BreakdownType::PHY_BreakdownType( const std::string& strName, const PHY_MaintenanceLevel& maintenanceLevel, E_Type nType, xml::xistream& xis )
     : strName_           ( strName )
     , maintenanceLevel_  ( maintenanceLevel )
     , nType_             ( nType )
     , nTheoricRepairTime_( 0 )
 {
-    archive.ReadField( "MosID", nID_ );
+    std::string repairTime, variance;
+    MT_Float rVariance;
+    xis >> attribute( "id", nID_ )
+        >> attribute( "average-repairing-time", repairTime )
+        >> attribute( "variance", variance );
 
-    archive.Section( "Reparation" );
-
-    archive.ReadTimeAttribute( "tempsMoyen", nTheoricRepairTime_, CheckValueGreaterOrEqual( 0 ) );
+    if( !tools::DecodeTime( repairTime, nTheoricRepairTime_ ) || nTheoricRepairTime_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "average-repairing-time < 0" );
     nTheoricRepairTime_ = (uint)MIL_Tools::ConvertSecondsToSim( nTheoricRepairTime_ );
-    
-    MT_Float rVariance;   
-    archive.ReadTimeAttribute( "variance", rVariance );
+    if( !tools::DecodeTime( variance, rVariance ) )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "variance < 0" );
     rVariance = fabs( MIL_Tools::ConvertSecondsToSim( rVariance ) );
 
     repairTime_ = MT_GaussianRandom( nTheoricRepairTime_, rVariance );
-    archive.EndSection(); // Reparation
 
     // Parts
-    archive.BeginList( "Pieces" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Piece" );
-        std::string strCategory;
-        archive.ReadAttribute( "categorie", strCategory );
-        
-        const PHY_DotationCategory* pCategory = PHY_DotationType::piece_.FindDotationCategory( strCategory );
-        if( !pCategory )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown part category", archive.GetContext() );
+    xis >> list( "part", *this, &PHY_BreakdownType::ReadPart );
+}
 
-        uint& nNbr = parts_[ pCategory ];
-        if( nNbr > 0 )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Part already initialized", archive.GetContext() );
-        archive.Read( nNbr, CheckValueGreaterOrEqual( 1 ) );
+// -----------------------------------------------------------------------------
+// Name: PHY_BreakdownType::ReadPart
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_BreakdownType::ReadPart( xml::xistream& xis )
+{
+    std::string strCategory;
+    xis >> attribute( "dotation", strCategory );
 
-        archive.EndSection(); // Piece
-    }
-    archive.EndList(); // Pieces
+    const PHY_DotationCategory* pCategory = PHY_DotationType::piece_.FindDotationCategory( strCategory );
+    if( !pCategory )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown part category" ); // $$$$ ABL 2007-07-20: error context
+
+    uint& nNbr = parts_[ pCategory ];
+    if( nNbr > 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Part already initialized" ); // $$$$ ABL 2007-07-20: error context
+    xis >> attribute( "quantity", nNbr );
+    if( nNbr < 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "part: quantity < 1" );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,4 +189,3 @@ PHY_BreakdownType::PHY_BreakdownType( const std::string& strName, const PHY_Main
 PHY_BreakdownType::~PHY_BreakdownType()
 {
 }
-

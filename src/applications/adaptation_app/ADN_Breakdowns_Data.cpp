@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-16 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_Breakdowns_Data.cpp $
-// $Author: Nld $
-// $Modtime: 27/04/05 10:57 $
-// $Revision: 7 $
-// $Workfile: ADN_Breakdowns_Data.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Breakdowns_Data.h"
@@ -24,8 +15,6 @@
 #include "ADN_Project_Data.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_DataException.h"
-#include "ADN_Xml_Exception.h"
-#include "ADN_XmlInput_Helper.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
@@ -83,35 +72,27 @@ ADN_Breakdowns_Data::RepairPartInfo* ADN_Breakdowns_Data::RepairPartInfo::Create
 // Name: RepairPartInfo::ReadArchive
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
-void ADN_Breakdowns_Data::RepairPartInfo::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Breakdowns_Data::RepairPartInfo::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Piece" );
     std::string strCategoryName;
-    input.ReadAttribute( "categorie", strCategoryName );
-
+    input >> xml::attribute( "dotation", strCategoryName )
+          >> xml::attribute( "quantity", nNbr_ );
     ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Piece ).FindCategory( strCategoryName );
     if( pCategory == 0 )
-        input.ThrowError( tr( "Repair part '%1' does not exist." ).arg( strCategoryName.c_str() ).ascii() );
-
+        throw ADN_DataException( "RepairPartInfo", tr( "Repair part '%1' does not exist." ).arg( strCategoryName.c_str() ).ascii() );
     ptrPart_ = pCategory;
-
-    int nNbr;
-    input.Read( nNbr );
-    nNbr_ = nNbr;
-    input.EndSection(); // Piece
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: RepairPartInfo::WriteArchive
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
-void ADN_Breakdowns_Data::RepairPartInfo::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Breakdowns_Data::RepairPartInfo::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Piece" );
-    output.WriteAttribute( "categorie", ptrPart_.GetData()->strName_.GetData() );
-    output << nNbr_.GetData();
-    output.EndSection(); // Piece
+    output << xml::start( "part" )
+            << xml::attribute( "dotation", ptrPart_.GetData()->strName_ )
+            << xml::attribute( "quantity", nNbr_ )
+        << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -125,8 +106,8 @@ ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo()
 , repairTime_          ( "0s" )
 , repairTimeVariance_  ( "0s" )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: BreakdownInfo::~BreakdownInfo
@@ -137,7 +118,6 @@ ADN_Breakdowns_Data::BreakdownInfo::~BreakdownInfo()
     MT_DELETEOWNED( vRepairParts_ );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: BreakdownInfo::GetNodeName
 // Created: APE 2005-03-16
@@ -147,7 +127,6 @@ std::string ADN_Breakdowns_Data::BreakdownInfo::GetNodeName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: BreakdownInfo::GetItemName
 // Created: APE 2005-03-16
@@ -156,7 +135,6 @@ std::string ADN_Breakdowns_Data::BreakdownInfo::GetItemName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: BreakdownInfo::CreateCopy
@@ -177,59 +155,49 @@ ADN_Breakdowns_Data::BreakdownInfo* ADN_Breakdowns_Data::BreakdownInfo::CreateCo
     return pCopy;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Breakdowns_Data::BreakdownInfo::ReadPart
+// Created: AGE 2007-08-16
+// -----------------------------------------------------------------------------
+void ADN_Breakdowns_Data::BreakdownInfo::ReadPart( xml::xistream& input )
+{
+    std::auto_ptr<RepairPartInfo> spNew( new RepairPartInfo() );
+    spNew->ReadArchive( input );
+    vRepairParts_.AddItem( spNew.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: BreakdownInfo::ReadArchive
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
-void ADN_Breakdowns_Data::BreakdownInfo::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Breakdowns_Data::BreakdownInfo::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Panne" );
-
-    input.ReadAttribute( "nom", strName_ );
-    input.ReadAttribute( "type", nType_, ADN_Tr::ConvertToBreakdownType, ADN_XmlInput_Helper::eThrow );
-
-    input.Section( "Reparation" );
-    input.ReadAttribute( "tempsMoyen", repairTime_ );
-    input.ReadAttribute( "variance", repairTimeVariance_ );
-    input.EndSection(); // Reparation
-
-    input.BeginList( "Pieces" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<RepairPartInfo> spNew( new RepairPartInfo() );
-        spNew->ReadArchive( input );
-        vRepairParts_.AddItem( spNew.release() );
-    }
-    input.EndList(); // Pieces
-
-    input.EndSection(); // Panne
+    std::string type;
+    input >> xml::attribute( "name", strName_ )
+          >> xml::attribute( "type", type )
+          >> xml::attribute( "average-repairing-time", repairTime_ )
+          >> xml::attribute( "variance", repairTimeVariance_ );
+    nType_ = ADN_Tr::ConvertToBreakdownType( type );
+    if( nType_ == E_BreakdownType( -1 ) )
+        throw ADN_DataException( "BreakdownInfo", "Unknown breakdown type " + type );
+    input >> xml::list( "part", *this, &ADN_Breakdowns_Data::BreakdownInfo::ReadPart );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: BreakdownInfo::WriteArchive
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
-void ADN_Breakdowns_Data::BreakdownInfo::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Breakdowns_Data::BreakdownInfo::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Panne" );
-
-    output.WriteAttribute( "nom", strName_.GetData() );
-    output.WriteAttribute( "type", ADN_Tr::ConvertFromBreakdownType( nType_.GetData() ) );
-    output.WriteField( "MosID", nId_.GetData() );
-
-    output.Section( "Reparation" );
-    output.WriteAttribute( "tempsMoyen", repairTime_.GetData() );
-    output.WriteAttribute( "variance", repairTimeVariance_.GetData() );
-    output.EndSection(); // Reparation
-
-    output.BeginList( "Pieces", vRepairParts_.size() );
+    output << xml::start( "breakdown" )
+           << xml::attribute( "name", strName_ )
+           << xml::attribute( "id", nId_ )
+           << xml::attribute( "type", ADN_Tr::ConvertFromBreakdownType( nType_.GetData() ) )
+           << xml::attribute( "average-repairing-time", repairTime_ )
+           << xml::attribute( "variance", repairTimeVariance_ );
     for( IT_RepairPartInfoVector it = vRepairParts_.begin(); it != vRepairParts_.end(); ++it )
         (*it)->WriteArchive( output );
-    output.EndList(); // Pieces
-
-    output.EndSection(); // Panne
+    output << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -241,8 +209,8 @@ ADN_Breakdowns_Data::ADN_Breakdowns_Data()
 , nNextId_     ( 1 )
 , vBreakdowns_ ()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_Data destructor
@@ -250,8 +218,8 @@ ADN_Breakdowns_Data::ADN_Breakdowns_Data()
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::~ADN_Breakdowns_Data()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_Data::FilesNeeded
@@ -262,7 +230,6 @@ void ADN_Breakdowns_Data::FilesNeeded( T_StringList& vFiles ) const
     vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szBreakdowns_.GetData() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_Data::GetNextId
 // Created: APE 2005-03-18
@@ -271,7 +238,6 @@ int ADN_Breakdowns_Data::GetNextId()
 {
     return nNextId_++;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_Data::Reset
@@ -282,7 +248,6 @@ void ADN_Breakdowns_Data::Reset()
     nNextId_ = 1;
     vBreakdowns_.Reset();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_Data::FindBreakdown
@@ -300,55 +265,60 @@ ADN_Breakdowns_Data::BreakdownInfo* ADN_Breakdowns_Data::FindBreakdown( const st
 // Name: ADN_Breakdowns_Data::ReadArchive
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
-void ADN_Breakdowns_Data::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Breakdowns_Data::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Pannes" );
-    input.ReadField( "TempsDiagnostique", strAverageDiagnosticTime_ );
-
-    input.Section( "Types" );
-    
-    for( uint i = 0; i < eNbrBreakdownNTI; ++i )
-    {
-        input.BeginList( ADN_Tr::ConvertFromBreakdownNTI( ( E_BreakdownNTI )i ) );
-        while( input.NextListElement() )
-        {
-            std::auto_ptr<BreakdownInfo> spNew( new BreakdownInfo() );
-            spNew->ReadArchive( input );
-            spNew->nNTI_ = ( E_BreakdownNTI )i;
-            vBreakdowns_.AddItem( spNew.release() );
-        }
-        input.EndList();
-    }
-
-    input.EndSection(); // Types
-
-    input.EndSection(); // Pannes
+    input >> xml::start( "breakdowns" )
+            >> xml::start( "diagnosis" )
+                >> xml::attribute( "time", strAverageDiagnosticTime_ )
+            >> xml::end()
+            >> xml::list( "category", *this, &ADN_Breakdowns_Data::ReadCategory )
+        >> xml::end();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Breakdowns_Data::ReadCategory
+// Created: AGE 2007-08-16
+// -----------------------------------------------------------------------------
+void ADN_Breakdowns_Data::ReadCategory( xml::xistream& input )
+{
+    std::string strNti;
+    input >> xml::attribute( "name", strNti );
+    E_BreakdownNTI nti = ADN_Tr::ConvertToBreakdownNTI( strNti );
+    input >> xml::list( "breakdown", *this, &ADN_Breakdowns_Data::ReadBreakdown, nti );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Breakdowns_Data::ReadBreakdown
+// Created: AGE 2007-08-16
+// -----------------------------------------------------------------------------
+void ADN_Breakdowns_Data::ReadBreakdown( xml::xistream& input, const E_BreakdownNTI& nti )
+{
+    std::auto_ptr<BreakdownInfo> spNew( new BreakdownInfo() );
+    spNew->ReadArchive( input );
+    spNew->nNTI_ = nti;
+    vBreakdowns_.AddItem( spNew.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_Data::WriteArchive
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
-void ADN_Breakdowns_Data::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Breakdowns_Data::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Pannes" );
-    output.WriteField( "TempsDiagnostique", strAverageDiagnosticTime_.GetData() );
-
-    output.Section( "Types" );
-
+    output << xml::start( "breakdowns" )
+            << xml::start( "diagnosis" )
+                << xml::attribute( "time", strAverageDiagnosticTime_ )
+            << xml::end();
     for( uint i = 0; i < eNbrBreakdownNTI; ++i )
     {
-        output.BeginList( ADN_Tr::ConvertFromBreakdownNTI( ( E_BreakdownNTI )i ), vBreakdowns_.size() );
+        output << xml::start( "category" )
+                << xml::attribute( "name", ADN_Tr::ConvertFromBreakdownNTI( ( E_BreakdownNTI )i ) );
         for( IT_BreakdownInfoVector it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
             if( (*it)->nNTI_ == ( E_BreakdownNTI )i )
                 (*it)->WriteArchive( output );
-        output.EndList();
+        output << xml::end();
     }
-
-    output.EndSection(); // Types
-
-    output.EndSection(); // Pannes
+    output << xml::end();
 }
 
 

@@ -17,6 +17,11 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "MIL_AutomateLOG.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 template < typename T > class PHY_ActionLogistic;
 
 // =============================================================================
@@ -28,7 +33,7 @@ class MIL_AgentPionLOG_ABC : public MIL_AgentPion
     MT_COPYNOTALLOWED( MIL_AgentPionLOG_ABC )
 
 public:
-             MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive );
+    MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis );
              MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition );
              MIL_AgentPionLOG_ABC();
     virtual ~MIL_AgentPionLOG_ABC();

@@ -29,6 +29,10 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 
 #include "Tools/MIL_Tools.h"
+#include "Tools/xmlcodecs.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 PHY_WeaponType::T_WeaponTypeMap PHY_WeaponType::weaponTypes_;
 
@@ -36,36 +40,46 @@ PHY_WeaponType::T_WeaponTypeMap PHY_WeaponType::weaponTypes_;
 // MANAGER
 // =============================================================================
 
+struct PHY_WeaponType::LoadingWrapper
+{
+    void ReadWeapon( xml::xistream& xis, MIL_EffectManager& manager, const MIL_Time_ABC& time )
+    {
+        PHY_WeaponType::ReadWeapon( xis, manager, time );
+    }
+};
+
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponType::Initialize
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::Initialize( MIL_EffectManager& manager, const MIL_Time_ABC& time, MIL_InputArchive& archive )
+void PHY_WeaponType::Initialize( MIL_EffectManager& manager, const MIL_Time_ABC& time, xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing weapon types" );
 
+    LoadingWrapper loader;
+
     // Initialisation des composantes
-    archive.BeginList( "Armements" );
+    xis >> start( "weapons" )
+            >> list( "weapon-system", loader, &LoadingWrapper::ReadWeapon, manager, time )
+        >> end();
+}
 
-    while ( archive.NextListElement() )
-    {
-        archive.Section( "Armement" );
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponType::ReadWeapon
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_WeaponType::ReadWeapon( xml::xistream& xis, MIL_EffectManager& manager, const MIL_Time_ABC& time )
+{
+    std::string strLauncher;
+    std::string strAmmunition;
 
-        std::string strLauncher;
-        std::string strAmmunition;
+    xis >> attribute( "launcher", strLauncher )
+        >> attribute( "munition", strAmmunition );
 
-        archive.ReadAttribute( "lanceur", strLauncher );
-        archive.ReadAttribute( "munition", strAmmunition );
-
-        const PHY_WeaponType*& pWeaponType = weaponTypes_[ std::make_pair( strLauncher, strAmmunition ) ];
-        if ( pWeaponType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Weapon %s/%s already registered", strLauncher.c_str(), strAmmunition.c_str() ), archive.GetContext() );
-
-        pWeaponType = new PHY_WeaponType( manager, time, strLauncher, strAmmunition, archive );
-
-        archive.EndSection(); // Armement
-    }
-    archive.EndList(); // Armements
+    const PHY_WeaponType*& pWeaponType = weaponTypes_[ std::make_pair( strLauncher, strAmmunition ) ];
+    if ( pWeaponType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Weapon %s/%s already registered", strLauncher.c_str(), strAmmunition.c_str() ) ); // $$$$ ABL 2007-07-20: error context
+    pWeaponType = new PHY_WeaponType( manager, time, strLauncher, strAmmunition, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +101,7 @@ void PHY_WeaponType::Terminate()
 // Name: PHY_WeaponType constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_WeaponType::PHY_WeaponType( MIL_EffectManager& manager, const MIL_Time_ABC& time, const std::string& strLauncher, const std::string& strAmmunition, MIL_InputArchive& archive )
+PHY_WeaponType::PHY_WeaponType( MIL_EffectManager& manager, const MIL_Time_ABC& time, const std::string& strLauncher, const std::string& strAmmunition, xml::xistream& xis )
     : time_               ( time )
     , pLauncherType_      ( PHY_LauncherType::FindLauncherType( strLauncher ) )
     , pDotationCategory_  ( PHY_DotationType::FindDotationCategory( strAmmunition ) )
@@ -99,20 +113,37 @@ PHY_WeaponType::PHY_WeaponType( MIL_EffectManager& manager, const MIL_Time_ABC& 
     , pIndirectFireData_  ( 0 )
 { 
     if( !pLauncherType_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown launcher type '%s'", strLauncher.c_str() ), archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown launcher type '%s'", strLauncher.c_str() ) ); // $$$$ ABL 2007-07-20: error context
     if( !pDotationCategory_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown dotation category '%s'", strAmmunition.c_str() ), archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown dotation category '%s'", strAmmunition.c_str() ) ); // $$$$ ABL 2007-07-20: error context
+    std::string burstTime, reloadingTime;
 
-    archive.ReadField    ( "NbrMunitionParRafale"       , nNbrAmmoPerBurst_  , CheckValueGreater( 0. ) );
-    archive.ReadTimeField( "DureeRafale"                , rBurstDuration_    , CheckValueGreater( 0. ) );
-    archive.ReadField    ( "NbrMunitionsParRechargement", nNbrAmmoPerLoader_ , CheckValueGreater( 0. ) );
-    archive.ReadTimeField( "DureeRechargement"          , rReloadingDuration_, CheckValueGreater( 0. ) );
+    xis >> start( "burst" )
+            >> attribute( "munition", nNbrAmmoPerBurst_ )
+            >> attribute( "duration", burstTime )
+        >> end()
+        >> start( "reloading" )
+            >> attribute( "munition", nNbrAmmoPerLoader_ )
+            >> attribute( "duration", reloadingTime )
+        >> end();
+    if( ! tools::DecodeTime( burstTime,     rBurstDuration_ )
+     || ! tools::DecodeTime( reloadingTime, rReloadingDuration_ ) )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid burst or reloading durations" ); // $$$$ ABL 2007-07-20: error context
 
     rBurstDuration_      = MIL_Tools::ConvertSecondsToSim( rBurstDuration_     );
     rReloadingDuration_  = MIL_Tools::ConvertSecondsToSim( rReloadingDuration_ );
     
-    InitializeDirectFireData  ( manager, archive );
-    InitializeIndirectFireData( archive );
+    if( nNbrAmmoPerBurst_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "burst: munition <= 0" );
+    if( rBurstDuration_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "burst: duration <= 0" );
+    if( nNbrAmmoPerLoader_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "reloading: munition <= 0" );
+    if( rReloadingDuration_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "reloading: duration <= 0" );
+
+    InitializeDirectFireData  ( manager, xis );
+    InitializeIndirectFireData( xis );
 
     strName_ = pLauncherType_->GetName() + "/" + pDotationCategory_->GetName();
 }
@@ -134,46 +165,54 @@ PHY_WeaponType::~PHY_WeaponType()
 // Name: PHY_WeaponType::InitializeDirectFireData
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::InitializeDirectFireData( MIL_EffectManager& manager, MIL_InputArchive& archive )
+void PHY_WeaponType::InitializeDirectFireData( MIL_EffectManager& manager, xml::xistream& xis )
 {
     pDirectFireData_ = 0;
-    
-    if( !archive.Section( "Direct", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> list( "direct-fire", *this, &PHY_WeaponType::ReadDirect, manager );
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponType::ReadDirect
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_WeaponType::ReadDirect( xml::xistream& xis, MIL_EffectManager& manager )
+{
     assert( pLauncherType_ );
     assert( pDotationCategory_ );
 
     if ( !pLauncherType_->CanDirectFire() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Associated launcher can not direct fire", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Associated launcher can not direct fire" ); // $$$$ ABL 2007-07-20: error context
     if ( !pDotationCategory_->CanBeUsedForDirectFire() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Associated ammunition can not direct fire", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Associated ammunition can not direct fire" ); // $$$$ ABL 2007-07-20: error context
 
-    pDirectFireData_ = new PHY_WeaponDataType_DirectFire( manager, *this, archive );
-    archive.EndSection(); // Direct
+    pDirectFireData_ = new PHY_WeaponDataType_DirectFire( manager, *this, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponType::InitializeIndirectFireData
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::InitializeIndirectFireData( MIL_InputArchive& archive )
+void PHY_WeaponType::InitializeIndirectFireData( xml::xistream& xis )
 {
     pIndirectFireData_ = 0;
+    xis >> list( "indirect-fire", *this, &PHY_WeaponType::ReadIndirect );
+}
 
-    if ( !archive.Section( "Indirect", MIL_InputArchive::eNothing ) )
-        return;
-
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponType::ReadIndirect
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_WeaponType::ReadIndirect( xml::xistream& xis )
+{
     assert( pLauncherType_ );
     assert( pDotationCategory_ );
 
     if ( !pLauncherType_->CanIndirectFire() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Associated launcher can not indirect fire", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Associated launcher can not indirect fire" ); // $$$$ ABL 2007-07-20: error context
     if ( !pDotationCategory_->CanBeUsedForIndirectFire() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Associated ammunition can not indirect fire", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Associated ammunition can not indirect fire" ); // $$$$ ABL 2007-07-20: error context
 
-    pIndirectFireData_ = new PHY_WeaponDataType_IndirectFire( *this, archive );
-    archive.EndSection(); // Indirect
+    pIndirectFireData_ = new PHY_WeaponDataType_IndirectFire( *this, xis );
 }
 
 // =============================================================================

@@ -13,11 +13,16 @@
 #define __MIL_AgentPion_h_
 
 #include "MIL.h"
-
 #include "MIL_Agent_ABC.h"
 #include "MIL_AgentTypePion.h"
 #include "Entities/Orders/MIL_PionOrderManager.h"
 #include "Entities/Actions/PHY_Actor.h"
+
+namespace xml
+{
+    class xostream;
+    class xistream;
+}
 
 class MIL_AgentPion;
 class MIL_Automate;
@@ -39,7 +44,7 @@ class MIL_AgentPion : public MIL_Agent_ABC
     MT_COPYNOTALLOWED( MIL_AgentPion )
 
 public:
-             MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive );    // Pion dans ODB
+             MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis );    // Pion dans ODB
              MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ); // Creation dynamique (convois, ...)
              MIL_AgentPion();
     virtual ~MIL_AgentPion();
@@ -51,12 +56,12 @@ public:
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     
-    virtual void WriteODB( MT_XXmlOutputArchive& archive ) const;
+    virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
     //! @name Init
     //@{
-    void ReadOverloading( MIL_InputArchive& archive );
+    void ReadOverloading( xml::xistream& xis );
     //@}
 
     //! @name Accessors
@@ -139,7 +144,7 @@ public:
 private:
     //! @name Operations
     //@{
-    void Initialize         ( MIL_InputArchive& archive );
+    void Initialize         ( xml::xistream& xml );
     void Initialize         ( const MT_Vector2D& vPosition );
     void UpdatePhysicalState();
     //@}

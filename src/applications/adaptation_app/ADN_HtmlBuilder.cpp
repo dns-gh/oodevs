@@ -6,22 +6,12 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-04-18 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_HtmlBuilder.cpp $
-// $Author: Ape $
-// $Modtime: 21/04/05 12:25 $
-// $Revision: 1 $
-// $Workfile: ADN_HtmlBuilder.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_HtmlBuilder.h"
 
 #include <qtable.h>
 #include <qlistview.h>
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder constructor
@@ -32,7 +22,6 @@ ADN_HtmlBuilder::ADN_HtmlBuilder()
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder destructor
 // Created: APE 2005-04-18
@@ -40,7 +29,6 @@ ADN_HtmlBuilder::ADN_HtmlBuilder()
 ADN_HtmlBuilder::~ADN_HtmlBuilder()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder::BeginHtml
@@ -52,7 +40,6 @@ void ADN_HtmlBuilder::BeginHtml( const char* szTitle )
     strOutput_ << "<h1>" << szTitle << "</h1><br>" << std::endl;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder::EndHtml
 // Created: APE 2005-04-18
@@ -61,7 +48,6 @@ void ADN_HtmlBuilder::EndHtml()
 {
     strOutput_ << "</html>" << std::endl;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder::Section
@@ -72,7 +58,6 @@ void ADN_HtmlBuilder::Section( const char* szTitle )
     strOutput_ << "<h2>" << szTitle << "</h2><br>" << std::endl;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder::SubSection
 // Created: APE 2005-04-21
@@ -81,7 +66,6 @@ void ADN_HtmlBuilder::SubSection( const char* szTitle )
 {
     strOutput_ << "<h3>" << szTitle << "</h3><br>" << std::endl;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder::BeginList
@@ -92,7 +76,6 @@ void ADN_HtmlBuilder::BeginList()
     strOutput_ << "<ul>" << std::endl;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder::ListItem
 // Created: APE 2005-04-18
@@ -101,7 +84,6 @@ void ADN_HtmlBuilder::ListItem( const char* szText )
 {
     strOutput_ << "<li>" << szText << "</li>" << std::endl;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder::ListItem
@@ -115,7 +97,6 @@ void ADN_HtmlBuilder::ListItem( const char* szField, const char* szText, const c
         strOutput_ << "<li><b>" << szField << ":</b> " << szText << "</li>" << std::endl;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder::ListItem
 // Created: APE 2005-04-20
@@ -127,7 +108,6 @@ void ADN_HtmlBuilder::ListItem( const char* szField, int nValue, const char* szU
     else
         strOutput_ << "<li><b>" << szField << ":</b> " << nValue << "</li>" << std::endl;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder::ListItem
@@ -150,7 +130,6 @@ void ADN_HtmlBuilder::EndList()
     strOutput_ << "</ul>" << std::endl;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder::BeginTable
 // Created: APE 2005-04-18
@@ -162,7 +141,6 @@ void ADN_HtmlBuilder::BeginTable( int nRows, int nCols )
     pStringArray_ = new std::string[nRows * nCols];
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder::TableItem
 // Created: APE 2005-04-18
@@ -171,7 +149,6 @@ void ADN_HtmlBuilder::TableItem( int nRow, int nCol, const char* szText, bool /*
 {
     pStringArray_[nCol + nRow * nTableCols_] = szText;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder::TableItem
@@ -184,7 +161,6 @@ void ADN_HtmlBuilder::TableItem( int nRow, int nCol, int nValue, bool /*bHeader*
     pStringArray_[nCol + nRow * nTableCols_] = strTemp.str();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder::TableItem
 // Created: APE 2005-04-18
@@ -195,7 +171,6 @@ void ADN_HtmlBuilder::TableItem( int nRow, int nCol, double rValue, bool /*bHead
     strTemp << rValue;
     pStringArray_[nCol + nRow * nTableCols_] = strTemp.str();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder::EndTable
@@ -218,7 +193,6 @@ void ADN_HtmlBuilder::EndTable()
     strOutput_ << "</table>" << std::endl;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder::Stream
 // Created: APE 2005-04-19
@@ -228,18 +202,15 @@ std::stringstream& ADN_HtmlBuilder::Stream()
     return strOutput_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder::WriteToFile
 // Created: APE 2005-04-19
 // -----------------------------------------------------------------------------
 void ADN_HtmlBuilder::WriteToFile( const char* strFileName )
 {
-    MT_TextOutputArchive output;
+    std::ofstream output( strFileName );
     output << strOutput_.str();
-    output.WriteToFile( strFileName );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder::CreateTableFrom

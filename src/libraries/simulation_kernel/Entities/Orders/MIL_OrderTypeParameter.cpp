@@ -15,30 +15,33 @@
 #include "MIL_OrderType_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "Network/NET_AsnException.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderTypeParameter constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_OrderTypeParameter::MIL_OrderTypeParameter( const MIL_OrderType_ABC& orderType, MIL_InputArchive& archive )
+MIL_OrderTypeParameter::MIL_OrderTypeParameter( const MIL_OrderType_ABC& orderType, xml::xistream& xis )
     : nDIAParameter_( 0 )
     , orderType_    ( orderType )
     , bIsOptional_  ( false )
     , strName_      ()
     , pParameter_   ( 0 )
 {
-    archive.ReadAttribute( "name", strName_ );
+    xis >> attribute( "name", strName_ );
 
     std::string strType;
-    archive.ReadAttribute( "type", strType );
+    xis >> attribute( "type", strType );
     pParameter_ = MIL_ParameterType_ABC::Find( strType );
     if( !pParameter_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown parameter type", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown parameter type" ); // $$$$ ABL 2007-07-25: error context
 
-    archive.ReadAttribute( "optional", bIsOptional_, MIL_InputArchive::eNothing );
+    xis >> optional() >> attribute( "optional", bIsOptional_ );
 
     std::string strDIAParameter;
-    archive.ReadAttribute( "dia-name", strDIAParameter );
+    xis >> attribute( "dia-name", strDIAParameter );
     nDIAParameter_ = DEC_Tools::InitializeDIAField( strDIAParameter, orderType_.GetDIAType() );
     //$$$$ Checker type DIA si c possible
 }

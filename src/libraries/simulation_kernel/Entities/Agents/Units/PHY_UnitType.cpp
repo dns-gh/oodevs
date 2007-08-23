@@ -18,6 +18,10 @@
 #include "Humans/PHY_HumanRank.h"
 #include "Dotations/PHY_DotationLogisticType.h"
 #include "Tools/MIL_Tools.h"
+#include "tools/xmlcodecs.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_UnitType::sComposanteTypeData::sComposanteTypeData
@@ -30,14 +34,15 @@ PHY_UnitType::sComposanteTypeData::sComposanteTypeData()
     , bCanBePartOfConvoy_( false )
     , nNbrHumanInCrew_   ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_UnitType constructor
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
-PHY_UnitType::PHY_UnitType( MIL_InputArchive& archive )
-    : dotationCapacitiesTC1_          ( "ContenanceTC1", archive )    
+PHY_UnitType::PHY_UnitType( xml::xistream& xis )
+    : dotationCapacitiesTC1_          ( "logistics", xis )
     , stockLogisticThresholdRatios_   ( PHY_DotationLogisticType::GetDotationLogisticTypes().size(), 0.1 )
     , composanteTypes_                ()
     , postureTimes_                   ( PHY_Posture::GetPostures().size(), 0 )
@@ -50,25 +55,18 @@ PHY_UnitType::PHY_UnitType( MIL_InputArchive& archive )
     , bCanFly_                        ( false )
     , bIsAutonomous_                  ( false )
 {
-    if( archive.Section( "PeutVoler", MIL_InputArchive::eNothing ) )
-    {
-        bCanFly_ = true;
-        archive.EndSection(); // PeutVoler
-    }
+    xis >> optional()
+            >> attribute( "can-fly", bCanFly_ )
+        >> optional()
+            >> attribute( "is-autonomous", bIsAutonomous_ );
 
-    if( archive.Section( "EstAutonome", MIL_InputArchive::eNothing ) ) 
-    {
-        bIsAutonomous_ = true;
-        archive.EndSection(); // EstAutonome
-    }
-
-    InitializeComposantes                 ( archive );
-    InitializeCommanderRepartition        ( archive );
-    InitializePostureTimes                ( archive );
-    InitializeInstallationTimes           ( archive );
-    InitializeCoupDeSonde                 ( archive );
-    InitializeNBC                         ( archive );
-    InitializeStockLogisticThresholdRatios( archive );
+    InitializeComposantes                 ( xis );
+    InitializeCommanderRepartition        ( xis );
+    InitializePostureTimes                ( xis );
+    InitializeInstallationTimes           ( xis );
+    InitializeCoupDeSonde                 ( xis );
+    InitializeNBC                         ( xis );
+    InitializeStockLogisticThresholdRatios( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,207 +75,231 @@ PHY_UnitType::PHY_UnitType( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 PHY_UnitType::~PHY_UnitType()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_UnitType::InitializeStockLogisticThresholdRatios
 // Created: NLD 2006-01-03
 // -----------------------------------------------------------------------------
-void PHY_UnitType::InitializeStockLogisticThresholdRatios( MIL_InputArchive& archive )
+void PHY_UnitType::InitializeStockLogisticThresholdRatios( xml::xistream& xis )
 {
-    if( !archive.Section( "Stocks", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> optional()
+            >> start( "stocks" )
+                >> list( "stock", *this, &PHY_UnitType::ReadStock )
+            >> end();
+}
 
-    archive.BeginList( "SeuilsLogistiques" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "SeuilLogistique" );
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::ReadStock
+// Created: ABL 2007-07-23
+// -----------------------------------------------------------------------------
+void PHY_UnitType::ReadStock( xml::xistream& xis )
+{
+    std::string strCategory;
+    xis >> attribute( "category", strCategory );
 
-        std::string strCategory;
-        archive.ReadAttribute( "categorie", strCategory );
+    const PHY_DotationLogisticType* pType = PHY_DotationLogisticType::Find( strCategory );
+    if( !pType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown logistic dotation type" ); // $$$$ ABL 2007-07-23: error context
 
-        const PHY_DotationLogisticType* pType = PHY_DotationLogisticType::Find( strCategory );
-        if( !pType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown logistic dotation type", archive.GetContext() );
+    assert( stockLogisticThresholdRatios_.size() > pType->GetID() );
 
-        assert( stockLogisticThresholdRatios_.size() > pType->GetID() );
+    MT_Float rThreshold = 0.;
+    xis >> attribute( "threshold", rThreshold );
+    if( rThreshold < 0 || rThreshold > 100 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "stock: thresolh not in [0..100]" );
 
-        MT_Float rThreshold = 0.;
-        archive.ReadAttribute( "seuil", rThreshold, CheckValueBound( 0., 100. ) );
-        rThreshold /= 100.;                  
-    
-        stockLogisticThresholdRatios_[ pType->GetID() ] = rThreshold;
+    rThreshold /= 100.;                  
 
-        archive.EndSection(); // SeuilLogistique
-    }
-    archive.EndList(); // SeuilsLogistiques
-
-    archive.EndSection(); // Stocks
+    stockLogisticThresholdRatios_[ pType->GetID() ] = rThreshold;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_UnitType::InitializeNBC
 // Created: NLD 2004-11-02
 // -----------------------------------------------------------------------------
-void PHY_UnitType::InitializeNBC( MIL_InputArchive& archive )
+void PHY_UnitType::InitializeNBC( xml::xistream& xis )
 {
     float rTmp;
-    archive.ReadTimeField( "DelaiDecontaminationNBC", rTmp, CheckValueGreater( 0. ) );
+    xis >> start( "nbc" );
+    tools::ReadTimeAttribute( xis, "decontamination-delay", rTmp );
+    if( rTmp <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "nbc: decontamination-delay <= 0" );
     rCoefDecontaminationPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rTmp );
+    xis >> end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_UnitType::InitializeComposantes
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
-void PHY_UnitType::InitializeComposantes( MIL_InputArchive& archive )
+void PHY_UnitType::InitializeComposantes( xml::xistream& xis )
 {
-    archive.BeginList( "Equipements" );
-
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Equipement" );
-
-        std::string strComposanteType;
-        archive.ReadAttribute( "nom", strComposanteType );
-
-        const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( strComposanteType );
-        if( !pComposanteType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown composante type", archive.GetContext() );
-
-        if( composanteTypes_.find( pComposanteType ) != composanteTypes_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Composante type already exist", archive.GetContext() );
-
-        sComposanteTypeData& compData = composanteTypes_[ pComposanteType ];
-        compData.bMajor_ = false;
-        archive.ReadAttribute( "majeur", compData.bMajor_, MIL_InputArchive::eNothing );
-        
-        compData.bLoadable_ = false;
-        archive.ReadAttribute( "embarquable", compData.bLoadable_, MIL_InputArchive::eNothing );
-
-        compData.bCanBePartOfConvoy_ = false;
-        archive.ReadAttribute( "convoyeur", compData.bCanBePartOfConvoy_, MIL_InputArchive::eNothing );
-
-        compData.nNbrHumanInCrew_ = 0;
-        archive.ReadAttribute( "equipage", compData.nNbrHumanInCrew_, CheckValueGreaterOrEqual( 0 ) );
-
-        if( compData.nNbrHumanInCrew_ == 0 && !IsAutonomous() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Composante not viable : no humans in crew", archive.GetContext() );
-
-        archive.Read( compData.nNbr_ );
-        archive.EndSection(); // Equipement
-    }
-
-    archive.EndList(); // Equipements
+    xis >> start( "equipments" )
+            >> list( "equipment", *this, &PHY_UnitType::ReadEquipment )
+        >> end();
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::ReadEquipment
+// Created: ABL 2007-07-23
+// -----------------------------------------------------------------------------
+void PHY_UnitType::ReadEquipment( xml::xistream& xis )
+{
+    std::string strComposanteType;
+    xis >> attribute( "type", strComposanteType );
+
+    const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( strComposanteType );
+    if( !pComposanteType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown composante type" ); // $$$$ ABL 2007-07-23: error context
+
+    if( composanteTypes_.find( pComposanteType ) != composanteTypes_.end() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Composante type already exist" ); // $$$$ ABL 2007-07-23: error context
+
+    sComposanteTypeData& compData = composanteTypes_[ pComposanteType ];
+    compData.bMajor_ = false;
+    compData.bLoadable_ = false;
+    compData.bCanBePartOfConvoy_ = false;
+    compData.nNbrHumanInCrew_ = 0;
+
+    xis >> optional()
+            >> attribute( "major", compData.bMajor_ )
+        >> optional()
+            >> attribute( "loadable", compData.bLoadable_ )
+        >> optional()
+            >> attribute( "convoyer", compData.bCanBePartOfConvoy_ )
+        >> attribute( "crew", compData.nNbrHumanInCrew_ );
+
+    if( compData.nNbrHumanInCrew_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "equipment: crew < 0" );
+
+    if( compData.nNbrHumanInCrew_ == 0 && !IsAutonomous() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Composante not viable : no humans in crew" ); // $$$$ ABL 2007-07-23: error context
+
+    xis >> attribute( "count", compData.nNbr_ );
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_UnitType::InitializeCommanderRepartition
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
-void PHY_UnitType::InitializeCommanderRepartition( MIL_InputArchive& archive )
+void PHY_UnitType::InitializeCommanderRepartition( xml::xistream& xis )
 {
-    if( !archive.Section( "RepartitionDuCommandement", MIL_InputArchive::eNothing ) )
+    xis >> start( "crew-ranks" )
+            >> list( "crew-rank", *this, &PHY_UnitType::ReadCrewRank )
+        >> end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::ReadCrewRank
+// Created: ABL 2007-07-23
+// -----------------------------------------------------------------------------
+void PHY_UnitType::ReadCrewRank( xml::xistream& xis )
+{
+    const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
+    std::string crewType;
+
+    xis >> attribute( "type", crewType );
+
+    PHY_HumanRank::CIT_HumanRankMap it = ranks.find( crewType );
+    const PHY_HumanRank& rank = *it->second;
+    if( !rank.IsCommander() )
         return;
 
-    const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
-    for( PHY_HumanRank::CIT_HumanRankMap it = ranks.begin(); it != ranks.end(); ++it )
-    {
-        const PHY_HumanRank& rank = *it->second;
-        if( !rank.IsCommander() )
-            continue;
+    if( commandersRepartition_.find( &rank ) != commandersRepartition_.end() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "crew-rank: type undefined" );        
 
-        if( commandersRepartition_.find( &rank ) != commandersRepartition_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );        
-
-        uint nValue = 0;
-        if( !archive.ReadField( rank.GetName(), nValue, MIL_InputArchive::eNothing ) )
-            continue;
-
+    uint nValue = 0;
+    xis >> attribute( "count", nValue );
+    if( nValue > 0 )
         commandersRepartition_[ &rank ] = nValue;
-    }
-
-    archive.EndSection(); // RepartitionDuCommandement
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_UnitType::InitializePostureTimes
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
-void PHY_UnitType::InitializePostureTimes( MIL_InputArchive& archive )
+void PHY_UnitType::InitializePostureTimes( xml::xistream& xis )
 {
-    archive.Section( "TempsMiseEnPosture" );
+    xis >> start( "postures" )
+            >> list( "posture", *this, &PHY_UnitType::ReadPosture )
+        >> end();
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::ReadPosture
+// Created: ABL 2007-07-23
+// -----------------------------------------------------------------------------
+void PHY_UnitType::ReadPosture( xml::xistream& xis )
+{
     const PHY_Posture::T_PostureMap& postures = PHY_Posture::GetPostures();
-    for( PHY_Posture::CIT_PostureMap it = postures.begin(); it != postures.end(); ++it )
-    {
-        const PHY_Posture& posture = *it->second;
-        if ( posture.IsInstantaneous() )
-        {
-            // Pour forcer la 'non-déclaration' dans le xml
-            if ( archive.Section( posture.GetName(), MIL_InputArchive::eNothing ) )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Posture is instantaneous and has no time", archive.GetContext() );
-            continue;
-        }
-        
-        archive.Section( posture.GetName() );
+    std::string postureName;
 
-        assert( postureTimes_.size() > posture.GetID() );
-        MT_Float rTime;
-        archive.ReadTime( rTime );
+    xis >> attribute( "name", postureName );
 
-        postureTimes_[ posture.GetID() ] = (uint)MIL_Tools::ConvertSecondsToSim( rTime );
-    
-        archive.EndSection(); // Posture
-    }
-    archive.EndSection(); // TempsMiseEnPosture
+    PHY_Posture::CIT_PostureMap it = postures.find( postureName );
+    const PHY_Posture& posture = *it->second;
+
+    assert( postureTimes_.size() > posture.GetID() );
+    MT_Float rTime;
+    tools::ReadTimeAttribute( xis, "setup-time", rTime );
+    postureTimes_[ posture.GetID() ] = (uint)MIL_Tools::ConvertSecondsToSim( rTime );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_UnitType::InitializeInstallationTimes
 // Created: NLD 2006-08-10
 // -----------------------------------------------------------------------------
-void PHY_UnitType::InitializeInstallationTimes( MIL_InputArchive& archive )
+void PHY_UnitType::InitializeInstallationTimes( xml::xistream& xis )
 {
-    if( !archive.Section( "Installation", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> list( "setup", *this, &PHY_UnitType::ReadSetup );
+}
 
-    archive.ReadTimeField( "DelaiInstallation"   , rInstallationTime_  , CheckValueGreaterOrEqual( 0. ) );
-    archive.ReadTimeField( "DelaiDesinstallation", rUninstallationTime_, CheckValueGreaterOrEqual( 0. ) );
-    
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::ReadSetup
+// Created: ABL 2007-07-23
+// -----------------------------------------------------------------------------
+void PHY_UnitType::ReadSetup( xml::xistream& xis )
+{
+    tools::ReadTimeAttribute( xis, "installation-time", rInstallationTime_ );
+    tools::ReadTimeAttribute( xis, "uninstallation-time", rUninstallationTime_ );
+
+    if( rInstallationTime_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "setup: installation-time < 0" );
+    if( rUninstallationTime_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "setup: uninstallation-time < 0" );
+
     rInstallationTime_   = (uint)MIL_Tools::ConvertSecondsToSim( rInstallationTime_   );
     rUninstallationTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rUninstallationTime_ );
-
-    archive.EndSection(); // Installation
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_UnitType::InitializeCoupDeSonde
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
-void PHY_UnitType::InitializeCoupDeSonde( MIL_InputArchive& archive )
+void PHY_UnitType::InitializeCoupDeSonde( xml::xistream& xis )
 {
-    if( !archive.Section( "CoupDeSonde", MIL_InputArchive::eNothing ) )
-    {
-        rCoupDeSondeLength_ = 0.;
-        rCoupDeSondeWidth_  = 0.;
-        return;
-    }
+    rCoupDeSondeLength_ = 0.;
+    rCoupDeSondeWidth_  = 0.;
+    xis >> list( "drill-blow", *this, &PHY_UnitType::ReadDrill );
+}
 
-    archive.ReadField( "Largeur" , rCoupDeSondeWidth_ );
-    archive.ReadField( "Longueur", rCoupDeSondeLength_ );
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::ReadDrill
+// Created: ABL 2007-07-23
+// -----------------------------------------------------------------------------
+void PHY_UnitType::ReadDrill( xml::xistream& xis )
+{
+    xis >> attribute( "width", rCoupDeSondeWidth_ )
+        >> attribute( "length", rCoupDeSondeLength_ );
 
     if ( rCoupDeSondeLength_ < rCoupDeSondeWidth_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Length (%f) should be greater than width (%f)", rCoupDeSondeLength_, rCoupDeSondeWidth_), archive.GetContext() );
-
-    archive.EndSection(); // CoupDeSonde
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Length (%f) should be greater than width (%f)", rCoupDeSondeLength_, rCoupDeSondeWidth_) ); // $$$$ ABL 2007-07-23: error context
 
     rCoupDeSondeLength_ = MIL_Tools::ConvertMeterToSim( rCoupDeSondeLength_ );
     rCoupDeSondeWidth_  = MIL_Tools::ConvertMeterToSim( rCoupDeSondeWidth_  );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_UnitType::GetPostureTime

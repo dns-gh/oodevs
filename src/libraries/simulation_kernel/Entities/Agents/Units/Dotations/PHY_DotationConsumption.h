@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_DotationCategory;
 
 // =============================================================================
@@ -25,7 +30,7 @@ class PHY_DotationConsumption
     MT_COPYNOTALLOWED( PHY_DotationConsumption )
 
 public:
-     PHY_DotationConsumption( const PHY_DotationCategory& category, MIL_InputArchive& archive );
+     PHY_DotationConsumption( const PHY_DotationCategory& category, xml::xistream& xis );
     ~PHY_DotationConsumption();
 
     //! @name Accessors

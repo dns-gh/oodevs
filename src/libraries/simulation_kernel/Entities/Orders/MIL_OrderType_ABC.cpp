@@ -14,28 +14,35 @@
 #include "MIL_OrderTypeParameter.h"
 #include "Decision/DEC_Tools.h"
 #include "Network/NET_AsnException.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderType_ABC constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_OrderType_ABC::MIL_OrderType_ABC( uint nID, MIL_InputArchive& archive )
+MIL_OrderType_ABC::MIL_OrderType_ABC( uint nID, xml::xistream& xis )
     : nID_       ( nID )
     , strName_   ()
     , pDIAType_  ( 0 )
     , parameters_()
 {
-    archive.ReadAttribute( "name", strName_ );
+    xis >> attribute( "name", strName_ );
 
     std::string strDIAType;
-    archive.ReadAttribute( "dia-type", strDIAType );
+    xis >> attribute( "dia-type", strDIAType );
     pDIAType_ = &DEC_Tools::GetDIAType( strDIAType );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "parameter" );
-        parameters_.push_back( new MIL_OrderTypeParameter( *this, archive ) );
-        archive.EndSection(); // parameter
-    }
+    xis >> list( "parameter", *this, &MIL_OrderType_ABC::ReadParameter );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderType_ABC::ReadParameter
+// Created: ABL 2007-07-25
+// -----------------------------------------------------------------------------
+void MIL_OrderType_ABC::ReadParameter( xml::xistream& xis )
+{
+    parameters_.push_back( new MIL_OrderTypeParameter( *this, xis ) );
 }
 
 //-----------------------------------------------------------------------------

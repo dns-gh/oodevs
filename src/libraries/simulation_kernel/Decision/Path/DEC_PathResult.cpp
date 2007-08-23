@@ -198,7 +198,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
 
         for( CIT_PathPointList itPathPoint = itNextPathPoint; itPathPoint != resultList_.end(); ++itPathPoint )
         {
-			MT_Line lineTmp( *pPrevPos, (*itPathPoint)->GetPos() );
+            MT_Line lineTmp( *pPrevPos, (*itPathPoint)->GetPos() );
 
             TER_DistanceLess colCmp( *pPrevPos );
             T_PointSet collisions( colCmp );

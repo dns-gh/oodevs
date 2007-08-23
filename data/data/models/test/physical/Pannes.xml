@@ -1,58 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Pannes>
-
-  <TempsDiagnostique>180s</TempsDiagnostique>
-
-  <Types>
-    <NTI1>
-      <Panne nom="Panne 1" type="M">
-        <MosID>1</MosID>
-        <Reparation tempsMoyen="600s" variance="180s"/>
-        <Pieces>
-          <Piece categorie="Truc pour reparer la mobilite 2">2</Piece>
-          <Piece categorie="Truc pour reparer la mobilite 1">1</Piece>
-        </Pieces>
-      </Panne>
-      <Panne nom="Panne 2" type="M">
-        <MosID>2</MosID>
-        <Reparation tempsMoyen="180s" variance="60s"/>
-        <Pieces>
-          <Piece categorie="Truc pour reparer la mobilite 1">1</Piece>
-          <Piece categorie="Truc pour reparer l'electronique 1">1</Piece>
-        </Pieces>
-      </Panne>
-      <Panne nom="Panne 3" type="EA">
-        <MosID>3</MosID>
-        <Reparation tempsMoyen="210s" variance="66s"/>
-        <Pieces>
-          <Piece categorie="Truc pour reparer l'electronique 1">1</Piece>
-        </Pieces>
-      </Panne>
-    </NTI1>
-    <NTI2>
-      <Panne nom="Delco casse" type="EA">
-        <MosID>4</MosID>
-        <Reparation tempsMoyen="360s" variance="120s"/>
-        <Pieces/>
-      </Panne>
-      <Panne nom="Panne 6" type="M">
-        <MosID>5</MosID>
-        <Reparation tempsMoyen="360s" variance="0s"/>
-        <Pieces>
-          <Piece categorie="Truc pour reparer la mobilite 1">2</Piece>
-        </Pieces>
-      </Panne>
-    </NTI2>
-    <NTI3>
-      <Panne nom="Panne 5" type="M">
-        <MosID>6</MosID>
-        <Reparation tempsMoyen="480s" variance="120s"/>
-        <Pieces>
-          <Piece categorie="Truc pour reparer la mobilite 1">1</Piece>
-          <Piece categorie="Truc pour reparer la mobilite 3">1</Piece>
-        </Pieces>
-      </Panne>
-    </NTI3>
-  </Types>
-
-</Pannes>
+<breakdowns>
+  <diagnosis time="180s"/>
+  <category name="NTI1">
+    <breakdown average-repairing-time="600s" id="1" name="Panne 1" type="M" variance="180s">
+      <part dotation="Truc pour reparer la mobilite 2" quantity="2"/>
+      <part dotation="Truc pour reparer la mobilite 1" quantity="1"/>
+    </breakdown>
+    <breakdown average-repairing-time="180s" id="2" name="Panne 2" type="M" variance="60s">
+      <part dotation="Truc pour reparer la mobilite 1" quantity="1"/>
+      <part dotation="Truc pour reparer l'electronique 1" quantity="1"/>
+    </breakdown>
+    <breakdown average-repairing-time="210s" id="3" name="Panne 3" type="EA" variance="66s">
+      <part dotation="Truc pour reparer l'electronique 1" quantity="1"/>
+    </breakdown>
+  </category>
+  <category name="NTI2">
+    <breakdown average-repairing-time="360s" id="4" name="Delco casse" type="EA" variance="120s"/>
+    <breakdown average-repairing-time="360s" id="5" name="Panne 6" type="M" variance="0s">
+      <part dotation="Truc pour reparer la mobilite 1" quantity="2"/>
+    </breakdown>
+  </category>
+  <category name="NTI3">
+    <breakdown average-repairing-time="480s" id="6" name="Panne 5" type="M" variance="120s">
+      <part dotation="Truc pour reparer la mobilite 1" quantity="1"/>
+      <part dotation="Truc pour reparer la mobilite 3" quantity="1"/>
+    </breakdown>
+  </category>
+</breakdowns>

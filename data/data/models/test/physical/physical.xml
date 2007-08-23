@@ -1,56 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <physical>
-
-  <Decisionnel>Decisionnel.xml</Decisionnel>
-
-  <Volumes>Volumes.xml</Volumes>
-
-  <Protections>Protections.xml</Protections>
-
-  <DotationNatures>DotationNatures.xml</DotationNatures>
-
-  <Objets>Objets.xml</Objets>
-
-  <Dotations>Dotations.xml</Dotations>
-
-  <Lanceurs>Lanceurs.xml</Lanceurs>
-
-  <Armements>Armements.xml</Armements>
-
-  <Capteurs>Capteurs.xml</Capteurs>
-
-  <Composantes>Composantes.xml</Composantes>
-
-  <Pions>Pions.xml</Pions>
-
-  <Automates>Automates.xml</Automates>
-
-  <NBC>NBC.xml</NBC>
-
-  <Sante>Sante.xml</Sante>
-
-  <ClasseIDs>IDClasses.xml</ClasseIDs>
-
-  <FacteursHumains>FacteursHumains.xml</FacteursHumains>
-
-  <Pannes>Pannes.xml</Pannes>
-
-  <GroupesConnaissance>GroupesConnaissance.xml</GroupesConnaissance>
-
-  <Maintenance>Maintenance.xml</Maintenance>
-
-  <Ravitaillement>Ravitaillement.xml</Ravitaillement>
-
-  <Communications>Communications.xml</Communications>
-
-  <PathFinder>Pathfind.xml</PathFinder>
-
-  <Populations>Populations.xml</Populations>
-
-  <ComptesRendus>Reports.xml</ComptesRendus>
-
-  <Modeles>Modeles.xml</Modeles>
-
-  <Missions>Missions.xml</Missions>
-
+  <decisional file="Decisionnel.xml"/>
+  <volumes file="Volumes.xml"/>
+  <protections file="Protections.xml"/>
+  <dotation-natures file="DotationNatures.xml"/>
+  <objects file="Objets.xml"/>
+  <dotations file="Dotations.xml"/>
+  <launchers file="Lanceurs.xml"/>
+  <weapon-systems file="Armements.xml"/>
+  <sensors file="Capteurs.xml"/>
+  <components file="Composantes.xml"/>
+  <units file="Pions.xml"/>
+  <automats file="Automates.xml"/>
+  <nbc file="NBC.xml"/>
+  <health file="Sante.xml"/>
+  <classeids file="IDClasses.xml"/>
+  <human-factors file="FacteursHumains.xml"/>
+  <breakdowns file="Pannes.xml"/>
+  <knowledge-groups file="GroupesConnaissance.xml"/>
+  <maintenance file="Maintenance.xml"/>
+  <supply file="Ravitaillement.xml"/>
+  <communications file="Communications.xml"/>
+  <pathfinder file="Pathfind.xml"/>
+  <populations file="Populations.xml"/>
+  <reports file="Reports.xml"/>
+  <models file="Modeles.xml"/>
+  <missions file="Missions.xml"/>
 </physical>

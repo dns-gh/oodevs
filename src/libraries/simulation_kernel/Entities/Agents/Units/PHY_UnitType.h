@@ -16,6 +16,11 @@
 
 #include "Dotations/PHY_DotationCapacities.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_Posture;
 class PHY_ComposanteTypePion;
 class PHY_RolePion_Composantes;
@@ -38,7 +43,7 @@ public:
     //@}
 
 public:
-    PHY_UnitType( MIL_InputArchive& archive );
+    PHY_UnitType( xml::xistream& xis );
     virtual ~PHY_UnitType();
 
     //! @name Instanciation
@@ -85,13 +90,22 @@ private:
 private:
     //! @name Init
     //@{
-    void InitializeComposantes                 ( MIL_InputArchive& archive );
-    void InitializeCommanderRepartition        ( MIL_InputArchive& archive );
-    void InitializePostureTimes                ( MIL_InputArchive& archive );
-    void InitializeCoupDeSonde                 ( MIL_InputArchive& archive );
-    void InitializeNBC                         ( MIL_InputArchive& archive );
-    void InitializeInstallationTimes           ( MIL_InputArchive& archive );
-    void InitializeStockLogisticThresholdRatios( MIL_InputArchive& archive );
+    void InitializeComposantes                 ( xml::xistream& xis );
+    void InitializeCommanderRepartition        ( xml::xistream& xis );
+    void InitializePostureTimes                ( xml::xistream& xis );
+    void InitializeCoupDeSonde                 ( xml::xistream& xis );
+    void InitializeNBC                         ( xml::xistream& xis );
+    void InitializeInstallationTimes           ( xml::xistream& xis );
+    void InitializeStockLogisticThresholdRatios( xml::xistream& xis );
+    //@}
+    //! @name Helpers
+    //@{
+    void ReadStock    ( xml::xistream& xis );
+    void ReadEquipment( xml::xistream& xis );
+    void ReadCrewRank ( xml::xistream& xis );
+    void ReadPosture  ( xml::xistream& xis );
+    void ReadSetup    ( xml::xistream& xis );
+    void ReadDrill    ( xml::xistream& xis );
     //@}
 
 private:

@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_RealObject_ABC;
 class DEC_Knowledge_Object;
 class MIL_AgentPion;
@@ -30,7 +35,7 @@ class PHY_SensorTypeObject
     MT_COPYNOTALLOWED( PHY_SensorTypeObject )
 
 public:
-     PHY_SensorTypeObject( const PHY_SensorType& type, MIL_InputArchive& archive );
+     PHY_SensorTypeObject( const PHY_SensorType& type, xml::xistream& xis );
     ~PHY_SensorTypeObject();
 
     //! @name Accessors
@@ -43,6 +48,11 @@ public:
     //@{
     const PHY_PerceptionLevel& ComputePerception( const MIL_AgentPion& perceiver, const MIL_RealObject_ABC&   target, MT_Float rSensorHeight ) const;
     const PHY_PerceptionLevel& ComputePerception( const MIL_AgentPion& perceiver, const DEC_Knowledge_Object& target, MT_Float rSensorHeight ) const;
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadObject( xml::xistream& xis );
     //@}
 
 private:

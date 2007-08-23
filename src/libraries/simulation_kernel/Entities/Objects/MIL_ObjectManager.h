@@ -16,6 +16,11 @@
 
 #include "game_asn/Asn.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_Army;
 class MIL_RealObjectType;
 class TER_Localisation;
@@ -53,7 +58,7 @@ public:
     void ProcessEvents();
     void UpdateStates ();
 
-    MIL_RealObject_ABC&         CreateObject                       ( const MIL_RealObjectType& type, uint nID, MIL_Army& army, MIL_InputArchive& archive ); 
+    void                        CreateObject                       ( xml::xistream& xis, MIL_Army& army ); 
     MIL_RealObject_ABC*         CreateObject                       ( MIL_Army& army, const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint nCurrentParamIdx );
     MIL_RealObject_ABC*         CreateObject                       ( const MIL_RealObjectType& type, MIL_Army& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
     MIL_NuageNBC&               CreateObjectNuageNBC               ( MIL_Army& army, const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgentType );

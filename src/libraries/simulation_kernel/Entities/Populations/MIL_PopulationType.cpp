@@ -28,6 +28,10 @@
 #include "Tools/MIL_Tools.h"
 #include "MIL_AgentServer.h"
 
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+
 MIL_PopulationType::T_PopulationMap MIL_PopulationType::populations_;
 MT_Float                            MIL_PopulationType::rEffectReloadingTimeDensity_ = 0.;
 MT_Float                            MIL_PopulationType::rEffectReloadingTimeFactor_  = 0.;
@@ -36,41 +40,53 @@ MT_Float                            MIL_PopulationType::rEffectReloadingTimeFact
 // STATIC INITIALIZATION (MANAGER)
 // =============================================================================
 
+struct MIL_PopulationType::LoadingWrapper
+{
+    void ReadPopulation( xml::xistream& xis )
+    {
+        MIL_PopulationType::ReadPopulation( xis );
+    }
+};
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationType::Initialize
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void MIL_PopulationType::Initialize( MIL_InputArchive& archive )
+void MIL_PopulationType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing population types" );
 
-    archive.Section( "Effets" );
+    xis >> start( "populations" )
+            >> start( "reloading-time-effect" )
+                >> attribute( "population-density", rEffectReloadingTimeDensity_ )
+                >> attribute( "modifier", rEffectReloadingTimeFactor_ )
+            >> end();
 
-    archive.Section( "TempsRechargement" );
-    archive.ReadAttribute( "densitePopulation", rEffectReloadingTimeDensity_, CheckValueGreaterOrEqual( 0. ) );
-    archive.ReadAttribute( "modificateur"     , rEffectReloadingTimeFactor_ , CheckValueGreaterOrEqual( 1. ) );
-    archive.EndSection(); // TempsRechargement
+    if( rEffectReloadingTimeDensity_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "reloading-time-effet: population-density < 0" );
+    if( rEffectReloadingTimeFactor_ < 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "reloading-time-effect: modifier < 1" );
 
-    archive.EndSection(); // Effets
+    LoadingWrapper loader;
 
+    xis     >> list( "population", loader, &LoadingWrapper::ReadPopulation )
+        >> end();
+}
 
-    archive.BeginList( "Populations" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Population" );
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::ReadPopulation
+// Created: ABL 2007-07-24
+// -----------------------------------------------------------------------------
+void MIL_PopulationType::ReadPopulation( xml::xistream& xis )
+{
+    std::string strName;
+    xis >> attribute( "name", strName );
 
-        std::string strName;
-        archive.ReadAttribute( "nom", strName );
+    const MIL_PopulationType*& pPopulation = populations_[ strName ];
+    if( pPopulation )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Population type already exists" ); // $$$$ ABL 2007-07-24: error context
 
-        const MIL_PopulationType*& pPopulation = populations_[ strName ];
-        if( pPopulation )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Population type already exists", archive.GetContext() );
-
-        pPopulation = new MIL_PopulationType( strName, archive );       
-            
-        archive.EndSection(); // Population
-    }
-    archive.EndList(); // Populations
+    pPopulation = new MIL_PopulationType( strName, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,7 +108,7 @@ void MIL_PopulationType::Terminate()
 // Name: MIL_PopulationType constructor
 // Created: NLD 2004-12-20
 // -----------------------------------------------------------------------------
-MIL_PopulationType::MIL_PopulationType( const std::string& strName, MIL_InputArchive& archive )
+MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistream& xis )
     : strName_              ( strName )
     , rConcentrationDensity_( 0. )
     , rDefaultFlowDensity_  ( 0. )
@@ -103,22 +119,28 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, MIL_InputArc
     , damageData_           ( PHY_RoePopulation::GetRoePopulations().size(), sDamageData( 0., 0. ) )
     , pDIAFunctionTable_    ( new DIA_FunctionTable< MIL_Population >() )
 {
-    archive.ReadField( "MosID"                     , nID_                   );
-    archive.ReadField( "DensiteConcentration"      , rConcentrationDensity_, CheckValueGreater( 0. ) );
-    archive.ReadField( "DensiteNominaleDeplacement", rDefaultFlowDensity_  , CheckValueGreater( 0. ) );
-    archive.ReadField( "VitesseDeplacement"        , rMaxSpeed_            , CheckValueGreater( 0. ) );
+    xis >> attribute( "id", nID_ )
+        >> attribute( "concentration-density", rConcentrationDensity_ )
+        >> attribute( "moving-base-density", rDefaultFlowDensity_ )
+        >> attribute( "moving-speed", rMaxSpeed_ );
+
+    if( rConcentrationDensity_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population: concentration-density <= 0" );
+    if( rDefaultFlowDensity_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population: moving-base-density <= 0" );
+    if( rMaxSpeed_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population: moving-speed" );
+
     rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ );
 
-    archive.Section( "Effets" );
-    InitializeSlowDownData( archive );
-    InitializeFireData    ( archive );
-    archive.EndSection(); // Effets
-    
+    InitializeSlowDownData( xis );
+    InitializeFireData    ( xis );
+
     std::string strModel;
-    archive.ReadField( "ModeleDecisionnel", strModel );
+    xis >> attribute( "decisional-model", strModel );
     pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPopulation( strModel );
     if( !pModel_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown population model", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown population model" ); // $$$$ ABL 2007-07-24: error context
 
     InitializeDiaFunctions();
 }
@@ -136,96 +158,97 @@ MIL_PopulationType::~MIL_PopulationType()
 // Name: MIL_PopulationType::InitializeSlowDownData
 // Created: NLD 2005-10-20
 // -----------------------------------------------------------------------------
-void MIL_PopulationType::InitializeSlowDownData( MIL_InputArchive& archive )
+void MIL_PopulationType::InitializeSlowDownData( xml::xistream& xis )
 {
-    archive.Section( "Ralentissement" );
+    xis >> start( "slowing-effects" )
+            >> list( "slowing-effect", *this, &MIL_PopulationType::ReadSlowingEffect )
+        >> end();
+}
 
-    if( !archive.BeginList( "Attitudes", MIL_InputArchive::eNothing ) )
-    {
-        archive.EndSection(); // Ralentissement
-        return;
-    }
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::ReadSlowingEffect
+// Created: ABL 2007-07-24
+// -----------------------------------------------------------------------------
+void MIL_PopulationType::ReadSlowingEffect( xml::xistream& xis )
+{
+    std::string strAttitude;
+    xis >> attribute( "population-attitude", strAttitude );
 
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Attitude" );
-        std::string strAttitude;
-        archive.ReadAttribute( "nom", strAttitude );
+    const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( strAttitude );
+    if( !pAttitude )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown attitude '%s'", strAttitude.c_str() ) ); // $$$$ ABL 2007-07-24: error context
 
-        const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( strAttitude );
-        if( !pAttitude )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown attitude '%s'", strAttitude.c_str() ), archive.GetContext() );
+    assert( slowDownData_.size() > pAttitude->GetID() );
+    T_VolumeSlowDownData& volumeSlowDownData = slowDownData_[ pAttitude->GetID() ];
 
-        assert( slowDownData_.size() > pAttitude->GetID() );
-        T_VolumeSlowDownData& volumeSlowDownData = slowDownData_[ pAttitude->GetID() ];
+    xis >> list( "unit", *this, &MIL_PopulationType::ReadSlowingUnitEffect, volumeSlowDownData );
+}
 
-        archive.BeginList( "VolumesPions" );
-        while( archive.NextListElement() )
-        {
-            archive.Section( "VolumePion" );
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::ReadSlowingUnitEffect
+// Created: ABL 2007-07-24
+// -----------------------------------------------------------------------------
+void MIL_PopulationType::ReadSlowingUnitEffect( xml::xistream& xis, T_VolumeSlowDownData& volumeSlowDownData )
+{
+    std::string strVolume;
+    MT_Float    rPopulationDensity = 0.;
+    MT_Float    rMaxSpeed          = 0.;
 
-            std::string strVolume;
-            MT_Float    rPopulationDensity = 0.;
-            MT_Float    rMaxSpeed          = 0.;
+    xis >> attribute( "unit-size", strVolume )
+        >> attribute( "population-density", rPopulationDensity )
+        >> attribute( "max-speed", rMaxSpeed );
 
-            archive.ReadAttribute( "nom", strVolume );
-            archive.ReadAttribute( "densitePopulation", rPopulationDensity, CheckValueGreater       ( 0. ) );
-            archive.ReadAttribute( "vitesseMaximale"  , rMaxSpeed         , CheckValueGreaterOrEqual( 0. ) );
-            rMaxSpeed = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed );
+    if( rPopulationDensity <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit: population-density <= 0" );
+    if( rMaxSpeed < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit: max-speed < 0" );
 
-            const PHY_Volume* pVolume = PHY_Volume::FindVolume( strVolume );
-            if( !pVolume )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown volume '%s'", strVolume.c_str() ), archive.GetContext() );
+    rMaxSpeed = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed );
 
-            assert( volumeSlowDownData.size() > pVolume->GetID() );
-            volumeSlowDownData[ pVolume->GetID() ] = sSlowDownData( rPopulationDensity, rMaxSpeed );
+    const PHY_Volume* pVolume = PHY_Volume::FindVolume( strVolume );
+    if( !pVolume )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown volume '%s'", strVolume.c_str() ) ); // $$$$ ABL 2007-07-24: error context
 
-            archive.EndSection(); // VolumePion
-        }
-        archive.EndList(); // VolumesPions
-        archive.EndSection(); // Attitude
-    }
-    archive.EndList(); // Attitudes
-    archive.EndSection(); // Ralentissement
+    assert( volumeSlowDownData.size() > pVolume->GetID() );
+    volumeSlowDownData[ pVolume->GetID() ] = sSlowDownData( rPopulationDensity, rMaxSpeed );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationType::InitializeFireData
 // Created: NLD 2005-11-02
 // -----------------------------------------------------------------------------
-void MIL_PopulationType::InitializeFireData( MIL_InputArchive& archive )
+void MIL_PopulationType::InitializeFireData( xml::xistream& xis )
 {
-    archive.Section( "Tir" );
+    xis >> start( "attrition-effects" );
+    attritionData_.Initialize( xis );
+    xis >> end();
 
-    archive.Section( "Tireur" );
-    attritionData_.Initialize( archive );
-    archive.EndSection(); // Tireur
+    xis >> start( "unit-fire-effects" )
+            >> list( "unit", *this, &MIL_PopulationType::ReadUnitFireEffect )
+        >> end();
+}
 
-    archive.Section( "Cible" ); 
-    if( archive.BeginList( "ReglesEngagementTireur", MIL_InputArchive::eNothing ) )
-    {
-        while( archive.NextListElement() )
-        {
-            archive.Section( "RegleEngagementTireur" );
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::ReadUnitFireEffect
+// Created: ABL 2007-07-24
+// -----------------------------------------------------------------------------
+void MIL_PopulationType::ReadUnitFireEffect( xml::xistream& xis )
+{
+    std::string strRoe;
+    xis >> attribute( "rule-of-engagment", strRoe );
+    const PHY_RoePopulation* pRoe = PHY_RoePopulation::Find( strRoe );
+    if( !pRoe )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown population roe '%s'", strRoe.c_str() ) ); // $$$$ ABL 2007-07-24: error context
 
-            std::string strRoe;
-            archive.ReadAttribute( "nom", strRoe );
-            const PHY_RoePopulation* pRoe = PHY_RoePopulation::Find( strRoe );
-            if( !pRoe )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown population roe '%s'", strRoe.c_str() ), archive.GetContext() );
-            
-            assert( damageData_.size() > pRoe->GetID() );
+    assert( damageData_.size() > pRoe->GetID() );
 
-            archive.ReadField( "SurfaceAttrition", damageData_[ pRoe->GetID() ].rAttritionSurface_, CheckValueGreaterOrEqual( 0. ) );
-            archive.ReadField( "PH"              , damageData_[ pRoe->GetID() ].rPH_              , CheckValueGreaterOrEqual( 0. ) );
+    xis >> attribute( "attrition-surface", damageData_[ pRoe->GetID() ].rAttritionSurface_ )
+        >> attribute( "ph", damageData_[ pRoe->GetID() ].rPH_ );
 
-            archive.EndSection(); // RegleEngagementTireur
-        }
-        archive.EndList(); // ReglesEngagementTireur
-    }
-    archive.EndSection(); // Cible
-
-    archive.EndSection(); // Tir
+    if( damageData_[ pRoe->GetID() ].rAttritionSurface_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit-fire-effect: rule-of-engagment < 0" );
+    if( damageData_[ pRoe->GetID() ].rPH_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit-fire-effect: ph < 0" );
 }
 
 // -----------------------------------------------------------------------------
@@ -288,9 +311,9 @@ void MIL_PopulationType::InitializeDiaFunctions()
 // Name: MIL_PopulationType::InstanciatePopulation
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MIL_Population& MIL_PopulationType::InstanciatePopulation( uint nID, MIL_Army& army, MIL_InputArchive& archive ) const
+MIL_Population& MIL_PopulationType::InstanciatePopulation( uint nID, MIL_Army& army, xml::xistream& xis ) const
 {
-    return *new MIL_Population( *this, nID, army, archive );
+    return *new MIL_Population( *this, nID, army, xis );
 }
 
 // -----------------------------------------------------------------------------

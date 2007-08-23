@@ -43,8 +43,8 @@ public:
 
         ComposanteInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output, bool bIsAutonomous );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output, bool bIsAutonomous );
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Composantes_Data::ComposanteInfos> ptrComposante_;
@@ -92,8 +92,8 @@ public:
 
         StockLogThresholdInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Enum< E_StockCategory, eNbrStockCategory > eCategory_;
@@ -118,8 +118,9 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( const std::string& strName, MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void ReadStock( xml::xistream& input );
+        void WriteArchive( const std::string& strName, xml::xostream& output );
 
     public:
         T_StockLogThresholdInfos_Vector vLogThresholds_;
@@ -137,8 +138,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         E_UnitPosture  nPosture_;
@@ -148,14 +149,17 @@ public:
         class Cmp : public std::unary_function< PostureInfos* , bool >
         {
         public:
-            Cmp(const E_UnitPosture& val) : val_(val) {}
+             Cmp(const E_UnitPosture& val) : val_(val) {}
+             Cmp(const std::string& val) : val_( E_UnitPosture( -12 ) ), str_(val) {}
             ~Cmp() {}
 
             bool operator()( PostureInfos* tgtnfos ) const
-            { return tgtnfos->nPosture_==val_; }
+            { return tgtnfos->nPosture_==val_
+            || ADN_Tools::ComputePostureScriptName( tgtnfos->nPosture_ ) == str_; }
 
         private:
             E_UnitPosture val_;
+            std::string str_;
         };
     };
 
@@ -177,8 +181,8 @@ public:
 
         PointInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         E_KeyPoint   nTypeTerrain_;  //$$$$
@@ -205,8 +209,12 @@ public:
 
         UnitInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void ReadEquipment( xml::xistream& input );
+        void ReadCrew( xml::xistream& input );
+        void ReadPosture( xml::xistream& input );
+        void ReadPointDistance( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Enum<E_AgentTypePion,eNbrAgentTypePion>            eTypeId_;
@@ -264,8 +272,9 @@ public:
     std::string GetUnitsThatUse( ADN_Models_Data::ModelInfos& model );
 
 private:
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void WriteArchive( MT_OutputArchive_ABC& output );
+    void ReadArchive( xml::xistream& input );
+    void ReadUnit( xml::xistream& input );
+    void WriteArchive( xml::xostream& output );
 
 private:
     int nNextId_;

@@ -60,34 +60,37 @@
 #include "MIL_Installation.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 MIL_RealObjectType::T_ObjectTypeMap     MIL_RealObjectType::objectTypes_;
 MIL_RealObjectTypeFilter*               MIL_RealObjectType::pDangerousObjectTypes_ = 0;
 
-const MIL_RealObjectType& MIL_RealObjectType::fosseAntiChar_            = *new MIL_RealObjectType( "fosse anti char"           , eObjectTypeFosseAntiChar          , EnumObjectType::fosse_anti_char          , &MIL_FosseAntiChar              ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::abattis_                  = *new MIL_RealObjectType( "abattis"                   , eObjectTypeAbattis                , EnumObjectType::abattis                  , &MIL_Abattis                    ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::barricade_                = *new MIL_RealObjectType( "barricade"                 , eObjectTypeBarricade              , EnumObjectType::barricade                , &MIL_Barricade                  ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::bouchonMines_             = *new MIL_RealObjectType( "bouchon mines"             , eObjectTypeBouchonMines           , EnumObjectType::bouchon_mines            , &MIL_BouchonMines               ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::zoneMineeLineaire_        = *new MIL_RealObjectType( "zone minee lineaire"       , eObjectTypeZoneMineeLineaire      , EnumObjectType::zone_minee_lineaire      , &MIL_ZoneMineeLineaire          ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::zoneMineeParDispersion_   = *new MIL_RealObjectType( "zone minee par dispersion" , eObjectTypeZoneMineeParDispersion , EnumObjectType::zone_minee_par_dispersion, &MIL_ZoneMineeParDispersion     ::Create ); 
-const MIL_RealObjectType& MIL_RealObjectType::eboulement_               = *new MIL_RealObjectType( "eboulement"                , eObjectTypeEboulement             , EnumObjectType::eboulement               , &MIL_Eboulement                 ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::destructionRoute_         = *new MIL_RealObjectType( "destruction route"         , eObjectTypeDestructionRoute       , EnumObjectType::destruction_route        , &MIL_DestructionRoute           ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::destructionPont_          = *new MIL_RealObjectType( "destruction pont"          , eObjectTypeDestructionPont        , EnumObjectType::destruction_pont         , &MIL_DestructionPont            ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::pontFlottantContinu_      = *new MIL_RealObjectType( "pont flottant continu"     , eObjectTypePontFlottantContinu    , EnumObjectType::pont_flottant_continu    , &MIL_FloatingBridgeContinuous   ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::pontFlottantDiscontinu_   = *new MIL_RealObjectType( "pont flottant discontinu"  , eObjectTypePontFlottantDiscontinu , EnumObjectType::pont_flottant_discontinu , &MIL_FloatingBridgeDiscontinuous::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::posteTir_                 = *new MIL_RealObjectType( "poste tir"                 , eObjectTypePosteTir               , EnumObjectType::poste_tir                , &MIL_PosteTir                   ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::zoneProtegee_             = *new MIL_RealObjectType( "zone protegee"             , eObjectTypeZoneProtegee           , EnumObjectType::zone_protegee            , &MIL_ZoneProtegee               ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::zoneImplantationCanon_    = *new MIL_RealObjectType( "zone implantation canon"   , eObjectTypeZoneImplantationCanon  , EnumObjectType::zone_implantation_canon  , &MIL_ZoneImplantationCanon      ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::zoneImplantationCOBRA_    = *new MIL_RealObjectType( "zone implantation cobra"   , eObjectTypeZoneImplantationCOBRA  , EnumObjectType::zone_implantation_cobra  , &MIL_ZoneImplantationCOBRA      ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::zoneImplantationLRM_      = *new MIL_RealObjectType( "zone implantation lrm"     , eObjectTypeZoneImplantationLRM    , EnumObjectType::zone_implantation_lrm    , &MIL_ZoneImplantationLRM        ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::siteFranchissement_       = *new MIL_RealObjectType( "site franchissement"       , eObjectTypeSiteFranchissement     , EnumObjectType::site_franchissement      , &MIL_SiteFranchissement         ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::nuageNBC_                 = *new MIL_RealObjectType( "nuage nbc"                 , eObjectTypeNuageNBC               , EnumObjectType::nuage_nbc                , &MIL_NuageNBC                   ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::siteDecontamination_      = *new MIL_RealObjectType( "site decontamination"      , eObjectTypeSiteDecontamination    , EnumObjectType::site_decontamination     , &MIL_SiteDecontamination        ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::plotRavitaillement_       = *new MIL_RealObjectType( "plot ravitaillement"       , eObjectTypePlotRavitaillement     , EnumObjectType::plot_ravitaillement      , &MIL_PlotRavitaillement         ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::zoneBrouillageBrod_       = *new MIL_RealObjectType( "zone brouillage brod"      , eObjectTypeZoneBrouillageBrod     , EnumObjectType::zone_brouillage_brod     , &MIL_ZoneBrouillageBrod         ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::zoneBrouillageBromure_    = *new MIL_RealObjectType( "zone brouillage bromure"   , eObjectTypeZoneBrouillageBromure  , EnumObjectType::zone_brouillage_bromure  , &MIL_ZoneBrouillageBromure      ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::rota_                     = *new MIL_RealObjectType( "rota"                      , eObjectTypeRota                   , EnumObjectType::rota                     , &MIL_Rota                       ::Create );  
-const MIL_RealObjectType& MIL_RealObjectType::zoneNBC_                  = *new MIL_RealObjectType( "zone NBC"                  , eObjectTypeZoneNBC                , EnumObjectType::zone_nbc                 , &MIL_ZoneNBC                    ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::fosseAntiChar_            = *new MIL_RealObjectType( "fosse anti char"           , eObjectTypeFosseAntiChar          , EnumObjectType::fosse_anti_char          , &MIL_FosseAntiChar              ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::abattis_                  = *new MIL_RealObjectType( "abattis"                   , eObjectTypeAbattis                , EnumObjectType::abattis                  , &MIL_Abattis                    ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::barricade_                = *new MIL_RealObjectType( "barricade"                 , eObjectTypeBarricade              , EnumObjectType::barricade                , &MIL_Barricade                  ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::bouchonMines_             = *new MIL_RealObjectType( "bouchon mines"             , eObjectTypeBouchonMines           , EnumObjectType::bouchon_mines            , &MIL_BouchonMines               ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::zoneMineeLineaire_        = *new MIL_RealObjectType( "zone minee lineaire"       , eObjectTypeZoneMineeLineaire      , EnumObjectType::zone_minee_lineaire      , &MIL_ZoneMineeLineaire          ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::zoneMineeParDispersion_   = *new MIL_RealObjectType( "zone minee par dispersion" , eObjectTypeZoneMineeParDispersion , EnumObjectType::zone_minee_par_dispersion, &MIL_ZoneMineeParDispersion     ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::eboulement_               = *new MIL_RealObjectType( "eboulement"                , eObjectTypeEboulement             , EnumObjectType::eboulement               , &MIL_Eboulement                 ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::destructionRoute_         = *new MIL_RealObjectType( "destruction route"         , eObjectTypeDestructionRoute       , EnumObjectType::destruction_route        , &MIL_DestructionRoute           ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::destructionPont_          = *new MIL_RealObjectType( "destruction pont"          , eObjectTypeDestructionPont        , EnumObjectType::destruction_pont         , &MIL_DestructionPont            ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::pontFlottantContinu_      = *new MIL_RealObjectType( "pont flottant continu"     , eObjectTypePontFlottantContinu    , EnumObjectType::pont_flottant_continu    , &MIL_FloatingBridgeContinuous   ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::pontFlottantDiscontinu_   = *new MIL_RealObjectType( "pont flottant discontinu"  , eObjectTypePontFlottantDiscontinu , EnumObjectType::pont_flottant_discontinu , &MIL_FloatingBridgeDiscontinuous::Create );
+const MIL_RealObjectType& MIL_RealObjectType::posteTir_                 = *new MIL_RealObjectType( "poste tir"                 , eObjectTypePosteTir               , EnumObjectType::poste_tir                , &MIL_PosteTir                   ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::zoneProtegee_             = *new MIL_RealObjectType( "zone protegee"             , eObjectTypeZoneProtegee           , EnumObjectType::zone_protegee            , &MIL_ZoneProtegee               ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::zoneImplantationCanon_    = *new MIL_RealObjectType( "zone implantation canon"   , eObjectTypeZoneImplantationCanon  , EnumObjectType::zone_implantation_canon  , &MIL_ZoneImplantationCanon      ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::zoneImplantationCOBRA_    = *new MIL_RealObjectType( "zone implantation cobra"   , eObjectTypeZoneImplantationCOBRA  , EnumObjectType::zone_implantation_cobra  , &MIL_ZoneImplantationCOBRA      ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::zoneImplantationLRM_      = *new MIL_RealObjectType( "zone implantation lrm"     , eObjectTypeZoneImplantationLRM    , EnumObjectType::zone_implantation_lrm    , &MIL_ZoneImplantationLRM        ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::siteFranchissement_       = *new MIL_RealObjectType( "site franchissement"       , eObjectTypeSiteFranchissement     , EnumObjectType::site_franchissement      , &MIL_SiteFranchissement         ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::nuageNBC_                 = *new MIL_RealObjectType( "nuage nbc"                 , eObjectTypeNuageNBC               , EnumObjectType::nuage_nbc                , &MIL_NuageNBC                   ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::siteDecontamination_      = *new MIL_RealObjectType( "site decontamination"      , eObjectTypeSiteDecontamination    , EnumObjectType::site_decontamination     , &MIL_SiteDecontamination        ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::plotRavitaillement_       = *new MIL_RealObjectType( "plot ravitaillement"       , eObjectTypePlotRavitaillement     , EnumObjectType::plot_ravitaillement      , &MIL_PlotRavitaillement         ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::zoneBrouillageBrod_       = *new MIL_RealObjectType( "zone brouillage brod"      , eObjectTypeZoneBrouillageBrod     , EnumObjectType::zone_brouillage_brod     , &MIL_ZoneBrouillageBrod         ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::zoneBrouillageBromure_    = *new MIL_RealObjectType( "zone brouillage bromure"   , eObjectTypeZoneBrouillageBromure  , EnumObjectType::zone_brouillage_bromure  , &MIL_ZoneBrouillageBromure      ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::rota_                     = *new MIL_RealObjectType( "rota"                      , eObjectTypeRota                   , EnumObjectType::rota                     , &MIL_Rota                       ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::zoneNBC_                  = *new MIL_RealObjectType( "zone NBC"                  , eObjectTypeZoneNBC                , EnumObjectType::zone_nbc                 , &MIL_ZoneNBC                    ::Create );
 const MIL_RealObjectType& MIL_RealObjectType::airePoser_                = *new MIL_RealObjectType( "aire poser"                , eObjectTypeAirePoser              , EnumObjectType::aire_poser               , &MIL_AirePoser                  ::Create );
 const MIL_RealObjectType& MIL_RealObjectType::piste_                    = *new MIL_RealObjectType( "piste"                     , eObjectTypePiste                  , EnumObjectType::piste                    , &MIL_Piste                      ::Create );
 const MIL_RealObjectType& MIL_RealObjectType::plateForme_               = *new MIL_RealObjectType( "plateforme"                , eObjectTypePlateForme             , EnumObjectType::plateforme               , &MIL_PlateForme                 ::Create );
@@ -108,11 +111,19 @@ const MIL_RealObjectType& MIL_RealObjectType::installation_             = *new M
 // MANAGER
 // =============================================================================
 
+struct MIL_RealObjectType::LoadingWrapper
+{
+    void ReadObject( xml::xistream& xis )
+    {
+        MIL_RealObjectType::ReadObject( xis );
+    }
+};
+
 // -----------------------------------------------------------------------------
 // Name: MIL_RealObjectType::Initialize
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-void MIL_RealObjectType::Initialize( MIL_InputArchive& archive )
+void MIL_RealObjectType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing real object types" );
 
@@ -157,32 +168,36 @@ void MIL_RealObjectType::Initialize( MIL_InputArchive& archive )
     objectTypes_[ installation_           .GetID() ] = &installation_;
 
     pDangerousObjectTypes_ = new MIL_RealObjectTypeFilter();
+    LoadingWrapper loader;
 
-    archive.Section  ( "Objets" );
-    archive.BeginList( "ObjetsReels" );
+    xis >> start( "objects" )
+            >> start( "real-objects" )
+            >> list( "object", loader, &LoadingWrapper::ReadObject )
+            >> end()
+        >> end();
 
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Objet" );
-
-        std::string strType;
-        archive.ReadAttribute( "type", strType );
-
-        const MIL_RealObjectType* pType = Find( strType );
-        if( !pType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type", archive.GetContext() );
-
-        const_cast< MIL_RealObjectType* >( pType )->Read( archive );
-        
-        archive.EndSection(); // Objet
-    }
     // Post check
     for( CIT_ObjectTypeMap itType = objectTypes_.begin(); itType != objectTypes_.end(); ++itType )
         if( !itType->second->IsInitialized() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Object type '%s' not initialized", itType->second->GetName().c_str() ), archive.GetContext() );
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Object type '%s' not initialized", itType->second->GetName().c_str() ) ); // $$$$ ABL 2007-07-19: error context
 
-    archive.EndList   (); // ObjetsReels
-    archive.EndSection(); // Objets
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObjectType::ReadObject
+// Created: ABL 2007-07-19
+// -----------------------------------------------------------------------------
+void MIL_RealObjectType::ReadObject( xml::xistream& xis )
+{
+    std::string strType;
+    xis >> attribute( "type", strType );
+
+    const MIL_RealObjectType* pType = Find( strType );
+    if( !pType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type" ); // $$$$ ABL 2007-07-19: error context
+
+    const_cast< MIL_RealObjectType* >( pType )->Read( xis );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -209,7 +224,7 @@ MIL_RealObjectType::MIL_RealObjectType( const std::string& strName, E_ObjectType
     , nAsnID_                          ( nAsnID )
     , objectInstanciator_              ( objectInstanciator )
     , strName_                         ( strName )
-    , bCanBeReservedObstacle_          ( false ) 
+    , bCanBeReservedObstacle_          ( false )
     , bCanBeMined_                     ( false )
     , bCanBeBypassed_                  ( false )
     , rAvoidanceDistance_              ( 0. )
@@ -230,149 +245,186 @@ MIL_RealObjectType::MIL_RealObjectType( const std::string& strName, E_ObjectType
     , pIDManager_                      ()
     , rPopulationAttritionPH_          ( 0. )
     , rPopulationAttritionSurface_     ( 0. )
-{   
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RealObjectType::InitializePionAttritionData
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void MIL_RealObjectType::InitializePionAttritionData( MIL_InputArchive& archive )
+void MIL_RealObjectType::InitializePionAttritionData( xml::xistream& xis )
+{
+    xis >> list( "unit-attritions", *this, &MIL_RealObjectType::ListAttrition );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObjectType::ListAttrition
+// Created: ABL 2007-07-19
+// -----------------------------------------------------------------------------
+void MIL_RealObjectType::ListAttrition( xml::xistream& xis )
+{
+    xis >> list( "unit-attrition", *this, &MIL_RealObjectType::ReadAttrition );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObjectType::ReadAttrition
+// Created: ABL 2007-07-19
+// -----------------------------------------------------------------------------
+void MIL_RealObjectType::ReadAttrition( xml::xistream& xis )
 {
     pionAttritions_.resize( PHY_Protection::GetProtections().size() );
-    
-    if ( !archive.Section( "Attritions", MIL_InputArchive::eNothing ) )
-        return;
-
     const PHY_Protection::T_ProtectionMap& protections = PHY_Protection::GetProtections();
-    for ( PHY_Protection::CIT_ProtectionMap itProtection = protections.begin(); itProtection != protections.end(); ++itProtection )
-    {
-        const PHY_Protection& protection = *itProtection->second;
+    std::string protectionType;
 
-        std::stringstream strSectionName;
-        strSectionName << "ProtectionType" << protection.GetName();
+    xis >> attribute( "protection", protectionType );
 
-        archive.Section( strSectionName.str() );
+    PHY_Protection::CIT_ProtectionMap it = protections.find( protectionType );
 
-        assert( pionAttritions_.size() > protection.GetID() );
-        pionAttritions_[ protection.GetID() ] = PHY_AttritionData( archive );
+    if( it == protections.end() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "invalid protection name" );
 
-        archive.EndSection(); // ProtectionTypeXXX
-    }
-    archive.EndSection(); // Attritions
+    const PHY_Protection& protection = *it->second;
+
+    assert( pionAttritions_.size() > protection.GetID() );
+    pionAttritions_[ protection.GetID() ] = PHY_AttritionData( xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RealObjectType::InitializePopulationAttritionData
 // Created: NLD 2006-04-24
 // -----------------------------------------------------------------------------
-void MIL_RealObjectType::InitializePopulationAttritionData( MIL_InputArchive& archive )
+void MIL_RealObjectType::InitializePopulationAttritionData( xml::xistream& xis )
+{
+    xis >> list( "population-attrition", *this, &MIL_RealObjectType::ReadPopulation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObjectType::ReadPopulation
+// Created: ABL 2007-07-19
+// -----------------------------------------------------------------------------
+void MIL_RealObjectType::ReadPopulation( xml::xistream& xis )
 {
     rPopulationAttritionPH_      = 0.;
     rPopulationAttritionSurface_ = 0.;
 
-    if ( !archive.Section( "AttritionPopulation", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> attribute( "surface", rPopulationAttritionSurface_ )
+        >> attribute( "ph", rPopulationAttritionPH_ );
 
-    archive.ReadField( "SurfaceAttrition", rPopulationAttritionSurface_, CheckValueGreater( 0. ) );
-    archive.ReadField( "PH"              , rPopulationAttritionPH_     , CheckValueGreater( 0. ) );
-   
-    archive.EndSection(); // AttritionPopulation
+    if( rPopulationAttritionPH_ <= 0. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population-attrition: ph <= 0" );
+    if( rPopulationAttritionSurface_ <= 0. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population-attrition: surface <= 0" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RealObjectType::InitializeDotation
 // Created: NLD 2004-09-01
 // -----------------------------------------------------------------------------
-void MIL_RealObjectType::InitializeDotation( MIL_InputArchive& archive, const std::string& strSection, const PHY_DotationCategory*& pDotationCategory, uint& nDotationValue ) const
+void MIL_RealObjectType::InitializeDotation( xml::xistream& xis, const std::string& strSection, const PHY_DotationCategory*& pDotationCategory, uint& nDotationValue ) const
 {
-    pDotationCategory = 0;
-    if ( !archive.Section( strSection, MIL_InputArchive::eNothing ) )
-        return;
+    xis >> list( strSection, *this, &MIL_RealObjectType::ReadValorizationOrConstruction, nDotationValue, pDotationCategory );
+}
 
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObjectType::ReadValorizationOrConstruction
+// Created: ABL 2007-07-19
+// -----------------------------------------------------------------------------
+void MIL_RealObjectType::ReadValorizationOrConstruction( xml::xistream& xis, uint& nDotationValue, const PHY_DotationCategory*& pDotationCategory ) const
+{
     std::string strDotationType;
     std::string strDotationCategory;
-    
-    archive.ReadAttribute( "type", strDotationType );
-    archive.ReadAttribute( "categorie", strDotationCategory );
+
+    xis >> attribute( "category", strDotationType )
+        >> attribute( "dotation", strDotationCategory );
 
     const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( strDotationType );
     if( !pDotationType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type" ); // $$$$ ABL 2007-07-19: error context
     pDotationCategory = pDotationType->FindDotationCategory( strDotationCategory );
     if( !pDotationCategory )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation category", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation category" ); // $$$$ ABL 2007-07-19: error context
 
-    archive.ReadAttribute( "valeur", nDotationValue, CheckValueGreaterOrEqual( 0 ) );
-    archive.EndSection(); // strSection
+    xis >> attribute( "count", nDotationValue );
+
+    if( nDotationValue < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dotations: count < 0" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RealObjectType::InitializeDotations
 // Created: NLD 2004-09-01
 // -----------------------------------------------------------------------------
-void MIL_RealObjectType::InitializeDotations( MIL_InputArchive& archive )
+void MIL_RealObjectType::InitializeDotations( xml::xistream& xis )
 {
-    if( !archive.Section( "Dotations", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> list( "dotations", *this, MIL_RealObjectType::ReadInitializeDotation );
+}
 
-    InitializeDotation( archive, "Construction", pDotationCategoryForConstruction_, nNbrDotationForConstruction_ );
-    InitializeDotation( archive, "Valorisation", pDotationCategoryForMining_      , nNbrDotationForMining_       );
-
-    archive.EndSection(); // Dotations
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObjectType::ReadInitializeDotation
+// Created: ABL 2007-07-19
+// -----------------------------------------------------------------------------
+void MIL_RealObjectType::ReadInitializeDotation( xml::xistream& xis )
+{
+    InitializeDotation( xis, "construction", pDotationCategoryForConstruction_, nNbrDotationForConstruction_ );
+    InitializeDotation( xis, "valorization", pDotationCategoryForMining_      , nNbrDotationForMining_       );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RealObjectType::InitializePlacementScores
 // Created: NLD 2004-10-01
 // -----------------------------------------------------------------------------
-void MIL_RealObjectType::InitializePlacementScores( MIL_InputArchive& archive )
+void MIL_RealObjectType::InitializePlacementScores( xml::xistream& xis )
 {
      // Placement scores
-    if( !archive.BeginList( "PlacementScores", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> optional()
+            >> start( "sensible-positions" )
+                >> list( "terrain", *this, MIL_RealObjectType::ReadTerrain )
+            >> end();
+}
 
-    while ( archive.NextListElement() )
-    {
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObjectType::ReadTerrain
+// Created: ABL 2007-07-19
+// -----------------------------------------------------------------------------
+void MIL_RealObjectType::ReadTerrain( xml::xistream& xis )
+{
         std::string strTerrainType;
+        uint nScore = 0;
 
-        archive.Section( "Terrain" );
-        archive.ReadAttribute( "type", strTerrainType );
+        xis >> attribute( "terrain", strTerrainType )
+            >> attribute( "value", nScore );
 
         TerrainData nLandType = MIL_Tools::ConvertLandType( strTerrainType );
         if( nLandType.Area() == 0xFF )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown land type", archive.GetContext() );
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown land type" ); // $$$$ ABL 2007-07-19: error context
 
-        uint nScore = 0;
-        archive.Read( nScore );
         environmentScores_.push_back( std::make_pair( nLandType, nScore ) );
-        archive.EndSection(); // Terrain
-    }
-    archive.EndList();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RealObjectType::InitializeSpeedData
 // Created: NLD 2005-02-17
 // -----------------------------------------------------------------------------
-void MIL_RealObjectType::InitializeSpeedData( MIL_InputArchive& archive )
+void MIL_RealObjectType::InitializeSpeedData( xml::xistream& xis )
 {
-    archive.ReadField( "VitesseParDefaut", rDefaultSpeedWhenNotBypassed_ );
-    if ( rDefaultSpeedWhenNotBypassed_ >= 0. )
+    xis >> attribute( "default-speed", rDefaultSpeedWhenNotBypassed_ )
+        >> attribute( "default-bypassed-speed", rDefaultSpeedWhenBypassed_ );
+
+    if( rDefaultSpeedWhenNotBypassed_ >= 0. )
         rDefaultSpeedWhenNotBypassed_ = MIL_Tools::ConvertSpeedMosToSim( rDefaultSpeedWhenNotBypassed_ );
     else
         rDefaultSpeedWhenNotBypassed_ = std::numeric_limits< MT_Float >::max();
 
-    archive.ReadField( "VitesseParDefautQuandContourne", rDefaultSpeedWhenBypassed_ );
-    if ( rDefaultSpeedWhenBypassed_ >= 0. )
+    if( rDefaultSpeedWhenBypassed_ >= 0. )
         rDefaultSpeedWhenBypassed_ = MIL_Tools::ConvertSpeedMosToSim( rDefaultSpeedWhenBypassed_  );
     else
         rDefaultSpeedWhenBypassed_ = std::numeric_limits< MT_Float >::max();
 
     std::string strSpeedPolicy;
 
-    archive.Section( "ModeImpactSurVitessePion" );
-    archive.ReadAttribute( "type", strSpeedPolicy );
+    xis >> attribute( "unit-speed-impact-mode", strSpeedPolicy );
+
     if( sCaseInsensitiveEqual()( strSpeedPolicy, "AuPlusLent" ) )
         nSpeedPolicy_ = eSpeedPolicy_Slowest;
     else if( sCaseInsensitiveEqual()( strSpeedPolicy, "VitesseMaxObjet" ) )
@@ -380,20 +432,20 @@ void MIL_RealObjectType::InitializeSpeedData( MIL_InputArchive& archive )
     else if( sCaseInsensitiveEqual()( strSpeedPolicy, "VitesseMaxAgent" ) )
     {
         nSpeedPolicy_ = eSpeedPolicy_AgentMaxSpeed;
-        archive.ReadAttribute( "pourcentageVitesseMaxAgent", rSpeedPolicyMaxSpeedAgentFactor_, CheckValueBound( 0., 100. ) );
+        xis >> attribute( "max-unit-percentage-speed", rSpeedPolicyMaxSpeedAgentFactor_ );
+        if( rSpeedPolicyMaxSpeedAgentFactor_ < 0 || rSpeedPolicyMaxSpeedAgentFactor_ > 100 )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "max-unit-percentage-speed not in [0..100]" );
         rSpeedPolicyMaxSpeedAgentFactor_ /= 100.;
     }
-    
-    archive.EndSection(); // ModeImpactSurVitessePion
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RealObjectType::Read
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-void MIL_RealObjectType::Read( MIL_InputArchive& archive )
+void MIL_RealObjectType::Read( xml::xistream& xis )
 {
-    if( bInitialized_ ) 
+    if( bInitialized_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Object types are already initialized" );
 
     pIDManager_ = MIL_IDManager::FindObjectIDManager( strName_ );
@@ -401,34 +453,44 @@ void MIL_RealObjectType::Read( MIL_InputArchive& archive )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Class ID of object '%s' is not initialized", strName_.c_str() ) );
 
     bool bDangerous;
-    archive.ReadField( "Dangereux", bDangerous );
+    xis >> attribute( "dangerous", bDangerous );
     if( bDangerous )
         pDangerousObjectTypes_->Set( *this );
 
     std::string strConsumptionMode;
-    archive.ReadField( "ModeConsommationParDefaut", strConsumptionMode );
+    xis >> attribute( "default-consumption-mode", strConsumptionMode );
     pDefaultConsumptionMode_ = PHY_ConsumptionType::FindConsumptionType( strConsumptionMode );
     if( !pDefaultConsumptionMode_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown consumption type", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown consumption type" ); // $$$$ ABL 2007-07-19: error context
 
-    archive.ReadField( "PeutEtreObstacleDeManoeuvre", bCanBeReservedObstacle_ );
-    archive.ReadField( "PeutEtreValorise"           , bCanBeMined_    );
-    archive.ReadField( "PeutEtreContourne"          , bCanBeBypassed_ );
-    
-    archive.ReadField( "HauteurMaxInteraction", rMaxInteractionHeight_ );
+    xis >> attribute( "can-be-maneuver-obstacle", bCanBeReservedObstacle_ )
+        >> attribute( "can-be-developed", bCanBeMined_ )
+        >> attribute( "can-be-bypassed", bCanBeBypassed_ )
+        >> attribute( "max-interaction-height", rMaxInteractionHeight_ );
 
-    rAvoidanceDistance_ = 100.; // $$$$ AGE 2005-03-30: 
-    archive.ReadField( "DistanceEvitement", rAvoidanceDistance_, MIL_InputArchive::eNothing );
+    rAvoidanceDistance_ = 100.; // $$$$ AGE 2005-03-30:
+    xis >> optional()
+            >> attribute( "avoid-distance", rAvoidanceDistance_ );
     rAvoidanceDistance_ = MIL_Tools::ConvertMeterToSim( rAvoidanceDistance_ );
 
-    archive.ReadField( "NombreAnimateursMax"      , nNbrMaxAnimators_         , CheckValueGreaterOrEqual( 0  ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
-    archive.ReadField( "DensitePopulationSortante", rExitingPopulationDensity_, CheckValueGreaterOrEqual( 0. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
+    nNbrMaxAnimators_ = 0;
+    rExitingPopulationDensity_ = 0;
 
-    InitializeSpeedData              ( archive );
-    InitializePlacementScores        ( archive );
-    InitializePopulationAttritionData( archive );
-    InitializePionAttritionData      ( archive );
-    InitializeDotations              ( archive );
+    xis >> optional()
+            >> attribute( "max-animating-units", nNbrMaxAnimators_ )
+        >> optional()
+            >> attribute( "population-density", rExitingPopulationDensity_ );
+
+    if( nNbrMaxAnimators_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "max-animating-units < 0" );
+    if( rExitingPopulationDensity_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population-density < 0" );
+
+    InitializeSpeedData              ( xis );
+    InitializePlacementScores        ( xis );
+    InitializePopulationAttritionData( xis );
+    InitializePionAttritionData      ( xis );
+    InitializeDotations              ( xis );
 
     bInitialized_ = true;
 }

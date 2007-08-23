@@ -12,6 +12,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_ParameterType_ABC;
 class DEC_KnowledgeResolver_ABC;
 class PHY_ComposanteTypePion;
@@ -104,7 +109,7 @@ public:
 public:
     //! @name Factory
     //@{
-    static       void        Initialize( MIL_InputArchive& archive );
+    static       void        Initialize( xml::xistream& xis );
     static const MIL_Report* Find      ( uint nID );
     //@}
 
@@ -126,7 +131,7 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-     MIL_Report( uint nID, MIL_InputArchive& archive );
+    MIL_Report( uint nID, xml::xistream& xis );
     ~MIL_Report();
     //@}
 
@@ -138,7 +143,6 @@ private:
     bool Send( uint nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const DIA_Parameters& diaParameters ) const;
     //@}
 
-private:
     //! @name Types
     //@{
     typedef std::map< uint, const MIL_Report* > T_ReportMap;
@@ -158,6 +162,14 @@ private:
 private:
     static T_ReportMap      reports_;
     static T_DiaEventVector diaEvents_;
+
+private:
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadReport( xml::xistream& xis );
+    void ReadParameter ( xml::xistream& xis );
+    //@}
 };
 
 #include "MIL_Report.inl"

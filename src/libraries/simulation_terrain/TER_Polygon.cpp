@@ -116,7 +116,7 @@ TER_Polygon::~TER_Polygon()
 //-----------------------------------------------------------------------------
 TER_Polygon& TER_Polygon::operator=( const TER_Polygon& rhs )
 {
-    rhs.pData_->ref();				// beware of r = r
+    rhs.pData_->ref();                // beware of r = r
     Detach();
     pData_ = rhs.pData_;
     return *this;
@@ -245,7 +245,7 @@ bool TER_Polygon::IntersectWithBorder( const MT_Line& line,T_PointSet& res, MT_F
             MT_Line lineTmp( *pLastPos, *pPos );
             if( lineTmp.IsClipped( line ) && lineTmp.Intersect2D( line ,vPosIntersect ) == eDoIntersect )
             {
-				assert( lineTmp.IsInside( vPosIntersect, rPrecision ) );
+                assert( lineTmp.IsInside( vPosIntersect, rPrecision ) );
                 if( !lineTmp.IsInside( line.GetPosStart(), rPrecision ) && !lineTmp.IsInside( line.GetPosEnd(), rPrecision ) ) //$$$ test colinéraité ?
                     res.insert( vPosIntersect );
             }
@@ -301,12 +301,12 @@ bool TER_Polygon::Intersect2D( const MT_Line& line, MT_Float rPrecision ) const
 bool TER_Polygon::Intersect2D( const MT_Line& line, T_PointSet& collisions, MT_Float rPrecision  ) const
 {
     collisions.clear();
-	IntersectWithBorder( line, collisions, rPrecision );
-	if( IsInside( line.GetPosStart(), rPrecision ) )
-		collisions.insert( line.GetPosStart() );
-	if( IsInside( line.GetPosEnd(), rPrecision ) )
-		collisions.insert( line.GetPosEnd() );
-	return !collisions.empty();
+    IntersectWithBorder( line, collisions, rPrecision );
+    if( IsInside( line.GetPosStart(), rPrecision ) )
+        collisions.insert( line.GetPosStart() );
+    if( IsInside( line.GetPosEnd(), rPrecision ) )
+        collisions.insert( line.GetPosEnd() );
+    return !collisions.empty();
 }
 
 // -----------------------------------------------------------------------------

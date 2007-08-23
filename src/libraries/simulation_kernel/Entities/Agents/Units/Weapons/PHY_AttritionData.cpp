@@ -14,6 +14,9 @@
 #include "PHY_AttritionData.h"
 
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 MT_Random PHY_AttritionData::randomGenerator_;
 
@@ -27,29 +30,36 @@ PHY_AttritionData::PHY_AttritionData()
     , rReparableWithoutEvacuationBound_( 0. )
     , rScore_                          ( 0. )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_AttritionData constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_AttritionData::PHY_AttritionData( MIL_InputArchive& archive )
+PHY_AttritionData::PHY_AttritionData( xml::xistream& xis )
 {
     MT_Float rDestroyed;
     MT_Float rReparableWithEvacuation;
     MT_Float rReparableWithoutEvacuation;
 
-    archive.ReadField( "Destruction"            , rDestroyed                  , CheckValueBound( 0., 1. ) );
-    archive.ReadField( "ReparableAvecEvacuation", rReparableWithEvacuation    , CheckValueBound( 0., 1. ) );
-    archive.ReadField( "ReparableSansEvacuation", rReparableWithoutEvacuation , CheckValueBound( 0., 1. ) );
+    xis >> attribute( "destruction", rDestroyed )
+        >> attribute( "repairable-with-evacuation", rReparableWithEvacuation )
+        >> attribute( "repairable-without-evacuation", rReparableWithoutEvacuation );
+
+    if( rDestroyed < 0. || rDestroyed > 1. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rDestroyed not in [0..1]" );
+    if( rReparableWithEvacuation < 0. || rReparableWithEvacuation > 1. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rReparableWithEvacuation not in [0..1]" );
+    if( rReparableWithoutEvacuation < 0. || rReparableWithoutEvacuation > 1. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rReparableWithoutEvacuation not in [0..1]" );
 
     rDestroyedBound_                    = rDestroyed;
     rReparableWithEvacuationBound_      = rDestroyedBound_ + rReparableWithEvacuation;
     rReparableWithoutEvacuationBound_   = rReparableWithEvacuationBound_ + rReparableWithoutEvacuation;
 
     if( rReparableWithoutEvacuationBound_ > 1. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Sum of attrition percentages is out of bound (%f > 1)", rReparableWithoutEvacuationBound_ ), archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Sum of attrition percentages is out of bound (%f > 1)", rReparableWithoutEvacuationBound_ ) ); // $$$$ ABL 2007-07-19: error context
 
     // Score
     rScore_ = rDestroyed + ( rReparableWithEvacuation / 2. ) + ( rReparableWithoutEvacuation / 4. );
@@ -66,7 +76,7 @@ PHY_AttritionData::PHY_AttritionData( const PHY_AttritionData& rhs )
     , rReparableWithoutEvacuationBound_( rhs.rReparableWithoutEvacuationBound_ )
     , rScore_                          ( rhs.rScore_                           )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +85,7 @@ PHY_AttritionData::PHY_AttritionData( const PHY_AttritionData& rhs )
 // -----------------------------------------------------------------------------
 PHY_AttritionData::~PHY_AttritionData()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

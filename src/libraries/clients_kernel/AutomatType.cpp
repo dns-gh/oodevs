@@ -20,29 +20,20 @@ using namespace xml;
 // Name: AutomatType constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-AutomatType::AutomatType( xml::xistream& xis, const Resolver_ABC< AgentType, QString >& agentResolver
+AutomatType::AutomatType( xistream& xis, const Resolver_ABC< AgentType, QString >& agentResolver
                                             , const Resolver_ABC< DecisionalModel, QString >& modelResolver )
+    : pcType_( 0 )
 {
-    int id;
     std::string modelName, name;
-
-    xis >> attribute( "nom", name )
+    xis >> attribute( "name", name )
         >> attribute( "type", type_ )
-        >> content( "MosID", id )
-        >> start( "Automate" )
-            >> content( "ModeleDecisionnel", modelName )
-            >> start( "Constitution" )
-                >> list( "Pion", *this, &AutomatType::ReadAgent, agentResolver )
-            >> end();
-    id_ = id;
+        >> attribute( "id", id_ )
+        >> attribute( "decisional-model", modelName )
+        >> list( "unit", *this, &AutomatType::ReadAgent, agentResolver );
     name_ = name.c_str();
     model_ = & modelResolver.Get( modelName.c_str() );
-    std::string pcType;
-    xis >> end()
-        >> start( "PionPC" )
-            >> attribute( "type", pcType );
-    pcType_ = & agentResolver.Get( pcType.c_str() );
-
+    if( ! pcType_ )
+        throw std::runtime_error( "Automat '" + name + "' has no command-post" );
     symbol_ = pcType_->GetSymbol();
 }
 
@@ -59,9 +50,13 @@ AutomatType::~AutomatType()
 // Name: AutomatType::ReadAgent
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
-void AutomatType::ReadAgent( xml::xistream& xis, const Resolver_ABC< AgentType, QString >& agentResolver )
+void AutomatType::ReadAgent( xistream& xis, const Resolver_ABC< AgentType, QString >& agentResolver )
 {
     units_.push_back( new AutomatComposition( xis, agentResolver ) );
+    bool commandPost = false;
+    xis >> optional() >> attribute( "command-post", commandPost );
+    if( commandPost )
+        pcType_ = & units_.back()->GetType();
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +72,7 @@ Iterator< const AutomatComposition& > AutomatType::CreateIterator() const
 // Name: AutomatType::GetTypePC
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-AgentType* AutomatType::GetTypePC() const
+const AgentType* AutomatType::GetTypePC() const
 {   
     return pcType_;
 }

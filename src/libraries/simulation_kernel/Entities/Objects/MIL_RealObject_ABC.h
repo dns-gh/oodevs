@@ -13,11 +13,15 @@
 #define __MIL_RealObject_ABC_h_
 
 #include "MIL.h"
-
 #include "MIL_Object_ABC.h"
 #include "game_asn/Asn.h"
 #include "MT_Tools/MT_Random.h"
-#include "simulation_terrain/TER_Localisation.h"
+
+namespace xml
+{
+    class xostream;
+    class xistream;
+}
 
 class MIL_PopulationElement_ABC;
 class MIL_RealObjectType;
@@ -58,7 +62,7 @@ public:
     
     //! @name Init
     //@{
-    virtual void                      Initialize( MIL_InputArchive& archive );
+    virtual void                      Initialize( xml::xistream& xis );
     virtual ASN1T_EnumObjectErrorCode Initialize( const ASN1T_MagicActionCreateObject& asn );
     virtual bool                      Initialize( const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint& nCurrentParamIdx ); 
     virtual bool                      Initialize( const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass ); // HLA
@@ -71,7 +75,7 @@ public:
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
 
-    void WriteODB( MT_XXmlOutputArchive& archive ) const;
+    void WriteODB( xml::xostream& xos ) const;
     //@}
 
     //! @name Operations
@@ -201,7 +205,7 @@ protected:
 
     //! @name Network
     //@{
-    virtual void WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const;
+            virtual void WriteSpecificAttributes( xml::xostream& xos ) const;
     virtual void WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg );
     virtual void WriteSpecificAttributes( NET_ASN_MsgObjectUpdate&   asnMsg );
             void NotifyAttributeUpdated ( E_AttributeUpdate nAttrToUpdate );

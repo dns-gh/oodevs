@@ -23,6 +23,11 @@
 
 #include "MIL_MOSIDManager.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_Config;
 
 // =============================================================================
@@ -60,6 +65,12 @@ private:
      MIL_IDManager( const MIL_IDManager& );            //!< Copy constructor
      MIL_IDManager& operator=( const MIL_IDManager& ); //!< Assignement operator
     ~MIL_IDManager();
+    //@}
+
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadClasse( xml::xistream& xis );
     //@}
 
 public:

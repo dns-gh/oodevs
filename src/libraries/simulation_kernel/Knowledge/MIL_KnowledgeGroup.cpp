@@ -22,6 +22,9 @@
 
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 std::set< uint > MIL_KnowledgeGroup::ids_;
 
@@ -31,7 +34,7 @@ BOOST_CLASS_EXPORT_GUID( MIL_KnowledgeGroup, "MIL_KnowledgeGroup" )
 // Name: MIL_KnowledgeGroup constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint nID, MIL_Army& army, MIL_InputArchive& /*archive*/ )
+MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint nID, MIL_Army& army )
     : pType_               ( &type )
     , nID_                 ( nID )
     , pArmy_               ( &army )
@@ -108,13 +111,13 @@ void MIL_KnowledgeGroup::save( MIL_CheckPointOutArchive& file, const uint ) cons
 // Name: MIL_KnowledgeGroup::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::WriteODB( MT_XXmlOutputArchive& archive ) const
+void MIL_KnowledgeGroup::WriteODB( xml::xostream& xos ) const
 {
     assert( pType_ );
-    archive.Section( "knowledge-group" );
-    archive.WriteAttribute( "id", nID_ );
-    archive.WriteAttribute( "type", pType_->GetName() );
-    archive.EndSection(); // knowledge-group
+    xos << start( "knowledge-group" )
+            << attribute( "id", nID_ )
+            << attribute( "type", pType_->GetName() )
+        << end();
 }
 
 // =============================================================================

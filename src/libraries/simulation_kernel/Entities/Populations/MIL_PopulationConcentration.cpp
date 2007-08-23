@@ -25,6 +25,9 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 BOOST_CLASS_EXPORT_GUID( MIL_PopulationConcentration, "MIL_PopulationConcentration" )
 
@@ -32,7 +35,7 @@ BOOST_CLASS_EXPORT_GUID( MIL_PopulationConcentration, "MIL_PopulationConcentrati
 // Name: MIL_PopulationConcentration constructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, MIL_InputArchive& archive )
+MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis )
     : MIL_PopulationElement_ABC      ( population, MIL_IDManager::populationConcentrations_.GetFreeSimID() )
     , TER_PopulationConcentration_ABC()
     , position_                      ()
@@ -44,10 +47,13 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 {
     // Position
     std::string strPosition;
-    archive.ReadAttribute( "position", strPosition );
+    xis >> attribute( "position", strPosition );
     MIL_Tools::ConvertCoordMosToSim( strPosition, position_ );
     MT_Float rNbrHumans;
-    archive.ReadAttribute( "humans", rNbrHumans, CheckValueGreater( 0. ) );
+    xis >> attribute( "humans", rNbrHumans );
+    if( rNbrHumans <= 0. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rNbrHumans is not greater than 0." );
+
     PushHumans( T_Humans( rNbrHumans, 0. ) );
         
     UpdateLocation();

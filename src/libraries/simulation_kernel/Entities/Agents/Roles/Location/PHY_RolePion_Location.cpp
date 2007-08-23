@@ -159,7 +159,7 @@ void PHY_RolePion_Location::SetHeight( MT_Float rHeight )
         return;
 
     bHeightHasChanged_ = true;
-	rHeight_           = rHeight;
+    rHeight_           = rHeight;
 }
 
 //-----------------------------------------------------------------------------
@@ -174,7 +174,7 @@ void PHY_RolePion_Location::SetPosition( const MT_Vector2D& vPosition )
         return;
 
     bPositionHasChanged_ = true;
-	vPosition_           = vPosition;
+    vPosition_           = vPosition;
     TER_World::GetWorld().ClipPointInsideWorld( vPosition_ );
 
     UpdatePatch();
@@ -192,7 +192,7 @@ void PHY_RolePion_Location::SetDirection( const MT_Vector2D& vDirection )
 
     assert( MT_IsZero( vDirection.SquareMagnitude() - 1. ) );
     bDirectionHasChanged_ = true;
-	vDirection_           = vDirection;
+    vDirection_           = vDirection;
 }
 
 // -----------------------------------------------------------------------------

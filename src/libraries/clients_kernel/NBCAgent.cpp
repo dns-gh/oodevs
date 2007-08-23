@@ -20,11 +20,9 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 NBCAgent::NBCAgent( xistream& input )
 {
-    int id;
     std::string name;
-    input >> attribute( "nom", name )
-          >> content( "MosID", id );
-    id_ = id;
+    input >> attribute( "name", name )
+          >> attribute( "id", id_ );
     name_ = name.c_str();
 }
 

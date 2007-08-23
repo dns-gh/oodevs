@@ -12,10 +12,9 @@
 
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
-#include "ADN_XmlInput_Helper.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
-
+#include "ADN_DataException.h"
 
 // -----------------------------------------------------------------------------
 // Name: WoundInfo::WoundInfo
@@ -23,38 +22,35 @@
 // -----------------------------------------------------------------------------
 ADN_Health_Data::WoundInfo::WoundInfo()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: WoundInfo::ReadArchive
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-void ADN_Health_Data::WoundInfo::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Health_Data::WoundInfo::ReadArchive( xml::xistream& input )
 {
-    input.Section( ADN_Tr::ConvertFromDoctorSkills( nType_) );
-    input.ReadAttribute( "esperanceVie", lifeExpectancy_ );
-    input.ReadAttribute( "tempsSoin", treatTime_ );
-    input.ReadAttribute( "tempsRepos", restingTime_ );
-    input.ReadAttribute( "pourcentage", rPercentage_ );
-    input.EndSection();
+    input >> xml::attribute( "life-expectancy", lifeExpectancy_ )
+          >> xml::attribute( "caring-time",     treatTime_ )
+          >> xml::attribute( "resting-time",    restingTime_ )
+          >> xml::attribute( "percentage",      rPercentage_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: WoundInfo::WriteArchive
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-void ADN_Health_Data::WoundInfo::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Health_Data::WoundInfo::WriteArchive( xml::xostream& output )
 {
-    output.Section( ADN_Tr::ConvertFromDoctorSkills( nType_) );
-    output.WriteAttribute( "esperanceVie", lifeExpectancy_.GetData() ) ;
-    output.WriteAttribute( "tempsSoin", treatTime_.GetData() ) ;
-    output.WriteAttribute( "tempsRepos", restingTime_.GetData() ) ;
-    output.WriteAttribute( "pourcentage", rPercentage_.GetData() );
-    output.EndSection();
+    output << xml::start( "injury" )
+             << xml::attribute( "category", ADN_Tr::ConvertFromDoctorSkills( nType_ ) )
+             << xml::attribute( "life-expectancy", lifeExpectancy_ )
+             << xml::attribute( "caring-time",     treatTime_ )
+             << xml::attribute( "resting-time",    restingTime_ )
+             << xml::attribute( "percentage",      rPercentage_ )
+           << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Health_Data constructor
@@ -67,15 +63,14 @@ ADN_Health_Data::ADN_Health_Data()
         wounds[n].nType_ = (E_DoctorSkills)n;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Health_Data destructor
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
 ADN_Health_Data::~ADN_Health_Data()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Health_Data::FilesNeeded
@@ -86,121 +81,117 @@ void ADN_Health_Data::FilesNeeded( T_StringList& vFiles ) const
     vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szHealth_.GetData() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Health_Data::Reset
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
 void ADN_Health_Data::Reset()
 {
+    // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Health_Data::ReadInjury
+// Created: AGE 2007-08-16
+// -----------------------------------------------------------------------------
+void ADN_Health_Data::ReadInjury( xml::xistream& input )
+{
+    std::string category;
+    input >> xml::attribute( "category", category );
+    if( category == "mental" )
+    {
+        input >> xml::attribute( "caring-time", shockTreatTime_ )
+              >> xml::attribute( "resting-time", shockRestingTime_ )
+              >> xml::attribute( "percentage", rShockPercentage_ );
+    }
+    else if( category == "contaminated" )
+    {
+        input >> xml::attribute( "caring-time", contaminationTreatTime_ )
+              >> xml::attribute( "resting-time", contaminationRestingTime_ );
+    }
+    else
+    {
+        E_DoctorSkills skill = ADN_Tr::ConvertToDoctorSkills( category );
+        if( skill == E_DoctorSkills( -1 ) )
+            throw ADN_DataException( "ADN_Health_Data", "Unknown injury category " + category );
+        wounds[skill].ReadArchive( input );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Health_Data::ReadResourceAvailability
+// Created: AGE 2007-08-16
+// -----------------------------------------------------------------------------
+void ADN_Health_Data::ReadResourceAvailability( xml::xistream& input )
+{
+    std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
+    pNew->ReadArchive( input );
+    const std::string resource = xml::attribute< std::string >( input, "resource" );
+    if( resource == "relieve" )
+        vChangeOverWarnings_.AddItem( pNew.release() );
+    else if( resource == "collection" )
+        vCollectingWarnings_.AddItem( pNew.release() );
+    else if( resource == "doctor" )
+        vDoctorsWarnings_.AddItem( pNew.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Health_Data::ReadArchive
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-void ADN_Health_Data::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Health_Data::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Sante" );
-    input.ReadField( "TempsDiagnostique", diagnosticTime_ );
-    input.ReadField( "TempsTri", sortingTime_ );
+    input >> xml::start( "health" )
+            >> xml::start( "times" )
+                >> xml::attribute( "diagnosis-time", diagnosticTime_ )
+                >> xml::attribute( "sorting-time", sortingTime_ )
+            >> xml::end()
+            >> xml::start( "injuries" )
+                >> xml::list( "injury", *this, &ADN_Health_Data::ReadInjury )
+            >> xml::end()
+            >> xml::start( "resource-availability-alerts" )
+                >> xml::list( "resource-availability-alert", *this, &ADN_Health_Data::ReadResourceAvailability )
+            >> xml::end()
+          >> xml::end();
 
-    input.Section( "CategoriesBlesse" );
-    for( int n = 0; n < eNbrDoctorSkills; ++n )
-        wounds[n].ReadArchive( input );
-    input.EndSection(); // CategoriesBlesse
-
-    input.Section( "ReacMental" );
-    input.ReadAttribute( "tempsSoin", shockTreatTime_ );
-    input.ReadAttribute( "tempsRepos", shockRestingTime_ );
-    input.ReadAttribute( "pourcentage", rShockPercentage_ );
-    input.EndSection(); // ReacMental 
-
-    input.Section( "Contamines" );
-    input.ReadAttribute( "tempsSoin", contaminationTreatTime_ );
-    input.ReadAttribute( "tempsRepos", contaminationRestingTime_ );
-    input.EndSection(); // Contamines 
-
-    input.Section( "AlertesDisponibiliteMoyens" );
-        input.BeginList( "AlertesDisponibiliteMoyensReleve" );
-        while( input.NextListElement() )
-        {
-            std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
-            pNew->ReadArchive( input, "AlerteDisponibiliteMoyensReleve" );
-            vChangeOverWarnings_.AddItem( pNew.release() );
-        }
-        vChangeOverWarnings_.AddItem( 0 );
-        input.EndList();
-
-        input.BeginList( "AlertesDisponibiliteMoyensRamassage" );
-        while( input.NextListElement() )
-        {
-            std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
-            pNew->ReadArchive( input, "AlerteDisponibiliteMoyensRamassage" );
-            vCollectingWarnings_.AddItem( pNew.release() );
-        }
-        vCollectingWarnings_.AddItem( 0 );
-        input.EndList();
-
-        input.BeginList( "AlertesDisponibiliteMedecins" );
-        while( input.NextListElement() )
-        {
-            std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
-            pNew->ReadArchive( input, "AlerteDisponibiliteMedecins" );
-            vDoctorsWarnings_.AddItem( pNew.release() );
-        }
-        vDoctorsWarnings_.AddItem( 0 );
-        input.EndList();
-
-    input.EndSection();
-
-    input.EndSection(); // Sante
+    vChangeOverWarnings_.AddItem( 0 );
+    vCollectingWarnings_.AddItem( 0 );
+    vDoctorsWarnings_.AddItem( 0 );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Health_Data::WriteArchive
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-void ADN_Health_Data::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Health_Data::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Sante" );
-    output.WriteField( "TempsDiagnostique", diagnosticTime_.GetData() );
-    output.WriteField( "TempsTri", sortingTime_.GetData() );
-
-    output.Section( "CategoriesBlesse" );
+    output << xml::start( "health" )
+            << xml::start( "times" )
+                << xml::attribute( "diagnosis-time", diagnosticTime_ )
+                << xml::attribute( "sorting-time", sortingTime_ )
+            << xml::end()
+            << xml::start( "injuries" );
     for( int n = 0; n < eNbrDoctorSkills; ++n )
         wounds[n].WriteArchive( output );
-    output.EndSection(); // CategoriesBlesse
-
-    output.Section( "ReacMental" );
-    output.WriteAttribute( "tempsSoin", shockTreatTime_.GetData() );
-    output.WriteAttribute( "tempsRepos", shockRestingTime_.GetData() );
-    output.WriteAttribute( "pourcentage", rShockPercentage_.GetData() );
-    output.EndSection(); // ReacMental 
-
-    output.Section( "Contamines" );
-    output.WriteAttribute( "tempsSoin", contaminationTreatTime_.GetData() );
-    output.WriteAttribute( "tempsRepos", contaminationRestingTime_.GetData() );
-    output.EndSection(); // Contamines 
-
-    output.Section( "AlertesDisponibiliteMoyens" );
-        output.BeginList( "AlertesDisponibiliteMoyensReleve", vChangeOverWarnings_.size() );
-        for( IT_AvailabilityWarning_Vector it = vChangeOverWarnings_.begin(); it != vChangeOverWarnings_.end(); ++it )
-            (*it)->WriteArchive( output, "AlerteDisponibiliteMoyensReleve" );
-        output.EndList();
-
-        output.BeginList( "AlertesDisponibiliteMoyensRamassage", vCollectingWarnings_.size() );
-        for( IT_AvailabilityWarning_Vector it = vCollectingWarnings_.begin(); it != vCollectingWarnings_.end(); ++it )
-            (*it)->WriteArchive( output, "AlerteDisponibiliteMoyensRamassage" );
-        output.EndList();
-
-        output.BeginList( "AlertesDisponibiliteMedecins", vDoctorsWarnings_.size() );
-        for( IT_AvailabilityWarning_Vector it = vDoctorsWarnings_.begin(); it != vDoctorsWarnings_.end(); ++it )
-            (*it)->WriteArchive( output, "AlerteDisponibiliteMedecins" );
-        output.EndList();
-    output.EndSection();
-
-    output.EndSection(); // Sante
+    output      << xml::start( "injury" )
+                    << xml::attribute( "category", "mental" )
+                    << xml::attribute( "caring-time", shockTreatTime_ )
+                    << xml::attribute( "resting-time", shockRestingTime_ )
+                    << xml::attribute( "percentage", rShockPercentage_ )
+                << xml::end()
+                << xml::start( "injury" )
+                    << xml::attribute( "category", "contaminated" )
+                    << xml::attribute( "caring-time", contaminationTreatTime_ )
+                    << xml::attribute( "resting-time", contaminationRestingTime_ )
+                << xml::end()
+            << xml::end()
+            << xml::start( "resource-availability-alerts" );
+    for( IT_AvailabilityWarning_Vector it = vChangeOverWarnings_.begin(); it != vChangeOverWarnings_.end(); ++it )
+        (*it)->WriteArchive( output, "resource", "relieve" );
+    for( IT_AvailabilityWarning_Vector it = vCollectingWarnings_.begin(); it != vCollectingWarnings_.end(); ++it )
+        (*it)->WriteArchive( output, "resource", "collection" );
+    for( IT_AvailabilityWarning_Vector it = vDoctorsWarnings_.begin(); it != vDoctorsWarnings_.end(); ++it )
+        (*it)->WriteArchive( output, "resource", "doctor" );
+    output  << xml::end()
+          << xml::end();
 }

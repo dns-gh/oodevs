@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_DotationCategory;
 class PHY_DotationCategory_IndirectFire_ABC;
 
@@ -55,7 +60,7 @@ public:
 
     //! @name Operations
     //@{
-    PHY_DotationCategory_IndirectFire_ABC& InstanciateDotationCategory( const PHY_DotationCategory& dotationCategory, MIL_InputArchive& archive ) const;
+    PHY_DotationCategory_IndirectFire_ABC& InstanciateDotationCategory( const PHY_DotationCategory& dotationCategory, xml::xistream& xis ) const;
     bool                                    operator==                ( const PHY_IndirectFireDotationClass& rhs ) const;
     bool                                    operator!=                ( const PHY_IndirectFireDotationClass& rhs ) const;
     //@}
@@ -66,7 +71,7 @@ private:
     typedef std::map< int, const PHY_IndirectFireDotationClass* > T_TypeMap;
     typedef T_TypeMap::const_iterator                             CIT_TypeMap;
 
-    typedef PHY_DotationCategory_IndirectFire_ABC& (*T_TypeInstancier)( const PHY_IndirectFireDotationClass&, const PHY_DotationCategory& dotationCategory, MIL_InputArchive& );
+    typedef PHY_DotationCategory_IndirectFire_ABC& (*T_TypeInstancier)( const PHY_IndirectFireDotationClass&, const PHY_DotationCategory& dotationCategory, xml::xistream& );
 
     enum E_Type
     {

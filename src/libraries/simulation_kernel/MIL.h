@@ -99,13 +99,6 @@ struct DestroyRecycledObject
     }
 };
 
-// archive logger
-#include "MT_Tools/MT_InputArchive_Logger.h"
-
-// archive logger XML
-class MT_XXmlInputArchive;
-typedef MT_InputArchive_Logger< MT_XXmlInputArchive > MIL_InputArchive;
-
 #pragma warning( disable: 4355 )
 
 #endif // __MIL_h_

@@ -17,6 +17,11 @@
 #include "Entities/Agents/Units/Weapons/PHY_AttritionData.h"
 #include "game_asn/Asn.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_DotationCategory;
 class MIL_RealObject_ABC;
 class MIL_Army;
@@ -66,11 +71,11 @@ public:
     static const MIL_RealObjectType& zoneBrouillageBromure_;
     static const MIL_RealObjectType& rota_;    
     static const MIL_RealObjectType& zoneNBC_;
-	static const MIL_RealObjectType& airePoser_;
-	static const MIL_RealObjectType& piste_;
-	static const MIL_RealObjectType& plateForme_;
-	static const MIL_RealObjectType& zoneMobiliteAmelioree_;
-	static const MIL_RealObjectType& zonePoserHelicoptere_;
+    static const MIL_RealObjectType& airePoser_;
+    static const MIL_RealObjectType& piste_;
+    static const MIL_RealObjectType& plateForme_;
+    static const MIL_RealObjectType& zoneMobiliteAmelioree_;
+    static const MIL_RealObjectType& zonePoserHelicoptere_;
     static const MIL_RealObjectType& aireLogistique_;
     static const MIL_RealObjectType& campPrisonniers_;
     static const MIL_RealObjectType& campRefugies_;
@@ -86,7 +91,7 @@ public:
 public:
     //! @name Manager
     //@{
-    static void Initialize       ( MIL_InputArchive& archive );
+    static void Initialize       ( xml::xistream& xis );
     static void Terminate        ();
 
     static const T_ObjectTypeMap&    GetObjectTypes();
@@ -163,11 +168,11 @@ protected:
         eObjectTypeRota                     = 20,
         eObjectTypeZoneNBC                  = 21,
         eObjectTypeZoneBrouillageBromure    = 22,
-		eObjectTypeAirePoser				= 23,
-		eObjectTypePiste					= 24,
-		eObjectTypePlateForme				= 25,
-		eObjectTypeZoneMobiliteAmelioree	= 26,
-		eObjectTypeZonePoserHelicoptere     = 27,
+        eObjectTypeAirePoser                = 23,
+        eObjectTypePiste                    = 24,
+        eObjectTypePlateForme                = 25,
+        eObjectTypeZoneMobiliteAmelioree    = 26,
+        eObjectTypeZonePoserHelicoptere     = 27,
         eObjectTypeAireLogistique           = 28,
         eObjectTypeItineraireLogistique     = 29,
         eObjectTypeCampPrisonniers          = 30,
@@ -197,7 +202,7 @@ protected:
 
     //! @name Init
     //@{
-    virtual void Read( MIL_InputArchive& archive );
+    virtual void Read( xml::xistream& xis );
     //@}
 
 private:
@@ -214,12 +219,24 @@ private:
     //! @name Init tools
     //@{
     bool IsInitialized                    () const;
-    void InitializeSpeedData              ( MIL_InputArchive& archive );
-    void InitializePlacementScores        ( MIL_InputArchive& archive );
-    void InitializePionAttritionData      ( MIL_InputArchive& archive );
-    void InitializePopulationAttritionData( MIL_InputArchive& archive );
-    void InitializeDotations              ( MIL_InputArchive& archive );
-    void InitializeDotation               ( MIL_InputArchive& archive, const std::string& strSection, const PHY_DotationCategory*& pDotationCategory, uint& rDotationValue ) const;
+    void InitializeSpeedData              ( xml::xistream& xis );
+    void InitializePlacementScores        ( xml::xistream& xis );
+    void InitializePionAttritionData      ( xml::xistream& xis );
+    void InitializePopulationAttritionData( xml::xistream& xis );
+    void InitializeDotations              ( xml::xistream& xis );
+    void InitializeDotation               ( xml::xistream& xis, const std::string& strSection, const PHY_DotationCategory*& pDotationCategory, uint& rDotationValue ) const;
+    //@}
+
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadObject                    ( xml::xistream& xis );
+    void ListAttrition                 ( xml::xistream& xis );
+    void ReadAttrition                 ( xml::xistream& xis );
+    void ReadPopulation                ( xml::xistream& xis );
+    void ReadValorizationOrConstruction( xml::xistream& xis, uint& nDotationValue, const PHY_DotationCategory*& pDotationCategory ) const;
+    void ReadInitializeDotation        ( xml::xistream& xis );
+    void ReadTerrain                   ( xml::xistream& xis );
     //@}
 
 private:

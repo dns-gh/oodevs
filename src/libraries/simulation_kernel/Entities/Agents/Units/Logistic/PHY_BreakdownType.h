@@ -16,6 +16,11 @@
 
 #include "MT_Tools/MT_GaussianRandom.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_MaintenanceLevel;
 class PHY_DotationCategory;
 
@@ -37,7 +42,7 @@ public:
 public:
     //! @name Manager
     //@{
-    static void                     Initialize       ( MIL_InputArchive& archive );
+    static void                     Initialize       ( xml::xistream& xis );
     static void                     Terminate        ();
     static uint                     GetDiagnosticTime();
     static const PHY_BreakdownType* Find             ( const std::string& strName );
@@ -69,9 +74,16 @@ private:
     typedef std::map< std::string, const PHY_BreakdownType*, sCaseInsensitiveLess > T_BreakdownMap;
     typedef T_BreakdownMap::const_iterator                                          CIT_BreakdownMap;
     //@}
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadCategory ( xml::xistream& xis );
+    static void ReadBreakdown( xml::xistream& xis, const PHY_MaintenanceLevel& maintenanceLevel );
+    void ReadPart            ( xml::xistream& xis );
 
+    //@}
 private:
-     PHY_BreakdownType( const std::string& strName, const PHY_MaintenanceLevel& maintenanceLevel, E_Type nType, MIL_InputArchive& archive );
+     PHY_BreakdownType( const std::string& strName, const PHY_MaintenanceLevel& maintenanceLevel, E_Type nType, xml::xistream& xis );
     ~PHY_BreakdownType();
 
     //! @name Tools

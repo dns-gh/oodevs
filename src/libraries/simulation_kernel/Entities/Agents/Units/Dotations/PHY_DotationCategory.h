@@ -16,6 +16,11 @@
 
 #include "Entities/Agents/Units/Weapons/PHY_AttritionData.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_DotationType;
 class PHY_DotationNature;
 class PHY_DotationCategory_IndirectFire_ABC;
@@ -34,7 +39,7 @@ class PHY_DotationCategory
     MT_COPYNOTALLOWED( PHY_DotationCategory )
 
 public:
-     PHY_DotationCategory( const PHY_DotationType& type, const std::string& strName, MIL_InputArchive& archive );
+     PHY_DotationCategory( const PHY_DotationType& type, const std::string& strName, xml::xistream& xis );
     ~PHY_DotationCategory();
 
     //! @name Accessors
@@ -81,10 +86,16 @@ private:
 private:
     //! @name Init
     //@{
-    void InitializeAttritions      ( MIL_InputArchive& archive );
-    void InitializeIndirectFireData( MIL_InputArchive& archive );
-    void InitializePackagingData   ( MIL_InputArchive& archive );
-    void InitializeLogisticType    ( MIL_InputArchive& archive );
+    void InitializeAttritions      ( xml::xistream& xis );
+    void InitializeIndirectFireData( xml::xistream& xis );
+    void InitializePackagingData   ( xml::xistream& xis );
+    void InitializeLogisticType    ( xml::xistream& xis );
+    //@}
+    //! @name Helpers
+    //@{
+    void ListAttrition   ( xml::xistream& xis );
+    void ReadAttrition   ( xml::xistream& xis );
+    void ReadIndirectFire( xml::xistream& xis );
     //@}
 
 private:

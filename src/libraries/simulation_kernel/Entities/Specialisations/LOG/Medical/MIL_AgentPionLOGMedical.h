@@ -16,6 +16,11 @@
 
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 // @class  MIL_AgentPionType
 // Created: JVT 2004-08-03
@@ -25,7 +30,7 @@ class MIL_AgentPionLOGMedical : public MIL_AgentPionLOG_ABC
     MT_COPYNOTALLOWED( MIL_AgentPionLOGMedical )
 
 public:
-             MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive );
+    MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis );
              MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition );
              MIL_AgentPionLOGMedical();
     virtual ~MIL_AgentPionLOGMedical();

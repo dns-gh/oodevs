@@ -16,6 +16,11 @@
 
 #include "MIL_VirtualObjectType.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_Volume;
 
 // =============================================================================
@@ -38,7 +43,11 @@ public:
 private:
     //! @name Init tools
     //@{
-    virtual void Read( MIL_InputArchive& archive );
+    virtual void Read( xml::xistream& xis );
+    //@}
+    //! @name Helpers
+    //@{
+    void ReadPercentage( xml::xistream& xis );
     //@}
 
 private:

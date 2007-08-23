@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Maintenance>
-
-  <RegimesTravail>
-    <Regime1 dureeTravail="8"/>
-    <Regime2 delaiAvantAvertissement="48h" dureeTravail="12"/>
-    <Regime3 delaiAvantAvertissement="36h" dureeTravail="16"/>
-    <Regime4 delaiAvantAvertissement="24h" dureeTravail="24"/>
-  </RegimesTravail>
-
-  <AlertesDisponibiliteMoyens>
-    <AlertesDisponibiliteReparateurs>
-      <AlerteDisponibiliteReparateurs pourcentageMoyensDisponibles="1"/>
-    </AlertesDisponibiliteReparateurs>
-    <AlertesDisponibiliteRemorqueurs>
-      <AlerteDisponibiliteRemorqueurs pourcentageMoyensDisponibles="25"/>
-      <AlerteDisponibiliteRemorqueurs pourcentageMoyensDisponibles="75"/>
-    </AlertesDisponibiliteRemorqueurs>
-  </AlertesDisponibiliteMoyens>
-
-</Maintenance>
+<maintenance>
+  <working-schemes>
+    <working-scheme type="Regime1" working-time="8"/>
+    <working-scheme time-before-warning="48h" type="Regime2" working-time="12"/>
+    <working-scheme time-before-warning="36h" type="Regime3" working-time="16"/>
+    <working-scheme time-before-warning="24h" type="Regime4" working-time="24"/>
+  </working-schemes>
+  <resource-availability-alerts>
+    <resource-availability-alert availability-threshold="1" resource="AlerteDisponibiliteReparateurs"/>
+    <resource-availability-alert availability-threshold="25" resource="AlerteDisponibiliteRemorqueurs"/>
+    <resource-availability-alert availability-threshold="75" resource="AlerteDisponibiliteRemorqueurs"/>
+  </resource-availability-alerts>
+</maintenance>

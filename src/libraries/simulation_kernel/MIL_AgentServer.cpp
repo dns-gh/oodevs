@@ -31,6 +31,9 @@
 
 #include "tools/thread/Thread.h"
 #include "tools/win32/ProcessMonitor.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
 
@@ -156,17 +159,10 @@ void MIL_AgentServer::ReadStaticData()
 void MIL_AgentServer::ReadTerData()
 {
     MT_LOG_INFO_MSG( "Initializing terrain" );
-
-    std::string strTerFile = config_.GetTerrainFile();
-    MIL_InputArchive terArchive;
-    terArchive.Open( strTerFile );
-    
-    config_.AddFileToCRC( strTerFile );
-
+    config_.AddFileToCRC( config_.GetTerrainFile() );
     MT_LOG_INFO_MSG( MT_FormatString( "Terrain: %s", config_.GetTerrainFile().c_str() ) );
     TER_World::Initialize( config_.GetTerrainFile() );
     MT_LOG_INFO_MSG( MT_FormatString( "Terrain size (w x h): %.2fkm x %.2fkm", TER_World::GetWorld().GetWidth() / 1000., TER_World::GetWorld().GetHeight()  / 1000. ) );
-    terArchive.Close();
 }
 
 // -----------------------------------------------------------------------------
@@ -389,10 +385,10 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
 // Name: MIL_AgentServer::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void MIL_AgentServer::WriteODB( MT_XXmlOutputArchive& archive ) const
+void MIL_AgentServer::WriteODB( xml::xostream& xos ) const
 {
     assert( pEntityManager_ );
-    pEntityManager_->WriteODB( archive );
+    pEntityManager_->WriteODB( xos );
 }
 
 // -----------------------------------------------------------------------------

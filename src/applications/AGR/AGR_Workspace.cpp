@@ -33,7 +33,7 @@ AGR_Workspace::~AGR_Workspace()
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Workspace::Read
-/** @param  strFile 
+/** @param  strFile
 */
 // Created: AGN 2004-04-22
 // -----------------------------------------------------------------------------
@@ -41,113 +41,87 @@ void AGR_Workspace::Read( const std::string& strFile )
 {
     std::string strModuleName;
     MT_ExtractBaseName( strFile, strModuleName );
-
     try
     {
-        MT_XXmlInputArchive input;
-        input.Open( "./agr_tmp/" + strFile );
-        input.EnableExceptions( true );
-        Read( input, strModuleName + ":" );
+        xml::xifstream xis( "./agr_tmp/" + strFile );
+        Read( xis );
     }
-    catch( MT_Exception& e )
+    catch( std::exception& e )
     {
-        std::stringstream strMsg;
-        strMsg << e.GetWholeMessage();
-
-        MessageBox( 0, strMsg.str().c_str(), "ASN Class Generator - Error while parsing files", MB_ICONERROR | MB_OK );
+        MessageBox( 0, e.what(), "ASN Class Generator - Error while parsing files", MB_ICONERROR | MB_OK );
     }
 }
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Workspace::Read
-/** @param  input 
-*/
 // Created: AGN 2004-04-22
 // -----------------------------------------------------------------------------
-void AGR_Workspace::Read( MT_XXmlInputArchive& input, const std::string& strModuleName )
+void AGR_Workspace::Read( xml::xistream& xis )
 {
-    input.BeginList( "xsd:schema" );
+    xis >> xml::start( "xsd:schema" )
+            >> xml::list( *this, &AGR_Workspace::ReadElement )
+        >> xml::end();
+}
 
-    while( input.NextListElement() )
-    {
-        std::string strSection = input.GetCurrentElementName();
-
-        if( strSection == "xsd:import" )
-            ReadImport( input, strModuleName );
-        else if( strSection == "xsd:simpleType" )
-            ReadSimpleType( input, strModuleName );
-        else
-        {
-            // Force the list pointer to advance.
-            input.Section( strSection );
-            input.EndSection();
-        }
-    }    
-    input.EndList(); // xsd:schema
+// -----------------------------------------------------------------------------
+// Name: AGR_Workspace::ReadElement
+// Created: AGE 2007-08-23
+// -----------------------------------------------------------------------------
+void AGR_Workspace::ReadElement( const std::string& type, xml::xistream& xis )
+{
+    if( type == "xsd:import" )
+        ReadImport( xis );
+    else if( type == "xsd:simpleType" )
+        ReadSimpleType( xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Workspace::ReadImport
 // Created: AGE 2004-09-15
 // -----------------------------------------------------------------------------
-void AGR_Workspace::ReadImport( MT_XXmlInputArchive& input, const std::string& /*strModuleName*/ )
+void AGR_Workspace::ReadImport( xml::xistream& xis )
 {
-    input.Section( "xsd:import" );
-    // read an other file
-    std::string strFileName;
-    input.ReadAttribute( "schemaLocation", strFileName );
-
+    const std::string strFileName = xml::attribute< std::string >( xis, "schemaLocation" );
     if( parsedFileSet_.find( strFileName ) == parsedFileSet_.end() )
     {
         Read( strFileName );
         parsedFileSet_.insert( strFileName );
     }
+}
 
-    input.EndSection(); // xsd:import
+// -----------------------------------------------------------------------------
+// Name: AGR_Workspace::ReadSimpleTypeElement
+// Created: AGE 2007-08-23
+// -----------------------------------------------------------------------------
+void AGR_Workspace::ReadSimpleTypeElement( const std::string& type, xml::xistream& xis, const std::string& strTypeName )
+{
+    if( type == "xsd:restriction" )
+    {
+        if( xml::attribute( xis, "base", std::string() ) == "xsd:token" )
+        {
+            bool bFound = false;
+            for( IT_Enumeration_Vector it = enumerationList_.begin(); it != enumerationList_.end(); ++it )
+                if( (*it)->GetName() == strTypeName )
+                    bFound = true;
+
+            if( ! bFound )
+            {
+                AGR_Enumeration* pEnum = new AGR_Enumeration( strTypeName );
+                pEnum->Read( xis );
+                enumerationList_.push_back( pEnum );
+            }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Workspace::ReadSimpleType
 // Created: AGE 2004-09-15
 // -----------------------------------------------------------------------------
-void AGR_Workspace::ReadSimpleType( MT_XXmlInputArchive& input, const std::string& strModuleName )
+void AGR_Workspace::ReadSimpleType( xml::xistream& xis )
 {
-    input.BeginList( "xsd:simpleType" );
-    std::string strTypeName;
-    input.ReadAttribute( "name", strTypeName );
-
-    // POSSIBLY AN ENUM
-    std::string strSubSection = input.GetCurrentElementName();
-    if( strSubSection == "xsd:restriction" )
-    {
-        input.Section( "xsd:restriction" );
-        std::string strTypeBase;
-        input.ReadAttribute( "base", strTypeBase );
-
-        // AN ENUM
-        if( strTypeBase == "xsd:token" )
-        {
-            // Some items can be read multiple times because of file inclusions. Ensure that we read them only once.
-            bool bFound = false;
-            for( IT_Enumeration_Vector it = enumerationList_.begin(); it != enumerationList_.end(); ++it )
-            {
-                if( (*it)->GetName() == strTypeName )
-                    bFound = true;
-            }
-
-            if( ! bFound )
-            {
-                // we define an enumeration. Just mark it as enum
-                AGR_Enumeration* pEnum = new AGR_Enumeration( strTypeName );
-                pEnum->Read( input );
-                enumerationList_.push_back( pEnum );
-            }
-        }
-
-        input.EndSection(); // "xsd:restriction"
-    }
-
-    input.EndList(); // "xsd:simpleType"
+    const std::string strTypeName = xml::attribute< std::string >( xis, "name" );
+    xis >> xml::list( *this, &AGR_Workspace::ReadSimpleTypeElement, strTypeName );
 }
 
 // -----------------------------------------------------------------------------

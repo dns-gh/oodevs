@@ -14,16 +14,21 @@
 #include "PHY_DotationConsumption.h"
 
 #include "Tools/MIL_Tools.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationConsumption constructor
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-PHY_DotationConsumption::PHY_DotationConsumption( const PHY_DotationCategory& category, MIL_InputArchive& archive )
+PHY_DotationConsumption::PHY_DotationConsumption( const PHY_DotationCategory& category, xml::xistream& xis )
     : category_ ( category )
     , rConsumption_( 0. )
 {
-    archive.Read( rConsumption_, CheckValueGreaterOrEqual( 0. ) );
+    xis >> attribute( "value", rConsumption_ );
+    if( rConsumption_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dotation: value < 0" );
 
     if ( rConsumption_ != 0. )
         rConsumption_ = 1. / MIL_Tools::ConvertHoursToSim( 1. / rConsumption_ );

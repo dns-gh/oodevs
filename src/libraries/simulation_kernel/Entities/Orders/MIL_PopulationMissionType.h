@@ -14,6 +14,11 @@
 
 #include "MIL_MissionType_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  MIL_MissionType_ABC
     @brief  MIL_MissionType_ABC
@@ -25,7 +30,7 @@ class MIL_PopulationMissionType : public MIL_MissionType_ABC
 public:
     //! @name Factory
     //@{
-    static void                             Initialize( MIL_InputArchive& archive );
+    static void                             Initialize( xml::xistream& xis );
     static const MIL_PopulationMissionType* Find      ( uint nID );
     static const MIL_PopulationMissionType* Find      ( const std::string& strName );
     //@}
@@ -43,8 +48,14 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-             MIL_PopulationMissionType( uint nID, MIL_InputArchive& archive );
+    MIL_PopulationMissionType( uint nID, xml::xistream& xis );
     virtual ~MIL_PopulationMissionType();
+    //@}
+
+    //! @name Heplers
+    //@{
+    struct LoadingWrapper;
+    static void ReadMission( xml::xistream& xis );
     //@}
 
 private:

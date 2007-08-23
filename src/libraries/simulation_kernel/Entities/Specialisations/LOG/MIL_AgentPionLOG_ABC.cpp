@@ -19,18 +19,22 @@
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePion_Medical.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
 
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOG_ABC, "MIL_AgentPionLOG_ABC" )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOG_ABC constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive )
-    : MIL_AgentPion   ( type, nID, automate, archive )
+MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis )
+    : MIL_AgentPion   ( type, nID, automate, xis )
     , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
 {
     if( !GetAutomate().GetType().IsLogistic() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "The automata of this pion is not a logistic one", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "The automata of this pion is not a logistic one" ); // $$$$ ABL 2007-07-10: error context
 }
 
 // -----------------------------------------------------------------------------

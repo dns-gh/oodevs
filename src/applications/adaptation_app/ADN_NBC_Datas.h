@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGN 2004-05-06 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_NBC_Datas.h $
-// $Author: Ape $
-// $Modtime: 7/04/05 11:21 $
-// $Revision: 9 $
-// $Workfile: ADN_NBC_Datas.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_NBC_Datas_h_
 #define __ADN_NBC_Datas_h_
@@ -23,9 +14,6 @@
 
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
-
-class ADN_XmlInput_Helper;
-
 
 // =============================================================================
 /** @class  ADN_NBC_Datas
@@ -53,8 +41,10 @@ public:
 
         void CopyFrom( NbcIntoxInfos& infos );
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadEffect( xml::xistream& input );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+        void WriteContent( xml::xostream& output );
 
     public:
         std::string     nodeName_;
@@ -82,8 +72,8 @@ public:
 
         void CopyFrom( NbcGazInfos& infos );
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         NbcIntoxInfos   intoxInfos_;
@@ -105,8 +95,9 @@ public:
 
         NbcAgentInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadEffect( xml::xistream& input );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_String strName_;
@@ -135,8 +126,9 @@ public:
     int GetNextId();
 
 private:
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void WriteArchive( MT_OutputArchive_ABC& output );
+    void ReadAgent( xml::xistream& input );
+    void ReadArchive( xml::xistream& input );
+    void WriteArchive( xml::xostream& output );
 
 private:
     int nNextId_;

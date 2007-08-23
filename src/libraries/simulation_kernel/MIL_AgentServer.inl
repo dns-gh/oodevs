@@ -38,7 +38,7 @@ inline
 DEC_Workspace& MIL_AgentServer::GetWorkspaceDIA() const
 {
     assert( pWorkspaceDIA_ );
-	return *pWorkspaceDIA_;
+    return *pWorkspaceDIA_;
 }
 
 //-----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ inline
 NET_AgentServer& MIL_AgentServer::GetAgentServer() const
 {
     assert( pAgentServer_ );
-	return *pAgentServer_;
+    return *pAgentServer_;
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +232,7 @@ inline
 MIL_AgentServer& MIL_AgentServer::GetWorkspace()
 {
     assert( pTheAgentServer_ );
-	return *pTheAgentServer_;
+    return *pTheAgentServer_;
 }
 
 //-----------------------------------------------------------------------------

@@ -16,6 +16,11 @@
 
 #include "game_asn/Asn.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 // @class  PHY_MaintenanceWorkRate
 // Created: JVT 2004-08-03
@@ -36,7 +41,7 @@ public:
 public:
     //! @name Manager
     //@{
-    static       void                     Initialize( MIL_InputArchive& archive );
+    static       void                     Initialize( xml::xistream& xis );
     static       void                     Terminate ();
     static const PHY_MaintenanceWorkRate* Find      ( ASN1T_EnumLogMaintenanceRegimeTravail nID );
     //@}
@@ -62,7 +67,8 @@ private:
 
     //! @name Init
     //@{
-    void ReadData( MIL_InputArchive& archive );
+    struct LoadingWrapper;
+    static void ReadWorkRate( xml::xistream& xis );
     //@}
 
 private:

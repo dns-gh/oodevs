@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xostream;
+}
+
 class DEC_KnowledgeBlackBoard_KnowledgeGroup;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
@@ -40,7 +45,7 @@ public:
     //@}
 
 public:
-     MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint nID, MIL_Army& army, MIL_InputArchive& archive );
+     MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint nID, MIL_Army& army );
      MIL_KnowledgeGroup();
     ~MIL_KnowledgeGroup();
 
@@ -51,7 +56,7 @@ public:
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     
-    void WriteODB( MT_XXmlOutputArchive& archive ) const;
+    void WriteODB( xml::xostream& xos ) const;
     //@}
 
     //! @name Operations

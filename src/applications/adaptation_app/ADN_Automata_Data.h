@@ -25,7 +25,7 @@
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Units_Data.h"
 
-class ADN_XmlInput_Helper;
+class xml::xistream;
 
 
 // =============================================================================
@@ -53,12 +53,13 @@ public:
 
         UnitInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output, const ADN_TypePtr_InVector_ABC<ADN_Units_Data::UnitInfos>& pc );
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Units_Data::UnitInfos> ptrUnit_;
-        ADN_Type_String                                     strNbrRegExp_;
+        ADN_Type_Int                                     min_;
+        ADN_Type_Int                                     max_;
     };
 
     typedef ADN_Type_Vector_ABC<UnitInfos> T_UnitInfosVector;
@@ -81,8 +82,9 @@ public:
 
         AutomatonInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output, int nMosId );
+        void ReadArchive( xml::xistream& input );
+        void ReadUnit( xml::xistream& input );
+        void WriteArchive( xml::xostream& output, int nMosId );
 
     public:
         ADN_Type_String                                       strName_;
@@ -113,8 +115,9 @@ public:
     std::string GetAutomataThatUse( ADN_Models_Data::ModelInfos& model );
 
 private:
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void WriteArchive( MT_OutputArchive_ABC& output );
+    void ReadArchive( xml::xistream& input );
+    void ReadAutomat( xml::xistream& input );
+    void WriteArchive( xml::xostream& output );
 
 public:
     T_AutomatonInfosVector  vAutomata_;

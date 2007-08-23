@@ -12,6 +12,9 @@
 #include "simulation_kernel_pch.h"
 
 #include "PHY_RolePion_Supply.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Supply, "PHY_RolePion_Supply" )
 
@@ -60,7 +63,7 @@ void PHY_RolePion_Supply::serialize( Archive& file, const uint )
 // Name: PHY_RolePion_Supply::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Supply::WriteODB( MT_XXmlOutputArchive& /*archive*/ ) const
+void PHY_RolePion_Supply::WriteODB( xml::xostream& xos ) const
 {
     // NOTHING
 }
@@ -148,7 +151,7 @@ void PHY_RolePion_Supply::RemoveStockReservation( const PHY_DotationCategory& /*
 // Name: PHY_RolePion_Supply::ReadOverloading
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Supply::ReadOverloading( MIL_InputArchive& /*archive*/ )
+void PHY_RolePion_Supply::ReadOverloading( xml::xistream& xis )
 {
     // NOTHING
 }

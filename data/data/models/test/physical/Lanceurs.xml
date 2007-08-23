@@ -1,221 +1,199 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Lanceurs>
-
-  <Lanceur nom="Rampe Lance Missiles Gazelle">
-    <Direct>
-      <ModificateursPH>
-        <TireurEnMouvement>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnMouvement>
-        <TireurEnMouvementDiscret>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnMouvementDiscret>
-        <TireurEnArret>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnArret>
-        <TireurEnPosteReflexe>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnPosteReflexe>
-        <TireurEnPoste>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.65</CibleEnArret>
-          <CibleEnPosteReflexe>0.55</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnPoste>
-        <TireurEnPosteAmenage>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnPosteAmenage>
-        <TireurEnPostePrepareGenie>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnPostePrepareGenie>
-      </ModificateursPH>
-    </Direct>
-    <Indirect/>
-  </Lanceur>
-
-  <Lanceur nom="Mitrailleuse">
-    <Direct>
-      <ModificateursPH>
-        <TireurEnMouvement>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnMouvement>
-        <TireurEnMouvementDiscret>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnMouvementDiscret>
-        <TireurEnArret>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnArret>
-        <TireurEnPosteReflexe>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnPosteReflexe>
-        <TireurEnPoste>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnPoste>
-        <TireurEnPosteAmenage>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnPosteAmenage>
-        <TireurEnPostePrepareGenie>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnPostePrepareGenie>
-      </ModificateursPH>
-    </Direct>
-    <Indirect/>
-  </Lanceur>
-
-  <Lanceur nom="Lance-fussoir">
-    <Indirect/>
-  </Lanceur>
-
-  <Lanceur nom="Canon 120">
-    <Direct>
-      <ModificateursPH>
-        <TireurEnMouvement>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnMouvement>
-        <TireurEnMouvementDiscret>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnMouvementDiscret>
-        <TireurEnArret>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnArret>
-        <TireurEnPosteReflexe>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnPosteReflexe>
-        <TireurEnPoste>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnPoste>
-        <TireurEnPosteAmenage>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnPosteAmenage>
-        <TireurEnPostePrepareGenie>
-          <CibleEnMouvement>0.5</CibleEnMouvement>
-          <CibleEnMouvementDiscret>0.5</CibleEnMouvementDiscret>
-          <CibleEnArret>0.5</CibleEnArret>
-          <CibleEnPosteReflexe>0.5</CibleEnPosteReflexe>
-          <CibleEnPoste>0.5</CibleEnPoste>
-          <CibleEnPosteAmenage>0.5</CibleEnPosteAmenage>
-          <CibleEnPostePrepareGenie>0.5</CibleEnPostePrepareGenie>
-        </TireurEnPostePrepareGenie>
-      </ModificateursPH>
-    </Direct>
-    <Indirect/>
-  </Lanceur>
-
-</Lanceurs>
+<launchers>
+  <launcher indirect-fire="true" name="Rampe Lance Missiles Gazelle">
+    <ph-modifiers posture="Mouvement">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+    <ph-modifiers posture="MouvementDiscret">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+    <ph-modifiers posture="Arret">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+    <ph-modifiers posture="PosteReflexe">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+    <ph-modifiers posture="Poste">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.65"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.55"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+    <ph-modifiers posture="PosteAmenage">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+    <ph-modifiers posture="PostePrepareGenie">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+  </launcher>
+  <launcher indirect-fire="true" name="Mitrailleuse">
+    <ph-modifiers posture="Mouvement">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+    <ph-modifiers posture="MouvementDiscret">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+    <ph-modifiers posture="Arret">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+    <ph-modifiers posture="PosteReflexe">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+    <ph-modifiers posture="Poste">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+    <ph-modifiers posture="PosteAmenage">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+    <ph-modifiers posture="PostePrepareGenie">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+  </launcher>
+  <launcher indirect-fire="true" name="Lance-fussoir"/>
+  <launcher indirect-fire="true" name="Canon 120">
+    <ph-modifiers posture="Mouvement">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+    <ph-modifiers posture="MouvementDiscret">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+    <ph-modifiers posture="Arret">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+    <ph-modifiers posture="PosteReflexe">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+    <ph-modifiers posture="Poste">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+    <ph-modifiers posture="PosteAmenage">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+    <ph-modifiers posture="PostePrepareGenie">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.5"/>
+      <ph-modifier target-posture="Arret" value="0.5"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.5"/>
+      <ph-modifier target-posture="Poste" value="0.5"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.5"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
+    </ph-modifiers>
+  </launcher>
+</launchers>

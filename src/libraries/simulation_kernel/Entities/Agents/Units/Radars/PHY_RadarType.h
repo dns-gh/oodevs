@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_RadarClass;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
@@ -31,7 +36,7 @@ class PHY_RadarType
 public:
     //! @name Manager
     //@{
-    static void Initialize( MIL_InputArchive& archive, const MIL_Time_ABC& time );
+    static void Initialize( xml::xistream& xis, const MIL_Time_ABC& time );
     static void Terminate ();
 
     static const PHY_RadarType* Find( const std::string& strType );
@@ -60,14 +65,24 @@ private:
     //@}
 
 private:
-     PHY_RadarType( const std::string& strName, const PHY_RadarClass& type, const MIL_Time_ABC& time, MIL_InputArchive& archive );
+     PHY_RadarType( const std::string& strName, const PHY_RadarClass& type, const MIL_Time_ABC& time, xml::xistream& xis );
     ~PHY_RadarType();
 
     //! @name Init
     //@{
-    void InitializeRange           ( MIL_InputArchive& archive );
-    void InitializeActivities      ( MIL_InputArchive& archive );
-    void InitializeAcquisitionTimes( MIL_InputArchive& archive );
+    void InitializeRange           ( xml::xistream& xis );
+    void InitializeActivities      ( xml::xistream& xis );
+    void InitializeAcquisitionTimes( xml::xistream& xis );
+    void ReadDetectableActivity    ( xml::xistream& xis, bool& bIsActivity );
+    void ReadActivity              ( xml::xistream& xis );
+    void ReadAcquisitionTime       ( xml::xistream& xis, bool& bIsTime );
+    void ReadTime                  ( xml::xistream& xis, bool& bIsPCTime );
+    //@}
+
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadRadar( xml::xistream& xis, const MIL_Time_ABC& time );
     //@}
     
 private:

@@ -32,6 +32,9 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AsnException.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 BOOST_CLASS_EXPORT_GUID( MIL_AutomateLOG, "MIL_AutomateLOG" )
 
@@ -39,8 +42,8 @@ BOOST_CLASS_EXPORT_GUID( MIL_AutomateLOG, "MIL_AutomateLOG" )
 // Name: MIL_AutomateLOG constructor
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Formation& formation, MIL_InputArchive& archive )
-    : MIL_Automate                ( type, nID, formation, archive )
+MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Formation& formation, xml::xistream& xis )
+    : MIL_Automate                ( type, nID, formation, xis )
     , pMaintenanceSuperior_       ( 0 )
     , pMedicalSuperior_           ( 0 )
     , pSupplySuperior_            ( 0 )
@@ -52,7 +55,7 @@ MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL
     , bQuotasHaveChanged_         ( false )
     , nTickRcStockSupplyQuerySent_( 0 )
     , pLogisticAction_            ( new PHY_ActionLogistic< MIL_AutomateLOG >( *this ) )
-{   
+{
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +97,7 @@ namespace boost
         template< typename Archive >
         inline void serialize( Archive& file, std::map< const PHY_DotationCategory*, MIL_AutomateLOG::sDotationQuota >& map, const uint nVersion )
         {
-            split_free( file, map, nVersion); 
+            split_free( file, map, nVersion);
         }
 
         template < typename Archive >
@@ -102,7 +105,7 @@ namespace boost
         {
             unsigned size = map.size();
             file << size;
-            for ( std::map< const PHY_DotationCategory*, MIL_AutomateLOG::sDotationQuota >::const_iterator it = map.begin(); it != map.end(); ++it )
+            for( std::map< const PHY_DotationCategory*, MIL_AutomateLOG::sDotationQuota >::const_iterator it = map.begin(); it != map.end(); ++it )
             {
                 uint id = it->first->GetMosID();
                 file << id
@@ -110,7 +113,7 @@ namespace boost
                      << it->second.rQuotaThreshold_;
             }
         }
-        
+
         template < typename Archive >
         void load( Archive& file, std::map< const PHY_DotationCategory*, MIL_AutomateLOG::sDotationQuota >& map, const uint )
         {
@@ -121,11 +124,11 @@ namespace boost
                 uint nCategory;
                 file >> nCategory;
                 const PHY_DotationCategory* pCategory = PHY_DotationType::FindDotationCategory( nCategory );
-                
+
                 MIL_AutomateLOG::sDotationQuota quota;
                 file >> quota.rQuota_
                      >> quota.rQuotaThreshold_;
-                     
+
                 map.insert( std::make_pair( pCategory, quota ) );
             }
         }
@@ -150,7 +153,7 @@ void MIL_AutomateLOG::serialize( Archive& file, const uint )
          & pushedFlowsSupplyStates_
          & nTickRcStockSupplyQuerySent_;
 }
-    
+
 // =============================================================================
 // INIT
 // =============================================================================
@@ -159,12 +162,12 @@ void MIL_AutomateLOG::serialize( Archive& file, const uint )
 // Name: MIL_AutomateLOG::ReadLogisticLink
 // Created: NLD 2006-10-19
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::ReadLogisticLink( MIL_AutomateLOG& superior, MIL_InputArchive& archive )
+void MIL_AutomateLOG::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& xis )
 {
-    MIL_Automate::ReadLogisticLink( superior, archive );
-    
+    MIL_Automate::ReadLogisticLink( superior, xis );
+
     std::string strLink;
-    archive.ReadAttribute( "link", strLink );
+    xis >> attribute( "link", strLink );
 
     if( sCaseInsensitiveEqual()( strLink, "maintenance" ) )
         pMaintenanceSuperior_ = &superior;
@@ -173,87 +176,91 @@ void MIL_AutomateLOG::ReadLogisticLink( MIL_AutomateLOG& superior, MIL_InputArch
     else if( sCaseInsensitiveEqual()( strLink, "supply" ) )
     {
         pSupplySuperior_ = &superior;
-        archive.BeginList( "quotas" );
-        while( archive.NextListElement() )
-        {
-            archive.Section( "dotation" );
-
-            std::string strType;           
-            archive.ReadAttribute( "name", strType );
-
-            const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
-            if ( !pDotationCategory )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type", archive.GetContext() );
-
-            if( stockQuotas_.find( pDotationCategory ) != stockQuotas_.end() )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Quota already defined", archive.GetContext() );
-
-            uint        nQuantity;            
-            archive.ReadAttribute( "quantity", nQuantity, CheckValueGreaterOrEqual( 0 ) );
-
-            sDotationQuota quota;
-            quota.rQuota_          = nQuantity;
-            quota.rQuotaThreshold_ = nQuantity * 0.1; //$$ fichier de conf cpp ;)
-            stockQuotas_[ pDotationCategory ] = quota;
-
-            archive.EndSection(); // dotation
-        }
-        archive.EndList(); // quotas
+        xis >> start( "quotas" )
+                >> list( "dotation", *this, &MIL_AutomateLOG::ReadDotation )
+            >> end();
     }
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::ReadDotation
+// Created: ABL 2007-07-10
+// -----------------------------------------------------------------------------
+void MIL_AutomateLOG::ReadDotation( xml::xistream& xis )
+{
+    std::string strType;
+    xis >> attribute( "name", strType );
+
+    const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
+    if( !pDotationCategory )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type" ); // $$$$ ABL 2007-07-10: error context
+
+    if( stockQuotas_.find( pDotationCategory ) != stockQuotas_.end() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Quota already defined" ); // $$$$ ABL 2007-07-10: error context
+
+    uint        nQuantity;
+    xis >> attribute( "quantity", nQuantity );
+    if( nQuantity < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "nQuantity is not greater or equal to 0" );
+
+    sDotationQuota quota;
+    quota.rQuota_          = nQuantity;
+    quota.rQuotaThreshold_ = nQuantity * 0.1; //$$ fichier de conf cpp ;)
+    stockQuotas_[ pDotationCategory ] = quota;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::WriteLogisticLinksODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::WriteLogisticLinksODB( MT_XXmlOutputArchive& archive ) const
+void MIL_AutomateLOG::WriteLogisticLinksODB( xml::xostream& xos ) const
 {
-    MIL_Automate::WriteLogisticLinksODB( archive );
+    MIL_Automate::WriteLogisticLinksODB( xos );
 
     if( pMaintenanceSuperior_ )
     {
-        archive.Section( "automat" );
-        archive.WriteAttribute( "id", pMaintenanceSuperior_->GetID() );
-        archive.Section( "subordinate" );
-        archive.WriteAttribute( "automat", GetID() );
-        archive.WriteAttribute( "link", "maintenance" );
-        archive.EndSection(); // subordinate
-        archive.EndSection(); // automat
+        xos << start( "automat" )
+                << attribute( "id", pMaintenanceSuperior_->GetID() )
+                << start ( "subordinate" )
+                    << attribute( "id", GetID() )
+                    << attribute( "link"   , "maintenance" )
+                << end()
+            << end();
     }
 
     if( pMedicalSuperior_ )
     {
-        archive.Section( "automat" );
-        archive.WriteAttribute( "id", pMedicalSuperior_->GetID() );
-        archive.Section( "subordinate" );
-        archive.WriteAttribute( "automat", GetID() );
-        archive.WriteAttribute( "link", "medical" );
-        archive.EndSection(); // subordinate
-        archive.EndSection(); // automat
+        xos << start( "automat" )
+                << attribute( "id", pMedicalSuperior_->GetID() )
+                << start ( "subordinate" )
+                    << attribute( "id", GetID() )
+                    << attribute( "link"   , "medical" )
+                << end()
+            << end();
     }
 
     if( pSupplySuperior_ )
     {
-        archive.Section( "automat" );
-        archive.WriteAttribute( "id", pSupplySuperior_->GetID() );
-        archive.Section( "subordinate" );
-        archive.WriteAttribute( "automat", GetID() );
-        archive.WriteAttribute( "link", "supply" );
+        xos << start( "automat" )
+            << attribute( "id", pSupplySuperior_->GetID() )
+                << start ( "subordinate" )
+                    << attribute( "id", GetID() )
+                    << attribute( "link"   , "supply" );
 
-        archive.Section( "quotas" );
+        xos         << start( "quotas" );
         for( CIT_DotationQuotaMap it = stockQuotas_.begin(); it != stockQuotas_.end(); ++it )
         {
             const PHY_DotationCategory& dotation = *it->first;
+            xos << start( "dotation" )
+                    << attribute( "name", dotation.GetName()  )
+                    << attribute( "quantity", it->second.rQuota_ )
+                << end(); // dotation
+        }
+        xos         << end(); // quotas
 
-            archive.Section( "dotation" );
-            archive.WriteAttribute( "name"    , dotation.GetName() );
-            archive.WriteAttribute( "quantity", it->second.rQuota_ );
-            archive.EndSection(); // dotation
-        }           
-        archive.EndSection(); // quotas
-
-        archive.EndSection(); // subordinate
-        archive.EndSection(); // automat
+        xos     << end() // subordinate
+            << end(); // automat
     }
 }
 
@@ -366,7 +373,7 @@ PHY_MedicalHumanState* MIL_AutomateLOG::MedicalHandleHumanForEvacuation( MIL_Age
             pSelectedRoleMedical = &roleMedical;
         }
     }
-    return pSelectedRoleMedical ? pSelectedRoleMedical->HandleHumanForEvacuation( pion, human ) : 0;    
+    return pSelectedRoleMedical ? pSelectedRoleMedical->HandleHumanForEvacuation( pion, human ) : 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -469,15 +476,15 @@ void MIL_AutomateLOG::ConsumeQuota( const PHY_DotationCategory& dotationCategory
 {
     IT_DotationQuotaMap it = stockQuotas_.find( &dotationCategory );
     assert( it != stockQuotas_.end() );
-    
+
     sDotationQuota& quota = it->second;
-    
+
     rQuotaConsumed = std::min( rQuotaConsumed, quota.rQuota_ );
 
     quota.rQuota_ -= rQuotaConsumed;
     if( quota.rQuota_ <= quota.rQuotaThreshold_ )
         MIL_Report::PostEvent( *this, MIL_Report::eReport_QuotaAlmostConsumed, dotationCategory );
-    bQuotasHaveChanged_ = true;  
+    bQuotasHaveChanged_ = true;
 }
 
 // =============================================================================
@@ -609,7 +616,7 @@ void MIL_AutomateLOG::UpdateLogistic()
             it = supplyConsigns_.erase( it );
         }
         else
-            ++it;            
+            ++it;
     }
 }
 
@@ -620,12 +627,12 @@ void MIL_AutomateLOG::UpdateLogistic()
 void MIL_AutomateLOG::UpdateState()
 {
     MIL_Automate::UpdateState();
-    
+
     // Supply system (TC2->BLD->BLT)
     if( !bStockSupplyNeeded_ || pExplicitStockSupplyState_ || !pSupplySuperior_ )
         return;
 
-    PHY_SupplyStockRequestContainer supplyRequests( *this );   
+    PHY_SupplyStockRequestContainer supplyRequests( *this );
     bStockSupplyNeeded_ = !supplyRequests.Execute( *pSupplySuperior_, pExplicitStockSupplyState_ );
 }
 
@@ -651,7 +658,7 @@ bool MIL_AutomateLOG::IsSupplyInProgress( const PHY_DotationCategory& dotationCa
 {
     if( pExplicitStockSupplyState_ && pExplicitStockSupplyState_->IsSupplying( dotationCategory ) )
         return true;
-    
+
     for( CIT_SupplyStockStateSet it = pushedFlowsSupplyStates_.begin(); it != pushedFlowsSupplyStates_.end(); ++it )
     {
         if( (**it).IsSupplying( dotationCategory ) )
@@ -817,7 +824,7 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const ASN1T_MsgAutomatCha
             if( !pNewTC2 )
                 throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate_tc2 );
         }
-    }    
+    }
     if( msg.m.oid_maintenancePresent )
     {
         bNewMaintenanceSuperior = true;
@@ -849,7 +856,7 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const ASN1T_MsgAutomatCha
         }
     }
 
-    if( bNewTC2 ) 
+    if( bNewTC2 )
         pTC2_ = pNewTC2;
     if( bNewMaintenanceSuperior )
         pMaintenanceSuperior_ = pNewMaintenanceSuperior;

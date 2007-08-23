@@ -26,6 +26,9 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Tools/MIL_IDManager.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 BOOST_CLASS_EXPORT_GUID( MIL_ObjectManager, "MIL_ObjectManager" )
 
@@ -162,27 +165,35 @@ void MIL_ObjectManager::RegisterObject( MIL_RealObject_ABC& object )
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-MIL_RealObject_ABC& MIL_ObjectManager::CreateObject( const MIL_RealObjectType& type, uint nID, MIL_Army& army, MIL_InputArchive& archive )
+void MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army& army )
 {
-    nID = type.GetIDManager().ConvertSimIDToMosID( nID );
-    if( realObjects_.find( nID ) != realObjects_.end() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "ID already exists", archive.GetContext() );
+    uint        id;
+    std::string strType;
+    xis >> attribute( "id", id )
+        >> attribute( "type", strType );
 
-    if( type.GetIDManager().IsMosIDValid( nID ) )
+    const MIL_RealObjectType* pType = MIL_RealObjectType::Find( strType );
+    if( !pType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type" ); // $$$$ ABL 2007-07-09: error context
+
+    id = pType->GetIDManager().ConvertSimIDToMosID( id );
+    if( realObjects_.find( id ) != realObjects_.end() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "ID already exists" ); // $$$$ ABL 2007-07-09: error context
+
+    if( pType->GetIDManager().IsMosIDValid( id ) )
     {
-        if( !type.GetIDManager().LockMosID( nID ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "ID already used", archive.GetContext() );
+        if( !pType->GetIDManager().LockMosID( id ) )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "ID already used" ); // $$$$ ABL 2007-07-09: error context
     }
 
-    MIL_RealObject_ABC& object = type.InstanciateObject( nID, army );
-    object.Initialize( archive );
+    MIL_RealObject_ABC& object = pType->InstanciateObject( id, army );
+    object.Initialize( xis );
 
     // Default state : full constructed, valorized if it can be, not prepared
     object.Construct();
     object.Mine     ();
 
     RegisterObject( object );
-    return object;
 }
 
 // -----------------------------------------------------------------------------

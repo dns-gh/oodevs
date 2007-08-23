@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_LauncherType;
 class PHY_DotationCategory;
 class PHY_WeaponDataType_IndirectFire;
@@ -44,7 +49,7 @@ class PHY_WeaponType
 public:
     //! @name Manager
     //@{
-    static void Initialize( MIL_EffectManager& manager, const MIL_Time_ABC& time, MIL_InputArchive& archive );
+    static void Initialize( MIL_EffectManager& manager, const MIL_Time_ABC& time, xml::xistream& xis );
     static void Terminate ();
 
     static const PHY_WeaponType* FindWeaponType( const std::string& strLauncher, const std::string& strAmmunition );
@@ -101,13 +106,21 @@ private:
     //@}
 
 private:
-     PHY_WeaponType( MIL_EffectManager& manager, const MIL_Time_ABC& time, const std::string& strLauncher, const std::string& strAmmunition, MIL_InputArchive& archive );
+     PHY_WeaponType( MIL_EffectManager& manager, const MIL_Time_ABC& time, const std::string& strLauncher, const std::string& strAmmunition, xml::xistream& xis );
     ~PHY_WeaponType();
 
     //! @name Initialization
     //@{
-    void InitializeDirectFireData  ( MIL_EffectManager& manager, MIL_InputArchive& archive );
-    void InitializeIndirectFireData( MIL_InputArchive& archive );
+    void InitializeDirectFireData  ( MIL_EffectManager& manager, xml::xistream& xis );
+    void InitializeIndirectFireData( xml::xistream& xis );
+    //@}
+
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadWeapon( xml::xistream& xis, MIL_EffectManager& manager, const MIL_Time_ABC& time );
+    void ReadDirect       ( xml::xistream& xis, MIL_EffectManager& manager );
+    void ReadIndirect     ( xml::xistream& xis );
     //@}
 
 private:

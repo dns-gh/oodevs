@@ -11,8 +11,6 @@
 #include "ADN_Reports_Data.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
-#include "ADN_XmlInput_Helper.h"
-#include "ADN_Xml_Exception.h"
 #include "ADN_Tr.h"
 
 // -----------------------------------------------------------------------------
@@ -57,23 +55,21 @@ ADN_Reports_Data::ReportParameterValue* ADN_Reports_Data::ReportParameterValue::
 // Name: ADN_Reports_Data::ReadArchive
 // Created: SBO 2006-12-14
 // -----------------------------------------------------------------------------
-void ADN_Reports_Data::ReportParameterValue::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Reports_Data::ReportParameterValue::ReadArchive( xml::xistream& input )
 {
-    input.Section( "value" );
-    input.ReadAttribute( "name", name_ );
-    input.EndSection();
+    input >> xml::attribute( "name", name_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Reports_Data::WriteArchive
 // Created: SBO 2006-12-14
 // -----------------------------------------------------------------------------
-void ADN_Reports_Data::ReportParameterValue::WriteArchive( MT_OutputArchive_ABC& output, unsigned int id )
+void ADN_Reports_Data::ReportParameterValue::WriteArchive( xml::xostream& output, unsigned int id )
 {
-    output.Section( "value" );
-    output.WriteAttribute( "id", id );
-    output.WriteAttribute( "name", name_.GetData() );
-    output.EndSection();
+    output << xml::start( "value" )
+            << xml::attribute( "id", id )
+            << xml::attribute( "name", name_ )
+           << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -125,32 +121,36 @@ ADN_Reports_Data::ReportParameter* ADN_Reports_Data::ReportParameter::CreateCopy
 // Name: ADN_Reports_Data::ReadArchive
 // Created: SBO 2006-12-14
 // -----------------------------------------------------------------------------
-void ADN_Reports_Data::ReportParameter::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Reports_Data::ReportParameter::ReadArchive( xml::xistream& input )
 {
-    input.BeginList( "parameter" );
     std::string type;
-    input.ReadAttribute( "type", type );
+    input >> xml::attribute( "type", type );
     type_ = ADN_Tr::ConvertToMissionParameterType( type );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr< ReportParameterValue > spNew( new ReportParameterValue() );
-        spNew->ReadArchive( input );
-        values_.AddItem( spNew.release() );
-    }
-    input.EndList();
+    input >> xml::list( "value", *this, &ADN_Reports_Data::ReportParameter::ReadParameterValue );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Reports_Data::ReportParameter::ReadParameterValue
+// Created: AGE 2007-08-16
+// -----------------------------------------------------------------------------
+void ADN_Reports_Data::ReportParameter::ReadParameterValue( xml::xistream& input )
+{
+    std::auto_ptr< ReportParameterValue > spNew( new ReportParameterValue() );
+    spNew->ReadArchive( input );
+    values_.AddItem( spNew.release() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Reports_Data::WriteArchive
 // Created: SBO 2006-12-14
 // -----------------------------------------------------------------------------
-void ADN_Reports_Data::ReportParameter::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Reports_Data::ReportParameter::WriteArchive( xml::xostream& output )
 {
-    output.Section( "parameter" );
-    output.WriteAttribute( "type", ADN_Tr::ConvertFromMissionParameterType( type_.GetData() ) );
+    output << xml::start( "parameter" )
+           << xml::attribute( "type", ADN_Tr::ConvertFromMissionParameterType( type_.GetData()  ) );
     for( unsigned long i = 0; i < values_.size(); ++i )
         values_[i]->WriteArchive( output, i );
-    output.EndSection();
+    output << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -201,31 +201,35 @@ ADN_Reports_Data::ReportInfo* ADN_Reports_Data::ReportInfo::CreateCopy()
 // Name: ADN_Reports_Data::ReadArchive
 // Created: SBO 2006-12-14
 // -----------------------------------------------------------------------------
-void ADN_Reports_Data::ReportInfo::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Reports_Data::ReportInfo::ReadArchive( xml::xistream& input )
 {
-    input.BeginList( "report" );
-    input.ReadAttribute( "message", message_ );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr< ReportParameter > spNew( new ReportParameter() );
-        spNew->ReadArchive( input );
-        parameters_.AddItem( spNew.release() );
-    }
-    input.EndList();
+    input >> xml::attribute( "message", message_ )
+          >> xml::list( "parameter", *this, ADN_Reports_Data::ReportInfo::ReadParameter );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Reports_Data::ReportInfo::ReadParameter
+// Created: AGE 2007-08-16
+// -----------------------------------------------------------------------------
+void ADN_Reports_Data::ReportInfo::ReadParameter( xml::xistream& input )
+{
+    std::auto_ptr< ReportParameter > spNew( new ReportParameter() );
+    spNew->ReadArchive( input );
+    parameters_.AddItem( spNew.release() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Reports_Data::WriteArchive
 // Created: SBO 2006-12-14
 // -----------------------------------------------------------------------------
-void ADN_Reports_Data::ReportInfo::WriteArchive( MT_OutputArchive_ABC& output, unsigned long id )
+void ADN_Reports_Data::ReportInfo::WriteArchive( xml::xostream& output, unsigned long id )
 {
-    output.Section( "report" );
-    output.WriteAttribute( "id", id );
-    output.WriteAttribute( "message", message_.GetData() );
+    output << xml::start( "report" )
+            << xml::attribute( "id", id )
+            << xml::attribute( "message",  message_ );
     for( unsigned long i = 0; i < parameters_.size(); ++i )
         parameters_[i]->WriteArchive( output );
-    output.EndSection();
+    output << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -268,26 +272,32 @@ void ADN_Reports_Data::Reset()
 // Name: ADN_Reports_Data::ReadArchive
 // Created: SBO 2006-12-14
 // -----------------------------------------------------------------------------
-void ADN_Reports_Data::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Reports_Data::ReadArchive( xml::xistream& input )
 {
-    input.BeginList( "reports" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr< ReportInfo > spNew( new ReportInfo() );
-        spNew->ReadArchive( input );
-        reports_.AddItem( spNew.release() );
-    }
-    input.EndList();
+    input >> xml::start( "reports" )
+            >> xml::list( "report", *this, &ADN_Reports_Data::ReadReport )
+          >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Reports_Data::ReadReport
+// Created: AGE 2007-08-16
+// -----------------------------------------------------------------------------
+void ADN_Reports_Data::ReadReport( xml::xistream& input )
+{
+    std::auto_ptr< ReportInfo > spNew( new ReportInfo() );
+    spNew->ReadArchive( input );
+    reports_.AddItem( spNew.release() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Reports_Data::WriteArchive
 // Created: SBO 2006-12-14
 // -----------------------------------------------------------------------------
-void ADN_Reports_Data::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Reports_Data::WriteArchive( xml::xostream& output )
 {
-    output.Section( "reports" );
+    output << xml::start( "reports" );
     for( unsigned long i = 0; i < reports_.size(); ++i )
         reports_[i]->WriteArchive( output, i );
-    output.EndSection();
+    output << xml::end();
 }

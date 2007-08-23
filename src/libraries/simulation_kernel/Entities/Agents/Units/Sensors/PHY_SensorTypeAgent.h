@@ -17,6 +17,11 @@
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_PerceptionLevel;
 class PHY_RoleInterface_Posture;
 class PHY_RolePion_Posture;
@@ -38,7 +43,7 @@ class PHY_SensorTypeAgent
     MT_COPYNOTALLOWED( PHY_SensorTypeAgent )
 
 public:
-     PHY_SensorTypeAgent( const PHY_SensorType& type, MIL_InputArchive& archive );
+     PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistream& xis );
     ~PHY_SensorTypeAgent();
 
     //! @name Accessors
@@ -61,7 +66,7 @@ public:
           MT_Float             ComputePerceptionAccuracy( const MIL_AgentPion& perceiver, const MIL_PopulationFlow&          target, MT_Float rSensorHeight ) const;
     //@}
 
-private:
+public:
     //! @name Types
     //@{
     typedef std::vector< MT_Float > T_FactorVector;
@@ -70,12 +75,10 @@ private:
 private:
     //! @name Init
     //@{
-    void InitializeAngle             ( MIL_InputArchive& archive );
-    void InitializeDistances         ( MIL_InputArchive& archive );
-    void InitializeEnvironmentFactors( MIL_InputArchive& archive );
-    void InitializePopulationFactors ( MIL_InputArchive& archive );
-
-    template< typename C > static void InitializeFactors( const C& container, const std::string& strTagName, T_FactorVector& factors, MIL_InputArchive& archive );
+    void InitializeAngle             ( xml::xistream& xis );
+    void InitializeDistances         ( xml::xistream& xis );
+    void InitializeEnvironmentFactors( xml::xistream& xis );
+    void InitializePopulationFactors ( xml::xistream& xis );
     //@}
 
     //! @name Tools
@@ -93,6 +96,13 @@ private:
     MT_Float GetTargetFactor( const DEC_Knowledge_Agent& target ) const;
 
     MT_Float GetPopulationFactor( MT_Float rDensity ) const;
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadDistance       ( xml::xistream& xis );
+    void ReadTerrainModifier( xml::xistream& xis, unsigned int& visionObject );
+    friend class Loader;
     //@}
 
 private:

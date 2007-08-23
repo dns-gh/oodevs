@@ -16,6 +16,9 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Knowledge/DEC_Knowledge_ObjectZoneMineeLineaire.h"
 #include "Tools/MIL_Tools.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 BOOST_CLASS_EXPORT_GUID( MIL_ZoneMineeLineaire, "MIL_ZoneMineeLineaire" )
 
@@ -75,10 +78,10 @@ void MIL_ZoneMineeLineaire::serialize( Archive& file, const uint )
 // Name: MIL_ZoneMineeLineaire::WriteSpecificAttributes
 // Created: NLD 2007-02-06
 // -----------------------------------------------------------------------------
-void MIL_ZoneMineeLineaire::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
+void MIL_ZoneMineeLineaire::WriteSpecificAttributes( xml::xostream& xos ) const
 {
-    archive.WriteField( "activity-time", nMinesActivityTime_ );
-    archive.WriteField( "density"      , rMinesDensity_      );
+    xos << content( "activity-time", nMinesActivityTime_ )
+        << content( "density", rMinesDensity_ );
 }
 
 //=============================================================================
@@ -106,11 +109,18 @@ bool MIL_ZoneMineeLineaire::Initialize( const MIL_ObstacleType& obstacleType, DI
 // Name: MIL_ZoneMineeLineaire::Initialize
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-void MIL_ZoneMineeLineaire::Initialize( MIL_InputArchive& archive )
+void MIL_ZoneMineeLineaire::Initialize( xml::xistream& xis )
 {
-    MIL_RealObject_ABC::Initialize( archive );
-    archive.ReadField( "activity-time", nMinesActivityTime_, CheckValueGreaterOrEqual( 0  ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
-    archive.ReadField( "density"      , rMinesDensity_     , CheckValueGreaterOrEqual( 0. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
+    MIL_RealObject_ABC::Initialize( xis );
+
+    xis >> optional() >> content( "activity-time", nMinesActivityTime_ );
+    if( nMinesActivityTime_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "nMinesActivityTime_ is not greater or equal to 0 " );
+
+    xis >> optional() >> content( "density", rMinesDensity_ );
+    if( rMinesDensity_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rMinesDensity is not greater or equal to 0 " );
+
     rSizeCoef_                       = MIL_Tools::ConvertSimToMeter(  GetLocalisation().GetLength() ); // Coef      : tps construction/destruction au m
     nFullNbrDotationForConstruction_ = std::max( (uint)1, (uint)( rMinesDensity_ * rSizeCoef_ ) );
 }

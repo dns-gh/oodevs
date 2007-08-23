@@ -18,6 +18,10 @@
 
 #include "hla/Deserializer.h"
 
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+
 BOOST_CLASS_EXPORT_GUID( MIL_SiteFranchissement, "MIL_SiteFranchissement" )
 
 //=============================================================================
@@ -81,14 +85,14 @@ void MIL_SiteFranchissement::serialize( Archive& file, const uint )
 // Name: MIL_SiteFranchissement::WriteSpecificAttributes
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void MIL_SiteFranchissement::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
+void MIL_SiteFranchissement::WriteSpecificAttributes( xml::xostream& xos ) const
 {
-    archive.Section( "specific-attributes" );
-    archive.WriteField( "width"              , rWidth_ );
-    archive.WriteField( "depth"              , rDepth_ );
-    archive.WriteField( "speed"              , rCurrentSpeed_ );
-    archive.WriteField( "construction-needed", bBanksToFitOut_ );   
-    archive.EndSection(); // specific-attributes
+    xos << start( "specific-attributes" )
+            << content( "width", rWidth_ )
+            << content( "depth", rDepth_ )
+            << content( "speed", rCurrentSpeed_ )
+            << content( "construction-needed", bBanksToFitOut_ )
+        << end(); // specific-attributes
 }
 
 //=============================================================================
@@ -108,16 +112,26 @@ bool MIL_SiteFranchissement::Initialize( const MIL_ObstacleType& obstacleType, D
 // Name: MIL_SiteFranchissement::Initialize
 // Created: NLD 2003-07-21
 //-----------------------------------------------------------------------------
-void MIL_SiteFranchissement::Initialize( MIL_InputArchive& archive )
+void MIL_SiteFranchissement::Initialize( xml::xistream& xis )
 {
-    MIL_RealObject_ABC::Initialize( archive );
+    MIL_RealObject_ABC::Initialize( xis );
 
-    archive.Section( "specific-attributes" );
-    archive.ReadField( "width"              , rWidth_, CheckValueGreater( 0. ) );
-    archive.ReadField( "depth"              , rDepth_, CheckValueGreater( 0. ) );
-    archive.ReadField( "speed"              , rCurrentSpeed_, CheckValueGreaterOrEqual( 0. ) );
-    archive.ReadField( "construction-needed", bBanksToFitOut_ );   
-    archive.EndSection(); // specific-attributes
+    xis >> start( "specific-attributes" )
+            >> attribute( "width", rWidth_ )
+            >> attribute( "depth", rDepth_ )
+            >> attribute( "speed", rCurrentSpeed_ )
+            >> attribute( "construction-needed", bBanksToFitOut_ )
+        >> end();
+
+    if( rWidth_ <= 0. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rWidth_ is not greater than 0 " );
+
+    if( rDepth_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rDepth_ is not greater than 0 " );
+
+    if( rCurrentSpeed_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rCurrentSpeed_ is not greater or equal to 0 " );
+
 }
 
 // -----------------------------------------------------------------------------

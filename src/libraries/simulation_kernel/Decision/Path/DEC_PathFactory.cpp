@@ -11,6 +11,9 @@
 #include "DEC_PathFactory.h"
 #include "Agent/DEC_Agent_PathClass.h"
 #include "Population/DEC_Population_PathClass.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 DEC_PathFactory* DEC_PathFactory::pInstance_;
 
@@ -18,10 +21,10 @@ DEC_PathFactory* DEC_PathFactory::pInstance_;
 // Name: DEC_PathFactory::Initialize
 // Created: SBO 2006-03-27
 // -----------------------------------------------------------------------------
-void DEC_PathFactory::Initialize( MIL_InputArchive& archive )
+void DEC_PathFactory::Initialize( xml::xistream& xis )
 {
     if( !pInstance_ )
-        pInstance_ = new DEC_PathFactory( archive );
+        pInstance_ = new DEC_PathFactory( xis );
 }
     
 // -----------------------------------------------------------------------------
@@ -48,12 +51,10 @@ const DEC_PathFactory& DEC_PathFactory::GetInstance()
 // Name: DEC_PathFactory constructor
 // Created: SBO 2006-03-27
 // -----------------------------------------------------------------------------
-DEC_PathFactory::DEC_PathFactory( MIL_InputArchive& archive )
+DEC_PathFactory::DEC_PathFactory( xml::xistream& xis )
 {
-    archive.Section( "Rules" );
-        DEC_Agent_PathClass     ::Initialize( archive );
-        DEC_Population_PathClass::Initialize( archive );
-    archive.EndSection(); // Rules
+    DEC_Agent_PathClass     ::Initialize( xis );
+    DEC_Population_PathClass::Initialize( xis );
 }
     
 // -----------------------------------------------------------------------------

@@ -16,6 +16,11 @@
 
 #include "DEC_Model_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_PionMissionType;
 
 // =============================================================================
@@ -26,7 +31,7 @@ class DEC_ModelPion : public DEC_Model_ABC< MIL_PionMissionType >
     MT_COPYNOTALLOWED( DEC_ModelPion );
 
 public:
-    DEC_ModelPion( const DEC_Workspace& decWorkspace, const std::string& strName, MIL_InputArchive& input, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strArchivePath );
+    DEC_ModelPion( const DEC_Workspace& decWorkspace, const std::string& strName, xml::xistream& xis, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strArchivePath );
     virtual ~DEC_ModelPion();
 };
 

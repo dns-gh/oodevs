@@ -19,6 +19,9 @@
 #include "PHY_DotationCategory.h"
 #include "PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_SupplyDotationRequestContainer.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 BOOST_CLASS_EXPORT_GUID( PHY_DotationGroup, "PHY_DotationGroup" )
 
@@ -128,27 +131,27 @@ void PHY_DotationGroup::save( MIL_CheckPointOutArchive& file, const uint ) const
 // Name: PHY_DotationGroup::ReadValues
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-void PHY_DotationGroup::ReadValues( MIL_InputArchive& archive, const PHY_DotationCategory& category )
+void PHY_DotationGroup::ReadValues( xml::xistream& xis, const PHY_DotationCategory& category )
 {
     PHY_Dotation* pDotation = GetDotation( category );
     if( !pDotation )        
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation" ); // $$$$ ABL 2007-07-10: error context
 
-    pDotation->ReadValue( archive );
+    pDotation->ReadValue( xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroup::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void PHY_DotationGroup::WriteODB( MT_XXmlOutputArchive& archive ) const
+void PHY_DotationGroup::WriteODB( xml::xostream& xos ) const
 {
     for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
     {
-        archive.Section( "dotation" );
-        archive.WriteAttribute( "name"    , it->first->GetName() );
-        archive.WriteAttribute( "quantity", it->second->GetValue() );
-        archive.EndSection(); // dotation
+        xos << start( "dotation" )
+                << attribute( "name", it->first->GetName() )
+                << attribute( "quantity", it->second->GetValue() )
+            << end(); // dotation
     }
 }
 

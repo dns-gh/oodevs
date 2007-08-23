@@ -21,6 +21,11 @@
 
 #include "game_asn/Asn.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_WeaponType;
 class PHY_Weapon;
 class PHY_SensorType;
@@ -52,12 +57,12 @@ class PHY_ComposanteTypePion : public PHY_ComposanteType_ABC
     MT_COPYNOTALLOWED( PHY_ComposanteTypePion )
 
 public:
-             PHY_ComposanteTypePion( const MIL_Time_ABC& time, const std::string& strName, MIL_InputArchive& archive );
+             PHY_ComposanteTypePion( const MIL_Time_ABC& time, const std::string& strName, xml::xistream& xis );
     virtual ~PHY_ComposanteTypePion();
 
     //! @name Static initialization
     //@{
-    static void Initialize( const MIL_Time_ABC& time, MIL_InputArchive& archive );
+    static void Initialize( const MIL_Time_ABC& time, xml::xistream& xis );
     static void Terminate ();
 
     static const PHY_ComposanteTypePion* Find( const std::string& strName );
@@ -220,12 +225,13 @@ private:
 
     typedef std::vector< bool > T_WoundCapabilityVector;
 
+    friend struct sSummarizer;
     struct sBreakdownTypeProbability
     {
         sBreakdownTypeProbability( const PHY_BreakdownType& breakdown, MT_Float rProbabilityBound );
-        
+
         const PHY_BreakdownType* pBreakdownType_;
-              MT_Float           rProbabilityBound_;         
+              MT_Float           rProbabilityBound_;
     };
     typedef std::vector< sBreakdownTypeProbability >         T_BreakdownTypeProbabilityVector;
     typedef T_BreakdownTypeProbabilityVector::const_iterator CIT_BreakdownTypeProbabilityVector;
@@ -234,25 +240,46 @@ private:
 private:
     //! @name Init
     //@{
-    void InitializeWeapons                ( MIL_InputArchive& archive );
-    void InitializeTransport              ( MIL_InputArchive& archive );
-    void InitializeSensors                ( MIL_InputArchive& archive );
-    void InitializeRadars                 ( MIL_InputArchive& archive );
-    void InitializeObjects                ( MIL_InputArchive& archive );
-    void InitializeConsumptions           ( MIL_InputArchive& archive );
-    void InitializeLogistic               ( MIL_InputArchive& archive );
-    void InitializeLogisticMaintenance    ( MIL_InputArchive& archive );
-    void InitializeLogisticMedical        ( MIL_InputArchive& archive ); 
-    void InitializeLogisticSupply         ( MIL_InputArchive& archive );
-    void InitializeBreakdownTypes         ( MIL_InputArchive& archive );
-    void InitializeRandomBreakdownTypes   ( MIL_InputArchive& archive );
-    void InitializeAttritionBreakdownTypes( MIL_InputArchive& archive );
-    bool ReadWoundCapabilities            ( MIL_InputArchive& archive, T_WoundCapabilityVector& container ) const;
+    void InitializeWeapons                ( xml::xistream& xis );
+    void InitializeTransport              ( xml::xistream& xis );
+    void InitializeSensors                ( xml::xistream& xis );
+    void InitializeRadars                 ( xml::xistream& xis );
+    void InitializeObjects                ( xml::xistream& xis );
+    void InitializeConsumptions           ( xml::xistream& xis );
+    void InitializeLogistic               ( xml::xistream& xis );
+    void InitializeLogisticMaintenance    ( xml::xistream& xis );
+    void InitializeLogisticMedical        ( xml::xistream& xis ); 
+    void InitializeLogisticSupply         ( xml::xistream& xis );
+    void InitializeBreakdown              ( xml::xistream& xis );
+    void InitializeRandomBreakdownTypes   ( xml::xistream& xis );
+    void InitializeAttritionBreakdownTypes( xml::xistream& xis );
+    bool ReadWoundCapabilities            ( xml::xistream& xis, T_WoundCapabilityVector& container, const std::string attributeName ) const;
     //@}
     
     //! @name Tools
     //@{
     const PHY_BreakdownType& GetBreakdownType( const T_BreakdownTypeProbabilityVector& probasVector ) const;
+    //@}
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadElement      ( xml::xistream& xis, const MIL_Time_ABC& time );
+    void InitializeBreakdownTypes( xml::xistream& xis );
+    void ReadWeaponSystem        ( xml::xistream& xis );
+    void ReadSensor              ( xml::xistream& xis );
+    void ReadRadar               ( xml::xistream& xis );
+    void ReadTransportCrew       ( xml::xistream& xis );
+    void ReadTransportUnit       ( xml::xistream& xis );
+    void ReadObject              ( xml::xistream& xis );
+    void ReadConsumption         ( xml::xistream& xis );
+    void ReadMaintenance         ( xml::xistream& xis );
+    void ReadTowing              ( xml::xistream& xis );
+    void ReadRepairing           ( xml::xistream& xis );
+    void ReadLogistic            ( xml::xistream& xis );
+    void ReadSupply              ( xml::xistream& xis );
+    void ReadRelieving           ( xml::xistream& xis );
+    void ReadCollecting          ( xml::xistream& xis );
+    void ReadCaring              ( xml::xistream& xis );
     //@}
 
 private:

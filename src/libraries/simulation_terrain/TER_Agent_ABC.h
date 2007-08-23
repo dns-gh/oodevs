@@ -52,7 +52,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual	const MT_Vector2D& GetPosition() const = 0;
+    virtual    const MT_Vector2D& GetPosition() const = 0;
 
     void UpdatePatch    ();
     void RemoveFromPatch();

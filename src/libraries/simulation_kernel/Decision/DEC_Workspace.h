@@ -9,6 +9,11 @@
 
 #include "DEC_Debug.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class DEC_ModelPion;
 class DEC_ModelAutomate;
 class DEC_ModelPopulation;
@@ -24,11 +29,11 @@ class DEC_Workspace
      
 public:
      DEC_Workspace( MIL_Config& config );
-	~DEC_Workspace();
+    ~DEC_Workspace();
 
     //! @name Fonction dia
     //@{
-	virtual float GetTime() const;
+    virtual float GetTime() const;
     //@}
 
     //! @name Models management
@@ -53,9 +58,9 @@ private:
     void InitializeConfig      ( MIL_Config& config );
     void InitializeMissions    ( MIL_Config& config );
     void InitializeDIA         ( MIL_Config& config );
-    void InitializeDIATypes    ( MIL_InputArchive& initArchive, bool& bNeedScriptParsing, const std::string& strBinaryPath );
-    void InitializeDIAWorkspace( MIL_InputArchive& initArchive, bool& bNeedScriptParsing, const std::string& strBinaryPath );
-    void InitializeModels      ( MIL_Config&       config     , bool  bNeedScriptParsing, const std::string& strBinaryPath );   
+    void InitializeDIATypes    ( xml::xistream& xis, bool& bNeedScriptParsing, const std::string& strBinaryPath );
+    void InitializeDIAWorkspace( xml::xistream& xis, bool& bNeedScriptParsing, const std::string& strBinaryPath );
+    void InitializeModels      ( MIL_Config& config, bool  bNeedScriptParsing, const std::string& strBinaryPath );   
     //@}
 
 private:
@@ -69,6 +74,13 @@ private:
 
     typedef std::map< std::string, const DEC_ModelPopulation*, sCaseInsensitiveLess > T_ModelPopulationMap;
     typedef T_ModelPopulationMap::const_iterator                                      CIT_ModelPopulationMap;
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadUnit      ( xml::xistream& xis, bool bNeedScriptParsing, MIL_Config& config, const std::string& strBinaryPath );
+    void ReadAutomat   ( xml::xistream& xis, bool bNeedScriptParsing, MIL_Config& config, const std::string& strBinaryPath );
+    void ReadPopulation( xml::xistream& xis, bool bNeedScriptParsing, MIL_Config& config, const std::string& strBinaryPath );
     //@}
 
 private:

@@ -17,6 +17,11 @@
 #include "PHY_DotationCategory_IndirectFire_ABC.h"
 #include "MT_Tools/MT_Random.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 // @class  PHY_DotationCategory_IndirectFire
 // Created: JVT 2004-08-03
@@ -26,12 +31,12 @@ class PHY_DotationCategory_IndirectFire : public PHY_DotationCategory_IndirectFi
     MT_COPYNOTALLOWED( PHY_DotationCategory_IndirectFire )
 
 public:
-    PHY_DotationCategory_IndirectFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, MIL_InputArchive& archive );
+    PHY_DotationCategory_IndirectFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
     virtual ~PHY_DotationCategory_IndirectFire();
 
     //! @name 
     //@{
-    static PHY_DotationCategory_IndirectFire_ABC& Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, MIL_InputArchive& archive );
+    static PHY_DotationCategory_IndirectFire_ABC& Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
     //@}
 
     //! @name Operations
@@ -45,6 +50,10 @@ private:
     //@{
     typedef std::vector< MT_Float >     T_PhVector;
     typedef T_PhVector::const_iterator  CIT_PhVector;
+    //@}
+    //! @name Helpers
+    //@{
+    void ReadPh( xml::xistream& xis );
     //@}
 
 private:

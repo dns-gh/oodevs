@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xostream;
+}
+
 class PHY_DotationCategory;
 class PHY_IndirectFireDotationClass;
 class PHY_FireResults_ABC;
@@ -29,7 +34,7 @@ class PHY_DotationCategory_IndirectFire_ABC
     MT_COPYNOTALLOWED( PHY_DotationCategory_IndirectFire_ABC )
 
 public:
-    PHY_DotationCategory_IndirectFire_ABC( const PHY_IndirectFireDotationClass& category, const PHY_DotationCategory& dotationCategory, MIL_InputArchive& archive );
+    PHY_DotationCategory_IndirectFire_ABC( const PHY_IndirectFireDotationClass& category, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
     virtual ~PHY_DotationCategory_IndirectFire_ABC();
 
     //! @name Accessors

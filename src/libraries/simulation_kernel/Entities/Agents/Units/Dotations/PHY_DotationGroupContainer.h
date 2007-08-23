@@ -14,6 +14,12 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xostream;
+    class xistream;
+}
+
 class PHY_DotationType;
 class PHY_DotationGroup;
 class PHY_DotationCategory;
@@ -45,8 +51,8 @@ public:
     
     //! @name Init
     //@{
-    void ReadValues( MIL_InputArchive& archive );
-    void WriteODB  ( MT_XXmlOutputArchive& archive ) const;
+    void ReadValues( xml::xistream& xis );
+    void WriteODB  ( xml::xostream& xos ) const;
     //@}
 
     //! @name Operations
@@ -97,6 +103,11 @@ private:
     //@{
     PHY_DotationGroup* GetDotationGroup   ( const PHY_DotationType& dotationType ) const;
     PHY_DotationGroup& CreateDotationGroup( const PHY_DotationType& dotationType );
+    //@}
+    //! @name Helpers
+    //@{
+    void ReadDotations( xml::xistream& xis );
+    void ReadDotation ( xml::xistream& xis );
     //@}
 
 public:

@@ -153,12 +153,6 @@ private:
         return badString;
     }
 
-    //! @name Tools
-    //@{
-    static MT_Float GetMeterPerPixel            ();
-    static MT_Float GetMeterSquarePerPixelSquare();
-    //@}
-
 private:
     static converter< PHY_RawVisionData::E_VisionObject > environnementConverter_[];
   

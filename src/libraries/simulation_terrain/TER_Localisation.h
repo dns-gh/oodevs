@@ -13,15 +13,17 @@
 #define __TER_Localisation_h_
 
 #include "TER.h"
-
 #include "TER_Polygon.h"
 #include "MT_Tools/MT_Polyline.h"
-#include "MT_Tools/MT_Circle.h"
 
-template< typename T > class MT_InputArchive_Logger;
-class MT_XXmlInputArchive;
+namespace xml
+{
+    class xistream;
+    class xostream;
+}
 
 class MT_Circle;
+class MT_Rect;
 
 //=============================================================================
 // Created: NLD 2003-07-22
@@ -74,9 +76,10 @@ public:
     void Reset( const MT_Vector2D& vPos );
     bool Reset( const T_PointVector& pointVector );
     bool Reset( const T_PointList&   pointList   );
-    void Read ( MT_InputArchive_Logger< MT_XXmlInputArchive >& archive );
-    void Write( MT_OutputArchive_ABC& archive ) const;
+    void Read ( xml::xistream& xis ) ;
+    void Write( xml::xostream& xos ) const;
     //@}
+
 
     //-------------------------------------------------------------------------
     /** @name Operators */
@@ -150,6 +153,11 @@ private:
     bool InitializeEllipse  ();
 
     void InitializeBoundingBox( CT_PointVector& pointVector );
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadPoint( xml::xistream& xis );
     //@}
     
 protected:

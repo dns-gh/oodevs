@@ -13,8 +13,12 @@
 #define __PHY_Convoy_ABC_h_
 
 #include "MIL.h"
-
 #include "MT_Tools/MT_InterpolatedFunction.h"
+
+namespace xml
+{
+    class xistream;
+}
 
 class PHY_SupplyConsign_ABC;
 class PHY_ComposantePion;
@@ -36,7 +40,7 @@ class PHY_Convoy_ABC
 public:
     //! @name 
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( xml::xistream& xis );
     static void Terminate ();
     //@}
 
@@ -92,11 +96,17 @@ private:
 private:
     //! @name Initialization
     //@{
-    static void InitializeConvoyUnitType( MIL_InputArchive& archive );
-    static void InitializeConvoyMission ( MIL_InputArchive& archive );
+    static void InitializeConvoyUnitType( xml::xistream& xis );
+    static void InitializeConvoyMission ( xml::xistream& xis );
 
-    static void InitializeInterpolatedTime ( MIL_InputArchive& archive, const std::string& strTagName, MT_InterpolatedFunction< MT_Float >& data );
-    static void InitializeSpeedModificators( MIL_InputArchive& archive );
+    static void InitializeInterpolatedTime ( xml::xistream& xis, const std::string& strTagName, MT_InterpolatedFunction< MT_Float >& data );
+    static void InitializeSpeedModificators( xml::xistream& xis );
+    //@}
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< MT_Float >& data, std::pair< uint, MT_Float >& upperBound );
+    static void ReadSpeedModifier( xml::xistream& xis, std::pair< uint, MT_Float >& upperBound );
     //@}
 
 protected:

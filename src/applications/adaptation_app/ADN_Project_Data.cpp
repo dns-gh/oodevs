@@ -15,9 +15,7 @@
 #include "ADN_Workspace.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_Resources.h"
-#include "ADN_Xml_Exception.h"
 #include "ADN_SaveFile_Exception.h"
-#include "ADN_XmlInput_Helper.h"
 #include "ADN_DataException.h"
 
 #include <windows.h>
@@ -34,40 +32,57 @@ ADN_Project_Data::DataInfos::DataInfos()
     // NOTHING
 }
 
+namespace 
+{
+    void ReadFile( xml::xistream& input, const std::string& file, ADN_Type_String& outfile )
+    {
+        input >> xml::start( file )
+                >> xml::attribute( "file", outfile )
+              >> xml::end();
+    }
+
+    void WriteFile( xml::xostream& output, const std::string& file, ADN_Type_String& outfile )
+    {
+        output << xml::start( file )
+                 << xml::attribute( "file", outfile )
+               << xml::end();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DataInfos::ReadArchive
 // Created: APE 2004-11-17
 // -----------------------------------------------------------------------------
-void ADN_Project_Data::DataInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section("physical");
-    input.ReadField( "Decisionnel", szDecisional_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Volumes", szSizes_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Protections", szArmors_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "DotationNatures", szDotationNatures_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Objets", szObjects_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Dotations", szEquipements_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Lanceurs", szLaunchers_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Armements", szWeapons_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Capteurs", szSensors_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Composantes", szComponents_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Pions", szUnits_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Automates", szAutomata_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "NBC", szNBC_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Sante", szHealth_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "ClasseIDs", szIDs_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "FacteursHumains", szHumanFactors_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Pannes", szBreakdowns_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "GroupesConnaissance", szKnowledgeGroups_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Maintenance", szMaintenance_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Ravitaillement", szSupply_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Communications", szCom_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Populations", szPopulation_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "ComptesRendus", szReports_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "PathFinder", szPathfinder_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Modeles", szModels_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Missions", szMissions_, ADN_XmlInput_Helper::eThrow );
-    input.EndSection();   // physical
+    input >> xml::start( "physical" );
+    ReadFile( input, "decisional", szDecisional_ );
+    ReadFile( input, "volumes", szSizes_ );
+    ReadFile( input, "protections", szArmors_ );
+    ReadFile( input, "dotation-natures", szDotationNatures_ );
+    ReadFile( input, "objects", szObjects_ );
+    ReadFile( input, "dotations", szEquipements_ );
+    ReadFile( input, "launchers", szLaunchers_ );
+    ReadFile( input, "weapon-systems", szWeapons_ );
+    ReadFile( input, "sensors", szSensors_ );
+    ReadFile( input, "components", szComponents_ );
+    ReadFile( input, "units", szUnits_);
+    ReadFile( input, "automats", szAutomata_);
+    ReadFile( input, "nbc", szNBC_);
+    ReadFile( input, "health", szHealth_);
+    ReadFile( input, "classeids", szIDs_);
+    ReadFile( input, "human-factors", szHumanFactors_);
+    ReadFile( input, "breakdowns", szBreakdowns_);
+    ReadFile( input, "knowledge-groups", szKnowledgeGroups_);
+    ReadFile( input, "maintenance", szMaintenance_);
+    ReadFile( input, "supply", szSupply_);
+    ReadFile( input, "communications", szCom_);
+    ReadFile( input, "populations", szPopulation_);
+    ReadFile( input, "reports", szReports_);
+    ReadFile( input, "pathfinder", szPathfinder_);
+    ReadFile( input, "models", szModels_);
+    ReadFile( input, "missions", szMissions_);
+    input >> xml::end();
 }
 
 
@@ -75,36 +90,36 @@ void ADN_Project_Data::DataInfos::ReadArchive( ADN_XmlInput_Helper& input )
 // Name: DataInfos::WriteArchive
 // Created: APE 2004-11-17
 // -----------------------------------------------------------------------------
-void ADN_Project_Data::DataInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section("physical");
-    output.WriteField( "Decisionnel", szDecisional_.GetData() );
-    output.WriteField( "Volumes", szSizes_.GetData() );
-    output.WriteField( "Protections", szArmors_.GetData() );
-    output.WriteField( "DotationNatures", szDotationNatures_.GetData() );
-    output.WriteField( "Objets", szObjects_.GetData() );
-    output.WriteField( "Dotations", szEquipements_.GetData() );
-    output.WriteField( "Lanceurs", szLaunchers_.GetData() );
-    output.WriteField( "Armements", szWeapons_.GetData() );
-    output.WriteField( "Capteurs", szSensors_.GetData() );
-    output.WriteField( "Composantes", szComponents_.GetData() );
-    output.WriteField( "Pions", szUnits_.GetData() );
-    output.WriteField( "Automates", szAutomata_.GetData() );
-    output.WriteField( "NBC", szNBC_.GetData() );
-    output.WriteField( "Sante", szHealth_.GetData() );
-    output.WriteField( "ClasseIDs", szIDs_.GetData() );
-    output.WriteField( "FacteursHumains", szHumanFactors_.GetData() );
-    output.WriteField( "Pannes", szBreakdowns_.GetData() );
-    output.WriteField( "GroupesConnaissance", szKnowledgeGroups_.GetData() );
-    output.WriteField( "Maintenance", szMaintenance_.GetData() );
-    output.WriteField( "Ravitaillement", szSupply_.GetData() );
-    output.WriteField( "Communications", szCom_.GetData() );
-    output.WriteField( "PathFinder", szPathfinder_.GetData() );
-    output.WriteField( "Populations", szPopulation_.GetData() );
-    output.WriteField( "ComptesRendus", szReports_.GetData() );
-    output.WriteField( "Modeles", szModels_.GetData() );
-    output.WriteField( "Missions", szMissions_.GetData() );
-    output.EndSection();   // physical
+    output << xml::start( "physical" );
+    WriteFile( output, "decisional", szDecisional_ );
+    WriteFile( output, "volumes", szSizes_ );
+    WriteFile( output, "protections", szArmors_ );
+    WriteFile( output, "dotation-natures", szDotationNatures_ );
+    WriteFile( output, "objects", szObjects_ );
+    WriteFile( output, "dotations", szEquipements_ );
+    WriteFile( output, "launchers", szLaunchers_ );
+    WriteFile( output, "weapon-systems", szWeapons_ );
+    WriteFile( output, "sensors", szSensors_ );
+    WriteFile( output, "components", szComponents_ );
+    WriteFile( output, "units", szUnits_ );
+    WriteFile( output, "automats", szAutomata_ );
+    WriteFile( output, "nbc", szNBC_ );
+    WriteFile( output, "health", szHealth_ );
+    WriteFile( output, "classeids", szIDs_ );
+    WriteFile( output, "human-factors", szHumanFactors_ );
+    WriteFile( output, "breakdowns", szBreakdowns_ );
+    WriteFile( output, "knowledge-groups", szKnowledgeGroups_ );
+    WriteFile( output, "maintenance", szMaintenance_ );
+    WriteFile( output, "supply", szSupply_ );
+    WriteFile( output, "communications", szCom_ );
+    WriteFile( output, "pathfinder", szPathfinder_ );
+    WriteFile( output, "populations", szPopulation_ );
+    WriteFile( output, "reports", szReports_ );
+    WriteFile( output, "models", szModels_ );
+    WriteFile( output, "missions", szMissions_ );
+    output << xml::end();
 }
 
 //-----------------------------------------------------------------------------
@@ -267,8 +282,7 @@ void ADN_Project_Data::Reset()
     assert( ! szFile_.GetFileName().GetData().empty() );
 
     // load default parameters (included has resource)
-    ADN_XmlInput_Helper defaultFile;
-    defaultFile.SetData( physicalXml );
+    xml::xistringstream defaultFile( physicalXml );
     ReadArchive( defaultFile );
 }
 
@@ -281,25 +295,9 @@ void ADN_Project_Data::Load()
     assert( ! szFile_.GetFileName().GetData().empty() );
 
     // Read main file
-    ADN_XmlInput_Helper input;
-
-    if( !input.Open(szFile_.GetFileNameFull(), ADN_XmlInput_Helper::eNothing ) )
-        throw ADN_OpenFile_Exception( szFile_.GetFileNameFull() );
-
-    try
-    {
-        dataInfos_.ReadArchive( input );
-    }
-    catch( ADN_Xml_Exception& xmlException )
-    {
-        throw ADN_Xml_Exception( szFile_.GetFileNameFull(), xmlException.GetContext(), xmlException.GetErrorMessage() );
-    }
-    catch( MT_ArchiveLogger_Exception& xmlException )
-    {
-        throw ADN_DataException( "", xmlException.what() );
-    }
+    xml::xifstream input( szFile_.GetFileNameFull() );
+    dataInfos_.ReadArchive( input );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Project_Data::Save
@@ -309,21 +307,14 @@ void ADN_Project_Data::Save()
 {
     assert( ! szFile_.GetFileName().GetData().empty() );
 
-    // Save the scipio file.
-    MT_XXmlOutputArchive output;
-    dataInfos_.WriteArchive( output );
-
     std::string szFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()  + szFile_.GetFileName().GetData();
     ADN_Tools::CreatePathToFile( szFile );
-    if( ! output.WriteToFile( szFile ) )
-        throw ADN_SaveFile_Exception( szFile );
-
-    // Save the Id file (from static resource)
-    MT_TextOutputArchive idsOutput;
-    idsOutput.GetOutputStream() << idClassesXml;
+    xml::xofstream output( szFile );
+    dataInfos_.WriteArchive( output );
 
     std::string szIdsFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() + dataInfos_.szIDs_.GetData();
     ADN_Tools::CreatePathToFile( szIdsFile );
-    if( ! idsOutput.WriteToFile( szIdsFile ) )
-        throw ADN_SaveFile_Exception( szIdsFile );
+    std::ofstream idsOutput( szIdsFile.c_str() );
+    idsOutput << idClassesXml;
+    idsOutput.close();
 }

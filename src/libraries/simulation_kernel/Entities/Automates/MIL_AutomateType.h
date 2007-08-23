@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_AgentTypePion;
 class MIL_Automate;
 class MIL_Formation;
@@ -28,22 +33,22 @@ class MIL_AutomateType
     MT_COPYNOTALLOWED( MIL_AutomateType )
 
 public:
-    MIL_AutomateType( const std::string& strName, MIL_InputArchive& archive );
+    MIL_AutomateType( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AutomateType();
 
     //! @name Manager
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( xml::xistream& xis );
     static void Terminate ();
 
     static const MIL_AutomateType* FindAutomateType( const std::string& strName );
     static const MIL_AutomateType* FindAutomateType( uint nID );
-    static const MIL_AutomateType* Create          ( const std::string& strName, MIL_InputArchive& archive );
+    static const MIL_AutomateType* Create          ( const std::string& strName, xml::xistream& xis );
     //@}
 
     //! @name Instanciation
     //@{
-    virtual MIL_Automate& InstanciateAutomate( uint nID, MIL_Formation& formation, MIL_InputArchive& archive ) const;
+    virtual MIL_Automate& InstanciateAutomate( uint nID, MIL_Formation& formation, xml::xistream& xis ) const;
     //@}
 
     //! @name Accessors
@@ -73,7 +78,7 @@ private:
     typedef std::map< std::string, const MIL_AutomateType*, sCaseInsensitiveLess > T_AutomateTypeMap;
     typedef T_AutomateTypeMap::const_iterator                                      CIT_AutomateTypeMap;
 
-    typedef const MIL_AutomateType* (*T_AutomateTypeAllocator)( const std::string& strName, MIL_InputArchive& archive );
+    typedef const MIL_AutomateType* (*T_AutomateTypeAllocator)( const std::string& strName, xml::xistream& xis );
 
     typedef std::map< std::string, T_AutomateTypeAllocator, sCaseInsensitiveLess > T_AutomateTypeAllocatorMap;
     typedef T_AutomateTypeAllocatorMap::const_iterator                             CIT_AutomateTypeAllocatorMap;
@@ -92,16 +97,15 @@ private:
 private:
     //! @name Init
     //@{
-    void InitializeComposition ( MIL_InputArchive& archive );
-    void InitializeRapFor      ( MIL_InputArchive& archive );
-    void InitializeModel       ( MIL_InputArchive& archive );
+    void InitializeRapFor      ( xml::xistream& xis );
+    void InitializeModel       ( xml::xistream& xis );
     void InitializeDiaFunctions();
     //@}
-
-private:
-    //! @name Tools
+    //! @name Helpers
     //@{
-    static bool ParseComposition( std::string value, sCompositionBounds& );
+    struct LoadingWrapper;
+    static void ReadAutomat( xml::xistream& xis );
+    void ReadUnit          ( xml::xistream& xis );
     //@}
 
 private:

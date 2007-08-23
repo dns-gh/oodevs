@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="missions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="units" type="T_units_pop"/>
+				<xs:element name="automats" type="T_automat"/>
+				<xs:element name="populations" type="T_units_pop"/>
+				<xs:element name="fragorders" type="T_frags"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="T_units_pop">
+		<xs:sequence>
+			<xs:element name="mission" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="parameter" minOccurs="0" maxOccurs="unbounded" type="T_param"/>
+					</xs:sequence>
+					<xs:attribute name="dia-behavior" use="required" type="xs:string"/>
+					<xs:attribute name="dia-type" use="required" type="xs:string"/>
+					<xs:attribute name="id" use="required" type="xs:integer"/>
+					<xs:attribute name="name" use="required" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="T_automat">
+		<xs:sequence>
+			<xs:element name="mission" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="parameter" minOccurs="0" maxOccurs="unbounded" type="T_param"/>
+					</xs:sequence>
+					<xs:attribute name="cdt-dia-behavior" use="required" type="xs:string"/>
+					<xs:attribute name="dia-type" use="required" type="xs:string"/>
+					<xs:attribute name="id" use="required" type="xs:integer"/>
+					<xs:attribute name="mrt-dia-behavior" use="required" type="xs:string"/>
+					<xs:attribute name="name" use="required" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="T_frags">
+		<xs:sequence>
+			<xs:element name="fragorder" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="parameter" minOccurs="0" maxOccurs="unbounded" type="T_param"/>
+					</xs:sequence>
+					<xs:attribute name="available-for-all-mission" use="required" type="xs:boolean"/>
+					<xs:attribute name="available-without-mission" use="required" type="xs:boolean"/>
+					<xs:attribute name="dia-type" use="required" type="xs:string"/>
+					<xs:attribute name="id" use="required" type="xs:integer"/>
+					<xs:attribute name="name" use="required" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="T_param">
+		<xs:sequence>
+			<xs:element name="value" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="id" use="required" type="xs:integer"/>
+					<xs:attribute name="name" use="required" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="dia-name" use="required" type="xs:string"/>
+		<xs:attribute name="name" use="required" type="xs:string"/>
+		<xs:attribute name="optional" use="required" type="xs:boolean"/>
+		<xs:attribute name="type" use="required" type="xs:string"/>
+	</xs:complexType>
+	
+</xs:schema>

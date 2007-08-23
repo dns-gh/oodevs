@@ -12,15 +12,17 @@
 #include "simulation_kernel_pch.h"
 
 #include "DEC_ModelPopulation.h"
-
 #include "Entities/Orders/MIL_PopulationMissionType.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_ModelPopulation constructor
 // Created: NLD 2003-11-24
 // -----------------------------------------------------------------------------
-DEC_ModelPopulation::DEC_ModelPopulation( const DEC_Workspace& decWorkspace, const std::string& strName, MIL_InputArchive& input, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath )
-    : DEC_Model_ABC< MIL_PopulationMissionType >( decWorkspace, strName, input, bNeedParsing, bUseOnlyArchive, strBinaryPath, "populations" )
+DEC_ModelPopulation::DEC_ModelPopulation( const DEC_Workspace& decWorkspace, const std::string& strName, xml::xistream& xis, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath )
+    : DEC_Model_ABC< MIL_PopulationMissionType >( decWorkspace, strName, xis, bNeedParsing, bUseOnlyArchive, strBinaryPath, "populations" )
 {
 }
 

@@ -132,7 +132,7 @@ private:
     uint            GetCol( double ) const;
     uint            GetRow( double ) const;
     const sCell&    operator () ( uint col, uint row ) const;
-		  sCell&    operator () ( double, double );
+          sCell&    operator () ( double, double );
 
 
 

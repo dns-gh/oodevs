@@ -15,7 +15,7 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
 
-class ADN_XmlInput_Helper;
+class xml::xistream;
 
 
 //*****************************************************************************
@@ -33,8 +33,8 @@ public:
     public:
         DataInfos();
 
-        void ReadArchive( ADN_XmlInput_Helper& );
-        void WriteArchive( MT_OutputArchive_ABC& );
+        void ReadArchive( xml::xistream& );
+        void WriteArchive( xml::xostream& );
 
     public:
         ADN_Type_String szDecisional_;

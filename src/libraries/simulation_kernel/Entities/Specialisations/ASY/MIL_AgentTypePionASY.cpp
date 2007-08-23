@@ -12,13 +12,16 @@
 #include "simulation_kernel_pch.h"
 
 #include "MIL_AgentTypePionASY.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionASY constructor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AgentTypePionASY::MIL_AgentTypePionASY( const std::string& strName, MIL_InputArchive& archive )
-    : MIL_AgentTypePion( strName, archive )
+MIL_AgentTypePionASY::MIL_AgentTypePionASY( const std::string& strName, xml::xistream& xis )
+    : MIL_AgentTypePion( strName, xis )
 {
 }
 

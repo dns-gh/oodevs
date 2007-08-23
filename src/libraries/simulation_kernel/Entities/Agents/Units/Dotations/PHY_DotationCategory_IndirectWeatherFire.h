@@ -16,6 +16,11 @@
 
 #include "PHY_DotationCategory_IndirectFire_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 // @class  PHY_DotationCategory_IndirectWeatherFire
 // Created: JVT 2004-08-03
@@ -25,12 +30,12 @@ class PHY_DotationCategory_IndirectWeatherFire : public PHY_DotationCategory_Ind
     MT_COPYNOTALLOWED( PHY_DotationCategory_IndirectWeatherFire )
 
 public:
-    PHY_DotationCategory_IndirectWeatherFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, MIL_InputArchive& archive );
+    PHY_DotationCategory_IndirectWeatherFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
     virtual ~PHY_DotationCategory_IndirectWeatherFire();
 
     //! @name 
     //@{
-    static PHY_DotationCategory_IndirectFire_ABC& Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, MIL_InputArchive& archive );
+    static PHY_DotationCategory_IndirectFire_ABC& Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
     //@}
 
     //! @name Operations

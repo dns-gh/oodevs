@@ -18,6 +18,9 @@
 #include "PHY_DotationType.h"
 #include "PHY_DotationCategory.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 BOOST_CLASS_EXPORT_GUID( PHY_Dotation, "PHY_Dotation" )
 
@@ -110,10 +113,12 @@ void PHY_Dotation::save( MIL_CheckPointOutArchive& file, const uint ) const
 // Name: PHY_Dotation::ReadValue
 // Created: NLD 2005-01-21
 // -----------------------------------------------------------------------------
-void PHY_Dotation::ReadValue( MIL_InputArchive& archive )
+void PHY_Dotation::ReadValue( xml::xistream& xis )
 {
     MT_Float rValue;
-    archive.ReadAttribute( "quantity", rValue, CheckValueGreaterOrEqual( 0. ) );
+    xis >> attribute( "quantity", rValue );
+    if( rValue < 0. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rValue is not greater or equal to 0." );
 
     if( rValue > rCapacity_ )
     {

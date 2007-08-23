@@ -44,8 +44,6 @@ public:
     void MosToSimMgrsCoord( const std::string& strMgrs, MT_Vector2D& pos ) const;
     void SimToMosMgrsCoord( const MT_Vector2D& pos, std::string& strMgrs ) const;
 
-    MT_Float GetMeterPerPixel() const; // $$$$ AGE 2005-01-31: 
-    MT_Float GetMeterSquarePerPixelSquare() const;
     MT_Float GetWeldValue() const;
     MT_Float GetWidth    () const;
     MT_Float GetHeight   () const;
@@ -74,26 +72,6 @@ private:
     std::string strDefaultMGRS_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: TER_CoordinateManager::GetMeterPerPixel
-// Created: AGE 2005-01-31
-// -----------------------------------------------------------------------------
-inline
-MT_Float TER_CoordinateManager::GetMeterPerPixel() const
-{
-    return 1;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_CoordinateManager::GetMeterSquarePerPixelSquare
-// Created: AGE 2005-01-31
-// -----------------------------------------------------------------------------
-inline
-MT_Float TER_CoordinateManager::GetMeterSquarePerPixelSquare() const
-{
-    return 1;
-}
 
 // -----------------------------------------------------------------------------
 // Name: TER_CoordinateManager::GetWeldValue

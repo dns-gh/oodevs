@@ -14,12 +14,16 @@
 #include "MIL_AgentTypePionLOGSupply.h"
 #include "MIL_AgentPionLOGSupply.h"
 
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGSupply constructor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AgentTypePionLOGSupply::MIL_AgentTypePionLOGSupply( const std::string& strName, MIL_InputArchive& archive )
-    : MIL_AgentTypePionLOG_ABC( strName, archive )
+MIL_AgentTypePionLOGSupply::MIL_AgentTypePionLOGSupply( const std::string& strName, xml::xistream& xis )
+    : MIL_AgentTypePionLOG_ABC( strName, xis )
 { 
 }
 
@@ -42,9 +46,9 @@ MIL_AgentTypePionLOGSupply::~MIL_AgentTypePionLOGSupply()
 // Name: MIL_AgentTypePionLOGSupply::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_AgentTypePionLOGSupply::InstanciatePion( uint nID, MIL_Automate& automate, MIL_InputArchive& archive ) const
+MIL_AgentPion& MIL_AgentTypePionLOGSupply::InstanciatePion( uint nID, MIL_Automate& automate, xml::xistream& xis ) const
 {
-    return *new MIL_AgentPionLOGSupply( *this, nID, automate, archive );
+    return *new MIL_AgentPionLOGSupply( *this, nID, automate, xis );
 }
 
 // -----------------------------------------------------------------------------

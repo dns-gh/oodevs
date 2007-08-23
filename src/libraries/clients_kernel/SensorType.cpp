@@ -27,14 +27,8 @@ SensorType::SensorType( const QString& name, xml::xistream& xis )
     InitializeAngle    ( xis );
     InitializeDistances( xis );
 
-    xis >> start( "ModificateursDeDistance" );
-
-    InitializePostureSourceFactors( xis );
-    InitializeWeatherFactors      ( xis );
-    InitializeLightingFactors     ( xis );
+    xis >> start( "distance-modifiers" );
     InitializeEnvironnementFactors( xis );
-    InitializePopulationFactors   ( xis );
-    
     xis >> end();
 }
 
@@ -53,43 +47,27 @@ SensorType::~SensorType()
 // -----------------------------------------------------------------------------
 void SensorType::InitializeEnvironnementFactors( xml::xistream& xis )
 {
-    xis >> start( "Environnements" )
-            >> content( "Foret", factorInForest_ )
-            >> content( "Urbain", factorInTown_ )
-            >> content( "Sol", factorInGround_ )
+    xis >> start( "terrain-modifiers" )
+            >> list( "distance-modifier", *this, &SensorType::ReadEnvironnementFactor )
         >> end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: SensorType::InitializeWeatherFactors
-// Created: JVT 2004-09-27
+// Name: SensorType::ReadEnvironnementFactor
+// Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void SensorType::InitializeWeatherFactors( xml::xistream& xis )
+void SensorType::ReadEnvironnementFactor( xml::xistream& xis )
 {
-    xis >> start( "Precipitations" );
-    for( unsigned i = 0; i < eNbrWeatherType; ++i )
-    {
-        float& rFactor = weatherFactors_[ i ];
-        xis >> content( tools::GetXmlSection( (E_WeatherType)i ), rFactor );
-    }
-    xis >> end();
+    std::string type; float value;
+    xis >> attribute( "type", type )
+        >> attribute( "value", value );
+    if( type == "Foret" )
+        factorInForest_ = value;
+    else if( type == "Urbain" )
+        factorInTown_ = value;
+    else if( type == "Sol" )
+        factorInGround_ = value;
 }
-
-// -----------------------------------------------------------------------------
-// Name: SensorType::InitializeLightingFactors
-// Created: JVT 2004-09-27
-// -----------------------------------------------------------------------------
-void SensorType::InitializeLightingFactors( xml::xistream& xis )
-{
-    xis >> start( "Eclairements" );
-    for( unsigned i = 0; i < eNbrLightingType; ++i )
-    {
-        float& rFactor = lightingFactors_[ i ];
-        xis >> content( tools::GetXmlSection( (E_LightingType)i ), rFactor );
-    }
-    xis >> end();
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: SensorType::InitializeAngle
@@ -98,13 +76,9 @@ void SensorType::InitializeLightingFactors( xml::xistream& xis )
 void SensorType::InitializeAngle( xml::xistream& xis )
 {
     std::string unit;
-    xis >> start( "Angle" ) 
-            >> rAngle_
-            >> attribute( "unite", unit )
-            >> attribute( "balayage", bScanningAllowed_ )
-        >> end();
-    if ( !::_stricmp( unit.c_str(), "degre" ) )
-        rAngle_ *= ( std::acos( -1.f ) / 180.f );
+    xis >> attribute( "angle", rAngle_ ) 
+        >> attribute( "scanning", bScanningAllowed_ );
+    rAngle_ *= ( std::acos( -1.f ) / 180.f );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,41 +87,29 @@ void SensorType::InitializeAngle( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void SensorType::InitializeDistances( xml::xistream& xis )
 {
-    xis >> content( "DistanceDeProximite", rSquareProximityDist_ );
+    xis >> start( "base-distances" )
+            >> attribute( "close-range", rSquareProximityDist_ )
+            >> list( "base-distance", *this, &SensorType::ReadDistance )
+        >> end();
     rSquareProximityDist_ *= rSquareProximityDist_;
-
-    xis >> start( "DistancesDeBase" )
-            >> content( "DD", rDetectionDist_ )
-            >> content( "DR", rRecognitionDist_ )
-            >> content( "DI", rIdentificationDist_ )
-        >> end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: SensorType::InitializePopulationFactors
-// Created: NLD 2005-10-28
+// Name: SensorType::ReadDistance
+// Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void SensorType::InitializePopulationFactors( xml::xistream& xis )
+void SensorType::ReadDistance( xml::xistream& xis )
 {
-    xis >> start( "PresencePopulation" )
-            >> attribute( "densitePopulation", rPopulationDensity_ )
-            >> attribute( "modificateur", rPopulationFactor_ )
-        >> end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: SensorType::InitializePostureSourceFactors
-// Created: NLD 2004-09-10
-// -----------------------------------------------------------------------------
-void SensorType::InitializePostureSourceFactors( xml::xistream& xis )
-{
-    xis >> start( "PosturesSource" );
-    for( unsigned i = 0; i < eNbrUnitPosture; ++i )
-    {
-        float& rFactor = postureSourceFactors_[ i ];
-        xis >> content( tools::GetXmlSection( (E_UnitPosture)i ), rFactor );
-    }
-    xis >> end();
+    std::string level;
+    float distance;
+    xis >> attribute( "level",    level )
+        >> attribute( "distance", distance );
+    if( level == "identification" )
+        rIdentificationDist_ = distance;
+    else if( level == "recognition" )
+        rRecognitionDist_ = distance;
+    else if( level == "detection" )
+        rDetectionDist_ = distance;
 }
 
 // -----------------------------------------------------------------------------

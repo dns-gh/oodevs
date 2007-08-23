@@ -12,6 +12,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 // Created: NLD 2006-08-02
 // =============================================================================
@@ -20,7 +25,7 @@ class PHY_MaintenanceResourcesAlarms
 public:
     //! @name Initialization
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( xml::xistream& xis );
     static void Terminate ();
     //@}
 
@@ -31,18 +36,22 @@ public:
     //@}
 
 private:
+    //! @name Constructors/Destructor
+    //@{
+     PHY_MaintenanceResourcesAlarms();
+    ~PHY_MaintenanceResourcesAlarms();
+    //@}
+
     //! @name Types
     //@{
-    typedef std::set< MT_Float >       T_LevelSet;
+    typedef std::set< MT_Float >         T_LevelSet;
     typedef T_LevelSet::const_iterator CIT_LevelSet;
     //@}
 
-private:
-     PHY_MaintenanceResourcesAlarms();
-    ~PHY_MaintenanceResourcesAlarms();
-
-    //! @name Tools
+    //! @name Helpers
     //@{
+    struct LoadingWrapper;
+    static void ReadResource( xml::xistream& xis );
     static bool IsLevelReached( const T_LevelSet& levels, MT_Float rPreviousRatio, MT_Float rCurrentRatio );
     //@}
 

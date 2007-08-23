@@ -18,6 +18,11 @@
 
 #include "game_asn/Asn.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 // @class  PHY_HumanWound
 // Created: JVT 2004-08-03
@@ -45,7 +50,7 @@ public:
     //! @name Manager
     //@{
     static void Initialize           ();
-    static void InitializeMedicalData( MIL_InputArchive& archive );
+    static void InitializeMedicalData( xml::xistream& xis );
     static void Terminate            ();
 
     static const T_HumanWoundMap& GetHumanWounds();
@@ -82,6 +87,12 @@ public:
     bool operator> ( const PHY_HumanWound& rhs ) const;
     //@}
 
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadInjury( xml::xistream& xis, MT_Float& rFactorSum );
+    //@}
+
 private:
     //! @name Types
     //@{
@@ -105,8 +116,8 @@ private:
 
     //! @name Init
     //@{
-    static void InitializeWoundedInEquipements( MT_InputArchive_ABC& archive );
-    static void InitializeWoundedCoefs        ( MT_InputArchive_ABC& archive );
+    static void InitializeWoundedInEquipements( xml::xistream& xis );
+    static void InitializeWoundedCoefs        ( xml::xistream& xis );
     //@}
 
 private:
@@ -127,7 +138,7 @@ private:
     static uint            nContaminatedHealingTime_;
     static uint            nContaminatedRestingTime_;
     static uint            nMentalDiseaseHealingTime_;
-	static uint	           nMentalDiseaseRestingTime_;
+    static uint               nMentalDiseaseRestingTime_;
     static MT_Float        rMentalDiseaseFactor_;
 };
 

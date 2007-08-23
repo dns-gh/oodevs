@@ -13,8 +13,13 @@
 #define __MIL_Army_h_
 
 #include "MIL.h"
-
 #include "MT_Tools/MT_Converter.h"
+
+namespace xml
+{
+    class xostream;
+    class xistream;
+}
 
 class DEC_KnowledgeBlackBoard_Army;
 class DEC_Knowledge_Object;
@@ -54,7 +59,7 @@ public:
 
     typedef std::set< MIL_Formation* >      T_FormationSet;
     typedef T_FormationSet::const_iterator  CIT_FormationSet;
-    
+
     typedef std::set< MIL_Population* >      T_PopulationSet;
     typedef T_PopulationSet::const_iterator  CIT_PopulationSet;
 
@@ -63,15 +68,15 @@ public:
     //@}
 
 public:
-             MIL_Army( MIL_EntityManager& manager, uint nID, MIL_InputArchive& archive );
+             MIL_Army( MIL_EntityManager& manager, uint nID, xml::xistream& xis );
              MIL_Army();
     virtual ~MIL_Army();
 
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
-    void WriteODB         ( MT_XXmlOutputArchive& archive ) const;
-    void WriteDiplomacyODB( MT_XXmlOutputArchive& archive ) const;
+    void WriteODB         ( xml::xostream& xos ) const;
+    void WriteDiplomacyODB( xml::xostream& xos ) const;
     //@}
 
     //! @name Manager
@@ -82,7 +87,7 @@ public:
 
     //! @name Init
     //@{
-    void InitializeDiplomacy( MIL_InputArchive& archive );
+    void InitializeDiplomacy( xml::xistream& xis );
     //@}
 
     //! @name Knowledge
@@ -141,12 +146,10 @@ private:
     //! @name Tools
     //@{
     E_Diplomacy GetDiplomacy( const MIL_Army& army ) const;
-
-    void InitializeCommunication( MIL_InputArchive& archive );
-    void InitializeTactical     ( MIL_InputArchive& archive );
-    void InitializeObjects      ( MIL_InputArchive& archive );
-    void InitializePopulations  ( MIL_InputArchive& archive );
-    void InitializeLogistic     ( MIL_InputArchive& archive );
+    void ReadLogistic           ( xml::xistream& xis );
+    void ReadAutomat            ( xml::xistream& xis );
+    void ReadSubordinate        ( xml::xistream& xis, MIL_Automate* pSuperior );
+    void ReadDiplomacy          ( xml::xistream& xis );
     //@}
 
 private:

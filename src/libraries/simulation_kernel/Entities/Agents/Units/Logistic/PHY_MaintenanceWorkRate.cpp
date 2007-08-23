@@ -13,7 +13,11 @@
 
 #include "PHY_MaintenanceWorkRate.h"
 #include "PHY_Breakdown.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
+#include "tools/xmlcodecs.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 PHY_MaintenanceWorkRate::T_WorkRateMap PHY_MaintenanceWorkRate::workRates_;
 
@@ -22,32 +26,31 @@ PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r2_( "Regime2", EnumLogMaintena
 PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r3_( "Regime3", EnumLogMaintenanceRegimeTravail::regime_3 );
 PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r4_( "Regime4", EnumLogMaintenanceRegimeTravail::regime_4 );
 
+struct PHY_MaintenanceWorkRate::LoadingWrapper
+{
+    void ReadWorkRate( xml::xistream& xis )
+    {
+        PHY_MaintenanceWorkRate::ReadWorkRate( xis );
+    }
+};
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceWorkRate::Initialize
 // Created: NLD 2004-12-20
 // -----------------------------------------------------------------------------
-void PHY_MaintenanceWorkRate::Initialize( MIL_InputArchive& archive )
+void PHY_MaintenanceWorkRate::Initialize( xml::xistream& xis )
 {
     workRates_[ r1_.GetName() ] = &r1_;
     workRates_[ r2_.GetName() ] = &r2_;
     workRates_[ r3_.GetName() ] = &r3_;
     workRates_[ r4_.GetName() ] = &r4_;
 
-    archive.Section( "Maintenance" );
-    archive.Section( "RegimesTravail" );
-
-    for( CIT_WorkRateMap it = workRates_.begin(); it != workRates_.end(); ++it )
-    {
-        PHY_MaintenanceWorkRate& workRate = const_cast< PHY_MaintenanceWorkRate& >( *it->second );
-        archive.Section( workRate.GetName() );
-
-        workRate.ReadData( archive );
-
-        archive.EndSection();
-    }
-
-    archive.EndSection(); // RegimesTravail
-    archive.EndSection(); // Maintenance
+    LoadingWrapper loader;
+    xis >> start( "maintenance" )
+            >> start( "working-schemes" )
+                >> list( "working-scheme", loader, &LoadingWrapper::ReadWorkRate )
+            >> end()
+        >> end();
 }
 
 // -----------------------------------------------------------------------------
@@ -70,6 +73,7 @@ PHY_MaintenanceWorkRate::PHY_MaintenanceWorkRate( const std::string& strName, AS
     , rWorkTime_            ( 0. )
     , nDelayBeforeWarningRC_( std::numeric_limits< uint >::max() )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -78,18 +82,30 @@ PHY_MaintenanceWorkRate::PHY_MaintenanceWorkRate( const std::string& strName, AS
 // -----------------------------------------------------------------------------
 PHY_MaintenanceWorkRate::~PHY_MaintenanceWorkRate()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MaintenanceWorkRate::ReadData
+// Name: PHY_MaintenanceWorkRate::ReadWorkRate
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
-void PHY_MaintenanceWorkRate::ReadData( MIL_InputArchive& archive )
+void PHY_MaintenanceWorkRate::ReadWorkRate( xml::xistream& xis )
 {
-    archive.ReadAttribute( "dureeTravail", rWorkTime_, CheckValueGreater( 0. ) );
-    rWorkerRatio_ = rWorkTime_ / 24.;
+    std::string name;
+    xis >> attribute( "type", name );
 
-    if( archive.ReadTimeAttribute( "delaiAvantAvertissement", nDelayBeforeWarningRC_, CheckValueGreater( 0. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing ) )
-        nDelayBeforeWarningRC_ = (uint)MIL_Tools::ConvertSecondsToSim( nDelayBeforeWarningRC_ );
+    T_WorkRateMap::iterator it = workRates_.find( name );
+    if( it == workRates_.end() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Undefined working scheme" );
+
+    PHY_MaintenanceWorkRate& workRate = const_cast< PHY_MaintenanceWorkRate& >( *it->second );
+    xis >> attribute( "working-time", workRate.rWorkTime_ );
+    if( workRate.rWorkTime_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Working time <= 0" );
+    workRate.rWorkerRatio_ = workRate.rWorkTime_ / 24.;
+
+    std::string time;
+    xis >> optional() >> attribute( "time-before-warning", time );
+    if( tools::DecodeTime( time, workRate.nDelayBeforeWarningRC_ ) && workRate.nDelayBeforeWarningRC_ == 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Time before warning is null" );
 }

@@ -12,6 +12,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 // Created: SBO 2006-03-27
 // =============================================================================
@@ -20,7 +25,7 @@ class DEC_PathFactory
 public:
     //! @name Singleton
     //@{
-    static void  Initialize( MIL_InputArchive& archive );
+    static void  Initialize( xml::xistream& xis );
     static void  Terminate ();
     static const DEC_PathFactory& GetInstance();
     //@}
@@ -28,7 +33,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_PathFactory( MIL_InputArchive& archive );
+    explicit DEC_PathFactory( xml::xistream& xis );
     virtual ~DEC_PathFactory();
     //@}
 

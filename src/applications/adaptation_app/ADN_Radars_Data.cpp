@@ -25,11 +25,8 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_DataException.h"
 #include "ADN_Tools.h"
-#include "ADN_XmlInput_Helper.h"
-#include "ADN_Xml_Exception.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
-
 
 // -----------------------------------------------------------------------------
 // Name: DetectTimes::DetectTimes
@@ -43,8 +40,8 @@ ADN_Radars_Data::DetectTimes::DetectTimes()
 , bRecoTime_    ( false )
 , identTime_    ( "0s" )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DetectTimes::~DetectTimes
@@ -52,35 +49,73 @@ ADN_Radars_Data::DetectTimes::DetectTimes()
 // -----------------------------------------------------------------------------
 ADN_Radars_Data::DetectTimes::~DetectTimes()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DetectTimes::ReadArchive
 // Created: APE 2005-01-17
 // -----------------------------------------------------------------------------
-void ADN_Radars_Data::DetectTimes::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Radars_Data::DetectTimes::ReadArchive( xml::xistream& input, bool bHq )
 {
-    bDetectTime_ = input.ReadField( "DureeDetection", detectTime_, ADN_XmlInput_Helper::eNothing );
-    bRecoTime_ = input.ReadField( "DureeReconnaissance", recoTime_, ADN_XmlInput_Helper::eNothing );
-    bIdentTime_ = input.ReadField( "DureeIdentification", identTime_, ADN_XmlInput_Helper::eNothing );
+    input >> xml::optional()
+          >> xml::start( "acquisition-times" )
+            >> xml::list( "acquisition-time", *this, &ADN_Radars_Data::DetectTimes::ReadAcquisitionTime, bHq )
+          >> xml::end();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Radars_Data::DetectTimes::ReadAcquisitionTime
+// Created: AGE 2007-08-16
+// -----------------------------------------------------------------------------
+void ADN_Radars_Data::DetectTimes::ReadAcquisitionTime( xml::xistream& input, bool bHq )
+{
+    const std::string timeKey = bHq ? "command-post-time" : "base-time";
+    std::string time, level;
+    input >> xml::optional() >> xml::attribute( timeKey, time )
+          >> xml::attribute( "level", level );
+    if( time.empty() )
+        return;
+
+    if( level == "identification" ) {
+        bIdentTime_ = true;
+        identTime_ = time;
+    }
+    else if( level == "recognition" ) {
+        bRecoTime_ = true;
+        recoTime_ = time;
+    }
+    else if( level == "detection" ) {
+        bDetectTime_ = true;
+        detectTime_ = time;
+    }
+    else
+        throw ADN_DataException( "ADN_Radars_Data", "Unknown acquisition level " + level );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DetectTimes::WriteArchive
 // Created: APE 2005-01-17
 // -----------------------------------------------------------------------------
-void ADN_Radars_Data::DetectTimes::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Radars_Data::DetectTimes::WriteArchive( xml::xostream& output, bool bHq )
 {
+    const std::string time = bHq ? "command-post-time" : "base-time";
     if( bDetectTime_.GetData() )
-        output.WriteField( "DureeDetection", detectTime_.GetData() );
+        output << xml::start( "acquisition-time" )
+                << xml::attribute( "level", "detection" )
+                << xml::attribute( time, detectTime_ )
+               << xml::end();
     if( bRecoTime_.GetData() )
-        output.WriteField( "DureeReconnaissance", recoTime_.GetData() );
+        output << xml::start( "acquisition-time" )
+                << xml::attribute( "level", "recognition" )
+                << xml::attribute( time, recoTime_ )
+               << xml::end();
     if( bIdentTime_.GetData() )
-        output.WriteField( "DureeIdentification", identTime_.GetData() );
+        output << xml::start( "acquisition-time" )
+                << xml::attribute( "level", "identification" )
+                << xml::attribute( time, identTime_ )
+               << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: RadarInfos::RadarInfos
@@ -103,15 +138,14 @@ ADN_Radars_Data::RadarInfos::RadarInfos()
         detectableActivities_[n] = false;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: RadarInfos::~RadarInfos
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
 ADN_Radars_Data::RadarInfos::~RadarInfos()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: RadarInfos::GetNodeName
@@ -122,7 +156,6 @@ std::string ADN_Radars_Data::RadarInfos::GetNodeName()
     return std::string( "" );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: RadarInfos::GetItemName
 // Created: APE 2005-05-03
@@ -132,101 +165,94 @@ std::string ADN_Radars_Data::RadarInfos::GetItemName()
     return std::string( "" );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: RadarInfos::ReadArchive
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
-void ADN_Radars_Data::RadarInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Radars_Data::RadarInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Radar" );
-    input.ReadAttribute( "nom", strName_ );
-    input.ReadAttribute( "type", nType_, ADN_Tr::ConvertToRadarType, ADN_XmlInput_Helper::eThrow );
+    std::string type;
+    input >> xml::attribute( "name", strName_ )
+          >> xml::attribute( "type", type );
+    nType_ = ADN_Tr::ConvertToRadarType( type );
+    if( nType_ == E_RadarType(-1 ) )
+        throw ADN_DataException( "RadarInfos", "Invalid radar type " + type );
 
-    input.Section( "Portee" );
-    input.ReadField( "RayonAction", rRange_ );
-    bHasMinHeight_ = input.ReadField( "HauteurMinimale", rMinHeight_, ADN_XmlInput_Helper::eNothing );
-    bHasMaxHeight_ = input.ReadField( "HauteurMaximale", rMaxHeight_, ADN_XmlInput_Helper::eNothing );
-    input.EndSection(); // Portee
+    input >> xml::attribute( "action-range", rRange_ )
+          >> xml::optional() >> xml::attribute( "min-height", rMinHeight_ )
+          >> xml::optional() >> xml::attribute( "max-height", rMaxHeight_ );
+    bHasMinHeight_ = rMinHeight_ != 0;
+    bHasMaxHeight_ = rMaxHeight_ != 0;
 
-    if( input.Section( "ActivitePionsDetectables", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bHasDetectableActivities_ = true;
-        for( int n = 0; n < eNbrConsumptionType; ++n )
-        {
-            if( input.Section( ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)n ), ADN_XmlInput_Helper::eNothing ) )
-            {
-                detectableActivities_[n] = true;
-                input.EndSection();
-            }
-        }
-        input.EndSection(); // ActivitePionsDetectables
-    }
-
-    if( input.Section( "DureesAcquisition", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bHasDetectTimes_ = true;
-        detectTimes_.ReadArchive( input );
-        if( input.Section( "DureesSpecifiquesPionPC", ADN_XmlInput_Helper::eNothing ) )
-        {
-            bHasHQDetectTimes_ = true;
-            hqDetectTimes_.ReadArchive( input );
-            input.EndSection(); // DureesSpecifiquesPionPC
-        }
-        input.EndSection(); // DureesSpecifiquesPionPC
-    }
-    input.EndSection(); // Radar
+    input >> xml::optional()
+          >> xml::start( "detectable-activities" )
+            >> xml::list( "detectable-activity", *this, &ADN_Radars_Data::RadarInfos::ReadDetectableActivity )
+          >> xml::end();
+    detectTimes_.ReadArchive( input, false );
+    hqDetectTimes_.ReadArchive( input, true );
+    bHasDetectTimes_ = detectTimes_.bDetectTime_.GetData()
+                    || detectTimes_.bIdentTime_.GetData()
+                    || detectTimes_.bRecoTime_.GetData();
+    bHasHQDetectTimes_ = hqDetectTimes_.bDetectTime_.GetData()
+                    || hqDetectTimes_.bIdentTime_.GetData()
+                    || hqDetectTimes_.bRecoTime_.GetData();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Radars_Data::RadarInfos::ReadDetectableActivity
+// Created: AGE 2007-08-16
+// -----------------------------------------------------------------------------
+void ADN_Radars_Data::RadarInfos::ReadDetectableActivity( xml::xistream& input )
+{
+    std::string consumption;
+    bool value = false;
+    input >> xml::attribute( "type", consumption )
+          >> xml::optional() >> xml::attribute( "value", value );
+    unsigned n = (unsigned)ADN_Tr::ConvertToConsumptionType( consumption );
+    if( n == unsigned( -1 ) )
+        throw ADN_DataException( "ADN_Radars_Data", "Unknown consumption " + consumption );
+    detectableActivities_[n] = value;
+    bHasDetectableActivities_ = bHasDetectableActivities_.GetData() || value;
+}
 
 // -----------------------------------------------------------------------------
 // Name: RadarInfos::WriteArchive
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
-void ADN_Radars_Data::RadarInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Radars_Data::RadarInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Radar" );
-    output.WriteAttribute( "nom", strName_.GetData() );
-    output.WriteAttribute( "type", ADN_Tr::ConvertFromRadarType( nType_.GetData() ) );
-
-    output.Section( "Portee" );
-    output.WriteField( "RayonAction", rRange_.GetData() );
-    if( bHasMinHeight_.GetData())
-        output.WriteField( "HauteurMinimale", rMinHeight_.GetData() );
-    if( bHasMaxHeight_.GetData())
-        output.WriteField( "HauteurMaximale", rMaxHeight_.GetData() );
-    output.EndSection(); // Portee
+    output << xml::start( "radar" )
+            << xml::attribute( "name", strName_ )
+            << xml::attribute( "type", ADN_Tr::ConvertFromRadarType( nType_.GetData() ) )
+            << xml::attribute( "action-range", rRange_ );
+    if( bHasMinHeight_.GetData() )
+        output << xml::attribute( "min-height", rMinHeight_ );
+    if( bHasMaxHeight_.GetData() )
+        output << xml::attribute( "max-height", rMaxHeight_ );
 
     if( bHasDetectableActivities_.GetData() ) 
     {
-        output.Section( "ActivitePionsDetectables" );
+        output << xml::start( "detectable-activities" );
+
         for( int n = 0; n < eNbrConsumptionType; ++n )
-        {
             if( detectableActivities_[n].GetData() )
-            {
-                output.Section( ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)n ) );
-                output.EndSection();
-            }
-        }
-        output.EndSection(); // ActivitePionsDetectables
+                output << xml::start( "detectable-activity" )
+                        << xml::attribute( "type", ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)n ) )
+                        << xml::attribute( "value", true )
+                       << xml::end();
+
+        output << xml::end();
     }
 
-    if( bHasDetectTimes_.GetData() ) 
+    if( bHasDetectTimes_.GetData() || bHasHQDetectTimes_.GetData() ) 
     {
-        output.Section( "DureesAcquisition" );
-        detectTimes_.WriteArchive( output );
-        if( bHasHQDetectTimes_.GetData() )
-        {
-            output.Section( "DureesSpecifiquesPionPC");
-            hqDetectTimes_.WriteArchive( output );
-            output.EndSection(); // DureesSpecifiquesPionPC
-        }
-        output.EndSection(); // DureesSpecifiquesPionPC
+        output << xml::start( "acquisition-times" );
+        detectTimes_.WriteArchive( output, false );
+        hqDetectTimes_.WriteArchive( output, true );
+        output << xml::end();
     }
-    output.EndSection(); // Radar
+    output << xml::end();
 }
-
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Radars_Data constructor
@@ -234,8 +260,8 @@ void ADN_Radars_Data::RadarInfos::WriteArchive( MT_OutputArchive_ABC& output )
 // -----------------------------------------------------------------------------
 ADN_Radars_Data::ADN_Radars_Data()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Radars_Data destructor
@@ -253,7 +279,7 @@ ADN_Radars_Data::~ADN_Radars_Data()
 // -----------------------------------------------------------------------------
 void ADN_Radars_Data::FilesNeeded( T_StringList& /*files*/ ) const
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -277,34 +303,36 @@ ADN_Radars_Data::RadarInfos* ADN_Radars_Data::FindRadar( const std::string& strN
     return *it;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Radars_Data::ReadArchive
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
-void ADN_Radars_Data::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Radars_Data::ReadArchive( xml::xistream& input )
 {
-    input.BeginList( "Radars" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<RadarInfos> spNew( new RadarInfos() );
-        spNew->ReadArchive( input );
-        vRadars_.AddItem( spNew.release() );
-    }
-    input.EndList(); // Radars
+    input >> xml::start( "radars" )
+            >> xml::list( "radar", *this, &ADN_Radars_Data::ReadRadar )
+          >> xml::end();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Radars_Data::ReadRadar
+// Created: AGE 2007-08-16
+// -----------------------------------------------------------------------------
+void ADN_Radars_Data::ReadRadar( xml::xistream& input )
+{
+    std::auto_ptr<RadarInfos> spNew( new RadarInfos() );
+    spNew->ReadArchive( input );
+    vRadars_.AddItem( spNew.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Radars_Data::WriteArchive
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
-void ADN_Radars_Data::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Radars_Data::WriteArchive( xml::xostream& output )
 {
-    output.BeginList( "Radars", vRadars_.size() );
+    output << xml::start( "radars" );
     for( IT_RadarInfos_Vector it = vRadars_.begin(); it != vRadars_.end(); ++it )
-    {
         (*it)->WriteArchive( output );
-    }
-    output.EndList(); // Senseurs
+    output << xml::end();
 }

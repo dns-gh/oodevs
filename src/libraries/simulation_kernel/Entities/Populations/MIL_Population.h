@@ -11,10 +11,15 @@
 #define __MIL_Population_h_
 
 #include "MIL.h"
-
 #include "Entities/MIL_VisitableEntity_ABC.h"
 #include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include "Entities/Actions/PHY_Actor.h"
+
+namespace xml
+{
+    class xostream;
+    class xistream;
+}
 
 class MIL_PopulationType;
 class MIL_PopulationFlow;
@@ -39,7 +44,7 @@ class MIL_Population : public PHY_Actor
 public:
     //! @name Constructors/Destructor
     //@{
-     MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Army& army, MIL_InputArchive& archive );
+    MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Army& army, xml::xistream& xis );
      MIL_Population();
     ~MIL_Population();
     //@}
@@ -137,7 +142,7 @@ public:
     
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
-    void WriteODB( MT_XXmlOutputArchive& archive ) const;
+    void WriteODB( xml::xostream& xos ) const;
     //@}
 
     //! @name Visitor

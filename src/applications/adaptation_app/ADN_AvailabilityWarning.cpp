@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_AvailabilityWarning.h"
-#include "ADN_XmlInput_Helper.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_AvailabilityWarning constructor
@@ -52,20 +51,30 @@ std::string ADN_AvailabilityWarning::GetItemName()
 // Name: ADN_AvailabilityWarning::ReadArchive
 // Created: SBO 2006-08-04
 // -----------------------------------------------------------------------------
-void ADN_AvailabilityWarning::ReadArchive( ADN_XmlInput_Helper& input, const std::string& fieldName )
+void ADN_AvailabilityWarning::ReadArchive( xml::xistream& input )
 {
-    input.Section( fieldName );
-    input.ReadAttribute( "pourcentageMoyensDisponibles", percentage_ );
-    input.EndSection();
+    input >> xml::attribute( "availability-threshold", percentage_ );
 }
     
 // -----------------------------------------------------------------------------
 // Name: ADN_AvailabilityWarning::WriteArchive
 // Created: SBO 2006-08-04
 // -----------------------------------------------------------------------------
-void ADN_AvailabilityWarning::WriteArchive( MT_OutputArchive_ABC& output, const std::string& fieldName )
+void ADN_AvailabilityWarning::WriteArchive( xml::xostream& output )
 {
-    output.Section( fieldName );
-    output.WriteAttribute( "pourcentageMoyensDisponibles", percentage_.GetData() );
-    output.EndSection();
+    output << xml::start( "resource-availability-alert" )
+            << xml::attribute( "availability-threshold", percentage_ )
+           << xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_AvailabilityWarning::WriteArchive
+// Created: AGE 2007-08-16
+// -----------------------------------------------------------------------------
+void ADN_AvailabilityWarning::WriteArchive( xml::xostream& output, const std::string& attribute, const std::string& value )
+{
+    output << xml::start( "resource-availability-alert" )
+            << xml::attribute( "availability-threshold", percentage_ )
+            << xml::attribute( attribute, value )
+           << xml::end();
 }

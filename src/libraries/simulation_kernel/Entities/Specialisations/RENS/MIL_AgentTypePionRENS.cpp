@@ -14,13 +14,16 @@
 #include "MIL_AgentTypePionRENS.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/Functions/DEC_PerceptionFunctions.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionRENS constructor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AgentTypePionRENS::MIL_AgentTypePionRENS( const std::string& strName, MIL_InputArchive& archive )
-    : MIL_AgentTypePion( strName, archive )
+MIL_AgentTypePionRENS::MIL_AgentTypePionRENS( const std::string& strName, xml::xistream& xis )
+    : MIL_AgentTypePion( strName, xis )
 {
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PerceptionFunctions::EnableRecordMode , "DEC_Perception_ActiverModeEnregistrement"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PerceptionFunctions::DisableRecordMode, "DEC_Perception_DesactiverModeEnregistrement" );

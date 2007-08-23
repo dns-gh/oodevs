@@ -18,12 +18,14 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+using namespace xml;
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Model_ABC constructor
 // Created: NLD 2003-11-24
 // -----------------------------------------------------------------------------
 template< typename T >
-DEC_Model_ABC< T >::DEC_Model_ABC( const DEC_Workspace& decWorkspace, const std::string& strModel, MIL_InputArchive& input, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strPrefix )
+DEC_Model_ABC< T >::DEC_Model_ABC( const DEC_Workspace& decWorkspace, const std::string& strModel, xml::xistream& xis, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strPrefix )
     : strModel_            ( strModel )
     , pDIAModel_           ( 0 )
     , pDIAType_            ( 0 )
@@ -32,15 +34,15 @@ DEC_Model_ABC< T >::DEC_Model_ABC( const DEC_Workspace& decWorkspace, const std:
     , fragOrdersPerMission_()
 {
     std::string strDIAType;
-    input.ReadField( "DIAType", strDIAType );
-    input.ReadField( "File"   , strScript_ );
+    xis >> attribute( "dia-type", strDIAType )
+        >> attribute( "file", strScript_ );
 
     pDIAType_ = DIA_TypeManager::Instance().GetType( strDIAType );
     if( !pDIAType_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, std::string( "Unknown DIA Type : " ) + strDIAType );
 
     InitializeModel   ( decWorkspace, bNeedParsing, bUseOnlyArchive, strBinaryPath, strPrefix );
-    InitializeMissions( input );
+    InitializeMissions( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,39 +196,39 @@ void DEC_Model_ABC< T >::InitializeModel( const DEC_Workspace& decWorkspace, boo
 // Created: NLD 2003-11-24
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_Model_ABC< T >::InitializeMissions( MIL_InputArchive& archive )
+void DEC_Model_ABC< T >::InitializeMissions( xml::xistream& xis )
 {
     missionBitset_.clear();
     fragOrdersPerMission_.clear();
 
-    if ( !archive.BeginList( "Missions", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> optional() >> start( "missions" )
+                          >> list( "mission", *this, &DEC_Model_ABC::ReadMission )
+                      >> end();
+}
 
-    while( archive.NextListElement() )
-    {
-        if ( !archive.Section( "Mission", MIL_InputArchive::eNothing ) )
-            break;
-        
-        std::string strMission;
-        archive.ReadAttribute( "nom", strMission );
+// -----------------------------------------------------------------------------
+// Name: DEC_Model_ABC::ReadMission
+// Created: ABL 2007-07-26
+// -----------------------------------------------------------------------------
+template< typename T >
+void DEC_Model_ABC< T >::ReadMission( xml::xistream& xis )
+{
+    std::string strMission;
+    xis >> attribute( "name", strMission );
 
-        const T* pType = T::Find( strMission );
-        if ( !pType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Invalid mission name '%s' for model '%s'", strMission.c_str(), GetName().c_str() ), archive.GetContext() );
+    const T* pType = T::Find( strMission );
+    if ( !pType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Invalid mission name '%s' for model '%s'", strMission.c_str(), GetName().c_str() ) ); // $$$$ ABL 2007-07-26: error context
 
-        if ( missionBitset_.size() < pType->GetID() + 1 )
-            missionBitset_.resize( pType->GetID() + 1, false );
-        missionBitset_[ pType->GetID() ] = true;
+    if ( missionBitset_.size() < pType->GetID() + 1 )
+        missionBitset_.resize( pType->GetID() + 1, false );
+    missionBitset_[ pType->GetID() ] = true;
 
-        // Check if the DIA behavior is present
-        if( !IsMissionAvailable( *pType ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Missing behaviors for mission", archive.GetContext() );
+    // Check if the DIA behavior is present
+    if( !IsMissionAvailable( *pType ) )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Missing behaviors for mission" ); // $$$$ ABL 2007-07-26: error context
 
-        InitializeMissionFragOrders( archive, *pType );
-
-        archive.EndSection(); // Mission
-    }
-    archive.EndList(); // Missions
+    InitializeMissionFragOrders( xis, *pType );
 }
 
 // -----------------------------------------------------------------------------
@@ -234,31 +236,28 @@ void DEC_Model_ABC< T >::InitializeMissions( MIL_InputArchive& archive )
 // Created: NLD 2003-11-24
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_Model_ABC< T >::InitializeMissionFragOrders( MIL_InputArchive& archive, const T& missionType )
+void DEC_Model_ABC< T >::InitializeMissionFragOrders( xml::xistream& xis, const T& missionType )
 {
-    if ( !archive.BeginList( "OrdresConduite", MIL_InputArchive::eNothing ) )
-        return;
-
-    while( archive.NextListElement() )
-    {
-        if( !archive.Section( "OrdreConduite", MIL_InputArchive::eNothing ) )
-            break;
-
+    xis >> list( "fragorder", *this, &DEC_Model_ABC::ReadFragorder, missionType );
+}
+// -----------------------------------------------------------------------------
+// Name: DEC_Model_ABC::ReadFragorder
+// Created: ABL 2007-07-26
+// -----------------------------------------------------------------------------
+template< typename T >
+void DEC_Model_ABC< T >::ReadFragorder( xml::xistream& xis, const T& missionType )
+{
         std::string strOrdreConduite;
-        archive.ReadAttribute( "nom", strOrdreConduite );
+        xis >> attribute( "name", strOrdreConduite );
 
         const MIL_FragOrderType* pType = MIL_FragOrderType::Find( strOrdreConduite );
         if( !pType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown orderConduite type", archive.GetContext() );
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown orderConduite type" ); // $$$$ ABL 2007-07-26: error context
 
         T_IDBitVector& bitVector = fragOrdersPerMission_[ &missionType ];
         if( bitVector.size() < pType->GetID() + 1 )
             bitVector.resize( pType->GetID() + 1, false );
         bitVector[ pType->GetID() ] = true;  
-
-        archive.EndSection(); // Mission
-    }
-    archive.EndList(); // Missions
 }
 
 // =============================================================================

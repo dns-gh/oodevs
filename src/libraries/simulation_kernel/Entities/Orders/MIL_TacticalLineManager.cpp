@@ -72,16 +72,13 @@ void MIL_TacticalLineManager::save( MIL_CheckPointOutArchive& file, const uint )
 // LIMIT DATA
 // =============================================================================
 
-// -----------------------------------------------------------------------------
-// Name: MIL_TacticalLineManager::CreateLimit
-// Created: NLD 2006-11-17
-// -----------------------------------------------------------------------------
-void MIL_TacticalLineManager::CreateLimit( const MIL_Formation& formation, MIL_InputArchive& archive )
+namespace
 {
-    while( archive.NextListElement() )
+    template< typename Line, typename Parent >
+    void Create( xml::xistream& xis, const Parent& parent, std::map< uint, Line* >& list )
     {
-        MIL_Limit* pLimit = new MIL_Limit( formation, archive );
-        bool bOut = limits_.insert( std::make_pair( pLimit->GetID(), pLimit ) ).second;
+        Line* pLine = new Line( parent, xis );
+        bool bOut = list.insert( std::make_pair( pLine->GetID(), pLine ) ).second;
         assert( bOut );
     }
 }
@@ -90,42 +87,36 @@ void MIL_TacticalLineManager::CreateLimit( const MIL_Formation& formation, MIL_I
 // Name: MIL_TacticalLineManager::CreateLimit
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void MIL_TacticalLineManager::CreateLimit( const MIL_Automate& automate, MIL_InputArchive& archive )
+void MIL_TacticalLineManager::CreateLimit( xml::xistream& xis, const MIL_Formation& formation )
 {
-    while( archive.NextListElement() )
-    {
-        MIL_Limit* pLimit = new MIL_Limit( automate, archive );
-        bool bOut = limits_.insert( std::make_pair( pLimit->GetID(), pLimit ) ).second;
-        assert( bOut );
-    }
+    Create( xis, formation, limits_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_TacticalLineManager::CreateLimit
+// Created: NLD 2006-11-17
+// -----------------------------------------------------------------------------
+void MIL_TacticalLineManager::CreateLimit( xml::xistream& xis, const MIL_Automate& automate )
+{
+    Create( xis, automate, limits_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_TacticalLineManager::CreateLima
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void MIL_TacticalLineManager::CreateLima( const MIL_Formation& formation, MIL_InputArchive& archive )
+void MIL_TacticalLineManager::CreateLima( xml::xistream& xis, const MIL_Formation& formation )
 {
-    while( archive.NextListElement() )
-    {
-        MIL_Lima* pLima = new MIL_Lima( formation, archive );
-        bool bOut = limas_.insert( std::make_pair( pLima->GetID(), pLima ) ).second;
-        assert( bOut );
-    }
+    Create( xis, formation, limas_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_TacticalLineManager::CreateLima
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void MIL_TacticalLineManager::CreateLima( const MIL_Automate& automate, MIL_InputArchive& archive )
+void MIL_TacticalLineManager::CreateLima( xml::xistream& xis, const MIL_Automate& automate )
 {
-    while( archive.NextListElement() )
-    {
-        MIL_Lima* pLima = new MIL_Lima( automate, archive );
-        bool bOut = limas_.insert( std::make_pair( pLima->GetID(), pLima ) ).second;
-        assert( bOut );
-    }
+    Create( xis, automate, limas_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -1,195 +1,140 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Armements>
-
-  <Armement lanceur="Rampe Lance Missiles Gazelle" munition="Missile Hot">
-    <NbrMunitionParRafale>1</NbrMunitionParRafale>
-    <DureeRafale>2s</DureeRafale>
-    <NbrMunitionsParRechargement>4</NbrMunitionsParRechargement>
-    <DureeRechargement>30s</DureeRechargement>
-    <Direct>
-      <PHs>
-        <VolumeCibleGros>
-          <PH dist="0">1</PH>
-          <PH dist="400">0.9</PH>
-          <PH dist="800">0.8</PH>
-          <PH dist="1200">0.6</PH>
-          <PH dist="1600">0.4</PH>
-          <PH dist="2000">0.1</PH>
-          <PH dist="2100">0</PH>
-        </VolumeCibleGros>
-        <VolumeCibleMoyen>
-          <PH dist="0">0.9</PH>
-          <PH dist="2000">0.9</PH>
-          <PH dist="2100">0</PH>
-        </VolumeCibleMoyen>
-        <VolumeCiblePetit>
-          <PH dist="0">1</PH>
-          <PH dist="400">0.9</PH>
-          <PH dist="800">0.8</PH>
-          <PH dist="1200">0.6</PH>
-          <PH dist="1600">0.4</PH>
-          <PH dist="2000">0.1</PH>
-          <PH dist="2100">0</PH>
-        </VolumeCiblePetit>
-        <VolumeCiblePersonnel>
-          <PH dist="0">1</PH>
-          <PH dist="400">0.9</PH>
-          <PH dist="800">0.8</PH>
-          <PH dist="1200">0.6</PH>
-          <PH dist="1600">0.4</PH>
-          <PH dist="2000">0.1</PH>
-          <PH dist="2100">0</PH>
-        </VolumeCiblePersonnel>
-      </PHs>
-    </Direct>
-  </Armement>
-
-  <Armement lanceur="Mitrailleuse" munition="Balle Classique 12,7">
-    <NbrMunitionParRafale>5</NbrMunitionParRafale>
-    <DureeRafale>2s</DureeRafale>
-    <NbrMunitionsParRechargement>6</NbrMunitionsParRechargement>
-    <DureeRechargement>30s</DureeRechargement>
-    <Direct>
-      <PHs>
-        <VolumeCibleGros>
-          <PH dist="0">1</PH>
-          <PH dist="400">0.9</PH>
-          <PH dist="800">0.8</PH>
-          <PH dist="1200">0.6</PH>
-          <PH dist="1600">0.4</PH>
-          <PH dist="2000">0.1</PH>
-        </VolumeCibleGros>
-        <VolumeCibleMoyen>
-          <PH dist="6000">0.9</PH>
-          <PH dist="12000">0</PH>
-          <PH dist="0">0</PH>
-        </VolumeCibleMoyen>
-        <VolumeCiblePetit>
-          <PH dist="0">1</PH>
-          <PH dist="400">0.9</PH>
-          <PH dist="800">0.8</PH>
-          <PH dist="1200">0.6</PH>
-          <PH dist="1600">0.4</PH>
-          <PH dist="2000">0.1</PH>
-        </VolumeCiblePetit>
-        <VolumeCiblePersonnel>
-          <PH dist="0">1</PH>
-          <PH dist="400">0.9</PH>
-          <PH dist="800">0.8</PH>
-          <PH dist="1200">0.6</PH>
-          <PH dist="1600">0.4</PH>
-          <PH dist="2000">0.1</PH>
-        </VolumeCiblePersonnel>
-      </PHs>
-    </Direct>
-  </Armement>
-
-  <Armement lanceur="Canon 120" munition="Obus 120 mm">
-    <NbrMunitionParRafale>1</NbrMunitionParRafale>
-    <DureeRafale>10s</DureeRafale>
-    <NbrMunitionsParRechargement>2</NbrMunitionsParRechargement>
-    <DureeRechargement>120s</DureeRechargement>
-    <Direct>
-      <PHs>
-        <VolumeCibleGros>
-          <PH dist="0">1</PH>
-          <PH dist="400">0.9</PH>
-          <PH dist="800">0.8</PH>
-          <PH dist="1200">0.6</PH>
-          <PH dist="1600">0.4</PH>
-          <PH dist="2000">0.1</PH>
-          <PH dist="2100">0</PH>
-        </VolumeCibleGros>
-        <VolumeCibleMoyen>
-          <PH dist="0">1</PH>
-          <PH dist="2000">1</PH>
-          <PH dist="2100">0</PH>
-        </VolumeCibleMoyen>
-        <VolumeCiblePetit>
-          <PH dist="0">1</PH>
-          <PH dist="400">0.9</PH>
-          <PH dist="800">0.8</PH>
-          <PH dist="1200">0.6</PH>
-          <PH dist="1600">0.4</PH>
-          <PH dist="2000">0.1</PH>
-          <PH dist="2500">0</PH>
-        </VolumeCiblePetit>
-        <VolumeCiblePersonnel>
-          <PH dist="0">1</PH>
-          <PH dist="400">0.9</PH>
-          <PH dist="800">0.8</PH>
-          <PH dist="1200">0.6</PH>
-          <PH dist="1600">0.4</PH>
-          <PH dist="2000">0.1</PH>
-          <PH dist="2100">0</PH>
-        </VolumeCiblePersonnel>
-      </PHs>
-    </Direct>
-    <Indirect>
-      <VitesseMoyenne>150</VitesseMoyenne>
-      <PorteeMin>100</PorteeMin>
-      <PorteeMax>8000</PorteeMax>
-    </Indirect>
-  </Armement>
-
-  <Armement lanceur="Lance-fussoir" munition="Fusse a ailettes 50mm">
-    <NbrMunitionParRafale>5</NbrMunitionParRafale>
-    <DureeRafale>2s</DureeRafale>
-    <NbrMunitionsParRechargement>6</NbrMunitionsParRechargement>
-    <DureeRechargement>30s</DureeRechargement>
-    <Indirect>
-      <VitesseMoyenne>200</VitesseMoyenne>
-      <PorteeMin>200</PorteeMin>
-      <PorteeMax>10000</PorteeMax>
-    </Indirect>
-  </Armement>
-
-  <Armement lanceur="Lance-fussoir" munition="Fusse a jupette 53mm">
-    <NbrMunitionParRafale>5</NbrMunitionParRafale>
-    <DureeRafale>2s</DureeRafale>
-    <NbrMunitionsParRechargement>6</NbrMunitionsParRechargement>
-    <DureeRechargement>30s</DureeRechargement>
-    <Indirect>
-      <VitesseMoyenne>200</VitesseMoyenne>
-      <PorteeMin>500</PorteeMin>
-      <PorteeMax>20000</PorteeMax>
-    </Indirect>
-  </Armement>
-
-  <Armement lanceur="Lance-fussoir" munition="Obus eclairant">
-    <NbrMunitionParRafale>5</NbrMunitionParRafale>
-    <DureeRafale>2s</DureeRafale>
-    <NbrMunitionsParRechargement>6</NbrMunitionsParRechargement>
-    <DureeRechargement>30s</DureeRechargement>
-    <Indirect>
-      <VitesseMoyenne>200</VitesseMoyenne>
-      <PorteeMin>200</PorteeMin>
-      <PorteeMax>10000</PorteeMax>
-    </Indirect>
-  </Armement>
-
-  <Armement lanceur="Lance-fussoir" munition="Obus fumigene">
-    <NbrMunitionParRafale>5</NbrMunitionParRafale>
-    <DureeRafale>2s</DureeRafale>
-    <NbrMunitionsParRechargement>6</NbrMunitionsParRechargement>
-    <DureeRechargement>30s</DureeRechargement>
-    <Indirect>
-      <VitesseMoyenne>200</VitesseMoyenne>
-      <PorteeMin>300</PorteeMin>
-      <PorteeMax>800</PorteeMax>
-    </Indirect>
-  </Armement>
-
-  <Armement lanceur="Lance-fussoir" munition="Obus mine">
-    <NbrMunitionParRafale>5</NbrMunitionParRafale>
-    <DureeRafale>2s</DureeRafale>
-    <NbrMunitionsParRechargement>6</NbrMunitionsParRechargement>
-    <DureeRechargement>30s</DureeRechargement>
-    <Indirect>
-      <VitesseMoyenne>150</VitesseMoyenne>
-      <PorteeMin>200</PorteeMin>
-      <PorteeMax>10000</PorteeMax>
-    </Indirect>
-  </Armement>
-
-</Armements>
+<weapons>
+  <weapon-system launcher="Rampe Lance Missiles Gazelle" munition="Missile Hot">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="30s" munition="4"/>
+    <direct-fire>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="2000" percentage="0.9"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Mitrailleuse" munition="Balle Classique 12,7">
+    <burst duration="2s" munition="5"/>
+    <reloading duration="30s" munition="6"/>
+    <direct-fire>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="6000" percentage="0.9"/>
+        <hit-probability distance="12000" percentage="0"/>
+        <hit-probability distance="0" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon 120" munition="Obus 120 mm">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="120s" munition="2"/>
+    <direct-fire>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="2000" percentage="1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+    <indirect-fire average-speed="150" max-range="8000" min-range="100"/>
+  </weapon-system>
+  <weapon-system launcher="Lance-fussoir" munition="Fusse a ailettes 50mm">
+    <burst duration="2s" munition="5"/>
+    <reloading duration="30s" munition="6"/>
+    <indirect-fire average-speed="200" max-range="10000" min-range="200"/>
+  </weapon-system>
+  <weapon-system launcher="Lance-fussoir" munition="Fusse a jupette 53mm">
+    <burst duration="2s" munition="5"/>
+    <reloading duration="30s" munition="6"/>
+    <indirect-fire average-speed="200" max-range="20000" min-range="500"/>
+  </weapon-system>
+  <weapon-system launcher="Lance-fussoir" munition="Obus eclairant">
+    <burst duration="2s" munition="5"/>
+    <reloading duration="30s" munition="6"/>
+    <indirect-fire average-speed="200" max-range="10000" min-range="200"/>
+  </weapon-system>
+  <weapon-system launcher="Lance-fussoir" munition="Obus fumigene">
+    <burst duration="2s" munition="5"/>
+    <reloading duration="30s" munition="6"/>
+    <indirect-fire average-speed="200" max-range="800" min-range="300"/>
+  </weapon-system>
+  <weapon-system launcher="Lance-fussoir" munition="Obus mine">
+    <burst duration="2s" munition="5"/>
+    <reloading duration="30s" munition="6"/>
+    <indirect-fire average-speed="150" max-range="10000" min-range="200"/>
+  </weapon-system>
+</weapons>

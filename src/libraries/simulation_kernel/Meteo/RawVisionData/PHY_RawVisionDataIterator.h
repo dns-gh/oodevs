@@ -68,19 +68,19 @@ protected:
     /*const*/ bool bNegX_;
     /*const*/ bool bNegY_;
     /*const*/ bool bSwapOffset_;
-	
+    
     // Case réelle initiale
     /*const*/ int nCellColOffset_;
     /*const*/ int nCellRowOffset_;
 
-	// information de fin ( pour faire un end() d'itérateur à la STL )
-	enum E_IteratorState
-	{
-		eRunning,
-		eLastPoint,
-		eEnd
-	};
-	E_IteratorState eIteratorState_;
+    // information de fin ( pour faire un end() d'itérateur à la STL )
+    enum E_IteratorState
+    {
+        eRunning,
+        eLastPoint,
+        eEnd
+    };
+    E_IteratorState eIteratorState_;
 
     // Distance parcourue dans la cellule courrante
     MT_Float rLenght_;
@@ -104,5 +104,5 @@ protected:
     bool                             bIsInEnv_;
 };
 
-#	include "PHY_RawVisionDataIterator.inl"
+#    include "PHY_RawVisionDataIterator.inl"
 #endif // __PHY_RawVisionDataIterator_h_

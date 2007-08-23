@@ -17,61 +17,64 @@
 #include "PHY_DotationCapacity.h"
 #include "PHY_DotationGroupContainer.h"
 #include "PHY_DotationStockContainer.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCapacities constructor
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-PHY_DotationCapacities::PHY_DotationCapacities( const std::string& strParentTagName, MIL_InputArchive& archive )
+PHY_DotationCapacities::PHY_DotationCapacities( const std::string& strParentTagName, xml::xistream& xis )
 {
-    if ( !archive.BeginList( strParentTagName, MIL_InputArchive::eNothing ) )
-        return;
+    xis >> optional()
+        >> start( strParentTagName )
+            >> list( "category", *this, &PHY_DotationCapacities::ReadCategory )
+        >> end();
+}
 
-    while ( archive.NextListElement() )
-    {
-        archive.Section( "Dotation" );
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCapacities::ReadCategory
+// Created: ABL 2007-07-23
+// -----------------------------------------------------------------------------
+void PHY_DotationCapacities::ReadCategory( xml::xistream& xis )
+{
+    std::string strDotationType;
+    xis >> attribute( "name", strDotationType );
 
-        std::string strDotationType;
-        archive.ReadAttribute( "nom", strDotationType );
-
-        const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( strDotationType );
-        if ( !pDotationType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type", archive.GetContext() );
-       
-        ReadDotationCategories( archive, *pDotationType );
+    const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( strDotationType );
+    if ( !pDotationType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type" ); // $$$$ ABL 2007-07-23: error context
     
-        archive.EndSection(); // Dotation
-    }
-    archive.EndList(); // Contenance
+    ReadDotationCategories( xis, *pDotationType );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCapacities::ReadDotationCategories
 // Created: NLD 2004-09-30
 // -----------------------------------------------------------------------------
-void PHY_DotationCapacities::ReadDotationCategories( MIL_InputArchive& archive, const PHY_DotationType& dotationType )
+void PHY_DotationCapacities::ReadDotationCategories( xml::xistream& xis, const PHY_DotationType& dotationType )
 {
-    archive.BeginList( "Categories" );
+    xis >> list( "dotation", *this, &PHY_DotationCapacities::ReadDotation, dotationType );
+}
 
-    while ( archive.NextListElement() )
-    {
-        archive.Section( "Categorie" );
-        
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCapacities::ReadDotation
+// Created: ABL 2007-07-23
+// -----------------------------------------------------------------------------
+void PHY_DotationCapacities::ReadDotation( xml::xistream& xis, const PHY_DotationType& dotationType )
+{
         std::string strCategoryName;
-        archive.ReadAttribute( "nom", strCategoryName );
+        xis >> attribute( "name", strCategoryName );
 
         const PHY_DotationCategory* pDotationCategory = dotationType.FindDotationCategory( strCategoryName );
         if ( !pDotationCategory )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation category", archive.GetContext() );
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation category" ); // $$$$ ABL 2007-07-23: error context
 
         PHY_DotationCapacity*& pDotation = dotationCapacities_[ pDotationCategory ];
         if( pDotation )        
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Dotation already defined", archive.GetContext() );
-        pDotation = new PHY_DotationCapacity( *pDotationCategory, archive );
-
-        archive.EndSection(); // Categorie
-    }
-    archive.EndList(); // Categories    
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Dotation already defined" ); // $$$$ ABL 2007-07-23: error context
+        pDotation = new PHY_DotationCapacity( *pDotationCategory, xis );
 }
 
 // -----------------------------------------------------------------------------

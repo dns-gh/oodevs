@@ -10,6 +10,9 @@
 #include "simulation_kernel_pch.h"
 
 #include "MIL_PopulationMissionType.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 MIL_PopulationMissionType::T_MissionIDMap   MIL_PopulationMissionType::missionIDs_;
 MIL_PopulationMissionType::T_MissionNameMap MIL_PopulationMissionType::missionNames_;
@@ -18,36 +21,49 @@ MIL_PopulationMissionType::T_MissionNameMap MIL_PopulationMissionType::missionNa
 // FACTORY
 // =============================================================================
 
+struct MIL_PopulationMissionType::LoadingWrapper
+{
+    void ReadMission( xml::xistream& xis )
+    {
+        MIL_PopulationMissionType::ReadMission( xis );
+    }
+};
+
 //-----------------------------------------------------------------------------
 // Name: MIL_PopulationMissionType::Initialize
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-void MIL_PopulationMissionType::Initialize( MIL_InputArchive& archive )
+void MIL_PopulationMissionType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing population mission types" );
-    
-    archive.Section( "missions" );
-    archive.BeginList( "populations" );
-    while( archive.NextListElement() )
-    {
-        archive.BeginList( "mission" );
-        uint nID;
-        archive.ReadAttribute( "id", nID );
 
-        const MIL_PopulationMissionType*& pMission = missionIDs_[ nID ];
-        if( pMission )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Population mission already defined", archive.GetContext() );
-        pMission = new MIL_PopulationMissionType( nID, archive );
+    LoadingWrapper loader;
 
-        const MIL_PopulationMissionType*& pMissionName = missionNames_[ pMission->GetName() ];
-        if( pMissionName )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Population mission name already defined", archive.GetContext() );
-        pMissionName = pMission;
+    xis >> start( "missions" )
+            >> start( "populations" )
+                >> list( "mission", loader, &LoadingWrapper::ReadMission )
+            >> end()
+        >> end();
+}
 
-        archive.EndList(); // mission
-    }
-    archive.EndList(); // populations
-    archive.EndSection(); // missions
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationMissionType::ReadMission
+// Created: ABL 2007-07-25
+// -----------------------------------------------------------------------------
+void MIL_PopulationMissionType::ReadMission( xml::xistream& xis )
+{
+    uint nID;
+    xis >> attribute( "id", nID );
+
+    const MIL_PopulationMissionType*& pMission = missionIDs_[ nID ];
+    if( pMission )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Population mission already defined" ); // $$$$ ABL 2007-07-25: error context
+    pMission = new MIL_PopulationMissionType( nID, xis );
+
+    const MIL_PopulationMissionType*& pMissionName = missionNames_[ pMission->GetName() ];
+    if( pMissionName )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Population mission name already defined" ); // $$$$ ABL 2007-07-25: error context
+    pMissionName = pMission;
 }
 
 // =============================================================================
@@ -58,11 +74,11 @@ void MIL_PopulationMissionType::Initialize( MIL_InputArchive& archive )
 // Name: MIL_PopulationMissionType constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_PopulationMissionType::MIL_PopulationMissionType( uint nID, MIL_InputArchive& archive )
-    : MIL_MissionType_ABC( nID, archive )
+MIL_PopulationMissionType::MIL_PopulationMissionType( uint nID, xml::xistream& xis )
+    : MIL_MissionType_ABC( nID, xis )
     , strDIABehavior_    ()
 {
-    archive.ReadAttribute( "dia-behavior", strDIABehavior_ );
+    xis >> attribute( "dia-behavior", strDIABehavior_ );
 }
 
 //-----------------------------------------------------------------------------

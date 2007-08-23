@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xs:element name="physical">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Decisionnel" type="xs:string"/>
+				<xs:element name="Volumes" type="xs:string"/>
+				<xs:element name="Protections" type="xs:string"/>
+				<xs:element name="DotationNatures" type="xs:string"/>
+				<xs:element name="Objets" type="xs:string"/>
+				<xs:element name="Dotations" type="xs:string"/>
+				<xs:element name="Lanceurs" type="xs:string"/>
+				<xs:element name="Armements" type="xs:string"/>
+				<xs:element name="Capteurs" type="xs:string"/>
+				<xs:element name="Composantes" type="xs:string"/>
+				<xs:element name="Pions" type="xs:string"/>
+				<xs:element name="Automates" type="xs:string"/>
+				<xs:element name="NBC" type="xs:string"/>
+				<xs:element name="Sante" type="xs:string"/>
+				<xs:element name="ClasseIDs" type="xs:string"/>
+				<xs:element name="FacteursHumains" type="xs:string"/>
+				<xs:element name="Pannes" type="xs:string"/>
+				<xs:element name="GroupesConnaissance" type="xs:string"/>
+				<xs:element name="Maintenance" type="xs:string"/>
+				<xs:element name="Ravitaillement" type="xs:string"/>
+				<xs:element name="Communications" type="xs:string"/>
+				<xs:element name="PathFinder" type="xs:string"/>
+				<xs:element name="Populations" type="xs:string"/>
+				<xs:element name="ComptesRendus" type="xs:string"/>
+				<xs:element name="Modeles" type="xs:string"/>
+				<xs:element name="Missions" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

@@ -38,7 +38,7 @@
 #include "MT/MT_Archive/MT_Archive_lib.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include "MT/MT_Time/MT_Time_lib.h"
-#include "MT/MT_XmlTools/MT_XmlTools_lib.h"
+//#include "MT/MT_XmlTools/MT_XmlTools_lib.h"
 
 #include "DIA/DIA_Tool_Script_lib.h"
 #include "DIA/DIA_Kernel_lib.h"

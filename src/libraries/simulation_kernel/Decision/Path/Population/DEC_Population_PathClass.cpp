@@ -10,38 +10,57 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Population_PathClass.h"
 #include "Decision/Path/DEC_PathType.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 DEC_Population_PathClass::T_Rules DEC_Population_PathClass::rules_;
+
+struct DEC_Population_PathClass::LoadingWrapper
+{
+    void ReadPopulationRule( xml::xistream& xis )
+    {
+        DEC_Population_PathClass::ReadPopulationRule( xis );
+    }
+};
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Population_PathClass::Initialize
 // Created: SBO 2006-03-27
 // -----------------------------------------------------------------------------
-void DEC_Population_PathClass::Initialize( MIL_InputArchive& archive )
+void DEC_Population_PathClass::Initialize( xml::xistream& xis )
 {
-    archive.BeginList( "PopulationRules" );
-    while( archive.NextListElement() )
+    LoadingWrapper loader;
+
+    xis >> start( "population-rules" )
+            >> list( "rule", loader, &LoadingWrapper::ReadPopulationRule )
+        >> end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Population_PathClass::ReadPopulationRule
+// Created: ABL 2007-07-25
+// -----------------------------------------------------------------------------
+void DEC_Population_PathClass::ReadPopulationRule( xml::xistream& xis )
+{
+    std::string strType;
+
+    xis >> attribute( "type", strType );
+
+    std::string strBase;
+    const DEC_Population_PathClass* pBase = 0;
+    strBase = "nothing";
+    xis >> optional() >> attribute( "inherits", strBase );
+    if( strBase != "nothing" )
     {
-        archive.Section( "Rule" );
-        std::string strType;
-
-        archive.ReadAttribute( "type", strType );
-
-        std::string strBase;
-        const DEC_Population_PathClass* pBase = 0;
-        if( archive.ReadAttribute( "inherits", strBase, MIL_InputArchive::eNothing ) )
-        {
-            pBase  = rules_[ strBase ];
-            if( !pBase )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "base rule '" + strBase + "' is undefined", archive.GetContext() );
-        }
-        DEC_Population_PathClass*& pRule = rules_[ strType ];
-        if( pRule )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strType + "' already defined", archive.GetContext() );
-        pRule = new DEC_Population_PathClass( archive, pBase );
-        archive.EndSection(); // Rule
-    };
-    archive.EndList(); // PopulationRules
+        pBase  = rules_[ strBase ];
+        if( !pBase )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "base rule '" + strBase + "' is undefined" ); // $$$$ ABL 2007-07-25: error context
+    }
+    DEC_Population_PathClass*& pRule = rules_[ strType ];
+    if( pRule )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strType + "' already defined" ); // $$$$ ABL 2007-07-25: error context
+    pRule = new DEC_Population_PathClass( xis, pBase );
 }
     
 // -----------------------------------------------------------------------------
@@ -69,15 +88,15 @@ const DEC_Population_PathClass& DEC_Population_PathClass::GetPathClass( const st
 // Name: DEC_Population_PathClass constructor
 // Created: SBO 2006-03-27
 // -----------------------------------------------------------------------------
-DEC_Population_PathClass::DEC_Population_PathClass( MIL_InputArchive& archive, const DEC_Population_PathClass* pCopyFrom /*= 0*/ )
+DEC_Population_PathClass::DEC_Population_PathClass( xml::xistream& xis, const DEC_Population_PathClass* pCopyFrom /*= 0*/ )
     : rCostOutsideOfChanneling_( 10.f )
     , rChannelingRange_( 1000.f )
 {
     if( pCopyFrom )
         *this = *pCopyFrom;
 
-    archive.ReadField( "CostOutsideOfChanneling", rCostOutsideOfChanneling_, MIL_InputArchive::eNothing );
-    archive.ReadField( "ChannelingRange"        , rChannelingRange_        , MIL_InputArchive::eNothing );
+    xis >> optional() >> attribute( "cost-out-of-channeling", rCostOutsideOfChanneling_ )
+        >> optional() >> attribute( "channeling-range", rChannelingRange_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -14,8 +14,6 @@
 #include "ADN_Project_Data.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_DataException.h"
-#include "ADN_Xml_Exception.h"
-#include "ADN_XmlInput_Helper.h"
 #include "ADN_SaveFile_Exception.h"
 
 #include "ADN_Tr.h"
@@ -29,7 +27,8 @@ ADN_Automata_Data::UnitInfos::UnitInfos()
 : ADN_Ref_ABC()
 , ADN_DataTreeNode_ABC()
 , ptrUnit_( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0 )
-, strNbrRegExp_( "1" )
+, min_( 0 )
+, max_( -1 )
 {
     BindExistenceTo( &ptrUnit_ );
 }
@@ -54,7 +53,6 @@ std::string ADN_Automata_Data::UnitInfos::GetItemName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: UnitInfos::CreateCopy
 // Created: APE 2005-02-14
@@ -63,47 +61,43 @@ ADN_Automata_Data::UnitInfos* ADN_Automata_Data::UnitInfos::CreateCopy()
 {
     UnitInfos* pCopy = new UnitInfos();
     pCopy->ptrUnit_ = ptrUnit_.GetData();
-    pCopy->strNbrRegExp_ = strNbrRegExp_.GetData();
+    pCopy->min_     = min_.GetData();
+    pCopy->max_     = max_.GetData();
     return pCopy;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: UnitInfos::ReadArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Automata_Data::UnitInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Automata_Data::UnitInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Pion" );
-
-    std::string strName;
-    input.ReadAttribute( "nom", strName );
-    ADN_Units_Data::UnitInfos* pUnit = ADN_Workspace::GetWorkspace().GetUnits().GetData().FindUnit( strName );
-    if( pUnit == 0 )
-        input.ThrowError( MT_FormatString( "Type d'unité '%s' inconnu.", strName.c_str() ) );
-    assert( pUnit != 0 );
+    std::string type;
+    input >> xml::attribute( "type", type );
+    ADN_Units_Data::UnitInfos* pUnit = ADN_Workspace::GetWorkspace().GetUnits().GetData().FindUnit( type );
+    if( ! pUnit )
+        throw ADN_DataException( "ADN_Automata_Data", "Type d'unité '" + type + "' inconnu." );
     ptrUnit_ = pUnit;
-
-    std::string strNbrRegExp;
-    input.Read( strNbrRegExp );
-    strNbrRegExp_ = strNbrRegExp;
-
-    input.EndSection(); // Pion
+    input >> xml::optional() >> xml::attribute( "min-occurs", min_ )
+          >> xml::optional() >> xml::attribute( "max-occurs", max_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: UnitInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Automata_Data::UnitInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Automata_Data::UnitInfos::WriteArchive( xml::xostream& output, const ADN_TypePtr_InVector_ABC<ADN_Units_Data::UnitInfos>& pc )
 {
-    output.Section( "Pion" );
-    output.WriteAttribute( "nom", ptrUnit_.GetData()->strName_.GetData() );
-    output << strNbrRegExp_.GetData();
-    output.EndSection(); // Pion
+    output << xml::start( "unit" )
+             << xml::attribute( "type", ptrUnit_.GetData()->strName_ );
+    if( min_.GetData() != 0 )
+        output << xml::attribute( "min", min_ );
+    if( max_.GetData() >= 0 )
+        output << xml::attribute( "max", max_ );
+    if( ptrUnit_ == pc )
+        output << xml::attribute( "command-post", true );
+    output << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AutomatonInfos::AutomatonInfos
@@ -121,7 +115,6 @@ ADN_Automata_Data::AutomatonInfos::AutomatonInfos()
     BindExistenceTo( &ptrModel_ );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AutomatonInfos::~AutomatonInfos
 // Created: APE 2004-12-02
@@ -130,7 +123,6 @@ ADN_Automata_Data::AutomatonInfos::~AutomatonInfos()
 {
     vSubUnits_.Reset();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AutomatonInfos::GetNodeName
@@ -141,7 +133,6 @@ std::string ADN_Automata_Data::AutomatonInfos::GetNodeName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AutomatonInfos::GetItemName
 // Created: APE 2004-12-02
@@ -150,7 +141,6 @@ std::string ADN_Automata_Data::AutomatonInfos::GetItemName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AutomatonInfos::CreateCopy
@@ -173,98 +163,58 @@ ADN_Automata_Data::AutomatonInfos* ADN_Automata_Data::AutomatonInfos::CreateCopy
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Automata_Data::AutomatonInfos::ReadUnit
+// Created: AGE 2007-08-17
+// -----------------------------------------------------------------------------
+void ADN_Automata_Data::AutomatonInfos::ReadUnit( xml::xistream& input )
+{
+    std::auto_ptr<UnitInfos> spNew( new UnitInfos() );
+    spNew->ReadArchive( input );
+    bool cp = false;
+    input >> xml::optional() >> xml::attribute( "command-post", cp );
+    if( cp )
+        ptrUnit_ = spNew->ptrUnit_.GetData();
+    vSubUnits_.AddItem( spNew.release() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AutomatonInfos::ReadArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Automata_Data::AutomatonInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Automata_Data::AutomatonInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Unite" );
-    input.ReadAttribute( "nom", strName_ );
-
-    std::string strType;
-    input.ReadAttribute( "type", strType );
+    std::string strType, strModel;
+    input >> xml::attribute( "name", strName_ )
+          >> xml::attribute( "type", strType )
+          >> xml::attribute( "decisional-model", strModel )
+          >> xml::optional() >> xml::attribute( "force-ratio-feedback-time", strengthRatioFeedbackTime_ );
+    bStrengthRatioFeedbackTime_ = strengthRatioFeedbackTime_ != "0s";
     nAgentType_ = ADN_Tr::ConvertToAgentTypeAutomate( strType );
-
-    input.Section( "Automate" );
-
-    std::string strModel;
-    input.ReadField( "ModeleDecisionnel", strModel );
-    
     ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindAutomataModel( strModel );
     if( !pModel )
-        throw ADN_DataException( "Donnée invalide", MT_FormatString( "Modele '%s' inconnu - réferencé par l'automate '%s'", strModel.c_str(), strName_.GetData().c_str() ), "" );
-
+        throw ADN_DataException( "Donnée invalide", "Modele '" + strModel + "' inconnu - réferencé par l'automate '" + strName_.GetData() + "'" );
     ptrModel_ = pModel;
 
-    input.BeginList( "Constitution" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<UnitInfos> spNew( new UnitInfos() );
-        spNew->ReadArchive( input );
-        vSubUnits_.AddItem( spNew.release() );
-    }
-    input.EndList(); // Constitution
-
-    if( input.Section( "RapportDeForce", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bStrengthRatioFeedbackTime_ = true;
-        input.ReadField( "TempsDeRemontee", strengthRatioFeedbackTime_ );
-        input.EndSection(); // RapportDeForce
-    }
-
-    input.EndSection(); // Automate
-    input.Section( "PionPC" );
-
-    std::string strUnit;
-    input.ReadAttribute( "type", strUnit );
-    ADN_Units_Data::UnitInfos* pUnit = ADN_Workspace::GetWorkspace().GetUnits().GetData().FindUnit( strUnit );
-    if( pUnit == 0 )
-        input.ThrowError( MT_FormatString( "Type d'unité '%s' inconnu.", strUnit.c_str() ) );
-    ptrUnit_ = pUnit;
-
-    input.EndSection(); // PionPC
-    input.EndSection(); // Unite
+    input >> xml::list( "unit", *this, &ADN_Automata_Data::AutomatonInfos::ReadUnit );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AutomatonInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Automata_Data::AutomatonInfos::WriteArchive( MT_OutputArchive_ABC& output, int nMosId )
+void ADN_Automata_Data::AutomatonInfos::WriteArchive( xml::xostream& output, int nMosId )
 {
-    output.Section( "Unite" );
-    output.WriteAttribute( "nom", strName_.GetData() );
-    output.WriteAttribute( "type", ADN_Tr::ConvertFromAgentTypeAutomate( nAgentType_.GetData() ) );
-
-    output.WriteField( "MosID", nMosId );
-
-    output.Section( "Automate" );
-    output.WriteField( "ModeleDecisionnel", ptrModel_.GetData()->strName_.GetData() );
-
-    output.BeginList( "Constitution", vSubUnits_.size() );
-    for( IT_UnitInfosVector it = vSubUnits_.begin(); it != vSubUnits_.end(); ++it )
-        (*it)->WriteArchive( output );
-    output.EndList(); // Constitution
-
+    output << xml::start( "automat" )
+            << xml::attribute( "name", strName_ )
+            << xml::attribute( "type", ADN_Tr::ConvertFromAgentTypeAutomate( nAgentType_.GetData() ) )
+            << xml::attribute( "decisional-model", ptrModel_.GetData()->strName_ )
+            << xml::attribute( "id", nMosId );
     if( bStrengthRatioFeedbackTime_.GetData() )
-    {
-        output.Section( "RapportDeForce" );
-        output.WriteField( "TempsDeRemontee", strengthRatioFeedbackTime_.GetData() );
-        output.EndSection(); // RapportDeForce
-    }
-
-    output.EndSection(); // Automate
-
-    if( !ptrUnit_.GetData() )
-        throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Automat PC type missing: " ).append( strName_.GetData().c_str() ).ascii() );
-    output.Section( "PionPC" );
-    output.WriteAttribute( "type", ptrUnit_.GetData()->strName_.GetData() );
-    output.EndSection(); // PionPC
-
-    output.EndSection(); // Unite
+        output << xml::attribute( "force-ratio-feedback-time", strengthRatioFeedbackTime_ );
+    for( IT_UnitInfosVector it = vSubUnits_.begin(); it != vSubUnits_.end(); ++it )
+        (*it)->WriteArchive( output, ptrUnit_ );
+    output << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_Data constructor
@@ -275,7 +225,6 @@ ADN_Automata_Data::ADN_Automata_Data()
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_Data destructor
 // Created: APE 2004-12-02
@@ -284,7 +233,6 @@ ADN_Automata_Data::~ADN_Automata_Data()
 {
     Reset();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_Data::FilesNeeded
@@ -295,7 +243,6 @@ void ADN_Automata_Data::FilesNeeded( T_StringList& vFiles ) const
     vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szAutomata_.GetData() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_Data::Reset
 // Created: APE 2004-12-02
@@ -305,38 +252,40 @@ void ADN_Automata_Data::Reset()
     vAutomata_.Reset();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_Data::ReadArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Automata_Data::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Automata_Data::ReadArchive( xml::xistream& input )
 {
-    input.BeginList( "Automates" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<AutomatonInfos> spNew( new AutomatonInfos() );
-        spNew->ReadArchive( input );
-        vAutomata_.AddItem( spNew.release() );
-    }
-    input.EndList(); // Automates
+    input >> xml::start( "automats" )
+            >> xml::list( "automat", *this, &ADN_Automata_Data::ReadAutomat )
+          >> xml::end();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Automata_Data::ReadAutomat
+// Created: AGE 2007-08-17
+// -----------------------------------------------------------------------------
+void ADN_Automata_Data::ReadAutomat( xml::xistream& input )
+{
+    std::auto_ptr<AutomatonInfos> spNew( new AutomatonInfos() );
+    spNew->ReadArchive( input );
+    vAutomata_.AddItem( spNew.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_Data::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Automata_Data::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Automata_Data::WriteArchive( xml::xostream& output )
 {
     int nMosBaseId = ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos().size() + 1;
-    output.BeginList( "Automates", vAutomata_.size() );
+    output << xml::start( "automats" );
     int n = 0;
     for( IT_AutomatonInfosVector it = vAutomata_.begin(); it != vAutomata_.end(); ++it, ++n )
-    {
         (*it)->WriteArchive( output, nMosBaseId + n );
-    }
-    output.EndList(); // Automates
+    output  << xml::end();
 }
 
 

@@ -25,8 +25,8 @@ class MIL_Limit : public MIL_TacticalLine_ABC
 public:
     MIL_Limit();
     MIL_Limit( const ASN1T_MsgLimitCreationRequest& asn );
-    MIL_Limit( const MIL_Automate& automateBroadcasted  , MIL_InputArchive& archive );
-    MIL_Limit( const MIL_Formation& formationBroadcasted, MIL_InputArchive& archive );
+    MIL_Limit( const MIL_Automate& automateBroadcasted  , xml::xistream& xis );
+    MIL_Limit( const MIL_Formation& formationBroadcasted, xml::xistream& xis );
     virtual ~MIL_Limit();
 
     //! @name CheckPoints

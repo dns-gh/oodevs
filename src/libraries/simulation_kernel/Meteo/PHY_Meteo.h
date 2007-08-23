@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_Ephemeride;
 class PHY_Precipitation;
 class PHY_Lighting;
@@ -36,7 +41,7 @@ public:
     };
 
 public:
-    PHY_Meteo( MIL_InputArchive& archive, const PHY_Ephemeride& ephemeride );
+    PHY_Meteo( xml::xistream& xis, const PHY_Ephemeride& ephemeride );
     PHY_Meteo( const ASN1T_MeteoAttributes& );
 
     //-------------------------------------------------------------------------

@@ -20,39 +20,47 @@
 
 #include "Tools/MIL_Tools.h"
 #include "Network/NET_ASN_Tools.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 //-----------------------------------------------------------------------------
 // Name: PHY_Meteo constructor
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
-PHY_Meteo::PHY_Meteo( MIL_InputArchive& archive, const PHY_Ephemeride& ephemeride )
+PHY_Meteo::PHY_Meteo( xml::xistream& xis, const PHY_Ephemeride& ephemeride )
     : pLighting_     ( &PHY_Lighting::jourSansNuage_ )
     , pPrecipitation_( &PHY_Precipitation::none_ )
     , nRefCount_     ( 0 )
 {
     // Plancher de couverture nuageuse
-    archive.ReadField( "PlancherCouvertureNuageuse", nPlancherCouvertureNuageuse_ );
+    xis >> content( "PlancherCouvertureNuageuse", nPlancherCouvertureNuageuse_ );
 
     // Plafond de couverture nuageuse
-    archive.ReadField( "PlafondCouvertureNuageuse", nPlafondCouvertureNuageuse_ );
+
+    xis >> content( "PlafondCouvertureNuageuse", nPlafondCouvertureNuageuse_ );
 
     // Densite moyenne de couverture nuageuse
     uint nVal;
-    archive.ReadField( "DensiteMoyenneCouvertureNuageuse", nVal );
+    xis >> content( "DensiteMoyenneCouvertureNuageuse", nVal );
     rDensiteCouvertureNuageuse_ = std::min( nVal, (uint)100 ) / 100.;
 
     // Vitesse du vent
-    archive.ReadField( "VitesseVent", wind_.rWindSpeed_, CheckValueGreaterOrEqual( 0. ) );
+    xis >> content( "VitesseVent", wind_.rWindSpeed_ );
+    if( wind_.rWindSpeed_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "meteo: VitesseVent < 0" );
     wind_.rWindSpeed_ = MIL_Tools::ConvertSpeedMosToSim( wind_.rWindSpeed_ );
     
     // Direction du vent
     uint nAngle;
-    archive.ReadField( "DirectionVent", nAngle, CheckValueBound( 0, 360 ) );
+    xis >> content( "DirectionVent", nAngle );
+    if( nAngle < 0 || nAngle > 360 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "meteo: DirectionVent not in [0..360]" );
     NET_ASN_Tools::ReadDirection( nAngle, wind_.vWindDirection_ );
 
     // Précipitation
     std::string strVal;
-    archive.ReadField( "Precipitation", strVal );
+    xis >> content( "Precipitation", strVal );
 
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( strVal );
     if( !pPrecipitation_ )

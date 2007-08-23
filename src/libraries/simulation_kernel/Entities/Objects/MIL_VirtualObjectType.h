@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_VirtualObjectType_ControlZone;
 class MIL_VirtualObject_ABC;
 
@@ -37,7 +42,7 @@ public:
 public:
     //! @name Manager
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( xml::xistream& xis );
     static void Terminate ();
 
     static const MIL_VirtualObjectType* Find( const std::string& strName );
@@ -55,7 +60,12 @@ protected:
 
     //! @name Init tools
     //@{
-    virtual void Read( MIL_InputArchive& archive ) = 0;
+    virtual void Read( xml::xistream& xis ) = 0;
+    //@}
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadObject( xml::xistream& xis );
     //@}
 
 protected:

@@ -55,9 +55,9 @@ public:
     static void CopyLocationList              ( DIA_Call_ABC& call );
     static void CopyLocalisationToLocationList( DIA_Call_ABC& call );
 
-	// DIA Thing management
-	static void CreateDIAThing ( DIA_Call_ABC& call );	
-	static void DestroyDIAThing( DIA_Call_ABC& call );
+    // DIA Thing management
+    static void CreateDIAThing ( DIA_Call_ABC& call );    
+    static void DestroyDIAThing( DIA_Call_ABC& call );
     //@}
 };
 

@@ -51,8 +51,8 @@ public:
 
         void CopyFrom( AmbulanceInfos& src );
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( const std::string& section, xml::xostream& output );
 
     public:
         ADN_Type_Bool   transportSkills_[eNbrDoctorSkills];
@@ -78,8 +78,9 @@ public:
 
         void CopyFrom( LogHealthInfos& src );
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void ReadInfo( const std::string& type, xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Bool bIsAmbulance_;
@@ -110,8 +111,8 @@ public:
 
         void CopyFrom( NTIInfos& src );
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         std::string strName_;
@@ -137,8 +138,9 @@ public:
 
         void CopyFrom( LogMaintenanceInfos& src );
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void ReadInfo( const std::string& type, xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Bool bIsTower_;
@@ -167,8 +169,8 @@ public:
 
         void CopyFrom( LogSupplyInfos& src );
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Bool bIsCarrier_;
@@ -191,8 +193,9 @@ public:
 
         void CopyFrom( LogInfos& src );
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void ReadLogisticFunction( const std::string& type, xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Bool       bHasHealthInfos_;
@@ -219,8 +222,8 @@ public:
         BreakdownInfos* CreateCopy();
 
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( const std::string& origin, xml::xostream& output );
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Breakdowns_Data::BreakdownInfo> ptrBreakdown_;
@@ -244,8 +247,9 @@ public:
 
         void CopyFrom( BreakdownGroupInfos& src );
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void ReadBreakdown( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         std::string strName_;
@@ -264,8 +268,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         E_Location          nTypeTerrain_;
@@ -306,8 +310,8 @@ public:
 
         SensorInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Sensors_Data::SensorInfos> ptrSensor_;
@@ -348,8 +352,8 @@ public:
 
         RadarInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Radars_Data::RadarInfos> ptrRadar_;
@@ -376,8 +380,8 @@ public:
 
         WeaponInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Weapons_Data::WeaponInfos> ptrWeapon_;
@@ -419,8 +423,8 @@ public:
 
         CategoryInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::DotationInfos> ptrDotation_;
@@ -449,11 +453,14 @@ public:
 
         void CopyFrom( DotationInfos& src );
 
-        bool ReadArchive( const std::string& strListName, ADN_XmlInput_Helper& input, bool bOptionnal = false );
-        void WriteArchive( const std::string& strListName, MT_OutputArchive_ABC& output );
+        void ReadCategory( xml::xistream& input );
+
+        void ReadArchive( xml::xistream& input );
+        void ReadDotation( xml::xistream& input, ADN_Equipement_Data::DotationInfos& dotation );
+        void WriteArchive( xml::xostream& output );
 
     public:
-        T_CategoryInfos_Vector                                      categories_;
+        T_CategoryInfos_Vector categories_;
     };
 
 
@@ -472,8 +479,8 @@ public:
 
         ObjectInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Objects_Data::ObjectInfos>     ptrObject_;
@@ -533,8 +540,8 @@ public:
 
         ConsumptionItem* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         E_ConsumptionType                                           nConsumptionType_;
@@ -561,8 +568,10 @@ public:
 
         void CopyFrom( ConsumptionsInfos& source );
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void ReadConsumption( xml::xistream& input );
+        void ReadDotation( xml::xistream& input, const E_ConsumptionType& type );
+        void WriteArchive( xml::xostream& output );
 
     public:
         T_ConsumptionItem_Vector vConsumptions_;
@@ -585,8 +594,13 @@ public:
 
         ComposanteInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void ReadSpeed( xml::xistream& input );
+        void ReadSensor( xml::xistream& input );
+        void ReadRadar( xml::xistream& input );
+        void ReadWeapon( xml::xistream& input );
+        void ReadObject( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_String                                                           strName_;
@@ -666,8 +680,9 @@ public:
 
 
 private:
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void WriteArchive( MT_OutputArchive_ABC& output );
+    void ReadElement( xml::xistream& input );
+    void ReadArchive( xml::xistream& input );
+    void WriteArchive( xml::xostream& output );
 
 public:
     int nNextId_;

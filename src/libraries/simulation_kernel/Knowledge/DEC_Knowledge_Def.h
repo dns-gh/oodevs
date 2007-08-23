@@ -81,8 +81,8 @@ typedef T_PopulationKnowledgeObjectDiaIDVector::const_iterator CIT_PopulationKno
 //@{
 enum E_QueryValidity
 {
-	eQueryValid,
-	eQueryInvalid 
+    eQueryValid,
+    eQueryInvalid 
 };
 //@}
 

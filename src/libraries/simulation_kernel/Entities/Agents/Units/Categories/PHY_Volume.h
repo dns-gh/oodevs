@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 // @class  PHY_Volume
 // Created: JVT 2004-08-03
@@ -32,7 +37,7 @@ public:
 public:
     //! @name Manager
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( xml::xistream& xis );
     static void Terminate ();
 
     static const T_VolumeMap& GetVolumes();
@@ -57,6 +62,10 @@ private:
 private:
     static T_VolumeMap volumes_;
     static uint        nNextID_;
+
+private:
+    struct LoadingWrapper;
+    static void ReadVolume( xml::xistream& xis );
 };
 
 #include "PHY_Volume.inl"

@@ -40,6 +40,10 @@
 #include "Hla/HLA_UpdateFunctor.h"
 #include "MIL_AgentServer.h"
 
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+
 MT_Float PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_             = 0.;
 MT_Float PHY_RolePion_Composantes::rOpStateWeightMajorComposante_                = 0.;
 MT_Float PHY_RolePion_Composantes::rMaxDangerosityDegradationByNeutralizedState_ = 0.;
@@ -247,7 +251,7 @@ void PHY_RolePion_Composantes::serialize( Archive& file, const uint )
 // Name: PHY_RolePion_Composantes::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::WriteODB( MT_XXmlOutputArchive& archive ) const
+void PHY_RolePion_Composantes::WriteODB( xml::xostream& xos ) const
 {
     /*
     archive.Section( "Equipements" );
@@ -342,100 +346,116 @@ void PHY_RolePion_Composantes::DistributeHumanWounds( const PHY_HumanRank& rank,
 // Name: PHY_RolePion_Composantes::ReadComposantesOverloading
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ReadComposantesOverloading( MIL_InputArchive& archive )
+void PHY_RolePion_Composantes::ReadComposantesOverloading( xml::xistream& xis )
 {
-    if( !archive.BeginList( "Equipements", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> list( "Equipements", *this, &PHY_RolePion_Composantes::ReadEquipements );
+}
 
-    while( archive.NextListElement() )
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ReadEquipements
+// Created: ABL 2007-07-10
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ReadEquipements( xml::xistream& xis )
+{
+    xis >> list( "Equipement", *this, &PHY_RolePion_Composantes::ReadEquipement );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ReadEquipement
+// Created: ABL 2007-07-10
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ReadEquipement( xml::xistream& xis )
+{
+    std::string strType;
+    xis >> attribute( "type", strType );
+
+    const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::Find( strType );
+    if( !pType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknwon composante type" ); // $$$$ ABL 2007-07-10: error context
+
+    uint nNbrRepairable;
+    uint nNbrDead;
+
+    xis >> attribute( "reparable", nNbrRepairable )
+        >> attribute( "indisponible", nNbrDead );
+
+    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
     {
-        archive.Section( "Equipement" );
-
-        std::string strType;
-        archive.ReadAttribute( "type", strType );
-
-        const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::Find( strType );
-        if( !pType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknwon composante type", archive.GetContext() );
-
-        uint nNbrRepairable;
-        uint nNbrDead;
-
-        archive.ReadAttribute( "reparable"   , nNbrRepairable );
-        archive.ReadAttribute( "indisponible", nNbrDead       );
-
-        for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
+        PHY_ComposantePion& composante = **itComposante;
+        if( !( composante.GetType() == *pType && composante.GetState() == PHY_ComposanteState::undamaged_ ) )
+            continue;
+        if( nNbrDead )
         {
-            PHY_ComposantePion& composante = **itComposante;
-            if( !( composante.GetType() == *pType && composante.GetState() == PHY_ComposanteState::undamaged_ ) )
-                continue;
-            if( nNbrDead )
-            {
-                --nNbrDead;
-                composante.ReinitializeState( PHY_ComposanteState::dead_ );
-            }
-            else if( nNbrRepairable )
-            {
-                --nNbrRepairable;
-                composante.ReinitializeState( PHY_ComposanteState::repairableWithEvacuation_ );
-            }
-            else
-                break;
+            --nNbrDead;
+            composante.ReinitializeState( PHY_ComposanteState::dead_ );
         }
-
-        if( nNbrDead || nNbrRepairable )
-            MT_LOG_WARNING_MSG( "Agent " << pPion_->GetID() << " - Cannot apply all the composantes states overloading specified in ODB : " << nNbrDead << " deads and " << nNbrRepairable << " repairables '" << pType->GetName() << "' remaining" );
-
-        archive.EndSection(); // Equipement
+        else if( nNbrRepairable )
+        {
+            --nNbrRepairable;
+            composante.ReinitializeState( PHY_ComposanteState::repairableWithEvacuation_ );
+        }
+        else
+            break;
     }
-    archive.EndList(); // Equipements
+
+    if( nNbrDead || nNbrRepairable )
+        MT_LOG_WARNING_MSG( "Agent " << pPion_->GetID() << " - Cannot apply all the composantes states overloading specified in ODB : " << nNbrDead << " deads and " << nNbrRepairable << " repairables '" << pType->GetName() << "' remaining" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::ReadHumansOverloading
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ReadHumansOverloading( MIL_InputArchive& archive )
+void PHY_RolePion_Composantes::ReadHumansOverloading( xml::xistream& xis )
 {
-    if( !archive.BeginList( "Personnels", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> list( "Personnels", *this, &PHY_RolePion_Composantes::ReadPersonnels );
 
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ReadPersonnels
+// Created: ABL 2007-07-10
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ReadPersonnels( xml::xistream& xis )
+{
+    xis >> list( "Personnel", *this, &PHY_RolePion_Composantes::ReadPersonnel );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ReadPersonnel
+// Created: ABL 2007-07-10
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ReadPersonnel( xml::xistream& xis )
+{
+    std::string strState;
     CIT_ComposantePionVector itCurrentComp = composantes_.begin();
 
-    while( archive.NextListElement() )
+    xis >> attribute( "etat", strState );
+
+    const PHY_HumanWound* pWound = PHY_HumanWound::Find( strState );
+    if( !pWound )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown human wound" ); // $$$$ ABL 2007-07-10: error context
+
+    const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
+    for( PHY_HumanRank::CIT_HumanRankMap itRank = ranks.begin(); itRank != ranks.end(); ++itRank )
     {
-        archive.Section( "Personnel" );
-
-        std::string strState;
-        archive.ReadAttribute( "etat", strState );
-
-        const PHY_HumanWound* pWound = PHY_HumanWound::Find( strState );
-        if( !pWound )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown human wound", archive.GetContext() );
-
-        const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
-        for( PHY_HumanRank::CIT_HumanRankMap itRank = ranks.begin(); itRank != ranks.end(); ++itRank )
-        {
-            const PHY_HumanRank& rank = *itRank->second;
-            std::stringstream strRank;
-            strRank << "nb" << rank.GetName();
-            uint nNbr;
-            archive.ReadAttribute( strRank.str(), nNbr );
-            DistributeHumanWounds( rank, *pWound, nNbr, itCurrentComp );
-        }
-        archive.EndSection(); // Personnel
+        const PHY_HumanRank& rank = *itRank->second;
+        std::stringstream strRank;
+        strRank << "nb" << rank.GetName();
+        uint nNbr;
+        xis >> attribute( strRank.str(), nNbr );
+        DistributeHumanWounds( rank, *pWound, nNbr, itCurrentComp );
     }
-    archive.EndList(); // Personnels
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::ReadOverloading
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ReadOverloading( MIL_InputArchive& archive )
+void PHY_RolePion_Composantes::ReadOverloading( xml::xistream& xis )
 {
-    ReadComposantesOverloading( archive );
-    ReadHumansOverloading     ( archive );
+    ReadComposantesOverloading( xis );
+    ReadHumansOverloading     ( xis );
 }
 
 // =============================================================================

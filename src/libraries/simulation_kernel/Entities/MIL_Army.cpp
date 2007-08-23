@@ -30,6 +30,9 @@
 #include "Network/NET_AsnException.h"
 #include "Tools/MIL_IDManager.h"
 #include "MIL_Singletons.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 MT_Converter< std::string, MIL_Army::E_Diplomacy > MIL_Army::diplomacyConverter_( eUnknown );
 
@@ -54,6 +57,7 @@ void MIL_Army::Initialize()
 // -----------------------------------------------------------------------------
 void MIL_Army::Terminate()
 {
+    // NOTHING
 }
 
 // =============================================================================
@@ -64,9 +68,9 @@ void MIL_Army::Terminate()
 // Name: MIL_Army constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Army::MIL_Army( MIL_EntityManager& manager, uint nID, MIL_InputArchive& archive )
+MIL_Army::MIL_Army( MIL_EntityManager& manager, uint id, xml::xistream& xis )
     : manager_             ( manager )
-    , nID_                 ( nID )
+    , nID_                 ( id )
     , strName_             ()
     , nType_               ( eUnknown )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_Army( *this ) )
@@ -76,17 +80,28 @@ MIL_Army::MIL_Army( MIL_EntityManager& manager, uint nID, MIL_InputArchive& arch
     , populations_         ()
     , objects_             ()
 {
-    archive.ReadAttribute( "name", strName_ );
-
     std::string strType;
-    archive.ReadAttribute( "type", strType );
+    xis >> attribute( "name", strName_ )
+        >> attribute( "type", strType );
+
     nType_ = diplomacyConverter_.Convert( strType );
-    
-    InitializeCommunication( archive );
-    InitializeTactical     ( archive );
-    InitializeObjects      ( archive );
-    InitializeLogistic     ( archive );
-    InitializePopulations  ( archive );    
+
+    MIL_Formation* formation = 0;
+    xis >> start( "communication" )
+            >> list( "knowledge-group", *this, &MIL_Army::ReadLogistic )
+        >> end()
+        >> start( "tactical" )
+            >> list( "formation", manager_, &MIL_EntityManager::CreateFormation, *this, formation )
+        >> end()
+        >> start( "objects" )
+            >> list( "object", manager_, &MIL_EntityManager::CreateObject, *this )
+        >> end()
+        >> start( "logistic" )
+            >> list( "automat", *this, &MIL_Army::ReadAutomat  )
+        >> end()
+        >> start( "populations" )
+            >> list( "population", manager_, &MIL_EntityManager::CreatePopulation, *this )
+        >> end();
 }
 
 // -----------------------------------------------------------------------------
@@ -176,57 +191,57 @@ void MIL_Army::serialize( Archive& file, const uint )
 // Name: MIL_Army::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void MIL_Army::WriteODB( MT_XXmlOutputArchive& archive ) const
+void MIL_Army::WriteODB( xml::xostream& xos ) const
 {
-    archive.Section( "side" );
-    archive.WriteAttribute( "id"  , nID_ );
-    archive.WriteAttribute( "name", strName_ );
-    archive.WriteAttribute( "type", diplomacyConverter_.RevertConvert( nType_ ) );
+    xos << start( "side" )
+            << attribute( "id", nID_ )
+            << attribute( "name", strName_ )
+            << attribute( "type", diplomacyConverter_.RevertConvert( nType_ ) );
 
-    archive.Section( "communication" );
+    xos     << start( "communication" );
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
-        it->second->WriteODB( archive );
-    archive.EndSection(); // communication
-
-    archive.Section( "tactical" );
+        it->second->WriteODB( xos );
+    xos     << end();
+    
+    xos     << start( "tactical" );
     for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
-        (**it).WriteODB( archive );
-    archive.EndSection(); // tactical
+        (*it)->WriteODB( xos );
+    xos     << end();
 
-    archive.Section( "logistic" );
+    xos     << start( "logistic" );
     for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
-        (**it).WriteLogisticLinksODB( archive );
-    archive.EndSection(); // logistic
+        (*it)->WriteLogisticLinksODB( xos );
+    xos     << end();
 
-    archive.Section( "objects" );
+    xos     << start( "objects" );
     for( CIT_ObjectSet it = objects_.begin(); it != objects_.end(); ++it )
-        (**it).WriteODB( archive );    
-    archive.EndSection(); // objects
+        (*it)->WriteODB( xos );    
+    xos     << end();
 
-    archive.Section( "populations" );
+    xos     << start( "populations" );
     for( CIT_PopulationSet it = populations_.begin(); it != populations_.end(); ++it )
-        (**it).WriteODB( archive );
-    archive.EndSection(); // populations
+        (*it)->WriteODB( xos );
+    xos     << end();
 
-    archive.EndSection(); // side
+    xos << end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::WriteDiplomacyODB
 // Created: NLD 2006-10-18
 // -----------------------------------------------------------------------------
-void MIL_Army::WriteDiplomacyODB( MT_XXmlOutputArchive& archive ) const
+void MIL_Army::WriteDiplomacyODB( xml::xostream& xos ) const
 {
-    archive.Section( "side" );    
-    archive.WriteAttribute( "id", nID_ );
+    xos << start( "side" )
+        << attribute( "id", nID_ );
     for( CIT_DiplomacyMap it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
-        archive.Section( "relationship" );
-        archive.WriteAttribute( "side"     , it->first->GetID() );
-        archive.WriteAttribute( "diplomacy", diplomacyConverter_.RevertConvert( it->second ) );
-        archive.EndSection(); // relationship
+        xos << start( "relationship" )
+            << attribute( "side", it->first->GetID() )
+            << attribute( "diplomacy", diplomacyConverter_.RevertConvert(it->second) )
+        << end();
     }
-    archive.EndSection(); // side
+    xos << end();
 }
 
 // =============================================================================
@@ -237,184 +252,96 @@ void MIL_Army::WriteDiplomacyODB( MT_XXmlOutputArchive& archive ) const
 // Name: MIL_Army::InitializeDiplomacy
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-void MIL_Army::InitializeDiplomacy( MIL_InputArchive& archive )
+void MIL_Army::InitializeDiplomacy( xml::xistream& xis )
 {
-    while( archive.NextListElement() )
-    {
-        archive.Section( "relationship" );
-
-        uint        nTeam;
-        std::string strDiplomacy;
-
-        archive.ReadAttribute( "side"     , nTeam );
-        archive.ReadAttribute( "diplomacy", strDiplomacy );
-
-        E_Diplomacy nDiplomacy = diplomacyConverter_.Convert( strDiplomacy );
-        if( nDiplomacy == eUnknown )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown diplomacy relation between armies", archive.GetContext() );
-
-        MIL_Army* pArmy = manager_.FindArmy( nTeam );
-        if( !pArmy )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown army", archive.GetContext() );
-
-        if( diplomacies_.find( pArmy ) != diplomacies_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Diplomacy between armies already exist", archive.GetContext() );
-        if( pArmy == this )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Self diplomacy not allowed", archive.GetContext() );
-
-        diplomacies_[ pArmy ] = nDiplomacy;
-
-        archive.EndSection(); // relationship
-    }
+    xis >> list( "relationship", *this, &MIL_Army::ReadDiplomacy );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Army::InitializeCommunication
-// Created: NLD 2006-10-11
+// Name: MIL_Army::ReadDiplomacy
+// Created: ABL 2007-07-10
 // -----------------------------------------------------------------------------
-void MIL_Army::InitializeCommunication( MIL_InputArchive& archive )
+void MIL_Army::ReadDiplomacy( xml::xistream& xis )
 {
-    archive.BeginList( "communication" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "knowledge-group" );
+    uint        nTeam;
+    std::string strDiplomacy;
 
-        uint        nID;
-        std::string strType;
-        archive.ReadAttribute( "id"  , nID     );
-        archive.ReadAttribute( "type", strType );
+    xis >> attribute( "side", nTeam )
+        >> attribute( "diplomacy", strDiplomacy );
 
-        const MIL_KnowledgeGroupType* pType = MIL_KnowledgeGroupType::FindType( strType );
-        if( !pType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Knowledge group type doesn't exist", archive.GetContext() );
+    E_Diplomacy nDiplomacy = diplomacyConverter_.Convert( strDiplomacy );
+    if( nDiplomacy == eUnknown )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown diplomacy relation between armies" ); // $$$$ ABL 2007-07-10: error context
 
-        if( knowledgeGroups_.find( nID ) != knowledgeGroups_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Knowledge group id already defined", archive.GetContext() );
-        pType->InstanciateKnowledgeGroup( nID, *this, archive ); // Auto-registration
+    MIL_Army* pArmy = manager_.FindArmy( nTeam );
+    if( !pArmy )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown army" ); // $$$$ ABL 2007-07-10: error context
 
-        archive.EndSection(); // knowledge-group
-    }
-    archive.EndList(); // communication
+    if( diplomacies_.find( pArmy ) != diplomacies_.end() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Diplomacy between armies already exist" ); // $$$$ ABL 2007-07-10: error context
+    if( pArmy == this )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Self diplomacy not allowed" ); // $$$$ ABL 2007-07-10: error context
+
+    diplomacies_[ pArmy ] = nDiplomacy;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Army::InitializeTactical
-// Created: NLD 2006-10-11
+// Name: MIL_Army::ReadLogistic
+// Created: ABL 2007-07-09
 // -----------------------------------------------------------------------------
-void MIL_Army::InitializeTactical( MIL_InputArchive& archive )
+void MIL_Army::ReadLogistic( xml::xistream& xis )
 {
-    archive.BeginList( "tactical" );
-    while( archive.NextListElement() )
-    {
-        if( archive.BeginList( "formation" ) )
-        {
-            uint nID;
-            archive.ReadAttribute( "id", nID );
-            manager_.CreateFormation( nID, *this, archive ); // Auto-registration
-            archive.EndList(); // formation
-        }
-    }
-    archive.EndList(); // tactical
+    uint        id;
+    std::string strType;
+    xis >> attribute( "id", id )
+        >> attribute( "type", strType );
+
+    const MIL_KnowledgeGroupType* pType = MIL_KnowledgeGroupType::FindType( strType );
+    if( !pType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Knowledge group type doesn't exist" ); // $$$$ ABL 2007-07-09: error context
+
+    if( knowledgeGroups_.find( id ) != knowledgeGroups_.end() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Knowledge group id already defined" ); // $$$$ ABL 2007-07-09: error context
+    pType->InstanciateKnowledgeGroup( id, *this ); // Auto-registration
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Army::InitializeObjects
-// Created: NLD 2006-10-20
+// Name: MIL_Army::ReadAutomat
+// Created: ABL 2007-07-10
 // -----------------------------------------------------------------------------
-void MIL_Army::InitializeObjects( MIL_InputArchive& archive )
+void MIL_Army::ReadAutomat( xml::xistream& xis )
 {
-    archive.BeginList( "objects" );
-    while( archive.NextListElement() )
-    {
-        if( archive.Section( "object" ) )
-        {
-            uint        nID;
-            std::string strType;
-            archive.ReadAttribute( "id"  , nID );
-            archive.ReadAttribute( "type", strType );
+    uint id;
+    xis >> attribute( "id", id );
 
-            const MIL_RealObjectType* pType = MIL_RealObjectType::Find( strType );
-            if( !pType )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type", archive.GetContext() );
+    MIL_Automate* pSuperior = manager_.FindAutomate( id );
+    if( !pSuperior )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automat" ); // $$$$ ABL 2007-07-10: error context
+    if( pSuperior->GetArmy() != *this )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid automat (not in specified side)" ); // $$$$ ABL 2007-07-10: error context
+    if( !pSuperior->GetType().IsLogistic() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat isn't a logistic automat" ); // $$$$ ABL 2007-07-10: error context
 
-            manager_.CreateObject( *pType, nID, *this, archive ); // Auto-registration
-            archive.EndSection(); // object
-        }
-    }
-    archive.EndList(); // objects
+    xis >> list( "subordinate" , *this, &MIL_Army::ReadSubordinate, pSuperior );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Army::InitializeLogistic
-// Created: NLD 2006-10-19
+// Name: MIL_Army::ReadSubordinate
+// Created: ABL 2007-07-10
 // -----------------------------------------------------------------------------
-void MIL_Army::InitializeLogistic( MIL_InputArchive& archive )
+void MIL_Army::ReadSubordinate( xml::xistream& xis, MIL_Automate* pSuperior )
 {
-    archive.BeginList( "logistic" );
-    while( archive.NextListElement() )
-    {
-        archive.BeginList( "automat" );
+    uint        nSubordinateID;
+    std::string strLink;
+    xis >> attribute( "id", nSubordinateID );
 
-        uint nID;
-        archive.ReadAttribute( "id", nID );
-    
-        MIL_Automate* pSuperior = manager_.FindAutomate( nID );
-        if( !pSuperior )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automat", archive.GetContext() );
-        if( pSuperior->GetArmy() != *this )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid automat (not in specified side)", archive.GetContext() );
-        if( !pSuperior->GetType().IsLogistic() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat isn't a logistic automat", archive.GetContext() );
+    MIL_Automate* pSubordinate = manager_.FindAutomate( nSubordinateID );
+    if( !pSubordinate )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automat" ); // $$$$ ABL 2007-07-10: error context
+    if( pSubordinate->GetArmy() != *this )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid automat (not in specified side)" ); // $$$$ ABL 2007-07-10: error context
 
-        while( archive.NextListElement() )
-        {
-            archive.Section( "subordinate" );
-            
-            uint        nSubordinateID;
-            std::string strLink;
-            archive.ReadAttribute( "id", nSubordinateID );
-
-            MIL_Automate* pSubordinate = manager_.FindAutomate( nSubordinateID );
-            if( !pSubordinate )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automat", archive.GetContext() );
-            if( pSubordinate->GetArmy() != *this )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid automat (not in specified side)", archive.GetContext() );
-    
-            pSubordinate->ReadLogisticLink( static_cast< MIL_AutomateLOG& >( *pSuperior ), archive );
-
-            archive.EndSection(); // subordinate
-        }
-
-        archive.EndList(); // automat
-    }
-    archive.EndList(); // logistic
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Army::InitializePopulations
-// Created: NLD 2004-08-11
-// -----------------------------------------------------------------------------
-void MIL_Army::InitializePopulations( MIL_InputArchive& archive )
-{
-    archive.BeginList( "populations" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "population" );
-
-        uint        nID;
-        std::string strType;
-
-        archive.ReadAttribute( "id"  , nID     );
-        archive.ReadAttribute( "type", strType );
-
-        const MIL_PopulationType* pPopulationType = MIL_PopulationType::Find( strType );
-        if( !pPopulationType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown population type", archive.GetContext() );
-
-        manager_.CreatePopulation( *pPopulationType, MIL_IDManager::populations_.ConvertSimIDToMosID( nID ), *this, archive ); // Auto-registration
-        archive.EndSection(); // population
-    }
-    archive.EndList(); // populations
+    pSubordinate->ReadLogisticLink( static_cast< MIL_AutomateLOG& >( *pSuperior ), xis );
 }
 
 // =============================================================================

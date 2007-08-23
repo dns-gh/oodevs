@@ -12,14 +12,11 @@
 
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
-#include "ADN_XmlInput_Helper.h"
-#include "ADN_Xml_Exception.h"
 #include "ADN_Tools.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Enums.h"
 #include "ENT/ENT_Tr.h"
-
 
 // -----------------------------------------------------------------------------
 // Name: WorkingSchemeInfo::WorkingSchemeInfo
@@ -34,7 +31,6 @@ ADN_Maintenance_Data::WorkingSchemeInfo::WorkingSchemeInfo( unsigned int nIdx )
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: WorkingSchemeInfo::GetNodeName
 // Created: APE 2005-03-14
@@ -43,7 +39,6 @@ std::string ADN_Maintenance_Data::WorkingSchemeInfo::GetNodeName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: WorkingSchemeInfo::GetItemName
@@ -54,34 +49,31 @@ std::string ADN_Maintenance_Data::WorkingSchemeInfo::GetItemName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: WorkingSchemeInfo::ReadArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Maintenance_Data::WorkingSchemeInfo::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Maintenance_Data::WorkingSchemeInfo::ReadArchive( xml::xistream& input )
 {
-    input.Section( QString( "Regime" ).append( QString::number( nIdx_.GetData() ) ).ascii() );
-    input.ReadAttribute( "dureeTravail", nWorkTime_ );
-    input.ReadAttribute( "delaiAvantAvertissement", warningDelay_, ADN_XmlInput_Helper::eNothing );
-    input.EndSection();
+    input >> xml::attribute( "working-time", nWorkTime_ )
+          >> xml::optional() >> xml::attribute( "time-before-warning", warningDelay_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: WorkingSchemeInfo::WriteArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Maintenance_Data::WorkingSchemeInfo::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Maintenance_Data::WorkingSchemeInfo::WriteArchive( xml::xostream& output )
 {
-    output.Section( QString( "Regime" ).append( QString::number( nIdx_.GetData() ) ).ascii() );
-    output.WriteAttribute( "dureeTravail", nWorkTime_.GetData() );
+    output << xml::start( "working-scheme" )
+        << xml::attribute( "type", QString( "Regime" ).append( QString::number( nIdx_.GetData() ) ).ascii() )
+        << xml::attribute( "working-time", nWorkTime_ );
     if(  ! warningDelay_.GetData().empty()
-        && warningDelay_.GetData() != "0s"
-        && warningDelay_.GetData() != "0m"
-        && warningDelay_.GetData() != "0h" )
-        output.WriteAttribute( "delaiAvantAvertissement", warningDelay_.GetData() );
-    output.EndSection();
+        && warningDelay_ != "0s"
+        && warningDelay_ != "0m"
+        && warningDelay_ != "0h" )
+        output << xml::attribute( "time-before-warning", warningDelay_ );
+    output << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +87,6 @@ ADN_Maintenance_Data::ADN_Maintenance_Data()
         vWorkingSchemes_.AddItem( new WorkingSchemeInfo( n+1 ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Maintenance_Data destructor
 // Created: APE 2005-03-14
@@ -107,7 +98,6 @@ ADN_Maintenance_Data::~ADN_Maintenance_Data()
     vHaulerWarnings_.Reset();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Maintenance_Data::FilesNeeded
 // Created: APE 2005-03-14
@@ -116,7 +106,6 @@ void ADN_Maintenance_Data::FilesNeeded( T_StringList& vFiles ) const
 {
     vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szMaintenance_.GetData() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Maintenance_Data::Reset
@@ -128,68 +117,68 @@ void ADN_Maintenance_Data::Reset()
     vHaulerWarnings_.Reset();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Maintenance_Data::ReadWorkingScheme
+// Created: AGE 2007-08-17
+// -----------------------------------------------------------------------------
+void ADN_Maintenance_Data::ReadWorkingScheme( xml::xistream& input )
+{
+    std::string type;
+    input >> xml::attribute( "type", type );
+    const unsigned nType = *type.rbegin() - '1';
+    vWorkingSchemes_.at( nType )->ReadArchive( input );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Maintenance_Data::ReadAvailabilityAlert
+// Created: AGE 2007-08-17
+// -----------------------------------------------------------------------------
+void ADN_Maintenance_Data::ReadAvailabilityAlert( xml::xistream& input )
+{
+    std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
+    pNew->ReadArchive( input );
+    std::string resource;
+    input >> xml::attribute( "resource", resource );
+    if( resource == "AlerteDisponibiliteReparateurs" )
+        vRepairerWarnings_.AddItem( pNew.release() );
+    else if( resource == "AlerteDisponibiliteRemorqueurs" )
+        vHaulerWarnings_.AddItem( pNew.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Maintenance_Data::ReadArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Maintenance_Data::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Maintenance_Data::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Maintenance" );
-    input.Section( "RegimesTravail" );
-    for( IT_WorkingSchemeInfo_Vector it = vWorkingSchemes_.begin(); it != vWorkingSchemes_.end(); ++it )
-        (*it)->ReadArchive( input );
-    input.EndSection();
-
-    input.Section( "AlertesDisponibiliteMoyens" );
-        input.BeginList( "AlertesDisponibiliteReparateurs" );
-        while( input.NextListElement() )
-        {
-            std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
-            pNew->ReadArchive( input, "AlerteDisponibiliteReparateurs" );
-            vRepairerWarnings_.AddItem( pNew.release() );
-        }
-        vRepairerWarnings_.AddItem( 0 );
-        input.EndList();
-
-        input.BeginList( "AlertesDisponibiliteRemorqueurs" );
-        while( input.NextListElement() )
-        {
-            std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
-            pNew->ReadArchive( input, "AlerteDisponibiliteRemorqueurs" );
-            vHaulerWarnings_.AddItem( pNew.release() );
-        }
-        vHaulerWarnings_.AddItem( 0 );
-        input.EndList();
-    input.EndSection();
-
-    input.EndSection();
+    input >> xml::start( "maintenance" )
+            >> xml::start( "working-schemes" )
+                >> xml::list( "working-scheme", *this, &ADN_Maintenance_Data::ReadWorkingScheme )
+            >> xml::end()
+            >> xml::start( "resource-availability-alerts" )
+                >> xml::list( "resource-availability-alert", *this, &ADN_Maintenance_Data::ReadAvailabilityAlert )
+            >> xml::end()
+          >> xml::end();
+    vRepairerWarnings_.AddItem( 0 );
+    vHaulerWarnings_.AddItem( 0 );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Maintenance_Data::WriteArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Maintenance_Data::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Maintenance_Data::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Maintenance" );
-    output.Section( "RegimesTravail" );
+    output << xml::start( "maintenance" )
+           << xml::start( "working-schemes" );
     for( IT_WorkingSchemeInfo_Vector it = vWorkingSchemes_.begin(); it != vWorkingSchemes_.end(); ++it )
         (*it)->WriteArchive( output );
-    output.EndSection();
-
-    output.Section( "AlertesDisponibiliteMoyens" );
-        output.BeginList( "AlertesDisponibiliteReparateurs", vRepairerWarnings_.size() );
-        for( IT_AvailabilityWarning_Vector it = vRepairerWarnings_.begin(); it != vRepairerWarnings_.end(); ++it )
-            (*it)->WriteArchive( output, "AlerteDisponibiliteReparateurs" );
-        output.EndList();
-
-        output.BeginList( "AlertesDisponibiliteRemorqueurs", vHaulerWarnings_.size() );
-        for( IT_AvailabilityWarning_Vector it = vHaulerWarnings_.begin(); it != vHaulerWarnings_.end(); ++it )
-            (*it)->WriteArchive( output, "AlerteDisponibiliteRemorqueurs" );
-        output.EndList();
-    output.EndSection();
-
-    output.EndSection();
+    output << xml::end()
+        << xml::start( "resource-availability-alerts" );
+    for( IT_AvailabilityWarning_Vector it = vRepairerWarnings_.begin(); it != vRepairerWarnings_.end(); ++it )
+        (*it)->WriteArchive( output, "resource", "AlerteDisponibiliteReparateurs" );
+    for( IT_AvailabilityWarning_Vector it = vHaulerWarnings_.begin(); it != vHaulerWarnings_.end(); ++it )
+        (*it)->WriteArchive( output, "resource", "AlerteDisponibiliteRemorqueurs" );
+    output << xml::end()
+        << xml::end();
 }

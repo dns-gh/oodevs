@@ -16,9 +16,6 @@
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Tools.h"
-#include "ADN_XmlInput_Helper.h"
-#include "ADN_Xml_Exception.h"
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_AiEngine_Data constructor
@@ -32,7 +29,7 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
 , rMinorEquipmentWeight_( 0.0 )
 , rMajorEquipmentWeight_( 0.0 )
 , rHumanWeight_( 0.0 )
-, rDefaultFeedbackTime_( 1 ) 
+, rDefaultFeedbackTime_( "1s" ) 
 {
     rMinorEquipmentWeight_.SetDataName( "Poids des composantes non majeures." );
     rMajorEquipmentWeight_.SetDataName( "Poids des composantes majeures." );
@@ -52,7 +49,6 @@ ADN_AiEngine_Data::~ADN_AiEngine_Data()
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_AiEngine_Data::Reset
 // Created: AGN 2004-06-15
@@ -60,7 +56,6 @@ ADN_AiEngine_Data::~ADN_AiEngine_Data()
 void ADN_AiEngine_Data::Reset()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_AiEngine_Data::FilesNeeded
@@ -71,103 +66,86 @@ void ADN_AiEngine_Data::FilesNeeded( T_StringList& vFiles ) const
     vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDecisional_.GetData() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_AiEngine_Data::ReadArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_AiEngine_Data::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Decisionnel" );
+    input >> xml::start( "decisonal" )
+            >> xml::start( "dangerosity-modifiers" )
+                >> xml::attribute( "max-accuracy", rPertinenceMaxDecrease_ )
+                >> xml::attribute( "max-operational-state", rOperationalStateMaxDecrease_ )
+                >> xml::attribute( "max-neutralized-state", rNeutralizedStateMaxDecrease_ )
+            >> xml::end();
 
-    input.Section( "Dangerosite" );
-
-    double rTmp = 0.0;
-
-    input.ReadField( "DegradationMaxParPertinence", rTmp );
-    if( rTmp < 0.0 || rTmp > 100.0 )
+    if( rPertinenceMaxDecrease_.GetData() < 0.0 || rPertinenceMaxDecrease_.GetData() > 100.0 )
         throw ADN_DataException( "Donnée invalide",
         "La dégradation maximale due à la pertinence d'une connaissance doit être comprise dans l'intervalle [0;100].",
         "Veuillez éditer le fichier de configuration du moteur décisionnel pour modifier le champ DegradationMaxParPertinence" );
-    rPertinenceMaxDecrease_ = rTmp;
 
-    input.ReadField( "DegradationMaxParEtatOps", rTmp );
-    if( rTmp < 0.0 || rTmp > 100.0 )
+    if( rOperationalStateMaxDecrease_.GetData() < 0.0 || rOperationalStateMaxDecrease_.GetData() > 100.0 )
         throw ADN_DataException( "Donnée invalide",
         "La dégradation maximale due à l'état opérationnel d'une connaissance doit être comprise dans l'intervalle [0;100].",
         "Veuillez éditer le fichier de configuration du moteur décisionnel pour modifier le champ DegradationMaxParEtatOps" );
-    rOperationalStateMaxDecrease_ = rTmp;
 
-    input.ReadField( "DegradationMaxParEtatNeutralise", rTmp );
-    if( rTmp < 0.0 || rTmp > 100.0 )
+    if( rNeutralizedStateMaxDecrease_.GetData() < 0.0 || rNeutralizedStateMaxDecrease_.GetData() > 100.0 )
         throw ADN_DataException( "Donnée invalide",
         "La dégradation maximale due à l'état de neutralisation d'une connaissance doit être comprise dans l'intervalle [0;100].",
         "Veuillez éditer le fichier de configuration du moteur décisionnel pour modifier le champ DegradationMaxParEtatNeutralise" );
-    rNeutralizedStateMaxDecrease_ = rTmp;
 
-    input.EndSection(); // Dangerosite
+    input >> xml::start( "operational-state-weights" )
+            >> xml::attribute( "component", rMinorEquipmentWeight_ )
+            >> xml::attribute( "major-component", rMajorEquipmentWeight_ )
+            >> xml::attribute( "crew", rHumanWeight_ )
+          >> xml::end();
 
-    input.Section( "EtatOps" );
-
-    input.ReadField( "PoidsComposantesNonMajeures", rTmp );
-    if( rTmp < 0.0 || rTmp > 1.0 )
+    if( rMinorEquipmentWeight_.GetData() < 0.0 || rMinorEquipmentWeight_.GetData() > 1.0 )
         throw ADN_DataException( "Donnée invalide",
         "Le poids des composantes non majeures doit être compris entre 0 et 1.",
         "Veuillez éditer le fichier de configuration du moteur décisionnel pour modifier le champ PoidsComposantesNonMajeures." );
-    rMinorEquipmentWeight_ = rTmp;
-
-    input.ReadField( "PoidsComposantesMajeures", rTmp );
-    if( rTmp < 0.0 || rTmp > 1.0 )
+    
+    if( rMajorEquipmentWeight_.GetData() < 0.0 || rMajorEquipmentWeight_.GetData() > 1.0 )
         throw ADN_DataException( "Donnée invalide",
         "Le poids des composantes majeures doit être compris entre 0 et 1.",
         "Veuillez éditer le fichier de configuration du moteur décisionnel pour modifier le champ PoidsComposantesMajeures." );
-    rMajorEquipmentWeight_ = rTmp;
 
     if( rMinorEquipmentWeight_.GetData() + rMajorEquipmentWeight_.GetData() != 1.0 )
         throw ADN_DataException( "Donnée invalide",
         "La somme des poids des composantes doit être égal à 1.",
         "Veuillez éditer le fichier de configuration du moteur décisionnel pour modifier les champs PoidsComposantesMajeures et PoidsComposantesNonMajeures." );
 
-    input.ReadField( "PoidsPersonnel", rTmp );
-    if( rTmp < 0.0 || rTmp > 1.0 )
+    if( rHumanWeight_.GetData() < 0.0 || rHumanWeight_.GetData() > 1.0 )
         throw ADN_DataException( "Donnée invalide",
             "Le poids du personnel doit être compris entre 0 et 1.",
             "Veuillez éditer le fichier de configuration du moteur décisionnel pour modifier le champ PoidsPersonnel." );
-    rHumanWeight_ = rTmp;
-  
-    input.EndSection(); // EtatOps
 
-    input.Section( "RapportDeForce" );
-    input.ReadTimeField( "TempsDeRemonteeParDefaut", rDefaultFeedbackTime_ );
-    input.EndSection(); // RapportDeForce
+    input >> xml::start( "force-ratio" )
+            >> xml::attribute( "default-feedback-time", rDefaultFeedbackTime_ )
+          >> xml::end();
 
-    input.EndSection(); // Decisionnel
+    input >> xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_AiEngine_Data::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_AiEngine_Data::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_AiEngine_Data::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Decisionnel" );
-
-    output.Section( "Dangerosite" );
-    output.WriteField( "DegradationMaxParPertinence", rPertinenceMaxDecrease_.GetData() );
-    output.WriteField( "DegradationMaxParEtatOps", rOperationalStateMaxDecrease_.GetData() );
-    output.WriteField( "DegradationMaxParEtatNeutralise", rNeutralizedStateMaxDecrease_.GetData() );
-    output.EndSection(); // Dangerosite
-
-    output.Section( "EtatOps" );
-    output.WriteField( "PoidsComposantesNonMajeures", rMinorEquipmentWeight_.GetData() );
-    output.WriteField( "PoidsComposantesMajeures"   , rMajorEquipmentWeight_.GetData() );
-    output.WriteField( "PoidsPersonnel"             , rHumanWeight_         .GetData() );
-    output.EndSection(); // EtatOps
-
-    output.Section( "RapportDeForce" );
-    output.WriteField( "TempsDeRemonteeParDefaut", ADN_Tools::SecondToString( rDefaultFeedbackTime_.GetData() ) );
-    output.EndSection(); // RapportDeForce
-
-    output.EndSection(); // Decisionnel
+    output << xml::start( "decisonal" )
+            << xml::start( "dangerosity-modifiers" )
+                << xml::attribute( "max-accuracy", rPertinenceMaxDecrease_ )
+                << xml::attribute( "max-operational-state", rOperationalStateMaxDecrease_ )
+                << xml::attribute( "max-neutralized-state", rNeutralizedStateMaxDecrease_ )
+            << xml::end()
+            << xml::start( "operational-state-weights" )
+                << xml::attribute( "component", rMinorEquipmentWeight_ )
+                << xml::attribute( "major-component", rMajorEquipmentWeight_ )
+                << xml::attribute( "crew", rHumanWeight_ )
+            << xml::end()
+            << xml::start( "force-ratio" )
+                << xml::attribute( "default-feedback-time", rDefaultFeedbackTime_ )
+            << xml::end()
+           << xml::end();
 }

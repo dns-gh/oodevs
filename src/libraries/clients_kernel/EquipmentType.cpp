@@ -20,11 +20,9 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 EquipmentType::EquipmentType( xml::xistream& xis )
 {
-    int id;
     std::string name;
-    xis >> attribute( "nom", name )
-        >> content( "MosID", id );
-    id_ = id;
+    xis >> attribute( "name", name )
+        >> attribute( "id", id_ );
     name_ = name.c_str();
 }
 

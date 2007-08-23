@@ -37,6 +37,9 @@
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 MT_Random PHY_WeaponDataType_DirectFire::randomGenerator_;
 
@@ -44,16 +47,12 @@ MT_Random PHY_WeaponDataType_DirectFire::randomGenerator_;
 // Name: PHY_WeaponDataType_DirectFire constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_WeaponDataType_DirectFire::PHY_WeaponDataType_DirectFire( MIL_EffectManager& manager, const PHY_WeaponType& weaponType, MIL_InputArchive& archive )
+PHY_WeaponDataType_DirectFire::PHY_WeaponDataType_DirectFire( MIL_EffectManager& manager, const PHY_WeaponType& weaponType, xml::xistream& xis )
     : manager_   ( manager )
     , weaponType_( weaponType )
     , phs_       ( PHY_Volume::GetVolumes().size(), MT_InterpolatedFunction< MT_Float >( 0., 0. ) )
 {
-    archive.Section( "PHs" );
-    const PHY_Volume::T_VolumeMap& volumes = PHY_Volume::GetVolumes();
-    for ( PHY_Volume::CIT_VolumeMap itVolume = volumes.begin(); itVolume != volumes.end(); ++itVolume )
-        InitializePH( *itVolume->second, archive );
-    archive.EndSection(); // PHs
+    xis >> list( "hit-probabilities", *this, &PHY_WeaponDataType_DirectFire::InitializePH );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,33 +68,42 @@ PHY_WeaponDataType_DirectFire::~PHY_WeaponDataType_DirectFire()
 // Name: PHY_WeaponDataType_DirectFire::InitializePH
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void PHY_WeaponDataType_DirectFire::InitializePH( const PHY_Volume& volume, MIL_InputArchive& archive )
+void PHY_WeaponDataType_DirectFire::InitializePH( xml::xistream& xis )
 {
-    std::stringstream strSectionName;
-    strSectionName << "VolumeCible" << volume.GetName();
+    
+    const PHY_Volume::T_VolumeMap& volumes = PHY_Volume::GetVolumes();
+
+    std::string targetType;
+    xis >> attribute( "target", targetType );
+
+    PHY_Volume::CIT_VolumeMap it = volumes.find( targetType );
+    const PHY_Volume& volume = *it->second;
 
     assert( phs_.size() > volume.GetID() );
 
     MT_InterpolatedFunction< MT_Float >& phFunction = phs_[ volume.GetID() ];
 
-    archive.BeginList( strSectionName.str() );
+    xis >> list( "hit-probability", *this, PHY_WeaponDataType_DirectFire::ReadHitProbability, phFunction );
+}
 
-    while( archive.NextListElement() )
-    {
-        archive.Section( "PH" );
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponDataType_DirectFire::ReadHitProbability
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_WeaponDataType_DirectFire::ReadHitProbability( xml::xistream& xis, MT_InterpolatedFunction< MT_Float >& phFunction )
+{
+    MT_Float rDistance;
+    MT_Float rPH;
 
-        MT_Float rDistance;
-        MT_Float rPH;
+    xis >> attribute( "distance", rDistance )
+        >> attribute( "percentage", rPH );
 
-        archive.ReadAttribute( "dist", rDistance, CheckValueGreaterOrEqual( 0. ) );
-        archive.Read( rPH, CheckValueBound( 0., 1. ) );
+    if( rDistance < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "hit-probability: distance <  0" );
+    if( rPH < 0 || rPH > 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "hit-probability: percentage not in [0..1]" );
 
-        phFunction.AddNewPoint( MIL_Tools::ConvertMeterToSim( rDistance ), rPH );
-
-        archive.EndSection(); // PH
-    }
-
-    archive.EndList(); // VolumeCibleXXX
+    phFunction.AddNewPoint( MIL_Tools::ConvertMeterToSim( rDistance ), rPH );
 }
 
 // =============================================================================

@@ -134,7 +134,7 @@ void DEC_KS_ObjectInteraction::Talk()
     // Collision with objects
     for( CIT_ObjectCollisionVector itCollision = objectCollisions_.begin(); itCollision != objectCollisions_.end(); ++itCollision )
     {
-		MIL_RealObject_ABC& object = *itCollision->first;
+        MIL_RealObject_ABC& object = *itCollision->first;
         if( object.IsMarkedForDestruction() )
             continue;
         DEC_Knowledge_ObjectCollision& knowledge = GetKnowledgeObjectCollision( object );

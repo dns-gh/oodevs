@@ -19,6 +19,11 @@ class PHY_DotationLogisticType;
 
 #include "MT_Tools/MT_Converter.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 // @class  PHY_DotationType
 // Created: JVT 2004-08-03
@@ -42,7 +47,7 @@ public:
 public:
     //! @name Manager
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( xml::xistream& xis );
     static void Terminate ();
 
     static const PHY_DotationType*     FindDotationType    ( const std::string& strName );
@@ -98,7 +103,12 @@ private:
     const PHY_DotationCategory* InternalFindDotationCategory( uint nID ) const;
     const PHY_DotationCategory* InternalFindDotationCategory( const std::string& strName ) const;
 
-    void RegisterDotationCategory( const std::string& strCategoryName, MIL_InputArchive& archive );
+    void RegisterDotationCategory( const std::string& strCategoryName, xml::xistream& xis );
+    //@}
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadDotation( xml::xistream& xis );
     //@}
 
 private:

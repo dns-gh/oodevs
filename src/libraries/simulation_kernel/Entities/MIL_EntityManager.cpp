@@ -72,6 +72,9 @@
 #include "HLA/HLA_Federate.h"
 #include "Network/NET_AsnException.h"
 #include "MIL_Singletons.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 BOOST_CLASS_EXPORT_GUID( MIL_EntityManager, "MIL_EntityManager" )
 
@@ -91,7 +94,7 @@ void MIL_EntityManager::Initialize( MIL_Config& config, const MIL_Time_ABC& time
     PHY_IndirectFireDotationClass::Initialize();
     PHY_AmmoDotationClass        ::Initialize();
     PHY_Morale                   ::Initialize();
-    PHY_NatureLevel              ::Initialize();    
+    PHY_NatureLevel              ::Initialize();
     PHY_NatureAtlas              ::Initialize();
     PHY_RoePopulation            ::Initialize();
     PHY_MaintenanceLevel         ::Initialize();
@@ -101,38 +104,37 @@ void MIL_EntityManager::Initialize( MIL_Config& config, const MIL_Time_ABC& time
     PHY_DotationLogisticType     ::Initialize();
     MIL_LimaFunction             ::Initialize();
 
-    MIL_InputArchive phyArchive;
-    phyArchive.Open( config.GetPhysicalFile() );
-    phyArchive.Section( "physical" );
+    xml::xifstream xis( config.GetPhysicalFile() );
+    xis >> start( "physical" );
 
-    InitializeType< MIL_Report                     >( phyArchive, config, "ComptesRendus"       );
-    InitializeType< PHY_MaintenanceWorkRate        >( phyArchive, config, "Maintenance"         );
-    InitializeType< PHY_MaintenanceResourcesAlarms >( phyArchive, config, "Maintenance"         );
-    InitializeType< PHY_Experience                 >( phyArchive, config, "FacteursHumains"     );
-    InitializeType< PHY_Tiredness                  >( phyArchive, config, "FacteursHumains"     );    
-    InitializeType< PHY_Volume                     >( phyArchive, config, "Volumes"             );
-    InitializeType< PHY_Protection                 >( phyArchive, config, "Protections"         );
-    InitializeType< PHY_DotationNature             >( phyArchive, config, "DotationNatures"     );
-    InitializeType< PHY_DotationType               >( phyArchive, config, "Dotations"           );
-    InitializeType< MIL_RealObjectType             >( phyArchive, config, "Objets"              );
-    InitializeType< MIL_VirtualObjectType          >( phyArchive, config, "Objets"              );
-    InitializeType< PHY_BreakdownType              >( phyArchive, config, "Pannes"              );
-    InitializeType< PHY_LauncherType               >( phyArchive, config, "Lanceurs"            );
-    InitializeWeapons    ( phyArchive, config, time, effects );
-    InitializeSensors    ( phyArchive, config, time );
-    InitializeComposantes( phyArchive, config, time );
-    InitializeType< MIL_AgentTypePion              >( phyArchive, config, "Pions"               );
-    InitializeType< MIL_AutomateType               >( phyArchive, config, "Automates"           );
-    InitializeType< MIL_KnowledgeGroupType         >( phyArchive, config, "GroupesConnaissance" );
-    InitializeType< MIL_NbcAgentType               >( phyArchive, config, "NBC"                 );
-    InitializeType< PHY_SupplyResourcesAlarms      >( phyArchive, config, "Ravitaillement"      );   
-    InitializeType< PHY_Convoy_ABC                 >( phyArchive, config, "Ravitaillement"      );
-    InitializeType< PHY_MedicalResourcesAlarms     >( phyArchive, config, "Sante"               );
-    InitializeType< PHY_RolePion_Communications    >( phyArchive, config, "Communications"      );
-    InitializeType< MIL_PopulationType             >( phyArchive, config, "Populations"         );
-    InitializeMedical( phyArchive, config );
+    InitializeType< MIL_Report                     >( xis, config, "reports"             );
+    InitializeType< PHY_MaintenanceWorkRate        >( xis, config, "maintenance"         );
+    InitializeType< PHY_MaintenanceResourcesAlarms >( xis, config, "maintenance"         );
+    InitializeType< PHY_Experience                 >( xis, config, "human-factors"       );
+    InitializeType< PHY_Tiredness                  >( xis, config, "human-factors"       );    
+    InitializeType< PHY_Volume                     >( xis, config, "volumes"             );
+    InitializeType< PHY_Protection                 >( xis, config, "protections"         );
+    InitializeType< PHY_DotationNature             >( xis, config, "dotation-natures"    );
+    InitializeType< PHY_DotationType               >( xis, config, "dotations"           );
+    InitializeType< MIL_RealObjectType             >( xis, config, "objects"             );
+    InitializeType< MIL_VirtualObjectType          >( xis, config, "objects"             );
+    InitializeType< PHY_BreakdownType              >( xis, config, "breakdowns"          );
+    InitializeType< PHY_LauncherType               >( xis, config, "launchers"           );
+    InitializeWeapons    ( xis, config, time, effects );
+    InitializeSensors    ( xis, config, time );
+    InitializeComposantes( xis, config, time );
+    InitializeType< MIL_AgentTypePion              >( xis, config, "units"               );
+    InitializeType< MIL_AutomateType               >( xis, config, "automats"            );
+    InitializeType< MIL_KnowledgeGroupType         >( xis, config, "knowledge-groups"    );
+    InitializeType< MIL_NbcAgentType               >( xis, config, "nbc"                 );
+    InitializeType< PHY_SupplyResourcesAlarms      >( xis, config, "supply"              );   
+    InitializeType< PHY_Convoy_ABC                 >( xis, config, "supply"              );
+    InitializeType< PHY_MedicalResourcesAlarms     >( xis, config, "health"              );
+    InitializeType< PHY_RolePion_Communications    >( xis, config, "communications"      );
+    InitializeType< MIL_PopulationType             >( xis, config, "populations"         );
+    InitializeMedical( xis, config );
 
-    phyArchive.EndSection(); // physical
+    xis >> end(); // physical
 }
 
 // -----------------------------------------------------------------------------
@@ -184,49 +186,50 @@ MIL_EntityManager::MIL_EntityManager()
 // Name: MIL_EntityManager::InitializeSensors
 // Created: NLD 2004-11-05
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::InitializeSensors( MIL_InputArchive& archive, MIL_Config& config, const MIL_Time_ABC& time )
+void MIL_EntityManager::InitializeSensors( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time )
 {
     MT_LOG_INFO_MSG( "Initializing sensor types" );
 
     std::string strFile;
-    archive.ReadField( "Capteurs", strFile );
+    xis >> start( "sensors" )
+            >> attribute( "file", strFile )
+        >> end();
     strFile = config.BuildPhysicalChildFile( strFile );
 
-    MIL_InputArchive archiveType;
-    archiveType.Open( strFile );
+
+    xml::xifstream xisSensors( strFile );
     config.AddFileToCRC( strFile );
 
-    archiveType.Section( "Capteurs" );
-    PHY_PerceptionRecoSurveillance::Initialize( archiveType );
-    PHY_PerceptionFlyingShell     ::Initialize( archiveType );
-    PHY_SensorType                ::Initialize( archiveType );
-    PHY_RadarType                 ::Initialize( archiveType, time );
-    archiveType.EndSection(); // Capteurs
-
-    archiveType.Close();
+    xisSensors >> start( "sensors" );
+    PHY_PerceptionRecoSurveillance::Initialize( xisSensors );
+    PHY_PerceptionFlyingShell     ::Initialize( xisSensors );
+    PHY_SensorType                ::Initialize( xisSensors );
+    PHY_RadarType                 ::Initialize( xisSensors, time );
+    xisSensors >> end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::InitializeMedical
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::InitializeMedical( MIL_InputArchive& archive, MIL_Config& config )
+void MIL_EntityManager::InitializeMedical( xml::xistream& xis, MIL_Config& config )
 {
     MT_LOG_INFO_MSG( "Initializing medical data" );
 
     std::string strFile;
-    archive.ReadField( "Sante", strFile );
+    xis >> start( "health" )
+            >> attribute( "file", strFile )
+        >> end();
     strFile = config.BuildPhysicalChildFile( strFile );
 
-    MIL_InputArchive archiveType;
-    archiveType.Open( strFile );
-    archiveType.Section( "Sante" );
+    xml::xifstream xisHealth( strFile );
+
+    xisHealth >> start( "health" );
     config.AddFileToCRC( strFile );
 
-    PHY_HumanWound::InitializeMedicalData( archiveType );
+    PHY_HumanWound::InitializeMedicalData( xisHealth );
 
-    archiveType.EndSection(); // Sante
-    archiveType.Close();
+    xisHealth >> end();
 }
 
 // -----------------------------------------------------------------------------
@@ -234,57 +237,55 @@ void MIL_EntityManager::InitializeMedical( MIL_InputArchive& archive, MIL_Config
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 template < typename T >
-void MIL_EntityManager::InitializeType( MIL_InputArchive& archive, MIL_Config& config, const std::string& strSection )
+void MIL_EntityManager::InitializeType( xml::xistream& xis, MIL_Config& config, const std::string& strSection )
 {
     std::string strFile;
-    archive.ReadField( strSection, strFile );
+    xis >> start( strSection )
+            >> attribute( "file", strFile )
+        >> end();
+
     strFile = config.BuildPhysicalChildFile( strFile );
 
-    MIL_InputArchive archiveType;
-    archiveType.Open( strFile );
+    xml::xifstream xisType( strFile );
     config.AddFileToCRC( strFile );
 
-    T::Initialize( archiveType );
-
-    archiveType.Close();
+    T::Initialize( xisType );//verfifier tous les initialize
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::InitializeComposantes
 // Created: AGE 2007-08-13
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::InitializeComposantes( MIL_InputArchive& archive, MIL_Config& config, const MIL_Time_ABC& time )
+void MIL_EntityManager::InitializeComposantes( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time )
 {
     std::string strFile;
-    archive.ReadField( "Composantes", strFile );
+    xis >> start( "components" )
+            >> attribute( "file", strFile )
+        >> end();
     strFile = config.BuildPhysicalChildFile( strFile );
 
-    MIL_InputArchive archiveType;
-    archiveType.Open( strFile );
+    xml::xifstream xisComponents( strFile );
     config.AddFileToCRC( strFile );
 
-    PHY_ComposanteTypePion::Initialize( time, archiveType );
-
-    archiveType.Close();
+    PHY_ComposanteTypePion::Initialize( time, xisComponents );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::InitializeWeapons
 // Created: AGE 2007-08-13
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::InitializeWeapons( MIL_InputArchive& archive, MIL_Config& config, const MIL_Time_ABC& time, MIL_EffectManager& effects )
+void MIL_EntityManager::InitializeWeapons( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time, MIL_EffectManager& effects )
 {
     std::string strFile;
-    archive.ReadField( "Armements", strFile );
+    xis >> start( "weapon-systems" )
+            >> attribute( "file", strFile )
+        >> end();
     strFile = config.BuildPhysicalChildFile( strFile );
 
-    MIL_InputArchive archiveType;
-    archiveType.Open( strFile );
+    xml::xifstream xisWeapons( strFile );
     config.AddFileToCRC( strFile );
 
-    PHY_WeaponType::Initialize( effects, time, archiveType );
-
-    archiveType.Close();
+    PHY_WeaponType::Initialize( effects, time, xisWeapons );
 }
 
 // -----------------------------------------------------------------------------
@@ -302,7 +303,7 @@ MIL_EntityManager::~MIL_EntityManager()
 
     for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
         delete itPopulation->second;
-    
+
     for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
         delete itArmy->second;
 
@@ -310,8 +311,8 @@ MIL_EntityManager::~MIL_EntityManager()
     MIL_PopulationAttitude        ::Terminate();
     MIL_AutomateType              ::Terminate();
     MIL_AgentTypePion             ::Terminate();
-    PHY_SensorType                ::Terminate();  
-    PHY_ComposanteTypePion        ::Terminate(); 
+    PHY_SensorType                ::Terminate();
+    PHY_ComposanteTypePion        ::Terminate();
     PHY_WeaponType                ::Terminate();
     PHY_LauncherType              ::Terminate();
     PHY_DotationType              ::Terminate();
@@ -345,7 +346,7 @@ MIL_EntityManager::~MIL_EntityManager()
     PHY_MaintenanceResourcesAlarms::Terminate();
     PHY_MedicalResourcesAlarms    ::Terminate();
     MIL_LimaFunction              ::Terminate();
-        
+
     delete pObjectManager_;
 }
 
@@ -366,20 +367,17 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     const std::string strOrbat = config.GetOrbatFile();
     MT_LOG_INFO_MSG( MT_FormatString( "ODB file name : '%s'", strOrbat.c_str() ) );
 
-    MIL_InputArchive odbArchive;
-    odbArchive.Open( strOrbat );
+    xml::xifstream xis( strOrbat );
+    xis >> start( "orbat" );
 
-    odbArchive.Section( "orbat" );
-
-    InitializeArmies   ( odbArchive );
-    InitializeDiplomacy( odbArchive );
+    InitializeArmies   ( xis );
+    InitializeDiplomacy( xis );
 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automates_  .size() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , pions_      .size() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populations_.size() ) );
 
-    odbArchive.EndSection(); // ODB
-    odbArchive.Close();
+    xis >> end();
 
     // Check automate composition
     if( config.CheckAutomateComposition() )
@@ -398,97 +396,111 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
 // Name: MIL_EntityManager::InitializeDiplomacy
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::InitializeDiplomacy( MIL_InputArchive& archive )
+void MIL_EntityManager::InitializeDiplomacy( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing diplomacy" );
 
-    archive.BeginList( "diplomacies" );
-    while( archive.NextListElement() )
-    {
-        archive.BeginList( "side" );
+    xis >> start( "diplomacies" )
+            >> list( "side", *this, MIL_EntityManager::ReadDiplomacy )
+        >> end();
+}
 
-        uint nID;
-        archive.ReadAttribute( "id", nID );
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::ReadDiplomacy
+// Created: ABL 2007-07-10
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::ReadDiplomacy( xml::xistream& xis )
+{
+    uint id;
+    xis >> attribute( "id", id );
 
-        MIL_Army* pArmy = FindArmy( nID );
-        if( !pArmy )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown side", archive.GetContext() );
-        pArmy->InitializeDiplomacy( archive );
-
-        archive.EndList(); // side
-    }
-    archive.EndList(); // diplomacies
+    MIL_Army* pArmy = FindArmy( id );
+    if( !pArmy )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown side" ); // $$$$ ABL 2007-07-10: error context
+    pArmy->InitializeDiplomacy( xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::InitializeArmies
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::InitializeArmies( MIL_InputArchive& archive )
+void MIL_EntityManager::InitializeArmies( xml::xistream& xis )
 {
-    MT_LOG_INFO_MSG( "Initializing armies" );    
+    MT_LOG_INFO_MSG( "Initializing armies" );
 
     assert( armies_.empty() );
 
-    archive.BeginList( "sides" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "side" );
+    xis >> start( "sides" )
+            >> list( "side", *this, &MIL_EntityManager::ReadArmy )
+        >> end();
+}
 
-        uint nID;
-        archive.ReadAttribute( "id", nID );
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::ReadArmy
+// Created: ABL 2007-07-09
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::ReadArmy( xml::xistream& xis )
+{
+    uint id;
+    xis >> attribute( "id", id );
 
-        MIL_Army*& pArmy = armies_[ nID ];
-        if( pArmy )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Army already exists", archive.GetContext() );
-        
-        pArmy = new MIL_Army( *this, nID, archive );
-        archive.EndSection(); // side
-    }
-    archive.EndList(); // sides
+    MIL_Army*& pArmy = armies_[ id ];
+    if( pArmy )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Army already exists" );  // $$$$ ABL 2007-07-09: error context
+    pArmy = new MIL_Army( *this, id, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::CreateFormation
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
-MIL_Formation& MIL_EntityManager::CreateFormation( uint nID, MIL_Army& army, MIL_InputArchive& archive, MIL_Formation* pParent )
+void MIL_EntityManager::CreateFormation( xml::xistream& xis, MIL_Army& army, MIL_Formation* parent /*=0*/ )
 {
-    MIL_Formation*& pFormation = formations_[ nID ];
+    uint id;
+    xis >> attribute( "id", id );
+    MIL_Formation*& pFormation = formations_[ id ];
     if( pFormation )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Formation using this id already exists", archive.GetContext() );
-    pFormation = new MIL_Formation( *this, MIL_AgentServer::GetWorkspace().GetTacticalLineManager(), nID, army, archive, pParent );
-    return *pFormation;
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Formation using this id already exists" ); // $$$$ ABL 2007-07-09: error context
+    pFormation = new MIL_Formation( *this, MIL_AgentServer::GetWorkspace().GetTacticalLineManager(), id, army, xis, parent );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::CreateAutomate
+// Name: MIL_EntityManager::CreateAutomat
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_EntityManager::CreateAutomate( const MIL_AutomateType& type, uint nID, MIL_Formation& formation, MIL_InputArchive& archive )
+void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Formation& formation )
 {
-    MIL_Automate*& pAutomate = automates_[ nID ];
+    uint id;
+    std::string strType;
+
+    xis >> attribute( "id", id )
+        >> attribute( "type", strType );
+
+    const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( strType );
+    if( !pType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automat type" ); // $$$$ ABL 2007-07-09: error context
+
+    MIL_Automate*& pAutomate = automates_[ id ];
     if( pAutomate )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat using this id already exists", archive.GetContext() );
-    
-    pAutomate = &type.InstanciateAutomate( nID, formation, archive );
-    pAutomate->ReadOverloading( archive );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat using this id already exists" ); // $$$$ ABL 2007-07-09: error context
+
+    pAutomate = &pType->InstanciateAutomate( id, formation, xis );
+    pAutomate->ReadOverloading( xis );
     // $$$ Network
-    return *pAutomate;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::CreatePion
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive )
+MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis )
 {
     MIL_AgentPion*& pPion = pions_[ nID ];
     if( pPion )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pawn using this id already exists", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pawn using this id already exists" ); // $$$$ ABL 2007-07-10: error context
 
-    pPion = &type.InstanciatePion( nID, automate, archive );
-    pPion->ReadOverloading( archive );
+    pPion = &type.InstanciatePion( nID, automate, xis );
+    pPion->ReadOverloading( xis );
 
     if( hla_ )
         hla_->Register( *pPion );
@@ -519,14 +531,22 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 // Name: MIL_EntityManager::CreatePopulation
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_Population& MIL_EntityManager::CreatePopulation( const MIL_PopulationType& type, uint nID, MIL_Army& army, MIL_InputArchive& archive )
+void MIL_EntityManager::CreatePopulation( xml::xistream& xis, MIL_Army& army )
 {
-    MIL_Population*& pPopulation = populations_[ nID ];
-    if( pPopulation )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Population using this id already exists", archive.GetContext() );
+    uint id;
+    std::string strType;
+    xis >> attribute( "id", id )
+        >> attribute( "type", strType );
 
-    pPopulation = &type.InstanciatePopulation( nID, army, archive );
-    return *pPopulation;
+    const MIL_PopulationType* pType = MIL_PopulationType::Find( strType );
+    if( !pType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown population type" ); // $$$$ ABL 2007-07-10: error context
+
+    MIL_Population*& pPopulation = populations_[ id ];
+    if( pPopulation )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Population using this id already exists" ); // $$$$ ABL 2007-07-10: error context
+
+    pPopulation = &pType->InstanciatePopulation( MIL_IDManager::populations_.ConvertSimIDToMosID( id ), army, xis );
 }
 
 // =============================================================================
@@ -549,10 +569,10 @@ MIL_Army* MIL_EntityManager::FindArmy( const std::string& strName ) const
 // Name: MIL_EntityManager::CreateObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-MIL_RealObject_ABC& MIL_EntityManager::CreateObject( const MIL_RealObjectType& type, uint nID, MIL_Army& army, MIL_InputArchive& archive )
+void MIL_EntityManager::CreateObject( xml::xistream& xis, MIL_Army& army )
 {
     assert( pObjectManager_ );
-    return pObjectManager_->CreateObject( type, nID, army, archive );
+    pObjectManager_->CreateObject( xis, army );
 }
 
 // -----------------------------------------------------------------------------
@@ -723,7 +743,7 @@ void MIL_EntityManager::UpdateActions()
 void MIL_EntityManager::UpdateEffects()
 {
     assert( pObjectManager_ );
-    
+
     profiler_.Start();
     pObjectManager_->ProcessEvents();
     effectManager_.Update();
@@ -1023,7 +1043,7 @@ void MIL_EntityManager::OnReceiveMsgPopulationMagicAction( const ASN1T_MsgPopula
 
     try
     {
-        MIL_Population* pPopulation = FindPopulation( asnMsg.oid );    
+        MIL_Population* pPopulation = FindPopulation( asnMsg.oid );
         if( !pPopulation )
             throw NET_AsnException< ASN1T_EnumPopulationErrorCode >( EnumPopulationErrorCode::error_invalid_unit );
         pPopulation->OnReceiveMsgPopulationMagicAction( asnMsg );
@@ -1163,7 +1183,7 @@ void MIL_EntityManager::OnReceiveMsgLogSupplyChangeQuotas( const ASN1T_MsgLogSup
     {
         ack() = e.GetErrorID();
     }
-    ack.Send( nCtx );    
+    ack.Send( nCtx );
 }
 
 // -----------------------------------------------------------------------------
@@ -1186,7 +1206,7 @@ void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( const ASN1T_MsgLogSupplyP
     {
         ack() = e.GetErrorID();
     }
-    ack.Send( nCtx ); 
+    ack.Send( nCtx );
 }
 
 // -----------------------------------------------------------------------------
@@ -1231,7 +1251,7 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const uint )
          >> pObjectManager_
          >> rKnowledgesTime_
          >> rAutomatesDecisionTime_
-         >> rPionsDecisionTime_ 
+         >> rPionsDecisionTime_
          >> rPopulationsDecisionTime_
          >> rActionsTime_
          >> rEffectsTime_
@@ -1258,7 +1278,7 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const uint ) const
          << pObjectManager_
          << rKnowledgesTime_
          << rAutomatesDecisionTime_
-         << rPionsDecisionTime_ 
+         << rPionsDecisionTime_
          << rPopulationsDecisionTime_
          << rActionsTime_
          << rEffectsTime_
@@ -1270,19 +1290,18 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const uint ) const
 // Name: MIL_EntityManager::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::WriteODB( MT_XXmlOutputArchive& archive ) const
-{    
-    archive.Section( "orbat" );
-
-    archive.Section( "sides" );
+void MIL_EntityManager::WriteODB( xml::xostream& xos ) const
+{
+    xos << start( "orbat" )
+            << start( "sides" );
     for( CIT_ArmyMap it = armies_.begin(); it != armies_.end(); ++it )
-        it->second->WriteODB( archive );
-    archive.EndSection(); // sides
+        it->second->WriteODB( xos );
+    xos     << end();
 
-    archive.Section( "diplomacies" );
+    xos     << start( "diplomacies" );
     for( CIT_ArmyMap it = armies_.begin(); it != armies_.end(); ++it )
-        it->second->WriteDiplomacyODB( archive );
-    archive.EndSection(); // diplomacies
+        it->second->WriteDiplomacyODB( xos );
+    xos     << end();
 
-    archive.EndSection(); // orbat
+    xos << end();
 }

@@ -28,53 +28,90 @@
 #include "Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Tools/MIL_Tools.h"
+#include <xeumeuleu/xml.h>
 
-// -----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::InitializeFactors
-// Created: NLD 2004-08-06
-// -----------------------------------------------------------------------------
-template< typename C >
-void PHY_SensorTypeAgent::InitializeFactors( const C& container, const std::string& strTagName, T_FactorVector& factors, MIL_InputArchive& archive )
+using namespace xml;
+namespace
 {
-    archive.Section( strTagName );
-    for ( C::const_iterator it = container.begin(); it != container.end(); ++it )
+   template< typename C >
+   class Loader
+   {
+   public:
+        explicit Loader( const C& container )
+            : container_( container )
+        {}
+
+        void ReadFactor( xml::xistream& xis, PHY_SensorTypeAgent::T_FactorVector& factors )
+        {
+            std::string containerType;
+            xis >> attribute( "type", containerType );
+
+            C::const_iterator it = container_.find( containerType );
+            if( it != container_.end() )
+            {
+                assert( factors.size() > it->second->GetID() );
+                MT_Float& rFactor = factors[ it->second->GetID() ];
+
+                xis >> attribute( "value", rFactor );
+                if( rFactor < 0 || rFactor > 1 )
+                    throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "distance-modifier: value not in [0..1]" );
+            }
+            else
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "distance-modifier: unknow type" );
+        }
+   private:
+       const C& container_;
+    };
+
+   template<>
+   class Loader< PHY_Posture::T_PostureMap >
+   {
+   public:
+        explicit Loader( const PHY_Posture::T_PostureMap& container )
+            : container_( container )
+        {}
+
+        void ReadFactor( xml::xistream& xis, PHY_SensorTypeAgent::T_FactorVector& factors )
+        {
+            std::string containerType;
+            xis >> attribute( "type", containerType );
+
+            PHY_Posture::CIT_PostureMap it = container_.find( containerType );
+            if( it != container_.end() )
+            {
+                if( !it->second->CanModifyDetection() )
+                    return;
+                assert( factors.size() > it->second->GetID() );
+                MT_Float& rFactor = factors[ it->second->GetID() ];
+
+                xis >> attribute( "value", rFactor );
+                if( rFactor < 0 || rFactor > 1 )
+                    throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "distance-modifier: value not in [0..1]" );
+            }
+            else
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "distance-modifier: unknow type" );
+        }
+
+   private:
+       const PHY_Posture::T_PostureMap& container_;
+    };
+
+    template< typename C >
+    void InitializeFactors( const C& container, const std::string& strTagName, PHY_SensorTypeAgent::T_FactorVector& factors, xml::xistream& xis )
     {
-        assert( factors.size() > it->second->GetID() );
-        MT_Float& rFactor = factors[ it->second->GetID() ];
-
-        archive.ReadField( it->second->GetName(), rFactor, CheckValueBound( 0., 1. ) );
+        typedef typename Loader< C > T_Loader;
+        T_Loader loader( container );
+        xis >> start( strTagName )
+                >> list( "distance-modifier", loader, &T_Loader::ReadFactor, factors )
+            >> end();
     }
-    archive.EndSection(); // XXX
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::InitializeFactors
-// Created: NLD 2004-08-06
-// -----------------------------------------------------------------------------
-template<>
-void PHY_SensorTypeAgent::InitializeFactors( const PHY_Posture::T_PostureMap& container, const std::string& strTagName, T_FactorVector& factors, MIL_InputArchive& archive )
-{
-    archive.Section( strTagName );
-
-    for( PHY_Posture::CIT_PostureMap it = container.begin(); it != container.end(); ++it )
-    {
-        if( !it->second->CanModifyDetection() )
-            continue;
-
-        assert( factors.size() > it->second->GetID() );
-        MT_Float& rFactor = factors[ it->second->GetID() ];
-
-        archive.ReadField( it->second->GetName(), rFactor, CheckValueBound( 0., 1. ) );
-    }
-
-    archive.EndSection(); // XXX
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent constructor
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, MIL_InputArchive& archive )
+PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistream& xis )
     : type_                ( type )
     , volumeFactors_       ( PHY_Volume       ::GetVolumes       ().size(), 0. )
     , precipitationFactors_( PHY_Precipitation::GetPrecipitations().size(), 0. )
@@ -85,21 +122,21 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, MIL_InputA
     , rPopulationDensity_  ( 1. )
     , rPopulationFactor_   ( 1. )
 {
-    InitializeAngle        ( archive );
-    InitializeDistances    ( archive );
+    InitializeAngle        ( xis );
+    InitializeDistances    ( xis );
 
-    archive.Section( "ModificateursDeDistance" );
+    xis >> start( "distance-modifiers" );
 
-    InitializeFactors( PHY_Volume       ::GetVolumes        (), "VolumesCible"  , volumeFactors_       , archive );
-    InitializeFactors( PHY_Precipitation::GetPrecipitations (), "Precipitations", precipitationFactors_, archive );
-    InitializeFactors( PHY_Lighting     ::GetLightings      (), "Eclairements"  , lightingFactors_     , archive );
-    InitializeFactors( PHY_Posture      ::GetPostures       (), "PosturesSource", postureSourceFactors_, archive );
-    InitializeFactors( PHY_Posture      ::GetPostures       (), "PosturesCible" , postureTargetFactors_, archive );
+    InitializeFactors( PHY_Volume       ::GetVolumes        (), "size-modifiers"  , volumeFactors_       , xis );
+    InitializeFactors( PHY_Precipitation::GetPrecipitations (), "precipitation-modifiers", precipitationFactors_, xis );
+    InitializeFactors( PHY_Lighting     ::GetLightings      (), "visibility-modifiers"  , lightingFactors_     , xis );
+    InitializeFactors( PHY_Posture      ::GetPostures       (), "source-posture-modifiers", postureSourceFactors_, xis );
+    InitializeFactors( PHY_Posture      ::GetPostures       (), "target-posture-modifiers" , postureTargetFactors_, xis );
 
-    InitializeEnvironmentFactors( archive );
-    InitializePopulationFactors ( archive );
+    InitializeEnvironmentFactors( xis );
+    InitializePopulationFactors ( xis );
 
-    archive.EndSection(); // ModificateursDeDistance
+    xis >> end();
 }
 
 // -----------------------------------------------------------------------------
@@ -108,27 +145,19 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, MIL_InputA
 // -----------------------------------------------------------------------------
 PHY_SensorTypeAgent::~PHY_SensorTypeAgent()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::InitializeAngle
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-void PHY_SensorTypeAgent::InitializeAngle( MIL_InputArchive& archive )
+void PHY_SensorTypeAgent::InitializeAngle( xml::xistream& xis )
 {
-    archive.Section( "Angle" );
-    archive.Read( rAngle_ );
+    xis >> attribute( "angle", rAngle_ )
+        >> attribute( "scanning", bScanningAllowed_ );
 
-    std::string strUnit;
-    archive.ReadAttribute( "unite", strUnit );
-    if ( sCaseInsensitiveEqual()( strUnit, "degre" ) )
-        rAngle_ *= ( MT_PI / 180. );
-    else if ( !sCaseInsensitiveEqual()( strUnit, "radian" ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown angle unit", archive.GetContext() );
-
-    archive.ReadAttribute( "balayage", bScanningAllowed_ );
-    archive.EndSection(); // Angle
+    rAngle_ *= ( MT_PI / 180. );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,55 +165,93 @@ void PHY_SensorTypeAgent::InitializeAngle( MIL_InputArchive& archive )
 // Created: NLD 2004-08-06
 // Modified: JVT 2004-09-28
 // -----------------------------------------------------------------------------
-void PHY_SensorTypeAgent::InitializeDistances( MIL_InputArchive& archive )
+void PHY_SensorTypeAgent::InitializeDistances( xml::xistream& xis )
 {
-    archive.ReadField( "DistanceDeProximite", rSquareProximityDist_ );
+    xis >> start( "base-distances" )
+            >> attribute( "close-range", rSquareProximityDist_ );
     rSquareProximityDist_ = MIL_Tools::ConvertMeterToSim( rSquareProximityDist_ );
     rSquareProximityDist_ *= rSquareProximityDist_;
 
-    archive.Section( "DistancesDeBase" );
-    archive.ReadField( "DI", rIdentificationDist_, CheckValueGreaterOrEqual( 0. ) );
-    archive.ReadField( "DR", rRecognitionDist_   , CheckValueGreaterOrEqual( rIdentificationDist_ ) );
-    archive.ReadField( "DD", rDetectionDist_     , CheckValueGreaterOrEqual( rRecognitionDist_ ) );
-    archive.EndSection(); // DistancesDeBase
+    xis     >> list( "base-distance", *this, &PHY_SensorTypeAgent::ReadDistance )
+        >> end();
+}
 
-    rDetectionDist_      = MIL_Tools::ConvertMeterToSim( rDetectionDist_      );
-    rRecognitionDist_    = MIL_Tools::ConvertMeterToSim( rRecognitionDist_    );
-    rIdentificationDist_ = MIL_Tools::ConvertMeterToSim( rIdentificationDist_ );
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::ReadDistance
+// Created: ABL 2007-07-25
+// -----------------------------------------------------------------------------
+void PHY_SensorTypeAgent::ReadDistance( xml::xistream& xis )
+{
+    std::string distanceType;
+    xis >> attribute( "level", distanceType );
+    if( distanceType == "identification" )
+    {
+        xis >> attribute( "distance", rIdentificationDist_ );
+        if( rIdentificationDist_ < 0 )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "base-distance: identification distance < 0" );
+        rIdentificationDist_ = MIL_Tools::ConvertMeterToSim( rIdentificationDist_ );
+    }
+    else if( distanceType == "recognition" )
+    {
+        xis >> attribute( "distance", rRecognitionDist_ );
+        if( rRecognitionDist_ < rIdentificationDist_ )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "base-distance: recognition distance < identification distance" );
+        rRecognitionDist_ = MIL_Tools::ConvertMeterToSim( rRecognitionDist_ );
+    }
+    else if( distanceType == "detection" )
+    {
+        xis >> attribute( "distance", rDetectionDist_ );
+        if( rDetectionDist_ < rRecognitionDist_ )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "base-distance: detection distance < recognition distance" );
+        rDetectionDist_ = MIL_Tools::ConvertMeterToSim( rDetectionDist_ );
+    }
+    else
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "base-distance: unknow distance level" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::InitializeEnvironmentFactors
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-void PHY_SensorTypeAgent::InitializeEnvironmentFactors( MIL_InputArchive& archive )
+void PHY_SensorTypeAgent::InitializeEnvironmentFactors( xml::xistream& xis )
 {
-    archive.Section( "Environnements" );
+    unsigned int visionObject = 0;
+    xis >> start( "terrain-modifiers" )
+            >> list( "distance-modifier", *this, &PHY_SensorTypeAgent::ReadTerrainModifier, visionObject )
+        >> end();
+}
 
-    for ( uint i = 0; i < PHY_RawVisionData::eNbrVisionObjects; ++i )
-    {
-        PHY_RawVisionData::E_VisionObject nEnv = ConvertObjectIdxToEnvironnement( i );
-        assert( environmentFactors_.size() > i );
-        MT_Float& rFactor = environmentFactors_[ i ];
-
-        archive.ReadField( MIL_Tools::GetEnvironnementTypeName( nEnv ), rFactor, CheckValueBound( 0., 1. ) );
-    }
-
-    archive.EndSection(); // Environnements
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::ReadTerrainModifier
+// Created: ABL 2007-07-25
+// -----------------------------------------------------------------------------
+void PHY_SensorTypeAgent::ReadTerrainModifier( xml::xistream& xis, unsigned int& visionObject )
+{
+    assert( environmentFactors_.size() > visionObject );  // $$$$ _RC_ ABL 2007-07-27: use exception instead
+    MT_Float& rFactor = environmentFactors_[ visionObject ];
+    std::string terrainType;
+    xis >> attribute( "type", terrainType )
+        >> attribute( "value", rFactor );
+    if( rFactor < 0 || rFactor > 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "terrain-modifier: value not in [0..1]" );
+    ++visionObject;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::InitializePopulationFactors
 // Created: NLD 2005-10-27
 // -----------------------------------------------------------------------------
-void PHY_SensorTypeAgent::InitializePopulationFactors( MIL_InputArchive& archive )
+    void PHY_SensorTypeAgent::InitializePopulationFactors( xml::xistream& xis )
 {
-    archive.Section( "PresencePopulation" );
+    xis >> start( "population-modifier" )
+            >> attribute( "density", rPopulationDensity_ )
+            >> attribute( "modifier", rPopulationFactor_ )
+        >> end();
 
-    archive.ReadAttribute( "densitePopulation", rPopulationDensity_, CheckValueGreaterOrEqual( 0. ) );
-    archive.ReadAttribute( "modificateur"     , rPopulationFactor_ , CheckValueBound( 0., 1. )      );
-
-    archive.EndSection(); // PresencePopulation
+    if( rPopulationDensity_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population-modifier: density < 0" );
+    if( rPopulationFactor_ < 0 || rPopulationFactor_ > 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population-modifier: modifier not in [0..1]" );
 }
 
 // =============================================================================
@@ -218,7 +285,7 @@ MT_Float PHY_SensorTypeAgent::GetSourceFactor( const MIL_AgentPion& source ) con
     assert( postureSourceFactors_.size() > nOldPostureIdx );
     assert( postureSourceFactors_.size() > nCurPostureIdx );
 
-    MT_Float rModificator =   postureSourceFactors_[ nOldPostureIdx ] + sourcePosture.GetPostureCompletionPercentage() 
+    MT_Float rModificator =   postureSourceFactors_[ nOldPostureIdx ] + sourcePosture.GetPostureCompletionPercentage()
                           * ( postureSourceFactors_[ nCurPostureIdx ] - postureSourceFactors_[ nOldPostureIdx ] );
 
     // Elongation
@@ -285,7 +352,7 @@ MT_Float PHY_SensorTypeAgent::ComputeEnvironementFactor( PHY_RawVisionData::envB
 // Last modified: JVT 04-02-12
 //-----------------------------------------------------------------------------
 MT_Float PHY_SensorTypeAgent::ComputeExtinction( const PHY_RawVisionDataIterator& env, MT_Float rDistanceModificator, MT_Float rVisionNRJ ) const
-{ 
+{
     assert( rVisionNRJ <= rDetectionDist_ );
     assert( rVisionNRJ > 0 );
 
@@ -307,11 +374,11 @@ MT_Float PHY_SensorTypeAgent::ComputeExtinction( const PHY_RawVisionDataIterator
 inline
 const PHY_PerceptionLevel& PHY_SensorTypeAgent::InterpreteExtinction( MT_Float rExtinction ) const
 {
-    if ( rExtinction >= rDetectionDist_ - rIdentificationDist_ )
+    if( rExtinction >= rDetectionDist_ - rIdentificationDist_ )
         return PHY_PerceptionLevel::identified_;
-    if ( rExtinction >= rDetectionDist_ - rRecognitionDist_ )
+    if( rExtinction >= rDetectionDist_ - rRecognitionDist_ )
         return  PHY_PerceptionLevel::recognized_;
-    if ( rExtinction >= 0 )
+    if( rExtinction >= 0 )
          return PHY_PerceptionLevel::detected_;
     return PHY_PerceptionLevel::notSeen_;
 }
@@ -369,7 +436,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
         return ComputePerception( source, vTargetPos, rSensorHeight );
 
     const PHY_Volume* pSignificantVolume = target.GetRole< PHY_RoleInterface_Composantes >().GetSignificantVolume( *this );
-    if ( !pSignificantVolume )
+    if( !pSignificantVolume )
         return PHY_PerceptionLevel::notSeen_;
 
     MT_Float rDistanceMaxModificator  = GetFactor      ( *pSignificantVolume );
@@ -396,7 +463,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
         return ComputePerception( source, vTargetPos, rSensorHeight );
 
     const PHY_Volume* pSignificantVolume = target.GetSignificantVolume( *this );
-    if ( !pSignificantVolume )
+    if( !pSignificantVolume )
         return PHY_PerceptionLevel::notSeen_;
 
     MT_Float rDistanceMaxModificator  = GetFactor      ( *pSignificantVolume );
@@ -433,7 +500,7 @@ MT_Float PHY_SensorTypeAgent::ComputePerceptionAccuracy( const MIL_AgentPion& so
     const MT_Float rDistanceMaxModificator = GetSourceFactor( source );
     return rDetectionDist_ * rDistanceMaxModificator;
 }
-          
+
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::ComputePerception
 // Created: NLD 2005-10-12
@@ -448,5 +515,5 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
 
     if( !target.Intersect2DWithCircle( vSourcePos, rDetectionDist_ * rDistanceMaxModificator, shape ) )
         return PHY_PerceptionLevel::notSeen_;
-    return PHY_PerceptionLevel::identified_;    
+    return PHY_PerceptionLevel::identified_;
 }

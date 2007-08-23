@@ -57,7 +57,8 @@ void ReportFactory::Load( const kernel::ExerciseConfig& config  )
     xml::xifstream scipio( config.GetPhysicalFile() );
     std::string reports;
     scipio >> start( "physical" )
-                >> content( "ComptesRendus", reports );
+                >> start( "reports" )
+                >> attribute( "file", reports );
     xifstream xis( config.BuildPhysicalChildFile( reports ) );
     xis >> start( "reports" )
             >> list( "report", *this, &ReportFactory::ReadReport )

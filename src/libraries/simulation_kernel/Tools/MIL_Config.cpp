@@ -185,24 +185,22 @@ void MIL_Config::AddFileToCRC( const std::string& fileName )
 // -----------------------------------------------------------------------------
 boost::crc_32_type::value_type MIL_Config::serialize( const std::string& strFileName ) const
 {
-    MT_XXmlOutputArchive archive;
+    try
+    {
+        xml::xofstream xos( strFileName );
     
-    if ( !archive.Section( "Fichiers" ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Can't writer section 'Fichiers'", archive.RetrieveLastError()->GetInfo() );
-
-    for ( CIT_CRCMap it = CRCMap_.begin(); it != CRCMap_.end(); ++it )
-        if ( !archive.Section( "Fichier" ) 
-          || !archive.WriteAttribute( "nom", it->first ) 
-          || !archive.Write( it->second ) 
-          || !archive.EndSection()
-           )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Can't create section '%s'", it->first.c_str() ), archive.RetrieveLastError()->GetInfo() );
-
-    archive.EndSection(); // Fichiers
-    
-    if ( !archive.WriteToFile( strFileName ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Can't create file '%s'", strFileName.c_str() ), archive.RetrieveLastError()->GetInfo() );
-    
+        xos << start( "files" );
+        for ( CIT_CRCMap it = CRCMap_.begin(); it != CRCMap_.end(); ++it )
+            xos << start( "file" )
+                    << attribute( "name", it->first )
+                    << attribute( "crc", it->second )
+                << end();
+        xos << end();
+    }
+    catch( xml::exception& e )
+    {
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Can't create file '%s'", strFileName.c_str() ), e.what() );
+    }
     return MIL_Tools::ComputeCRC( strFileName );
 }
 

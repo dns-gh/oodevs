@@ -14,21 +14,30 @@
 #include "PHY_DotationCategory_IndirectFire_ABC.h"
 
 #include "Tools/MIL_Tools.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire_ABC::PHY_DotationCategory_IndirectFire_ABC
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_DotationCategory_IndirectFire_ABC::PHY_DotationCategory_IndirectFire_ABC( const PHY_IndirectFireDotationClass& category, const PHY_DotationCategory& dotationCategory, MIL_InputArchive& archive )
+PHY_DotationCategory_IndirectFire_ABC::PHY_DotationCategory_IndirectFire_ABC( const PHY_IndirectFireDotationClass& category, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
     : category_         ( category )
     , dotationCategory_ ( dotationCategory )
     , rDispersionX_     ( 0. )
     , rDispersionY_     ( 0. )
 {
-    archive.ReadField( "InterventionType", nInterventionType_, CheckValueGreater( 0 ) );
+    xis >> attribute( "intervention-type", nInterventionType_ )
+        >> attribute( "x-dispersion", rDispersionX_ )
+        >> attribute( "y-dispersion", rDispersionY_ );
 
-    archive.ReadField( "DispersionX", rDispersionX_, CheckValueGreater( 0. ) );
-    archive.ReadField( "DispersionY", rDispersionY_, CheckValueGreater( 0. ) );
+    if( nInterventionType_ <= 0. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "intervention-type <= 0" );
+    if( rDispersionX_ <= 0. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rDispersionX_ <= 0" );
+    if( rDispersionY_ <= 0. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rDispersionY_ <= 0" );
 
     rDispersionX_ = MIL_Tools::ConvertMeterToSim( rDispersionX_ );
     rDispersionY_ = MIL_Tools::ConvertMeterToSim( rDispersionY_ );

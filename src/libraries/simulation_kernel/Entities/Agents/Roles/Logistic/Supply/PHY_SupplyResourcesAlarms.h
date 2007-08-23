@@ -12,6 +12,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 // Created: NLD 2006-08-02
 // =============================================================================
@@ -20,7 +25,7 @@ class PHY_SupplyResourcesAlarms
 public:
     //! @name Initialization
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( xml::xistream& xis );
     static void Terminate ();
     //@}
 
@@ -43,6 +48,11 @@ private:
     //! @name Tools
     //@{
     static bool IsLevelReached( const T_LevelSet& levels, MT_Float rPreviousRatio, MT_Float rCurrentRatio );
+    //@}
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadResourceAvailabilityAlert ( xml::xistream& xis );
     //@}
 
 private:

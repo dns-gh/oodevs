@@ -13,6 +13,9 @@
 
 #include "MIL_AgentPionLOGConvoy.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePionLOGConvoy_Supply.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGConvoy, "MIL_AgentPionLOGConvoy" )
 
@@ -20,11 +23,11 @@ BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGConvoy, "MIL_AgentPionLOGConvoy" )
 // Name: MIL_AgentPionLOGConvoy constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGConvoy::MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive )
-    : MIL_AgentPionLOG_ABC( type, nID, automate, archive )
+MIL_AgentPionLOGConvoy::MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis )
+    : MIL_AgentPionLOG_ABC( type, nID, automate, xis )
 {
     RegisterRole< PHY_RolePionLOGConvoy_Supply >( *this );
-    throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Creation of pion of type 'Pion LOG Convoi' not allowed in ODB", archive.GetContext() );
+    throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Creation of pion of type 'Pion LOG Convoi' not allowed in ODB" ); // $$$$ ABL 2007-07-10: error context
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +86,7 @@ void MIL_AgentPionLOGConvoy::save( MIL_CheckPointOutArchive& file, const uint ) 
 // Name: MIL_AgentPionLOGConvoy::WriteODB
 // Created: NLD 2006-06-05
 // -----------------------------------------------------------------------------
-void MIL_AgentPionLOGConvoy::WriteODB( MT_XXmlOutputArchive& /*archive*/ ) const
+void MIL_AgentPionLOGConvoy::WriteODB( xml::xostream& xos ) const
 {
     // NOTHING : don't serialize Convoys
 }

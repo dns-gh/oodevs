@@ -23,7 +23,6 @@
 
 #include "ADN_DataException.h"
 #include "ADN_OpenFile_Exception.h"
-#include "ADN_Xml_Exception.h"
 
 #include "ADN_OpenMode_Dialog.h"
 #include "ADN_RunProcessDialog.h"

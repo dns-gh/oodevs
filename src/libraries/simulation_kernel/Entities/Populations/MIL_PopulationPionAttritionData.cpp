@@ -21,6 +21,9 @@
 
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationPionAttritionData::sAttritionData
@@ -41,6 +44,7 @@ MIL_PopulationPionAttritionData::sAttritionData::sAttritionData()
 MIL_PopulationPionAttritionData::MIL_PopulationPionAttritionData()
     : attitudeAttritionData_( MIL_PopulationAttitude::GetAttitudes().size(), sAttritionData() )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -49,69 +53,69 @@ MIL_PopulationPionAttritionData::MIL_PopulationPionAttritionData()
 // -----------------------------------------------------------------------------
 MIL_PopulationPionAttritionData::~MIL_PopulationPionAttritionData()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationPionAttritionData::Initialize
 // Created: NLD 2005-11-02
 // -----------------------------------------------------------------------------
-void MIL_PopulationPionAttritionData::Initialize( MIL_InputArchive& archive )
+void MIL_PopulationPionAttritionData::Initialize( xml::xistream& xis )
 {
-    if( !archive.BeginList( "Attitudes", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> list( "attrition-effect", *this, &MIL_PopulationPionAttritionData::ReadAttritionEffect );
+}
 
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Attitude" );
-        
-        std::string strAttitude;
-        archive.ReadAttribute( "nom", strAttitude );
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationPionAttritionData::ReadAttritionEffect
+// Created: ABL 2007-07-24
+// -----------------------------------------------------------------------------
+void MIL_PopulationPionAttritionData::ReadAttritionEffect( xml::xistream& xis )
+{
+    std::string strAttitude;
+    xis >> attribute( "population-attitude", strAttitude );
 
-        const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( strAttitude );
-        if( !pAttitude )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown attitude '%s'", strAttitude.c_str() ), archive.GetContext() );
+    const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( strAttitude );
+    if( !pAttitude )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown attitude '%s'", strAttitude.c_str() ) ); // $$$$ ABL 2007-07-24: error context
 
-        ReadAttitudeData( *pAttitude, archive );
-
-        archive.EndSection(); // Attitude
-    }
-    archive.EndList();
+    ReadAttitudeData( *pAttitude, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationPionAttritionData::ReadAttitudeData
 // Created: NLD 2005-11-02
 // -----------------------------------------------------------------------------
-void MIL_PopulationPionAttritionData::ReadAttitudeData( const MIL_PopulationAttitude& attitude, MIL_InputArchive& archive )
+void MIL_PopulationPionAttritionData::ReadAttitudeData( const MIL_PopulationAttitude& attitude, xml::xistream& xis )
 {
     assert( attitudeAttritionData_.size() > attitude.GetID() );
 
     sAttritionData& attitudeData = attitudeAttritionData_[ attitude.GetID() ];
 
-    archive.Section( "Intensite" );
-    archive.ReadAttribute( "densitePopulation", attitudeData.rPopulationDensity_, CheckValueGreaterOrEqual( 0. ) );
-    archive.ReadAttribute( "intensite"        , attitudeData.rIntensity_        , CheckValueBound         ( 0., 1. ) );
-    archive.EndSection(); // Intensite
+    xis >> attribute( "population-density", attitudeData.rPopulationDensity_ )
+        >> attribute( "intensity", attitudeData.rIntensity_ );
 
-    archive.BeginList( "ProtectionsPions" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "ProtectionPion" );
+    if( attitudeData.rPopulationDensity_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "attrition-effect: population-density < 0" );
+    if( attitudeData.rIntensity_ < 0 || attitudeData.rIntensity_ > 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "attrition-effetc: intensity not in [0..1]" );
 
-        std::string strProtection;
-        archive.ReadAttribute( "nom", strProtection );
-        const PHY_Protection* pProtection = PHY_Protection::Find( strProtection );
-        if( !pProtection )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown protection '%s'", strProtection.c_str() ), archive.GetContext() );
+    xis >> list( "unit", *this, &MIL_PopulationPionAttritionData::ReadAttritionUnitEffect, attitudeData );
+}
 
-        assert( attitudeData.attritions_.size() > pProtection->GetID() );
-        attitudeData.attritions_[ pProtection->GetID() ] = PHY_AttritionData( archive );
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationPionAttritionData::ReadAttritionUnitEffect
+// Created: ABL 2007-07-24
+// -----------------------------------------------------------------------------
+void MIL_PopulationPionAttritionData::ReadAttritionUnitEffect( xml::xistream& xis, sAttritionData& attitudeData )
+{
+    std::string strProtection;
+    xis >> attribute( "protection", strProtection );
+    const PHY_Protection* pProtection = PHY_Protection::Find( strProtection );
+    if( !pProtection )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown protection '%s'", strProtection.c_str() ) ); // $$$$ ABL 2007-07-24: error context
 
-        archive.EndSection(); // ProtectionPion            
-    }
-
-    archive.EndList(); // ProtectionsPions
+    assert( attitudeData.attritions_.size() > pProtection->GetID() );
+    attitudeData.attritions_[ pProtection->GetID() ] = PHY_AttritionData( xis );
 }
 
 // =============================================================================

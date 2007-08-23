@@ -240,7 +240,7 @@ bool NET_ASN_Tools::ReadPolygonList( const ASN1T_PolygonList& asn, T_Localisatio
 // static
 bool NET_ASN_Tools::ReadPointList( const ASN1T_PointList& asn, T_PointVector& pointVector )
 {
-	pointVector.clear(); pointVector.reserve( asn.n );
+    pointVector.clear(); pointVector.reserve( asn.n );
     for( uint i = 0; i < asn.n; ++i )
     {
         MT_Vector2D vPos;

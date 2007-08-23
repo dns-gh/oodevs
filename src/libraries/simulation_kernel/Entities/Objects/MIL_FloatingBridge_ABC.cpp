@@ -44,7 +44,7 @@ MIL_FloatingBridge_ABC::MIL_FloatingBridge_ABC()
 //-----------------------------------------------------------------------------
 MIL_FloatingBridge_ABC::~MIL_FloatingBridge_ABC()
 {
-    UnlinkFromPathFinder();	
+    UnlinkFromPathFinder();    
 }
 
 //=============================================================================
@@ -72,9 +72,9 @@ bool MIL_FloatingBridge_ABC::Initialize( const MIL_ObstacleType& obstacleType, D
 // Name: MIL_FloatingBridge_ABC::Initialize
 // Created: NLD 2003-07-21
 //-----------------------------------------------------------------------------
-void MIL_FloatingBridge_ABC::Initialize( MIL_InputArchive& archive )
+void MIL_FloatingBridge_ABC::Initialize( xml::xistream& xis )
 {
-    MIL_RealObject_ABC::Initialize( archive );
+    MIL_RealObject_ABC::Initialize( xis );
     LinkToPathFinder();
 }
 

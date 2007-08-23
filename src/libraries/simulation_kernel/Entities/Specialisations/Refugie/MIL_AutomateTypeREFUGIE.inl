@@ -14,9 +14,9 @@
 // Created: NLD 2004-12-27
 // -----------------------------------------------------------------------------
 inline
-const MIL_AutomateType* MIL_AutomateTypeREFUGIE::Create( const std::string& strName, MIL_InputArchive& archive )
+const MIL_AutomateType* MIL_AutomateTypeREFUGIE::Create( const std::string& strName, xml::xistream& xis )
 {
-    return new MIL_AutomateTypeREFUGIE( strName, archive );
+    return new MIL_AutomateTypeREFUGIE( strName, xis );
 }
 
 // -----------------------------------------------------------------------------

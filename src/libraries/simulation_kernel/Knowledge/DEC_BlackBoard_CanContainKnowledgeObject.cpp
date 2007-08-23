@@ -26,7 +26,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeObject, "DEC_BlackBoa
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObject()
 {
-	
+    
 }
 
 // -----------------------------------------------------------------------------
@@ -36,7 +36,7 @@ DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObje
 DEC_BlackBoard_CanContainKnowledgeObject::~DEC_BlackBoard_CanContainKnowledgeObject()
 {
     while( !knowledgeObjectFromIDMap_.empty() )
-        DestroyKnowledgeObject( *knowledgeObjectFromIDMap_.begin()->second );        	
+        DestroyKnowledgeObject( *knowledgeObjectFromIDMap_.begin()->second );            
 }
 
 // =============================================================================

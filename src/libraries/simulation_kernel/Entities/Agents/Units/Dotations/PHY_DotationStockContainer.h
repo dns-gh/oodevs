@@ -14,6 +14,12 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+    class xostream;
+}
+
 class PHY_DotationCategory;
 class PHY_DotationCapacity;
 class PHY_DotationStock;
@@ -37,12 +43,12 @@ public:
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
-    void WriteODB( MT_XXmlOutputArchive& archive ) const;
+    void WriteODB( xml::xostream& xos ) const;
     //@}
     
     //! @name Init
     //@{
-    void ReadValues( MIL_InputArchive& archive );
+    void ReadValues( xml::xistream& xis);
     //@}
 
     //! @name Main
@@ -80,6 +86,11 @@ public:
     void FillSupplyRequest ( PHY_SupplyStockRequestContainer& supplyRequest ) const;
     //@}
 
+    //! @name Helpers
+    //@{
+    void ReadStock( xml::xistream& xis );
+    //@}
+
 public:
     //! @name Types
     //@{
@@ -93,7 +104,7 @@ public:
 private:
     //! @name Tools
     //@{
-    PHY_DotationStock* AddStock            ( const PHY_DotationCategory& category, MIL_InputArchive& archive );
+    PHY_DotationStock* AddStock            ( const PHY_DotationCategory& category, xml::xistream& xis);
     void               CheckStockCapacities();
     //@}
 

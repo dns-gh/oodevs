@@ -25,6 +25,9 @@
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_ASN_Messages.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 BOOST_CLASS_EXPORT_GUID( PHY_DotationStockContainer, "PHY_DotationStockContainer" )
 
@@ -151,20 +154,20 @@ void PHY_DotationStockContainer::serialize( Archive& file, const uint )
 // Name: PHY_DotationStockContainer::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void PHY_DotationStockContainer::WriteODB( MT_XXmlOutputArchive& archive ) const
+void PHY_DotationStockContainer::WriteODB( xml::xostream& xos ) const
 {
-    archive.Section( "stocks") ;
+    xos << start( "stocks" );
 
     for( CIT_StockMap it = stocks_.begin(); it != stocks_.end(); ++it )
     {
         const PHY_DotationStock& dotationStock = *it->second;
 
-        archive.Section( "dotation" );
-        archive.WriteAttribute( "name"    , dotationStock.GetCategory().GetName() );
-        archive.WriteAttribute( "quantity", dotationStock.GetValue() );
-        archive.EndSection(); // dotation"
+        xos << start( "dotation" )
+            << attribute( "name", dotationStock.GetCategory().GetName() )
+            << attribute( "quantity", dotationStock.GetValue() )
+        << end(); // dotation"
     }
-    archive.EndSection(); // stocks
+    xos << end(); // stocks
 }
 
 // =============================================================================
@@ -175,27 +178,27 @@ void PHY_DotationStockContainer::WriteODB( MT_XXmlOutputArchive& archive ) const
 // Name: PHY_DotationStockContainer::ReadValues
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-void PHY_DotationStockContainer::ReadValues( MIL_InputArchive& archive )
+void PHY_DotationStockContainer::ReadValues( xml::xistream& xis )
 {
-    if ( !archive.BeginList( "stocks", MIL_InputArchive::eNothing ) )
-        return;
+    xis >> optional() >> start( "stocks" )
+                          >> list( "dotation", *this, &PHY_DotationStockContainer::ReadStock )
+                      >> end();
+}
 
-    while( archive.NextListElement() )
-    {
-        archive.Section( "dotation" );
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationStockContainer::ReadStock
+// Created: ABL 2007-07-27
+// -----------------------------------------------------------------------------
+void PHY_DotationStockContainer::ReadStock( xml::xistream& xis )
+{
+    std::string strType;
+    xis >> attribute( "name", strType );
 
-        std::string strType;
-        archive.ReadAttribute( "name", strType );
+    const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
+    if( !pDotationCategory )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type" ); // $$$$ ABL 2007-07-27: error context
 
-        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
-        if( !pDotationCategory )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type", archive.GetContext() );
-
-        AddStock( *pDotationCategory, archive );
-
-        archive.EndSection(); // dotation
-    }
-    archive.EndList(); // stocks
+    AddStock( *pDotationCategory, xis );
 }
 
 // =============================================================================
@@ -252,10 +255,12 @@ PHY_DotationStock* PHY_DotationStockContainer::GetStock( const PHY_DotationCateg
 // Name: PHY_DotationStockContainer::AddStock
 // Created: NLD 2006-01-03
 // -----------------------------------------------------------------------------
-PHY_DotationStock* PHY_DotationStockContainer::AddStock( const PHY_DotationCategory& category, MIL_InputArchive& archive )
+PHY_DotationStock* PHY_DotationStockContainer::AddStock( const PHY_DotationCategory& category, xml::xistream& xis)
 {
     MT_Float rValue;
-    archive.ReadAttribute( "quantity", rValue, CheckValueGreaterOrEqual( 0. ) );
+    xis >> attribute( "quantity", rValue );
+    if( rValue < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "stock: quantity < 0" );
 
     const MT_Float rThresholdRatio = pRoleSupply_->GetPion().GetType().GetUnitType().GetStockLogisticThresholdRatio( category.GetLogisticType() );
 

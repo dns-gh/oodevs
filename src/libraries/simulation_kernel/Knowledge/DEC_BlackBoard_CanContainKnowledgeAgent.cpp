@@ -53,7 +53,7 @@ DEC_BlackBoard_CanContainKnowledgeAgent::DEC_BlackBoard_CanContainKnowledgeAgent
     , refugeesContainer_         ()
     , surrenderedAgentsContainer_()
 {
-	
+    
 }
 
 // -----------------------------------------------------------------------------

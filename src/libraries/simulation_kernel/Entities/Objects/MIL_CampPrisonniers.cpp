@@ -21,6 +21,9 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Knowledge/DEC_Knowledge_ObjectCampPrisonniers.h"
 #include "Network/NET_ASN_Messages.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 BOOST_CLASS_EXPORT_GUID( MIL_CampPrisonniers, "MIL_CampPrisonniers" )
 
@@ -51,7 +54,7 @@ MIL_CampPrisonniers::MIL_CampPrisonniers()
 //-----------------------------------------------------------------------------
 MIL_CampPrisonniers::~MIL_CampPrisonniers()
 {
-	
+    
 }
 
 // =============================================================================
@@ -73,14 +76,14 @@ void MIL_CampPrisonniers::serialize( Archive& file, const uint )
 // Name: MIL_CampPrisonniers::WriteSpecificAttributes
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void MIL_CampPrisonniers::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
+void MIL_CampPrisonniers::WriteSpecificAttributes( xml::xostream& xos ) const
 {
     assert( pTC2_ );
-    archive.Section( "specific-attributes" );
-    archive.Section( "tc2" );
-    archive.WriteAttribute( "id", pTC2_->GetID() );
-    archive.EndSection(); // tc2
-    archive.EndSection(); // specific-attributes
+    xos << start( "specific-attributes" )
+            << start( "tc2" )
+            << attribute( "id", pTC2_->GetID() )
+            << end()
+        << end();
 }
 
 // =============================================================================
@@ -111,22 +114,25 @@ bool MIL_CampPrisonniers::Initialize( const MIL_ObstacleType& obstacleType, DIA_
 // Name: MIL_CampPrisonniers::Initialize
 // Created: NLD 2005-02-24
 // -----------------------------------------------------------------------------
-void MIL_CampPrisonniers::Initialize( MIL_InputArchive& archive )
+void MIL_CampPrisonniers::Initialize( xml::xistream& xis )
 {
-    MIL_RealObject_ABC::Initialize( archive );
+    MIL_RealObject_ABC::Initialize( xis );
 
-    archive.Section( "specific-attributes" );
-    archive.Section( "tc2" );
     uint nTC2;
-    archive.ReadAttribute( "id", nTC2 );
+
+    xis >> start( "specific-attributes" )
+            >> start( "tc2" )
+            >> attribute( "id", nTC2 );
+
     MIL_Automate* pTC2Tmp = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nTC2 );
     if( !pTC2Tmp )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automate TC2 specified is invalid", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automate TC2 specified is invalid" ); // $$$$ ABL 2007-07-09: error context
     if( !pTC2Tmp->GetType().IsLogistic() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automate TC2 specified is not a logistic automate", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automate TC2 specified is not a logistic automate" ); // $$$$ ABL 2007-07-09: error context
     pTC2_ = static_cast< MIL_AutomateLOG* >( pTC2Tmp );
-    archive.EndSection(); // tc2
-    archive.EndSection(); // specific-attributes
+
+    xis >> end()
+        >> end();
 }
     
 // -----------------------------------------------------------------------------

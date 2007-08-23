@@ -24,48 +24,72 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Tools/MIL_Tools.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+
+struct PHY_SensorTypeObjectData::LoadingWrapper
+{
+    void ReadPosture( xml::xistream& xis, const PHY_Posture::T_PostureMap& container, PHY_SensorTypeObjectData::T_FactorVector& factors )
+    {
+        PHY_SensorTypeObjectData::ReadPosture( xis, container, factors );
+    }
+};
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeObjectData::InitializeFactors
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
 template<>
-void PHY_SensorTypeObjectData::InitializeFactors( const PHY_Posture::T_PostureMap& container, const std::string& strTagName, T_FactorVector& factors, MIL_InputArchive& archive )
+void PHY_SensorTypeObjectData::InitializeFactors( const PHY_Posture::T_PostureMap& container, const std::string& strTagName, T_FactorVector& factors, xml::xistream& xis )
 {
-    archive.Section( strTagName );
+    LoadingWrapper loader;
 
-    for ( PHY_Posture::CIT_PostureMap it = container.begin(); it != container.end(); ++it )
+    xis >> start( strTagName )
+            >> list( "source-posture-modifier", loader, &LoadingWrapper::ReadPosture, container, factors )
+        >> end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeObjectData::ReadPosture
+// Created: ABL 2007-07-25
+// -----------------------------------------------------------------------------
+void PHY_SensorTypeObjectData::ReadPosture( xml::xistream& xis, const PHY_Posture::T_PostureMap& container, T_FactorVector& factors )
+{
+    std::string postureType;
+    xis >> attribute( "type", postureType );
+
+    PHY_Posture::CIT_PostureMap it = container.find( postureType );
+    if( it != container.end() )
     {
         if( !it->second->CanModifyDetection() )
-            continue;
+            return;
 
         assert( factors.size() > it->second->GetID() );
         MT_Float& rFactor = factors[ it->second->GetID() ];
-        archive.ReadField( it->second->GetName(), rFactor, CheckValueBound( 0., 1. ) );
+        xis >> attribute( "value", rFactor );
+        if( rFactor < 0 || rFactor > 1 )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "source-posture-modifier: value not in [0..1]" );
     }
-
-    archive.EndSection(); // XXX
+    else
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "source-posture-modifier: unknow type" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeObjectData::PHY_SensorTypeObjectData
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-PHY_SensorTypeObjectData::PHY_SensorTypeObjectData( MIL_InputArchive& archive )
+PHY_SensorTypeObjectData::PHY_SensorTypeObjectData( xml::xistream& xis )
     : rDD_                 ( 0. )
     , postureSourceFactors_( PHY_Posture::GetPostures().size(), 0. )
     , rPopulationDensity_  ( 1. )
     , rPopulationFactor_   ( 1. )
 {
-    archive.ReadField( "DD", rDD_ );
+    xis >> attribute( "detection-distance", rDD_ );
     rDD_ = MIL_Tools::ConvertMeterToSim( rDD_ );
 
-    archive.Section( "ModificateursDeDistance" );
-    
-    InitializeFactors          ( PHY_Posture::GetPostures(), "PosturesSource", postureSourceFactors_, archive );
-    InitializePopulationFactors( archive );
-
-    archive.EndSection(); // ModificateursDeDistance
+    InitializeFactors          ( PHY_Posture::GetPostures(), "source-posture-modifiers", postureSourceFactors_, xis );
+    InitializePopulationFactors( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +98,7 @@ PHY_SensorTypeObjectData::PHY_SensorTypeObjectData( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 PHY_SensorTypeObjectData::~PHY_SensorTypeObjectData()
 {
-
+    // NOTHING
 }
 
 // =============================================================================
@@ -85,14 +109,17 @@ PHY_SensorTypeObjectData::~PHY_SensorTypeObjectData()
 // Name: PHY_SensorTypeObjectData::InitializePopulationFactors
 // Created: NLD 2005-10-27
 // -----------------------------------------------------------------------------
-void PHY_SensorTypeObjectData::InitializePopulationFactors( MIL_InputArchive& archive )
+void PHY_SensorTypeObjectData::InitializePopulationFactors( xml::xistream& xis )
 {
-    archive.Section( "PresencePopulation" );
+    xis >> start( "population-modifier" )
+            >> attribute( "density", rPopulationDensity_ )
+            >> attribute( "modifier", rPopulationFactor_ )
+        >> end();
 
-    archive.ReadAttribute( "densitePopulation", rPopulationDensity_, CheckValueGreaterOrEqual( 0. ) );
-    archive.ReadAttribute( "modificateur"     , rPopulationFactor_ , CheckValueBound( 0., 1. )      );
-
-    archive.EndSection(); // PresencePopulation
+    if( rPopulationDensity_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population-modifier: density < 0" );
+    if( rPopulationFactor_ < 0 || rPopulationFactor_ > 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population-modifier: modifier not in [0..1]" );
 }
 
 // -----------------------------------------------------------------------------

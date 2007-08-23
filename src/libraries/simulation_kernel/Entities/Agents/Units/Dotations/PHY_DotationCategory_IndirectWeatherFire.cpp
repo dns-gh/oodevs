@@ -17,28 +17,35 @@
 #include "Entities/MIL_EntityManager.h"
 
 #include "Tools/MIL_Tools.h"
+#include "xeumeuleu/xml.h"
+#include "Tools/xmlcodecs.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire::Create
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
-PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectWeatherFire::Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, MIL_InputArchive& archive )
+PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectWeatherFire::Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
 {
-    return *new PHY_DotationCategory_IndirectWeatherFire( type, dotationCategory, archive );
+    return *new PHY_DotationCategory_IndirectWeatherFire( type, dotationCategory, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectWeatherFire constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_DotationCategory_IndirectWeatherFire::PHY_DotationCategory_IndirectWeatherFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, MIL_InputArchive& archive )
-    : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, archive )
+PHY_DotationCategory_IndirectWeatherFire::PHY_DotationCategory_IndirectWeatherFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
+    : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, xis )
 {
-    archive.ReadTimeField( "DureeDeploiement", rDeploymentDuration_, CheckValueGreaterOrEqual( 0. ) );
-    rDeploymentDuration_ = MIL_Tools::ConvertSecondsToSim( rDeploymentDuration_ );
+    std::string setupTime, lifeTime;
+    xis >> attribute( "setup-time", setupTime )
+        >> attribute( "life-time", lifeTime );
 
-    archive.ReadTimeField( "DureeVie", rLifeDuration_, CheckValueGreaterOrEqual( 0. ) );
-    rLifeDuration_ = MIL_Tools::ConvertSecondsToSim( rLifeDuration_ );
+    if( ! tools::DecodeTime( setupTime, rDeploymentDuration_ ) || rDeploymentDuration_ < 0. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "indirect-fire: setup-time < 0" );
+    if( ! tools::DecodeTime( lifeTime, rLifeDuration_ ) || rLifeDuration_ < 0. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "indirect-fire: life-time < 0" );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +54,7 @@ PHY_DotationCategory_IndirectWeatherFire::PHY_DotationCategory_IndirectWeatherFi
 // -----------------------------------------------------------------------------
 PHY_DotationCategory_IndirectWeatherFire::~PHY_DotationCategory_IndirectWeatherFire()
 {
-
+    // NOTHING
 }
 
 // =============================================================================

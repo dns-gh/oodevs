@@ -31,12 +31,14 @@
 #include "Decision/Functions/DEC_LogisticFunctions.h"
 #include "Decision/Functions/DEC_ObjectFunctions.h"
 #include "MIL_AgentServer.h"
-
 #include "Entities/Specialisations/ASA/MIL_AutomateTypeASA.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateTypeLOG.h"
 #include "Entities/Specialisations/REFUGIE/MIL_AutomateTypeREFUGIE.h"
-
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
+#include "tools/xmlcodecs.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 MIL_AutomateType::T_AutomateTypeAllocatorMap  MIL_AutomateType::automateTypeAllocators_;
 MIL_AutomateType::T_AutomateTypeMap           MIL_AutomateType::automateTypes_;
@@ -45,16 +47,24 @@ MIL_AutomateType::T_AutomateTypeMap           MIL_AutomateType::automateTypes_;
 // Name: MIL_AutomateType::Create
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-const MIL_AutomateType* MIL_AutomateType::Create( const std::string& strName, MIL_InputArchive& archive )
+const MIL_AutomateType* MIL_AutomateType::Create( const std::string& strName, xml::xistream& xis )
 {
-    return new MIL_AutomateType( strName, archive );
+    return new MIL_AutomateType( strName, xis );
 }
+
+struct MIL_AutomateType::LoadingWrapper
+{
+    void ReadAutomat( xml::xistream& xis )
+    {
+        MIL_AutomateType::ReadAutomat( xis );
+    }
+};
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateType::Initialize
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-void MIL_AutomateType::Initialize( MIL_InputArchive& archive )
+void MIL_AutomateType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing automate types" );
 
@@ -80,34 +90,38 @@ void MIL_AutomateType::Initialize( MIL_InputArchive& archive )
     automateTypeAllocators_[ "Automate MILICE"                 ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate ASY"                    ] = &MIL_AutomateType       ::Create;
     
+    LoadingWrapper loader;
+
+    xis >> start( "automats" )
+            >> list( "automat", loader, &LoadingWrapper::ReadAutomat )
+        >> end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateType::ReadAutomat
+// Created: ABL 2007-07-23
+// -----------------------------------------------------------------------------
+void MIL_AutomateType::ReadAutomat( xml::xistream& xis )
+{
     std::set< uint > ids_;
-    archive.BeginList( "Automates" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Unite" );
+    std::string strName;
+    std::string strType;
 
-        std::string strName;
-        std::string strType;
+    xis >> attribute( "name", strName )
+        >> attribute( "type", strType );
 
-        archive.ReadAttribute( "nom", strName );
-        archive.ReadAttribute( "type", strType );
+    CIT_AutomateTypeAllocatorMap itAutomateAllocator = automateTypeAllocators_.find( strType );
+    if( itAutomateAllocator == automateTypeAllocators_.end() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automate type" ); // $$$$ ABL 2007-07-23: error context
 
-        CIT_AutomateTypeAllocatorMap itAutomateAllocator = automateTypeAllocators_.find( strType );
-        if( itAutomateAllocator == automateTypeAllocators_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automate type", archive.GetContext() );
+    const MIL_AutomateType*& pType = automateTypes_[ strName ];
+    if( pType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automate type already defined" ); // $$$$ ABL 2007-07-23: error context
 
-        const MIL_AutomateType*& pType = automateTypes_[ strName ];
-        if( pType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automate type already defined", archive.GetContext() );
+    pType = (*itAutomateAllocator->second)( strName, xis );
 
-        pType = (*itAutomateAllocator->second)( strName, archive );
-
-        if( !ids_.insert( pType->GetID() ).second )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automate type ID already used", archive.GetContext() );
-
-        archive.EndSection(); // Unite
-    }
-    archive.EndList(); // Automates
+    if( !ids_.insert( pType->GetID() ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automate type ID already used" ); // $$$$ ABL 2007-07-23: error context
 }
 
 // -----------------------------------------------------------------------------
@@ -129,7 +143,7 @@ void MIL_AutomateType::Terminate()
 // Name: MIL_AutomateType constructor
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-MIL_AutomateType::MIL_AutomateType( const std::string& strName, MIL_InputArchive& archive )
+MIL_AutomateType::MIL_AutomateType( const std::string& strName, xml::xistream& xis )
     : nID_                            ( 0 )
     , strName_                        ( strName )
     , pDIAFunctionTable_              ( new DIA_FunctionTable< MIL_Automate >() )
@@ -137,27 +151,14 @@ MIL_AutomateType::MIL_AutomateType( const std::string& strName, MIL_InputArchive
     , pModel_                         ( 0 )
     , rRapForIncreasePerTimeStepValue_( DEC_Knowledge_RapFor_ABC::GetRapForIncreasePerTimeStepDefaultValue() )
 {
-    archive.ReadField( "MosID", nID_ );
-
-    // Automate
-    archive.Section( "Automate" );
-
-    InitializeComposition ( archive );
-    InitializeRapFor      ( archive );
-    InitializeModel       ( archive );
-    InitializeDiaFunctions();
-
-    archive.EndSection(); // Automate
-
-    // PC
-    archive.Section( "PionPC" );
-    std::string strPCType;
-    archive.ReadAttribute( "type", strPCType );    
-    pTypePC_ = MIL_AgentTypePion::Find( strPCType );
+    xis >> attribute( "id", nID_ )
+        >> list( "unit", *this, &MIL_AutomateType::ReadUnit );
     if( !pTypePC_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown PC type", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "No command-post defined for automat type: %s", strName_ ) );
 
-    archive.EndSection(); // PionPC
+    InitializeRapFor      ( xis );
+    InitializeModel       ( xis );
+    InitializeDiaFunctions();
 }
 
 // -----------------------------------------------------------------------------
@@ -169,130 +170,62 @@ MIL_AutomateType::~MIL_AutomateType()
     delete pDIAFunctionTable_;
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateType::ParseComposition
-// Created: JVT 2005-02-01
+// Name: MIL_AutomateType::ReadUnit
+// Created: ABL 2007-07-23
 // -----------------------------------------------------------------------------
-bool MIL_AutomateType::ParseComposition( std::string strBuf, sCompositionBounds& result )
-{   // parser très pourri de + ou * ou n..m ou n
-    uint i = 0;
-    
-    if ( strBuf[ i ] == '+' )
-    {
-        if ( strBuf.size() != 1 )
-            return false;
-        result.nMin_ = 1;
-        result.nMax_ = std::numeric_limits< uint >::max();
-        return true;
-    }
-    
-    if ( strBuf[ i ] == '*' )
-    {
-        if ( strBuf.size() != 1 )
-            return false;
-        result.nMin_ = 0;
-        result.nMax_ = std::numeric_limits< uint >::max();
-        return true;
-    }
-    
-    for ( result.nMin_ = 0; i < strBuf.size(); ++i )
-        if ( strBuf[ i ] >= '0' && strBuf[ i ] <= '9' )
-        {
-            result.nMin_ *= 10;
-            result.nMin_ += strBuf[ i ] - '0';
-        }
-        else
-            break;
-    
-    if ( i == strBuf.size() )
-    {
-        result.nMax_ = result.nMin_;
-        return true;
-    }    
-    
-    if ( i + 2 >= strBuf.size() || strBuf[ i++ ] != '.' || strBuf[ i++ ] != '.' )
-        return false;
-
-    for ( result.nMax_ = 0; i < strBuf.size(); ++i )
-        if ( strBuf[ i ] >= '0' && strBuf[ i ] <= '9' )
-        {
-            result.nMax_ *= 10;
-            result.nMax_ += strBuf[ i ] - '0';
-        }
-        else
-            break;
-    
-    if ( result.nMin_ > result.nMax_ )
-        std::swap( result.nMin_, result.nMax_ );
-    
-    return i == strBuf.size();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateType::InitializeComposition
-// Created: NLD 2004-08-09
-// -----------------------------------------------------------------------------
-void MIL_AutomateType::InitializeComposition( MIL_InputArchive& archive )
+void MIL_AutomateType::ReadUnit( xml::xistream& xis )
 {
-    archive.BeginList( "Constitution" );
+    std::string strPionType;
+    xis >> attribute( "type", strPionType );
 
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Pion" );
+    const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( strPionType );
+    if( !pType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown pawn type" ); // $$$$ ABL 2007-07-23: error context
 
-        std::string strPionType;
-        archive.ReadAttribute( "nom", strPionType );
+    if( composition_.find( pType ) != composition_.end() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pawn type already defined in composition" ); // $$$$ ABL 2007-07-23: error context
 
-        const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( strPionType );
-        if( !pType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown pawn type", archive.GetContext() );
+    composition_[ pType ].nMax_ = std::numeric_limits< uint >::max();
+    composition_[ pType ].nMin_ = 0;
 
-        if( composition_.find( pType ) != composition_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pawn type already defined in composition", archive.GetContext() );
+    xis >> optional() >> attribute( "min-occurs", composition_[ pType ].nMin_ )
+        >> optional() >> attribute( "max-occurs", composition_[ pType ].nMax_ );
 
-        std::string strBuf;
-        archive.Read( strBuf );
-    
-        if ( !ParseComposition( strBuf, composition_[ pType ] ) )    
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown format for composition (should be + or * or n..m or n !)", archive.GetContext() );
-        
-        archive.EndSection(); // Pion
-    }
-    archive.EndList(); // Constitution
+    bool isCommandPost = false;
+    xis >> optional() >> attribute( "command-post", isCommandPost );
+    if( isCommandPost )
+        if( !pTypePC_ )
+            pTypePC_ = pType;
+        else
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Multiple command-post defined in automat type: %s", strName_ ) ); // $$$$ ABL 2007-07-23: error context
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateType::InitializeModel
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-void MIL_AutomateType::InitializeModel( MIL_InputArchive& archive )
+void MIL_AutomateType::InitializeModel( xml::xistream& xis )
 {
     std::string strModel;
-    archive.ReadField( "ModeleDecisionnel", strModel );
-
+    xis >> attribute( "decisional-model", strModel );
     pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelAutomate( strModel );
     if( !pModel_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automata model", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automata model" ); // $$$$ ABL 2007-07-23: error context
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateType::InitializeRapFor
 // Created: NLD 2004-11-25
 // -----------------------------------------------------------------------------
-void MIL_AutomateType::InitializeRapFor( MIL_InputArchive& archive )
+void MIL_AutomateType::InitializeRapFor( xml::xistream& xis )
 {
-    if( !archive.Section( "RapportDeForce", MIL_InputArchive::eNothing ) )
-        return;
-
     MT_Float rTimeTmp;
-    if( archive.ReadTimeField( "TempsDeRemontee", rTimeTmp, MIL_InputArchive::eNothing ) )
+    if( tools::ReadTimeAttribute( xis, "force-ratio-feedback-time", rTimeTmp ) )
     {
         rTimeTmp                         = MIL_Tools::ConvertSecondsToSim( rTimeTmp );
         rRapForIncreasePerTimeStepValue_ = DEC_Knowledge_RapFor_ABC::ComputeRapForIncreasePerTimeStepValue( rTimeTmp );
     }
-    archive.EndSection(); // RapportDeForce
 }
 
 // -----------------------------------------------------------------------------
@@ -505,7 +438,7 @@ void MIL_AutomateType::InitializeDiaFunctions()
 // Name: MIL_AutomateType::InstanciateAutomate
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateType::InstanciateAutomate( uint nID, MIL_Formation& formation, MIL_InputArchive& archive ) const
+MIL_Automate& MIL_AutomateType::InstanciateAutomate( uint nID, MIL_Formation& formation, xml::xistream& xis ) const
 {
-    return *new MIL_Automate( *this, nID, formation, archive );
+    return *new MIL_Automate( *this, nID, formation, xis );
 }

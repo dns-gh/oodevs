@@ -14,6 +14,9 @@
 #include "MIL_VirtualObjectType.h"
 
 #include "MIL_VirtualObjectType_ControlZone.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
       MIL_VirtualObjectType::T_ObjectTypeMap MIL_VirtualObjectType::objectTypes_;
 const MIL_VirtualObjectType_ControlZone&     MIL_VirtualObjectType::controlZone_ = *new MIL_VirtualObjectType_ControlZone( "controle de zone" );
@@ -22,42 +25,52 @@ const MIL_VirtualObjectType_ControlZone&     MIL_VirtualObjectType::controlZone_
 // MANAGER
 // =============================================================================
 
+struct MIL_VirtualObjectType::LoadingWrapper
+{
+    void ReadObject( xml::xistream& xis )
+    {
+        MIL_VirtualObjectType::ReadObject( xis );
+    }
+};
+
 // -----------------------------------------------------------------------------
 // Name: MIL_VirtualObjectType::Initialize
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-void MIL_VirtualObjectType::Initialize( MIL_InputArchive& archive )
+void MIL_VirtualObjectType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing virtual object types" );
 
     objectTypes_[ controlZone_.GetName() ] = &controlZone_;
+    LoadingWrapper loader;
 
-    archive.Section  ( "Objets" );
-    archive.BeginList( "ObjetsVirtuels" );
+    xis >> start( "objects" )
+            >> start( "virtual-objects" )
+                >> list( "object", loader, &LoadingWrapper::ReadObject )
+            >> end()
+        >> end();
 
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Objet" );
-
-        std::string strType;
-        archive.ReadAttribute( "type", strType );
-
-        const MIL_VirtualObjectType* pType = Find( strType );
-        if( !pType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type", archive.GetContext() );
-
-        const_cast< MIL_VirtualObjectType* >( pType )->Read( archive );
-        
-        archive.EndSection(); // Objet
-    }
 
     // Post check
     for( CIT_ObjectTypeMap itType = objectTypes_.begin(); itType != objectTypes_.end(); ++itType )
         if( !itType->second->IsInitialized() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Object type '%s' not initialized", itType->second->GetName().c_str() ), archive.GetContext() );
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Object type '%s' not initialized", itType->second->GetName().c_str() ) ); // $$$$ ABL 2007-07-19: error context
+}
 
-    archive.EndList   (); // ObjetsVirtuels
-    archive.EndSection(); // Objets
+// -----------------------------------------------------------------------------
+// Name: MIL_VirtualObjectType::ReadObject
+// Created: ABL 2007-07-19
+// -----------------------------------------------------------------------------
+void MIL_VirtualObjectType::ReadObject( xml::xistream& xis )
+{
+        std::string strType;
+        xis >> attribute( "type", strType );
+
+        const MIL_VirtualObjectType* pType = Find( strType );
+        if( !pType )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type" ); // $$$$ ABL 2007-07-19: error context
+
+        const_cast< MIL_VirtualObjectType* >( pType )->Read( xis );
 }
 
 // -----------------------------------------------------------------------------

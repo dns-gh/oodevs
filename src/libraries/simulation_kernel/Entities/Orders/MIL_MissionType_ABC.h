@@ -14,6 +14,11 @@
 
 #include "MIL_OrderType_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  MIL_MissionType_ABC
     @brief  MIL_MissionType_ABC
@@ -25,7 +30,7 @@ class MIL_MissionType_ABC : public MIL_OrderType_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_MissionType_ABC( uint nID, MIL_InputArchive& archive );
+    MIL_MissionType_ABC( uint nID, xml::xistream& xis );
     virtual ~MIL_MissionType_ABC();
     //@}
 

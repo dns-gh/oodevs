@@ -27,7 +27,7 @@ class DotationType
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationType( const std::string& dotationName, xml::xistream& xis );
+    explicit DotationType( xml::xistream& xis );
     virtual ~DotationType();
     //@}
 
@@ -49,11 +49,6 @@ private:
     //@{
     DotationType( const DotationType& );            //!< Copy constructor
     DotationType& operator=( const DotationType& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void ReadDType( xml::xistream& xis );
     //@}
 
 private:

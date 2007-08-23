@@ -16,6 +16,11 @@
 
 #include "MIL_PopulationPionAttritionData.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_Population;
 class MIL_PopulationAttitude;
 class PHY_Volume;
@@ -35,7 +40,7 @@ class MIL_PopulationType
 public:
     //! @name Manager
     //@{
-    static void                      Initialize( MIL_InputArchive& archive );
+    static void                      Initialize( xml::xistream& xis );
     static void                      Terminate ();
     static const MIL_PopulationType* Find      ( const std::string& strName );
     static const MIL_PopulationType* Find      ( uint nID );
@@ -55,7 +60,7 @@ public:
 
     //! @name Operations
     //@{
-    MIL_Population& InstanciatePopulation( uint nID, MIL_Army& army, MIL_InputArchive& archive ) const;
+          MIL_Population& InstanciatePopulation( uint nID, MIL_Army& army, xml::xistream& xis ) const;
     //@}
 
     //! @name Effects
@@ -78,13 +83,13 @@ private:
     //@}
 
 private:
-     MIL_PopulationType( const std::string& strName, MIL_InputArchive& archive );
+     MIL_PopulationType( const std::string& strName, xml::xistream& xis );
     ~MIL_PopulationType();
 
     //! @name Initialization
     //@{
-    void InitializeSlowDownData ( MIL_InputArchive& archive );
-    void InitializeFireData     ( MIL_InputArchive& archive );
+    void InitializeSlowDownData ( xml::xistream& xis );
+    void InitializeFireData     ( xml::xistream& xis );
     void InitializeDiaFunctions ();
     //@}
 
@@ -106,6 +111,15 @@ private:
         MT_Float rPH_;
     };
     typedef std::vector< sDamageData >          T_DamageData;
+    //@}
+
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadPopulation( xml::xistream& xis );
+    void ReadSlowingEffect    ( xml::xistream& xis );
+    void ReadSlowingUnitEffect( xml::xistream& xis, T_VolumeSlowDownData& volumeSlowDownData );
+    void ReadUnitFireEffect   ( xml::xistream& xis );
     //@}
 
 private:

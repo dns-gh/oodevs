@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_App.h"
-#include "MT_Tools/MT_ScipioException.h"
 #include <windows.h>
 #include <commctrl.h>
 #include <qtranslator.h>

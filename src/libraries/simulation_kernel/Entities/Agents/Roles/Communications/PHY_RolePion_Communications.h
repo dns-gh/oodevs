@@ -16,6 +16,11 @@
 
 #include "PHY_RoleInterface_Communications.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_CommunicationsAgentType;
 class NET_ASN_MsgUnitAttributes;
 class MIL_AgentPion;
@@ -31,7 +36,7 @@ class PHY_RolePion_Communications : public PHY_RoleInterface_Communications
 public:
     //! @name Static
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( xml::xistream& xis );
     //@}
 
              PHY_RolePion_Communications( MT_RoleContainer& role, MIL_AgentPion& pion );

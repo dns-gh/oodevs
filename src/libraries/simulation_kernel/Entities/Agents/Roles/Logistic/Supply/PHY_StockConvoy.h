@@ -16,6 +16,11 @@
 
 #include "PHY_Convoy_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_SupplyStockConsign;
 class MIL_AgentPion;
 
@@ -30,7 +35,7 @@ class PHY_StockConvoy : public PHY_Convoy_ABC
 public:
     //! @name 
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( xml::xistream& xis );
     static void Terminate ();
     //@}
 

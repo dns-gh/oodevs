@@ -27,6 +27,10 @@
 
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+
 BOOST_CLASS_EXPORT_GUID( MIL_Rota, "MIL_Rota" )
 
 //-----------------------------------------------------------------------------
@@ -107,21 +111,20 @@ void MIL_Rota::save( MIL_CheckPointOutArchive& file, const uint ) const
 // Name: MIL_Rota::WriteSpecificAttributes
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void MIL_Rota::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
+void MIL_Rota::WriteSpecificAttributes( xml::xostream& xos ) const
 {
-    archive.Section( "specific-attributes" );
+    xos << start( "specific-attributes" )
+        << content( "danger", nDanger_ )
+            << start( "nbc-agents" );
 
-    archive.WriteField( "danger", nDanger_ );
-    archive.Section( "nbc-agents" );
     for( CIT_NbcAgentSet it = nbcAgents_.begin(); it != nbcAgents_.end(); ++it )
     {
-        archive.Section( "nbc-agent" );
-        archive.WriteAttribute( "type", (**it).GetName() );
-        archive.EndSection(); // nbc-agent
+        xos << start( "nbc-agent" )
+            << attribute( "type", (**it).GetName() )
+            << end(); // nbc-agent
     }
-    archive.EndSection(); // nbc-agents
-
-    archive.EndSection(); // specific-attributes
+    xos        << end()
+        << end();
 }
 
 //=============================================================================
@@ -142,29 +145,37 @@ bool MIL_Rota::Initialize( const MIL_ObstacleType& obstacleType, DIA_Parameters&
 // Name: MIL_Rota::Initialize
 // Created: NLD 2003-07-21
 //-----------------------------------------------------------------------------
-void MIL_Rota::Initialize( MIL_InputArchive& archive )
+void MIL_Rota::Initialize( xml::xistream& xis )
 {
-    MIL_RealObject_ABC::Initialize( archive );
+    MIL_RealObject_ABC::Initialize( xis );
 
-    archive.Section( "specific-attributes" );
-    archive.ReadField( "danger", nDanger_, CheckValueBound( 0, 10 ) );
+    xis >> start( "specific-attributes" )
+            >> content( "danger", nDanger_ );
+
+    if( nDanger_ > 10 || nDanger_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "specific-attributes is not in bound( 0, 10 )" );
     
     nbcAgents_.clear();
-    archive.BeginList( "nbc-agents" );
-    while( archive.NextListElement() )
-    {
-        std::string strNbcTmp;
-        archive.Section( "nbc-agent" );
-        archive.ReadAttribute( "type", strNbcTmp );
-        const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( strNbcTmp );
-        if( !pNbcAgentType )
-            throw MT_ScipioException( "MIL_Rota::Initialize", __FILE__, __LINE__, MT_FormatString( "Unknown 'AgentNBC' '%s' for rota object '%d'", strNbcTmp.c_str(), GetID() ), archive.GetContext() );
-        nbcAgents_.insert( pNbcAgentType );
-        archive.EndSection(); // nbc-agent
-    }
-    archive.EndList(); // nbc-agents
+    xis >> start( "nbc-agents" )
+            >> list( "nbc-agent", *this, &MIL_Rota::ReadNbcAgent )
+        >> end();
 
-    archive.EndSection(); // specific-attributes
+    xis >> end(); // specific-attributes
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Rota::ReadNbcAgent
+// Created: ABL 2007-07-09
+// -----------------------------------------------------------------------------
+void MIL_Rota::ReadNbcAgent( xml::xistream& xis )
+{
+    std::string strNbcTmp;
+    xis >> attribute( "type", strNbcTmp );
+
+    const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( strNbcTmp );
+    if( !pNbcAgentType )
+        throw MT_ScipioException( "MIL_Rota::Initialize", __FILE__, __LINE__, MT_FormatString( "Unknown 'AgentNBC' '%s' for rota object '%d'", strNbcTmp.c_str(), GetID() ) ); // $$$$ _RC_ ABL 2007-07-09: error context
+    nbcAgents_.insert( pNbcAgentType );
 }
 
 // -----------------------------------------------------------------------------

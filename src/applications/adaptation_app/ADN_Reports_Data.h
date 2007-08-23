@@ -14,7 +14,7 @@
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
 
-class ADN_XmlInput_Helper;
+class xml::xistream;
 
 // =============================================================================
 /** @class  ADN_Reports_Data
@@ -39,8 +39,8 @@ public:
         std::string GetItemName();
         ReportParameterValue* CreateCopy();
 
-        void ReadArchive ( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output, unsigned int id );
+        void ReadArchive ( xml::xistream& input );
+        void WriteArchive( xml::xostream& output, unsigned int id );
 
     public:
         ADN_Type_String name_;
@@ -61,8 +61,9 @@ public:
         std::string GetItemName();
         ReportParameter* CreateCopy();
 
-        void ReadArchive ( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive       ( xml::xistream& input );
+        void ReadParameterValue( xml::xistream& input );
+        void WriteArchive      ( xml::xostream& output );
 
     public:
         ADN_Type_String                                                   strName_;
@@ -89,8 +90,9 @@ public:
         std::string GetItemName();
         ReportInfo* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output, unsigned long id );
+        void ReadArchive( xml::xistream& input );
+        void ReadParameter( xml::xistream& input );
+        void WriteArchive( xml::xostream& output, unsigned long id );
 
     public:
         ADN_Type_String message_;
@@ -122,8 +124,9 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void WriteArchive( MT_OutputArchive_ABC& output );
+    void ReadArchive( xml::xistream& input );
+    void ReadReport( xml::xistream& input );
+    void WriteArchive( xml::xostream& output );
     //@}
 
 private:

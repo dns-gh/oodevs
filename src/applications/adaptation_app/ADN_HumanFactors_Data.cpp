@@ -6,23 +6,12 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-14 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_HumanFactors_Data.cpp $
-// $Author: Ape $
-// $Modtime: 21/03/05 17:22 $
-// $Revision: 2 $
-// $Workfile: ADN_HumanFactors_Data.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_HumanFactors_Data.h"
 
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
-#include "ADN_XmlInput_Helper.h"
-#include "ADN_Xml_Exception.h"
 #include "ADN_Tools.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
@@ -35,40 +24,37 @@
 ADN_HumanFactors_Data::ModifiersInfo::ModifiersInfo( const std::string& strName )
 : strName_ ( strName )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ModifiersInfo::ReadArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_HumanFactors_Data::ModifiersInfo::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_HumanFactors_Data::ModifiersInfo::ReadArchive( xml::xistream& input )
 {
-    input.Section( strName_ );
-    input.ReadField( "CoefModificationVitesseMax", rSpeedModifier_ );
-    input.ReadField( "CoefModificationPH", rPHModifier_ );
-    input.ReadField( "CoefModificationDistanceCapteurs", rSensorsModifier_ );
-    input.ReadField( "CoefModificationTempsRechargement", rReloadModifier_ );
-    input.ReadField( "CoefModificationTempsMiseEnPosture", rStanceModifier_ );
-    input.EndSection();
+    input >> xml::attribute( "max-speed", rSpeedModifier_ )
+          >> xml::attribute( "ph", rPHModifier_ )
+          >> xml::attribute( "sensor-distance", rSensorsModifier_ )
+          >> xml::attribute( "loading-time", rReloadModifier_ )
+          >> xml::attribute( "posture-setup-time", rStanceModifier_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ModifiersInfo::WriteArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_HumanFactors_Data::ModifiersInfo::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_HumanFactors_Data::ModifiersInfo::WriteArchive( xml::xostream& output )
 {
-    output.Section( strName_ );
-    output.WriteField( "CoefModificationVitesseMax", rSpeedModifier_.GetData() );
-    output.WriteField( "CoefModificationPH", rPHModifier_.GetData() );
-    output.WriteField( "CoefModificationDistanceCapteurs", rSensorsModifier_.GetData() );
-    output.WriteField( "CoefModificationTempsRechargement", rReloadModifier_.GetData() );
-    output.WriteField( "CoefModificationTempsMiseEnPosture", rStanceModifier_.GetData() );
-    output.EndSection();
+    output << xml::start( "modifier" )
+            << xml::attribute( "state", strName_ )
+            << xml::attribute( "max-speed", rSpeedModifier_ )
+            << xml::attribute( "ph", rPHModifier_ )
+            << xml::attribute( "sensor-distance", rSensorsModifier_ )
+            << xml::attribute( "loading-time", rReloadModifier_ )
+            << xml::attribute( "posture-setup-time", rStanceModifier_ )
+           << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HumanFactors_Data constructor
@@ -83,8 +69,8 @@ ADN_HumanFactors_Data::ADN_HumanFactors_Data()
 , tiredModifiers_       ( "Fatigue" )
 , exhaustedModifiers_   ( "Epuise" )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HumanFactors_Data destructor
@@ -92,8 +78,8 @@ ADN_HumanFactors_Data::ADN_HumanFactors_Data()
 // -----------------------------------------------------------------------------
 ADN_HumanFactors_Data::~ADN_HumanFactors_Data()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HumanFactors_Data::FilesNeeded
@@ -104,59 +90,71 @@ void ADN_HumanFactors_Data::FilesNeeded( T_StringList& vFiles ) const
     vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szHumanFactors_.GetData() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_HumanFactors_Data::Reset
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
 void ADN_HumanFactors_Data::Reset()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HumanFactors_Data::ReadArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_HumanFactors_Data::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_HumanFactors_Data::ReadArchive( xml::xistream& input )
 {
-    input.Section( "FacteursHumains" );
-    
-    input.Section( "Experience" );
-    veteranModifiers_.ReadArchive( input );
-    xpModifiers_.ReadArchive( input );
-    newbieModifiers_.ReadArchive( input );
-    input.EndSection(); // Experience
-    
-    input.Section( "Fatigue" );
-    normalModifiers_.ReadArchive( input );
-    tiredModifiers_.ReadArchive( input );
-    exhaustedModifiers_.ReadArchive( input );
-    input.EndSection(); // Fatigue
-    
-    input.EndSection(); // FacteursHumains
+    input >> xml::start( "humans-factors" )
+            >> xml::start( "experience-factor" )
+                >> xml::list( "modifier", *this, &ADN_HumanFactors_Data::ReadModifier )
+            >> xml::end()
+            >> xml::start( "tiredness-factor" )
+                >> xml::list( "modifier", *this, &ADN_HumanFactors_Data::ReadModifier )
+            >> xml::end()
+          >> xml::end();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_HumanFactors_Data::ReadModifier
+// Created: AGE 2007-08-17
+// -----------------------------------------------------------------------------
+void ADN_HumanFactors_Data::ReadModifier( xml::xistream& input )
+{
+    const std::string state = xml::attribute< std::string >( input, "state" );
+    if( state == "Veteran" )
+        veteranModifiers_.ReadArchive( input );
+    else if( state == "Experimente" )
+        xpModifiers_.ReadArchive( input );
+    else if( state == "Conscrit" )
+        newbieModifiers_.ReadArchive( input );
+    else if( state == "Normal" )
+        normalModifiers_.ReadArchive( input );
+    else if( state == "Fatigue" )
+        tiredModifiers_.ReadArchive( input );
+    else if( state == "Epuise" )
+        exhaustedModifiers_.ReadArchive( input );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HumanFactors_Data::WriteArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_HumanFactors_Data::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_HumanFactors_Data::WriteArchive( xml::xostream& output )
 {
-    output.Section( "FacteursHumains" );
+    output << xml::start( "humans-factors" )
 
-    output.Section( "Experience" );
+            << xml::start( "experience-factor" );
     veteranModifiers_.WriteArchive( output );
     xpModifiers_.WriteArchive( output );
     newbieModifiers_.WriteArchive( output );
-    output.EndSection(); // Experience
+    output << xml::end()
 
-    output.Section( "Fatigue" );
+        << xml::start( "tiredness-factor" );
     normalModifiers_.WriteArchive( output );
     tiredModifiers_.WriteArchive( output );
     exhaustedModifiers_.WriteArchive( output );
-    output.EndSection(); // Fatigue
+    output << xml::end()
 
-    output.EndSection(); // FacteursHumains
+        << xml::end();
 }

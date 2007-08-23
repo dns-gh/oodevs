@@ -14,13 +14,16 @@
 #include "DEC_ModelAutomate.h"
 
 #include "Entities/Orders/MIL_AutomateMissionType.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_ModelAutomate constructor
 // Created: NLD 2003-11-24
 // -----------------------------------------------------------------------------
-DEC_ModelAutomate::DEC_ModelAutomate( const DEC_Workspace& decWorkspace, const std::string& strName, MIL_InputArchive& input, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath )
-    : DEC_Model_ABC< MIL_AutomateMissionType >( decWorkspace, strName, input, bNeedParsing, bUseOnlyArchive, strBinaryPath, "automats" )
+DEC_ModelAutomate::DEC_ModelAutomate( const DEC_Workspace& decWorkspace, const std::string& strName, xml::xistream& xis, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath )
+    : DEC_Model_ABC< MIL_AutomateMissionType >( decWorkspace, strName, xis, bNeedParsing, bUseOnlyArchive, strBinaryPath, "automats" )
 {
 }
 

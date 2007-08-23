@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_Posture;
 class PHY_RolePion_Posture;
 class PHY_RoleInterface_Posture;
@@ -29,7 +34,7 @@ class PHY_LauncherType
 public:
     //! @name Manager
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( xml::xistream& xis );
     static void Terminate ();
 
     static const PHY_LauncherType* FindLauncherType( const std::string& strName );
@@ -60,14 +65,21 @@ private:
     //@}
 
 private:
-    PHY_LauncherType( const std::string& strName, MIL_InputArchive& archive );
+     PHY_LauncherType( const std::string& strName, xml::xistream& xis );
     ~PHY_LauncherType();
 
     //! @name Init
     //@{
-    void InitializeForIndirectFire( MIL_InputArchive& archive );
-    void InitializeForDirectFire  ( MIL_InputArchive& archive );
+    void InitializeForIndirectFire( xml::xistream& xis );
+    void InitializeForDirectFire  ( xml::xistream& xis );
     void RegisterPHModificator    ( const PHY_Posture& postureSource, const PHY_Posture& postureTarget, MT_Float rModificatorValue );
+    //@}
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadLauncher( xml::xistream& xis );
+    void ReadDirect         ( xml::xistream& xis );
+    void ReadModifier       ( xml::xistream& xis, const PHY_Posture& postureSource );
     //@}
 
 private:

@@ -36,6 +36,20 @@ AgentTypes::AgentTypes()
     // NOTHING
 }
 
+namespace
+{
+    struct FileReader
+    {
+        FileReader( xml::xistream& xis ) : xis_( &xis ) {}
+        const FileReader& Read( const std::string& tag, std::string& file ) const
+        {
+            *xis_ >> start( tag ) >> attribute( "file", file ) >> end();
+            return *this;
+        }
+        xml::xistream* xis_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: AgentTypes::Load
 // Created: AGE 2006-04-28
@@ -50,14 +64,15 @@ void AgentTypes::Load( const ExerciseConfig& config )
     xis >> start( "physical" );
 
     std::string components, missions, models, agents, automats, sensors, populations, groups;
-    xis >> content( "Capteurs", sensors )
-        >> content( "Composantes", components )
-        >> content( "Missions", missions )
-        >> content( "Modeles", models )
-        >> content( "Pions", agents )
-        >> content( "Automates", automats )
-        >> content( "Populations", populations )
-        >> content( "GroupesConnaissance", groups );
+    FileReader( xis )
+        .Read( "sensors", sensors )
+        .Read( "components", components )
+        .Read( "missions", missions )
+        .Read( "models", models )
+        .Read( "units", agents )
+        .Read( "automats", automats )
+        .Read( "populations", populations )
+        .Read( "knowledge-groups", groups );
 
     ReadComponents( config.BuildPhysicalChildFile( components ) );
     ReadOrderTypes( config.BuildPhysicalChildFile( missions ) );
@@ -112,8 +127,8 @@ AgentTypes::~AgentTypes()
 void AgentTypes::ReadComponents( const std::string& components )
 {
     xifstream xis( components );
-    xis >> start( "Composantes" )
-            >> list( "Composante", *this, &AgentTypes::ReadComponent );
+    xis >> start( "elements" )
+            >> list( "element", *this, &AgentTypes::ReadComponent );
 }
     
 // -----------------------------------------------------------------------------
@@ -183,15 +198,15 @@ void AgentTypes::ReadModels( const std::string& models )
     T_Resolver automatResolver    = &MissionFactory::CreateAutomatMission;
     T_Resolver populationResolver = &MissionFactory::CreatePopulationMission;
 
-    xis >> start( "Modeles" )
-            >> start( "Pions" )
-                >> list( "Modele", *this, &AgentTypes::ReadModel, unitResolver, unitModels_ )
+    xis >> start( "models" )
+            >> start( "units" )
+                >> list( "unit", *this, &AgentTypes::ReadModel, unitResolver, unitModels_ )
             >> end()
-            >> start( "Automates" )
-                >> list( "Modele", *this, &AgentTypes::ReadModel, automatResolver, automatModels_ )
+            >> start( "automats" )
+                >> list( "automat", *this, &AgentTypes::ReadModel, automatResolver, automatModels_ )
             >> end()
-            >> start( "Populations" )
-                >> list( "Modele", *this, &AgentTypes::ReadModel, populationResolver, populationModels_ )
+            >> start( "populations" )
+                >> list( "population", *this, &AgentTypes::ReadModel, populationResolver, populationModels_ )
             >> end();
 }
     
@@ -213,9 +228,9 @@ void AgentTypes::ReadModel( xml::xistream& xis, const T_Resolver& missionResolve
 void AgentTypes::ReadSensors( const std::string& sensors )
 {
     xifstream xis( sensors );
-    xis >> start( "Capteurs" )
-            >> start( "Senseurs" )
-                >> list( "Senseur", *this, &AgentTypes::ReadSensor );
+    xis >> start( "sensors" )
+            >> start( "sensors" )
+                >> list( "sensor", *this, &AgentTypes::ReadSensor );
 }
 
 // -----------------------------------------------------------------------------
@@ -225,8 +240,8 @@ void AgentTypes::ReadSensors( const std::string& sensors )
 void AgentTypes::ReadSensor( xml::xistream& xis )
 {
     std::string name;
-    xis >> attribute( "nom", name )
-        >> list( "DetectionAgents", *this, &AgentTypes::ReallyReadSensor, name );
+    xis >> attribute( "name", name )
+        >> list( "unit-detection", *this, &AgentTypes::ReallyReadSensor, name );
 }
 
 // -----------------------------------------------------------------------------
@@ -246,8 +261,8 @@ void AgentTypes::ReallyReadSensor( xml::xistream& xis, const std::string& sensor
 void AgentTypes::ReadAgents( const std::string& agents )
 {
     xifstream xis( agents );
-    xis >> start( "Pions" )
-            >> list( "Unite", *this, &AgentTypes::ReadAgentType );
+    xis >> start( "units" )
+            >> list( "unit", *this, &AgentTypes::ReadAgentType );
 }
 
 // -----------------------------------------------------------------------------
@@ -268,8 +283,8 @@ void AgentTypes::ReadAgentType( xml::xistream& xis )
 void AgentTypes::ReadAutomats( const std::string& automats )
 {
     xifstream xis( automats );
-    xis >> start( "Automates" )
-            >> list( "Unite", *this, &AgentTypes::ReadAutomatType );
+    xis >> start( "automats" )
+            >> list( "automat", *this, &AgentTypes::ReadAutomatType );
 }
 
 // -----------------------------------------------------------------------------
@@ -290,8 +305,8 @@ void AgentTypes::ReadAutomatType( xml::xistream& xis )
 void AgentTypes::ReadPopulations( const std::string& populations )
 {
     xifstream xis( populations );
-    xis >> start( "Populations" )
-            >> list( "Population", *this, &AgentTypes::ReadPopulationType );
+    xis >> start( "populations" )
+            >> list( "population", *this, &AgentTypes::ReadPopulationType );
 }
 
 // -----------------------------------------------------------------------------
@@ -312,8 +327,8 @@ void AgentTypes::ReadPopulationType( xml::xistream& xis )
 void AgentTypes::ReadKnowledgeGroups( const std::string& groups )
 {
     xifstream xis( groups );
-    xis >> start( "GroupesConnaissance" )
-            >> list( "GroupeConnaissance", *this, &AgentTypes::ReadKnowledgeGroupType );
+    xis >> start( "knowledge-groups" )
+            >> list( "knowledge-group", *this, &AgentTypes::ReadKnowledgeGroupType );
 }
 
 // -----------------------------------------------------------------------------

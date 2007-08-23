@@ -16,6 +16,11 @@
 
 #include "game_asn/Asn.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_ConsumptionType;
 
 // =============================================================================
@@ -44,7 +49,7 @@ public:
 public:
     //! @name Manager
     //@{
-    static       void           Initialize( MIL_InputArchive& archive );
+    static       void           Initialize( xml::xistream& xis );
     static       void           Terminate ();
     static const PHY_Tiredness* Find      ( const std::string& strName );
     static const PHY_Tiredness* Find      ( ASN1T_EnumUnitTiredness nAsnID );
@@ -87,7 +92,7 @@ private:
 
     //! @name Init
     //@{
-    void Read( MIL_InputArchive& archive );
+    void Read( xml::xistream& xis );
     //@}
 
 private:
@@ -104,6 +109,11 @@ private:
 
 private:
     static T_TirednessMap tirednesses_;
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadTiredness( xml::xistream& xis );
+    //@}
 };
 
 #include "PHY_Tiredness.inl"

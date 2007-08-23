@@ -20,12 +20,16 @@
 #include "PHY_DotationLogisticType.h"
 #include "PHY_DotationNature.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+
 
 //-----------------------------------------------------------------------------
 // Name: PHY_DotationType::Initialize
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
-PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const std::string& strName, MIL_InputArchive& archive )
+PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const std::string& strName, xml::xistream& xis )
     : type_              ( type )
     , pAmmoDotationClass_( 0 )
     , pLogisticType_     ( 0 )
@@ -37,26 +41,26 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     , rWeight_           ( 0. )
     , rVolume_           ( 0. ) 
 {
-    archive.ReadField( "MosID", nMosID_ );
-
     std::string strNature;
-    archive.ReadField( "Nature", strNature );
+    xis >> attribute( "id", nMosID_ )
+        >> attribute( "nature", strNature );
+
     pNature_ = PHY_DotationNature::Find( strNature );
     if( !pNature_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation nature", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation nature" ); // $$$$ ABL 2007-07-19: error context
 
-    InitializePackagingData   ( archive );
-    InitializeAttritions      ( archive );
-    InitializeIndirectFireData( archive );
-    InitializeLogisticType    ( archive );
+    InitializePackagingData   ( xis );
+    InitializeAttritions      ( xis );
+    InitializeIndirectFireData( xis );
+    InitializeLogisticType    ( xis );
 
     if( !attritions_.empty() || pIndirectFireData_ )
     {
         std::string strTmp;
-        archive.ReadField( "Type", strTmp );
+        xis >> attribute( "type", strTmp );
         pAmmoDotationClass_ = PHY_AmmoDotationClass::Find( strTmp );
         if( !pAmmoDotationClass_ )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid ammo dotation class", archive.GetContext() );
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid ammo dotation class" ); // $$$$ ABL 2007-07-19: error context
     }
     else
         pAmmoDotationClass_ = 0;
@@ -75,14 +79,19 @@ PHY_DotationCategory::~PHY_DotationCategory()
 // Name: PHY_DotationCategory::InitializePackagingData
 // Created: NLD 2005-07-13
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory::InitializePackagingData( MIL_InputArchive& archive )
+void PHY_DotationCategory::InitializePackagingData( xml::xistream& xis )
 {
     MT_Float rNbrInPackage;
-    archive.Section( "Conditionnement" );
-    archive.ReadField( "Nombre", rNbrInPackage, CheckValueGreater( 0. ) );
-    archive.ReadField( "Masse" , rWeight_, CheckValueGreater( 0. ) );
-    archive.ReadField( "Volume", rVolume_, CheckValueGreater( 0. ) );
-    archive.EndSection(); // Conditionnement
+    xis >> attribute( "package-size", rNbrInPackage )
+        >> attribute( "package-mass", rWeight_ )
+        >> attribute( "package-volume", rVolume_ );
+
+    if( rNbrInPackage <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dotation rNbrInPackage <= 0" );
+    if( rWeight_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dotation rWeight_ <= 0" );
+    if( rVolume_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dotation rVolume_ <= 0" );
 
     rWeight_ /= rNbrInPackage;
     rVolume_ /= rNbrInPackage;
@@ -92,68 +101,80 @@ void PHY_DotationCategory::InitializePackagingData( MIL_InputArchive& archive )
 // Name: PHY_DotationCategory::InitializeAttritions
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory::InitializeAttritions( MIL_InputArchive& archive )
+void PHY_DotationCategory::InitializeAttritions( xml::xistream& xis )
 {
     attritions_.clear();
+    xis >> list( "attritions", *this, &PHY_DotationCategory::ListAttrition );
+}
 
-    if( !archive.Section( "Attritions", MIL_InputArchive::eNothing ) )
-        return;
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::ListAttrition
+// Created: ABL 2007-07-19
+// -----------------------------------------------------------------------------
+void PHY_DotationCategory::ListAttrition( xml::xistream& xis )
+{
+    xis >> list( "attrition", *this, &PHY_DotationCategory::ReadAttrition );
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::ReadAttrition
+// Created: ABL 2007-07-19
+// -----------------------------------------------------------------------------
+void PHY_DotationCategory::ReadAttrition( xml::xistream& xis )
+{
     attritions_.resize( PHY_Protection::GetProtections().size() );
+    std::string protectionType;
+    xis >> attribute( "protection", protectionType );
 
     const PHY_Protection::T_ProtectionMap& protections = PHY_Protection::GetProtections();
-    for( PHY_Protection::CIT_ProtectionMap itProtection = protections.begin(); itProtection != protections.end(); ++itProtection )
-    {
-        const PHY_Protection& protection = *itProtection->second;
+    PHY_Protection::CIT_ProtectionMap it = protections.find( protectionType );
+    if( it == protections.end() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Undefined protection type: %s", protectionType.c_str() ) );
 
-        std::stringstream strSectionName;
-        strSectionName << "ProtectionType" << protection.GetName();
-
-        archive.Section( strSectionName.str() );
-
-        assert( attritions_.size() > protection.GetID() );
-        attritions_[ protection.GetID() ] = PHY_AttritionData( archive );
-
-        archive.EndSection(); // ProtectionTypeXXX
-    }
-    archive.EndSection(); // Attritions
+    const PHY_Protection& protection = *it->second;
+    assert( attritions_.size() > protection.GetID() );
+    attritions_[ protection.GetID() ] = PHY_AttritionData( xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::InitializeIndirectFireData
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory::InitializeIndirectFireData( MIL_InputArchive& archive )
+void PHY_DotationCategory::InitializeIndirectFireData( xml::xistream& xis )
+{
+    xis >> list( "indirect-fire", *this, &PHY_DotationCategory::ReadIndirectFire );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::ReadIndirectFire
+// Created: ABL 2007-07-19
+// -----------------------------------------------------------------------------
+void PHY_DotationCategory::ReadIndirectFire( xml::xistream& xis )
 {
     pIndirectFireData_ = 0;
-
-    if( !archive.Section( "TirIndirect", MIL_InputArchive::eNothing ) )
-        return;
-
     std::string strType;
-    archive.ReadAttribute( "type", strType );
+
+    xis >> attribute( "type", strType );
 
     const PHY_IndirectFireDotationClass* pType = PHY_IndirectFireDotationClass::Find( strType );
     if( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown indirect fire data type", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown indirect fire data type" ); // $$$$ ABL 2007-07-19: error context
 
-    pIndirectFireData_ = &pType->InstanciateDotationCategory( *this, archive );      
-    archive.EndSection(); // TirIndirect
+    pIndirectFireData_ = &pType->InstanciateDotationCategory( *this, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::InitializeLogisticType
 // Created: NLD 2006-01-03
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory::InitializeLogisticType( MIL_InputArchive& archive )
+void PHY_DotationCategory::InitializeLogisticType( xml::xistream& xis )
 {
     pLogisticType_ = &type_.GetDefaultLogisticType();
+    bool dTranche = false;
 
-    if( archive.Section( "TrancheD", MIL_InputArchive::eNothing ) )
-    {
+    xis >> optional() >> attribute( "d-type", dTranche );
+    if( dTranche )
         pLogisticType_ = &PHY_DotationLogisticType::uniteFeuTD_;
-        archive.EndSection();
-    }
 }
 
 // =============================================================================

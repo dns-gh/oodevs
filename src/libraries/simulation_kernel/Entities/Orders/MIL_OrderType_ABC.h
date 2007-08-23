@@ -12,6 +12,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_OrderTypeParameter;
 class DEC_KnowledgeResolver_ABC;
 class DIA_Model;
@@ -27,7 +32,7 @@ class MIL_OrderType_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_OrderType_ABC( uint nID, MIL_InputArchive& archive );
+    MIL_OrderType_ABC( uint nID, xml::xistream& xis );
     virtual ~MIL_OrderType_ABC();
     //@}
 
@@ -44,6 +49,11 @@ public:
     bool Copy                   ( const DIA_TypedObject&         from, DIA_TypedObject&         to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const;
     bool Copy                   ( const DIA_TypedObject&         from, ASN1T_MissionParameters& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const;
     void CleanAfterSerialization( ASN1T_MissionParameters& to ) const;
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadParameter( xml::xistream& xis );
     //@}
 
 private:

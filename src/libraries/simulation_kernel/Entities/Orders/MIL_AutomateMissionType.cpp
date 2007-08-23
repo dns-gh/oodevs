@@ -10,6 +10,9 @@
 #include "simulation_kernel_pch.h"
 
 #include "MIL_AutomateMissionType.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 MIL_AutomateMissionType::T_MissionIDMap   MIL_AutomateMissionType::missionIDs_;
 MIL_AutomateMissionType::T_MissionNameMap MIL_AutomateMissionType::missionNames_;
@@ -18,52 +21,65 @@ MIL_AutomateMissionType::T_MissionNameMap MIL_AutomateMissionType::missionNames_
 // FACTORY
 // =============================================================================
 
+struct MIL_AutomateMissionType::LoadingWrapper
+{
+    void ReadMission( xml::xistream& xis )
+    {
+        MIL_AutomateMissionType::ReadMission( xis );
+    }
+};
+
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMissionType::Initialize
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-void MIL_AutomateMissionType::Initialize( MIL_InputArchive& archive )
+void MIL_AutomateMissionType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing automate mission types" );
+
+    LoadingWrapper loader;
     
-    archive.Section( "missions" );
-    archive.BeginList( "automats" );
-    while( archive.NextListElement() )
-    {
-        archive.BeginList( "mission" );
-        uint nID;
-        archive.ReadAttribute( "id", nID );
+    xis >> start( "missions" )
+            >> start( "automats" )
+                >> list( "mission", loader, &LoadingWrapper::ReadMission )
+            >> end()
+        >> end();
+}
 
-        const MIL_AutomateMissionType*& pMission = missionIDs_[ nID ];
-        if( pMission )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat mission already defined", archive.GetContext() );
-        pMission = new MIL_AutomateMissionType( nID, archive );
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateMissionType::ReadMission
+// Created: ABL 2007-07-26
+// -----------------------------------------------------------------------------
+void MIL_AutomateMissionType::ReadMission( xml::xistream& xis )
+{
+    uint nID;
+    xis >> attribute( "id", nID );
 
-        const MIL_AutomateMissionType*& pMissionName = missionNames_[ pMission->GetName() ];
-        if( pMissionName )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat mission name already defined", archive.GetContext() );
-        pMissionName = pMission;
+    const MIL_AutomateMissionType*& pMission = missionIDs_[ nID ];
+    if( pMission )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat mission already defined" ); // $$$$ ABL 2007-07-26: error context
+    pMission = new MIL_AutomateMissionType( nID, xis );
 
-        archive.EndList(); // mission
-    }
-    archive.EndList(); // automats
-    archive.EndSection(); // missions
+    const MIL_AutomateMissionType*& pMissionName = missionNames_[ pMission->GetName() ];
+    if( pMissionName )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat mission name already defined" ); // $$$$ ABL 2007-07-26: error context
+    pMissionName = pMission;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateMissionType::InitializeAutomaticMission
 // Created: NLD 2006-11-24
 // -----------------------------------------------------------------------------
-const MIL_AutomateMissionType& MIL_AutomateMissionType::InitializeAutomaticMission( MIL_InputArchive& archive, const std::string& strTagName )
+const MIL_AutomateMissionType& MIL_AutomateMissionType::InitializeAutomaticMission( xml::xistream& xis, const std::string& strTagName )
 {
-    archive.Section( strTagName );
+    xis >> start( strTagName );
 
     std::string strMissionName;
-    archive.ReadAttribute( "name", strMissionName );
+    xis >> attribute( "name", strMissionName );
     const MIL_AutomateMissionType* pType = MIL_AutomateMissionType::Find( strMissionName );
     if( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown mission", archive.GetContext() );
-    archive.EndSection();
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown mission" ); // $$$$ ABL 2007-07-26: error context
+    xis >> end();
     return *pType;
 }
 
@@ -75,13 +91,13 @@ const MIL_AutomateMissionType& MIL_AutomateMissionType::InitializeAutomaticMissi
 // Name: MIL_AutomateMissionType constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_AutomateMissionType::MIL_AutomateMissionType( uint nID, MIL_InputArchive& archive )
-    : MIL_MissionType_ABC( nID, archive )
+MIL_AutomateMissionType::MIL_AutomateMissionType( uint nID, xml::xistream& xis )
+    : MIL_MissionType_ABC( nID, xis )
     , strDIAMrtBehavior_ ()
     , strDIACdtBehavior_ ()
 {
-    archive.ReadAttribute( "mrt-dia-behavior", strDIAMrtBehavior_ );
-    archive.ReadAttribute( "cdt-dia-behavior", strDIACdtBehavior_ );
+    xis >> attribute( "mrt-dia-behavior", strDIAMrtBehavior_ )
+        >> attribute( "cdt-dia-behavior", strDIACdtBehavior_ );
 }
 
 //-----------------------------------------------------------------------------

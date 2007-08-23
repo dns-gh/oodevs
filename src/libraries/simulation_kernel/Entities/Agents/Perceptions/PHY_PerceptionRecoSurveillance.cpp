@@ -22,14 +22,16 @@
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 
 #include "simulation_terrain/TER_World.h"
-
 #include "Tools/MIL_Tools.h"
+#include "tools/xmlcodecs.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 
 MT_Float PHY_PerceptionRecoSurveillance::rForestSurveillanceTime_ = std::numeric_limits< MT_Float >::max();
 MT_Float PHY_PerceptionRecoSurveillance::rUrbanSurveillanceTime_  = std::numeric_limits< MT_Float >::max();
 MT_Float PHY_PerceptionRecoSurveillance::rEmptySurveillanceTime_  = std::numeric_limits< MT_Float >::max();
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoSurveillance::sReco constructor
@@ -52,32 +54,48 @@ PHY_PerceptionRecoSurveillance::sReco::sReco( const TER_Localisation& localisati
     const_cast< uint& >( nUrbanDetectionTimeStep_  ) += (uint)( nUrbanSurface  * rForestSurveillanceTime_ );
 }
 
+struct PHY_PerceptionRecoSurveillance::LoadingWrapper
+{
+    void ReadAlatTime( xml::xistream& xis )
+    {
+        PHY_PerceptionRecoSurveillance::ReadAlatTime( xis );
+    }
+};
+
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoSurveillance::Initialize
 // Created: NLD 2004-11-17
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRecoSurveillance::Initialize( MIL_InputArchive& archive )
+void PHY_PerceptionRecoSurveillance::Initialize( xml::xistream& xis )
 {
-    archive.Section( "SurveillanceALAT" );
-    archive.Section( "TempsSurveillance" );
-    
-    archive.ReadTimeField( "Vide" , rEmptySurveillanceTime_ , CheckValueGreaterOrEqual( 0. ) );
+    LoadingWrapper loader;
+
+    xis >> start( "alat-monitoring-times" )
+            >> list( "alat-monitoring-time", loader, &LoadingWrapper::ReadAlatTime )
+        >> end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionRecoSurveillance::ReadAlatTime
+// Created: ABL 2007-07-24
+// -----------------------------------------------------------------------------
+void PHY_PerceptionRecoSurveillance::ReadAlatTime( xml::xistream& xis )
+{
+    tools::ReadTimeAttribute( xis, "empty", rEmptySurveillanceTime_ );
+    tools::ReadTimeAttribute( xis, "forest", rForestSurveillanceTime_ );
+    tools::ReadTimeAttribute( xis, "urban", rUrbanSurveillanceTime_ );
+       
     rEmptySurveillanceTime_ = MIL_Tools::ConvertSecondsToSim( rEmptySurveillanceTime_ );                // second.hectare-1 => dT.hectare-1
     rEmptySurveillanceTime_ /= 10000.;                                                                  // dT.hectare-1     => dT.m-2
     rEmptySurveillanceTime_ = 1. / MIL_Tools::ConvertMeterSquareToSim( 1. / rEmptySurveillanceTime_ );  // dT.m-2           => dT.px-2
 
-    archive.ReadTimeField( "Foret" , rForestSurveillanceTime_, CheckValueGreaterOrEqual( 0. ) );
     rForestSurveillanceTime_ = MIL_Tools::ConvertSecondsToSim( rForestSurveillanceTime_ );                 // second.hectare-1 => dT.hectare-1
     rForestSurveillanceTime_ /= 10000.;                                                                    // dT.hectare-1     => dT.m-2
     rForestSurveillanceTime_ = 1. / MIL_Tools::ConvertMeterSquareToSim( 1. / rForestSurveillanceTime_ );   // dT.m-2           => dT.px-2
 
-    archive.ReadTimeField( "Urbain", rUrbanSurveillanceTime_ , CheckValueGreaterOrEqual( 0. ) );
     rUrbanSurveillanceTime_ = MIL_Tools::ConvertSecondsToSim( rUrbanSurveillanceTime_ );                // second.hectare-1 => dT.hectare-1
     rUrbanSurveillanceTime_ /= 10000.;                                                                  // dT.hectare-1     => dT.m-2
     rUrbanSurveillanceTime_ = 1. / MIL_Tools::ConvertMeterSquareToSim( 1. / rUrbanSurveillanceTime_ );  // dT.m-2           => dT.px-2
-
-    archive.EndSection(); // SurveillanceALAT
-    archive.EndSection(); // TempsSurveillance
 }
 
 // -----------------------------------------------------------------------------

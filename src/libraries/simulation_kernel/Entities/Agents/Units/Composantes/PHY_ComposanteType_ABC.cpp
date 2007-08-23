@@ -15,6 +15,9 @@
 
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // =============================================================================
 // INITIALIZATION
@@ -24,25 +27,22 @@
 // Name: PHY_ComposanteType_ABC constructor
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-PHY_ComposanteType_ABC::PHY_ComposanteType_ABC( const std::string& strName, MIL_InputArchive& archive )
+PHY_ComposanteType_ABC::PHY_ComposanteType_ABC( const std::string& strName, xml::xistream& xis )
     : strName_           ( strName )
     , pProtection_       ( 0 )
     , pVolume_           ( 0 )
 {
-    archive.ReadField( "MosID", nMosID_ );
-
     std::string strVal;
-    archive.ReadField( "Protection", strVal );
-    
+    xis >> attribute( "id", nMosID_ )
+        >> attribute( "protection", strVal );
     pProtection_ = PHY_Protection::Find( strVal );
     if ( !pProtection_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown protection '%s'", strVal.c_str() ), archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown protection '%s'", strVal.c_str() ) ); // $$$$ ABL 2007-07-23: error context
 
-    archive.ReadField( "Volume", strVal );
-
+    xis >> attribute( "size", strVal );
     pVolume_ = PHY_Volume::FindVolume( strVal );
     if ( !pVolume_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown volume '%s'", strVal.c_str() ), archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown volume '%s'", strVal.c_str() ) ); // $$$$ ABL 2007-07-23: error context
 }
 
 // -----------------------------------------------------------------------------
@@ -51,4 +51,5 @@ PHY_ComposanteType_ABC::PHY_ComposanteType_ABC( const std::string& strName, MIL_
 // -----------------------------------------------------------------------------
 PHY_ComposanteType_ABC::~PHY_ComposanteType_ABC()
 {
+    // NOTHING
 }

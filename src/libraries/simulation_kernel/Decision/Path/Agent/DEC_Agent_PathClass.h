@@ -21,6 +21,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class DEC_PathType;
 class MIL_AgentPion;
 class MIL_RealObjectType;
@@ -37,7 +42,7 @@ class DEC_Agent_PathClass
 public:
     //! @name Manager
     //@{
-    static       void                 Initialize  ( MIL_InputArchive& archive );
+    static       void                 Initialize  ( xml::xistream& xis );
     static       void                 Terminate   ();
     static const DEC_Agent_PathClass& GetPathClass( const DEC_PathType& pathType, const MIL_AgentPion& pion );
     //@}
@@ -45,7 +50,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Agent_PathClass( MIL_InputArchive& archive, const DEC_Agent_PathClass* pCopyFrom = 0 );
+    DEC_Agent_PathClass( xml::xistream& xis, const DEC_Agent_PathClass* pCopyFrom = 0 );
     virtual ~DEC_Agent_PathClass();
     //@}
 
@@ -89,19 +94,29 @@ public:
 private:
     //! @name Initialization
     //@{
-    void ReadFuseau         ( MIL_InputArchive& archive );
-    void ReadAutomataFuseau ( MIL_InputArchive& archive );
-    void ReadDangerDirection( MIL_InputArchive& archive );
-    void ReadEnemiesCost    ( MIL_InputArchive& archive );
-    void ReadTerrains       ( MIL_InputArchive& archive, TerrainData& data );
-    void ReadPopulationsCost( MIL_InputArchive& archive );
-    void ReadObjectsCost    ( MIL_InputArchive& archive );
+    void ReadFuseau           ( xml::xistream& xis );
+    void ReadAutomataFuseau   ( xml::xistream& xis );
+    void ReadDangerDirection  ( xml::xistream& xis );
+    void ReadEnemiesCost      ( xml::xistream& xis );
+    void ReadPrefferedTerrains( xml::xistream& xis, TerrainData& data );
+    void ReadAvoidedTerrain   ( xml::xistream& xis, TerrainData& data );
+    void ReadPopulationsCost  ( xml::xistream& xis );
+    void ReadObjectsCost      ( xml::xistream& xis );
     //@}
 
 private:
     //! @name Initialization
     //@{
     static void CheckRulesExistence();
+    //@}
+
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadUnitRule( xml::xistream& xis );
+    void ReadObject         ( xml::xistream& xis );
+    void ReadTerrain        ( xml::xistream& xis, TerrainData& data );
+    void ReadPopulation     ( xml::xistream& xis );
     //@}
 
 private:

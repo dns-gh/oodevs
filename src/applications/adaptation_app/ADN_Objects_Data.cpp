@@ -15,15 +15,12 @@
 #include "ADN_Tools.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
-#include "ADN_XmlInput_Helper.h"
-#include "ADN_Xml_Exception.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_DataException.h"
 #include "ADN_SaveFile_Exception.h"
 
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
-
 
 // -----------------------------------------------------------------------------
 // Name: ScoreLocationInfos::ScoreLocationInfos
@@ -39,7 +36,6 @@ ADN_Objects_Data::ScoreLocationInfos::ScoreLocationInfos()
     nScore_.SetParentNode( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ScoreLocationInfos::GetNodeName
 // Created: AGN 2004-05-24
@@ -50,7 +46,6 @@ std::string ADN_Objects_Data::ScoreLocationInfos::GetNodeName()
     return strResult + ADN_Tr::ConvertFromLocation( nLocation_.GetData(), ADN_Tr::eToTr );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ScoreLocationInfos::GetItemName
 // Created: AGN 2004-05-24
@@ -60,47 +55,28 @@ std::string ADN_Objects_Data::ScoreLocationInfos::GetItemName()
     return ADN_Tr::ConvertFromLocation( nLocation_.GetData(), ADN_Tr::eToTr );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ScoreLocationInfos::ReadArchive
 // Created: APE 2004-11-18
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data::ScoreLocationInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Objects_Data::ScoreLocationInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Terrain" );
-
     std::string strTerrain;
-    input.ReadAttribute( "type", strTerrain );
-
+    input >> xml::attribute( "terrain", strTerrain )
+          >> xml::attribute( "value", nScore_ );
     nLocation_ = ADN_Tr::ConvertToLocation( strTerrain );
-//    if( nTypeTerrain == (E_TypeTerrain)-1 )
-//    throw ADN_DataException( "Données invalides",
-//    MT_FormatString( "L'object %s définit un poids de placement sur un terrain %s non valide.", szTmp.c_str(), strTerrain.c_str() ).c_str(),
-//    MT_FormatString( "Modifiez la liste PlacementScores de l'objet %s", szTmp.c_str() ).c_str() );
-
-    int nScore;
-    input.Read( nScore );
-    nScore_ = nScore;
-
-//    if( nScore_.GetData() < 0 )
-//    throw ADN_DataException( "Données invalides",
-//    MT_FormatString( "Le poids de placement sur un terrain de type %s de l'objet %s est négatif.", szTerrain.c_str(), szTmp.c_str() ).c_str(),
-//    MT_FormatString( "Editer le fichier objetsTypes.xml pour modifier le poids de placement du terrain %s pour l'objet %s", szTerrain.c_str(), szTmp.c_str() ).c_str() );
-//
-    input.EndSection(); // Terrain
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ScoreLocationInfos::WriteArchive
 // Created: APE 2004-11-18
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data::ScoreLocationInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Objects_Data::ScoreLocationInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Terrain" );
-    output.WriteAttribute( "type", ADN_Tr::ConvertFromLocation( nLocation_.GetData() ) );
-    output << nScore_.GetData();
-    output.EndSection(); // Terrain
+    output << xml::start( "sensible-position" )
+             << xml::attribute( "terrain", ADN_Tr::ConvertFromLocation( nLocation_.GetData() ) )
+             << xml::attribute( "value", nScore_ )
+           << xml::end();
 }
 
 // =============================================================================
@@ -131,22 +107,25 @@ ADN_Objects_Data::PopulationAttritionInfos::~PopulationAttritionInfos()
 // Name: ADN_Objects_Data::PopulationAttritionInfos::ReadArchive
 // Created: SBO 2006-04-25
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data::PopulationAttritionInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Objects_Data::PopulationAttritionInfos::ReadArchive( xml::xistream& input )
 {
-    input.ReadField( "SurfaceAttrition", rSurface_ );
-    input.ReadField( "PH", rPh_ );
+    input >> xml::optional() >> xml::start( "population-attrition" )
+                >> xml::attribute( "surface", rSurface_ )
+                >> xml::attribute( "ph", rPh_ )
+            >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::PopulationAttritionInfos::WriteArchive
 // Created: SBO 2006-04-25
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data::PopulationAttritionInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Objects_Data::PopulationAttritionInfos::WriteArchive( xml::xostream& output )
 {
-    output.WriteField( "SurfaceAttrition", rSurface_.GetData() );
-    output.WriteField( "PH", rPh_.GetData() );
+    output << xml::start( "population-attrition" )
+                << xml::attribute( "surface", rSurface_ )
+                << xml::attribute( "ph", rPh_ )
+            << xml::end();
 }
-
 
 // =============================================================================
 // ObjectInfos
@@ -157,29 +136,29 @@ void ADN_Objects_Data::PopulationAttritionInfos::WriteArchive( MT_OutputArchive_
 // Created: JDY 03-07-09
 //-----------------------------------------------------------------------------
 ADN_Objects_Data::ObjectInfos::ObjectInfos( E_ObjectType nType )
-: ADN_Ref_ABC       ()
-, nObjectType_      ( nType )
-, strName_          ( nType == (E_ObjectType)-1 ? "" : ENT_Tr::ConvertFromObjectType( nType, ENT_Tr::eToTr ) )
-, bDangerous_       ( false )
-, bCanBeValorized_  ( false )
-, bCanBeReservedObstacle_( false )
-, bCanBeBypassed_   ( false )
-, rAvoidDistance_   ( 0 )
-, rDefaultSpeed_    ( -1 )
-, rDefaultBypassSpeed_( -1 )
-, rMaxInteractionHeight_( 0 )
-, nMaxNbrUsers_     ( 0 )
-, bAttritions_      ( false )
-, attritions_       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos())
-, bToReinforce_     ( false )
-, bToBuild_         ( false )
-, nNbrToBuild_      ( 0 )
-, nNbrToReinforce_  ( 0 )
-, rMaxAgentSpeedPercentage_( 0 )
-, rOutgoingPopulationDensity_( 0 )
-, bHasOutgoingPopulationDensity_( false )
-, populationAttrition_()
-, bPopulationAttrition_( false )
+    : ADN_Ref_ABC       ()
+    , nObjectType_      ( nType )
+    , strName_          ( nType == (E_ObjectType)-1 ? "" : ENT_Tr::ConvertFromObjectType( nType, ENT_Tr::eToTr ) )
+    , bDangerous_       ( false )
+    , bCanBeValorized_  ( false )
+    , bCanBeReservedObstacle_( false )
+    , bCanBeBypassed_   ( false )
+    , rAvoidDistance_   ( 0 )
+    , rDefaultSpeed_    ( -1 )
+    , rDefaultBypassSpeed_( -1 )
+    , rMaxInteractionHeight_( 0 )
+    , nMaxNbrUsers_     ( 0 )
+    , bAttritions_      ( false )
+    , attritions_       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos())
+    , bToReinforce_     ( false )
+    , bToBuild_         ( false )
+    , nNbrToBuild_      ( 0 )
+    , nNbrToReinforce_  ( 0 )
+    , rMaxAgentSpeedPercentage_( 0 )
+    , rOutgoingPopulationDensity_( 0 )
+    , bHasOutgoingPopulationDensity_( false )
+    , populationAttrition_()
+    , bPopulationAttrition_( false )
 {
     rAvoidDistance_.SetDataName( "la distance d'évitement" );
     rAvoidDistance_.SetParentNode( *this );
@@ -204,7 +183,6 @@ ADN_Objects_Data::ObjectInfos::ObjectInfos( E_ObjectType nType )
     vScoreLocation_.SetItemTypeName( "un poids de placement sur un terrain de type" );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ObjectInfos::~ObjectInfos
 // Created: APE 2004-11-22
@@ -213,8 +191,6 @@ ADN_Objects_Data::ObjectInfos::~ObjectInfos()
 {
     vScoreLocation_.Reset();
 }
-
-
 
 // -----------------------------------------------------------------------------
 // Name: ObjectInfos::GetNodeName
@@ -225,7 +201,6 @@ std::string ADN_Objects_Data::ObjectInfos::GetItemName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ObjectInfos::GetNodeName
 // Created: AGN 2004-05-14
@@ -235,155 +210,125 @@ std::string ADN_Objects_Data::ObjectInfos::GetNodeName()
     return std::string( "de l'objet " ) + strName_.GetData();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ObjectInfos::ReadSensiblePosition
+// Created: AGE 2007-08-20
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ObjectInfos::ReadSensiblePosition( xml::xistream& input )
+{
+    std::auto_ptr<ScoreLocationInfos> spNew( new ScoreLocationInfos() );
+    spNew->ReadArchive( input );
+    vScoreLocation_.AddItem( spNew.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ObjectInfos::ReadDotation
+// Created: AGE 2007-08-20
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ObjectInfos::ReadDotation( const std::string& type, xml::xistream& input )
+{
+    std::string dotation, category;
+    unsigned count;
+    input >> xml::attribute( "dotation", dotation )
+          >> xml::attribute( "category", category )
+          >> xml::attribute( "count", count );
+    ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( category, dotation );
+    if( pCategory == 0 )
+        throw ADN_DataException( "Donnée invalide", "Dotation invalide dans l'objet " + strName_.GetData() );
+    if( type == "construction" )
+    {
+        ptrToBuild_ = pCategory;
+        bToBuild_ = true;
+        nNbrToBuild_ = count;
+    }
+    else if( type == "valorization" )
+    {
+        ptrToReinforce_ = pCategory;
+        bToReinforce_ = true;
+        nNbrToReinforce_ = count;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ObjectInfos::ReadUnitAttrition
+// Created: AGE 2007-08-20
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ObjectInfos::ReadUnitAttrition( xml::xistream& input )
+{
+    bAttritions_ = true;
+    std::string protection;
+    input >> xml::attribute( "protection", protection );
+    IT_AttritionInfosVector itAttrition = std::find_if( attritions_.begin(), attritions_.end(), AttritionInfos::Cmp(protection));
+    if( itAttrition != attritions_.end() )
+        (*itAttrition)->ReadArchive( input );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ObjectInfos::ReadArchive
 // Created: APE 2004-11-18
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data::ObjectInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Objects_Data::ObjectInfos::ReadArchive( xml::xistream& input )
 {
     std::string strComsuption;
-    input.ReadField( "ModeConsommationParDefaut", strComsuption );
-
+    input >> xml::attribute( "default-consumption-mode", strComsuption );
     E_ConsumptionType nConsumption = ADN_Tr::ConvertToConsumptionType( strComsuption );
-    assert( nConsumption != -1 );
     nDefaultConsumption_ = nConsumption;
 
-    input.ReadField( "Dangereux" , bDangerous_ );
-    input.ReadField( "PeutEtreObstacleDeManoeuvre" , bCanBeReservedObstacle_ );
-    input.ReadField( "PeutEtreValorise", bCanBeValorized_ );
-    input.ReadField( "PeutEtreContourne", bCanBeBypassed_ );
-    input.ReadField( "DistanceEvitement", rAvoidDistance_, ADN_XmlInput_Helper::eNothing );
+    input >> xml::attribute( "dangerous", bDangerous_ )
+          >> xml::attribute( "can-be-maneuver-obstacle", bCanBeReservedObstacle_ )
+          >> xml::attribute( "can-be-developed", bCanBeValorized_ )
+          >> xml::attribute( "can-be-bypassed", bCanBeBypassed_ )
+          >> xml::optional() >> xml::attribute( "avoid-distance", rAvoidDistance_ )
+          >> xml::attribute( "default-speed", rDefaultSpeed_ )
+          >> xml::attribute( "default-bypassed-speed", rDefaultBypassSpeed_ )
+          >> xml::attribute( "max-interaction-height", rMaxInteractionHeight_ )
+          >> xml::optional() >> xml::attribute( "population-density", rOutgoingPopulationDensity_ )
+          >> xml::optional() >> xml::attribute( "max-animating-units", nMaxNbrUsers_ );
 
-    input.ReadField( "VitesseParDefaut", rDefaultSpeed_ );
     if( rDefaultSpeed_.GetData() < -1 )
         throw ADN_DataException( "Donnée invalide",
         MT_FormatString( "La vitesse par défaut de l'objet %s est négative.", strName_.GetData().c_str() ).c_str(),
         "Editer le fichier pour modifier le champ Objets::Type::VitesseParDefaut de cet objet." );
-
-    input.ReadField( "VitesseParDefautQuandContourne", rDefaultBypassSpeed_ );
     if( rDefaultBypassSpeed_.GetData() < -1 )
         throw ADN_DataException( "Donnée invalide",
         MT_FormatString( "La vitesse par défaut de l'objet %s, lorsqu'il est contourné, est négative.", strName_.GetData().c_str() ).c_str(),
         "Editer le fichier %s pour modifier le champ Objets::Type::VitesseParDefautQuandContourne de cet objet." );
-
-    input.ReadField( "HauteurMaxInteraction", rMaxInteractionHeight_ );
     if( rMaxInteractionHeight_.GetData() < 0 )
         throw ADN_DataException( "Donnée invalide",
         MT_FormatString( "La hauteur maximale d'interaction de l'objet %s est négative.", strName_.GetData().c_str() ).c_str(),
         "Editer le fichier %s pour modifier le champ Objets::Type::HauteurMaxInteraction de cet objet." );
+    if( rOutgoingPopulationDensity_.GetData() < 0 )
+        throw ADN_DataException( "Donnée invalide",
+        MT_FormatString( "La densité des populations sortantes de l'objet %s est négative.", strName_.GetData().c_str() ).c_str(),
+        "Editer le fichier pour modifier le champ Objets::Type::DensitePopulationSortante de cet objet." );
+     if( nMaxNbrUsers_.GetData() < -1 )
+        throw ADN_DataException( "Donnée invalide",
+        MT_FormatString( "Le nombre d'animateurs de l'objet %s est négatif.", strName_.GetData().c_str() ).c_str() );
 
-    if( input.ReadField( "DensitePopulationSortante", rOutgoingPopulationDensity_, ADN_XmlInput_Helper::eNothing ) )
-    {
-        if( rOutgoingPopulationDensity_.GetData() < 0 )
-            throw ADN_DataException( "Donnée invalide",
-            MT_FormatString( "La densité des populations sortantes de l'objet %s est négative.", strName_.GetData().c_str() ).c_str(),
-            "Editer le fichier %s pour modifier le champ Objets::Type::DensitePopulationSortante de cet objet." );
-        bHasOutgoingPopulationDensity_ = true;
-    }
+    bHasOutgoingPopulationDensity_ = rOutgoingPopulationDensity_.GetData() != 0;
 
-    input.Section( "ModeImpactSurVitessePion" );
-    input.ReadAttribute( "type", nSpeedImpact_, ADN_Tr::ConvertToSpeedImpact, ADN_XmlInput_Helper::eThrow );
-    if( nSpeedImpact_.GetData() == eSpeedImpact_VitesseMaxAgent )
-        input.ReadAttribute( "pourcentageVitesseMaxAgent", rMaxAgentSpeedPercentage_ );
-    input.EndSection(); // ModeImpactSurVitessePion
+    std::string impact = xml::attribute< std::string >( input, "unit-speed-impact-mode" );
+    nSpeedImpact_ = ADN_Tr::ConvertToSpeedImpact( impact );
+    if( nSpeedImpact_ == eSpeedImpact_VitesseMaxAgent )
+        input >> xml::attribute( "max-unit-percentage-speed", rMaxAgentSpeedPercentage_ );
 
-    // Location weigths
-    if( input.BeginList( "PlacementScores", ADN_XmlInput_Helper::eNothing ) )
-    {
-        while( input.NextListElement() )
-        {
-            std::auto_ptr<ScoreLocationInfos> spNew( new ScoreLocationInfos() );
-            spNew->ReadArchive( input );
+    input >> xml::optional() 
+            >> xml::start( "sensible-positions" )
+                >> xml::list( "sensible-position", *this, &ADN_Objects_Data::ObjectInfos::ReadSensiblePosition )
+            >> xml::end();
 
-//            T_ScoreLocationInfosVector::iterator found = std::find_if( vScoreLocation_.begin(), vScoreLocation_.end(), ScoreLocationInfos::Cmp( spNew->nLocation_ ) );
-//            if( found != vScoreLocation_.end() )
-//            throw ADN_DataException( "Données dupliquées",
-//            MT_FormatString( "L'objet %s définit plusieurs fois le poids de placement sur un terrain %s", strName_.GetData().c_str(), spNew->strName_.GetData().c_str() ).c_str(),
-//            MT_FormatString( "Editer le fichier objetsTypes.xml pour éliminer les doublons de la liste PlacementScores de l'objet %s", strName_.GetData().c_str() ).c_str() );
+    input >> xml::optional()
+          >> xml::start( "dotations" )
+            >> xml::list( *this, &ADN_Objects_Data::ObjectInfos::ReadDotation )
+          >> xml::end();
 
-            vScoreLocation_.AddItem( spNew.release() );
-        }
-        input.EndList(); // PlacementScores
-    }
+    input >> xml::optional()
+            >> xml::start( "unit-attritions" )
+                >> xml::list( "unit-attrition", *this, &ADN_Objects_Data::ObjectInfos::ReadUnitAttrition )
+            >> xml::end();
 
-    if( input.ReadField( "NombreAnimateursMax", nMaxNbrUsers_, ADN_XmlInput_Helper::eNothing ) )
-        if( nMaxNbrUsers_.GetData() < -1 )
-            throw ADN_DataException( "Donnée invalide",
-            MT_FormatString( "La vitesse par défaut de l'objet %s est négative.", strName_.GetData().c_str() ).c_str(),
-            "Editer le fichier pour modifier le champ Objets::Type::VitesseParDefaut de cet objet." );
-
-    if( input.Section( "Dotations", ADN_XmlInput_Helper::eNothing ) )
-    {
-        if( input.Section( "Construction", ADN_XmlInput_Helper::eNothing ) )
-        {
-            std::string strType;
-            std::string strCategory;
-            uint        nValue;
-            input.ReadAttribute( "type", strType );
-            input.ReadAttribute( "categorie", strCategory );
-            input.ReadAttribute( "valeur", nValue );
-
-            ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( strType, strCategory );
-            if( pCategory == 0 )
-                throw ADN_DataException( "Donnée invalide",
-                MT_FormatString( "La hauteur maximale d'interaction de l'objet %s est négative.", strName_.GetData().c_str() ).c_str(),
-                "Editer le fichier %s pour modifier le champ Objets::Type::HauteurMaxInteraction de cet objet." );
-
-            ptrToBuild_ = pCategory;
-            bToBuild_ = true;
-            nNbrToBuild_ = nValue;
-
-            input.EndSection(); // Construction
-        }
-
-        if( input.Section( "Valorisation", ADN_XmlInput_Helper::eNothing ) )
-        {
-            std::string strType;
-            std::string strCategory;
-            uint        nValue;
-            input.ReadAttribute( "type", strType );
-            input.ReadAttribute( "categorie", strCategory );
-            input.ReadAttribute( "valeur", nValue );
-
-            ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( strType, strCategory );
-            if( pCategory == 0 )
-                throw ADN_DataException( "Donnée invalide",
-                MT_FormatString( "La hauteur maximale d'interaction de l'objet %s est négative.", strName_.GetData().c_str() ).c_str(),
-                "Editer le fichier %s pour modifier le champ Objets::Type::HauteurMaxInteraction de cet objet." );
-
-            ptrToReinforce_ = pCategory;
-            bToReinforce_ = true;
-            nNbrToReinforce_ = nValue;
-
-            input.EndSection(); // Valorisation
-        }
-
-        input.EndSection(); // Dotations
-    }
-
-    if( input.Section( "Attritions", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bAttritions_ = true;
-
-        ADN_Categories_Data::T_ArmorInfos_Vector& armorInfos = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos();
-        for( ADN_Categories_Data::T_ArmorInfos_Vector::iterator it = armorInfos.begin(); it != armorInfos.end(); ++it )
-        {
-            IT_AttritionInfosVector itAttrition = std::find_if( attritions_.begin(), attritions_.end(),AttritionInfos::CmpRef(*it));
-            assert( itAttrition != attritions_.end() );
-            (*itAttrition)->ReadArchive( input );
-        }
-
-        input.EndSection(); // Attritions
-    }
-
-    // Population Attritions
-    if( input.Section( "AttritionPopulation", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bPopulationAttrition_ = true;
-        populationAttrition_.ReadArchive( input );
-        input.EndSection(); // AttritionPopulation
-    }
+    populationAttrition_.ReadArchive( input );
+    bPopulationAttrition_ = populationAttrition_.rPh_ != 0 || populationAttrition_.rSurface_ != 0;
 }
 
 
@@ -391,105 +336,80 @@ void ADN_Objects_Data::ObjectInfos::ReadArchive( ADN_XmlInput_Helper& input )
 // Name: ObjectInfos::WriteArchive
 // Created: APE 2004-11-18
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data::ObjectInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Objects_Data::ObjectInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Objet" );
-
-    output.WriteAttribute( "type", ENT_Tr::ConvertFromObjectType( nObjectType_.GetData() ) );
-
-    output.WriteField( "ModeConsommationParDefaut", ADN_Tr::ConvertFromConsumptionType( nDefaultConsumption_.GetData() ) );
-    output.WriteField( "Dangereux", bDangerous_.GetData() );
-    output.WriteField( "PeutEtreObstacleDeManoeuvre" , bCanBeReservedObstacle_.GetData() );
-    output.WriteField( "PeutEtreValorise", bCanBeValorized_.GetData() || bToReinforce_.GetData() );
-    output.WriteField( "PeutEtreContourne", bCanBeBypassed_.GetData() );
-
-    if( rAvoidDistance_.GetData() != 0 )
-        output.WriteField( "DistanceEvitement", rAvoidDistance_.GetData() );
-
-    output.WriteField( "VitesseParDefaut", rDefaultSpeed_.GetData() );
-    output.WriteField( "VitesseParDefautQuandContourne", rDefaultBypassSpeed_.GetData() );
-    output.WriteField( "HauteurMaxInteraction", rMaxInteractionHeight_.GetData() );
-
-    if( bHasOutgoingPopulationDensity_ == true )
-        output.WriteField( "DensitePopulationSortante", rOutgoingPopulationDensity_.GetData() );
-
     if( nObjectType_ == eObjectType_SiteDecontamination && nMaxNbrUsers_.GetData() <= 0 )
         throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Nbr max users for decontamination site <= 0 when it should be >= 1." ).ascii() );
 
+    output << xml::start( "object" )
+            << xml::attribute( "type", ENT_Tr::ConvertFromObjectType( nObjectType_.GetData() ) )
+            << xml::attribute( "default-consumption-mode", ADN_Tr::ConvertFromConsumptionType( nDefaultConsumption_.GetData() ) )
+            << xml::attribute( "dangerous", bDangerous_ )
+            << xml::attribute( "can-be-maneuver-obstacle", bCanBeReservedObstacle_ )
+            << xml::attribute( "can-be-developed", bCanBeValorized_.GetData() || bToReinforce_.GetData() )
+            << xml::attribute( "can-be-bypassed", bCanBeBypassed_ );
+    if( rAvoidDistance_.GetData() != 0 )
+        output << xml::attribute( "avoid-distance", rAvoidDistance_ );
+    output  << xml::attribute( "default-speed", rDefaultSpeed_ )
+            << xml::attribute( "default-bypassed-speed", rDefaultBypassSpeed_ )
+            << xml::attribute( "max-interaction-height", rMaxInteractionHeight_ );
+            
+    if( bHasOutgoingPopulationDensity_.GetData() )
+        output << xml::attribute( "population-density", rOutgoingPopulationDensity_ );
     if( nMaxNbrUsers_.GetData() != -1 )
-        output.WriteField( "NombreAnimateursMax", nMaxNbrUsers_.GetData() );
+        output << xml::attribute( "max-animating-units", nMaxNbrUsers_ );
 
-    output.Section( "ModeImpactSurVitessePion" );
-    output.WriteAttribute( "type", ADN_Tr::ConvertFromSpeedImpact( nSpeedImpact_.GetData() ) );
+    output << xml::attribute( "unit-speed-impact-mode", ADN_Tr::ConvertFromSpeedImpact( nSpeedImpact_.GetData() ) );
     if( nSpeedImpact_.GetData() == eSpeedImpact_VitesseMaxAgent )
-        output.WriteAttribute( "pourcentageVitesseMaxAgent", rMaxAgentSpeedPercentage_.GetData() );
-    output.EndSection(); // ModeImpactSurVitessePion
+        output << xml::attribute( "max-unit-percentage-speed", rMaxAgentSpeedPercentage_ );
 
     if( ! vScoreLocation_.empty() )
     {
-        output.Section( "PlacementScores" );
+        output << xml::start( "sensible-positions" );
         for( T_ScoreLocationInfosVector::iterator itScore = vScoreLocation_.begin(); itScore != vScoreLocation_.end(); ++itScore )
-        {
             (*itScore)->WriteArchive( output );
-        }
-        output.EndSection(); // PlacementScores
+        output << xml::end();
     }
 
     if( bToBuild_.GetData() || bToReinforce_.GetData() )
     {
-        output.Section( "Dotations" );
-
+        output << xml::start( "dotations" );
         if( bToBuild_.GetData() == true )
         {
             if( ptrToBuild_.GetData() == 0 )
                 throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Undefined category for construction in object %1." ).arg( ENT_Tr::ConvertFromObjectType( nObjectType_.GetData() ).c_str() ).ascii() );
-
-            output.Section( "Construction" );
-            output.WriteAttribute( "type", ptrToBuild_.GetData()->parentDotation_.strName_.GetData() );
-            output.WriteAttribute( "categorie", ptrToBuild_.GetData()->strName_.GetData() );
-            output.WriteAttribute( "valeur", nNbrToBuild_.GetData() );
-            output.EndSection(); // Construction
+            output << xml::start( "construction" )
+                    << xml::attribute( "category", ptrToBuild_.GetData()->parentDotation_.strName_ )
+                    << xml::attribute( "dotation", ptrToBuild_.GetData()->strName_ )
+                    << xml::attribute( "count", nNbrToBuild_ )
+                   << xml::end();
         }
-
         if( bToReinforce_.GetData() == true )
         {
             if( ptrToReinforce_.GetData() == 0 )
                 throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Undefined category for valorization in object %1." ).arg( ENT_Tr::ConvertFromObjectType( nObjectType_.GetData() ).c_str() ).ascii() );
-
-            output.Section( "Valorisation" );
-            output.WriteAttribute( "type", ptrToReinforce_.GetData()->parentDotation_.strName_.GetData() );
-            output.WriteAttribute( "categorie", ptrToReinforce_.GetData()->strName_.GetData() );
-            output.WriteAttribute( "valeur", nNbrToReinforce_.GetData() );
-            output.EndSection(); // Valorisation
+            output << xml::start( "valorization" )
+                    << xml::attribute( "category", ptrToReinforce_.GetData()->parentDotation_.strName_ )
+                    << xml::attribute( "dotation", ptrToReinforce_.GetData()->strName_ )
+                    << xml::attribute( "count", nNbrToReinforce_ )
+                   << xml::end();
         }
-
-        output.EndSection(); // Dotations
+        output << xml::end();
     }
 
-    if( bAttritions_.GetData() == true )
+    if( bAttritions_.GetData() )
     {
-        output.Section( "Attritions" );
-        ADN_Categories_Data::T_ArmorInfos_Vector& armorInfos = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos();
-        for( ADN_Categories_Data::T_ArmorInfos_Vector::iterator it = armorInfos.begin(); it != armorInfos.end(); ++it )
-        {
-            IT_AttritionInfosVector itAttrition = std::find_if( attritions_.begin(), attritions_.end(),AttritionInfos::CmpRef(*it));
-            assert( itAttrition != attritions_.end() );
-            (*itAttrition)->WriteArchive( output );
-        }
-
-        output.EndSection(); // Attritions
+        output << xml::start( "unit-attritions" );
+        for( IT_AttritionInfosVector it = attritions_.begin(); it != attritions_.end(); ++it )
+            (*it)->WriteArchive( output, "unit-attrition" );
+        output << xml::end();
     }
 
-    if( bPopulationAttrition_.GetData() == true )
-    {
-        output.Section( "AttritionPopulation" );
+    if( bPopulationAttrition_.GetData() )
         populationAttrition_.WriteArchive( output );
-        output.EndSection(); // AttritionPopulation
-    }
 
-    output.EndSection(); // Objet
+    output << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AreaControlInformations::AreaControlInformations
@@ -501,9 +421,8 @@ ADN_Objects_Data::AreaControlInformations::AreaControlInformations()
 , ptrSize_              ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), 0 )
 , nPercentage_          ( 0 )
 {
-    this->BindExistenceTo( &ptrSize_ );
+    BindExistenceTo( &ptrSize_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AreaControlInformations::~AreaControlInformations
@@ -512,7 +431,6 @@ ADN_Objects_Data::AreaControlInformations::AreaControlInformations()
 ADN_Objects_Data::AreaControlInformations::~AreaControlInformations()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AreaControlInformations::GetNodeName
@@ -523,7 +441,6 @@ std::string ADN_Objects_Data::AreaControlInformations::GetNodeName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AreaControlInformations::GetItemName
 // Created: APE 2005-02-23
@@ -533,24 +450,17 @@ std::string ADN_Objects_Data::AreaControlInformations::GetItemName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AreaControlInformations::ReadArchive
 // Created: APE 2005-02-23
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data::AreaControlInformations::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Objects_Data::AreaControlInformations::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Pourcentage" );
     std::string strSize;
-    input.ReadAttribute( "volume", strSize );
+    input >> xml::attribute( "percentage", nPercentage_ )
+          >> xml::attribute( "volume", strSize );
     ADN_Categories_Data::SizeInfos* pSize = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindSize( strSize );
-    assert( pSize != 0 );
     ptrSize_ = pSize;
-
-    int n;
-    input.Read( n );
-    nPercentage_ = n;
-    input.EndSection(); // Pourcentage
 }
 
 
@@ -558,15 +468,13 @@ void ADN_Objects_Data::AreaControlInformations::ReadArchive( ADN_XmlInput_Helper
 // Name: AreaControlInformations::WriteArchive
 // Created: APE 2005-02-23
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data::AreaControlInformations::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Objects_Data::AreaControlInformations::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Pourcentage" );
-    output.WriteAttribute( "volume", ptrSize_.GetData()->GetData() );
-    output << nPercentage_.GetData();
-    output.EndSection(); // Pourcentage
+    output << xml::start( "shot-percentage-per-human-per-hectare" )
+            << xml::attribute( "percentage", nPercentage_ )
+            << xml::attribute( "volume", ptrSize_.GetData()->GetData() )
+           << xml::end();
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Objects_Data constructor
@@ -579,7 +487,6 @@ ADN_Objects_Data::ADN_Objects_Data()
         vObjectInfos_.AddItem( new ObjectInfos( (E_ObjectType)i ) );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Objects_Data destructor
 // Created: JDY 03-06-25
@@ -589,8 +496,6 @@ ADN_Objects_Data::~ADN_Objects_Data()
     vObjectInfos_.Reset();
 }
 
-
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::FilesNeeded
 // Created: JDY 03-09-08
@@ -599,7 +504,6 @@ void ADN_Objects_Data::FilesNeeded(T_StringList& files) const
 {
     files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szObjects_.GetData());
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::Reset
@@ -613,79 +517,71 @@ void ADN_Objects_Data::Reset()
         vObjectInfos_.AddItem( new ObjectInfos( (E_ObjectType)i ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ReadObject
+// Created: AGE 2007-08-20
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ReadObject( xml::xistream& input )
+{
+    std::string type;
+    input >> xml::attribute( "type", type );
+    E_ObjectType nObjectType = ENT_Tr::ConvertToObjectType( type );
+    if( nObjectType == (E_ObjectType)-1)
+        throw ADN_DataException( "Object", "Le type d'objet " + type + " n'est pas connu" );
+
+    ObjectInfos* pObjInfo = vObjectInfos_[ (int)nObjectType ];
+    pObjInfo->strName_ = type;
+    pObjInfo->ReadArchive( input );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ReadShotPercentage
+// Created: AGE 2007-08-20
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ReadShotPercentage( xml::xistream& input )
+{
+    std::auto_ptr<AreaControlInformations> spNew( new AreaControlInformations() );
+    spNew->ReadArchive( input );
+    vAreaControlInformations_.AddItem( spNew.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ReadArchive
 // Created: APE 2004-11-18
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Objects_Data::ReadArchive( xml::xistream& input )
 {
-    input.Section( "Objets" );
-    input.BeginList( "ObjetsReels" );
-    while( input.NextListElement() )
-    {
-        input.Section( "Objet" );
-
-        std::string strTmp;
-        input.ReadAttribute( "type", strTmp );
-
-        E_ObjectType nObjectType = ENT_Tr::ConvertToObjectType( strTmp );
-        if( nObjectType == (E_ObjectType)-1)
-            input.ThrowError( MT_FormatString( "Le type d'objet %s n'est pas connu", strTmp.c_str() ).c_str() );
-
-        ObjectInfos* pObjInfo = vObjectInfos_[ (int)nObjectType ];
-        pObjInfo->strName_ = strTmp;
-        pObjInfo->ReadArchive( input );
-
-        input.EndSection(); // Objet
-    }
-    input.EndList(); // ObjetsReels
-
-    input.Section( "ObjetsVirtuels" );
-    input.Section( "Objet" );
-    input.BeginList( "PourcentagesTirParHumainParHectare" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<AreaControlInformations> spNew( new AreaControlInformations() );
-        spNew->ReadArchive( input );
-        vAreaControlInformations_.AddItem( spNew.release() );
-    }
-    input.EndList(); // PourcentagesTirParHumainParHectare
-    input.EndSection(); // Objet
-    input.EndSection(); // ObjetsVirtuels
-
-    input.EndSection(); // Objets
+    input >> xml::start( "objects" )
+            >> xml::start( "real-objects" )
+                >> xml::list( "object", *this, &ADN_Objects_Data::ReadObject )
+            >> xml::end()
+            >> xml::start( "virtual-objects" )
+                >> xml::start( "object" )
+                    >> xml::list( "shot-percentage-per-human-per-hectare", *this, &ADN_Objects_Data::ReadShotPercentage )
+                >> xml::end()
+            >> xml::end()
+          >> xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::WriteArchive
 // Created: APE 2004-11-18
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Objects_Data::WriteArchive( xml::xostream& output )
 {
-    output.Section( "Objets" );
-
-    output.Section( "ObjetsReels" );
+    output << xml::start( "objects" )
+            << xml::start( "real-objects" );
     for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it!= vObjectInfos_.end(); ++it)
-    {
         (*it)->WriteArchive( output );
-    }
-    output.EndSection(); // ObjetsReels
-
-    output.Section( "ObjetsVirtuels" );
-    output.Section( "Objet" );
-    output.WriteAttribute( "type", "controle de zone" );
-    output.BeginList( "PourcentagesTirParHumainParHectare", vAreaControlInformations_.size() );
+    output  << xml::end()
+            << xml::start( "virtual-objects" )
+                << xml::start( "object" )
+                << xml::attribute( "type", "controle de zone" );
     for( IT_AreaControlInformations_Vector it = vAreaControlInformations_.begin(); it != vAreaControlInformations_.end(); ++it )
-    {
         (*it)->WriteArchive( output );
-    }
-    output.EndList(); // PourcentagesTirParHumainParHectare
-    output.EndSection(); // Objet
-    output.EndSection(); // ObjetsVirtuels
-
-    output.EndSection(); // Objets
+    output      << xml::end()
+            << xml::end()
+           << xml::end();
 }
 
 

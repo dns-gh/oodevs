@@ -36,8 +36,12 @@
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
 #include "DIA/DIA_Tool_Archive_lib.h"
 #include "DIA/DIA_SDK_Manager.h"
+#include "xeumeuleu/xml.h"
+#include "tools/InputBinaryStream.h"
 
 #include <sys/stat.h>
+
+using namespace xml;
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Workspace constructor
@@ -49,7 +53,7 @@ DEC_Workspace::DEC_Workspace( MIL_Config& config )
     , pFunctionCaller_( 0 )
 {
     MT_LOG_INFO_MSG( "Initializing decision" );
-    DIA_SDK_Manager::InitializeSDK();  
+    DIA_SDK_Manager::InitializeSDK();
 
     InitializeConfig( config );
     InitializeDIA   ( config );
@@ -92,7 +96,7 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::CompareDirection              , "DEC_Geometrie_DirectionEgales"                );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::Distance                      , "DEC_Geometrie_Distance"                       );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ConvertPointToLocalisation    , "DEC_Geometrie_ConvertirPointEnLocalisation"   );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::IsPointInsideLocalisation     , "DEC_Geometrie_EstPointDansLocalisation"       );    
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::IsPointInsideLocalisation     , "DEC_Geometrie_EstPointDansLocalisation"       );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::CompareLocalisations          , "DEC_Geometrie_LocalisationsEgales"            );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateLocalisation            , "DEC_Geometrie_CreerLocalisation"              );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateListPoint               , "DEC_Geometrie_CreerListePoints"               );
@@ -111,7 +115,7 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateCircleLocalisation      , "DEC_Geometrie_CreerLocalisationCercle"        );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::IsPionCoordinated             , "DEC_Geometrie_PionEstCoordonne"               );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeLocalisationArea       , "DEC_Geometrie_AireLocalisation"               );
-    
+
     // Time management
     pFuncTable->RegisterFunction( DEC_DIAFunctions::GetSimTime         , "DEC_TempsSim"        );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::GetRealTime        , "DEC_TempsReel"       );
@@ -133,15 +137,15 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
     pFuncTable->RegisterFunction( DEC_DIAFunctions::UserTypeList_Contains, "DEC_UserTypeList_Contient"  );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::UserTypeList_PushBack, "DEC_UserTypeList_PushBack"  );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::UserTypeList_Remove  , "DEC_UserTypeList_Remove"    );
-        
+
     pFuncTable->RegisterFunction( DEC_DIAFunctions::ListPoint_GetAt      , "DEC_ListePoints_GetAt"      );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::ListPoint_Size       , "DEC_ListePoints_Size"       );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::ListPoint_PushBack   , "DEC_ListePoints_PushBack"   );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::ListPoint_Remove     , "DEC_ListePoints_Remove"     );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::ListPoint_Clear      , "DEC_ListePoints_Clear"      );
-	// DIA Thing management
-	pFuncTable->RegisterFunction( DEC_DIAFunctions::CreateDIAThing		 , "DEC_CreerDIAThing"    );
-	pFuncTable->RegisterFunction( DEC_DIAFunctions::DestroyDIAThing		 , "DEC_DetruireDIAThing" );
+    // DIA Thing management
+    pFuncTable->RegisterFunction( DEC_DIAFunctions::CreateDIAThing         , "DEC_CreerDIAThing"    );
+    pFuncTable->RegisterFunction( DEC_DIAFunctions::DestroyDIAThing         , "DEC_DetruireDIAThing" );
 
     // Logistic
     pFuncTable->RegisterFunction( DEC_LogisticFunctions::HasWoundedHumansToEvacuate       , "DEC_NecessiteEvacuationBlesses"            );
@@ -175,67 +179,76 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
 void DEC_Workspace::InitializeConfig( MIL_Config& config )
 {
     // $$$$ NLD 2007-01-11: A DEPLACER
-    MIL_InputArchive phyArchive;
-    phyArchive.Open( config.GetPhysicalFile() );
+    xml::xifstream xis( config.GetPhysicalFile() );
 
     std::string strDecFile;
-    phyArchive.Section( "physical" );
-    phyArchive.ReadField( "Decisionnel", strDecFile );
-    phyArchive.EndSection(); // physical
+    xis >> start( "physical" )
+            >> start( "decisional" )
+                >> attribute( "file", strDecFile )
+            >> end()
+        >> end();
 
     strDecFile = config.BuildPhysicalChildFile( strDecFile );
 
-    MIL_InputArchive decArchive;
-    decArchive.Open( strDecFile );
+    xml::xifstream xisDecisional( strDecFile );
     config.AddFileToCRC( strDecFile );
 
-    decArchive.Section( "Decisionnel" );
-
-    // Dangerosite
-    decArchive.Section( "Dangerosite" );
-
     uint nTmp;
-    decArchive.ReadField( "DegradationMaxParPertinence", nTmp, CheckValueBound( 0, 100 ) );
+
+    xisDecisional >> start( "decisonal" )
+                      >> start( "dangerosity-modifiers" )
+                          >> attribute( "max-accuracy", nTmp );
+    if( nTmp < 0 || nTmp > 100 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dangerosity-modifiers: max-accuracy not in [0..100]" );
     DEC_Knowledge_Agent::rMaxDangerosityDegradationByRelevance_ = nTmp / 100.;
-    
-    decArchive.ReadField( "DegradationMaxParEtatOps", nTmp, CheckValueBound( 0, 100 ) );
+
+    xisDecisional >> attribute( "max-operational-state", nTmp );
+    if( nTmp < 0 || nTmp > 100 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dangerosity-modifiers: max-operationnal-state not in [0..100]" );
     DEC_Knowledge_Agent     ::rMaxDangerosityDegradationByOpState_ = nTmp / 100.;
     PHY_RolePion_Composantes::rMaxDangerosityDegradationByOpState_ = nTmp / 100.;
 
-    decArchive.ReadField( "DegradationMaxParEtatNeutralise", nTmp, CheckValueBound( 0, 100 ) );
+    xisDecisional >> attribute( "max-neutralized-state", nTmp );
+    if( nTmp < 0 || nTmp > 100 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "degerousity-modifiers: max-neutralized-state not in [0..100]" );
     DEC_Knowledge_Agent     ::rMaxDangerosityDegradationByNeutralizedState_ = nTmp / 100.;
     PHY_RolePion_Composantes::rMaxDangerosityDegradationByNeutralizedState_ = nTmp / 100.;
 
-    decArchive.EndSection(); // Dangerosite
+    xisDecisional     >> end()
+                          >> start( "operational-state-weights" )
+                              >> attribute( "component", PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_ )
+                              >> attribute( "major-component", PHY_RolePion_Composantes::rOpStateWeightMajorComposante_ )
+                              >> attribute( "crew", PHY_ComposantePion::rOpStateWeightHumans_ )
+                          >> end();
 
-    // EtatOpsEtatOps
-    decArchive.Section( "EtatOps" );
-
-    decArchive.ReadField( "PoidsComposantesNonMajeures", PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_, CheckValueBound( 0., 1. ) );
-    decArchive.ReadField( "PoidsComposantesMajeures"   , PHY_RolePion_Composantes::rOpStateWeightMajorComposante_   , CheckValueBound( 0., 1. ) );
-    decArchive.ReadField( "PoidsPersonnel"             , PHY_ComposantePion      ::rOpStateWeightHumans_            , CheckValueBound( 0., 1. ) );
+    if( PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_ < 0 || PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_ > 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "operational-state-weights: component not in [0..1]" );
+    if( PHY_RolePion_Composantes::rOpStateWeightMajorComposante_ < 0 || PHY_RolePion_Composantes::rOpStateWeightMajorComposante_ > 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "operational-state-weights: major-component not in [0..1]" );
+    if( PHY_ComposantePion::rOpStateWeightHumans_ < 0 || PHY_ComposantePion::rOpStateWeightHumans_ > 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "operational-state-weights: crew not in [0..1]" );
 
     if( PHY_RolePion_Composantes::rOpStateWeightMajorComposante_ + PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_ != 1. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Sum of 'Decisionnel::EtatOps::PoidsComposantesMajeures', 'PoidsComposantesMajeures' and 'PoidsPersonnel' != 1", decArchive.GetContext() );
-    decArchive.EndSection(); // EtatOps
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Sum of 'Decisionnel::EtatOps::PoidsComposantesMajeures', 'PoidsComposantesMajeures' and 'PoidsPersonnel' != 1" ); // $$$$ ABL 2007-07-25: error context
 
-    DEC_Knowledge_RapFor_ABC::Initialize( decArchive );
+    DEC_Knowledge_RapFor_ABC::Initialize( xisDecisional );
 
-    decArchive.EndSection(); // Decisionnel
+    xisDecisional >> end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Workspace::InitializeDIATypes
 // Created: NLD 2005-04-11
 // -----------------------------------------------------------------------------
-void DEC_Workspace::InitializeDIATypes( MIL_InputArchive& initArchive, bool& bNeedScriptParsing, const std::string& strBinaryPath )
+void DEC_Workspace::InitializeDIATypes( xml::xistream& xis, bool& bNeedScriptParsing, const std::string& strBinaryPath )
 {
     MT_LOG_INFO_MSG( "\tReading DIA types" );
 
     std::string    strErrors;
     T_StringVector openedFiles;
     std::string strScript;
-    initArchive.ReadField( "DIATypes", strScript );
+    xis >> xml::content( "DIATypes", strScript );
+
     if( MIL_AgentServer::GetWorkspace().GetConfig().UseOnlyDIAArchive() )
     {
         if( !DIA_ReadScript_TypesBin( strScript, strBinaryPath + "/type.model", strErrors, openedFiles ) )
@@ -249,7 +262,7 @@ void DEC_Workspace::InitializeDIATypes( MIL_InputArchive& initArchive, bool& bNe
 
         if( !DIA_ReadScript_Types( strScript, strBinaryPath + "/type.model", strErrors, openedFiles ) )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, std::string( "Error while parsing types files" ) + strScript, strErrors );
-        
+
         // Updating opened files archive
         MT_FlatBinaryOutputArchive openedFilesArchive;
         openedFilesArchive << openedFiles.size();
@@ -263,14 +276,14 @@ void DEC_Workspace::InitializeDIATypes( MIL_InputArchive& initArchive, bool& bNe
 // Name: DEC_Workspace::InitializeDIAWorkspace
 // Created: NLD 2005-04-11
 // -----------------------------------------------------------------------------
-void DEC_Workspace::InitializeDIAWorkspace( MIL_InputArchive& initArchive, bool& bNeedScriptParsing, const std::string& strBinaryPath )
-{ 
+void DEC_Workspace::InitializeDIAWorkspace( xml::xistream& xis, bool& bNeedScriptParsing, const std::string& strBinaryPath )
+{
     MT_LOG_INFO_MSG( "\tReading DIA Workspace" );
 
     std::string    strErrors;
     T_StringVector openedFiles;
     std::string strScript;
-    initArchive.ReadField( "DIAWorkspace", strScript );
+    xis >> xml::content( "DIAWorkspace", strScript );
     if( MIL_AgentServer::GetWorkspace().GetConfig().UseOnlyDIAArchive() )
     {
         if( !DIA_ReadScript_WorkspaceBin( strScript, strBinaryPath + "/workspace.model", strErrors, openedFiles ) )
@@ -301,18 +314,13 @@ void DEC_Workspace::InitializeDIAWorkspace( MIL_InputArchive& initArchive, bool&
 void DEC_Workspace::InitializeDIA( MIL_Config& config )
 {
     const std::string strDecFile = config.GetDecisionalFile();
-    
-    MIL_InputArchive decArchive;
-    decArchive.Open( strDecFile );
+
+    xml::xifstream xis( strDecFile );
     config.AddFileToCRC( strDecFile );
-
-    decArchive.Section( "decisional" );
-
-    // Read the archive path output
-    std::string strBinaryPath;
-    std::string strSourcePath;
-    decArchive.ReadField( "RepertoireBinaires", strBinaryPath );
-    decArchive.ReadField( "RepertoireSources" , strSourcePath );
+    xis >> xml::start( "decisional" );
+    std::string strBinaryPath, strSourcePath;
+    xis >> xml::content( "RepertoireBinaires", strBinaryPath )
+        >> xml::content( "RepertoireSources" , strSourcePath );
     strBinaryPath = config.BuildDecisionalChildFile( strBinaryPath );
     strSourcePath = config.BuildDecisionalChildFile( strSourcePath );
     MT_MakeDir( strBinaryPath                  );
@@ -331,29 +339,29 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
     DIA_SetParsingOptions( eParsingOption_Default );
 
     //$$$$$$$ NLD ??
-	// test if an older workspace debug file exist
-	MT_File workspaceDebugFile;
-	if( workspaceDebugFile.Open( strSourcePath + "/debug/workspace.ddi", "rb" ) )
-	{
-		workspaceDebugFile.Close();
-		DIA_Workspace::Instance().ReadDebugFile();
-	}
+    // test if an older workspace debug file exist
+    MT_File workspaceDebugFile;
+    if( workspaceDebugFile.Open( strSourcePath + "/debug/workspace.ddi", "rb" ) )
+    {
+        workspaceDebugFile.Close();
+        DIA_Workspace::Instance().ReadDebugFile();
+    }
     //$$$$$$$ NLD ??
 
     bool bNeedScriptParsing = false;//!MIL_AgentServer::GetWorkspace().GetConfig().UseDIAArchive();
 
     MT_LOG_INFO_MSG( "Initializing DIA" );
-    InitializeDIATypes    ( decArchive, bNeedScriptParsing, strBinaryPath );
-    InitializeDIAWorkspace( decArchive, bNeedScriptParsing, strBinaryPath );
+    InitializeDIATypes    ( xis, bNeedScriptParsing, strBinaryPath );
+    InitializeDIAWorkspace( xis, bNeedScriptParsing, strBinaryPath );
 
     DEC_Tools                ::InitializeDIA();
     DEC_PopulationDecision   ::InitializeDIA();
     DEC_AutomateDecision     ::InitializeDIA();
-    DEC_RolePion_Decision    ::InitializeDIA();   
+    DEC_RolePion_Decision    ::InitializeDIA();
     DEC_Rep_PathPoint        ::InitializeDIA();
     DEC_Rep_PathPoint_Front  ::InitializeDIA();
     DEC_Rep_PathPoint_Special::InitializeDIA();
-    DEC_Rep_PathPoint_Lima   ::InitializeDIA();       
+    DEC_Rep_PathPoint_Lima   ::InitializeDIA();
     MIL_PionMission          ::InitializeDIA();
     MIL_AutomateMission      ::InitializeDIA();
     MIL_PopulationMission    ::InitializeDIA();
@@ -362,7 +370,7 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
 
     InitializeMissions( config );
     InitializeModels  ( config, bNeedScriptParsing, strBinaryPath );
-            
+
     // Finish the initialiazation of the Workspace by linking function calls
     pFuncTable_ = new DIA_FunctionTable< DEC_Workspace >();
     RegisterDIA_Functions( pFuncTable_ );
@@ -376,7 +384,7 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
     {
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.GetExceptionMessage() );
     }
-    
+
     try
     {
         DIA_Workspace::Instance().WriteDebugFile( "." ); //$$$$$$$ NLD ??
@@ -400,26 +408,24 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeMissions( MIL_Config& config )
 {
-    MIL_InputArchive phyArchive;
-    phyArchive.Open( config.GetPhysicalFile() );
+    xml::xifstream xis( config.GetPhysicalFile() );
 
     std::string strMissionsFile;
-    phyArchive.Section( "physical" );
-    phyArchive.ReadField( "Missions", strMissionsFile );
-    phyArchive.EndSection(); // physical
+    xis >> start( "physical" )
+            >> start( "missions" )
+               >> attribute( "file", strMissionsFile )
+            >> end();
 
     strMissionsFile = config.BuildPhysicalChildFile( strMissionsFile );
 
-    MIL_InputArchive missionsArchive;
-    missionsArchive.Open( strMissionsFile );
+    xml::xifstream xisMission( strMissionsFile );
+
     config.AddFileToCRC( strMissionsFile );
 
-    MIL_PionMissionType      ::Initialize( missionsArchive );
-    MIL_AutomateMissionType  ::Initialize( missionsArchive );
-    MIL_PopulationMissionType::Initialize( missionsArchive );
-    MIL_FragOrderType        ::Initialize( missionsArchive );
-
-    missionsArchive.Close();
+    MIL_PionMissionType      ::Initialize( xisMission );
+    MIL_AutomateMissionType  ::Initialize( xisMission );
+    MIL_PopulationMissionType::Initialize( xisMission );
+    MIL_FragOrderType        ::Initialize( xisMission );
 }
 
 // -----------------------------------------------------------------------------
@@ -428,86 +434,91 @@ void DEC_Workspace::InitializeMissions( MIL_Config& config )
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeModels( MIL_Config& config, bool bNeedScriptParsing, const std::string& strBinaryPath )
 {
-    MIL_InputArchive phyArchive;
-    phyArchive.Open( config.GetPhysicalFile() );
+    xml::xifstream xis( config.GetPhysicalFile() );
 
     std::string strModelsFile;
-    phyArchive.Section( "physical" );
-    phyArchive.ReadField( "Modeles", strModelsFile );
-    phyArchive.EndSection(); // physical
+    xis >> start( "physical" )
+            >> start( "models" )
+                >> attribute( "file", strModelsFile )
+            >> end()
+        >> end();
 
     strModelsFile = config.BuildPhysicalChildFile( strModelsFile );
 
-    MIL_InputArchive modelArchive;
-    modelArchive.Open( strModelsFile );
+    xml::xifstream xisModels( strModelsFile );
+
     config.AddFileToCRC( strModelsFile );
 
-    modelArchive.Section( "Modeles" );
+    xisModels >> start( "models" );
 
     // Pions
     MT_LOG_INFO_MSG( "Initializing unit DIA models" );
-    modelArchive.BeginList( "Pions" );
-    while( modelArchive.NextListElement() )
-    {
-        modelArchive.Section( "Modele" );
-
-        std::string strName;
-        modelArchive.ReadAttribute( "nom", strName );
-
-        const DEC_ModelPion*& pModel = pionModels_[ strName ];
-        if( pModel )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown model name", modelArchive.GetContext() );   
-        pModel = new DEC_ModelPion( *this, strName, modelArchive, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath );
-        static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
-
-        modelArchive.EndSection(); // Modele
-    }
-    modelArchive.EndList(); // Pions
+    xisModels >> start( "units" )
+                  >> list( "unit", *this, &DEC_Workspace::ReadUnit, bNeedScriptParsing, config, strBinaryPath )
+              >> end();
 
     // Automates
     MT_LOG_INFO_MSG( "Initializing automat DIA models" );
-    modelArchive.BeginList( "Automates" );
-    while( modelArchive.NextListElement() )
-    {
-        modelArchive.Section( "Modele" );
-
-        std::string strName;
-        modelArchive.ReadAttribute( "nom", strName );
-
-        const DEC_ModelAutomate*& pModel = automateModels_[ strName ];
-        if( pModel )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknwon model name", modelArchive.GetContext() );   
-        pModel = new DEC_ModelAutomate( *this, strName, modelArchive, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath );
-        static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
-
-        modelArchive.EndSection(); // Modele
-    }
-    modelArchive.EndList(); // Automates
+    xisModels >> start( "automats" )
+                  >> list( "automat", *this, &DEC_Workspace::ReadAutomat, bNeedScriptParsing, config, strBinaryPath )
+              >> end();
 
     // Populations
     MT_LOG_INFO_MSG( "Initializing population DIA models" );
-    modelArchive.BeginList( "Populations" );
-    while( modelArchive.NextListElement() )
-    {
-        modelArchive.Section( "Modele" );
+    xisModels >> start( "populations" )
+                  >> list( "population", *this, &DEC_Workspace::ReadPopulation, bNeedScriptParsing, config, strBinaryPath )
+              >> end();
 
-        std::string strName;
-        modelArchive.ReadAttribute( "nom", strName );
-
-        const DEC_ModelPopulation*& pModel = populationModels_[ strName ];
-        if( pModel )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknwon model name", modelArchive.GetContext() );   
-        pModel = new DEC_ModelPopulation( *this, strName, modelArchive, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath );
-        static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
-
-        modelArchive.EndSection(); // Modele
-    }
-    modelArchive.EndList(); // Populations
-    
-    modelArchive.EndSection(); // Modeles
-    modelArchive.Close();
+    xisModels >> end(); // models
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Workspace::ReadUnit
+// Created: ABL 2007-07-26
+// -----------------------------------------------------------------------------
+void DEC_Workspace::ReadUnit( xml::xistream& xis, bool bNeedScriptParsing, MIL_Config& config, const std::string& strBinaryPath )
+{
+    std::string strName;
+    xis >> attribute( "name", strName );
+
+    const DEC_ModelPion*& pModel = pionModels_[ strName ];
+    if( pModel )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown model name" ); // $$$$ ABL 2007-07-26: error context
+    pModel = new DEC_ModelPion( *this, strName, xis, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath );
+    static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Workspace::ReadAutomat
+// Created: ABL 2007-07-26
+// -----------------------------------------------------------------------------
+void DEC_Workspace::ReadAutomat( xml::xistream& xis, bool bNeedScriptParsing, MIL_Config& config, const std::string& strBinaryPath )
+{
+    std::string strName;
+    xis >> attribute( "name", strName );
+
+    const DEC_ModelAutomate*& pModel = automateModels_[ strName ];
+    if( pModel )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknwon model name" ); // $$$$ ABL 2007-07-26: error context
+    pModel = new DEC_ModelAutomate( *this, strName, xis, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath );
+    static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Workspace::ReadPopulation
+// Created: ABL 2007-07-26
+// -----------------------------------------------------------------------------
+void DEC_Workspace::ReadPopulation( xml::xistream& xis, bool bNeedScriptParsing, MIL_Config& config, const std::string& strBinaryPath )
+{
+    std::string strName;
+    xis >> attribute( "name", strName );
+
+    const DEC_ModelPopulation*& pModel = populationModels_[ strName ];
+    if( pModel )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknwon model name" ); // $$$$ ABL 2007-07-26: error context
+    pModel = new DEC_ModelPopulation( *this, strName, xis, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath );
+    static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
+}
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Workspace::GetTime
@@ -529,8 +540,8 @@ bool DEC_Workspace::CheckFilesDepencies( const std::string& strArchiveFile )
     if( _stat( strArchiveFile.c_str(), & binInfo ) == -1 )
         return true;
 
-    MT_FlatBinaryInputArchive needFilesArchive;
-    if( ! needFilesArchive.Open( strArchiveFile ) )
+    tools::InputBinaryStream needFilesArchive( strArchiveFile );
+    if( ! needFilesArchive )
         return true;
 
     T_StringVector::size_type nSize;
@@ -598,6 +609,3 @@ DIA_Model* DEC_Workspace::FindDIAModelFromScript( const std::string& strScriptNa
     }
     return 0;
 }
-
-
-

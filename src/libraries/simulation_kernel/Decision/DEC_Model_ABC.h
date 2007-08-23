@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class DIA_Model;
 class DEC_Workspace;
 class MIL_MissionType_ABC;
@@ -45,7 +50,7 @@ public:
 protected:
     //! @name Constructors/Destructor
     //@{
-    DEC_Model_ABC( const DEC_Workspace& decWorkspace, const std::string& strModel, MIL_InputArchive& input, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strPrefix );
+    DEC_Model_ABC( const DEC_Workspace& decWorkspace, const std::string& strModel, xml::xistream& xis, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strPrefix );
     virtual ~DEC_Model_ABC();
     //@}
 
@@ -59,8 +64,14 @@ private:
     //! @name Initialization
     //@{
     void InitializeModel            ( const DEC_Workspace& decWorkspace, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strPrefix );
-    void InitializeMissions         ( MIL_InputArchive& archive );
-    void InitializeMissionFragOrders( MIL_InputArchive& archive, const T& missionType );
+    void InitializeMissions         ( xml::xistream& xis );
+    void InitializeMissionFragOrders( xml::xistream& xis, const T& missionType );
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadMission  ( xml::xistream& xis );
+    void ReadFragorder( xml::xistream& xis, const T& missionType );
     //@}
 
 private:

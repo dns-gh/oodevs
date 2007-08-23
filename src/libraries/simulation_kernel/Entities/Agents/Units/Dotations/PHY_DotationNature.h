@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xostream;
+}
+
 // =============================================================================
 // @class  PHY_DotationNature
 // Created: JVT 2004-08-03
@@ -25,7 +30,7 @@ class PHY_DotationNature
 public:
     //! @name Manager
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( xml::xistream& xis );
     static void Terminate ();
 
     static const PHY_DotationNature* Find( const std::string& strName );
@@ -51,6 +56,11 @@ private:
 private:
      PHY_DotationNature( const std::string& strName );
     ~PHY_DotationNature();
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadNature( xml::xistream& xis );
+    //@}
 
 private:
     const std::string strName_;

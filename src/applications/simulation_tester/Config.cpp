@@ -12,7 +12,6 @@
 
 #include "MT/MT_IO/MT_DirectoryBrowser.h"
 #include "MT/MT_IO/MT_Dir.h"
-//#include "MT/MT_XmlTools/MT_XXmlInputArchive.h"
 
 using namespace TEST;
 

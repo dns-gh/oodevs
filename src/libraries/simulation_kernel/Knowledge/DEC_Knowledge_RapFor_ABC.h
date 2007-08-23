@@ -16,6 +16,11 @@
 
 #include "DEC_Knowledge_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 // Created: NLD 2004-04-07
 // =============================================================================
@@ -42,7 +47,7 @@ public:
 
     //! @name Tools
     //@{
-    static void     Initialize                              ( MIL_InputArchive& archive );
+    static void     Initialize                              ( xml::xistream& xis );
     static MT_Float ComputeRapForIncreasePerTimeStepValue   ( MT_Float rBaseTimeValue );    
     static MT_Float GetRapForIncreasePerTimeStepDefaultValue();
     //@}

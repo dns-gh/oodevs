@@ -16,6 +16,11 @@
 
 #include "Meteo/PHY_Lighting.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 //*****************************************************************************
 // Created: JVT 03-08-05
 // Last modified: JVT 03-08-07
@@ -25,7 +30,7 @@ class PHY_Ephemeride
     MT_COPYNOTALLOWED( PHY_Ephemeride )
     
 public:
-     PHY_Ephemeride( MIL_InputArchive& archive );
+    PHY_Ephemeride( xml::xistream& xis );
     ~PHY_Ephemeride();
 
     //! @name 

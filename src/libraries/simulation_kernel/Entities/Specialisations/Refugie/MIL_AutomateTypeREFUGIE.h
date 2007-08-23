@@ -16,6 +16,11 @@
 
 #include "Entities/Automates/MIL_AutomateType.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 // @class  MIL_AutomateType
 // Created: JVT 2004-08-03
@@ -25,7 +30,7 @@ class MIL_AutomateTypeREFUGIE : public MIL_AutomateType
     MT_COPYNOTALLOWED( MIL_AutomateTypeREFUGIE )
 
 public:
-    MIL_AutomateTypeREFUGIE( const std::string& strName, MIL_InputArchive& archive );
+    MIL_AutomateTypeREFUGIE( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AutomateTypeREFUGIE();
 
     //! @name Accessors
@@ -35,7 +40,7 @@ public:
 
     //! @name Main
     //@{
-    static const MIL_AutomateType* Create( const std::string& strName, MIL_InputArchive& archive );
+    static const MIL_AutomateType* Create( const std::string& strName, xml::xistream& xis );
     //@}
 };
 

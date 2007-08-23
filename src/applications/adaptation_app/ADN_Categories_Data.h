@@ -18,7 +18,7 @@
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Tools.h"
 
-class ADN_XmlInput_Helper;
+class xml::xistream;
 
 
 //*****************************************************************************
@@ -42,8 +42,8 @@ public:
 
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& );
-        void WriteArchive( MT_OutputArchive_ABC& );
+        void ReadArchive( xml::xistream& );
+        void WriteArchive( xml::xostream& );
 
     public:
         ADN_Type_Enum< E_EquipmentState, eNbrEquipmentState > nEquipmentState_;
@@ -67,8 +67,9 @@ public:
 
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& );
-        void WriteArchive( MT_OutputArchive_ABC& );
+        void ReadArchive( xml::xistream& );
+        void ReadAttrition( xml::xistream& );
+        void WriteArchive( xml::xostream& );
 
     public:
         ADN_Type_String strName_;
@@ -99,7 +100,7 @@ public:
 //*****************************************************************************
 public:
 
-    ADN_Categories_Data();
+             ADN_Categories_Data();
     virtual ~ADN_Categories_Data();
     
     void            FilesNeeded(T_StringList& l) const;
@@ -115,13 +116,16 @@ public:
     DotationNatureInfos*    FindDotationNature( const std::string& strName );
 
 private:
-    void ReadSizes( ADN_XmlInput_Helper& input );
-    void ReadArmors( ADN_XmlInput_Helper& input );
-    void ReadDotationNatures( ADN_XmlInput_Helper& input );
+    void ReadVolume( xml::xistream& input );
+    void ReadSizes( xml::xistream& input );
+    void ReadProtection( xml::xistream& input );
+    void ReadArmors( xml::xistream& input );
+    void ReadNature( xml::xistream& input );
+    void ReadDotationNatures( xml::xistream& input );
 
-    void WriteSizes( MT_OutputArchive_ABC& output );
-    void WriteArmors( MT_OutputArchive_ABC& output );
-    void WriteDotationNatures( MT_OutputArchive_ABC& output );
+    void WriteSizes( xml::xostream& output );
+    void WriteArmors( xml::xostream& output );
+    void WriteDotationNatures( xml::xostream& output );
 
 
 private:

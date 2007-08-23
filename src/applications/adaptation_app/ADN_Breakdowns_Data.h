@@ -23,7 +23,7 @@
 #include "ADN_Types.h"
 #include "ADN_Equipement_Data.h"
 
-class ADN_XmlInput_Helper;
+class xml::xistream;
 
 
 // =============================================================================
@@ -52,8 +52,8 @@ public:
 
         RepairPartInfo* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::CategoryInfo> ptrPart_;
@@ -80,8 +80,9 @@ public:
 
         BreakdownInfo* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void ReadPart   ( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_String   strName_;
@@ -118,8 +119,10 @@ public:
     //@}
 
 private:
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void WriteArchive( MT_OutputArchive_ABC& output );
+    void ReadArchive( xml::xistream& input );
+    void ReadCategory( xml::xistream& input );
+    void ReadBreakdown( xml::xistream& input, const E_BreakdownNTI& nti );
+    void WriteArchive( xml::xostream& output );
 
 public:
     int nNextId_;

@@ -119,7 +119,7 @@ void DEC_KnowledgeObjectFunctions::IsBypassed( DIA_Call_ABC& call, const T& call
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T >  void DEC_KnowledgeObjectFunctions::IsConstructed					
+// Name: template< typename T >  void DEC_KnowledgeObjectFunctions::IsConstructed                    
 // Created: NLD 2006-10-27
 // -----------------------------------------------------------------------------
 template< typename T > 

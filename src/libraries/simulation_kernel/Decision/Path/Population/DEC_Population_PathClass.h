@@ -12,6 +12,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class DEC_PathType;
 class MIL_Population;
 
@@ -26,7 +31,7 @@ class DEC_Population_PathClass
 public:
     //! @name Manager
     //@{
-    static       void                      Initialize  ( MIL_InputArchive& archive );
+    static       void                      Initialize  ( xml::xistream& xis );
     static       void                      Terminate   ();
     static const DEC_Population_PathClass& GetPathClass( const std::string& type );
     //@}
@@ -34,7 +39,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Population_PathClass( MIL_InputArchive& archive, const DEC_Population_PathClass* pCopyFrom = 0 );
+    DEC_Population_PathClass( xml::xistream& xis, const DEC_Population_PathClass* pCopyFrom = 0 );
     virtual ~DEC_Population_PathClass();
     //@}
 
@@ -42,6 +47,12 @@ public:
     //@{
     double GetCostOutsideOfChanneling() const;
     double GetChannelingRange        () const;
+    //@}
+
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadPopulationRule( xml::xistream& xis );
     //@}
 
 private:

@@ -12,17 +12,100 @@
 #ifndef __ADN_APPLICATION_PCH_H_
 #define __ADN_APPLICATION_PCH_H_
 
-#include "MT/MT_Archive/MT_Archive_lib.h"
 #include "MT/MT_Tools/MT_Tools_lib.h"
 #include "MT/MT_IO/MT_IO_lib.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
-#include "MT/MT_Thread/MT_Thread_lib.h"
-#include "MT/MT_Time/MT_Time_lib.h"
-#include "MT/MT_XmlTools/MT_XmlTools_lib.h"
 #include "MT/MT_Qt/MT_Qt_lib.h"
-
 #include "MT_Tools/MT_Tools_Types.h"
-#include "MT_Tools/MT_ScipioException.h"
 
+#include "xeumeuleu/xml.h"
+#include "ADN_Type_ABC.h"
+
+namespace xml
+{
+    template< typename T >
+    class attribute_manipulator< ADN_Type_ABC< T > >
+    {
+    public:
+        //! @name Constructors/Destructor
+        //@{
+        attribute_manipulator( const std::string& name, ADN_Type_ABC< T >& value )
+            : name_ ( name )
+            , value_( value )
+        {}
+        //@}
+
+        //! @name Operators
+        //@{
+        xistream& operator()( xistream& xis ) const
+        {
+            T value = value_.GetData();
+            xis.attribute( name_, value );
+            value_ = value;
+            return xis;
+        }
+        xostream& operator()( xostream& xos ) const
+        {
+            T value = value_.GetData();
+            xos.attribute( name_, value );
+            return xos;
+        }
+        //@}
+        
+    private:
+        //! @name Copy/Assignment
+        //@{
+        attribute_manipulator& operator=( const attribute_manipulator& ); //!< Assignment operator
+        //@}
+
+    private:
+        //! @name Member data
+        //@{
+        std::string name_;
+        ADN_Type_ABC< T >& value_;
+        //@}
+    };
+
+    template< typename T >
+    class content_manipulator< ADN_Type_ABC< T > >
+    {
+    public:
+        //! @name Constructors/Destructor
+        //@{
+        content_manipulator( const std::string& tag, ADN_Type_ABC< T >& value )
+            : tag_  ( tag )
+            , value_( value )
+        {}
+        //@}
+
+        //! @name Operators
+        //@{
+        xistream& operator()( xistream& xis ) const
+        {
+            T value;
+            xis >> start( tag_ ) >> value >> end();
+            value_ = value;
+            return xis;
+        }
+        xostream& operator()( xostream& xos ) const
+        {
+            return xos << start( tag_ ) << value_.GetData() << end();
+        }
+        //@}
+
+    private:
+        //! @name Copy/Assignment
+        //@{
+        content_manipulator& operator=( const content_manipulator& ); //!< Assignment operator
+        //@}
+
+    private:
+        //! @name Member data
+        //@{
+        std::string tag_;
+        ADN_Type_ABC< T >& value_;
+        //@}
+    };
+}
 
 #endif // __ADN_APPLICATION_PCH_H_

@@ -28,7 +28,7 @@
 #include "ADN_Launchers_Data.h"
 #include "ADN_Equipement_Data.h"
 
-class ADN_XmlInput_Helper;
+class xml::xistream;
 
 
 // =============================================================================
@@ -55,8 +55,8 @@ public:
 
         PhInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Int       nDistance_;
@@ -81,8 +81,9 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void ReadHp( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Categories_Data::SizeInfos>   ptrSize_;
@@ -139,8 +140,9 @@ public:
 
         WeaponInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void ReadTargetSize( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_String strName_; // $$$ Dummy for  ADN_ChangeValueCommand_Pointer<>::UpdateDescription()
@@ -203,8 +205,9 @@ public:
     void                 UpdateNames();
 
 private:
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void WriteArchive( MT_OutputArchive_ABC& output );
+    void ReadWeapon( xml::xistream& input );
+    void ReadArchive( xml::xistream& input );
+    void WriteArchive( xml::xostream& output );
 
 public:
     T_WeaponInfosVector     weapons_;

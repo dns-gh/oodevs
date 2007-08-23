@@ -15,6 +15,11 @@
 #include "PHY_Perception_ABC.h"
 #include "simulation_terrain/TER_Localisation.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_Effect_IndirectFire;
 
 // =============================================================================
@@ -32,7 +37,7 @@ public:
 
     //! @name Initialization
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( xml::xistream& xis );
     //@}
 
     //! @name Add/Remove Points

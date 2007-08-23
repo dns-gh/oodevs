@@ -26,6 +26,9 @@
 #include "Tools/MIL_Tools.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AsnException.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 BOOST_CLASS_EXPORT_GUID( MIL_Population, "MIL_Population" )
 
@@ -33,7 +36,7 @@ BOOST_CLASS_EXPORT_GUID( MIL_Population, "MIL_Population" )
 // Name: MIL_Population constructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Army& army, MIL_InputArchive& archive )
+MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Army& army, xml::xistream& xis )
     : PHY_Actor               ()
     , pType_                  ( &type )
     , nID_                    ( nID )
@@ -48,18 +51,18 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Ar
     , rOverloadedPionMaxSpeed_( 0. )
     , bHasDoneMagicMove_      ( false )
 {
-    archive.ReadAttribute( "name", strName_, MIL_InputArchive::eNothing );
+    xis >> optional() >> attribute( "name", strName_ );
 
     std::string strAttitude;
-    archive.ReadAttribute( "attitude", strAttitude );
+    xis >> attribute( "attitude", strAttitude );
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( strAttitude );
     if( !pDefaultAttitude_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown attitude", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown attitude" ); // $$$$ ABL 2007-07-10: error context
 
     pKnowledge_ = new DEC_PopulationKnowledge();
     pDecision_  = new DEC_PopulationDecision( *this );
 
-    MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, archive );
+    MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, xis );
     concentrations_.push_back( pConcentration );
     rPeopleCount_ = pConcentration->GetNbrAliveHumans();
 
@@ -167,26 +170,26 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const uint ) const
 // Name: MIL_Population::WriteODB
 // Created: NLD 2006-06-01
 // -----------------------------------------------------------------------------
-void MIL_Population::WriteODB( MT_XXmlOutputArchive& archive ) const
+void MIL_Population::WriteODB( xml::xostream& xos ) const
 {
     assert( pType_ );
     assert( pArmy_ );
     assert( pDefaultAttitude_ );
     assert( !concentrations_.empty() || !flows_.empty() );
 
-    archive.Section( "population" );
-    archive.WriteAttribute( "id"      , nID_ );
-    archive.WriteAttribute( "type"    , pType_->GetName() );    
-    archive.WriteAttribute( "name"    , strName_ );
-    archive.WriteAttribute( "humans"  , GetNbrAliveHumans() + GetNbrDeadHumans() );
-    archive.WriteAttribute( "attitude", pDefaultAttitude_->GetName() );
+    xos << start( "population" )
+        << attribute( "id"      , nID_ )
+        << attribute( "type"    , pType_->GetName() )
+        << attribute( "name"    , strName_ )
+        << attribute( "humans"  , GetNbrAliveHumans() + GetNbrDeadHumans() )
+        << attribute( "attitude", pDefaultAttitude_->GetName() );
     
     if( !concentrations_.empty() )
-        archive.WriteAttribute( "position", MIL_Tools::ConvertCoordSimToMos( concentrations_.front()->GetPosition() ) );
+        xos << attribute( "position", MIL_Tools::ConvertCoordSimToMos( concentrations_.front()->GetPosition() ) );
     else
-        archive.WriteAttribute( "position", MIL_Tools::ConvertCoordSimToMos( flows_.front()->GetPosition() ) );
+        xos << attribute( "position", MIL_Tools::ConvertCoordSimToMos( flows_.front()->GetPosition() ) );
 
-    archive.EndSection(); // population
+    xos << end(); // population
 }
 
 // =============================================================================

@@ -14,7 +14,7 @@
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
 inline
-const MIL_AutomateType* MIL_AutomateTypeASA::Create( const std::string& strName, MIL_InputArchive& archive )
+const MIL_AutomateType* MIL_AutomateTypeASA::Create( const std::string& strName, xml::xistream& xis )
 {
-    return new MIL_AutomateTypeASA( strName, archive );
+    return new MIL_AutomateTypeASA( strName, xis );
 }

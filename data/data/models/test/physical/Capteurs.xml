@@ -1,319 +1,256 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Capteurs>
-
-  <SurveillanceALAT>
-    <TempsSurveillance>
-      <Vide>10s</Vide>
-      <Foret>20s</Foret>
-      <Urbain>32s</Urbain>
-    </TempsSurveillance>
-  </SurveillanceALAT>
-
-  <RadarCOBRA>
-    <Portee>
-      <RayonAction>100000</RayonAction>
-    </Portee>
-  </RadarCOBRA>
-
-  <Radars>
-    <Radar nom="Radar standard" type="radar">
-      <Portee>
-        <RayonAction>10000</RayonAction>
-      </Portee>
-      <DureesAcquisition>
-        <DureeDetection>300s</DureeDetection>
-        <DureeReconnaissance>900s</DureeReconnaissance>
-      </DureesAcquisition>
-    </Radar>
-    <Radar nom="Radar doppler" type="radar">
-      <Portee>
-        <RayonAction>10000</RayonAction>
-      </Portee>
-      <ActivitePionsDetectables>
-        <Deplacement/>
-        <EnTravaux/>
-      </ActivitePionsDetectables>
-      <DureesAcquisition>
-        <DureeDetection>300s</DureeDetection>
-        <DureeReconnaissance>900s</DureeReconnaissance>
-      </DureesAcquisition>
-    </Radar>
-    <Radar nom="Radar HAWK" type="radar">
-      <Portee>
-        <RayonAction>15000</RayonAction>
-        <HauteurMinimale>20</HauteurMinimale>
-        <HauteurMaximale>450</HauteurMaximale>
-      </Portee>
-      <ActivitePionsDetectables>
-        <ArretMoteurEteint/>
-        <ArretMoteurAllume/>
-        <Deplacement/>
-        <EnTravaux/>
-      </ActivitePionsDetectables>
-    </Radar>
-    <Radar nom="Radar MISTRAL" type="radar">
-      <Portee>
-        <RayonAction>50000</RayonAction>
-        <HauteurMinimale>0</HauteurMinimale>
-        <HauteurMaximale>3000</HauteurMaximale>
-      </Portee>
-      <ActivitePionsDetectables>
-        <Deplacement/>
-      </ActivitePionsDetectables>
-    </Radar>
-    <Radar nom="Radar ROLAND" type="radar">
-      <Portee>
-        <RayonAction>6000</RayonAction>
-        <HauteurMinimale>20</HauteurMinimale>
-        <HauteurMaximale>150</HauteurMaximale>
-      </Portee>
-      <ActivitePionsDetectables>
-        <Deplacement/>
-        <EnTravaux/>
-      </ActivitePionsDetectables>
-    </Radar>
-    <Radar nom="Ecoute" type="ecoute">
-      <Portee>
-        <RayonAction>10000</RayonAction>
-      </Portee>
-      <DureesAcquisition>
-        <DureeDetection>60s</DureeDetection>
-        <DureeReconnaissance>120s</DureeReconnaissance>
-        <DureeIdentification>198s</DureeIdentification>
-        <DureesSpecifiquesPionPC>
-          <DureeDetection>300s</DureeDetection>
-          <DureeReconnaissance>480s</DureeReconnaissance>
-          <DureeIdentification>900s</DureeIdentification>
-        </DureesSpecifiquesPionPC>
-      </DureesAcquisition>
-    </Radar>
-    <Radar nom="Ecoute radar" type="ecoute radar">
-      <Portee>
-        <RayonAction>10000</RayonAction>
-      </Portee>
-      <DureesAcquisition>
-        <DureeDetection>6s</DureeDetection>
-        <DureeReconnaissance>36s</DureeReconnaissance>
-      </DureesAcquisition>
-    </Radar>
-  </Radars>
-
-  <Senseurs>
-    <Senseur nom="oeil">
-      <DetectionAgents>
-        <Angle balayage="true" unite="degre">30</Angle>
-        <DistanceDeProximite>50</DistanceDeProximite>
-        <DistancesDeBase>
-          <DD>8000</DD>
-          <DR>5000</DR>
-          <DI>3000</DI>
-        </DistancesDeBase>
-        <ModificateursDeDistance>
-          <PresencePopulation densitePopulation="1" modificateur="0.5"/>
-          <VolumesCible>
-            <Gros>1</Gros>
-            <Moyen>0.9</Moyen>
-            <Petit>0.7</Petit>
-            <Personnel>0.3</Personnel>
-          </VolumesCible>
-          <Precipitations>
-            <PasDePrecipitation>1</PasDePrecipitation>
-            <TempeteDeSable>0</TempeteDeSable>
-            <Brouillard>0.1</Brouillard>
-            <Crachin>0.4</Crachin>
-            <Pluie>0.2</Pluie>
-            <Neige>0.1</Neige>
-            <Fumigene>0.1</Fumigene>
-          </Precipitations>
-          <Eclairements>
-            <JourSansNuage>1</JourSansNuage>
-            <JourPeuNuageux>1</JourPeuNuageux>
-            <JourMoyennementNuageux>1</JourMoyennementNuageux>
-            <JourAssezNuageux>1</JourAssezNuageux>
-            <JourTresNuageux>1</JourTresNuageux>
-            <NuitPleineLune>0.5</NuitPleineLune>
-            <NuitTroisQuartDeLune>0.5</NuitTroisQuartDeLune>
-            <NuitDemiLune>0.5</NuitDemiLune>
-            <NuitQuartDeLune>0.5</NuitQuartDeLune>
-            <NuitNouvelleLune>1</NuitNouvelleLune>
-            <Eclairant>1</Eclairant>
-          </Eclairements>
-          <PosturesSource>
-            <Mouvement>0.9</Mouvement>
-            <MouvementDiscret>0.9</MouvementDiscret>
-            <Arret>0.9</Arret>
-            <PosteReflexe>0.9</PosteReflexe>
-            <Poste>0.9</Poste>
-            <PosteAmenage>1</PosteAmenage>
-            <PostePrepareGenie>1</PostePrepareGenie>
-          </PosturesSource>
-          <PosturesCible>
-            <Mouvement>1</Mouvement>
-            <MouvementDiscret>0.9</MouvementDiscret>
-            <Arret>0.9</Arret>
-            <PosteReflexe>0.8</PosteReflexe>
-            <Poste>0.7</Poste>
-            <PosteAmenage>0.7</PosteAmenage>
-            <PostePrepareGenie>0.7</PostePrepareGenie>
-          </PosturesCible>
-          <Environnements>
-            <Sol>1</Sol>
-            <Vide>1</Vide>
-            <Foret>1</Foret>
-            <Urbain>1</Urbain>
-          </Environnements>
-        </ModificateursDeDistance>
-      </DetectionAgents>
-      <DetectionObjets>
-        <Objets>
-          <Objet type="bouchon mines">
-            <DD>1000</DD>
-            <ModificateursDeDistance>
-              <PresencePopulation densitePopulation="1" modificateur="0.5"/>
-              <PosturesSource>
-                <Mouvement>1</Mouvement>
-                <MouvementDiscret>0.25</MouvementDiscret>
-                <Arret>0.9</Arret>
-                <PosteReflexe>0.8</PosteReflexe>
-                <Poste>0.3</Poste>
-                <PosteAmenage>0.25</PosteAmenage>
-                <PostePrepareGenie>0.2</PostePrepareGenie>
-              </PosturesSource>
-            </ModificateursDeDistance>
-          </Objet>
-          <Objet type="itineraire logistique">
-            <DD>1000</DD>
-            <ModificateursDeDistance>
-              <PresencePopulation densitePopulation="1" modificateur="0.5"/>
-              <PosturesSource>
-                <Mouvement>1</Mouvement>
-                <MouvementDiscret>0.25</MouvementDiscret>
-                <Arret>0.9</Arret>
-                <PosteReflexe>0.8</PosteReflexe>
-                <Poste>0.3</Poste>
-                <PosteAmenage>0.25</PosteAmenage>
-                <PostePrepareGenie>0.2</PostePrepareGenie>
-              </PosturesSource>
-            </ModificateursDeDistance>
-          </Objet>
-          <Objet type="site franchissement">
-            <DD>5000</DD>
-            <ModificateursDeDistance>
-              <PresencePopulation densitePopulation="1" modificateur="0.5"/>
-              <PosturesSource>
-                <Mouvement>1</Mouvement>
-                <MouvementDiscret>1</MouvementDiscret>
-                <Arret>1</Arret>
-                <PosteReflexe>1</PosteReflexe>
-                <Poste>1</Poste>
-                <PosteAmenage>1</PosteAmenage>
-                <PostePrepareGenie>1</PostePrepareGenie>
-              </PosturesSource>
-            </ModificateursDeDistance>
-          </Objet>
-        </Objets>
-      </DetectionObjets>
-    </Senseur>
-    <Senseur nom="oeil NBC">
-      <DetectionAgents>
-        <Angle balayage="true" unite="degre">60</Angle>
-        <DistanceDeProximite>50</DistanceDeProximite>
-        <DistancesDeBase>
-          <DD>200</DD>
-          <DR>150</DR>
-          <DI>75</DI>
-        </DistancesDeBase>
-        <ModificateursDeDistance>
-          <PresencePopulation densitePopulation="1" modificateur="0.5"/>
-          <VolumesCible>
-            <Gros>1</Gros>
-            <Moyen>0.9</Moyen>
-            <Petit>0.7</Petit>
-            <Personnel>0.3</Personnel>
-          </VolumesCible>
-          <Precipitations>
-            <PasDePrecipitation>1</PasDePrecipitation>
-            <TempeteDeSable>0</TempeteDeSable>
-            <Brouillard>0.1</Brouillard>
-            <Crachin>0.4</Crachin>
-            <Pluie>0.2</Pluie>
-            <Neige>0.1</Neige>
-            <Fumigene>0.1</Fumigene>
-          </Precipitations>
-          <Eclairements>
-            <JourSansNuage>0</JourSansNuage>
-            <JourPeuNuageux>0</JourPeuNuageux>
-            <JourMoyennementNuageux>0</JourMoyennementNuageux>
-            <JourAssezNuageux>0</JourAssezNuageux>
-            <JourTresNuageux>0</JourTresNuageux>
-            <NuitPleineLune>0.7</NuitPleineLune>
-            <NuitTroisQuartDeLune>0.4</NuitTroisQuartDeLune>
-            <NuitDemiLune>0.3</NuitDemiLune>
-            <NuitQuartDeLune>0.1</NuitQuartDeLune>
-            <NuitNouvelleLune>1</NuitNouvelleLune>
-            <Eclairant>0</Eclairant>
-          </Eclairements>
-          <PosturesSource>
-            <Mouvement>1</Mouvement>
-            <MouvementDiscret>0.25</MouvementDiscret>
-            <Arret>0.9</Arret>
-            <PosteReflexe>0.8</PosteReflexe>
-            <Poste>0.3</Poste>
-            <PosteAmenage>0.25</PosteAmenage>
-            <PostePrepareGenie>0.2</PostePrepareGenie>
-          </PosturesSource>
-          <PosturesCible>
-            <Mouvement>1</Mouvement>
-            <MouvementDiscret>0.25</MouvementDiscret>
-            <Arret>0.9</Arret>
-            <PosteReflexe>0.8</PosteReflexe>
-            <Poste>0.3</Poste>
-            <PosteAmenage>0.25</PosteAmenage>
-            <PostePrepareGenie>0.2</PostePrepareGenie>
-          </PosturesCible>
-          <Environnements>
-            <Sol>0</Sol>
-            <Vide>1</Vide>
-            <Foret>0.05</Foret>
-            <Urbain>1</Urbain>
-          </Environnements>
-        </ModificateursDeDistance>
-      </DetectionAgents>
-      <DetectionObjets>
-        <Objets>
-          <Objet type="rota">
-            <DD>1000</DD>
-            <ModificateursDeDistance>
-              <PresencePopulation densitePopulation="1" modificateur="0.5"/>
-              <PosturesSource>
-                <Mouvement>1</Mouvement>
-                <MouvementDiscret>0.25</MouvementDiscret>
-                <Arret>0.9</Arret>
-                <PosteReflexe>0.8</PosteReflexe>
-                <Poste>0.3</Poste>
-                <PosteAmenage>0.25</PosteAmenage>
-                <PostePrepareGenie>0.2</PostePrepareGenie>
-              </PosturesSource>
-            </ModificateursDeDistance>
-          </Objet>
-          <Objet type="nuage nbc">
-            <DD>1000</DD>
-            <ModificateursDeDistance>
-              <PresencePopulation densitePopulation="1" modificateur="0.5"/>
-              <PosturesSource>
-                <Mouvement>1</Mouvement>
-                <MouvementDiscret>0.25</MouvementDiscret>
-                <Arret>0.9</Arret>
-                <PosteReflexe>0.8</PosteReflexe>
-                <Poste>0.3</Poste>
-                <PosteAmenage>0.25</PosteAmenage>
-                <PostePrepareGenie>0.2</PostePrepareGenie>
-              </PosturesSource>
-            </ModificateursDeDistance>
-          </Objet>
-        </Objets>
-      </DetectionObjets>
-    </Senseur>
-  </Senseurs>
-
-</Capteurs>
+<sensors>
+  <alat-monitoring-times>
+    <alat-monitoring-time terrain="Vide" time="10s"/>
+    <alat-monitoring-time terrain="Foret" time="20s"/>
+    <alat-monitoring-time terrain="Urbain" time="32s"/>
+  </alat-monitoring-times>
+  <cobra-radar action-range="100000"/>
+  <radars>
+    <radar action-range="10000" name="Radar standard" type="radar">
+      <acquisition-times>
+        <acquisition-time base-time="300s" level="detection"/>
+        <acquisition-time base-time="900s" level="recognition"/>
+      </acquisition-times>
+    </radar>
+    <radar action-range="10000" name="Radar doppler" type="radar">
+      <detectable-activities>
+        <detectable-activity type="Deplacement" value="true"/>
+        <detectable-activity type="EnTravaux" value="true"/>
+      </detectable-activities>
+      <acquisition-times>
+        <acquisition-time base-time="300s" level="detection"/>
+        <acquisition-time base-time="900s" level="recognition"/>
+      </acquisition-times>
+    </radar>
+    <radar action-range="15000" max-height="450" min-height="20" name="Radar HAWK" type="radar">
+      <detectable-activities>
+        <detectable-activity type="ArretMoteurEteint" value="true"/>
+        <detectable-activity type="ArretMoteurAllume" value="true"/>
+        <detectable-activity type="Deplacement" value="true"/>
+        <detectable-activity type="EnTravaux" value="true"/>
+      </detectable-activities>
+    </radar>
+    <radar action-range="50000" max-height="3000" name="Radar MISTRAL" type="radar">
+      <detectable-activities>
+        <detectable-activity type="Deplacement" value="true"/>
+      </detectable-activities>
+    </radar>
+    <radar action-range="6000" max-height="150" min-height="20" name="Radar ROLAND" type="radar">
+      <detectable-activities>
+        <detectable-activity type="Deplacement" value="true"/>
+        <detectable-activity type="EnTravaux" value="true"/>
+      </detectable-activities>
+    </radar>
+    <radar action-range="10000" name="Ecoute" type="ecoute">
+      <acquisition-times>
+        <acquisition-time base-time="60s" level="detection"/>
+        <acquisition-time base-time="120s" level="recognition"/>
+        <acquisition-time base-time="198s" level="identification"/>
+        <acquisition-time command-post-time="300s" level="detection"/>
+        <acquisition-time command-post-time="480s" level="recognition"/>
+        <acquisition-time command-post-time="900s" level="identification"/>
+      </acquisition-times>
+    </radar>
+    <radar action-range="10000" name="Ecoute radar" type="ecoute radar">
+      <acquisition-times>
+        <acquisition-time base-time="6s" level="detection"/>
+        <acquisition-time base-time="36s" level="recognition"/>
+      </acquisition-times>
+    </radar>
+  </radars>
+  <sensors>
+    <sensor name="oeil">
+      <unit-detection angle="30" scanning="true">
+        <base-distances close-range="50">
+          <base-distance distance="3000" level="identification"/>
+          <base-distance distance="5000" level="recognition"/>
+          <base-distance distance="8000" level="detection"/>
+        </base-distances>
+        <distance-modifiers>
+          <population-modifier density="1" modifier="0.5"/>
+          <size-modifiers>
+            <distance-modifier type="Gros" value="1"/>
+            <distance-modifier type="Moyen" value="0.9"/>
+            <distance-modifier type="Petit" value="0.7"/>
+            <distance-modifier type="Personnel" value="0.3"/>
+          </size-modifiers>
+          <precipitation-modifiers>
+            <distance-modifier type="PasDePrecipitation" value="1"/>
+            <distance-modifier type="TempeteDeSable" value="0"/>
+            <distance-modifier type="Brouillard" value="0.1"/>
+            <distance-modifier type="Crachin" value="0.4"/>
+            <distance-modifier type="Pluie" value="0.2"/>
+            <distance-modifier type="Neige" value="0.1"/>
+            <distance-modifier type="Fumigene" value="0.1"/>
+          </precipitation-modifiers>
+          <visibility-modifiers>
+            <distance-modifier type="JourSansNuage" value="1"/>
+            <distance-modifier type="JourPeuNuageux" value="1"/>
+            <distance-modifier type="JourMoyennementNuageux" value="1"/>
+            <distance-modifier type="JourAssezNuageux" value="1"/>
+            <distance-modifier type="JourTresNuageux" value="1"/>
+            <distance-modifier type="NuitPleineLune" value="0.5"/>
+            <distance-modifier type="NuitTroisQuartDeLune" value="0.5"/>
+            <distance-modifier type="NuitDemiLune" value="0.5"/>
+            <distance-modifier type="NuitQuartDeLune" value="0.5"/>
+            <distance-modifier type="NuitNouvelleLune" value="1"/>
+            <distance-modifier type="Eclairant" value="1"/>
+          </visibility-modifiers>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="0.9"/>
+            <distance-modifier type="MouvementDiscret" value="0.9"/>
+            <distance-modifier type="Arret" value="0.9"/>
+            <distance-modifier type="PosteReflexe" value="0.9"/>
+            <distance-modifier type="Poste" value="0.9"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+          <target-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="0.9"/>
+            <distance-modifier type="Arret" value="0.9"/>
+            <distance-modifier type="PosteReflexe" value="0.8"/>
+            <distance-modifier type="Poste" value="0.7"/>
+            <distance-modifier type="PosteAmenage" value="0.7"/>
+            <distance-modifier type="PostePrepareGenie" value="0.7"/>
+          </target-posture-modifiers>
+          <terrain-modifiers>
+            <distance-modifier type="Sol" value="1"/>
+            <distance-modifier type="Vide" value="1"/>
+            <distance-modifier type="Foret" value="1"/>
+            <distance-modifier type="Urbain" value="1"/>
+          </terrain-modifiers>
+        </distance-modifiers>
+      </unit-detection>
+      <object-detection>
+        <object detection-distance="1000" type="bouchon mines">
+          <population-modifier density="1" modifier="0.5"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="0.25"/>
+            <distance-modifier type="Arret" value="0.9"/>
+            <distance-modifier type="PosteReflexe" value="0.8"/>
+            <distance-modifier type="Poste" value="0.3"/>
+            <distance-modifier type="PosteAmenage" value="0.25"/>
+            <distance-modifier type="PostePrepareGenie" value="0.2"/>
+          </source-posture-modifiers>
+        </object>
+        <object detection-distance="1000" type="itineraire logistique">
+          <population-modifier density="1" modifier="0.5"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="0.25"/>
+            <distance-modifier type="Arret" value="0.9"/>
+            <distance-modifier type="PosteReflexe" value="0.8"/>
+            <distance-modifier type="Poste" value="0.3"/>
+            <distance-modifier type="PosteAmenage" value="0.25"/>
+            <distance-modifier type="PostePrepareGenie" value="0.2"/>
+          </source-posture-modifiers>
+        </object>
+        <object detection-distance="5000" type="site franchissement">
+          <population-modifier density="1" modifier="0.5"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
+      </object-detection>
+    </sensor>
+    <sensor name="oeil NBC">
+      <unit-detection angle="60" scanning="true">
+        <base-distances close-range="50">
+          <base-distance distance="75" level="identification"/>
+          <base-distance distance="150" level="recognition"/>
+          <base-distance distance="200" level="detection"/>
+        </base-distances>
+        <distance-modifiers>
+          <population-modifier density="1" modifier="0.5"/>
+          <size-modifiers>
+            <distance-modifier type="Gros" value="1"/>
+            <distance-modifier type="Moyen" value="0.9"/>
+            <distance-modifier type="Petit" value="0.7"/>
+            <distance-modifier type="Personnel" value="0.3"/>
+          </size-modifiers>
+          <precipitation-modifiers>
+            <distance-modifier type="PasDePrecipitation" value="1"/>
+            <distance-modifier type="TempeteDeSable" value="0"/>
+            <distance-modifier type="Brouillard" value="0.1"/>
+            <distance-modifier type="Crachin" value="0.4"/>
+            <distance-modifier type="Pluie" value="0.2"/>
+            <distance-modifier type="Neige" value="0.1"/>
+            <distance-modifier type="Fumigene" value="0.1"/>
+          </precipitation-modifiers>
+          <visibility-modifiers>
+            <distance-modifier type="JourSansNuage" value="0"/>
+            <distance-modifier type="JourPeuNuageux" value="0"/>
+            <distance-modifier type="JourMoyennementNuageux" value="0"/>
+            <distance-modifier type="JourAssezNuageux" value="0"/>
+            <distance-modifier type="JourTresNuageux" value="0"/>
+            <distance-modifier type="NuitPleineLune" value="0.7"/>
+            <distance-modifier type="NuitTroisQuartDeLune" value="0.4"/>
+            <distance-modifier type="NuitDemiLune" value="0.3"/>
+            <distance-modifier type="NuitQuartDeLune" value="0.1"/>
+            <distance-modifier type="NuitNouvelleLune" value="1"/>
+            <distance-modifier type="Eclairant" value="0"/>
+          </visibility-modifiers>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="0.25"/>
+            <distance-modifier type="Arret" value="0.9"/>
+            <distance-modifier type="PosteReflexe" value="0.8"/>
+            <distance-modifier type="Poste" value="0.3"/>
+            <distance-modifier type="PosteAmenage" value="0.25"/>
+            <distance-modifier type="PostePrepareGenie" value="0.2"/>
+          </source-posture-modifiers>
+          <target-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="0.25"/>
+            <distance-modifier type="Arret" value="0.9"/>
+            <distance-modifier type="PosteReflexe" value="0.8"/>
+            <distance-modifier type="Poste" value="0.3"/>
+            <distance-modifier type="PosteAmenage" value="0.25"/>
+            <distance-modifier type="PostePrepareGenie" value="0.2"/>
+          </target-posture-modifiers>
+          <terrain-modifiers>
+            <distance-modifier type="Sol" value="0"/>
+            <distance-modifier type="Vide" value="1"/>
+            <distance-modifier type="Foret" value="0.05"/>
+            <distance-modifier type="Urbain" value="1"/>
+          </terrain-modifiers>
+        </distance-modifiers>
+      </unit-detection>
+      <object-detection>
+        <object detection-distance="1000" type="rota">
+          <population-modifier density="1" modifier="0.5"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="0.25"/>
+            <distance-modifier type="Arret" value="0.9"/>
+            <distance-modifier type="PosteReflexe" value="0.8"/>
+            <distance-modifier type="Poste" value="0.3"/>
+            <distance-modifier type="PosteAmenage" value="0.25"/>
+            <distance-modifier type="PostePrepareGenie" value="0.2"/>
+          </source-posture-modifiers>
+        </object>
+        <object detection-distance="1000" type="nuage nbc">
+          <population-modifier density="1" modifier="0.5"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="0.25"/>
+            <distance-modifier type="Arret" value="0.9"/>
+            <distance-modifier type="PosteReflexe" value="0.8"/>
+            <distance-modifier type="Poste" value="0.3"/>
+            <distance-modifier type="PosteAmenage" value="0.25"/>
+            <distance-modifier type="PostePrepareGenie" value="0.2"/>
+          </source-posture-modifiers>
+        </object>
+      </object-detection>
+    </sensor>
+  </sensors>
+</sensors>

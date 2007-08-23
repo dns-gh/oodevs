@@ -1,570 +1,114 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Dotations>
-
-  <Dotation nom="munition">
-    <Categories>
-      <Categorie nom="Balle Classique 12,7">
-        <MosID>1</MosID>
-        <Type>Mitraille</Type>
-        <Conditionnement>
-          <Nombre>5</Nombre>
-          <Masse>0.2</Masse>
-          <Volume>0.2</Volume>
-        </Conditionnement>
-        <CodeEMAT6>Balle Classique 12,7</CodeEMAT6>
-        <CodeEMAT8>Balle Classique 12,7</CodeEMAT8>
-        <CodeLFRIL>Balle Classique 12,7</CodeLFRIL>
-        <CodeNNO>Balle Classique 12,7</CodeNNO>
-        <Nature>Solide</Nature>
-        <Attritions>
-          <ProtectionTypeCharLourd>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeCharLourd>
-          <ProtectionTypeCharMoyen>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeCharMoyen>
-          <ProtectionTypeBlindeLeger>
-            <Destruction>0</Destruction>
-            <ReparableAvecEvacuation>0.1</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.1</ReparableSansEvacuation>
-          </ProtectionTypeBlindeLeger>
-          <ProtectionTypeTransportBlinde>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeTransportBlinde>
-          <ProtectionTypeAeronef>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeAeronef>
-          <ProtectionTypeVehiculeNonProtege>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeVehiculeNonProtege>
-          <ProtectionTypeCombattant>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.3</ReparableSansEvacuation>
-          </ProtectionTypeCombattant>
-        </Attritions>
-      </Categorie>
-      <Categorie nom="Obus 120 mm">
-        <MosID>2</MosID>
-        <Type>Obus</Type>
-        <Conditionnement>
-          <Nombre>5</Nombre>
-          <Masse>0.6</Masse>
-          <Volume>0.5</Volume>
-        </Conditionnement>
-        <CodeEMAT6>Obus 120 mm</CodeEMAT6>
-        <CodeEMAT8>Obus 120 mm</CodeEMAT8>
-        <CodeLFRIL>Obus 120 mm</CodeLFRIL>
-        <CodeNNO>Obus 120 mm</CodeNNO>
-        <Nature>Liquide</Nature>
-        <Attritions>
-          <ProtectionTypeCharLourd>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeCharLourd>
-          <ProtectionTypeCharMoyen>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeCharMoyen>
-          <ProtectionTypeBlindeLeger>
-            <Destruction>0</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.2</ReparableSansEvacuation>
-          </ProtectionTypeBlindeLeger>
-          <ProtectionTypeTransportBlinde>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeTransportBlinde>
-          <ProtectionTypeAeronef>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeAeronef>
-          <ProtectionTypeVehiculeNonProtege>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeVehiculeNonProtege>
-          <ProtectionTypeCombattant>
-            <Destruction>0</Destruction>
-            <ReparableAvecEvacuation>1</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0</ReparableSansEvacuation>
-          </ProtectionTypeCombattant>
-        </Attritions>
-        <TirIndirect type="explosif">
-          <InterventionType>6</InterventionType>
-          <DispersionX>1000</DispersionX>
-          <DispersionY>1500</DispersionY>
-          <CoefficientNeutralisation>1.5</CoefficientNeutralisation>
-          <PHs>
-            <PostureCible>
-              <Mouvement>1</Mouvement>
-              <MouvementDiscret>1</MouvementDiscret>
-              <Arret>1</Arret>
-              <PosteReflexe>1</PosteReflexe>
-              <Poste>1</Poste>
-              <PosteAmenage>0.2</PosteAmenage>
-              <PostePrepareGenie>0.2</PostePrepareGenie>
-            </PostureCible>
-          </PHs>
-        </TirIndirect>
-      </Categorie>
-      <Categorie nom="Fusse a jupette 53mm">
-        <TrancheD/>
-        <MosID>3</MosID>
-        <Type>MissileSol</Type>
-        <Conditionnement>
-          <Nombre>5</Nombre>
-          <Masse>65</Masse>
-          <Volume>5</Volume>
-        </Conditionnement>
-        <CodeEMAT6>Fusse a jupette 53mm</CodeEMAT6>
-        <CodeEMAT8>Fusse a jupette 53mm</CodeEMAT8>
-        <CodeLFRIL>Fusse a jupette 53mm</CodeLFRIL>
-        <CodeNNO>Fusse a jupette 53mm</CodeNNO>
-        <Nature>Solide</Nature>
-        <Attritions>
-          <ProtectionTypeCharLourd>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeCharLourd>
-          <ProtectionTypeCharMoyen>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeCharMoyen>
-          <ProtectionTypeBlindeLeger>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.3</ReparableSansEvacuation>
-          </ProtectionTypeBlindeLeger>
-          <ProtectionTypeTransportBlinde>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeTransportBlinde>
-          <ProtectionTypeAeronef>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeAeronef>
-          <ProtectionTypeVehiculeNonProtege>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeVehiculeNonProtege>
-          <ProtectionTypeCombattant>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.3</ReparableSansEvacuation>
-          </ProtectionTypeCombattant>
-        </Attritions>
-        <TirIndirect type="explosif">
-          <InterventionType>6</InterventionType>
-          <DispersionX>1000</DispersionX>
-          <DispersionY>1500</DispersionY>
-          <CoefficientNeutralisation>1.5</CoefficientNeutralisation>
-          <PHs>
-            <PostureCible>
-              <Mouvement>1</Mouvement>
-              <MouvementDiscret>1</MouvementDiscret>
-              <Arret>1</Arret>
-              <PosteReflexe>1</PosteReflexe>
-              <Poste>1</Poste>
-              <PosteAmenage>0.2</PosteAmenage>
-              <PostePrepareGenie>0.2</PostePrepareGenie>
-            </PostureCible>
-          </PHs>
-        </TirIndirect>
-      </Categorie>
-      <Categorie nom="Fusse a ailettes 50mm">
-        <MosID>4</MosID>
-        <Type>MissileAir</Type>
-        <Conditionnement>
-          <Nombre>5</Nombre>
-          <Masse>65</Masse>
-          <Volume>5</Volume>
-        </Conditionnement>
-        <CodeEMAT6>Fusse a ailettes 50mm</CodeEMAT6>
-        <CodeEMAT8>Fusse a ailettes 50mm</CodeEMAT8>
-        <CodeLFRIL>Fusse a ailettes 50mm</CodeLFRIL>
-        <CodeNNO>Fusse a ailettes 50mm</CodeNNO>
-        <Nature>Solide</Nature>
-        <Attritions>
-          <ProtectionTypeCharLourd>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeCharLourd>
-          <ProtectionTypeCharMoyen>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeCharMoyen>
-          <ProtectionTypeBlindeLeger>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.3</ReparableSansEvacuation>
-          </ProtectionTypeBlindeLeger>
-          <ProtectionTypeTransportBlinde>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeTransportBlinde>
-          <ProtectionTypeAeronef>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeAeronef>
-          <ProtectionTypeVehiculeNonProtege>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeVehiculeNonProtege>
-          <ProtectionTypeCombattant>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.3</ReparableSansEvacuation>
-          </ProtectionTypeCombattant>
-        </Attritions>
-        <TirIndirect type="explosif">
-          <InterventionType>6</InterventionType>
-          <DispersionX>300</DispersionX>
-          <DispersionY>200</DispersionY>
-          <CoefficientNeutralisation>1.5</CoefficientNeutralisation>
-          <PHs>
-            <PostureCible>
-              <Mouvement>1</Mouvement>
-              <MouvementDiscret>1</MouvementDiscret>
-              <Arret>1</Arret>
-              <PosteReflexe>1</PosteReflexe>
-              <Poste>1</Poste>
-              <PosteAmenage>0.2</PosteAmenage>
-              <PostePrepareGenie>0.2</PostePrepareGenie>
-            </PostureCible>
-          </PHs>
-        </TirIndirect>
-      </Categorie>
-      <Categorie nom="Missile Hot">
-        <MosID>5</MosID>
-        <Type>MissileSol</Type>
-        <Conditionnement>
-          <Nombre>5</Nombre>
-          <Masse>65</Masse>
-          <Volume>5</Volume>
-        </Conditionnement>
-        <CodeEMAT6>Missile Hot</CodeEMAT6>
-        <CodeEMAT8>Missile Hot</CodeEMAT8>
-        <CodeLFRIL>Missile Hot</CodeLFRIL>
-        <CodeNNO>Missile Hot</CodeNNO>
-        <Nature>Solide</Nature>
-        <Attritions>
-          <ProtectionTypeCharLourd>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeCharLourd>
-          <ProtectionTypeCharMoyen>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeCharMoyen>
-          <ProtectionTypeBlindeLeger>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.3</ReparableSansEvacuation>
-          </ProtectionTypeBlindeLeger>
-          <ProtectionTypeTransportBlinde>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeTransportBlinde>
-          <ProtectionTypeAeronef>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeAeronef>
-          <ProtectionTypeVehiculeNonProtege>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-          </ProtectionTypeVehiculeNonProtege>
-          <ProtectionTypeCombattant>
-            <Destruction>0.3</Destruction>
-            <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
-            <ReparableSansEvacuation>0.3</ReparableSansEvacuation>
-          </ProtectionTypeCombattant>
-        </Attritions>
-        <TirIndirect type="explosif">
-          <InterventionType>6</InterventionType>
-          <DispersionX>300</DispersionX>
-          <DispersionY>200</DispersionY>
-          <CoefficientNeutralisation>1.5</CoefficientNeutralisation>
-          <PHs>
-            <PostureCible>
-              <Mouvement>1</Mouvement>
-              <MouvementDiscret>1</MouvementDiscret>
-              <Arret>1</Arret>
-              <PosteReflexe>1</PosteReflexe>
-              <Poste>1</Poste>
-              <PosteAmenage>0.2</PosteAmenage>
-              <PostePrepareGenie>0.2</PostePrepareGenie>
-            </PostureCible>
-          </PHs>
-        </TirIndirect>
-      </Categorie>
-      <Categorie nom="Obus eclairant">
-        <TrancheD/>
-        <MosID>6</MosID>
-        <Type>Obus</Type>
-        <Conditionnement>
-          <Nombre>5</Nombre>
-          <Masse>65</Masse>
-          <Volume>5</Volume>
-        </Conditionnement>
-        <CodeEMAT6>Obus eclairant</CodeEMAT6>
-        <CodeEMAT8>Obus eclairant</CodeEMAT8>
-        <CodeLFRIL>Obus eclairant</CodeLFRIL>
-        <CodeNNO>Obus eclairant</CodeNNO>
-        <Nature>Solide</Nature>
-        <TirIndirect type="eclairant">
-          <InterventionType>3</InterventionType>
-          <DispersionX>1000</DispersionX>
-          <DispersionY>1500</DispersionY>
-          <DureeDeploiement>0s</DureeDeploiement>
-          <DureeVie>120000s</DureeVie>
-        </TirIndirect>
-      </Categorie>
-      <Categorie nom="Obus mine">
-        <TrancheD/>
-        <MosID>7</MosID>
-        <Type>Obus</Type>
-        <Conditionnement>
-          <Nombre>5</Nombre>
-          <Masse>65</Masse>
-          <Volume>5</Volume>
-        </Conditionnement>
-        <CodeEMAT6>Obus mine</CodeEMAT6>
-        <CodeEMAT8>Obus mine</CodeEMAT8>
-        <CodeLFRIL>Obus mine</CodeLFRIL>
-        <CodeNNO>Obus mine</CodeNNO>
-        <Nature>Solide</Nature>
-        <TirIndirect type="mine">
-          <InterventionType>6</InterventionType>
-          <DispersionX>1000</DispersionX>
-          <DispersionY>1500</DispersionY>
-          <NombreMines>5</NombreMines>
-        </TirIndirect>
-      </Categorie>
-      <Categorie nom="Obus fumigene">
-        <MosID>8</MosID>
-        <Type>Obus</Type>
-        <Conditionnement>
-          <Nombre>5</Nombre>
-          <Masse>65</Masse>
-          <Volume>5</Volume>
-        </Conditionnement>
-        <CodeEMAT6>Obus mine</CodeEMAT6>
-        <CodeEMAT8>Obus mine</CodeEMAT8>
-        <CodeLFRIL>Obus mine</CodeLFRIL>
-        <CodeNNO>Obus mine</CodeNNO>
-        <Nature>Solide</Nature>
-        <TirIndirect type="fumigene">
-          <InterventionType>10</InterventionType>
-          <DispersionX>450</DispersionX>
-          <DispersionY>300</DispersionY>
-          <DureeDeploiement>60s</DureeDeploiement>
-          <DureeVie>600s</DureeVie>
-        </TirIndirect>
-      </Categorie>
-    </Categories>
-  </Dotation>
-
-  <Dotation nom="carburant">
-    <Categories>
-      <Categorie nom="gasoil">
-        <MosID>9</MosID>
-        <Conditionnement>
-          <Nombre>50</Nombre>
-          <Masse>6</Masse>
-          <Volume>5</Volume>
-        </Conditionnement>
-        <CodeEMAT6>gasoil</CodeEMAT6>
-        <CodeEMAT8>gasoil</CodeEMAT8>
-        <CodeLFRIL>gasoil</CodeLFRIL>
-        <CodeNNO>gasoil</CodeNNO>
-        <Nature>Liquide</Nature>
-      </Categorie>
-    </Categories>
-  </Dotation>
-
-  <Dotation nom="explosif">
-    <Categories>
-      <Categorie nom="explosif classique">
-        <MosID>10</MosID>
-        <Conditionnement>
-          <Nombre>5</Nombre>
-          <Masse>65</Masse>
-          <Volume>5</Volume>
-        </Conditionnement>
-        <CodeEMAT6>explosif classique</CodeEMAT6>
-        <CodeEMAT8>explosif classique</CodeEMAT8>
-        <CodeLFRIL>explosif classique</CodeLFRIL>
-        <CodeNNO>explosif classique</CodeNNO>
-        <Nature>Solide</Nature>
-      </Categorie>
-    </Categories>
-  </Dotation>
-
-  <Dotation nom="mine">
-    <Categories>
-      <Categorie nom="mine classique">
-        <MosID>11</MosID>
-        <Conditionnement>
-          <Nombre>5</Nombre>
-          <Masse>65</Masse>
-          <Volume>5</Volume>
-        </Conditionnement>
-        <CodeEMAT6>mine classique</CodeEMAT6>
-        <CodeEMAT8>mine classique</CodeEMAT8>
-        <CodeLFRIL>mine classique</CodeLFRIL>
-        <CodeNNO>mine classique</CodeNNO>
-        <Nature>Solide</Nature>
-      </Categorie>
-      <Categorie nom="pont flottant de la mort">
-        <MosID>12</MosID>
-        <Conditionnement>
-          <Nombre>5</Nombre>
-          <Masse>65</Masse>
-          <Volume>5</Volume>
-        </Conditionnement>
-        <CodeEMAT6>pont flottant</CodeEMAT6>
-        <CodeEMAT8>pont flottant</CodeEMAT8>
-        <CodeLFRIL>pont flottant</CodeLFRIL>
-        <CodeNNO>pont flottant</CodeNNO>
-        <Nature>Solide</Nature>
-      </Categorie>
-    </Categories>
-  </Dotation>
-
-  <Dotation nom="barbele">
-    <Categories>
-      <Categorie nom="barbele classique">
-        <MosID>13</MosID>
-        <Conditionnement>
-          <Nombre>5</Nombre>
-          <Masse>65</Masse>
-          <Volume>5</Volume>
-        </Conditionnement>
-        <CodeEMAT6>barbele classique</CodeEMAT6>
-        <CodeEMAT8>barbele classique</CodeEMAT8>
-        <CodeLFRIL>barbele classique</CodeLFRIL>
-        <CodeNNO>barbele classique</CodeNNO>
-        <Nature>Solide</Nature>
-      </Categorie>
-    </Categories>
-  </Dotation>
-
-  <Dotation nom="piece">
-    <Categories>
-      <Categorie nom="Truc pour reparer la mobilite 1">
-        <MosID>14</MosID>
-        <Conditionnement>
-          <Nombre>5</Nombre>
-          <Masse>65</Masse>
-          <Volume>5</Volume>
-        </Conditionnement>
-        <CodeEMAT6>Truc pour reparer la mobilite 1</CodeEMAT6>
-        <CodeEMAT8>Truc pour reparer la mobilite 1</CodeEMAT8>
-        <CodeLFRIL>Truc pour reparer la mobilite 1</CodeLFRIL>
-        <CodeNNO>Truc pour reparer la mobilite 1</CodeNNO>
-        <Nature>Solide</Nature>
-      </Categorie>
-      <Categorie nom="Truc pour reparer la mobilite 2">
-        <MosID>15</MosID>
-        <Conditionnement>
-          <Nombre>5</Nombre>
-          <Masse>65</Masse>
-          <Volume>5</Volume>
-        </Conditionnement>
-        <CodeEMAT6>Truc pour reparer la mobilite 2</CodeEMAT6>
-        <CodeEMAT8>Truc pour reparer la mobilite 2</CodeEMAT8>
-        <CodeLFRIL>Truc pour reparer la mobilite 2</CodeLFRIL>
-        <CodeNNO>Truc pour reparer la mobilite 2</CodeNNO>
-        <Nature>Solide</Nature>
-      </Categorie>
-      <Categorie nom="Truc pour reparer la mobilite 3">
-        <MosID>16</MosID>
-        <Conditionnement>
-          <Nombre>5</Nombre>
-          <Masse>65</Masse>
-          <Volume>5</Volume>
-        </Conditionnement>
-        <CodeEMAT6>Truc pour reparer la mobilite 3</CodeEMAT6>
-        <CodeEMAT8>Truc pour reparer la mobilite 3</CodeEMAT8>
-        <CodeLFRIL>Truc pour reparer la mobilite 3</CodeLFRIL>
-        <CodeNNO>Truc pour reparer la mobilite 3</CodeNNO>
-        <Nature>Solide</Nature>
-      </Categorie>
-      <Categorie nom="Truc pour reparer l'electronique 1">
-        <MosID>17</MosID>
-        <Conditionnement>
-          <Nombre>5</Nombre>
-          <Masse>65</Masse>
-          <Volume>5</Volume>
-        </Conditionnement>
-        <CodeEMAT6>Truc pour reparer l'electronique 1</CodeEMAT6>
-        <CodeEMAT8>Truc pour reparer l'electronique 1</CodeEMAT8>
-        <CodeLFRIL>Truc pour reparer l'electronique 1</CodeLFRIL>
-        <CodeNNO>Truc pour reparer l'electronique 1</CodeNNO>
-        <Nature>Solide</Nature>
-      </Categorie>
-    </Categories>
-  </Dotation>
-
-  <Dotation nom="ration">
-    <Categories>
-      <Categorie nom="bouffe">
-        <MosID>18</MosID>
-        <Conditionnement>
-          <Nombre>5</Nombre>
-          <Masse>65</Masse>
-          <Volume>5</Volume>
-        </Conditionnement>
-        <CodeEMAT6>bouffe</CodeEMAT6>
-        <CodeEMAT8>bouffe</CodeEMAT8>
-        <CodeLFRIL>bouffe</CodeLFRIL>
-        <CodeNNO>bouffe</CodeNNO>
-        <Nature>Solide</Nature>
-      </Categorie>
-      <Categorie nom="flotte">
-        <MosID>19</MosID>
-        <Conditionnement>
-          <Nombre>5</Nombre>
-          <Masse>65</Masse>
-          <Volume>5</Volume>
-        </Conditionnement>
-        <CodeEMAT6>flotte</CodeEMAT6>
-        <CodeEMAT8>flotte</CodeEMAT8>
-        <CodeLFRIL>flotte</CodeLFRIL>
-        <CodeNNO>flotte</CodeNNO>
-        <Nature>Solide</Nature>
-      </Categorie>
-    </Categories>
-  </Dotation>
-
-</Dotations>
+<dotations>
+  <dotation category="Balle Classique 12,7" codeEMAT6="Balle Classique 12,7" codeEMAT8="Balle Classique 12,7" codeLFRIL="Balle Classique 12,7" codeNNO="Balle Classique 12,7" id="1" name="munition" nature="Solide" package-mass="0.2" package-size="5" package-volume="0.2" type="Mitraille">
+    <attritions>
+      <attrition destruction="0.3" protection="CharLourd" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0" protection="BlindeLeger" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.3" protection="TransportBlinde" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="Aeronef" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="Combattant" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
+    </attritions>
+  </dotation>
+  <dotation category="Obus 120 mm" codeEMAT6="Obus 120 mm" codeEMAT8="Obus 120 mm" codeLFRIL="Obus 120 mm" codeNNO="Obus 120 mm" id="2" name="munition" nature="Liquide" package-mass="0.6" package-size="5" package-volume="0.5" type="Obus">
+    <attritions>
+      <attrition destruction="0.3" protection="CharLourd" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0" protection="BlindeLeger" repairable-with-evacuation="0.2" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0.3" protection="TransportBlinde" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="Aeronef" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+    </attritions>
+    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="1000" y-dispersion="1500">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="1"/>
+      <ph target-posture="PosteAmenage" value="0.2"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </dotation>
+  <dotation category="Fusse a jupette 53mm" codeEMAT6="Fusse a jupette 53mm" codeEMAT8="Fusse a jupette 53mm" codeLFRIL="Fusse a jupette 53mm" codeNNO="Fusse a jupette 53mm" d-type="true" id="3" name="munition" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="MissileSol">
+    <attritions>
+      <attrition destruction="0.3" protection="CharLourd" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="BlindeLeger" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.3" protection="TransportBlinde" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="Aeronef" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="Combattant" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
+    </attritions>
+    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="1000" y-dispersion="1500">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="1"/>
+      <ph target-posture="PosteAmenage" value="0.2"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </dotation>
+  <dotation category="Fusse a ailettes 50mm" codeEMAT6="Fusse a ailettes 50mm" codeEMAT8="Fusse a ailettes 50mm" codeLFRIL="Fusse a ailettes 50mm" codeNNO="Fusse a ailettes 50mm" id="4" name="munition" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="MissileAir">
+    <attritions>
+      <attrition destruction="0.3" protection="CharLourd" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="BlindeLeger" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.3" protection="TransportBlinde" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="Aeronef" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="Combattant" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
+    </attritions>
+    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="1"/>
+      <ph target-posture="PosteAmenage" value="0.2"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </dotation>
+  <dotation category="Missile Hot" codeEMAT6="Missile Hot" codeEMAT8="Missile Hot" codeLFRIL="Missile Hot" codeNNO="Missile Hot" id="5" name="munition" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="MissileSol">
+    <attritions>
+      <attrition destruction="0.3" protection="CharLourd" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="BlindeLeger" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.3" protection="TransportBlinde" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="Aeronef" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.3" protection="Combattant" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
+    </attritions>
+    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="1"/>
+      <ph target-posture="PosteAmenage" value="0.2"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </dotation>
+  <dotation category="Obus eclairant" codeEMAT6="Obus eclairant" codeEMAT8="Obus eclairant" codeLFRIL="Obus eclairant" codeNNO="Obus eclairant" d-type="true" id="6" name="munition" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="Obus">
+    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
+  </dotation>
+  <dotation category="Obus mine" codeEMAT6="Obus mine" codeEMAT8="Obus mine" codeLFRIL="Obus mine" codeNNO="Obus mine" d-type="true" id="7" name="munition" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="Obus">
+    <indirect-fire intervention-type="6" mine-count="5" type="mine" x-dispersion="1000" y-dispersion="1500"/>
+  </dotation>
+  <dotation category="Obus fumigene" codeEMAT6="Obus mine" codeEMAT8="Obus mine" codeLFRIL="Obus mine" codeNNO="Obus mine" id="8" name="munition" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="Obus">
+    <indirect-fire intervention-type="10" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="450" y-dispersion="300"/>
+  </dotation>
+  <dotation category="gasoil" codeEMAT6="gasoil" codeEMAT8="gasoil" codeLFRIL="gasoil" codeNNO="gasoil" id="9" name="carburant" nature="Liquide" package-mass="6" package-size="50" package-volume="5"/>
+  <dotation category="explosif classique" codeEMAT6="explosif classique" codeEMAT8="explosif classique" codeLFRIL="explosif classique" codeNNO="explosif classique" id="10" name="explosif" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
+  <dotation category="mine classique" codeEMAT6="mine classique" codeEMAT8="mine classique" codeLFRIL="mine classique" codeNNO="mine classique" id="11" name="mine" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
+  <dotation category="pont flottant de la mort" codeEMAT6="pont flottant" codeEMAT8="pont flottant" codeLFRIL="pont flottant" codeNNO="pont flottant" id="12" name="mine" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
+  <dotation category="barbele classique" codeEMAT6="barbele classique" codeEMAT8="barbele classique" codeLFRIL="barbele classique" codeNNO="barbele classique" id="13" name="barbele" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
+  <dotation category="Truc pour reparer la mobilite 1" codeEMAT6="Truc pour reparer la mobilite 1" codeEMAT8="Truc pour reparer la mobilite 1" codeLFRIL="Truc pour reparer la mobilite 1" codeNNO="Truc pour reparer la mobilite 1" id="14" name="piece" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
+  <dotation category="Truc pour reparer la mobilite 2" codeEMAT6="Truc pour reparer la mobilite 2" codeEMAT8="Truc pour reparer la mobilite 2" codeLFRIL="Truc pour reparer la mobilite 2" codeNNO="Truc pour reparer la mobilite 2" id="15" name="piece" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
+  <dotation category="Truc pour reparer la mobilite 3" codeEMAT6="Truc pour reparer la mobilite 3" codeEMAT8="Truc pour reparer la mobilite 3" codeLFRIL="Truc pour reparer la mobilite 3" codeNNO="Truc pour reparer la mobilite 3" id="16" name="piece" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
+  <dotation category="Truc pour reparer l'electronique 1" codeEMAT6="Truc pour reparer l'electronique 1" codeEMAT8="Truc pour reparer l'electronique 1" codeLFRIL="Truc pour reparer l'electronique 1" codeNNO="Truc pour reparer l'electronique 1" id="17" name="piece" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
+  <dotation category="bouffe" codeEMAT6="bouffe" codeEMAT8="bouffe" codeLFRIL="bouffe" codeNNO="bouffe" id="18" name="ration" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
+  <dotation category="flotte" codeEMAT6="flotte" codeEMAT8="flotte" codeLFRIL="flotte" codeNNO="flotte" id="19" name="ration" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
+</dotations>

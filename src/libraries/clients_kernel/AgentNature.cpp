@@ -20,16 +20,10 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 AgentNature::AgentNature( xml::xistream& xis )
 {
-    xis >> start( "Nature" )
-            >> start( "Niveau" )
-                >> attribute( "type", level_ )
-            >> end()
-            >> start( "Nature" )
-                >> attribute( "type", nature_ )
-            >> end()
-            >> start( "QualificatifAtlas" )
-                >> attribute( "type", atlas_ )
-            >> end()
+    xis >> start( "nature" )
+            >> attribute( "level", level_ )
+            >> attribute( "nature", nature_ )
+            >> attribute( "atlas-nature", atlas_ )
         >> end();
 }
     

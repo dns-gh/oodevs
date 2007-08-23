@@ -12,9 +12,20 @@
 #include "simulation_kernel_pch.h"
 
 #include "PHY_Volume.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 PHY_Volume::T_VolumeMap PHY_Volume::volumes_;
 uint                    PHY_Volume::nNextID_ = 0;
+
+struct PHY_Volume::LoadingWrapper
+{
+    void ReadVolume( xml::xistream& xis )
+    {
+        PHY_Volume::ReadVolume( xis );
+    }
+};
 
 // =============================================================================
 // STATIC INITIALIZATION (MANAGER)
@@ -24,29 +35,32 @@ uint                    PHY_Volume::nNextID_ = 0;
 // Name: PHY_Volume::Initialize
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-void PHY_Volume::Initialize( MIL_InputArchive& archive )
+void PHY_Volume::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing volumes" );
 
+    LoadingWrapper loader;
+
     // Initialisation des composantes
-    archive.BeginList( "Volumes" );
+    xis >> start( "volumes" )
+            >> list( "volume", loader, &LoadingWrapper::ReadVolume )
+        >> end();
+}
 
-    while ( archive.NextListElement() )
-    {
-        archive.Section( "Volume" );
+// -----------------------------------------------------------------------------
+// Name: PHY_Volume::ReadVolume
+// Created: ABL 2007-07-18
+// -----------------------------------------------------------------------------
+void PHY_Volume::ReadVolume( xml::xistream& xis )
+{
+    std::string strVolume;
+    xis >> attribute( "name", strVolume );
 
-        std::string strVolume;
-        archive.Read( strVolume );
-
-        const PHY_Volume*& pVolume = volumes_[ strVolume ];
-        if( pVolume )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Volume '%s' already registered", strVolume.c_str() ) );
-        
-        pVolume = new PHY_Volume( strVolume );
-
-        archive.EndSection(); // Volume
-    }
-    archive.EndList(); // Volumes
+    const PHY_Volume*& pVolume = volumes_[ strVolume ];
+    if( pVolume )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Volume '%s' already registered", strVolume.c_str() ) );
+    
+    pVolume = new PHY_Volume( strVolume );
 }
 
 // -----------------------------------------------------------------------------

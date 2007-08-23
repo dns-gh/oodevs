@@ -23,6 +23,10 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Tools/MIL_Tools.h"
+#include "tools/xmlcodecs.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 PHY_RadarType::T_RadarTypeMap PHY_RadarType::radarTypes_;
 uint                          PHY_RadarType::nNextID_ = 0;
@@ -31,36 +35,63 @@ uint                          PHY_RadarType::nNextID_ = 0;
 // MANAGER
 // =============================================================================
 
+struct PHY_RadarType::LoadingWrapper
+{
+    void ReadRadar( xml::xistream& xis, const MIL_Time_ABC& time )
+    {
+        PHY_RadarType::ReadRadar( xis, time );
+    }
+};
+
+namespace
+{
+    template< typename T >
+    bool ReadPcAndBaseTime( xml::xistream& xis, const std::string& name, T& time )
+    {
+        int seconds = 0;
+        std::string timeString;
+        xis >> optional() >> attribute( name, timeString );
+        if( tools::DecodeTime( timeString, seconds ) )
+        {
+            time = seconds;
+            return true;
+        }
+        return false;
+    }
+};
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RadarType::Initialize
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-void PHY_RadarType::Initialize( MIL_InputArchive& archive, const MIL_Time_ABC& time )
+void PHY_RadarType::Initialize( xml::xistream& xis, const MIL_Time_ABC& time )
 {
-    archive.BeginList( "Radars" );
+    LoadingWrapper loader;
 
-    while ( archive.NextListElement() )
-    {
-        archive.Section( "Radar" );
+    xis >> start( "radars" )
+            >> list( "radar", loader, &LoadingWrapper::ReadRadar, time )
+        >> end();
+}
 
-        std::string strRadarName;
-        archive.ReadAttribute( "nom", strRadarName );
+// -----------------------------------------------------------------------------
+// Name: PHY_RadarType::ReadRadar
+// Created: ABL 2007-07-26
+// -----------------------------------------------------------------------------
+void PHY_RadarType::ReadRadar( xml::xistream& xis, const MIL_Time_ABC& time )
+{
+    std::string strRadarName;
+    xis >> attribute( "name", strRadarName );
 
-        std::string strType;
-        archive.ReadAttribute( "type", strType );
-        const PHY_RadarClass* pType = PHY_RadarClass::Find( strType );
-        if( !pType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown radar type", archive.GetContext() );
+    std::string strType;
+    xis >> attribute( "type", strType );
+    const PHY_RadarClass* pType = PHY_RadarClass::Find( strType );
+    if( !pType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown radar type" ); // $$$$ ABL 2007-07-26: error context
 
-        const PHY_RadarType*& pRadarType = radarTypes_[ strRadarName ];
-        if( pRadarType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Radar already exists", archive.GetContext() );
-        pRadarType = new PHY_RadarType( strRadarName, *pType, time, archive );
-
-        archive.EndSection(); // Senseur
-    }
-
-    archive.EndList(); // Senseurs
+    const PHY_RadarType*& pRadarType = radarTypes_[ strRadarName ];
+    if( pRadarType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Radar already exists" ); // $$$$ ABL 2007-07-26: error context
+    pRadarType = new PHY_RadarType( strRadarName, *pType, time, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +112,7 @@ void PHY_RadarType::Terminate()
 // Name: PHY_RadarType constructor
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-PHY_RadarType::PHY_RadarType( const std::string& strName, const PHY_RadarClass& radarClass, const MIL_Time_ABC& time, MIL_InputArchive& archive )
+PHY_RadarType::PHY_RadarType( const std::string& strName, const PHY_RadarClass& radarClass, const MIL_Time_ABC& time, xml::xistream& xis )
     : nID_                  ( nNextID_++ )
     , strName_              ( strName )
     , class_                ( radarClass )
@@ -97,9 +128,9 @@ PHY_RadarType::PHY_RadarType( const std::string& strName, const PHY_RadarClass& 
     , rPcRecognitionTime_   ( std::numeric_limits< MT_Float >::max() )
     , rPcIdentificationTime_( std::numeric_limits< MT_Float >::max() )
 {
-    InitializeRange           ( archive );
-    InitializeActivities      ( archive );
-    InitializeAcquisitionTimes( archive );
+    InitializeRange           ( xis );
+    InitializeActivities      ( xis );
+    InitializeAcquisitionTimes( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,103 +145,162 @@ PHY_RadarType::~PHY_RadarType()
 // Name: PHY_RadarType::InitializeRange
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-void PHY_RadarType::InitializeRange( MIL_InputArchive& archive )
+void PHY_RadarType::InitializeRange( xml::xistream& xis )
 {
-    archive.Section( "Portee" );
+    xis >> attribute( "action-range", rRadius_ )
+        >> optional() >> attribute( "min-height", rMinHeight_ )
+        >> optional() >> attribute( "max-height", rMaxHeight_ );
 
-    archive.ReadField( "RayonAction", rRadius_, CheckValueGreaterOrEqual( 0. ) );
+    if( rRadius_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "radar: action-range < 0" );
     rRadius_ = MIL_Tools::ConvertMeterToSim( rRadius_ );
 
-    archive.ReadField( "HauteurMinimale", rMinHeight_, CheckValueGreaterOrEqual( 0.          ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
-    archive.ReadField( "HauteurMaximale", rMaxHeight_, CheckValueGreaterOrEqual( rMinHeight_ ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
-
-    archive.EndSection(); // Portee
+    if( rMinHeight_ != -std::numeric_limits< MT_Float >::max() && rMinHeight_ < 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "radar: min-height < 0" );
+    if( rMaxHeight_ != std::numeric_limits< MT_Float >::max() && rMaxHeight_ < rMinHeight_ )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "radar: max-height < min-height" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RadarType::InitializeActivities
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-void PHY_RadarType::InitializeActivities( MIL_InputArchive& archive )
+void PHY_RadarType::InitializeActivities( xml::xistream& xis )
 {
-    if( !archive.Section( "ActivitePionsDetectables", MIL_InputArchive::eNothing ) )
+    bool bIsActivity = false;
+    xis >> list( "detectable-activities", *this, &PHY_RadarType::ReadDetectableActivity, bIsActivity );
+    if( !bIsActivity )
     {
         std::fill( detectableActivities_.begin(), detectableActivities_.end(), true );
         return;
     }
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RadarType::ReadDetectableActivity
+// Created: ABL 2007-07-26
+// -----------------------------------------------------------------------------
+void PHY_RadarType::ReadDetectableActivity( xml::xistream& xis, bool& bIsActivity )
+{
+    bIsActivity = true;
     std::fill( detectableActivities_.begin(), detectableActivities_.end(), false );
 
+    xis >> list( "detectable-activity", *this, &PHY_RadarType::ReadActivity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RadarType::ReadActivity
+// Created: ABL 2007-07-26
+// -----------------------------------------------------------------------------
+void PHY_RadarType::ReadActivity( xml::xistream& xis )
+{
     const PHY_ConsumptionType::T_ConsumptionTypeMap& consumptionTypes = PHY_ConsumptionType::GetConsumptionTypes();
-    for( PHY_ConsumptionType::CIT_ConsumptionTypeMap it = consumptionTypes.begin(); it != consumptionTypes.end(); ++it )
+
+    std::string activityType;
+    xis >> attribute( "type", activityType );
+
+    PHY_ConsumptionType::CIT_ConsumptionTypeMap it = consumptionTypes.find( activityType );
+    if( it != consumptionTypes.end() )
     {
         const PHY_ConsumptionType& conso = *it->second;
-        if ( archive.Section( conso.GetName(), MIL_InputArchive::eNothing ) )
-        {
-            detectableActivities_[ conso.GetID() ] = true;
-            archive.EndSection();
-        }
+        bool bValue = false;
+        xis >> optional() >> attribute( "value", bValue );
+        detectableActivities_[ conso.GetID() ] = bValue;
     }
-    archive.EndSection(); // ActivitePionsDetectables
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RadarType::InitializeAcquisitionTimes
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-void PHY_RadarType::InitializeAcquisitionTimes( MIL_InputArchive& archive )
+void PHY_RadarType::InitializeAcquisitionTimes( xml::xistream& xis )
 {
-    if( !archive.Section( "DureesAcquisition", MIL_InputArchive::eNothing ) )
+    bool bIsTime = false;
+    xis >> list( "acquisition-times", *this, &PHY_RadarType::ReadAcquisitionTime, bIsTime );
+
+    if( !bIsTime )
     {
         rPcDetectionTime_       = rDetectionTime_       = std::numeric_limits< MT_Float >::max();
         rPcRecognitionTime_     = rRecognitionTime_     = 0;
         rPcIdentificationTime_  = rIdentificationTime_  = std::numeric_limits< MT_Float >::max();
         return;
     }
-   
-    MT_Float rMinBound = 0.;
-    if( archive.ReadTimeField( "DureeDetection", rDetectionTime_, CheckValueGreaterOrEqual( 0. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing ) ) 
-        rMinBound = rDetectionTime_;   
-    if( archive.ReadTimeField( "DureeReconnaissance", rRecognitionTime_, CheckValueGreaterOrEqual( rMinBound ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing ) )
-        rMinBound = rRecognitionTime_;
-    archive.ReadTimeField( "DureeIdentification", rIdentificationTime_, CheckValueGreaterOrEqual( rMinBound ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
+}
 
-    if( rDetectionTime_ != std::numeric_limits< MT_Float >::max() )
-        rDetectionTime_ = MIL_Tools::ConvertSecondsToSim( rDetectionTime_ );
-    if( rRecognitionTime_ != std::numeric_limits< MT_Float >::max() )
-        rRecognitionTime_ = MIL_Tools::ConvertSecondsToSim( rRecognitionTime_ );
-    if( rIdentificationTime_ != std::numeric_limits< MT_Float >::max() )
-        rIdentificationTime_ = MIL_Tools::ConvertSecondsToSim( rIdentificationTime_ );
+// -----------------------------------------------------------------------------
+// Name: PHY_RadarType::ReadAcquisitionTime
+// Created: ABL 2007-07-26
+// -----------------------------------------------------------------------------
+void PHY_RadarType::ReadAcquisitionTime( xml::xistream& xis, bool& bIsTime )
+{
+    bIsTime = true;
+    bool bIsPCTime = false;
+    xis >> list( "acquisition-time", *this, &PHY_RadarType::ReadTime, bIsPCTime );
 
-    if( !archive.Section( "DureesSpecifiquesPionPC", MIL_InputArchive::eNothing ) )
+    if( !bIsPCTime )
     {
         rPcDetectionTime_       = rDetectionTime_;
         rPcRecognitionTime_     = rRecognitionTime_;
         rPcIdentificationTime_  = rIdentificationTime_;
     }
-    else
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RadarType::ReadTime
+// Created: ABL 2007-07-26
+// -----------------------------------------------------------------------------
+void PHY_RadarType::ReadTime( xml::xistream& xis, bool& bIsPCTime )
+{
+    std::string acquisitionType;
+    xis >> attribute( "level", acquisitionType );
+
+    if( acquisitionType == "detection" )
     {
-        rPcDetectionTime_       = std::numeric_limits< MT_Float >::max();
-        rPcRecognitionTime_     = std::numeric_limits< MT_Float >::max();
-        rPcIdentificationTime_  = std::numeric_limits< MT_Float >::max();
+        if( ReadPcAndBaseTime( xis, "base-time", rDetectionTime_ ) )
+            if( rDetectionTime_ < 0 )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "detection acquisition-time: base-time < 0" );
+            else
+                rDetectionTime_ = MIL_Tools::ConvertSecondsToSim( rDetectionTime_ );
 
-        MT_Float rMinBound = 0.;
-        if( archive.ReadTimeField( "DureeDetection", rPcDetectionTime_, CheckValueGreaterOrEqual( 0. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing ) ) 
-            rMinBound = rPcDetectionTime_;   
-        if( archive.ReadTimeField( "DureeReconnaissance", rPcRecognitionTime_, CheckValueGreaterOrEqual( rMinBound ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing ) )
-            rMinBound = rPcRecognitionTime_;
-        archive.ReadTimeField( "DureeIdentification", rPcIdentificationTime_, CheckValueGreaterOrEqual( rMinBound ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
-
-        if( rPcDetectionTime_ != std::numeric_limits< MT_Float >::max() )
-            rPcDetectionTime_ = MIL_Tools::ConvertSecondsToSim( rPcDetectionTime_ );
-        if( rPcRecognitionTime_ != std::numeric_limits< MT_Float >::max() )
-            rPcRecognitionTime_ = MIL_Tools::ConvertSecondsToSim( rPcRecognitionTime_ );
-        if( rPcIdentificationTime_ != std::numeric_limits< MT_Float >::max() )
-            rPcIdentificationTime_ = MIL_Tools::ConvertSecondsToSim( rPcIdentificationTime_ );
-        archive.EndSection(); // DureesSpecifiquesPionPC
+        if( ReadPcAndBaseTime( xis, "command-post-time", rPcDetectionTime_ ) )
+            if( rPcDetectionTime_ < 0 )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "detection acquisition-time: command-post-time < 0" );
+            else
+            {
+                bIsPCTime = true;
+                rPcDetectionTime_ = MIL_Tools::ConvertSecondsToSim( rPcDetectionTime_ );
+            }
     }
+    else if( acquisitionType == "recognition" )
+    {
+        if( ReadPcAndBaseTime( xis, "base-time", rRecognitionTime_ ) )
+            if( rRecognitionTime_ < rDetectionTime_ )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "recoginition acquisition-time: base-time < detection base-time" );
+            else
+                rRecognitionTime_ = MIL_Tools::ConvertSecondsToSim( rRecognitionTime_ );
 
-    archive.EndSection(); // DureesAcquisition
+        if( ReadPcAndBaseTime( xis, "command-post-time", rPcRecognitionTime_ ) )
+            if( rPcRecognitionTime_ < rPcDetectionTime_ )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "recognition acquisition-time: command-post-time < detection command-post-time" );
+            else
+                rPcRecognitionTime_ = MIL_Tools::ConvertSecondsToSim( rPcRecognitionTime_ );
+    }
+    else if( acquisitionType == "identification" )
+    {
+        if( ReadPcAndBaseTime( xis, "base-time", rIdentificationTime_ ) )
+            if( rIdentificationTime_ < rRecognitionTime_ )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "identification acquisition-time: base-time < recognition base-time" );
+            else
+                rIdentificationTime_ = MIL_Tools::ConvertSecondsToSim( rIdentificationTime_ );
+
+        if( ReadPcAndBaseTime( xis, "command-post-time", rPcIdentificationTime_ ) )
+            if( rPcIdentificationTime_ < rPcRecognitionTime_ )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "identification acquisition-time: command-post-time < recognition command-post-time" );
+            else
+                rPcIdentificationTime_ = MIL_Tools::ConvertSecondsToSim( rPcIdentificationTime_ );
+    }
+    else
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown acquisition-time: " + acquisitionType );
 }
 
 // =============================================================================

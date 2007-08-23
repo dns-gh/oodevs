@@ -17,9 +17,6 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Tools.h"
 
-#include "ADN_XmlInput_Helper.h"
-#include "ADN_Xml_Exception.h"
-
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_Datas::NbcIntoxInfos
 // Created: SBO 2006-10-30
@@ -86,103 +83,102 @@ void ADN_NBC_Datas::NbcIntoxInfos::CopyFrom( NbcIntoxInfos& infos )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_NBC_Datas::NbcIntoxInfos::ReadEffect
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_NBC_Datas::NbcIntoxInfos::ReadEffect( xml::xistream& input )
+{
+    using namespace std;
+    const std::string wound = lower( xml::attribute< std::string >( input, "wound" ) );
+    ADN_Type_Double* pWound = 
+        wound == "nonblesse" ? &rNbAlivedHumans_ :
+        wound == "u1"        ? &rNbHurtedHumans1_ :
+        wound == "u2"        ? &rNbHurtedHumans2_ :
+        wound == "u3"        ? &rNbHurtedHumans3_ :
+        wound == "ue"        ? &rNbHurtedHumansE_ :
+        wound == "mort"      ? &rNbDeadHumans_ :
+        0;
+    if( pWound )
+    {
+        *pWound = xml::attribute< double >( input, "percentage" ) * 100.;
+        if( pWound->GetData() < 0. || pWound->GetData() > 100. )
+            throw ADN_DataException( "Donnée invalide", "Un pourcentage d'intoxication NBC n'est pas entre 0 et 1" );
+    }
+    else 
+        throw ADN_DataException( "NbcIntoxInfos", "Unknown wound " + wound );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_NBC_Datas::ReadArchive
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::NbcIntoxInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_NBC_Datas::NbcIntoxInfos::ReadArchive( xml::xistream& input )
 {
-    bIntoxPresent_ = input.Section( "Intoxication", ADN_XmlInput_Helper::eNothing );
+    const std::string affliction = xml::attribute( input, "affliction", std::string() );
+    bIntoxPresent_ = affliction == "intoxication";
     if( bIntoxPresent_.GetData() )
     {
-        double rTmp;
-        // alive humans percentage
-        input.ReadField( "Humains_NonBlesse", rTmp );
-        if( rTmp < 0.0 || rTmp > 1.0 )
-            throw ADN_DataException( "Donnée invalide",
-            MT_FormatString( "Le pourcentage d'humains vivants lors d'une intoxication '%s' par l'agent NBC par '%s' est en dehors de l'intervalle [0;1] autorisé", GetNodeName().c_str(), GetParentNode()->GetNodeName().c_str() ).c_str(),
-            MT_FormatString( "Veuillez modifier la valeur du champ NBC::AgentsNBC::AgentNBC::%s::Intoxication::Humains_NonBlesse", GetNodeName().c_str() ).c_str() );
-        rNbAlivedHumans_ = rTmp * 100.0;
-
-        // U1 hurted humans percentage
-        input.ReadField( "Humains_U1", rTmp );
-        if( rTmp < 0.0 || rTmp > 1.0 )
-            throw ADN_DataException( "Donnée invalide",
-            MT_FormatString( "Le pourcentage d'humains avec une blessure de niveau U1 lors d'une intoxication par '%s' par l'agent NBC '%s' est en dehors de l'intervalle [0;1] autorisé", GetNodeName().c_str(), GetParentNode()->GetNodeName().c_str() ).c_str(),
-            MT_FormatString( "Veuillez modifier la valeur du champ NBC::AgentsNBC::AgentNBC::%s::Intoxication::Humains_BlessesU1", GetNodeName().c_str() ).c_str() );
-        rNbHurtedHumans1_ = rTmp * 100.0;
-
-        // U2 hurted humans percentage
-        input.ReadField( "Humains_U2", rTmp );
-        if( rTmp < 0.0 || rTmp > 1.0 )
-            throw ADN_DataException( "Donnée invalide",
-            MT_FormatString( "Le pourcentage d'humains avec une blessure de niveau U2 lors d'une intoxication par '%s' par l'agent NBC %s est en dehors de l'intervalle [0;1] autorisé", GetNodeName().c_str(), GetParentNode()->GetNodeName().c_str() ).c_str(),
-            MT_FormatString( "Veuillez modifier la valeur du champ NBC::AgentsNBC::AgentNBC::%s::Intoxication::Humains_BlessesU2", GetNodeName().c_str() ).c_str() );
-        rNbHurtedHumans2_ = rTmp * 100.0;
-
-        // U3 hurted humans percentage
-        input.ReadField( "Humains_U3", rTmp );
-        if( rTmp < 0.0 || rTmp > 1.0 )
-            throw ADN_DataException( "Donnée invalide",
-            MT_FormatString( "Le pourcentage d'humains avec une blessure de niveau U3 lors d'une intoxication par '%s' par l'agent NBC '%s' est en dehors de l'intervalle [0;1] autorisé", GetNodeName().c_str(), GetParentNode()->GetNodeName().c_str() ).c_str(),
-            MT_FormatString( "Veuillez modifier la valeur du champ NBC::AgentsNBC::AgentNBC::%s::Intoxication::Humains_BlessesU3", GetNodeName().c_str() ).c_str() );
-        rNbHurtedHumans3_ = rTmp * 100.0;
-
-        // U4 hurted humans percentage
-        input.ReadField( "Humains_UE", rTmp );
-        if( rTmp < 0.0 || rTmp > 1.0 )
-            throw ADN_DataException( "Donnée invalide",
-            MT_FormatString( "Le pourcentage d'humains avec une blessure de niveau UE lors d'une intoxication par '%s' par l'agent NBC '%s' est en dehors de l'intervalle [0;1] autorisé", GetNodeName().c_str(), GetParentNode()->GetNodeName().c_str() ).c_str(),
-            MT_FormatString( "Veuillez modifier la valeur du champ NBC::AgentsNBC::AgentNBC::%s::Intoxication::Humains_BlessesUE", GetNodeName().c_str() ).c_str() );
-        rNbHurtedHumansE_ = rTmp * 100.0;
-
-        // dead humans percentage
-        input.ReadField( "Humains_Mort", rTmp );
-        if( rTmp < 0.0 || rTmp > 1.0 )
-            throw ADN_DataException( "Donnée invalide",
-            MT_FormatString( "Le pourcentage d'humains morts lors d'une intoxication par '%s' par l'agent NBC '%s' est en dehors de l'intervalle [0;1] autorisé", GetNodeName().c_str(), GetParentNode()->GetNodeName().c_str() ).c_str(),
-            MT_FormatString( "Veuillez modifier la valeur du champ NBC::AgentsNBC::AgentNBC::%s::Intoxication::Humains_Morts", GetNodeName().c_str() ).c_str() );
-        rNbDeadHumans_ = rTmp * 100.0;
-
-        // check the data. The sum must be equal to 100
+        input >> xml::list( "effect", *this, &ADN_NBC_Datas::NbcIntoxInfos::ReadEffect );
         if( rNbAlivedHumans_.GetData() + rNbHurtedHumans1_.GetData() + rNbHurtedHumans2_.GetData() + rNbHurtedHumans3_.GetData() + rNbHurtedHumansE_.GetData() + rNbDeadHumans_.GetData() != 100.0 )
             throw ADN_DataException( "Incohérence des données",
-            MT_FormatString( "La répartition de l'intoxication '%s' sur les humains de l'agent NBC '%s' ne couvre pas tous les cas possibles (soit 100%).", GetNodeName().c_str(), GetParentNode()->GetNodeName().c_str() ).c_str(),
-            MT_FormatString( "Veuillez vérifier les valeurs des différents champs d'intoxication '%s' de l'agent NBC '%s'.", GetNodeName().c_str(), GetParentNode()->GetNodeName().c_str() ).c_str() );
-        input.EndSection();
+            "La répartition de l'intoxication sur les humains de l'agent NBC '" + GetParentNode()->GetNodeName() 
+            + "' ne couvre pas tous les cas possibles (soit 100%)." );
     }
-
-    bContaminationPresent_ = input.Section( "Contamination", ADN_XmlInput_Helper::eNothing );
-    if( bContaminationPresent_.GetData() )
-        input.EndSection();
+    input >> xml::optional() >> xml::attribute( "contamination", bContaminationPresent_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_Datas::WriteArchive
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::NbcIntoxInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_NBC_Datas::NbcIntoxInfos::WriteArchive( xml::xostream& output )
+{
+    output << xml::start( "effects" )
+           << xml::attribute( "type", "liquid" );
+    WriteContent( output );
+    output << xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_NBC_Datas::NbcIntoxInfos::WriteContent
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_NBC_Datas::NbcIntoxInfos::WriteContent( xml::xostream& output )
 {
     if( bIntoxPresent_.GetData() )
     {
         if( rNbAlivedHumans_.GetData() + rNbHurtedHumans1_.GetData() + rNbHurtedHumans2_.GetData() + rNbHurtedHumans3_.GetData() + rNbHurtedHumansE_.GetData() + rNbDeadHumans_.GetData() != 100.0 )
-            throw ADN_DataException( "Incohérence des données",
-            MT_FormatString( "La répartition de l'intoxication '%s' sur les humains de l'agent NBC %s ne couvre pas tous les cas possibles (soit 100%).", GetNodeName().c_str(), GetParentNode()->GetNodeName().c_str() ).c_str(),
-            MT_FormatString( "Vérifier les valeurs des différents champs d'intoxication '%s' de l'agent NBC %s.", GetNodeName().c_str(), GetParentNode()->GetNodeName().c_str() ).c_str() );
+            throw ADN_DataException( "Incohérence des données", "La répartition de l'intoxication de l'agent NBC '" + GetParentNode()->GetNodeName() + " ne couvre pas tous les cas possibles (soit 100%)." );
 
-        output.Section( "Intoxication" );
-        output.WriteField( "Humains_NonBlesse", rNbAlivedHumans_.GetData() / 100.0 );
-        output.WriteField( "Humains_U1", rNbHurtedHumans1_.GetData() / 100.0 );
-        output.WriteField( "Humains_U2", rNbHurtedHumans2_.GetData() / 100.0 );
-        output.WriteField( "Humains_U3", rNbHurtedHumans3_.GetData() / 100.0 );
-        output.WriteField( "Humains_UE", rNbHurtedHumansE_.GetData() / 100.0 );
-        output.WriteField( "Humains_Mort", rNbDeadHumans_.GetData() / 100.0 );
-        output.EndSection();
+        output << xml::attribute( "affliction", "intoxication" )
+               << xml::start( "effect" )
+                << xml::attribute( "wound", "nonblesse" )
+                << xml::attribute( "percentage", rNbAlivedHumans_.GetData() / 100.0 )
+               << xml::end()
+               << xml::start( "effect" )
+                << xml::attribute( "wound", "u1" )
+                << xml::attribute( "percentage", rNbHurtedHumans1_.GetData() / 100.0 )
+               << xml::end()
+               << xml::start( "effect" )
+                << xml::attribute( "wound", "u2" )
+                << xml::attribute( "percentage", rNbHurtedHumans2_.GetData() / 100.0 )
+               << xml::end()
+               << xml::start( "effect" )
+                << xml::attribute( "wound", "u3" )
+                << xml::attribute( "percentage", rNbHurtedHumans3_.GetData() / 100.0 )
+               << xml::end()
+               << xml::start( "effect" )
+                << xml::attribute( "wound", "ue" )
+                << xml::attribute( "percentage", rNbHurtedHumansE_.GetData() / 100.0 )
+               << xml::end()
+               << xml::start( "effect" )
+                << xml::attribute( "wound", "mort" )
+                << xml::attribute( "percentage", rNbDeadHumans_.GetData() / 100.0 )
+               << xml::end();
     }
+
     if( bContaminationPresent_.GetData() )
-    {
-        output.Section( "Contamination" );
-        output.EndSection();
-    }
+        output << xml::attribute( "contamination", bContaminationPresent_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -233,61 +229,25 @@ void ADN_NBC_Datas::NbcGazInfos::CopyFrom( NbcGazInfos& infos )
 // Name: ADN_NBC_Datas::ReadArchive
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::NbcGazInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_NBC_Datas::NbcGazInfos::ReadArchive( xml::xistream& input )
 {
     intoxInfos_.ReadArchive( input );
-
-    input.ReadField( "DureeDeVie", lifeTime_ );
-    
-//    if( rTmp < 0.0 )
-//        throw ADN_DataException( "Donnée invalide",
-//        MT_FormatString( "La durée de vie de l'agent NBC %s est inférieure à 0", strName.c_str() ).c_str(),
-//        MT_FormatString( "Veuillez modifier la valeur du champ NBC::AgentsNBC::AgentNBC::DureeDeVie" ).c_str() );
-//    rLifeTime_ = rTmp;
-
-    input.Section( "AngleDePropagation" );
-    std::string strUnit( "degre" );
-    input.ReadAttribute( "unite", strUnit, ADN_XmlInput_Helper::eNothing );
-
-    int nAngle = 0;
-    input.Read( nAngle );
-
-    if( strUnit == "degre" )
-    {
-        if( nAngle < 0 || nAngle > 360 )
-            throw ADN_DataException( "Mauvaises données lors du chargement d'un agent NBC",
-            MT_FormatString( "L'agent NBC %s a un angle de propagation hors de la plage de valeur autorisée.", GetParentNode()->GetNodeName().c_str() ).c_str(),
-            "Assurez vous que l'angle soit entre 0 et 360." );
-        rSpreadAngle_ = nAngle;
-    }
-    else if( strUnit == "radian" )
-    {
-        if( nAngle < 0 || nAngle > 2 * MT_PI )
-            throw ADN_DataException( "Mauvaises données lors du chargement d'un agent NBC",
-            MT_FormatString( "L'agent NBC %s a un angle de propagation hors de la plage de valeur autorisée.", GetParentNode()->GetNodeName().c_str() ).c_str(),
-            "Assurez vous que l'angle soit entre 0 et 2 PI." );
-        rSpreadAngle_ = (int)(((double)nAngle)*180/MT_PI);
-    }
-    else
-        throw ADN_DataException( "Mauvaises données lors du chargement d'un agent NBC",
-        MT_FormatString( "Unitée inconnue pour l'angle de propagation de l'agent NBC %s.", GetParentNode()->GetNodeName().c_str() ).c_str(),
-        "Utilisez soit \"degre\" soit \"radian\"." );
-
-    input.EndSection(); // AngleDePropagation
+    input >> xml::attribute( "life-time", lifeTime_ )
+          >> xml::attribute( "propagation", rSpreadAngle_ );
 }
     
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_Datas::WriteArchive
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::NbcGazInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_NBC_Datas::NbcGazInfos::WriteArchive( xml::xostream& output )
 {
-    intoxInfos_.WriteArchive( output );
-    output.WriteField( "DureeDeVie", lifeTime_.GetData() );
-    output.Section( "AngleDePropagation" );
-    output.WriteAttribute( "unite", "degre" );
-    output << rSpreadAngle_.GetData();
-    output.EndSection();
+    output << xml::start( "effects" )
+            << xml::attribute( "type", "gaseous" )
+            << xml::attribute( "propagation", rSpreadAngle_ )
+            << xml::attribute( "life-time", lifeTime_ );
+    intoxInfos_.WriteContent( output );
+    output << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -309,7 +269,6 @@ ADN_NBC_Datas::NbcAgentInfos::NbcAgentInfos()
     bGazPresent_.SetParentNode( *this );
     gazInfos_.SetParentNode( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: NbcAgentInfos::GetNodeName
@@ -342,58 +301,46 @@ ADN_NBC_Datas::NbcAgentInfos* ADN_NBC_Datas::NbcAgentInfos::CreateCopy()
     return pCopy;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_NBC_Datas::NbcAgentInfos::ReadEffect
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_NBC_Datas::NbcAgentInfos::ReadEffect( xml::xistream& input )
+{
+    const std::string type = xml::attribute< std::string >( input, "type" );
+    if( type == "liquid" )
+        liquidInfos_.ReadArchive( input );    
+    else if( type == "gaseous" )
+    {
+        bGazPresent_ = true;
+        gazInfos_.ReadArchive( input );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: NbcAgentInfos::ReadArchive
 // Created: APE 2004-11-17
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::NbcAgentInfos::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_NBC_Datas::NbcAgentInfos::ReadArchive( xml::xistream& input )
 {
-    input.Section( "AgentNBC" );
-
-    std::string strName;
-    input.ReadAttribute( "nom", strName );
-    strName_ = strName;
-
-    input.Section( "Liquide" );
-    liquidInfos_.ReadArchive( input );    
-    input.EndSection();
-
-    bGazPresent_ = input.Section( "Gaz", ADN_XmlInput_Helper::eNothing );
-    if( bGazPresent_.GetData() )
-    {
-        gazInfos_.ReadArchive( input );
-        input.EndSection();
-    }
-
-    input.EndSection();
+    input >> xml::attribute( "name", strName_ )
+          >> xml::list( "effects", *this, &ADN_NBC_Datas::NbcAgentInfos::ReadEffect );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: NbcAgentInfos::WriteArchive
 // Created: APE 2004-11-17
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::NbcAgentInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_NBC_Datas::NbcAgentInfos::WriteArchive( xml::xostream& output )
 {
-    output.Section( "AgentNBC" );
-
-    output.WriteAttribute( "nom", strName_.GetData() );
-    output.WriteField( "MosID", nMosId_ );
-
-    output.Section( "Liquide" );
+    output << xml::start( "agent" )
+           << xml::attribute( "name", strName_ )
+           << xml::attribute( "id", nMosId_ );
     liquidInfos_.WriteArchive( output );
-    output.EndSection();
-
     if( bGazPresent_.GetData() )
-    {
-        output.Section( "Gaz" );
         gazInfos_.WriteArchive( output );
-        output.EndSection();
-    }
-    output.EndSection(); // AgentNBC
+    output << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_Datas constructor
@@ -406,7 +353,6 @@ ADN_NBC_Datas::ADN_NBC_Datas()
     vNbcAgent_.SetItemTypeName( "un agent NBC" );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_Datas destructor
 // Created: AGN 2004-05-06
@@ -416,7 +362,6 @@ ADN_NBC_Datas::~ADN_NBC_Datas()
     Reset();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_Datas::FilesNeeded
 // Created: APE 2004-12-06
@@ -425,7 +370,6 @@ void ADN_NBC_Datas::FilesNeeded( T_StringList& vFiles ) const
 {
     vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szNBC_.GetData() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_Datas::Reset
@@ -437,59 +381,57 @@ void ADN_NBC_Datas::Reset()
     vNbcAgent_.Reset();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_NBC_Datas::ReadAgent
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_NBC_Datas::ReadAgent( xml::xistream& input )
+{
+    std::auto_ptr<NbcAgentInfos> spNew( new NbcAgentInfos() );
+    spNew->ReadArchive( input );
+    vNbcAgent_.AddItem( spNew.release() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_Datas::ReadArchive
 // Created: AGN 2004-07-02
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_NBC_Datas::ReadArchive( xml::xistream& input )
 {
-    input.Section( "NBC" );
-
-    input.Section( "ImpactTenueNBC" );
-    input.ReadField( "CoefModificationVitesseMax", rNbcSuitMaxSpeedMultiplier_ );
-    input.ReadField( "CoefModificationTempsRechargement", rNbcSuitReloadSpeedMultiplier_ );
-    input.EndSection(); // ImpactTenueNBC
-
-    input.ReadField( "VitesseVentLimiteAvantPropagationDirectionnelle", rWindSpeedLimitForSpreading_ );
-
-    input.Section( "AgentsNBC" );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<NbcAgentInfos> spNew( new NbcAgentInfos() );
-        spNew->ReadArchive( input );
-        vNbcAgent_.AddItem( spNew.release() );
-    }
-    input.EndSection(); // AgentsNBC
-    input.EndSection(); // NBC
+    input >> xml::start( "nbc" )
+            >> xml::start( "propagation" )
+                >> xml::attribute( "wind-speed-limit", rWindSpeedLimitForSpreading_ )
+            >> xml::end()
+            >> xml::start( "nbc-suit" )
+                >> xml::attribute( "max-speed-modifier", rNbcSuitMaxSpeedMultiplier_ )
+                >> xml::attribute( "reloading-time-modifier", rNbcSuitReloadSpeedMultiplier_ )
+            >> xml::end();
+    input >> xml::start( "agents" )
+            >> xml::list( "agent", *this, &ADN_NBC_Datas::ReadAgent )
+          >> xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_Datas::WriteArchive
 // Created: APE 2004-11-17
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_NBC_Datas::WriteArchive( xml::xostream& output )
 {
-    output.Section( "NBC" );
+    output << xml::start( "nbc" )
+            << xml::start( "propagation" )
+                << xml::attribute( "wind-speed-limit", rWindSpeedLimitForSpreading_ )
+            << xml::end()
+            << xml::start( "nbc-suit" )
+                << xml::attribute( "max-speed-modifier", rNbcSuitMaxSpeedMultiplier_ )
+                << xml::attribute( "reloading-time-modifier", rNbcSuitReloadSpeedMultiplier_ )
+            << xml::end();
 
-    output.Section( "ImpactTenueNBC" );
-    output.WriteField( "CoefModificationVitesseMax", rNbcSuitMaxSpeedMultiplier_.GetData() );
-    output.WriteField( "CoefModificationTempsRechargement", rNbcSuitReloadSpeedMultiplier_.GetData() );
-    output.EndSection(); // ImpactTenueNBC
-
-    output.WriteField( "VitesseVentLimiteAvantPropagationDirectionnelle", rWindSpeedLimitForSpreading_.GetData() );
-
-    output.Section( "AgentsNBC" );
+    output << xml::start( "agents" );
     for( T_NbcAgentInfos_Vector::iterator itAgent = vNbcAgent_.begin(); itAgent != vNbcAgent_.end(); ++itAgent )
-    {
         (*itAgent)->WriteArchive( output );
-    }
-    output.EndSection(); // AgentsNBC
-
-    output.EndSection(); // NBC
+    output << xml::end();
+    output << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_Datas::GetNextId

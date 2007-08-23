@@ -16,6 +16,11 @@
 
 #include "MT_Tools/MT_Random.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_HumanWound;
 
 //*****************************************************************************
@@ -29,7 +34,7 @@ class MIL_NbcAgentType
 public:
     //! @name Factory
     //@{
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( xml::xistream& xis );
     static void Terminate();
 
     static const MIL_NbcAgentType* Find( const std::string& strName );
@@ -71,13 +76,22 @@ private:
     //@}
 
 private:
-     MIL_NbcAgentType( const std::string& strName, MIL_InputArchive& archive );
+     MIL_NbcAgentType( const std::string& strName, xml::xistream& xis );
     ~MIL_NbcAgentType();
 
     //! @name Tools
     //@{
-    bool                  ReadPoisonousData( MIL_InputArchive& archive, T_HumanPoisonousVector& data );
+    bool                  ReadPoisonousData( xml::xistream& xis, T_HumanPoisonousVector& data );
     const PHY_HumanWound& GetRandomWound   ( const T_HumanPoisonousVector& data ) const;
+    //@}
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadAgent( xml::xistream& xis );
+    void SortEffectType  ( xml::xistream& xis );
+    void ReadLiquid      ( xml::xistream& xis );
+    void ReadGaz         ( xml::xistream& xis );
+    void ReadEffect      ( xml::xistream& xis, T_HumanPoisonousVector& data );
     //@}
 
 private:

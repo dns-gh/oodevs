@@ -10,15 +10,8 @@
 //*****************************************************************************
 
 #include "MT_Tools_pch.h"
-
 #include "MT_Rect.h"
-
 #include "MT_Line.h"
-
-#include "MT/MT_Archive/MT_OutputArchive_ABC.h"
-#include "MT/MT_Archive/MT_InputArchive_ABC.h"
-
-//MT_BOOSTPOOLING_FUNCTIONS( MT_Rect )
 
 //-----------------------------------------------------------------------------
 // Name: MT_Rect constructor
@@ -341,84 +334,4 @@ void MT_Rect::ClipPoint( MT_Vector2D& vPosToClip ) const
     else if( vPosToClip.rY_ > rPosY2_ )
         vPosToClip.rY_ = rPosY2_;
 }
-
-
-
-//=============================================================================
-// IN/OUT
-//=============================================================================
-
-//-----------------------------------------------------------------------------
-//  Name  :  MT_Rect::Write
-// Created: FBD 02-09-05
-//-----------------------------------------------------------------------------
-//int MT_Rect::Write( MT_OutputArchive_ABC& archive ) const
-//{
-//    archive.WriteField( "PosX1", rPosX1_ );
-//    archive.WriteField( "PosY1", rPosY1_ );
-//    archive.WriteField( "PosX2", rPosX2_ );
-//    archive.WriteField( "PosY2", rPosY2_ );
-//    archive.WriteField( "Height", rHeight_ );
-//    archive.WriteField( "Width", rWidth_ );
-//
-//    archive.Section( "PointUpLeft" );
-//    pointUpLeft_   .Write( archive );
-//    archive.EndSection();
-//
-//    archive.Section( "PointUpRight" );
-//    pointUpRight_  .Write( archive );
-//    archive.EndSection();
-//
-//    archive.Section( "PointDownRight" );
-//    pointDownRight_.Write( archive );
-//    archive.EndSection();
-//
-//    archive.Section( "PointDownLeft" );
-//    pointDownLeft_ .Write( archive );
-//    archive.EndSection();
-//
-//    archive.Section( "Center" );
-//    vCenter_       .Write( archive );
-//    archive.EndSection();
-//    return 0;
-//}
-//
-//-----------------------------------------------------------------------------
-//  Name  :  MT_Rect::Read
-// Created: FBD 02-09-05
-//-----------------------------------------------------------------------------
-//int MT_Rect::Read( MT_InputArchive_ABC& archive )
-//{
-//    archive.ReadField( "PosX1", rPosX1_ );
-//    archive.ReadField( "PosY1", rPosY1_ );
-//    archive.ReadField( "PosX2", rPosX2_ );
-//    archive.ReadField( "PosY2", rPosY2_ );
-//    archive.ReadField( "Height", rHeight_ );
-//    archive.ReadField( "Width", rWidth_ );
-//    archive.Section( "PointUpLeft" );
-//    pointUpLeft_   .Read( archive );
-//    archive.EndSection();
-//
-//    archive.Section( "PointUpRight" );
-//    pointUpRight_  .Read( archive );
-//    archive.EndSection();
-//
-//    archive.Section( "PointDownRight" );
-//    pointDownRight_.Read( archive );
-//    archive.EndSection();
-//
-//    archive.Section( "PointDownLeft" );
-//    pointDownLeft_ .Read( archive );
-//    archive.EndSection();
-//
-//    archive.Section( "Center" );
-//    vCenter_       .Read( archive );
-//    archive.EndSection();
-//
-//    lineUp_    = MT_Line( pointUpLeft_,   pointUpRight_   );
-//    lineRight_ = MT_Line( pointUpRight_,  pointDownRight_ );
-//    lineDown_  = MT_Line( pointDownLeft_, pointDownRight_ );
-//    lineLeft_  = MT_Line( pointUpLeft_,   pointDownLeft_  );
-//    return 0;
-//}
 

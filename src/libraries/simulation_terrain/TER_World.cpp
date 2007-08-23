@@ -26,8 +26,7 @@
 #include "pathfind/TerrainData.h"
 #include "geocoord/Geoid.h"
 #include "MT_Tools/MT_Rect.h"
-#include "MT_Tools/MT_InputArchive_Logger.h"
-#include "MT/MT_XmlTools/MT_XXmlInputArchive.h"
+#include "xeumeuleu/xml.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -73,13 +72,11 @@ namespace
 // -----------------------------------------------------------------------------
 TER_World::TER_World( const std::string& rootFile )
 {
-    MT_InputArchive_Logger< MT_XXmlInputArchive > archive;
-    archive.Open( rootFile );
-    archive.Section( "Terrain" );
     std::string strWorld, strPathfind;
-    archive.ReadField( "World", strWorld );
-    archive.ReadField( "Pathfind", strPathfind );
-    archive.EndSection(); // Terrain
+    xml::xifstream xis( rootFile );
+    xis >> xml::start( "Terrain" )
+        >> xml::content( "World", strWorld )
+        >> xml::content( "Pathfind", strPathfind );
 
     float rMiddleLatitude, rMiddleLongitude;
     MT_Rect extent;
@@ -100,15 +97,13 @@ TER_World::TER_World( const std::string& rootFile )
 // -----------------------------------------------------------------------------
 void TER_World::ReadWorld( const std::string& strWorld, float& rLatitude, float& rLongitude, MT_Rect& extent ) const
 {
-     MT_InputArchive_Logger< MT_XXmlInputArchive > archive;
-     archive.Open( strWorld );
-     archive.Section( "World" );
-     archive.ReadField( "Latitude", rLatitude );
-     archive.ReadField( "Longitude", rLongitude );
-     double rWidth, rHeight;
-     archive.ReadField( "Width", rWidth  );
-     archive.ReadField( "Height", rHeight );
-     archive.EndSection(); // World
+    double rWidth, rHeight;
+    xml::xifstream xis( strWorld );
+    xis >> xml::start( "World" )
+        >> xml::content( "Latitude", rLatitude )
+        >> xml::content( "Longitude", rLongitude )
+        >> xml::content( "Width", rWidth )
+        >> xml::content( "Height", rHeight );
      extent.Set( MT_Vector2D( 0, 0 ), MT_Vector2D( rWidth, rHeight ) );
 }
 

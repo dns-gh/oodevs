@@ -24,7 +24,7 @@
 // =============================================================================
 class DEC_Knowledge_ABC
 {
-	MT_COPYNOTALLOWED( DEC_Knowledge_ABC )
+    MT_COPYNOTALLOWED( DEC_Knowledge_ABC )
 
 public:
     //! @name Constructors/Destructor

@@ -27,7 +27,7 @@
 #include "ADN_Models_Data.h"
 #include "ADN_Categories_Data.h"
 
-class ADN_XmlInput_Helper;
+class xml::xistream;
 
 
 // =============================================================================
@@ -54,8 +54,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_String                                           strName_;
@@ -98,8 +98,9 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void ReadProtection( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_String                   strName_;
@@ -140,8 +141,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_String strName_;
@@ -167,8 +168,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_String                                          strName_;
@@ -210,8 +211,9 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void ReadSpeedEffect( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         E_PopulationAttitude           nAttitude_;
@@ -238,8 +240,11 @@ public:
 
         PopulationInfos* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output, int nMosId );
+        void ReadArchive( xml::xistream& input );
+        void ReadSlowingEffect( xml::xistream& input );
+        void ReadAttritionEffect( xml::xistream& input );
+        void ReadFireEffect( xml::xistream& input );
+        void WriteArchive( xml::xostream& output, int nMosId );
 
     public:
         ADN_Type_String                                       strName_;
@@ -266,8 +271,8 @@ public:
         ReloadingSpeedEffectInfos();
         ~ReloadingSpeedEffectInfos();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Double rDensity_;
@@ -287,8 +292,9 @@ public:
     std::string GetPopulationsThatUse( ADN_Models_Data::ModelInfos& model );
 
 private:
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void WriteArchive( MT_OutputArchive_ABC& output );
+    void ReadArchive( xml::xistream& input );
+    void ReadPopulation( xml::xistream& input );
+    void WriteArchive( xml::xostream& output );
 
 public:
     T_PopulationInfosVector   vPopulation_;

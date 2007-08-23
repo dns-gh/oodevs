@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="tools.xsd"/>
+	<xs:element name="objects">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="real-objects"/>
+				<xs:element ref="virtual-objects"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="real-objects">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="object" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="object">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="sensible-positions" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="sensible-position" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="value" type="T_NonNegativeDouble" use="required"/>
+									<xs:attribute name="terrain" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="dotations" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="construction" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="count" type="T_NonNegativeDouble" use="required"/>
+									<xs:attribute name="dotation" type="xs:string" use="required"/>
+									<xs:attribute name="category" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="valorization" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="category" type="xs:string" use="required"/>
+									<xs:attribute name="dotation" type="xs:string" use="required"/>
+									<xs:attribute name="count" type="T_NonNegativeDouble" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="unit-attritions" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="unit-attrition" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="repairable-without-evacuation" type="T_NonNegativeDouble" use="required"/>
+									<xs:attribute name="repairable-with-evacuation" type="T_NonNegativeDouble" use="required"/>
+									<xs:attribute name="destruction" type="T_NonNegativeDouble" use="required"/>
+									<xs:attribute name="protection" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="population-attrition" minOccurs="0">
+					<xs:complexType>
+						<xs:attribute name="ph" type="T_NonNegativeDouble" use="required"/>
+						<xs:attribute name="surface" type="xs:nonNegativeInteger" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="population-density" type="T_NonNegativeDouble" use="optional"/>
+			<xs:attribute name="max-unit-percentage-speed" type="xs:nonNegativeInteger" use="optional"/>
+			<xs:attribute name="unit-speed-impact-mode" type="xs:string" use="required"/>
+			<xs:attribute name="max-animating-units" type="T_NonNegativeDouble" use="required"/>
+			<xs:attribute name="max-interaction-height" type="T_NonNegativeDouble" use="required"/>
+			<xs:attribute name="avoid-distance" type="T_NonNegativeDouble" use="optional"/>
+			<xs:attribute name="default-bypassed-speed" type="xs:double" use="required"/>
+			<xs:attribute name="default-speed" type="xs:double" use="required"/>
+			<xs:attribute name="can-be-bypassed" type="xs:boolean" use="required"/>
+			<xs:attribute name="can-be-developed" type="xs:boolean" use="required"/>
+			<xs:attribute name="can-be-maneuver-obstacle" type="xs:boolean" use="required"/>
+			<xs:attribute name="dangerous" type="xs:boolean" use="required"/>
+			<xs:attribute name="default-consumption-mode" type="xs:string" use="required"/>
+			<xs:attribute name="type" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="virtual-objects">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="object" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="shot-percentage-per-human-per-hectare" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="percentage" type="xs:nonNegativeInteger" use="required"/>
+									<xs:attribute name="volume" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="type" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

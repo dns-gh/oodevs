@@ -27,7 +27,7 @@
 #include "ADN_Enums.h"
 #include "ADN_Categories_Data.h"
 
-class ADN_XmlInput_Helper;
+class xml::xistream;
 
 
 // =============================================================================
@@ -59,8 +59,9 @@ public:
 
         virtual CategoryInfo* CreateCopy();
 
-        virtual void ReadArchive( ADN_XmlInput_Helper& );
-        virtual void WriteArchive( MT_OutputArchive_ABC& );
+        virtual void ReadArchive( xml::xistream& );
+        virtual void WriteArchive( xml::xostream& );
+        virtual void WriteContent( xml::xostream& );
 
     public:
         DotationInfos&  parentDotation_;
@@ -79,7 +80,6 @@ public:
     typedef ADN_Type_Vector_ABC<CategoryInfo> T_CategoryInfos_Vector;
     typedef T_CategoryInfos_Vector::iterator  IT_CategoryInfos_Vector;
 
-
 // *****************************************************************************
     class AttritionInfos
         : public ADN_Ref_ABC
@@ -95,8 +95,8 @@ public:
 
         void CopyFrom( AttritionInfos& attritions );
 
-        void ReadArchive( ADN_XmlInput_Helper& );
-        void WriteArchive( MT_OutputArchive_ABC& );
+        void ReadArchive( xml::xistream& );
+        void WriteArchive( xml::xostream&, const std::string& tag = "attrition" );
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Categories_Data::ArmorInfos>   ptrArmor_;
@@ -111,13 +111,22 @@ public:
         {
         public:
             CmpRef(ADN_Categories_Data::ArmorInfos* val) : val_(val) {}
-            ~CmpRef(){}
-
             bool operator()( AttritionInfos* tgtnfos ) const 
             {   return tgtnfos->ptrArmor_.GetData() == val_;}
 
         private:
             ADN_Categories_Data::ArmorInfos* val_;
+        };
+
+        class Cmp : public std::unary_function< AttritionInfos* , bool >
+        {
+        public:
+            Cmp( const std::string& name ) : name_(name) {}
+            bool operator()( AttritionInfos* tgtnfos ) const 
+            {   return tgtnfos->ptrArmor_.GetData()->strName_ == name_;}
+
+        private:
+            std::string name_;
         };
     };
 
@@ -137,8 +146,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         E_UnitPosture       eType_;
@@ -155,7 +164,7 @@ public:
             { return tgtnfos->eType_==val_; }
 
         private:
-            E_UnitPosture val_;
+             E_UnitPosture val_;
         };
     };
 
@@ -174,8 +183,9 @@ public:
 
         void CopyFrom( IndirectAmmoInfos& ammoInfos );
 
-        void ReadArchive( ADN_XmlInput_Helper& );
-        void WriteArchive( MT_OutputArchive_ABC& );
+        void ReadArchive( xml::xistream& );
+        void ReadPh( xml::xistream& );
+        void WriteArchive( xml::xostream& );
 
     public:
         ADN_Type_Enum<E_TypeMunitionTirIndirect,eNbrTypeMunitionTirIndirect>  nIndirectType_;
@@ -206,8 +216,10 @@ public:
 
         CategoryInfo* CreateCopy();
 
-        void ReadArchive( ADN_XmlInput_Helper& );
-        void WriteArchive( MT_OutputArchive_ABC& );
+        void ReadArchive( xml::xistream& );
+        void ReadAttrition( xml::xistream& );
+        void ReadIndirectFire( xml::xistream& );
+        void WriteArchive( xml::xostream& );
 
     public:
         ADN_Type_Enum< E_MunitionType, eNbrMunitionType > nType_;
@@ -242,8 +254,8 @@ public:
         T_CategoryInfos_Vector& GetCategories();
         CategoryInfo* FindCategory( const std::string& strName );
         
-        void ReadArchive( ADN_XmlInput_Helper& );
-        void WriteArchive( MT_OutputArchive_ABC& );
+        void ReadArchive( xml::xistream& );
+        void WriteArchive( xml::xostream& );
 
     public:
         E_DotationFamily      nType_;
@@ -271,8 +283,9 @@ public:
     int                     GetNextCatId();
 
 private:
-    void ReadArchive( ADN_XmlInput_Helper& );
-    void WriteArchive( MT_OutputArchive_ABC& );
+    void ReadArchive( xml::xistream& );
+    void ReadDotation( xml::xistream& );
+    void WriteArchive( xml::xostream& );
 
 private:
     int nNextCatId_;

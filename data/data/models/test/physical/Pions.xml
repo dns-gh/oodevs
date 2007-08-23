@@ -1,2244 +1,1156 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Pions>
-
-  <Unite nom="PC TC2" type="Pion LOG TC2">
-    <MosID>1</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="xxxx"/>
-      <QualificatifAtlas type="ASA"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" nom="NTI TC2">3</Equipement>
-      <Equipement equipage="250" nom="Remorqueur 5T">3</Equipement>
-      <Equipement equipage="250" nom="Remorqueur 3T">3</Equipement>
-      <Equipement equipage="4" nom="VSB (releve)">5</Equipement>
-      <Equipement equipage="4" nom="VSR (ramassage)">5</Equipement>
-      <Equipement equipage="4" nom="Medecin TC2">10</Equipement>
-      <Equipement convoyeur="true" equipage="1" nom="Camion transport solide">15</Equipement>
-      <Equipement convoyeur="true" equipage="1" nom="Camion transport liquide">15</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer la mobilite 1" seuilLogistique="10"/>
-          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer la mobilite 2" seuilLogistique="10"/>
-          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer la mobilite 3" seuilLogistique="10"/>
-          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer l'electronique 1" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <Installation>
-      <DelaiInstallation>500s</DelaiInstallation>
-      <DelaiDesinstallation>30s</DelaiDesinstallation>
-    </Installation>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-      <Point type="lima">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>6000s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="PC BLD Maintenance" type="Pion LOG BLD Maintenance">
-    <MosID>2</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements/>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="PC BLT Maintenance" type="Pion LOG BLT Maintenance">
-    <MosID>3</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements/>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Cie Reparation BLT - M" type="Pion LOG BLT Maintenance">
-    <MosID>4</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" nom="NTI BLT M">3</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer la mobilite 1" seuilLogistique="10"/>
-          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer la mobilite 2" seuilLogistique="10"/>
-          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer la mobilite 3" seuilLogistique="10"/>
-          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer l'electronique 1" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Cie Reparation BLT - EA" type="Pion LOG BLT Maintenance">
-    <MosID>5</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" nom="NTI BLT EA">3</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Groupe evacuation maintenance BLT" type="Pion LOG BLT Maintenance">
-    <MosID>6</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="250" nom="Remorqueur 5T">2</Equipement>
-      <Equipement equipage="250" nom="Remorqueur 3T">2</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-      <Point type="lima">100</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Cie Reparation BLD - M" type="Pion LOG BLT Maintenance">
-    <MosID>7</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" nom="NTI BLD M">3</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer la mobilite 1" seuilLogistique="10"/>
-          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer la mobilite 2" seuilLogistique="10"/>
-          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer la mobilite 3" seuilLogistique="10"/>
-          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer l'electronique 1" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Cie Reparation BLD - EA" type="Pion LOG BLD Maintenance">
-    <MosID>8</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" nom="NTI BLD EA">3</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Groupe evacuation maintenance BLD" type="Pion LOG BLD Maintenance">
-    <MosID>9</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="250" nom="Remorqueur 5T">2</Equipement>
-      <Equipement equipage="250" nom="Remorqueur 3T">2</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Section Combat GEN" type="Pion INF">
-    <MosID>10</MosID>
-    <ModeleDecisionnel>Test</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" majeur="true" nom="CompTest">3</Equipement>
-      <Equipement embarquable="true" equipage="4" nom="CompTest2">2</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Fusse a jupette 53mm" seuilLogistique="10"/>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Obus 120 mm" seuilLogistique="10"/>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Obus fumigene" seuilLogistique="10"/>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <Installation>
-      <DelaiInstallation>1000s</DelaiInstallation>
-      <DelaiDesinstallation>500s</DelaiDesinstallation>
-    </Installation>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-      <Point type="lima">100</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Section Combat GEN 2" type="Pion INF">
-    <MosID>11</MosID>
-    <ModeleDecisionnel>Test</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer"/>
-    </Nature>
-    <Equipements>
-      <Equipement embarquable="true" equipage="4" nom="CompTest2">5</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>120s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-  </Unite>
-
-  <Unite nom="Escadrille ALAT" type="Pion ALAT">
-    <MosID>12</MosID>
-    <ModeleDecisionnel>Test ALAT</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" majeur="true" nom="Truc Volant">1</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>120s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <PeutVoler/>
-  </Unite>
-
-  <Unite nom="Section Combat NBC" type="Pion NBC">
-    <MosID>13</MosID>
-    <ModeleDecisionnel>NBC Test</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" nom="CompNBC">1</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>0</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>120s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-  </Unite>
-
-  <Unite nom="Section Combat RENS" type="Pion RENS">
-    <MosID>14</MosID>
-    <ModeleDecisionnel>RENS Test</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" nom="CompNBC">1</Equipement>
-      <Equipement equipage="4" nom="CompTest">2</Equipement>
-      <Equipement equipage="4" nom="CompTest2">2</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>0</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>120s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <PeutVoler/>
-  </Unite>
-
-  <Unite nom="Drone RENS" type="Pion RENS">
-    <MosID>15</MosID>
-    <ModeleDecisionnel>RENS Test</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="0" nom="Drone">2</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>0</Officier>
-      <SousOfficier>0</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>120s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <PeutVoler/>
-    <EstAutonome/>
-  </Unite>
-
-  <Unite nom="PC BLD Sante" type="Pion LOG BLD Sante">
-    <MosID>16</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="1" majeur="true" nom="CompTest">1</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Secteur tri BLD" type="Pion LOG BLD Sante">
-    <MosID>17</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="1" nom="Medecin tri">1</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Secteur soin chirurgical BLD" type="Pion LOG BLD Sante">
-    <MosID>18</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements/>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Secteur soin mental BLD" type="Pion LOG BLD Sante">
-    <MosID>19</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" nom="Medecin soin mental">1</Equipement>
-      <Equipement equipage="4" nom="Medecin soin chirurgical">5</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Secteur soin NBC BLD" type="Pion LOG BLD Sante">
-    <MosID>20</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" nom="Medecin soin NBC">1</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Secteur tri/soin BLD" type="Pion LOG BLD Sante">
-    <MosID>21</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" nom="Medecin tri">1</Equipement>
-      <Equipement equipage="4" nom="Medecin soin mental">1</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Groupe evacuation sante BLD" type="Pion LOG BLD Sante">
-    <MosID>22</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" nom="VSR (ramassage)">10</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="PC BLT Sante" type="Pion LOG BLT Sante">
-    <MosID>23</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements/>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Secteur tri BLT" type="Pion LOG BLT Sante">
-    <MosID>24</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" nom="Medecin tri">1</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Secteur soin chirurgical BLT" type="Pion LOG BLT Sante">
-    <MosID>25</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" nom="Medecin soin chirurgical">1</Equipement>
-      <Equipement equipage="4" nom="Medecin soin chirurgical U2/U3">1</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Secteur soin mental BLT" type="Pion LOG BLT Sante">
-    <MosID>26</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" nom="Medecin soin mental">1</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Secteur soin NBC BLT" type="Pion LOG BLT Sante">
-    <MosID>27</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" nom="Medecin soin NBC">1</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Secteur tri/soin BLT" type="Pion LOG BLT Sante">
-    <MosID>28</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" nom="Medecin tri">1</Equipement>
-      <Equipement equipage="4" nom="Medecin soin chirurgical">1</Equipement>
-      <Equipement equipage="4" nom="Medecin soin mental">1</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Groupe evacuation sante BLT" type="Pion LOG BLT Sante">
-    <MosID>29</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" nom="VSR (ramassage)">1</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="PC BLD Ravitaillement" type="Pion LOG BLD Ravitaillement">
-    <MosID>30</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="1" majeur="true" nom="CompTest">1</Equipement>
-      <Equipement convoyeur="true" equipage="1" nom="Camion transport solide">25</Equipement>
-      <Equipement convoyeur="true" equipage="1" nom="Camion transport liquide">25</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Pion RAV stocks" type="Pion LOG BLD Ravitaillement">
-    <MosID>31</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" nom="CompTest">1</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <Stocks>
-      <SeuilsLogistiques>
-        <SeuilLogistique categorie="Unite essence" seuil="10"/>
-        <SeuilLogistique categorie="Unite feu TD" seuil="10"/>
-        <SeuilLogistique categorie="Unite feu -TD" seuil="10"/>
-        <SeuilLogistique categorie="Unite vivre" seuil="10"/>
-        <SeuilLogistique categorie="Pieces" seuil="10"/>
-      </SeuilsLogistiques>
-    </Stocks>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Pion RAV camions" type="Pion LOG BLD Ravitaillement">
-    <MosID>32</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement convoyeur="true" equipage="1" nom="Camion transport solide">25</Equipement>
-      <Equipement convoyeur="true" equipage="1" nom="Camion transport liquide">25</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <Stocks>
-      <SeuilsLogistiques>
-        <SeuilLogistique categorie="Unite essence" seuil="10"/>
-        <SeuilLogistique categorie="Unite feu TD" seuil="10"/>
-        <SeuilLogistique categorie="Unite feu -TD" seuil="10"/>
-        <SeuilLogistique categorie="Unite vivre" seuil="10"/>
-        <SeuilLogistique categorie="Pieces" seuil="10"/>
-      </SeuilsLogistiques>
-    </Stocks>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Pion Convoi" type="Pion LOG Convoi">
-    <MosID>33</MosID>
-    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="oo"/>
-      <QualificatifAtlas type="Blinde"/>
-      <Nature type="combat support service/transportation"/>
-    </Nature>
-    <Equipements/>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <Stocks>
-      <SeuilsLogistiques>
-        <SeuilLogistique categorie="Unite essence" seuil="10"/>
-        <SeuilLogistique categorie="Unite feu TD" seuil="10"/>
-        <SeuilLogistique categorie="Unite feu -TD" seuil="10"/>
-        <SeuilLogistique categorie="Unite vivre" seuil="10"/>
-        <SeuilLogistique categorie="Pieces" seuil="10"/>
-      </SeuilsLogistiques>
-    </Stocks>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-  <Unite nom="Pion Refugie" type="Pion REFUGIE">
-    <MosID>34</MosID>
-    <ModeleDecisionnel>REFUGIE Test</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <QualificatifAtlas type="None"/>
-      <Nature type="combat/engineer/combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement equipage="4" majeur="true" nom="CompTest">3</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <Stocks>
-      <SeuilsLogistiques>
-        <SeuilLogistique categorie="Unite essence" seuil="10"/>
-        <SeuilLogistique categorie="Unite feu TD" seuil="10"/>
-        <SeuilLogistique categorie="Unite feu -TD" seuil="10"/>
-        <SeuilLogistique categorie="Unite vivre" seuil="10"/>
-        <SeuilLogistique categorie="Pieces" seuil="10"/>
-      </SeuilsLogistiques>
-    </Stocks>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-  </Unite>
-
-</Pions>
+<units>
+  <unit decisional-model="Test LOG" id="1" name="PC TC2" type="Pion LOG TC2">
+    <nature atlas-nature="ASA" level="xxxx" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="3" crew="4" type="NTI TC2"/>
+      <equipment count="3" crew="250" type="Remorqueur 5T"/>
+      <equipment count="3" crew="250" type="Remorqueur 3T"/>
+      <equipment count="5" crew="4" type="VSB (releve)"/>
+      <equipment count="5" crew="4" type="VSR (ramassage)"/>
+      <equipment count="10" crew="4" type="Medecin TC2"/>
+      <equipment convoyer="true" count="15" crew="1" type="Camion transport solide"/>
+      <equipment convoyer="true" count="15" crew="1" type="Camion transport liquide"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+      <category name="piece">
+        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 1" normalized-consumption="0"/>
+        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 2" normalized-consumption="0"/>
+        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 3" normalized-consumption="0"/>
+        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer l'electronique 1" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <setup installation-time="500s" uninstallation-time="30s"/>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+      <distance-before-point type="lima" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="6000s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="2" name="PC BLD Maintenance" type="Pion LOG BLD Maintenance">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="3" name="PC BLT Maintenance" type="Pion LOG BLT Maintenance">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="4" name="Cie Reparation BLT - M" type="Pion LOG BLT Maintenance">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="3" crew="4" type="NTI BLT M"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+      <category name="piece">
+        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 1" normalized-consumption="0"/>
+        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 2" normalized-consumption="0"/>
+        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 3" normalized-consumption="0"/>
+        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer l'electronique 1" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="5" name="Cie Reparation BLT - EA" type="Pion LOG BLT Maintenance">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="3" crew="4" type="NTI BLT EA"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="6" name="Groupe evacuation maintenance BLT" type="Pion LOG BLT Maintenance">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="2" crew="250" type="Remorqueur 5T"/>
+      <equipment count="2" crew="250" type="Remorqueur 3T"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+      <distance-before-point type="lima" value="100"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="7" name="Cie Reparation BLD - M" type="Pion LOG BLT Maintenance">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="3" crew="4" type="NTI BLD M"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+      <category name="piece">
+        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 1" normalized-consumption="0"/>
+        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 2" normalized-consumption="0"/>
+        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 3" normalized-consumption="0"/>
+        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer l'electronique 1" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="8" name="Cie Reparation BLD - EA" type="Pion LOG BLD Maintenance">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="3" crew="4" type="NTI BLD EA"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="9" name="Groupe evacuation maintenance BLD" type="Pion LOG BLD Maintenance">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="2" crew="250" type="Remorqueur 5T"/>
+      <equipment count="2" crew="250" type="Remorqueur 3T"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test" id="10" name="Section Combat GEN" type="Pion INF">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="3" crew="4" major="true" type="CompTest"/>
+      <equipment count="2" crew="4" loadable="true" type="CompTest2"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Fusse a jupette 53mm" normalized-consumption="0"/>
+        <dotation capacity="200" logistic-threshold="10" name="Obus 120 mm" normalized-consumption="0"/>
+        <dotation capacity="200" logistic-threshold="10" name="Obus fumigene" normalized-consumption="0"/>
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="200" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <setup installation-time="1000s" uninstallation-time="500s"/>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+      <distance-before-point type="lima" value="100"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test" id="11" name="Section Combat GEN 2" type="Pion INF">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer"/>
+    <equipments>
+      <equipment count="5" crew="4" loadable="true" type="CompTest2"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="120s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+  </unit>
+  <unit can-fly="true" decisional-model="Test ALAT" id="12" name="Escadrille ALAT" type="Pion ALAT">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer"/>
+    <equipments>
+      <equipment count="1" crew="4" major="true" type="Truc Volant"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="120s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+  </unit>
+  <unit decisional-model="NBC Test" id="13" name="Section Combat NBC" type="Pion NBC">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer"/>
+    <equipments>
+      <equipment count="1" crew="4" type="CompNBC"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="120s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+  </unit>
+  <unit can-fly="true" decisional-model="RENS Test" id="14" name="Section Combat RENS" type="Pion RENS">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer"/>
+    <equipments>
+      <equipment count="1" crew="4" type="CompNBC"/>
+      <equipment count="2" crew="4" type="CompTest"/>
+      <equipment count="2" crew="4" type="CompTest2"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="120s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+  </unit>
+  <unit can-fly="true" decisional-model="RENS Test" id="15" is-autonomous="true" name="Drone RENS" type="Pion RENS">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer"/>
+    <equipments>
+      <equipment count="2" crew="0" type="Drone"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="120s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="16" name="PC BLD Sante" type="Pion LOG BLD Sante">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="1" crew="1" major="true" type="CompTest"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="17" name="Secteur tri BLD" type="Pion LOG BLD Sante">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="1" crew="1" type="Medecin tri"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="18" name="Secteur soin chirurgical BLD" type="Pion LOG BLD Sante">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="19" name="Secteur soin mental BLD" type="Pion LOG BLD Sante">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="1" crew="4" type="Medecin soin mental"/>
+      <equipment count="5" crew="4" type="Medecin soin chirurgical"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="20" name="Secteur soin NBC BLD" type="Pion LOG BLD Sante">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="1" crew="4" type="Medecin soin NBC"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="21" name="Secteur tri/soin BLD" type="Pion LOG BLD Sante">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="1" crew="4" type="Medecin tri"/>
+      <equipment count="1" crew="4" type="Medecin soin mental"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="22" name="Groupe evacuation sante BLD" type="Pion LOG BLD Sante">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="10" crew="4" type="VSR (ramassage)"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="23" name="PC BLT Sante" type="Pion LOG BLT Sante">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="24" name="Secteur tri BLT" type="Pion LOG BLT Sante">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="1" crew="4" type="Medecin tri"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="25" name="Secteur soin chirurgical BLT" type="Pion LOG BLT Sante">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="1" crew="4" type="Medecin soin chirurgical"/>
+      <equipment count="1" crew="4" type="Medecin soin chirurgical U2/U3"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="26" name="Secteur soin mental BLT" type="Pion LOG BLT Sante">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="1" crew="4" type="Medecin soin mental"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="27" name="Secteur soin NBC BLT" type="Pion LOG BLT Sante">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="1" crew="4" type="Medecin soin NBC"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="28" name="Secteur tri/soin BLT" type="Pion LOG BLT Sante">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="1" crew="4" type="Medecin tri"/>
+      <equipment count="1" crew="4" type="Medecin soin chirurgical"/>
+      <equipment count="1" crew="4" type="Medecin soin mental"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="29" name="Groupe evacuation sante BLT" type="Pion LOG BLT Sante">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="1" crew="4" type="VSR (ramassage)"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="30" name="PC BLD Ravitaillement" type="Pion LOG BLD Ravitaillement">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="1" crew="1" major="true" type="CompTest"/>
+      <equipment convoyer="true" count="25" crew="1" type="Camion transport solide"/>
+      <equipment convoyer="true" count="25" crew="1" type="Camion transport liquide"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="31" name="Pion RAV stocks" type="Pion LOG BLD Ravitaillement">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="1" crew="4" type="CompTest"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="32" name="Pion RAV camions" type="Pion LOG BLD Ravitaillement">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment convoyer="true" count="25" crew="1" type="Camion transport solide"/>
+      <equipment convoyer="true" count="25" crew="1" type="Camion transport liquide"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="Test LOG" id="33" name="Pion Convoi" type="Pion LOG Convoi">
+    <nature atlas-nature="Blinde" level="oo" nature="combat support service/transportation"/>
+    <equipments/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+  <unit decisional-model="REFUGIE Test" id="34" name="Pion Refugie" type="Pion REFUGIE">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+      <equipment count="3" crew="4" major="true" type="CompTest"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="100s"/>
+  </unit>
+</units>

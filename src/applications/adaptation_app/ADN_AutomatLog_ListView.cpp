@@ -114,7 +114,7 @@ void ADN_AutomatLog_ListView::BuildBody()
                 assert( pUnitInfos->ptrUnit_.GetData() != 0 );
                 pUnit = pUnitInfos->ptrUnit_.GetData();
                 ++it2;
-                nUnit += QString( pUnitInfos->strNbrRegExp_.GetData().c_str() ).toUInt();
+                nUnit += pUnitInfos->min_.GetData();
             }
             ADN_Units_Data::UnitInfos& unit = *pUnit;
             if( nUnitInAutomat == 0 )

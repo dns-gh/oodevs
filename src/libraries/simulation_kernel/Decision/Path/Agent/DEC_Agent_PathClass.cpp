@@ -15,8 +15,19 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 DEC_Agent_PathClass::T_Rules       DEC_Agent_PathClass::rules_;
+
+struct DEC_Agent_PathClass::LoadingWrapper
+{
+    void ReadUnitRule( xml::xistream& xis )
+    {
+        DEC_Agent_PathClass::ReadUnitRule( xis );
+    }
+};
 
 // =============================================================================
 // MANAGER
@@ -46,37 +57,45 @@ void DEC_Agent_PathClass::CheckRulesExistence()
 // Name: DEC_Agent_PathClass::Initialize
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
-void DEC_Agent_PathClass::Initialize( MIL_InputArchive& archive )
+void DEC_Agent_PathClass::Initialize( xml::xistream& xis )
 {
-    archive.BeginList( "AgentRules" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Rule" );
-        std::string strType;
-        bool        bFlying;
-        bool        bAutonomous;
+    LoadingWrapper loader;
 
-        archive.ReadAttribute( "type"      , strType     );
-        archive.ReadAttribute( "flying"    , bFlying     );
-        archive.ReadAttribute( "autonomous", bAutonomous );
-
-        std::string strBase;
-        const DEC_Agent_PathClass* pBase = 0;
-        if( archive.ReadAttribute( "inherits", strBase, MIL_InputArchive::eNothing ) )
-        {
-            pBase  = rules_[ T_RuleType( strBase, T_BooleanPair( bFlying, bAutonomous ) ) ];
-            if( !pBase )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "base rule '" + strBase + "' is undefined", archive.GetContext() );
-        }
-        DEC_Agent_PathClass*& pRule = rules_[ T_RuleType( strType, T_BooleanPair( bFlying, bAutonomous ) ) ];
-        if( pRule )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strType + "' already defined", archive.GetContext() );
-        pRule = new DEC_Agent_PathClass( archive, pBase );
-        archive.EndSection(); // Rule
-    }
-    archive.EndList(); // AgentRules
+    xis >> start( "unit-rules" )
+            >> list( "rule", loader, &LoadingWrapper::ReadUnitRule )
+        >> end();
 
     CheckRulesExistence();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_PathClass::ReadUnitRule
+// Created: ABL 2007-07-25
+// -----------------------------------------------------------------------------
+void DEC_Agent_PathClass::ReadUnitRule( xml::xistream& xis )
+{
+    std::string strType;
+    bool        bFlying;
+    bool        bAutonomous;
+
+    xis >> attribute( "type"      , strType     )
+        >> attribute( "flying"    , bFlying     )
+        >> attribute( "autonomous", bAutonomous );
+
+    std::string strBase;
+    const DEC_Agent_PathClass* pBase = 0;
+    strBase = "nothing";
+    xis >> optional() >> attribute( "inherits", strBase );
+    if( strBase != "nothing" )
+    {
+        pBase  = rules_[ T_RuleType( strBase, T_BooleanPair( bFlying, bAutonomous ) ) ];
+        if( !pBase )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "base rule '" + strBase + "' is undefined" ); // $$$$ ABL 2007-07-25: error context
+    }
+    DEC_Agent_PathClass*& pRule = rules_[ T_RuleType( strType, T_BooleanPair( bFlying, bAutonomous ) ) ];
+    if( pRule )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strType + "' already defined" ); // $$$$ ABL 2007-07-25: error context
+    pRule = new DEC_Agent_PathClass( xis, pBase );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +115,7 @@ void DEC_Agent_PathClass::Terminate()
 // Name: DEC_Agent_PathClass constructor
 // Created: AGE 2005-08-04
 // -----------------------------------------------------------------------------
-DEC_Agent_PathClass::DEC_Agent_PathClass( MIL_InputArchive& archive, const DEC_Agent_PathClass* pCopyFrom /*= 0*/ )
+DEC_Agent_PathClass::DEC_Agent_PathClass( xml::xistream& xis, const DEC_Agent_PathClass* pCopyFrom /*= 0*/ )
     : bShort_                            ( false )
     , rPreferedTerrainCost_              ( 0 )
     , rAvoidedTerrainCost_               ( 0 )
@@ -122,55 +141,35 @@ DEC_Agent_PathClass::DEC_Agent_PathClass( MIL_InputArchive& archive, const DEC_A
     if( pCopyFrom )
         *this = *pCopyFrom;
 
-    archive.ReadField( "GoStraight", bShort_, MIL_InputArchive::eNothing );
-    if( archive.BeginList( "PreferTerrain", MIL_InputArchive::eNothing ) )
-    {
-        archive.ReadAttribute( "strength", rPreferedTerrainCost_, MIL_InputArchive::eNothing );
-        ReadTerrains( archive, preferedTerrain_ );
-        archive.EndList();
-    }
-    if( archive.BeginList( "AvoidTerrain", MIL_InputArchive::eNothing ) )
-    {
-        archive.ReadAttribute( "strength", rAvoidedTerrainCost_, MIL_InputArchive::eNothing );
-        ReadTerrains( archive, avoidedTerrain_ );
-        archive.EndList();
-    }
-    archive.ReadField( "AltitudePreference", rAltitudePreference_, MIL_InputArchive::eNothing );
+    xis >> optional() >> start( "optimisation" )
+                        >> attribute( "shortest", bShort_ )
+                    >> end()
 
-    if( archive.Section( "Fuseau", MIL_InputArchive::eNothing ) )
-    {
-        ReadFuseau( archive );
-        archive.EndSection(); // Fuseau
-    }
-    if( archive.Section( "AutomataFuseau", MIL_InputArchive::eNothing ) )
-    {
-        ReadAutomataFuseau( archive );
-        archive.EndSection(); // AutomataFuseau
-    }
+        >> optional() >> start( "preferred-terrains" )
+                          >> optional() >> attribute( "strength", rPreferedTerrainCost_ )
+                          >> list( "preferred-terrain", *this, &DEC_Agent_PathClass::ReadPrefferedTerrains, preferedTerrain_ )
+                      >> end()
 
-    if( archive.Section( "DangerDirection", MIL_InputArchive::eNothing ) )
-    {
-        ReadDangerDirection( archive );
-        archive.EndSection(); // DangerDirection
-    }
+        >> optional() >> start( "avoided-terrains" )
+                          >> optional() >> attribute( "strength", rAvoidedTerrainCost_ )
+                          >> list( "avoided-terrain", *this, &DEC_Agent_PathClass::ReadAvoidedTerrain, avoidedTerrain_ )
+                      >> end()
 
-    if( archive.Section( "Enemies", MIL_InputArchive::eNothing ) )
-    {
-        ReadEnemiesCost( archive );
-        archive.EndSection(); // Enemies
-    }
+        >> optional() >> start( "preferred-altitude" )
+                          >> attribute( "value", rAltitudePreference_ )
+                      >> end()
 
-    if( archive.Section( "Objects", MIL_InputArchive::eNothing ) )
-    {
-        ReadObjectsCost( archive );
-        archive.EndSection(); // Objects
-    }
+        >> list( "zone", *this, &DEC_Agent_PathClass::ReadFuseau )
 
-    if( archive.Section( "Populations", MIL_InputArchive::eNothing ) )
-    {
-        ReadPopulationsCost( archive );
-        archive.EndSection(); // Populations
-    }
+        >> list( "automat-zone", *this, &DEC_Agent_PathClass::ReadAutomataFuseau )
+
+        >> list( "danger-direction", *this, &DEC_Agent_PathClass::ReadDangerDirection )
+
+        >> list( "enemies", *this, &DEC_Agent_PathClass::ReadEnemiesCost )
+
+        >> list( "object-costs", *this, &DEC_Agent_PathClass::ReadObjectsCost )
+
+        >> list( "population-costs", *this, &DEC_Agent_PathClass::ReadPopulationsCost );
 }
 
 // -----------------------------------------------------------------------------
@@ -190,133 +189,143 @@ DEC_Agent_PathClass::~DEC_Agent_PathClass()
 // Name: DEC_Agent_PathClass::ReadObjectsCost
 // Created: NLD 2007-02-08
 // -----------------------------------------------------------------------------
-void DEC_Agent_PathClass::ReadObjectsCost( MIL_InputArchive& archive )
+void DEC_Agent_PathClass::ReadObjectsCost( xml::xistream& xis )
 {
-    archive.ReadAttribute( "avoid", bAvoidObjects_ );
-    if( archive.BeginList( "Costs", MIL_InputArchive::eNothing ) )
-    {
-        while( archive.NextListElement() )
-        {
-            archive.Section( "Cost" );
-            
-            std::string strObjectType;
-            archive.ReadAttribute( "type", strObjectType );           
-            const MIL_RealObjectType* pType = MIL_RealObjectType::Find( strObjectType );
-            if( !pType )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type", archive.GetContext() );
+    xis >> attribute( "avoid", bAvoidObjects_ )
+        >> list( "object-cost", *this, &DEC_Agent_PathClass::ReadObject );
+}
 
-            assert( objectCosts_.size() > pType->GetID() );
-            archive.Read( objectCosts_[ pType->GetID() ] );
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_PathClass::xistream& xis );void ReadObject
+// Created: ABL 2007-07-25
+// -----------------------------------------------------------------------------
+void DEC_Agent_PathClass::ReadObject( xml::xistream& xis )
+{
+    std::string strObjectType;
+    xis >> attribute( "type", strObjectType );
+    const MIL_RealObjectType* pType = MIL_RealObjectType::Find( strObjectType );
+    if( !pType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type" ); // $$$$ ABL 2007-07-25: error context
 
-            archive.EndSection(); // Cost
-        }
-        archive.EndList(); // Costs
-    }
+    assert( objectCosts_.size() > pType->GetID() );
+    xis >> attribute( "value", objectCosts_[ pType->GetID() ] );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathClass::ReadTerrains
 // Created: AGE 2005-08-04
 // -----------------------------------------------------------------------------
-void DEC_Agent_PathClass::ReadTerrains( MIL_InputArchive& archive, TerrainData& destinationData )
+void DEC_Agent_PathClass::ReadPrefferedTerrains( xml::xistream& xis, TerrainData& destinationData )
 {
     destinationData = TerrainData();
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Terrain" );
-        std::string strType;
-        archive.ReadAttribute( "type", strType );
-        const TerrainData data = TerrainData( strType );
-        if( data.Area() == 0xFF )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown terrain type '" + strType + "'", archive.GetContext() );
-        destinationData.Merge( data );
-        archive.EndSection(); // Terrain
-    }
+    xis >> list( "preferred-terrain", *this, &DEC_Agent_PathClass::ReadTerrain, destinationData );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_PathClass::ReadAvoidedTerrain
+// Created: ABL 2007-07-25
+// -----------------------------------------------------------------------------
+void DEC_Agent_PathClass::ReadAvoidedTerrain( xml::xistream& xis, TerrainData& destinationData )
+{
+    destinationData = TerrainData();
+    xis >> list( "avoided-terrain", *this, &DEC_Agent_PathClass::ReadTerrain, destinationData );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_PathClass::ReadTerrain
+// Created: ABL 2007-07-25
+// -----------------------------------------------------------------------------
+void DEC_Agent_PathClass::ReadTerrain( xml::xistream& xis, TerrainData& destinationData )
+{
+    std::string strType;
+    xis >> attribute( "type", strType );
+    const TerrainData data = TerrainData( strType );
+    if( data.Area() == 0xFF )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown terrain type '" + strType + "'" ); // $$$$ ABL 2007-07-25: error context
+    destinationData.Merge( data );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathClass::ReadFuseau
 // Created: AGE 2005-08-04
 // -----------------------------------------------------------------------------
-void DEC_Agent_PathClass::ReadFuseau( MIL_InputArchive& archive )
+void DEC_Agent_PathClass::ReadFuseau( xml::xistream& xis )
 {
-    if( archive.Section( "ToleratedDistanceOutside", MIL_InputArchive::eNothing ) )
-    {
-        archive.ReadAttribute( "costPerMeter", rFuseauCostPerMeterOut_, MIL_InputArchive::eNothing );
-        archive.ReadField( "WithoutAutomata", rMaximumFuseauDistance_, MIL_InputArchive::eNothing );
-        archive.ReadField( "WithAutomata", rMaximumFuseauDistanceWithAutomata_, MIL_InputArchive::eNothing );
-        archive.EndSection(); // ToleratedDistanceOutside
-    }
-    if( archive.Section( "ComfortDistanceInside", MIL_InputArchive::eNothing ) )
-    {
-        archive.ReadAttribute( "costPerMeter", rFuseauCostPerMeterIn_, MIL_InputArchive::eNothing );
-        archive.Read( rComfortFuseauDistance_ );
-        archive.EndSection(); //ComfortDistanceInside
-    }
+    xis >> optional() >> start( "outter-tolerance" )
+                          >> optional() >> attribute( "cost-per-meter", rFuseauCostPerMeterOut_ )
+                          >> optional() >> attribute( "without-automat", rMaximumFuseauDistance_ )
+                          >> optional() >> attribute( "with-automat", rMaximumFuseauDistanceWithAutomata_ )
+                      >> end()
+
+        >>optional() >> start( "inner-comfort" )
+                          >> optional() >> attribute( "cost-per-meter", rFuseauCostPerMeterIn_ )
+                          >> attribute( "distance", rComfortFuseauDistance_ )
+                     >> end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathClass::ReadAutomataFuseau
 // Created: AGE 2005-08-12
 // -----------------------------------------------------------------------------
-void DEC_Agent_PathClass::ReadAutomataFuseau( MIL_InputArchive& archive )
+void DEC_Agent_PathClass::ReadAutomataFuseau( xml::xistream& xis )
 {
-    if( archive.Section( "ToleratedDistanceOutside", MIL_InputArchive::eNothing ) )
-    {
-        archive.ReadAttribute( "costPerMeter", rAutomataFuseauCostPerMeterOut_, MIL_InputArchive::eNothing );
-        archive.Read( rMaximumAutomataFuseauDistance_ );
-        if( rMaximumAutomataFuseauDistance_ < 10 )
-            rMaximumAutomataFuseauDistance_ = 10;
-        archive.EndSection(); // ToleratedDistanceOutside
-    }
+    xis >> optional() >> start( "outter-tolerance " )
+                          >> optional() >> attribute( "cost-per-meter" ,rAutomataFuseauCostPerMeterOut_ )
+                          >> attribute( "distance", rMaximumAutomataFuseauDistance_ )
+                      >> end();
+    if( rMaximumAutomataFuseauDistance_ < 10 )
+        rMaximumAutomataFuseauDistance_ = 10;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathClass::ReadDangerDirection
 // Created: AGE 2005-08-04
 // -----------------------------------------------------------------------------
-void DEC_Agent_PathClass::ReadDangerDirection( MIL_InputArchive& archive )
+void DEC_Agent_PathClass::ReadDangerDirection( xml::xistream& xis )
 {
-    archive.ReadField( "BaseCostBeyond"    , rDangerDirectionBaseCost_  , MIL_InputArchive::eNothing );
-    archive.ReadField( "CostPerMeterBeyond", rDangerDirectionLinearCost_, MIL_InputArchive::eNothing );
+    xis >> optional() >> attribute( "base-cost-beyond", rDangerDirectionBaseCost_ )
+        >> optional() >> attribute( "cost-per-meter", rDangerDirectionLinearCost_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathClass::ReadEnemiesCost
 // Created: AGE 2005-08-04
 // -----------------------------------------------------------------------------
-void DEC_Agent_PathClass::ReadEnemiesCost( MIL_InputArchive& archive )
+void DEC_Agent_PathClass::ReadEnemiesCost( xml::xistream& xis )
 {
-    archive.ReadField( "CostOnContact"      , rEnemyCostOnContact_      , MIL_InputArchive::eNothing );
-    archive.ReadField( "CostAtSecurityRange", rEnemyCostAtSecurityRange_, MIL_InputArchive::eNothing );
-    archive.ReadField( "MaximumCost"        , rEnemyMaximumCost_        , MIL_InputArchive::eNothing );
+    xis >> optional() >> attribute( "cost-on-contact", rEnemyCostOnContact_ )
+        >> optional() >> attribute( "cost-at-security-range", rEnemyCostAtSecurityRange_ )
+        >> optional() >> attribute( "maximum-cost", rEnemyMaximumCost_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathClass::ReadPopulationsCost
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
-void DEC_Agent_PathClass::ReadPopulationsCost( MIL_InputArchive& archive )
+void DEC_Agent_PathClass::ReadPopulationsCost( xml::xistream& xis )
 {
     std::string strAttitude;
+    xis >> optional() >> attribute( "security-range", rPopulationSecurityRange_ )
+        >> optional() >> attribute( "maximum", rPopulationMaximumCost_ )
+        >> optional() >> attribute( "outside-of-population", rCostOutsideOfPopulation_ )
+            >> list( "population-cost", *this, &DEC_Agent_PathClass::ReadPopulation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_PathClass::ReadPopulation
+// Created: ABL 2007-07-25
+// -----------------------------------------------------------------------------
+void DEC_Agent_PathClass::ReadPopulation( xml::xistream& xis )
+{
     MT_Float rCost = 0.0f;
-    archive.ReadField( "SecurityRange"         , rPopulationSecurityRange_, MIL_InputArchive::eNothing );
-    archive.ReadField( "MaximumCost"           , rPopulationMaximumCost_  , MIL_InputArchive::eNothing );
-    archive.ReadField( "CostOusideOfPopulation", rCostOutsideOfPopulation_, MIL_InputArchive::eNothing );
-    archive.BeginList( "CostsOnContact", MIL_InputArchive::eNothing );
-    while( archive.NextListElement() )
+    std::string strAttitude;
+    xis >> attribute( "attitude", strAttitude );
+    const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( strAttitude );
+    if( pAttitude )
     {
-        archive.Section( "CostOnContact" );
-        archive.ReadAttribute( "attitude", strAttitude );
-        const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( strAttitude );
-        if( pAttitude )
-        {
-            archive.Read( rCost ); 
-            populationAttitudeCosts_[ pAttitude ] = rCost;
-        }
-        archive.EndSection(); // CostOnContact
+        xis >> attribute( "contact-cost", rCost );
+        populationAttitudeCosts_[ pAttitude ] = rCost;
     }
-    archive.EndList(); // CostsOnContact
 }
 
 // =============================================================================

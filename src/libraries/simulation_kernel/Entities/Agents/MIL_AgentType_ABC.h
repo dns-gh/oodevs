@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_NatureLevel;
 class PHY_NatureAtlas;
 
@@ -26,7 +31,7 @@ class MIL_AgentType_ABC
     MT_COPYNOTALLOWED( MIL_AgentType_ABC )
 
 public:
-    MIL_AgentType_ABC( const std::string& strName, MIL_InputArchive& archive );
+             MIL_AgentType_ABC( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentType_ABC();
 
     //! @name Types
@@ -44,7 +49,7 @@ public:
 private:
     //! @name Init
     //@{
-    void InitializeNature( MIL_InputArchive& archive );
+    void InitializeNature( xml::xistream& xis );
     //@}
 
 private:

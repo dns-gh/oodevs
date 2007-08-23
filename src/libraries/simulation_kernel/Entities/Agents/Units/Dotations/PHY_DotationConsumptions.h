@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_DotationType;
 class PHY_DotationCategory;
 class PHY_DotationConsumption;
@@ -35,7 +40,7 @@ public:
     //@}
 
 public:
-     PHY_DotationConsumptions( const std::string& strParentTagName, MIL_InputArchive& archive );
+     PHY_DotationConsumptions( const std::string& strParentTagName, xml::xistream& xis );
     ~PHY_DotationConsumptions();
 
     //! @name Accessors
@@ -56,11 +61,10 @@ private:
     //@}
 
 private:
-    //! @name Init
+    //! @name Helpers
     //@{
-    void ReadDotationCategories( MIL_InputArchive& archive, const PHY_DotationType& dotationType );
+    void ReadDotation( xml::xistream& xis );
     //@}
-
 private:
     T_DotationConsumptionMap dotationConsumptions_;
 };

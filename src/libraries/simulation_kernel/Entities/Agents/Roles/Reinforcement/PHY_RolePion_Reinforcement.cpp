@@ -129,9 +129,9 @@ bool PHY_RolePion_Reinforcement::Reinforce( MIL_AgentPion& pionToReinforce )
     if( !CanReinforce() || !pionToReinforce.GetRole< PHY_RolePion_Reinforcement >().CanBeReinforced() )
         return false;
 
-	// Annulation du renforcement en cours si il existe
-	if( pPionReinforced_ )
-		CancelReinforcement();
+    // Annulation du renforcement en cours si il existe
+    if( pPionReinforced_ )
+        CancelReinforcement();
 
     pionToReinforce.GetRole< PHY_RolePion_Reinforcement >().NotifyReinforcementAdded( *pPion_ );
     pPionReinforced_ = &pionToReinforce;

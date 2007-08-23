@@ -15,15 +15,11 @@
 #include "MT/MT_Tools/MT_Types.h"
 #include "MT_Tools_Types.h"
 
-class MT_OutputArchive_ABC;
-class MT_InputArchive_ABC;
-
 //=============================================================================
 // Created: FBD 02-03-01
 //=============================================================================
 class MT_Vector2D
 {
-//    MT_BOOSTPOOLING_MEMBERS( MT_Vector2D )
 
 public:
      MT_Vector2D();                           // Constructor : les valeurs XYZ sont mises a 0

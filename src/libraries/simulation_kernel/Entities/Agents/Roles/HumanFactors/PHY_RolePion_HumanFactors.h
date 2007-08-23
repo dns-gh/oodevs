@@ -16,6 +16,11 @@
 
 #include "PHY_RoleInterface_HumanFactors.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class NET_ASN_MsgUnitAttributes;
 class PHY_Morale;
 class PHY_Experience;
@@ -52,7 +57,7 @@ public:
 
     //! @name Main
     //@{
-    void ReadOverloading( MIL_InputArchive& archive );
+    void ReadOverloading( xml::xistream& xis );
     void SetMorale      ( const PHY_Morale& morale         );
     void SetExperience  ( const PHY_Experience& experience );
     void SetTiredness   ( const PHY_Tiredness&  tiredness  );
@@ -86,6 +91,15 @@ private:
     const PHY_Morale*     pMorale_;
     const PHY_Experience* pExperience_;
     const PHY_Tiredness*  pTiredness_;
+
+private:
+    //! @name Helpers
+    //@{
+    void ReadFacteursHumains( xml::xistream& xis );
+    void ReadFatigue        ( xml::xistream& xis );
+    void ReadMoral          ( xml::xistream& xis );
+    void ReadExperience     ( xml::xistream& xis );
+    //@}
 };
 
 #include "PHY_RolePion_HumanFactors.inl"

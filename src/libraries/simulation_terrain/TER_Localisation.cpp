@@ -12,12 +12,12 @@
 #include "simulation_terrain_pch.h"
 #include "TER_Localisation.h"
 #include "TER_World.h"
+#include "MT_Tools/MT_Circle.h"
 #include "MT_Tools/MT_ScipioException.h"
-#include "MT_Tools/MT_InputArchive_Logger.h"
-#include "MT/MT_Archive/MT_OutputArchive_ABC.h"
-#include "MT/MT_XmlTools/MT_XXmlInputArchive.h"
-#include "MT/MT_Archive/MT_Error.h"
 #include "MT/MT_IO/MT_FormatString.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // $$$$ JVT : CRADE
 #include "../../src/libraries/simulation_kernel/CheckPoints/MIL_CheckPointSerializationHelpers.h"
@@ -55,8 +55,8 @@ TER_Localisation::TER_Localisation( const TER_Localisation& localisation )
 
     if( nType_ == ePolygon )
         polygon_ = localisation.polygon_;
-	else if( nType_ == eLine )
-		polyline_ = localisation.polyline_;
+    else if( nType_ == eLine )
+        polyline_ = localisation.polyline_;
     else if( nType_ == ePoint )
         polygon_ = localisation.polygon_;
 
@@ -204,7 +204,7 @@ bool TER_Localisation::InitializeLine()
 inline
 bool TER_Localisation::InitializePoint()
 {
-    static MT_Float rRectSize = 250 / TER_World::GetWorld().GetMeterPerPixel();
+    static MT_Float rRectSize = 250;
 
     if( pointVector_.size() < 1 )
         return false;
@@ -484,8 +484,8 @@ void TER_Localisation::Reset( const TER_Localisation& localisation )
 
     if( nType_ == ePolygon )
         polygon_ = localisation.polygon_;
-	else if( nType_ == eLine )
-		polyline_ = localisation.polyline_;
+    else if( nType_ == eLine )
+        polyline_ = localisation.polyline_;
     else if( nType_ == ePoint )
         polygon_ = localisation.polygon_;
 
@@ -496,74 +496,75 @@ void TER_Localisation::Reset( const TER_Localisation& localisation )
 // Name: TER_Localisation::Read
 // Created: NLD 2003-07-22
 //-----------------------------------------------------------------------------
-void TER_Localisation::Read( MT_InputArchive_Logger< MT_XXmlInputArchive >& archive )
+void TER_Localisation::Read( xml::xistream& xis )
 {
     Reset();
-    archive.Section( "shape" );
-
     std::string strType;
-    archive.ReadAttribute( "type", strType );
+
+    xis >> start( "shape" )
+        >> attribute( "type", strType );
     nType_ = ConvertLocalisationType( strType );
 
     // Points
-    archive.BeginList( "points" );
-    while ( archive.NextListElement() )
-    {
-        std::string strPoint;
-        archive.Section( "point" );
-        archive.Read( strPoint );
-        archive.EndSection();
+    xis >> start( "points" )
+        >> list( "point", *this, &TER_Localisation::ReadPoint )
+        >> end();// points
 
-        MT_Vector2D vPoint;
-        TER_World::GetWorld().MosToSimMgrsCoord( strPoint, vPoint );
-        pointVector_.push_back( vPoint );
-    }   
-    archive.EndList(); // points
-   
-    archive.EndSection(); // shape
+    xis >> end(); // shape
 
     if( !Initialize() )
-        throw MT_ScipioException( "TER_Localisation::Read", __FILE__, __LINE__, "Invalid localisation", archive.GetContext() );
+        throw MT_ScipioException( "TER_Localisation::Read", __FILE__, __LINE__, "Invalid localisation" ); // $$$$ ABL 2007-07-09: error context
 }
 
+// -----------------------------------------------------------------------------
+// Name: TER_Localisation::ReadPoint
+// Created: ABL 2007-07-09
+// -----------------------------------------------------------------------------
+void TER_Localisation::ReadPoint( xml::xistream& xis )
+{
+    std::string strPoint;
+    xis >> strPoint;
 
+    MT_Vector2D vPoint;
+    TER_World::GetWorld().MosToSimMgrsCoord( strPoint, vPoint );
+    pointVector_.push_back( vPoint );
+}
 //-----------------------------------------------------------------------------
 // Name: TER_Localisation::Write
 // Created: JVT 03-07-31
 //-----------------------------------------------------------------------------
-void TER_Localisation::Write( MT_OutputArchive_ABC& archive ) const
+void TER_Localisation::Write( xml::xostream& xos ) const
 {
-    archive.Section( "shape" );
+    xos << start( "shape" );
 
     if( bWasCircle_ )
     {
-        archive.WriteAttribute( "type", "cercle" );
-        archive.Section( "points" );
+        xos << attribute( "type", "cercle" )
+            << start( "points" );
         std::string strPoint;
         TER_World::GetWorld().SimToMosMgrsCoord( vCircleCenter_, strPoint );
-        archive.WriteField( "point", strPoint );
+        xos << content( "point", strPoint );
 
         MT_Vector2D vDir( 0., 1. );
         TER_World::GetWorld().SimToMosMgrsCoord( vCircleCenter_ + vDir * rCircleRadius_, strPoint );
-        archive.WriteField( "point", strPoint );
+        xos << content( "point", strPoint );
 
-        archive.EndSection(); // points
+        xos << end(); // points
     }
     else
     {
-        archive.WriteAttribute( "type", ConvertLocalisationType( nType_ ) );
+        xos << attribute( "type", ConvertLocalisationType( nType_ ) )
+            << start( "points" );
 
-        archive.Section( "points" );
         std::string strPoint;
-        for ( CIT_PointVector it = pointVector_.begin(); it != pointVector_.end(); ++it )
+        for( CIT_PointVector it = pointVector_.begin(); it != pointVector_.end(); ++it )
         {
             TER_World::GetWorld().SimToMosMgrsCoord( *it, strPoint );
-            archive.WriteField( "point", strPoint );
-           
+            xos << content( "point", strPoint );
         }
-        archive.EndSection(); // points        
+        xos << end(); // points        
     }
-    archive.EndSection(); // shape
+    xos << end(); // shape
 }
 
 
@@ -998,7 +999,7 @@ void TER_Localisation::Scale( MT_Float rDist )
     }
     else if( nType_ == ePoint )
     {
-            static MT_Float rRectSize = 250 / TER_World::GetWorld().GetMeterPerPixel();
+            static MT_Float rRectSize = 250;
             MT_Float rNewRectSize = rRectSize + rDist;
 
             // Transformation du point en rectangle

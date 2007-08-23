@@ -52,7 +52,7 @@ MIL_OrderContext::MIL_OrderContext( const ASN1T_OrderContext& asn, const MT_Vect
     T_PointVector leftLimitData;
     T_PointVector rightLimitData;
 
-	if( asn.m.limite_gauchePresent && !NET_ASN_Tools::ReadLine( asn.limite_gauche, leftLimitData ) )
+    if( asn.m.limite_gauchePresent && !NET_ASN_Tools::ReadLine( asn.limite_gauche, leftLimitData ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_limit );
 
     if( asn.m.limite_droitePresent && !NET_ASN_Tools::ReadLine( asn.limite_droite, rightLimitData ))

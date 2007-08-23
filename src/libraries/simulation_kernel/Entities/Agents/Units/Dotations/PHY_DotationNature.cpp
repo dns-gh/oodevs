@@ -12,6 +12,9 @@
 #include "simulation_kernel_pch.h"
 
 #include "PHY_DotationNature.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 PHY_DotationNature::T_DotationNatureMap PHY_DotationNature::natures_;
 uint                                    PHY_DotationNature::nNextID_ = 0;
@@ -20,33 +23,41 @@ uint                                    PHY_DotationNature::nNextID_ = 0;
 // MANAGER
 // =============================================================================
 
+struct PHY_DotationNature::LoadingWrapper
+{
+    void ReadNature( xml::xistream& xis )
+    {
+        PHY_DotationNature::ReadNature( xis );
+    }
+};
+
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationNature::Initialize
 // Created: NLD 2006-03-21
 // -----------------------------------------------------------------------------
-void PHY_DotationNature::Initialize( MIL_InputArchive& archive )
+void PHY_DotationNature::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing dotation natures" );
+    LoadingWrapper loader;
 
-    archive.BeginList( "Natures" );
+    xis >> start( "natures" )
+            >> list( "nature", loader, &LoadingWrapper::ReadNature )
+        >> end();
+}
 
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Nature" );
-
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationNature::ReadNature
+// Created: ABL 2007-07-19
+// -----------------------------------------------------------------------------
+void PHY_DotationNature::ReadNature( xml::xistream& xis )
+{
         std::string strName;
-        archive.Read( strName );
+        xis >> attribute( "type", strName );
 
         const PHY_DotationNature*& pDotationNature = natures_[ strName ];
         if( pDotationNature )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Dotation nature '%s' already registered", strName.c_str() ) );
         pDotationNature = new PHY_DotationNature( strName );
-
-        archive.EndSection(); // Nature
-
-    }
-
-    archive.EndList(); // Natures
 }
 
 // -----------------------------------------------------------------------------

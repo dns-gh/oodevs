@@ -13,6 +13,12 @@
 #define __PHY_SensorTypeObjectData_h_
 
 #include "MIL.h"
+#include "Entities/Agents/Units/Postures/PHY_Posture.h"
+
+namespace xml
+{
+    class xistream;
+}
 
 class MIL_RealObject_ABC;
 class DEC_Knowledge_Object;
@@ -29,7 +35,7 @@ class PHY_SensorTypeObjectData
     MT_COPYNOTALLOWED( PHY_SensorTypeObjectData )
 
 public:
-     PHY_SensorTypeObjectData( MIL_InputArchive& archive );
+     PHY_SensorTypeObjectData( xml::xistream& xis );
     ~PHY_SensorTypeObjectData();
 
     //! @name Tools
@@ -52,10 +58,15 @@ private:
 private:
     //! @name Tools
     //@{
-    template< typename C > static void InitializeFactors( const C& container, const std::string& strTagName, T_FactorVector& factors, MIL_InputArchive& archive );
+    template< typename C > static void InitializeFactors( const C& container, const std::string& strTagName, T_FactorVector& factors, xml::xistream& xis );
     MT_Float GetPopulationFactor        ( MT_Float rDensity ) const;
     MT_Float GetSourceFactor            ( const MIL_AgentPion& source ) const;
-    void     InitializePopulationFactors( MIL_InputArchive& archive );
+    void     InitializePopulationFactors( xml::xistream& xis );
+    //@}
+    //! @name Hepers
+    //@{
+    struct LoadingWrapper;
+    static void ReadPosture( xml::xistream& xis, const PHY_Posture::T_PostureMap& container, T_FactorVector& factors );
     //@}
 
 private:

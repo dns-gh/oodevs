@@ -13,8 +13,13 @@
 #define __MIL_ZoneMineeLineaire_h_
 
 #include "MIL.h"
-
 #include "MIL_Obstacle.h"
+
+namespace xml
+{
+    class xostream;
+    class xostream;
+}
 
 //=============================================================================
 // Created: NLD 2002-12-12
@@ -39,7 +44,7 @@ public:
     static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
 
     virtual bool                      Initialize( const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
-    virtual void                      Initialize( MIL_InputArchive& archive );
+    virtual void                      Initialize( xml::xistream& xis );
     virtual ASN1T_EnumObjectErrorCode Initialize( const ASN1T_MagicActionCreateObject& asn );
     //@}
 
@@ -67,7 +72,7 @@ private:
 
     //! @name Network
     //@{
-    virtual void WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const;
+    virtual void WriteSpecificAttributes( xml::xostream& xos ) const;
     virtual void WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg );
     //@}
 

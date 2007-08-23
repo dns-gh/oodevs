@@ -22,7 +22,7 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
 
-class ADN_XmlInput_Helper;
+class xml::xistream;
 
 
 // =============================================================================
@@ -44,8 +44,8 @@ public:
     public:
         ModifiersInfo( const std::string& strName );
 
-        void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
 
     public:
         const std::string strName_;
@@ -73,8 +73,9 @@ public:
     //@}
 
 private:
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void WriteArchive( MT_OutputArchive_ABC& output );
+    void ReadArchive( xml::xistream& input );
+    void ReadModifier( xml::xistream& input );
+    void WriteArchive( xml::xostream& output );
 
 public:
     ModifiersInfo veteranModifiers_;

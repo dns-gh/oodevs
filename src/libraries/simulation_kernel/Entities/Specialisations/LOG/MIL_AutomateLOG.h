@@ -13,8 +13,13 @@
 #define __MIL_AutomateLOG_h_
 
 #include "MIL.h"
-
 #include "Entities/Automates/MIL_Automate.h"
+
+namespace xml
+{
+    class xostream;
+    class xistream;
+}
 
 class MIL_AutomateTypeLOG;
 class PHY_MaintenanceComposanteState;
@@ -51,7 +56,7 @@ public:
     };
     
 public:
-             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Formation& formation, MIL_InputArchive& archive );
+             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Formation& formation, xml::xistream& xis );
              MIL_AutomateLOG();
     virtual ~MIL_AutomateLOG();
 
@@ -62,7 +67,7 @@ public:
     
     //! @name Initialize
     //@{
-    virtual void ReadLogisticLink( MIL_AutomateLOG& superior, MIL_InputArchive& archive );
+    virtual void ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& xis );
     //@}
 
     //! @name Operations
@@ -153,7 +158,11 @@ private:
     //! @name Tools
     //@{
     virtual void SendLogisticLinks    () const;
-    virtual void WriteLogisticLinksODB( MT_XXmlOutputArchive& archive ) const;
+    virtual void WriteLogisticLinksODB( xml::xostream& xos ) const;
+    //@}
+    //! @name Helpers
+    //@{
+    void ReadDotation( xml::xistream& xis );
     //@}
     
 private:
