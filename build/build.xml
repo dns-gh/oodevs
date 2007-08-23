@@ -349,7 +349,7 @@ BLOCK "VarFileInfo"
     </target>
 
     <target name="application.AGR" description="build AGR executable">
-        <build-app name="AGR" subsystem="console" excludes="**/*_Skeleton.*" depends="mt,boost">
+        <build-app name="AGR" subsystem="console" excludes="**/*_Skeleton.*" depends="mt,boost,xeumeuleu">
             <syslibset libs="user32"/>
         </build-app>
     </target>
