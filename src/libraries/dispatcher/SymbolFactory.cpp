@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "dispatcher_pch.h"
 #include "SymbolFactory.h"
 #include "SymbolRule.h"
 #include "xeumeuleu/xml.h"

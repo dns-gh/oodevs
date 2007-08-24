@@ -34,6 +34,7 @@
 #include "FireEffect.h"
 #include "Synchroniser.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
+#include "AgentTypes.h"
 
 #include "SimulationModel.h"
 
@@ -43,9 +44,10 @@ using namespace dispatcher;
 // Name: Model constructor
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-Model::Model()
+Model::Model( const Config& config )
     : pSimulationModel_( new SimulationModel() )
     , synching_( false )
+    , agentTypes_( new kernel::AgentTypes( config ) )
 {
     // NOTHING
 }

@@ -55,6 +55,7 @@ public:
     void SendCreation  ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
     void Accept( ModelVisitor_ABC& visitor );
+    virtual std::string BuildSymbol( bool up = true ) const;
     //@}
 
 private:

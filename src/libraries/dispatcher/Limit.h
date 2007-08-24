@@ -39,6 +39,7 @@ public:
     virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    virtual std::string BuildSymbol( bool up = true ) const;
     //@}
 
 private:

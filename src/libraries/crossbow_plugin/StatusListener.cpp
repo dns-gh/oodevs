@@ -10,7 +10,7 @@
 #include "crossbow_plugin_pch.h"
 #include "StatusListener.h"
 #include "Connector.h"
-#include "dispatcher/Publisher_ABC.h"
+#include "dispatcher/SimulationPublisher_ABC.h"
 #include "dispatcher/Network_Def.h"
 
 using namespace crossbow;
@@ -19,8 +19,9 @@ using namespace crossbow;
 // Name: StatusListener constructor
 // Created: JCR 2007-06-13
 // -----------------------------------------------------------------------------
-StatusListener::StatusListener( Connector& connector )
-    : status_ ( eResumed )
+StatusListener::StatusListener( Connector& connector, dispatcher::SimulationPublisher_ABC& publisher )
+    : publisher_( publisher )
+    , paused_( false )
 {    
     ITablePtr   spTable;
     ICursorPtr  spCursor;
@@ -37,7 +38,7 @@ StatusListener::StatusListener( Connector& connector )
             throw std::runtime_error( "Search failed" ); // $$$$ SBO 2007-05-30:
         spCursor->NextRow( &spRow_ );
     }
-    catch ( std::exception& e )
+    catch ( std::exception& )
     {
         spRow_ = (IRowPtr)0;
     }
@@ -70,53 +71,32 @@ namespace
 // Name: StatusListener::Listen
 // Created: JCR 2007-06-13
 // -----------------------------------------------------------------------------
-void StatusListener::Listen( dispatcher::Publisher_ABC& publisher )
+void StatusListener::Listen()
 {
     if ( spRow_ )
     {
         CComVariant value;
         spRow_->get_Value( lFieldValue_, &value );        
-        ProcessStatus( publisher, GetString( value ) );
+        ChangeStatus( GetString( value ) );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: StatusListener::ProcessStatus
+// Name: StatusListener::ChangeStatus
 // Created: JCR 2007-06-13
 // -----------------------------------------------------------------------------
-void StatusListener::ProcessStatus( dispatcher::Publisher_ABC& publisher, const std::string& status )
+void StatusListener::ChangeStatus( const std::string& status )
 {
-    switch ( status_ )
+    if( paused_ && status == "resumed" )
     {
-    case eResumed:
-        if ( status == "paused" ) 
-            Pause( publisher );
-        break;
-    case ePaused:
-        if ( status == "resumed" )
-            Resume( publisher );
-        break;
+        dispatcher::AsnMsgClientToSimControlResume asn;
+        asn.Send( publisher_ );
+        paused_ = false;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: StatusListener::Pause
-// Created: JCR 2007-06-13
-// -----------------------------------------------------------------------------
-void StatusListener::Pause( dispatcher::Publisher_ABC& publisher )
-{
-    dispatcher::AsnMsgClientToSimControlPause asn;
-    asn.Send( publisher );
-    status_ = ePaused;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: StatusListener::Resume
-// Created: JCR 2007-06-13
-// -----------------------------------------------------------------------------
-void StatusListener::Resume( dispatcher::Publisher_ABC& publisher )
-{
-    dispatcher::AsnMsgClientToSimControlResume asn;
-    asn.Send( publisher );
-    status_ = eResumed;
+    else if( !paused_ && status == "paused" )
+    {
+        dispatcher::AsnMsgClientToSimControlPause asn;
+        asn.Send( publisher_ );
+        paused_ = true;
+    }
 }

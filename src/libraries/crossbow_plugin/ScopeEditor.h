@@ -12,17 +12,14 @@
 
 #include "ESRI.h"
 #include "game_asn/Asn.h"
-#include "Resolver_ABC.h"
 
-namespace kernel
+namespace dispatcher
 {
-    class AgentType;
-    class AutomatType;
+    class Model;
 }
 
 namespace crossbow
 {
-    class Connector;
 
 // =============================================================================
 /** @class  ScopeEditor
@@ -32,17 +29,17 @@ namespace crossbow
 // =============================================================================
 class ScopeEditor
 {
-    friend class Connector;
-
 public:
     //! @name Constructors/Destructor
     //@{
-             ScopeEditor( Connector& connector/*, IdBuffer& buffer_*/, const kernel::Resolver_ABC< kernel::AgentType >& agentResolver, const kernel::Resolver_ABC< kernel::AutomatType >& automatResolver );
+    explicit ScopeEditor( const dispatcher::Model& model );
     virtual ~ScopeEditor();
     //@}
 
     //! @name Operators
     //@{
+    void StartEdit( IWorkspacePtr spWorkspace, ISpatialReferencePtr spSpatialReference );
+    void StopEdit();
     bool Clear( IFeatureClassPtr spFeatureClass );
     template< typename ASN_Type >
     bool Insert( IFeatureClassPtr spFeatureClass, const ASN_Type& asn );
@@ -77,30 +74,16 @@ private:
     ScopeEditor& operator=( const ScopeEditor& ); //!< Assignement operator
     //@}
 
-    //! @name
+    //! @name Helpers
     //@{
-    void StartEdit( IWorkspacePtr spWorkspace, ISpatialReferencePtr spSpatialReference );
-    void StopEdit();
-    void CheckError();
-    //@}
-
-    //! @name
-    //@{
+    void ThrowError();
     IFeatureCursorPtr UpdateCursor( IFeatureClassPtr spFeatureClass, ASN1T_OID oid );
-    //@}
-
-    //! @name Write features
-    //@{
     void Write( IFeatureBufferPtr spBuffer, const ASN1T_MsgUnitCreation& msg );
     void Write( IFeatureBufferPtr spBuffer, const ASN1T_MsgUnitKnowledgeCreation& msg );
     void Write( IFeatureBufferPtr spBuffer, const ASN1T_MsgLimitCreation& msg );
     void Write( IFeatureBufferPtr spBuffer, const ASN1T_MsgLimaCreation& msg );
     void Write( IFeatureBufferPtr spBuffer, const ASN1T_MsgObjectCreation& msg );
     void Write( IFeatureBufferPtr spBuffer, const ASN1T_MsgReport& msg );
-    //@}
-
-    //! @name Write rows
-    //@{
     void Write( IRowBufferPtr spBuffer, const ASN1T_MsgFormationCreation& asn );
     void Write( IRowBufferPtr spBuffer, const ASN1T_MsgAutomatCreation& asn );
     //@}
@@ -108,20 +91,10 @@ private:
 private:
     //! @name Member data
     //@{
-    Connector&          connector_;
-    IFeaturePtr         spFeature_;
-    //@}
-
-    //! @name
-    //@{
-    IWorkspaceEditPtr       spWorkspaceEdit_;
-    ISpatialReferencePtr    spSpatialReference_;
-    //@}
-
-    //! @name
-    //@{
-    const kernel::Resolver_ABC< kernel::AgentType >& agentResolver_;
-    const kernel::Resolver_ABC< kernel::AutomatType >& automatResolver_;
+    const dispatcher::Model& model_;
+    IFeaturePtr              spFeature_;
+    IWorkspaceEditPtr        spWorkspaceEdit_;
+    ISpatialReferencePtr     spSpatialReference_;
     //@}
 };
 
@@ -142,7 +115,7 @@ bool ScopeEditor::Insert( IFeatureClassPtr spFeatureClass, const ASN_Type& msg )
     if( !FAILED( spCursor->InsertFeature( spBuffer, &varID ) ) )
         spFeatureClass->GetFeature( varID.lVal , &spFeature_ );
     else
-        CheckError();
+        ThrowError();
     return true;
 }
 
@@ -183,7 +156,7 @@ HRESULT ScopeEditor::Write( IContainerTypePtr spContainer, BSTR name, VariantTyp
     if( ! FAILED( res = spFlds->FindField( name, &id ) ) )
         spContainer->put_Value( id, CComVariant( info ) );
     else
-        CheckError();
+        ThrowError();
     return res;
 }
 
@@ -196,7 +169,7 @@ HRESULT ScopeEditor::WriteGeometry( FeatureType spFeature, IGeometryPtr spGeomet
 {
     HRESULT     res;
     if( FAILED( res = spFeature->putref_Shape( spGeometry ) ) )
-        CheckError();
+        ThrowError();
     return res;
 }
 

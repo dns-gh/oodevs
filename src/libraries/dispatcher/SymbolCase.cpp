@@ -7,64 +7,63 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
-#include "AgentNature.h"
+#include "dispatcher_pch.h"
+#include "SymbolCase.h"
+#include "SymbolRule.h"
+#include "SymbolVisitor_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
 using namespace xml;
 
 // -----------------------------------------------------------------------------
-// Name: AgentNature constructor
+// Name: SymbolCase constructor
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-AgentNature::AgentNature( xml::xistream& xis )
+SymbolCase::SymbolCase( xml::xistream& xis )
+    : rule_( 0 )
 {
-    xis >> start( "Nature" )
-            >> start( "Niveau" )
-                >> attribute( "type", level_ )
-            >> end()
-            >> start( "Nature" )
-                >> attribute( "type", nature_ )
-            >> end()
-            >> start( "QualificatifAtlas" )
-                >> attribute( "type", atlas_ )
-            >> end()
-        >> end();
+    xis >> attribute( "symbol", value_ )
+        >> attribute( "name", name_ )
+        >> list( "choice", *this, &SymbolCase::ReadRule );
 }
     
 // -----------------------------------------------------------------------------
-// Name: AgentNature destructor
+// Name: SymbolCase destructor
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-AgentNature::~AgentNature()
+SymbolCase::~SymbolCase()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentNature::GetLevel
-// Created: AGE 2006-10-23
+// Name: SymbolCase::ReadRule
+// Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-const std::string& AgentNature::GetLevel() const
+void SymbolCase::ReadRule( xml::xistream& xis )
 {
-    return level_;
+    if( rule_ )
+        throw std::runtime_error( __FUNCTION__ );
+    rule_ = new SymbolRule( xis );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentNature::GetNature
-// Created: AGE 2006-10-23
+// Name: SymbolCase::Evaluate
+// Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-const std::string& AgentNature::GetNature() const
+void SymbolCase::Evaluate( const std::string& request, std::string& result ) const
 {
-    return nature_;
+    result += value_;
+    if( rule_ )
+        rule_->Evaluate( request, result );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentNature::GetAtlas
-// Created: AGE 2006-10-23
+// Name: SymbolCase::Accept
+// Created: AGE 2006-10-24
 // -----------------------------------------------------------------------------
-const std::string& AgentNature::GetAtlas() const
+void SymbolCase::Accept( SymbolVisitor_ABC& visitor ) const
 {
-    return atlas_;
+    visitor.AddChoice( rule_, name_, value_ );
 }

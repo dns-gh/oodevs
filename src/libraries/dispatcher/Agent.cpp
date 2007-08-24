@@ -23,6 +23,9 @@
 #include "AgentLogSupply.h"
 #include "AgentOrder.h"
 #include "Network_Def.h"
+#include "AgentTypes.h"
+#include "AgentType.h"
+#include "tools/App6Symbol.h"
 
 using namespace dispatcher;
 
@@ -34,6 +37,7 @@ Agent::Agent( Model& model, const ASN1T_MsgUnitCreation& msg )
     : model_                        ( model )
     , nID_                          ( msg.oid )
     , nType_                        ( msg.type_pion )
+    , type_                         ( model.GetAgentTypes().Get( nType_ ) )
     , strName_                      ( msg.nom )
     , pAutomat_                     ( &model.GetAutomats().Get( msg.oid_automate ) )
     , bPC_                          ( msg.pc )
@@ -506,4 +510,19 @@ void Agent::SendSpecialUpdate( ClientPublisher_ABC& publisher ) const
     ack().oid_automate = pAutomat_->GetID();
     ack().oid          = nID_;
     ack.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::BuildSymbol
+// Created: SBO 2007-08-22
+// -----------------------------------------------------------------------------
+std::string Agent::BuildSymbol( bool up /*= true*/ ) const
+{
+    std::string symbol( type_.GetSymbol() );
+    symbol = symbol.substr( symbol.find_last_of( "/" ) + 1 );
+    tools::app6::SetCommandPost( symbol, bPC_ );
+    tools::app6::SetLevel( symbol, type_.GetLevelSymbol() );
+    if( up && pAutomat_ )
+        return tools::app6::MergeSymbol( symbol, pAutomat_->BuildSymbol() );
+    return symbol;
 }

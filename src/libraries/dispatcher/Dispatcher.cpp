@@ -26,7 +26,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Dispatcher::Dispatcher( const Config& config )
     : config_( config )
-    , pModel_( new Model() )
+    , pModel_( new Model( config_ ) )
 {
     pClientsNetworker_   .reset( new ClientsNetworker   ( *this, config_ ) );
     pSimulationNetworker_.reset( new SimulationNetworker( *pModel_, *pClientsNetworker_, handler_, config_ ) );

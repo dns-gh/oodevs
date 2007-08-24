@@ -10,8 +10,6 @@
 #ifndef __OrderParameter_h_
 #define __OrderParameter_h_
 
-#include "Resolver.h"
-
 namespace xml
 {
     class xistream;

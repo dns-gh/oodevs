@@ -17,6 +17,7 @@
 #include "Object.h"
 #include "Population.h"
 #include "ModelVisitor_ABC.h"
+#include "tools/App6Symbol.h"
 
 using namespace dispatcher;
 
@@ -122,4 +123,15 @@ void Side::Accept( ModelVisitor_ABC& visitor )
 	formations_		.Apply( std::mem_fun_ref( &Formation     ::Accept ), visitor );
 	objects_		.Apply( std::mem_fun_ref( &Object        ::Accept ), visitor );
 	populations_	.Apply( std::mem_fun_ref( &Population    ::Accept ), visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Side::BuildSymbol
+// Created: SBO 2007-08-22
+// -----------------------------------------------------------------------------
+std::string Side::BuildSymbol( bool /*up = true*/ ) const
+{
+    std::string symbol;
+    tools::app6::SetAffiliation( symbol, (unsigned int)nType_ ); // $$$$ SBO 2007-08-23: enumerate value... find something better
+    return symbol;
 }

@@ -172,11 +172,11 @@ GENERATE_ASN_MSG_SENDER         ( ReplayToClient, ControlSkipToTickAck         ,
 
 GENERATE_EMPTY_ASN_MSG_SENDER   ( MiddleToSim, CtrlClientAnnouncement          , control_client_announcement     );
 
-//GENERATE_EMPTY_ASN_MSG_SENDER   ( ClientToSim, ControlPause, control_pause );
-//GENERATE_EMPTY_ASN_MSG_SENDER   ( ClientToSim, ControlResume, control_resume );
-//GENERATE_ASN_MSG_SENDER         ( ClientToSim, UnitOrder, unit_order );
-//GENERATE_ASN_MSG_SENDER         ( ClientToSim, FragOrder, frag_order );
-//GENERATE_ASN_MSG_SENDER         ( ClientToSim, AutomatOrder, automat_order );
+GENERATE_EMPTY_ASN_MSG_SENDER   ( ClientToSim, ControlPause, control_pause );
+GENERATE_EMPTY_ASN_MSG_SENDER   ( ClientToSim, ControlResume, control_resume );
+GENERATE_ASN_MSG_SENDER         ( ClientToSim, UnitOrder, unit_order );
+GENERATE_ASN_MSG_SENDER         ( ClientToSim, FragOrder, frag_order );
+GENERATE_ASN_MSG_SENDER         ( ClientToSim, AutomatOrder, automat_order );
 
 template< typename L, typename E, typename P > 
 void SendContainerValues( const P& container, L& asnList )

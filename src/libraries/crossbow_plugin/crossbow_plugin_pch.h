@@ -19,5 +19,6 @@
 #include <memory>
 
 #include <boost/shared_ptr.hpp>
+#include "MT/MT_Logger/MT_Logger_Lib.h"
 
 #endif // __crossbow_plugin_pch_h_

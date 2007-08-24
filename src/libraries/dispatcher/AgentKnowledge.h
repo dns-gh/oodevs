@@ -43,6 +43,7 @@ public:
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    virtual std::string BuildSymbol( bool up = true ) const;
     //@}
 
 private:
@@ -51,7 +52,7 @@ private:
     typedef std::vector< ASN1T_AutomatPerception > T_AutomatePerceptionVector;
 
     //$$$ bullshit
-    struct T_Optionals 
+    struct T_Optionals
     {
       unsigned pertinencePresent : 1;
       unsigned identification_levelPresent : 1;
@@ -72,9 +73,9 @@ private:
 
 private:
           Model&          model_;
-    const unsigned int    nID_; 
+    const unsigned int    nID_;
     const KnowledgeGroup& knowledgeGroup_;
-    const Agent&          agent_;        
+    const Agent&          agent_;
     const ASN1T_UnitType  nTypeAgent_;
 
     unsigned int                        nRelevance_;

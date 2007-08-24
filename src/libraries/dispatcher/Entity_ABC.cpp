@@ -111,3 +111,12 @@ void Entity_ABC::Accept( ModelVisitor_ABC& visitor )
 {
     visitor.Visit( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Entity_ABC::BuildSymbol
+// Created: SBO 2007-08-23
+// -----------------------------------------------------------------------------
+std::string Entity_ABC::BuildSymbol( bool /*up = true*/ ) const
+{
+     return std::string();
+}

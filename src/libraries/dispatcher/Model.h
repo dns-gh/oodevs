@@ -14,9 +14,15 @@
 #include "ModelsContainer.h"
 #include "MessageHandler_ABC.h"
 
+namespace kernel
+{
+    class AgentTypes;
+}
+
 namespace dispatcher
 {
 
+class Config;
 class ModelVisitor_ABC;
 class Side;
 class KnowledgeGroup;
@@ -51,7 +57,7 @@ class Model : public MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Model();
+    explicit Model( const Config& config );
     virtual ~Model();
     //@}
 
@@ -99,6 +105,8 @@ public:
           ModelsContainer< Population     >& GetPopulations    ();
     const ModelsContainer< Limit          >& GetLimits         () const;
     const ModelsContainer< Lima           >& GetLimas          () const;
+
+    const kernel::AgentTypes& GetAgentTypes() const;
     //@}
 
 private:
@@ -137,6 +145,8 @@ private:
     ModelsContainer< Fire                   > fires_;
     ModelsContainer< PopulationFire         > populationFires_;
     ModelsContainer< FireEffect             > fireEffects_;
+
+    std::auto_ptr< kernel::AgentTypes >     agentTypes_;
 
     bool synching_;
 };

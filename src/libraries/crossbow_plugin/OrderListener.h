@@ -21,7 +21,7 @@ namespace kernel
 namespace dispatcher
 {
     class Model;
-    class Publisher_ABC;
+    class SimulationPublisher_ABC;
 }
 
 namespace crossbow
@@ -41,13 +41,13 @@ class OrderListener : public Listener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderListener( Connector& connector, const kernel::OrderTypes& types, const dispatcher::Model& model );
+             OrderListener( Connector& connector, dispatcher::SimulationPublisher_ABC& publisher, const kernel::OrderTypes& types, const dispatcher::Model& model );
     virtual ~OrderListener();
     //@}
 
     //! @name Operations
     //@{
-    void Listen( dispatcher::Publisher_ABC& publisher );
+    void Listen();
     //@}
 
 private:
@@ -65,6 +65,7 @@ private:
 private:
     //! @name Member data
     //@{
+    dispatcher::SimulationPublisher_ABC& publisher_;
     std::auto_ptr< OrderDispatcher > dispatcher_;
     ITablePtr table_;
     IQueryFilterPtr waitingOrdersFilter_;

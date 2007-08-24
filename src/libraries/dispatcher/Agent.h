@@ -17,6 +17,11 @@
 #include "Entity_ABC.h"
 #include "DecisionalState.h"
 
+namespace kernel
+{
+    class AgentType;
+}
+
 namespace dispatcher
 {
 class Dispatcher;
@@ -68,6 +73,7 @@ public:
     //@{
     unsigned long GetID() const;
     const Automat& GetAutomat() const;
+    virtual std::string BuildSymbol( bool up = true ) const;
     //@}
 
 private:
@@ -87,6 +93,7 @@ private:
           Model&         model_;
     const unsigned long  nID_;
     const unsigned long  nType_; // XML reference - no resolved by dispatcher
+    const kernel::AgentType& type_;
     const std::string    strName_;
           Automat*       pAutomat_;
     const bool           bPC_;

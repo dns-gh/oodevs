@@ -13,7 +13,7 @@
 #include "OrderTypes.h"
 #include "OrderType.h"
 #include "OrderParameterSerializer.h"
-#include "dispatcher/Publisher_ABC.h"
+#include "dispatcher/SimulationPublisher_ABC.h"
 #include "dispatcher/Network_Def.h"
 #include "dispatcher/Model.h"
 #include "dispatcher/Agent.h"
@@ -86,7 +86,7 @@ namespace
 // Name: OrderDispatcher::Dispatch
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::Dispatch( dispatcher::Publisher_ABC& publisher, const IRowPtr& row )
+void OrderDispatcher::Dispatch( dispatcher::SimulationPublisher_ABC& publisher, const IRowPtr& row )
 {
     const unsigned long id = GetTargetId( row );
     if( const dispatcher::Agent* agent = model_.GetAgents().Find( id ) )
@@ -94,15 +94,14 @@ void OrderDispatcher::Dispatch( dispatcher::Publisher_ABC& publisher, const IRow
     else if( const dispatcher::Automat* automat = model_.GetAutomats().Find( id ) )
         DispatchMission( publisher, *automat, row );
     else
-        std::cerr << "Unable to retrieve target id" << std::endl;
-     // $$$$ SBO 2007-05-31: else: throw or something
+        MT_LOG_ERROR_MSG( "Unable to resolve order target unit : " << id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrderDispatcher::DispatchMission
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::DispatchMission( dispatcher::Publisher_ABC& publisher, const dispatcher::Agent& agent, const IRowPtr& row )
+void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Agent& agent, const IRowPtr& row )
 {
     if( agent.GetAutomat().IsEngaged() )
     {
@@ -134,7 +133,7 @@ void OrderDispatcher::DispatchMission( dispatcher::Publisher_ABC& publisher, con
 // Name: OrderDispatcher::DispatchMission
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::DispatchMission( dispatcher::Publisher_ABC& publisher, const dispatcher::Automat& automat, const IRowPtr& row )
+void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Automat& automat, const IRowPtr& row )
 {
     const OrderType* type = GetAutomatMission( row );
     if( !type )
@@ -161,7 +160,7 @@ void OrderDispatcher::DispatchMission( dispatcher::Publisher_ABC& publisher, con
 // Name: OrderDispatcher::DispatchFragOrder
 // Created: SBO 2007-06-07
 // -----------------------------------------------------------------------------
-void OrderDispatcher::DispatchFragOrder( dispatcher::Publisher_ABC& publisher, unsigned long targetId, const IRowPtr& row )
+void OrderDispatcher::DispatchFragOrder( dispatcher::SimulationPublisher_ABC& publisher, unsigned long targetId, const IRowPtr& row )
 {
     const OrderType* type = types_.FindFragOrder( GetString( GetFieldValue( row, "OrderName" ) ) );
     if( !type )
@@ -193,7 +192,7 @@ const OrderType* OrderDispatcher::GetAgentMission( const IRowPtr& row ) const
     const OrderType*    order( types_.FindAgentMission( name ) );
 
     if( !order )
-        std::cout << "Unknown agent mission : " + name << std::endl;
+        MT_LOG_ERROR_MSG( "Unknown agent mission : " << name );
     return order;
 }
 
@@ -207,7 +206,7 @@ const OrderType* OrderDispatcher::GetAutomatMission( const IRowPtr& row ) const
     const OrderType*    order( types_.FindAutomatMission( name ) );
 
     if( !order )
-        std::cout << "Unknown automat mission : " + name << std::endl;
+        MT_LOG_ERROR_MSG( "Unknown automat mission : " << name );
     return order;
 }
 
@@ -217,7 +216,7 @@ const OrderType* OrderDispatcher::GetAutomatMission( const IRowPtr& row ) const
 // -----------------------------------------------------------------------------
 void OrderDispatcher::SetParameters( ASN1T_MissionParameters& parameters, unsigned long orderId, const OrderType& type )
 {
-    parameters.n = type.Count();
+    parameters.n = type.GetParameterCount();
     parameters.elem = new ASN1T_MissionParameter[ parameters.n ];
 
     IQueryFilterPtr parametersFilter;
@@ -245,7 +244,7 @@ void OrderDispatcher::SetParameters( ASN1T_MissionParameters& parameters, unsign
 void OrderDispatcher::SetParameter( ASN1T_MissionParameter& parameter, const IRowPtr& row, const OrderType& type )
 {
     const std::string name = GetString( GetFieldValue( row, "name" ) );
-    const OrderParameter* param = type.Find( name );
+    const OrderParameter* param = type.FindParameter( name );
     parameter.null_value = param ? 0 : 1;
     if( param )
         serializer_->Serialize( parameter, *param, GetString( GetFieldValue( row, "ParamValue" ) ) );

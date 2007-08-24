@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Listen( dispatcher::Publisher_ABC& publisher ) = 0;
+    virtual void Listen() = 0;
     //@}
 };
 

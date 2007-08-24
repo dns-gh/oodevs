@@ -11,15 +11,9 @@
 #define __Connector_h_
 
 #include "ESRI.h"
-#include "dispatcher/Publisher_ABC.h"
+#include "dispatcher/SimulationPublisher_ABC.h"
+#include "dispatcher/ClientPublisher_ABC.h"
 #include "game_asn/Asn.h"
-#include "Resolver_ABC.h"
-
-namespace kernel
-{
-    class AgentType;
-    class AutomatType;
-}
 
 namespace dispatcher
 {
@@ -38,12 +32,13 @@ namespace crossbow
 */
 // Created: JCR 2007-04-30
 // =============================================================================
-class Connector : public dispatcher::Publisher_ABC
+class Connector : public dispatcher::SimulationPublisher_ABC
+                , public dispatcher::ClientPublisher_ABC
 {    
 public:
     //! @name Constructors/Destructor
     //@{
-             Connector( const dispatcher::Config& config, const kernel::Resolver_ABC< kernel::AgentType >& agentTypes, const kernel::Resolver_ABC< kernel::AutomatType >& automatTypes, const dispatcher::Model& model );
+             Connector( const dispatcher::Config& config, const dispatcher::Model& model );
     virtual ~Connector();
     //@}
     
@@ -51,15 +46,13 @@ public:
     //@{
     void Lock();
     void Unlock();
-    bool IsLocked() const;
     ITablePtr GetTable( const std::string& name );
     //@}
 
     //! @name 
     //@{ 
-    const dispatcher::Model& GetModel() const; // $$$$ SBO 2007-07-24: ???
     void VisitModel( dispatcher::ModelVisitor_ABC& visitor );
-    void Send( const ASN1T_MsgsSimToClient& msg );
+    virtual void Send( const ASN1T_MsgsSimToClient& msg );
     //@}
 
 private:
@@ -71,6 +64,7 @@ private:
     
     //! @name Helpers
     //@{
+    bool IsLocked() const;
     void                ConnectToGeodatabase( const std::string& geodatabase );
     void                CheckOutLicences( esriLicenseProductCode eProcuct );
     void                LoadStatialReference( const std::string& feature );
@@ -126,8 +120,6 @@ private:
     //@{
     ScopeEditor*    pScopeEditor_;
     const dispatcher::Model&    model_;
-    const kernel::Resolver_ABC< kernel::AgentType >& agents_;
-    const kernel::Resolver_ABC< kernel::AutomatType >& automats_;
     //@}
 };
 

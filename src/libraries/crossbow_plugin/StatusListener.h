@@ -16,7 +16,7 @@
 namespace dispatcher
 {
     class Model;
-    class Publisher_ABC;
+    class SimulationPublisher_ABC;
 }
 
 namespace crossbow
@@ -35,17 +35,14 @@ class StatusListener : public Listener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             StatusListener( Connector& connector );
+             StatusListener( Connector& connector, dispatcher::SimulationPublisher_ABC& publisher );
     virtual ~StatusListener();
     //@}
 
     //! @name Operations
     //@{    
-    virtual void Listen( dispatcher::Publisher_ABC& publisher );
+    virtual void Listen();
     //@}
-
-private:
-    enum E_Status { eResumed, ePaused };
 
 private:
     //! @name Copy/Assignement
@@ -56,21 +53,21 @@ private:
     
     //! @name Helpers
     //@{
-    void ProcessStatus( dispatcher::Publisher_ABC& publisher, const std::string& status );
-    void Pause( dispatcher::Publisher_ABC& publisher );
-    void Resume( dispatcher::Publisher_ABC& publisher );
+    void ChangeStatus( const std::string& status );
+    //@}
+
+    //! @name Types
+    //@{
+    enum E_Status { eResumed, ePaused }; // $$$$ SBO 2007-08-24: a bool should be enough
     //@}
 
 private:
-    //! @name ESRI
-    //@{
-    IRowPtr spRow_;
-    long    lFieldValue_;
-    //@}
-
     //! @name Member data
     //@{
-    E_Status status_;    
+    dispatcher::SimulationPublisher_ABC& publisher_;
+    bool paused_;
+    IRowPtr spRow_;
+    long lFieldValue_;
     //@}
 };
 

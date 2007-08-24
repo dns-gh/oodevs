@@ -93,7 +93,6 @@ bool GeometryEditor::UpdateCoord( IPointPtr spPoint, const ASN1T_CoordUTM& asnUT
         return false;
     
     spPointWGS->QueryCoords( &x, &y );
-    std::cout << "plot on x=" << x << " y=" << y << std::endl;
     spPoint->PutCoords( x, y );
     spPoint->put_Z( 0. );
     return true;
@@ -136,7 +135,7 @@ namespace
 
         ::GetErrorInfo( 0, &ipError );
         ipError->GetDescription( &strError );
-        std::cerr << strError << std::endl;
+        MT_LOG_ERROR_MSG( strError );
     }
 }
 

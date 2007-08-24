@@ -19,8 +19,9 @@ using namespace crossbow;
 // Name: OrderListener constructor
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
-OrderListener::OrderListener( Connector& connector, const kernel::OrderTypes& types, const Model& model )
-    : dispatcher_   ( new OrderDispatcher( connector, types, model ) )
+OrderListener::OrderListener( Connector& connector, dispatcher::SimulationPublisher_ABC& publisher, const kernel::OrderTypes& types, const Model& model )
+    : publisher_    ( publisher )
+    , dispatcher_   ( new OrderDispatcher( connector, types, model ) )
     , table_        ( connector.GetTable( "Orders" ) )
     , waitingOrdersFilter_()
     , cursor_       ()
@@ -65,7 +66,7 @@ namespace
 // Name: OrderListener::Listen
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
-void OrderListener::Listen( Publisher_ABC& publisher )
+void OrderListener::Listen()
 {
     IRowPtr row;
     HRESULT res = table_->Search( waitingOrdersFilter_, false, &cursor_ );
@@ -75,7 +76,7 @@ void OrderListener::Listen( Publisher_ABC& publisher )
     cursor_->NextRow( &row );
     while( row != 0 )
     {
-        dispatcher_->Dispatch( publisher, row );
+        dispatcher_->Dispatch( publisher_, row );
         MarkProcessed( row );
         cursor_->NextRow( &row );
     }    

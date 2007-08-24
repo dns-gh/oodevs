@@ -10,44 +10,37 @@
 #ifndef __AgentTypes_h_
 #define __AgentTypes_h_
 
-#include "Resolver.h"
-
 namespace dispatcher
 {
     class Config;
 }
 
-
 namespace xml { class xistream; };
 
 namespace kernel
 {
-    class AgentType;    
-    class AutomatType;          
+    class AgentType;
     class SymbolFactory;
-        
+
 // =============================================================================
 /** @class  AgentTypes
     @brief  AgentTypes
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class AgentTypes : public Resolver< AgentType >
-                 , public Resolver< AgentType, std::string >
-                 , public Resolver< AutomatType >
-                 , public Resolver< AutomatType, std::string >
+class AgentTypes
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentTypes( const dispatcher::Config& config );
+    explicit AgentTypes( const dispatcher::Config& config );
     virtual ~AgentTypes();
     //@}
 
     //! @name Operations
     //@{
-    void Purge();
+    const AgentType& Get( unsigned long id ) const;
     //@}
 
 private:
@@ -58,18 +51,23 @@ private:
     //@}
 
     //! @name Helpers
-    //@{    
+    //@{
+    void Purge();
     void Load( const dispatcher::Config& config );
     void ReadAgents( const std::string& agents );
-    void ReadAutomats( const std::string& automats );    
-
     void ReadAgentType( xml::xistream& xis );
-    void ReadAutomatType( xml::xistream& xis );    
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< unsigned long, const AgentType* > T_AgentTypes;
+    typedef T_AgentTypes::const_iterator              CIT_AgentTypes;
     //@}
 
 private:
     //! @name Member data
     //@{
+    T_AgentTypes agentTypes_;
     SymbolFactory* symbolFactory_;
     //@}
 };

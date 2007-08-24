@@ -32,7 +32,8 @@ OrderType::OrderType( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 OrderType::~OrderType()
 {
-    DeleteAll();
+    for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
+        delete it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -59,6 +60,27 @@ std::string OrderType::GetName() const
 // -----------------------------------------------------------------------------
 void OrderType::ReadParameter( xml::xistream& xis )
 {
-    OrderParameter* parameter = new OrderParameter( xis );
-    Register( parameter->GetName(), *parameter );
+    const OrderParameter* parameter = new OrderParameter( xis );
+    parameters_[parameter->GetName()] = parameter;
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderType::GetParameterCount
+// Created: SBO 2007-08-22
+// -----------------------------------------------------------------------------
+unsigned int OrderType::GetParameterCount() const
+{
+    return parameters_.size();
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderType::FindParameter
+// Created: SBO 2007-08-22
+// -----------------------------------------------------------------------------
+const OrderParameter* OrderType::FindParameter( const std::string& name ) const
+{
+    CIT_Parameters it = parameters_.find( name );
+    if( it != parameters_.end() )
+        return it->second;
+    return 0;
 }

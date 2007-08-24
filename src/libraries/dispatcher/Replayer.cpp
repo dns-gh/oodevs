@@ -23,9 +23,9 @@ using namespace dispatcher;
 
 namespace 
 {
-    boost::shared_ptr< Model > CreateModel( CompositeMessageHandler& handler )
+    boost::shared_ptr< Model > CreateModel( CompositeMessageHandler& handler, const Config& config )
     {
-        boost::shared_ptr< Model > result( new Model() );
+        boost::shared_ptr< Model > result( new Model( config ) );
         handler.Add( result );
         return result;
     }
@@ -42,7 +42,7 @@ namespace
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
 Replayer::Replayer( const Config& config, const std::string& records )
-    : model_           ( CreateModel( handler_ ) )
+    : model_           ( CreateModel( handler_, config ) )
     , clientsNetworker_( new ClientsNetworker( *this, config ) )
     , simulation_      ( CreateSimulation( *clientsNetworker_, *model_, handler_ ) )
     , loader_          ( new Loader( *simulation_, handler_, config, records ) )

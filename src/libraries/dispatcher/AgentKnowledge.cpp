@@ -16,6 +16,7 @@
 #include "Network_Def.h"
 #include "Model.h"
 #include "Side.h"
+#include "tools/App6Symbol.h"
 
 using namespace dispatcher;
 
@@ -217,4 +218,15 @@ void AgentKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
     asn().oid                   = nID_;
     asn().oid_groupe_possesseur = knowledgeGroup_.GetID();
     asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::BuildSymbol
+// Created: SBO 2007-08-23
+// -----------------------------------------------------------------------------
+std::string AgentKnowledge::BuildSymbol( bool /*up = true*/ ) const
+{
+    std::string symbol = agent_.BuildSymbol( true );
+    tools::app6::FilterPerceptionLevel( symbol, (unsigned int)nMaxPerceptionLevel_ );
+    return symbol;
 }

@@ -25,7 +25,7 @@ OrderTypes::OrderTypes( const dispatcher::Config& config )
     xml::xifstream xis( config.GetPhysicalFile() );
     xis >> start( "physical" );
     std::string missions;
-    xis >> content( "Missions", missions );
+    xis >> start( "missions" ) >> attribute( "file", missions );
 
     Load( config.BuildPhysicalChildFile( missions ) );
 }
@@ -36,9 +36,12 @@ OrderTypes::OrderTypes( const dispatcher::Config& config )
 // -----------------------------------------------------------------------------
 OrderTypes::~OrderTypes()
 {
-    fragOrders_.DeleteAll();
-    unitMissions_.DeleteAll();
-    automatMissions_.DeleteAll();
+    for( CIT_OrderTypes it = fragOrders_.begin(); it != fragOrders_.end(); ++it )
+        delete it->second;
+    for( CIT_OrderTypes it = unitMissions_.begin(); it != unitMissions_.end(); ++it )
+        delete it->second;
+    for( CIT_OrderTypes it = automatMissions_.begin(); it != automatMissions_.end(); ++it )
+        delete it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -65,10 +68,10 @@ void OrderTypes::Load( const std::string& filename )
 // Name: OrderTypes::ReadOrderType
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderTypes::ReadOrderType( xml::xistream& xis, Resolver< OrderType, std::string >& resolver )
+void OrderTypes::ReadOrderType( xml::xistream& xis, T_OrderTypes& resolver )
 {
-    OrderType* type = new OrderType( xis );
-    resolver.Register( type->GetName(), *type );
+    const OrderType* type = new OrderType( xis );
+    resolver[type->GetName()] = type;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +80,10 @@ void OrderTypes::ReadOrderType( xml::xistream& xis, Resolver< OrderType, std::st
 // -----------------------------------------------------------------------------
 const OrderType* OrderTypes::FindAgentMission( const std::string& name ) const
 {
-    return unitMissions_.Find( name );
+    CIT_OrderTypes it = unitMissions_.find( name );
+    if( it != unitMissions_.end() )
+        return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +92,10 @@ const OrderType* OrderTypes::FindAgentMission( const std::string& name ) const
 // -----------------------------------------------------------------------------
 const OrderType* OrderTypes::FindAutomatMission( const std::string& name ) const
 {
-    return automatMissions_.Find( name );
+    CIT_OrderTypes it = automatMissions_.find( name );
+    if( it != automatMissions_.end() )
+        return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -95,5 +104,8 @@ const OrderType* OrderTypes::FindAutomatMission( const std::string& name ) const
 // -----------------------------------------------------------------------------
 const OrderType* OrderTypes::FindFragOrder( const std::string& name ) const
 {
-    return fragOrders_.Find( name );
+    CIT_OrderTypes it = fragOrders_.find( name );
+    if( it != fragOrders_.end() )
+        return it->second;
+    return 0;
 }

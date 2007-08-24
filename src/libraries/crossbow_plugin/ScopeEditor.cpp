@@ -9,16 +9,13 @@
 
 #include "crossbow_plugin_pch.h"
 #include "ScopeEditor.h"
-#include "Connector.h"
 #include "PositionEditor.h"
 #include "LineEditor.h"
 #include "LocationEditor.h"
 #include "SymbolEditor.h"
-#include "AgentType.h"
-#include "AutomatType.h"
-#include "dispatcher/ModelWalker.h"
+#include "dispatcher/Agent.h"
 #include "dispatcher/Model.h"
-#include "dispatcher/ModelVisitors.h"
+#include "tools/App6Symbol.h"
 
 using namespace dispatcher;
 using namespace crossbow;
@@ -27,10 +24,8 @@ using namespace crossbow;
 // Name: ScopeEditor constructor
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
-ScopeEditor::ScopeEditor( Connector& connector, const kernel::Resolver_ABC< kernel::AgentType >& agentResolver, const kernel::Resolver_ABC< kernel::AutomatType >& automatResolver )
-    : connector_        ( connector )
-    , agentResolver_    ( agentResolver )
-    , automatResolver_  ( automatResolver )
+ScopeEditor::ScopeEditor( const dispatcher::Model& model )
+    : model_( model )
 {
     // NOTHING
 }
@@ -86,36 +81,21 @@ bool ScopeEditor::Clear( IFeatureClassPtr spFeatureClass )
     return true;
 }
 
-namespace
-{
-    std::string GetString( BSTR bstrIN )
-    {
-        TCHAR       szFinal[ 255 ];
-
-        // direct conversion from BSTR to LPCTSTR only works in Unicode
-        // you have to go through _bstr_t to have it work in ANSI and Unicode
-        _stprintf( szFinal, _T( "%s" ), ( LPCTSTR )_bstr_t( bstrIN ) );
-        return std::string( szFinal );
-    }
-
-    void check_error()
-    {
-        IErrorInfoPtr ipError;
-        BSTR          strError;
-
-        ::GetErrorInfo( 0, &ipError );
-        ipError->GetDescription( &strError );
-        std::cerr << GetString( strError ) << std::endl;
-    }
-}
-
 // -----------------------------------------------------------------------------
-// Name: ScopeEditor::CheckError
-// Created: JCR 2007-05-15
+// Name: ScopeEditor::ThrowError
+// Created: SBO 2007-08-24
 // -----------------------------------------------------------------------------
-void ScopeEditor::CheckError()
+void ScopeEditor::ThrowError()
 {
-    check_error();
+    IErrorInfoPtr ipError;
+    BSTR strError;
+    ::GetErrorInfo( 0, &ipError );
+    ipError->GetDescription( &strError );
+
+    TCHAR szFinal[ 255 ];
+    _stprintf( szFinal, _T( "%s" ), ( LPCTSTR )_bstr_t( strError ) );
+    MT_LOG_ERROR_MSG( szFinal );
+    //throw std::exception( szFinal ); // $$$$ SBO 2007-08-24: should throw
 }
 
 // -----------------------------------------------------------------------------
@@ -185,10 +165,7 @@ void ScopeEditor::Write( IRowBufferPtr spRow, const ASN1T_MsgFormationCreation& 
     Write( spRow, CComBSTR( L"Public_OID" ), asn.oid );
     Write( spRow, CComBSTR( L"Parent_OID" ), asn.oid_formation_parente );
     Write( spRow, CComBSTR( L"Name" ), asn.nom  );
-    {
-        SymbolEditor    editor( *this, connector_.GetModel() );
-        editor.Write( spRow, asn );
-    }
+    SymbolEditor( *this, model_ ).Write( spRow, asn );
 }
 
 // -----------------------------------------------------------------------------
@@ -200,10 +177,7 @@ void ScopeEditor::Write( IRowBufferPtr spRow, const ASN1T_MsgAutomatCreation& as
     Write( spRow, CComBSTR( L"Public_OID" ), asn.oid );
     Write( spRow, CComBSTR( L"Parent_OID" ), asn.oid_formation );
     Write( spRow, CComBSTR( L"Name" ), asn.nom );
-    {
-        SymbolEditor    editor( *this, connector_.GetModel() );
-        editor.Write( spRow, asn, automatResolver_ );
-    }
+    SymbolEditor( *this, model_ ).Write( spRow, asn );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,14 +188,8 @@ void ScopeEditor::Write( IFeatureBufferPtr spBuffer, const ASN1T_MsgLimaCreation
 {
     Write( spBuffer, CComBSTR( L"Public_OID" ), asn.oid );
     Write( spBuffer, CComBSTR( L"Name" ), asn.tactical_line.name );
-    {
-        SymbolEditor    editor( *this, connector_.GetModel() );
-        editor.Write( spBuffer, asn );
-    }
-    {
-        LineEditor  editor( *this, spSpatialReference_ );
-        editor.CreateGeometry( spBuffer, asn.tactical_line.geometry );
-    }
+    SymbolEditor( *this, model_ ).Write( spBuffer, asn );
+    LineEditor( *this, spSpatialReference_ ).CreateGeometry( spBuffer, asn.tactical_line.geometry );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,14 +200,8 @@ void ScopeEditor::Write( IFeatureBufferPtr spBuffer, const ASN1T_MsgLimitCreatio
 {
     Write( spBuffer, CComBSTR( L"Public_OID" ), asn.oid );
     Write( spBuffer, CComBSTR( L"Name" ), asn.tactical_line.name );
-    {
-        SymbolEditor    editor( *this, connector_.GetModel() );
-        editor.Write( spBuffer, asn );
-    }
-    {
-        LineEditor  editor( *this, spSpatialReference_ );
-        editor.CreateGeometry( spBuffer, asn.tactical_line.geometry );
-    }
+    SymbolEditor( *this, model_ ).Write( spBuffer, asn );
+    LineEditor( *this, spSpatialReference_ ).CreateGeometry( spBuffer, asn.tactical_line.geometry );
 }
 
 // -----------------------------------------------------------------------------
@@ -251,20 +213,8 @@ void ScopeEditor::Write( IFeatureBufferPtr spBuffer, const ASN1T_MsgUnitCreation
     Write( spBuffer, CComBSTR( L"Public_OID" ), asn.oid );
     Write( spBuffer, CComBSTR( L"Parent_OID" ), asn.oid_automate );
     Write( spBuffer, CComBSTR( L"Name" ), asn.nom );
-    {
-        SymbolEditor    editor( *this, connector_.GetModel() );
-        editor.Write( spBuffer, asn, agentResolver_ );
-    }
-    {
-        PositionEditor  editor( *this, spSpatialReference_ );
-        editor.CreateGeometry( spBuffer );
-    }
-    {
-        ModelWalker walker( connector_.GetModel() );
-        FormationModelVisitor   visitor( walker );
-        walker.WalkTo( visitor, asn );
-        Write( spBuffer, CComBSTR( L"Formation_OID" ), visitor.GetOID() );
-    }
+    SymbolEditor( *this, model_ ).Write( spBuffer, asn );
+    PositionEditor( *this, spSpatialReference_ ).CreateGeometry( spBuffer );
 }
 
 // -----------------------------------------------------------------------------
@@ -278,19 +228,7 @@ void ScopeEditor::Write( const ASN1T_MsgUnitAttributes& asn )
     if( asn.m.etat_operationnelPresent )
         Write( spFeature_, CComBSTR( L"OpsState" ), asn.etat_operationnel_brut );
     if( asn.m.positionPresent )
-    {
-        PositionEditor editor( *this, spSpatialReference_ );
-        editor.Write( spFeature_, asn.position );
-    }
-}
-
-namespace
-{
-    std::string GetDiplomatie( ASN1T_EnumDiplomacy diplomatie )
-    {
-        const char cDiplomatie[ 4 ] = { 'U' /*Unkown*/, 'F' /*Friend*/, 'H' /*Hostile*/, 'N' /*Neutral*/};
-        return std::string( 1, cDiplomatie[ ( unsigned )diplomatie ] );
-    }
+        PositionEditor( *this, spSpatialReference_ ).Write( spFeature_, asn.position );
 }
 
 // -----------------------------------------------------------------------------
@@ -302,20 +240,11 @@ void ScopeEditor::Write( IFeatureBufferPtr spBuffer, const ASN1T_MsgUnitKnowledg
     Write( spBuffer, CComBSTR( L"Public_OID" ), asn.oid );
     Write( spBuffer, CComBSTR( L"Group_OID" ), asn.oid_groupe_possesseur );
     Write( spBuffer, CComBSTR( L"RealUnit_OID" ), asn.oid_unite_reelle );
-    {
-        ModelWalker         walker( connector_.GetModel() );
-        SideModelVisitor    visitor( walker );
-        walker.WalkTo( visitor, asn );
-        Write( spBuffer, CComBSTR( L"ObserverAffiliation" ), GetDiplomatie( visitor.GetSide() ).c_str() );
-    }
-    {
-        SymbolEditor    editor( *this, connector_.GetModel() );
-        editor.Write( spBuffer, asn );
-    }
-    {
-        PositionEditor  editor( *this, spSpatialReference_ );
-        editor.CreateGeometry( spBuffer );
-    }
+
+    if( const dispatcher::Agent* realAgent = model_.GetAgents().Find( asn.oid_unite_reelle ) ) // $$$$ SBO 2007-08-24: snif
+        Write( spBuffer, CComBSTR( L"ObserverAffiliation" ), tools::app6::GetAffiliation( realAgent->BuildSymbol() ).c_str() );
+    SymbolEditor( *this, model_ ).Write( spBuffer, asn );
+    PositionEditor( *this, spSpatialReference_ ).CreateGeometry( spBuffer );
 }
 
 // -----------------------------------------------------------------------------
@@ -329,15 +258,9 @@ void ScopeEditor::Write( const ASN1T_MsgUnitKnowledgeUpdate& asn )
     if( asn.m.identification_levelPresent )
         Write( spFeature_, CComBSTR( L"IdentificationLevel" ), asn.identification_level );
     if( asn.m.max_identification_levelPresent )
-    {
-        SymbolEditor    editor( *this, connector_.GetModel() );
-        editor.Write( spFeature_, asn, agentResolver_ );
-    }
+        SymbolEditor( *this, model_ ).Write( spFeature_, asn );
     if( asn.m.positionPresent )
-    {
-        PositionEditor editor( *this, spSpatialReference_ );
-        editor.Write( spFeature_, asn.position );
-    }
+        PositionEditor( *this, spSpatialReference_ ).Write( spFeature_, asn.position );
 }
 
 // -----------------------------------------------------------------------------
@@ -348,29 +271,17 @@ void ScopeEditor::Write( IFeatureBufferPtr spBuffer, const ASN1T_MsgObjectCreati
 {
     Write( spBuffer, CComBSTR( L"Public_OID" ), asn.oid );
     Write( spBuffer, CComBSTR( L"Name" ), asn.name );
-    {
-        SymbolEditor    editor( *this, connector_.GetModel() );
-        editor.Write( spBuffer, asn );
-    }
+    SymbolEditor( *this, model_ ).Write( spBuffer, asn );
     switch ( asn.location.type )
     {
     case EnumLocationType::point:
-        {
-            PositionEditor  editor( *this, spSpatialReference_ );
-            editor.CreateGeometry( spBuffer, asn.location.coordinates.elem[ 0 ] );
-            break;
-        }
+        PositionEditor( *this, spSpatialReference_ ).CreateGeometry( spBuffer, asn.location.coordinates.elem[ 0 ] );
+        break;
     case EnumLocationType::line:
-        {
-            LineEditor  editor( *this, spSpatialReference_ );
-            editor.CreateGeometry( spBuffer, asn.location.coordinates );
-            break;
-        }
+        LineEditor( *this, spSpatialReference_ ).CreateGeometry( spBuffer, asn.location.coordinates );
+        break;
     default:
-        {
-            LocationEditor  editor( *this, spSpatialReference_ );
-            editor.CreateGeometry( spBuffer, asn.location );
-        }
+        LocationEditor( *this, spSpatialReference_ ).CreateGeometry( spBuffer, asn.location );
     }
 }
 

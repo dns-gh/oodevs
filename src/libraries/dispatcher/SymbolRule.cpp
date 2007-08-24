@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "dispatcher_pch.h"
 #include "SymbolRule.h"
 #include "SymbolCase.h"
 #include "SymbolVisitor_ABC.h"

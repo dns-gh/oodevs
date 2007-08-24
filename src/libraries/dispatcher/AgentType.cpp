@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "dispatcher_pch.h"
 #include "AgentType.h"
 #include "xeumeuleu/xml.h"
 #include "AgentNature.h"
@@ -23,11 +23,12 @@ using namespace xml;
 AgentType::AgentType( xml::xistream& xis, const SymbolFactory& symbolFactory )
     : nature_ ( 0 )
 {        
-    xis >> attribute( "nom", name_ )
+    std::string modelName, name, type;
+    xis >> attribute( "name", name_ )
         >> attribute( "type", type_ )
-        >> content( "MosID", id_ )
-        >> content( "ModeleDecisionnel", model_ );    
-    
+        >> attribute( "id", id_ )
+        >> attribute( "decisional-model", model_ );
+
     std::auto_ptr< AgentNature > nature( new AgentNature( xis ) );
     symbol_      = symbolFactory.CreateSymbol( nature->GetNature() );
     levelSymbol_ = symbolFactory.CreateLevelSymbol( nature->GetLevel() );

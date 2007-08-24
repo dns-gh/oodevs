@@ -21,7 +21,7 @@ namespace kernel
 
 namespace dispatcher
 {
-    class Publisher_ABC;
+    class SimulationPublisher_ABC;
     class Model;
     class Agent;
     class Automat;
@@ -50,7 +50,7 @@ public:
 
     //! @name Operations
     //@{
-    void Dispatch( dispatcher::Publisher_ABC& publisher, const IRowPtr& row );
+    void Dispatch( dispatcher::SimulationPublisher_ABC& publisher, const IRowPtr& row );
     //@}
 
 private:
@@ -62,9 +62,9 @@ private:
 
     //! @name Helpers
     //@{
-    void DispatchMission( dispatcher::Publisher_ABC& publisher, const dispatcher::Agent& agent, const IRowPtr& row );
-    void DispatchMission( dispatcher::Publisher_ABC& publisher, const dispatcher::Automat& automat, const IRowPtr& row );
-    void DispatchFragOrder( dispatcher::Publisher_ABC& publisher, unsigned long targetId, const IRowPtr& row );
+    void DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Agent& agent, const IRowPtr& row );
+    void DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Automat& automat, const IRowPtr& row );
+    void DispatchFragOrder( dispatcher::SimulationPublisher_ABC& publisher, unsigned long targetId, const IRowPtr& row );
 
     unsigned long GetTargetId( const IRowPtr& row ) const;
     const kernel::OrderType* GetAgentMission( const IRowPtr& row ) const;

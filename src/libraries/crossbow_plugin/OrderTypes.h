@@ -10,8 +10,6 @@
 #ifndef __OrderTypes_h_
 #define __OrderTypes_h_
 
-#include "Resolver.h"
-
 namespace xml
 {
     class xistream;
@@ -56,18 +54,24 @@ private:
     OrderTypes& operator=( const OrderTypes& ); //!< Assignment operator
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::map< std::string, const OrderType* > T_OrderTypes;
+    typedef T_OrderTypes::const_iterator            CIT_OrderTypes;
+    //@}
+
     //! @name Helpers
     //@{
     void Load( const std::string& filename );
-    void ReadOrderType( xml::xistream& xis, Resolver< OrderType, std::string >& resolver );
+    void ReadOrderType( xml::xistream& xis, T_OrderTypes& resolver );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Resolver< OrderType, std::string > unitMissions_;
-    Resolver< OrderType, std::string > automatMissions_;
-    Resolver< OrderType, std::string > fragOrders_;
+    T_OrderTypes unitMissions_;
+    T_OrderTypes automatMissions_;
+    T_OrderTypes fragOrders_;
     //@}
 };
 

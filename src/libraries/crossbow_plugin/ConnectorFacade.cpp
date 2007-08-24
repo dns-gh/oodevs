@@ -10,7 +10,6 @@
 #include "crossbow_plugin_pch.h"
 #include "ConnectorFacade.h"
 #include "Connector.h"
-#include "AgentTypes.h"
 #include "OrderTypes.h"
 #include "OrderListener.h"
 #include "StatusListener.h"
@@ -24,15 +23,13 @@ using namespace crossbow;
 // Name: ConnectorFacade constructor
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
-ConnectorFacade::ConnectorFacade( const dispatcher::Model& model, const dispatcher::Config& config, dispatcher::Publisher_ABC& simulation )
-    : types_     ( new kernel::AgentTypes( config ) )
-    , orderTypes_( new kernel::OrderTypes( config ) )
-    , connector_ ( new Connector( config, *types_, *types_,  model ) )
+ConnectorFacade::ConnectorFacade( const dispatcher::Model& model, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher )
+    : orderTypes_( new kernel::OrderTypes( config ) )
+    , connector_ ( new Connector( config, model ) )
     , bLoaded_   ( false )
-    , simulation_( simulation )
 {
-    listeners_.push_back( T_SharedListener( new OrderListener( *connector_, *orderTypes_, model ) ) );
-    listeners_.push_back( T_SharedListener( new StatusListener( *connector_) ) );
+    listeners_.push_back( T_SharedListener( new OrderListener( *connector_, publisher, *orderTypes_, model ) ) );
+    listeners_.push_back( T_SharedListener( new StatusListener( *connector_, publisher ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,23 +98,25 @@ void ConnectorFacade::UpdateOnTick( const ASN1T_MsgsSimToClient& asnMsg )
     if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_begin_tick )
     {
         connector_->Lock();        
-        Send( simulation_ ); // $$$$ JCR 2007-08-02: Push it out of here ...
+        UpdateListeners(); // $$$$ JCR 2007-08-02: Push it out of here ...
     }
     else if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
+    {
         connector_->Unlock();
+        MT_LOG_INFO_MSG( "Tick: " << asnMsg.msg.u.msg_control_end_tick->current_tick );
+    }
     else if( IsRelevant( asnMsg ) )
         connector_->Send( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConnectorFacade::Send
+// Name: ConnectorFacade::UpdateListeners
 // Created: JCR 2007-08-01
 // -----------------------------------------------------------------------------
-void ConnectorFacade::Send( dispatcher::Publisher_ABC& publisher ) const
+void ConnectorFacade::UpdateListeners() const
 {
     for( CIT_ListenerList it = listeners_.begin(); it != listeners_.end(); ++it )
-        if( *it )
-            (*it)->Listen( publisher );
+        (*it)->Listen();
 }
 
 // -----------------------------------------------------------------------------

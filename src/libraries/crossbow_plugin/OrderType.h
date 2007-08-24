@@ -10,8 +10,6 @@
 #ifndef __OrderType_h_
 #define __OrderType_h_
 
-#include "Resolver.h"
-
 namespace xml
 {
     class xistream;
@@ -27,7 +25,7 @@ namespace kernel
 */
 // Created: SBO 2007-05-31
 // =============================================================================
-class OrderType : public Resolver< OrderParameter, std::string >
+class OrderType
 {
 
 public:
@@ -41,6 +39,8 @@ public:
     //@{
     unsigned long GetId() const;
     std::string GetName() const;
+    unsigned int GetParameterCount() const;
+    const OrderParameter* FindParameter( const std::string& name ) const;
     //@}
 
 private:
@@ -55,11 +55,18 @@ private:
     void ReadParameter( xml::xistream& xis );
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::map< std::string, const OrderParameter* > T_Parameters;
+    typedef T_Parameters::const_iterator                 CIT_Parameters;
+    //@}
+
 private:
     //! @name Member data
     //@{
     unsigned long id_;
     std::string name_;
+    T_Parameters parameters_;
     //@}
 };
 

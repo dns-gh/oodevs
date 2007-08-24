@@ -10,8 +10,6 @@
 #include "crossbow_plugin_pch.h"
 #include "Connector.h"
 #include "ScopeEditor.h"
-#include "AgentType.h"
-#include "AutomatType.h"
 #include "dispatcher/Model.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/PluginConfig.h"
@@ -22,11 +20,9 @@ using namespace crossbow;
 // Name: Connector constructor
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
-Connector::Connector( const dispatcher::Config& config, const kernel::Resolver_ABC< kernel::AgentType >& agentTypes, const kernel::Resolver_ABC< kernel::AutomatType >& automatTypes, const dispatcher::Model& model )
+Connector::Connector( const dispatcher::Config& config, const dispatcher::Model& model )
     : pScopeEditor_( 0 )
     , model_( model )
-    , agents_( agentTypes )
-    , automats_( automatTypes )
 {
     ::CoInitialize( NULL ); // Initialize COM
 
@@ -133,7 +129,7 @@ namespace
 
         ::GetErrorInfo( 0, &ipError );
         ipError->GetDescription( &strError );
-        std::cerr << GetString( strError ) << std::endl;
+        MT_LOG_ERROR_MSG( GetString( strError ) );
         // throw std::runtime_error( "Connector::Error: " + GetString( strError ) );
     }
 }
@@ -160,8 +156,7 @@ IFeatureClassPtr Connector::LoadFeatureClass( const std::string& feature, bool c
 // -----------------------------------------------------------------------------
 void Connector::ClearFeatureClass( IFeatureClassPtr spFeatureClass )
 {
-    ScopeEditor editor( *this, agents_, automats_ );
-    editor.Clear( spFeatureClass );
+    ScopeEditor( model_ ).Clear( spFeatureClass );
 }
 
 // -----------------------------------------------------------------------------
@@ -205,7 +200,7 @@ ITablePtr Connector::GetTable( const std::string& name )
 // -----------------------------------------------------------------------------
 void Connector::Lock()
 {
-    pScopeEditor_ = new ScopeEditor( *this, agents_, automats_ );
+    pScopeEditor_ = new ScopeEditor( model_ );
     pScopeEditor_->StartEdit( spWorkspace_, spSpatialReference_ );
 }
 
@@ -237,15 +232,6 @@ bool Connector::IsLocked() const
 void Connector::VisitModel( dispatcher::ModelVisitor_ABC& visitor )
 {
     model_.Accept( visitor );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Connector::GetModel
-// Created: JCR 2007-05-15
-// -----------------------------------------------------------------------------
-const dispatcher::Model& Connector::GetModel() const
-{
-    return model_;
 }
 
 // -----------------------------------------------------------------------------
@@ -393,8 +379,8 @@ void Connector::Send( const ASN1T_MsgObjectCreation& msg )
 // -----------------------------------------------------------------------------
 void Connector::Send( const ASN1T_MsgObjectUpdate& msg )
 {
-    ScopeEditor&    editor = *pScopeEditor_;
-    bool            bResult = false;
+    ScopeEditor& editor = *pScopeEditor_;
+    bool         bResult = false;
 
     switch ( msg.location.type )
     {

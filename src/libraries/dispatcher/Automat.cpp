@@ -20,6 +20,8 @@
 #include "DotationQuota.h"
 #include "ModelVisitor_ABC.h"
 #include "AutomatOrder.h"
+#include "AgentTypes.h"
+#include "tools/App6Symbol.h"
 
 using namespace dispatcher;
 
@@ -276,4 +278,34 @@ void Automat::SendSpecialUpdate( ClientPublisher_ABC& publisher ) const
     ack().oid_camp = side_.GetID();
     ack().oid_groupe_connaissance = pKnowledgeGroup_->GetID();
     ack.Send( publisher );
+}
+
+namespace
+{
+    struct SymbolAggregator
+    {
+        SymbolAggregator() : level_( 0 ) {}
+        void operator()( Agent& agent )
+        {
+            const std::string agentSymbol = agent.BuildSymbol( false );
+            level_ = std::max( level_, tools::app6::GetLevel( agentSymbol ) );
+            symbol_ = tools::app6::FilterSymbol( agentSymbol, symbol_ );
+        }
+        std::string symbol_;
+        unsigned int level_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::BuildSymbol
+// Created: SBO 2007-08-22
+// -----------------------------------------------------------------------------
+std::string Automat::BuildSymbol( bool up /*= true*/ ) const
+{
+    SymbolAggregator aggregator;
+    agents_.Apply< SymbolAggregator& >( aggregator );
+    if( up )
+        aggregator.symbol_ = tools::app6::MergeSymbol( formation_.BuildSymbol(), aggregator.symbol_ );
+    tools::app6::SetLevel( aggregator.symbol_, aggregator.level_ + 1 );
+    return aggregator.symbol_;
 }

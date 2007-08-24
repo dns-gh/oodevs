@@ -7,48 +7,58 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
-#include "AutomatComposition.h"
-#include "Resolver_ABC.h"
+#include "dispatcher_pch.h"
+#include "AgentNature.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
+using namespace xml;
 
 // -----------------------------------------------------------------------------
-// Name: AutomatComposition constructor
-// Created: AGE 2006-09-05
+// Name: AgentNature constructor
+// Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-AutomatComposition::AutomatComposition( xml::xistream& input, const Resolver_ABC< AgentType, std::string >& agentResolver )
-    : type_ ( agentResolver.Get( ReadType( input ) ) )     
+AgentNature::AgentNature( xml::xistream& xis )
 {
-    // NOTHING    
+    xis >> start( "nature" )
+            >> attribute( "level", level_ )
+            >> attribute( "nature", nature_ )
+            >> attribute( "atlas-nature", atlas_ )
+        >> end();
 }
-
+    
 // -----------------------------------------------------------------------------
-// Name: AutomatComposition destructor
-// Created: AGE 2006-09-05
+// Name: AgentNature destructor
+// Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-AutomatComposition::~AutomatComposition()
+AgentNature::~AgentNature()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatComposition::ReadType
-// Created: AGE 2006-09-05
+// Name: AgentNature::GetLevel
+// Created: AGE 2006-10-23
 // -----------------------------------------------------------------------------
-std::string AutomatComposition::ReadType( xml::xistream& input )
+const std::string& AgentNature::GetLevel() const
 {
-    std::string name;
-    input >> xml::attribute( "nom", name );
-    return name;
+    return level_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatComposition::GetType
-// Created: AGE 2006-09-05
+// Name: AgentNature::GetNature
+// Created: AGE 2006-10-23
 // -----------------------------------------------------------------------------
-const AgentType& AutomatComposition::GetType() const
+const std::string& AgentNature::GetNature() const
 {
-    return type_;
+    return nature_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentNature::GetAtlas
+// Created: AGE 2006-10-23
+// -----------------------------------------------------------------------------
+const std::string& AgentNature::GetAtlas() const
+{
+    return atlas_;
 }

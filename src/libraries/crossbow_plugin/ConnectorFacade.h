@@ -16,7 +16,6 @@
 
 namespace kernel
 {
-    class AgentTypes;
     class OrderTypes;
 }
 
@@ -24,7 +23,7 @@ namespace dispatcher
 {
     class Model;
     class Config;
-    class Publisher_ABC;
+    class SimulationPublisher_ABC;
 }
 
 namespace crossbow
@@ -44,14 +43,13 @@ class ConnectorFacade : public dispatcher::MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ConnectorFacade( const dispatcher::Model& model, const dispatcher::Config& config, dispatcher::Publisher_ABC& client );
+             ConnectorFacade( const dispatcher::Model& model, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher );
     virtual ~ConnectorFacade();
     //@}
 
     //! @name Operations
     //@{ 
     virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg );
-            void Send( dispatcher::Publisher_ABC& publisher ) const;
     //@}
 
 private:
@@ -61,15 +59,16 @@ private:
     ConnectorFacade& operator=( const ConnectorFacade& ); //!< Assignement operator
     //@}
 
-    //! @name 
+    //! @name Helpers
     //@{    
+    void UpdateListeners() const;
     void UpdateCurrentState();
     void UpdateOnTick( const ASN1T_MsgsSimToClient& asn );
     bool IsRelevant( const ASN1T_MsgsSimToClient& asn ) const;
     //@}
 
 private:
-    //! @name 
+    //! @name Types
     //@{
     typedef boost::shared_ptr< Listener_ABC >   T_SharedListener;
     typedef std::list< T_SharedListener >       T_ListenerList;
@@ -80,12 +79,10 @@ private:
 private:
     //! @name Member data
     //@{    
-    std::auto_ptr< kernel::AgentTypes > types_;
     std::auto_ptr< kernel::OrderTypes > orderTypes_;
     std::auto_ptr< Connector >          connector_;
     T_ListenerList                      listeners_;
     bool                                bLoaded_;
-    dispatcher::Publisher_ABC&          simulation_;
     //@}
 };
 

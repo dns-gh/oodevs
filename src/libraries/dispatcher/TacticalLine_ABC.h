@@ -45,6 +45,7 @@ protected:
     //@{
     void Update( const ASN1T_TacticalLine& asn );
     void Send  ( ASN1T_TacticalLine& asn ) const;
+    std::string BuildSymbol( bool up = true ) const;
     //@}
 
     //! @name Accessors

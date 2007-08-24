@@ -43,6 +43,7 @@ public:
     virtual void SendDestruction  ( ClientPublisher_ABC& publisher ) const;
     virtual void SendSpecialUpdate( ClientPublisher_ABC& publisher ) const;
     virtual void Accept           ( ModelVisitor_ABC& visitor );
+    virtual std::string BuildSymbol( bool up = true ) const; // $$$$ SBO 2007-08-22: abstract
     //@}
 
 protected:

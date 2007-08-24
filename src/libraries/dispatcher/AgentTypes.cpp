@@ -7,12 +7,11 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "dispatcher_pch.h"
 #include "AgentTypes.h"
 #include "AgentType.h"
-#include "AutomatType.h"
 #include "SymbolFactory.h"
-#include "dispatcher/Config.h"
+#include "Config.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -35,30 +34,16 @@ void AgentTypes::Load( const dispatcher::Config& config )
 {
     Purge();
 
-    xml::xifstream xisSymbols( dispatcher::Config::BuildWorkingDirectoryChildFile( "symbols.xml" ) ); // $$$$ NLD 2007-01-12: 
+    xml::xifstream xisSymbols( dispatcher::Config::BuildWorkingDirectoryChildFile( "symbols.xml" ) ); // $$$$ NLD 2007-01-12:
     symbolFactory_ = new SymbolFactory( xisSymbols );
 
     xml::xifstream xis( config.GetPhysicalFile() );
     xis >> start( "physical" );
 
-    std::string agents, automats;
-    xis >> content( "Pions", agents )
-        >> content( "Automates", automats );
+    std::string agents;
+    xis >> start( "units" ) >> attribute( "file", agents );
 
     ReadAgents( config.BuildPhysicalChildFile( agents ) );
-    ReadAutomats( config.BuildPhysicalChildFile( automats ) );    
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentTypes::Purge
-// Created: SBO 2006-05-24
-// -----------------------------------------------------------------------------
-void AgentTypes::Purge()
-{
-    Resolver< AgentType, std::string >::Clear();
-    Resolver< AgentType >::DeleteAll();        
-    Resolver< AutomatType, std::string >::Clear();
-    Resolver< AutomatType >::DeleteAll();    
 }
 
 // -----------------------------------------------------------------------------
@@ -70,6 +55,17 @@ AgentTypes::~AgentTypes()
     Purge();
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentTypes::Purge
+// Created: SBO 2007-08-24
+// -----------------------------------------------------------------------------
+void AgentTypes::Purge()
+{
+    for( CIT_AgentTypes it = agentTypes_.begin(); it != agentTypes_.end(); ++it )
+        delete it->second;
+    agentTypes_.clear();
+}
+
  // -----------------------------------------------------------------------------
 // Name: AgentTypes::ReadAgents
 // Created: AGE 2006-02-14
@@ -77,8 +73,8 @@ AgentTypes::~AgentTypes()
 void AgentTypes::ReadAgents( const std::string& agents )
 {
     xifstream xis( agents );
-    xis >> start( "Pions" )
-            >> list( "Unite", *this, &AgentTypes::ReadAgentType );
+    xis >> start( "units" )
+            >> list( "unit", *this, &AgentTypes::ReadAgentType );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,28 +84,17 @@ void AgentTypes::ReadAgents( const std::string& agents )
 void AgentTypes::ReadAgentType( xml::xistream& xis )
 {
     AgentType* type = new AgentType( xis, *symbolFactory_ );
-    Resolver< AgentType >               ::Register( type->GetId(), *type );
-    Resolver< AgentType, std::string >  ::Register( type->GetName(), *type );
+    agentTypes_[type->GetId()] = type;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentTypes::ReadAutomats
-// Created: AGE 2006-02-14
+// Name: AgentTypes::Get
+// Created: SBO 2007-08-24
 // -----------------------------------------------------------------------------
-void AgentTypes::ReadAutomats( const std::string& automats )
+const AgentType& AgentTypes::Get( unsigned long id ) const
 {
-    xifstream xis( automats );
-    xis >> start( "Automates" )
-            >> list( "Unite", *this, &AgentTypes::ReadAutomatType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentTypes::ReadAutomatType
-// Created: AGE 2006-02-14
-// -----------------------------------------------------------------------------
-void AgentTypes::ReadAutomatType( xml::xistream& xis )
-{
-    AutomatType* type = new AutomatType( xis, *this );
-    Resolver< AutomatType >                 ::Register( type->GetId(), *type ); 
-    Resolver< AutomatType, std::string >    ::Register( type->GetName(), *type );
+    CIT_AgentTypes it = agentTypes_.find( id );
+    if( it != agentTypes_.end() )
+        return *it->second;
+    throw std::runtime_error( "Agent type does not exist" );
 }
