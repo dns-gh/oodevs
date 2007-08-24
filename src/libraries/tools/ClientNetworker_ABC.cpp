@@ -105,7 +105,7 @@ void ClientNetworker_ABC::Update()
 // -----------------------------------------------------------------------------
 void ClientNetworker_ABC::OnConnected( DIN_Link& link )
 {
-    MT_LOG_INFO_MSG( MT_FormatString( "Connected to '%s'", link.GetRemoteAddress().GetAddressAsString().c_str() ).c_str() );
+    MT_LOG_INFO_MSG( "Connected to '" << link.GetRemoteAddress().GetAddressAsString() << "'" );
     session_ = &link;
 }
 
@@ -115,7 +115,7 @@ void ClientNetworker_ABC::OnConnected( DIN_Link& link )
 // -----------------------------------------------------------------------------
 void ClientNetworker_ABC::OnConnectionFailed( DIN_Link& link, const DIN_ErrorDescription& reason )
 {
-    MT_LOG_INFO_MSG( MT_FormatString( "Connection to '%s' failed (reason : %s)", link.GetRemoteAddress().GetAddressAsString().c_str(), reason.GetInfo().c_str() ).c_str() );
+    MT_LOG_INFO_MSG( "Connection to '" << link.GetRemoteAddress().GetAddressAsString() << "' failed (reason : " << reason.GetInfo() << ")" );
     connectionService_->JoinHost( *serverAddress_ );
     session_ = 0;
 }
@@ -126,7 +126,7 @@ void ClientNetworker_ABC::OnConnectionFailed( DIN_Link& link, const DIN_ErrorDes
 // -----------------------------------------------------------------------------
 void ClientNetworker_ABC::OnConnectionLost( DIN_Link& link, const DIN_ErrorDescription& reason )
 {
-    MT_LOG_INFO_MSG( MT_FormatString( "Connection to '%s' lost (reason : %s) - reconnecting", link.GetRemoteAddress().GetAddressAsString().c_str(), reason.GetInfo().c_str() ).c_str() );    
+    MT_LOG_INFO_MSG( "Connection to '" << link.GetRemoteAddress().GetAddressAsString() << "' lost (reason : " << reason.GetInfo() << ") - reconnecting" );    
     connectionService_->JoinHost( *serverAddress_ );
     session_ = 0;
 }
@@ -141,7 +141,7 @@ void ClientNetworker_ABC::OnConnectionLost( DIN_Link& link, const DIN_ErrorDescr
 // -----------------------------------------------------------------------------
 bool ClientNetworker_ABC::OnErrorReceivingMessage( DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& info )
 {
-    MT_LOG_INFO_MSG( MT_FormatString( "Error while receiving message from simulation '%s' : %s", link.GetRemoteAddress().GetAddressAsString().c_str(), info.GetInfo().c_str() ).c_str() );
+    MT_LOG_INFO_MSG( "Error while receiving message from simulation '" << link.GetRemoteAddress().GetAddressAsString() << "' : " << info.GetInfo() );
     return false;    
 }
 
