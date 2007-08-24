@@ -32,7 +32,7 @@ class Master : public tools::Server_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Master( DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link, Model& model, Profile& profile );
+             Master( tools::ObjectMessageService& messageService, DIN::DIN_Link& link, Model& model, Profile& profile );
     virtual ~Master();
     //@}
 

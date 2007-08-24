@@ -20,6 +20,7 @@
 #include "frontend/Exceptions.h"
 #include "frontend/Profile.h"
 #include "tools/AsnMessageEncoder.h"
+#include "tools/ObjectMessageService.h"
 #include "clients_gui/Tools.h"
 #include "DIN/MessageService/DIN_MessageService_ABC.h"
 #include "DIN/DIN_Link.h"
@@ -31,7 +32,7 @@ using namespace frontend;
 // Name: Master constructor
 // Created: SBO 2007-01-25
 // -----------------------------------------------------------------------------
-Master::Master( DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link, Model& model, Profile& profile )
+Master::Master( ObjectMessageService& messageService, DIN::DIN_Link& link, Model& model, Profile& profile )
     : Server_ABC ( messageService, link )
     , model_( model )
     , profile_( profile )
@@ -87,7 +88,7 @@ void Master::OnReceive( unsigned int id, DIN::DIN_Input& message )
 // -----------------------------------------------------------------------------
 void Master::Send( const ASN1T_MsgsInMaster& message )
 {
-    AsnMessageEncoder< ASN1T_MsgsInMaster, ASN1C_MsgsInMaster > asnEncoder( messageService_, message );
+    AsnMessageEncoder< ASN1T_MsgsInMaster > asnEncoder( messageService_, message );
     messageService_.Send( link_, eMsgInMaster, asnEncoder.GetDinMsg() );
 }
 
