@@ -96,6 +96,7 @@ void Simulation::ChangeSpeed( int timeFactor )
 // -----------------------------------------------------------------------------
 void Simulation::Update( const ASN1T_MsgControlInformation& message )
 {
+    tickCount_    = unsigned( -1 );
     tickDuration_ = message.tick_duration;
     paused_       = message.status == EnumSimulationState::paused;
     timeFactor_   = message.time_factor;

@@ -9,8 +9,8 @@
 
 #include "tools_pch.h"
 #include "ClientNetworker_ABC.h"
-#include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
 #include "DIN/ConnectionService/DIN_ConnectionServiceClientUserCbk.h"
+#include <boost/bind.hpp>
 
 using namespace tools;
 using namespace DIN;
@@ -31,11 +31,11 @@ namespace
 ClientNetworker_ABC::ClientNetworker_ABC( unsigned int magicCookie, const std::string& host /* = "" */ )
     : dinEngine_        ( new DIN_Engine() )
     , connectionService_( new DIN_ConnectionServiceClientUserCbk< ClientNetworker_ABC >( *this, *dinEngine_, DIN_ConnectorGuest(), DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 ), magicCookie ) )
-    , messageService_   ( new DIN_MessageServiceUserCbk         < ClientNetworker_ABC >( *this, *dinEngine_, DIN_ConnectorGuest() ) )   
+    , messageService_   ( new ObjectMessageService( *dinEngine_, DIN_ConnectorGuest() ) )   
     , serverAddress_    ( 0 )
     , session_          ( 0 )
 { 
-    messageService_   ->SetCbkOnError( &ClientNetworker_ABC::OnErrorReceivingMessage );
+    messageService_   ->SetCallbackOnError( boost::bind( &ClientNetworker_ABC::OnErrorReceivingMessage, this, _1, _2 ) );
     connectionService_->SetCbkOnConnectionSuccessful( &ClientNetworker_ABC::OnConnected        );
     connectionService_->SetCbkOnConnectionFailed    ( &ClientNetworker_ABC::OnConnectionFailed );
     connectionService_->SetCbkOnConnectionLost      ( &ClientNetworker_ABC::OnConnectionLost   );
@@ -150,10 +150,10 @@ bool ClientNetworker_ABC::OnErrorReceivingMessage( DIN::DIN_Link& link, const DI
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DIN::DIN_MessageServiceUserCbk< ClientNetworker_ABC >& ClientNetworker_ABC::GetMessageService
+// Name: ClientNetworker_ABC::GetMessageService
 // Created: NLD 2007-01-24
 // -----------------------------------------------------------------------------
-DIN::DIN_MessageServiceUserCbk< ClientNetworker_ABC >& ClientNetworker_ABC::GetMessageService() const
+ObjectMessageService& ClientNetworker_ABC::GetMessageService() const
 {
     return *messageService_;
 }

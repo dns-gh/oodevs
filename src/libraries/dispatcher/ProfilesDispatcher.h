@@ -15,7 +15,7 @@
 namespace dispatcher
 {
     class ProfileManager;
-    class Publisher_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  ProfilesDispatcher
@@ -29,13 +29,13 @@ class ProfilesDispatcher
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfilesDispatcher( ProfileManager& manager, Publisher_ABC& publisher );
+             ProfilesDispatcher( ProfileManager& manager, ClientPublisher_ABC& publisher );
     virtual ~ProfilesDispatcher();
     //@}
 
     //! @name Operations
     //@{
-    void OnReceive( const ASN1T_MsgsClientToMiddle& asnMsg );
+    void OnReceive( const ASN1T_MsgsClientToAuthentication& asnMsg );
     //@}
 
 private:
@@ -56,7 +56,7 @@ private:
     //! @name Member data
     //@{
     ProfileManager& manager_;
-    Publisher_ABC& publisher_;
+    ClientPublisher_ABC& publisher_;
     //@}
 };
 

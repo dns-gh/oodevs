@@ -98,7 +98,7 @@ void ReplayerToolbar::OnSliderReleased()
 {
     if( userMove_ )
     {
-        ASN_MsgControlSkipToTick skip;
+        ASN_MsgReplayControlSkipToTick skip;
         skip() = slider_->value();
         skip.Send( network_ );
     }

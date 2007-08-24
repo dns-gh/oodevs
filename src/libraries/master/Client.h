@@ -39,7 +39,7 @@ class Client : public tools::Client_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Client( Master& master, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link );
+             Client( Master& master, tools::ObjectMessageService& messageService, DIN::DIN_Link& link );
     virtual ~Client();
     //@}
 

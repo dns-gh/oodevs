@@ -16,6 +16,7 @@
 #include "ProfileManager.h"
 #include "DataManager.h"
 #include "tools/AsnMessageEncoder.h"
+#include "tools/ObjectMessageService.h"
 #include "DIN/MessageService/DIN_MessageService_ABC.h"
 #include "DIN/DIN_Link.h"
 
@@ -27,7 +28,7 @@ using namespace DIN;
 // Name: Client constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-Client::Client( Master& master, DIN_MessageService_ABC& messageService, DIN_Link& link )
+Client::Client( Master& master, ObjectMessageService& messageService, DIN_Link& link )
     : Client_ABC( messageService, link )
     , master_   ( master )
     , pProfile_ ( 0 )
@@ -145,9 +146,7 @@ void Client::Send( const ASN1T_MsgsOutMaster& asnMsg )
 {
     if( !CheckRights( asnMsg ) )
         return;
-
-    AsnMessageEncoder< ASN1T_MsgsOutMaster, ASN1C_MsgsOutMaster > asnEncoder( messageService_, asnMsg );
-    messageService_.Send( link_, eMsgOutMaster, asnEncoder.GetDinMsg() );
+    messageService_.Send( link_, asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,8 +157,7 @@ void Client::Send( const ASN1T_MsgsOutMaster& asnMsg, const DIN_BufferedMessage&
 {
     if( !CheckRights( asnMsg ) )
         return;
-
-    messageService_.Send( link_, eMsgOutMaster, dinMsg );
+    messageService_.Send( link_, asnMsg, dinMsg );
 }
 
 // =============================================================================

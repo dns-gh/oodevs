@@ -10,25 +10,11 @@
 #ifndef __NetworkDef_h__
 #define __NetworkDef_h__
 
-#include "Publisher_ABC.h"
+#include "ClientPublisher_ABC.h"
+#include "SimulationPublisher_ABC.h"
 
 namespace dispatcher
 {
-//! @name DIN Messages
-//@{
-static enum  
-{
-    eMsgSimToClient                            = 0,
-    eMsgClientToSim                            = 1,
-
-    eMsgSimToMiddle                            = 2,
-    eMsgMiddleToSim                            = 3,
-
-    eMsgClientToMiddle                         = 4,
-    eMsgMiddleToClient                         = 5,
-};
-//@}
-
  
 #define GENERATE_EMPTY_ASN_MSG_SENDER( TARGET, ASNMSG, ASNVAR )  \
 class AsnMsg##TARGET##ASNMSG                                     \
@@ -36,7 +22,8 @@ class AsnMsg##TARGET##ASNMSG                                     \
 public:                                                          \
     AsnMsg##TARGET##ASNMSG() {}                                  \
                                                                  \
-    void Send( Publisher_ABC& publisher, int context = 0 )       \
+    template< typename Publisher >                               \
+    void Send( Publisher& publisher, int context = 0 )           \
     {                                                            \
         ASN1T_Msgs##TARGET asnMsg;                               \
         asnMsg.context = context;                                \
@@ -51,7 +38,8 @@ class AsnMsg##TARGET##ASNMSG                                              \
 public:                                                                   \
     AsnMsg##TARGET##ASNMSG() {}                                           \
                                                                           \
-    void Send( Publisher_ABC& publisher, int context = 0 )                \
+    template< typename Publisher >                                        \
+    void Send( Publisher& publisher, int context = 0 )                    \
     {                                                                     \
         ASN1T_Msgs##TARGET asnMsg;                                        \
         asnMsg.context            = context;                              \
@@ -72,7 +60,8 @@ class AsnMsg##TARGET##ASNMSG                                              \
 public:                                                                   \
     AsnMsg##TARGET##ASNMSG() {}                                           \
                                                                           \
-    void Send( Publisher_ABC& publisher, int context = 0 )                \
+    template< typename Publisher >                                        \
+    void Send( Publisher& publisher, int context = 0 )                    \
     {                                                                     \
         ASN1T_Msgs##TARGET asnMsg;                                        \
         asnMsg.context            = context;                              \
@@ -166,22 +155,28 @@ GENERATE_ASN_MSG_SENDER         ( SimToClient, PopulationFlowKnowledgeCreation  
 GENERATE_ASN_MSG_SENDER         ( SimToClient, PopulationFlowKnowledgeDestruction            , population_flow_knowledge_destruction             );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, PopulationFlowKnowledgeUpdate                 , population_flow_knowledge_update                  );
 
-GENERATE_ASN_MSG_SENDER         ( MiddleToClient, AuthenticationResponse       , authentication_response         );
-GENERATE_ASN_MSG_SENDER         ( MiddleToClient, ProfileCreation              , profile_creation                );
-GENERATE_ASN_MSG_SENDER         ( MiddleToClient, ProfileUpdate                , profile_update                  );
-GENERATE_NOPTR_ASN_MSG_SENDER   ( MiddleToClient, ProfileDestruction           , profile_destruction             );
-GENERATE_ASN_MSG_SENDER         ( MiddleToClient, ProfileCreationRequestAck    , profile_creation_request_ack    );
-GENERATE_ASN_MSG_SENDER         ( MiddleToClient, ProfileUpdateRequestAck      , profile_update_request_ack      );
-GENERATE_ASN_MSG_SENDER         ( MiddleToClient, ProfileDestructionRequestAck , profile_destruction_request_ack );
-GENERATE_ASN_MSG_SENDER         ( MiddleToClient, ControlReplayInformation     , control_replay_information      );
-GENERATE_ASN_MSG_SENDER         ( MiddleToClient, ControlSkipToTickAck         , control_skip_to_tick_ack        );
+GENERATE_ASN_MSG_SENDER         ( AuthenticationToClient, AuthenticationResponse       , authentication_response         );
+GENERATE_ASN_MSG_SENDER         ( AuthenticationToClient, ProfileCreation              , profile_creation                );
+GENERATE_ASN_MSG_SENDER         ( AuthenticationToClient, ProfileUpdate                , profile_update                  );
+GENERATE_NOPTR_ASN_MSG_SENDER   ( AuthenticationToClient, ProfileDestruction           , profile_destruction             );
+GENERATE_ASN_MSG_SENDER         ( AuthenticationToClient, ProfileCreationRequestAck    , profile_creation_request_ack    );
+GENERATE_ASN_MSG_SENDER         ( AuthenticationToClient, ProfileUpdateRequestAck      , profile_update_request_ack      );
+GENERATE_ASN_MSG_SENDER         ( AuthenticationToClient, ProfileDestructionRequestAck , profile_destruction_request_ack );
+
+GENERATE_ASN_MSG_SENDER         ( ReplayToClient, ControlReplayInformation     , control_replay_information      );
+GENERATE_NOPTR_ASN_MSG_SENDER   ( ReplayToClient, ControlStopAck               , control_stop_ack                                  );
+GENERATE_NOPTR_ASN_MSG_SENDER   ( ReplayToClient, ControlPauseAck              , control_pause_ack                                 );
+GENERATE_NOPTR_ASN_MSG_SENDER   ( ReplayToClient, ControlResumeAck             , control_resume_ack                                );
+GENERATE_ASN_MSG_SENDER         ( ReplayToClient, ControlChangeTimeFactorAck   , control_change_time_factor_ack                    );
+GENERATE_ASN_MSG_SENDER         ( ReplayToClient, ControlSkipToTickAck         , control_skip_to_tick_ack        );
 
 GENERATE_EMPTY_ASN_MSG_SENDER   ( MiddleToSim, CtrlClientAnnouncement          , control_client_announcement     );
-GENERATE_EMPTY_ASN_MSG_SENDER   ( ClientToSim, ControlPause, control_pause );
-GENERATE_EMPTY_ASN_MSG_SENDER   ( ClientToSim, ControlResume, control_resume );
-GENERATE_ASN_MSG_SENDER         ( ClientToSim, UnitOrder, unit_order );
-GENERATE_ASN_MSG_SENDER         ( ClientToSim, FragOrder, frag_order );
-GENERATE_ASN_MSG_SENDER         ( ClientToSim, AutomatOrder, automat_order );
+
+//GENERATE_EMPTY_ASN_MSG_SENDER   ( ClientToSim, ControlPause, control_pause );
+//GENERATE_EMPTY_ASN_MSG_SENDER   ( ClientToSim, ControlResume, control_resume );
+//GENERATE_ASN_MSG_SENDER         ( ClientToSim, UnitOrder, unit_order );
+//GENERATE_ASN_MSG_SENDER         ( ClientToSim, FragOrder, frag_order );
+//GENERATE_ASN_MSG_SENDER         ( ClientToSim, AutomatOrder, automat_order );
 
 template< typename L, typename E, typename P > 
 void SendContainerValues( const P& container, L& asnList )

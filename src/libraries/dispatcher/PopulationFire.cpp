@@ -45,7 +45,7 @@ void PopulationFire::Update( const ASN1T_MsgStartPopulationFire& )
 // Name: PopulationFire::SendFullUpdate
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
-void PopulationFire::SendFullUpdate( Publisher_ABC& ) const
+void PopulationFire::SendFullUpdate( ClientPublisher_ABC& ) const
 {
     // NOTHING
 }
@@ -54,7 +54,7 @@ void PopulationFire::SendFullUpdate( Publisher_ABC& ) const
 // Name: PopulationFire::SendCreation
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
-void PopulationFire::SendCreation( Publisher_ABC& publisher ) const
+void PopulationFire::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientStartPopulationFire asn;
     asn() = msg_;
@@ -65,7 +65,7 @@ void PopulationFire::SendCreation( Publisher_ABC& publisher ) const
 // Name: PopulationFire::SendDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void PopulationFire::SendDestruction( Publisher_ABC& publisher ) const
+void PopulationFire::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientStopPopulationFire asn;
     asn().fire_oid = msg_.fire_oid;

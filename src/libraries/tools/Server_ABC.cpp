@@ -9,7 +9,7 @@
 
 #include "tools_pch.h"
 #include "Server_ABC.h"
-#include "DIN/MessageService/DIN_MessageService_ABC.h"
+#include "ObjectMessageService.h"
 #include "DIN/MessageService/DIN_BufferedMessage.h"
 #include "DIN/DIN_Link.h"
 
@@ -20,7 +20,7 @@ using namespace DIN;
 // Name: Server_ABC constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-Server_ABC::Server_ABC( DIN_MessageService_ABC& messageService, DIN_Link& link )
+Server_ABC::Server_ABC( ObjectMessageService& messageService, DIN_Link& link )
     : DIN_UserData_ABC()
     , messageService_ ( messageService )
     , link_           ( link )

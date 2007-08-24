@@ -13,8 +13,7 @@
 
 #include "Network_Def.h"
 #include "game_asn/Asn.h"
-#include "tools/AsnMessageEncoder.h"
-#include "DIN/MessageService/DIN_MessageService_ABC.h"
+#include "tools/ObjectMessageService.h"
 #include "DIN/DIN_Link.h"
 #include "MessageHandler_ABC.h"
 
@@ -26,7 +25,7 @@ using namespace DIN;
 // Name: Simulation constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-Simulation::Simulation( MessageHandler_ABC& handler, DIN_MessageService_ABC& messageService, DIN_Link& link )
+Simulation::Simulation( MessageHandler_ABC& handler, ObjectMessageService& messageService, DIN_Link& link )
     : Server_ABC ( messageService, link )
     , handler_   ( handler )
 {
@@ -52,22 +51,12 @@ void Simulation::OnReceive( const ASN1T_MsgsSimToClient& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Simulation::OnReceive
-// Created: NLD 2007-04-24
-// -----------------------------------------------------------------------------
-void Simulation::OnReceive( const ASN1T_MsgsSimToMiddle& )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: Simulation::Send
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
 void Simulation::Send( const ASN1T_MsgsMiddleToSim& asnMsg )
 {
-    AsnMessageEncoder< ASN1T_MsgsMiddleToSim, ASN1C_MsgsMiddleToSim > asnEncoder( messageService_, asnMsg );
-    messageService_.Send( link_, eMsgMiddleToSim, asnEncoder.GetDinMsg() );
+    messageService_.Send( link_, asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,6 +65,5 @@ void Simulation::Send( const ASN1T_MsgsMiddleToSim& asnMsg )
 // -----------------------------------------------------------------------------
 void Simulation::Send( const ASN1T_MsgsClientToSim& asnMsg )
 {
-    AsnMessageEncoder< ASN1T_MsgsClientToSim, ASN1C_MsgsClientToSim > asnEncoder( messageService_, asnMsg );
-    messageService_.Send( link_, eMsgClientToSim, asnEncoder.GetDinMsg() );
+    messageService_.Send( link_, asnMsg );
 }

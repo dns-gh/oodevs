@@ -90,6 +90,7 @@ private:
     DisconnectDialog*   pDisconnectDlg_;
     int speed_;
     bool connected_, paused_;
+    bool replay_; // $$$$ AGE 2007-08-24: 
 
     QIconSet connectPix_, disconnectPix_;
     QIconSet playPix_, stopPix_;

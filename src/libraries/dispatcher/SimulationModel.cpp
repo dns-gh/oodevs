@@ -139,7 +139,7 @@ void SimulationModel::Update( const ASN1T_MsgControlEndTick& msg )
 // Name: SimulationModel::Send
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void SimulationModel::Send( Publisher_ABC& publisher ) const
+void SimulationModel::Send( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientControlInformation asn;
     asn().current_tick           = nCurrentTick_;

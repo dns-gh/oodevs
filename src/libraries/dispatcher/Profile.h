@@ -20,7 +20,7 @@ namespace dispatcher
     class Side;
     class Formation;
     class Population;
-    class Publisher_ABC;
+    class ClientPublisher_ABC;
     class Model;
     class ClientsNetworker;
 
@@ -35,22 +35,23 @@ class Profile
 public:
     //! @name Constructors/Destructor
     //@{
-             Profile( Model& model, Publisher_ABC& clients, const std::string& strLogin, xml::xistream& xis );
-             Profile( Model& model, Publisher_ABC& clients, const ASN1T_MsgProfileCreationRequest& message );
+             Profile( Model& model, ClientPublisher_ABC& clients, const std::string& strLogin, xml::xistream& xis );
+             Profile( Model& model, ClientPublisher_ABC& clients, const ASN1T_MsgProfileCreationRequest& message );
     virtual ~Profile();
     //@}
 
     //! @name Main
     //@{
     bool CheckPassword( const std::string& strPassword ) const;
-    bool CheckRights  ( const ASN1T_MsgsClientToSim&    msg ) const;
-    bool CheckRights  ( const ASN1T_MsgsClientToMiddle& msg ) const;
+    bool CheckRights  ( const ASN1T_MsgsClientToSim&            msg ) const;
+    bool CheckRights  ( const ASN1T_MsgsClientToAuthentication& msg ) const;
+    bool CheckRights  ( const ASN1T_MsgsClientToReplay&         msg ) const;
     //@}
 
     //! @name Network
     //@{
            void Send        ( ASN1T_Profile& asn ) const;
-           void SendCreation( Publisher_ABC& publisher ) const;
+           void SendCreation( ClientPublisher_ABC& publisher ) const;
     static void AsnDelete   ( ASN1T_Profile& asn );
     //@}
 
@@ -90,7 +91,7 @@ private:
 
 private:
     Model& model_;
-    Publisher_ABC& clients_;
+    ClientPublisher_ABC& clients_;
 
     std::string     strLogin_;
     std::string     strPassword_;

@@ -15,7 +15,7 @@
 
 namespace dispatcher
 {
-    class Publisher_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  SideModelVisitor
@@ -27,14 +27,14 @@ namespace dispatcher
         : public ModelDataVisitor_ABC        
     {
     public:
-        SideModelVisitor( Publisher_ABC& publisher );
+        SideModelVisitor( ClientPublisher_ABC& publisher );
 
         virtual void Visit  ( Entity_ABC& entity );
         virtual bool Accept ( const ASN1T_MsgTeamCreation& asn );
 
         ASN1T_EnumDiplomacy GetSide() const;
     private:
-        Publisher_ABC* publisher_;
+        ClientPublisher_ABC* publisher_;
         ASN1T_EnumDiplomacy type_;
     };
 
@@ -42,7 +42,7 @@ namespace dispatcher
         : public ModelDataVisitor_ABC        
     {
     public:
-        FormationModelVisitor( Publisher_ABC& publisher );
+        FormationModelVisitor( ClientPublisher_ABC& publisher );
 
         virtual void Visit  ( Entity_ABC& entity );
         virtual bool Accept ( const ASN1T_MsgFormationCreation& asn );
@@ -50,7 +50,7 @@ namespace dispatcher
         ASN1T_EnumNatureLevel GetEchelon() const;
         ASN1T_OID GetOID() const;
     private:
-        Publisher_ABC* publisher_;
+        ClientPublisher_ABC* publisher_;
         ASN1T_EnumNatureLevel echelon_;
         ASN1T_OID oid_;
     };
@@ -59,14 +59,14 @@ namespace dispatcher
         : public ModelDataVisitor_ABC        
     {
     public:
-        UnitKnowledgeModelVisitor( Publisher_ABC& publisher );
+        UnitKnowledgeModelVisitor( ClientPublisher_ABC& publisher );
 
         virtual void Visit  ( Entity_ABC& entity );
         virtual bool Accept ( const ASN1T_MsgUnitKnowledgeCreation& asn );
 
         ASN1T_UnitType GetType() const;
     private:
-        Publisher_ABC* publisher_;
+        ClientPublisher_ABC* publisher_;
         ASN1T_UnitType type_;
     };
 

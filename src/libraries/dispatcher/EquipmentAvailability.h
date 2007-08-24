@@ -16,7 +16,6 @@
 namespace dispatcher
 {
 class Model;
-class Publisher_ABC;
 
 // =============================================================================
 /** @class  EquipmentAvailability

@@ -32,7 +32,7 @@ class LogConsignMedical;
 class Population;
 class PopulationKnowledge;
 class SimulationModel;
-class Publisher_ABC;
+class ClientPublisher_ABC;
 class Limit;
 class Lima;
 class Entity_ABC;
@@ -62,14 +62,14 @@ public:
     virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg );
     void Update( const ASN1T_MsgsSimToClient& asnMsg );
 
-    void Send  ( Publisher_ABC& publisher ) const;
+    void Send  ( ClientPublisher_ABC& publisher ) const;
     //@}
 
     //! @name Operations
     //@{
     void Accept( ModelVisitor_ABC& visitor ) const;
     void StartSynchronisation();
-    void EndSynchronisation( Publisher_ABC& publisher );
+    void EndSynchronisation( ClientPublisher_ABC& publisher );
     //@}
 
     //! @name Synchro

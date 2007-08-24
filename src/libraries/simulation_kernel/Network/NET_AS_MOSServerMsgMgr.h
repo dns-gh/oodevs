@@ -97,6 +97,7 @@ private:
     NET_Simulation_ABC& simulation_;
 
     DIN::DIN_MessageServiceUserCbk< NET_AS_MOSServerMsgMgr > messageService_;
+    const unsigned int eMsgSimToClient_;
 
     // ASN
     ASN1OCTET aASNEncodeBuffer_[100000];

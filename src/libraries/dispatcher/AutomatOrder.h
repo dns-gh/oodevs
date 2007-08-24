@@ -16,7 +16,7 @@ struct ASN1T_MsgAutomatOrder;
 
 namespace dispatcher
 {
-    class Publisher_ABC;
+    class ClientPublisher_ABC;
     class Automat;
 
 // =============================================================================
@@ -37,8 +37,8 @@ public:
 
     //! @name Operations
     //@{
-           void Send         ( Publisher_ABC& publisher );
-    static void SendNoMission( const Automat& automat, Publisher_ABC& publisher ); 
+           void Send         ( ClientPublisher_ABC& publisher );
+    static void SendNoMission( const Automat& automat, ClientPublisher_ABC& publisher ); 
     //@}
 
 private:

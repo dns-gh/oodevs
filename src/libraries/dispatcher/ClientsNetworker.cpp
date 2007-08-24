@@ -37,8 +37,9 @@ ClientsNetworker::ClientsNetworker( Dispatcher& dispatcher, const Config& config
     , dispatcher_        ( &dispatcher )
     , replayer_          ( 0 )
 {
-    GetMessageService().RegisterReceivedMessage( eMsgClientToSim           , *this, &ClientsNetworker::OnReceiveMsgClientToSim            );
-    GetMessageService().RegisterReceivedMessage( eMsgClientToMiddle        , *this, &ClientsNetworker::OnReceiveMsgClientToMiddle         );
+    RegisterMessage( *this, &ClientsNetworker::OnReceiveMsgClientToSim    );
+    RegisterMessage( *this, &ClientsNetworker::OnReceiveMsgClientToMiddle );
+    RegisterMessage( *this, &ClientsNetworker::OnReceiveMsgClientToReplay );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,8 +51,9 @@ ClientsNetworker::ClientsNetworker( Replayer& replayer, const Config& config )
     , dispatcher_        ( 0 )
     , replayer_          ( &replayer )
 {
-    GetMessageService().RegisterReceivedMessage( eMsgClientToSim           , *this, &ClientsNetworker::OnReceiveMsgClientToSim            );
-    GetMessageService().RegisterReceivedMessage( eMsgClientToMiddle        , *this, &ClientsNetworker::OnReceiveMsgClientToMiddle         );
+    RegisterMessage( *this, &ClientsNetworker::OnReceiveMsgClientToSim    );
+    RegisterMessage( *this, &ClientsNetworker::OnReceiveMsgClientToMiddle );
+    RegisterMessage( *this, &ClientsNetworker::OnReceiveMsgClientToReplay );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,36 +142,29 @@ void ClientsNetworker::OnConnectionLost( DIN_Server& server, DIN_Link& link, con
 
 // -----------------------------------------------------------------------------
 // Name: ClientsNetworker::OnReceiveMsgClientToSim
-// Created: NLD 2006-09-21
+// Created: AGE 2007-08-23
 // -----------------------------------------------------------------------------
-void ClientsNetworker::OnReceiveMsgClientToSim( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input )
+void ClientsNetworker::OnReceiveMsgClientToSim( DIN::DIN_Link& linkFrom, const ASN1T_MsgsClientToSim& message )
 {
-    try
-    {
-        AsnMessageDecoder< ASN1T_MsgsClientToSim, ASN1C_MsgsClientToSim > asnDecoder( input );
-        Client::GetClientFromLink( linkFrom ).OnReceive( asnDecoder.GetAsnMsg() );
-    }
-    catch( std::runtime_error& exception )
-    {
-        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
-    }
+    Client::GetClientFromLink( linkFrom ).OnReceive( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ClientsNetworker::OnReceiveMsgClientToMiddle
-// Created: NLD 2006-09-21
+// Created: AGE 2007-08-23
 // -----------------------------------------------------------------------------
-void ClientsNetworker::OnReceiveMsgClientToMiddle( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input )
+void ClientsNetworker::OnReceiveMsgClientToMiddle( DIN::DIN_Link& linkFrom, const ASN1T_MsgsClientToAuthentication& message )
 {
-    try
-    {
-        AsnMessageDecoder< ASN1T_MsgsClientToMiddle, ASN1C_MsgsClientToMiddle > asnDecoder( input );
-        Client::GetClientFromLink( linkFrom ).OnReceive( asnDecoder.GetAsnMsg() );
-    }
-    catch( std::runtime_error& exception )
-    {
-        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
-    }
+    Client::GetClientFromLink( linkFrom ).OnReceive( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::OnReceiveMsgClientToReplay
+// Created: AGE 2007-08-24
+// -----------------------------------------------------------------------------
+void ClientsNetworker::OnReceiveMsgClientToReplay( DIN::DIN_Link& linkFrom, const ASN1T_MsgsClientToReplay& message )
+{
+    Client::GetClientFromLink( linkFrom ).OnReceive( message );
 }
 
 // =============================================================================
@@ -184,7 +179,7 @@ void ClientsNetworker::Send( const ASN1T_MsgsSimToClient& asnMsg )
 {
     try
     {
-        AsnMessageEncoder< ASN1T_MsgsSimToClient, ASN1C_MsgsSimToClient > asnEncoder( GetMessageService(), asnMsg );
+        AsnMessageEncoder< ASN1T_MsgsSimToClient > asnEncoder( GetMessageService(), asnMsg );
         for( CIT_ClientSet it = clients_.begin(); it != clients_.end(); ++it )
             (**it).Send( asnMsg, asnEncoder.GetDinMsg() );
     }
@@ -198,11 +193,11 @@ void ClientsNetworker::Send( const ASN1T_MsgsSimToClient& asnMsg )
 // Name: ClientsNetworker::Send
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const ASN1T_MsgsMiddleToClient& asnMsg )
+void ClientsNetworker::Send( const ASN1T_MsgsAuthenticationToClient& asnMsg )
 {
     try
     {
-        AsnMessageEncoder< ASN1T_MsgsMiddleToClient, ASN1C_MsgsMiddleToClient > asnEncoder( GetMessageService(), asnMsg );
+        AsnMessageEncoder< ASN1T_MsgsAuthenticationToClient > asnEncoder( GetMessageService(), asnMsg );
         for( CIT_ClientSet it = clients_.begin(); it != clients_.end(); ++it )
             (**it).Send( asnMsg, asnEncoder.GetDinMsg() );
     }

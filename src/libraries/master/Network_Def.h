@@ -15,15 +15,6 @@
 
 namespace master
 {
-//! @name DIN Messages
-//@{
-static enum  
-{
-    eMsgOutMaster   = 0,
-    eMsgInMaster    = 1
-};
-//@}
-
  
 #define GENERATE_EMPTY_ASN_MSG_SENDER( TARGET, ASNMSG, ASNVAR )  \
 class AsnMsg##TARGET##ASNMSG                                     \
@@ -82,34 +73,6 @@ GENERATE_ASN_MSG_SENDER( OutMaster, TerrainCreation       , terrain_creation    
 GENERATE_ASN_MSG_SENDER( OutMaster, PhysicalModelCreation , physical_model_creation );
 GENERATE_ASN_MSG_SENDER( OutMaster, DatasetCreation       , dataset_creation        );
 GENERATE_ASN_MSG_SENDER( OutMaster, ExerciseCreation      , exercise_creation       );
-
-/*
-template< typename L, typename E, typename P > 
-void SendContainerValues( const P& container, L& asnList )
-{
-    asnList.n = container.size();
-    if( !container.empty() )
-    {
-        asnList.elem = new E[ container.size() ];
-        uint i = 0;
-        for( P::const_iterator it = container.begin(); it != container.end(); ++it, ++i )
-            asnList.elem[ i ] = *it;
-    }
-}
-
-template< typename L, typename E, typename P > 
-void SendContainerRefs( const P& container, L& asnList )
-{
-    asnList.n = container.size();
-    if( !container.empty() )
-    {
-        asnList.elem = new E[ container.size() ];
-        uint i = 0;
-        for( P::const_iterator it = container.begin(); it != container.end(); ++it, ++i )
-            asnList.elem[ i ] = (**it).GetID();
-    }
-}
-*/
 
 } // end namespace master
 

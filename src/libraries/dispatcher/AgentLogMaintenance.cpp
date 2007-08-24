@@ -89,7 +89,7 @@ void AgentLogMaintenance::Update( const ASN1T_MsgLogMaintenanceState& asnMsg )
 // Name: AgentLogMaintenance::Send
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void AgentLogMaintenance::Send( Publisher_ABC& publisher ) const
+void AgentLogMaintenance::Send( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientLogMaintenanceState asn;
 

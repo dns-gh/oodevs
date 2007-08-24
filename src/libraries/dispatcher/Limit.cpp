@@ -57,7 +57,7 @@ void Limit::Update( const ASN1T_MsgLimitUpdate& message )
 // Name: Limit::SendCreation
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void Limit::SendCreation( Publisher_ABC& publisher ) const
+void Limit::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientLimitCreation asn;
 
@@ -72,7 +72,7 @@ void Limit::SendCreation( Publisher_ABC& publisher ) const
 // Name: Limit::SendFullUpdate
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-void Limit::SendFullUpdate( Publisher_ABC& ) const
+void Limit::SendFullUpdate( ClientPublisher_ABC& ) const
 {
     // NOTHING
 }
@@ -81,7 +81,7 @@ void Limit::SendFullUpdate( Publisher_ABC& ) const
 // Name: Limit::SendDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Limit::SendDestruction( Publisher_ABC& publisher ) const
+void Limit::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientLimitDestruction asn;
     asn() = GetID();

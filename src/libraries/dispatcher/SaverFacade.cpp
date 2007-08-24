@@ -13,10 +13,10 @@
 #include "Savable_ABC.h"
 #include "Model.h"
 #include "Side.h"
-#include "Publisher_ABC.h"
 #include "Visitors.h"
 #include "network_def.h"
 #include "tools/OutputBinaryWrapper.h"
+#include "ClientPublisher_ABC.h"
 
 using namespace dispatcher;
 
@@ -85,7 +85,7 @@ void SaverFacade::SaveUpdate( ASN1T_MsgsSimToClient& asnMsg )
 
 namespace
 {
-    struct ModelMessage : public Savable_ABC, public Publisher_ABC
+    struct ModelMessage : public Savable_ABC, public ClientPublisher_ABC
     {
         ModelMessage( Model& model, ASN1OCTET* buffer, unsigned size, bool firstFrame )
             : model_( &model )

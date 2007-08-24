@@ -9,7 +9,7 @@
 
 #include "tools_pch.h"
 #include "Client_ABC.h"
-#include "DIN/MessageService/DIN_MessageService_ABC.h"
+#include "ObjectMessageService.h"
 #include "DIN/MessageService/DIN_BufferedMessage.h"
 #include "DIN/DIN_Link.h"
 
@@ -20,7 +20,7 @@ using namespace DIN;
 // Name: Client_ABC constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-Client_ABC::Client_ABC( DIN_MessageService_ABC& messageService, DIN_Link& link )
+Client_ABC::Client_ABC( ObjectMessageService& messageService, DIN_Link& link )
     : DIN_UserData_ABC()
     , messageService_ ( messageService )
     , link_           ( link )

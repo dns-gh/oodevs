@@ -3,66 +3,57 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
-#include "Publisher_ABC.h"
+#include "ClientPublisher_ABC.h"
 
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
-// Name: Publisher_ABC constructor
-// Created: NLD 2006-09-26
+// Name: ClientPublisher_ABC constructor
+// Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-Publisher_ABC::Publisher_ABC()
+ClientPublisher_ABC::ClientPublisher_ABC()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Publisher_ABC destructor
-// Created: NLD 2006-09-26
+// Name: ClientPublisher_ABC destructor
+// Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-Publisher_ABC::~Publisher_ABC()
+ClientPublisher_ABC::~ClientPublisher_ABC()
 {
     // NOTHING
 }
 
+
 // -----------------------------------------------------------------------------
-// Name: Publisher_ABC::Send
-// Created: NLD 2007-04-24
+// Name: ClientPublisher_ABC::Send
+// Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void Publisher_ABC::Send( const ASN1T_MsgsSimToClient& msg )
+void ClientPublisher_ABC::Send( const ASN1T_MsgsSimToClient& )
 {
-    throw std::runtime_error( "Invalid publisher" );
+    throw std::runtime_error( "Invalid dispatcher : " __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Publisher_ABC::Send
-// Created: NLD 2007-04-24
+// Name: ClientPublisher_ABC::Send
+// Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void Publisher_ABC::Send( const ASN1T_MsgsClientToSim& msg )
+void ClientPublisher_ABC::Send( const ASN1T_MsgsAuthenticationToClient& )
 {
-    throw std::runtime_error( "Invalid publisher" );
+    throw std::runtime_error( "Invalid dispatcher : " __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Publisher_ABC::Send
-// Created: NLD 2007-04-24
+// Name: ClientPublisher_ABC::Send
+// Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void Publisher_ABC::Send( const ASN1T_MsgsMiddleToClient& msg )
+void ClientPublisher_ABC::Send( const ASN1T_MsgsReplayToClient& )
 {
-    throw std::runtime_error( "Invalid publisher" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Publisher_ABC::Send
-// Created: NLD 2007-04-24
-// -----------------------------------------------------------------------------
-void Publisher_ABC::Send( const ASN1T_MsgsMiddleToSim& msg )
-{
-    throw std::runtime_error( "Invalid publisher" );
+    throw std::runtime_error( "Invalid dispatcher : " __FUNCTION__ " not implemented" );
 }

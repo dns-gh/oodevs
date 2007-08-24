@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: FullUpdateVisitor::FullUpdateVisitor
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-FullUpdateVisitor::FullUpdateVisitor( Publisher_ABC& publisher )
+FullUpdateVisitor::FullUpdateVisitor( ClientPublisher_ABC& publisher )
     : publisher_( &publisher )
 {
     // NOTHING
@@ -36,7 +36,7 @@ void FullUpdateVisitor::Visit( Entity_ABC& entity )
 // Name: CreationVisitor::CreationVisitor
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-CreationVisitor::CreationVisitor( Publisher_ABC& publisher )
+CreationVisitor::CreationVisitor( ClientPublisher_ABC& publisher )
     : publisher_( &publisher )
 {
     // NOTHING

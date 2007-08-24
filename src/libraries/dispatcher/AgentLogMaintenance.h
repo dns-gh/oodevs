@@ -20,7 +20,7 @@ namespace dispatcher
 class Model;
 class Automat;
 class Agent;
-class Publisher_ABC;
+class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  AgentLogMaintenance
@@ -40,7 +40,7 @@ public:
     //! @name Main
     //@{
     void Update(  const ASN1T_MsgLogMaintenanceState& asnMsg );
-    void Send  ( Publisher_ABC& publisher ) const;
+    void Send  ( ClientPublisher_ABC& publisher ) const;
     //@}
 
 private:

@@ -16,7 +16,7 @@
 namespace dispatcher
 {
     class Model;
-    class Publisher_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  SimulationDispatcher
@@ -30,7 +30,7 @@ class SimulationDispatcher : public ReplayModel_ABC, public MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SimulationDispatcher( Publisher_ABC& clientsPublisher, Model& model );
+             SimulationDispatcher( ClientPublisher_ABC& clientsPublisher, Model& model );
     virtual ~SimulationDispatcher();
     //@}
 
@@ -56,9 +56,9 @@ private:
 private:
     //! @name Member data
     //@{
-    Publisher_ABC& clientsPublisher_;
-    Model&         model_;
-    bool           synching_;
+    ClientPublisher_ABC& clientsPublisher_;
+    Model&               model_;
+    bool                 synching_;
     //@}
 };
 

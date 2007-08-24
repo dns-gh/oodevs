@@ -19,7 +19,7 @@ namespace dispatcher
 {
 class Config;
 class Profile;
-class Publisher_ABC;
+class ClientPublisher_ABC;
 class Model;
 class ClientsNetworker;
 
@@ -34,7 +34,7 @@ class ProfileManager : public MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileManager( Model& model, Publisher_ABC& clients, const Config& config );
+             ProfileManager( Model& model, ClientPublisher_ABC& clients, const Config& config );
     virtual ~ProfileManager();
     //@}
 
@@ -44,7 +44,7 @@ public:
     Profile* Authenticate( const std::string& strName, const std::string& strPassword ) const;
     Profile* Find        ( const std::string& strName ) const;
 
-    void Send( Publisher_ABC& publisher ) const;
+    void Send( ClientPublisher_ABC& publisher ) const;
 
     ASN1T_MsgProfileCreationRequestAck_error_code    Create ( const ASN1T_MsgProfileCreationRequest&    message );
     ASN1T_MsgProfileUpdateRequestAck_error_code      Update ( const ASN1T_MsgProfileUpdateRequest&      message );
@@ -78,9 +78,9 @@ private:
 
 private:
     const Config&        config_;
-          Model&         model_;
-          Publisher_ABC& clients_;
-          T_ProfileMap   profiles_;
+    Model&               model_;
+    ClientPublisher_ABC& clients_;
+    T_ProfileMap         profiles_;
 };
 
 }

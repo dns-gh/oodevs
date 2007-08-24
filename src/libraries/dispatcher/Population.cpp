@@ -159,7 +159,7 @@ void Population::Update( const ASN1T_MsgDecisionalState& msg )
 // Name: Population::SendCreation
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::SendCreation( Publisher_ABC& publisher ) const
+void Population::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationCreation asn;
 
@@ -175,7 +175,7 @@ void Population::SendCreation( Publisher_ABC& publisher ) const
 // Name: Population::SendFullUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::SendFullUpdate( Publisher_ABC& publisher ) const
+void Population::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     {
         AsnMsgSimToClientPopulationUpdate asn;

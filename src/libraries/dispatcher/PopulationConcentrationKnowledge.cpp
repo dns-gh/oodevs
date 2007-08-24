@@ -113,7 +113,7 @@ void PopulationConcentrationKnowledge::Update( const ASN1T_MsgPopulationConcentr
 // Name: PopulationConcentrationKnowledge::SendCreation
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationConcentrationKnowledge::SendCreation( Publisher_ABC& publisher ) const
+void PopulationConcentrationKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationConcentrationKnowledgeCreation asn;
 
@@ -130,7 +130,7 @@ void PopulationConcentrationKnowledge::SendCreation( Publisher_ABC& publisher ) 
 // Name: PopulationConcentrationKnowledge::SendFullUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationConcentrationKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
+void PopulationConcentrationKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationConcentrationKnowledgeUpdate asn;
 
@@ -178,7 +178,7 @@ void PopulationConcentrationKnowledge::SendFullUpdate( Publisher_ABC& publisher 
 // Name: PopulationConcentrationKnowledge::SendDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void PopulationConcentrationKnowledge::SendDestruction( Publisher_ABC& publisher ) const
+void PopulationConcentrationKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationConcentrationKnowledgeDestruction asn;
     asn().oid_connaissance_concentration = nID_;

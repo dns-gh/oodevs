@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "LoaderFacade.h"
 #include "Loader.h"
-#include "Publisher_ABC.h"
+#include "ClientPublisher_ABC.h"
 #include "network_def.h"
 #include "game_asn/Asn.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
@@ -21,7 +21,7 @@ using namespace dispatcher;
 // Name: LoaderFacade constructor
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-LoaderFacade::LoaderFacade( Publisher_ABC& clients, Loader& loader )
+LoaderFacade::LoaderFacade( ClientPublisher_ABC& clients, Loader& loader )
     : clients_    ( clients )
     , loader_     ( loader )
     , factor_     ( 1 )
@@ -45,32 +45,20 @@ LoaderFacade::~LoaderFacade()
 // Name: LoaderFacade::OnReceive
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-void LoaderFacade::OnReceive( const ASN1T_MsgsClientToSim& asnMsg )
+void LoaderFacade::OnReceive( const ASN1T_MsgsClientToReplay& asnMsg )
 {
     switch( asnMsg.msg.t )
     {
-        case T_MsgsClientToSim_msg_msg_control_pause:
+        case T_MsgsClientToReplay_msg_msg_control_pause:
             TogglePause( true );
             break;
-        case T_MsgsClientToSim_msg_msg_control_resume:
+        case T_MsgsClientToReplay_msg_msg_control_resume:
             TogglePause( false );
             break;
-        case T_MsgsClientToSim_msg_msg_control_change_time_factor:
+        case T_MsgsClientToReplay_msg_msg_control_change_time_factor:
             ChangeTimeFactor( asnMsg.msg.u.msg_control_change_time_factor );
             break;
-    };
-    // $$$$ NLD 2007-04-24: Messages devraient être ClientToMiddle
-}
-
-// -----------------------------------------------------------------------------
-// Name: LoaderFacade::OnReceive
-// Created: NLD 2007-04-24
-// -----------------------------------------------------------------------------
-void LoaderFacade::OnReceive( const ASN1T_MsgsClientToMiddle& asnMsg )
-{
-    switch( asnMsg.msg.t )
-    {      
-        case T_MsgsClientToMiddle_msg_msg_control_skip_to_tick:
+        case T_MsgsClientToReplay_msg_msg_control_skip_to_tick:
             skipToFrame_ = asnMsg.msg.u.msg_control_skip_to_tick;
             break;
     };
@@ -125,7 +113,7 @@ void LoaderFacade::TogglePause( bool pause )
 // -----------------------------------------------------------------------------
 void LoaderFacade::SkipToFrame( unsigned frame )
 {
-    AsnMsgMiddleToClientControlSkipToTickAck asn;
+    AsnMsgReplayToClientControlSkipToTickAck asn;
 
     asn().tick = loader_.GetCurrentTick();
     if( frame < loader_.GetTickNumber() )
@@ -145,9 +133,9 @@ void LoaderFacade::SkipToFrame( unsigned frame )
 // Name: LoaderFacade::SendReplayInfo
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-void LoaderFacade::SendReplayInfo( Publisher_ABC& publisher ) const
+void LoaderFacade::SendReplayInfo( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgMiddleToClientControlReplayInformation asn;
+    AsnMsgReplayToClientControlReplayInformation asn;
     asn().current_tick  = loader_.GetCurrentTick();
     asn().tick_duration = 10; // $$$$ AGE 2007-04-11: 
     asn().time_factor = factor_;

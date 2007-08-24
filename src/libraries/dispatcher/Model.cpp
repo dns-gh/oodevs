@@ -270,7 +270,7 @@ void Model::UpdateAnyAgent( unsigned id, const T& message )
 // Name: Model::Send
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void Model::Send( Publisher_ABC& publisher ) const
+void Model::Send( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientControlSendCurrentStateBegin().Send( publisher );
 
@@ -323,7 +323,7 @@ void Model::StartSynchronisation()
 // Name: Model::EndSynchronisation
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Model::EndSynchronisation( Publisher_ABC& publisher )
+void Model::EndSynchronisation( ClientPublisher_ABC& publisher )
 {
     Synchroniser synch;
     EndSynchVisitor visitor( synch );

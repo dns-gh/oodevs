@@ -47,7 +47,7 @@ ClientsNetworker::ClientsNetworker( Master& master, const std::string& configFil
     , master_            ( master )
     , clients_           ()
 {
-    GetMessageService().RegisterReceivedMessage( eMsgInMaster, *this, &ClientsNetworker::OnReceiveMsgInMaster );
+    RegisterMessage( *this, &ClientsNetworker::OnReceiveMsgInMaster );
     AllowConnections();
 }
 
@@ -121,12 +121,11 @@ void ClientsNetworker::OnConnectionLost( DIN_Server& server, DIN_Link& link, con
 // Name: ClientsNetworker::OnReceiveMsgInMaster
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void ClientsNetworker::OnReceiveMsgInMaster( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input )
+void ClientsNetworker::OnReceiveMsgInMaster( DIN::DIN_Link& linkFrom, const ASN1T_MsgsInMaster& message )
 {
     try
     {
-        AsnMessageDecoder< ASN1T_MsgsInMaster, ASN1C_MsgsInMaster> asnDecoder( input );
-        Client::GetClientFromLink( linkFrom ).OnReceive( asnDecoder.GetAsnMsg() );
+        Client::GetClientFromLink( linkFrom ).OnReceive( message );
     }
     catch( std::runtime_error& exception )
     {

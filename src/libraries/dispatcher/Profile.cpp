@@ -17,7 +17,7 @@
 #include "Side.h"
 #include "Formation.h"
 #include "Population.h"
-#include "Publisher_ABC.h"
+#include "ClientPublisher_ABC.h"
 #include "xeumeuleu/xml.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 
@@ -27,7 +27,7 @@ using namespace dispatcher;
 // Name: Profile constructor
 // Created: NLD 2006-10-06
 // -----------------------------------------------------------------------------
-Profile::Profile( Model& model, Publisher_ABC& clients, const std::string& strLogin, xml::xistream& xis )
+Profile::Profile( Model& model, ClientPublisher_ABC& clients, const std::string& strLogin, xml::xistream& xis )
     : model_       ( model )
     , clients_     ( clients )
     , strLogin_    ( strLogin )
@@ -55,7 +55,7 @@ Profile::Profile( Model& model, Publisher_ABC& clients, const std::string& strLo
 // Name: Profile constructor
 // Created: SBO 2007-01-22
 // -----------------------------------------------------------------------------
-Profile::Profile( Model& model, Publisher_ABC& clients, const ASN1T_MsgProfileCreationRequest& message )
+Profile::Profile( Model& model, ClientPublisher_ABC& clients, const ASN1T_MsgProfileCreationRequest& message )
     : model_       ( model )
     , clients_     ( clients )
     , strLogin_    ( message.login )
@@ -73,7 +73,7 @@ Profile::Profile( Model& model, Publisher_ABC& clients, const ASN1T_MsgProfileCr
 // -----------------------------------------------------------------------------
 Profile::~Profile()
 {
-    AsnMsgMiddleToClientProfileDestruction asn;
+    AsnMsgAuthenticationToClientProfileDestruction asn;
     asn() = strLogin_.c_str();
     asn.Send( clients_ );
 }
@@ -214,7 +214,7 @@ bool Profile::CheckRights( const ASN1T_MsgsClientToSim& msg ) const
         case T_MsgsClientToSim_msg_msg_control_checkpoint_save_now           : return bSupervision_;
         case T_MsgsClientToSim_msg_msg_control_checkpoint_set_frequency      : return bSupervision_;
 
-        case T_MsgsClientToSim_msg_msg_control_toggle_vision_cones        : return true; // $$$$ AGE 2007-07-06: devrait etre un client to middle et par client ?
+        case T_MsgsClientToSim_msg_msg_control_toggle_vision_cones        : return true;
         case T_MsgsClientToSim_msg_msg_limit_creation_request             : return true;
         case T_MsgsClientToSim_msg_msg_limit_destruction_request          : return true;
         case T_MsgsClientToSim_msg_msg_limit_update_request               : return true;
@@ -245,18 +245,26 @@ bool Profile::CheckRights( const ASN1T_MsgsClientToSim& msg ) const
 // Name: Profile::CheckRights
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-bool Profile::CheckRights( const ASN1T_MsgsClientToMiddle& msg ) const
+bool Profile::CheckRights( const ASN1T_MsgsClientToAuthentication& msg ) const
 {
     switch( msg.msg.t )
     {
-        case T_MsgsClientToMiddle_msg_msg_control_skip_to_tick               : return bSupervision_;
-        case T_MsgsClientToMiddle_msg_msg_authentication_request             : return true;
-        case T_MsgsClientToMiddle_msg_msg_profile_creation_request           : return bSupervision_; //$$$ Administration
-        case T_MsgsClientToMiddle_msg_msg_profile_update_request             : return bSupervision_; //$$$ Administration
-        case T_MsgsClientToMiddle_msg_msg_profile_destruction_request        : return bSupervision_; //$$$ Administration
+        case T_MsgsClientToAuthentication_msg_msg_authentication_request             : return true;
+        case T_MsgsClientToAuthentication_msg_msg_profile_creation_request           : return bSupervision_; //$$$ Administration
+        case T_MsgsClientToAuthentication_msg_msg_profile_update_request             : return bSupervision_; //$$$ Administration
+        case T_MsgsClientToAuthentication_msg_msg_profile_destruction_request        : return bSupervision_; //$$$ Administration
         default:
             return false;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::CheckRights
+// Created: AGE 2007-08-23
+// -----------------------------------------------------------------------------
+bool Profile::CheckRights( const ASN1T_MsgsClientToReplay& ) const
+{
+    return bSupervision_;
 }
 
 // =============================================================================
@@ -326,9 +334,9 @@ void Profile::AsnDelete( ASN1T_Profile& asn )
 // Name: Profile::SendCreation
 // Created: SBO 2007-01-22
 // -----------------------------------------------------------------------------
-void Profile::SendCreation( Publisher_ABC& publisher ) const
+void Profile::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgMiddleToClientProfileCreation asn;
+    AsnMsgAuthenticationToClientProfileCreation asn;
     Send( asn() );
     asn().m.passwordPresent = 1;
     asn().password = strPassword_.c_str();
@@ -348,7 +356,7 @@ void Profile::Update( const ASN1T_MsgProfileUpdateRequest& message )
     bSupervision_ = message.profile.superviseur;
     ReadRights( message.profile );
 
-    AsnMsgMiddleToClientProfileUpdate asn;
+    AsnMsgAuthenticationToClientProfileUpdate asn;
     asn().login = message.login;
     asn().profile.m.passwordPresent = message.profile.m.passwordPresent;
     if( asn().profile.m.passwordPresent )

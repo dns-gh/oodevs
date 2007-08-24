@@ -14,7 +14,7 @@
 
 namespace dispatcher
 {
-class Publisher_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  SimulationModel
@@ -33,15 +33,15 @@ public:
 
     //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgControlInformation&				 msg );
+    void Update        ( const ASN1T_MsgControlInformation&			 msg );
     void Update        ( const ASN1T_MsgControlBeginTick&			 msg );
-    void Update        ( const ASN1T_MsgControlEndTick&			 msg );
-	void Update_Stop   ( const ASN1T_MsgControlStopAck&			 msg ); //$$$
+    void Update        ( const ASN1T_MsgControlEndTick&			     msg );
+	void Update_Stop   ( const ASN1T_MsgControlStopAck&			     msg ); //$$$
 	void Update_Pause  ( const ASN1T_MsgControlPauseAck&			 msg ); //$$$
 	void Update_Resume ( const ASN1T_MsgControlResumeAck&			 msg ); //$$$
 	void Update		   ( const ASN1T_MsgControlChangeTimeFactorAck& msg );
 //    void Update        ( const ASN1T_MsgControlCheckPointSetFrequencyAck& msg );
-    void Send          ( Publisher_ABC& publisher ) const;
+    void Send          ( ClientPublisher_ABC& publisher ) const;
     void Reset         ();
     //@}
 

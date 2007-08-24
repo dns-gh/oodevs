@@ -78,7 +78,7 @@ void AgentLogSupply::Update( const ASN1T_MsgLogSupplyState& asnMsg )
 // Name: AgentLogSupply::Send
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void AgentLogSupply::Send( Publisher_ABC& publisher ) const
+void AgentLogSupply::Send( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientLogSupplyState asn;
 

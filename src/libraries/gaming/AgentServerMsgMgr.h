@@ -65,7 +65,8 @@ public:
     void Disconnect();
 
     virtual void Send( ASN1T_MsgsClientToSim& message );
-    virtual void Send( ASN1T_MsgsClientToMiddle& message );
+    virtual void Send( ASN1T_MsgsClientToAuthentication& message );
+    virtual void Send( ASN1T_MsgsClientToReplay& message );
 
     DIN::DIN_BufferedMessage BuildMessage();
     void SendMsgClientToSim ( ASN1OCTET* pMsg, int nMsgLength );
@@ -82,11 +83,13 @@ private:
     //! @name Message callbacks
     //@{
     // ASN
-    void OnReceiveMsgSimToClient   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgMiddleToClient( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgSimToClient           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgAuthenticationToClient( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgReplayToClient        ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
-    void _OnReceiveMsgSimToClient                           ( DIN::DIN_Input& input );    
-    void _OnReceiveMsgMiddleToClient                        ( DIN::DIN_Input& input );    
+    void _OnReceiveMsgSimToClient           ( DIN::DIN_Input& input );    
+    void _OnReceiveMsgAuthenticationToClient( DIN::DIN_Input& input );
+    void _OnReceiveMsgReplayToClient        ( DIN::DIN_Input& input );
 
     
     void OnReceiveMsgUnitVisionCones                       ( const ASN1T_MsgUnitVisionCones& message );
@@ -110,8 +113,6 @@ private:
     void OnReceiveMsgCheckPointSaveEnd        ();
     void OnReceiveMsgCheckPointSetFrequencyAck();
     void OnReceiveMsgCheckPointSaveNowAck     ();
-    void OnReceiveMsgControlSendCurrentStateBegin();
-    void OnReceiveMsgControlSendCurrentStateEnd  ();
     void OnReceiveMsgControlBeginTick            ( const ASN1T_MsgControlBeginTick& asnMsg );
     void OnReceiveMsgControlEndTick              ( const ASN1T_MsgControlEndTick& asnMsg );
     void OnReceiveMsgAutomatCreation         ( const ASN1T_MsgAutomatCreation& asnMsg );
@@ -277,6 +278,10 @@ private:
 
     DIN::DIN_Link* session_;
     DIN::DIN_MessageServiceUserCbk<AgentServerMsgMgr>*  pMessageService_;
+
+    const unsigned int eMsgClientToAuthentication_;
+    const unsigned int eMsgClientToSim_;
+    const unsigned int eMsgClientToReplay_;
 
     // ASN
     ASN1OCTET           aASNEncodeBuffer_[100000];

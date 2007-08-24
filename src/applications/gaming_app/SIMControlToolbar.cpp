@@ -80,6 +80,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     , speed_( 4212 )
     , connected_( false )
     , paused_( false )
+    , replay_( false )
     , connectPix_   ( MAKE_ICON( notconnected ) )
     , disconnectPix_( MAKE_ICON( connected ) )
     , playPix_      ( MAKE_ICON( play ) )
@@ -179,15 +180,32 @@ void SIMControlToolbar::SlotConnectDisconnect()
 //-----------------------------------------------------------------------------
 void SIMControlToolbar::SlotPlayPause()
 {
+    // $$$$ AGE 2007-08-24: 
     if ( paused_ )
     {
-        ASN_MsgControlResume asnMsg;
-        asnMsg.Send( publisher_ );
+        if( replay_ )
+        {
+            ASN_MsgReplayControlResume asnMsg;
+            asnMsg.Send( publisher_ );
+        }
+        else
+        {
+            ASN_MsgSimControlResume  asnMsg;
+            asnMsg.Send( publisher_ );
+        }
     }
     else
     {
-        ASN_MsgControlPause asnMsg;
-        asnMsg.Send( publisher_ );
+        if( replay_ )
+        {
+            ASN_MsgReplayControlPause asnMsg;
+            asnMsg.Send( publisher_ );
+        }
+        else
+        {
+            ASN_MsgSimControlPause asnMsg;
+            asnMsg.Send( publisher_ );
+        }
     }
 }
 
@@ -199,9 +217,18 @@ void SIMControlToolbar::SlotSpeedChange()
 {
     if( connected_ )
     {
-        ASN_MsgControlChangeTimeFactor asnMsg;
-        asnMsg() = pSpeedSpinBox_->value();
-        asnMsg.Send( publisher_ );
+        if( replay_ )
+        {
+            ASN_MsgReplayControlChangeTimeFactor asnMsg;
+            asnMsg() = pSpeedSpinBox_->value();
+            asnMsg.Send( publisher_ );
+        }
+        else
+        {
+            ASN_MsgSimControlChangeTimeFactor asnMsg;
+            asnMsg() = pSpeedSpinBox_->value();
+            asnMsg.Send( publisher_ );
+        }
     }
 }
 
@@ -220,6 +247,8 @@ void SIMControlToolbar::SlotOnSpinBoxChange( int value )
 // -----------------------------------------------------------------------------
 void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
 {
+    replay_ = ( simulation.GetTickCount() != unsigned( -1 ) );
+
     if( simulation.IsConnected() != connected_ )
     {
         connected_ = simulation.IsConnected();

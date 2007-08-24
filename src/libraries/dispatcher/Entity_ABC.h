@@ -12,7 +12,7 @@
 
 namespace dispatcher
 {
-    class Publisher_ABC;
+    class ClientPublisher_ABC;
     class ModelVisitor_ABC;
     class Synchroniser;
     class Model;
@@ -38,10 +38,10 @@ public:
     void StartSynchronisation( bool create );
     void EndSynchronisation  ( Synchroniser& synch );
 
-    virtual void SendFullUpdate   ( Publisher_ABC& publisher ) const = 0;
-    virtual void SendCreation     ( Publisher_ABC& publisher ) const = 0;
-    virtual void SendDestruction  ( Publisher_ABC& publisher ) const;
-    virtual void SendSpecialUpdate( Publisher_ABC& publisher ) const;
+    virtual void SendFullUpdate   ( ClientPublisher_ABC& publisher ) const = 0;
+    virtual void SendCreation     ( ClientPublisher_ABC& publisher ) const = 0;
+    virtual void SendDestruction  ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendSpecialUpdate( ClientPublisher_ABC& publisher ) const;
     virtual void Accept           ( ModelVisitor_ABC& visitor );
     //@}
 

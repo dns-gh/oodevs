@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "SimulationDispatcher.h"
 #include "Model.h"
-#include "Publisher_ABC.h"
+#include "ClientPublisher_ABC.h"
 
 using namespace dispatcher;
 
@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Name: SimulationDispatcher constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-SimulationDispatcher::SimulationDispatcher( Publisher_ABC& clientsPublisher, Model& model )
+SimulationDispatcher::SimulationDispatcher( ClientPublisher_ABC& clientsPublisher, Model& model )
     : clientsPublisher_( clientsPublisher )
     , model_           ( model )
     , synching_        ( false )

@@ -27,8 +27,8 @@ IMPORTS BaseExports                   FROM Base
         ArmyExports                   FROM Army
         AuthExports                   FROM Auth;
 MessagesIncludes ::= SEQUENCE
-{ BaseExports, LimaLimiteExports, OrderExports, ControlExports, KnowledgeGroupExports, 
-  FormationExports, FireExports, UnitExports, UnitKnowledgeExports, ObjectExports, 
+{ BaseExports, LimaLimiteExports, OrderExports, ControlExports, KnowledgeGroupExports,
+  FormationExports, FireExports, UnitExports, UnitKnowledgeExports, ObjectExports,
   ObjectKnowledgeExports, PopulationExports, PopulationKnowledgeExports, LogMaintenanceExports,
   LogRavitaillementExports, LogSanteExports, AutomateExports, ArmyExports, AuthExports }
 MessagesExports  ::= NULL
@@ -54,7 +54,7 @@ MsgsSimToClient ::= SEQUENCE
         msg-unit-order-ack                                      MsgUnitOrderAck,
         msg-automat-order-ack                                   MsgAutomatOrderAck,
         msg-population-order-ack                                MsgPopulationOrderAck,
-        msg-frag-order-ack                                      MsgFragOrderAck,                                                                
+        msg-frag-order-ack                                      MsgFragOrderAck,
         msg-set-automat-mode-ack                                MsgSetAutomatModeAck,
         msg-unit-creation-request-ack                           MsgUnitCreationRequestAck,
         msg-unit-magic-action-ack                               MsgUnitMagicActionAck,
@@ -64,10 +64,10 @@ MsgsSimToClient ::= SEQUENCE
         msg-change-diplomacy-ack                                MsgChangeDiplomacyAck,
         msg-automat-change-knowledge-group-ack                  MsgAutomatChangeKnowledgeGroupAck,
         msg-automat-change-logistic-links-ack                   MsgAutomatChangeLogisticLinksAck,
-        msg-unit-change-superior-ack                            MsgUnitChangeSuperiorAck,   
+        msg-unit-change-superior-ack                            MsgUnitChangeSuperiorAck,
 
         msg-log-supply-push-flow-ack                            MsgLogSupplyPushFlowAck,
-        msg-log-supply-change-quotas-ack                        MsgLogSupplyChangeQuotasAck,   
+        msg-log-supply-change-quotas-ack                        MsgLogSupplyChangeQuotasAck,
 
         -- MESSAGES
         msg-control-information                                 MsgControlInformation,
@@ -92,7 +92,7 @@ MsgsSimToClient ::= SEQUENCE
         msg-limit-destruction                                   MsgLimitDestruction,
         msg-lima-creation                                       MsgLimaCreation,
         msg-lima-update                                         MsgLimaUpdate,
-        msg-lima-destruction                                    MsgLimaDestruction, 
+        msg-lima-destruction                                    MsgLimaDestruction,
 
         msg-formation-creation                                  MsgFormationCreation,
         msg-knowledge-group-creation                            MsgKnowledgeGroupCreation,
@@ -103,12 +103,12 @@ MsgsSimToClient ::= SEQUENCE
 
         msg-unit-creation                                       MsgUnitCreation,
         msg-unit-attributes                                     MsgUnitAttributes,
-        msg-unit-pathfind                                       MsgUnitPathFind,                
+        msg-unit-pathfind                                       MsgUnitPathFind,
         msg-unit-destruction                                    MsgUnitDestruction,
         msg-unit-environment-type                               MsgUnitEnvironmentType,
 
         msg-change-diplomacy                                    MsgChangeDiplomacy,
-        msg-unit-change-superior                                MsgUnitChangeSuperior,        
+        msg-unit-change-superior                                MsgUnitChangeSuperior,
         msg-automat-change-logistic-links                       MsgAutomatChangeLogisticLinks,
 
         msg-unit-knowledge-creation                             MsgUnitKnowledgeCreation,
@@ -118,7 +118,7 @@ MsgsSimToClient ::= SEQUENCE
         msg-start-unit-fire                                     MsgStartUnitFire,
         msg-stop-unit-fire                                      MsgStopUnitFire,
         msg-start-population-fire                               MsgStartPopulationFire,
-        msg-stop-population-fire                                MsgStopPopulationFire,        
+        msg-stop-population-fire                                MsgStopPopulationFire,
         msg-explosion                                           MsgExplosion,
         msg-start-fire-effect                                   MsgStartFireEffect,
         msg-stop-fire-effect                                    MsgStopFireEffect,
@@ -127,14 +127,14 @@ MsgsSimToClient ::= SEQUENCE
         msg-trace                                               MsgTrace,
         msg-decisional-state                                    MsgDecisionalState,
         msg-debug-points                                        MsgDebugPoints,
-        
-        msg-unit-vision-cones                                        MsgUnitVisionCones,
+
+        msg-unit-vision-cones                                   MsgUnitVisionCones,
         msg-unit-detection                                      MsgUnitDetection,
         msg-object-detection                                    MsgObjectDetection,
         msg-population-concentration-detection                  MsgPopulationConcentrationDetection,
         msg-population-flow-detection                           MsgPopulationFlowDetection,
 
-        msg-unit-order                                          MsgUnitOrder,        
+        msg-unit-order                                          MsgUnitOrder,
         msg-automat-order                                       MsgAutomatOrder,
         msg-population-order                                    MsgPopulationOrder,
 
@@ -159,7 +159,7 @@ MsgsSimToClient ::= SEQUENCE
         msg-log-supply-handling-update                          MsgLogSupplyHandlingUpdate,
         msg-log-supply-handling-destruction                     MsgLogSupplyHandlingDestruction,
         msg-log-supply-state                                    MsgLogSupplyState,
-        msg-log-supply-quotas                                   MsgLogSupplyQuotas,  
+        msg-log-supply-quotas                                   MsgLogSupplyQuotas,
 
         msg-population-creation                                 MsgPopulationCreation,
         msg-population-update                                   MsgPopulationUpdate,
@@ -179,7 +179,7 @@ MsgsSimToClient ::= SEQUENCE
         msg-population-flow-knowledge-creation                  MsgPopulationFlowKnowledgeCreation,
         msg-population-flow-knowledge-destruction               MsgPopulationFlowKnowledgeDestruction,
         msg-population-flow-knowledge-update                    MsgPopulationFlowKnowledgeUpdate
-    }    
+    }
 }
 
 MsgsClientToSim ::= SEQUENCE
@@ -187,15 +187,15 @@ MsgsClientToSim ::= SEQUENCE
     context INTEGER DEFAULT 0,
     msg     CHOICE
     {
-        msg-control-stop                           MsgControlStop,
-        msg-control-pause                          MsgControlPause,
-        msg-control-resume                         MsgControlResume,
-        msg-control-change-time-factor             MsgControlChangeTimeFactor,      
-        msg-control-global-meteo                   MsgControlGlobalMeteo,
-        msg-control-local-meteo                    MsgControlLocalMeteo,
-        msg-control-checkpoint-save-now            MsgControlCheckPointSaveNow,
-        msg-control-checkpoint-set-frequency       MsgControlCheckPointSetFrequency, 
-        msg-control-toggle-vision-cones            MsgControlToggleVisionCones,
+        msg-control-stop                        MsgControlStop,
+        msg-control-pause                       MsgControlPause,
+        msg-control-resume                      MsgControlResume,
+        msg-control-change-time-factor          MsgControlChangeTimeFactor,
+        msg-control-global-meteo                MsgControlGlobalMeteo,
+        msg-control-local-meteo                 MsgControlLocalMeteo,
+        msg-control-checkpoint-save-now         MsgControlCheckPointSaveNow,
+        msg-control-checkpoint-set-frequency    MsgControlCheckPointSetFrequency,
+        msg-control-toggle-vision-cones         MsgControlToggleVisionCones,
 
         msg-limit-creation-request              MsgLimitCreationRequest,
         msg-limit-destruction-request           MsgLimitDestructionRequest,
@@ -208,10 +208,10 @@ MsgsClientToSim ::= SEQUENCE
         msg-automat-order                       MsgAutomatOrder,
         msg-population-order                    MsgPopulationOrder,
         msg-frag-order                          MsgFragOrder,
-       
+
         msg-set-automat-mode                    MsgSetAutomatMode,
         msg-unit-creation-request               MsgUnitCreationRequest,
-        
+
         msg-unit-magic-action                   MsgUnitMagicAction,
         msg-object-magic-action                 MsgObjectMagicAction,
         msg-population-magic-action             MsgPopulationMagicAction,
@@ -226,17 +226,6 @@ MsgsClientToSim ::= SEQUENCE
     }
 }
 
---
--- 
---  
-MsgsSimToMiddle ::= SEQUENCE
-{
-    context INTEGER DEFAULT 0
---    msg     CHOICE
---    {
---    }    
-}
-
 MsgsMiddleToSim ::= SEQUENCE
 {
     context INTEGER DEFAULT 0,
@@ -247,15 +236,43 @@ MsgsMiddleToSim ::= SEQUENCE
 }
 
 --
--- 
---  
-MsgsMiddleToClient ::= SEQUENCE
+--
+--
+MsgsReplayToClient ::= SEQUENCE
 {
     context INTEGER DEFAULT 0,
     msg     CHOICE
     {
         msg-control-replay-information      MsgControlReplayInformation,
+        msg-control-stop-ack                MsgControlStopAck,
+        msg-control-pause-ack               MsgControlPauseAck,
+        msg-control-resume-ack              MsgControlResumeAck,
         msg-control-skip-to-tick-ack        MsgControlSkipToTickAck,
+        msg-control-change-time-factor-ack  MsgControlChangeTimeFactorAck
+    }
+}
+
+MsgsClientToReplay ::= SEQUENCE
+{
+    context INTEGER DEFAULT 0,
+    msg     CHOICE
+    {
+        msg-control-stop                MsgControlStop,
+        msg-control-pause               MsgControlPause,
+        msg-control-resume              MsgControlResume,
+        msg-control-skip-to-tick        MsgControlSkipToTick,
+        msg-control-change-time-factor  MsgControlChangeTimeFactor
+    }
+}
+
+--
+--
+--
+MsgsAuthenticationToClient ::= SEQUENCE
+{
+    context INTEGER DEFAULT 0,
+    msg     CHOICE
+    {
         msg-authentication-response         MsgAuthenticationResponse,
         msg-profile-creation                MsgProfileCreation,
         msg-profile-creation-request-ack    MsgProfileCreationRequestAck,
@@ -263,15 +280,14 @@ MsgsMiddleToClient ::= SEQUENCE
         msg-profile-update-request-ack      MsgProfileUpdateRequestAck,
         msg-profile-destruction             MsgProfileDestruction,
         msg-profile-destruction-request-ack MsgProfileDestructionRequestAck
-    }    
+    }
 }
 
-MsgsClientToMiddle ::= SEQUENCE
+MsgsClientToAuthentication ::= SEQUENCE
 {
     context INTEGER DEFAULT 0,
     msg     CHOICE
-    {       
-        msg-control-skip-to-tick        MsgControlSkipToTick,
+    {
         msg-authentication-request      MsgAuthenticationRequest,
         msg-profile-creation-request    MsgProfileCreationRequest,
         msg-profile-update-request      MsgProfileUpdateRequest,

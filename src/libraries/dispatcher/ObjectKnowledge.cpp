@@ -185,7 +185,7 @@ void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
 // Name: ObjectKnowledge::SendCreation
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::SendCreation( Publisher_ABC& publisher ) const
+void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientObjectKnowledgeCreation asn;
 
@@ -216,7 +216,7 @@ void ObjectKnowledge::SendCreation( Publisher_ABC& publisher ) const
 // Name: ObjectKnowledge::SendFullUpdate
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
+void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientObjectKnowledgeUpdate asn;
 
@@ -269,7 +269,7 @@ void ObjectKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 // Name: ObjectKnowledge::SendDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::SendDestruction( Publisher_ABC& publisher ) const
+void ObjectKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientObjectKnowledgeDestruction asn;
     asn().oid  = nID_;
@@ -281,7 +281,7 @@ void ObjectKnowledge::SendDestruction( Publisher_ABC& publisher ) const
 // Name: ObjectKnowledge::SendSpecialUpdate
 // Created: AGE 2007-05-11
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::SendSpecialUpdate( Publisher_ABC& publisher ) const
+void ObjectKnowledge::SendSpecialUpdate( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientObjectKnowledgeUpdate asn;
 

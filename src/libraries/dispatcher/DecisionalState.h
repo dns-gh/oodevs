@@ -14,7 +14,7 @@
 
 namespace dispatcher
 {
-    class Publisher_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  DecisionalState
@@ -36,7 +36,7 @@ public:
     //@{
     void Clear();
     void Update( const ASN1T_MsgDecisionalState& asnMsg );
-    void Send( unsigned id, Publisher_ABC& publisher ) const;
+    void Send( unsigned id, ClientPublisher_ABC& publisher ) const;
     //@}
 
 private:

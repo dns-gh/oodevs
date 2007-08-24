@@ -35,8 +35,7 @@ SimulationNetworker::SimulationNetworker( Model& model, ClientsNetworker& client
     , clients_           ( clients )
     , handler_           ( handler )
 {
-    GetMessageService().RegisterReceivedMessage( eMsgSimToClient , *this, &SimulationNetworker::OnReceiveMsgSimToClient );
-    GetMessageService().RegisterReceivedMessage( eMsgSimToMiddle , *this, &SimulationNetworker::OnReceiveMsgSimToMiddle );
+    RegisterMessage( *this, &SimulationNetworker::OnReceiveMsgSimToClient );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,29 +93,11 @@ void SimulationNetworker::OnConnectionLost( DIN_Link& link, const DIN_ErrorDescr
 // Name: SimulationNetworker::OnReceiveMsgSimToClient
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void SimulationNetworker::OnReceiveMsgSimToClient( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
+void SimulationNetworker::OnReceiveMsgSimToClient( DIN::DIN_Link& /*linkFrom*/, const ASN1T_MsgsSimToClient& message )
 {
     try
     {
-        AsnMessageDecoder< ASN1T_MsgsSimToClient, ASN1C_MsgsSimToClient > asnDecoder( input );
-        simulation_->OnReceive( asnDecoder.GetAsnMsg() );
-    }
-    catch( std::runtime_error& exception )
-    {
-        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimulationNetworker::OnReceiveMsgSimToMiddle
-// Created: NLD 2006-09-21
-// -----------------------------------------------------------------------------
-void SimulationNetworker::OnReceiveMsgSimToMiddle( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
-{
-    try
-    {
-        AsnMessageDecoder< ASN1T_MsgsSimToMiddle, ASN1C_MsgsSimToMiddle > asnDecoder( input );
-        simulation_->OnReceive( asnDecoder.GetAsnMsg() );
+        simulation_->OnReceive( message );
     }
     catch( std::runtime_error& exception )
     {

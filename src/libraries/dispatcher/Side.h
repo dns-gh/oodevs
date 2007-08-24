@@ -22,7 +22,6 @@ namespace dispatcher
     class Model;
 	class Object;
 	class Population;
-    class Publisher_ABC;
 
 // =============================================================================
 /** @class  Side
@@ -53,8 +52,8 @@ public:
     void Update        ( const ASN1T_MsgTeamCreation&        asnMsg );
     void Update        ( const ASN1T_MsgChangeDiplomacy&    asnMsg );
     void Update        ( const ASN1T_MsgChangeDiplomacyAck& asnMsg );
-    void SendCreation  ( Publisher_ABC& publisher ) const;
-    virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
+    void SendCreation  ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
     void Accept( ModelVisitor_ABC& visitor );
     //@}
 

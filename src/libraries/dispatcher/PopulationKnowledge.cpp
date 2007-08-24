@@ -139,7 +139,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFlowKnowledgeDestruct
 // Name: PopulationKnowledge::SendCreation
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::SendCreation( Publisher_ABC& publisher ) const
+void PopulationKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationKnowledgeCreation asn;
 
@@ -155,7 +155,7 @@ void PopulationKnowledge::SendCreation( Publisher_ABC& publisher ) const
 // Name: PopulationKnowledge::SendFullUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
+void PopulationKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationKnowledgeUpdate asn;
 
@@ -183,7 +183,7 @@ void PopulationKnowledge::Accept( ModelVisitor_ABC& visitor )
 // Name: PopulationKnowledge::SendDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::SendDestruction( Publisher_ABC& publisher ) const
+void PopulationKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationKnowledgeDestruction asn;
     asn().oid_connaissance = nID_;

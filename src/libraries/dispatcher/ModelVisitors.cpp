@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "ModelVisitors.h"
 #include "dispatcher/Entity_ABC.h"
-#include "dispatcher/Publisher_ABC.h"
+#include "dispatcher/ClientPublisher_ABC.h"
 
 using namespace dispatcher;
 
@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Name: ModelVisitors::SideModelVisitor
 // Created: JCR 2007-05-15
 // -----------------------------------------------------------------------------
-SideModelVisitor::SideModelVisitor( Publisher_ABC& publisher )
+SideModelVisitor::SideModelVisitor( ClientPublisher_ABC& publisher )
     : publisher_ ( &publisher )
 {
     // NOTHING
@@ -58,7 +58,7 @@ ASN1T_EnumDiplomacy SideModelVisitor::GetSide() const
 // Name: ModelVisitors::FormationModelVisitor
 // Created: JCR 2007-05-16
 // -----------------------------------------------------------------------------
-FormationModelVisitor::FormationModelVisitor( Publisher_ABC& publisher )
+FormationModelVisitor::FormationModelVisitor( ClientPublisher_ABC& publisher )
     : publisher_ ( &publisher )
 {
     // NOTHING
@@ -106,7 +106,7 @@ ASN1T_OID FormationModelVisitor::GetOID() const
 // Name: ModelVisitors::UnitKnowledgeModelVisitor
 // Created: JCR 2007-05-24
 // -----------------------------------------------------------------------------
-UnitKnowledgeModelVisitor::UnitKnowledgeModelVisitor( Publisher_ABC& publisher )
+UnitKnowledgeModelVisitor::UnitKnowledgeModelVisitor( ClientPublisher_ABC& publisher )
     : publisher_ ( &publisher )
 {
     // NOTHING

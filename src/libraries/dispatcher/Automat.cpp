@@ -180,7 +180,7 @@ void Automat::Update( const ASN1T_MsgAutomatOrder& asnMsg )
 // Name: Automat::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void Automat::SendCreation( Publisher_ABC& publisher ) const
+void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientAutomatCreation asn;
     asn().oid                     = nID_;
@@ -203,7 +203,7 @@ void Automat::SendCreation( Publisher_ABC& publisher ) const
 // Name: Automat::SendFullUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Automat::SendFullUpdate( Publisher_ABC& publisher ) const
+void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     {
         AsnMsgSimToClientAutomatAttributes asn;
@@ -268,7 +268,7 @@ void Automat::Accept( ModelVisitor_ABC& visitor )
 // Name: Automat::SendSpecialUpdate
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Automat::SendSpecialUpdate( Publisher_ABC& publisher ) const
+void Automat::SendSpecialUpdate( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientAutomatChangeKnowledgeGroupAck ack;
     ack().error_code = EnumChangeHierarchyErrorCode::no_error;

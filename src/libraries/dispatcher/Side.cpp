@@ -10,9 +10,7 @@
 #include "dispatcher_pch.h"
 
 #include "Side.h"
-
 #include "Network_Def.h"
-#include "Publisher_ABC.h"
 #include "Model.h"
 #include "Formation.h"
 #include "KnowledgeGroup.h"
@@ -88,7 +86,7 @@ void Side::Update( const ASN1T_MsgChangeDiplomacyAck& asnMsg )
 // Name: Side::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void Side::SendCreation( Publisher_ABC& publisher ) const
+void Side::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientTeamCreation asn;
     asn().oid  = nID_;
@@ -101,7 +99,7 @@ void Side::SendCreation( Publisher_ABC& publisher ) const
 // Name: Side::SendFullUpdate
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Side::SendFullUpdate( Publisher_ABC& publisher ) const
+void Side::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     for( CIT_DiplomacyMap it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {

@@ -17,7 +17,6 @@
 
 namespace dispatcher
 {
-class Publisher_ABC;
 class Model;
 class Side;
 class PopulationConcentration;
@@ -58,8 +57,8 @@ public:
     void Update        ( const ASN1T_MsgPopulationFlowDestruction&          msg );
     void Update        ( const ASN1T_MsgPopulationOrder&                    msg );
     void Update        ( const ASN1T_MsgDecisionalState&                    msg );
-    void SendCreation  ( Publisher_ABC& publisher ) const;
-    virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
+    void SendCreation  ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
 
     void Accept( ModelVisitor_ABC& visitor );
     //@}

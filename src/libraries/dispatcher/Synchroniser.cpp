@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "Synchroniser.h"
 #include "Entity_ABC.h"
-#include "Publisher_ABC.h"
+#include "ClientPublisher_ABC.h"
 #include "Model.h"
 
 using namespace dispatcher;
@@ -71,9 +71,9 @@ void Synchroniser::FlagForDestruction( Entity_ABC& entity )
 
 namespace
 {
-    struct Publisher : public Publisher_ABC
+    struct Publisher : public ClientPublisher_ABC
     {
-        Publisher( Publisher_ABC& forward, Model& model )
+        Publisher( ClientPublisher_ABC& forward, Model& model )
             : forward_( &forward )
             , model_  ( &model ) {}
         virtual void Send( const ASN1T_MsgsSimToClient& msg )
@@ -81,7 +81,7 @@ namespace
             forward_->Send( msg );
             model_->Update( msg );
         }
-        Publisher_ABC* forward_;
+        ClientPublisher_ABC* forward_;
         Model* model_;
     };
 }
@@ -90,7 +90,7 @@ namespace
 // Name: Synchroniser::Commit
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Synchroniser::Commit( Publisher_ABC& publisher, Model& model )
+void Synchroniser::Commit( ClientPublisher_ABC& publisher, Model& model )
 {
     for( CIT_Entities it = toCreate_.begin(); it != toCreate_.end(); ++it )
         (*it)->SendCreation( publisher );

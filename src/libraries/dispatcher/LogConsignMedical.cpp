@@ -88,7 +88,7 @@ void LogConsignMedical::Update( const ASN1T_MsgLogMedicalHandlingUpdate& msg )
 // Name: LogConsignMedical::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void LogConsignMedical::SendCreation( Publisher_ABC& publisher ) const
+void LogConsignMedical::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientLogMedicalHandlingCreation asn;
 
@@ -107,7 +107,7 @@ void LogConsignMedical::SendCreation( Publisher_ABC& publisher ) const
 // Name: LogConsignMedical::SendFullUpdate
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void LogConsignMedical::SendFullUpdate( Publisher_ABC& publisher ) const
+void LogConsignMedical::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientLogMedicalHandlingUpdate asn;
 
@@ -135,7 +135,7 @@ void LogConsignMedical::SendFullUpdate( Publisher_ABC& publisher ) const
 // Name: LogConsignMedical::SendDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void LogConsignMedical::SendDestruction( Publisher_ABC& publisher ) const
+void LogConsignMedical::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientLogMedicalHandlingDestruction asn;
     asn().oid_consigne = nID_;

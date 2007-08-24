@@ -331,7 +331,7 @@ void Agent::Update( const ASN1T_MsgUnitOrder& asnMsg )
 // Name: Agent::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void Agent::SendCreation( Publisher_ABC& publisher ) const
+void Agent::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientUnitCreation asn;
     asn().oid           = nID_;
@@ -346,7 +346,7 @@ void Agent::SendCreation( Publisher_ABC& publisher ) const
 // Name: Agent::SendFullUpdate
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
+void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     { // Attributes $$$
         AsnMsgSimToClientUnitAttributes asn;
@@ -488,7 +488,7 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
 // Name: Agent::SendDestruction
 // Created: AGE 2007-04-24
 // -----------------------------------------------------------------------------
-void Agent::SendDestruction( Publisher_ABC& publisher ) const
+void Agent::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientUnitDestruction asn;
     asn() = nID_;
@@ -499,7 +499,7 @@ void Agent::SendDestruction( Publisher_ABC& publisher ) const
 // Name: Agent::SendSpecialUpdate
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Agent::SendSpecialUpdate( Publisher_ABC& publisher ) const
+void Agent::SendSpecialUpdate( ClientPublisher_ABC& publisher ) const
 {   
     AsnMsgSimToClientUnitChangeSuperiorAck ack;
     ack().error_code   = EnumChangeHierarchyErrorCode::no_error;

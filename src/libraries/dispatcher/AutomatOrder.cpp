@@ -43,7 +43,7 @@ AutomatOrder::~AutomatOrder()
 // Name: AutomatOrder::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void AutomatOrder::Send( Publisher_ABC& publisher )
+void AutomatOrder::Send( ClientPublisher_ABC& publisher )
 {
     AsnMsgSimToClientAutomatOrder asn;
     asn().oid       = automat_.GetID();
@@ -63,7 +63,7 @@ void AutomatOrder::Send( Publisher_ABC& publisher )
 // Created: NLD 2007-04-25
 // -----------------------------------------------------------------------------
 // static
-void AutomatOrder::SendNoMission( const Automat& automat, Publisher_ABC& publisher )
+void AutomatOrder::SendNoMission( const Automat& automat, ClientPublisher_ABC& publisher )
 {
     AsnMsgSimToClientAutomatOrder asn;
 

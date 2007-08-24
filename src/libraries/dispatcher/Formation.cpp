@@ -10,9 +10,7 @@
 #include "dispatcher_pch.h"
 
 #include "Formation.h"
-
 #include "Network_Def.h"
-#include "Publisher_ABC.h"
 #include "Model.h"
 #include "Side.h"
 #include "Automat.h"
@@ -69,7 +67,7 @@ void Formation::Update( const ASN1T_MsgFormationCreation& )
 // Name: Formation::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void Formation::SendCreation( Publisher_ABC& publisher ) const
+void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientFormationCreation asn;
 
@@ -91,7 +89,7 @@ void Formation::SendCreation( Publisher_ABC& publisher ) const
 // Name: Formation::SendFullUpdate
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Formation::SendFullUpdate( Publisher_ABC& ) const
+void Formation::SendFullUpdate( ClientPublisher_ABC& ) const
 {
     // NOTHING
 }

@@ -79,7 +79,7 @@ bool Entity_ABC::FlagUpdate( bool special /*= false */)
 // Name: Entity_ABC::SendDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Entity_ABC::SendDestruction( Publisher_ABC& ) const
+void Entity_ABC::SendDestruction( ClientPublisher_ABC& ) const
 {
     throw std::runtime_error( typeid( *this ).name() + std::string( "::SendDestruction" ) );
 }
@@ -88,7 +88,7 @@ void Entity_ABC::SendDestruction( Publisher_ABC& ) const
 // Name: Entity_ABC::SendSpecialUpdate
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Entity_ABC::SendSpecialUpdate( Publisher_ABC& ) const
+void Entity_ABC::SendSpecialUpdate( ClientPublisher_ABC& ) const
 {
     // NOTHING
 }

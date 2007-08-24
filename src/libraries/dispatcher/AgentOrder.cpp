@@ -42,7 +42,7 @@ AgentOrder::~AgentOrder()
 // Name: AgentOrder::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void AgentOrder::Send( Publisher_ABC& publisher )
+void AgentOrder::Send( ClientPublisher_ABC& publisher )
 {
     AsnMsgSimToClientUnitOrder asn;
     asn().oid     = agent_.GetID();
@@ -60,7 +60,7 @@ void AgentOrder::Send( Publisher_ABC& publisher )
 // Name: AgentOrder::SendNoMission
 // Created: NLD 2007-04-25
 // -----------------------------------------------------------------------------
-void AgentOrder::SendNoMission( const Agent& agent, Publisher_ABC& publisher )
+void AgentOrder::SendNoMission( const Agent& agent, ClientPublisher_ABC& publisher )
 {
     AsnMsgSimToClientUnitOrder asn;
 

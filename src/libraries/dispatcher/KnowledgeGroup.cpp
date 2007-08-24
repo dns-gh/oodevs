@@ -10,10 +10,8 @@
 #include "dispatcher_pch.h"
 
 #include "KnowledgeGroup.h"
-
 #include "Side.h"
 #include "Model.h"
-#include "Publisher_ABC.h"
 #include "Network_Def.h"
 
 using namespace dispatcher;
@@ -56,7 +54,7 @@ void KnowledgeGroup::Update( const ASN1T_MsgKnowledgeGroupCreation& )
 // Name: KnowledgeGroup::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::SendCreation( Publisher_ABC& publisher ) const
+void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientKnowledgeGroupCreation asn;
     
@@ -70,7 +68,7 @@ void KnowledgeGroup::SendCreation( Publisher_ABC& publisher ) const
 // Name: KnowledgeGroup::SendFullUpdate
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::SendFullUpdate( Publisher_ABC& /*publisher*/ ) const
+void KnowledgeGroup::SendFullUpdate( ClientPublisher_ABC& /*publisher*/ ) const
 {
 	// NOTHING
 }

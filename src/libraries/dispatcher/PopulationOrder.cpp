@@ -42,7 +42,7 @@ PopulationOrder::~PopulationOrder()
 // Name: PopulationOrder::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void PopulationOrder::Send( Publisher_ABC& publisher )
+void PopulationOrder::Send( ClientPublisher_ABC& publisher )
 {
     AsnMsgSimToClientPopulationOrder asn;
     asn().oid       = population_.GetID();
@@ -60,7 +60,7 @@ void PopulationOrder::Send( Publisher_ABC& publisher )
 // Created: NLD 2007-04-25
 // -----------------------------------------------------------------------------
 // static
-void PopulationOrder::SendNoMission( const Population& population, Publisher_ABC& publisher )
+void PopulationOrder::SendNoMission( const Population& population, ClientPublisher_ABC& publisher )
 {
     AsnMsgSimToClientPopulationOrder asn;
 

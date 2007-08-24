@@ -54,7 +54,7 @@ void DecisionalState::Update( const ASN1T_MsgDecisionalState& asnMsg )
 // Name: DecisionalState::Send
 // Created: ZEBRE 2007-06-21
 // -----------------------------------------------------------------------------
-void DecisionalState::Send( unsigned id, Publisher_ABC& publisher ) const
+void DecisionalState::Send( unsigned id, ClientPublisher_ABC& publisher ) const
 {
     for( std::map< std::string, std::string >::const_iterator it = decisionalInfos_.begin(); it != decisionalInfos_.end(); ++it )
     {

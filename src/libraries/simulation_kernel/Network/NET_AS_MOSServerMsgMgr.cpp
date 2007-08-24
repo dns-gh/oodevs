@@ -24,23 +24,9 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "CheckPoints/MIL_CheckPointManager.h"
 #include "Tools/MIL_ProfilerMgr.h"
+#include "tools/MessageIdentifierFactory.h"
 
 using namespace DIN;
-
-//! @name DIN Messages
-//@{
-static enum  
-{
-    eMsgSimToClient                            = 0,
-    eMsgClientToSim                            = 1,
-
-    eMsgSimToMiddle                            = 2,
-    eMsgMiddleToSim                            = 3,
-
-    eMsgClientToMiddle                         = 4,
-    eMsgMiddleToClient                         = 5,
-};
-//@}
 
 //-----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerMsgMgr constructor
@@ -50,9 +36,12 @@ NET_AS_MOSServerMsgMgr::NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer, NE
     : agentServer_   ( agentServer )
     , simulation_    ( simulation )
     , messageService_( *this, agentServer.GetDINEngine(), DIN_ConnectorHost() )
+    , eMsgSimToClient_( tools::MessageIdentifierFactory::GetIdentifier< ASN1T_MsgsSimToClient >() )
 {
-    messageService_.RegisterReceivedMessage( eMsgClientToSim           , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgClientToSim            );
-    messageService_.RegisterReceivedMessage( eMsgMiddleToSim           , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgMiddleToSim            );
+    const unsigned eClientToSim = tools::MessageIdentifierFactory::GetIdentifier< ASN1T_MsgsClientToSim >();
+    messageService_.RegisterReceivedMessage( eClientToSim, *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgClientToSim );
+    const unsigned eMiddleToSim = tools::MessageIdentifierFactory::GetIdentifier< ASN1T_MsgsMiddleToSim >();
+    messageService_.RegisterReceivedMessage( eMiddleToSim, *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgMiddleToSim );
 
     messageService_.SetCbkOnError( & NET_AS_MOSServerMsgMgr::OnError );
 }
@@ -63,6 +52,7 @@ NET_AS_MOSServerMsgMgr::NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer, NE
 //-----------------------------------------------------------------------------
 NET_AS_MOSServerMsgMgr::~NET_AS_MOSServerMsgMgr()
 {
+    // NOTHING
 }
 
 //=============================================================================
@@ -154,7 +144,7 @@ void NET_AS_MOSServerMsgMgr::Send( ASN1T_MsgsSimToClient& asnMsg )
     DIN_BufferedMessage dinMsg = BuildMessage();
     dinMsg.GetOutput().Append( asnPEREncodeBuffer.GetMsgPtr(), asnPEREncodeBuffer.GetMsgLen() );
 
-    SendMsgToAll( eMsgSimToClient, dinMsg );
+    SendMsgToAll( eMsgSimToClient_, dinMsg );
 }
 
 // -----------------------------------------------------------------------------

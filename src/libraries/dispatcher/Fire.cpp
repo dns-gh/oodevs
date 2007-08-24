@@ -53,7 +53,7 @@ void Fire::Update( const ASN1T_MsgStartUnitFire& )
 // Name: Fire::SendFullUpdate
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
-void Fire::SendFullUpdate( Publisher_ABC& ) const
+void Fire::SendFullUpdate( ClientPublisher_ABC& ) const
 {
     // NOTHING
 }
@@ -62,7 +62,7 @@ void Fire::SendFullUpdate( Publisher_ABC& ) const
 // Name: Fire::SendCreation
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
-void Fire::SendCreation( Publisher_ABC& publisher ) const
+void Fire::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientStartUnitFire asn;
     asn().fire_oid  = oid_tir;
@@ -86,7 +86,7 @@ void Fire::SendCreation( Publisher_ABC& publisher ) const
 // Name: Fire::SendDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Fire::SendDestruction( Publisher_ABC& publisher ) const
+void Fire::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientStopUnitFire asn;
     asn().fire_oid = oid_tir;

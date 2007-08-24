@@ -10,7 +10,7 @@
 #ifndef __Client_h_
 #define __Client_h_
 
-#include "Publisher_ABC.h"
+#include "ClientPublisher_ABC.h"
 #include "game_asn/Asn.h"
 #include "tools/Client_ABC.h"
 
@@ -29,24 +29,26 @@ namespace dispatcher
 // Created: NLD 2006-09-19
 // =============================================================================
 class Client : public tools::Client_ABC
-             , public Publisher_ABC
+             , public ClientPublisher_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Client( const Model& model, ProfileManager& profiles, LoaderFacade& loader, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link );
-             Client( const Model& model, ProfileManager& profiles, SimulationNetworker& simulation, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link );
+             Client( const Model& model, ProfileManager& profiles, LoaderFacade& loader, tools::ObjectMessageService& messageService, DIN::DIN_Link& link );
+             Client( const Model& model, ProfileManager& profiles, SimulationNetworker& simulation, tools::ObjectMessageService& messageService, DIN::DIN_Link& link );
     virtual ~Client();
     //@}
 
     //! @name Messages
     //@{
             void OnReceive( const ASN1T_MsgsClientToSim& asnMsg );
-            void OnReceive( const ASN1T_MsgsClientToMiddle& asnMsg );
-    virtual void Send     ( const ASN1T_MsgsMiddleToClient& asnMsg );
+            void OnReceive( const ASN1T_MsgsClientToAuthentication& asnMsg );
+            void OnReceive( const ASN1T_MsgsClientToReplay& asnMsg );
+
+    virtual void Send     ( const ASN1T_MsgsAuthenticationToClient& asnMsg );
     virtual void Send     ( const ASN1T_MsgsSimToClient&    asnMsg );
 
-            void Send     ( const ASN1T_MsgsMiddleToClient& asnMsg, const DIN::DIN_BufferedMessage& dinMsg );    
+            void Send     ( const ASN1T_MsgsAuthenticationToClient& asnMsg, const DIN::DIN_BufferedMessage& dinMsg );    
             void Send     ( const ASN1T_MsgsSimToClient&    asnMsg, const DIN::DIN_BufferedMessage& dinMsg );    
     //@}
 
@@ -64,8 +66,9 @@ private:
 
     //! @name Rights management
     //@{
+    bool CheckRights( const ASN1T_MsgsClientToReplay& asnMsg ) const;
     bool CheckRights( const ASN1T_MsgsClientToSim&    asnMsg ) const;
-    bool CheckRights( const ASN1T_MsgsClientToMiddle& asnMsg ) const;
+    bool CheckRights( const ASN1T_MsgsClientToAuthentication& asnMsg ) const;
     //@}
 
     //! @name Messages

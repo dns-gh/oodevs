@@ -13,6 +13,7 @@
 #include "tools/ServerNetworker_ABC.h"
 
 struct ASN1T_MsgsOutMaster;
+struct ASN1T_MsgsInMaster;
 
 namespace DIN { class DIN_Input; }
 
@@ -56,7 +57,7 @@ private:
 
     //! @name Messages callbacks
     //@{
-    void OnReceiveMsgInMaster( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgInMaster( DIN::DIN_Link& linkFrom, const ASN1T_MsgsInMaster& message );
     //@}
 
     //! @name Tools

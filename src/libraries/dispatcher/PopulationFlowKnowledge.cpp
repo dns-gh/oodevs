@@ -131,7 +131,7 @@ void PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFlowKnowledgeUpda
 // Name: PopulationFlowKnowledge::SendCreation
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::SendCreation( Publisher_ABC& publisher ) const
+void PopulationFlowKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationFlowKnowledgeCreation asn;
 
@@ -147,7 +147,7 @@ void PopulationFlowKnowledge::SendCreation( Publisher_ABC& publisher ) const
 // Name: PopulationFlowKnowledge::SendFullUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
+void PopulationFlowKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationFlowKnowledgeUpdate asn;
 
@@ -206,7 +206,7 @@ void PopulationFlowKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 // Name: PopulationFlowKnowledge::SendDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::SendDestruction( Publisher_ABC& publisher ) const
+void PopulationFlowKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationFlowKnowledgeDestruction asn;
     asn().oid_connaissance_flux       = nID_;

@@ -26,7 +26,6 @@ class Equipment;
 class Dotation;
 class Humans;
 class Loan;
-class Publisher_ABC;
 class AgentLogMedical;
 class AgentLogMaintenance;
 class AgentLogSupply;
@@ -59,10 +58,10 @@ public:
     void Update        ( const ASN1T_MsgUnitChangeSuperior&    asnMsg );
     void Update        ( const ASN1T_MsgUnitChangeSuperiorAck& asnMsg );
     void Update        ( const ASN1T_MsgUnitOrder&             asnMsg );
-    virtual void SendCreation   ( Publisher_ABC& publisher ) const;
-    virtual void SendFullUpdate ( Publisher_ABC& publisher ) const;
-    virtual void SendSpecialUpdate( Publisher_ABC& publisher ) const;
-    virtual void SendDestruction( Publisher_ABC& publisher ) const;
+    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendSpecialUpdate( ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
     //@}
 
     //! @name Accessors

@@ -18,7 +18,6 @@
 namespace dispatcher
 {
     class Model;
-    class Publisher_ABC;
     class KnowledgeGroup;
     class Object;
     class Automat;
@@ -44,10 +43,10 @@ public:
     //@{
     void Update        ( const ASN1T_MsgObjectKnowledgeCreation& asnMsg );
     void Update        ( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg );
-    virtual void SendCreation   ( Publisher_ABC& publisher ) const;
-    virtual void SendFullUpdate ( Publisher_ABC& publisher ) const;
-    virtual void SendDestruction( Publisher_ABC& publisher ) const;
-    virtual void SendSpecialUpdate( Publisher_ABC& publisher ) const;
+    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    virtual void SendSpecialUpdate( ClientPublisher_ABC& publisher ) const;
     //@}
 
 private:

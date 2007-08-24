@@ -10,7 +10,7 @@
 #ifndef __ClientsNetworker_h_
 #define __ClientsNetworker_h_
 
-#include "Publisher_ABC.h"
+#include "ClientPublisher_ABC.h"
 #include "MessageHandler_ABC.h"
 #include "tools/ServerNetworker_ABC.h"
 
@@ -35,7 +35,7 @@ class Config;
 // Created: NLD 2006-09-19
 // =============================================================================
 class ClientsNetworker : public tools::ServerNetworker_ABC
-                       , public Publisher_ABC
+                       , public ClientPublisher_ABC
                        , public MessageHandler_ABC
 {
 public:
@@ -52,7 +52,7 @@ public:
     virtual void AllowConnections();
 
     virtual void Send( const ASN1T_MsgsSimToClient&    asnMsg );
-    virtual void Send( const ASN1T_MsgsMiddleToClient& asnMsg );
+    virtual void Send( const ASN1T_MsgsAuthenticationToClient& asnMsg );
     //@}
 
 protected:
@@ -76,8 +76,9 @@ private:
 
     //! @name Messages callbacks
     //@{
-    void OnReceiveMsgClientToSim   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgClientToMiddle( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgClientToSim   ( DIN::DIN_Link& linkFrom, const ASN1T_MsgsClientToSim& message );
+    void OnReceiveMsgClientToMiddle( DIN::DIN_Link& linkFrom, const ASN1T_MsgsClientToAuthentication& message );
+    void OnReceiveMsgClientToReplay( DIN::DIN_Link& linkFrom, const ASN1T_MsgsClientToReplay& message );
     //@}
 
 private:

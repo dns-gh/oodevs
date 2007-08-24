@@ -29,7 +29,7 @@ namespace
         handler.Add( result );
         return result;
     }
-    boost::shared_ptr< SimulationDispatcher > CreateSimulation( Publisher_ABC& publisher, Model& model, CompositeMessageHandler& handler )
+    boost::shared_ptr< SimulationDispatcher > CreateSimulation( ClientPublisher_ABC& publisher, Model& model, CompositeMessageHandler& handler )
     {
         boost::shared_ptr< SimulationDispatcher > result( new SimulationDispatcher( publisher, model ) );
         handler.Add( result );

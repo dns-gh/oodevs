@@ -10,7 +10,7 @@
 #ifndef __ModelWalker_h_
 #define __ModelWalker_h_
 
-#include "Publisher_ABC.h"
+#include "ClientPublisher_ABC.h"
 #include "game_asn/Asn.h"
 
 namespace dispatcher
@@ -25,7 +25,7 @@ namespace dispatcher
 */
 // Created: JCR 2007-05-15
 // =============================================================================
-class ModelWalker : public Publisher_ABC
+class ModelWalker : public ClientPublisher_ABC
 {
 public:
     //! @name Constructors/Destructor

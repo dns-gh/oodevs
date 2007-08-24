@@ -21,7 +21,7 @@ using namespace dispatcher;
 // Name: ProfileManager constructor
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-ProfileManager::ProfileManager( Model& model, Publisher_ABC& clients, const Config& config )
+ProfileManager::ProfileManager( Model& model, ClientPublisher_ABC& clients, const Config& config )
     : model_   ( model )
     , clients_ ( clients )
     , config_  ( config )
@@ -138,7 +138,7 @@ Profile* ProfileManager::Find( const std::string& strName ) const
 // Name: ProfileManager::Send
 // Created: SBO 2007-01-22
 // -----------------------------------------------------------------------------
-void ProfileManager::Send( Publisher_ABC& publisher ) const
+void ProfileManager::Send( ClientPublisher_ABC& publisher ) const
 {
     for( CIT_ProfileMap it = profiles_.begin(); it != profiles_.end(); ++it )
         it->second->SendCreation( publisher );

@@ -10,7 +10,7 @@
 #ifndef __SimulationNetworker_h_
 #define __SimulationNetworker_h_
 
-#include "Publisher_ABC.h"
+#include "SimulationPublisher_ABC.h"
 #include "tools/ClientNetworker_ABC.h"
 
 struct ASN1T_MsgsInSim;
@@ -35,7 +35,7 @@ namespace dispatcher
 // Created: NLD 2006-09-19
 // =============================================================================
 class SimulationNetworker : public tools::ClientNetworker_ABC
-                          , public Publisher_ABC
+                          , public SimulationPublisher_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -66,8 +66,7 @@ private:
 
     //! @name Messages callbacks
     //@{
-    void OnReceiveMsgSimToClient( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );    
-    void OnReceiveMsgSimToMiddle( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );        
+    void OnReceiveMsgSimToClient( DIN::DIN_Link& linkFrom, const ASN1T_MsgsSimToClient& message );    
     //@}
 
 private:

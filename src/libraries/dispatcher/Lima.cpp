@@ -57,7 +57,7 @@ void Lima::Update( const ASN1T_MsgLimaUpdate& message )
 // Name: Lima::SendCreation
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void Lima::SendCreation( Publisher_ABC& publisher ) const
+void Lima::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientLimaCreation asn;
 
@@ -72,7 +72,7 @@ void Lima::SendCreation( Publisher_ABC& publisher ) const
 // Name: Lima::SendFullUpdate
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-void Lima::SendFullUpdate( Publisher_ABC& ) const
+void Lima::SendFullUpdate( ClientPublisher_ABC& ) const
 {
     // NOTHING
 }
@@ -81,7 +81,7 @@ void Lima::SendFullUpdate( Publisher_ABC& ) const
 // Name: Lima::SendDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Lima::SendDestruction( Publisher_ABC& publisher ) const
+void Lima::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientLimaDestruction asn;
     asn() = GetID();

@@ -74,7 +74,7 @@ void PopulationConcentration::Update( const ASN1T_MsgPopulationConcentrationUpda
 // Name: PopulationConcentration::SendCreation
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationConcentration::SendCreation( Publisher_ABC& publisher ) const
+void PopulationConcentration::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationConcentrationCreation asn;
 
@@ -89,7 +89,7 @@ void PopulationConcentration::SendCreation( Publisher_ABC& publisher ) const
 // Name: PopulationConcentration::SendFullUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationConcentration::SendFullUpdate( Publisher_ABC& publisher ) const
+void PopulationConcentration::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationConcentrationUpdate asn;
 
@@ -110,7 +110,7 @@ void PopulationConcentration::SendFullUpdate( Publisher_ABC& publisher ) const
 // Name: PopulationConcentration::SendDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void PopulationConcentration::SendDestruction( Publisher_ABC& publisher ) const
+void PopulationConcentration::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationConcentrationDestruction destruction;
     destruction().oid_population    = population_.GetID();

@@ -14,13 +14,14 @@
 
 namespace DIN
 {
-    class DIN_MessageService_ABC;
     class DIN_BufferedMessage;
     class DIN_Link;
 }
 
 namespace tools
 {
+    class ObjectMessageService;
+
 // =============================================================================
 /** @class  Client_ABC
     @brief  Client_ABC
@@ -32,7 +33,7 @@ class Client_ABC : public DIN::DIN_UserData_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Client_ABC( DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link );
+             Client_ABC( ObjectMessageService& messageService, DIN::DIN_Link& link );
     virtual ~Client_ABC();
     //@}
 
@@ -53,9 +54,9 @@ private:
     Client_ABC& operator=( const Client_ABC& ); //!< Assignement operator
     //@}
 
-protected:
-    DIN::DIN_MessageService_ABC& messageService_;
-    DIN::DIN_Link&               link_;
+protected: // $$$$ AGE 2007-08-23: 
+    ObjectMessageService& messageService_;
+    DIN::DIN_Link&        link_;
 };
 
 }

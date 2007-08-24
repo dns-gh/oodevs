@@ -20,7 +20,6 @@ namespace dispatcher
     class Automat;
     class Model;
     class Side;
-    class Publisher_ABC;
 
 // =============================================================================
 /** @class  Formation
@@ -47,8 +46,8 @@ public:
     //! @name Main
     //@{
     void Update( const ASN1T_MsgFormationCreation& msg );
-    void SendCreation  ( Publisher_ABC& publisher ) const;
-    virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
+    void SendCreation  ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
     void Accept( ModelVisitor_ABC& visitor );
     //@}
 

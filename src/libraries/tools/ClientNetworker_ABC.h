@@ -10,16 +10,14 @@
 #ifndef __ClientNetworker_ABC_h_
 #define __ClientNetworker_ABC_h_
 
+#include "ObjectMessageService.h"
+
 #include <string>
 #include <memory>
 
 namespace DIN
 {
-    class DIN_MessageService_ABC;
-    template< typename T > class DIN_MessageServiceUserCbk;
     template< typename T > class DIN_ConnectionServiceClientUserCbk;
-    class DIN_Link;
-    class DIN_Engine;
     class DIN_ErrorDescription;
 }
 
@@ -70,7 +68,12 @@ protected:
 
     //! @name Accessors
     //@{
-    DIN::DIN_MessageServiceUserCbk< ClientNetworker_ABC >& GetMessageService() const;
+    ObjectMessageService& GetMessageService() const;
+    template< typename C, typename T >
+    void RegisterMessage( C& instance, void (C::*callback)( DIN::DIN_Link &link, const T& object ) )
+    {
+        GetMessageService().RegisterMessage( instance, callback );
+    }
     //@}
 
 private:
@@ -83,7 +86,7 @@ private:
 private:
     std::auto_ptr< DIN::DIN_Engine                                                > dinEngine_;
     std::auto_ptr< DIN::DIN_ConnectionServiceClientUserCbk< ClientNetworker_ABC > > connectionService_;
-    std::auto_ptr< DIN::DIN_MessageServiceUserCbk         < ClientNetworker_ABC > > messageService_;
+    std::auto_ptr< ObjectMessageService >                                           messageService_;
     std::auto_ptr< NEK::NEK_AddressINET                                           > serverAddress_;
     DIN::DIN_Link*                                                                  session_;
 };

@@ -86,7 +86,7 @@ void PopulationFlow::Update( const ASN1T_MsgPopulationFlowUpdate& msg )
 // Name: PopulationFlow::SendCreation
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationFlow::SendCreation( Publisher_ABC& publisher ) const
+void PopulationFlow::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationFlowCreation asn;
 
@@ -100,7 +100,7 @@ void PopulationFlow::SendCreation( Publisher_ABC& publisher ) const
 // Name: PopulationFlow::SendFullUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationFlow::SendFullUpdate( Publisher_ABC& publisher ) const
+void PopulationFlow::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationFlowUpdate asn;
 
@@ -133,7 +133,7 @@ void PopulationFlow::SendFullUpdate( Publisher_ABC& publisher ) const
 // Name: PopulationFlow::SendDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void PopulationFlow::SendDestruction( Publisher_ABC& publisher ) const
+void PopulationFlow::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientPopulationFlowDestruction destruction;
     destruction().oid            = nID_;

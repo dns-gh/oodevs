@@ -141,7 +141,7 @@ void Object::Update( const ASN1T_MsgObjectUpdate& msg )
 // Name: Object::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void Object::SendCreation( Publisher_ABC& publisher ) const
+void Object::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientObjectCreation asn;
 
@@ -192,7 +192,7 @@ void Object::SendCreation( Publisher_ABC& publisher ) const
 // Name: Object::SendFullUpdate
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Object::SendFullUpdate( Publisher_ABC& publisher ) const
+void Object::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientObjectUpdate asn;
 
@@ -253,7 +253,7 @@ void Object::SendFullUpdate( Publisher_ABC& publisher ) const
 // Name: Object::SendDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Object::SendDestruction( Publisher_ABC& publisher ) const
+void Object::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientObjectDestruction destruction;
     destruction() = nID_;

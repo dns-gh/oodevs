@@ -20,7 +20,6 @@ class Dispatcher;
 class Side;
 class Model;
 class ObjectAttribute_ABC;
-class Publisher_ABC;
 
 // =============================================================================
 /** @class  Object
@@ -46,9 +45,9 @@ public:
     //@{
             void Update         ( const ASN1T_MsgObjectCreation& msg );
             void Update         ( const ASN1T_MsgObjectUpdate&   msg );
-    virtual void SendCreation   ( Publisher_ABC& publisher ) const;
-    virtual void SendFullUpdate ( Publisher_ABC& publisher ) const;
-    virtual void SendDestruction( Publisher_ABC& publisher ) const;
+    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
     //@}
 
 private:

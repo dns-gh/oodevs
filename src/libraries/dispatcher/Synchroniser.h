@@ -13,7 +13,7 @@
 namespace dispatcher
 {
     class Entity_ABC;
-    class Publisher_ABC;
+    class ClientPublisher_ABC;
     class Model;
 
 // =============================================================================
@@ -39,7 +39,7 @@ public:
     void FlagForSpecialUpdate( Entity_ABC& entity );
     void FlagForDestruction  ( Entity_ABC& entity );
 
-    void Commit( Publisher_ABC& publisher, Model& model );
+    void Commit( ClientPublisher_ABC& publisher, Model& model );
     //@}
 
 private:

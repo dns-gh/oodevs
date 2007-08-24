@@ -20,27 +20,23 @@
 // ASN ENCODER WRAPPER MACROS
 //=============================================================================
  
-#define GENERATE_EMPTY_ASN_MSG_SENDER( TARGET, ASNMSG, ASNVAR )  \
-class ASN_Msg##ASNMSG                                     \
-{                                                                \
-public:                                                          \
-    ASN_Msg##ASNMSG() {}                                  \
-                                                                 \
-    void Send( Publisher_ABC& publisher, int context = 0 )       \
-    {                                                            \
-        ASN1T_Msgs##TARGET asnMsg;                               \
-        asnMsg.context = context;                                \
-        asnMsg.msg.t   = T_Msgs##TARGET##_msg_msg_##ASNVAR;      \
-        publisher.Send( asnMsg );                                \
-    }                                                            \
+#define GENERATE_EMPTY_ASN_MSG_SENDER( TARGET, ASNMSG, ASNVAR, PREFIX )  \
+class ASN_Msg##PREFIX##ASNMSG                                            \
+{                                                                        \
+public:                                                                  \
+    void Send( Publisher_ABC& publisher, int context = 0 )               \
+    {                                                                    \
+        ASN1T_Msgs##TARGET asnMsg;                                       \
+        asnMsg.context = context;                                        \
+        asnMsg.msg.t   = T_Msgs##TARGET##_msg_msg_##ASNVAR;              \
+        publisher.Send( asnMsg );                                        \
+    }                                                                    \
 };
 
-#define GENERATE_NOPTR_ASN_MSG_SENDER( TARGET, ASNMSG, ASNVAR )           \
-class ASN_Msg##ASNMSG                                              \
+#define GENERATE_NOPTR_ASN_MSG_SENDER( TARGET, ASNMSG, ASNVAR, PREFIX  )  \
+class ASN_Msg##PREFIX##ASNMSG                                             \
 {                                                                         \
 public:                                                                   \
-    ASN_Msg##ASNMSG() {}                                           \
-                                                                          \
     void Send( Publisher_ABC& publisher, int context = 0 )                \
     {                                                                     \
         ASN1T_Msgs##TARGET asnMsg;                                        \
@@ -56,12 +52,10 @@ private:                                                                  \
                                                                           \
 };
 
-#define GENERATE_ASN_MSG_SENDER( TARGET, ASNMSG, ASNVAR )                 \
-class ASN_Msg##ASNMSG                                              \
+#define GENERATE_ASN_MSG_SENDER( TARGET, ASNMSG, ASNVAR, PREFIX )         \
+class ASN_Msg##PREFIX##ASNMSG                                             \
 {                                                                         \
 public:                                                                   \
-    ASN_Msg##ASNMSG() {}                                           \
-                                                                          \
     void Send( Publisher_ABC& publisher, int context = 0 )                \
     {                                                                     \
         ASN1T_Msgs##TARGET asnMsg;                                        \
@@ -82,16 +76,20 @@ private:                                                                  \
 //=============================================================================
 // GENERATE ASN MESSAGES
 //=============================================================================
-
-GENERATE_ASN_MSG_SENDER( ClientToMiddle, AuthenticationRequest, authentication_request )
-GENERATE_ASN_MSG_SENDER( ClientToMiddle, ProfileCreationRequest, profile_creation_request )
-GENERATE_ASN_MSG_SENDER( ClientToMiddle, ProfileUpdateRequest, profile_update_request )
-GENERATE_NOPTR_ASN_MSG_SENDER( ClientToMiddle, ProfileDestructionRequest, profile_destruction_request )
-GENERATE_EMPTY_ASN_MSG_SENDER( ClientToSim, ControlStop, control_stop  )
-GENERATE_EMPTY_ASN_MSG_SENDER( ClientToSim, ControlPause, control_pause )
-GENERATE_EMPTY_ASN_MSG_SENDER( ClientToSim, ControlResume, control_resume )
-GENERATE_NOPTR_ASN_MSG_SENDER( ClientToSim, ControlChangeTimeFactor, control_change_time_factor )
-GENERATE_NOPTR_ASN_MSG_SENDER( ClientToMiddle, ControlSkipToTick, control_skip_to_tick )
+#pragma warning( disable : 4003 )
+GENERATE_ASN_MSG_SENDER( ClientToAuthentication, AuthenticationRequest, authentication_request )
+GENERATE_ASN_MSG_SENDER( ClientToAuthentication, ProfileCreationRequest, profile_creation_request )
+GENERATE_ASN_MSG_SENDER( ClientToAuthentication, ProfileUpdateRequest, profile_update_request )
+GENERATE_NOPTR_ASN_MSG_SENDER( ClientToAuthentication, ProfileDestructionRequest, profile_destruction_request )
+GENERATE_EMPTY_ASN_MSG_SENDER( ClientToSim,    ControlStop, control_stop, Sim  )
+GENERATE_EMPTY_ASN_MSG_SENDER( ClientToSim,    ControlPause, control_pause, Sim )
+GENERATE_EMPTY_ASN_MSG_SENDER( ClientToSim,    ControlResume, control_resume, Sim )
+GENERATE_NOPTR_ASN_MSG_SENDER( ClientToSim,    ControlChangeTimeFactor, control_change_time_factor, Sim )
+GENERATE_EMPTY_ASN_MSG_SENDER( ClientToReplay, ControlStop, control_stop, Replay  )
+GENERATE_EMPTY_ASN_MSG_SENDER( ClientToReplay, ControlPause, control_pause, Replay )
+GENERATE_EMPTY_ASN_MSG_SENDER( ClientToReplay, ControlResume, control_resume, Replay )
+GENERATE_NOPTR_ASN_MSG_SENDER( ClientToReplay, ControlChangeTimeFactor, control_change_time_factor, Replay )
+GENERATE_NOPTR_ASN_MSG_SENDER( ClientToReplay, ControlSkipToTick, control_skip_to_tick, Replay )
 GENERATE_ASN_MSG_SENDER( ClientToSim, ControlCheckPointSaveNow, control_checkpoint_save_now )
 GENERATE_NOPTR_ASN_MSG_SENDER( ClientToSim, ControlCheckPointSetFrequency, control_checkpoint_set_frequency )
 GENERATE_ASN_MSG_SENDER( ClientToSim, ControlGlobalMeteo, control_global_meteo )
@@ -123,5 +121,6 @@ GENERATE_ASN_MSG_SENDER( ClientToSim, AutomatChangeKnowledgeGroup, automat_chang
 GENERATE_ASN_MSG_SENDER( ClientToSim, AutomatChangeLogisticLinks  , automat_change_logistic_links )
 GENERATE_ASN_MSG_SENDER( ClientToSim, LogSupplyPushFlow    , log_supply_push_flow )
 GENERATE_ASN_MSG_SENDER( ClientToSim, LogSupplyChangeQuotas   , log_supply_change_quotas )
+#pragma warning( 4 : 4003 )
 
 #endif // __ASN_Messages_h_

@@ -13,6 +13,7 @@
 #include "asn/asn1per.h"
 #include "asn/asn1PerCppTypes.h"
 #include "DIN/MessageService/DIN_BufferedMessage.h"
+#include "AsnControllers.h"
 
 namespace DIN
 {
@@ -27,7 +28,7 @@ namespace tools
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-template< typename T, typename C >
+template< typename T, typename C = typename AsnControllers< T >::C >
 class AsnMessageEncoder
 {
 public:

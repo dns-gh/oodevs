@@ -17,7 +17,7 @@
 namespace dispatcher
 {
     class Loader;
-    class Publisher_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  LoaderFacade
@@ -31,17 +31,16 @@ class LoaderFacade : private MT_Timer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LoaderFacade( Publisher_ABC& clients, Loader& loader );
+             LoaderFacade( ClientPublisher_ABC& clients, Loader& loader );
     virtual ~LoaderFacade();
     //@}
 
     //! @name Operations
     //@{
     void Update();
-    void SendReplayInfo( Publisher_ABC& publisher ) const;
+    void SendReplayInfo( ClientPublisher_ABC& publisher ) const;
 
-    void OnReceive( const ASN1T_MsgsClientToSim&    asnInMsg );
-    void OnReceive( const ASN1T_MsgsClientToMiddle& asnInMsg );
+    void OnReceive( const ASN1T_MsgsClientToReplay& asnInMsg );
     //@}
 
 protected:
@@ -67,7 +66,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Publisher_ABC& clients_;
+    ClientPublisher_ABC& clients_;
     Loader& loader_;
 
     unsigned factor_;

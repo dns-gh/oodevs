@@ -11,6 +11,7 @@
 #include "ServerNetworker_ABC.h"
 #include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
 #include "DIN/ConnectionService/DIN_ConnectionServiceServerUserCbk.h"
+#include <boost/bind.hpp>
 
 using namespace tools;
 using namespace DIN;
@@ -23,11 +24,11 @@ using namespace NEK;
 ServerNetworker_ABC::ServerNetworker_ABC( unsigned int magicCookie, unsigned short port )
     : dinEngine_        ( new DIN_Engine() )
     , connectionService_( new DIN_ConnectionServiceServerUserCbk< ServerNetworker_ABC >( *this, *dinEngine_, DIN_ConnectorHost(), DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 ), magicCookie ) )
-    , messageService_   ( new DIN_MessageServiceUserCbk         < ServerNetworker_ABC >( *this, *dinEngine_, DIN_ConnectorHost() ) )
+    , messageService_   ( new ObjectMessageService( *dinEngine_, DIN_ConnectorHost() ) )
     , serverAddress_    ( new NEK_AddressINET( port ) )
     , pServer_          ( 0 )
 {
-    messageService_->SetCbkOnError( &ServerNetworker_ABC::OnErrorReceivingMessage );
+    messageService_->SetCallbackOnError( boost::bind( &ServerNetworker_ABC::OnErrorReceivingMessage, this, _1, _2 ) );
 
     connectionService_->SetCbkOnConnectionReceived( &ServerNetworker_ABC::OnConnectionReceived );
     connectionService_->SetCbkOnConnectionFailed  ( &ServerNetworker_ABC::OnConnectionFailed   );
@@ -130,10 +131,10 @@ bool ServerNetworker_ABC::OnErrorReceivingMessage( DIN::DIN_Link& link, const DI
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DIN::DIN_MessageServiceUserCbk< ServerNetworker_ABC >& ServerNetworker_ABC::GetMessageService
+// Name: ServerNetworker_ABC::GetMessageService
 // Created: NLD 2007-01-24
 // -----------------------------------------------------------------------------
-DIN::DIN_MessageServiceUserCbk< ServerNetworker_ABC >& ServerNetworker_ABC::GetMessageService() const
+ObjectMessageService& ServerNetworker_ABC::GetMessageService() const
 {
     return *messageService_;
 }

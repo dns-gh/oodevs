@@ -20,7 +20,6 @@ namespace dispatcher
     class Dispatcher;
     class Side;
     class Automat;
-    class Publisher_ABC;
 
 // =============================================================================
 /** @class  KnowledgeGroup
@@ -46,8 +45,8 @@ public:
     //! @name Main
     //@{
     void Update( const ASN1T_MsgKnowledgeGroupCreation& msg );
-    void SendCreation( Publisher_ABC& publisher ) const;
-	virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
+    void SendCreation( ClientPublisher_ABC& publisher ) const;
+	virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
     //@}
 
 private:

@@ -130,7 +130,7 @@ void AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeCreation& )
 // Name: AgentKnowledge::SendCreation
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void AgentKnowledge::SendCreation( Publisher_ABC& publisher ) const
+void AgentKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientUnitKnowledgeCreation asn;
 
@@ -153,7 +153,7 @@ void AgentKnowledge::SendCreation( Publisher_ABC& publisher ) const
 // Name: AgentKnowledge::SendFullUpdate
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void AgentKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
+void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientUnitKnowledgeUpdate asn;
 
@@ -211,7 +211,7 @@ void AgentKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 // Name: AgentKnowledge::SendDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void AgentKnowledge::SendDestruction( Publisher_ABC& publisher ) const
+void AgentKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientUnitKnowledgeDestruction asn;
     asn().oid                   = nID_;

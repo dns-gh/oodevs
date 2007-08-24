@@ -76,7 +76,7 @@ void LogConsignMaintenance::Update( const ASN1T_MsgLogMaintenanceHandlingUpdate&
 // Name: LogConsignMaintenance::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void LogConsignMaintenance::SendCreation( Publisher_ABC& publisher ) const
+void LogConsignMaintenance::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientLogMaintenanceHandlingCreation asn;
     
@@ -94,7 +94,7 @@ void LogConsignMaintenance::SendCreation( Publisher_ABC& publisher ) const
 // Name: LogConsignMaintenance::SendFullUpdate
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void LogConsignMaintenance::SendFullUpdate( Publisher_ABC& publisher ) const
+void LogConsignMaintenance::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientLogMaintenanceHandlingUpdate asn;
 
@@ -115,7 +115,7 @@ void LogConsignMaintenance::SendFullUpdate( Publisher_ABC& publisher ) const
 // Name: LogConsignMaintenance::SendDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void LogConsignMaintenance::SendDestruction( Publisher_ABC& publisher ) const
+void LogConsignMaintenance::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientLogMaintenanceHandlingDestruction asn;
     asn().oid_consigne = nID_;

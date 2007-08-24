@@ -25,7 +25,6 @@ class Model;
 class Formation;
 class Agent;
 class DotationQuota;
-class Publisher_ABC;
 class AutomatOrder;
 
 // =============================================================================
@@ -60,9 +59,9 @@ public:
     void Update        ( const ASN1T_MsgAutomatChangeLogisticLinks&     msg );
     void Update        ( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& msg );
     void Update        ( const ASN1T_MsgAutomatOrder&                   msg );
-    virtual void SendCreation  ( Publisher_ABC& publisher ) const;
-    virtual void SendSpecialUpdate( Publisher_ABC& publisher ) const;
-    virtual void SendFullUpdate( Publisher_ABC& publisher ) const;
+    virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendSpecialUpdate( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
 
     void Accept( ModelVisitor_ABC& visitor );
     //@}

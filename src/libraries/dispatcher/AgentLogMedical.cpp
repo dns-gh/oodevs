@@ -97,7 +97,7 @@ void AgentLogMedical::Update( const ASN1T_MsgLogMedicalState& asnMsg )
 // Name: AgentLogMedical::Send
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void AgentLogMedical::Send( Publisher_ABC& publisher ) const
+void AgentLogMedical::Send( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientLogMedicalState asn;
 

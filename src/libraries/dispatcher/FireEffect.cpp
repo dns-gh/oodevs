@@ -47,7 +47,7 @@ void FireEffect::Update( const ASN1T_MsgStartFireEffect& )
 // Name: FireEffect::SendFullUpdate
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
-void FireEffect::SendFullUpdate( Publisher_ABC& ) const
+void FireEffect::SendFullUpdate( ClientPublisher_ABC& ) const
 {
     // NOTHING
 }
@@ -56,7 +56,7 @@ void FireEffect::SendFullUpdate( Publisher_ABC& ) const
 // Name: FireEffect::SendCreation
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
-void FireEffect::SendCreation( Publisher_ABC& publisher ) const
+void FireEffect::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientStartFireEffect asn;
     asn().effect_oid = id_;
@@ -70,7 +70,7 @@ void FireEffect::SendCreation( Publisher_ABC& publisher ) const
 // Name: FireEffect::SendDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void FireEffect::SendDestruction( Publisher_ABC& publisher ) const
+void FireEffect::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientStopFireEffect asn;
     asn() = id_;

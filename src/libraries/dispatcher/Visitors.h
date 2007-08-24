@@ -14,25 +14,25 @@
 
 namespace dispatcher
 {
-    class Publisher_ABC;
+    class ClientPublisher_ABC;
     class Synchroniser;
 
     class FullUpdateVisitor : public ModelVisitor_ABC
     {
     public:
-        FullUpdateVisitor( Publisher_ABC& publisher );
+        FullUpdateVisitor( ClientPublisher_ABC& publisher );
         virtual void Visit( Entity_ABC& entity );
     private:
-        Publisher_ABC* publisher_;
+        ClientPublisher_ABC* publisher_;
     };
 
     class CreationVisitor : public ModelVisitor_ABC
     {
     public:
-        CreationVisitor( Publisher_ABC& publisher );
+        CreationVisitor( ClientPublisher_ABC& publisher );
         virtual void Visit( Entity_ABC& entity );
     private:
-        Publisher_ABC* publisher_;
+        ClientPublisher_ABC* publisher_;
     };
 
     class StartSynchVisitor : public ModelVisitor_ABC
