@@ -42,19 +42,13 @@ public:
     //@{
     void Reset();
     Profile* Authenticate( const std::string& strName, const std::string& strPassword ) const;
-    Profile* Find        ( const std::string& strName ) const;
 
     void Send( ClientPublisher_ABC& publisher ) const;
+    virtual void Receive( const ASN1T_MsgsSimToClient& message );
 
     ASN1T_MsgProfileCreationRequestAck_error_code    Create ( const ASN1T_MsgProfileCreationRequest&    message );
     ASN1T_MsgProfileUpdateRequestAck_error_code      Update ( const ASN1T_MsgProfileUpdateRequest&      message );
     ASN1T_MsgProfileDestructionRequestAck_error_code Destroy( const ASN1T_MsgProfileDestructionRequest& message );
-    //@}
-
-protected:
-    //! @name Operations
-    //@{
-    virtual void Receive( const ASN1T_MsgsSimToClient& message );
     //@}
 
 private:
@@ -72,7 +66,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, Profile* > T_ProfileMap;
+    typedef std::map< std::string, Profile* >   T_ProfileMap;
     typedef T_ProfileMap::const_iterator      CIT_ProfileMap;
     //@}
 

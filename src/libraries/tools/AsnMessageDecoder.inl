@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include <iostream>
+#include "DIN/DIN_Input.h"
 
 namespace tools {
 
@@ -54,7 +55,7 @@ AsnMessageDecoder< T, C >::~AsnMessageDecoder()
 template< typename T, typename C > inline
 void AsnMessageDecoder< T, C >::Decode( DIN::DIN_Input& dinMsg )
 {
-    uint nAsnMsgSize = dinMsg.GetAvailable();
+    unsigned int nAsnMsgSize = dinMsg.GetAvailable();
     assert( nAsnMsgSize <= sizeof( aAsnBuffer_ ) );
 
     memcpy( aAsnBuffer_, dinMsg.GetBuffer( nAsnMsgSize ), nAsnMsgSize );

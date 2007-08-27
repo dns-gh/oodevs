@@ -10,7 +10,7 @@
 #ifndef __Dispatcher_h_
 #define __Dispatcher_h_
 
-#include "CompositeMessageHandler.h"
+#include "CompositePlugin.h"
 #include "boost/shared_ptr.hpp"
 
 namespace dispatcher
@@ -19,7 +19,6 @@ namespace dispatcher
     class Model;
     class SimulationNetworker;
     class ClientsNetworker;
-    class ProfileManager;
 
 // =============================================================================
 /** @class  Dispatcher
@@ -41,13 +40,6 @@ public:
     void Update();
     //@}
 
-    //! @name Accessors
-    //@{
-    Model&               GetModel              () const;
-    SimulationNetworker& GetSimulationNetworker() const;
-    ProfileManager&      GetProfileManager     () const;
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{
@@ -57,15 +49,12 @@ private:
 
 private:
     const Config&                             config_;
-    CompositeMessageHandler                   handler_;
+    CompositePlugin                           handler_;
     boost::shared_ptr< Model >                pModel_;
     boost::shared_ptr< ClientsNetworker >     pClientsNetworker_;
     boost::shared_ptr< SimulationNetworker >  pSimulationNetworker_;
-    boost::shared_ptr< ProfileManager >       pProfileManager_;
 };
 
 }
-
-#include "Dispatcher.inl"
 
 #endif // __Dispatcher_h_

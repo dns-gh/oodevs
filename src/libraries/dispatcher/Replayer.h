@@ -10,7 +10,7 @@
 #ifndef __Replayer_h_
 #define __Replayer_h_
 
-#include "CompositeMessageHandler.h"
+#include "CompositePlugin.h"
 #include <memory>
 #include <boost/shared_ptr.hpp>
 
@@ -22,7 +22,7 @@ namespace dispatcher
     class SimulationDispatcher;
     class Loader;
     class LoaderFacade;
-    class ProfileManager;
+    class ReplayPlugin;
 
 // =============================================================================
 /** @class  Replayer
@@ -45,13 +45,6 @@ public:
     void Update();
     //@}
 
-    //! @name Accessors
-    //@{
-    Model&          GetModel   () const;
-    ProfileManager& GetProfiles() const;
-    LoaderFacade&   GetLoader  () const;
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
@@ -62,13 +55,13 @@ private:
 private:
     //! @name Member data
     //@{
-    CompositeMessageHandler                   handler_;
-    boost::shared_ptr< Model >                model_;
-    std::auto_ptr< ClientsNetworker >         clientsNetworker_;
-    boost::shared_ptr< SimulationDispatcher > simulation_;
-    std::auto_ptr< Loader >                   loader_;
-    std::auto_ptr< LoaderFacade >             facade_;
-    std::auto_ptr< ProfileManager >           profiles_;
+    CompositePlugin                            handler_;
+    boost::shared_ptr< Model >                 model_;
+    boost::shared_ptr< ClientsNetworker >      clientsNetworker_;
+    boost::shared_ptr< SimulationDispatcher >  simulation_;
+    std::auto_ptr< Loader >                    loader_;
+    std::auto_ptr< LoaderFacade >              facade_;
+    boost::shared_ptr< ReplayPlugin >          plugin_;
     //@}
 };
 

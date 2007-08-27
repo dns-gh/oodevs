@@ -115,6 +115,8 @@ namespace
             asnMsgCtrl.Encode();
             Message( asnPEREncodeBuffer ).Serialize( *output_ );
         }
+        virtual void Send( const ASN1T_MsgsAuthenticationToClient& ) {}
+        virtual void Send( const ASN1T_MsgsReplayToClient& ) {}
         void SendStartTick()
         {
             AsnMsgSimToClientControlBeginTick tick;
@@ -135,7 +137,7 @@ namespace
 // -----------------------------------------------------------------------------
 void SaverFacade::StartFrame( ASN1T_MsgsSimToClient& asnMsg )
 {
-    if( frameCount_ % 100 == 0 ) // $$$$ AGE 2007-04-11: 
+    if( ( frameCount_ % 100 ) == 0 )
         saver_->SaveKeyFrame( ModelMessage( model_, aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), frameCount_ == 0 ) );
     ++frameCount_;
 

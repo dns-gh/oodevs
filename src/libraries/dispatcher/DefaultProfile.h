@@ -7,37 +7,38 @@
 //
 // *****************************************************************************
 
-#ifndef __SimulationPublisher_ABC_h_
-#define __SimulationPublisher_ABC_h_
+#ifndef __DefaultProfile_h_
+#define __DefaultProfile_h_
 
-#include "game_asn/Asn.h"
+#include "Profile_ABC.h"
 
 namespace dispatcher
 {
 
 // =============================================================================
-/** @class  SimulationPublisher_ABC
-    @brief  SimulationPublisher_ABC
+/** @class  DefaultProfile
+    @brief  DefaultProfile
 */
 // Created: AGE 2007-08-24
 // =============================================================================
-class SimulationPublisher_ABC
+class DefaultProfile : public Profile_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             SimulationPublisher_ABC() {};
-    virtual ~SimulationPublisher_ABC() {};
+             DefaultProfile();
+    virtual ~DefaultProfile();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send( const ASN1T_MsgsClientToSim& msg ) = 0;
-    virtual void Send( const ASN1T_MsgsMiddleToSim& msg ) = 0;
+    virtual bool CheckRights( const ASN1T_MsgsClientToSim& msg ) const;
+    virtual bool CheckRights( const ASN1T_MsgsClientToAuthentication& msg ) const;
+    virtual bool CheckRights( const ASN1T_MsgsClientToReplay& msg ) const;
     //@}
 };
 
 }
 
-#endif // __SimulationPublisher_ABC_h_
+#endif // __DefaultProfile_h_

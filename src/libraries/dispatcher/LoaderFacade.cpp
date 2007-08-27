@@ -70,9 +70,7 @@ void LoaderFacade::OnReceive( const ASN1T_MsgsClientToReplay& asnMsg )
 // -----------------------------------------------------------------------------
 void LoaderFacade::ChangeTimeFactor( unsigned factor )
 {
-    // $$$$ NLD 2007-04-24: A CHANGER => MiddleToClient
-    AsnMsgSimToClientControlChangeTimeFactorAck asn;
-
+    AsnMsgReplayToClientControlChangeTimeFactorAck asn;
     if( factor )
     {
         factor_ = factor;
@@ -94,13 +92,13 @@ void LoaderFacade::TogglePause( bool pause )
 {
     if( pause )
     {
-        AsnMsgSimToClientControlPauseAck asn;
+        AsnMsgReplayToClientControlPauseAck asn;
         asn() = running_ ? EnumControlErrorCode::no_error : EnumControlErrorCode::error_already_paused;
         asn.Send( clients_ );
     }
     else
     {
-        AsnMsgSimToClientControlResumeAck asn;
+        AsnMsgReplayToClientControlResumeAck asn;
         asn() = running_ ? EnumControlErrorCode::error_not_paused :  EnumControlErrorCode::no_error;
         asn.Send( clients_ );
     }

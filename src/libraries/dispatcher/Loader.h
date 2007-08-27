@@ -40,6 +40,7 @@ public:
 
     //! @name Operations
     //@{
+    void Start();
     void SkipToFrame( unsigned count ); 
     bool Tick();
 

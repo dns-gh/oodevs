@@ -11,6 +11,8 @@
 #define __ObjectMessageCallback_h_
 
 #include "AsnMessageDecoder.h"
+#include <boost/function.hpp>
+#include <boost/bind.hpp>
 
 namespace DIN
 {
@@ -49,30 +51,33 @@ public:
 */
 // Created: AGE 2007-03-07
 // =============================================================================
-template< typename C, typename T >
+template< typename T >
 class ObjectMessageCallback : public ObjectMessageCallback_ABC
 {
 public:
     //! @name Types
     //@{
-    typedef void (C::*T_Callback)( DIN::DIN_Link& input, const T& object );
+    typedef boost::function2< void, DIN::DIN_Link& , const T& > T_Callback;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ObjectMessageCallback( C& instance, T_Callback callback ) 
-        : instance_( instance )
-        , callback_( callback )
-    {}
+             ObjectMessageCallback() {}
+    virtual ~ObjectMessageCallback() {}
     //@}
 
     //! @name Operations
     //@{
+    void AddCallback( const T_Callback& callback )
+    {
+        callbacks_.push_back( callback );
+    }
     virtual void OnMessage( DIN::DIN_Link& link, DIN::DIN_Input& input )
     {
         AsnMessageDecoder< T > decoder( input );
-        (instance_.*callback_)( link, decoder.GetAsnMsg() );
+        for( std::vector< T_Callback >::iterator it = callbacks_.begin(); it != callbacks_.end(); ++it )
+            (*it)( link, decoder.GetAsnMsg() );
     }
     //@}
 
@@ -86,8 +91,7 @@ private:
 private:
     //! @name Member data
     //@{
-    C& instance_;
-    T_Callback callback_;
+    std::vector< T_Callback > callbacks_;
     //@}
 };
 

@@ -81,6 +81,8 @@ namespace
             forward_->Send( msg );
             model_->Update( msg );
         }
+        virtual void Send( const ASN1T_MsgsAuthenticationToClient& ) {}
+        virtual void Send( const ASN1T_MsgsReplayToClient& ) {}
         ClientPublisher_ABC* forward_;
         Model* model_;
     };

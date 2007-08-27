@@ -8,52 +8,53 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-#include "CompositeMessageHandler.h"
+#include "SaverPlugin.h"
+#include "SaverFacade.h"
 
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
-// Name: CompositeMessageHandler constructor
-// Created: AGE 2007-07-09
+// Name: SaverPlugin constructor
+// Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-CompositeMessageHandler::CompositeMessageHandler()
+SaverPlugin::SaverPlugin( Model& model, const Config& config )
+    : saver_( new SaverFacade( model, config ) )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: CompositeMessageHandler destructor
-// Created: AGE 2007-07-09
+// Name: SaverPlugin destructor
+// Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-CompositeMessageHandler::~CompositeMessageHandler()
+SaverPlugin::~SaverPlugin()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: CompositeMessageHandler::Add
-// Created: AGE 2007-07-09
+// Name: SaverPlugin::Receive
+// Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void CompositeMessageHandler::Add( boost::shared_ptr< MessageHandler_ABC > handler )
+void SaverPlugin::Receive( const ASN1T_MsgsSimToClient& message )
 {
-    handlers_.push_back( handler );
+    saver_->Receive( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: CompositeMessageHandler::Add
-// Created: AGE 2007-07-12
+// Name: SaverPlugin::NotifyClientAuthenticated
+// Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void CompositeMessageHandler::Add( MessageHandler_ABC* handler )
+void SaverPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& , Profile_ABC& )
 {
-    Add( boost::shared_ptr< MessageHandler_ABC >( handler ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: CompositeMessageHandler::Receive
-// Created: AGE 2007-07-09
+// Name: SaverPlugin::NotifyClientLeft
+// Created: AGE 2007-08-27
 // -----------------------------------------------------------------------------
-void CompositeMessageHandler::Receive( const ASN1T_MsgsSimToClient& message )
+void SaverPlugin::NotifyClientLeft( ClientPublisher_ABC& )
 {
-    for( CIT_Handlers it = handlers_.begin(); it != handlers_.end(); ++it )
-        (*it)->Receive( message );
+    // NOTHING
 }

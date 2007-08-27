@@ -46,6 +46,7 @@ protected:
     //! @name Operations
     //@{
     virtual void Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback ) = 0;
+    virtual ObjectMessageCallback_ABC* Retrieve( unsigned long id ) = 0;
     //@}
 };
 
@@ -57,8 +58,13 @@ template< typename C, typename T >
 void MessageDispatcher_ABC::RegisterMessage( C& instance, void (C::*callback)( DIN::DIN_Link& link, const T& object ) )
 {
     const unsigned int objectClassId = MessageIdentifierFactory::GetIdentifier< T >();
-    std::auto_ptr< ObjectMessageCallback_ABC > callbackObject( new ObjectMessageCallback< C, T >( instance, callback ) );
-    Register( objectClassId, callbackObject );
+    ObjectMessageCallback< T >* composite = static_cast< ObjectMessageCallback< T >* >( Retrieve( objectClassId ) );
+    if( ! composite )
+    {
+        composite = new ObjectMessageCallback< T >();
+        Register( objectClassId, std::auto_ptr< ObjectMessageCallback_ABC >( composite ) );
+    }
+    composite->AddCallback( boost::bind( callback, &instance, _1, _2 ) );
 }
 
 }

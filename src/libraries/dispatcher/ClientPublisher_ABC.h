@@ -27,15 +27,15 @@ class ClientPublisher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ClientPublisher_ABC();
-    virtual ~ClientPublisher_ABC();
+             ClientPublisher_ABC() {};
+    virtual ~ClientPublisher_ABC() {};
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send( const ASN1T_MsgsSimToClient&            msg );
-    virtual void Send( const ASN1T_MsgsAuthenticationToClient& msg );
-    virtual void Send( const ASN1T_MsgsReplayToClient&         msg );
+    virtual void Send( const ASN1T_MsgsSimToClient&            msg ) = 0;
+    virtual void Send( const ASN1T_MsgsAuthenticationToClient& msg ) = 0;
+    virtual void Send( const ASN1T_MsgsReplayToClient&         msg ) = 0;
     //@}
 };
 

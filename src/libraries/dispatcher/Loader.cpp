@@ -26,7 +26,7 @@ Loader::Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Confi
     , loader_      ( new MessageLoader( config, records ) )
     , currentFrame_( 0 )
 {
-    SkipToFrame( 0 );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -47,6 +47,20 @@ bool Loader::RequiresKeyFrame( unsigned frame )
     unsigned key = frame / 100;
     unsigned currentKey = currentFrame_ / 100;
     return !frame || key != currentKey || frame < currentFrame_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Loader::Start
+// Created: AGE 2007-08-27
+// -----------------------------------------------------------------------------
+void Loader::Start()
+{
+    loader_->LoadKeyFrame( 0, handler_ );
+
+    // simulation the end of the initialization
+    ASN1T_MsgsSimToClient message;
+    message.msg.t = T_MsgsSimToClient_msg_msg_control_send_current_state_end;
+    handler_.Receive( message );
 }
 
 // -----------------------------------------------------------------------------

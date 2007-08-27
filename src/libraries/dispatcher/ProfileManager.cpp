@@ -12,6 +12,7 @@
 #include "ProfileManager.h"
 #include "Profile.h"
 #include "Config.h"
+#include "Client.h"
 #include "xeumeuleu/xml.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 
@@ -120,18 +121,6 @@ Profile* ProfileManager::Authenticate( const std::string& strName, const std::st
 
     MT_LOG_INFO_MSG( "Auth - Profile '" << strName << "' authenticated" );
     return it->second;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProfileManager::Find
-// Created: SBO 2007-01-22
-// -----------------------------------------------------------------------------
-Profile* ProfileManager::Find( const std::string& strName ) const
-{
-    CIT_ProfileMap it = profiles_.find( strName );
-    if( it != profiles_.end() )
-        return it->second;
-    return 0;
 }
 
 // -----------------------------------------------------------------------------

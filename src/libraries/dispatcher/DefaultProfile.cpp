@@ -8,52 +8,51 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-#include "ClientPublisher_ABC.h"
+#include "DefaultProfile.h"
 
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
-// Name: ClientPublisher_ABC constructor
+// Name: DefaultProfile constructor
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-ClientPublisher_ABC::ClientPublisher_ABC()
+DefaultProfile::DefaultProfile()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClientPublisher_ABC destructor
+// Name: DefaultProfile destructor
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-ClientPublisher_ABC::~ClientPublisher_ABC()
+DefaultProfile::~DefaultProfile()
 {
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: ClientPublisher_ABC::Send
+// Name: DefaultProfile::CheckRights
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void ClientPublisher_ABC::Send( const ASN1T_MsgsSimToClient& )
+bool DefaultProfile::CheckRights( const ASN1T_MsgsClientToSim& ) const
 {
-    throw std::runtime_error( "Invalid dispatcher : " __FUNCTION__ " not implemented" );
+    return false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClientPublisher_ABC::Send
+// Name: DefaultProfile::CheckRights
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void ClientPublisher_ABC::Send( const ASN1T_MsgsAuthenticationToClient& )
+bool DefaultProfile::CheckRights( const ASN1T_MsgsClientToAuthentication& msg ) const
 {
-    throw std::runtime_error( "Invalid dispatcher : " __FUNCTION__ " not implemented" );
+    return msg.msg.t == T_MsgsClientToAuthentication_msg_msg_authentication_request;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClientPublisher_ABC::Send
+// Name: DefaultProfile::CheckRights
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void ClientPublisher_ABC::Send( const ASN1T_MsgsReplayToClient& )
+bool DefaultProfile::CheckRights( const ASN1T_MsgsClientToReplay& ) const
 {
-    throw std::runtime_error( "Invalid dispatcher : " __FUNCTION__ " not implemented" );
+    return false;
 }

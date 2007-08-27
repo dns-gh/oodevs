@@ -18,7 +18,6 @@
 
 namespace dispatcher
 {
-class Dispatcher;
 class Side;
 class KnowledgeGroup;
 class Model;

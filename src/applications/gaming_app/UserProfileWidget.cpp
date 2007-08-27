@@ -63,6 +63,7 @@ UserProfileWidget::~UserProfileWidget()
 // -----------------------------------------------------------------------------
 void UserProfileWidget::Display( const UserProfile& profile )
 {
+    // $$$$ AGE 2007-08-27: pas de QMessageBox statique :
     if( selectedProfile_ && selectedProfile_ != &profile && NeedsSaving() )
         if( QMessageBox::question( this, tr( "Profile edition" ), tr( "Profile has changed, commit modifications?" )
                                  , QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )

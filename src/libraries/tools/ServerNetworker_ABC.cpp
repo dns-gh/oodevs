@@ -81,6 +81,24 @@ void ServerNetworker_ABC::AllowConnections()
     pServer_ = &connectionService_->CreateHost( *serverAddress_ );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ServerNetworker_ABC::Register
+// Created: AGE 2007-08-24
+// -----------------------------------------------------------------------------
+void ServerNetworker_ABC::Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback )
+{
+    messageService_->Register( id, callback );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ServerNetworker_ABC::Retrieve
+// Created: AGE 2007-08-24
+// -----------------------------------------------------------------------------
+ObjectMessageCallback_ABC* ServerNetworker_ABC::Retrieve( unsigned long id )
+{
+    return messageService_->Retrieve( id );
+}
+
 // =============================================================================
 // CONNECTION CALLBACKS
 // =============================================================================

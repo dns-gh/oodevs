@@ -13,6 +13,7 @@
 #include <set>
 #include <memory>
 #include "ObjectMessageService.h"
+#include "MessageDispatcher_ABC.h"
 
 namespace DIN
 {
@@ -36,7 +37,7 @@ namespace tools
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class ServerNetworker_ABC
+class ServerNetworker_ABC : public MessageDispatcher_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -66,17 +67,14 @@ protected:
     //! @name Accessors
     //@{
     ObjectMessageService& GetMessageService() const;
-    template< typename C, typename T >
-    void RegisterMessage( C& instance, void (C::*callback)( DIN::DIN_Link &link, const T& object ) )
-    {
-        GetMessageService().RegisterMessage( instance, callback );
-    }
     //@}
 
     //! @name Operations
     //@{
     virtual void DenyConnections ();
     virtual void AllowConnections();
+    virtual void Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback );
+    virtual ObjectMessageCallback_ABC* Retrieve( unsigned long id );
     //@}
 
 private:

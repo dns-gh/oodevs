@@ -45,12 +45,13 @@ public:
     using DIN_MessageService::Disable;
 
     void SetCallbackOnError( const boost::function2< bool, DIN::DIN_Link&, const DIN::DIN_ErrorDescription& >& callback );
+    virtual void Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback );
+    virtual ObjectMessageCallback_ABC* Retrieve( unsigned long id );
     //@}
 
 protected:
     //! @name Operations
     //@{
-    virtual void Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback );
     virtual bool OnError( DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason );
     //@}
 
@@ -63,8 +64,8 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< ObjectMessageCallback_ABC* > T_Callbacks;
-    typedef T_Callbacks::const_iterator             CIT_Callbacks;
+    typedef std::map< unsigned int, ObjectMessageCallback_ABC* > T_Callbacks;
+    typedef T_Callbacks::const_iterator                        CIT_Callbacks;
     //@}
 
 private:

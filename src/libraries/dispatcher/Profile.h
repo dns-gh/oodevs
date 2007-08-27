@@ -11,6 +11,7 @@
 #define __Profile_h_
 
 #include "game_asn/Asn.h"
+#include "Profile_ABC.h"
 
 namespace xml{ class xistream; };
 
@@ -30,7 +31,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Profile
+class Profile : public Profile_ABC
 {
 public:
     //! @name Constructors/Destructor

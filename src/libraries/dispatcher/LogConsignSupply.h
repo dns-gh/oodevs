@@ -17,7 +17,6 @@
 
 namespace dispatcher
 {
-class Dispatcher;
 class Agent;
 class Automat;
 class Model;

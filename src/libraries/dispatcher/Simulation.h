@@ -21,6 +21,7 @@ namespace dispatcher
 // =============================================================================
 /** @class  Simulation
     @brief  Simulation
+    // $$$$ AGE 2007-08-24: au final, sert juste a positionner un flag sur SimulationNetworker...
 */
 // Created: NLD 2006-09-19
 // =============================================================================

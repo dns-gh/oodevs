@@ -14,8 +14,9 @@ namespace dispatcher
 {
     class Config;
     class Model;
-    class CompositeMessageHandler;
+    class CompositePlugin;
     class SimulationNetworker;
+    class ClientsNetworker;
 
 // =============================================================================
 /** @class  PluginFactory
@@ -29,13 +30,13 @@ class PluginFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             PluginFactory( const Config& config, Model& model, SimulationNetworker& simulation );
+             PluginFactory( const Config& config, Model& model, SimulationNetworker& simulation, ClientsNetworker& clients );
     virtual ~PluginFactory();
     //@}
 
     //! @name Operations
     //@{
-    void RegisterPlugins( CompositeMessageHandler& handler ) const;
+    void RegisterPlugins( CompositePlugin& handler ) const;
     //@}
 
 private:
@@ -51,6 +52,7 @@ private:
     const Config& config_;
     Model& model_;
     SimulationNetworker& simulation_;
+    ClientsNetworker& clients_;
     //@}
 };
 

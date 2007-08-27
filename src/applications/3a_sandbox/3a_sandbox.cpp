@@ -14,7 +14,7 @@
 #include "AttributeExtractor.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/MessageLoader.h"
-#include "dispatcher/CompositeMessageHandler.h"
+#include "dispatcher/CompositePlugin.h"
 #include <iostream>
 #include <ctime>
 
@@ -45,10 +45,10 @@ namespace
         unsigned count_;
     };
 
-    void Analyse( const dispatcher::Config& config, const std::string& record, dispatcher::CompositeMessageHandler& handler )
+    void Analyse( const dispatcher::Config& config, const std::string& record, dispatcher::CompositePlugin& handler )
     {
         boost::shared_ptr< MessageCounter > counter( new MessageCounter() );
-        handler.Add( counter );
+        handler.AddHandler( counter );
         dispatcher::MessageLoader loader( config, record );
         loader.LoadKeyFrame( 0, handler );
 
@@ -71,13 +71,13 @@ namespace
     void Test3a( const dispatcher::Config& config, const std::string& record )
     {
         ValueHandler output;
-        dispatcher::CompositeMessageHandler composite;
+        dispatcher::CompositePlugin composite;
         ValueEqualsExtractor< UnitIdExtractor > unitIdExtractor( 10 );
 //        AttributeExtractor< extractors::Heading > valueExtractor;
         AttributeExtractor< extractors::Humans > valueExtractor( 
             extractors::Humans( EnumHumanRank::mdr, &ASN1T_HumanDotations::nb_operationnels ) );
-        composite.Add( new MessageFilter( unitIdExtractor, unitIdExtractor, valueExtractor ) );
-        composite.Add( new Ticker( valueExtractor, output ) );
+        composite.AddHandler( new MessageFilter( unitIdExtractor, unitIdExtractor, valueExtractor ) );
+        composite.AddHandler( new Ticker( valueExtractor, output ) );
 
         Analyse( config, record, composite );
 
@@ -91,12 +91,12 @@ namespace
 {
     void GenerateVolume( const dispatcher::Config& config, const std::string& record )
     {
-        boost::shared_ptr< dispatcher::Model > model( new dispatcher::Model() );
+        boost::shared_ptr< dispatcher::Model > model( new dispatcher::Model( config ) );
         boost::shared_ptr< dispatcher::SaverFacade > saver( new dispatcher::SaverFacade( *model, config ) );
 
-        dispatcher::CompositeMessageHandler composite;
-        composite.Add( model );
-        composite.Add( saver );
+        dispatcher::CompositePlugin composite;
+        composite.AddHandler( model );
+        composite.AddHandler( saver );
 
         dispatcher::MessageLoader loader( config, record );
         loader.LoadKeyFrame( 0, composite );

@@ -17,7 +17,6 @@
 namespace dispatcher
 {
     class Model;
-    class Dispatcher;
     class Side;
     class Automat;
 

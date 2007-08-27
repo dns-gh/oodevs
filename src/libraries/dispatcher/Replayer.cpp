@@ -16,6 +16,10 @@
 #include "LoaderFacade.h"
 #include "ProfileManager.h"
 #include "Loader.h"
+#include "ReplayPlugin.h"
+#include "RightsPlugin.h"
+#include "DispatcherPlugin.h"
+#include "NoopPublisher.h"
 
 #include "xeumeuleu/xml.h"
 
@@ -23,16 +27,16 @@ using namespace dispatcher;
 
 namespace 
 {
-    boost::shared_ptr< Model > CreateModel( CompositeMessageHandler& handler, const Config& config )
+    boost::shared_ptr< Model > CreateModel( CompositePlugin& handler, const Config& config )
     {
         boost::shared_ptr< Model > result( new Model( config ) );
-        handler.Add( result );
+        handler.AddHandler( result );
         return result;
     }
-    boost::shared_ptr< SimulationDispatcher > CreateSimulation( ClientPublisher_ABC& publisher, Model& model, CompositeMessageHandler& handler )
+    boost::shared_ptr< SimulationDispatcher > CreateSimulation( ClientPublisher_ABC& publisher, Model& model, CompositePlugin& handler )
     {
         boost::shared_ptr< SimulationDispatcher > result( new SimulationDispatcher( publisher, model ) );
-        handler.Add( result );
+        handler.AddHandler( result );
         return result;
     }
 }
@@ -43,14 +47,21 @@ namespace
 // -----------------------------------------------------------------------------
 Replayer::Replayer( const Config& config, const std::string& records )
     : model_           ( CreateModel( handler_, config ) )
-    , clientsNetworker_( new ClientsNetworker( *this, config ) )
+    , clientsNetworker_( new ClientsNetworker( config, handler_ ) )
     , simulation_      ( CreateSimulation( *clientsNetworker_, *model_, handler_ ) )
     , loader_          ( new Loader( *simulation_, handler_, config, records ) )
     , facade_          ( new LoaderFacade( *clientsNetworker_, *loader_ ) )
-    , profiles_        ( new ProfileManager( *model_, *clientsNetworker_, config ) )
+    , plugin_          ( new ReplayPlugin( *facade_, *clientsNetworker_ ) )
 {
-    profiles_->Reset();
-    clientsNetworker_->AllowConnections();
+    handler_.AddHandler( clientsNetworker_ );
+
+    // $$$$ AGE 2007-08-27: utiliser la PluginFactory => replay ESRI
+    RightsPlugin* rights = new RightsPlugin( *model_, *clientsNetworker_, config, *clientsNetworker_, handler_ );
+    handler_.Add( rights  );
+    static NoopSimulationPublisher simu;
+    handler_.Add( new DispatcherPlugin( *model_, simu, *clientsNetworker_, *rights ) );
+    handler_.Add( plugin_ );
+    loader_->Start();
 }
  
 // -----------------------------------------------------------------------------
@@ -70,31 +81,4 @@ void Replayer::Update()
 {
     clientsNetworker_->Update();
     facade_->Update();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Replayer::GetModel
-// Created: AGE 2007-04-10
-// -----------------------------------------------------------------------------
-Model& Replayer::GetModel() const
-{
-    return *model_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Replayer::GetProfiles
-// Created: AGE 2007-04-10
-// -----------------------------------------------------------------------------
-ProfileManager& Replayer::GetProfiles() const
-{
-    return *profiles_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Replayer::GetLoader
-// Created: AGE 2007-04-11
-// -----------------------------------------------------------------------------
-LoaderFacade& Replayer::GetLoader() const
-{
-    return *facade_;
 }

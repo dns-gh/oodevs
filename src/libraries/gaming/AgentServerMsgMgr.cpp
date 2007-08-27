@@ -1711,8 +1711,12 @@ void AgentServerMsgMgr::_OnReceiveMsgReplayToClient( DIN::DIN_Input& input )
 
     switch( message.msg.t )
     {
-        case T_MsgsReplayToClient_msg_msg_control_replay_information:  OnReceiveMsgCtrReplayInfo       ( *message.msg.u.msg_control_replay_information ); break;
-        case T_MsgsReplayToClient_msg_msg_control_skip_to_tick_ack:    OnReceiveMsgControlSkipToTickAck( *message.msg.u.msg_control_skip_to_tick_ack               ); break;
+        case T_MsgsReplayToClient_msg_msg_control_replay_information:     OnReceiveMsgCtrReplayInfo             ( *message.msg.u.msg_control_replay_information     ); break;
+        case T_MsgsReplayToClient_msg_msg_control_stop_ack:               break;
+        case T_MsgsReplayToClient_msg_msg_control_pause_ack:              OnReceiveMsgControlPauseAck           ( message.msg.u.msg_control_pause_ack               ); break;
+        case T_MsgsReplayToClient_msg_msg_control_resume_ack:             OnReceiveMsgControlResumeAck          ( message.msg.u.msg_control_pause_ack               ); break;
+        case T_MsgsReplayToClient_msg_msg_control_skip_to_tick_ack:       OnReceiveMsgControlSkipToTickAck      ( *message.msg.u.msg_control_skip_to_tick_ack       ); break;
+        case T_MsgsReplayToClient_msg_msg_control_change_time_factor_ack: OnReceiveMsgControlChangeTimeFactorAck( *message.msg.u.msg_control_change_time_factor_ack ); break;
         default:
             UnhandledMessage( message.msg.t );
     }

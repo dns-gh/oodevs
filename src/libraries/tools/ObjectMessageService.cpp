@@ -31,7 +31,7 @@ ObjectMessageService::~ObjectMessageService()
 {
     Terminate();
     for( CIT_Callbacks it = callbacks_.begin(); it != callbacks_.end(); ++it )
-        delete *it;
+        delete it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -41,7 +41,16 @@ ObjectMessageService::~ObjectMessageService()
 void ObjectMessageService::Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback )
 {
     DIN_MessageService::RegisterReceivedMessage( id, *callback, &ObjectMessageCallback_ABC::OnMessage );
-    callbacks_.push_back( callback.release() );
+    callbacks_[ id ] = callback.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectMessageService::Retrieve
+// Created: AGE 2007-08-24
+// -----------------------------------------------------------------------------
+ObjectMessageCallback_ABC* ObjectMessageService::Retrieve( unsigned long id )
+{
+    return callbacks_[ id ];
 }
 
 // -----------------------------------------------------------------------------

@@ -16,7 +16,6 @@
 
 namespace dispatcher
 {
-    class Dispatcher;
     class KnowledgeGroup;
     class Formation;
     class Model;

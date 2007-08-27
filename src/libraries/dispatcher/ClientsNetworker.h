@@ -13,6 +13,7 @@
 #include "ClientPublisher_ABC.h"
 #include "MessageHandler_ABC.h"
 #include "tools/ServerNetworker_ABC.h"
+#include "tools/MessageDispatcher_ABC.h"
 
 struct ASN1T_MsgsInClient;
 
@@ -23,10 +24,9 @@ namespace DIN
 
 namespace dispatcher 
 {
-class Dispatcher;
-class Replayer;
-class Client;
-class Config;
+    class Client;
+    class Config;
+    class Plugin_ABC;
 
 // =============================================================================
 /** @class  ClientsNetworker
@@ -41,8 +41,7 @@ class ClientsNetworker : public tools::ServerNetworker_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ClientsNetworker( Dispatcher& dispatcher, const Config& config );
-             ClientsNetworker( Replayer&   replayer  , const Config& config );
+             ClientsNetworker( const Config& config, Plugin_ABC& plugin );
     virtual ~ClientsNetworker();
     //@}
 
@@ -51,8 +50,9 @@ public:
     virtual void DenyConnections ();
     virtual void AllowConnections();
 
-    virtual void Send( const ASN1T_MsgsSimToClient&    asnMsg );
+    virtual void Send( const ASN1T_MsgsSimToClient& asnMsg );
     virtual void Send( const ASN1T_MsgsAuthenticationToClient& asnMsg );
+    virtual void Send( const ASN1T_MsgsReplayToClient& );
     //@}
 
 protected:
@@ -74,24 +74,19 @@ private:
     virtual void OnConnectionLost    ( DIN::DIN_Server& server, DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason );
     //@}
 
-    //! @name Messages callbacks
-    //@{
-    void OnReceiveMsgClientToSim   ( DIN::DIN_Link& linkFrom, const ASN1T_MsgsClientToSim& message );
-    void OnReceiveMsgClientToMiddle( DIN::DIN_Link& linkFrom, const ASN1T_MsgsClientToAuthentication& message );
-    void OnReceiveMsgClientToReplay( DIN::DIN_Link& linkFrom, const ASN1T_MsgsClientToReplay& message );
-    //@}
-
 private:
     //! @name Types
     //@{
-    typedef std::set< Client* >         T_ClientSet;
+    typedef std::set< Client* >           T_ClientSet;
     typedef T_ClientSet::const_iterator CIT_ClientSet;
     //@}
 
 private:
-    Dispatcher* dispatcher_;
-    Replayer*   replayer_;
+    //! @name Member data
+    //@{
+    Plugin_ABC& plugin_;
     T_ClientSet clients_;
+    //@}
 };
 
 }

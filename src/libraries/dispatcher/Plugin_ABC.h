@@ -7,37 +7,40 @@
 //
 // *****************************************************************************
 
-#ifndef __SimulationPublisher_ABC_h_
-#define __SimulationPublisher_ABC_h_
+#ifndef __Plugin_ABC_h_
+#define __Plugin_ABC_h_
 
-#include "game_asn/Asn.h"
+#include "MessageHandler_ABC.h"
 
 namespace dispatcher
 {
+    class Profile_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
-/** @class  SimulationPublisher_ABC
-    @brief  SimulationPublisher_ABC
+/** @class  Plugin_ABC
+    @brief  Plugin_ABC
 */
 // Created: AGE 2007-08-24
 // =============================================================================
-class SimulationPublisher_ABC
+class Plugin_ABC : public MessageHandler_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             SimulationPublisher_ABC() {};
-    virtual ~SimulationPublisher_ABC() {};
+             Plugin_ABC() {};
+    virtual ~Plugin_ABC() {};
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send( const ASN1T_MsgsClientToSim& msg ) = 0;
-    virtual void Send( const ASN1T_MsgsMiddleToSim& msg ) = 0;
+    virtual void Receive( const ASN1T_MsgsSimToClient& message ) = 0;
+    virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile ) = 0;
+    virtual void NotifyClientLeft         ( ClientPublisher_ABC& client ) = 0;
     //@}
 };
 
 }
 
-#endif // __SimulationPublisher_ABC_h_
+#endif // __Plugin_ABC_h_

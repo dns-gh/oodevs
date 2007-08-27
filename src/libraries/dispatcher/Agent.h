@@ -24,7 +24,6 @@ namespace kernel
 
 namespace dispatcher
 {
-class Dispatcher;
 class Automat;
 class Model;
 class Equipment;

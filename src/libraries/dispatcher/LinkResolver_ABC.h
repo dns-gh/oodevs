@@ -7,37 +7,42 @@
 //
 // *****************************************************************************
 
-#ifndef __SimulationPublisher_ABC_h_
-#define __SimulationPublisher_ABC_h_
+#ifndef __LinkResolver_ABC_h_
+#define __LinkResolver_ABC_h_
 
-#include "game_asn/Asn.h"
+namespace DIN
+{
+    class DIN_Link;
+}
 
 namespace dispatcher
 {
+    class Profile_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
-/** @class  SimulationPublisher_ABC
-    @brief  SimulationPublisher_ABC
+/** @class  LinkResolver_ABC
+    @brief  LinkResolver_ABC
 */
 // Created: AGE 2007-08-24
 // =============================================================================
-class SimulationPublisher_ABC
+class LinkResolver_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             SimulationPublisher_ABC() {};
-    virtual ~SimulationPublisher_ABC() {};
+             LinkResolver_ABC() {};
+    virtual ~LinkResolver_ABC() {};
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send( const ASN1T_MsgsClientToSim& msg ) = 0;
-    virtual void Send( const ASN1T_MsgsMiddleToSim& msg ) = 0;
+    virtual Profile_ABC&         GetProfile  ( const DIN::DIN_Link& link ) = 0;
+    virtual ClientPublisher_ABC& GetPublisher( const DIN::DIN_Link& link ) = 0;
     //@}
 };
 
 }
 
-#endif // __SimulationPublisher_ABC_h_
+#endif // __LinkResolver_ABC_h_

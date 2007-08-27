@@ -16,7 +16,6 @@
 
 namespace dispatcher
 {
-class Dispatcher;
 class Side;
 class Model;
 class ObjectAttribute_ABC;
