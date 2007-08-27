@@ -46,6 +46,12 @@ public:
     virtual std::string BuildSymbol( bool up = true ) const;
     //@}
 
+    //! @name Accessors
+    //@{
+    unsigned int GetID() const;
+    std::string GetName() const;
+    //@}
+
 private:
     //! @name Types
     //@{

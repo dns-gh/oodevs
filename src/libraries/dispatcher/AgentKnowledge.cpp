@@ -230,3 +230,21 @@ std::string AgentKnowledge::BuildSymbol( bool /*up = true*/ ) const
     tools::app6::FilterPerceptionLevel( symbol, (unsigned int)nMaxPerceptionLevel_ );
     return symbol;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::GetID
+// Created: SBO 2007-08-27
+// -----------------------------------------------------------------------------
+unsigned int AgentKnowledge::GetID() const
+{
+    return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::GetName
+// Created: SBO 2007-08-27
+// -----------------------------------------------------------------------------
+std::string AgentKnowledge::GetName() const
+{
+    return agent_.GetName();
+}

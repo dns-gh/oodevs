@@ -62,6 +62,7 @@ bool ConnectorFacade::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
     case T_MsgsSimToClient_msg_msg_unit_knowledge_creation:
     case T_MsgsSimToClient_msg_msg_unit_knowledge_update:
     case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:
+    case T_MsgsSimToClient_msg_msg_report:
         relevant = true;
         break;
     case T_MsgsSimToClient_msg_msg_unit_creation:

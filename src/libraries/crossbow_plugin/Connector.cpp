@@ -10,6 +10,7 @@
 #include "crossbow_plugin_pch.h"
 #include "Connector.h"
 #include "ScopeEditor.h"
+#include "ReportFactory.h"
 #include "dispatcher/Model.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/PluginConfig.h"
@@ -23,6 +24,7 @@ using namespace crossbow;
 Connector::Connector( const dispatcher::Config& config, const dispatcher::Model& model )
     : pScopeEditor_( 0 )
     , model_( model )
+    , reportFactory_( new ReportFactory( config, model ) )
 {
     ::CoInitialize( NULL ); // Initialize COM
 
@@ -82,15 +84,6 @@ void Connector::ConnectToGeodatabase( const std::string& geodatabase )
     if( FAILED( spWorkspace_->QueryInterface( IID_IFeatureWorkspace, (LPVOID*)&spFeatureWorkspace_ ) ) )
         throw std::runtime_error( "Cannot retrieve IFeatureWorkspace interface." );
 
-    GetFeatureClass( "UnitForces" ); // $$$$ JCR 2007-05-14: TODO UnitForces
-    GetFeatureClass( "BoundaryLimits" );
-    GetFeatureClass( "TacticalLines" );
-    GetFeatureClass( "KnowledgeUnits" );
-    GetFeatureClass( "TacticalObjectPoint" );
-    GetFeatureClass( "TacticalObjectLine" );
-    GetFeatureClass( "TacticalObjectArea" );
-    GetFeatureClass( "OrderParameterShapes" );
-//    GetFeatureClass( "OperationalReports" );
     LoadStatialReference( "vmap" );
 }
 
@@ -156,7 +149,7 @@ IFeatureClassPtr Connector::LoadFeatureClass( const std::string& feature, bool c
 // -----------------------------------------------------------------------------
 void Connector::ClearFeatureClass( IFeatureClassPtr spFeatureClass )
 {
-    ScopeEditor( model_ ).Clear( spFeatureClass );
+    ScopeEditor( model_, *reportFactory_ ).Clear( spFeatureClass );
 }
 
 // -----------------------------------------------------------------------------
@@ -165,7 +158,7 @@ void Connector::ClearFeatureClass( IFeatureClassPtr spFeatureClass )
 // -----------------------------------------------------------------------------
 IFeatureClassPtr Connector::GetFeatureClass( const std::string& feature )
 {
-    IFeatureClassPtr spFeatureClass = features_[ feature ];
+    IFeatureClassPtr& spFeatureClass = features_[ feature ];
     if( spFeatureClass == NULL )
         features_[ feature ] = LoadFeatureClass( feature, true );
     return spFeatureClass;
@@ -200,7 +193,7 @@ ITablePtr Connector::GetTable( const std::string& name )
 // -----------------------------------------------------------------------------
 void Connector::Lock()
 {
-    pScopeEditor_ = new ScopeEditor( model_ );
+    pScopeEditor_ = new ScopeEditor( model_, *reportFactory_ );
     pScopeEditor_->StartEdit( spWorkspace_, spSpatialReference_ );
 }
 
@@ -300,6 +293,7 @@ void Connector::Send( const ASN1T_MsgsSimToClient& asn )
     case T_MsgsSimToClient_msg_msg_object_creation:     Send( *asn.msg.u.msg_object_creation ); break;
     case T_MsgsSimToClient_msg_msg_object_update:       Send( *asn.msg.u.msg_object_update ); break;
     case T_MsgsSimToClient_msg_msg_object_destruction:  Send( asn.msg.u.msg_object_destruction ); break;
+    case T_MsgsSimToClient_msg_msg_report:              Send( *asn.msg.u.msg_report ); break;
     }
     if( bForceLock )
         Unlock();
@@ -405,7 +399,8 @@ void Connector::Send( const ASN1T_MsgObjectUpdate& msg )
 // Name: Connector::Send
 // Created: JCR 2007-05-23
 // -----------------------------------------------------------------------------
-void Connector::Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgReport& /*msg*/ )
+void Connector::Send( const ASN1T_MsgReport& msg )
 {
-//    editor.Insert( GetFeatureClass( "OperationalReports" ), msg );
+    if( pScopeEditor_ )
+        pScopeEditor_->Insert( GetTable( "Reports" ), msg );
 }

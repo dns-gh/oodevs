@@ -72,6 +72,7 @@ public:
     //! @name Accessors
     //@{
     unsigned long GetID() const;
+    std::string GetName() const;
     const Automat& GetAutomat() const;
     virtual std::string BuildSymbol( bool up = true ) const;
     //@}

@@ -20,6 +20,7 @@ namespace dispatcher
 
 namespace crossbow
 {
+    class ReportFactory;
 
 // =============================================================================
 /** @class  ScopeEditor
@@ -32,7 +33,7 @@ class ScopeEditor
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ScopeEditor( const dispatcher::Model& model );
+             ScopeEditor( const dispatcher::Model& model, const ReportFactory& reportFactory );
     virtual ~ScopeEditor();
     //@}
 
@@ -83,7 +84,7 @@ private:
     void Write( IFeatureBufferPtr spBuffer, const ASN1T_MsgLimitCreation& msg );
     void Write( IFeatureBufferPtr spBuffer, const ASN1T_MsgLimaCreation& msg );
     void Write( IFeatureBufferPtr spBuffer, const ASN1T_MsgObjectCreation& msg );
-    void Write( IFeatureBufferPtr spBuffer, const ASN1T_MsgReport& msg );
+    void Write( IRowBufferPtr spBuffer, const ASN1T_MsgReport& msg );
     void Write( IRowBufferPtr spBuffer, const ASN1T_MsgFormationCreation& asn );
     void Write( IRowBufferPtr spBuffer, const ASN1T_MsgAutomatCreation& asn );
     //@}
@@ -92,6 +93,7 @@ private:
     //! @name Member data
     //@{
     const dispatcher::Model& model_;
+    const ReportFactory&     reportFactory_;
     IFeaturePtr              spFeature_;
     IWorkspaceEditPtr        spWorkspaceEdit_;
     ISpatialReferencePtr     spSpatialReference_;

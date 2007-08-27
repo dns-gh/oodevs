@@ -13,6 +13,7 @@
 #include "LineEditor.h"
 #include "LocationEditor.h"
 #include "SymbolEditor.h"
+#include "ReportFactory.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Model.h"
 #include "tools/App6Symbol.h"
@@ -24,8 +25,9 @@ using namespace crossbow;
 // Name: ScopeEditor constructor
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
-ScopeEditor::ScopeEditor( const dispatcher::Model& model )
+ScopeEditor::ScopeEditor( const dispatcher::Model& model, const ReportFactory& reportFactory )
     : model_( model )
+    , reportFactory_( reportFactory )
 {
     // NOTHING
 }
@@ -298,7 +300,8 @@ void ScopeEditor::Write( const ASN1T_MsgObjectUpdate& /*asn*/ )
 // Name: ScopeEditor::Write
 // Created: JCR 2007-05-23
 // -----------------------------------------------------------------------------
-void ScopeEditor::Write( IFeatureBufferPtr /*spBuffer*/, const ASN1T_MsgReport& /*asn*/ )
+void ScopeEditor::Write( IRowBufferPtr spBuffer, const ASN1T_MsgReport& asn )
 {
-    // $$$$ JCR 2007-05-03: TODO
+    Write( spBuffer, CComBSTR( L"unit_id" ), asn.oid );
+    Write( spBuffer, CComBSTR( L"message" ), reportFactory_.CreateMessage( asn ).c_str() );
 }

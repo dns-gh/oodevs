@@ -25,23 +25,24 @@ namespace dispatcher
 namespace crossbow
 {
     class ScopeEditor;
+    class ReportFactory;
 
 // =============================================================================
 /** @class  Connector
-    @brief  Connector    
+    @brief  Connector
 */
 // Created: JCR 2007-04-30
 // =============================================================================
 class Connector : public dispatcher::SimulationPublisher_ABC
                 , public dispatcher::ClientPublisher_ABC
-{    
+{
 public:
     //! @name Constructors/Destructor
     //@{
              Connector( const dispatcher::Config& config, const dispatcher::Model& model );
     virtual ~Connector();
     //@}
-    
+
     //! @name Operations
     //@{
     void Lock();
@@ -49,8 +50,8 @@ public:
     ITablePtr GetTable( const std::string& name );
     //@}
 
-    //! @name 
-    //@{ 
+    //! @name
+    //@{
     void VisitModel( dispatcher::ModelVisitor_ABC& visitor );
     virtual void Send( const ASN1T_MsgsSimToClient& msg );
     //@}
@@ -61,7 +62,7 @@ private:
     Connector( const Connector& );            //!< Copy constructor
     Connector& operator=( const Connector& ); //!< Assignement operator
     //@}
-    
+
     //! @name Helpers
     //@{
     bool IsLocked() const;
@@ -70,21 +71,21 @@ private:
     void                LoadStatialReference( const std::string& feature );
     IFeatureClassPtr    LoadFeatureClass( const std::string& feature, bool clear );
     IFeatureClassPtr    GetFeatureClass( const std::string& feature );
-    void                ClearFeatureClass( IFeatureClassPtr spFeatureClass );        
+    void                ClearFeatureClass( IFeatureClassPtr spFeatureClass );
     //@}
 
-    //! @name 
-    //@{    
-    void Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgLimaUpdate& msg );    
-    void Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgUnitAttributes& msg );    
+    //! @name
+    //@{
+    void Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgLimaUpdate& msg );
+    void Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgUnitAttributes& msg );
     void Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgUnitKnowledgeUpdate& msg );
-    void Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgReport& msg );
     void Send( const ASN1T_MsgObjectCreation& msg );
     void Send( const ASN1T_MsgObjectDestruction& msg );
-    void Send( const ASN1T_MsgObjectUpdate& msg );    
+    void Send( const ASN1T_MsgObjectUpdate& msg );
+    void Send( const ASN1T_MsgReport& msg );
     //@}
 
-    //! @name 
+    //! @name
     //@{
     template< typename ASN_Type >
     void Insert( IFeatureClassPtr spFeature, const ASN_Type& asn );
@@ -94,8 +95,8 @@ private:
     void Delete( IFeatureClassPtr spFeature, const ASN_Type& asn );
     //@}
 
-private:    
-    //! @name 
+private:
+    //! @name
     //@{
     typedef std::map< std::string, IFeatureClassPtr > T_FeatureMap;
     typedef std::map< std::string, ITablePtr >        T_Tables;
@@ -108,18 +109,19 @@ private:
     IWorkspacePtr           spWorkspace_;
     IFeatureWorkspacePtr    spFeatureWorkspace_;
     T_FeatureMap            features_;
-    IFeatureClassPtr        spUnitFeatureClass_;  // $$$$ JCR 2007-04-30: use FeatureClassDispatcher    
-    IFeatureClassPtr        spLimitFeatureClass_;  // $$$$ JCR 2007-04-30: use FeatureClassDispatcher    
-    IFeatureClassPtr        spLimaFeatureClass_;  // $$$$ JCR 2007-04-30: use FeatureClassDispatcher    
-    IFeatureClassPtr        spObjectFeatureClass_;  // $$$$ JCR 2007-04-30: use FeatureClassDispatcher    
+    IFeatureClassPtr        spUnitFeatureClass_;  // $$$$ JCR 2007-04-30: use FeatureClassDispatcher
+    IFeatureClassPtr        spLimitFeatureClass_;  // $$$$ JCR 2007-04-30: use FeatureClassDispatcher
+    IFeatureClassPtr        spLimaFeatureClass_;  // $$$$ JCR 2007-04-30: use FeatureClassDispatcher
+    IFeatureClassPtr        spObjectFeatureClass_;  // $$$$ JCR 2007-04-30: use FeatureClassDispatcher
     ISpatialReferencePtr    spSpatialReference_;
     T_Tables                tables_;
     //@}
-    
-    //! @name 
+
+    //! @name
     //@{
     ScopeEditor*    pScopeEditor_;
     const dispatcher::Model&    model_;
+    std::auto_ptr< ReportFactory > reportFactory_;              
     //@}
 };
 
