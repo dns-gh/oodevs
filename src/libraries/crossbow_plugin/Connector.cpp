@@ -301,11 +301,29 @@ void Connector::Send( const ASN1T_MsgsSimToClient& asn )
 
 // -----------------------------------------------------------------------------
 // Name: Connector::Send
+// Created: AGE 2007-08-27
+// -----------------------------------------------------------------------------
+void Connector::Send( const ASN1T_MsgsAuthenticationToClient& )
+{
+    // NOTHING
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Connector::Send
+// Created: AGE 2007-08-27
+// -----------------------------------------------------------------------------
+void Connector::Send( const ASN1T_MsgsReplayToClient& )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Connector::Send
 // Created: JCR 2007-05-23
 // -----------------------------------------------------------------------------
 void Connector::Send( IFeatureClassPtr /*pFeatureClass*/, const ASN1T_MsgLimaUpdate& /*msg*/ )
 {
-
+    // $$$$ AGE 2007-08-27: WTF
 }
 
 // -----------------------------------------------------------------------------
