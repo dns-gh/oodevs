@@ -13,7 +13,6 @@
 #include "Model.h"
 #include "ClientsNetworker.h"
 #include "SimulationDispatcher.h"
-#include "LoaderFacade.h"
 #include "ProfileManager.h"
 #include "Loader.h"
 #include "ReplayPlugin.h"
@@ -50,8 +49,7 @@ Replayer::Replayer( const Config& config, const std::string& records )
     , clientsNetworker_( new ClientsNetworker( config, handler_ ) )
     , simulation_      ( CreateSimulation( *clientsNetworker_, *model_, handler_ ) )
     , loader_          ( new Loader( *simulation_, handler_, config, records ) )
-    , facade_          ( new LoaderFacade( *clientsNetworker_, *loader_ ) )
-    , plugin_          ( new ReplayPlugin( *facade_, *clientsNetworker_ ) )
+    , plugin_          ( new ReplayPlugin( *clientsNetworker_, *clientsNetworker_, *loader_ ) )
 {
     handler_.AddHandler( clientsNetworker_ );
 
@@ -80,5 +78,5 @@ Replayer::~Replayer()
 void Replayer::Update()
 {
     clientsNetworker_->Update();
-    facade_->Update();
+    plugin_->Update();
 }

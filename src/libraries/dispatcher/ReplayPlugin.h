@@ -11,6 +11,9 @@
 #define __ReplayPlugin_h_
 
 #include "Plugin_ABC.h"
+#include "MT/MT_Time/MT_Timer_ABC.h"
+#include "MT/MT_Time/MT_TimerManager.h"
+#include "game_asn/Asn.h"
 
 namespace DIN
 {
@@ -24,27 +27,29 @@ namespace tools
 
 namespace dispatcher
 {
-    class LoaderFacade;
+    class Loader;
 
 // =============================================================================
 /** @class  ReplayPlugin
     @brief  ReplayPlugin
-    // $$$$ AGE 2007-08-27: fusionner avec LoaderFacade
 */
 // Created: AGE 2007-08-24
 // =============================================================================
 class ReplayPlugin : public Plugin_ABC
+                   , private MT_Timer_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayPlugin( LoaderFacade& loader, tools::MessageDispatcher_ABC& clientCommands );
+             ReplayPlugin( ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands, Loader& loader );
     virtual ~ReplayPlugin();
     //@}
 
     //! @name Operations
     //@{
+    void Update();
+
     virtual void Receive( const ASN1T_MsgsSimToClient& message );
     virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile );
     virtual void NotifyClientLeft         ( ClientPublisher_ABC& client );
@@ -59,13 +64,25 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void OnTimer();
     void OnReceive( DIN::DIN_Link& link, const ASN1T_MsgsClientToReplay& asnMsg );
+    void ChangeTimeFactor( unsigned factor );
+    void Pause();
+    void Resume();
+    void SkipToFrame( unsigned frame );
     //@}
 
 private:
     //! @name Member data
     //@{
-    LoaderFacade& loader_;
+    ClientPublisher_ABC& clients_;
+    Loader& loader_;
+
+    unsigned factor_;
+    bool running_;
+    int skipToFrame_;
+
+    MT_TimerManager manager_;
     //@}
 };
 

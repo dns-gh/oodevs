@@ -21,7 +21,6 @@ namespace dispatcher
     class ClientsNetworker;
     class SimulationDispatcher;
     class Loader;
-    class LoaderFacade;
     class ReplayPlugin;
 
 // =============================================================================
@@ -60,7 +59,6 @@ private:
     boost::shared_ptr< ClientsNetworker >      clientsNetworker_;
     boost::shared_ptr< SimulationDispatcher >  simulation_;
     std::auto_ptr< Loader >                    loader_;
-    std::auto_ptr< LoaderFacade >              facade_;
     boost::shared_ptr< ReplayPlugin >          plugin_;
     //@}
 };
