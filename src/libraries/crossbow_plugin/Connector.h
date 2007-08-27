@@ -32,7 +32,7 @@ namespace crossbow
 */
 // Created: JCR 2007-04-30
 // =============================================================================
-class Connector : public dispatcher::ClientPublisher_ABC
+class Connector // : public dispatcher::ClientPublisher_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -51,9 +51,9 @@ public:
     //! @name
     //@{
     void VisitModel( dispatcher::ModelVisitor_ABC& visitor );
-    virtual void Send( const ASN1T_MsgsSimToClient&            msg )
-    virtual void Send( const ASN1T_MsgsAuthenticationToClient& msg )
-    virtual void Send( const ASN1T_MsgsReplayToClient&         msg )
+    virtual void Send( const ASN1T_MsgsSimToClient&            msg );
+    virtual void Send( const ASN1T_MsgsAuthenticationToClient& msg );
+    virtual void Send( const ASN1T_MsgsReplayToClient&         msg );
     //@}
 
 private:
