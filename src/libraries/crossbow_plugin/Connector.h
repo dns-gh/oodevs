@@ -32,7 +32,7 @@ namespace crossbow
 */
 // Created: JCR 2007-04-30
 // =============================================================================
-class Connector // : public dispatcher::ClientPublisher_ABC
+class Connector : public dispatcher::ClientPublisher_ABC
 {
 public:
     //! @name Constructors/Destructor
