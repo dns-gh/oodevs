@@ -13,6 +13,7 @@ namespace Crossbow
     /// <summary>
     /// Summary description for InfoPanelCommand.
     /// </summary>
+    [ComVisible(true)]
     [Guid("c1a51b6e-bb30-43d9-84e4-989355fed456")]
     [ClassInterface(ClassInterfaceType.None)]
     [ProgId("CSword.InfoPanelCommand")]

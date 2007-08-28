@@ -29,7 +29,6 @@ namespace Crossbow
             DynamicMoleLayer dynamicLayer = new DynamicMoleLayer(Tools.GetCSwordExtension().SymbolFactory);
             dynamicLayer.FeatureClass = featureLayer.FeatureClass;
             dynamicLayer.Connect();
-
             return MakeGroup(name, featureLayer, dynamicLayer);
         }
 

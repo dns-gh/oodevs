@@ -10,6 +10,7 @@ namespace Crossbow
     /// <summary>
     /// Summary description for CSwordMenu.
     /// </summary>
+    [ComVisible(true)]
     [Guid("2eb6ae6d-2b52-40e3-9177-0b2d43a793fe")]
     [ClassInterface(ClassInterfaceType.None)]
     [ProgId("CSword.CSwordMenu")]

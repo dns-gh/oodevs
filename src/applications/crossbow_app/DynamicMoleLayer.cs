@@ -24,7 +24,7 @@ namespace Crossbow
     [Guid("e5798908-98b7-466f-9eee-43e58516f700")]
     [ClassInterface(ClassInterfaceType.None)]
     [ProgId("Crossbow.DynamicMoleLayer")]
-    public partial class DynamicMoleLayer : BaseDynamicLayer, IFeatureLayer, IFeatureSelection, IEnumFeature, IDynamicLayerDataset, IDisposable
+    public partial class DynamicMoleLayer : BaseDynamicLayer, IFeatureLayer, IFeatureSelection, IFeatureLayerSelectionEvents_Event, IEnumFeature, IDynamicLayerDataset, IDisposable
     {
         private bool            m_selectable = true;
         private IFeatureClass   m_featureClass;

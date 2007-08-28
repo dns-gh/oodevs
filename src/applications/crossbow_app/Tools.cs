@@ -117,7 +117,7 @@ namespace Crossbow
             return -1;
         }
         #endregion
-                
+
         #region "Get FeatureLayer from Layer Name"
         public static IFeatureLayer GetIFeatureLayerFromLayerName(string name)
         {
@@ -143,6 +143,30 @@ namespace Crossbow
                     if (featureLayer != null)
                         return featureLayer;
                 }
+            return null;
+        }
+        #endregion
+
+        #region "Get Layer by name"
+        public static ILayer GetLayerByName(string name)
+        {
+            IMap map = GetMxDocument().FocusMap;
+            if (map == null)
+                return null;
+            for (int i = 0; i < map.LayerCount; ++i)
+            {
+                ILayer layer = map.get_Layer(i);
+                if (layer.Name == name)
+                    return layer;
+                ICompositeLayer composite = layer as ICompositeLayer;
+                if (composite != null)
+                    for (int j = 0; j < composite.Count; ++j)
+                    {
+                        layer = composite.get_Layer(j);
+                        if (layer.Name == name)
+                            return layer;
+                    }
+            }
             return null;
         }
         #endregion

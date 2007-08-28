@@ -16,6 +16,7 @@ using ESRI.ArcGIS.Geodatabase;
 
 namespace Crossbow
 {
+    [ComVisible(true)]
     [Guid("e8fc9be2-8b39-4250-8522-6d061cfc5769")]
     [ClassInterface(ClassInterfaceType.None)]
     [ProgId("Crossbow.InfoPanel")]
@@ -23,7 +24,7 @@ namespace Crossbow
     {
         private IFeatureLayerSelectionEvents_FeatureLayerSelectionChangedEventHandler m_selectionChangedEvent;
         private IFeatureLayer m_unitLayer;
-        private IFeatureSelection m_selection;
+        private IEnumFeature m_selection;
 
         #region COM Registration Function(s)
         [ComRegisterFunction()]
@@ -118,10 +119,11 @@ namespace Crossbow
         {
             if (m_selectionChangedEvent == null)
             {
-                m_unitLayer = Tools.GetIFeatureLayerFromLayerName(Tools.GetCSwordExtension().Config.LayersConfiguration.Units);
+                m_unitLayer = (IFeatureLayer)Tools.GetLayerByName(Tools.GetCSwordExtension().Config.LayersConfiguration.Units + " - Graphics");
+                //m_unitLayer = Tools.GetIFeatureLayerFromLayerName(Tools.GetCSwordExtension().Config.LayersConfiguration.Units + " - Graphics");
                 if (m_unitLayer == null)
                     return; // $$$$ SBO 2007-08-28: display error message or something
-                m_selection = (IFeatureSelection)m_unitLayer;
+                m_selection = (IEnumFeature)m_unitLayer;
                 m_selectionChangedEvent = new IFeatureLayerSelectionEvents_FeatureLayerSelectionChangedEventHandler(OnSelectionChanged);
                 ((IFeatureLayerSelectionEvents_Event)m_unitLayer).FeatureLayerSelectionChanged += m_selectionChangedEvent;
             }
@@ -141,16 +143,15 @@ namespace Crossbow
 
         private void UpdateSelection()
         {
-            IEnumIDs ids = m_selection.SelectionSet.IDs;
-            ids.Reset();
-            int unitId = ids.Next();
-            if (unitId < 0)
+            m_selection.Reset();
+            IFeature selected = m_selection.Next();
+            if (selected == null)
                 return;
             IFeatureWorkspace workspace = Tools.RetrieveWorkspace(m_unitLayer);
             ITable reportsTable = workspace.OpenTable(Tools.GetCSwordExtension().Config.LayersConfiguration.Reports);
             reportsList.BeginUpdate();
             IQueryFilter query = new QueryFilterClass();
-            query.WhereClause = "unit_id=" + unitId;
+            query.WhereClause = "unit_id=" + Tools.GetValue<int>(selected, "Public_OID");
             ICursor cursor = reportsTable.Search(query, false);
             for (IRow result = cursor.NextRow(); result != null; result = cursor.NextRow() )
                 reportsList.Items.Add(Tools.GetValue<string>(result, "message"));

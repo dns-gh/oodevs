@@ -35,7 +35,13 @@ namespace Crossbow
             }
         }
         #endregion    
-            
+
+        #region IFeatureLayerSelectionEvents_Event Members
+
+        public event IFeatureLayerSelectionEvents_FeatureLayerSelectionChangedEventHandler FeatureLayerSelectionChanged;
+
+        #endregion
+
         #region IFeatureSelection Members
 
         public void Add(IFeature Feature)
@@ -60,7 +66,7 @@ namespace Crossbow
 
         public void Clear()
         {
-            m_featureSelection.Clear();            
+            m_featureSelection.Clear();
         }
 
         public esriSelectionResultEnum CombinationMethod
@@ -126,7 +132,7 @@ namespace Crossbow
 
         private void UpdateFeatureSelection()
         {
-            m_featureSelection.Clear();            
+            m_featureSelection.Clear();
             IEnumIDs ids = m_selectionSet.IDs;
             ids.Reset();
             int id = ids.Next();
@@ -141,9 +147,7 @@ namespace Crossbow
 
         public void SelectionChanged()
         {
-            //IFeatureLayerSelectionEvents_FeatureLayerSelectionChangedEventHandler 
-            System.Diagnostics.Debug.Print( "Selection changed" );
-            // $$$$ SBO 2007-08-28: NOTHING ?
+            FeatureLayerSelectionChanged();
         }
 
         public IColor SelectionColor
@@ -201,7 +205,7 @@ namespace Crossbow
             if (m_featureEnumerator == null)
                 Reset();
             if ( m_featureEnumerator.MoveNext() )
-                return m_featureEnumerator.Current as IFeature;            
+                return m_featureEnumerator.Current as IFeature;
             return null;
         }
         
@@ -209,7 +213,7 @@ namespace Crossbow
         {
             if (m_featureEnumerator != null)
                 m_featureEnumerator = null;
-            m_featureEnumerator = m_featureSelection.GetEnumerator();            
+            m_featureEnumerator = m_featureSelection.GetEnumerator();
         }
         #endregion
     }    
