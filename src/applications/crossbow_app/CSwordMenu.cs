@@ -1,31 +1,20 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Text;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using ESRI.ArcGIS.esriSystem;
-using ESRI.ArcGIS.SystemUI;
-using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.ADF.CATIDs;
-using ESRI.ArcGIS.Display;
-using ESRI.ArcGIS.Geodatabase;
-using ESRI.ArcGIS.ArcMapUI;
-using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.ADF.BaseClasses;
 
 namespace Crossbow
 {
-    [ComVisible(true)]
-    [Guid("02a14a61-dd9f-493e-80be-7927ae8a5bac")]
+    /// <summary>
+    /// Summary description for CSwordMenu.
+    /// </summary>
+    [Guid("2eb6ae6d-2b52-40e3-9177-0b2d43a793fe")]
     [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("Crossbow.Orbat")]
-    public partial class Orbat : UserControl, IDockableWindowDef
+    [ProgId("CSword.CSwordMenu")]
+    public sealed class CSwordMenu : BaseMenu
     {
-        private SymbolFactory m_pSymbolFactory = new SymbolFactory();
-        private IDisplay m_SimpleDisplay = new SimpleDisplayClass();
-
         #region COM Registration Function(s)
         [ComRegisterFunction()]
         [ComVisible(false)]
@@ -33,6 +22,7 @@ namespace Crossbow
         {
             // Required for ArcGIS Component Category Registrar support
             ArcGISCategoryRegistration(registerType);
+
             //
             // TODO: Add any COM registration code here
             //
@@ -58,8 +48,7 @@ namespace Crossbow
         private static void ArcGISCategoryRegistration(Type registerType)
         {
             string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
-            MxDockableWindows.Register(regKey);
-
+            MxCommandBars.Register(regKey);
         }
         /// <summary>
         /// Required method for ArcGIS Component Category unregistration -
@@ -68,55 +57,31 @@ namespace Crossbow
         private static void ArcGISCategoryUnregistration(Type registerType)
         {
             string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
-            MxDockableWindows.Unregister(regKey);
-
+            MxCommandBars.Unregister(regKey);
         }
 
         #endregion
         #endregion
-                
-        public Orbat()
-        {            
-            InitializeComponent();
-            InitializeEvents();
-        }
-        
-        #region IDockableWindowDef Members
 
-        public string Caption
+        public CSwordMenu()
+        {
+            AddItem("CSword.OrbatCommand");
+            AddItem("CSword.InfoPanelCommand");
+        }
+
+        public override string Caption
         {
             get
-            {                
-                return "Order of Battle";
+            {
+                return "CSword";
             }
         }
-
-        public int ChildHWND
+        public override string Name
         {
-            get { return this.Handle.ToInt32(); }
-        }
-
-        public void OnCreate(object hook)
-        {
-            Tools.GetCSwordExtension().ModelLoaded += new EventHandler(OnModelLoadedHandler);
-        }
-
-        public void OnDestroy()
-        {
-            m_SimpleDisplay = null;
-            m_pSymbolFactory = null;
-        }
-
-        public object UserData
-        {
-            get { return this; }
-        }
-
-        #endregion
-
-        private void OnModelLoadedHandler(object sender, EventArgs e)
-        {
-            LoadLayer(Tools.GetCSwordExtension().Config.LayersConfiguration.Units);
+            get
+            {
+                return "CSword_CSwordMenu";
+            }
         }
     }
 }

@@ -160,7 +160,7 @@ namespace Crossbow
             m_teamCombo = new System.Windows.Forms.ComboBox();
             m_teamCombo.DropDownStyle = ComboBoxStyle.DropDownList;
             m_teamCombo.Width = 150;
-            m_teamCombo.SelectedIndexChanged += new System.EventHandler(OnSelectionChanged);
+            m_teamCombo.SelectedIndexChanged += new EventHandler(OnSelectionChanged);
             int index = m_teamCombo.Items.Add("All");
             m_teamCombo.Items.Add( "Friends" );
             m_teamCombo.Items.Add( "Hostiles" );

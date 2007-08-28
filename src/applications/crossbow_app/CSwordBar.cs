@@ -66,6 +66,7 @@ namespace Crossbow
 
         public CSwordBar()
         {
+            AddItem("CSword.CSwordMenu");
             AddItem("CSword.CreateWorkspace");
             AddItem("CSword.AddDynamicMoleLayer");
             AddItem("CSword.OrbatCommand");

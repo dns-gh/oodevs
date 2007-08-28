@@ -70,7 +70,6 @@ namespace Crossbow
         #endregion
 
         private IDockableWindow m_dockableWindow;
-        private const string DockableWindowGuid = "{02a14a61-dd9f-493e-80be-7927ae8a5bac}";
        
         public OrbatCommand()
         {
@@ -101,12 +100,12 @@ namespace Crossbow
             if (hook != null && hook is IMxApplication)
             {
                 CreateDockableWindow(hook as IDockableWindowManager);
-                Tools.GetCSwordExtension().Config.ConfigurationLoaded += new EventHandler(Config_ConfigurationLoaded);
+                Tools.GetCSwordExtension().ModelLoaded += new EventHandler(OnModelLoaded);
             }
             m_enabled = false;
         }
 
-        void Config_ConfigurationLoaded(object sender, EventArgs e)
+        void OnModelLoaded(object sender, EventArgs e)
         {
             if (m_dockableWindow != null)
                 m_enabled = true;
@@ -120,8 +119,6 @@ namespace Crossbow
             if (!Enabled || m_dockableWindow == null)
                 return;
             bool visible = m_dockableWindow.IsVisible();
-            if (!visible)
-                ((IOrbat)m_dockableWindow.UserData).OnLoad();
             m_dockableWindow.Show(!visible);
             base.m_checked = visible;
         }
@@ -140,7 +137,7 @@ namespace Crossbow
             if (m_dockableWindow == null && dockWindowManager != null)
             {
                 UID windowID = new UIDClass();
-                windowID.Value = DockableWindowGuid;
+                windowID.Value = "Crossbow.Orbat";
                 m_dockableWindow = dockWindowManager.GetDockableWindow(windowID);
             }
         }

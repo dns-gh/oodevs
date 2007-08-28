@@ -92,6 +92,7 @@ namespace Crossbow
         private string m_units  = "UnitForces";
         private string m_limits = "BoundaryLimits";
         private string m_limas = "TacticalLines";
+        private string m_reports = "Reports";
 
         [DescriptionAttribute("Layer containing units")]
         [CategoryAttribute("Layer bindings")]
@@ -138,6 +139,22 @@ namespace Crossbow
             set
             {
                 m_limits = value;
+            }
+        }
+
+        [DescriptionAttribute("Table containing reports")]
+        [CategoryAttribute("Table bindings")]
+        [TypeConverterAttribute(typeof(FeatureLayerList))]
+        [DefaultValue("Reports")]
+        public string Reports
+        {
+            get
+            {
+                return m_reports;
+            }
+            set
+            {
+                m_reports = value;
             }
         }
     }

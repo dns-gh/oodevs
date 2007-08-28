@@ -73,7 +73,7 @@ namespace Crossbow
         private IDocumentEvents_NewDocumentEventHandler   m_newDocumentEvent;
         private IDocumentEvents_OpenDocumentEventHandler  m_openDocumentEvent;
         private IDocumentEvents_CloseDocumentEventHandler m_closeDocumentEvent;
-        private EventHandler m_configLoadedEvent;
+        public event EventHandler ModelLoaded;
 
         #region IExtension Members
         /// <summary>
@@ -104,26 +104,14 @@ namespace Crossbow
 
         private void SetupEvents()
         {
-            {
-                m_configLoadedEvent = new EventHandler(OnConfigurationLoadedHandler);
-                m_config.ConfigurationLoaded += m_configLoadedEvent;
-            }
-            {
-                m_newDocumentEvent = new IDocumentEvents_NewDocumentEventHandler(OnNewDocumentHandler);
-                ((IDocumentEvents_Event)(Tools.GetMxDocument())).NewDocument += m_newDocumentEvent;
-                m_openDocumentEvent = new IDocumentEvents_OpenDocumentEventHandler(OnOpenDocumentHandler);
-                ((IDocumentEvents_Event)(Tools.GetMxDocument())).OpenDocument += m_openDocumentEvent;
-                m_closeDocumentEvent = new IDocumentEvents_CloseDocumentEventHandler(OnCloseDocumentHandler);
-                ((IDocumentEvents_Event)(Tools.GetMxDocument())).CloseDocument += m_closeDocumentEvent;
-                m_contextMenuEvent = new IDocumentEvents_OnContextMenuEventHandler(OnContextMenuHandler);
-                ((IDocumentEvents_Event)(Tools.GetMxDocument())).OnContextMenu += m_contextMenuEvent;
-            }
-        }
-
-        private void OnConfigurationLoadedHandler(object sender, EventArgs e)
-        {
-            if (m_orderHandler == null)
-                m_orderHandler = new OrderHandler(m_config);
+            m_newDocumentEvent = new IDocumentEvents_NewDocumentEventHandler(OnNewDocumentHandler);
+            ((IDocumentEvents_Event)(Tools.GetMxDocument())).NewDocument += m_newDocumentEvent;
+            m_openDocumentEvent = new IDocumentEvents_OpenDocumentEventHandler(OnOpenDocumentHandler);
+            ((IDocumentEvents_Event)(Tools.GetMxDocument())).OpenDocument += m_openDocumentEvent;
+            m_closeDocumentEvent = new IDocumentEvents_CloseDocumentEventHandler(OnCloseDocumentHandler);
+            ((IDocumentEvents_Event)(Tools.GetMxDocument())).CloseDocument += m_closeDocumentEvent;
+            m_contextMenuEvent = new IDocumentEvents_OnContextMenuEventHandler(OnContextMenuHandler);
+            ((IDocumentEvents_Event)(Tools.GetMxDocument())).OnContextMenu += m_contextMenuEvent;
         }
 
         private void OnNewDocumentHandler()
@@ -147,7 +135,14 @@ namespace Crossbow
             if (m_orderHandler != null)
                 handled = m_orderHandler.OnContextMenu(x, y);
         }
-        
+
+        public void NotifyModelLoaded()
+        {
+            if (m_orderHandler == null)
+                m_orderHandler = new OrderHandler(m_config);
+            ModelLoaded(this, EventArgs.Empty);
+        }
+
         public OrderHandler OrderHandler
         {
             get

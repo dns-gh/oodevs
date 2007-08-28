@@ -103,10 +103,11 @@ namespace Crossbow
         {
             if (hook != null && hook is IMxApplication)
             {
-                m_form = new WorkspaceConfigurationForm(Tools.GetCSwordExtension().Config); // $$$$ SBO 2007-08-20: bof bof...
+                WorkspaceConfiguration config = Tools.GetCSwordExtension().Config; // $$$$ SBO 2007-08-20: bof bof...
+                m_form = new WorkspaceConfigurationForm(config);
                 m_enabled = m_form != null;
                 if (m_enabled)
-                    Tools.GetCSwordExtension().Config.ConfigurationLoaded += new EventHandler(Config_ConfigurationLoaded);
+                    config.ConfigurationLoaded += new EventHandler(Config_ConfigurationLoaded);
             }
             else
                 m_enabled = false;
@@ -115,6 +116,7 @@ namespace Crossbow
         void Config_ConfigurationLoaded(object sender, EventArgs e)
         {
             WorkspaceBuilder.Build((WorkspaceConfiguration)sender);
+            Tools.GetCSwordExtension().NotifyModelLoaded();
         }
 
         /// <summary>

@@ -37,6 +37,7 @@ namespace Crossbow
         #endregion    
             
         #region IFeatureSelection Members
+
         public void Add(IFeature Feature)
         {
             if (Feature == null)
@@ -44,6 +45,7 @@ namespace Crossbow
             m_featureSelection.Add(Feature);
             m_selectionSet.Add(Feature.OID);
         }
+
         public double BufferDistance
         {
             get
@@ -55,10 +57,12 @@ namespace Crossbow
                 m_bufferDistance = value;
             }
         }
+
         public void Clear()
         {
             m_featureSelection.Clear();            
         }
+
         public esriSelectionResultEnum CombinationMethod
         {
             get
@@ -73,10 +77,10 @@ namespace Crossbow
 
         public void SelectFeatures(IQueryFilter Filter, esriSelectionResultEnum Method, bool justOne)
         {
+            justOne = true;
             ISpatialFilter spatialFilter = Filter as ISpatialFilter;
             if (spatialFilter != null)
                 UpdateEnveloppe(spatialFilter);
-
             esriSelectionOption option = justOne ? esriSelectionOption.esriSelectionOptionOnlyOne : esriSelectionOption.esriSelectionOptionNormal;
             ISelectionSet result = m_featureClass.Select(Filter, esriSelectionType.esriSelectionTypeHybrid, option, Dataset.Workspace);
             UpdateSelection(result, Method);
@@ -132,13 +136,16 @@ namespace Crossbow
                 id = ids.Next();
             }
             Reset();
+            SelectionChanged();
         }
 
         public void SelectionChanged()
         {
-            //throw new Exception("The method or operation is not implemented.");
+            //IFeatureLayerSelectionEvents_FeatureLayerSelectionChangedEventHandler 
+            System.Diagnostics.Debug.Print( "Selection changed" );
+            // $$$$ SBO 2007-08-28: NOTHING ?
         }
-        
+
         public IColor SelectionColor
         {
             get
@@ -150,6 +157,7 @@ namespace Crossbow
                 m_selectionColor = value;
             }
         }
+
         public ISelectionSet SelectionSet
         {
             get
@@ -161,6 +169,7 @@ namespace Crossbow
                 m_selectionSet = value;
             }
         }
+
         public ISymbol SelectionSymbol
         {
             get
@@ -172,7 +181,7 @@ namespace Crossbow
                 m_selectionSymbol = value;
             }
         }
-        
+
         public bool SetSelectionSymbol
         {
             get
