@@ -14,6 +14,8 @@
 #include "LocationEditor.h"
 #include "SymbolEditor.h"
 #include "ReportFactory.h"
+#include "FolkEditor.h"
+#include "FolkManager.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Model.h"
 #include "tools/App6Symbol.h"
@@ -25,9 +27,10 @@ using namespace crossbow;
 // Name: ScopeEditor constructor
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
-ScopeEditor::ScopeEditor( const dispatcher::Model& model, const ReportFactory& reportFactory )
-    : model_( model )
+ScopeEditor::ScopeEditor( const dispatcher::Model& model, const ReportFactory& reportFactory, const FolkManager& folk )
+    : model_        ( model )
     , reportFactory_( reportFactory )
+    , folk_         ( folk )
 {
     // NOTHING
 }
@@ -104,13 +107,13 @@ void ScopeEditor::ThrowError()
 // Name: ScopeEditor::UpdateCursor
 // Created: JCR 2007-05-24
 // -----------------------------------------------------------------------------
-IFeatureCursorPtr ScopeEditor::UpdateCursor( IFeatureClassPtr spFeatureClass, ASN1T_OID oid )
+IFeatureCursorPtr ScopeEditor::UpdateCursor( IFeatureClassPtr spFeatureClass, std::string idField, ASN1T_OID oid )
 {
     IFeatureCursorPtr   spCursor;
     IQueryFilterPtr     spQueryFilter;
 
     std::stringstream ss;
-    ss << "Public_OID = " << oid;
+    ss << idField << "=" << oid;
 
     spQueryFilter.CreateInstance( CLSID_QueryFilter );
     spQueryFilter->put_WhereClause( CComBSTR( ss.str().c_str() ) );
@@ -124,11 +127,24 @@ IFeatureCursorPtr ScopeEditor::UpdateCursor( IFeatureClassPtr spFeatureClass, AS
 // -----------------------------------------------------------------------------
 bool ScopeEditor::Update( IFeatureClassPtr spFeatureClass, ASN1T_OID oid )
 {
-    IFeatureCursorPtr   spCursor = UpdateCursor( spFeatureClass, oid );
+    IFeatureCursorPtr   spCursor = UpdateCursor( spFeatureClass, "Public_OID", oid );
 
     if( spCursor )
         spCursor->NextFeature( &spFeature_ );
     return spFeature_ != NULL;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScopeEditor::Update
+// Created: JCR 2007-08-29
+// -----------------------------------------------------------------------------
+void ScopeEditor::Update( IFeatureClassPtr spFeatureClass, const ASN1T_MsgFolkGraphEdgeUpdate& asn )
+{
+    IFeatureCursorPtr   spCursor = UpdateCursor( spFeatureClass, "LINK_ID", asn.oid );
+    if( spCursor )
+        spCursor->NextFeature( &spFeature_ );
+    if ( spFeature_ != NULL )
+        FolkEditor( *this, folk_ ).Write( spFeature_, asn );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +153,7 @@ bool ScopeEditor::Update( IFeatureClassPtr spFeatureClass, ASN1T_OID oid )
 // -----------------------------------------------------------------------------
 bool ScopeEditor::Delete( IFeatureClassPtr spFeatureClass, ASN1T_OID oid )
 {
-    IFeatureCursorPtr   spCursor = UpdateCursor( spFeatureClass, oid );
+    IFeatureCursorPtr   spCursor = UpdateCursor( spFeatureClass, "Public_OID", oid );
 
     if( spCursor )
     {

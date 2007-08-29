@@ -25,6 +25,7 @@ namespace crossbow
 {
     class ScopeEditor;
     class ReportFactory;
+    class FolkManager;
 
 // =============================================================================
 /** @class  Connector
@@ -72,27 +73,27 @@ private:
     IFeatureClassPtr    LoadFeatureClass( const std::string& feature, bool clear );
     IFeatureClassPtr    GetFeatureClass( const std::string& feature );
     void                ClearFeatureClass( IFeatureClassPtr spFeatureClass );
+    IFeatureClassPtr    GetObjectFeatureClass( const ASN1T_Location& location );
     //@}
 
     //! @name
     //@{
-    void Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgLimaUpdate& msg );
-    void Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgUnitAttributes& msg );
-    void Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgUnitKnowledgeUpdate& msg );
-    void Send( const ASN1T_MsgObjectCreation& msg );
-    void Send( const ASN1T_MsgObjectDestruction& msg );
-    void Send( const ASN1T_MsgObjectUpdate& msg );
-    void Send( const ASN1T_MsgReport& msg );
+    template<typename ASN1T_MsgUpdate >
+    void Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgUpdate& asn );
+    void Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgLimaUpdate& asn );
+    void Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgFolkGraphEdgeUpdate& asn );
+    void Send( const ASN1T_MsgObjectUpdate& msg ); 
+    void Delete( const ASN1T_MsgObjectDestruction& msg );    
     //@}
 
     //! @name
     //@{
-    template< typename ASN_Type >
-    void Insert( IFeatureClassPtr spFeature, const ASN_Type& asn );
-    template< typename ASN_Type >
-    void Insert( ITablePtr spTable, const ASN_Type& asn );
-    template< typename ASN_Type >
-    void Delete( IFeatureClassPtr spFeature, const ASN_Type& asn );
+    template< typename ASN1T_MsgCreation >
+    void Insert( IFeatureClassPtr spFeature, const ASN1T_MsgCreation& asn );
+    template< typename ASN1T_MsgCreation >
+    void Insert( ITablePtr spTable, const ASN1T_MsgCreation& asn );
+    template< typename ASN1T_MsgDestruction >
+    void Delete( IFeatureClassPtr spFeature, const ASN1T_MsgDestruction& asn );
     //@}
 
 private:
@@ -119,9 +120,10 @@ private:
 
     //! @name
     //@{
-    ScopeEditor*    pScopeEditor_;
+    ScopeEditor*                pScopeEditor_;
     const dispatcher::Model&    model_;
-    std::auto_ptr< ReportFactory > reportFactory_;              
+    std::auto_ptr< ReportFactory >  reportFactory_;
+    std::auto_ptr< FolkManager >    folk_;
     //@}
 };
 

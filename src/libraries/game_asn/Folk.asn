@@ -1,0 +1,35 @@
+--
+-- file name : Folk.asn
+--
+-- Messages de gestion des objets
+--
+
+Folk DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS BaseExports FROM Base;
+FolkIncludes ::= SEQUENCE { BaseExports }
+FolkExports  ::= NULL
+-- END includes
+
+----------------------
+-- Population
+----------------------
+
+MsgFolkCreation ::= SEQUENCE
+{
+    profiles                SEQUENCE OF OCTET STRING,
+    activities              SEQUENCE OF OCTET STRING,
+    container-size          INTEGER
+}
+
+----------------------
+-- Population Update
+----------------------
+MsgFolkGraphEdgeUpdate ::= SEQUENCE
+{
+    oid                     OID,
+    population-occupation   SEQUENCE OF INTEGER (0..MAX)
+}
+
+END -- Folk

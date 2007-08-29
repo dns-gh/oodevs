@@ -25,12 +25,14 @@ IMPORTS BaseExports                   FROM Base
         LogSanteExports               FROM LogSante
         AutomateExports               FROM Automat
         ArmyExports                   FROM Army
-        AuthExports                   FROM Auth;
+        AuthExports                   FROM Auth
+        FolkExports                   FROM Folk;
+        
 MessagesIncludes ::= SEQUENCE
 { BaseExports, LimaLimiteExports, OrderExports, ControlExports, KnowledgeGroupExports,
   FormationExports, FireExports, UnitExports, UnitKnowledgeExports, ObjectExports,
   ObjectKnowledgeExports, PopulationExports, PopulationKnowledgeExports, LogMaintenanceExports,
-  LogRavitaillementExports, LogSanteExports, AutomateExports, ArmyExports, AuthExports }
+  LogRavitaillementExports, LogSanteExports, AutomateExports, ArmyExports, AuthExports, FolkExports }
 MessagesExports  ::= NULL
 -- END includes
 
@@ -178,7 +180,10 @@ MsgsSimToClient ::= SEQUENCE
         msg-population-concentration-knowledge-update           MsgPopulationConcentrationKnowledgeUpdate,
         msg-population-flow-knowledge-creation                  MsgPopulationFlowKnowledgeCreation,
         msg-population-flow-knowledge-destruction               MsgPopulationFlowKnowledgeDestruction,
-        msg-population-flow-knowledge-update                    MsgPopulationFlowKnowledgeUpdate
+        msg-population-flow-knowledge-update                    MsgPopulationFlowKnowledgeUpdate,
+                
+        msg-folk-creation                                       MsgFolkCreation,
+        msg-folk-graph-edge-update                              MsgFolkGraphEdgeUpdate        
     }
 }
 

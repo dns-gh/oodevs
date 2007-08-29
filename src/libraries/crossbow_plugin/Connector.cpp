@@ -11,6 +11,7 @@
 #include "Connector.h"
 #include "ScopeEditor.h"
 #include "ReportFactory.h"
+#include "FolkManager.h"
 #include "dispatcher/Model.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/PluginConfig.h"
@@ -22,9 +23,10 @@ using namespace crossbow;
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
 Connector::Connector( const dispatcher::Config& config, const dispatcher::Model& model )
-    : pScopeEditor_( 0 )
-    , model_( model )
-    , reportFactory_( new ReportFactory( config, model ) )
+    : pScopeEditor_  ( 0 )
+    , model_         ( model )
+    , reportFactory_ ( new ReportFactory( config, model ) )
+    , folk_          ( new FolkManager( config ) )
 {
     ::CoInitialize( NULL ); // Initialize COM
 
@@ -149,7 +151,7 @@ IFeatureClassPtr Connector::LoadFeatureClass( const std::string& feature, bool c
 // -----------------------------------------------------------------------------
 void Connector::ClearFeatureClass( IFeatureClassPtr spFeatureClass )
 {
-    ScopeEditor( model_, *reportFactory_ ).Clear( spFeatureClass );
+    ScopeEditor( model_, *reportFactory_, *folk_ ).Clear( spFeatureClass );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,7 +195,7 @@ ITablePtr Connector::GetTable( const std::string& name )
 // -----------------------------------------------------------------------------
 void Connector::Lock()
 {
-    pScopeEditor_ = new ScopeEditor( model_, *reportFactory_ );
+    pScopeEditor_ = new ScopeEditor( model_, *reportFactory_, *folk_ );
     pScopeEditor_->StartEdit( spWorkspace_, spSpatialReference_ );
 }
 
@@ -231,10 +233,10 @@ void Connector::VisitModel( dispatcher::ModelVisitor_ABC& visitor )
 // Name: Connector::Insert
 // Created: JCR 2007-05-24
 // -----------------------------------------------------------------------------
-template< typename ASN_Type >
-void Connector::Insert( IFeatureClassPtr spFeature, const ASN_Type& asn )
+template< typename ASN1T_MsgCreation >
+void Connector::Insert( IFeatureClassPtr spFeature, const ASN1T_MsgCreation& asn )
 {
-    if( pScopeEditor_ )
+    if( pScopeEditor_ != NULL && spFeature != NULL )
         pScopeEditor_->Insert( spFeature, asn );
 }
 
@@ -242,10 +244,10 @@ void Connector::Insert( IFeatureClassPtr spFeature, const ASN_Type& asn )
 // Name: Connector::Insert
 // Created: JCR 2007-06-11
 // -----------------------------------------------------------------------------
-template< typename ASN_Type >
-void Connector::Insert( ITablePtr spTable, const ASN_Type& asn )
+template< typename ASN1T_MsgCreation >
+void Connector::Insert( ITablePtr spTable, const ASN1T_MsgCreation& asn )
 {
-    if( pScopeEditor_ )
+    if( pScopeEditor_ != NULL && spTable != NULL )
         pScopeEditor_->Insert( spTable, asn );
 }
 
@@ -253,13 +255,48 @@ void Connector::Insert( ITablePtr spTable, const ASN_Type& asn )
 // Name: Connector::Delete
 // Created: JCR 2007-05-24
 // -----------------------------------------------------------------------------
-template< typename ASN_Type >
-void Connector::Delete( IFeatureClassPtr spFeature, const ASN_Type& asn_oid )
+template< typename ASN1T_MsgDestruction >
+void Connector::Delete( IFeatureClassPtr spFeature, const ASN1T_MsgDestruction& asn_oid )
 {
-    if( pScopeEditor_ )
+    if( pScopeEditor_ != NULL && spFeature != NULL )
         pScopeEditor_->Delete( spFeature, asn_oid );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Connector::Send
+// Created: JCR 2007-04-30
+// -----------------------------------------------------------------------------
+template<typename ASN1T_MsgUpdate >
+void Connector::Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgUpdate& asn )
+{
+    if( pScopeEditor_ && pScopeEditor_->Update( pFeatureClass, asn.oid ) )
+    {
+        pScopeEditor_->Write( asn );
+        pScopeEditor_->Flush();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Connector::GetObjectFeatureClass
+// Created: JCR 2007-08-29
+// -----------------------------------------------------------------------------
+IFeatureClassPtr Connector::GetObjectFeatureClass( const ASN1T_Location& location )
+{
+    IFeatureClassPtr pFeatureClass;
+    switch ( location.type )
+    {
+    case EnumLocationType::point:
+        pFeatureClass = GetFeatureClass( "TacticalObjectPoint" );
+        break;
+    case EnumLocationType::line:        
+        pFeatureClass = GetFeatureClass( "TacticalObjectLine" );
+        break;
+    default:
+        pFeatureClass = GetFeatureClass( "TacticalObjectArea" );
+    }
+    return pFeatureClass;
+}
+    
 // -----------------------------------------------------------------------------
 // Name: Connector::Update
 // Created: JCR 2007-04-30
@@ -290,10 +327,13 @@ void Connector::Send( const ASN1T_MsgsSimToClient& asn )
     case T_MsgsSimToClient_msg_msg_unit_knowledge_update:       Send( GetFeatureClass( "KnowledgeUnits" ), *asn.msg.u.msg_unit_knowledge_update ); break;
     case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:  Delete( GetFeatureClass( "KnowledgeUnits" ), asn.msg.u.msg_unit_knowledge_destruction->oid );  break;
 
-    case T_MsgsSimToClient_msg_msg_object_creation:     Send( *asn.msg.u.msg_object_creation ); break;
+    case T_MsgsSimToClient_msg_msg_object_creation:     Insert( GetObjectFeatureClass( asn.msg.u.msg_object_creation->location ), *asn.msg.u.msg_object_creation ); break;
     case T_MsgsSimToClient_msg_msg_object_update:       Send( *asn.msg.u.msg_object_update ); break;
-    case T_MsgsSimToClient_msg_msg_object_destruction:  Send( asn.msg.u.msg_object_destruction ); break;
-    case T_MsgsSimToClient_msg_msg_report:              Send( *asn.msg.u.msg_report ); break;
+    case T_MsgsSimToClient_msg_msg_object_destruction:  Delete( asn.msg.u.msg_object_destruction ); break;
+    case T_MsgsSimToClient_msg_msg_report:              Insert( GetTable( "Reports" ), *asn.msg.u.msg_report ); break;
+    
+    case T_MsgsSimToClient_msg_msg_folk_creation:           folk_->Send( *asn.msg.u.msg_folk_creation ); break;
+    case T_MsgsSimToClient_msg_msg_folk_graph_edge_update:  Send( GetFeatureClass( "Population" ), *asn.msg.u.msg_folk_graph_edge_update ); break;
     }
     if( bForceLock )
         Unlock();
@@ -328,26 +368,13 @@ void Connector::Send( IFeatureClassPtr /*pFeatureClass*/, const ASN1T_MsgLimaUpd
 
 // -----------------------------------------------------------------------------
 // Name: Connector::Send
-// Created: JCR 2007-04-30
+// Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-void Connector::Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgUnitAttributes& msg )
+void Connector::Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgFolkGraphEdgeUpdate& asn )
 {
-    if( pScopeEditor_ && pScopeEditor_->Update( pFeatureClass, msg.oid ) )
+    if( pScopeEditor_ )
     {
-        pScopeEditor_->Write( msg );
-        pScopeEditor_->Flush();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Connector::Send
-// Created: JCR 2007-04-30
-// -----------------------------------------------------------------------------
-void Connector::Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgUnitKnowledgeUpdate& msg )
-{
-    if( pScopeEditor_ && pScopeEditor_->Update( GetFeatureClass( "KnowledgeUnits" ), msg.oid ) )
-    {
-        pScopeEditor_->Write( msg );
+        pScopeEditor_->Update( pFeatureClass, asn );
         pScopeEditor_->Flush();
     }
 }
@@ -356,7 +383,7 @@ void Connector::Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgUnitKnowled
 // Name: Connector::Send
 // Created: JCR 2007-05-24
 // -----------------------------------------------------------------------------
-void Connector::Send( const ASN1T_MsgObjectDestruction& asn )
+void Connector::Delete( const ASN1T_MsgObjectDestruction& asn )
 {
     if( pScopeEditor_ )
     {
@@ -370,55 +397,11 @@ void Connector::Send( const ASN1T_MsgObjectDestruction& asn )
 // Name: Connector::Send
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
-void Connector::Send( const ASN1T_MsgObjectCreation& msg )
+void Connector::Send( const ASN1T_MsgObjectUpdate& asn )
 {
-    switch ( msg.location.type )
+    if( pScopeEditor_ && pScopeEditor_->Update( GetObjectFeatureClass( asn.location ), asn.oid ) )
     {
-    case EnumLocationType::point:
-        pScopeEditor_->Insert( GetFeatureClass( "TacticalObjectPoint" ), msg );
-        break;
-    case EnumLocationType::line:
-        pScopeEditor_->Insert( GetFeatureClass( "TacticalObjectLine" ), msg );
-        break;
-    default:
-        pScopeEditor_->Insert( GetFeatureClass( "TacticalObjectArea" ), msg );
+        pScopeEditor_->Write( asn );
+        pScopeEditor_->Flush();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Connector::Send
-// Created: JCR 2007-04-30
-// -----------------------------------------------------------------------------
-void Connector::Send( const ASN1T_MsgObjectUpdate& msg )
-{
-    ScopeEditor& editor = *pScopeEditor_;
-    bool         bResult = false;
-
-    switch ( msg.location.type )
-    {
-    case EnumLocationType::point:
-        bResult = editor.Update( GetFeatureClass( "TacticalObjectPoint" ), msg.oid );
-        break;
-    case EnumLocationType::line:
-        bResult = editor.Update( GetFeatureClass( "TacticalObjectLine" ), msg.oid );
-        break;
-    default:
-        bResult = editor.Update( GetFeatureClass( "TacticalObjectArea" ), msg.oid );
-    }
-
-    if( bResult )
-    {
-        editor.Write( msg );
-        editor.Flush();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Connector::Send
-// Created: JCR 2007-05-23
-// -----------------------------------------------------------------------------
-void Connector::Send( const ASN1T_MsgReport& msg )
-{
-    if( pScopeEditor_ )
-        pScopeEditor_->Insert( GetTable( "Reports" ), msg );
 }

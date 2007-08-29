@@ -18,7 +18,7 @@
 #include "RightsPlugin.h"
 #include "ClientsNetworker.h"
 
-#include "crossbow_plugin/ConnectorFacade.h"
+#include "crossbow_plugin/CrossbowPlugin.h"
 
 using namespace dispatcher;
 
@@ -58,6 +58,6 @@ void PluginFactory::RegisterPlugins( CompositePlugin& handler ) const
 
 #ifdef CROSSBOW_PLUGIN // $$$$ JCR 2007-08-08: for build server purpose - does not include <com and atl> components
     if( config_.GetPluginConfig( "crossbow" ).IsEnabled() )
-        handler.Add( new crossbow::ConnectorFacade( model_, config_, simulation_ ) );
+        handler.Add( new crossbow::CrossbowPlugin( model_, config_, simulation_ ) );
 #endif
 }

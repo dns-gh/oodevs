@@ -32,6 +32,7 @@
 #include "generated/Object.h"
 #include "generated/Population.h"
 #include "generated/PopulationKnowledge.h"
+#include "generated/Folk.h"
 
 #pragma warning( pop ) 
 

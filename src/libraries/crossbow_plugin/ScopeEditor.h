@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ScopeEditor_h_
-#define __ScopeEditor_h_
+#ifndef __crossbow_ScopeEditor_h_
+#define __crossbow_ScopeEditor_h_
 
 #include "ESRI.h"
 #include "game_asn/Asn.h"
@@ -21,6 +21,7 @@ namespace dispatcher
 namespace crossbow
 {
     class ReportFactory;
+    class FolkManager;
 
 // =============================================================================
 /** @class  ScopeEditor
@@ -33,7 +34,7 @@ class ScopeEditor
 public:
     //! @name Constructors/Destructor
     //@{
-             ScopeEditor( const dispatcher::Model& model, const ReportFactory& reportFactory );
+             ScopeEditor( const dispatcher::Model& model, const ReportFactory& reportFactory, const FolkManager& folk );
     virtual ~ScopeEditor();
     //@}
 
@@ -42,26 +43,25 @@ public:
     void StartEdit( IWorkspacePtr spWorkspace, ISpatialReferencePtr spSpatialReference );
     void StopEdit();
     bool Clear( IFeatureClassPtr spFeatureClass );
-    template< typename ASN_Type >
-    bool Insert( IFeatureClassPtr spFeatureClass, const ASN_Type& asn );
-    template< typename ASN_Type >
-    bool Insert( ITablePtr spTable, const ASN_Type& msg );
+    template< typename ASN1T_MsgCreation >
+    bool Insert( IFeatureClassPtr spFeatureClass, const ASN1T_MsgCreation& asn );
+    template< typename ASN1T_MsgCreation >
+    bool Insert( ITablePtr spTable, const ASN1T_MsgCreation& msg );
     //@}
 
     //! @name Update operators
     //@{
     bool Delete( IFeatureClassPtr spFeatureClass, ASN1T_OID oid );
     bool Update( IFeatureClassPtr spFeatureClass, ASN1T_OID oid );
+    void Update( IFeatureClassPtr spFeatureClass, const ASN1T_MsgFolkGraphEdgeUpdate& msg );
     void Write( const ASN1T_MsgUnitAttributes& msg );
     void Write( const ASN1T_MsgUnitKnowledgeUpdate& msg );
-    void Write( const ASN1T_MsgObjectUpdate& msg );
+    void Write( const ASN1T_MsgObjectUpdate& msg );    
     void Flush();
     //@}
 
     //! @name
     //@{
-//    template< typename VariantType >
-//    HRESULT Write( IFeaturePtr spFeature, BSTR name, VariantType type );
     template< typename IContainerTypePtr, typename VariantType >
     HRESULT Write( IContainerTypePtr spFeature, BSTR name, VariantType type );
     template< typename FeatureType >
@@ -78,7 +78,7 @@ private:
     //! @name Helpers
     //@{
     void ThrowError();
-    IFeatureCursorPtr UpdateCursor( IFeatureClassPtr spFeatureClass, ASN1T_OID oid );
+    IFeatureCursorPtr UpdateCursor( IFeatureClassPtr spFeatureClass, std::string idField, ASN1T_OID oid );
     void Write( IFeatureBufferPtr spBuffer, const ASN1T_MsgUnitCreation& msg );
     void Write( IFeatureBufferPtr spBuffer, const ASN1T_MsgUnitKnowledgeCreation& msg );
     void Write( IFeatureBufferPtr spBuffer, const ASN1T_MsgLimitCreation& msg );
@@ -94,6 +94,7 @@ private:
     //@{
     const dispatcher::Model& model_;
     const ReportFactory&     reportFactory_;
+    const FolkManager&       folk_;
     IFeaturePtr              spFeature_;
     IWorkspaceEditPtr        spWorkspaceEdit_;
     ISpatialReferencePtr     spSpatialReference_;
@@ -104,8 +105,8 @@ private:
 // Name: ScopeEditor::Insert
 // Created: JCR 2007-05-15
 // -----------------------------------------------------------------------------
-template< typename ASN_Type >
-bool ScopeEditor::Insert( IFeatureClassPtr spFeatureClass, const ASN_Type& msg )
+template< typename ASN1T_MsgCreation >
+bool ScopeEditor::Insert( IFeatureClassPtr spFeatureClass, const ASN1T_MsgCreation& msg )
 {
     CComVariant         varID;
     IFeatureCursorPtr   spCursor;
@@ -125,20 +126,14 @@ bool ScopeEditor::Insert( IFeatureClassPtr spFeatureClass, const ASN_Type& msg )
 // Name: ScopeEditor::Insert
 // Created: JCR 2007-05-15
 // -----------------------------------------------------------------------------
-template< typename ASN_Type >
-bool ScopeEditor::Insert( ITablePtr spTable, const ASN_Type& msg )
+template< typename ASN1T_MsgCreation >
+bool ScopeEditor::Insert( ITablePtr spTable, const ASN1T_MsgCreation& msg )
 {
-    CComVariant     varID;
-    ICursorPtr      spCursor;
+    CComVariant     varID;    
     IRowPtr         spRow;
-    IRowBufferPtr   spBuffer;
-
-    // spTable->Insert( VARIANT_TRUE, &spCursor );
-    spTable->CreateRow( &spRow );
-    // spTable->CreateRowBuffer( &spBuffer );
-    Write( spRow, msg );
-    // if( FAILED( spCursor->InsertRow( spBuffer, &varID ) ) )
-    //     CheckError();
+        
+    spTable->CreateRow( &spRow );    
+    Write( spRow, msg );    
     spRow->Store();
     return true;
 }
@@ -177,4 +172,4 @@ HRESULT ScopeEditor::WriteGeometry( FeatureType spFeature, IGeometryPtr spGeomet
 
 }
 
-#endif // __ScopeEditor_h_
+#endif // __crossbow_ScopeEditor_h_

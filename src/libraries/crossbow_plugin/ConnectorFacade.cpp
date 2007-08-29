@@ -65,6 +65,10 @@ bool ConnectorFacade::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
     case T_MsgsSimToClient_msg_msg_report:
         relevant = true;
         break;
+    case T_MsgsSimToClient_msg_msg_folk_creation:
+    case T_MsgsSimToClient_msg_msg_folk_graph_edge_update:
+        relevant = true;
+        break;
     case T_MsgsSimToClient_msg_msg_unit_creation:
     case T_MsgsSimToClient_msg_msg_unit_destruction:
         relevant = true;

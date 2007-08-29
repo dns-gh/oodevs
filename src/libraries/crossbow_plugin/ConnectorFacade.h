@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ConnectorFacade_h_
-#define __ConnectorFacade_h_
+#ifndef __crossbow_ConnectorFacade_h_
+#define __crossbow_ConnectorFacade_h_
 
 #include "game_asn/Asn.h"
 #include "dispatcher/MessageHandler_ABC.h"
@@ -22,8 +22,10 @@ namespace kernel
 namespace dispatcher
 {
     class Model;
-    class Config;
+    class Config;    
     class SimulationPublisher_ABC;
+    class ClientPublisher_ABC;
+    class Profile_ABC;
 }
 
 namespace crossbow
@@ -88,4 +90,4 @@ private:
 
 }
 
-#endif // __ConnectorFacade_h_
+#endif // __crossbow_ConnectorFacade_h_
