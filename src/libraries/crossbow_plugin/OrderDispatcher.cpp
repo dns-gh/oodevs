@@ -219,11 +219,10 @@ void OrderDispatcher::SetParameters( ASN1T_MissionParameters& parameters, unsign
     parameters.n = type.GetParameterCount();
     parameters.elem = new ASN1T_MissionParameter[ parameters.n ];
 
-    IQueryFilterPtr parametersFilter;
+    IQueryFilterPtr parametersFilter( CLSID_QueryFilter );
     ICursorPtr cursor;
     std::stringstream ss;
     ss << "order_id=" << orderId << " AND context=false";
-    parametersFilter.CreateInstance( CLSID_QueryFilter );
     parametersFilter->put_WhereClause( CComBSTR( ss.str().c_str() ) );
     HRESULT res = paramTable_->Search( parametersFilter, false, &cursor );
     if( FAILED( res ) )
@@ -272,11 +271,10 @@ void OrderDispatcher::SetOrderContext( ASN1T_OrderContext& asn, unsigned long or
     asn.m.limite_droitePresent = 0;
     asn.m.limite_gauchePresent = 0;
 
-    IQueryFilterPtr parametersFilter;
+    IQueryFilterPtr parametersFilter( CLSID_QueryFilter );
     ICursorPtr cursor;
     std::stringstream ss;
     ss << "order_id=" << orderId << " AND context=true";
-    parametersFilter.CreateInstance( CLSID_QueryFilter );
     parametersFilter->put_WhereClause( CComBSTR( ss.str().c_str() ) );
     HRESULT res = paramTable_->Search( parametersFilter, false, &cursor );
     if( FAILED( res ) )
@@ -320,11 +318,10 @@ void OrderDispatcher::CleanOrderContext( ASN1T_OrderContext& asn )
 // -----------------------------------------------------------------------------
 unsigned int OrderDispatcher::GetLimaCount( unsigned long orderId )
 {
-    IQueryFilterPtr parametersFilter;
+    IQueryFilterPtr parametersFilter( CLSID_QueryFilter );
     ICursorPtr cursor;
     std::stringstream ss;
     ss << "order_id=" << orderId << " AND context=true AND name='lima'";
-    parametersFilter.CreateInstance( CLSID_QueryFilter );
     parametersFilter->put_WhereClause( CComBSTR( ss.str().c_str() ) );
     long count = 0;
     HRESULT res = paramTable_->RowCount( parametersFilter, &count );

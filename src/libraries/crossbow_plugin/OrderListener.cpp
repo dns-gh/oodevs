@@ -20,13 +20,12 @@ using namespace crossbow;
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
 OrderListener::OrderListener( Connector& connector, dispatcher::SimulationPublisher_ABC& publisher, const kernel::OrderTypes& types, const Model& model )
-    : publisher_    ( publisher )
-    , dispatcher_   ( new OrderDispatcher( connector, types, model ) )
-    , table_        ( connector.GetTable( "Orders" ) )
-    , waitingOrdersFilter_()
-    , cursor_       ()
+    : publisher_          ( publisher )
+    , dispatcher_         ( new OrderDispatcher( connector, types, model ) )
+    , table_              ( connector.GetTable( "Orders" ) )
+    , waitingOrdersFilter_( CLSID_QueryFilter )
+    , cursor_             ()
 {
-    waitingOrdersFilter_.CreateInstance( CLSID_QueryFilter );
     waitingOrdersFilter_->put_WhereClause( CComBSTR( "processed=false" ) );
 }
 

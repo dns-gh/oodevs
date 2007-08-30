@@ -62,15 +62,13 @@ bool ConnectorFacade::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
     case T_MsgsSimToClient_msg_msg_unit_knowledge_creation:
     case T_MsgsSimToClient_msg_msg_unit_knowledge_update:
     case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:
-    case T_MsgsSimToClient_msg_msg_report:
-        relevant = true;
-        break;
     case T_MsgsSimToClient_msg_msg_folk_creation:
     case T_MsgsSimToClient_msg_msg_folk_graph_edge_update:
         relevant = true;
         break;
     case T_MsgsSimToClient_msg_msg_unit_creation:
     case T_MsgsSimToClient_msg_msg_unit_destruction:
+    case T_MsgsSimToClient_msg_msg_report:
         relevant = true;
         break;
     case T_MsgsSimToClient_msg_msg_unit_attributes:
@@ -102,7 +100,7 @@ void ConnectorFacade::UpdateOnTick( const ASN1T_MsgsSimToClient& asnMsg )
 {
     if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_begin_tick )
     {
-        connector_->Lock();        
+        connector_->Lock();
         UpdateListeners(); // $$$$ JCR 2007-08-02: Push it out of here ...
     }
     else if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )

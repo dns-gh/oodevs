@@ -150,8 +150,7 @@ void GeometryEditor::ConvertCoordMosToSim( const std::string& strMgrs, IPointPtr
     BSTR        stUTM;
     BSTR        stMGRS;
         
-    ICoordinateToolPtr spConverter;
-    spConverter.CreateInstance( CLSID_CoordinateTool ); //WGS 1984 (WGS84)
+    ICoordinateToolPtr spConverter( CLSID_CoordinateTool ); //WGS 1984 (WGS84)
     if ( FAILED( spConverter->ConvertLocation( CComVariant( strMgrs.c_str() ), 4, CComVariant( L"WGS 1984 (WGS84)" ), CComVariant( L"WGS 1984 (WGS84)" ), &spPointWGS, &spPoint, &stDMS, &stUTM, &stMGRS ) ) )
         check_error();
 }

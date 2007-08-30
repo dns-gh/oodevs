@@ -23,19 +23,19 @@ using namespace crossbow;
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
 Connector::Connector( const dispatcher::Config& config, const dispatcher::Model& model )
-    : pScopeEditor_  ( 0 )
-    , model_         ( model )
-    , reportFactory_ ( new ReportFactory( config, model ) )
-    , folk_          ( new FolkManager( config ) )
+    : model_        ( model )
+    , reportFactory_( new ReportFactory( config, model_ ) )
+    , folk_         ( new FolkManager( config ) )
+    , scopeEditor_  ( new ScopeEditor( model_, *reportFactory_, *folk_ ) )
 {
-    ::CoInitialize( NULL ); // Initialize COM
-
-// #if ! defined( _ARCGIS_VERSION_ )  // $$$$ JCR 2007-06-14: do not use license checking on arcgis version lower than 9.2
+    ::CoInitialize( NULL );
+//    #if ! defined( _ARCGIS_VERSION_ )  // $$$$ JCR 2007-06-14: do not use license checking on arcgis version lower than 9.2
     CheckOutLicences( esriLicenseProductCodeArcInfo );
-// #endif
+//    #endif
 
     const dispatcher::PluginConfig& pluginConfig = config.GetPluginConfig( "crossbow" );
     ConnectToGeodatabase( config.BuildGameChildFile( pluginConfig.GetParameter( "geodatabase" ) ) );
+    LoadSpatialReference();
 }
 
 // -----------------------------------------------------------------------------
@@ -44,27 +44,24 @@ Connector::Connector( const dispatcher::Config& config, const dispatcher::Model&
 // -----------------------------------------------------------------------------
 Connector::~Connector()
 {
-    if( IsLocked() )
-        Unlock();
+    scopeEditor_.release();
     if( spLicenseHandler_ )
         spLicenseHandler_->Shutdown();
-    //::CoUninitialize(); // Release COM // $$$$ SBO 2007-06-12:
+    ::CoUninitialize();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Connector::CheckOutLicences
 // Created: JCR 2007-06-14
 // -----------------------------------------------------------------------------
-void Connector::CheckOutLicences( esriLicenseProductCode eProcuct )
+void Connector::CheckOutLicences( esriLicenseProductCode product )
 {
-    esriLicenseStatus status;
     if( FAILED( spLicenseHandler_.CreateInstance( CLSID_AoInitialize ) ) )
         throw std::runtime_error( "Unable to initialize license manager" );
-
-    if( FAILED( spLicenseHandler_->IsProductCodeAvailable( eProcuct, &status ) ) )
+    esriLicenseStatus status;
+    if( FAILED( spLicenseHandler_->IsProductCodeAvailable( product, &status ) ) )
         throw std::runtime_error( "No product available" );
-
-    if( FAILED( spLicenseHandler_->Initialize( esriLicenseProductCodeArcInfo, &status ) ) )
+    if( FAILED( spLicenseHandler_->Initialize( product, &status ) ) )
         throw std::runtime_error( "Unable to retrieve license information" );
 }
 
@@ -74,33 +71,27 @@ void Connector::CheckOutLicences( esriLicenseProductCode eProcuct )
 // -----------------------------------------------------------------------------
 void Connector::ConnectToGeodatabase( const std::string& geodatabase )
 {
-    IWorkspaceFactoryPtr spWorkspaceFactory;
-    if( FAILED( spWorkspaceFactory.CreateInstance( CLSID_AccessWorkspaceFactory ) ) )
-        throw std::runtime_error( "Unable to create Database access from CLSID_AccessWorkspaceFactory id." );
-
-    // Connect to Geodatabase
-    if( FAILED( spWorkspaceFactory->OpenFromFile( CComBSTR( geodatabase.c_str() ), NULL, &spWorkspace_ ) ) )
-        throw std::runtime_error( "Unable connect to geodatabase: " + geodatabase );
-
-    // QI for the IFeatureWorkspace
-    if( FAILED( spWorkspace_->QueryInterface( IID_IFeatureWorkspace, (LPVOID*)&spFeatureWorkspace_ ) ) )
+    IWorkspaceFactoryPtr spWorkspaceFactory( CLSID_AccessWorkspaceFactory );
+    IWorkspacePtr workspace;
+    if( spWorkspaceFactory == NULL )
+        throw std::runtime_error( "Unable to create Access workspace factory." );
+    if( FAILED( spWorkspaceFactory->OpenFromFile( CComBSTR( geodatabase.c_str() ), NULL, &workspace ) ) )
+        throw std::runtime_error( "Unable to connect to geodatabase: " + geodatabase );
+    if( FAILED( workspace->QueryInterface( IID_IFeatureWorkspace, (LPVOID*)&spWorkspace_ ) ) )
         throw std::runtime_error( "Cannot retrieve IFeatureWorkspace interface." );
-
-    LoadStatialReference( "vmap" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Connector::LoadStatialReference
 // Created: JCR 2007-05-11
 // -----------------------------------------------------------------------------
-void Connector::LoadStatialReference( const std::string& feature )
+void Connector::LoadSpatialReference()
 {
-    IFeatureDatasetPtr  spFeatureDataset;
-    IGeoDatasetPtr      spGeodataset;
-
-    spFeatureWorkspace_->OpenFeatureDataset( CComBSTR( feature.c_str() ), &spFeatureDataset );
-    spFeatureDataset->QueryInterface( IID_IGeoDataset, (LPVOID*)&spGeodataset );
-    spGeodataset->get_SpatialReference( &spSpatialReference_ );
+    ISpatialReferenceFactoryPtr factory( CLSID_SpatialReferenceEnvironment );
+    IGeographicCoordinateSystemPtr geoCoordSystem;
+    if( factory == NULL || FAILED( factory->CreateGeographicCoordinateSystem( (int)esriSRGeoCS_WGS1984, &geoCoordSystem ) ) ) // _NTF / _WGS1984
+        throw std::runtime_error( "Unable to initialize coordinate system" );
+    spSpatialReference_ = geoCoordSystem;
 }
 
 namespace
@@ -133,15 +124,16 @@ namespace
 // Name: Connector::LoadFeatureClass
 // Created: JCR 2007-05-11
 // -----------------------------------------------------------------------------
-IFeatureClassPtr Connector::LoadFeatureClass( const std::string& feature, bool clear )
+IFeatureClassPtr Connector::LoadFeatureClass( const std::string& feature )
 {
     IFeatureClassPtr spFeatureClass;
-
-    if( FAILED( spFeatureWorkspace_->OpenFeatureClass( CComBSTR( feature.c_str() ), &spFeatureClass ) ) )
+    if( FAILED( spWorkspace_->OpenFeatureClass( CComBSTR( feature.c_str() ), &spFeatureClass ) ) || spFeatureClass == NULL )
         check_error();
-    // $$$$ SBO 2007-05-30: throw if feature not found
-    if( spFeatureClass != 0 && clear )
+    else
+    {
         ClearFeatureClass( spFeatureClass );
+        SetSpatialReference( spFeatureClass );
+    }
     return spFeatureClass;
 }
 
@@ -151,7 +143,26 @@ IFeatureClassPtr Connector::LoadFeatureClass( const std::string& feature, bool c
 // -----------------------------------------------------------------------------
 void Connector::ClearFeatureClass( IFeatureClassPtr spFeatureClass )
 {
-    ScopeEditor( model_, *reportFactory_, *folk_ ).Clear( spFeatureClass );
+    scopeEditor_->Clear( spFeatureClass );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Connector::SetSpatialReference
+// Created: SBO 2007-08-29
+// -----------------------------------------------------------------------------
+void Connector::SetSpatialReference( IFeatureClassPtr spFeatureClass )
+{
+    IGeoDatasetSchemaEditPtr geoDatasetSchemaEdit;
+    if( !FAILED( spFeatureClass->QueryInterface( IID_IGeoDatasetSchemaEdit, (LPVOID*)&geoDatasetSchemaEdit ) ) )
+    {
+        VARIANT_BOOL canAlter;
+        if( !FAILED( geoDatasetSchemaEdit->get_CanAlterSpatialReference( &canAlter ) ) && canAlter == VARIANT_TRUE )
+        {
+            geoDatasetSchemaEdit->AlterSpatialReference( spSpatialReference_ );
+            return;
+        }
+    }
+    check_error();
 }
 
 // -----------------------------------------------------------------------------
@@ -162,7 +173,7 @@ IFeatureClassPtr Connector::GetFeatureClass( const std::string& feature )
 {
     IFeatureClassPtr& spFeatureClass = features_[ feature ];
     if( spFeatureClass == NULL )
-        features_[ feature ] = LoadFeatureClass( feature, true );
+        spFeatureClass = LoadFeatureClass( feature );
     return spFeatureClass;
 }
 
@@ -172,19 +183,17 @@ IFeatureClassPtr Connector::GetFeatureClass( const std::string& feature )
 // -----------------------------------------------------------------------------
 ITablePtr Connector::GetTable( const std::string& name )
 {
-    ITablePtr spTable = tables_[ name ];
+    ITablePtr& spTable = tables_[ name ];
     if( spTable == NULL )
     {
-        if( FAILED( spFeatureWorkspace_->OpenTable( CComBSTR( name.c_str() ), &spTable ) ) )
+        if( FAILED( spWorkspace_->OpenTable( CComBSTR( name.c_str() ), &spTable ) ) )
         {
             check_error();
             throw std::runtime_error( "cannot open" + name );
         }
-        IQueryFilterPtr spFilter;
-        spFilter.CreateInstance( CLSID_QueryFilter );
+        IQueryFilterPtr spFilter( CLSID_QueryFilter );
         spFilter->put_WhereClause( CComBSTR( "1" ) );
         spTable->DeleteSearchedRows( spFilter );
-        tables_[ name ] = spTable;
     }
     return spTable;
 }
@@ -195,8 +204,7 @@ ITablePtr Connector::GetTable( const std::string& name )
 // -----------------------------------------------------------------------------
 void Connector::Lock()
 {
-    pScopeEditor_ = new ScopeEditor( model_, *reportFactory_, *folk_ );
-    pScopeEditor_->StartEdit( spWorkspace_, spSpatialReference_ );
+    scopeEditor_->StartEdit( spWorkspace_, spSpatialReference_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -205,19 +213,7 @@ void Connector::Lock()
 // -----------------------------------------------------------------------------
 void Connector::Unlock()
 {
-    assert( pScopeEditor_ );
-    pScopeEditor_->StopEdit();
-    delete pScopeEditor_;
-    pScopeEditor_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Connector::Islock
-// Created: JCR 2007-05-14
-// -----------------------------------------------------------------------------
-bool Connector::IsLocked() const
-{
-    return pScopeEditor_ != 0;
+    scopeEditor_->StopEdit();
 }
 
 // -----------------------------------------------------------------------------
@@ -230,49 +226,46 @@ void Connector::VisitModel( dispatcher::ModelVisitor_ABC& visitor )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Connector::Insert
+// Name: Connector::Create
 // Created: JCR 2007-05-24
 // -----------------------------------------------------------------------------
-template< typename ASN1T_MsgCreation >
-void Connector::Insert( IFeatureClassPtr spFeature, const ASN1T_MsgCreation& asn )
+template< typename Message >
+void Connector::Create( IFeatureClassPtr spFeature, const Message& asn )
 {
-    if( pScopeEditor_ != NULL && spFeature != NULL )
-        pScopeEditor_->Insert( spFeature, asn );
+    scopeEditor_->Insert( spFeature, asn );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Connector::Insert
+// Name: Connector::Create
 // Created: JCR 2007-06-11
 // -----------------------------------------------------------------------------
-template< typename ASN1T_MsgCreation >
-void Connector::Insert( ITablePtr spTable, const ASN1T_MsgCreation& asn )
+template< typename Message >
+void Connector::Create( ITablePtr spTable, const Message& asn )
 {
-    if( pScopeEditor_ != NULL && spTable != NULL )
-        pScopeEditor_->Insert( spTable, asn );
+    scopeEditor_->Insert( spTable, asn );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Connector::Delete
 // Created: JCR 2007-05-24
 // -----------------------------------------------------------------------------
-template< typename ASN1T_MsgDestruction >
-void Connector::Delete( IFeatureClassPtr spFeature, const ASN1T_MsgDestruction& asn_oid )
+template< typename Message >
+void Connector::Delete( IFeatureClassPtr spFeature, const Message& asn_oid )
 {
-    if( pScopeEditor_ != NULL && spFeature != NULL )
-        pScopeEditor_->Delete( spFeature, asn_oid );
+    scopeEditor_->Delete( spFeature, asn_oid );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Connector::Send
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
-template<typename ASN1T_MsgUpdate >
-void Connector::Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgUpdate& asn )
+template<typename Message >
+void Connector::Update( IFeatureClassPtr pFeatureClass, const Message& asn )
 {
-    if( pScopeEditor_ && pScopeEditor_->Update( pFeatureClass, asn.oid ) )
+    if( scopeEditor_->Update( pFeatureClass, asn ) )
     {
-        pScopeEditor_->Write( asn );
-        pScopeEditor_->Flush();
+        scopeEditor_->Write( asn );
+        scopeEditor_->Flush();
     }
 }
 
@@ -282,19 +275,13 @@ void Connector::Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgUpdate& asn
 // -----------------------------------------------------------------------------
 IFeatureClassPtr Connector::GetObjectFeatureClass( const ASN1T_Location& location )
 {
-    IFeatureClassPtr pFeatureClass;
+    std::string className = "TacticalObjectArea";
     switch ( location.type )
     {
-    case EnumLocationType::point:
-        pFeatureClass = GetFeatureClass( "TacticalObjectPoint" );
-        break;
-    case EnumLocationType::line:        
-        pFeatureClass = GetFeatureClass( "TacticalObjectLine" );
-        break;
-    default:
-        pFeatureClass = GetFeatureClass( "TacticalObjectArea" );
+    case EnumLocationType::point: className = "TacticalObjectPoint"; break;
+    case EnumLocationType::line:  className = "TacticalObjectLine"; break;
     }
-    return pFeatureClass;
+    return GetFeatureClass( className );
 }
     
 // -----------------------------------------------------------------------------
@@ -303,40 +290,34 @@ IFeatureClassPtr Connector::GetObjectFeatureClass( const ASN1T_Location& locatio
 // -----------------------------------------------------------------------------
 void Connector::Send( const ASN1T_MsgsSimToClient& asn )
 {
-    bool bForceLock = !IsLocked();
-
-    if( bForceLock )
-        Lock();
     switch ( asn.msg.t )
     {
-    case T_MsgsSimToClient_msg_msg_formation_creation:  Insert( GetTable( "Formations" ), *asn.msg.u.msg_formation_creation ); break;
-    case T_MsgsSimToClient_msg_msg_automat_creation:    Insert( GetTable( "Formations" ), *asn.msg.u.msg_automat_creation ); break;
+    case T_MsgsSimToClient_msg_msg_formation_creation:  Create( GetTable( "Formations" ), *asn.msg.u.msg_formation_creation ); break;
+    case T_MsgsSimToClient_msg_msg_automat_creation:    Create( GetTable( "Formations" ), *asn.msg.u.msg_automat_creation ); break;
 
-    case T_MsgsSimToClient_msg_msg_lima_creation:       Insert( GetFeatureClass( "TacticalLines" ), *asn.msg.u.msg_lima_creation ); break;
-    case T_MsgsSimToClient_msg_msg_lima_update:         Send( GetFeatureClass( "TacticalLines" ), *asn.msg.u.msg_lima_update ); break;
+    case T_MsgsSimToClient_msg_msg_lima_creation:       Create( GetFeatureClass( "TacticalLines" ), *asn.msg.u.msg_lima_creation ); break;
+    case T_MsgsSimToClient_msg_msg_lima_update:         Update( GetFeatureClass( "TacticalLines" ), *asn.msg.u.msg_lima_update ); break;
     case T_MsgsSimToClient_msg_msg_lima_destruction:    Delete( GetFeatureClass( "TacticalLines" ), asn.msg.u.msg_lima_destruction ); break;
 
-    case T_MsgsSimToClient_msg_msg_limit_creation:      Insert( GetFeatureClass( "BoundaryLimits" ), *asn.msg.u.msg_limit_creation ); break;
+    case T_MsgsSimToClient_msg_msg_limit_creation:      Create( GetFeatureClass( "BoundaryLimits" ), *asn.msg.u.msg_limit_creation ); break;
     case T_MsgsSimToClient_msg_msg_limit_destruction:   Delete( GetFeatureClass( "BoundaryLimits" ), asn.msg.u.msg_lima_destruction ); break;
 
-    case T_MsgsSimToClient_msg_msg_unit_creation:       Insert( GetFeatureClass( "UnitForces" ), *asn.msg.u.msg_unit_creation ); break;
-    case T_MsgsSimToClient_msg_msg_unit_attributes:     Send( GetFeatureClass( "UnitForces" ), *asn.msg.u.msg_unit_attributes ); break;
+    case T_MsgsSimToClient_msg_msg_unit_creation:       Create( GetFeatureClass( "UnitForces" ), *asn.msg.u.msg_unit_creation ); break;
+    case T_MsgsSimToClient_msg_msg_unit_attributes:     Update( GetFeatureClass( "UnitForces" ), *asn.msg.u.msg_unit_attributes ); break;
     case T_MsgsSimToClient_msg_msg_unit_destruction:    Delete( GetFeatureClass( "UnitForces" ), asn.msg.u.msg_unit_destruction ); break;
 
-    case T_MsgsSimToClient_msg_msg_unit_knowledge_creation:     Insert( GetFeatureClass( "KnowledgeUnits" ), *asn.msg.u.msg_unit_knowledge_creation ); break;
-    case T_MsgsSimToClient_msg_msg_unit_knowledge_update:       Send( GetFeatureClass( "KnowledgeUnits" ), *asn.msg.u.msg_unit_knowledge_update ); break;
+    case T_MsgsSimToClient_msg_msg_unit_knowledge_creation:     Create( GetFeatureClass( "KnowledgeUnits" ), *asn.msg.u.msg_unit_knowledge_creation ); break;
+    case T_MsgsSimToClient_msg_msg_unit_knowledge_update:       Update( GetFeatureClass( "KnowledgeUnits" ), *asn.msg.u.msg_unit_knowledge_update ); break;
     case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:  Delete( GetFeatureClass( "KnowledgeUnits" ), asn.msg.u.msg_unit_knowledge_destruction->oid );  break;
 
-    case T_MsgsSimToClient_msg_msg_object_creation:     Insert( GetObjectFeatureClass( asn.msg.u.msg_object_creation->location ), *asn.msg.u.msg_object_creation ); break;
-    case T_MsgsSimToClient_msg_msg_object_update:       Send( *asn.msg.u.msg_object_update ); break;
+    case T_MsgsSimToClient_msg_msg_object_creation:     Create( GetObjectFeatureClass( asn.msg.u.msg_object_creation->location ), *asn.msg.u.msg_object_creation ); break;
+    case T_MsgsSimToClient_msg_msg_object_update:       Update( GetObjectFeatureClass( asn.msg.u.msg_object_update->location ), *asn.msg.u.msg_object_update ); break;
     case T_MsgsSimToClient_msg_msg_object_destruction:  Delete( asn.msg.u.msg_object_destruction ); break;
-    case T_MsgsSimToClient_msg_msg_report:              Insert( GetTable( "Reports" ), *asn.msg.u.msg_report ); break;
+    case T_MsgsSimToClient_msg_msg_report:              Create( GetTable( "Reports" ), *asn.msg.u.msg_report ); break;
     
     case T_MsgsSimToClient_msg_msg_folk_creation:           folk_->Send( *asn.msg.u.msg_folk_creation ); break;
-    case T_MsgsSimToClient_msg_msg_folk_graph_edge_update:  Send( GetFeatureClass( "Population" ), *asn.msg.u.msg_folk_graph_edge_update ); break;
+    case T_MsgsSimToClient_msg_msg_folk_graph_edge_update:  Update( GetFeatureClass( "Population" ), *asn.msg.u.msg_folk_graph_edge_update ); break;
     }
-    if( bForceLock )
-        Unlock();
 }
 
 // -----------------------------------------------------------------------------
@@ -358,50 +339,12 @@ void Connector::Send( const ASN1T_MsgsReplayToClient& )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Connector::Send
-// Created: JCR 2007-05-23
-// -----------------------------------------------------------------------------
-void Connector::Send( IFeatureClassPtr /*pFeatureClass*/, const ASN1T_MsgLimaUpdate& /*msg*/ )
-{
-    // $$$$ AGE 2007-08-27: WTF
-}
-
-// -----------------------------------------------------------------------------
-// Name: Connector::Send
-// Created: JCR 2007-08-29
-// -----------------------------------------------------------------------------
-void Connector::Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgFolkGraphEdgeUpdate& asn )
-{
-    if( pScopeEditor_ )
-    {
-        pScopeEditor_->Update( pFeatureClass, asn );
-        pScopeEditor_->Flush();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Connector::Send
+// Name: Connector::Delete
 // Created: JCR 2007-05-24
 // -----------------------------------------------------------------------------
 void Connector::Delete( const ASN1T_MsgObjectDestruction& asn )
 {
-    if( pScopeEditor_ )
-    {
-        pScopeEditor_->Delete( GetFeatureClass( "TacticalObjectPoint" ), asn );
-        pScopeEditor_->Delete( GetFeatureClass( "TacticalObjectLine" ), asn );
-        pScopeEditor_->Delete( GetFeatureClass( "TacticalObjectArea" ), asn );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Connector::Send
-// Created: JCR 2007-04-30
-// -----------------------------------------------------------------------------
-void Connector::Send( const ASN1T_MsgObjectUpdate& asn )
-{
-    if( pScopeEditor_ && pScopeEditor_->Update( GetObjectFeatureClass( asn.location ), asn.oid ) )
-    {
-        pScopeEditor_->Write( asn );
-        pScopeEditor_->Flush();
-    }
+    scopeEditor_->Delete( GetFeatureClass( "TacticalObjectPoint" ), asn );
+    scopeEditor_->Delete( GetFeatureClass( "TacticalObjectLine" ), asn );
+    scopeEditor_->Delete( GetFeatureClass( "TacticalObjectArea" ), asn );
 }

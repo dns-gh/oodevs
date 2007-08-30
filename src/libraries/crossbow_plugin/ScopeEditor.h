@@ -52,11 +52,14 @@ public:
     //! @name Update operators
     //@{
     bool Delete( IFeatureClassPtr spFeatureClass, ASN1T_OID oid );
-    bool Update( IFeatureClassPtr spFeatureClass, ASN1T_OID oid );
-    void Update( IFeatureClassPtr spFeatureClass, const ASN1T_MsgFolkGraphEdgeUpdate& msg );
+    template< typename Message >
+    bool Update( IFeatureClassPtr spFeatureClass, const Message& message );
+    bool Update( IFeatureClassPtr spFeatureClass, const ASN1T_MsgFolkGraphEdgeUpdate& msg );
     void Write( const ASN1T_MsgUnitAttributes& msg );
     void Write( const ASN1T_MsgUnitKnowledgeUpdate& msg );
     void Write( const ASN1T_MsgObjectUpdate& msg );    
+    void Write( const ASN1T_MsgLimaUpdate& msg );
+    void Write( const ASN1T_MsgFolkGraphEdgeUpdate& msg );
     void Flush();
     //@}
 
@@ -92,14 +95,27 @@ private:
 private:
     //! @name Member data
     //@{
-    const dispatcher::Model& model_;
-    const ReportFactory&     reportFactory_;
-    const FolkManager&       folk_;
-    IFeaturePtr              spFeature_;
-    IWorkspaceEditPtr        spWorkspaceEdit_;
-    ISpatialReferencePtr     spSpatialReference_;
+    const dispatcher::Model&   model_;
+    const ReportFactory&       reportFactory_;
+    const FolkManager&         folk_;
+    IFeaturePtr                spFeature_;
+    IWorkspaceEditPtr          spWorkspaceEdit_;
+    ISpatialReferencePtr       spSpatialReference_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: ScopeEditor::Update
+// Created: SBO 2007-08-30
+// -----------------------------------------------------------------------------
+template< typename Message >
+bool ScopeEditor::Update( IFeatureClassPtr spFeatureClass, const Message& message )
+{
+    IFeatureCursorPtr spCursor = UpdateCursor( spFeatureClass, "Public_OID", message.oid );
+    if( spCursor )
+        spCursor->NextFeature( &spFeature_ );
+    return spFeature_ != NULL;
+}
 
 // -----------------------------------------------------------------------------
 // Name: ScopeEditor::Insert

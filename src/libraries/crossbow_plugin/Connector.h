@@ -66,38 +66,31 @@ private:
 
     //! @name Helpers
     //@{
-    bool IsLocked() const;
-    void                ConnectToGeodatabase( const std::string& geodatabase );
-    void                CheckOutLicences( esriLicenseProductCode eProcuct );
-    void                LoadStatialReference( const std::string& feature );
-    IFeatureClassPtr    LoadFeatureClass( const std::string& feature, bool clear );
-    IFeatureClassPtr    GetFeatureClass( const std::string& feature );
-    void                ClearFeatureClass( IFeatureClassPtr spFeatureClass );
-    IFeatureClassPtr    GetObjectFeatureClass( const ASN1T_Location& location );
+    void             ConnectToGeodatabase( const std::string& geodatabase );
+    void             CheckOutLicences( esriLicenseProductCode eProcuct );
+    void             LoadSpatialReference();
+    IFeatureClassPtr LoadFeatureClass( const std::string& feature );
+    IFeatureClassPtr GetFeatureClass( const std::string& feature );
+    IFeatureClassPtr GetObjectFeatureClass( const ASN1T_Location& location );
+    void             ClearFeatureClass( IFeatureClassPtr spFeatureClass );
+    void             SetSpatialReference( IFeatureClassPtr spFeatureClass );
     //@}
 
-    //! @name
+    //! @name Message handlers
     //@{
-    template<typename ASN1T_MsgUpdate >
-    void Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgUpdate& asn );
-    void Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgLimaUpdate& asn );
-    void Send( IFeatureClassPtr pFeatureClass, const ASN1T_MsgFolkGraphEdgeUpdate& asn );
-    void Send( const ASN1T_MsgObjectUpdate& msg ); 
-    void Delete( const ASN1T_MsgObjectDestruction& msg );    
+    void Delete( const ASN1T_MsgObjectDestruction& msg );
+
+    template< typename Message >
+    void Create( IFeatureClassPtr spFeature, const Message& asn );
+    template< typename Message >
+    void Create( ITablePtr spTable, const Message& asn );
+    template< typename Message >
+    void Delete( IFeatureClassPtr spFeature, const Message& asn );
+    template< typename Message >
+    void Update( IFeatureClassPtr pFeatureClass, const Message& asn );
     //@}
 
-    //! @name
-    //@{
-    template< typename ASN1T_MsgCreation >
-    void Insert( IFeatureClassPtr spFeature, const ASN1T_MsgCreation& asn );
-    template< typename ASN1T_MsgCreation >
-    void Insert( ITablePtr spTable, const ASN1T_MsgCreation& asn );
-    template< typename ASN1T_MsgDestruction >
-    void Delete( IFeatureClassPtr spFeature, const ASN1T_MsgDestruction& asn );
-    //@}
-
-private:
-    //! @name
+    //! @name Types
     //@{
     typedef std::map< std::string, IFeatureClassPtr > T_FeatureMap;
     typedef std::map< std::string, ITablePtr >        T_Tables;
@@ -107,23 +100,18 @@ private:
     //! @name Member data
     //@{
     IAoInitializePtr        spLicenseHandler_;
-    IWorkspacePtr           spWorkspace_;
-    IFeatureWorkspacePtr    spFeatureWorkspace_;
+    IFeatureWorkspacePtr    spWorkspace_;
     T_FeatureMap            features_;
-    IFeatureClassPtr        spUnitFeatureClass_;  // $$$$ JCR 2007-04-30: use FeatureClassDispatcher
-    IFeatureClassPtr        spLimitFeatureClass_;  // $$$$ JCR 2007-04-30: use FeatureClassDispatcher
-    IFeatureClassPtr        spLimaFeatureClass_;  // $$$$ JCR 2007-04-30: use FeatureClassDispatcher
-    IFeatureClassPtr        spObjectFeatureClass_;  // $$$$ JCR 2007-04-30: use FeatureClassDispatcher
-    ISpatialReferencePtr    spSpatialReference_;
     T_Tables                tables_;
+    ISpatialReferencePtr    spSpatialReference_;
     //@}
 
     //! @name
     //@{
-    ScopeEditor*                pScopeEditor_;
-    const dispatcher::Model&    model_;
-    std::auto_ptr< ReportFactory >  reportFactory_;
-    std::auto_ptr< FolkManager >    folk_;
+    const dispatcher::Model&       model_;
+    std::auto_ptr< ReportFactory > reportFactory_;
+    std::auto_ptr< FolkManager >   folk_;
+    std::auto_ptr< ScopeEditor >   scopeEditor_;
     //@}
 };
 

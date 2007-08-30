@@ -20,7 +20,6 @@
 #include "dispatcher/Model.h"
 #include "tools/App6Symbol.h"
 
-using namespace dispatcher;
 using namespace crossbow;
 
 // -----------------------------------------------------------------------------
@@ -41,7 +40,11 @@ ScopeEditor::ScopeEditor( const dispatcher::Model& model, const ReportFactory& r
 // -----------------------------------------------------------------------------
 ScopeEditor::~ScopeEditor()
 {
-    // NOTHING
+    VARIANT_BOOL editing;
+    if( !FAILED( spWorkspaceEdit_->IsBeingEdited( &editing ) ) && editing == VARIANT_TRUE )
+        StopEdit();
+    spWorkspaceEdit_ = 0;
+    spSpatialReference_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -50,10 +53,15 @@ ScopeEditor::~ScopeEditor()
 // -----------------------------------------------------------------------------
 void ScopeEditor::StartEdit( IWorkspacePtr spWorkspace, ISpatialReferencePtr spSpatialReference )
 {
-    spWorkspaceEdit_ = spWorkspace;
+    if( FAILED( spWorkspace->QueryInterface( IID_IWorkspaceEdit, (LPVOID*)&spWorkspaceEdit_ ) ) || spWorkspaceEdit_ == 0 )
+        return;
     spSpatialReference_ = spSpatialReference;
-    spWorkspaceEdit_->StartEditing( VARIANT_FALSE );
-    spWorkspaceEdit_->StartEditOperation();
+    VARIANT_BOOL editing;
+    if( !FAILED( spWorkspaceEdit_->IsBeingEdited( &editing ) ) && editing == VARIANT_FALSE )
+    {
+        spWorkspaceEdit_->StartEditing( VARIANT_FALSE );
+        spWorkspaceEdit_->StartEditOperation();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -72,16 +80,12 @@ void ScopeEditor::StopEdit()
 // -----------------------------------------------------------------------------
 bool ScopeEditor::Clear( IFeatureClassPtr spFeatureClass )
 {
-    IFeatureCursorPtr   spCursor;
-
-    if( ! FAILED( spFeatureClass->Update( 0, VARIANT_TRUE, &spCursor ) ) )
+    ITablePtr table;
+    if( !FAILED( spFeatureClass.QueryInterface( IID_ITable, &table ) ) )
     {
-        spCursor->NextFeature( &spFeature_ );
-        while ( spFeature_ )
-        {
-            spCursor->DeleteFeature();
-            spCursor->NextFeature( &spFeature_ );
-        }
+        IQueryFilterPtr filter( CLSID_QueryFilter );
+        filter->put_WhereClause( CComBSTR( "1" ) );
+        table->DeleteSearchedRows( filter );
     }
     return true;
 }
@@ -99,8 +103,7 @@ void ScopeEditor::ThrowError()
 
     TCHAR szFinal[ 255 ];
     _stprintf( szFinal, _T( "%s" ), ( LPCTSTR )_bstr_t( strError ) );
-    MT_LOG_ERROR_MSG( szFinal );
-    //throw std::exception( szFinal ); // $$$$ SBO 2007-08-24: should throw
+    MT_LOG_ERROR_MSG( szFinal ); // $$$$ SBO 2007-08-24: should throw
 }
 
 // -----------------------------------------------------------------------------
@@ -109,13 +112,12 @@ void ScopeEditor::ThrowError()
 // -----------------------------------------------------------------------------
 IFeatureCursorPtr ScopeEditor::UpdateCursor( IFeatureClassPtr spFeatureClass, std::string idField, ASN1T_OID oid )
 {
-    IFeatureCursorPtr   spCursor;
-    IQueryFilterPtr     spQueryFilter;
-
     std::stringstream ss;
     ss << idField << "=" << oid;
 
-    spQueryFilter.CreateInstance( CLSID_QueryFilter );
+    IFeatureCursorPtr spCursor;
+    IQueryFilterPtr spQueryFilter( CLSID_QueryFilter );
+
     spQueryFilter->put_WhereClause( CComBSTR( ss.str().c_str() ) );
     spFeatureClass->Update( spQueryFilter, VARIANT_TRUE, &spCursor );
     return spCursor;
@@ -123,28 +125,14 @@ IFeatureCursorPtr ScopeEditor::UpdateCursor( IFeatureClassPtr spFeatureClass, st
 
 // -----------------------------------------------------------------------------
 // Name: ScopeEditor::Update
-// Created: JCR 2007-05-03
+// Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-bool ScopeEditor::Update( IFeatureClassPtr spFeatureClass, ASN1T_OID oid )
+bool ScopeEditor::Update( IFeatureClassPtr spFeatureClass, const ASN1T_MsgFolkGraphEdgeUpdate& asn )
 {
-    IFeatureCursorPtr   spCursor = UpdateCursor( spFeatureClass, "Public_OID", oid );
-
+    IFeatureCursorPtr spCursor = UpdateCursor( spFeatureClass, "LINK_ID", asn.oid );
     if( spCursor )
         spCursor->NextFeature( &spFeature_ );
     return spFeature_ != NULL;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScopeEditor::Update
-// Created: JCR 2007-08-29
-// -----------------------------------------------------------------------------
-void ScopeEditor::Update( IFeatureClassPtr spFeatureClass, const ASN1T_MsgFolkGraphEdgeUpdate& asn )
-{
-    IFeatureCursorPtr   spCursor = UpdateCursor( spFeatureClass, "LINK_ID", asn.oid );
-    if( spCursor )
-        spCursor->NextFeature( &spFeature_ );
-    if ( spFeature_ != NULL )
-        FolkEditor( *this, folk_ ).Write( spFeature_, asn );
 }
 
 // -----------------------------------------------------------------------------
@@ -307,9 +295,27 @@ void ScopeEditor::Write( IFeatureBufferPtr spBuffer, const ASN1T_MsgObjectCreati
 // Name: ScopeEditor::Write
 // Created: JCR 2007-05-03
 // -----------------------------------------------------------------------------
-void ScopeEditor::Write( const ASN1T_MsgObjectUpdate& /*asn*/ )
+void ScopeEditor::Write( const ASN1T_MsgObjectUpdate& asn )
 {
     // $$$$ JCR 2007-05-03: TODO
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScopeEditor::Write
+// Created: SBO 2007-08-30
+// -----------------------------------------------------------------------------
+void ScopeEditor::Write( const ASN1T_MsgLimaUpdate& msg )
+{
+    // $$$$ SBO 2007-08-30: TODO
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScopeEditor::Write
+// Created: SBO 2007-08-30
+// -----------------------------------------------------------------------------
+void ScopeEditor::Write( const ASN1T_MsgFolkGraphEdgeUpdate& asn )
+{
+    FolkEditor( *this, folk_ ).Write( spFeature_, asn );
 }
 
 // -----------------------------------------------------------------------------

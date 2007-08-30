@@ -22,23 +22,29 @@ using namespace crossbow;
 StatusListener::StatusListener( Connector& connector, dispatcher::SimulationPublisher_ABC& publisher )
     : publisher_( publisher )
     , paused_( false )
-{    
-    ITablePtr   spTable;
-    ICursorPtr  spCursor;
-
+{
+    // $$$$ SBO 2007-08-29: Create a wrapper for Properties access
     try
     {
+        ITablePtr   spTable;
+        ICursorPtr  spCursor;
+
         spTable = connector.GetTable( "SimulationProperties" );
         spTable->FindField( CComBSTR( L"PropertyValue" ), &lFieldValue_ );
         
-        IQueryFilterPtr spQueryFilter;
-        spQueryFilter.CreateInstance( CLSID_QueryFilter );
+        IQueryFilterPtr spQueryFilter( CLSID_QueryFilter );
         spQueryFilter->put_WhereClause( CComBSTR( L"Property=Status" ) );
         if( FAILED( spTable->Search( spQueryFilter, false, &spCursor ) ) )
-            throw std::runtime_error( "Search failed" ); // $$$$ SBO 2007-05-30:
-        spCursor->NextRow( &spRow_ );
+        {
+            // $$$$ SBO 2007-08-29: create property if not exist...
+            //throw std::runtime_error( "Search failed" ); // $$$$ SBO 2007-05-30: !!!!!
+            return;
+        }
+        // $$$$ SBO 2007-08-29: is keeping IRowPtr really supposed to work ?
+        if( spCursor != NULL )
+            spCursor->NextRow( &spRow_ );
     }
-    catch ( std::exception& )
+    catch( std::exception& )
     {
         spRow_ = (IRowPtr)0;
     }
@@ -73,7 +79,7 @@ namespace
 // -----------------------------------------------------------------------------
 void StatusListener::Listen()
 {
-    if ( spRow_ )
+    if( spRow_ )
     {
         CComVariant value;
         spRow_->get_Value( lFieldValue_, &value );        
