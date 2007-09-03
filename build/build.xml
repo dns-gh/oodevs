@@ -174,6 +174,7 @@ BLOCK "VarFileInfo"
         <build-lib name="simulation_kernel" pattern="lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/ASN"/>
             <includepath path="${libraries.dir}/simulation_kernel"/> <!-- pour MIL.h -->
+	    <defineset define="USE_DLL"/> 	      <!-- Include folk library : use dll -->
         </build-lib>
     </target>
 
@@ -257,7 +258,7 @@ BLOCK "VarFileInfo"
                          lib${ant.project.name}_simulation_terrain-${platform}-mt
                          lib${ant.project.name}_simulation_kernel-${platform}-mt
                          lib${ant.project.name}_dispatcher-${platform}-mt" >
-            <syslibset libs="dbghelp,psapi,iphlpapi "/>
+            <syslibset libs="dbghelp,psapi,iphlpapi"/>
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <includepath path="${include.dir}/ASN"/>
             <defineset define="_WIN32_WINNT=0x0400"/> <!-- for 'IsDebuggerPresent()' -->
