@@ -65,7 +65,7 @@ bool ConnectorFacade::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
     case T_MsgsSimToClient_msg_msg_unit_destruction:        
     case T_MsgsSimToClient_msg_msg_report:
     case T_MsgsSimToClient_msg_msg_folk_creation:
-    case T_MsgsSimToClient_msg_msg_folk_graph_edge_update:
+    case T_MsgsSimToClient_msg_msg_folk_graph_update:
         return true;            
     case T_MsgsSimToClient_msg_msg_unit_attributes:
         const ASN1T_MsgUnitAttributes* attributes = asn.msg.u.msg_unit_attributes;

@@ -196,7 +196,7 @@ uint MIL_Config::GetTimeStep() const
 inline
 uint MIL_Config::GetTimeFactor() const
 {
-    return timeStep_; 
+    return timeFactor_; 
 }
 
 // -----------------------------------------------------------------------------

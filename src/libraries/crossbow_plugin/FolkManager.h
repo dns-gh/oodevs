@@ -58,7 +58,7 @@ public:
     //@{
 	void Initialize();
     void Send( const ASN1T_MsgFolkCreation& asn );
-	void Send( const ASN1T_MsgFolkGraphEdgeUpdate& asn );    
+	void Send( const ASN1T_MsgFolkGraphUpdate& asn );    
 	//@}
 
     //! @name 
@@ -82,6 +82,7 @@ private:
     //@{
     template< typename MsgFolkManagerCreation_trait >
     void Update ( T_Trait& trait, const MsgFolkManagerCreation_trait& asn );
+	void Send( const ASN1T_MsgFolkGraphEdgeUpdate& asn );    
     //@}
 
 private:

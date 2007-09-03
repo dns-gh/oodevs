@@ -68,6 +68,16 @@ void FolkManager::Initialize()
 
 // -----------------------------------------------------------------------------
 // Name: FolkManager::Send
+// Created: AGE 2007-09-03
+// -----------------------------------------------------------------------------
+void FolkManager::Send( const ASN1T_MsgFolkGraphUpdate& asn )
+{
+    for( unsigned i = 0; i < asn.n; ++i )
+        Send( asn.elem[i] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FolkManager::Send
 // Created: JCR 2007-08-31
 // -----------------------------------------------------------------------------
 void FolkManager::Send( const ASN1T_MsgFolkGraphEdgeUpdate& asn )

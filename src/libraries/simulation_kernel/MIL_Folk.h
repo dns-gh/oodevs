@@ -35,13 +35,13 @@ public:
     //! @name Modifiers
     //@{
     void Update( unsigned utime, unsigned timeStep );    
-    void UpdateNetwork() const;
     void SendStateToNewClient() const;    
     //@}
 
 private:
     //! @name 
     //@{
+    void UpdateNetwork() const;
     void SendUpdate() const;
     void SendCreation() const;
     //@}

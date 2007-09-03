@@ -114,32 +114,60 @@ namespace
 
     struct FolkUpdateSerializer : public population::message::Serializer_ABC
     {
-        FolkUpdateSerializer() { Clear(); }
-
-        void Clear()
-        {
-            asn_().oid = 0;
-            asn_().population_occupation.n = 0;
-            asn_().population_occupation.elem = 0;
+        FolkUpdateSerializer()
+            : bufferOffset_( 0 )
+        { 
+            messages_.reserve( 50 );
+            const unsigned maxAsnSize      = 100000;
+            const unsigned maxBufferSize   = maxAsnSize * 4 / 5;
+            const unsigned maxBufferLength = maxBufferSize / sizeof( int );
+            buffer_.resize( maxBufferLength );
         }
 
-        // $$$$ JCR 2007-08-27:  not needed yet...
         virtual population::message::Serializer_ABC& operator <<( int value )
         {
-            asn_().oid = value;            
+            messages_.push_back( ASN1T_MsgFolkGraphEdgeUpdate() );
+            messages_.back().oid = value;
             return *this;
         }
 
         virtual population::message::Serializer_ABC& operator <<( const std::vector<int>& value )
         {
-            asn_().population_occupation.n = value.size();
-            asn_().population_occupation.elem = &*const_cast<std::vector<int>&>(value).begin();
-            asn_.Send();
-            Clear();
+            const unsigned size = value.size();
+            if( size + bufferOffset_ > buffer_.size() )
+                Flush();
+            memcpy( &buffer_[bufferOffset_], &*value.begin(), size * sizeof( int ) );
+            messages_.back().population_occupation.n    = size;
+            messages_.back().population_occupation.elem = &buffer_[bufferOffset_];
+            bufferOffset_+=size;
             return *this;
         } 
-        
-        NET_ASN_MsgFolkGraphEdgeUpdate asn_;
+        void Commit()
+        {
+            if( ! messages_.empty() )
+            {
+                NET_ASN_MsgFolkGraphUpdate message;
+                message().n    = messages_.size();
+                message().elem = &*messages_.begin();
+                message.Send();
+            }
+            bufferOffset_ = 0;
+            messages_.resize( 0 );
+        }
+    private:
+        void Flush()
+        {
+            if( messages_.empty() ) return;
+            int lastId = messages_.back().oid;
+            messages_.pop_back();
+            
+            Commit();
+            
+            *this << lastId;
+        }
+        std::vector< int > buffer_;
+        std::vector< ASN1T_MsgFolkGraphEdgeUpdate > messages_;
+        unsigned bufferOffset_;
     };
 }
 
@@ -167,4 +195,5 @@ void MIL_Folk::SendUpdate() const
 {
     FolkUpdateSerializer    serializer;    
     pFlow_->SerializePopulationUpdate( serializer );
+    serializer.Commit();
 }

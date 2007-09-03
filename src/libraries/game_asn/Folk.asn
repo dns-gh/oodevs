@@ -32,4 +32,6 @@ MsgFolkGraphEdgeUpdate ::= SEQUENCE
     population-occupation   SEQUENCE OF INTEGER (0..MAX)
 }
 
+MsgFolkGraphUpdate ::= SEQUENCE OF MsgFolkGraphEdgeUpdate
+
 END -- Folk

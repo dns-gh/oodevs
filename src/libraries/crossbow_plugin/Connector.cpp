@@ -333,8 +333,8 @@ void Connector::Send( const ASN1T_MsgsSimToClient& asn )
     case T_MsgsSimToClient_msg_msg_object_destruction:  Delete( asn.msg.u.msg_object_destruction ); break;
     case T_MsgsSimToClient_msg_msg_report:              Create( GetTable( "Reports" ), *asn.msg.u.msg_report ); break;
     
-    case T_MsgsSimToClient_msg_msg_folk_creation:           folk_->Send( *asn.msg.u.msg_folk_creation ); break;
-	case T_MsgsSimToClient_msg_msg_folk_graph_edge_update:  folk_->Send( *asn.msg.u.msg_folk_graph_edge_update ); break;
+    case T_MsgsSimToClient_msg_msg_folk_creation:      folk_->Send( *asn.msg.u.msg_folk_creation ); break;
+	case T_MsgsSimToClient_msg_msg_folk_graph_update:  folk_->Send( *asn.msg.u.msg_folk_graph_update ); break;
     }
 }
 
