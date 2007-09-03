@@ -58,6 +58,42 @@ void FolkManager::Update( T_Trait& trait, const MsgFolkCreation_trait& asn )
 }
 
 // -----------------------------------------------------------------------------
+// Name: FolkManager::Initialize
+// Created: JCR 2007-08-31
+// -----------------------------------------------------------------------------
+void FolkManager::Initialize()
+{
+	it_ = dump_.begin();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FolkManager::Send
+// Created: JCR 2007-08-31
+// -----------------------------------------------------------------------------
+void FolkManager::Send( const ASN1T_MsgFolkGraphEdgeUpdate& asn )
+{
+	if ( it_ == dump_.end() )
+	{
+		dump_.resize( dump_.size() + 1 );
+		it_ = --dump_.end();
+	}
+	PopulationInfo& info = *it_;
+
+	info.id_ = asn.oid;
+	info.population_ = Filter( asn, info.containers_ );
+	++it_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FolkManager::Get
+// Created: JCR 2007-08-31
+// -----------------------------------------------------------------------------
+const FolkManager::T_PopulationInfoVector& FolkManager::GetPopulationInfo() const
+{
+	return dump_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: FolkManager::Filter
 /* Read asn message containing population information and store appropriate 
    indiviudals
@@ -68,14 +104,15 @@ unsigned FolkManager::Filter( const ASN1T_MsgFolkGraphEdgeUpdate& asn, /*out*/ s
 {
     unsigned population = 0;
     int c = -1;
-    
-    for ( unsigned i = 0; i < asn.population_occupation.n; ++i )
+   
+	const unsigned size = activities_.size() * profiles_.size();
+	for ( unsigned i = 0; i < asn.population_occupation.n; ++i )
     {
         const int individuals = asn.population_occupation.elem[i];
-        if ( i % ( activities_.size() * profiles_.size() ) == 0 )
+        if ( i % size == 0 )
             ++c;
         population += individuals;
-        container[c] += individuals;
+        container[c] += individuals;		
     }
     return population;
 }

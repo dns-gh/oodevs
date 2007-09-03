@@ -82,6 +82,10 @@ public:
     std::string GetOrbatFile  () const;
 
     std::string BuildCheckpointChildFile( const std::string& file, std::string name = "" ) const;
+
+           bool IsPopulationEnabled() const;
+    std::string GetPopulationDir() const;
+    std::string GetPopulationFile() const;
     //@}
 
     //! @name CheckPoints
@@ -147,6 +151,7 @@ private:
     std::string                terrain_;
     std::string                weather_;
     std::string                orbat_;
+    std::string                population_;
     //@}
 };
 

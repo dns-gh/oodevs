@@ -124,12 +124,12 @@ namespace
 // Name: Connector::LoadFeatureClass
 // Created: JCR 2007-05-11
 // -----------------------------------------------------------------------------
-IFeatureClassPtr Connector::LoadFeatureClass( const std::string& feature )
+IFeatureClassPtr Connector::LoadFeatureClass( const std::string& feature, bool clear )
 {
     IFeatureClassPtr spFeatureClass;
     if( FAILED( spWorkspace_->OpenFeatureClass( CComBSTR( feature.c_str() ), &spFeatureClass ) ) || spFeatureClass == NULL )
         check_error();
-    else
+    else if ( clear )
     {
         ClearFeatureClass( spFeatureClass );
         SetSpatialReference( spFeatureClass );
@@ -169,11 +169,11 @@ void Connector::SetSpatialReference( IFeatureClassPtr spFeatureClass )
 // Name: Connector::GetFeatureClass
 // Created: JCR 2007-05-23
 // -----------------------------------------------------------------------------
-IFeatureClassPtr Connector::GetFeatureClass( const std::string& feature )
+IFeatureClassPtr Connector::GetFeatureClass( const std::string& feature, bool clear = true )
 {
     IFeatureClassPtr& spFeatureClass = features_[ feature ];
     if( spFeatureClass == NULL )
-        spFeatureClass = LoadFeatureClass( feature );
+        spFeatureClass = LoadFeatureClass( feature, clear );
     return spFeatureClass;
 }
 
@@ -214,6 +214,24 @@ void Connector::Lock()
 void Connector::Unlock()
 {
     scopeEditor_->StopEdit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Connector::Initialize
+// Created: JCR 2007-08-31
+// -----------------------------------------------------------------------------
+void Connector::Initialize()
+{
+	folk_->Initialize();
+}
+	
+// -----------------------------------------------------------------------------
+// Name: Connector::Finalize
+// Created: JCR 2007-08-31
+// -----------------------------------------------------------------------------
+void Connector::Finalize()
+{
+	scopeEditor_->FlushPopulation( GetFeatureClass( "Population", false ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -316,7 +334,7 @@ void Connector::Send( const ASN1T_MsgsSimToClient& asn )
     case T_MsgsSimToClient_msg_msg_report:              Create( GetTable( "Reports" ), *asn.msg.u.msg_report ); break;
     
     case T_MsgsSimToClient_msg_msg_folk_creation:           folk_->Send( *asn.msg.u.msg_folk_creation ); break;
-    case T_MsgsSimToClient_msg_msg_folk_graph_edge_update:  Update( GetFeatureClass( "Population" ), *asn.msg.u.msg_folk_graph_edge_update ); break;
+	case T_MsgsSimToClient_msg_msg_folk_graph_edge_update:  folk_->Send( *asn.msg.u.msg_folk_graph_edge_update ); break;
     }
 }
 

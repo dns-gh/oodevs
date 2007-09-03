@@ -38,15 +38,44 @@ FolkEditor::~FolkEditor()
 // Name: FolkEditor::Write
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-void FolkEditor::Write( IFeatureBufferPtr spFeature, const ASN1T_MsgFolkGraphEdgeUpdate& asn )
+void FolkEditor::Write( IFeaturePtr spFeature, const ASN1T_MsgFolkGraphEdgeUpdate& asn )
 {
-    std::vector<unsigned>   container( 5, 0 );
-    const unsigned population = folk_.Filter( asn, container );
-    
-    scope_.Write( spFeature, CComBSTR( L"Individuals" ), population );
-    scope_.Write( spFeature, CComBSTR( L"Pavement" ), container[0] );
-    scope_.Write( spFeature, CComBSTR( L"Road" ), container[1] );
-    scope_.Write( spFeature, CComBSTR( L"Office" ), container[2] );
-    scope_.Write( spFeature, CComBSTR( L"Residential" ), container[3] );
-    scope_.Write( spFeature, CComBSTR( L"Shop" ), container[4] );
+	FolkManager::PopulationInfo	info;
+
+	info.population_ = folk_.Filter( asn, info.containers_ );
+    Write( spFeature, info );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FolkEditor::Write
+// Created: JCR 2007-08-31
+// -----------------------------------------------------------------------------
+void FolkEditor::Write( IFeatureCursorPtr spCursor )
+{	
+    // $$$$ JCR 2007-08-31: Revoir tout ca...
+	typedef FolkManager::T_PopulationInfoVector::const_iterator	CIT_PopulationInfoVector;
+	
+	IFeaturePtr spFeature;
+	CIT_PopulationInfoVector it = folk_.GetPopulationInfo().begin(); 
+	
+	spCursor->NextFeature( &spFeature );
+	while ( spFeature )
+	{
+		Write( spFeature, *it++ );
+		spCursor->NextFeature( &spFeature );
+	}
+}
+
+// -----------------------------------------------------------------------------
+// Name: FolkEditor::Write
+// Created: JCR 2007-08-31
+// -----------------------------------------------------------------------------
+void FolkEditor::Write( IFeaturePtr spFeature, const FolkManager::PopulationInfo& info )
+{
+	scope_.Write( spFeature, CComBSTR( L"Individuals" ), info.population_ );
+    scope_.Write( spFeature, CComBSTR( L"Pavement" ), info.containers_[0] );
+    scope_.Write( spFeature, CComBSTR( L"Road" ), info.containers_[1] );
+    scope_.Write( spFeature, CComBSTR( L"Office" ), info.containers_[2] );
+    scope_.Write( spFeature, CComBSTR( L"Residential" ), info.containers_[3] );
+    scope_.Write( spFeature, CComBSTR( L"Shop" ), info.containers_[4] );
 }

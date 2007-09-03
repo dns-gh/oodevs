@@ -46,8 +46,7 @@ ConnectorFacade::~ConnectorFacade()
 // Created: JCR 2007-05-14
 // -----------------------------------------------------------------------------
 bool ConnectorFacade::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
-{
-    bool relevant = false;
+{    
     switch ( asn.msg.t )
     {
     case T_MsgsSimToClient_msg_msg_lima_creation:
@@ -62,22 +61,18 @@ bool ConnectorFacade::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
     case T_MsgsSimToClient_msg_msg_unit_knowledge_creation:
     case T_MsgsSimToClient_msg_msg_unit_knowledge_update:
     case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:
+    case T_MsgsSimToClient_msg_msg_unit_creation:
+    case T_MsgsSimToClient_msg_msg_unit_destruction:        
+    case T_MsgsSimToClient_msg_msg_report:
     case T_MsgsSimToClient_msg_msg_folk_creation:
     case T_MsgsSimToClient_msg_msg_folk_graph_edge_update:
-        relevant = true;
-        break;
-    case T_MsgsSimToClient_msg_msg_unit_creation:
-    case T_MsgsSimToClient_msg_msg_unit_destruction:
-    case T_MsgsSimToClient_msg_msg_report:
-        relevant = true;
-        break;
+        return true;            
     case T_MsgsSimToClient_msg_msg_unit_attributes:
         const ASN1T_MsgUnitAttributes* attributes = asn.msg.u.msg_unit_attributes;
         if( attributes->m.positionPresent || attributes->m.vitessePresent || attributes->m.etat_operationnelPresent )
-            relevant = true;
-        break;
+            return true;        
     }
-    return relevant;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -86,30 +81,38 @@ bool ConnectorFacade::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
 // -----------------------------------------------------------------------------
 void ConnectorFacade::Receive( const ASN1T_MsgsSimToClient& asnMsg )
 {
-    if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_end )
-        UpdateCurrentState();
-    else if( bLoaded_ )
-        UpdateOnTick( asnMsg );
+    if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_begin ||
+        asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_begin_tick )
+    {
+        connector_->Lock();
+    }
+	UpdateOnMessage( asnMsg );
+    if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_end ||
+        asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
+    {
+        connector_->Unlock();
+    }    
 }
 
 // -----------------------------------------------------------------------------
 // Name: ConnectorFacade::UpdateOnTick
 // Created: JCR 2007-05-14
 // -----------------------------------------------------------------------------
-void ConnectorFacade::UpdateOnTick( const ASN1T_MsgsSimToClient& asnMsg )
+void ConnectorFacade::UpdateOnMessage( const ASN1T_MsgsSimToClient& asnMsg )
 {
-    if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_begin_tick )
-    {
-        connector_->Lock();
+	switch ( asnMsg.msg.t )
+	{
+	case T_MsgsSimToClient_msg_msg_control_begin_tick:
+		connector_->Initialize();
         UpdateListeners(); // $$$$ JCR 2007-08-02: Push it out of here ...
-    }
-    else if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
-    {
-        connector_->Unlock();
-        MT_LOG_INFO_MSG( "Tick: " << asnMsg.msg.u.msg_control_end_tick->current_tick );
-    }
-    else if( IsRelevant( asnMsg ) )
-        connector_->Send( asnMsg );
+		break;
+	case T_MsgsSimToClient_msg_msg_control_end_tick:
+		connector_->Finalize();        
+		break;
+	default:
+		if( IsRelevant( asnMsg ) )
+			connector_->Send( asnMsg );
+	}    
 }
 
 // -----------------------------------------------------------------------------

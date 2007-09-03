@@ -16,6 +16,7 @@ namespace xml
 {
     class xostream;
 }
+
 class MIL_EffectManager;
 class MIL_TacticalLineManager;
 class MIL_Agent_ABC;
@@ -28,6 +29,7 @@ class PHY_MeteoDataManager;
 class MIL_ProfilerMgr;
 class HLA_Federate;
 class ProcessMonitor;
+class MIL_Folk;
 
 //*****************************************************************************
 // Created: DFT 02-02-28
@@ -78,8 +80,13 @@ public:
     void       MainSimLoop();
     //@}
 
-    //! @name Accessors
+    //! @name Network
     //@{
+    void SendStateToNewClient() const;
+    //@}
+
+    //! @name Accessors
+    //@{    
     MIL_EntityManager&       GetEntityManager      () const;
     MIL_EffectManager&       GetEffectManager      () const;
     DEC_Workspace&           GetWorkspaceDIA       () const;
@@ -119,7 +126,7 @@ private:
     //@{
     void ReadStaticData();
     void ReadTerData   ();
-    void ReadHLA       ();
+    void ReadHLA       ();    
     //@}
 
     //! @name Timer
@@ -148,7 +155,7 @@ private:
 
     MIL_EffectManager*           pEffectManager_;
     MIL_EntityManager*           pEntityManager_;
-    DEC_Workspace*                 pWorkspaceDIA_;
+    DEC_Workspace*               pWorkspaceDIA_;
     PHY_MeteoDataManager*        pMeteoDataManager_;
 
     MT_TimerManager              timerManager_;
@@ -158,6 +165,8 @@ private:
     MIL_CheckPointManager*       pCheckPointManager_;
     NET_AgentServer*             pAgentServer_;
     HLA_Federate*                pFederate_;
+    
+    MIL_Folk*                    pFolk_;
 
     ProcessMonitor*              pProcessMonitor_;
 

@@ -65,7 +65,7 @@ private:
     //@{    
     void UpdateListeners() const;
     void UpdateCurrentState();
-    void UpdateOnTick( const ASN1T_MsgsSimToClient& asn );
+    void UpdateOnMessage( const ASN1T_MsgsSimToClient& asn );
     bool IsRelevant( const ASN1T_MsgsSimToClient& asn ) const;
     //@}
 

@@ -70,8 +70,11 @@ void ScopeEditor::StartEdit( IWorkspacePtr spWorkspace, ISpatialReferencePtr spS
 // -----------------------------------------------------------------------------
 void ScopeEditor::StopEdit()
 {
-    spWorkspaceEdit_->StopEditOperation();
-    spWorkspaceEdit_->StopEditing( VARIANT_TRUE );
+    if ( spWorkspaceEdit_ )
+    {
+        spWorkspaceEdit_->StopEditOperation();
+        spWorkspaceEdit_->StopEditing( VARIANT_TRUE );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -150,6 +153,21 @@ bool ScopeEditor::Delete( IFeatureClassPtr spFeatureClass, ASN1T_OID oid )
             spCursor->DeleteFeature();
     }
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScopeEditor::FlushPopulation
+// Created: JCR 2007-08-31
+// -----------------------------------------------------------------------------
+void ScopeEditor::FlushPopulation( IFeatureClassPtr spFeatureClass )
+{
+	IFeatureCursorPtr   spCursor;
+	IQueryFilterPtr		spNullQuery;
+	FolkEditor			folk( *this, folk_ );
+
+	spFeatureClass->Update( spNullQuery, VARIANT_TRUE, &spCursor );
+	if( spCursor )
+		folk.Write( spCursor );	
 }
 
 // -----------------------------------------------------------------------------

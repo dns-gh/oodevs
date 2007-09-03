@@ -22,15 +22,6 @@
 #import "esriDataSourcesGDB.olb"    raw_interfaces_only, raw_native_types, no_namespace, named_guids, exclude( "OLE_COLOR", "OLE_HANDLE" )
 #import "esriMilitaryAnalyst.olb"   raw_interfaces_only, raw_native_types, no_namespace, named_guids, exclude( "OLE_COLOR", "OLE_HANDLE" )
 
-//#import "esriSystemUI.olb"          raw_interfaces_only, raw_native_types, no_namespace, named_guids, exclude( "OLE_COLOR", "OLE_HANDLE" )
-//#import "esriFramework.olb"         raw_interfaces_only, raw_native_types, no_namespace, named_guids, exclude( "OLE_COLOR", "OLE_HANDLE" )
-//#import "esriLocation.olb"          raw_interfaces_only, raw_native_types, no_namespace, named_guids, exclude( "OLE_COLOR", "OLE_HANDLE" )
-//#import "esriDisplay.olb"           raw_interfaces_only, raw_native_types, no_namespace, named_guids, exclude( "OLE_COLOR", "OLE_HANDLE" )
-//#import "esriCarto.olb"             raw_interfaces_only, raw_native_types, no_namespace, named_guids, exclude( "OLE_COLOR", "OLE_HANDLE", "IColorSymbol", "IColorRampSymbol" )
-//#import "esriMOLE.olb"              raw_interfaces_only, raw_native_types, no_namespace, named_guids, exclude( "OLE_COLOR", "OLE_HANDLE", "IColorSymbol", "IColorRampSymbol" )
-//#import "esriMOLEUI.olb"            raw_interfaces_only, raw_native_types, no_namespace, named_guids, exclude( "OLE_COLOR", "OLE_HANDLE", "IColorSymbol", "IColorRampSymbol" )
-// #import "esriMilitaryAnalystUI.olb" raw_interfaces_only, raw_native_types, no_namespace, named_guids, exclude( "OLE_COLOR", "OLE_HANDLE", "IColorSymbol", "IColorRampSymbol" )
-
 #pragma warning( pop )
 
 #endif // __EsriConnector_h_

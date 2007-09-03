@@ -36,13 +36,14 @@ GeneralConfig::GeneralConfig()
 {
     po::options_description desc( "General options" );
     desc.add_options()
-        ( "root-dir"     , po::value< std::string >( &rootDir_      )->default_value( "../"             ), "specify global root directory"    )
-        ( "terrains-dir" , po::value< std::string >( &terrainsDir_  )->default_value( "data/terrains/"  ), "specify terrains root directory"  )
-        ( "models-dir"   , po::value< std::string >( &modelsDir_    )->default_value( "data/models/"    ), "specify models root directory"    )
-        ( "exercises-dir", po::value< std::string >( &exercisesDir_ )->default_value( "exercises/"      ), "specify exercises root directory" )
-        ( "games-dir"    , po::value< std::string >( &gamesDir_     )                                    , "specify games root directory"     )
-        ( "game"         , po::value< std::string >( &gameName_     )                                    , "specify game name"                )
-        ( "exercise"     , po::value< std::string >( &exerciseName_ )                                    , "specify exercise name"            )
+        ( "root-dir"      , po::value< std::string >( &rootDir_      )->default_value( "../"             ), "specify global root directory"    )
+        ( "terrains-dir"  , po::value< std::string >( &terrainsDir_  )->default_value( "data/terrains/"  ), "specify terrains root directory"  )
+        ( "models-dir"    , po::value< std::string >( &modelsDir_    )->default_value( "data/models/"    ), "specify models root directory"    )
+        ( "population-dir", po::value< std::string >( &populationDir_)->default_value( "data/population/"), "specify population root directory")
+        ( "exercises-dir" , po::value< std::string >( &exercisesDir_ )->default_value( "exercises/"      ), "specify exercises root directory" )
+        ( "games-dir"     , po::value< std::string >( &gamesDir_     )                                    , "specify games root directory"     )
+        ( "game"          , po::value< std::string >( &gameName_     )                                    , "specify game name"                )
+        ( "exercise"      , po::value< std::string >( &exerciseName_ )                                    , "specify exercise name"            )
     ;
     AddOptions( desc );
 }
@@ -83,6 +84,7 @@ void GeneralConfig::Parse( int argc, char** argv )
     ResolveRelativePath( root, modelsDir_ );
     ResolveRelativePath( root, exercisesDir_ );
     ResolveRelativePath( root, gamesDir_ );
+    ResolveRelativePath( root, populationDir_ );
 }
 
 namespace
@@ -239,4 +241,13 @@ std::string GeneralConfig::GetModelsDir() const
 std::string GeneralConfig::BuildWorkingDirectoryChildFile( const std::string& file )
 {
     return BuildChildPath( ".", file );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::GetPopualtionDir
+// Created: JCR 2007-08-24
+// -----------------------------------------------------------------------------
+std::string GeneralConfig::GetPopualtionDir() const
+{
+    return populationDir_;
 }

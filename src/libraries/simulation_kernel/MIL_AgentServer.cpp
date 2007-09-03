@@ -13,6 +13,7 @@
 #include "Entities/Orders/MIL_TacticalLineManager.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
+#include "MIL_Folk.h"
 
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Network/NET_AgentServer.h"
@@ -64,6 +65,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pAgentServer_            ( 0 )
     , pFederate_               ( 0 )
     , pProcessMonitor_         ( new ProcessMonitor() )
+    , pFolk_                   ( new MIL_Folk( config ) )
 {
     assert( !pTheAgentServer_ );
     pTheAgentServer_ = this;
@@ -71,7 +73,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     config_.AddFileToCRC( config_.GetExerciseFile() );
     
     ReadStaticData();
-
+    
     if( config_.UseCheckPoint() )
         pCheckPointManager_->LoadCheckPoint( config_ );
     else
@@ -79,7 +81,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
         pEntityManager_     = new MIL_EntityManager    ( *this, *pEffectManager_, *pProfilerMgr_, pFederate_ );
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
-        pEntityManager_->ReadODB( config_ );
+        pEntityManager_->ReadODB( config_ );                        
         Resume();
     }
 
@@ -149,7 +151,7 @@ void MIL_AgentServer::ReadStaticData()
 
     if( !config_.IsDataTestMode() )
         pPathFindManager_ = new DEC_PathFind_Manager( config_ );
-    ReadHLA();
+    ReadHLA();    
 }
 
 //-----------------------------------------------------------------------------
@@ -186,7 +188,6 @@ void MIL_AgentServer::ReadHLA()
     else
         MT_LOG_INFO_MSG( "Connected to federation '" << config_.GetHLAFederation() << "'" );
 }
-
 
 //=============================================================================
 // MAIN LOOPS
@@ -257,9 +258,11 @@ void MIL_AgentServer::MainSimLoop()
 {
     pProfilerMgr_->NotifyTickBegin( GetCurrentTimeStep() );
     SendMsgBeginTick();
-
+    
     pEntityManager_   ->Update();
+    pFolk_            ->Update( nCurrentTimeStep_ * nTimeStepDuration_, nTimeStepDuration_ );
     pMeteoDataManager_->Update();
+
     if( pProcessMonitor_->MonitorProcess() )
     {
         MT_LOG_INFO_MSG( MT_FormatString( "**************** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f) %.2fms %.2fms %.2fms - PathFind : %d short %d long %d done - RAM : %.3f MB / %.3f MB (VM)",
@@ -317,6 +320,17 @@ void MIL_AgentServer::SendMsgEndTick() const
     msgEndTick().memory            = pProcessMonitor_->GetMemory();
     msgEndTick().virtual_memory    = pProcessMonitor_->GetVirtualMemory();
     msgEndTick.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::SendStateToNewClient
+// Created: JCR 2007-08-30
+// -----------------------------------------------------------------------------
+void MIL_AgentServer::SendStateToNewClient() const
+{    
+    pEntityManager_->SendStateToNewClient();
+    pTacticalLineManager_->SendStateToNewClient();
+    pFolk_->SendStateToNewClient();
 }
 
 // =============================================================================
@@ -487,5 +501,3 @@ void MIL_AgentServer::SetTimeFactor( unsigned timeFactor )
     msg().time_factor = nTimeFactor_;
     msg.Send();
 }
-
-    

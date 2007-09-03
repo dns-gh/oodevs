@@ -157,6 +157,9 @@ void MIL_Config::ReadExerciseFile()
             >> start( "terrain" )
                 >> attribute( "name", terrain_ )
             >> end()
+            >> optional() >> start( "population" )
+                >> attribute( "name", population_ )
+            >> end()
             >> start( "model" )
                 >> attribute( "dataset", dataset_ )
                 >> attribute( "physical", physical_ )
@@ -300,4 +303,33 @@ std::string MIL_Config::GetOrbatFile() const
 std::string MIL_Config::BuildCheckpointChildFile( const std::string& file, std::string name /*= ""*/ ) const
 {
     return BuildGameChildFile( ( bfs::path( "checkpoints", bfs::native ) / bfs::path( name.empty() ?  strCheckPointName_ : name, bfs::native ) / file ).native_file_string() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::IsPopulation
+// Created: JCR 2007-08-30
+// -----------------------------------------------------------------------------
+bool MIL_Config::IsPopulationEnabled() const
+{
+    return population_.size() > 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetPopualtionDir
+// Created: JCR 2007-08-24
+// -----------------------------------------------------------------------------
+std::string MIL_Config::GetPopulationDir() const
+{
+    return ( bfs::path( tools::GeneralConfig::GetPopualtionDir(), bfs::native ) / bfs::path( population_, bfs::native ) / bfs::path( "model", bfs::native ) ).native_file_string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetPopualtionFile
+// Created: JCR 2007-08-24
+// -----------------------------------------------------------------------------
+std::string MIL_Config::GetPopulationFile() const
+{
+    if ( population_.size() > 0 )
+        return "population.xml";
+    return "";
 }

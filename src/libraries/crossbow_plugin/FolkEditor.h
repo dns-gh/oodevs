@@ -12,10 +12,10 @@
 
 #include "ESRI.h"
 #include "game_asn/Asn.h"
+#include "FolkManager.h"
 
 namespace crossbow
-{
-    class FolkManager;
+{    
     class ScopeEditor;
 
 // =============================================================================
@@ -25,8 +25,7 @@ namespace crossbow
 // Created: JCR 2007-08-29
 // =============================================================================
 class FolkEditor
-{
-
+{	
 public:
     //! @name Constructors/Destructor
     //@{
@@ -36,14 +35,20 @@ public:
 
     //! @name 
     //@{
-    void Write( IFeatureBufferPtr spFeature, const ASN1T_MsgFolkGraphEdgeUpdate& asn );
-    //@}
+    void Write( IFeaturePtr spFeature, const ASN1T_MsgFolkGraphEdgeUpdate& asn );
+    void Write( IFeatureCursorPtr spCursor );
+	//@}
 
 private:
     //! @name Copy/Assignement
     //@{
     FolkEditor( const FolkEditor& );            //!< Copy constructor
     FolkEditor& operator=( const FolkEditor& ); //!< Assignement operator
+    //@}
+
+    //! @name 
+    //@{
+	void Write( IFeaturePtr spFeature, const FolkManager::PopulationInfo& info );
     //@}
 
 private:

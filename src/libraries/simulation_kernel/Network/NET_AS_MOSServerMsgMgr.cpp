@@ -163,10 +163,8 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlClientAnnouncement( DIN::DIN_Link& 
     NET_ASN_MsgControlSendCurrentStateBegin asnMsgStateBegin;
     asnMsgStateBegin.Send();
     
-    MIL_AgentServer& workspace = MIL_AgentServer::GetWorkspace();
-    workspace.GetEntityManager      ().SendStateToNewClient();
-    workspace.GetTacticalLineManager().SendStateToNewClient();
-    
+    MIL_AgentServer::GetWorkspace().SendStateToNewClient();
+        
     NET_ASN_MsgControlSendCurrentStateEnd asnMsgStateEnd;
     asnMsgStateEnd.Send();
 }

@@ -47,6 +47,8 @@ public:
     void Lock();
     void Unlock();
     ITablePtr GetTable( const std::string& name );
+	void Initialize();
+	void Finalize();
     //@}
 
     //! @name
@@ -69,8 +71,8 @@ private:
     void             ConnectToGeodatabase( const std::string& geodatabase );
     void             CheckOutLicences( esriLicenseProductCode eProcuct );
     void             LoadSpatialReference();
-    IFeatureClassPtr LoadFeatureClass( const std::string& feature );
-    IFeatureClassPtr GetFeatureClass( const std::string& feature );
+    IFeatureClassPtr LoadFeatureClass( const std::string& feature, bool clear );
+    IFeatureClassPtr GetFeatureClass( const std::string& feature, bool clear );
     IFeatureClassPtr GetObjectFeatureClass( const ASN1T_Location& location );
     void             ClearFeatureClass( IFeatureClassPtr spFeatureClass );
     void             SetSpatialReference( IFeatureClassPtr spFeatureClass );

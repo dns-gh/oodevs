@@ -69,6 +69,8 @@
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_Polygon.h"
 
+#include "population/population.h"
+
 //$$$ DEGUEU
 #ifdef  NDEBUG
 #   define assert( exp ) ( static_cast< void >( exp ) )

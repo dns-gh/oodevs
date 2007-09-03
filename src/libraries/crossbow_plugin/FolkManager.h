@@ -32,6 +32,20 @@ class FolkManager
     //@{
     typedef std::vector<std::string>    T_Trait;
     //@}
+public:
+    //! @name Types
+    //@{
+	struct PopulationInfo
+	{
+		explicit PopulationInfo() : id_ ( 0 ), population_ ( 0 ), containers_ ( 5, 0 ) {}
+		int		 id_;
+		unsigned population_; 
+		std::vector<unsigned> containers_;
+	};
+	typedef std::vector<PopulationInfo>	T_PopulationInfoVector;
+	typedef T_PopulationInfoVector::iterator		IT_PopulationInfoVector;
+	typedef T_PopulationInfoVector::const_iterator	CIT_PopulationInfoVector;
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -41,8 +55,15 @@ public:
     //@}
 
     //! @name Operations
-    //@{    
-    void Send( const ASN1T_MsgFolkCreation& asn );    
+    //@{
+	void Initialize();
+    void Send( const ASN1T_MsgFolkCreation& asn );
+	void Send( const ASN1T_MsgFolkGraphEdgeUpdate& asn );    
+	//@}
+
+    //! @name 
+    //@{
+	const T_PopulationInfoVector& GetPopulationInfo() const;
     //@}
 
     //! @name Accessors
@@ -69,6 +90,12 @@ private:
     T_Trait     profiles_;
     T_Trait     activities_;
     unsigned    container_size_;
+    //@}
+
+    //! @name 
+    //@{
+	T_PopulationInfoVector dump_;
+	IT_PopulationInfoVector	it_;
     //@}
 };
 

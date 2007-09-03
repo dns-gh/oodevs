@@ -60,7 +60,8 @@ public:
     void Write( const ASN1T_MsgObjectUpdate& msg );    
     void Write( const ASN1T_MsgLimaUpdate& msg );
     void Write( const ASN1T_MsgFolkGraphEdgeUpdate& msg );
-    void Flush();
+    void FlushPopulation( IFeatureClassPtr spFeatureClass );
+	void Flush();
     //@}
 
     //! @name

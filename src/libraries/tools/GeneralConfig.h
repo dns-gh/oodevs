@@ -58,6 +58,12 @@ public:
     virtual void Parse( int argc, char** argv );
     //@}
 
+protected:
+    //! @name 
+    //@{
+    std::string GetPopualtionDir() const;    
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -80,6 +86,7 @@ private:
     std::string gamesDir_;
     std::string exerciseName_;
     std::string gameName_;
+    std::string populationDir_;
 
     const std::string terrainConfigFile_;
     const std::string exerciseConfigFile_;
