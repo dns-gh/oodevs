@@ -69,7 +69,7 @@
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_Polygon.h"
 
-#include "population/population.h"
+#include "folk/population.h"
 
 //$$$ DEGUEU
 #ifdef  NDEBUG

@@ -11,11 +11,11 @@
 #include "MIL_Folk.h"
 #include "Tools/MIL_Config.h"
 
-#include "population/Config.h"
-#include "population/FlowManagerFactory.h"
-#include "population/FlowManager_ABC.h"
-#include "population/Serializer_ABC.h"
-#include "population/Time.h"
+#include "folk/Config.h"
+#include "folk/FlowManagerFactory.h"
+#include "folk/FlowManager_ABC.h"
+#include "folk/Serializer_ABC.h"
+#include "folk/Time.h"
 #include "Network/NET_ASN_Messages.h"
 
 using namespace population;
