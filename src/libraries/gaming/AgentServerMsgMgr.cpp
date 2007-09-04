@@ -1452,6 +1452,24 @@ void AgentServerMsgMgr::OnReceiveMsgAuthenticationResponse( const ASN1T_MsgAuthe
     profile_.Update( message );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgFolkCreation
+// Created: AGE 2007-09-04
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgFolkCreation( const ASN1T_MsgFolkCreation& asnMsg )
+{
+    // $$$$ AGE 2007-09-04: TODO !
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgFolkGraphUpdate
+// Created: AGE 2007-09-04
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgFolkGraphUpdate( const ASN1T_MsgFolkGraphUpdate& asnMsg )
+{
+    // $$$$ AGE 2007-09-04: TODO !
+}
+
 //=============================================================================
 // ASN
 //=============================================================================
@@ -1652,6 +1670,10 @@ void AgentServerMsgMgr::_OnReceiveMsgSimToClient( DIN_Input& input )
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_update               : OnReceiveMsgPopulationFlowKnowledgeUpdate              ( *message.msg.u.msg_population_flow_knowledge_update               ); break;
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_destruction          : OnReceiveMsgPopulationFlowKnowledgeDestruction         ( *message.msg.u.msg_population_flow_knowledge_destruction          ); break;
         case T_MsgsSimToClient_msg_msg_unit_environment_type                          : break; // $$$$ AGE 2007-07-06: 
+
+//        case T_MsgsSimToClient_msg_msg_folk_creation                                  : OnReceiveMsgFolkCreation   ( *message.msg.u.msg_folk_creation ); break;
+//        case T_MsgsSimToClient_msg_msg_graph_update                                   : OnReceiveMsgFolkGraphUpdate( *message.msg.u.msg_folk_graph_update ); break;
+
         default:
             UnhandledMessage( message.msg.t );
     }

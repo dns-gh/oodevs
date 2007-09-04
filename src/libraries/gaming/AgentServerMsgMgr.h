@@ -247,6 +247,10 @@ private:
     void OnReceiveMsgPopulationMagicActionAck   ( const ASN1T_MsgPopulationMagicActionAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgPopulationOrderAck         ( const ASN1T_MsgPopulationOrderAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgPopulationOrder            ( const ASN1T_MsgPopulationOrder& asnMsg ); 
+
+    // Folk
+    void OnReceiveMsgFolkCreation               ( const ASN1T_MsgFolkCreation& asnMsg );
+    void OnReceiveMsgFolkGraphUpdate            ( const ASN1T_MsgFolkGraphUpdate& asnMsg );
     //@}
 
     //! @name Helpers
