@@ -251,7 +251,7 @@ BLOCK "VarFileInfo"
 
     <target name="application.simulation_app" description="build CSword Simulation executable" depends="library.dispatcher">
         <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost,xeumeuleu"
-                   libs="HLA,libFedTime,masalloc,paranoia,tools,asn1per
+                   libs="HLA,libFedTime,masalloc,paranoia,tools,asn1per,population-${platform}-gd
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
