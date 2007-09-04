@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __crossbow_ConnectorFacade_h_
-#define __crossbow_ConnectorFacade_h_
+#ifndef __gearth_ConnectorFacade_h_
+#define __gearth_ConnectorFacade_h_
 
 #include "game_asn/Asn.h"
 #include "dispatcher/MessageHandler_ABC.h"
@@ -28,10 +28,9 @@ namespace dispatcher
     class Profile_ABC;
 }
 
-namespace crossbow
+namespace gearth
 {
-    class Connector;
-    class Listener_ABC;
+    class ReportFactory;
 
 // =============================================================================
 /** @class  ConnectorFacade
@@ -45,7 +44,7 @@ class ConnectorFacade : public dispatcher::MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ConnectorFacade( const dispatcher::Model& model, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher );
+             ConnectorFacade( const dispatcher::Config& config, const dispatcher::Model& model );
     virtual ~ConnectorFacade();
     //@}
 
@@ -62,30 +61,21 @@ private:
     //@}
 
     //! @name Helpers
-    //@{    
-    void UpdateListeners() const;    
-    void UpdateOnMessage( const ASN1T_MsgsSimToClient& asn );
+    //@{        
+    void UpdateCurrentState();
     bool IsRelevant( const ASN1T_MsgsSimToClient& asn ) const;
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef boost::shared_ptr< Listener_ABC >   T_SharedListener;
-    typedef std::list< T_SharedListener >       T_ListenerList;
-    typedef T_ListenerList::iterator            IT_ListenerList;
-    typedef T_ListenerList::const_iterator      CIT_ListenerList;
-    //@}
-
-private:
     //! @name Member data
-    //@{    
-    std::auto_ptr< kernel::OrderTypes > orderTypes_;
-    std::auto_ptr< Connector >          connector_;
-    T_ListenerList                      listeners_;    
+    //@{
+    std::auto_ptr< ReportFactory >  reportFactory_;
+    const dispatcher::Model&        model_;
+    const dispatcher::Config&       config_;    
+    bool                            bNeedUpdate_;
     //@}
 };
 
 }
 
-#endif // __crossbow_ConnectorFacade_h_
+#endif // __gearth_ConnectorFacade_h_
