@@ -563,7 +563,6 @@ BLOCK "VarFileInfo"
         <update name="terrain" package="generation_app"/>
         <update name="DIA" package="DIA_Tool_DebugGUI_${platform}"/>
         <update name="esri"/>
-        <update name="shapelib"/>
         <update name="folk"/>
     </target>
 
