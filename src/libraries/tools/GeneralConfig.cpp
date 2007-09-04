@@ -87,12 +87,13 @@ void GeneralConfig::Parse( int argc, char** argv )
     ResolveRelativePath( root, populationDir_ );
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::BuildChildPath
+// Created: AGE 2007-09-04
+// -----------------------------------------------------------------------------
+std::string GeneralConfig::BuildChildPath( const std::string& parent, const std::string& child )
 {
-    std::string BuildChildPath( const std::string& parent, const std::string& child )
-    {
-        return ( bfs::path( parent, bfs::native ).branch_path() / bfs::path( child, bfs::native ) ).native_file_string();
-    }
+    return ( bfs::path( parent, bfs::native ).branch_path() / bfs::path( child, bfs::native ) ).native_file_string();
 }
 
 // -----------------------------------------------------------------------------
@@ -147,7 +148,7 @@ std::string GeneralConfig::GetPhysicalsDir( const std::string& dataset ) const
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetPhysicalFile( const std::string& dataset, const std::string& physical ) const
-{    
+{
     return ( bfs::path( GetPhysicalsDir( dataset ), bfs::native ) / bfs::path( physical, bfs::native ) / "physical.xml" ).native_file_string();
 }
 
@@ -166,7 +167,7 @@ std::string GeneralConfig::BuildPhysicalChildFile( const std::string& dataset, c
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetDecisionalFile( const std::string& dataset ) const
 {
-    // $$$$ NLD 2007-01-29: 
+    // $$$$ NLD 2007-01-29:
     return ( bfs::path( modelsDir_, bfs::native ) / bfs::path( dataset, bfs::native ) / "decisional/decisional.xml" ).native_file_string();
 }
 
@@ -244,10 +245,11 @@ std::string GeneralConfig::BuildWorkingDirectoryChildFile( const std::string& fi
 }
 
 // -----------------------------------------------------------------------------
-// Name: GeneralConfig::GetPopualtionDir
-// Created: JCR 2007-08-24
+// Name: GeneralConfig::BuildPopulationChildFile
+// Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::GetPopualtionDir() const
+std::string GeneralConfig::BuildPopulationChildFile( const std::string& file ) const
 {
-    return populationDir_;
+    return ( bfs::path( populationDir_, bfs::native ) / bfs::path( file, bfs::native ) ).string();
 }
+

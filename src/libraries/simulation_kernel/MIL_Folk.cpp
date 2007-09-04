@@ -31,7 +31,7 @@ MIL_Folk::MIL_Folk( const MIL_Config& config )
     if ( pFlow_ )
     {
         MT_LOG_INFO_MSG( "Loading population module" )
-        Config  popConfig( config.GetPopulationDir(), config.GetPopulationFile() );
+        Config  popConfig( config.GetPopulationDir(), "population.xml" );
         pFlow_->Load( popConfig );
     }
 }

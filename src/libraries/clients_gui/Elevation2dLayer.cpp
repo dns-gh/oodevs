@@ -189,15 +189,6 @@ void Elevation2dLayer::Paint( const geometry::Rectangle2f& viewport )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Elevation2dLayer::Paint
-// Created: AGE 2007-02-23
-// -----------------------------------------------------------------------------
-void Elevation2dLayer::Paint( kernel::Viewport_ABC& )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: Elevation2dLayer::Cleanup
 // Created: AGE 2007-01-17
 // -----------------------------------------------------------------------------
@@ -223,8 +214,6 @@ void Elevation2dLayer::SetGradient()
     glEnable( GL_TEXTURE_1D );
     if( updateGradient_ )
     {
-        glDeleteTextures( 1, &gradientTexture_ );
-        glGenTextures( 1, &gradientTexture_ );
         glBindTexture( GL_TEXTURE_1D, gradientTexture_ );
         gradient_.MakeGlTexture( GetAlpha() );
         if( shader_.get() )

@@ -47,6 +47,7 @@ public:
     std::string GetWeatherFile () const;
     std::string GetOrbatFile   () const;
     std::string GetProfilesFile() const;
+    std::string GetPopulationFile() const;
     //@}
 
 protected:
@@ -71,6 +72,7 @@ private:
     std::string weather_;
     std::string orbat_;
     std::string profiles_;
+    std::string population_;
     //@}
 };
 

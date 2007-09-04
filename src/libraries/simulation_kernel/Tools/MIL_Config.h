@@ -83,9 +83,8 @@ public:
 
     std::string BuildCheckpointChildFile( const std::string& file, std::string name = "" ) const;
 
-           bool IsPopulationEnabled() const;
+    bool IsPopulationEnabled() const;
     std::string GetPopulationDir() const;
-    std::string GetPopulationFile() const;
     //@}
 
     //! @name CheckPoints

@@ -10,7 +10,10 @@
 #include "clients_kernel_pch.h"
 #include "ExerciseConfig.h"
 #include "xeumeuleu/xml.h"
+#pragma warning( disable : 4245 )
+#include <boost/filesystem.hpp>
 
+namespace bfs = boost::filesystem;
 using namespace kernel;
 using namespace xml;
 
@@ -66,6 +69,9 @@ void ExerciseConfig::LoadExercise( const std::string& file )
             >> end()
             >> start( "profiles" )
                 >> attribute( "file", profiles_ )
+            >> end()
+            >> optional() >> start( "population" )
+                >> attribute( "name", population_ )
             >> end();
 }
 
@@ -130,4 +136,14 @@ std::string ExerciseConfig::GetOrbatFile() const
 std::string ExerciseConfig::GetProfilesFile() const
 {
     return BuildExerciseChildFile( profiles_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetPopulationFile
+// Created: AGE 2007-09-04
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetPopulationFile() const
+{
+    const std::string realPopulationFile = ( bfs::path( population_, bfs::native ) / "model" / "population.xml" ).native_file_string();
+    return population_.empty() ? population_ : BuildPopulationChildFile( realPopulationFile );
 }

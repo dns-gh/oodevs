@@ -61,6 +61,15 @@ void WorldParameters::Load( const ExerciseConfig& config )
     detection_ = config.BuildTerrainChildFile( detection + "/detection.dat" );
     graphicsDirectory_ = config.BuildTerrainChildFile( graphics );
     ReadWorld( config.BuildTerrainChildFile( world ) );
+
+    if( ! config.GetPopulationFile().empty() )
+    {
+        xifstream popxis( config.GetPopulationFile() );
+        popxis >> start( "configuration" )
+                    >> start( "graph" )
+                        >> attribute( "file", populationGraph_ );
+        populationGraph_ = config.BuildChildPath( config.GetPopulationFile(), populationGraph_ );
+    }
 }
 
 // -----------------------------------------------------------------------------

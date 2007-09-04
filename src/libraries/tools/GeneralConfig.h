@@ -32,6 +32,7 @@ public:
 
     //! @name Operations
     //@{
+    static std::string BuildChildPath( const std::string& parent, const std::string& child );
     static std::string BuildWorkingDirectoryChildFile( const std::string& file );
 
     std::string GetExercisesDir() const;
@@ -53,15 +54,11 @@ public:
     std::string GetGameFile() const;
     std::string BuildGameChildFile( const std::string& file ) const;
 
+    std::string BuildPopulationChildFile( const std::string& file ) const;
+
     std::string GetModelsDir() const;
 
     virtual void Parse( int argc, char** argv );
-    //@}
-
-protected:
-    //! @name 
-    //@{
-    std::string GetPopualtionDir() const;    
     //@}
 
 private:

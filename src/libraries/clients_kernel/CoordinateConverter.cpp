@@ -85,6 +85,18 @@ geometry::Point2f CoordinateConverter::ConvertToGeo( const geometry::Point2f& po
 }
 
 // -----------------------------------------------------------------------------
+// Name: CoordinateConverter::ConvertFromGeo
+// Created: AGE 2007-09-04
+// -----------------------------------------------------------------------------
+geometry::Point2f CoordinateConverter::ConvertFromGeo( const geometry::Point2f& pos ) const
+{
+    static const float rPiOver180 = std::acos( -1.f ) / 180.f;
+    geodetic_.Set( pos.Y() * rPiOver180, pos.X() * rPiOver180 );
+    planar_.SetCoordinates( geodetic_ );
+    return geometry::Point2f( float( planar_.GetX() ), float( planar_.GetY() ) ) + translation_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: CoordinateConverter::IsInBoundaries
 // Created: SBO 2006-04-14
 // -----------------------------------------------------------------------------

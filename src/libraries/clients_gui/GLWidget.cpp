@@ -129,7 +129,7 @@ void GlWidget::paintGL()
 // Created: AGE 2006-06-22
 // -----------------------------------------------------------------------------
 void GlWidget::RenderMiniViews()
-{   
+{
     if( views_.empty() )
         return;
     const geometry::Rectangle2f viewport = viewport_;
@@ -318,7 +318,7 @@ unsigned short GlWidget::StipplePattern( int factor /*= 1*/ ) const
         0xFF00, 0xFE01, 0xFC03, 0xF807,
         0xF00F, 0xE01F, 0xC03F, 0x807F
     };
-    return pattern[ ( factor * frame_ ) % 16 ]; 
+    return pattern[ ( factor * frame_ ) % 16 ];
 }
 
 // -----------------------------------------------------------------------------
@@ -359,7 +359,7 @@ void GlWidget::DrawLine( const Point2f& from, const Point2f& to ) const
 void GlWidget::DrawLines( const T_PointVector& points ) const
 {
     glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
-    glDrawArrays( GL_LINE_STRIP, 0, points.size() );    
+    glDrawArrays( GL_LINE_STRIP, 0, points.size() );
 }
 
 // -----------------------------------------------------------------------------
@@ -374,11 +374,11 @@ void GlWidget::DrawConvexPolygon( const T_PointVector& points ) const
         color[3]*=0.5f;
         glColor4fv( color );
         glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
-        glDrawArrays( GL_POLYGON, 0, points.size() );    
+        glDrawArrays( GL_POLYGON, 0, points.size() );
     glPopAttrib();
 
     glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
-    glDrawArrays( GL_LINE_LOOP, 0, points.size() );    
+    glDrawArrays( GL_LINE_LOOP, 0, points.size() );
 }
 
 // -----------------------------------------------------------------------------
@@ -396,7 +396,7 @@ void GlWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /*=
     const Vector2f v = 0.5f * u.Normal();
     const Point2f left  = to - u + v;
     const Point2f right = to - u - v;
-    
+
     glBegin( GL_LINES );
         glVertex2f( to.X(), to.Y() );
         glVertex2f( left.X(), left.Y() );
@@ -427,9 +427,9 @@ void GlWidget::DrawArc( const geometry::Point2f& center, const geometry::Point2f
         maxAngle = maxAngle + twoPi;
     }
 
-    
+
     const float deltaAngle = ( maxAngle - minAngle ) / 24.f + 1e-6;
-    glMatrixMode(GL_MODELVIEW);	
+    glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
         glScalef    ( radius, radius, 1.f );
@@ -456,7 +456,7 @@ void GlWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float cu
     const Vector2f v( u.Normal() );
     const Point2f middle = from + 0.5f * u;
     const Point2f center = middle + v * ( 1.f / curveRatio - 1.f );
-    
+
     DrawArc( center, from, to );
     Vector2f endSegment = Vector2f( center, to ).Normal();
     endSegment.Normalize();
@@ -474,7 +474,7 @@ void GlWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/, E_Uni
     else if( unit == pixels )
         radius *= Pixels();
 
-    glMatrixMode(GL_MODELVIEW);	
+    glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
         glScalef    ( radius, radius, 1.f );
@@ -495,7 +495,7 @@ void GlWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/, E_Unit 
     else if( unit == pixels )
         radius *= Pixels();
 
-    glMatrixMode(GL_MODELVIEW);	
+    glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
         glScalef    ( radius, radius, 1.f );
@@ -529,7 +529,7 @@ void GlWidget::DrawLife( const Point2f& where, float h, float factor /*= 1.f*/ )
             glVertex2f( x + halfWidth, y + ydelta );
             glVertex2f( x - halfWidth, y + ydelta );
         glEnd();
-        glColor3f( 1 - h, h, 0.1f ); // $$$$ AGE 2006-09-11: 
+        glColor3f( 1 - h, h, 0.1f ); // $$$$ AGE 2006-09-11:
         glBegin( GL_QUADS );
             glVertex2f( x - xdelta, y - ydelta );
             glVertex2f( x + xdelta, y - ydelta );
@@ -573,7 +573,7 @@ void GlWidget::Print( const std::string& message, const Point2f& where ) const
             return;
     }
     glListBase( baseFont_ );
-    glCallLists( message.length(), GL_UNSIGNED_BYTE, message.c_str() );    
+    glCallLists( message.length(), GL_UNSIGNED_BYTE, message.c_str() );
 }
 
 // -----------------------------------------------------------------------------

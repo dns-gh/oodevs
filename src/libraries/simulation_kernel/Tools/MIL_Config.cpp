@@ -311,25 +311,16 @@ std::string MIL_Config::BuildCheckpointChildFile( const std::string& file, std::
 // -----------------------------------------------------------------------------
 bool MIL_Config::IsPopulationEnabled() const
 {
-    return population_.size() > 0;
+    return ! population_.empty();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::GetPopualtionDir
-// Created: JCR 2007-08-24
+// Name: MIL_Config::GetPopulationDir
+// Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
 std::string MIL_Config::GetPopulationDir() const
 {
-    return ( bfs::path( tools::GeneralConfig::GetPopualtionDir(), bfs::native ) / bfs::path( population_, bfs::native ) / bfs::path( "model", bfs::native ) ).native_file_string();
+    const std::string realPopulationDir = ( bfs::path( population_, bfs::native ) / "model" ).native_directory_string();
+    return population_.empty() ? population_ : BuildPopulationChildFile( realPopulationDir );
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::GetPopualtionFile
-// Created: JCR 2007-08-24
-// -----------------------------------------------------------------------------
-std::string MIL_Config::GetPopulationFile() const
-{
-    if ( population_.size() > 0 )
-        return "population.xml";
-    return "";
-}

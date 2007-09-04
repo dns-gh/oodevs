@@ -52,6 +52,7 @@ public:
     std::string terrainDirectory_;
     std::string graphicsDirectory_;
     std::string detection_;
+    std::string populationGraph_;
     //@}
 };
 
