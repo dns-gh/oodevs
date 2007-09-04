@@ -56,10 +56,11 @@ void PluginFactory::RegisterPlugins( CompositePlugin& handler ) const
     handler.Add( new DispatcherPlugin( model_, simulation_, clients_, *rights ) );
     if( config_.GetPluginConfig( "recorder" ).IsEnabled() )
         handler.Add( new SaverPlugin( model_, config_ ) );
+
+#ifdef CROSSBOW_PLUGIN // $$$$ JCR 2007-08-08: for build server purpose - does not include <com and atl> components
     if( config_.GetPluginConfig( "gearth" ).IsEnabled() )
         handler.Add( new gearth::GearthPlugin( model_, config_ ) );
 
-#ifdef CROSSBOW_PLUGIN // $$$$ JCR 2007-08-08: for build server purpose - does not include <com and atl> components
     if( config_.GetPluginConfig( "crossbow" ).IsEnabled() )
         handler.Add( new crossbow::CrossbowPlugin( model_, config_, simulation_ ) );
 #endif
