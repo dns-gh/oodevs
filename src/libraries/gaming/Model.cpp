@@ -70,7 +70,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , weather_( *new WeatherModel( controllers, *this ) )
     , profiles_( *new UserProfilesModel( userProfileFactory_ ) )
     , actions_( *new ActionsModel( actionFactory_, simulation ) )
-    , folk_( *new FolkModel() )
+    , folk_( *new FolkModel( controllers.controller_ ) )
 {
     // NOTHING
 }
