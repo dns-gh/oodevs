@@ -45,6 +45,7 @@ class Entity_ABC;
 class Fire;
 class PopulationFire;
 class FireEffect;
+class FolkModel;
 
 // =============================================================================
 /** @class  Model
@@ -126,6 +127,8 @@ private:
 
 private:
     SimulationModel*    pSimulationModel_;
+    std::auto_ptr< FolkModel > folkModel_;
+
 
     ModelsContainer< Side                   > sides_;
     ModelsContainer< KnowledgeGroup         > knowledgeGroups_;

@@ -47,6 +47,7 @@
 #include "icons.h"
 #include "ClockDock.h"
 #include "AutomatsLayer.h"
+#include "FolkLayer.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -101,7 +102,6 @@
 #include "clients_gui/LocationEditorToolbar.h"
 #include "clients_gui/LocationsLayer.h"
 #include "clients_gui/FormationLayer.h"
-#include "clients_gui/FolkLayer.h"
 
 #include "xeumeuleu/xml.h"
 
@@ -344,7 +344,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
     Layer_ABC& logoLayer            = *new LogoLayer( *glProxy_, QImage( "logo.png" ), 0.7f );
     Layer_ABC& formationLayer       = *new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    Layer_ABC& folkLayer            = *new FolkLayer( controllers_.controller_, staticModel_.coordinateConverter_ );
+    Layer_ABC& folkLayer            = *new ::FolkLayer( controllers_.controller_, staticModel_.coordinateConverter_, model_.folk_ );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );

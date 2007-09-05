@@ -65,7 +65,7 @@ void FolkLayer::SetCoordinates( const std::vector< float >& coordinates )
     const float textureRatio = gradient_.UsedRatio() - 2 * textureMin;
     std::vector< float >::const_iterator it = coordinates.begin();
     CIT_Edges itEdge = edges_.begin();
-    for( ; it != coordinates.end(); ++it, ++itEdge  )
+    for( ; it != coordinates.end() && itEdge != edges_.end(); ++it, ++itEdge  )
     {
         const float coordinate = *it * textureRatio + textureMin;
         for( unsigned i = itEdge->first; i != itEdge->second; ++i )
@@ -177,6 +177,7 @@ void FolkLayer::LoadGraph( const std::string& graph )
     const Point2f topRight   = converter_.ConvertFromGeo( Point2f( shp->adBoundsMax[0], shp->adBoundsMax[1] ) );
     box_ = Rectangle2f( bottomLeft, topRight );
     edges_.reserve( shp->nRecords );
+    graph_.reserve( shp->nRecords * 4 );
     for( int i = 0; i < shp->nRecords; ++i )
     {
         boost::shared_ptr< SHPObject > object( SHPReadObject( shp.get(), i ), &SHPDestroyObject );

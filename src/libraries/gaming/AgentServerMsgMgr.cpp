@@ -32,6 +32,7 @@
 #include "UserProfile.h"
 #include "DIN_InputDeepCopy.h"
 #include "LogTools.h"
+#include "FolkModel.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Object_ABC.h"
@@ -1458,7 +1459,7 @@ void AgentServerMsgMgr::OnReceiveMsgAuthenticationResponse( const ASN1T_MsgAuthe
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgFolkCreation( const ASN1T_MsgFolkCreation& asnMsg )
 {
-    // $$$$ AGE 2007-09-04: TODO !
+    GetModel().folk_.Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1467,7 +1468,7 @@ void AgentServerMsgMgr::OnReceiveMsgFolkCreation( const ASN1T_MsgFolkCreation& a
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgFolkGraphUpdate( const ASN1T_MsgFolkGraphUpdate& asnMsg )
 {
-    // $$$$ AGE 2007-09-04: TODO !
+    GetModel().folk_.Update( asnMsg );
 }
 
 //=============================================================================
@@ -1671,8 +1672,8 @@ void AgentServerMsgMgr::_OnReceiveMsgSimToClient( DIN_Input& input )
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_destruction          : OnReceiveMsgPopulationFlowKnowledgeDestruction         ( *message.msg.u.msg_population_flow_knowledge_destruction          ); break;
         case T_MsgsSimToClient_msg_msg_unit_environment_type                          : break; // $$$$ AGE 2007-07-06: 
 
-//        case T_MsgsSimToClient_msg_msg_folk_creation                                  : OnReceiveMsgFolkCreation   ( *message.msg.u.msg_folk_creation ); break;
-//        case T_MsgsSimToClient_msg_msg_graph_update                                   : OnReceiveMsgFolkGraphUpdate( *message.msg.u.msg_folk_graph_update ); break;
+        case T_MsgsSimToClient_msg_msg_folk_creation                                  : OnReceiveMsgFolkCreation   ( *message.msg.u.msg_folk_creation ); break;
+        case T_MsgsSimToClient_msg_msg_folk_graph_update                              : OnReceiveMsgFolkGraphUpdate( *message.msg.u.msg_folk_graph_update ); break;
 
         default:
             UnhandledMessage( message.msg.t );

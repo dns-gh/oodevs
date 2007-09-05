@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __FolkLayer_h_
-#define __FolkLayer_h_
+#ifndef __gui_FolkLayer_h_
+#define __gui_FolkLayer_h_
 
 #include "Layer_ABC.h"
 #include "Gradient.h"
@@ -90,4 +90,4 @@ private:
 
 }
 
-#endif // __FolkLayer_h_
+#endif // __gui_FolkLayer_h_

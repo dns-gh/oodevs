@@ -35,6 +35,7 @@
 #include "Synchroniser.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include "AgentTypes.h"
+#include "FolkModel.h"
 
 #include "SimulationModel.h"
 
@@ -46,6 +47,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Model::Model( const Config& config )
     : pSimulationModel_( new SimulationModel() )
+    , folkModel_( new FolkModel() )
     , synching_( false )
     , agentTypes_( new kernel::AgentTypes( config ) )
 {
@@ -232,7 +234,7 @@ void Model::Update( const ASN1T_MsgsSimToClient& asnMsg )
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_creation             : populationKnowledges_.Get( asnMsg.msg.u.msg_population_flow_knowledge_creation->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_flow_knowledge_creation ); break;
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_update               : populationKnowledges_.Get( asnMsg.msg.u.msg_population_flow_knowledge_update->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_flow_knowledge_update ); break;
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_destruction          : populationKnowledges_.Get( asnMsg.msg.u.msg_population_flow_knowledge_destruction->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_flow_knowledge_destruction ); break;
-
+        case T_MsgsSimToClient_msg_msg_folk_creation                                  : folkModel_->Update( *asnMsg.msg.u.msg_folk_creation ); break;
 //        default:
 //            assert( false );
     }
@@ -277,7 +279,7 @@ void Model::Send( ClientPublisher_ABC& publisher ) const
     AsnMsgSimToClientControlSendCurrentStateBegin().Send( publisher );
 
     pSimulationModel_->Send( publisher );
-
+    folkModel_->SendCreation( publisher );
     {
         CreationVisitor visitor( publisher );
         Accept( visitor );

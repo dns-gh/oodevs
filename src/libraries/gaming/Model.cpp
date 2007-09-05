@@ -35,6 +35,7 @@
 #include "ActionParameterFactory.h"
 #include "ActionFactory.h"
 #include "ActionsModel.h"
+#include "FolkModel.h"
 
 using namespace kernel;
 
@@ -69,6 +70,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , weather_( *new WeatherModel( controllers, *this ) )
     , profiles_( *new UserProfilesModel( userProfileFactory_ ) )
     , actions_( *new ActionsModel( actionFactory_, simulation ) )
+    , folk_( *new FolkModel() )
 {
     // NOTHING
 }
@@ -79,6 +81,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete &folk_;
     delete &actions_;
     delete &profiles_;
     delete &weather_;

@@ -20,7 +20,8 @@ MsgFolkCreation ::= SEQUENCE
 {
     profiles                SEQUENCE OF OCTET STRING,
     activities              SEQUENCE OF OCTET STRING,
-    container-size          INTEGER
+    container-size          INTEGER,
+    edge-number             INTEGER (0..MAX)
 }
 
 ----------------------
@@ -29,6 +30,7 @@ MsgFolkCreation ::= SEQUENCE
 MsgFolkGraphEdgeUpdate ::= SEQUENCE
 {
     oid                     OID,
+    shp-oid                 OID,
     population-occupation   SEQUENCE OF INTEGER (0..MAX)
 }
 

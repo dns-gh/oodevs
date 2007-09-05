@@ -44,6 +44,7 @@ class UserProfileFactory_ABC;
 class ActionsModel;
 class ActionParameterFactory_ABC;
 class ActionFactory_ABC;
+class FolkModel;
 
 // =============================================================================
 /** @class  Model
@@ -98,6 +99,7 @@ public:
     WeatherModel&         weather_;
     UserProfilesModel&    profiles_;
     ActionsModel&         actions_;
+    FolkModel&            folk_;
     //@}
 
 private:

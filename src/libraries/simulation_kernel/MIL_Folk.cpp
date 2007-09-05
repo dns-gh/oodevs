@@ -116,6 +116,7 @@ namespace
     {
         FolkUpdateSerializer()
             : bufferOffset_( 0 )
+            , count_       ( 0 )
         { 
             messages_.reserve( 50 );
             const unsigned maxAsnSize      = 100000;
@@ -127,7 +128,8 @@ namespace
         virtual population::message::Serializer_ABC& operator <<( int value )
         {
             messages_.push_back( ASN1T_MsgFolkGraphEdgeUpdate() );
-            messages_.back().oid = value;
+            messages_.back().oid     = value;
+            messages_.back().shp_oid = count_++;
             return *this;
         }
 
@@ -160,6 +162,7 @@ namespace
             if( messages_.empty() ) return;
             int lastId = messages_.back().oid;
             messages_.pop_back();
+            --count_;
             
             Commit();
             
@@ -168,6 +171,22 @@ namespace
         std::vector< int > buffer_;
         std::vector< ASN1T_MsgFolkGraphEdgeUpdate > messages_;
         unsigned bufferOffset_;
+        unsigned count_;
+    };
+
+    struct EdgeCounter : public population::message::Serializer_ABC
+    {
+        EdgeCounter() : count_( 0 ) {}
+        virtual population::message::Serializer_ABC& operator <<( int )
+        {
+            ++count_;
+            return *this;
+        }
+        virtual population::message::Serializer_ABC& operator <<( const std::vector<int>& )
+        {
+            return *this;
+        }
+        unsigned count_;
     };
 }
 
@@ -179,7 +198,12 @@ void MIL_Folk::SendCreation() const
 {    
     NET_ASN_MsgFolkCreation asn;
     FolkCreationSerializer  serializer( asn );
-    
+    asn().container_size = 5; // $$$$ AGE 2007-09-04: hc
+
+    EdgeCounter counter;
+    pFlow_->SerializePopulationUpdate( counter );
+    asn().edge_number = counter.count_;
+
     MT_LOG_INFO_MSG( "MIL_Folk::SendCreation()" )
     pFlow_->SerializePopulationCreation( serializer );
     asn.Send();
