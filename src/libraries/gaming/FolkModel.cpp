@@ -79,7 +79,7 @@ void FolkModel::Update( const ASN1T_MsgFolkGraphUpdate& update )
 // -----------------------------------------------------------------------------
 void FolkModel::Update( const ASN1T_MsgFolkGraphEdgeUpdate& update )
 {
-    // $$$$ AGE 2007-09-05: pas vraiment des assert
+    // $$$$ AGE 2007-09-05: 
     assert( update.population_occupation.n == edgeSize_ );
     assert( update.shp_oid < edgeCount_ );
 
@@ -92,12 +92,10 @@ namespace
 {
     int Find( const QString& entry, const std::vector< QString >& names )
     {
-        if( entry == "any" )
-            return -1;
         std::vector< QString >::const_iterator it = std::find( names.begin(), names.end(), entry );
         if( it != names.end() )
             return int( it - names.begin() );
-        throw std::runtime_error( __FUNCTION__ );
+        return -1;
     }
 }
 

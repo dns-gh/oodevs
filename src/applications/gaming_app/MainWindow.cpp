@@ -48,6 +48,7 @@
 #include "ClockDock.h"
 #include "AutomatsLayer.h"
 #include "FolkLayer.h"
+#include "FolkToolbar.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -290,6 +291,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     ReplayerToolbar* replayerToolbar = new ReplayerToolbar( this, controllers, publisher );
     new DisplayToolbar( this, controllers );
     new EventToolbar( this, controllers, profile );
+    ( new FolkToolbar( this, controllers, model.folk_ ) )->hide();
 
     // $$$$ AGE 2007-05-14: mettre un GetOrdersDirectory
     OrderBrowser* browser = new OrderBrowser( this, config.BuildExerciseChildFile( "orders" ).c_str() );
