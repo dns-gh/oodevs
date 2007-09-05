@@ -11,8 +11,12 @@
 #define __FolkModel_h_
 
 #include "game_asn/asn.h"
-
 #include <boost/multi_array.hpp>
+
+namespace kernel
+{
+    class Controller;
+}
 
 // =============================================================================
 /** @class  FolkModel
@@ -31,7 +35,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             FolkModel();
+    explicit FolkModel( kernel::Controller& controller );
     virtual ~FolkModel();
     //@}
 
@@ -72,6 +76,8 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
+
     T_Names containers_;
     T_Names profiles_;
     T_Names activities_;

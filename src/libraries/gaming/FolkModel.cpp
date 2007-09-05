@@ -9,14 +9,16 @@
 
 #include "gaming_pch.h"
 #include "FolkModel.h"
+#include "clients_kernel/Controller.h"
 #include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: FolkModel constructor
 // Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
-FolkModel::FolkModel()
-    : edgeCount_       ( 0 )
+FolkModel::FolkModel( kernel::Controller& controller )
+    : controller_      ( controller )
+    , edgeCount_       ( 0 )
     , edgeSize_        ( 0 )
     , dirty_           ( false )
     , currentContainer_( -1 )
@@ -57,6 +59,8 @@ void FolkModel::Update( const ASN1T_MsgFolkCreation& creation )
     boost::array< T_Values::index, 4 > shape = { edgeCount_, containers_.size(), profiles_.size(), activities_.size() };
     values_.reset( new T_Values( shape ) );
     ratios_.resize( edgeCount_ );
+
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,8 +130,10 @@ namespace
             Adder< Size - 1 > next;
             if( config[ Size - 1 ] >= 0 )
                 return next( array[ config[ Size - 1 ] ], config );
-            return std::accumulate( array.begin(), array.end(), 0.f, 
-                boost::bind< float >( std::plus< float >(), _1, boost::bind< float >( next, _2, boost::ref( config ) ) ) );
+            float result = 0.f;
+            for( Array::const_iterator it = array.begin(); it != array.end(); ++it )
+                result += next( *it, config );
+            return result;
         }
     };
     template< >
