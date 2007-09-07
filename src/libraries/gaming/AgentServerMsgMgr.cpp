@@ -30,7 +30,6 @@
 #include "WeatherModel.h"
 #include "UserProfilesModel.h"
 #include "UserProfile.h"
-#include "DIN_InputDeepCopy.h"
 #include "LogTools.h"
 #include "FolkModel.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -39,40 +38,28 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Team_ABC.h"
-#include "tools/MessageIdentifierFactory.h"
+#include "tools/MessageDispatcher_ABC.h"
+#include "tools/MessageSender_ABC.h"
 #include <ctime>
 
-using namespace DIN;
 using namespace log_tools;
 using namespace kernel;
+using namespace tools;
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-AgentServerMsgMgr::AgentServerMsgMgr( DIN::DIN_Engine& engine, Simulation& simu, Profile& profile, boost::mutex& mutex )
-    : simulation_      ( simu )
+AgentServerMsgMgr::AgentServerMsgMgr( MessageDispatcher_ABC& dispatcher, MessageSender_ABC& sender, Simulation& simu, Profile& profile )
+    : dispatcher_      ( dispatcher )
+    , sender_          ( sender )
+    , simulation_      ( simu )
     , profile_         ( profile )
-    , session_         ( 0 )
-    , mutex_           ( mutex )
     , msgRecorder_     ( 0 )
-    , eMsgClientToAuthentication_( tools::MessageIdentifierFactory::GetIdentifier< ASN1T_MsgsClientToAuthentication >() )
-    , eMsgClientToSim_           ( tools::MessageIdentifierFactory::GetIdentifier< ASN1T_MsgsClientToSim >() )
-    , eMsgClientToReplay_        ( tools::MessageIdentifierFactory::GetIdentifier< ASN1T_MsgsClientToReplay >() )
-
 {
-    pMessageService_ = new DIN_MessageServiceUserCbk< AgentServerMsgMgr >( *this, engine, DIN_ConnectorGuest(), "Msgs MOS Server -> Agent_ABC Server" );
-
-    pMessageService_->RegisterReceivedMessage( 
-        tools::MessageIdentifierFactory::GetIdentifier< ASN1T_MsgsSimToClient >()
-        , *this, & AgentServerMsgMgr::OnReceiveMsgSimToClient );
-    pMessageService_->RegisterReceivedMessage( 
-        tools::MessageIdentifierFactory::GetIdentifier< ASN1T_MsgsAuthenticationToClient >(),
-        *this, & AgentServerMsgMgr::OnReceiveMsgAuthenticationToClient );
-    pMessageService_->RegisterReceivedMessage( 
-        tools::MessageIdentifierFactory::GetIdentifier< ASN1T_MsgsReplayToClient >(),
-        *this, & AgentServerMsgMgr::OnReceiveMsgReplayToClient );
-    pMessageService_->SetCbkOnError( & AgentServerMsgMgr::OnError );
+    dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgSimToClient );
+    dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgAuthenticationToClient );
+    dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgReplayToClient );
 }
 
 //-----------------------------------------------------------------------------
@@ -81,7 +68,7 @@ AgentServerMsgMgr::AgentServerMsgMgr( DIN::DIN_Engine& engine, Simulation& simu,
 //-----------------------------------------------------------------------------
 AgentServerMsgMgr::~AgentServerMsgMgr()
 {
-    delete pMessageService_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -103,69 +90,13 @@ void AgentServerMsgMgr::UnregisterMessageRecorder( MsgRecorder& recorder )
         msgRecorder_  = 0;
 }
 
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::BuildMessage
-// Created: NLD 2002-08-06
-//-----------------------------------------------------------------------------
-DIN::DIN_BufferedMessage AgentServerMsgMgr::BuildMessage()
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::Connect
+// Created: AGE 2007-09-06
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::Connect( const std::string& host )
 {
-    boost::mutex::scoped_lock locker( mutex_ );
-    return DIN::DIN_BufferedMessage( *pMessageService_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::* function )
-// Created: AGE 2006-04-21
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::Enqueue( DIN::DIN_Input& input, T_Callback function )
-{
-    workingInputs_.push_back( new DIN_InputDeepCopy( input, function ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::DoUpdate
-// Created: AGE 2006-04-21
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::DoUpdate()
-{
-    if( pendingInputs_.empty() )
-    {
-        boost::mutex::scoped_lock locker( inputMutex_ );
-        std::swap( buffer_, pendingInputs_ );
-    }
-    T_Inputs::iterator it = pendingInputs_.begin();
-    try
-    {
-        for( ; it != pendingInputs_.end(); ++it )
-        {
-            (*it)->Apply( *this );
-            delete *it;
-            *it = 0;
-        }
-        pendingInputs_.erase( pendingInputs_.begin(), it );
-    }
-    catch( ... )
-    {
-        for( CIT_Inputs it = pendingInputs_.begin(); it != pendingInputs_.end(); ++it )
-            delete *it;
-        pendingInputs_.clear();
-        throw;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::Flush
-// Created: AGE 2006-04-26
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::Flush()
-{
-    boost::mutex::scoped_lock locker( inputMutex_ );
-    if( session_ )
-        std::copy( workingInputs_.begin(), workingInputs_.end(), std::back_inserter( buffer_ ) );
-    else
-        for( CIT_Inputs it = workingInputs_.begin(); it != workingInputs_.end(); ++it )
-            delete *it;
-    workingInputs_.clear();
+    host_ = host;
 }
 
 // -----------------------------------------------------------------------------
@@ -174,53 +105,37 @@ void AgentServerMsgMgr::Flush()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::Disconnect()
 {
-    boost::mutex::scoped_lock locker( inputMutex_ );
-    for( CIT_Inputs it = buffer_.begin(); it != buffer_.end(); ++it )
-        delete *it;
-    buffer_.clear();
-    for( CIT_Inputs it = pendingInputs_.begin(); it != pendingInputs_.end(); ++it )
-        delete *it;
-    pendingInputs_.clear();
-    session_ = 0;
+    host_.clear();
 }
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::IsPaused
-// Created: AGE 2006-02-13
-// -----------------------------------------------------------------------------
-bool AgentServerMsgMgr::IsPaused() const
-{
-    return simulation_.IsPaused();
-}
-
-//=============================================================================
-// SERVICE ACTIVATION
-//=============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::Enable
-// Created: AGE 2006-02-08
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::Enable( DIN::DIN_Link& session )
-{
-    boost::mutex::scoped_lock locker( mutex_ );
-    pMessageService_->Enable( session );
-    session_ = &session;
-}
-
-//=============================================================================
-// MESSAGES : MISC
-//=============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::Send
-// Created: AGE 2006-02-08
+// Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::Send( unsigned int id, DIN::DIN_BufferedMessage& message )
+void AgentServerMsgMgr::Send( ASN1T_MsgsClientToSim& message )
 {
-    boost::mutex::scoped_lock locker( mutex_ );
-    if( session_ )
-        pMessageService_->Send( *session_, id, message );
+    if( ! host_.empty() )
+        sender_.Send( host_, message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::Send
+// Created: AGE 2007-09-06
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::Send( ASN1T_MsgsClientToAuthentication& message )
+{
+    if( ! host_.empty() )
+        sender_.Send( host_, message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::Send
+// Created: AGE 2007-09-06
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::Send( ASN1T_MsgsClientToReplay& message )
+{
+    if( ! host_.empty() )
+        sender_.Send( host_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -302,97 +217,6 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility( const ASN1T_M
 void AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints( const ASN1T_MsgDebugPoints& message )
 {
     GetModel().agents_.FindAllAgent( message.oid )->Update( message );
-}
-
-//=============================================================================
-// ASN
-//=============================================================================
-
-    
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::Send
-// Created: SBO 2006-07-06
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::Send( ASN1T_MsgsClientToSim& message )
-{
-    if( ! session_ )
-        return;
-    ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
-
-    ASN1C_MsgsClientToSim asnMsgControl( asnPEREncodeBuffer, message );
-
-    if( asnMsgControl.Encode() != ASN_OK )
-    {
-        asnPEREncodeBuffer.PrintErrorInfo();
-        return;
-    }
-
-    DIN_BufferedMessage dinMsg = BuildMessage();
-    dinMsg.GetOutput().Append( asnPEREncodeBuffer.GetMsgPtr(), asnPEREncodeBuffer.GetMsgLen() );
-
-    Send( eMsgClientToSim_, dinMsg );
-
-    if( msgRecorder_ )
-        msgRecorder_->OnNewMsg( message.msg.t, asnPEREncodeBuffer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::Send
-// Created: SBO 2006-07-06
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::Send( ASN1T_MsgsClientToAuthentication& message )
-{
-    if( ! session_ )
-        return;
-    ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
-
-    ASN1C_MsgsClientToAuthentication asnMsgControl( asnPEREncodeBuffer, message );
-
-    if( asnMsgControl.Encode() != ASN_OK )
-    {
-        asnPEREncodeBuffer.PrintErrorInfo();
-        return;
-    }
-
-    DIN_BufferedMessage dinMsg = BuildMessage();
-    dinMsg.GetOutput().Append( asnPEREncodeBuffer.GetMsgPtr(), asnPEREncodeBuffer.GetMsgLen() );
-
-    Send( eMsgClientToAuthentication_, dinMsg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::Send
-// Created: AGE 2007-08-24
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::Send( ASN1T_MsgsClientToReplay& message )
-{
-    if( ! session_ )
-        return;
-    
-    ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
-    ASN1C_MsgsClientToReplay asnMsgControl( asnPEREncodeBuffer, message );
-
-    if( asnMsgControl.Encode() != ASN_OK )
-    {
-        asnPEREncodeBuffer.PrintErrorInfo();
-        return;
-    }
-
-    DIN_BufferedMessage dinMsg = BuildMessage();
-    dinMsg.GetOutput().Append( asnPEREncodeBuffer.GetMsgPtr(), asnPEREncodeBuffer.GetMsgLen() );
-    Send( eMsgClientToReplay_, dinMsg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::SendMsgClientToSim
-// Created: APE 2004-10-20
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::SendMsgClientToSim( ASN1OCTET* pMsg, int nMsgLength )
-{
-    DIN_BufferedMessage dinMsg = BuildMessage();
-    dinMsg.GetOutput().Append( pMsg, nMsgLength );
-    Send( eMsgClientToSim_, dinMsg );
 }
 
 //-----------------------------------------------------------------------------
@@ -479,10 +303,6 @@ void AgentServerMsgMgr::OnReceiveMsgControlEndTick( const ASN1T_MsgControlEndTic
     simulation_.EndTick( message );
 }
 
-// =============================================================================
-// Profiles
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgProfileCreation
 // Created: SBO 2007-01-19
@@ -542,11 +362,6 @@ void AgentServerMsgMgr::OnReceiveMsgProfileUpdateRequestAck( const ASN1T_MsgProf
     CheckAcknowledge( message, "ProfileUpdateRequestAck" );
     // $$$$ SBO 2007-01-19: display profile name + error
 }
-
-
-// =============================================================================
-// Entities
-// =============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgUnitAttributes
@@ -831,7 +646,6 @@ void AgentServerMsgMgr::OnReceiveMsgLimitUpdateRequestAck( const ASN1T_MsgLimitU
     CheckAcknowledge( message, "LimitUpdateAck" );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLimitDestructionAck
 // Created: NLD 2003-02-28
@@ -922,10 +736,6 @@ void AgentServerMsgMgr::OnReceiveMsgLimaDestruction( const ASN1T_MsgLimaDestruct
 {
     GetModel().limits_.DeleteLima( message );
 }
-
-//=============================================================================
-// ORDRES
-//=============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgAutomatOrder
@@ -1029,7 +839,6 @@ void AgentServerMsgMgr::OnReceiveMsgUnitChangeSuperiorAck( const ASN1T_MsgUnitCh
         GetModel().agents_.GetAgent( message.oid ).Update( message );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgUnitChangeSuperior
 // Created: APE 2004-10-27
@@ -1081,10 +890,6 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinksAck( const ASN1T_M
         GetModel().agents_.GetAutomat( message.oid ).Update( message );
 }
 
-// =============================================================================
-// KNOWLEDGES
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeCreation
 // Created: NLD 2004-03-18
@@ -1121,7 +926,6 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObje
     GetModel().teams_.GetTeam( message.team ).Update( message );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeUpdate
 // Created: NLD 2004-03-25
@@ -1139,10 +943,6 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgO
 {
     GetModel().teams_.GetTeam( message.team ).Update( message );
 }
-
-// =============================================================================
-// POPULATION KNOWLEDGE
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeCreation
@@ -1225,10 +1025,6 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeDestruction( const AS
     GetModel().knowledgeGroups_.Get( message.oid_groupe_possesseur ).Update( message );
 }
 
-//=============================================================================
-// OBJECTS
-//=============================================================================
-
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgObjectCreation
 // Created: NLD 2003-04-29
@@ -1256,10 +1052,6 @@ void AgentServerMsgMgr::OnReceiveMsgObjectDestruction( const ASN1T_MsgObjectDest
     GetModel().objects_.DeleteObject( message );
 }
 
-//=============================================================================
-// TIRS
-//=============================================================================
-
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgStartUnitFire
 // Created: NLD 2003-04-30
@@ -1280,8 +1072,6 @@ void AgentServerMsgMgr::OnReceiveMsgStopUnitFire( const ASN1T_MsgStopUnitFire& m
     Entity_ABC* src = GetModel().fires_.FindFirer( message );
     if( src )
         src->Update( message );
-    else
-        MT_LOG_WARNING_MSG( "Could not find fire" );
     GetModel().fires_.RemoveFire( message );
 }
 
@@ -1471,38 +1261,6 @@ void AgentServerMsgMgr::OnReceiveMsgFolkGraphUpdate( const ASN1T_MsgFolkGraphUpd
     GetModel().folk_.Update( asnMsg );
 }
 
-//=============================================================================
-// ASN
-//=============================================================================
-
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr constructor
-// Created: NLD 2003-02-26
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgSimToClient( DIN_Link& /*linkFrom*/, DIN_Input& input )
-{
-    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgSimToClient );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgAuthenticationToClient
-// Created: AGE 2007-08-24
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAuthenticationToClient( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
-{
-    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgAuthenticationToClient );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgReplayToClient
-// Created: AGE 2007-08-24
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgReplayToClient( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
-{
-    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgReplayToClient );
-}
-
 namespace
 {
     void UnhandledMessage( int message )
@@ -1513,31 +1271,14 @@ namespace
     }
 }
 
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr constructor
-// Created: NLD 2003-02-26
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::_OnReceiveMsgSimToClient( DIN_Input& input )
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgSimToClient
+// Created: AGE 2007-09-06
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const ASN1T_MsgsSimToClient& message )
 {
-    uint nAsnMsgSize = input.GetAvailable();
-
-    assert( nAsnMsgSize <= sizeof(aASNDecodeBuffer_) );
-
-    // Fill the asn buffer array
-    memcpy( aASNDecodeBuffer_, input.GetBuffer(nAsnMsgSize), nAsnMsgSize );
-
-    // Create the asn msg buffer
-    ASN1PERDecodeBuffer asnPERDecodeBuffer( aASNDecodeBuffer_, nAsnMsgSize, TRUE );
-
-    // Decode the message
-    ASN1T_MsgsSimToClient message;
-    ASN1C_MsgsSimToClient asnMsgControl( asnPERDecodeBuffer, message );
-    if( asnMsgControl.Decode() != ASN_OK )
-    {
-        asnPERDecodeBuffer.PrintErrorInfo();
-        throw std::runtime_error( "ASN fussé" );
-    }
-
+    if( host_.empty() )
+        return;
     switch( message.msg.t )
     {
         case T_MsgsSimToClient_msg_msg_limit_creation_request_ack:             OnReceiveMsgLimitCreationRequestAck            ( message.msg.u.msg_limit_creation_request_ack               , message.context ); break;
@@ -1677,28 +1418,17 @@ void AgentServerMsgMgr::_OnReceiveMsgSimToClient( DIN_Input& input )
 
         default:
             UnhandledMessage( message.msg.t );
-    }
+    };
 }
 
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::_OnReceiveMsgAuthenticationToClient
-// Created: NLD 2003-02-26
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::_OnReceiveMsgAuthenticationToClient( DIN::DIN_Input& input )
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgAuthenticationToClient
+// Created: AGE 2007-09-06
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgAuthenticationToClient( const std::string& , const ASN1T_MsgsAuthenticationToClient& message )
 {
-    uint nAsnMsgSize = input.GetAvailable();
-    assert( nAsnMsgSize <= sizeof(aASNDecodeBuffer_) );
-    
-    memcpy( aASNDecodeBuffer_, input.GetBuffer(nAsnMsgSize), nAsnMsgSize );
-    ASN1PERDecodeBuffer asnPERDecodeBuffer( aASNDecodeBuffer_, nAsnMsgSize, TRUE );
-    ASN1T_MsgsAuthenticationToClient message;
-    ASN1C_MsgsAuthenticationToClient asnMsgControl( asnPERDecodeBuffer, message );
-    if( asnMsgControl.Decode() != ASN_OK )
-    {
-        asnPERDecodeBuffer.PrintErrorInfo();
-        throw std::runtime_error( "ASN fussé" );
-    }
-
+    if( host_.empty() )
+        return;
     switch( message.msg.t )
     {
         case T_MsgsAuthenticationToClient_msg_msg_authentication_response:              OnReceiveMsgAuthenticationResponse      ( *message.msg.u.msg_authentication_response ); break;
@@ -1714,24 +1444,13 @@ void AgentServerMsgMgr::_OnReceiveMsgAuthenticationToClient( DIN::DIN_Input& inp
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::_OnReceiveMsgReplayToClient
-// Created: AGE 2007-08-24
+// Name: AgentServerMsgMgr::OnReceiveMsgReplayToClient
+// Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::_OnReceiveMsgReplayToClient( DIN::DIN_Input& input )
+void AgentServerMsgMgr::OnReceiveMsgReplayToClient( const std::string& , const ASN1T_MsgsReplayToClient& message )
 {
-    uint nAsnMsgSize = input.GetAvailable();
-    assert( nAsnMsgSize <= sizeof(aASNDecodeBuffer_) );
-    
-    memcpy( aASNDecodeBuffer_, input.GetBuffer(nAsnMsgSize), nAsnMsgSize );
-    ASN1PERDecodeBuffer asnPERDecodeBuffer( aASNDecodeBuffer_, nAsnMsgSize, TRUE );
-    ASN1T_MsgsReplayToClient message;
-    ASN1C_MsgsReplayToClient asnMsgControl( asnPERDecodeBuffer, message );
-    if( asnMsgControl.Decode() != ASN_OK )
-    {
-        asnPERDecodeBuffer.PrintErrorInfo();
-        throw std::runtime_error( "ASN fussé" );
-    }
-
+    if( host_.empty() )
+        return;
     switch( message.msg.t )
     {
         case T_MsgsReplayToClient_msg_msg_control_replay_information:     OnReceiveMsgCtrReplayInfo             ( *message.msg.u.msg_control_replay_information     ); break;
@@ -1743,15 +1462,6 @@ void AgentServerMsgMgr::_OnReceiveMsgReplayToClient( DIN::DIN_Input& input )
         default:
             UnhandledMessage( message.msg.t );
     }
-}
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnError
-// Created: NLD 2003-02-26
-//-----------------------------------------------------------------------------
-bool AgentServerMsgMgr::OnError( DIN::DIN_Link& /*link*/, const DIN::DIN_ErrorDescription& /*info*/ )
-{
-    return false;
 }
 
 // -----------------------------------------------------------------------------

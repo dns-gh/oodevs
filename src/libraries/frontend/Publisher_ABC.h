@@ -12,8 +12,6 @@
 
 struct ASN1T_MsgsInMaster;
 
-namespace DIN { class DIN_BufferedMessage; }
-
 namespace frontend
 {
 
@@ -36,7 +34,6 @@ public:
     //! @name Operations
     //@{
     virtual void Send( const ASN1T_MsgsInMaster& message ) = 0;
-    virtual DIN::DIN_BufferedMessage BuildDinMsg() = 0;
     //@}
 };
 

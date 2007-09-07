@@ -18,11 +18,6 @@ namespace tools
     class MessageDispatcher_ABC;
 }
 
-namespace DIN
-{
-    class DIN_Link;
-}
-
 namespace dispatcher
 {
     class ProfileManager;
@@ -42,7 +37,7 @@ class RightsPlugin : public Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands, Plugin_ABC& container );
+             RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands, Plugin_ABC& container, LinkResolver_ABC& base );
     virtual ~RightsPlugin();
     //@}
 
@@ -52,8 +47,8 @@ public:
     virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile );
     virtual void NotifyClientLeft         ( ClientPublisher_ABC& client );
 
-    virtual Profile_ABC&         GetProfile  ( const DIN::DIN_Link& link );
-    virtual ClientPublisher_ABC& GetPublisher( const DIN::DIN_Link& link );
+    virtual Profile_ABC&         GetProfile  ( const std::string& link );
+    virtual ClientPublisher_ABC& GetPublisher( const std::string& link );
     //@}
 
 private:
@@ -65,8 +60,8 @@ private:
 
     //! @name Helpers
     //@{
-    void OnReceive( DIN::DIN_Link& link, const ASN1T_MsgsClientToAuthentication& message );
-    void OnReceiveMsgAuthenticationRequest    ( DIN::DIN_Link& link, const ASN1T_MsgAuthenticationRequest& message );
+    void OnReceive( const std::string& link, const ASN1T_MsgsClientToAuthentication& message );
+    void OnReceiveMsgAuthenticationRequest    ( const std::string& link, const ASN1T_MsgAuthenticationRequest& message );
     void OnReceiveMsgProfileCreationRequest   ( ClientPublisher_ABC& client, const ASN1T_MsgProfileCreationRequest&    message );
     void OnReceiveMsgProfileUpdateRequest     ( ClientPublisher_ABC& client, const ASN1T_MsgProfileUpdateRequest&      message );
     void OnReceiveMsgProfileDestructionRequest( ClientPublisher_ABC& client, const ASN1T_MsgProfileDestructionRequest& message );
@@ -74,15 +69,16 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const DIN::DIN_Link*, Profile_ABC* > T_Profiles;
-    typedef T_Profiles::iterator                          IT_Profiles;
-    typedef T_Profiles::const_iterator                   CIT_Profiles;
+    typedef std::map< std::string, Profile_ABC* > T_Profiles;
+    typedef T_Profiles::iterator                 IT_Profiles;
+    typedef T_Profiles::const_iterator          CIT_Profiles;
     //@}
 
 private:
     //! @name Member data
     //@{
     Plugin_ABC& container_;
+    LinkResolver_ABC& base_;
     std::auto_ptr< ProfileManager >  profiles_;
     T_Profiles                       authenticated_;
     //@}

@@ -14,13 +14,9 @@
 #include "MessageIdentifierFactory.h"
 #include <memory>
 
-namespace DIN
-{
-    class DIN_Link;
-}
-
 namespace tools
 {
+
 // =============================================================================
 /** @class  MessageDispatcher_ABC
     @brief  Message dispatcher definition
@@ -39,7 +35,7 @@ public:
     //! @name Operations
     //@{
     template< typename C, typename T >
-    void RegisterMessage( C& instance, void (C::*callback)( DIN::DIN_Link& link, const T& object ) );
+    void RegisterMessage( C& instance, void (C::*callback)( const std::string& link, const T& object ) );
     //@}
 
 protected:
@@ -55,7 +51,7 @@ protected:
 // Created: AGE 2007-03-07
 // -----------------------------------------------------------------------------
 template< typename C, typename T >
-void MessageDispatcher_ABC::RegisterMessage( C& instance, void (C::*callback)( DIN::DIN_Link& link, const T& object ) )
+void MessageDispatcher_ABC::RegisterMessage( C& instance, void (C::*callback)( const std::string& link, const T& object ) )
 {
     const unsigned int objectClassId = MessageIdentifierFactory::GetIdentifier< T >();
     ObjectMessageCallback< T >* composite = static_cast< ObjectMessageCallback< T >* >( Retrieve( objectClassId ) );

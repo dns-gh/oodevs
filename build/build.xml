@@ -550,6 +550,7 @@ BLOCK "VarFileInfo"
     <target name="configure" description="initialize local project structure with libraries">
         <update name="terrain" modules="terrain,geometry,geocoord,graphics,pathfind"/>
         <update name="asn"/>
+        <update name="asio"/>
         <update name="MT" modules="MT_Tools,MT_Memory,MT_IO,MT_Archive,MT_Patterns,MT_Profiler,MT_Time,MT_Thread,MT_Logger,MT_XmlTools,MT_Qt"/>
         <update name="qt"/>
         <update name="DIN"/>

@@ -11,6 +11,7 @@
 #define __tools_pch_h_
 
 #include <string>
+#include "asio.h"
 
 #endif // __tools_pch_h_
 

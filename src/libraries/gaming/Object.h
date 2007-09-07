@@ -18,6 +18,7 @@
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/OptionalValue.h"
+#include "Types.h"
 
 namespace kernel
 {

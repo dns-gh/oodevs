@@ -10,12 +10,10 @@
 #ifndef __ClientsNetworker_h_
 #define __ClientsNetworker_h_
 
-#include "tools/ServerNetworker_ABC.h"
+#include "tools/ServerNetworker.h"
 
 struct ASN1T_MsgsOutMaster;
 struct ASN1T_MsgsInMaster;
-
-namespace DIN { class DIN_Input; }
 
 namespace master 
 {
@@ -28,7 +26,7 @@ class Client;
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class ClientsNetworker : public tools::ServerNetworker_ABC
+class ClientsNetworker : public tools::ServerNetworker
 {
 public:
     //! @name Constructors/Destructor
@@ -51,31 +49,30 @@ private:
 
     //! @name Connection callbacks
     //@{
-    virtual void OnConnectionReceived( DIN::DIN_Server& server, DIN::DIN_Link& link );
-    virtual void OnConnectionLost    ( DIN::DIN_Server& server, DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason );
+    virtual void ConnectionSucceeded( const std::string& endpoint );
+    virtual void ConnectionError    ( const std::string& address, const std::string& error );
     //@}
 
     //! @name Messages callbacks
     //@{
-    void OnReceiveMsgInMaster( DIN::DIN_Link& linkFrom, const ASN1T_MsgsInMaster& message );
+    void OnReceiveMsgInMaster( const std::string& linkFrom, const ASN1T_MsgsInMaster& message );
     //@}
 
     //! @name Tools
     //@{
     virtual void DenyConnections ();
-    virtual void AllowConnections();
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::set< Client* >         T_ClientSet;
-    typedef T_ClientSet::const_iterator CIT_ClientSet;
+    typedef std::map< std::string, Client* >   T_Clients;
+    typedef T_Clients::const_iterator        CIT_Clients;
     //@}
 
 private:
-    Master&     master_;
-    T_ClientSet clients_;
+    Master&   master_;
+    T_Clients clients_;
 };
 
 }

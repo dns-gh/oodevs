@@ -11,15 +11,14 @@
 #define __Client_h_
 
 #include "Publisher_ABC.h"
-#include "tools/Client_ABC.h"
 
 struct ASN1T_MsgsOutMaster;
 struct ASN1T_MsgsInMaster;
 struct ASN1T_MsgAuthenticationRequest;
 
-namespace DIN
+namespace tools
 {
-    class DIN_Input;
+    class MessageSender_ABC;
 }
 
 namespace master
@@ -33,13 +32,12 @@ namespace master
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Client : public tools::Client_ABC
-             , public Publisher_ABC
+class Client : public Publisher_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Client( Master& master, tools::ObjectMessageService& messageService, DIN::DIN_Link& link );
+             Client( Master& master, tools::MessageSender_ABC& sender, const std::string& endpoint );
     virtual ~Client();
     //@}
 
@@ -47,12 +45,6 @@ public:
     //@{
     void OnReceive( const ASN1T_MsgsInMaster& asnMsg );
     void Send     ( const ASN1T_MsgsOutMaster& asnMsg );
-    void Send     ( const ASN1T_MsgsOutMaster& asnMsg, const DIN::DIN_BufferedMessage& dinMsg );    
-    //@}
-
-    //! @name Tools
-    //@{
-    static Client& GetClientFromLink( const DIN::DIN_Link& link );
     //@}
 
 private:
@@ -75,6 +67,8 @@ private:
 
 private:
     Master&  master_;
+    tools::MessageSender_ABC& sender_;
+    const std::string endpoint_;
     Profile* pProfile_;
 };
 

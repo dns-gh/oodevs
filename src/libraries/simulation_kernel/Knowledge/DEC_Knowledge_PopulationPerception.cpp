@@ -24,8 +24,6 @@
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationPerception, "DEC_Knowledge_PopulationPerception" )
 
-using namespace DIN;
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationPerception constructor
 // Created: NLD 2004-03-11

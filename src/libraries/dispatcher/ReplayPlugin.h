@@ -15,11 +15,6 @@
 #include "MT/MT_Time/MT_TimerManager.h"
 #include "game_asn/Asn.h"
 
-namespace DIN
-{
-    class DIN_Link;
-}
-
 namespace tools
 {
     class MessageDispatcher_ABC;
@@ -65,7 +60,7 @@ private:
     //! @name Helpers
     //@{
     virtual void OnTimer();
-    void OnReceive( DIN::DIN_Link& link, const ASN1T_MsgsClientToReplay& asnMsg );
+    void OnReceive( const std::string& link, const ASN1T_MsgsClientToReplay& asnMsg );
     void ChangeTimeFactor( unsigned factor );
     void Pause();
     void Resume();

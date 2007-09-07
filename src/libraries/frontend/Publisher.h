@@ -35,7 +35,6 @@ public:
     //! @name Operations
     //@{
     virtual void Send( const ASN1T_MsgsInMaster& message );
-    virtual DIN::DIN_BufferedMessage BuildDinMsg();
     //@}
 
 private:

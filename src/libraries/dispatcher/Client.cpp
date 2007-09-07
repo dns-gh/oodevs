@@ -13,19 +13,18 @@
 
 #include "game_asn/Asn.h"
 #include "Profile.h"
-#include "tools/ObjectMessageService.h"
-#include "DIN/DIN_Link.h"
+#include "tools/MessageSender_ABC.h"
 
 using namespace dispatcher;
 using namespace tools;
-using namespace DIN;
 
 // -----------------------------------------------------------------------------
 // Name: Client constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-Client::Client( ObjectMessageService& messageService, DIN::DIN_Link& link )
-    : Client_ABC ( messageService, link )
+Client::Client( tools::MessageSender_ABC& sender, const std::string& endpoint )
+    : sender_  ( sender )
+    , endpoint_( endpoint )
 {
     // NOTHING
 }
@@ -45,7 +44,7 @@ Client::~Client()
 // -----------------------------------------------------------------------------
 void Client::Send( const ASN1T_MsgsAuthenticationToClient& asnMsg )
 {
-    messageService_.Send( link_, asnMsg );
+    sender_.Send( endpoint_, asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +53,7 @@ void Client::Send( const ASN1T_MsgsAuthenticationToClient& asnMsg )
 // -----------------------------------------------------------------------------
 void Client::Send( const ASN1T_MsgsSimToClient& asnMsg )
 {
-    messageService_.Send( link_, asnMsg );
+    sender_.Send( endpoint_, asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,17 +62,5 @@ void Client::Send( const ASN1T_MsgsSimToClient& asnMsg )
 // -----------------------------------------------------------------------------
 void Client::Send( const ASN1T_MsgsReplayToClient& msg )
 {
-    messageService_.Send( link_, msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::GetClientFromLink
-// Created: NLD 2006-09-21
-// -----------------------------------------------------------------------------
-// static
-Client& Client::GetClientFromLink( const DIN_Link& link )
-{
-    DIN_UserData_ABC* pTmp = link.GetUserData();
-    assert( pTmp );
-    return *static_cast< Client* >( pTmp );    
+    sender_.Send( endpoint_, msg );
 }

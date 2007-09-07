@@ -14,13 +14,10 @@
 #include "asn/asn1PerCppTypes.h"
 #include "AsnControllers.h"
 
-namespace DIN
-{
-    class DIN_Input;
-}
-
 namespace tools
 {
+    class Message;
+
 // =============================================================================
 /** @class  AsnMessageDecoder
     @brief  AsnMessageDecoder
@@ -33,14 +30,12 @@ class AsnMessageDecoder
 public:
     //! @name Constructors/Destructor
     //@{
-     AsnMessageDecoder( DIN::DIN_Input& dinMsg );
-     AsnMessageDecoder( DIN::DIN_Input& dinMsg, unsigned long& nContext );
-    ~AsnMessageDecoder();
+    explicit AsnMessageDecoder( Message& message );
     //@}
 
     //! @name Accessors
     //@{
-    const T& GetAsnMsg() const;
+    operator const T&() const;
     //@}
 
 private:
@@ -52,15 +47,14 @@ private:
 
     //! @name Tools
     //@{
-    void Decode( DIN::DIN_Input& dinMsg );
-    void Dump  () const;
+    void Decode( Message& message );
     //@}
 
 private:
     ASN1OCTET           aAsnBuffer_[ 100000 ];
     ASN1PERDecodeBuffer asnBuffer_;
     T                   asnMsg_;
-    C                   asnMsgCtrl_;        
+    C                   asnMsgCtrl_;
 };
 
 }

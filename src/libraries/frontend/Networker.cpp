@@ -1,4 +1,4 @@
-// *****************************************************************************
+*****************************************************************************
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
@@ -13,11 +13,9 @@
 #include "Master.h"
 #include "tools/AsnMessageDecoder.h"
 #include "clients_kernel/Controller.h"
-#include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
 
 using namespace frontend;
 using namespace tools;
-using namespace DIN;
 
 static const unsigned int magicCookie_ = 4242;
 
@@ -26,13 +24,13 @@ static const unsigned int magicCookie_ = 4242;
 // Created: SBO 2007-01-25
 // -----------------------------------------------------------------------------
 Networker::Networker( const std::string& host, kernel::Controller& controller, Model& model, Profile& profile )
-    : ClientNetworker_ABC( magicCookie_, host )
+    : ClientNetworker( host, true )
     , controller_( controller )
     , master_( 0 )
     , model_( model )
     , profile_( profile )
 {
-    GetMessageService().RegisterReceivedMessage( eMsgOutMaster, *this, &Networker::OnReceiveMsgOutMaster );
+    RegisterMessage( *this, &Networker::OnReceiveMsgOutMaster );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,53 +43,34 @@ Networker::~Networker()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Networker::OnConnected
-// Created: SBO 2007-01-25
+// Name: Networker::ConnectionSucceeded
+// Created: AGE 2007-09-07
 // -----------------------------------------------------------------------------
-void Networker::OnConnected( DIN::DIN_Link& link )
+void Networker::ConnectionSucceeded( const std::string& endpoint )
 {
-    ClientNetworker_ABC::OnConnected( link );
-    master_.reset( new Master( GetMessageService(), link, model_, profile_ ) );
+    ClientNetworker::ConnectionSucceeded( endpoint );
+    master_.reset( new Master( *this, endpoint, model_, profile_ ) );
     controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Networker::OnConnectionLost
-// Created: SBO 2007-01-25
+// Name: Networker::ConnectionError
+// Created: AGE 2007-09-07
 // -----------------------------------------------------------------------------
-void Networker::OnConnectionLost( DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason )
+void Networker::ConnectionError( const std::string& address, const std::string& error )
 {
-    ClientNetworker_ABC::OnConnectionLost( link, reason );
+    ClientNetworker::ConnectionError( address, error );
     master_.release();
     controller_.Update( *this );
 }
 
-// =============================================================================
-// RECEIVED MESSAGES
-// =============================================================================
-
-#define DECLARE_DIN_CALLBACK( MSG )                                                       \
-    void Networker::OnReceiveMsg##MSG( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& msg ) \
-    {                                                                                     \
-        master_->OnReceive( eMsg##MSG, msg );                                             \
-    }
-
 // -----------------------------------------------------------------------------
 // Name: Networker::OnReceiveMsgOutMaster
-// Created: SBO 2007-01-25
+// Created: AGE 2007-09-07
 // -----------------------------------------------------------------------------
-void Networker::OnReceiveMsgOutMaster( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
+void Networker::OnReceiveMsgOutMaster( const std::string& , const ASN1T_MsgsOutMaster& message )
 {
-    try
-    {
-        AsnMessageDecoder< ASN1T_MsgsOutMaster, ASN1C_MsgsOutMaster > asnDecoder( input );
-        master_->OnReceive( asnDecoder.GetAsnMsg() );
-    }
-    catch( std::runtime_error& exception )
-    {
-        // $$$$ SBO 2007-01-25: transform into a non-critical exception
-        throw std::exception( exception.what() );
-    }
+    master_->OnReceive( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,12 +84,10 @@ void Networker::Send( const ASN1T_MsgsInMaster& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Networker::BuildDinMsg
-// Created: SBO 2007-01-30
+// Name: Networker::IsConnected
+// Created: AGE 2007-09-07
 // -----------------------------------------------------------------------------
-DIN::DIN_BufferedMessage Networker::BuildDinMsg()
+bool Networker::IsConnected() const
 {
-    if( master_.get() )
-        return master_->BuildDinMsg();
-    throw std::runtime_error( "Trying to build network message but you're not connected!" );
+    return master_.get() != 0;
 }

@@ -15,7 +15,6 @@
 #include "Plugin_ABC.h"
 
 using namespace dispatcher;
-using namespace DIN;
 
 static const unsigned int magicCookie_ = 10;
 
@@ -24,7 +23,7 @@ static const unsigned int magicCookie_ = 10;
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
 ClientsNetworker::ClientsNetworker( const Config& config, Plugin_ABC& plugin )
-    : ServerNetworker_ABC( magicCookie_, config.GetNetworkClientsParameters() )
+    : ServerNetworker( config.GetNetworkClientsParameters() )
     , plugin_( plugin )
 {
     // NOTHING
@@ -36,7 +35,8 @@ ClientsNetworker::ClientsNetworker( const Config& config, Plugin_ABC& plugin )
 // -----------------------------------------------------------------------------
 ClientsNetworker::~ClientsNetworker()
 {
-    // NOTHING
+    for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+        delete it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -51,51 +51,34 @@ void ClientsNetworker::Receive( const ASN1T_MsgsSimToClient& message )
         AllowConnections();
 }
 
-// -----------------------------------------------------------------------------
-// Name: ClientsNetworker::DenyConnections
-// Created: NLD 2006-10-05
-// -----------------------------------------------------------------------------
-void ClientsNetworker::DenyConnections()
-{
-    ServerNetworker_ABC::DenyConnections();
-    for( CIT_ClientSet it = clients_.begin(); it != clients_.end(); ++it )
-        (**it).Disconnect();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ClientsNetworker::AllowConnections
-// Created: NLD 2006-10-05
-// -----------------------------------------------------------------------------
-void ClientsNetworker::AllowConnections()
-{
-    ServerNetworker_ABC::AllowConnections();
-}
-
 // =============================================================================
 // CONNECTION CALLBACKS
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: ClientsNetworker::OnConnectionReceived
+// Name: ClientsNetworker::ConnectionSucceeded
 // Created: NLD 2002-07-12
 // -----------------------------------------------------------------------------
-void ClientsNetworker::OnConnectionReceived( DIN_Server& server, DIN_Link& link )
+void ClientsNetworker::ConnectionSucceeded( const std::string& link  )
 {
-    ServerNetworker_ABC::OnConnectionReceived( server, link );
-    clients_.insert( new Client( GetMessageService(), link ) );
+    ServerNetworker::ConnectionSucceeded( link  );
+    clients_[link] = new Client( *this, link  );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClientsNetworker::OnConnectionLost
-// Created: NLD 2002-07-12
+// Name: ClientsNetworker::ConnectionError
+// Created: AGE 2007-09-05
 // -----------------------------------------------------------------------------
-void ClientsNetworker::OnConnectionLost( DIN_Server& server, DIN_Link& link, const DIN_ErrorDescription& reason )
+void ClientsNetworker::ConnectionError( const std::string& link , const std::string& reason )
 {
-    ServerNetworker_ABC::OnConnectionLost( server, link, reason );
-    Client& client = Client::GetClientFromLink( link );
-    plugin_.NotifyClientLeft( client );
-    clients_.erase( &client );
-    delete &client;
+    ServerNetworker::ConnectionError( link, reason );
+    Client* client = clients_[ link ];
+    if( client )
+    {
+        plugin_.NotifyClientLeft( *client );
+        clients_.erase( link );
+        delete client;
+    }
 }
 
 // =============================================================================
@@ -108,9 +91,8 @@ void ClientsNetworker::OnConnectionLost( DIN_Server& server, DIN_Link& link, con
 // -----------------------------------------------------------------------------
 void ClientsNetworker::Send( const ASN1T_MsgsSimToClient& asnMsg )
 {
-    // $$$$ AGE 2007-08-24: perf issues ?
-    for( CIT_ClientSet it = clients_.begin(); it != clients_.end(); ++it )
-        (**it).Send( asnMsg );
+    for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+        it->second->Send( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,8 +101,8 @@ void ClientsNetworker::Send( const ASN1T_MsgsSimToClient& asnMsg )
 // -----------------------------------------------------------------------------
 void ClientsNetworker::Send( const ASN1T_MsgsAuthenticationToClient& asnMsg )
 {
-    for( CIT_ClientSet it = clients_.begin(); it != clients_.end(); ++it )
-        (**it).Send( asnMsg );
+    for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+        it->second->Send( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -129,6 +111,27 @@ void ClientsNetworker::Send( const ASN1T_MsgsAuthenticationToClient& asnMsg )
 // -----------------------------------------------------------------------------
 void ClientsNetworker::Send( const ASN1T_MsgsReplayToClient& asnMsg )
 {
-    for( CIT_ClientSet it = clients_.begin(); it != clients_.end(); ++it )
-        (**it).Send( asnMsg );
+    for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+        it->second->Send( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::GetProfile
+// Created: AGE 2007-09-05
+// -----------------------------------------------------------------------------
+Profile_ABC& ClientsNetworker::GetProfile( const std::string& )
+{
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::GetPublisher
+// Created: AGE 2007-09-05
+// -----------------------------------------------------------------------------
+ClientPublisher_ABC& ClientsNetworker::GetPublisher( const std::string& link )
+{
+    Client* client = clients_[ link ];
+    if( ! client )
+        throw std::runtime_error( link + " is not a valid client" );
+    return *client;
 }

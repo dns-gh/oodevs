@@ -10,10 +10,7 @@
 #ifndef __ASN_Messages_h_
 #define __ASN_Messages_h_
 
-#include "clients_kernel/Types.h"
-
-#include "Network.h"
-#include "AgentServerMsgMgr.h"
+#include "Publisher_ABC.h"
 #include "game_asn/Asn.h"
 
 //=============================================================================

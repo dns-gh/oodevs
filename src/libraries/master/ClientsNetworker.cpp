@@ -43,9 +43,9 @@ static const unsigned int magicCookie_ = 4242;
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
 ClientsNetworker::ClientsNetworker( Master& master, const std::string& configFile )
-    : ServerNetworker_ABC( magicCookie_, ReadPort( configFile ) )
-    , master_            ( master )
-    , clients_           ()
+    : ServerNetworker( ReadPort( configFile ) )
+    , master_        ( master )
+    , clients_       ()
 {
     RegisterMessage( *this, &ClientsNetworker::OnReceiveMsgInMaster );
     AllowConnections();
@@ -70,47 +70,34 @@ ClientsNetworker::~ClientsNetworker()
 // -----------------------------------------------------------------------------
 void ClientsNetworker::DenyConnections()
 {
-    ServerNetworker_ABC::DenyConnections();
-    for( CIT_ClientSet it = clients_.begin(); it != clients_.end(); ++it )
-        (**it).Disconnect();
+    ServerNetworker::DenyConnections();
+    for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+    {
+        Disconnect( it->first );
+        delete it->second;
+    }
+    clients_.clear();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClientsNetworker::AllowConnections
-// Created: NLD 2006-10-05
+// Name: ClientsNetworker::ConnectionSucceeded
+// Created: AGE 2007-09-07
 // -----------------------------------------------------------------------------
-void ClientsNetworker::AllowConnections()
+void ClientsNetworker::ConnectionSucceeded( const std::string& endpoint )
 {
-    ServerNetworker_ABC::AllowConnections();
-}
-
-// =============================================================================
-// CONNECTION CALLBACKS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: ClientsNetworker::OnConnectionReceived
-// Created: NLD 2002-07-12
-// -----------------------------------------------------------------------------
-void ClientsNetworker::OnConnectionReceived( DIN_Server& server, DIN_Link& link )
-{
-    ServerNetworker_ABC::OnConnectionReceived( server, link );
-
-    Client* pClient = new Client( master_, GetMessageService(), link );
-    clients_.insert( pClient );
+    ServerNetworker::ConnectionSucceeded( endpoint );
+    clients_[ endpoint ] = new Client( master_, *this, endpoint );;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClientsNetworker::OnConnectionLost
-// Created: NLD 2002-07-12
+// Name: ClientsNetworker::ConnectionError
+// Created: AGE 2007-09-07
 // -----------------------------------------------------------------------------
-void ClientsNetworker::OnConnectionLost( DIN_Server& server, DIN_Link& link, const DIN_ErrorDescription& reason )
+void ClientsNetworker::ConnectionError( const std::string& address, const std::string& error )
 {
-    ServerNetworker_ABC::OnConnectionLost( server, link, reason );
-
-    Client& client = Client::GetClientFromLink( link );
-    clients_.erase( &client );
-    delete &client;
+    ServerNetworker::ConnectionError( address, error );
+    delete clients_[ address ];
+    clients_.erase( address );
 }
 
 // =============================================================================
@@ -121,16 +108,11 @@ void ClientsNetworker::OnConnectionLost( DIN_Server& server, DIN_Link& link, con
 // Name: ClientsNetworker::OnReceiveMsgInMaster
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void ClientsNetworker::OnReceiveMsgInMaster( DIN::DIN_Link& linkFrom, const ASN1T_MsgsInMaster& message )
+void ClientsNetworker::OnReceiveMsgInMaster( const std::string& from, const ASN1T_MsgsInMaster& message )
 {
-    try
-    {
-        Client::GetClientFromLink( linkFrom ).OnReceive( message );
-    }
-    catch( std::runtime_error& exception )
-    {
-        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
-    }
+    Client* client = clients_[ from ];
+    if( client )
+        client->OnReceive( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,14 +121,6 @@ void ClientsNetworker::OnReceiveMsgInMaster( DIN::DIN_Link& linkFrom, const ASN1
 // -----------------------------------------------------------------------------
 void ClientsNetworker::Send( const ASN1T_MsgsOutMaster& asnMsg )
 {
-    try
-    {
-        AsnMessageEncoder< ASN1T_MsgsOutMaster, ASN1C_MsgsOutMaster > asnEncoder( GetMessageService(), asnMsg );
-        for( CIT_ClientSet it = clients_.begin(); it != clients_.end(); ++it )
-            (**it).Send( asnMsg, asnEncoder.GetDinMsg() );
-    }
-    catch( std::runtime_error& exception )
-    {
-        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
-    }
+    for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+        it->second->Send( asnMsg );
 }

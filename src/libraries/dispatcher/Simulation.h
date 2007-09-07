@@ -12,7 +12,11 @@
 
 #include "SimulationPublisher_ABC.h"
 #include "game_asn/Asn.h"
-#include "tools/Server_ABC.h"
+
+namespace tools
+{
+    class MessageSender_ABC;
+}
 
 namespace dispatcher
 {
@@ -25,13 +29,12 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Simulation : public tools::Server_ABC
-                 , public SimulationPublisher_ABC
+class Simulation : public SimulationPublisher_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Simulation( MessageHandler_ABC& handler, tools::ObjectMessageService& messageService, DIN::DIN_Link& link );
+             Simulation( MessageHandler_ABC& handler, tools::MessageSender_ABC& messageService, const std::string& endpoint );
     virtual ~Simulation();
     //@}
 
@@ -52,6 +55,8 @@ private:
 
 private:
     MessageHandler_ABC& handler_;
+    tools::MessageSender_ABC& messageService_;
+    std::string endpoint_;
 };
 
 }

@@ -41,12 +41,3 @@ void Publisher::Send( const ASN1T_MsgsInMaster& message )
 {
     master_.Send( message );
 }
-
-// -----------------------------------------------------------------------------
-// Name: Publisher::BuildDinMsg
-// Created: SBO 2007-01-25
-// -----------------------------------------------------------------------------
-DIN::DIN_BufferedMessage Publisher::BuildDinMsg()
-{
-    return master_.BuildDinMsg();
-}

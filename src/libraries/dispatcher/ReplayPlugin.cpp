@@ -105,7 +105,7 @@ void ReplayPlugin::OnTimer()
 // Name: ReplayPlugin::OnReceive
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void ReplayPlugin::OnReceive( DIN::DIN_Link& , const ASN1T_MsgsClientToReplay& asnMsg )
+void ReplayPlugin::OnReceive( const std::string& , const ASN1T_MsgsClientToReplay& asnMsg )
 {
     switch( asnMsg.msg.t )
     {

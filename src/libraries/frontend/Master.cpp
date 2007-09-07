@@ -19,11 +19,8 @@
 #include "frontend/PhysicalModelsModel.h"
 #include "frontend/Exceptions.h"
 #include "frontend/Profile.h"
-#include "tools/AsnMessageEncoder.h"
-#include "tools/ObjectMessageService.h"
+#include "tools/MessageSender_ABC.h"
 #include "clients_gui/Tools.h"
-#include "DIN/MessageService/DIN_MessageService_ABC.h"
-#include "DIN/DIN_Link.h"
 
 using namespace tools;
 using namespace frontend;
@@ -32,10 +29,11 @@ using namespace frontend;
 // Name: Master constructor
 // Created: SBO 2007-01-25
 // -----------------------------------------------------------------------------
-Master::Master( ObjectMessageService& messageService, DIN::DIN_Link& link, Model& model, Profile& profile )
-    : Server_ABC ( messageService, link )
+Master::Master( tools::MessageSender_ABC& messageService, const std::string& endpoint, Model& model, Profile& profile )
+    : messageService_( messageService )
     , model_( model )
     , profile_( profile )
+    , endpoint_( endpoint )
 {
     // NOTHING
 }
@@ -74,22 +72,12 @@ void Master::OnReceive( const ASN1T_MsgsOutMaster& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Master::OnReceive
-// Created: SBO 2007-01-25
-// -----------------------------------------------------------------------------
-void Master::OnReceive( unsigned int id, DIN::DIN_Input& message )
-{
-    // $$$$ SBO 2007-01-25: process message
-}
-
-// -----------------------------------------------------------------------------
 // Name: Master::Send
 // Created: SBO 2007-01-25
 // -----------------------------------------------------------------------------
 void Master::Send( const ASN1T_MsgsInMaster& message )
 {
-    AsnMessageEncoder< ASN1T_MsgsInMaster > asnEncoder( messageService_, message );
-    messageService_.Send( link_, eMsgInMaster, asnEncoder.GetDinMsg() );
+    messageService_.Send( endpoint_, message );
 }
 
 // =============================================================================

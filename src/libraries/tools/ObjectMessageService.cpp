@@ -9,18 +9,17 @@
 
 #include "tools_pch.h"
 #include "ObjectMessageService.h"
+#include <boost/lexical_cast.hpp>
 
 using namespace tools;
-using namespace DIN;
 
 // -----------------------------------------------------------------------------
 // Name: ObjectMessageService constructor
 // Created: AGE 2007-03-07
 // -----------------------------------------------------------------------------
-ObjectMessageService::ObjectMessageService( DIN_Engine& engine, const DIN::DIN_Connector_ABC& connector )
-    : DIN_MessageService( engine, connector )
+ObjectMessageService::ObjectMessageService()
 {
-    Initialize();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -29,7 +28,6 @@ ObjectMessageService::ObjectMessageService( DIN_Engine& engine, const DIN::DIN_C
 // -----------------------------------------------------------------------------
 ObjectMessageService::~ObjectMessageService()
 {
-    Terminate();
     for( CIT_Callbacks it = callbacks_.begin(); it != callbacks_.end(); ++it )
         delete it->second;
 }
@@ -40,7 +38,6 @@ ObjectMessageService::~ObjectMessageService()
 // -----------------------------------------------------------------------------
 void ObjectMessageService::Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback )
 {
-    DIN_MessageService::RegisterReceivedMessage( id, *callback, &ObjectMessageCallback_ABC::OnMessage );
     callbacks_[ id ] = callback.release();
 }
 
@@ -54,19 +51,35 @@ ObjectMessageCallback_ABC* ObjectMessageService::Retrieve( unsigned long id )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectMessageService::OnError
-// Created: AGE 2007-08-23
+// Name: ObjectMessageService::RegisterErrorCallback
+// Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-bool ObjectMessageService::OnError( DIN_Link& link, const DIN_ErrorDescription& reason )
+void ObjectMessageService::RegisterErrorCallback( const boost::function2< void, const std::string&, const std::string& >& error )
 {
-    return error_ ? error_( link, reason ) : true;
+    error_ = error;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectMessageService::SetCallbackOnError
-// Created: AGE 2007-08-23
+// Name: ObjectMessageService::OnError
+// Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void ObjectMessageService::SetCallbackOnError( const boost::function2< bool, DIN_Link&, const DIN_ErrorDescription& >& callback )
+void ObjectMessageService::OnError( const std::string& endpoint, const std::string& error )
 {
-    error_ = callback;
+    if( error_ )
+        error_( endpoint, error );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectMessageService::OnMessage
+// Created: AGE 2007-09-06
+// -----------------------------------------------------------------------------
+void ObjectMessageService::OnMessage( const std::string& endpoint, Message& message )
+{
+    unsigned long tag;
+    message >> tag;
+    CIT_Callbacks it = callbacks_.find( tag );
+    if( it != callbacks_.end() )
+        it->second->OnMessage( endpoint, message );
+    else
+        throw std::runtime_error( "Unknown message tag " + boost::lexical_cast< std::string >( tag ) );
 }

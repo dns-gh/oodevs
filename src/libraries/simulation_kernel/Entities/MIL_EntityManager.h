@@ -21,11 +21,6 @@ namespace xml
     class xistream;
 }
 
-namespace DIN
-{
-    class DIN_Input;
-}
-
 class MIL_EffectManager;
 class MIL_ObjectManager;
 class MIL_Army;

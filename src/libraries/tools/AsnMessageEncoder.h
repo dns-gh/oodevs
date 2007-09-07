@@ -12,16 +12,12 @@
 
 #include "asn/asn1per.h"
 #include "asn/asn1PerCppTypes.h"
-#include "DIN/MessageService/DIN_BufferedMessage.h"
 #include "AsnControllers.h"
-
-namespace DIN
-{
-    class DIN_MessageService_ABC;
-}
 
 namespace tools 
 {
+    class Message;
+
 // =============================================================================
 /** @class  AsnMessageEncoder
     @brief  AsnMessageEncoder
@@ -34,14 +30,12 @@ class AsnMessageEncoder
 public:
     //! @name Constructors/Destructor
     //@{
-     AsnMessageEncoder( DIN::DIN_MessageService_ABC& msgService, const T& asnMsg );
-     AsnMessageEncoder( DIN::DIN_MessageService_ABC& msgService, const T& asnMsg, unsigned long nContext );
-    ~AsnMessageEncoder();
+     explicit AsnMessageEncoder( const T& asnMsg );
     //@}
 
     //! @name Accessors
     //@{
-    const DIN::DIN_BufferedMessage& GetDinMsg() const;
+    operator const Message&() const;
     //@}
 
 private:
@@ -54,14 +48,13 @@ private:
     //! @name Tools
     //@{
     void Encode();
-    void Dump  () const;
     //@}
 
 private:
-    ASN1OCTET                aAsnBuffer_[ 100000 ];
-    ASN1PEREncodeBuffer      asnBuffer_;
-    C                        asnMsgCtrl_;
-    DIN::DIN_BufferedMessage dinMsg_;
+    ASN1OCTET           aAsnBuffer_[ 100000 ];
+    ASN1PEREncodeBuffer asnBuffer_;
+    C                   asnMsgCtrl_;
+    Message             message_;
 };
 
 }

@@ -13,13 +13,8 @@
 #define __NET_AS_MOSServerMsgMgr_h_
 
 #include "MIL.h"
-#include "NET_ASN_MessageController.h"
 #include "NET_Publisher_ABC.h"
 #include "game_asn/Asn.h"
-#include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
-
-NET_ASN_GENERATE_MESSAGE_CONTROLLER( MsgsClientToSim )
-NET_ASN_GENERATE_MESSAGE_CONTROLLER( MsgsMiddleToSim )
 
 class NET_AgentServer;
 class NET_Simulation_ABC;
@@ -34,82 +29,42 @@ class NET_AS_MOSServerMsgMgr : public NET_Publisher_ABC
 
 public:
 
-             NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer, NET_Simulation_ABC& simulation ); 
+    //! @name Constructors/Destructors
+    //@{
+             NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer, NET_Simulation_ABC& simulation );
     virtual ~NET_AS_MOSServerMsgMgr();
+    //@}
 
-    //! @name Service activation 
-    //@{
-    void Enable ( DIN::DIN_Link& link );
-    void Disable( DIN::DIN_Link& link );
-    //@}
-    
-    //! @name Messages tools 
-    //@{
-    DIN::DIN_BufferedMessage BuildMessage      ();
-    void                     DeleteMessagesFrom( DIN::DIN_Link& dinLink );
-    //@}
-    
     //! @name Message sending
     //@{
     virtual void Send( ASN1T_MsgsSimToClient& asnMsg );
-    //@}
-
-    //! @name Callback Handling
-    //@{
-    void DoUpdate();
-    //@}
-
-    //! @name Service callback 
-    //@{
-    bool OnError( DIN::DIN_Link &link, const DIN::DIN_ErrorDescription &info );
+    void AddClient   ( const std::string& client );
+    void RemoveClient( const std::string& client );
     //@}
 
 private:
-    //! @name Tools
-    //@{
-    void SendMsgToAll( uint nMsgID, DIN::DIN_BufferedMessage& msg );
-    //@}
-
     //! @name Msg callbacks
-    //@{     
-    void OnReceiveMsgClientToSim           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgMiddleToSim           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgCtrlClientAnnouncement( DIN::DIN_Link& linkFrom );
+    //@{
+    void OnReceiveClient( const std::string& from, const ASN1T_MsgsClientToSim& message );
+    void OnReceiveMiddle( const std::string& from, const ASN1T_MsgsMiddleToSim& message );
+    void OnReceiveMsgCtrlClientAnnouncement( const std::string& from );
     //@}
 
     //! @name Types
     //@{
-    typedef std::vector< NET_ASN_MsgsClientToSimController* >     T_MessageClientToSimControllerVector;
-    typedef T_MessageClientToSimControllerVector::const_iterator  CIT_MessageClientToSimControllerVector;
-
-    typedef std::vector< NET_ASN_MsgsMiddleToSimController* >     T_MessageMiddleToSimControllerVector;
-    typedef T_MessageMiddleToSimControllerVector::const_iterator  CIT_MessageMiddleToSimControllerVector;
+    typedef std::set< std::string >     T_Clients;
+    typedef T_Clients::const_iterator CIT_Clients;
     //@}
 
-    //! @name Helpers
-    //@{
-    void DoUpdate( const T_MessageClientToSimControllerVector& messages );
-    void DoUpdate( const T_MessageMiddleToSimControllerVector& messages );
-    //@}
-    
 private:
+    //! @name Member data
+    //@{
     NET_AgentServer& agentServer_;
     NET_Simulation_ABC& simulation_;
-
-    DIN::DIN_MessageServiceUserCbk< NET_AS_MOSServerMsgMgr > messageService_;
-    const unsigned int eMsgSimToClient_;
-
-    // ASN
-    ASN1OCTET aASNEncodeBuffer_[100000];
-    ASN1OCTET aASNDecodeBuffer_[100000];
-    
-    MT_CriticalSection                   ctlListCriticalSection_;
-    T_MessageMiddleToSimControllerVector messageMiddleToSimControllerList_;
-    T_MessageClientToSimControllerVector messageClientToSimControllerList_;
+    T_Clients clients_;
+    //@}
 };
 
 #include "NET_AS_MOSServerMsgMgr.inl"
 
 #endif // __NET_AS_MOSServerMsgMgr_h_
-
-

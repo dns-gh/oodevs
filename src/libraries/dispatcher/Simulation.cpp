@@ -13,21 +13,20 @@
 
 #include "Network_Def.h"
 #include "game_asn/Asn.h"
-#include "tools/ObjectMessageService.h"
-#include "DIN/DIN_Link.h"
+#include "tools/MessageSender_ABC.h"
 #include "MessageHandler_ABC.h"
 
 using namespace dispatcher;
 using namespace tools;
-using namespace DIN;
 
 // -----------------------------------------------------------------------------
 // Name: Simulation constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-Simulation::Simulation( MessageHandler_ABC& handler, ObjectMessageService& messageService, DIN_Link& link )
-    : Server_ABC ( messageService, link )
-    , handler_   ( handler )
+Simulation::Simulation( MessageHandler_ABC& handler, MessageSender_ABC& messageService, const std::string& endpoint )
+    : handler_       ( handler )
+    , messageService_( messageService )
+    , endpoint_      ( endpoint )
 {
     AsnMsgMiddleToSimCtrlClientAnnouncement().Send( *this );    
 }
@@ -56,7 +55,7 @@ void Simulation::OnReceive( const ASN1T_MsgsSimToClient& asnMsg )
 // -----------------------------------------------------------------------------
 void Simulation::Send( const ASN1T_MsgsMiddleToSim& asnMsg )
 {
-    messageService_.Send( link_, asnMsg );
+    messageService_.Send( endpoint_, asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,5 +64,5 @@ void Simulation::Send( const ASN1T_MsgsMiddleToSim& asnMsg )
 // -----------------------------------------------------------------------------
 void Simulation::Send( const ASN1T_MsgsClientToSim& asnMsg )
 {
-    messageService_.Send( link_, asnMsg );
+    messageService_.Send( endpoint_, asnMsg );
 }

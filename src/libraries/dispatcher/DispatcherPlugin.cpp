@@ -72,7 +72,7 @@ void DispatcherPlugin::NotifyClientLeft( ClientPublisher_ABC& client )
 // Name: DispatcherPlugin::OnReceive
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void DispatcherPlugin::OnReceive( DIN::DIN_Link& link, const ASN1T_MsgsClientToSim& asnMsg )
+void DispatcherPlugin::OnReceive( const std::string& link, const ASN1T_MsgsClientToSim& asnMsg )
 {
     if( links_.GetProfile( link ).CheckRights( asnMsg ) )
         simulation_.Send( asnMsg );

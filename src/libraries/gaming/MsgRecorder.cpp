@@ -11,6 +11,7 @@
 #include "MsgRecorder.h"
 #include "AgentServerMsgMgr.h"
 #include "Network.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 #include <fstream>
 
 namespace internal
@@ -74,7 +75,8 @@ Message::~Message()
 // -----------------------------------------------------------------------------
 void Message::Send( AgentServerMsgMgr& msgManager )
 {
-    msgManager.SendMsgClientToSim( pMsg_, nMsgLength_ );
+    // $$$$ AGE 2007-09-06: remove completely
+//    msgManager.SendMsgClientToSim( pMsg_, nMsgLength_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -14,17 +14,12 @@
 #include "ASN_Messages.h"
 #include "Simulation.h"
 #include "Profile.h"
-
-#include "DIN/DIN_Engine.h"
-#include "DIN/DIN_Statistics.h"
-#include "DIN/ConnectionService/DIN_ConnectionServiceClientUserCbk.h"
 #include "Tools.h"
+#include <boost/lexical_cast.hpp>
+#include "MT/MT_Logger/MT_Logger_lib.h"
 
-using namespace DIN; using namespace NEK;
-using namespace tools::thread;
 using namespace kernel;
-
-static const unsigned int magicCookie_ = 10;
+using namespace tools;
 
 // -----------------------------------------------------------------------------
 // Name: Network constructor
@@ -33,54 +28,32 @@ static const unsigned int magicCookie_ = 10;
 Network::Network( Simulation& simu, Profile& profile )
     : simu_      ( simu )
     , profile_   ( profile )
-    , engine_    ( new DIN::DIN_Engine() )
-    , manager_   ( new AgentServerMsgMgr( *engine_, simu, profile, mutex_ ) )
-    , session_   ( 0 )
-    , terminated_( false )
+    , manager_   ( new AgentServerMsgMgr( *this, *this, simu, profile ) )
 {
-    pConnService_ = new DIN_ConnectionServiceClientUserCbk< Network >( 
-                                      *this
-                                    , *engine_
-                                    , DIN_ConnectorGuest()
-                                    , DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 )
-                                    , magicCookie_
-                                    , "MOS Server to agent server"); 
-
-	pConnService_->SetCbkOnConnectionSuccessful( &Network::OnConnected      );
-    pConnService_->SetCbkOnConnectionFailed    ( &Network::OnNotConnected   );
-    pConnService_->SetCbkOnConnectionLost      ( &Network::OnConnectionLost );
-
-    Thread::Start();
+    // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Network destructor
 // Created: AGE 2006-02-08
 // -----------------------------------------------------------------------------
 Network::~Network()
 {
-    terminated_ = true;
-    Join();
-    delete pConnService_;
-    delete manager_;
-    delete engine_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: Network::Connect
 // Created: AGE 2006-02-08
 // -----------------------------------------------------------------------------
-bool Network::Connect( const std::string& strHostName, uint16 nPort )
+bool Network::Connect( const std::string& strHostName, unsigned short nPort )
 {
-    boost::mutex::scoped_lock locker( mutex_ );
     if( IsConnected() )
         return false;
-    
-    NEK_AddressINET addr( strHostName.c_str(), nPort );
-    pConnService_->JoinHost( addr );
+
+    ClientNetworker::Connect( strHostName + ":" + boost::lexical_cast< std::string >( nPort ), false );
     return true;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Network::Disconnect
@@ -88,31 +61,13 @@ bool Network::Connect( const std::string& strHostName, uint16 nPort )
 // -----------------------------------------------------------------------------
 bool Network::Disconnect()
 {
-    boost::mutex::scoped_lock locker( mutex_ );
     if( ! IsConnected() )
         return false;
-    session_->Close( false );
+    session_.clear();
+    manager_->Disconnect();
+    ClientNetworker::Disconnect();
     simu_.Disconnect();
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Network::Run
-// Created: AGE 2006-04-21
-// -----------------------------------------------------------------------------
-void Network::Run()
-{
-    while( ! terminated_ )
-    {
-        unsigned events = 1;
-        {
-            boost::mutex::scoped_lock locker( mutex_ );
-            while( events > 0 )
-                events = engine_->Update();
-            manager_->Flush();
-        }
-        Thread::Sleep( 10 );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -121,44 +76,7 @@ void Network::Run()
 // -----------------------------------------------------------------------------
 bool Network::IsConnected() const
 {
-    return session_ != 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Network::Update
-// Created: AGE 2006-02-08
-// -----------------------------------------------------------------------------
-void Network::Update()
-{
-    {
-        boost::mutex::scoped_lock locker( mutex_ );
-        T_Messages messages;
-        std::swap( messages, messages_ );
-        for( CIT_Messages it = messages.begin(); it != messages.end(); ++it )
-        {
-            session_ = it->link_;
-            if( it->error_.empty() )
-            {
-                MT_LOG_INFO_MSG( tools::translate( "Network", "Connected to " ) << it->link_->GetRemoteAddress().GetAddressAsString() );
-                manager_->Enable( *session_ );
-                simu_.Connect( it->address_ );
-                profile_.Login( *manager_ );
-            }
-            else if( it->lost_ )
-            {
-                MT_LOG_WARNING_MSG( tools::translate( "Network", "Connection to " ) << it->address_ << tools::translate( "Network", " lost (cause :" ) << it->error_ << ")" );   
-                manager_->Disconnect();
-                simu_.Disconnect();
-            }
-            else
-            {
-                MT_LOG_WARNING_MSG( tools::translate( "Network", "Not connected to " ) << it->address_ << tools::translate( "Network", " (cause :" ) << it->error_ << ")" );   
-                manager_->Disconnect();
-                simu_.Disconnect();
-            }
-        }
-    }
-    manager_->DoUpdate();
+    return !session_.empty();
 }
 
 // -----------------------------------------------------------------------------
@@ -171,52 +89,12 @@ AgentServerMsgMgr& Network::GetMessageMgr()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Network::OnConnected
-// Created: AGE 2006-02-08
-// -----------------------------------------------------------------------------
-void Network::OnConnected( DIN::DIN_Link& link )
-{
-    messages_.push_back( T_Message() );
-    messages_.back().link_ = &link;
-    messages_.back().address_ = link.GetRemoteAddress().GetAddressAsString();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Network::OnNotConnected
-// Created: AGE 2006-02-08
-// -----------------------------------------------------------------------------
-void Network::OnNotConnected( DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason )
-{
-    messages_.push_back( T_Message() );
-    messages_.back().lost_ = false;
-    messages_.back().link_ = 0;
-    messages_.back().address_ = link.GetRemoteAddress().GetAddressAsString();
-    messages_.back().error_ = reason.GetInfo();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Network::OnConnectionLost
-// Created: AGE 2006-02-08
-// -----------------------------------------------------------------------------
-void Network::OnConnectionLost( DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason )
-{
-    messages_.push_back( T_Message() );
-    messages_.back().lost_ = true;
-    messages_.back().link_ = 0;
-    messages_.back().address_ = link.GetRemoteAddress().GetAddressAsString();
-    messages_.back().error_ = reason.GetInfo();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Network::GetReceivedAmount
 // Created: SBO 2007-01-04
 // -----------------------------------------------------------------------------
 unsigned long Network::GetReceivedAmount() const
 {
-    if( !engine_ )
-        return 0;
-    const DIN::DIN_Statistics& stats = engine_->GetStatistics();
-    return stats.GetReceivedBytes();
+    return 0; // $$$$ AGE 2007-09-06:
 }
 
 // -----------------------------------------------------------------------------
@@ -225,8 +103,42 @@ unsigned long Network::GetReceivedAmount() const
 // -----------------------------------------------------------------------------
 unsigned long Network::GetSentAmount() const
 {
-    if( !engine_ )
-        return 0;
-    const DIN::DIN_Statistics& stats = engine_->GetStatistics();
-    return stats.GetSentBytes();
+    return 0; // $$$$ AGE 2007-09-06:
+}
+
+// -----------------------------------------------------------------------------
+// Name: Network::ConnectionSucceeded
+// Created: AGE 2007-09-06
+// -----------------------------------------------------------------------------
+void Network::ConnectionSucceeded( const std::string& endpoint )
+{
+    session_ = endpoint;
+    MT_LOG_INFO_MSG( tools::translate( "Network", "Connected to " ) << endpoint );
+    manager_->Connect( session_ );
+    simu_.Connect( session_ );
+    profile_.Login( *manager_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Network::ConnectionFailed
+// Created: AGE 2007-09-06
+// -----------------------------------------------------------------------------
+void Network::ConnectionFailed( const std::string& address, const std::string& error )
+{
+    session_.clear();
+    MT_LOG_WARNING_MSG( tools::translate( "Network", "Not connected to " ) << address << tools::translate( "Network", " (cause :" ) << error << ")" );
+    manager_->Disconnect();
+    simu_.Disconnect();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Network::ConnectionError
+// Created: AGE 2007-09-06
+// -----------------------------------------------------------------------------
+void Network::ConnectionError( const std::string& address, const std::string& error )
+{
+    session_.clear();
+    MT_LOG_WARNING_MSG( tools::translate( "Network", "Connection to " ) << address << tools::translate( "Network", " lost (cause :" ) << error << ")" );
+    manager_->Disconnect();
+    simu_.Disconnect();
 }

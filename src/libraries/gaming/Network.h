@@ -10,22 +10,13 @@
 #ifndef __Network_h_
 #define __Network_h_
 
-#undef Yield
-#include "tools/thread/Thread.h"
-#include <boost/thread/mutex.hpp>
+#include "tools/ClientNetworker.h"
 
 class AgentServerMsgMgr;
 class Model;
 class Simulation;
 class Profile;
 
-namespace DIN
-{
-    class DIN_Link;
-    class DIN_Engine;
-    class DIN_ErrorDescription;
-    template< typename T > class DIN_ConnectionServiceClientUserCbk;
-}
 
 // =============================================================================
 /** @class  Network
@@ -33,7 +24,7 @@ namespace DIN
 */
 // Created: AGE 2006-02-08
 // =============================================================================
-class Network : public tools::thread::Thread
+class Network : public tools::ClientNetworker
 {
 
 public:
@@ -49,7 +40,7 @@ public:
     bool Disconnect();
     bool IsConnected() const;
 
-    void Update();
+    using tools::ClientNetworker::Update;
 
     AgentServerMsgMgr& GetMessageMgr();
     //@}
@@ -69,38 +60,18 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Run();
-    void OnConnected     ( DIN::DIN_Link& link );
-    void OnNotConnected  ( DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason );
-    void OnConnectionLost( DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason );
-    //@}
-
-    //! @name Types
-    //@{
-    struct T_Message
-    {
-        DIN::DIN_Link* link_;
-        std::string address_;
-        std::string error_;
-        bool lost_;
-    };
-    typedef std::vector< T_Message >     T_Messages;
-    typedef T_Messages::const_iterator CIT_Messages;
+    virtual void ConnectionSucceeded( const std::string& endpoint );
+    virtual void ConnectionFailed   ( const std::string& address, const std::string& error );
+    virtual void ConnectionError    ( const std::string& address, const std::string& error );
     //@}
 
 private:
     //! @name Member data
     //@{
-    boost::mutex mutex_;
-    T_Messages messages_;
     Simulation& simu_;
     Profile& profile_;
-    DIN::DIN_Engine* engine_;
-    DIN::DIN_ConnectionServiceClientUserCbk< Network >* pConnService_;
-
-    DIN::DIN_Link* session_;
+    std::string session_;
     AgentServerMsgMgr* manager_;
-    bool terminated_;
     //@}
 };
 

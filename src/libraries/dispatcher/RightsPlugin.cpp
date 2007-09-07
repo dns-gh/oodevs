@@ -25,9 +25,10 @@ using namespace dispatcher;
 // Name: RightsPlugin constructor
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-RightsPlugin::RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands, Plugin_ABC& container )
+RightsPlugin::RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands, Plugin_ABC& container, LinkResolver_ABC& base )
     : profiles_( new ProfileManager( model, clients, config ) )
     , container_( container )
+    , base_( base )
 {
     clientCommands.RegisterMessage( *this, &RightsPlugin::OnReceive );
 }
@@ -66,7 +67,7 @@ void RightsPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, Profi
 void RightsPlugin::NotifyClientLeft( ClientPublisher_ABC& client )
 {
     for( IT_Profiles it = authenticated_.begin(); it != authenticated_.end(); ++it )
-        if( &GetPublisher( *it->first ) == &client )
+        if( &GetPublisher( it->first ) == &client )
         {
             authenticated_.erase( it );
             return;
@@ -77,7 +78,7 @@ void RightsPlugin::NotifyClientLeft( ClientPublisher_ABC& client )
 // Name: RightsPlugin::OnReceive
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void RightsPlugin::OnReceive( DIN::DIN_Link& link, const ASN1T_MsgsClientToAuthentication& message )
+void RightsPlugin::OnReceive( const std::string& link, const ASN1T_MsgsClientToAuthentication& message )
 {
     if( GetProfile( link ).CheckRights( message ) )
     {
@@ -99,9 +100,9 @@ void RightsPlugin::OnReceive( DIN::DIN_Link& link, const ASN1T_MsgsClientToAuthe
 // Name: RightsPlugin::OnReceiveMsgAuthenticationRequest
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void RightsPlugin::OnReceiveMsgAuthenticationRequest( DIN::DIN_Link& link, const ASN1T_MsgAuthenticationRequest& message )
+void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, const ASN1T_MsgAuthenticationRequest& message )
 {
-    ClientPublisher_ABC& client = Client::GetClientFromLink( link );
+    ClientPublisher_ABC& client = base_.GetPublisher( link );
 
     Profile* profile = profiles_->Authenticate( message.login, message.password );
     if( !profile )
@@ -119,7 +120,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( DIN::DIN_Link& link, const
         ack.Send( client );
         Profile::AsnDelete( ack().profile );
         container_.NotifyClientAuthenticated( client, *profile );
-        authenticated_[ &link ] = profile;
+        authenticated_[ link ] = profile;
     }
 }
 
@@ -163,10 +164,10 @@ void RightsPlugin::OnReceiveMsgProfileDestructionRequest( ClientPublisher_ABC& c
 // Name: RightsPlugin::GetProfile
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-Profile_ABC& RightsPlugin::GetProfile( const DIN::DIN_Link& link )
+Profile_ABC& RightsPlugin::GetProfile( const std::string& link )
 {
     static DefaultProfile def;
-    CIT_Profiles it = authenticated_.find( &link );
+    CIT_Profiles it = authenticated_.find( link );
     if( it != authenticated_.end() )
         return *(it->second);
     return def;
@@ -176,11 +177,11 @@ Profile_ABC& RightsPlugin::GetProfile( const DIN::DIN_Link& link )
 // Name: RightsPlugin::GetPublisher
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-ClientPublisher_ABC& RightsPlugin::GetPublisher( const DIN::DIN_Link& link )
+ClientPublisher_ABC& RightsPlugin::GetPublisher( const std::string& link )
 {
     static NoopClientPublisher def;
-    CIT_Profiles it = authenticated_.find( &link );
+    CIT_Profiles it = authenticated_.find( link );
     if( it != authenticated_.end() )
-        return Client::GetClientFromLink( link );
+        return base_.GetPublisher( link );
     return def;
 }

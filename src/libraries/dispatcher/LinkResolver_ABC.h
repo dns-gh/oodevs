@@ -10,11 +10,6 @@
 #ifndef __LinkResolver_ABC_h_
 #define __LinkResolver_ABC_h_
 
-namespace DIN
-{
-    class DIN_Link;
-}
-
 namespace dispatcher
 {
     class Profile_ABC;
@@ -38,8 +33,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual Profile_ABC&         GetProfile  ( const DIN::DIN_Link& link ) = 0;
-    virtual ClientPublisher_ABC& GetPublisher( const DIN::DIN_Link& link ) = 0;
+    virtual Profile_ABC&         GetProfile  ( const std::string& link ) = 0;
+    virtual ClientPublisher_ABC& GetPublisher( const std::string& link ) = 0;
     //@}
 };
 

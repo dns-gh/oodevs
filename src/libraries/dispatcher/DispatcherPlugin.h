@@ -12,11 +12,6 @@
 
 #include "Plugin_ABC.h"
 
-namespace DIN
-{
-    class DIN_Link;
-}
-
 namespace tools
 {
     class MessageDispatcher_ABC;
@@ -60,7 +55,7 @@ private:
 
     //! @name Helpers
     //@{
-    void OnReceive( DIN::DIN_Link& link, const ASN1T_MsgsClientToSim& asnMsg );
+    void OnReceive( const std::string& link, const ASN1T_MsgsClientToSim& asnMsg );
     //@}
 
 private:

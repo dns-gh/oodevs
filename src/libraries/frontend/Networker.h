@@ -10,14 +10,9 @@
 #ifndef __Networker_h_
 #define __Networker_h_
 
-#include "tools/ClientNetworker_ABC.h"
+#include "tools/ClientNetworker.h"
 #include "Messages.h"
 #include "Publisher_ABC.h"
-
-namespace DIN
-{
-    class DIN_Input;
-}
 
 namespace kernel
 {
@@ -36,7 +31,7 @@ namespace frontend
 */
 // Created: SBO 2007-01-25
 // =============================================================================
-class Networker : public tools::ClientNetworker_ABC
+class Networker : public tools::ClientNetworker
                 , public Publisher_ABC
 {
 
@@ -49,8 +44,8 @@ public:
 
     //! @name Operations
     //@{
+    bool IsConnected() const;
     virtual void Send( const ASN1T_MsgsInMaster& message );
-    virtual DIN::DIN_BufferedMessage BuildDinMsg();
     //@}
 
 private:
@@ -62,13 +57,13 @@ private:
 
     //! @name Connection callbacks
     //@{
-    virtual void OnConnected     ( DIN::DIN_Link& link );
-    virtual void OnConnectionLost( DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason );
+    virtual void ConnectionSucceeded( const std::string& endpoint );
+    virtual void ConnectionError    ( const std::string& address, const std::string& error );
     //@}
 
     //! @name Messages callbacks
     //@{
-    void OnReceiveMsgOutMaster( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgOutMaster( const std::string& from, const ASN1T_MsgsOutMaster& message );
     //@}
 
 private:

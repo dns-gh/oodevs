@@ -11,25 +11,28 @@
 #define __Client_h_
 
 #include "ClientPublisher_ABC.h"
-#include "tools/Client_ABC.h"
 #include "game_asn/Asn.h"
+
+namespace tools
+{
+    class MessageSender_ABC;
+}
 
 namespace dispatcher
 {
 
-    // =============================================================================
+// =============================================================================
 /** @class  Client
     @brief  Client
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Client : public tools::Client_ABC
-             , public ClientPublisher_ABC
+class Client : public ClientPublisher_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Client( tools::ObjectMessageService& messageService, DIN::DIN_Link& link );
+             Client( tools::MessageSender_ABC& sender, const std::string& endpoint );
     virtual ~Client();
     //@}
 
@@ -40,16 +43,18 @@ public:
     virtual void Send( const ASN1T_MsgsReplayToClient& msg );
     //@}
 
-    //! @name Tools
-    //@{
-    static Client& GetClientFromLink( const DIN::DIN_Link& link );
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{
     Client( const Client& );            //!< Copy constructor
     Client& operator=( const Client& ); //!< Assignement operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    tools::MessageSender_ABC& sender_;
+    std::string endpoint_;
     //@}
 };
 

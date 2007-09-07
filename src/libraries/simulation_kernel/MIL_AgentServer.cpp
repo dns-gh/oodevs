@@ -217,9 +217,6 @@ void MIL_AgentServer::WaitForNextStep()
         pFederate_->Tick();
     DIA_Workspace::Instance().UpdateWorkspace();
 
-    if( ! pAgentServer_->IsThreaded() )
-        return;
-
     long sleepTime = 100;
     if( nSimState_ == eSimRunning )
     {

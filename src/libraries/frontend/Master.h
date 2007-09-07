@@ -10,10 +10,12 @@
 #ifndef __Master_h_
 #define __Master_h_
 
-#include "tools/Server_ABC.h"
 #include "master_asn/Asn.h"
 
-namespace DIN { class DIN_Input; }
+namespace tools
+{
+    class MessageSender_ABC;
+}
 
 namespace frontend
 {
@@ -26,20 +28,19 @@ namespace frontend
 */
 // Created: SBO 2007-01-25
 // =============================================================================
-class Master : public tools::Server_ABC
+class Master
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Master( tools::ObjectMessageService& messageService, DIN::DIN_Link& link, Model& model, Profile& profile );
+             Master( tools::MessageSender_ABC& messageService, const std::string& endpoint, Model& model, Profile& profile );
     virtual ~Master();
     //@}
 
     //! @name Operations
     //@{
     void OnReceive( const ASN1T_MsgsOutMaster& message );
-    void OnReceive( unsigned int id, DIN::DIN_Input& message );
     void Send     ( const ASN1T_MsgsInMaster&  message );
     //@}
 
@@ -67,8 +68,10 @@ private:
 private:
     //! @name Member data
     //@{
+    tools::MessageSender_ABC& messageService_;
     Model& model_;
     Profile& profile_;
+    const std::string endpoint_;
     //@}
 };
 

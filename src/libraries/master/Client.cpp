@@ -15,22 +15,19 @@
 #include "Master.h"
 #include "ProfileManager.h"
 #include "DataManager.h"
-#include "tools/AsnMessageEncoder.h"
-#include "tools/ObjectMessageService.h"
-#include "DIN/MessageService/DIN_MessageService_ABC.h"
-#include "DIN/DIN_Link.h"
+#include "tools/MessageSender_ABC.h"
 
 using namespace master;
 using namespace tools;
-using namespace DIN;
 
 // -----------------------------------------------------------------------------
 // Name: Client constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-Client::Client( Master& master, ObjectMessageService& messageService, DIN_Link& link )
-    : Client_ABC( messageService, link )
-    , master_   ( master )
+Client::Client( Master& master, tools::MessageSender_ABC& sender, const std::string& endpoint )
+    : master_   ( master )
+    , sender_   ( sender )
+    , endpoint_ ( endpoint )
     , pProfile_ ( 0 )
 {
     // NOTHING
@@ -92,11 +89,11 @@ bool Client::CheckRights( const ASN1T_MsgsOutMaster& asnMsg ) const
 void Client::OnReceiveMsgAuthenticationRequest( const ASN1T_MsgAuthenticationRequest& msg )
 {
     //$$$ TMP
-    if( pProfile_ )
-    {
-        Disconnect();
-        return;
-    }
+//    if( pProfile_ )
+//    {
+//        Disconnect();
+//        return;
+//    }
 
     pProfile_ = master_.GetProfileManager().Authenticate( msg.login, msg.password );
     if( !pProfile_ )
@@ -124,10 +121,7 @@ void Client::OnReceiveMsgAuthenticationRequest( const ASN1T_MsgAuthenticationReq
 void Client::OnReceive( const ASN1T_MsgsInMaster& asnInMsg )
 {
     if( !CheckRights( asnInMsg ) )
-    {
-        Disconnect();
         return;
-    }
 
     switch( asnInMsg.msg.t )
     {
@@ -140,38 +134,11 @@ void Client::OnReceive( const ASN1T_MsgsInMaster& asnInMsg )
 
 // -----------------------------------------------------------------------------
 // Name: Client::Send
-// Created: NLD 2006-09-27
+// Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 void Client::Send( const ASN1T_MsgsOutMaster& asnMsg )
 {
     if( !CheckRights( asnMsg ) )
         return;
-    messageService_.Send( link_, asnMsg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::Send
-// Created: NLD 2006-09-25
-// -----------------------------------------------------------------------------
-void Client::Send( const ASN1T_MsgsOutMaster& asnMsg, const DIN_BufferedMessage& dinMsg )
-{
-    if( !CheckRights( asnMsg ) )
-        return;
-    messageService_.Send( link_, asnMsg, dinMsg );
-}
-
-// =============================================================================
-// TOOLS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: Client::GetClientFromLink
-// Created: NLD 2006-09-21
-// -----------------------------------------------------------------------------
-// static
-Client& Client::GetClientFromLink( const DIN_Link& link )
-{
-    DIN_UserData_ABC* pTmp = link.GetUserData();
-    assert( pTmp );
-    return *static_cast< Client* >( pTmp );    
+    sender_.Send( endpoint_, asnMsg );
 }

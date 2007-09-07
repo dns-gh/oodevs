@@ -12,15 +12,11 @@
 
 #include "ClientPublisher_ABC.h"
 #include "MessageHandler_ABC.h"
-#include "tools/ServerNetworker_ABC.h"
+#include "LinkResolver_ABC.h"
+#include "tools/ServerNetworker.h"
 #include "tools/MessageDispatcher_ABC.h"
 
 struct ASN1T_MsgsInClient;
-
-namespace DIN
-{
-    class DIN_Input;
-}
 
 namespace dispatcher 
 {
@@ -34,9 +30,10 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class ClientsNetworker : public tools::ServerNetworker_ABC
+class ClientsNetworker : public tools::ServerNetworker
                        , public ClientPublisher_ABC
                        , public MessageHandler_ABC
+                       , public LinkResolver_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -47,12 +44,12 @@ public:
 
     //! @name Main
     //@{
-    virtual void DenyConnections ();
-    virtual void AllowConnections();
-
     virtual void Send( const ASN1T_MsgsSimToClient& asnMsg );
     virtual void Send( const ASN1T_MsgsAuthenticationToClient& asnMsg );
     virtual void Send( const ASN1T_MsgsReplayToClient& );
+
+    virtual Profile_ABC&         GetProfile  ( const std::string& link );
+    virtual ClientPublisher_ABC& GetPublisher( const std::string& link );
     //@}
 
 protected:
@@ -70,22 +67,22 @@ private:
 
     //! @name Connection callbacks
     //@{
-    virtual void OnConnectionReceived( DIN::DIN_Server& server, DIN::DIN_Link& link );
-    virtual void OnConnectionLost    ( DIN::DIN_Server& server, DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason );
+    virtual void ConnectionSucceeded( const std::string& endpoint );
+    virtual void ConnectionError    ( const std::string& endpoint, const std::string& reason );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::set< Client* >           T_ClientSet;
-    typedef T_ClientSet::const_iterator CIT_ClientSet;
+    typedef std::map< std::string, Client* > T_Clients;
+    typedef T_Clients::const_iterator      CIT_Clients;
     //@}
 
 private:
     //! @name Member data
     //@{
     Plugin_ABC& plugin_;
-    T_ClientSet clients_;
+    T_Clients clients_;
     //@}
 };
 

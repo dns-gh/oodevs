@@ -11,14 +11,9 @@
 #define __SimulationNetworker_h_
 
 #include "SimulationPublisher_ABC.h"
-#include "tools/ClientNetworker_ABC.h"
+#include "tools/ClientNetworker.h"
 
 struct ASN1T_MsgsInSim;
-
-namespace DIN
-{
-    class DIN_Input;
-}
 
 namespace dispatcher 
 {
@@ -34,7 +29,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class SimulationNetworker : public tools::ClientNetworker_ABC
+class SimulationNetworker : public tools::ClientNetworker
                           , public SimulationPublisher_ABC
 {
 public:
@@ -59,14 +54,14 @@ private:
 
     //! @name Connection callbacks
     //@{
-    virtual void OnConnected        ( DIN::DIN_Link& link );
-    virtual void OnConnectionFailed ( DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason );
-    virtual void OnConnectionLost   ( DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason );
+    virtual void ConnectionSucceeded( const std::string& endpoint );
+    virtual void ConnectionFailed   ( const std::string& address, const std::string& error );
+    virtual void ConnectionError    ( const std::string& address, const std::string& error );
     //@}
 
     //! @name Messages callbacks
     //@{
-    void OnReceiveMsgSimToClient( DIN::DIN_Link& linkFrom, const ASN1T_MsgsSimToClient& message );    
+    void OnReceiveMsgSimToClient( const std::string& linkFrom, const ASN1T_MsgsSimToClient& message );    
     //@}
 
 private:

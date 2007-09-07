@@ -17,11 +17,10 @@
 #include "Network_Def.h"
 #include "tools/AsnMessageDecoder.h"
 #include "tools/AsnMessageEncoder.h"
-#include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 
 using namespace tools;
 using namespace dispatcher;
-using namespace DIN;
 
 static const unsigned int magicCookie_ = 1;
 
@@ -30,10 +29,10 @@ static const unsigned int magicCookie_ = 1;
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
 SimulationNetworker::SimulationNetworker( Model& model, ClientsNetworker& clients, MessageHandler_ABC& handler, const Config& config )
-    : ClientNetworker_ABC( magicCookie_, config.GetNetworkSimulationParameters() )
-    , model_             ( model )
-    , clients_           ( clients )
-    , handler_           ( handler )
+    : ClientNetworker( config.GetNetworkSimulationParameters(), true )
+    , model_         ( model )
+    , clients_       ( clients )
+    , handler_       ( handler )
 {
     RegisterMessage( *this, &SimulationNetworker::OnReceiveMsgSimToClient );
 }
@@ -47,53 +46,45 @@ SimulationNetworker::~SimulationNetworker()
     // NOTHING
 }
   
-// =============================================================================
-// CONNECTION CALLBACKS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
-// Name: SimulationNetworker::OnConnected
-// Created: AML 03-04-02
+// Name: SimulationNetworker::ConnectionSucceeded
+// Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void SimulationNetworker::OnConnected( DIN_Link& link )
+void SimulationNetworker::ConnectionSucceeded( const std::string& endpoint )
 {
-    ClientNetworker_ABC::OnConnected( link );
+    ClientNetworker::ConnectionSucceeded( endpoint );
     assert( !simulation_.get() );
-    simulation_.reset( new Simulation( handler_, GetMessageService(), link ) );
+    simulation_.reset( new Simulation( handler_, *this, endpoint ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SimulationNetworker::OnConnectionFailed
-// Created: AML 03-04-02
+// Name: SimulationNetworker::ConnectionFailed
+// Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void SimulationNetworker::OnConnectionFailed( DIN_Link& link, const DIN_ErrorDescription& reason )
+void SimulationNetworker::ConnectionFailed( const std::string& address, const std::string& error )
 {
-    ClientNetworker_ABC::OnConnectionFailed( link, reason );
+    ClientNetworker::ConnectionFailed( address, error );
     model_.Reset();
     clients_.DenyConnections();
 }
-
+    
 // -----------------------------------------------------------------------------
-// Name: SimulationNetworker::OnConnectionLost
-// Created: AML 03-04-02
+// Name: SimulationNetworker::ConnectionError
+// Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void SimulationNetworker::OnConnectionLost( DIN_Link& link, const DIN_ErrorDescription& reason )
+void SimulationNetworker::ConnectionError( const std::string& address, const std::string& error )
 {
-    ClientNetworker_ABC::OnConnectionLost( link, reason );
+    ClientNetworker::ConnectionError( address, error );
     simulation_.reset();
     model_.Reset();
     clients_.DenyConnections();
 }
 
-// =============================================================================
-// RECEIVED MESSAGES
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: SimulationNetworker::OnReceiveMsgSimToClient
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void SimulationNetworker::OnReceiveMsgSimToClient( DIN::DIN_Link& /*linkFrom*/, const ASN1T_MsgsSimToClient& message )
+void SimulationNetworker::OnReceiveMsgSimToClient( const std::string& /*linkFrom*/, const ASN1T_MsgsSimToClient& message )
 {
     try
     {

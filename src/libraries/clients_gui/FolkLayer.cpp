@@ -101,7 +101,13 @@ void FolkLayer::Paint( const Rectangle2f& viewport )
     if( ! box_.Intersect( viewport ).IsEmpty() )
     {
         glPushAttrib( GL_CURRENT_BIT | GL_TEXTURE_BIT );
+        glLineWidth( 3 );
+        gl::glActiveTexture( gl::GL_TEXTURE1 );
+        glDisable( GL_TEXTURE_1D );
+        glDisable( GL_TEXTURE_2D );
         gl::glActiveTexture( gl::GL_TEXTURE0 );
+        glDisable(GL_TEXTURE_GEN_S);
+        glDisable(GL_TEXTURE_GEN_T);
         glEnable( GL_TEXTURE_1D );
         glDisable( GL_TEXTURE_2D );
         glBindTexture( GL_TEXTURE_1D, gradientTexture_ );

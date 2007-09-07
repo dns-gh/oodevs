@@ -9,6 +9,8 @@
 
 #include "tools_pch.h"
 #include "App6Symbol.h"
+#undef max
+#undef min
 
 namespace tools
 {

@@ -12,33 +12,23 @@
 
 #include "clients_kernel/Types.h"
 #include "game_asn/Asn.h"
-#include "DIN/DIN_Engine.h"
-#include "DIN/DIN_Link.h"
-#include "DIN/DIN_Input.h"
-#include "DIN/MessageService/DIN_BufferedMessage.h"
-#include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
-#include "DIN/ConnectionService/DIN_ConnectionServiceServerUserCbk.h"
-#include "DIN/ConnectionService/DIN_ConnectionServiceClientUserCbk.h"
 #include "Publisher_ABC.h"
 
-#include "boost/thread/mutex.hpp"
+namespace tools
+{
+    class MessageDispatcher_ABC;
+    class MessageSender_ABC;
+}
 
 namespace kernel
 {
     class Agent_ABC;
 }
 
-class AgentServerController;
 class MsgRecorder;
 class Model;
 class Simulation;
-class DIN_InputDeepCopy;
 class Profile;
-
-namespace DIN
-{
-	template < class T > class DIN_MessageServiceUserCbk;
-}
 
 //=============================================================================
 // Created: NLD 2002-07-12
@@ -49,49 +39,33 @@ class AgentServerMsgMgr : public Publisher_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             AgentServerMsgMgr( DIN::DIN_Engine& engine, Simulation& simu, Profile& profile, boost::mutex& mutex ); 
+             AgentServerMsgMgr( tools::MessageDispatcher_ABC& dispatcher, tools::MessageSender_ABC& sender, Simulation& simu, Profile& profile ); 
     virtual ~AgentServerMsgMgr();
     //@}
 
     //! @name Operations
     //@{
-    bool IsPaused() const;
     void RegisterMessageRecorder( MsgRecorder& recorder );
     void UnregisterMessageRecorder( MsgRecorder& recorder );
 
-    void Enable( DIN::DIN_Link& session );
-    void DoUpdate();
-    void Flush();
+    void Connect( const std::string& host );
     void Disconnect();
 
     virtual void Send( ASN1T_MsgsClientToSim& message );
     virtual void Send( ASN1T_MsgsClientToAuthentication& message );
     virtual void Send( ASN1T_MsgsClientToReplay& message );
 
-    DIN::DIN_BufferedMessage BuildMessage();
-    void SendMsgClientToSim ( ASN1OCTET* pMsg, int nMsgLength );
-
     void SetModel( Model& model );
     //@}
 
 private:
-    //! @name Service callback
-    //@{
-    bool OnError( DIN::DIN_Link &link, const DIN::DIN_ErrorDescription& info );
-    //@}
-
     //! @name Message callbacks
     //@{
     // ASN
-    void OnReceiveMsgSimToClient           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgAuthenticationToClient( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgReplayToClient        ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgSimToClient           ( const std::string& from, const ASN1T_MsgsSimToClient& message );
+    void OnReceiveMsgAuthenticationToClient( const std::string& from, const ASN1T_MsgsAuthenticationToClient& message );
+    void OnReceiveMsgReplayToClient        ( const std::string& from, const ASN1T_MsgsReplayToClient& message );
 
-    void _OnReceiveMsgSimToClient           ( DIN::DIN_Input& input );    
-    void _OnReceiveMsgAuthenticationToClient( DIN::DIN_Input& input );
-    void _OnReceiveMsgReplayToClient        ( DIN::DIN_Input& input );
-
-    
     void OnReceiveMsgUnitVisionCones                       ( const ASN1T_MsgUnitVisionCones& message );
     void OnReceiveMsgUnitInterVisibility                   ( const ASN1T_MsgUnitDetection& message );
     void OnReceiveMsgObjectInterVisibility                 ( const ASN1T_MsgObjectDetection& message );
@@ -255,9 +229,6 @@ private:
 
     //! @name Helpers
     //@{
-    void Send( unsigned int id, DIN::DIN_BufferedMessage& message );
-    typedef void ( AgentServerMsgMgr::* T_Callback ) ( DIN::DIN_Input& input );
-    void Enqueue( DIN::DIN_Input& input, T_Callback function );
     Model& GetModel() const;
     //@}
 
@@ -267,34 +238,18 @@ private:
     AgentServerMsgMgr& operator=( const AgentServerMsgMgr& );
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::vector< DIN_InputDeepCopy* > T_Inputs;
-    typedef T_Inputs::const_iterator        CIT_Inputs;
-    //@}
-    
 private:
+    //! @name Member data
+    //@{
+    tools::MessageDispatcher_ABC& dispatcher_;
+    tools::MessageSender_ABC& sender_;
+
+    std::string          host_;
     Model*               model_;
     Simulation&          simulation_;
     Profile&             profile_;
-    boost::mutex&        mutex_;
     MsgRecorder*         msgRecorder_;
-
-    DIN::DIN_Link* session_;
-    DIN::DIN_MessageServiceUserCbk<AgentServerMsgMgr>*  pMessageService_;
-
-    const unsigned int eMsgClientToAuthentication_;
-    const unsigned int eMsgClientToSim_;
-    const unsigned int eMsgClientToReplay_;
-
-    // ASN
-    ASN1OCTET           aASNEncodeBuffer_[100000];
-    ASN1OCTET           aASNDecodeBuffer_[100000];
-
-    boost::mutex inputMutex_;
-    T_Inputs workingInputs_; // network thread only
-    T_Inputs buffer_;        // shared
-    T_Inputs pendingInputs_; // main thread only
+    //@}
 };
 
 #endif // __AgentServerMsgMgr_h_

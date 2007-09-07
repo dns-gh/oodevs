@@ -54,7 +54,7 @@ Replayer::Replayer( const Config& config, const std::string& records )
     handler_.AddHandler( clientsNetworker_ );
 
     // $$$$ AGE 2007-08-27: utiliser la PluginFactory => replay ESRI
-    RightsPlugin* rights = new RightsPlugin( *model_, *clientsNetworker_, config, *clientsNetworker_, handler_ );
+    RightsPlugin* rights = new RightsPlugin( *model_, *clientsNetworker_, config, *clientsNetworker_, handler_, *clientsNetworker_ );
     handler_.Add( rights  );
     static NoopSimulationPublisher simu;
     handler_.Add( new DispatcherPlugin( *model_, simu, *clientsNetworker_, *rights ) );

@@ -51,7 +51,7 @@ PluginFactory::~PluginFactory()
 // -----------------------------------------------------------------------------
 void PluginFactory::RegisterPlugins( CompositePlugin& handler ) const
 {
-    RightsPlugin* rights = new RightsPlugin( model_, clients_, config_, clients_, handler );
+    RightsPlugin* rights = new RightsPlugin( model_, clients_, config_, clients_, handler, clients_ );
     handler.Add( rights );
     handler.Add( new DispatcherPlugin( model_, simulation_, clients_, *rights ) );
     if( config_.GetPluginConfig( "recorder" ).IsEnabled() )

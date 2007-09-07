@@ -10,49 +10,41 @@
 #ifndef __ObjectMessageService_h_
 #define __ObjectMessageService_h_
 
-#include "DIN/MessageService/DIN_MessageService.h"
 #include "MessageIdentifierFactory.h"
 #include "MessageDispatcher_ABC.h"
 #include "AsnMessageEncoder.h"
+#include "MessageCallback_ABC.h"
 #include <boost/function.hpp>
+#include <vector>
 
 namespace tools
 {
+    class Message;
+
 // =============================================================================
 /** @class  ObjectMessageService
     @brief  Object message service
 */
 // Created: AGE 2007-03-07
 // =============================================================================
-class ObjectMessageService : public DIN::DIN_MessageService, public MessageDispatcher_ABC
+class ObjectMessageService : public MessageDispatcher_ABC
+                           , public MessageCallback_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectMessageService( DIN::DIN_Engine& engine, const DIN::DIN_Connector_ABC& connector );
+             ObjectMessageService();
     virtual ~ObjectMessageService();
     //@}
 
     //! @name Operations
     //@{
-    template< typename T >
-    void Send( DIN::DIN_Link& link, const T& message );
-    template< typename T >
-    void Send( DIN::DIN_Link& link, const T& , const DIN::DIN_BufferedMessage& message );
-
     using MessageDispatcher_ABC::RegisterMessage;
-    using DIN_MessageService::Enable;
-    using DIN_MessageService::Disable;
 
-    void SetCallbackOnError( const boost::function2< bool, DIN::DIN_Link&, const DIN::DIN_ErrorDescription& >& callback );
-    virtual void Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback );
+    void RegisterErrorCallback( const boost::function2< void, const std::string&, const std::string& >& error );
+
     virtual ObjectMessageCallback_ABC* Retrieve( unsigned long id );
-    //@}
-
-protected:
-    //! @name Operations
-    //@{
-    virtual bool OnError( DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason );
+    virtual void Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback );
     //@}
 
 private:
@@ -60,6 +52,12 @@ private:
     //@{
     ObjectMessageService( const ObjectMessageService& );            //!< Copy constructor
     ObjectMessageService& operator=( const ObjectMessageService& ); //!< Assignement operator
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void OnError  ( const std::string& endpoint, const std::string& error );
+    virtual void OnMessage( const std::string& endpoint, Message& message );
     //@}
 
     //! @name Types
@@ -72,32 +70,9 @@ private:
     //! @name Member data
     //@{
     T_Callbacks callbacks_;
-    boost::function2< bool, DIN::DIN_Link&, const DIN::DIN_ErrorDescription& > error_;
+    boost::function2< void, const std::string&, const std::string& > error_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: ObjectMessageService::Send
-// Created: AGE 2007-08-23
-// -----------------------------------------------------------------------------
-template< typename T >
-void ObjectMessageService::Send( DIN::DIN_Link& link, const T& message )
-{
-    static const unsigned long id = MessageIdentifierFactory::GetIdentifier< T >();
-    AsnMessageEncoder< T > asnEncoder( *this, message );
-    DIN::DIN_MessageService::Send( link, id, asnEncoder.GetDinMsg() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectMessageService::Send
-// Created: AGE 2007-08-23
-// -----------------------------------------------------------------------------
-template< typename T >
-void ObjectMessageService::Send( DIN::DIN_Link& link, const T& , const DIN::DIN_BufferedMessage& message )
-{
-    static const unsigned long id = MessageIdentifierFactory::GetIdentifier< T >();
-    DIN::DIN_MessageService::Send( link, id, message );
-}
 
 }
 

@@ -13,16 +13,17 @@
 #include "AsnMessageDecoder.h"
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
+#include <boost/bind/apply.hpp>
+#include <vector>
 
 namespace DIN
 {
-    class DIN_Link;
     class DIN_Input;
 }
 
 namespace tools
 {
-    
+
 // =============================================================================
 /** @class  ObjectMessageCallback_ABC
     @brief  ObjectMessageCallback_ABC
@@ -41,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void OnMessage( DIN::DIN_Link& link, DIN::DIN_Input& input ) = 0;
+    virtual void OnMessage( const std::string& link, Message& input ) = 0;
     //@}
 };
 
@@ -57,7 +58,7 @@ class ObjectMessageCallback : public ObjectMessageCallback_ABC
 public:
     //! @name Types
     //@{
-    typedef boost::function2< void, DIN::DIN_Link& , const T& > T_Callback;
+    typedef boost::function2< void, const std::string& , const T& > T_Callback;
     //@}
 
 public:
@@ -73,11 +74,11 @@ public:
     {
         callbacks_.push_back( callback );
     }
-    virtual void OnMessage( DIN::DIN_Link& link, DIN::DIN_Input& input )
+    virtual void OnMessage( const std::string& link, Message& input )
     {
         AsnMessageDecoder< T > decoder( input );
-        for( std::vector< T_Callback >::iterator it = callbacks_.begin(); it != callbacks_.end(); ++it )
-            (*it)( link, decoder.GetAsnMsg() );
+        std::for_each( callbacks_.begin(), callbacks_.end(),
+            boost::bind( boost::apply< void >(), _1, boost::ref( link ), boost::ref( decoder ) ) );
     }
     //@}
 
