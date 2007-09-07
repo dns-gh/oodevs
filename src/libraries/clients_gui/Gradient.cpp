@@ -127,6 +127,7 @@ namespace
             FillGradient( colors.begin() + colorIndex, colors.begin() + colorIndex + elements, with[i].second, with[i+1].second );
             colorIndex += elements;
         }
+        colors.back() = MakeColor( with.back().second, with.back().second, colors.back(), 1 );
     }
 }
 

@@ -11,6 +11,7 @@
 #include "FolkModel.h"
 #include "clients_kernel/Controller.h"
 #include <boost/bind.hpp>
+#include <algorithm>
 
 // -----------------------------------------------------------------------------
 // Name: FolkModel constructor
@@ -161,28 +162,14 @@ void FolkModel::ComputeRatios()
     T_Values& values = *values_;
     for( unsigned i = 0; i < edgeCount_; ++i )
         ratios_[ i ] = Sum( values[ i ], config );
-    NormalizeRatios();
     dirty_ = false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: FolkModel::NormalizeRatios
+// Name: FolkModel::GetCurrentOccupation
 // Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
-void FolkModel::NormalizeRatios()
-{
-    if( ratios_.empty() )
-        return;
-    const float max = *std::max_element( ratios_.begin(), ratios_.end() );
-    if( max > 0 )
-        std::for_each( ratios_.begin(), ratios_.end(), std::bind2nd( std::multiplies< float >(), 1.f / max ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: std::vector< float >& FolkModel::GetCurrentsRatios
-// Created: AGE 2007-09-04
-// -----------------------------------------------------------------------------
-const std::vector< float >& FolkModel::GetCurrentsRatios()
+const std::vector< float >& FolkModel::GetCurrentOccupation()
 {
     if( dirty_ )
         ComputeRatios();

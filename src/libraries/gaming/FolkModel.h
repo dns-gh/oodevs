@@ -50,7 +50,7 @@ public:
     const T_Names& Activities() const;
     void SwitchTo( const QString& container, const QString& profile, const QString& activity );
 
-    const std::vector< float >& GetCurrentsRatios();
+    const std::vector< float >& GetCurrentOccupation();
     //@}
 
 private:
@@ -64,7 +64,6 @@ private:
     //@{
     void Update( const ASN1T_MsgFolkGraphEdgeUpdate& update );
     void ComputeRatios(); 
-    void NormalizeRatios();
     //@}
 
     //! @name Types

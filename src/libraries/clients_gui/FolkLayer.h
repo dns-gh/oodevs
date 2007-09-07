@@ -46,7 +46,7 @@ public:
     //@{
     virtual void Paint( const geometry::Rectangle2f& viewport );
     void SetGradient( const Gradient& gradient );
-    void SetCoordinates( const std::vector< float >& coordinates );
+    void SetOccupation( const std::vector< float >& coordinates );
     //@}
 
 private:
@@ -65,9 +65,14 @@ private:
 
     //! @name Types
     //@{
-    typedef std::pair< unsigned, unsigned > T_Edge;
-    typedef std::vector< T_Edge >           T_Edges;
-    typedef T_Edges::const_iterator       CIT_Edges;
+    struct Edge
+    {
+        unsigned start;
+        unsigned end;
+        float ratio;
+    };
+    typedef std::vector< Edge >       T_Edges;
+    typedef T_Edges::const_iterator CIT_Edges;
     //@}
 
 private:

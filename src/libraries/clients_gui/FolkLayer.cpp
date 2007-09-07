@@ -56,19 +56,35 @@ void FolkLayer::SetGradient( const Gradient& gradient )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FolkLayer::SetCoordinates
+// Name: FolkLayer::SetOccupation
 // Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
-void FolkLayer::SetCoordinates( const std::vector< float >& coordinates )
+void FolkLayer::SetOccupation( const std::vector< float >& coordinates )
 {
-    const float textureMin   = 0.5f / float( gradient_.Length() );
-    const float textureRatio = gradient_.UsedRatio() - 2 * textureMin;
-    std::vector< float >::const_iterator it = coordinates.begin();
+    if( coordinates.empty() )
+        return;
+    
+    std::vector< float > transformed( coordinates );
     CIT_Edges itEdge = edges_.begin();
-    for( ; it != coordinates.end() && itEdge != edges_.end(); ++it, ++itEdge  )
+    std::vector< float >::iterator it = transformed.begin();
+    float max = 0;
+    for( ; it != transformed.end() && itEdge != edges_.end(); ++it, ++itEdge )
+    {
+        *it = *it * itEdge->ratio;
+        max = std::max( max, *it );
+    }
+    if( max == 0 )
+        max = 1;
+
+    const float textureMin   = 0.5f / float( gradient_.Length() );
+    const float textureRatio = ( gradient_.UsedRatio() - 2 * textureMin ) / max;
+    itEdge = edges_.begin();
+    it = transformed.begin();
+    for( ; it != transformed.end() && itEdge != edges_.end(); ++it, ++itEdge  )
     {
         const float coordinate = *it * textureRatio + textureMin;
-        for( unsigned i = itEdge->first; i != itEdge->second; ++i )
+        assert( coordinate >= textureMin && coordinate <= 1 - textureMin );
+        for( unsigned i = itEdge->start; i != itEdge->end; ++i )
             coordinates_.at( i ) = coordinate;
     }
 }
@@ -81,6 +97,7 @@ void FolkLayer::UpdateGradient()
 {
     if( ! gradientTexture_ )
         glGenTextures( 1, &gradientTexture_ );
+    gl::Initialize();
     gl::glActiveTexture( gl::GL_TEXTURE0 );
     glBindTexture( GL_TEXTURE_1D, gradientTexture_ );
     gradient_.MakeGlTexture( 1 );
@@ -101,7 +118,7 @@ void FolkLayer::Paint( const Rectangle2f& viewport )
     if( ! box_.Intersect( viewport ).IsEmpty() )
     {
         glPushAttrib( GL_CURRENT_BIT | GL_TEXTURE_BIT );
-        glLineWidth( 3 );
+        glLineWidth( 1 );
         gl::glActiveTexture( gl::GL_TEXTURE1 );
         glDisable( GL_TEXTURE_1D );
         glDisable( GL_TEXTURE_2D );
@@ -111,7 +128,7 @@ void FolkLayer::Paint( const Rectangle2f& viewport )
         glEnable( GL_TEXTURE_1D );
         glDisable( GL_TEXTURE_2D );
         glBindTexture( GL_TEXTURE_1D, gradientTexture_ );
-        glColor3f( 1, 1, GetAlpha() );
+        glColor4f( 1, 1, 1, GetAlpha() );
         glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&graph_.front()) );
         glEnableClientState( GL_TEXTURE_COORD_ARRAY );
         glTexCoordPointer( 1, GL_FLOAT, 0, (const void*)(&coordinates_.front()) );
@@ -135,29 +152,35 @@ namespace
 {
     void ShpClose( SHPHandle shp ) { if( shp ) SHPClose( shp ); }
 
-    void DoAddPoints( SHPObject& object, T_PointVector& points, std::vector< std::pair< unsigned, unsigned > >& edges, const CoordinateConverter_ABC& converter )
+    template< typename Edge >
+    void DoAddPoints( SHPObject& object, T_PointVector& points, std::vector< Edge >& edges, const CoordinateConverter_ABC& converter )
     {
         for( int part = 0; part < object.nParts; ++part )
         {
             const int start = object.panPartStart[ part ];
             const int end   = part < object.nParts - 1 ? object.panPartStart[ part+1 ] : object.nVertices;
-            std::pair< unsigned, unsigned > edge;
-            edge.first = points.size();
+            Edge edge;
+            edge.start = points.size();
+            float length = 0;
             points.reserve( points.size() + 2 * ( end - start ) );
             for( int i = start; i < end; ++i )
             {
                 const Point2f geodetic( object.padfX[i], object.padfY[i] );
                 const Point2f point = converter.ConvertFromGeo( geodetic );
+                if( i > start )
+                    length += points.back().Distance( point );
                 points.push_back( point );
                 if( i > start && i < end-1 )
                     points.push_back( point );
             }
-            edge.second = points.size();
+            edge.end = points.size();
+            edge.ratio = 1.f / length;
             edges.push_back( edge );
         }
     }
 
-    void AddPoints( SHPObject& object, T_PointVector& points, std::vector< std::pair< unsigned, unsigned > >& edges, const CoordinateConverter_ABC& converter )
+    template< typename Edge >
+    void AddPoints( SHPObject& object, T_PointVector& points, std::vector< Edge >& edges, const CoordinateConverter_ABC& converter )
     {
         switch( object.nSHPType )
         {
