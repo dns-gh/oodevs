@@ -15,7 +15,7 @@
     </exec>
     <propertyregex property="version.svn" input="${svn.info}" regexp="Last Changed Rev: ([0-9]+)" select="\1" defaultvalue="UNKNOWN"/>
     <property name="version.major" value="1"/>
-    <property name="version.minor" value="5"/>
+    <property name="version.minor" value="0"/>
     <property name="version.product" value="C-Sword"/>
 
     <macrodef name="generation-version-resource">
@@ -429,28 +429,37 @@ BLOCK "VarFileInfo"
             <arg value="--test"/>
         </exec>
     </target>
+          
+    <macrodef name="macro-test-adaptation">
+        <attribute name="physical"/>
+        <sequential>
+            <property name="adaptation_test.dir1" value="${data.dir}/data/models/@{physical}"/>
+            <property name="adaptation_test.dir2" value="${run.dir}/adaptation_test/main"/>
+            <delete dir="${adaptation_test.dir2}"/>
+            <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
+                <arg value="-i"/>
+                <arg value="${adaptation_test.dir1}/physical.xml"/>
+                <arg value="-o"/>
+                <arg value="${adaptation_test.dir2}/physical.xml"/>
+            </exec>
+            <compare-dirs dir1="${adaptation_test.dir1}" dir2="${adaptation_test.dir2}"
+                          excludes="**/Pathfind.xml"
+                          includes="**/*.xml" property="adaptation_test.is-different"/>
+            <if>
+                <isset property="adaptation_test.is-different"/>
+                <then>
+                    <echo>"ERROR: the following files differ :</echo>
+                    <echo-files files="${adaptation_test.is-different}"/>
+                    <fail message="saved data differs from loaded data."/>
+                </then>
+            </if>
+        </sequential>
+    </macrodef>
 
     <target name="test-adaptation" description="load and save adaptation main data, check that output==input">
-        <property name="adaptation_test.dir1" value="${data.dir}/data/models/main/physical/worldwide"/>
-        <property name="adaptation_test.dir2" value="${run.dir}/adaptation_test/main"/>
-        <delete dir="${adaptation_test.dir2}"/>
-        <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
-            <arg value="-i"/>
-            <arg value="${adaptation_test.dir1}/physical.xml"/>
-            <arg value="-o"/>
-            <arg value="${adaptation_test.dir2}/physical.xml"/>
-        </exec>
-        <compare-dirs dir1="${adaptation_test.dir1}" dir2="${adaptation_test.dir2}"
-                      excludes="**/Pathfind.xml"
-                      includes="**/*.xml" property="adaptation_test.is-different"/>
-        <if>
-            <isset property="adaptation_test.is-different"/>
-            <then>
-                <echo>"ERROR: the following files differ :</echo>
-                <echo-files files="${adaptation_test.is-different}"/>
-                <fail message="saved data differs from loaded data."/>
-            </then>
-        </if>
+        <macro-test-adaptation physical="main/physical/worldwide"/>
+        <macro-test-adaptation physical="main/physical/france"/>
+        <macro-test-adaptation physical="test/physical"/>
     </target>
 
     <!--
@@ -499,6 +508,7 @@ BLOCK "VarFileInfo"
                 <include name="symbols.pak"/>
                 <include name="symbols.xml"/>
                 <include name="preferences.xml"/>
+                <include name="gradients.xml"/>
                 <include name="DrawingTemplates.xml"/>
                 <include name="gradients.xml"/>
                 <include name="license.dat"/>
