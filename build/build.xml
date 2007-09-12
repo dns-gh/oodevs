@@ -591,6 +591,7 @@ BLOCK "VarFileInfo"
         <update name="DIA" package="DIA_Tool_DebugGUI_${platform}"/>
         <update name="esri"/>
         <update name="folk"/>
+        <update name="mockpp"/>
     </target>
 
     <!--
