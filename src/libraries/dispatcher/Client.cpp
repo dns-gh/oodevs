@@ -64,3 +64,12 @@ void Client::Send( const ASN1T_MsgsReplayToClient& msg )
 {
     sender_.Send( endpoint_, msg );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Client::Send
+// Created: AGE 2007-09-12
+// -----------------------------------------------------------------------------
+void Client::Send( const ASN1T_MsgsAfterActionReviewToClient& msg )
+{
+    sender_.Send( endpoint_, msg );
+}

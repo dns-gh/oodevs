@@ -70,7 +70,6 @@ public:
         for( CIT_Plugins it = plugins_.begin(); it != plugins_.end(); ++it )
             (*it)->NotifyClientLeft( client );
     }
-
     //@}
 
 private:

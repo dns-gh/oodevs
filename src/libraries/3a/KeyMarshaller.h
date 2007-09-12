@@ -1,0 +1,144 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#ifndef __KeyMarshaller_h_
+#define __KeyMarshaller_h_
+
+#include "Functions.h"
+
+// =============================================================================
+/** @class  KeyMarshaller
+    @brief  KeyMarshaller
+*/
+// Created: AGE 2007-08-30
+// =============================================================================
+template< typename K, typename A1, typename A2 >
+class KeyMarshaller
+{
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit KeyMarshaller( Function2_ABC< K, A1, A2 >& function )
+        : function_( function )
+        , first_( this )
+        , second_( this ) {}
+    virtual ~KeyMarshaller() {}
+    //@}
+
+    //! @name Operations
+    //@{
+    Function1_ABC< K, A1 >& FirstParameter()  { return first_; }
+    Function1_ABC< K, A2 >& SecondParameter() { return second_; }
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    KeyMarshaller( const KeyMarshaller& );            //!< Copy constructor
+    KeyMarshaller& operator=( const KeyMarshaller& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    template< typename T >
+    struct Function : public Function1_ABC< K, T >
+    {
+        Function( KeyMarshaller* that )
+            : that_( that ), done_( false ), hasKey_( false ), current_() {}
+        virtual void BeginTick() {}
+        virtual void SetKey( const K& key )
+        {
+            hasKey_ = true;
+            current_ = key;
+        }
+        virtual void Apply( const T& arg )
+        {
+            values_[ current_ ] = arg;
+        }
+        virtual void EndTick()
+        {
+            done_ = true;
+            that_->Commit();
+        }
+        void Reset()
+        {
+            done_ = hasKey_ = false;
+            current_ = K();
+            values_.clear();
+        }
+        KeyMarshaller* that_;
+        bool done_;
+        bool hasKey_;
+        K current_;
+        std::map< K, T > values_;
+    };
+    void Commit()
+    {
+        if( first_.done_ && second_.done_ )
+        {
+            function_.BeginTick();
+            if( first_.hasKey_ && second_.hasKey_ )
+                MergeKeys();
+            else if( first_.hasKey_ )
+                ForwardFirst();
+            else if( second_.hasKey_ )
+                ForwardSecond();
+            else
+                function_.Apply( first_.values_[ K() ], second_.values_[ K() ] );
+            first_.Reset(); second_.Reset();
+            function_.EndTick();
+        }
+    }
+    void MergeKeys()
+    {
+        std::map< K, A1 >::const_iterator firstIt  = first_.values_.begin();
+        std::map< K, A2 >::const_iterator secondIt = second_.values_.begin();
+        while( firstIt != first_.values_.end() && secondIt != second_.values_.end() )
+            if( firstIt->first < secondIt->first )
+                ++firstIt;
+            else if( secondIt->first < firstIt->first )
+                ++secondIt;
+            else
+            {
+                function_.SetKey( firstIt->first );
+                function_.Apply ( firstIt->second, secondIt->second );
+                ++firstIt; ++secondIt;
+            }
+    }
+    void ForwardFirst()
+    {
+        const A2& second = second_.values_[ K() ];
+        for( std::map< K, A1 >::const_iterator it = first_.values_.begin(); it != first_.values_.end(); ++it )
+        {
+            function_.SetKey( it->first );
+            function_.Apply( it->second, second );
+        }
+    }
+    void ForwardSecond()
+    {
+        const A1& first = first_.values_[ K() ];
+        for( std::map< K, A2 >::const_iterator it = second_.values_.begin(); it != second_.values_.end(); ++it )
+        {
+            function_.SetKey( it->first );
+            function_.Apply( first, it->second );
+        }
+    }
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    Function2_ABC< K, A1, A2 >& function_;
+    Function< A1 > first_;
+    Function< A2 > second_;
+    //@}
+};
+
+#endif // __KeyMarshaller_h_

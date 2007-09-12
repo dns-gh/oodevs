@@ -1,0 +1,47 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#ifndef __Slots_h_
+#define __Slots_h_
+
+// =============================================================================
+/** @class  Slot_ABC
+    @brief  Slot_ABC
+*/
+// Created: AGE 2007-09-10
+// =============================================================================
+class Slot_ABC
+{
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+             Slot_ABC() {};
+    virtual ~Slot_ABC() {};
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual std::string GetName() const = 0;
+    //@}
+
+    //! @name Operations
+    //@{
+    template< typename Target >
+    Target& Cast()
+    {
+        Target* target = dynamic_cast< Target* >( this );
+        if( ! target )
+            throw std::runtime_error( GetName() + " is not of type " + typeid( Target ).name() );
+        return *target;
+    }
+    //@}
+};
+
+#endif // __Slots_h_

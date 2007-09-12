@@ -26,13 +26,14 @@ IMPORTS BaseExports                   FROM Base
         AutomateExports               FROM Automat
         ArmyExports                   FROM Army
         AuthExports                   FROM Auth
-        FolkExports                   FROM Folk;
+        FolkExports                   FROM Folk
+        AarExports                    FROM Aar;
 
 MessagesIncludes ::= SEQUENCE
 { BaseExports, LimaLimiteExports, OrderExports, ControlExports, KnowledgeGroupExports,
   FormationExports, FireExports, UnitExports, UnitKnowledgeExports, ObjectExports,
   ObjectKnowledgeExports, PopulationExports, PopulationKnowledgeExports, LogMaintenanceExports,
-  LogRavitaillementExports, LogSanteExports, AutomateExports, ArmyExports, AuthExports, FolkExports }
+  LogRavitaillementExports, LogSanteExports, AutomateExports, ArmyExports, AuthExports, FolkExports, AarExports }
 MessagesExports  ::= NULL
 -- END includes
 
@@ -297,6 +298,27 @@ MsgsClientToAuthentication ::= SEQUENCE
         msg-profile-creation-request    MsgProfileCreationRequest,
         msg-profile-update-request      MsgProfileUpdateRequest,
         msg-profile-destruction-request MsgProfileDestructionRequest
+    }
+}
+
+-- 
+-- 
+-- 
+MsgsAfterActionReviewToClient ::= SEQUENCE
+{
+    context INTEGER DEFAULT 0,
+    msg     CHOICE
+    {
+        msg-indicator-result            MsgIndicatorResult
+    }
+}
+
+MsgsClientToAfterActionReview ::= SEQUENCE
+{
+    context INTEGER DEFAULT 0,
+    msg     CHOICE
+    {
+        msg-indicator-request           MsgIndicatorRequest
     }
 }
 

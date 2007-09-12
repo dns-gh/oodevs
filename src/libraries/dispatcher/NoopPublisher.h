@@ -34,9 +34,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send( const ASN1T_MsgsSimToClient&            ) {};
-    virtual void Send( const ASN1T_MsgsAuthenticationToClient& ) {};
-    virtual void Send( const ASN1T_MsgsReplayToClient&         ) {};
+    virtual void Send( const ASN1T_MsgsSimToClient&               ) {};
+    virtual void Send( const ASN1T_MsgsAuthenticationToClient&    ) {};
+    virtual void Send( const ASN1T_MsgsReplayToClient&            ) {};
+    virtual void Send( const ASN1T_MsgsAfterActionReviewToClient& ) {};
     //@}
 };
 

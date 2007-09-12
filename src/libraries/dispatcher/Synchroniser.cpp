@@ -83,6 +83,7 @@ namespace
         }
         virtual void Send( const ASN1T_MsgsAuthenticationToClient& ) {}
         virtual void Send( const ASN1T_MsgsReplayToClient& ) {}
+        virtual void Send( const ASN1T_MsgsAfterActionReviewToClient& ) {}
         ClientPublisher_ABC* forward_;
         Model* model_;
     };

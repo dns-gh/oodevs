@@ -55,8 +55,9 @@ public:
     //@{
     void VisitModel( dispatcher::ModelVisitor_ABC& visitor );
     virtual void Send( const ASN1T_MsgsSimToClient&            msg );
-    virtual void Send( const ASN1T_MsgsAuthenticationToClient& msg );
-    virtual void Send( const ASN1T_MsgsReplayToClient&         msg );
+    virtual void Send( const ASN1T_MsgsAuthenticationToClient&    ) {}
+    virtual void Send( const ASN1T_MsgsReplayToClient&            ) {}
+    virtual void Send( const ASN1T_MsgsAfterActionReviewToClient& ) {}
     //@}
 
 private:

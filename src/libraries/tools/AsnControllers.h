@@ -42,6 +42,8 @@ DECLARE( MsgsReplayToClient )
 DECLARE( MsgsMiddleToSim )
 DECLARE( MsgsOutMaster )
 DECLARE( MsgsInMaster )
+DECLARE( MsgsClientToAfterActionReview )
+DECLARE( MsgsAfterActionReviewToClient )
 
 #undef DECLARE
 

@@ -116,6 +116,16 @@ void ClientsNetworker::Send( const ASN1T_MsgsReplayToClient& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ClientsNetworker::Send
+// Created: AGE 2007-09-12
+// -----------------------------------------------------------------------------
+void ClientsNetworker::Send( const ASN1T_MsgsAfterActionReviewToClient& asnMsg )
+{
+    for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+        it->second->Send( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ClientsNetworker::GetProfile
 // Created: AGE 2007-09-05
 // -----------------------------------------------------------------------------

@@ -213,6 +213,12 @@ BLOCK "VarFileInfo"
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
+    
+    <target name="library.3a" description="build 3a static library" depends="library.dispatcher">
+        <build-lib name="3a" pattern="lib${ant.project.name}_3a-${platform}-mt@{suffix}" suffix="-gd">
+            <includepath path="${include.dir}/ASN"/>
+        </build-lib>
+    </target>
 
     <!--
     ============================================================================
@@ -397,7 +403,11 @@ BLOCK "VarFileInfo"
       tests
     ============================================================================
     -->
-    <target name="test" depends="generate-license,test-test-scripts,test-main-scripts-france,test-main-scripts-worldwide,test-adaptation" description="run all tests"/>
+    <target name="test" depends="generate-license,test-test-scripts,test-main-scripts-france,test-main-scripts-worldwide,test-adaptation,3a_test" description="run all tests"/>
+    
+    <target name="3a_test" depends="library.3a">
+      <build-test name="3a" depends="xeumeuleu" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix}"/>
+    </target>
 
     <target name="generate-license" description="generate license file in run directory">
         <exec executable="${bin.dir}/hostid_light.exe" failonerror="true" outputproperty="hostid"/>

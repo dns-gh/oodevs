@@ -1,0 +1,25 @@
+--
+-- file name : Aar.asn
+--
+-- Messages de gestion des attributs d'une unité
+--
+
+Aar DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS BaseExports FROM Base;
+AarIncludes ::= SEQUENCE { BaseExports }
+AarExports  ::= NULL
+-- END includes
+
+MsgIndicatorResult ::= SEQUENCE
+{
+    values SEQUENCE OF REAL
+}
+
+MsgIndicatorRequest ::= SEQUENCE
+{
+    request VisibleString
+}
+
+END -- Aar

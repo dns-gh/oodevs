@@ -43,7 +43,7 @@ class ScopeEditor : public dispatcher::ClientPublisher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-            ScopeEditor( const dispatcher::Config& config, const dispatcher::Model& model, const ReportFactory& reportFactory );
+             ScopeEditor( const dispatcher::Config& config, const dispatcher::Model& model, const ReportFactory& reportFactory );
     virtual ~ScopeEditor();
     //@}
 
@@ -51,8 +51,9 @@ public:
     //@{
     void VisitModel( dispatcher::ModelVisitor_ABC& visitor );
     virtual void Send( const ASN1T_MsgsSimToClient& asn );
-    virtual void Send( const ASN1T_MsgsAuthenticationToClient& asn );
-    virtual void Send( const ASN1T_MsgsReplayToClient&         asn );
+    virtual void Send( const ASN1T_MsgsAuthenticationToClient& ) {};
+    virtual void Send( const ASN1T_MsgsReplayToClient&         ) {};
+    virtual void Send( const ASN1T_MsgsAfterActionReviewToClient& ) {};
     //@}
         
 private:
