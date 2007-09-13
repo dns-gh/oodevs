@@ -406,7 +406,7 @@ BLOCK "VarFileInfo"
     <target name="test" depends="generate-license,test-test-scripts,test-main-scripts-france,test-main-scripts-worldwide,test-adaptation,3a_test" description="run all tests"/>
     
     <target name="3a_test" depends="library.3a">
-      <build-test name="3a" depends="xeumeuleu" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix}">
+      <build-test name="3a" depends="xeumeuleu,terrain" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix}">
         <includepath path="${include.dir}/ASN"/>
       </build-test>
     </target>
