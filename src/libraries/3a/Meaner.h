@@ -21,6 +21,11 @@
 template< typename K, typename T >
 class Meaner : public Reductor_ABC< K, T >
 {
+public:
+    //! @name Types
+    //@{
+    typedef T Result_Type;
+    //@}
 
 public:
     //! @name Constructors/Destructor

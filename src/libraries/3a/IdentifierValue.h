@@ -24,6 +24,9 @@ struct IdentifierValue : public InstantValue< unsigned long >
 #define SET_OID( tag )                                  \
     case( T_MsgsSimToClient_msg_##tag ):                \
         Set( message.msg.u.tag->oid ); break;
+#define SET_CONSIGN_OID( tag )                          \
+    case( T_MsgsSimToClient_msg_##tag ):                \
+        Set( message.msg.u.tag->oid_consigne ); break;
 
     //! @name Operations
     //@{
@@ -46,11 +49,21 @@ struct IdentifierValue : public InstantValue< unsigned long >
             SET_OID( msg_population_concentration_detection );
             SET_OID( msg_population_flow_detection );
             SET_OID( msg_unit_order );
+            SET_CONSIGN_OID( msg_log_medical_handling_creation );
+            SET_CONSIGN_OID( msg_log_medical_handling_update );
+            SET_CONSIGN_OID( msg_log_medical_handling_destruction );
+            SET_CONSIGN_OID( msg_log_maintenance_handling_creation );
+            SET_CONSIGN_OID( msg_log_maintenance_handling_update );
+            SET_CONSIGN_OID( msg_log_maintenance_handling_destruction );
+            SET_CONSIGN_OID( msg_log_supply_handling_creation );
+            SET_CONSIGN_OID( msg_log_supply_handling_update );
+            SET_CONSIGN_OID( msg_log_supply_handling_destruction );
             // $$$$ AGE 2007-08-29: objets, ...
         };
     }
     //@}
 #undef SET_OID
+#undef SET_CONSIGN_OID
 };
 
 #endif // __IdentifierValue_h_

@@ -7,70 +7,71 @@
 //
 // *****************************************************************************
 
-#ifndef __Adder_h_
-#define __Adder_h_
+#ifndef __Filter_h_
+#define __Filter_h_
 
-#include "Reductor_ABC.h"
+#include "Functions.h"
 
 // =============================================================================
-/** @class  Adder
-    @brief  Adder
+/** @class  Filter
+    @brief  Filter
 */
-// Created: AGE 2007-08-28
+// Created: AGE 2007-09-13
 // =============================================================================
 template< typename K, typename T >
-class Adder : public Reductor_ABC< K, T >
+class Filter : public Function2_ABC< K, bool, T >
 {
 public:
-    //! @name Types
+    //! @name 
     //@{
     typedef T Result_Type;
     //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Adder( Function1_ABC< K, T >& handler ) 
-        : handler_( handler ), sum_() {};
-    virtual ~Adder() {};
+    explicit Filter( Function1_ABC< K, T >& next )
+        : next_( next ) {}
     //@}
 
     //! @name Operations
     //@{
-    virtual std::string GetName() const { return "Add"; }
-    virtual void OnBeginTick()
+    virtual void BeginTick()
     {
-        sum_ = T();
-        handler_.BeginTick();
+        next_.BeginTick();
     };
-    virtual void SetKey( const K& )
+    virtual void SetKey( const K& key )
     {
-        // NOTHING
+        next_.SetKey( key );
     };
-    virtual void Apply( const T& value )
+    virtual void Apply( const bool& test, const T& value )
     {
-        sum_ += value;
-    };
-    virtual void OnEndTick()
-    {
-        handler_.Apply( sum_ );
-        handler_.EndTick();
+        if( test )
+            next_.Apply( value );
     }
+    virtual void EndTick()
+    {
+        next_.EndTick();
+    };
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual std::string GetName() const { return "Filter"; }
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    Adder( const Adder& );
-    Adder& operator=( const Adder& );
+    Filter( const Filter& );            //!< Copy constructor
+    Filter& operator=( const Filter& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    Function1_ABC< K, T >& handler_;
-    T sum_;
+    Function1_ABC< K, T >& next_;
     //@}
 };
 
-#endif // __Adder_h_
+#endif // __Filter_h_

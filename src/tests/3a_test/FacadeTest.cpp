@@ -48,7 +48,7 @@ namespace
     class MockPublisher : public dispatcher::ClientPublisher_ABC, public mockpp::ChainableMockObject
     {
     public:
-        MockPublisher() 
+        MockPublisher()
             : mockpp::ChainableMockObject( "MockPublisher", 0 )
             , Send_mocker( "Send", this ) {}
 
@@ -175,8 +175,32 @@ BOOST_AUTO_TEST_CASE( Facade_TestDistanceBetweenTwoUnits )
     publisher.verify();
 }
 
+namespace
+{
+    ASN1T_MsgsSimToClient CreateConsign( unsigned long id )
+    {
+        static ASN1T_MsgLogMaintenanceHandlingCreation creation;
+        creation.oid_consigne = id;
 
+        ASN1T_MsgsSimToClient result;
+        result.msg.t = T_MsgsSimToClient_msg_msg_log_maintenance_handling_creation;
+        result.msg.u.msg_log_maintenance_handling_creation = &creation;
+        return result;
+    }
 
+    ASN1T_MsgsSimToClient DestroyConsign( unsigned long id )
+    {
+        static ASN1T_MsgLogMaintenanceHandlingDestruction destruction;
+        destruction.oid_consigne = id;
+
+        ASN1T_MsgsSimToClient result;
+        result.msg.t = T_MsgsSimToClient_msg_msg_log_maintenance_handling_destruction;
+        result.msg.u.msg_log_maintenance_handling_destruction = &destruction;
+        return result;
+    }
+}
+
+// $$$$ AGE 2007-09-13: AU_NTI1 => liste de pannes
 //CREATE PROCEDURE DBO.[AAAT_LOGISTIQUE_MATERIELS_AU_NTI1_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Pourcentages)]
 //(
 //  @TDebut DATETIME,               -- Date
@@ -185,6 +209,45 @@ BOOST_AUTO_TEST_CASE( Facade_TestDistanceBetweenTwoUnits )
 //  @Materiels equipment_id_tablename,      -- Materiels a prendre en compte
 //  @Resultat tablename OUT             -- Tableau de resultat
 //)
+// -----------------------------------------------------------------------------
+// Name: Facade_TestNumberOfBreakdowns
+// Created: AGE 2004-12-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdowns )
+{
+    const std::string input =
+    "<indicator>"
+        "<extract value='maintenance-handling' name='all-consigns'/>"
+        "<transform function='filter' type='bool' input='all-consigns,all-consigns' name='consigns'/>"
+        "<reduce type='bool' function='count' input='consigns' name='count'/>"
+        "<plot input='count' type='unsigned'/>"
+    "</indicator>";
+    xml::xistringstream xis( input );
+
+    MockPublisher publisher;
+    FunctionFactory facade( publisher );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+
+    task->Receive( BeginTick() );
+    task->Receive( CreateConsign( 12 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( CreateConsign( 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( DestroyConsign( 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( EndTick() );
+
+    double expectedResult[] = { 1., 2., 2., 1., 1. };
+    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+
+    task->Commit();
+    publisher.verify();
+}
 
 //CREATE PROCEDURE DBO.[AAAT_LOGISTIQUE_MATERIELS_AU_NTI2_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Pourcentages)]
 //(
@@ -254,7 +317,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestDistanceBetweenTwoUnits )
 //  @Resultat tablename OUT             -- Tableau de resultat
 //)
 
-// $$$$ AGE 2007-09-10: ressources consommées => variation <0 
+// $$$$ AGE 2007-09-10: ressources consommées => variation <0
 //CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_RESSOURCES_CONSOMMEES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Quantites)]
 //(
 //  @TDebut DATETIME,           -- Date Debut
@@ -266,42 +329,42 @@ BOOST_AUTO_TEST_CASE( Facade_TestDistanceBetweenTwoUnits )
 
 //CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_RESSOURCES_DISPONIBLES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Pourcentages)]
 //(
-//	@TDebut DATETIME,			-- Date Debut
-//	@Unites unit_id_tablename,		-- Unites concernees
-//	@Ressources ressource_id_tablename,	-- Ressource à comptabiliser
-//	@Resultat tablename OUTPUT		-- Table de resultats
+//  @TDebut DATETIME,           -- Date Debut
+//  @Unites unit_id_tablename,      -- Unites concernees
+//  @Ressources ressource_id_tablename, -- Ressource à comptabiliser
+//  @Resultat tablename OUTPUT      -- Table de resultats
 //)
 
 // $$$$ AGE 2007-09-10: UE-UF-JV => consommation normalisée
 //CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_STOCKS_DISPONIBLES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(UE-UF-JV)]
 //(
-//	@TDebut DATETIME,			-- Date Debut
-//	@Unites unit_id_tablename,		-- Unites concernees
-//	@Ressources ressource_id_tablename,	-- Ressource à comptabiliser
-//	@Resultat tablename OUTPUT		-- Table de resultats
+//  @TDebut DATETIME,           -- Date Debut
+//  @Unites unit_id_tablename,      -- Unites concernees
+//  @Ressources ressource_id_tablename, -- Ressource à comptabiliser
+//  @Resultat tablename OUTPUT      -- Table de resultats
 //)
 
 //CREATE PROCEDURE dbo.[AAAT_MELEE-APPUI_NOMBRE_DE_COUPS_DIRECTS_TIRES_PAR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2]
 //(
-//	@TDebut DATETIME,			-- Date de debut de l'intervalle 
-//	@TFin DATETIME,			-- Date de fin de l'intervalle
-//	@Unites  unit_id_tablename,		-- Groupe d'unites
-//	@Resultat tablename OUTPUT		-- Table contenant le résultat
+//  @TDebut DATETIME,           -- Date de debut de l'intervalle
+//  @TFin DATETIME,         -- Date de fin de l'intervalle
+//  @Unites  unit_id_tablename,     -- Groupe d'unites
+//  @Resultat tablename OUTPUT      -- Table contenant le résultat
 //)
 
 //CREATE PROCEDURE DBO.[AAAT_MELEE-APPUI_PERTES_EN_MATERIEL_INFLIGEES_PAR_UNE_UNITE_PAR_TIR_DIRECT_ENTRE_T1_ET_T2]
 //(
-//	@TDebut DATETIME,					-- Date debut
-//	@TFin DATETIME,					-- Date Fin
-//	@Unites unit_id_tablename,				-- Groupe d unites
-//	@Resultat tablename OUT				-- Table de resultats
+//  @TDebut DATETIME,                   -- Date debut
+//  @TFin DATETIME,                 -- Date Fin
+//  @Unites unit_id_tablename,              -- Groupe d unites
+//  @Resultat tablename OUT             -- Table de resultats
 //)
 
 // $$$$ AGE 2007-09-10: pourcentage efficacité => nombre de tirs avec degat / nombre de tirs
 //CREATE PROCEDURE dbo.[AAAT_MELEE-APPUI_POURCENTAGE_EFFICACITE_DES_TIRS_INDIRECTS_D_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2]
 //(
-//	@TDebut DATETIME,			-- DATE DEBUT 
-//	@TFin DATETIME,			-- DATE FIN
-//	@Unites  unit_id_tablename,		-- UNITES CONCERNEES
-//	@Resultat tablename OUTPUT		-- TABLE DES RESULTATS
+//  @TDebut DATETIME,           -- DATE DEBUT
+//  @TFin DATETIME,         -- DATE FIN
+//  @Unites  unit_id_tablename,     -- UNITES CONCERNEES
+//  @Resultat tablename OUTPUT      -- TABLE DES RESULTATS
 //)

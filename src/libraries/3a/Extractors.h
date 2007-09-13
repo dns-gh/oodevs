@@ -26,19 +26,33 @@ namespace extractors
         typedef T Type;
     };
 
+    // Attributes
     struct OperationalState : public Extractor< float >
     {
-        bool  HasFlag( const ASN1T_MsgUnitAttributes& attributes ) 
+        bool  HasFlag( const ASN1T_MsgUnitAttributes& attributes ) const
         { return attributes.m.etat_operationnel_brutPresent; }
-        float Extract( const ASN1T_MsgUnitAttributes& attributes ) 
+        float Extract( const ASN1T_MsgUnitAttributes& attributes ) const
         { return float( attributes.etat_operationnel_brut ) * 0.01f; }
     };
+
     struct Position : public Extractor< ::Position >
     {
-        bool  HasFlag( const ASN1T_MsgUnitAttributes& attributes ) 
+        bool  HasFlag( const ASN1T_MsgUnitAttributes& attributes ) const
         { return attributes.m.positionPresent; }
-        ::Position Extract( const ASN1T_MsgUnitAttributes& attributes ) 
+        ::Position Extract( const ASN1T_MsgUnitAttributes& attributes ) const
         { return ::Position( attributes.position ); }
+    };
+
+    // Existences
+    struct Existence : public Extractor< bool >
+    {
+    };
+    struct MaintenanceHandling : public Existence
+    {
+        bool IsCreation( const ASN1T_MsgsSimToClient& message ) const
+        { return message.msg.t == T_MsgsSimToClient_msg_msg_log_maintenance_handling_creation; }
+        bool IsDestruction( const ASN1T_MsgsSimToClient& message ) const
+        { return message.msg.t == T_MsgsSimToClient_msg_msg_log_maintenance_handling_destruction; }
     };
 }
 

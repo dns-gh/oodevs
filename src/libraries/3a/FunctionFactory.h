@@ -65,14 +65,23 @@ private:
     void Reduce( xml::xistream& xis, Task& result );
     template< typename T >
     void Reduce( const std::string& name, xml::xistream& xis, Task& result );
+    template< typename F >
+    void Reduce( const std::string& name, Task& result );
 
     void Transform( xml::xistream& xis, Task& result );
+    template< typename T >
+    void Transform1( const std::string& name, Task& result );
     template< typename T >
     void Transform2( const std::string& name, Task& result );
 
     void Plot( xml::xistream& xis, Task& result );
     template< typename T >
     void Plot( Task& result );
+
+    void TypeError( const std::string& name );
+    void ValueError( const std::string& name );
+    void ReductionError( const std::string& name );
+    void TransformationError( const std::string& name );
     //@}
 
 private:

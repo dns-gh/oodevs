@@ -140,7 +140,6 @@ BOOST_AUTO_TEST_CASE( Function_TestMarshallingWithTwoKeysSortsKeysBack )
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Function_TestMarshallingWithTwoKeysOnlyForwardsWhenBothKeysArePresent
 // Created: AGE 2004-12-15

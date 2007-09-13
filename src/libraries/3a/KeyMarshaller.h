@@ -10,7 +10,8 @@
 #ifndef __KeyMarshaller_h_
 #define __KeyMarshaller_h_
 
-#include "Functions.h"
+#include "Reductor_ABC.h"
+
 #pragma warning (push)
 #pragma warning (disable : 4355)
 
@@ -61,11 +62,11 @@ private:
     //! @name Helpers
     //@{
     template< typename T >
-    struct Function : public Function1_ABC< K, T >
+    struct Function : public Reductor_ABC< K, T >
     {
         Function( KeyMarshaller* that )
             : that_( that ), done_( false ), hasKey_( false ), current_() {}
-        virtual void BeginTick() {}
+        virtual void OnBeginTick() {}
         virtual void SetKey( const K& key )
         {
             hasKey_ = true;
@@ -75,7 +76,7 @@ private:
         {
             values_[ current_ ] = arg;
         }
-        virtual void EndTick()
+        virtual void OnEndTick()
         {
             done_ = true;
             that_->Commit();

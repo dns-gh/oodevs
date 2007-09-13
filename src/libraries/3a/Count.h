@@ -22,12 +22,18 @@
 template< typename K, typename T >
 class Count : public Reductor_ABC< K, T >
 {
+public:
+    //! @name Types
+    //@{
+    typedef unsigned Result_Type;
+    //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
     explicit Count( Function1_ABC< K, unsigned >& handler )
-        : handler_( handler ) {}
+        : handler_( handler )
+        , set_( false ){}
     virtual ~Count() {}
     //@}
 
@@ -41,11 +47,13 @@ public:
     }
     virtual void SetKey( const K& key )
     {
-        keys_.insert( key );
+        set_ = true; current_ = key;
     };
     virtual void Apply( const T& )
     {
-        // NOTHING
+        if( set_ )
+            keys_.insert( current_ );
+        set_ = false;
     }
     virtual void OnEndTick()
     {
@@ -61,15 +69,12 @@ private:
     Count& operator=( const Count& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
     Function1_ABC< K, unsigned >& handler_;
     std::set< K > keys_;
+    K current_; bool set_;
     //@}
 };
 

@@ -10,12 +10,15 @@
 #include "FunctionFactory.h"
 #include "DispatchedFunctionHelper.h"
 #include "Attributes.h"
+#include "Existences.h"
 #include "IdentifierValue.h"
 #include "Selector.h"
 #include "Connectors.h"
 #include "Task.h"
 #include "Plotter.h"
 #include "Distance.h"
+#include "Filter.h"
+#include "Count.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -99,8 +102,26 @@ void FunctionFactory::Extract( xml::xistream& xis, Task& result )
         Extract< attributes::OperationalState >( name, xis, result );
     else if( value == "position" )
         Extract< attributes::Position >( name, xis, result );
+    else if( value == "maintenance-handling" )
+        Extract< existences::MaintenanceHandling >( name, xis, result );
     else
-        throw std::runtime_error( "Unknown value to extract '" + value + "'" );
+        ValueError( value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FunctionFactory::Reduce
+// Created: AGE 2007-09-13
+// -----------------------------------------------------------------------------
+template< typename F >
+void FunctionFactory::Reduce( const std::string& name, Task& result )
+{
+    typedef typename F::Key_Type K;
+    typedef typename F::Argument_Type T;
+    typedef typename F::Result_Type R;
+    boost::shared_ptr< FunctionConnector< K, R > > connector( new FunctionConnector< K, R >() );
+    boost::shared_ptr< Function_ABC > function( new F( *connector ) );
+    result.AddFunction( name, function );
+    result.AddConnector( name, connector );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,16 +132,20 @@ template< typename T >
 void FunctionFactory::Reduce( const std::string& name, xml::xistream& xis, Task& result )
 {
     typedef unsigned long K;
-    boost::shared_ptr< FunctionConnector< K, T > > connector( new FunctionConnector< K, T >() );
-    boost::shared_ptr< Function_ABC > function;
     const std::string functionName = xml::attribute< std::string >( xis, "function" );
+
     if( functionName == "select" )
     {
+        boost::shared_ptr< FunctionConnector< K, T > > connector( new FunctionConnector< K, T >() );
         const unsigned long id = xml::attribute< K >( xis, "id" );
-        function.reset( new Selector<K, T >( id, *connector ) );
+        boost::shared_ptr< Function_ABC > function( new Selector< K, T >( id, *connector ) );
+        result.AddFunction( name, function );
+        result.AddConnector( name, connector );
     }
-    result.AddFunction( name, function );
-    result.AddConnector( name, connector );
+    else if( functionName == "count" )
+        Reduce< Count< K, T > >( name, result );
+    else
+        ReductionError( functionName );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,8 +161,10 @@ void FunctionFactory::Reduce( xml::xistream& xis, Task& result )
         Reduce< float >( name, xis, result );
     else if( type == "position" )
         Reduce< ::Position >( name, xis, result );
+    else if( type == "bool" )
+        Reduce< bool >( name, xis, result );
     else
-        throw std::runtime_error( "Unknown type '" + type + "'" );
+        TypeError( type );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,8 +175,8 @@ template< typename T >
 void FunctionFactory::Transform2( const std::string& name, Task& result )
 {
     typedef FunctionConnector< typename T::Key_Type, typename T::Result_Type > Connector;
-    typedef KeyMarshaller< typename T::Key_Type, 
-                           typename T::First_Argument_Type, 
+    typedef KeyMarshaller< typename T::Key_Type,
+                           typename T::First_Argument_Type,
                            typename T::Second_Argument_Type > Marshaller;
     boost::shared_ptr< Connector > connector( new Connector() );
     boost::shared_ptr< T > function( new T( *connector ) );
@@ -161,16 +188,41 @@ void FunctionFactory::Transform2( const std::string& name, Task& result )
 }
 
 // -----------------------------------------------------------------------------
+// Name: FunctionFactory::Transform1
+// Created: AGE 2007-09-13
+// -----------------------------------------------------------------------------
+template< typename T >
+void FunctionFactory::Transform1( const std::string& name, Task& result )
+{
+    typedef FunctionConnector< typename T::Key_Type, typename T::Result_Type > Connector;
+    boost::shared_ptr< Connector > connector( new Connector() );
+    boost::shared_ptr< T > function( new T( *connector ) );
+
+    result.AddConnector( name, connector );
+    result.AddFunction ( name, function );
+}
+
+// -----------------------------------------------------------------------------
 // Name: FunctionFactory::Transform
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
 void FunctionFactory::Transform( xml::xistream& xis, Task& result )
 {
-    std::string function, name;
+    std::string function, name, type;
     xis >> xml::attribute( "function", function )
-        >> xml::attribute( "name", name );
+        >> xml::attribute( "name", name )
+        >> xml::optional() >> xml::attribute( "type", type );
     if( function == "distance" )
         Transform2< Distance< unsigned long > >( name, result );
+    else if( function == "filter" )
+    {
+        if( type == "bool" )
+            Transform2< Filter< unsigned long, bool > >( name, result );
+        else
+            TypeError( type );
+    }
+    else
+        TransformationError( function );
 }
 
 // -----------------------------------------------------------------------------
@@ -182,8 +234,10 @@ void FunctionFactory::Plot( xml::xistream& xis, Task& result )
     const std::string type = xml::attribute< std::string >( xis, "type" );
     if( type == "float" )
         Plot< float >( result );
+    else if( type == "unsigned" || type == "unsigned int" )
+        Plot< unsigned >( result );
     else
-        throw std::runtime_error( "Unknown type '" + type + "'" );
+        TypeError( type );
 }
 
 // -----------------------------------------------------------------------------
@@ -195,4 +249,40 @@ void FunctionFactory::Plot( Task& result )
 {
     boost::shared_ptr< Plotter< unsigned long, T > > plotter( new Plotter< unsigned long, T >() );
     result.SetResult( plotter );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FunctionFactory::TypeError
+// Created: AGE 2007-09-13
+// -----------------------------------------------------------------------------
+void FunctionFactory::TypeError( const std::string& name )
+{
+    throw std::runtime_error( "Unknown type '" + name + "'" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FunctionFactory::ValueError
+// Created: AGE 2007-09-13
+// -----------------------------------------------------------------------------
+void FunctionFactory::ValueError( const std::string& name )
+{
+    throw std::runtime_error( "Unknown value to extract '" + name + "'" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FunctionFactory::ReductionError
+// Created: AGE 2007-09-13
+// -----------------------------------------------------------------------------
+void FunctionFactory::ReductionError( const std::string& name )
+{
+    throw std::runtime_error( "Unknown reduction '" + name + "'" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FunctionFactory::TransformationError
+// Created: AGE 2007-09-13
+// -----------------------------------------------------------------------------
+void FunctionFactory::TransformationError( const std::string& name )
+{
+    throw std::runtime_error( "Unknown transformation '" + name + "'" );
 }

@@ -33,7 +33,6 @@ public:
     //@{
     explicit Distance( Function1_ABC< K, float >& next )
         : next_( next ) {}
-    virtual ~Distance() {}
     //@}
 
     //! @name Operations
