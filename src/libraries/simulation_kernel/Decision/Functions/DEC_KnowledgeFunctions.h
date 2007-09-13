@@ -17,6 +17,7 @@
 class DIA_Call_ABC;
 class MIL_AgentPion;
 class MIL_Automate;
+class MIL_Fuseau;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -41,8 +42,11 @@ public:
     static void GetLivingEnemiesInFuseau         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetLivingEnemiesInCircle         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
 
-    template< typename T> static void GetLivingEnemiesPerceivedByPion( DIA_Call_ABC& call, const T& caller );
-    template< typename T> static void GetDangerousEnemiesInZoneOfPion( DIA_Call_ABC& call, const T& caller );   
+    template< typename T > static void ComputeFuseauUnloadedEnemiesRatio    ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void ComputeFuseauLoadedEnemiesRatio      ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void SortFuseauxAccordingToUnloadedEnemies( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetLivingEnemiesPerceivedByPion      ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetDangerousEnemiesInZoneOfPion      ( DIA_Call_ABC& call, const T& caller );
 
     static void GetNearbyRefugees                ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetNearbySurrenderedAgents       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
@@ -62,6 +66,11 @@ public:
     static void GetPopulationsColliding( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetPopulationsAttacking( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     template< typename T > static void GetPopulations           ( DIA_Call_ABC& call, const T& caller );
+    //@}
+
+    //! @name Tools
+    //@{
+    template< typename T > static float _ComputeFuseauEnemiesRatio( const T& caller, const MIL_Fuseau& fuseau, bool unloaded );
     //@}
 };
 

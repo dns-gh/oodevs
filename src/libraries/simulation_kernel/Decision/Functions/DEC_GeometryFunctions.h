@@ -34,31 +34,39 @@ public:
     static void CreateDirection        ( DIA_Call_ABC& );
     static void CreateOrthoDirection   ( DIA_Call_ABC& );
 
-    static void ReverseDirection             ( DIA_Call_ABC& );
-    static void RotateDirection              ( DIA_Call_ABC& );
-    static void CopyAndReverseDirection      ( DIA_Call_ABC& );
-    static void CopyAndRotateDirection       ( DIA_Call_ABC& );
-    static void IsPointInsideLocalisation    ( DIA_Call_ABC& );
-    static void CompareLocalisations         ( DIA_Call_ABC& );
-    static void CompareDirection             ( DIA_Call_ABC& );
-    static void ComparePositions             ( DIA_Call_ABC& );
-    static void TranslatePosition            ( DIA_Call_ABC& );
-    static void TranslatePositionInDirection ( DIA_Call_ABC& );
-    static void Distance                     ( DIA_Call_ABC& );
-    static void ConvertPointToLocalisation   ( DIA_Call_ABC& );
-    static void CreateCircleLocalisation     ( DIA_Call_ABC& );
-    static void ComputeMeanDirection         ( DIA_Call_ABC& );
-    static void ComputeAgentsBarycenter      ( DIA_Call_ABC& ); //$$$ Pourri
-    static void ComputeDistanceFromMiddleLine( DIA_Call_ABC& );
-    static void ComputeLocalisationBarycenter( DIA_Call_ABC& );
-    static void ComputeCoverPosition         ( DIA_Call_ABC& );
-    static void ComputeRandomPointOnCircle   ( DIA_Call_ABC& );
-    static void ComputeRandomPointInCircle   ( DIA_Call_ABC& );
-    static void IsPionCoordinated            ( DIA_Call_ABC& );
-    static void ComputeLocalisationArea      ( DIA_Call_ABC& );
-    static void SplitListPoints              ( DIA_Call_ABC& );
-    static void SplitPath                    ( DIA_Call_ABC& );
-                           
+    static void ReverseDirection                    ( DIA_Call_ABC& );
+    static void RotateDirection                     ( DIA_Call_ABC& );
+    static void CopyAndReverseDirection             ( DIA_Call_ABC& );
+    static void CopyAndRotateDirection              ( DIA_Call_ABC& );
+    static void IsPointInsideLocalisation           ( DIA_Call_ABC& );
+    static void CompareLocalisations                ( DIA_Call_ABC& );
+    static void CompareDirection                    ( DIA_Call_ABC& );
+    static void ComparePositions                    ( DIA_Call_ABC& );
+    static void TranslatePosition                   ( DIA_Call_ABC& );
+    static void TranslatePositionInDirection        ( DIA_Call_ABC& );
+    static void Distance                            ( DIA_Call_ABC& );
+    static void ConvertPointToLocalisation          ( DIA_Call_ABC& );
+    static void CreateCircleLocalisation            ( DIA_Call_ABC& );
+    static void ComputeMeanDirection                ( DIA_Call_ABC& );
+    static void ComputeAgentsBarycenter             ( DIA_Call_ABC& ); //$$$ Pourri
+    static void ComputeDistanceFromMiddleLine       ( DIA_Call_ABC& );
+    static void ComputeLocalisationBarycenter       ( DIA_Call_ABC& );
+    static void ComputeCoverPosition                ( DIA_Call_ABC& );
+    static void ComputeRandomPointOnCircle          ( DIA_Call_ABC& );
+    static void ComputeRandomPointInCircle          ( DIA_Call_ABC& );
+    static void IsPionCoordinated                   ( DIA_Call_ABC& );
+    static void ComputeLocalisationArea             ( DIA_Call_ABC& );
+    static void SplitListPoints                     ( DIA_Call_ABC& );
+    static void SplitPath                           ( DIA_Call_ABC& );
+    static void ComputeClosedTerrainRatioInFuseau   ( DIA_Call_ABC& );
+    static void SortFuseauxAccordingToTerrainOpening( DIA_Call_ABC& );
+    static void IsLocalisationInFuseau              ( DIA_Call_ABC& );
+    static void ConvertFuseauToLocalisation         ( DIA_Call_ABC& );
+    static void ComputeAutomatesBarycenter          ( DIA_Call_ABC& );
+    static void GetNextObjectiveInFuseau            ( DIA_Call_ABC& );
+
+
+    
                            static void ComputeChantierPosition                          ( DIA_Call_ABC& call, const MIL_AgentPion& );
                            static void StartComputingFrontAndBackLines                  ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
                            static void StopComputingFrontAndBackLines                   ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
@@ -87,8 +95,10 @@ public:
     template< typename T > static void ComputeNearestUnclippedLocalisationPointInFuseau ( DIA_Call_ABC& call, const T& caller                    );
     template< typename T > static void IsPointInFuseau                                  ( DIA_Call_ABC& call, const T& caller                    );
                            static void ComputeKnowledgeAgentBarycenter                  ( DIA_Call_ABC& call, const MIL_AgentPion& caller        );
-    template< typename T > static void ComputeFrontestAgent                             ( DIA_Call_ABC& call, const T& callerAgent );
-    template< typename T > static void ComputeBackestAgent                              ( DIA_Call_ABC& call, const T& callerAgent );
+    template< typename T > static void ComputeFrontestAgent                             ( DIA_Call_ABC& call, const T& caller                    );
+    template< typename T > static void ComputeBackestAgent                              ( DIA_Call_ABC& call, const T& caller                    );
+    template< typename T > static void SortFuseauxAccordingToSchedule                   ( DIA_Call_ABC& call, const T& caller                    );
+    template< typename T > static void ComputeDelayFromSchedule                         ( DIA_Call_ABC& call, const T& caller                    );
 
     // ASA
     static void ComputePosDeploiementASANasseDBG    ( DIA_Call_ABC& );
@@ -102,8 +112,9 @@ public:
     //@}
 
 private:
-    static const MT_Vector2D& GetPosition( const MIL_Automate&  );
-    static const MT_Vector2D& GetPosition( const MIL_AgentPion& );
+    static const MT_Vector2D& GetPosition                ( const MIL_Automate&  );
+    static const MT_Vector2D& GetPosition                ( const MIL_AgentPion& );
+    static       MT_Vector2D  _ComputeAutomatesBarycenter( const T_ObjectVector& automates );
 
 private:
     static bool ClipLocalisationInFuseau( const TER_Localisation& localisation, const MIL_Fuseau& fuseau, TER_Localisation& clippedLocalisation );

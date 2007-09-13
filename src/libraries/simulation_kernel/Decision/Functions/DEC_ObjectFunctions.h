@@ -44,6 +44,11 @@ public:
     static void GetGenObjectPreliminaire     ( DIA_Call_ABC& call );
     static void GetGenObjectTC2              ( DIA_Call_ABC& call );
     static void GetGenObjectMinesActivityTime( DIA_Call_ABC& call );
+
+    // Objectives
+    static void GetObjectiveLocalisation     ( DIA_Call_ABC& call );
+    static void IsObjectiveFlagged           ( DIA_Call_ABC& call );
+    static void SetObjectiveFlag             ( DIA_Call_ABC& call );
     //@}
 };
 

@@ -12,6 +12,7 @@
 
 class ActionParameterNumeric;
 class ActionParameterObstacle;
+class ActionParameterObjective;
 class ActionParameterLima;
 class ActionParameterLimit;
 class ActionParameterLocation;
@@ -43,6 +44,7 @@ public:
     //@{
     virtual void Visit( const ActionParameterNumeric&             ) {}
     virtual void Visit( const ActionParameterObstacle&            ) {}
+    virtual void Visit( const ActionParameterObjective&           ) {}
     virtual void Visit( const ActionParameterLima&                ) {}
     virtual void Visit( const ActionParameterLimit&               ) {}
     virtual void Visit( const ActionParameterPath&                ) {}

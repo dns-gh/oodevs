@@ -38,6 +38,15 @@ PopulationDecisions::~PopulationDecisions()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationDecisions::CanBeOrdered
+// Created: AGE 2007-04-04
+// -----------------------------------------------------------------------------
+bool PopulationDecisions::CanBeOrdered() const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationDecisions::DoUpdate
 // Created: SBO 2006-12-18
 // -----------------------------------------------------------------------------
@@ -75,6 +84,15 @@ kernel::Iterator< const kernel::FragOrder& > PopulationDecisions::GetFragOrders(
 const kernel::Mission* PopulationDecisions::GetCurrentMission() const
 {
     return current_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationDecisions::GetAgent
+// Created: AGE 2007-04-04
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC& PopulationDecisions::GetAgent() const
+{
+    return popu_;
 }
 
 // -----------------------------------------------------------------------------

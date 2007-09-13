@@ -43,8 +43,9 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned long                GetID    () const;
-    ModelRefsContainer< Agent >& GetAgents();
+    unsigned long                  GetID      () const;
+    ModelRefsContainer< Agent >&   GetAgents  ();
+    ModelRefsContainer< Automat >& GetAutomats();
     bool IsEngaged() const;
     //@}
 
@@ -57,6 +58,7 @@ public:
     void Update        ( const ASN1T_MsgAutomatChangeLogisticLinksAck&  msg );
     void Update        ( const ASN1T_MsgAutomatChangeLogisticLinks&     msg );
     void Update        ( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& msg );
+    void Update        ( const ASN1T_MsgAutomatChangeSuperiorAck&       msg );
     void Update        ( const ASN1T_MsgAutomatOrder&                   msg );
     virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;
     virtual void SendSpecialUpdate( ClientPublisher_ABC& publisher ) const;
@@ -79,9 +81,11 @@ private:
     const unsigned long                       nType_; // XML reference - no resolved by dispatcher
     const std::string                         strName_;
           Side&                               side_;
-          Formation&                          formation_;
+          Formation*                          pParentFormation_;
+          Automat*                            pParentAutomat_;
           KnowledgeGroup*                     pKnowledgeGroup_;
-          ModelRefsContainer< Agent >         agents_;
+          ModelRefsContainer< Agent   >       agents_;
+          ModelRefsContainer< Automat >       automats_;
           ModelsContainer   < DotationQuota > quotas_;
 
     ASN1T_EnumAutomatMode             nAutomatState_;

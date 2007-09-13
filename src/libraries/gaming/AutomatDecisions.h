@@ -13,15 +13,13 @@
 #include "game_asn/Asn.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver.h"
 #include "clients_kernel/Displayable_ABC.h"
+#include "Decisions_ABC.h"
 
 namespace kernel
 {
     class Automat_ABC;
     class Controller;
-    class Mission;
-    class FragOrder;
     class Displayer_ABC;
     class DecisionalModel;
 }
@@ -38,6 +36,7 @@ class AutomatDecisions : public kernel::Extension_ABC
                        , public kernel::Updatable_ABC< ASN1T_MsgAutomatAttributes >
                        , public kernel::Updatable_ABC< ASN1T_MsgAutomatOrder >
                        , public kernel::Displayable_ABC
+                       , public Decisions_ABC
 {
 
 public:
@@ -51,12 +50,14 @@ public:
     //@{
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
 
-    const kernel::Automat_ABC& GetAgent() const; // $$$$ AGE 2006-10-06: 
-    bool IsEmbraye() const; // $$$$ AGE 2006-03-14: 
-
+    virtual bool CanBeOrdered() const;
     virtual kernel::Iterator< const kernel::Mission& > GetMissions() const;
     virtual kernel::Iterator< const kernel::FragOrder& > GetFragOrders() const;
-    const kernel::Mission* GetCurrentMission() const;
+    virtual const kernel::Mission* GetCurrentMission() const;
+    virtual const kernel::Entity_ABC& GetAgent() const;
+
+    bool IsEmbraye() const; // $$$$ AGE 2006-03-14: 
+
     void Engage() const;
     void Disengage() const;
     //@}
@@ -72,6 +73,7 @@ private:
     //@{
     virtual void DoUpdate( const ASN1T_MsgAutomatAttributes& message );
     virtual void DoUpdate( const ASN1T_MsgAutomatOrder& message );
+    bool HasEngagedSuperior() const;
     //@}
 
 private:

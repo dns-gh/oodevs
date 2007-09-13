@@ -17,7 +17,6 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 

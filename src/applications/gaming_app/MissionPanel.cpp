@@ -42,7 +42,7 @@ using namespace gui;
 // Created: APE 2004-03-19
 // -----------------------------------------------------------------------------
 MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, ParametersLayer& layer, const GlTools_ABC& tools, const kernel::Profile_ABC& profile, ActionsModel& actionsModel
-                          , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter )
+                          , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const Simulation& simulation )
     : QDockWindow              ( pParent )
     , controllers_             ( controllers )
     , static_                  ( model )
@@ -53,7 +53,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const St
     , tools_                   ( tools )
     , profile_                 ( profile )
     , pMissionInterface_       ( 0 )
-    , interfaceBuilder_        ( new MissionInterfaceBuilder( controllers_.actions_, layer_, knowledgeConverter, objectKnowledgeConverter, static_ ) ) 
+    , interfaceBuilder_        ( new MissionInterfaceBuilder( controllers_.actions_, layer_, knowledgeConverter, objectKnowledgeConverter, static_, simulation ) ) 
     , selectedEntity_          ( controllers )
 {
     setResizeEnabled( true );
@@ -83,9 +83,9 @@ void MissionPanel::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu 
     {
         selectedEntity_ = &agent;
         if( const Decisions* decisions = agent.Retrieve< Decisions >() )
-            AddAgentMissions( *decisions, menu );
+            AddMissions( *decisions, menu, tr( "Agent missions" ), SLOT( ActivateAgentMission( int ) ) );
         if( const Automat_ABC* automat = static_cast< const Automat_ABC* >( agent.Get< kernel::TacticalHierarchies >().GetSuperior() ) )
-            AddAutomatMissions( automat->Get< AutomatDecisions >(), menu );
+            AddMissions( automat->Get< AutomatDecisions >(), menu, tr( "Automat missions" ), SLOT( ActivateAutomatMission( int ) ) );
     }
 }
 
@@ -99,10 +99,10 @@ void MissionPanel::NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::
     {
         selectedEntity_ = &agent;
         const AutomatDecisions& decisions = agent.Get< AutomatDecisions >();
-        AddAutomatMissions( decisions, menu );
+        AddMissions( decisions, menu, tr( "Automat missions" ), SLOT( ActivateAutomatMission( int ) ) );
         if( ! decisions.IsEmbraye() )
             menu.InsertItem( "Command", tr( "Engage" ), this, SLOT( Engage() ) );
-        else
+        else if( decisions.CanBeOrdered() )
             menu.InsertItem( "Command", tr( "Disengage" ), this, SLOT( Disengage() ) );
     }
 }
@@ -117,7 +117,7 @@ void MissionPanel::NotifyContextMenu( const Population_ABC& entity, ContextMenu&
     {
         selectedEntity_ = &entity;
         const PopulationDecisions& decisions = entity.Get< PopulationDecisions >();
-        AddPopulationMissions( decisions, menu );
+        AddMissions( decisions, menu, tr( "Population missions" ), SLOT( ActivatePopulationMission( int ) ) );
     }
 }
 
@@ -141,8 +141,7 @@ int MissionPanel::AddMissions( Iterator< const Mission& > it, ContextMenu& menu,
 // Name: MissionPanel::AddFragOrders
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-template< typename D >
-int MissionPanel::AddFragOrders( const D& decisions, ContextMenu& menu, const QString& name, const char* slot )
+int MissionPanel::AddFragOrders( const Decisions_ABC& decisions, ContextMenu& menu, const QString& name, const char* slot )
 {
     QPopupMenu& orders = *new QPopupMenu( menu );
     Iterator< const FragOrder& > it = decisions.GetFragOrders();
@@ -185,37 +184,16 @@ void MissionPanel::AddFragOrders( Iterator< const FragOrder& > it, QPopupMenu& m
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionPanel::AddAgentMissions
-// Created: AGE 2006-03-14
+// Name: MissionPanel::AddMissions
+// Created: AGE 2007-04-04
 // -----------------------------------------------------------------------------
-void MissionPanel::AddAgentMissions( const Decisions& decisions, ContextMenu& menu )
+void MissionPanel::AddMissions( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot )
 {
-    const int id = AddMissions( decisions.GetMissions(), menu, tr( "Unit missions" ), SLOT( ActivateAgentMission( int ) ) );
-    const bool isEmbraye = decisions.IsEmbraye();
-    menu.SetItemEnabled( id, ! isEmbraye );
-    if( ! isEmbraye )
-        AddFragOrders( decisions, menu, tr( "Fragmentary orders" ), SLOT( ActivateFragOrder( int ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionPanel::AddAutomatMissions
-// Created: AGE 2006-03-14
-// -----------------------------------------------------------------------------
-void MissionPanel::AddAutomatMissions( const AutomatDecisions& decisions, ContextMenu& menu )
-{
-    const int id = AddMissions( decisions.GetMissions(), menu, tr( "Automat missions" ), SLOT( ActivateAutomatMission( int ) ) );
-    menu.SetItemEnabled( id, decisions.IsEmbraye() );
-    if( decisions.IsEmbraye() )
-        AddFragOrders( decisions, menu, tr( "Fragmentary orders" ), SLOT( ActivateFragOrder( int ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionPanel::AddPopulationMissions
-// Created: SBO 2006-12-18
-// -----------------------------------------------------------------------------
-void MissionPanel::AddPopulationMissions( const PopulationDecisions& decisions, kernel::ContextMenu& menu )
-{
-    AddMissions( decisions.GetMissions(), menu, tr( "Population missions" ), SLOT( ActivatePopulationMission( int ) ) );
+    if( !decisions.CanBeOrdered() )
+        return;
+    
+    AddMissions( decisions.GetMissions(), menu, name, slot );
+    //menu.SetItemEnabled( id, decisions.CanBeOrdered() );
     AddFragOrders( decisions, menu, tr( "Fragmentary orders" ), SLOT( ActivateFragOrder( int ) ) );
 }
 

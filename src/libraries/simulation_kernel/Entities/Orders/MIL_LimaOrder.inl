@@ -28,6 +28,36 @@ const T_PointVector& MIL_LimaOrder::GetPoints() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_LimaOrder::GetSchedule
+// Created: NLD 2007-04-24
+// -----------------------------------------------------------------------------
+inline
+uint MIL_LimaOrder::GetSchedule() const
+{
+    return nSchedule_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaOrder::FlagSchedule
+// Created: NLD 2007-04-24
+// -----------------------------------------------------------------------------
+inline
+void MIL_LimaOrder::FlagSchedule( bool bFlag )
+{
+    bScheduleFlag_ = bFlag;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaOrder::IsScheduleFlagged
+// Created: NLD 2007-04-24
+// -----------------------------------------------------------------------------
+inline
+bool MIL_LimaOrder::IsScheduleFlagged() const
+{
+    return bScheduleFlag_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_LimaOrder::Flag
 // Created: NLD 2006-11-16
 // -----------------------------------------------------------------------------

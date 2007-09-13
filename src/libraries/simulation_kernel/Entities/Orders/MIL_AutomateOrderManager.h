@@ -15,6 +15,7 @@
 #include "MIL_OrderManager_ABC.h"
 #include "MIL_AutomateMRT.h"
 
+class MIL_AutomateMission;
 class MIL_AutomateMissionType;
 class MIL_Automate;
 class MIL_AgentPion;
@@ -47,12 +48,15 @@ public:
 
     //! @name Operations
     //@{
-    void              MRT_SetFuseauForPion ( MIL_AgentPion& pion, MIL_Fuseau& fuseau );
-    const MIL_Fuseau* MRT_GetFuseauForPion ( MIL_AgentPion& pion ) const;
-    MIL_PionMission*  MRT_CreatePionMission( MIL_AgentPion& pion, const MIL_PionMissionType& missionType );
-    void              MRT_Validate         ();
-    MIL_PionMission*  CDT_CreatePionMission( MIL_AgentPion& pion, const MIL_PionMissionType& missionType );
-    void              CDT_GivePionMission  ( MIL_PionMission& mission );
+    void                    MRT_SetFuseauForPion ( MIL_AgentPion& pion, MIL_Fuseau& fuseau );
+    const MIL_Fuseau*       MRT_GetFuseauForPion ( MIL_AgentPion& pion ) const;
+    MIL_PionMission*        MRT_CreatePionMission( MIL_AgentPion& pion, const MIL_PionMissionType& missionType );
+    void                    MRT_Validate         ();
+    MIL_PionMission*        CDT_CreatePionMission( MIL_AgentPion& pion, const MIL_PionMissionType& missionType );
+    void                    CDT_GivePionMission  ( MIL_PionMission& mission );
+
+    MIL_AutomateMission*    CreateAutomateMission( MIL_Automate& automate, const MIL_AutomateMissionType& missionType );
+    void                    GiveAutomateMission  ( MIL_AutomateMission& mission );
     //@}
 
 private:
@@ -64,15 +68,14 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::set< MIL_PionMission* >    T_PionMissionSet;
-    typedef T_PionMissionSet::const_iterator CIT_PionMissionSet;
+    typedef std::set< MIL_Mission_ABC* > T_MissionSet;
+    typedef T_MissionSet::const_iterator CIT_MissionSet;
     //@}
    
 private:
-    MIL_Automate&       automate_;
-
-    MIL_AutomateMRT     mrt_;
-    T_PionMissionSet    cdtPreparedMissions_;
+    MIL_Automate&   automate_;
+    MIL_AutomateMRT mrt_;
+    T_MissionSet    preparedMissions_;
 };
 
 #endif // __MIL_AutomateOrderManager_h_

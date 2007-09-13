@@ -11,12 +11,12 @@
 
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
-#include "Tools/MIL_Tools.h"
-
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Tools/MIL_Tools.h"
+#include "Decision/DEC_Objective.h"
 
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_PathFindManager.h"
@@ -422,8 +422,7 @@ void DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau( DIA_Call_AB
 // Name: DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau
 // Created: GGR 2006-09-27
 // -----------------------------------------------------------------------------
-template< typename T >
-inline
+template< typename T > inline
 void DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau( DIA_Call_ABC& call, const T& caller )
 {
     assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
@@ -441,4 +440,110 @@ void DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau( DI
     bOut = fuseauLocalisation.ComputeNearestPoint( pLocalisation->ComputeBarycenter(), *pResult );
     param.GetParameter( 1 ).SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
     call.GetResult().SetValue( bOut );
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > static void DEC_GeometryFunctions::SortFuseauxAccordingToSchedule
+// Created: NLD 2007-05-14
+// -----------------------------------------------------------------------------
+template< typename T > inline
+void DEC_GeometryFunctions::SortFuseauxAccordingToSchedule( DIA_Call_ABC& call, const T& caller )
+{   
+    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) );   
+    assert( DEC_Tools::CheckTypePoint       ( call.GetParameter( 1 ) ) );
+    assert( DEC_Tools::CheckTypeLima        ( call.GetParameter( 2 ) ) || DEC_Tools::CheckTypeObjectif( call.GetParameter( 2 ) ) );
+
+    const MT_Vector2D* pRefPoint = call.GetParameter( 1 ).ToUserPtr( pRefPoint );
+    assert( pRefPoint );
+
+    call.GetResult() = call.GetParameter( 0 );
+
+    const MIL_LimaOrder* pLima      = 0;
+    const DEC_Objective* pObjective = 0;
+    if( DEC_Tools::CheckTypeLima( call.GetParameter( 2 ) ) )
+        pLima = caller.FindLima( (uint)call.GetParameter( 2 ).ToPtr() ); 
+    else if( DEC_Tools::CheckTypeObjectif( call.GetParameter( 2 ) ) )
+        pObjective = call.GetParameter( 2 ).ToUserPtr( pObjective );
+    if( !pObjective && !pLima )
+        return;
+
+    std::multimap< MT_Float, DIA_Variable_ABC* > sortedFuseaux;
+    T_ObjectVariableVector& fuseaux = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
+    for( CIT_ObjectVariableVector it = fuseaux.begin(); it != fuseaux.end(); ++it )
+    {
+        const MIL_Fuseau* pFuseau = (**it).ToUserPtr( pFuseau );
+        if( pLima )        
+            sortedFuseaux.insert( std::make_pair( pFuseau->ComputeAverageDistanceFromLima( *pLima, *pRefPoint ), *it ) );
+        else // if( pObjective )
+            sortedFuseaux.insert( std::make_pair( pFuseau->ComputeAverageDistanceFromObjective( *pObjective, *pRefPoint ), *it ) );
+    }
+
+    fuseaux.clear();
+    for( std::multimap< MT_Float, DIA_Variable_ABC* >::const_iterator it = sortedFuseaux.begin(); it != sortedFuseaux.end(); ++it )
+        fuseaux.push_back( it->second );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeDelayFromSchedule
+// Created: NLD 2007-04-29
+// -----------------------------------------------------------------------------
+template< typename T > inline
+void DEC_GeometryFunctions::ComputeDelayFromSchedule( DIA_Call_ABC& call, const T& caller )
+{   
+    assert( DEC_Tools::CheckTypeFuseau        ( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypeListeAutomates( call.GetParameter( 1 ) ) );
+    assert( DEC_Tools::CheckTypeLima          ( call.GetParameter( 2 ) ) || DEC_Tools::CheckTypeObjectif( call.GetParameter( 2 ) ) );
+
+    const MIL_Fuseau*    pFuseau   = call.GetParameter( 0 ).ToUserPtr( pFuseau );
+    const T_ObjectVector automates = call.GetParameter( 1 ).ToSelection();
+    assert( pFuseau );
+
+    // Calcul distance entre barycentre automates et element schedulé
+    MT_Float rDistanceFromScheduled = std::numeric_limits< MT_Float >::max();
+    uint     nSchedule              = 0;
+    if( DEC_Tools::CheckTypeLima( call.GetParameter( 2 ) ) )
+    {
+        const MIL_LimaOrder* pLima = caller.FindLima( (uint)call.GetParameter( 2 ).ToPtr() );
+        if( pLima ) 
+        {
+            rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromLima( *pLima, _ComputeAutomatesBarycenter( automates ) );
+            nSchedule = pLima->GetSchedule();
+        }
+    }
+    else if( DEC_Tools::CheckTypeObjectif( call.GetParameter( 2 ) ) )
+    {
+        const DEC_Objective* pObjective = call.GetParameter( 2 ).ToUserPtr( pObjective );
+        if( pObjective )
+        {
+            rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromObjective( *pObjective, _ComputeAutomatesBarycenter( automates ) );
+            nSchedule = pObjective->GetSchedule();
+        }
+    }
+
+    // Calcul vitesse moyenne de l'automate
+    MT_Float rSpeed = std::numeric_limits< MT_Float >::max();
+    for( CIT_ObjectVector it = automates.begin(); it != automates.end(); ++it )
+    {
+        const MIL_Automate& automate = static_cast< DEC_AutomateDecision& >( **it ).GetAutomate();
+        rSpeed = std::min( rSpeed, automate.GetAlivePionsMaxSpeed() );
+    }
+
+    if( rDistanceFromScheduled == std::numeric_limits< MT_Float >::max() || rSpeed == 0. )
+    {
+        call.GetResult().SetValue( (float)0. );
+        return;
+    }
+
+    const MT_Float rTimeToGoToElement = 1.439 * rDistanceFromScheduled / rSpeed; //$$$ Deplacer la formule magique (Cf. PHY_ComposantePion où elle existe aussi...)
+    const MT_Float rTimeLeeway        = 1.439 * 2000. / rSpeed;
+
+    // Valeur de retour : = 0 : en avance, ou à 2km de la lima
+    //                    = 1 : en retard
+    //              entre les 2 : marge de sécurité
+
+    const MT_Float rDelay = nSchedule - ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + rTimeToGoToElement );
+    if( rDelay < 0 )
+        call.GetResult().SetValue( (float)1. );
+    else
+        call.GetResult().SetValue( (float)( 1. - std::min( 1., rDelay / rTimeLeeway ) ) );
 }

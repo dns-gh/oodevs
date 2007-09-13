@@ -110,7 +110,7 @@ public:
     static uint           ConvertEnvironementToObjectIdx( E_VisionObject obj );
     static E_VisionObject ConvertObjectIdxToEnvironnement( uint );
 
-    void GetVisionObjectsInSurface( const TER_Localisation& localisation, uint& rEmptySurface, uint& rForestSurface, uint& rUrbanSurface ) const;
+    template< typename T > void GetVisionObjectsInSurface( const T& localisation, uint& rEmptySurface, uint& rForestSurface, uint& rUrbanSurface ) const;
 
     void RegisterMeteoPatch   ( const MT_Vector2D&, const MT_Vector2D&, PHY_Meteo* );
 

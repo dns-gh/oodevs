@@ -78,7 +78,7 @@ void PHY_RolePionLOGConvoy_Supply::Update( bool bIsDead )
 {
     assert( pPion_ );
     
-    if ( bIsDead )
+    if( bIsDead )
         GetRole< PHY_RolePion_Location >().Follow( pPion_->GetAutomate().GetPionPC() );
 }
     

@@ -37,8 +37,11 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MIL_AgentPion*> T_PionVector;
+    typedef std::vector< MIL_AgentPion*>  T_PionVector;
     typedef T_PionVector::const_iterator  CIT_PionVector;
+
+    typedef std::vector< MIL_Automate*>      T_AutomateVector;
+    typedef T_AutomateVector::const_iterator CIT_AutomateVector;
     //@}
 
 private:
@@ -48,9 +51,10 @@ private:
     //@}
                                               
 private:
-    const MIL_Automate& automate_;
-          T_PionVector   pions_;
-          uint           nLastTimeComputed_;
+    const MIL_Automate&     refAutomate_; // reference
+          T_PionVector      pions_;           //$$$ Factoriser
+          T_AutomateVector  automates_;
+          uint              nLastTimeComputed_;
 
     MT_Droite backLineDroite_;
     MT_Droite frontLineDroite_;

@@ -31,6 +31,16 @@ ModelRefsContainer< Agent >& Automat::GetAgents()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ModelRefsContainer< Automat >& Automat::GetAutomats
+// Created: NLD 2007-04-02
+// -----------------------------------------------------------------------------
+inline
+ModelRefsContainer< Automat >& Automat::GetAutomats()
+{
+    return automats_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Automat::IsEngaged
 // Created: SBO 2007-07-24
 // -----------------------------------------------------------------------------

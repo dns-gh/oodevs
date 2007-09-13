@@ -24,7 +24,11 @@ MsgAutomatCreation ::= SEQUENCE
     oid                      Automat,
     type-automate            AutomatType,
     nom                      VisibleString,
-    oid-formation            Formation,
+    oid-parent               CHOICE
+    {
+        formation Formation,
+        automate  Automat
+    },
     oid-camp                 Team,
     oid-groupe-connaissance  OID
 }
@@ -90,6 +94,26 @@ MsgAutomatChangeLogisticLinksAck ::= SEQUENCE
     oid-sante          Automat OPTIONAL,
     oid-ravitaillement Automat OPTIONAL,
     error-code         EnumChangeHierarchyErrorCode   
+}
+
+MsgAutomatChangeSuperior ::= SEQUENCE
+{
+    oid           Automat,
+    oid-superior  CHOICE
+    {
+        formation Formation,
+        automate  Automat
+    }    
+}
+MsgAutomatChangeSuperiorAck ::= SEQUENCE
+{
+    oid           Automat,
+    oid-superior  CHOICE
+    {
+        formation Formation,
+        automate  Automat
+    },
+    error-code   EnumChangeHierarchyErrorCode
 }
 
 END -- Automat

@@ -15,6 +15,7 @@
 using namespace xml;
 
 MIL_AutomateMissionType::T_MissionIDMap   MIL_AutomateMissionType::missionIDs_;
+MIL_AutomateMissionType::T_MissionIDMap   MIL_AutomateMissionType::missionDiaIDs_;
 MIL_AutomateMissionType::T_MissionNameMap MIL_AutomateMissionType::missionNames_;
 
 // =============================================================================
@@ -54,16 +55,21 @@ void MIL_AutomateMissionType::ReadMission( xml::xistream& xis )
 {
     uint nID;
     xis >> attribute( "id", nID );
-
+    
     const MIL_AutomateMissionType*& pMission = missionIDs_[ nID ];
     if( pMission )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat mission already defined" ); // $$$$ ABL 2007-07-26: error context
     pMission = new MIL_AutomateMissionType( nID, xis );
+    
+    const MIL_AutomateMissionType*& pMissionDiaID = missionDiaIDs_[ pMission->GetDIAType().GetDebugId() ];
+    if( pMissionDiaID )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat mission DIA ID already defined" ); // $$$$ ABL 2007-07-26: error context
+    pMissionDiaID = pMission;       
 
     const MIL_AutomateMissionType*& pMissionName = missionNames_[ pMission->GetName() ];
     if( pMissionName )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat mission name already defined" ); // $$$$ ABL 2007-07-26: error context
-    pMissionName = pMission;
+    pMissionName = pMission;       
 }
 
 // -----------------------------------------------------------------------------

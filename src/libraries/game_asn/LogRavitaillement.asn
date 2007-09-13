@@ -82,7 +82,6 @@ MsgLogSupplyState ::= SEQUENCE
     disponibilites-transporteurs-convois SEQUENCE OF LogSupplyEquimentAvailability OPTIONAL
 }
 
-
 DotationQuota ::= SEQUENCE
 {
     ressource-id        DotationType,

@@ -13,14 +13,12 @@
 #include "game_asn/Asn.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Iterator.h"
+#include "Decisions_ABC.h"
 
 namespace kernel
 {
     class Controller;
     class Population_ABC;
-    class Mission;
-    class FragOrder;
     class DecisionalModel;
 }
 
@@ -32,6 +30,7 @@ namespace kernel
 // =============================================================================
 class PopulationDecisions : public kernel::Extension_ABC
                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationOrder >
+                          , public Decisions_ABC
 {
 
 public:
@@ -43,9 +42,11 @@ public:
 
     //! @name Operations
     //@{
+    virtual bool CanBeOrdered() const;
     virtual kernel::Iterator< const kernel::Mission& > GetMissions() const;
     virtual kernel::Iterator< const kernel::FragOrder& > GetFragOrders() const;
-    const kernel::Mission* GetCurrentMission() const;
+    virtual const kernel::Mission* GetCurrentMission() const;
+    virtual const kernel::Entity_ABC& GetAgent() const;
     //@}
 
 private:

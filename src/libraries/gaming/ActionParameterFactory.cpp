@@ -13,6 +13,8 @@
 #include "ActionParameterLimaList.h"
 #include "ActionParameterObstacle.h"
 #include "ActionParameterObstacleList.h"
+#include "ActionParameterObjective.h"
+#include "ActionParameterObjectiveList.h"
 #include "ActionParameterDirection.h"
 #include "ActionParameterLocation.h"
 #include "ActionParameterPoint.h"
@@ -57,11 +59,12 @@ using namespace kernel;
 // Name: ActionParameterFactory constructor
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-ActionParameterFactory::ActionParameterFactory( const CoordinateConverter_ABC& converter, const Model& model, const StaticModel& staticModel
+ActionParameterFactory::ActionParameterFactory( const CoordinateConverter_ABC& converter, const Model& model, const StaticModel& staticModel, const Simulation& simulation
                                               , AgentKnowledgeConverter_ABC& agentKnowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter )
     : converter_( converter )
     , model_( model )
     , staticModel_( staticModel )
+    , simulation_( simulation )
     , agentKnowledgeConverter_( agentKnowledgeConverter )
     , objectKnowledgeConverter_( objectKnowledgeConverter )
 {
@@ -133,6 +136,10 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
         return new ActionParameterObstacle( parameter, converter_, staticModel_.objectTypes_, model_.agents_, *asn.value.u.plannedWork );
     case T_MissionParameter_value_atlasNature:
         return new ActionParameterAtlasNature( parameter, *asn.value.u.atlasNature, staticModel_.atlasNatures_ );
+    case T_MissionParameter_value_missionObjective:
+        return new ActionParameterObjective( parameter, converter_, simulation_, *asn.value.u.missionObjective );
+    case T_MissionParameter_value_missionObjectiveList:
+        return new ActionParameterObjectiveList( parameter, converter_, simulation_, *asn.value.u.missionObjectiveList );
     case T_MissionParameter_value_point:
         return new ActionParameterPoint( parameter, converter_, *asn.value.u.point );
     case T_MissionParameter_value_polygon:
@@ -166,7 +173,7 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
 // -----------------------------------------------------------------------------
 ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, const ASN1T_LimasOrder& asn ) const
 {
-    return new ActionParameterLimaList( parameter, converter_, asn );
+    return new ActionParameterLimaList( parameter, converter_, simulation_, asn );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,7 +221,7 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     else if( type == "direction" || type == "dangerousdirection" )
         return new ActionParameterDirection( parameter, xis );
     else if( type == "limalist" )
-        return new ActionParameterLimaList( parameter, converter_, xis );
+        return new ActionParameterLimaList( parameter, converter_, simulation_, xis );
     else if( type == "limits" )
         return new ActionParameterLimits( parameter, converter_, xis );
     else if( type == "enumeration" )
@@ -245,6 +252,10 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
         return new ActionParameterObjectKnowledgeList( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity );
     else if( type == "atlasnature" )
         return new ActionParameterAtlasNature( parameter, xis, staticModel_.atlasNatures_ );
+    else if( type == "objective" )
+        return new ActionParameterObjective( parameter, xis, converter_, simulation_ );
+    else if( type == "objectivelist" )
+        return new ActionParameterObjectiveList( parameter, xis, converter_, simulation_ );
     else if( type == "medicalpriorities" )
         return new ActionParameterMedicalPriorities( parameter, xis );
     else if( type == "maintenancepriorities" )

@@ -35,7 +35,7 @@ MIL_AutomateOrderManager::MIL_AutomateOrderManager( MIL_Automate& automate )
     : MIL_OrderManager_ABC()
     , automate_           ( automate )
     , mrt_                ()
-    , cdtPreparedMissions_()
+    , preparedMissions_   ()
 {
 }
 
@@ -45,10 +45,10 @@ MIL_AutomateOrderManager::MIL_AutomateOrderManager( MIL_Automate& automate )
 // -----------------------------------------------------------------------------
 MIL_AutomateOrderManager::~MIL_AutomateOrderManager()
 {
-    // Destruction de toutes les missions préparées mais non données par l'automate à ses pions pendant la conduite
-    for( CIT_PionMissionSet it = cdtPreparedMissions_.begin(); it != cdtPreparedMissions_.end(); ++it )
+    // Destruction de toutes les missions préparées mais non données
+    for( CIT_MissionSet it = preparedMissions_.begin(); it != preparedMissions_.end(); ++it )
         delete *it;
-    cdtPreparedMissions_.clear();
+    preparedMissions_.clear();
 }
 
 //-----------------------------------------------------------------------------
@@ -120,15 +120,17 @@ void MIL_AutomateOrderManager::StopAllMissions()
 
     if( automate_.IsEngaged() )
     {
-        const MIL_Automate::T_PionVector& pions = automate_.GetPions();
-        for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
+        for( MIL_Automate::CIT_AutomateVector it = automate_.GetAutomates().begin(); it != automate_.GetAutomates().end(); ++it )
+            (**it).GetOrderManager().ReplaceMission( 0 );
+
+        for( MIL_Automate::CIT_PionVector it = automate_.GetPions().begin(); it != automate_.GetPions().end(); ++it )
             (**it).GetOrderManager().ReplaceMission( 0 );
     }
 
     // Destruction de toutes les missions préparées mais non données par l'automate à ses pions pendant la conduite
-    for( CIT_PionMissionSet it = cdtPreparedMissions_.begin(); it != cdtPreparedMissions_.end(); ++it )
+    for( CIT_MissionSet it = preparedMissions_.begin(); it != preparedMissions_.end(); ++it )
         delete *it;
-    cdtPreparedMissions_.clear();
+    preparedMissions_.clear();
 
     mrt_.Cancel();
 }
@@ -263,7 +265,7 @@ MIL_PionMission* MIL_AutomateOrderManager::CDT_CreatePionMission( MIL_AgentPion&
     }
 
     MIL_PionMission* pPionMission = new MIL_PionMission( missionType, pion, *pCurrentMission );
-    bool bOut = cdtPreparedMissions_.insert( pPionMission ).second;
+    bool bOut = preparedMissions_.insert( pPionMission ).second;
     assert( bOut );
     return pPionMission;
 }
@@ -276,9 +278,39 @@ void MIL_AutomateOrderManager::CDT_GivePionMission( MIL_PionMission& mission )
 {
     assert( automate_.IsEngaged() );
 
-    int nOut = cdtPreparedMissions_.erase( &mission );
+    int nOut = preparedMissions_.erase( &mission );
     assert( nOut == 1 );
-
     mission.GetPion().GetOrderManager().ReplaceMission( &mission );
 }
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateOrderManager::CreateAutomateMission
+// Created: NLD 2007-04-03
+// -----------------------------------------------------------------------------
+MIL_AutomateMission* MIL_AutomateOrderManager::CreateAutomateMission( MIL_Automate& automate, const MIL_AutomateMissionType& missionType )
+{
+    if( !automate.GetOrderManager().IsMissionAvailable( missionType ) )
+        return 0;
 
+    const MIL_AutomateMission* pCurrentMission = static_cast< const MIL_AutomateMission* >( GetCurrentMission() );
+    MIL_AutomateMission* pAutomateMission = 0;
+    if( pCurrentMission )
+        pAutomateMission = new MIL_AutomateMission( missionType, automate, *pCurrentMission );
+    else
+        pAutomateMission = new MIL_AutomateMission( missionType, automate );
+
+    bool bOut = preparedMissions_.insert( pAutomateMission ).second;
+    assert( bOut );
+    return pAutomateMission;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateOrderManager::GiveAutomateMission
+// Created: NLD 2007-04-03
+// -----------------------------------------------------------------------------
+void MIL_AutomateOrderManager::GiveAutomateMission( MIL_AutomateMission& mission )
+{
+    int nOut = preparedMissions_.erase( &mission );
+    assert( nOut == 1 );
+    mission.GetAutomate().GetOrderManager().ReplaceMission( &mission );
+}

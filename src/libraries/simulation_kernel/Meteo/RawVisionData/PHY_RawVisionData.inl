@@ -194,3 +194,43 @@ const PHY_Meteo::sWindData& PHY_RawVisionData::sCell::GetWind() const
 {
     return pMeteo ? pMeteo->GetWind() : pGlobalMeteo_->GetWind();
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RawVisionData::GetVisionObjectsInSurface
+// Created: NLD 2004-11-17
+// -----------------------------------------------------------------------------
+template< typename T > inline
+void PHY_RawVisionData::GetVisionObjectsInSurface( const T& localisation, uint& nEmptySurface, uint& nForestSurface, uint& nUrbanSurface ) const
+{
+    nEmptySurface  = 0;
+    nForestSurface = 0;
+    nUrbanSurface  = 0;
+
+    const uint nXEnd   = GetCol( localisation.GetBoundingBox().GetRight() );
+    const uint nYBegin = GetRow( localisation.GetBoundingBox().GetBottom() );
+    const uint nYEnd   = GetRow( localisation.GetBoundingBox().GetTop() );
+    
+    for ( uint nX = GetCol( localisation.GetBoundingBox().GetLeft() ); nX <= nXEnd; ++nX )
+        for ( uint nY = nYBegin; nY <= nYEnd; ++nY )
+        {
+            if ( !localisation.IsInside( MT_Vector2D( nX * rCellSize_, nY * rCellSize_ ) ) )
+                continue;
+
+            const envBits env = operator () ( nX, nY ).GetEnv();
+
+            if ( env == eVisionEmpty )
+                ++nEmptySurface;
+            else
+            {
+                if ( env & eVisionForest )
+                    ++nForestSurface;
+                if ( env & eVisionUrban )
+                    ++nUrbanSurface;
+            }
+        }
+
+    nEmptySurface  *= ( rCellSize_ * rCellSize_ );
+    nForestSurface *= ( rCellSize_ * rCellSize_ );
+    nUrbanSurface  *= ( rCellSize_ * rCellSize_ );
+}

@@ -31,9 +31,9 @@
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Agent, "DEC_Knowledge_Agent" )
 
-MT_Float         DEC_Knowledge_Agent::rMaxDangerosityDegradationByRelevance_        = 0.2; // 20%
-MT_Float         DEC_Knowledge_Agent::rMaxDangerosityDegradationByOpState_          = 0.2; // 20%
-MT_Float         DEC_Knowledge_Agent::rMaxDangerosityDegradationByNeutralizedState_ = 0.8; // 80%
+MT_Float DEC_Knowledge_Agent::rMaxDangerosityDegradationByRelevance_        = 0.2; // 20%
+MT_Float DEC_Knowledge_Agent::rMaxDangerosityDegradationByOpState_          = 0.2; // 20%
+MT_Float DEC_Knowledge_Agent::rMaxDangerosityDegradationByNeutralizedState_ = 0.8; // 80%
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent constructor
@@ -369,11 +369,11 @@ void DEC_Knowledge_Agent::UpdateRelevance()
     assert( rRelevance_ >= 0. && rRelevance_ <= 1. );
 
     // La connaissance est invalidée quand l'unité réelle a fait un magic move
-    // ou quand on voit la position à laquelle l'unité devrait se trouver
+    // ou quand on voit la position à laquelle l'unité devrait se trouver <==== ou pas
     assert( pAgentKnown_ );
     assert( pKnowledgeGroup_ );
     
-    if ( pAgentKnown_->GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove() || pKnowledgeGroup_->IsPerceived( *this ) ) 
+    if ( pAgentKnown_->GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove() /*|| pKnowledgeGroup_->IsPerceived( *this )*/ ) 
     {
         ChangeRelevance( 0. );
         return;

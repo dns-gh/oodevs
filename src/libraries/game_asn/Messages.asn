@@ -67,8 +67,9 @@ MsgsSimToClient ::= SEQUENCE
         msg-change-diplomacy-ack                                MsgChangeDiplomacyAck,
         msg-automat-change-knowledge-group-ack                  MsgAutomatChangeKnowledgeGroupAck,
         msg-automat-change-logistic-links-ack                   MsgAutomatChangeLogisticLinksAck,
-        msg-unit-change-superior-ack                            MsgUnitChangeSuperiorAck,
-
+        msg-automat-change-superior-ack                         MsgAutomatChangeSuperiorAck,
+        msg-unit-change-superior-ack                            MsgUnitChangeSuperiorAck,   
+        
         msg-log-supply-push-flow-ack                            MsgLogSupplyPushFlowAck,
         msg-log-supply-change-quotas-ack                        MsgLogSupplyChangeQuotasAck,
 
@@ -225,6 +226,7 @@ MsgsClientToSim ::= SEQUENCE
         msg-change-diplomacy                    MsgChangeDiplomacy,
         msg-automat-change-knowledge-group      MsgAutomatChangeKnowledgeGroup,
         msg-automat-change-logistic-links       MsgAutomatChangeLogisticLinks,
+        msg-automat-change-superior             MsgAutomatChangeSuperior,
         msg-unit-change-superior                MsgUnitChangeSuperior,
 
         msg-log-supply-push-flow                MsgLogSupplyPushFlow,

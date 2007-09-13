@@ -167,6 +167,26 @@ const MIL_Automate::T_PionVector& MIL_Automate::GetPions() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Automate::GetAutomates
+// Created: NLD 2007-04-03
+// -----------------------------------------------------------------------------
+inline
+const MIL_Automate::T_AutomateVector& MIL_Automate::GetAutomates() const
+{
+    return automates_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::GetParentAutomate
+// Created: NLD 2007-04-24
+// -----------------------------------------------------------------------------
+inline
+MIL_Automate* MIL_Automate::GetParentAutomate() const
+{
+    return pParentAutomate_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Automate::GetName
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
@@ -214,6 +234,29 @@ void MIL_Automate::UnregisterPion( MIL_AgentPion& pion )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Automate::RegisterAutomate
+// Created: NLD 2007-03-29
+// -----------------------------------------------------------------------------
+inline
+void MIL_Automate::RegisterAutomate( MIL_Automate& automate )
+{
+    assert( std::find( automates_.begin(), automates_.end(), &automate ) == automates_.end() );
+    automates_.push_back( &automate );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::UnregisterAutomate
+// Created: NLD 2007-03-29
+// -----------------------------------------------------------------------------
+inline
+void MIL_Automate::UnregisterAutomate( MIL_Automate& automate )
+{
+    IT_AutomateVector it = std::find( automates_.begin(), automates_.end(), &automate );
+    assert( it != automates_.end() );
+    automates_.erase( it );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Automate::FindLima
 // Created: NLD 2006-11-16
 // -----------------------------------------------------------------------------
@@ -234,6 +277,16 @@ MIL_LimaOrder* MIL_Automate::FindLima( uint nID ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Automate::FindLima
+// Created: NLD 2007-04-30
+// -----------------------------------------------------------------------------
+inline
+MIL_LimaOrder* MIL_Automate::FindNextScheduledLima() const
+{
+    return orderManager_.FindNextScheduledLima();
+}
+
+// -----------------------------------------------------------------------------
 // Name: template< typename T > MIL_Automate::ApplyOnHierarchy
 // Created: NLD 2007-05-09
 // -----------------------------------------------------------------------------
@@ -242,7 +295,9 @@ void MIL_Automate::ApplyOnHierarchy( T& functor )
 {
     functor( *this );
 
-    T_PionVector& pions = pions_;
-    for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
+    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+        (**it).ApplyOnHierarchy( functor );
+
+    for( MIL_Automate::CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
         functor( **it );
 }

@@ -17,9 +17,9 @@ namespace kernel
     class AgentType;
     class AutomatType;
     class PopulationType;
-    class Formation_ABC;
     class Team_ABC;
     class Automat_ABC;
+    class Entity_ABC;
 }
 
 namespace xml
@@ -46,11 +46,11 @@ public:
     //! @name Operations
     //@{
     virtual kernel::Agent_ABC* Create( kernel::Automat_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position, bool commandPost = false ) = 0;
-    virtual kernel::Automat_ABC* Create( kernel::Formation_ABC& parent, const kernel::AutomatType& type ) = 0;
+    virtual kernel::Automat_ABC* Create( kernel::Entity_ABC& parent, const kernel::AutomatType& type  ) = 0;
     virtual kernel::Population_ABC* Create( kernel::Team_ABC& parent, const kernel::PopulationType& type, const geometry::Point2f& position ) = 0;
 
     virtual kernel::Agent_ABC* Create( xml::xistream& xis, kernel::Automat_ABC& parent ) = 0;
-    virtual kernel::Automat_ABC* Create( xml::xistream& xis, kernel::Formation_ABC& parent ) = 0;
+    virtual kernel::Automat_ABC* Create( xml::xistream& xis, kernel::Entity_ABC& parent ) = 0;
     virtual kernel::Population_ABC* Create( xml::xistream& xis, kernel::Team_ABC& parent ) = 0;
     //@}
 

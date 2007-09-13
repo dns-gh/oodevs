@@ -60,8 +60,8 @@ void AgentsModelChecker::CheckCommandPosts( const AgentsModel& model ) const
         unsigned int commandPostCount = 0;
         while( itChild.HasMoreElements() )
         {
-            const Agent_ABC& agent = static_cast< const Agent_ABC& >( itChild.NextElement() );
-            if( agent.IsCommandPost() )
+            const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( & itChild.NextElement() );
+            if( agent && agent->IsCommandPost() )
                 ++commandPostCount;
         }
         if( commandPostCount == 0 )

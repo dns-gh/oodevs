@@ -15,8 +15,12 @@
 #include "MIL_AgentServer.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Automates/DEC_AutomateDecision.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_PionMissionType.h"
 #include "Entities/Orders/MIL_PionMission.h"
+#include "Entities/Orders/MIL_AutomateMissionType.h"
+#include "Entities/Orders/MIL_AutomateMission.h"
 #include "Decision/DEC_Tools.h"
 
 //=============================================================================
@@ -124,15 +128,88 @@ void DEC_OrdersFunctions::CDT_CreatePionMission( DIA_Call_ABC& call, MIL_Automat
 void DEC_OrdersFunctions::CDT_GivePionMission( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
 {
     assert( DEC_Tools::CheckTypeMissionPion( call.GetParameter( 0 ) ) );
-
     MIL_PionMission* pPionMission = call.GetParameter( 0 ).ToUserObject( pPionMission );
     assert( pPionMission );
-
     callerAutomate.GetOrderManager().CDT_GivePionMission( *pPionMission );
 }
+
+// =============================================================================
+// ADA
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::CreateAutomateMission
+// Created: NLD 2007-04-03
+// -----------------------------------------------------------------------------
+void DEC_OrdersFunctions::CreateAutomateMission( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+{
+    assert( DEC_Tools::CheckTypeAutomate( call.GetParameter( 0 ) ) );
+
+    DEC_AutomateDecision* pAutomate = call.GetParameter( 0 ).ToUserObject( pAutomate );
+    assert( pAutomate );
+
+    const MIL_AutomateMissionType* pMissionType = MIL_AutomateMissionType::FindFromDiaID( call.GetParameter( 1 ).ToId() );
+    assert( pMissionType );
+
+    MIL_AutomateMission* pMission = callerAutomate.GetOrderManager().CreateAutomateMission( pAutomate->GetAutomate(), *pMissionType );
+    call.GetResult().SetValue( *pMission );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::GiveAutomateMission
+// Created: NLD 2007-04-03
+// -----------------------------------------------------------------------------
+void DEC_OrdersFunctions::GiveAutomateMission( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+{
+    assert( DEC_Tools::CheckTypeMissionAutomate( call.GetParameter( 0 ) ) );
+    MIL_AutomateMission* pMission = call.GetParameter( 0 ).ToUserObject( pMission );
+    assert( pMission );
+    callerAutomate.GetOrderManager().GiveAutomateMission( *pMission );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::SplitFuseau
+// Created: NLD 2007-04-05
+// -----------------------------------------------------------------------------
+void DEC_OrdersFunctions::SplitFuseau( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+{
+    DIA_Variable_ObjectList& result = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+
+    MIL_Fuseau::T_FuseauPtrList subFuseaux;
+    callerAutomate.GetFuseau().SplitIntoSubFuseaux( (uint)call.GetParameter( 0 ).ToFloat(), subFuseaux );
+    result.SetValueUserType( subFuseaux, DEC_Tools::GetTypeFuseau() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::AssignFuseauToAutomateMission
+// Created: NLD 2007-04-05
+// -----------------------------------------------------------------------------
+void DEC_OrdersFunctions::AssignFuseauToAutomateMission( DIA_Call_ABC& call, MIL_Automate& /*callerAutomate*/ )
+{
+    assert( DEC_Tools::CheckTypeFuseau         ( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypeMissionAutomate( call.GetParameter( 1 ) ) );
+
+    MIL_Fuseau*          pFuseau  = call.GetParameter( 0 ).ToUserPtr   ( pFuseau  );
+    MIL_AutomateMission* pMission = call.GetParameter( 1 ).ToUserObject( pMission );
+    assert( pMission && pFuseau );
+
+    pMission->AffectFuseau( *pFuseau );
+}
+
 // =============================================================================
 // LIMAS
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::GetHigherEngagedAutomate
+// Created: NLD 2007-05-09
+// -----------------------------------------------------------------------------
+MIL_Automate& DEC_OrdersFunctions::GetHigherEngagedAutomate( MIL_Automate& automate )
+{
+    if( automate.GetParentAutomate() && automate.GetParentAutomate()->IsEngaged() )
+        return GetHigherEngagedAutomate( *automate.GetParentAutomate() );
+    return automate;
+}
 
 namespace 
 {
@@ -152,6 +229,23 @@ namespace
         const uint nLimaID_;
         const bool bValue_;
     };
+
+    class FlagScheduleMissionLima
+    {   
+    public:
+        FlagScheduleMissionLima( uint nLimaID, bool bValue ) : nLimaID_( nLimaID ), bValue_( bValue ) {}
+
+        template< typename T >
+        void operator() ( T& entity )
+        {
+            MIL_LimaOrder* pLima = entity.FindLima( nLimaID_ );
+            if( pLima )
+                pLima->FlagSchedule( bValue_ );
+        }
+    private:
+        const uint nLimaID_;
+        const bool bValue_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -166,7 +260,22 @@ void DEC_OrdersFunctions::PionSetMissionLimaFlag( DIA_Call_ABC& call, MIL_AgentP
     if( !caller.GetAutomate().IsEngaged() )
         functor( caller );
     else
-        caller.GetAutomate().ApplyOnHierarchy( functor );
+        GetHigherEngagedAutomate( caller.GetAutomate() ).ApplyOnHierarchy( functor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::PionSetMissionLimaScheduleFlag
+// Created: NLD 2007-05-08
+// -----------------------------------------------------------------------------
+void DEC_OrdersFunctions::PionSetMissionLimaScheduleFlag( DIA_Call_ABC& call, MIL_AgentPion& caller )
+{
+    assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
+
+    FlagScheduleMissionLima functor( (uint)call.GetParameter( 0 ).ToPtr(), call.GetParameter( 1 ).ToBool() );
+    if( !caller.GetAutomate().IsEngaged() )
+        functor( caller );
+    else
+        GetHigherEngagedAutomate( caller.GetAutomate() ).ApplyOnHierarchy( functor );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,5 +287,18 @@ void DEC_OrdersFunctions::AutomateSetMissionLimaFlag( DIA_Call_ABC& call, MIL_Au
     assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
 
     FlagMissionLima functor( (uint)call.GetParameter( 0 ).ToPtr(), call.GetParameter( 1 ).ToBool() );
-    caller.ApplyOnHierarchy( functor );
+    GetHigherEngagedAutomate( caller ).ApplyOnHierarchy( functor );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag
+// Created: NLD 2007-05-08
+// -----------------------------------------------------------------------------
+void DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag( DIA_Call_ABC& call, MIL_Automate& caller )
+{
+    assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
+
+    FlagScheduleMissionLima functor( (uint)call.GetParameter( 0 ).ToPtr(), call.GetParameter( 1 ).ToBool() );
+    GetHigherEngagedAutomate( caller ).ApplyOnHierarchy( functor );
+}
+

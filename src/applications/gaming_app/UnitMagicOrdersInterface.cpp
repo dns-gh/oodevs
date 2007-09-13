@@ -97,7 +97,7 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& age
     int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
     bool bMoveAllowed = false;
     if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
-        bMoveAllowed = decisions->IsEmbraye();
+        bMoveAllowed = decisions->CanBeOrdered();
     magicMenu->setItemEnabled( moveId, bMoveAllowed );
     AddSurrenderMenu( magicMenu, agent );
     FillCommonOrders( magicMenu );

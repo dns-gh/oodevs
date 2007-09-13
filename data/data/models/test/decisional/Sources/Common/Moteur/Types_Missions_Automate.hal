@@ -38,3 +38,8 @@ typedef struct T_Mission_Automate_OrienterRefugies : T_Mission_Automate
 T_ListeConnaissancesAgent refugies_;
 T_ConnaissanceObjet campRefugies_;
 };
+
+typedef struct T_Mission_Automate_ADA_MoveTo : T_Mission_Automate
+{
+T_ListeObjectifs objectifs_;
+};

@@ -30,10 +30,13 @@ public:
     static void IsEngaged          ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     static void DebrayeAutomate    ( DIA_Call_ABC& call,       MIL_Automate& callerAutomate );
 
-    static void GetPionsWithoutPC  ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void GetPionsWithPC     ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void GetPionPC          ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void GetPionPCOfAutomate( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+    static void GetPionsWithoutPC      ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+    static void GetPionsWithPC         ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+    static void GetPionPC              ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+    static void GetPionPCOfAutomate    ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+    static void GetAutomates           ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+    static void GetParentAutomate      ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+    static void IsParentAutomateEngaged( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
         
     static void GetPionsOfAutomateWithoutPC( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     static void GetPionsOfAutomateWithPC   ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );

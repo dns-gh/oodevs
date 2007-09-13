@@ -30,9 +30,10 @@ class MIL_AutomateMissionType : public MIL_MissionType_ABC
 public:
     //! @name Factory
     //@{
-    static void                           Initialize( xml::xistream& xis );
-    static const MIL_AutomateMissionType* Find      ( uint nID );
-    static const MIL_AutomateMissionType* Find      ( const std::string& strName );
+    static void                           Initialize   ( xml::xistream& xis );
+    static const MIL_AutomateMissionType* Find         ( uint nID );
+    static const MIL_AutomateMissionType* Find         ( const std::string& strName );
+    static const MIL_AutomateMissionType* FindFromDiaID( uint nID );
     //@}
 
     //! @name Accessors
@@ -80,6 +81,7 @@ private:
 
 private:
     static T_MissionIDMap   missionIDs_;
+    static T_MissionIDMap   missionDiaIDs_;
     static T_MissionNameMap missionNames_;    
 };
 

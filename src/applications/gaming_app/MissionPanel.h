@@ -36,7 +36,7 @@ namespace gui
 }
 
 class QPopupMenu;
-
+class Decisions_ABC;
 class Decisions;
 class AutomatDecisions;
 class PopulationDecisions;
@@ -48,6 +48,7 @@ class Publisher_ABC;
 class MissionInterfaceFactory;
 class MissionInterfaceBuilder;
 class ActionsModel;
+class Simulation;
 
 // =============================================================================
 // Created: APE 2004-03-19
@@ -65,7 +66,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MissionPanel( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const kernel::Profile_ABC& profile, ActionsModel& actionsModel
-                         , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter );
+                         , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const Simulation& simulation );
     virtual ~MissionPanel();
     //@}
 
@@ -100,11 +101,8 @@ private:
     virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Population_ABC& agent, kernel::ContextMenu& menu );
     int AddMissions( kernel::Iterator< const kernel::Mission& > it, kernel::ContextMenu& menu, const QString& name, const char* slot );
-    void AddAgentMissions( const Decisions& decisions, kernel::ContextMenu& menu ); 
-    void AddAutomatMissions( const AutomatDecisions& decisions, kernel::ContextMenu& menu ); 
-    void AddPopulationMissions( const PopulationDecisions& decisions, kernel::ContextMenu& menu ); 
-    template< typename D >
-    int AddFragOrders( const D& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot );
+    void AddMissions( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot ); 
+    int AddFragOrders( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot );
     void AddFragOrders( kernel::Iterator< const kernel::FragOrder& > it, QPopupMenu& menu, const char* slot );
     void SetInterface( MissionInterface_ABC* missionInterface );
     //@}

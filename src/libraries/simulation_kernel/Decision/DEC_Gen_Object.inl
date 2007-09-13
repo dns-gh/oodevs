@@ -68,3 +68,4 @@ uint DEC_Gen_Object::GetMinesActivityTime() const
 {
     return nMinesActivityTime_;
 }
+

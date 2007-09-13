@@ -33,6 +33,41 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Decision/DEC_Tools.h"
     
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::GetParentAutomate
+// Created: NLD 2007-04-24
+// -----------------------------------------------------------------------------
+void DEC_AutomateFunctions::GetParentAutomate( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
+{
+    if( callerAutomate.GetParentAutomate() )
+        call.GetResult().SetValue( callerAutomate.GetParentAutomate()->GetDecision() );
+    else
+        call.GetResult().Reset();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::IsParentAutomateEngaged
+// Created: NLD 2007-04-24
+// -----------------------------------------------------------------------------
+void DEC_AutomateFunctions::IsParentAutomateEngaged( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
+{
+    call.GetResult().SetValue( callerAutomate.GetParentAutomate() ? callerAutomate.GetParentAutomate()->IsEngaged() : false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::GetAutomates
+// Created: NLD 2007-04-03
+// -----------------------------------------------------------------------------
+void DEC_AutomateFunctions::GetAutomates( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
+{
+    T_ObjectVector result;
+    const MIL_Automate::T_AutomateVector& automates = callerAutomate.GetAutomates();
+    for( MIL_Automate::CIT_AutomateVector it = automates.begin(); it != automates.end(); ++it )
+            result.push_back( &(**it).GetDecision() );
+    call.GetResult().SetValue( result );
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::GetPionsWithoutPC
 // Created: NLD 2004-10-18
@@ -40,14 +75,12 @@
 void DEC_AutomateFunctions::GetPionsWithoutPC( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
 {
     T_ObjectVector result;
-
     const MIL_Automate::T_PionVector& pions = callerAutomate.GetPions();
-    for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
+    for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
     {
-        if( callerAutomate.GetPionPC() != (**itPion) )
-            result.push_back( &(**itPion).GetDecision() );
+        if( callerAutomate.GetPionPC() != (**it) )
+            result.push_back( &(**it).GetDecision() );
     }
-
     call.GetResult().SetValue( result );
 }
 
@@ -75,8 +108,8 @@ void DEC_AutomateFunctions::GetPionsWithPC( DIA_Call_ABC& call, const MIL_Automa
 
     const MIL_Automate::T_PionVector& pions = callerAutomate.GetPions();
     result.reserve( pions.size() );
-    for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-        result.push_back( &(**itPion).GetDecision() );
+    for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
+        result.push_back( &(**it).GetDecision() );
     call.GetResult().SetValue( result );
 }
 

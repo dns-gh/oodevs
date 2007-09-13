@@ -138,6 +138,16 @@ MIL_LimaOrder* MIL_AgentPion::FindLima( uint nID ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::FindLima
+// Created: NLD 2007-04-30
+// -----------------------------------------------------------------------------
+inline
+MIL_LimaOrder* MIL_AgentPion::FindNextScheduledLima() const
+{
+    return orderManager_.FindNextScheduledLima();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::GetName
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------

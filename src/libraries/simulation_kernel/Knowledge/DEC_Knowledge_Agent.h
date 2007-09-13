@@ -111,6 +111,7 @@ public:
     const PHY_PerceptionLevel&           GetMaxPerceptionLevel    () const;
     const PHY_PerceptionLevel&           GetCurrentPerceptionLevel() const;
     const DEC_Knowledge_AgentComposante* GetMajorComposante       () const;
+          bool                           IsHuman                  () const; // $$$$ NLD 2007-04-19: A CHIER
     //@}
 
     //! @name Perception

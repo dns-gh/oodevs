@@ -46,7 +46,8 @@ TacticalLinesDiffusion ::= CHOICE
 LimaOrder ::= SEQUENCE
 {
     lima      Line,
-    fonctions SEQUENCE OF EnumLimaType    
+    horaire   INTEGER DEFAULT 0,
+    fonctions SEQUENCE OF EnumLimaType
 }
 LimasOrder ::= SEQUENCE OF LimaOrder
 

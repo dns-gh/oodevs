@@ -11,6 +11,7 @@
 #include "AutomatTacticalHierarchies.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 
 using namespace kernel;
 
@@ -18,9 +19,12 @@ using namespace kernel;
 // Name: AutomatTacticalHierarchies constructor
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-AutomatTacticalHierarchies::AutomatTacticalHierarchies( Controller& controller, Entity_ABC& holder, Formation_ABC& superior, PropertiesDictionary& dictionary )
+AutomatTacticalHierarchies::AutomatTacticalHierarchies( Controller& controller, Entity_ABC& holder, Entity_ABC& superior
+                                                       , const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const kernel::Resolver_ABC< kernel::Formation_ABC >& formationResolver )
     : MergingTacticalHierarchies( controller, holder, 0 )
     , controller_( controller )
+    , automatResolver_( automatResolver )
+    , formationResolver_( formationResolver )
     , superior_( superior )
 {
     // NOTHING
@@ -34,6 +38,21 @@ AutomatTacticalHierarchies::AutomatTacticalHierarchies( Controller& controller, 
 AutomatTacticalHierarchies::~AutomatTacticalHierarchies()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatTacticalHierarchies::DoUpdate
+// Created: NLD 2007-04-12
+// -----------------------------------------------------------------------------
+void AutomatTacticalHierarchies::DoUpdate( const ASN1T_MsgAutomatChangeSuperiorAck& message )
+{
+    if( !message.error_code )
+    {
+        if( message.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_automate )
+            ChangeSuperior( &automatResolver_.Get( message.oid_superior.u.automate ) );
+        else if( message.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_formation )
+            ChangeSuperior( &formationResolver_.Get( message.oid_superior.u.formation ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

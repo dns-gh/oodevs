@@ -483,8 +483,35 @@ void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Formation& format
     MIL_Automate*& pAutomate = automates_[ id ];
     if( pAutomate )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat using this id already exists" ); // $$$$ ABL 2007-07-09: error context
-
+    pAutomate = (MIL_Automate*)0xdead;  // $$$$ NLD 2007-04-04: N'importe quoi
+    
     pAutomate = &pType->InstanciateAutomate( id, formation, xis );
+    pAutomate->ReadOverloading( xis );
+    // $$$ Network
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CreateAutomat
+// Created: NLD 2006-10-11
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Automate& parent )
+{
+    uint id;
+    std::string strType;
+
+    xis >> attribute( "id", id )
+        >> attribute( "type", strType );
+
+    const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( strType );
+    if( !pType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automat type" ); // $$$$ ABL 2007-07-09: error context
+            
+    MIL_Automate*& pAutomate = automates_[ id ];
+    if( pAutomate )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat using this id already exists" ); // $$$$ ABL 2007-07-09: error context
+    pAutomate = (MIL_Automate*)0xdead; // $$$$ NLD 2007-04-04: N'importe quoi
+    
+    pAutomate = &pType->InstanciateAutomate( id, parent, xis );
     pAutomate->ReadOverloading( xis );
     // $$$ Network
 }
@@ -671,47 +698,47 @@ void MIL_EntityManager::UpdateDecisions()
         MT_Profiler decisionUpdateProfiler;
 
         profiler_.Start();
-        for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
+        for( CIT_AutomateMap it = automates_.begin(); it != automates_.end(); ++it )
         {
             decisionUpdateProfiler.Start();
-            itAutomate->second->UpdateDecision();
-            profilerManager_.NotifyDecisionUpdated( *itAutomate->second, decisionUpdateProfiler.Stop() );
+            it->second->UpdateDecision();
+            MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( *it->second, decisionUpdateProfiler.Stop() );
         }
         rAutomatesDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
-        for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+        for( CIT_PionMap it = pions_.begin(); it != pions_.end(); ++it )
         {
             decisionUpdateProfiler.Start();
-            itPion->second->UpdateDecision();
-            profilerManager_.NotifyDecisionUpdated( *itPion->second, decisionUpdateProfiler.Stop() );
+            it->second->UpdateDecision();
+            MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( *it->second, decisionUpdateProfiler.Stop() );
         }
         rPionsDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
-        for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
+        for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
         {
             decisionUpdateProfiler.Start();
-            itPopulation->second->UpdateDecision();
-            profilerManager_.NotifyDecisionUpdated( *itPopulation->second, decisionUpdateProfiler.Stop() );
+            it->second->UpdateDecision();
+            MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( *it->second, decisionUpdateProfiler.Stop() );
         }
         rPopulationsDecisionTime_ = profiler_.Stop();
     }
     else
     {
         profiler_.Start();
-        for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
-            itAutomate->second->UpdateDecision();
+        for( CIT_AutomateMap it = automates_.begin(); it != automates_.end(); ++it )
+            it->second->UpdateDecision();
         rAutomatesDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
-        for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-            itPion->second->UpdateDecision();
+        for( CIT_PionMap it = pions_.begin(); it != pions_.end(); ++it )
+            it->second->UpdateDecision();
         rPionsDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
-        for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
-            itPopulation->second->UpdateDecision();
+        for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
+            it->second->UpdateDecision();
         rPopulationsDecisionTime_ = profiler_.Stop();
     }
 }
@@ -724,14 +751,14 @@ void MIL_EntityManager::UpdateActions()
 {
     profiler_.Start();
 
-    for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
-        itAutomate->second->UpdateActions();
+    for( CIT_AutomateMap it = automates_.begin(); it != automates_.end(); ++it )
+        it->second->UpdateActions();
 
-    for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-        itPion->second->UpdateActions();
+    for( CIT_PionMap it = pions_.begin(); it != pions_.end(); ++it )
+        it->second->UpdateActions();
 
-    for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
-        itPopulation->second->UpdateActions();
+    for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
+        it->second->UpdateActions();
 
     rActionsTime_ = profiler_.Stop();
 }
@@ -1130,6 +1157,35 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks( const ASN1T_Msg
         if( !pAutomate )
             throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate );
         pAutomate->OnReceiveMsgChangeLogisticLinks( asnMsg );
+    }
+    catch( NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >& e )
+    {
+        ack().error_code = e.GetErrorID();
+    }
+    ack.Send( nCtx );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveMsgAutomateChangeSuperior
+// Created: NLD 2007-04-11
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveMsgAutomateChangeSuperior( const ASN1T_MsgAutomatChangeSuperior& asnMsg, uint nCtx )
+{
+    NET_ASN_MsgAutomatChangeSuperiorAck ack;
+    ack().oid            = asnMsg.oid;
+    ack().oid_superior.t = asnMsg.oid_superior.t;
+    ack().error_code     = EnumChangeHierarchyErrorCode::no_error;
+    if( asnMsg.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_formation )
+        ack().oid_superior.u.formation = asnMsg.oid_superior.u.formation;
+    else if( asnMsg.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_automate )
+        ack().oid_superior.u.automate = asnMsg.oid_superior.u.automate;
+
+    try
+    {
+        MIL_Automate* pAutomate = FindAutomate( asnMsg.oid );
+        if( !pAutomate )
+            throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate );
+        pAutomate->OnReceiveMsgChangeSuperior( asnMsg ); 
     }
     catch( NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >& e )
     {

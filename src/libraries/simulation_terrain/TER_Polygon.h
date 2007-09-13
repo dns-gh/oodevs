@@ -30,6 +30,7 @@ public:
     // @name Constructors/Destructor 
     //@{
              TER_Polygon();
+             TER_Polygon( const TER_Polygon& poly );
     virtual ~TER_Polygon();
     //@}
 
@@ -69,13 +70,7 @@ public:
     
     MT_Rect GetBoundingBox() const;
     //@}
-    
-protected:
-    // @name 
-    //@{
-    TER_Polygon( const TER_Polygon& poly );
-    //@}
-        
+          
 private:
     // @name 
     //@{

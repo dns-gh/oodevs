@@ -21,6 +21,8 @@ namespace kernel
 
 class Lima;
 class ActionParameter_ABC;
+class Simulation;
+class ParamDateTime;
 
 // =============================================================================
 /** @class  LimaParameter
@@ -37,7 +39,7 @@ class LimaParameter : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             LimaParameter( QObject* parent, const QString& name, const kernel::CoordinateConverter_ABC& converter, const Lima& lima );
+             LimaParameter( QObject* parent, const QString& name, const kernel::CoordinateConverter_ABC& converter, const Simulation& simulation, const Lima& lima );
     virtual ~LimaParameter();
     //@}
 
@@ -72,9 +74,11 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
+    const Simulation& simulation_;
     const Lima* lima_;
     QListBox* functions_;
     QLabel* entityLabel_;
+    ParamDateTime* schedule_;
     //@}
 };
 

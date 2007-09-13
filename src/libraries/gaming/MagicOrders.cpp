@@ -60,5 +60,5 @@ bool MagicOrders::CanRetrieveTransporters() const
 // -----------------------------------------------------------------------------
 bool MagicOrders::CanMagicMove() const
 {
-    return ! agent_.Get< Decisions >().IsEmbraye();
+    return agent_.Get< Decisions >().CanBeOrdered();
 }

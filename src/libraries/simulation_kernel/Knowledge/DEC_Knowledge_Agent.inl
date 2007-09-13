@@ -221,3 +221,13 @@ bool DEC_Knowledge_Agent::Clean() const
 {
     return GetRelevance() <= 0.;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::IsHuman
+// Created: NLD 2007-04-19
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Knowledge_Agent::IsHuman() const
+{
+    return dataRecognition_.IsHuman();
+}

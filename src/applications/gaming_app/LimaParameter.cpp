@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "LimaParameter.h"
 #include "moc_LimaParameter.cpp"
+#include "ParamDateTime.h"
 #include "gaming/Lima.h"
 #include "gaming/Tools.h"
 #include "gaming/ActionParameterLima.h"
@@ -23,11 +24,13 @@ using namespace kernel;
 // Name: LimaParameter constructor
 // Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
-LimaParameter::LimaParameter( QObject* parent, const QString& name, const kernel::CoordinateConverter_ABC& converter, const Lima& lima )
+LimaParameter::LimaParameter( QObject* parent, const QString& name, const kernel::CoordinateConverter_ABC& converter, const Simulation& simulation, const Lima& lima )
     : QObject( parent )
     , Param_ABC( name )
     , converter_( converter )
+    , simulation_( simulation )
     , lima_( &lima )
+    , schedule_( 0 )
 {
     // NOTHING
 }
@@ -38,7 +41,7 @@ LimaParameter::LimaParameter( QObject* parent, const QString& name, const kernel
 // -----------------------------------------------------------------------------
 LimaParameter::~LimaParameter()
 {
-    // NOTHING
+    delete schedule_;
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +50,7 @@ LimaParameter::~LimaParameter()
 // -----------------------------------------------------------------------------
 bool LimaParameter::CheckValidity()
 {
-    return lima_;
+    return lima_ && ( schedule_ && schedule_->CheckValidity() );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,6 +72,8 @@ void LimaParameter::BuildInterface( QWidget* parent )
         functions_->insertItem( tools::ToString( (E_FuncLimaType)i ), i );
     functions_->setRowMode( QListBox::FitToHeight );
     functions_->setFixedSize( 150, functions_->itemHeight( 0 ) * 4 );
+    schedule_ = new ParamDateTime( this, tr( "Schedule" ), simulation_, true ); // $$$$ SBO 2007-05-14: optional
+    schedule_->BuildInterface( group );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,6 +94,7 @@ void LimaParameter::Draw( const geometry::Point2f& point, const kernel::Viewport
         const geometry::Point2f position = lima_->Get< kernel::Positions >().GetPosition();
         const geometry::Vector2f lineFeed = geometry::Vector2f( 0, -18.f * tools.Pixels() ); // $$$$ SBO 2007-05-15: hard coded \n
         tools.Print( functions.join( ", " ).ascii(), position + lineFeed, QFont( "Arial", 12, QFont::Bold ) ); // $$$$ SBO 2007-05-15: gather fonts somewhere
+        schedule_->Draw( position + lineFeed * 2.f, viewport, tools );
     glPopAttrib();
 }
 
@@ -132,5 +138,6 @@ void LimaParameter::CommitTo( ActionParameterContainer_ABC& parameter ) const
     for( unsigned int i = 0; i < functions_->count(); ++i )
         if( functions_->isSelected( i ) )
             param->AddFunction( i );
+    schedule_->CommitTo( *param );
     parameter.AddParameter( *param.release() );
 }

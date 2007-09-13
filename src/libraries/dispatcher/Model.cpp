@@ -137,6 +137,7 @@ void Model::Update( const ASN1T_MsgsSimToClient& asnMsg )
         case T_MsgsSimToClient_msg_msg_automat_change_knowledge_group_ack:       automats_.Get( asnMsg.msg.u.msg_automat_change_knowledge_group_ack->oid ).Update( *asnMsg.msg.u.msg_automat_change_knowledge_group_ack ); break;
         case T_MsgsSimToClient_msg_msg_automat_change_logistic_links_ack:        automats_.Get( asnMsg.msg.u.msg_automat_change_logistic_links_ack->oid ).Update( *asnMsg.msg.u.msg_automat_change_logistic_links_ack ); break;
         case T_MsgsSimToClient_msg_msg_automat_change_logistic_links:            automats_.Get( asnMsg.msg.u.msg_automat_change_logistic_links->oid ).Update( *asnMsg.msg.u.msg_automat_change_logistic_links); break;
+        case T_MsgsSimToClient_msg_msg_automat_change_superior_ack:              automats_.Get( asnMsg.msg.u.msg_automat_change_superior_ack->oid ).Update( *asnMsg.msg.u.msg_automat_change_superior_ack ); break;
         case T_MsgsSimToClient_msg_msg_unit_change_superior_ack:                 agents_.Get( asnMsg.msg.u.msg_unit_change_superior_ack->oid ).Update( *asnMsg.msg.u.msg_unit_change_superior_ack ); break;
         case T_MsgsSimToClient_msg_msg_unit_change_superior:                     agents_.Get( asnMsg.msg.u.msg_unit_change_superior->oid ).Update( *asnMsg.msg.u.msg_unit_change_superior ); break;
         case T_MsgsSimToClient_msg_msg_log_supply_push_flow_ack:

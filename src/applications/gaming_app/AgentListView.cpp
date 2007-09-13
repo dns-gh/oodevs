@@ -132,6 +132,7 @@ bool AgentListView::Drop( const Agent_ABC& item, const Automat_ABC& target )
 {
     if( & item.Get< CommunicationHierarchies >().GetUp() == &target )
         return false;
+
     ASN_MsgUnitChangeSuperior asnMsg;
     asnMsg().oid = item.GetId();
     asnMsg().oid_automate = target.GetId();

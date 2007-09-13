@@ -74,3 +74,23 @@ MIL_LimaOrder* MIL_OrderContext::FindLima( const MIL_LimaFunction& func )
             return &(*it);
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderContext::FindNextScheduledLima
+// Created: NLD 2007-04-25
+// -----------------------------------------------------------------------------
+inline
+MIL_LimaOrder* MIL_OrderContext::FindNextScheduledLima()
+{
+    MIL_LimaOrder* pNextLima = 0;
+    for( IT_LimaVector it = limas_.begin(); it != limas_.end(); ++it )
+    {
+        MIL_LimaOrder& lima = *it;
+        if( lima.GetSchedule() == 0 || lima.IsScheduleFlagged() )
+            continue;
+
+        if( ( lima.GetSchedule() != 0 ) && ( !pNextLima || lima.GetSchedule() < pNextLima->GetSchedule() ) )
+            pNextLima = &lima;
+    }
+    return pNextLima;
+}

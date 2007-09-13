@@ -22,10 +22,12 @@ uint MIL_LimaOrder::nNextID_ = 0;
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
 MIL_LimaOrder::MIL_LimaOrder( const ASN1T_LimaOrder& asn )
-    : nID_      ( ++nNextID_ )
-    , points_   ()
-    , functions_()
-    , bFlag_    ( false )
+    : nID_          ( ++nNextID_ )
+    , points_       ()
+    , functions_    ()
+    , bFlag_        ( false )
+    , bScheduleFlag_( false )
+    , nSchedule_    ( asn.horaire )
 {
     if( !NET_ASN_Tools::ReadLine( asn.lima, points_ ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_lima );
@@ -110,6 +112,7 @@ void MIL_LimaOrder::Serialize( ASN1T_LimaOrder& asn ) const
     NET_ASN_Tools::WriteLine( points_, asn.lima );
 
     asn.fonctions.n = functions_.size();
+    asn.horaire = nSchedule_;
     if( !functions_.empty() )
     {
         asn.fonctions.elem = new ASN1T_EnumLimaType[ functions_.size() ];

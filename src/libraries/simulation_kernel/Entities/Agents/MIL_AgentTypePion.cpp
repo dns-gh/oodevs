@@ -543,13 +543,14 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     // Ordres de conduite
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions ::RelievePion, "DEC_ReleverUnite" );
 
-    // Limas / Mission
-    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::IsNewMissionStarted       < MIL_AgentPion >, "DEC_NouvelleMission"             );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::FinishMission             < MIL_AgentPion >, "DEC_FinMission"                  );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::PionSetMissionLimaFlag                     , "DEC_SetMissionLimaFlag"          );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetMissionLimaFlag        < MIL_AgentPion >, "DEC_GetMissionLimaFlag"          );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetLima                   < MIL_AgentPion >, "DEC_GetLima"                     );
+    // Limas / Mission    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::IsNewMissionStarted           < MIL_AgentPion >, "DEC_NouvelleMission"               );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::FinishMission                 < MIL_AgentPion >, "DEC_FinMission"                    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetLima                       < MIL_AgentPion >, "DEC_GetLima"                       );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::PionSetMissionLimaFlag                         , "DEC_SetMissionLimaFlag"            );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetMissionLimaFlag            < MIL_AgentPion >, "DEC_GetMissionLimaFlag"            );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::PionSetMissionLimaScheduleFlag                 , "DEC_SetMissionLimaFlagHoraire"     );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetMissionLimaScheduleFlag    < MIL_AgentPion >, "DEC_GetMissionLimaFlagHoraire"     );
 
     // Etat décisionnel
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyForceRatioStateChanged                 , "DEC_Agent_ChangeEtatRapportDeForce"         );

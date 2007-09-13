@@ -55,6 +55,7 @@ private:
     //@{
     Localisation location_;
     T_Functions  functions_;
+    unsigned int nSchedule_;
     //@}
 };
 

@@ -68,6 +68,21 @@ MIL_AutomateMission::MIL_AutomateMission( const MIL_AutomateMissionType& type, M
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateMission constructor
+// Created: NLD 2006-11-23
+// -----------------------------------------------------------------------------
+MIL_AutomateMission::MIL_AutomateMission( const MIL_AutomateMissionType& type, MIL_Automate& automate, const MIL_AutomateMission& parent )
+    : MIL_Mission_ABC          ( type, automate.GetKnowledge(), parent )
+    , type_                    ( type )
+    , automate_                ( automate )
+    , bDIAMrtBehaviorActivated_( false )
+    , bDIACdtBehaviorActivated_( false )
+{
+    GetVariable( nDIADirectionDanger_ ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
+    GetVariable( nDIAFormation_       ).SetValue( (int)EnumAutomatOrderFormation::deux_echelons );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 MIL_AutomateMission::MIL_AutomateMission( MIL_Automate& automate, const MIL_AutomateMission& rhs )

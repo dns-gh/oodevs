@@ -199,7 +199,7 @@ void ScopeEditor::Write( IRowBufferPtr spRow, const ASN1T_MsgFormationCreation& 
 void ScopeEditor::Write( IRowBufferPtr spRow, const ASN1T_MsgAutomatCreation& asn )
 {
     Write( spRow, CComBSTR( L"Public_OID" ), asn.oid );
-    Write( spRow, CComBSTR( L"Parent_OID" ), asn.oid_formation );
+    Write( spRow, CComBSTR( L"Parent_OID" ), asn.oid_parent.t == T_MsgAutomatCreation_oid_parent_formation ? asn.oid_parent.u.formation : asn.oid_parent.u.automate );
     Write( spRow, CComBSTR( L"Name" ), asn.nom );
     SymbolEditor( *this, model_ ).Write( spRow, asn );
 }

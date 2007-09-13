@@ -15,6 +15,7 @@
 #include "clients_kernel/CommandPostAttributes.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "icons.h"
 
 // -----------------------------------------------------------------------------
@@ -98,6 +99,13 @@ bool TacticalListView::Drop( const kernel::Entity_ABC& item, const kernel::Entit
     if( const kernel::Agent_ABC* agent = dynamic_cast< const kernel::Agent_ABC* >( &item ) )
         if( const kernel::Automat_ABC* automat = dynamic_cast< const kernel::Automat_ABC* >( &target ) )
             return Drop( *agent, *automat );
+
+    if( const kernel::Automat_ABC* automatSource = dynamic_cast< const kernel::Automat_ABC* >( &item ) )
+        if( const kernel::Automat_ABC* automatTarget = dynamic_cast< const kernel::Automat_ABC* >( &target ) )
+            return Drop( *automatSource, *automatTarget );
+        else if( const kernel::Formation_ABC* formationTarget = dynamic_cast< const kernel::Formation_ABC* >( &target ) )
+            return Drop( *automatSource, *formationTarget );
+
     return false;
 }
 
@@ -112,6 +120,38 @@ bool TacticalListView::Drop( const kernel::Agent_ABC& item, const kernel::Automa
     ASN_MsgUnitChangeSuperior asnMsg;
     asnMsg().oid = item.GetId();
     asnMsg().oid_automate = target.GetId();
+    asnMsg.Send( publisher_ );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::Drop
+// Created: NLD 2007-04-12
+// -----------------------------------------------------------------------------
+bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Automat_ABC& target )
+{
+    if( & item.Get< kernel::TacticalHierarchies >().GetUp() == &target || &item == &target )
+        return false;
+    ASN_MsgAutomatChangeSuperior asnMsg;
+    asnMsg().oid                     = item.GetId();
+    asnMsg().oid_superior.t          = T_MsgAutomatChangeSuperior_oid_superior_automate;
+    asnMsg().oid_superior.u.automate = target.GetId();
+    asnMsg.Send( publisher_ );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::Drop
+// Created: NLD 2007-04-12
+// -----------------------------------------------------------------------------
+bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Formation_ABC& target )
+{
+    if( & item.Get< kernel::TacticalHierarchies >().GetUp() == &target )
+        return false;
+    ASN_MsgAutomatChangeSuperior asnMsg;
+    asnMsg().oid                      = item.GetId();
+    asnMsg().oid_superior.t           = T_MsgAutomatChangeSuperior_oid_superior_formation;
+    asnMsg().oid_superior.u.formation = target.GetId();
     asnMsg.Send( publisher_ );
     return true;
 }

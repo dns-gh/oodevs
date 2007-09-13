@@ -42,7 +42,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint
     , automates_           ()
 {
     pArmy_->RegisterKnowledgeGroup( *this );
-    if ( !ids_.insert( nID_ ).second )
+    if( !ids_.insert( nID_ ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "KnowledgeGroup id %d is already used", nID_ ) );
 }
 
@@ -130,8 +130,8 @@ void MIL_KnowledgeGroup::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::UpdateKnowledges()
 {
-    for( CIT_AutomateVector itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
-        (**itAutomate).UpdateKnowledges();
+    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+        (**it).UpdateKnowledges();
 
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->Update();
@@ -146,8 +146,8 @@ void MIL_KnowledgeGroup::CleanKnowledges()
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->Clean();
 
-    for( CIT_AutomateVector itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
-        (**itAutomate).CleanKnowledges();
+    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+        (**it).CleanKnowledges();
 }
 
 // -----------------------------------------------------------------------------
@@ -162,8 +162,8 @@ bool MIL_KnowledgeGroup::IsPerceived( const DEC_Knowledge_Agent& knowledge ) con
     if( knowledge.GetPosition() == knowledge.GetAgentKnown().GetRole< PHY_RoleInterface_Location >().GetPosition() )
         return false;
 
-    for( CIT_AutomateVector itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
-        if( (*itAutomate)->IsPerceived( knowledge ) )
+    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+        if( (*it)->IsPerceived( knowledge ) )
             return true;
     return false;
 }
@@ -174,8 +174,8 @@ bool MIL_KnowledgeGroup::IsPerceived( const DEC_Knowledge_Agent& knowledge ) con
 // -----------------------------------------------------------------------------
 bool MIL_KnowledgeGroup::IsPerceived( const DEC_Knowledge_Object& knowledge ) const
 {
-    for( CIT_AutomateVector itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
-        if( (*itAutomate)->IsPerceived( knowledge ) )
+    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+        if( (*it)->IsPerceived( knowledge ) )
             return true;
     return false;
 }

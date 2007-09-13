@@ -188,11 +188,11 @@ void TacticalListView::NotifyContextMenu( const Formation_ABC& formation, Contex
 // -----------------------------------------------------------------------------
 void TacticalListView::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
 {
-    if( agent.Retrieve< AutomatDecisions >() )
+    if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
     {
-        if( ! agent.Retrieve< AutomatDecisions >()->IsEmbraye() )
+        if( ! decisions->IsEmbraye() )
             menu.InsertItem( "Command", tr( "Engage" ), this, SLOT( Engage() ) );
-        else
+        else if( decisions->CanBeOrdered() )
             menu.InsertItem( "Command", tr( "Disengage" ), this, SLOT( Disengage() ) );
     }
 }

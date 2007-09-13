@@ -20,6 +20,7 @@
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Gen_Object.h"
+#include "Decision/DEC_Objective.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_ObjectFunctions::CanObjectTypeBeBypassed
@@ -131,4 +132,40 @@ void DEC_ObjectFunctions::GetGenObjectMinesActivityTime( DIA_Call_ABC& call )
     assert( DEC_Tools::CheckTypeGenObjet( call.GetParameter( 0 ) ) );    
     DEC_Gen_Object* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );    
     call.GetResult().SetValue( (float)pTmp->GetMinesActivityTime() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::GetObjectiveLocalisation
+// Created: NLD 2007-05-14
+// -----------------------------------------------------------------------------
+void DEC_ObjectFunctions::GetObjectiveLocalisation( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeObjectif( call.GetParameter( 0 ) ) );
+    DEC_Objective* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );
+    assert( pTmp );
+    call.GetResult().SetValue( (void*)&pTmp->GetLocalisation(), &DEC_Tools::GetTypeLocalisation(), 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::IsObjectiveFlagged
+// Created: NLD 2007-05-15
+// -----------------------------------------------------------------------------
+void DEC_ObjectFunctions::IsObjectiveFlagged( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeObjectif( call.GetParameter( 0 ) ) );
+    DEC_Objective* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );
+    assert( pTmp );
+    call.GetResult().SetValue( pTmp->IsFlagged() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::SetObjectiveFlag
+// Created: NLD 2007-05-15
+// -----------------------------------------------------------------------------
+void DEC_ObjectFunctions::SetObjectiveFlag( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeObjectif( call.GetParameter( 0 ) ) );
+    DEC_Objective* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );
+    assert( pTmp );
+    pTmp->Flag( call.GetParameter( 1 ).ToBool() );
 }

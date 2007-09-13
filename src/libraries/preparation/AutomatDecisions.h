@@ -27,6 +27,7 @@ namespace xml
 // =============================================================================
 /** @class  AutomatDecisions
     @brief  AutomatDecisions
+    // $$$$ AGE 2007-04-05: ^c^v de gaming...
 */
 // Created: AGE 2006-03-14
 // =============================================================================
@@ -45,6 +46,7 @@ public:
     //! @name Operations
     //@{
     const kernel::Automat_ABC& GetAgent() const;
+    bool CanBeOrdered() const;
     bool IsEmbraye() const;
     void Engage();
     void Disengage();
@@ -56,6 +58,12 @@ private:
     //@{
     AutomatDecisions( const AutomatDecisions& );            //!< Copy constructor
     AutomatDecisions& operator=( const AutomatDecisions& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    bool HasEngagedSuperior() const;
+    void ForwardEngageStatus();
     //@}
 
 private:

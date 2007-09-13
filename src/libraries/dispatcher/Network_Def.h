@@ -88,6 +88,7 @@ GENERATE_EMPTY_ASN_MSG_SENDER   ( SimToClient, ControlSendCurrentStateEnd       
 GENERATE_ASN_MSG_SENDER         ( SimToClient, UnitChangeSuperiorAck                         , unit_change_superior_ack                          );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, AutomatChangeKnowledgeGroupAck                , automat_change_knowledge_group_ack                );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, AutomatChangeLogisticLinks                    , automat_change_logistic_links                     );
+GENERATE_ASN_MSG_SENDER         ( SimToClient, AutomatChangeSuperiorAck                      , automat_change_superior_ack                       );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, LimitCreation                                 , limit_creation                                    );
 GENERATE_NOPTR_ASN_MSG_SENDER   ( SimToClient, LimitDestruction                              , limit_destruction                                 );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, LimaCreation                                  , lima_creation                                     );

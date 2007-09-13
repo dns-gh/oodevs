@@ -159,6 +159,17 @@ MIL_LimaOrder* MIL_OrderManager_ABC::FindLima( uint nID ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_OrderManager_ABC::FindNextScheduledLima
+// Created: NLD 2006-11-16
+// -----------------------------------------------------------------------------
+MIL_LimaOrder* MIL_OrderManager_ABC::FindNextScheduledLima() const
+{
+    if( !pMission_ )
+        return 0;
+    return pMission_->FindNextScheduledLima();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_OrderManager_ABC::GetCurrentMissionType
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------

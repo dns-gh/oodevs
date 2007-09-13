@@ -113,6 +113,17 @@ public:
     static void CopyGenObject( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
     //@}
 
+    //! @name Mission parameters tools : Objectives
+    //@{
+    static void CopyObjectiveList( const ASN1T_MissionObjectiveList& asn, DIA_Variable_ABC& dia );
+    static bool CopyObjectiveList( const DIA_Variable_ABC& dia, ASN1T_MissionObjectiveList& asn );
+    static void CopyObjectiveList( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
+
+    static void CopyObjective( const ASN1T_MissionObjective& asn, DIA_Variable_ABC& dia );
+    static bool CopyObjective( const DIA_Variable_ABC& dia, ASN1T_MissionObjective& asn );
+    static void CopyObjective( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
+    //@}
+
     //! @name Mission parameters tools : Localisation/Geometry DIA - SIM - ASN
     //@{
     static bool CopyLocation ( const ASN1T_Location& asn, DIA_Variable_ABC& dia );  
@@ -205,18 +216,20 @@ public:
 
     // @name Misc tools
     //@{
-    static void Delete( ASN1T_PlannedWork&     asn );
-    static void Delete( ASN1T_PlannedWorkList& asn );
-    static void Delete( ASN1T_UnitList&            asn );
-    static void Delete( ASN1T_AutomatList&         asn );
-    static void Delete( ASN1T_Polygon&              asn );
-    static void Delete( ASN1T_PolygonList&          asn );
-    static void Delete( ASN1T_PointList&            asn );
-    static void Delete( ASN1T_PathList&       asn );
-    static void Delete( ASN1T_LocationList&     asn );
-    static void Delete( ASN1T_UnitKnowledgeList&   asn );
-    static void Delete( ASN1T_ObjectKnowledgeList&  asn );
-    static void Delete( ASN1T_LogMedicalPriorities&       asn );
+    static void Delete( ASN1T_MissionObjective&         asn );
+    static void Delete( ASN1T_MissionObjectiveList&     asn );
+    static void Delete( ASN1T_PlannedWork&              asn );
+    static void Delete( ASN1T_PlannedWorkList&          asn );
+    static void Delete( ASN1T_UnitList&                 asn );
+    static void Delete( ASN1T_AutomatList&              asn );
+    static void Delete( ASN1T_Polygon&                  asn );
+    static void Delete( ASN1T_PolygonList&              asn );
+    static void Delete( ASN1T_PointList&                asn );
+    static void Delete( ASN1T_PathList&                 asn );
+    static void Delete( ASN1T_LocationList&             asn );
+    static void Delete( ASN1T_UnitKnowledgeList&        asn );
+    static void Delete( ASN1T_ObjectKnowledgeList&      asn );
+    static void Delete( ASN1T_LogMedicalPriorities&     asn );
     static void Delete( ASN1T_LogMaintenancePriorities& asn );
     static void Delete( ASN1T_CoordUTMList& asn );
     //@}

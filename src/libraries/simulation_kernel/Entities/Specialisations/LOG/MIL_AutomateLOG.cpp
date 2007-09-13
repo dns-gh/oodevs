@@ -42,8 +42,8 @@ BOOST_CLASS_EXPORT_GUID( MIL_AutomateLOG, "MIL_AutomateLOG" )
 // Name: MIL_AutomateLOG constructor
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Formation& formation, xml::xistream& xis )
-    : MIL_Automate                ( type, nID, formation, xis )
+MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Formation& parent, xml::xistream& xis )
+    : MIL_Automate                ( type, nID, parent, xis )
     , pMaintenanceSuperior_       ( 0 )
     , pMedicalSuperior_           ( 0 )
     , pSupplySuperior_            ( 0 )
@@ -56,6 +56,28 @@ MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL
     , nTickRcStockSupplyQuerySent_( 0 )
     , pLogisticAction_            ( new PHY_ActionLogistic< MIL_AutomateLOG >( *this ) )
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG constructor
+// Created: NLD 2007-03-29
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Automate&  parent, xml::xistream& xis )
+    : MIL_Automate                ( type, nID, parent, xis )
+    , pMaintenanceSuperior_       ( 0 )
+    , pMedicalSuperior_           ( 0 )
+    , pSupplySuperior_            ( 0 )
+    , stockQuotas_                ()
+    , supplyConsigns_             ()
+    , bStockSupplyNeeded_         ( false )
+    , pExplicitStockSupplyState_  ( 0 )
+    , pushedFlowsSupplyStates_    ()
+    , bQuotasHaveChanged_         ( false )
+    , nTickRcStockSupplyQuerySent_( 0 )
+    , pLogisticAction_            ( new PHY_ActionLogistic< MIL_AutomateLOG >( *this ) )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

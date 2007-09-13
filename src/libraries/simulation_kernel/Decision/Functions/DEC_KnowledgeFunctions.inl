@@ -214,3 +214,90 @@ void DEC_KnowledgeFunctions::GetPopulations( DIA_Call_ABC& call, const T& caller
     diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissancePopulation() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: template< typename T > static float DEC_KnowledgeFunctions::_ComputeFuseauEnemiesRatio
+// Created: NLD 2007-04-19
+// -----------------------------------------------------------------------------
+template< typename T >
+float DEC_KnowledgeFunctions::_ComputeFuseauEnemiesRatio( const T& caller, const MIL_Fuseau& fuseau, bool unloaded )
+{
+    uint nNbrTotalLivingEnemies    = 0;
+    uint nNbrSelectedLivingEnemies = 0;
+
+    const T_KnowledgeAgentVector& enemies = caller.GetKnowledgeGroup().GetKnowledge().GetEnemies();
+    for( CIT_KnowledgeAgentVector itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
+    {
+        const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
+
+        if( !knowledge.IsDead() && fuseau.IsInside( knowledge.GetPosition() ) )
+        {
+            ++ nNbrTotalLivingEnemies;
+            if( knowledge.IsHuman() == unloaded )
+                ++ nNbrSelectedLivingEnemies;
+        }
+    }
+    if( nNbrTotalLivingEnemies == 0 )
+        return 0.;
+    return (float)nNbrSelectedLivingEnemies / (float)nNbrTotalLivingEnemies;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::ComputeFuseauUnloadedEnemiesRatio
+// Created: NLD 2007-04-19
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_KnowledgeFunctions::ComputeFuseauUnloadedEnemiesRatio( DIA_Call_ABC& call, const T& caller )
+{
+    assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) );
+    const MIL_Fuseau* pFuseau = call.GetParameter( 0 ).ToUserPtr( pFuseau );
+    assert( pFuseau );
+
+    call.GetResult().SetValue( _ComputeFuseauEnemiesRatio( caller, *pFuseau, true ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::ComputeFuseauLoadedEnemiesRatio
+// Created: NLD 2007-04-19
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_KnowledgeFunctions::ComputeFuseauLoadedEnemiesRatio( DIA_Call_ABC& call, const T& caller )
+{
+    assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) );
+    const MIL_Fuseau* pFuseau = call.GetParameter( 0 ).ToUserPtr( pFuseau );
+    assert( pFuseau );
+
+    call.GetResult().SetValue( _ComputeFuseauEnemiesRatio( caller, *pFuseau, false ) );
+}
+
+namespace 
+{
+    template< typename T >
+    struct CompareFuseauUnloadedEnemies
+    {
+        CompareFuseauUnloadedEnemies( const T& caller ) : pCaller_( &caller ) {}
+        bool operator()( DIA_Variable_ABC* dia1, DIA_Variable_ABC* dia2 )
+        {
+            MIL_Fuseau* pFuseau1 = dia1->ToUserPtr( pFuseau1 );
+            MIL_Fuseau* pFuseau2 = dia2->ToUserPtr( pFuseau2 );
+
+            return DEC_KnowledgeFunctions::_ComputeFuseauEnemiesRatio( *pCaller_, *pFuseau1, true ) < DEC_KnowledgeFunctions::_ComputeFuseauEnemiesRatio( *pCaller_, *pFuseau2, true );
+        }
+
+        const T* pCaller_;
+    };    
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > static void DEC_KnowledgeFunctions::SortFuseauxAccordingToUnloadedEnemies
+// Created: NLD 2007-04-19
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_KnowledgeFunctions::SortFuseauxAccordingToUnloadedEnemies( DIA_Call_ABC& call, const T& caller )
+{
+    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) );   
+
+    call.GetResult() = call.GetParameter( 0 );
+    
+    T_ObjectVariableVector& fuseaux = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
+    std::sort( fuseaux.begin(), fuseaux.end(), CompareFuseauUnloadedEnemies< MIL_Automate >( caller ) );
+}

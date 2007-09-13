@@ -42,6 +42,8 @@
 #include "MIL_ParameterType_MedicalPriorities.h"
 #include "MIL_ParameterType_IndirectFire.h"
 #include "MIL_ParameterType_String.h"
+#include "MIL_ParameterType_Objective.h"
+#include "MIL_ParameterType_ObjectiveList.h"
 #include "MIL_OrderType_ABC.h"
 #include "Decision/DEC_Tools.h"
 
@@ -49,7 +51,7 @@
 // FACTORY
 // =============================================================================
 
-MIL_ParameterType_ABC::T_ParameterMap       MIL_ParameterType_ABC::parameters_;
+MIL_ParameterType_ABC::T_ParameterMap MIL_ParameterType_ABC::parameters_;
 
 // -----------------------------------------------------------------------------
 // Name: template< typename T > void MIL_ParameterType_ABC::RegisterParameterType
@@ -101,7 +103,9 @@ void MIL_ParameterType_ABC::Initialize()
     RegisterParameterType< MIL_ParameterType_MaintenancePriorities >();
     RegisterParameterType< MIL_ParameterType_MedicalPriorities     >();
     RegisterParameterType< MIL_ParameterType_IndirectFire          >();
-    RegisterParameterType< MIL_ParameterType_String                >();    
+    RegisterParameterType< MIL_ParameterType_String                >();
+    RegisterParameterType< MIL_ParameterType_Objective             >();
+    RegisterParameterType< MIL_ParameterType_ObjectiveList         >();
 }
 
 // =============================================================================

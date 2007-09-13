@@ -18,6 +18,8 @@ namespace kernel
     class CoordinateConverter_ABC;
 }
 
+class Simulation;
+
 // =============================================================================
 /** @class  ActionParameterLimaList
     @brief  ActionParameterLimaList
@@ -31,8 +33,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ActionParameterLimaList( const kernel::OrderParameter& parameter );
-             ActionParameterLimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_LimasOrder& limas );
-             ActionParameterLimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
+             ActionParameterLimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Simulation& simulation, const ASN1T_LimasOrder& limas );
+             ActionParameterLimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Simulation& simulation, xml::xistream& xis );
     virtual ~ActionParameterLimaList();
     //@}
 
@@ -45,7 +47,7 @@ public:
 protected:
     //! @name Operations
     //@{
-    virtual void DisplayTooltip( const kernel::GlTools_ABC& tools ) const;
+    virtual void DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -57,7 +59,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadLima( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
+    void ReadLima( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const Simulation& simulation );
     //@}
 };
 

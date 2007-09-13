@@ -3,7 +3,9 @@ max_instances       =   10;
 max_activations     =   10;
 
 behavior BEH_Defaut( id nDummy )
-{
+{       
+    DEC_DecisionalState( "bite", "couille" );
+
     DEC_Debug( "Rapfor global: " + FloatToString( DEC_RapportDeForceGlobal() ) );
 
     /*T_ListePions selFusse = DEC_Geometrie_PionEstCoordonne( DEC_Automate_PionPC(), DEC_Automate_PionsSansPC(), 2000 );
@@ -38,8 +40,7 @@ behavior BEH_Defaut( id nDummy )
 }
 
 behavior MIS_Automate_MRT_Test_MoveTo( T_Mission_Automate_Test_MoveTo mission, id nDummy )
-{           
-         
+{         
     if( DIA_ModuleBegins() )
     { 
         DEC_Debug( "MIS_Automate_MRT_Test_MoveTo" );
@@ -156,8 +157,6 @@ behavior MIS_Automate_CDT_GEN_RealiserTravaux( T_Mission_Automate_GEN_RealiserTr
 }
 
 
-
-
 behavior MIS_Automate_MRT_LOG_SeDeployer( T_Mission_Automate_LOG_SeDeployer mission, id nDummy )
 {
     if( DIA_ModuleBegins() )
@@ -183,13 +182,15 @@ behavior MIS_Automate_MRT_LOG_SeDeployer( T_Mission_Automate_LOG_SeDeployer miss
         DEC_MRT_Valide();
     }
 }
-
- behavior MIS_Automate_CDT_LOG_SeDeployer( T_Mission_Automate_LOG_SeDeployer mission, id nDummy )
+behavior MIS_Automate_CDT_LOG_SeDeployer( T_Mission_Automate_LOG_SeDeployer mission, id nDummy )
 {
-    persistent T_CalculLignesAvantArriere tacheTmp = DEC_Geometrie_StartCalculLignesAvantEtArriere( DEC_Automate_PionsAvecPC() );
-    float rProut  = DEC_Geometrie_CalculerDistancePointLigneAvant  ( tacheTmp, mission.positionDeploiement_ );
-    float rProut2 = DEC_Geometrie_CalculerDistancePointLigneArriere( tacheTmp, mission.positionDeploiement_ );
-    DEC_Debug( "Distance ligne avant : " + FloatToString( rProut ) + " - Distance ligne arrière : " + FloatToString( rProut2 ) );
+    if( mission.positionDeploiement_ != 0 )
+    {
+        persistent T_CalculLignesAvantArriere tacheTmp = DEC_Geometrie_StartCalculLignesAvantEtArriere( DEC_Automate_PionsAvecPC() );
+        float rProut  = DEC_Geometrie_CalculerDistancePointLigneAvant  ( tacheTmp, mission.positionDeploiement_ );
+        float rProut2 = DEC_Geometrie_CalculerDistancePointLigneArriere( tacheTmp, mission.positionDeploiement_ );
+        DEC_Debug( "Distance ligne avant : " + FloatToString( rProut ) + " - Distance ligne arrière : " + FloatToString( rProut2 ) );
+    }
 }
 
 

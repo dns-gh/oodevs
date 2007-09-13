@@ -43,7 +43,7 @@ public:
 
     //! @name Accessors
     //@{
-                  MIL_AgentPion&        GetPion() const;
+                  MIL_AgentPion&       GetPion() const;
     virtual const MIL_PionMissionType& GetType() const;
     //@}
 

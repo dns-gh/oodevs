@@ -17,6 +17,7 @@
 class TER_Localisation;
 class TER_LimitData;
 class MIL_LimaOrder;
+class DEC_Objective;
 
 //=============================================================================
 // Created: NLD 2003-01-14
@@ -31,13 +32,13 @@ public:
     //@}
     
 public:
-     MIL_Fuseau();
-     MIL_Fuseau( const MT_Vector2D& vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima = 0, const MIL_LimaOrder* pEndMissionLima = 0 );
+              MIL_Fuseau();
+     explicit MIL_Fuseau( const MT_Vector2D& vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima = 0, const MIL_LimaOrder* pEndMissionLima = 0 );
     ~MIL_Fuseau();
 
     //! @name Init */
     //@{
-    void Reset( const MT_Vector2D& vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima );
+    void Reset( const MT_Vector2D& vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima = 0 );
     void Reset();
     //@}
 
@@ -47,12 +48,17 @@ public:
     bool IntersectWithBorder( const MT_Line& line ) const;
     bool IntersectWithBorder( const MT_Line& line, T_PointSet& res ) const;
 
-    bool ComputeFurthestExtremityPoint( MT_Vector2D& vResult ) const;
-    bool ComputeClosestExtremityPoint ( MT_Vector2D& vResult ) const;
-    bool ComputePointBeforeLima       ( const MIL_LimaOrder& lima, MT_Float rDistBefore, MT_Vector2D&   vResult ) const;
-    bool ComputePointsBeforeLima      ( const MIL_LimaOrder& lima, MT_Float rDistBefore, uint nNbPoints, T_PointVector& results ) const;
-    void ComputeNearestEntryPoint     ( const MT_Vector2D& vStartPos, MT_Vector2D& vResult ) const;
-    void ComputeEntryPoint            ( const MT_Vector2D& vStartPos, MT_Vector2D& vResult ) const;
+    bool     ComputeFurthestExtremityPoint      ( MT_Vector2D& vResult ) const;
+    bool     ComputeClosestExtremityPoint       ( MT_Vector2D& vResult ) const;
+    bool     ComputePointBeforeLima             ( const MIL_LimaOrder& lima, MT_Float rDistBefore, MT_Vector2D&   vResult ) const;
+    bool     ComputePointsBeforeLima            ( const MIL_LimaOrder& lima, MT_Float rDistBefore, uint nNbPoints, T_PointVector& results ) const;
+    void     ComputeNearestEntryPoint           ( const MT_Vector2D& vStartPos, MT_Vector2D& vResult ) const;
+    void     ComputeEntryPoint                  ( const MT_Vector2D& vStartPos, MT_Vector2D& vResult ) const;
+    MT_Float ComputeAverageDistanceFromLima     ( const MIL_LimaOrder& lima     , const MT_Vector2D& refPoint ) const;
+    MT_Float ComputeAverageDistanceFromObjective( const DEC_Objective& objective, const MT_Vector2D& refPoint ) const;
+
+    float ComputeOpenTerrainRatio  () const;
+    float ComputeClosedTerrainRatio() const;
     //@}
 
     //! @name Pathfind

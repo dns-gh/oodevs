@@ -188,10 +188,11 @@ private:
     void OnReceiveMsgSetAutomatModeAck( const ASN1T_MsgSetAutomatModeAck& asnMsg, unsigned long nCtx );
     
     // Hierachy changes
-    void OnReceiveMsgUnitChangeSuperiorAck              ( const ASN1T_MsgUnitChangeSuperiorAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgUnitChangeSuperior                 ( const ASN1T_MsgUnitChangeSuperior& asnMsg );
-    void OnReceiveMsgChangeDiplomacyAck                 ( const ASN1T_MsgChangeDiplomacyAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgAutomatChangeKnowledgeGroupAck( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgUnitChangeSuperiorAck          ( const ASN1T_MsgUnitChangeSuperiorAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgUnitChangeSuperior             ( const ASN1T_MsgUnitChangeSuperior& asnMsg );
+    void OnReceiveMsgChangeDiplomacyAck             ( const ASN1T_MsgChangeDiplomacyAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgAutomatChangeSuperiorAck       ( const ASN1T_MsgAutomatChangeSuperiorAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgAutomatChangeKnowledgeGroupAck ( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgAutomatChangeLogisticLinks     ( const ASN1T_MsgAutomatChangeLogisticLinks& asnMsg );
     void OnReceiveMsgAutomatChangeLogisticLinksAck  ( const ASN1T_MsgAutomatChangeLogisticLinksAck& asnMsg, unsigned long nCtx );
 

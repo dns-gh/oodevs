@@ -86,6 +86,7 @@ public:
     //! @name Factory
     //@{
     void CreateFormation ( xml::xistream& xis, MIL_Army& army, MIL_Formation* parent = 0 );
+    void CreateAutomat   ( xml::xistream& xis, MIL_Automate&  parent );
     void CreateAutomat   ( xml::xistream& xis, MIL_Formation& formation );
     void CreatePopulation( xml::xistream& xis, MIL_Army& army );
     MIL_AgentPion&  CreatePion      ( const MIL_AgentTypePion& type, uint nID, MIL_Automate&  automate , xml::xistream& xis );
@@ -149,6 +150,7 @@ public:
     void OnReceiveMsgChangeDiplomacy             ( const ASN1T_MsgChangeDiplomacy&                  msg, uint nCtx );
     void OnReceiveMsgAutomateChangeKnowledgeGroup( const ASN1T_MsgAutomatChangeKnowledgeGroup&      msg, uint nCtx );
     void OnReceiveMsgAutomateChangeLogisticLinks ( const ASN1T_MsgAutomatChangeLogisticLinks&       msg, uint nCtx );
+    void OnReceiveMsgAutomateChangeSuperior      ( const ASN1T_MsgAutomatChangeSuperior&            msg, uint nCtx );
     void OnReceiveMsgUnitChangeSuperior          ( const ASN1T_MsgUnitChangeSuperior&               msg, uint nCtx );
     void OnReceiveMsgLogSupplyChangeQuotas       ( const ASN1T_MsgLogSupplyChangeQuotas&            msg, uint nCtx );
     void OnReceiveMsgLogSupplyPushFlow           ( const ASN1T_MsgLogSupplyPushFlow&                msg, uint nCtx );

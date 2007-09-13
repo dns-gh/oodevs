@@ -133,9 +133,9 @@ void ActionParameterPathList::Clean( ASN1T_MissionParameter& asn ) const
 // Name: ActionParameterPathList::DisplayTooltip
 // Created: AGE 2007-07-10
 // -----------------------------------------------------------------------------
-void ActionParameterPathList::DisplayTooltip( const kernel::GlTools_ABC& tools ) const
+void ActionParameterPathList::DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    ActionParameter< QString >::DisplayTooltip( tools );
+    ActionParameter< QString >::DisplayTooltip( viewport, tools );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->DisplayTooltip( tools );
+        it->second->DisplayTooltip( viewport, tools );
 }

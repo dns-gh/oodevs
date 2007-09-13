@@ -73,22 +73,39 @@ void FormationHierarchies::SerializeAttributes( xml::xostream& xos ) const
     }
 }
 
+namespace
+{
+    bool SerializeAutomatLogistics( xml::xostream& xos, const kernel::Entity_ABC& entity )
+    {
+        if( entity.Retrieve< AutomatDecisions >() )
+        {
+            const kernel::Automat_ABC& automat = static_cast< const kernel::Automat_ABC& >( entity );
+            if( automat.GetType().HasLogistics() )
+            {
+                xos << start( "automat" );
+                automat.Interface().Apply( & kernel::Serializable_ABC::SerializeLogistics, xos );
+                xos << end();
+            }
+            return true;
+        }
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: FormationHierarchies::SerializeLogistics
 // Created: SBO 2006-10-26
 // -----------------------------------------------------------------------------
 void FormationHierarchies::SerializeLogistics( xml::xostream& xos ) const
 {
+    // $$$$ AGE 2007-04-05: quick ada fix. 
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        if( it->second->Retrieve< AutomatDecisions >() )
+        if( SerializeAutomatLogistics( xos, *it->second ) )
         {
-            const kernel::Automat_ABC* automat = static_cast< const kernel::Automat_ABC* >( it->second );
-            if( automat && automat->GetType().HasLogistics() )
-            {
-                xos << start( "automat" );
-                it->second->Interface().Apply( & Serializable_ABC::SerializeLogistics, xos );
-                xos << end();
-            }
+            kernel::Iterator< const kernel::Entity_ABC& > subIt 
+                = it->second->Get< TacticalHierarchies >().CreateSubordinateIterator();
+            while( subIt.HasMoreElements() )
+                SerializeAutomatLogistics( xos, subIt.NextElement() );
         }
         else
             it->second->Interface().Apply( & Serializable_ABC::SerializeLogistics, xos );

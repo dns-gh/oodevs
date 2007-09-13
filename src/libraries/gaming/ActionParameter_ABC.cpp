@@ -13,8 +13,10 @@
 #include "Tools.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/GlTooltip_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 
 using namespace xml;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameter_ABC constructor
@@ -58,7 +60,7 @@ QString ActionParameter_ABC::GetType() const
 // Name: ActionParameter_ABC::Draw
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-void ActionParameter_ABC::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void ActionParameter_ABC::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
@@ -71,11 +73,27 @@ void ActionParameter_ABC::Draw( const geometry::Point2f& where, const kernel::Vi
 // Name: ActionParameter_ABC::DisplayTooltip
 // Created: AGE 2007-07-10
 // -----------------------------------------------------------------------------
-void ActionParameter_ABC::DisplayTooltip( const kernel::GlTools_ABC& tools ) const
+void ActionParameter_ABC::DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( !toolTip_.get() )
     {
         std::auto_ptr< kernel::GlTooltip_ABC > tooltip( tools.CreateTooltip() );
+        const_cast< ActionParameter_ABC* >( this )->toolTip_ = tooltip;
+    }
+    DrawToolTip( viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter_ABC::DrawToolTip
+// Created: SBO 2007-06-25
+// -----------------------------------------------------------------------------
+void ActionParameter_ABC::DrawToolTip( const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+{
+    if( !viewport.IsVisible( GetPosition() ) )
+        return;
+    if( !toolTip_.get() )
+    {
+        std::auto_ptr< GlTooltip_ABC > tooltip( tools.CreateTooltip() );
         const_cast< ActionParameter_ABC* >( this )->toolTip_ = tooltip;
     }
     DisplayInToolTip( *toolTip_ );
@@ -121,7 +139,7 @@ bool ActionParameter_ABC::IsContext() const
 // Name: ActionParameter_ABC::Display
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-void ActionParameter_ABC::Display( kernel::Displayer_ABC& displayer ) const
+void ActionParameter_ABC::Display( Displayer_ABC& displayer ) const
 {
     displayer.Item( tools::translate( "ActionParameter", "Action" ) ).Display( GetName() )
              .Item( tools::translate( "ActionParameter", "Value" ) ).Display( "" );
@@ -131,7 +149,7 @@ void ActionParameter_ABC::Display( kernel::Displayer_ABC& displayer ) const
 // Name: ActionParameter_ABC::DisplayInToolTip
 // Created: SBO 2007-05-15
 // -----------------------------------------------------------------------------
-void ActionParameter_ABC::DisplayInToolTip( kernel::Displayer_ABC& ) const
+void ActionParameter_ABC::DisplayInToolTip( Displayer_ABC& ) const
 {
     // NOTHING
 }

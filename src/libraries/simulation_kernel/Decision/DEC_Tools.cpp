@@ -14,6 +14,7 @@
 #include "Functions/DEC_FrontAndBackLinesComputer.h"
 #include "Decision/Path/Agent/DEC_Agent_Path.h"
 #include "Decision/DEC_Gen_Object.h"
+#include "Decision/DEC_Objective.h"
 
 #include "DIA/DIA_Instance.h"
 #include "DIA/DIA_Tool_Script_Engine.h"
@@ -37,6 +38,7 @@ const DIA_TypeDef* DEC_Tools::pTypePion_                          = 0;
 const DIA_TypeDef* DEC_Tools::pTypeAutomate_                      = 0;
 const DIA_TypeDef* DEC_Tools::pTypeGenObjet_                      = 0;
 const DIA_TypeDef* DEC_Tools::pTypeMissionPion_                   = 0;
+const DIA_TypeDef* DEC_Tools::pTypeMissionAutomate_               = 0;
 const DIA_TypeDef* DEC_Tools::pTypePerceptionPoint_               = 0;
 const DIA_TypeDef* DEC_Tools::pTypePerceptionLocalisation_        = 0;
 const DIA_TypeDef* DEC_Tools::pTypePerceptionRadar_               = 0;
@@ -48,6 +50,8 @@ const DIA_TypeDef* DEC_Tools::pTypePerceptionFlyingShell_         = 0;
 const DIA_TypeDef* DEC_Tools::pTypeDotation_                      = 0;
 const DIA_TypeDef* DEC_Tools::pTypeEquipement_                    = 0;
 const DIA_TypeDef* DEC_Tools::pTypeTirIndirect_                   = 0;
+const DIA_TypeDef* DEC_Tools::pTypeFuseau_                        = 0;
+const DIA_TypeDef* DEC_Tools::pTypeObjectif_                      = 0;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Tools::InitializeDIA
@@ -72,6 +76,7 @@ void DEC_Tools::InitializeDIA()
     pTypeAutomate_                      = &GetDIAType( "T_Automate"                     ); 
     pTypeGenObjet_                      = &GetDIAType( "T_GenObjet"                     );
     pTypeMissionPion_                   = &GetDIAType( "T_Mission_Pion"                 );
+    pTypeMissionAutomate_               = &GetDIAType( "T_Mission_Automate"             );
     pTypePerceptionPoint_               = &GetDIAType( "T_PerceptionPoint"              );
     pTypePerceptionLocalisation_        = &GetDIAType( "T_PerceptionLocalisation"       );
     pTypePerceptionRadar_               = &GetDIAType( "T_PerceptionRadar"              );
@@ -83,6 +88,8 @@ void DEC_Tools::InitializeDIA()
     pTypeDotation_                      = &GetDIAType( "T_Dotation"                     );
     pTypeEquipement_                    = &GetDIAType( "T_Equipement"                   );
     pTypeTirIndirect_                   = &GetDIAType( "T_TirIndirect"                  );
+    pTypeFuseau_                        = &GetDIAType( "T_Fuseau"                       );
+    pTypeObjectif_                      = &GetDIAType( "T_Objectif"                     );
 }
 
 // -----------------------------------------------------------------------------
@@ -304,6 +311,38 @@ bool DEC_Tools::CheckTypeListeDirection( const DIA_Variable_ABC& diaVariable )
             return false;
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Tools::CheckTypeListeFuseaux
+// Created: NLD 2007-04-13
+// -----------------------------------------------------------------------------
+bool DEC_Tools::CheckTypeListeFuseaux( const DIA_Variable_ABC& diaVariable )
+{
+    if( diaVariable.Type() != eSelection )
+        return false;
+
+    const DIA_Variable_ObjectList& diaUserList = static_cast< const DIA_Variable_ObjectList& >( diaVariable );
+    for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
+        if( !CheckTypeFuseau( **it ) )
+            return false;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Tools::CheckTypeListeObjectifs
+// Created: NLD 2007-05-14
+// -----------------------------------------------------------------------------
+bool DEC_Tools::CheckTypeListeObjectifs( const DIA_Variable_ABC& diaVariable )
+{
+    if( diaVariable.Type() != eSelection )
+        return false;
+
+    const DIA_Variable_ObjectList& diaUserList = static_cast< const DIA_Variable_ObjectList& >( diaVariable );
+    for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
+        if( !CheckTypeObjectif( **it ) )
+            return false;
+    return true;
+}
  
 // -----------------------------------------------------------------------------
 // Name: DEC_Tools::ManageDeletion
@@ -356,6 +395,8 @@ void DEC_Tools::ManageDeletion( void* pPtr, const DIA_Type* pType )
         delete static_cast< DEC_Gen_Object* >( pPtr );
     else if( *pType == *pTypeMissionPion_ )
         assert( false );
+    else if( *pType == *pTypeMissionAutomate_ )
+        assert( false );
     else if( *pType == *pTypePerceptionPoint_ )
         ; // NOTHING
     else if( *pType == *pTypePerceptionLocalisation_ )
@@ -378,6 +419,10 @@ void DEC_Tools::ManageDeletion( void* pPtr, const DIA_Type* pType )
         ; // NOTHING
     else if( *pType == *pTypeTirIndirect_ )
         ; // NOTHING
+    else if( *pType == *pTypeFuseau_ )
+        delete static_cast< MIL_Fuseau* >( pPtr );
+    else if( *pType == *pTypeObjectif_ )
+        delete static_cast< DEC_Objective* >( pPtr );
     else
         assert( false );
 }

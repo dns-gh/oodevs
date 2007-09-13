@@ -38,6 +38,8 @@
 #include "ParamDotationDType.h"
 #include "ParamLimits.h"
 #include "ParamLimaList.h"
+#include "ParamMissionObjective.h"
+#include "ParamMissionObjectiveList.h"
 #include "gaming/StaticModel.h"
 #include "gaming/Tools.h"
 #include "gaming/AgentKnowledge_ABC.h"
@@ -57,13 +59,14 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 MissionInterfaceBuilder::MissionInterfaceBuilder( ActionController& controller, gui::ParametersLayer& layer
                                                 , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
-                                                , const StaticModel& staticModel )
+                                                , const StaticModel& staticModel, const Simulation& simulation )
     : controller_              ( controller )
     , layer_                   ( layer )
     , converter_               ( staticModel.coordinateConverter_ )
     , knowledgeConverter_      ( knowledgeConverter )
     , objectKnowledgeConverter_( objectKnowledgeConverter )
     , staticModel_             ( staticModel )
+    , simulation_              ( simulation )
     , missionInterface_        ( 0 )
     , entity_                  ( 0 )
 {
@@ -73,6 +76,8 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( ActionController& controller, 
     builderFunctors_["automatelist"]        = &MissionInterfaceBuilder::BuildAutomatList;
     builderFunctors_["genobject"]           = &MissionInterfaceBuilder::BuildGenObject;
     builderFunctors_["genobjectlist"]       = &MissionInterfaceBuilder::BuildGenObjectList;
+    builderFunctors_["objective"]           = &MissionInterfaceBuilder::BuildMissionObjective;
+    builderFunctors_["objectivelist"]       = &MissionInterfaceBuilder::BuildMissionObjectiveList;
     builderFunctors_["dotationtype"]        = &MissionInterfaceBuilder::BuildDotation;
     builderFunctors_["natureatlas"]         = &MissionInterfaceBuilder::BuildAtlasNature;
 
@@ -363,6 +368,24 @@ Param_ABC* MissionInterfaceBuilder::BuildGenObjectList( const OrderParameter& pa
 }
 
 // -----------------------------------------------------------------------------
+// Name: MissionInterfaceBuilder::BuildMissionObjective
+// Created: SBO 2007-05-14
+// -----------------------------------------------------------------------------
+Param_ABC* MissionInterfaceBuilder::BuildMissionObjective( const kernel::OrderParameter& parameter ) const
+{
+    return new ParamMissionObjective( parameter, layer_, simulation_, converter_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterfaceBuilder::BuildMissionObjectiveList
+// Created: SBO 2007-05-14
+// -----------------------------------------------------------------------------
+Param_ABC* MissionInterfaceBuilder::BuildMissionObjectiveList( const kernel::OrderParameter& parameter ) const
+{
+    return new ParamMissionObjectiveList( missionInterface_, parameter, layer_, simulation_, converter_, controller_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildMaintenancePriorities
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
@@ -420,7 +443,7 @@ Param_ABC* MissionInterfaceBuilder::BuildLimits( const OrderParameter& parameter
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildLimaList( const OrderParameter& parameter ) const
 {
-    return new ParamLimaList( missionInterface_, parameter, converter_, controller_ );
+    return new ParamLimaList( missionInterface_, parameter, converter_, controller_, simulation_ );
 }
 
 // -----------------------------------------------------------------------------

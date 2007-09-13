@@ -58,6 +58,10 @@ public:
     typedef T_PionVector::const_iterator   CIT_PionVector;
     typedef T_PionVector::reverse_iterator RIT_PionVector;
 
+    typedef std::vector< MIL_Automate* >     T_AutomateVector;
+    typedef T_AutomateVector::iterator       IT_AutomateVector;
+    typedef T_AutomateVector::const_iterator CIT_AutomateVector;
+
     typedef std::map< const MIL_AutomateLOG*, PHY_SupplyDotationState* > T_SupplyDotationStateMap;
     typedef T_SupplyDotationStateMap::iterator                           IT_SupplyDotationStateMap;
     typedef T_SupplyDotationStateMap::const_iterator                     CIT_SupplyDotationStateMap;
@@ -65,6 +69,7 @@ public:
 
 public:
              MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formation& formation, xml::xistream& xis );
+             MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Automate&  parent   , xml::xistream& xis);
              MIL_Automate();
     virtual ~MIL_Automate();
 
@@ -97,14 +102,17 @@ public:
           MIL_AutomateOrderManager&         GetOrderManager  ();
           MIL_AgentPion&                    GetPionPC        () const;
     const T_PionVector&                     GetPions         () const; // Including pion PC
+    const T_AutomateVector&                 GetAutomates     () const;
+          MIL_Automate*                     GetParentAutomate() const;
           DEC_AutomateDecision&             GetDecision      () const;
           DEC_KnowledgeBlackBoard_Automate& GetKnowledge     () const;
           bool                              IsEngaged        () const;
 
-    const MIL_Fuseau&                       GetFuseau        () const;
-    const MT_Vector2D&                      GetDirDanger     () const;
-          MIL_LimaOrder*                    FindLima         ( const MIL_LimaFunction& function ) const;
-          MIL_LimaOrder*                    FindLima         ( uint nID ) const;
+    const MIL_Fuseau&                       GetFuseau            () const;
+    const MT_Vector2D&                      GetDirDanger         () const;
+          MIL_LimaOrder*                    FindLima             ( const MIL_LimaFunction& function ) const;
+          MIL_LimaOrder*                    FindLima             ( uint nID ) const;
+          MIL_LimaOrder*                    FindNextScheduledLima() const;
     //@}
         
     //! @name Operations
@@ -113,6 +121,9 @@ public:
 
     void RegisterPion  ( MIL_AgentPion& pion );
     void UnregisterPion( MIL_AgentPion& pion );
+
+    void RegisterAutomate  ( MIL_Automate& automate );
+    void UnregisterAutomate( MIL_Automate& automate );
 
             void UpdateDecision  ();
             void UpdateKnowledges();
@@ -149,20 +160,22 @@ public:
     virtual void SendFullState                    () const;
             void SendKnowledge                    () const;
 
-            void OnReceiveMsgOrder                ( const ASN1T_MsgAutomatOrder&                    msg );
-            void OnReceiveMsgFragOrder            ( const ASN1T_MsgFragOrder&                        msg );
-            void OnReceiveMsgSetAutomateMode      ( const ASN1T_MsgSetAutomatMode&                  msg );
-            void OnReceiveMsgUnitCreationRequest  ( const ASN1T_MsgUnitCreationRequest&              msg );
-            void OnReceiveMsgUnitMagicAction      ( const ASN1T_MsgUnitMagicAction&                  msg );
+            void OnReceiveMsgOrder                ( const ASN1T_MsgAutomatOrder&                msg );
+            void OnReceiveMsgFragOrder            ( const ASN1T_MsgFragOrder&                   msg );
+            void OnReceiveMsgSetAutomateMode      ( const ASN1T_MsgSetAutomatMode&              msg );
+            void OnReceiveMsgUnitCreationRequest  ( const ASN1T_MsgUnitCreationRequest&         msg );
+            void OnReceiveMsgUnitMagicAction      ( const ASN1T_MsgUnitMagicAction&             msg );
             void OnReceiveMsgChangeKnowledgeGroup ( const ASN1T_MsgAutomatChangeKnowledgeGroup& msg );
-    virtual void OnReceiveMsgChangeLogisticLinks  ( const ASN1T_MsgAutomatChangeLogisticLinks&   msg );
-    virtual void OnReceiveMsgLogSupplyChangeQuotas( const ASN1T_MsgLogSupplyChangeQuotas&    msg );
-    virtual void OnReceiveMsgLogSupplyPushFlow    ( const ASN1T_MsgLogSupplyPushFlow&     msg );
+            void OnReceiveMsgChangeSuperior       ( const ASN1T_MsgAutomatChangeSuperior&       msg );
+    virtual void OnReceiveMsgChangeLogisticLinks  ( const ASN1T_MsgAutomatChangeLogisticLinks&  msg );
+    virtual void OnReceiveMsgLogSupplyChangeQuotas( const ASN1T_MsgLogSupplyChangeQuotas&       msg );
+    virtual void OnReceiveMsgLogSupplyPushFlow    ( const ASN1T_MsgLogSupplyPushFlow&           msg );
     //@}
 
     //! @name Misc
     //@{
-    bool GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const;
+    bool     GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const;
+    MT_Float GetAlivePionsMaxSpeed  () const;
     //@}
 
     //! @name Dynamic pions
@@ -196,13 +209,15 @@ protected:
 private:
     //! @name Tools
     //@{
-    void InitializeSubordinates( xml::xistream& xis );
+    void Initialize( xml::xistream& xis ); 
     //@}
+    
     //! @name Helpers
     //@{
-    void ReadUnit   ( xml::xistream& xis );
-    void CreateLimit( xml::xistream& xis );
-    void CreateLima ( xml::xistream& xis );
+    void ReadAutomatSubordinate( xml::xistream& xis ); 
+    void ReadUnitSubordinate   ( xml::xistream& xis );         
+    void CreateLimit           ( xml::xistream& xis );
+    void CreateLima            ( xml::xistream& xis );
     //@}
 
 protected:
@@ -213,7 +228,8 @@ protected:
 private:
     const MIL_AutomateType* pType_;
     const uint              nID_;
-          MIL_Formation*    pFormation_;
+          MIL_Formation*    pParentFormation_;
+          MIL_Automate*     pParentAutomate_;
           std::string       strName_;
           bool              bEngaged_;
 
@@ -223,6 +239,7 @@ private:
     MIL_AgentPion*           pPionPC_;
     T_PionVector             pions_; // Including pion PC
     T_PionVector             recycledPions_; // Dynamic pions
+    T_AutomateVector         automates_;
 
     bool                     bAutomateModeChanged_;
 
@@ -243,4 +260,5 @@ private:
 #include "MIL_Automate.inl"
 
 #endif // __MIL_Automate_h_
+
 

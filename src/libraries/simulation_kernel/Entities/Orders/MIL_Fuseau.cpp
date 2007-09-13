@@ -16,10 +16,11 @@
 #include "MIL_LimaOrder.h"
 #include "TER_LimitData.h"
 #include "MIL_TacticalLineManager.h"
-
+#include "Meteo/PHY_MeteoDataManager.h"
+#include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
-
+#include "Decision/DEC_Objective.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_DynamicData.h"
 #include "MT_Tools/MT_Polyline.h"
@@ -523,7 +524,6 @@ MT_Vector2D GetPointOnLimitAfterIntersection( const T_PointVector& points, const
         pPrevPoint = pCurPoint;
     }
 
-
     ( rDist > rDistBefore ) ? rDist -= rDistBefore : rDist = 0.;
 
     MT_Vector2D vResult;
@@ -540,6 +540,26 @@ MT_Vector2D GetPointOnLimitAfterIntersection( const T_PointVector& points, const
 ////////////////////////////////////////////////////////////////////////////////////////
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$  A NETTOYER
 ////////////////////////////////////////////////////////////////////////////////////////
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::ComputeClosedTerrainRatio
+// Created: NLD 2007-04-13
+// -----------------------------------------------------------------------------
+float MIL_Fuseau::ComputeClosedTerrainRatio() const
+{
+    uint nForestSurface = 0, nEmptySurface  = 0, nUrbanSurface  = 0;
+    MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetVisionObjectsInSurface( *this, nEmptySurface, nForestSurface, nUrbanSurface );
+    return float( nForestSurface + nUrbanSurface ) / float( nForestSurface + nUrbanSurface + nEmptySurface );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::ComputeOpenTerrainRatio
+// Created: NLD 2007-04-13
+// -----------------------------------------------------------------------------
+float MIL_Fuseau::ComputeOpenTerrainRatio() const
+{
+    return (float)1. - ComputeClosedTerrainRatio();
+}
 
 //-----------------------------------------------------------------------------
 // Name: MIL_Fuseau::Split
@@ -688,8 +708,35 @@ void MIL_Fuseau::ComputeNearestEntryPoint( const MT_Vector2D& vStartPos, MT_Vect
 
 
 //$$$ NLD - PUTAIN DE FONCTIONS !
-inline bool GetPolyLineClosestPoint(const MT_Vector2D& vPos,const T_PointVector& vPoly,MT_Vector2D& vNearest,MT_Float& rDist)
+ inline bool GetPolyLineClosestPoint(const MT_Vector2D& vPos, const T_PointVector& vPoly, MT_Vector2D& vNearest )
 {
+          MT_Float     rSquareDist = std::numeric_limits<MT_Float>::max();
+          bool         bRes        = false;
+    const MT_Vector2D* pLastPos    = 0;
+    for( CIT_PointVector itPoint = vPoly.begin(); itPoint != vPoly.end(); ++itPoint )
+    {
+        const MT_Vector2D* pPos = &*itPoint;
+        if( pLastPos )
+        {
+            MT_Line lineTmp( *pLastPos, *pPos );
+            MT_Vector2D vTmp        = lineTmp.ClosestPointOnLine( vPos );
+            MT_Float rSquareDistTmp = vPos.SquareDistance( vTmp );
+            if( rSquareDistTmp < rSquareDist )
+            {
+                bRes        = true;
+                rSquareDist = rSquareDistTmp;
+                vNearest    = vTmp;
+            }
+        }
+        pLastPos = pPos;
+    }
+    return bRes;
+}
+
+/// Allez, une de plus ...
+inline bool GetPolyLineClosestPoint( const MT_Vector2D& vPos, const T_PointVector& vPoly, MT_Vector2D& vNearest, CIT_PointVector& itNext )
+{
+    MT_Float rDist = std::numeric_limits<MT_Float>::max();
     bool  bRes                      = false;
     const MT_Vector2D* pLastPos     = 0;
     for( CIT_PointVector itPoint = vPoly.begin(); itPoint != vPoly.end(); ++itPoint )
@@ -705,6 +752,7 @@ inline bool GetPolyLineClosestPoint(const MT_Vector2D& vPos,const T_PointVector&
                 bRes        = true;
                 rDist       = rSquareDistTmp;
                 vNearest    = vTmp;
+                itNext      = itPoint;
             }
         }
         pLastPos = pPos;
@@ -733,13 +781,12 @@ void MIL_Fuseau::ComputeEntryPoint(const MT_Vector2D& vPos, MT_Vector2D& vResult
     const T_PointVector* pOtherLimit = 0;
     MT_Line*       pExtremity  = 0;
     MT_Vector2D    vNearest;
-    MT_Float       rSquareDist = std::numeric_limits<MT_Float>::max();
     static const MT_Float rNbSteps = MIL_Tools::ConvertMeterToSim( nNbrMeterPerSample_ );
     MT_Float rOwnStep   = 0.0;
     MT_Float rOtherStep = 0.0;
 
     // check nearest point with left border
-    if ( GetPolyLineClosestPoint( vPos, pLeftLimit_->GetPoints(), vNearest, rSquareDist ) )
+    if ( GetPolyLineClosestPoint( vPos, pLeftLimit_->GetPoints(), vNearest ) )
     {
         pOwnLimit    = &pLeftLimit_ ->GetPoints();
         pOtherLimit  = &pRightLimit_->GetPoints();
@@ -748,13 +795,15 @@ void MIL_Fuseau::ComputeEntryPoint(const MT_Vector2D& vPos, MT_Vector2D& vResult
     }
 
     // check nearest point with right border
-    if ( GetPolyLineClosestPoint( vPos, pRightLimit_->GetPoints(), vNearest, rSquareDist ) )
+    if ( GetPolyLineClosestPoint( vPos, pRightLimit_->GetPoints(), vNearest ) )
     {
         pOwnLimit    = &pRightLimit_->GetPoints();
         pOtherLimit  = &pLeftLimit_ ->GetPoints();
         rOwnStep     = pRightLimit_->GetLength() / rNbSteps;
         rOtherStep   = pLeftLimit_ ->GetLength() / rNbSteps;
     }
+
+    MT_Float rSquareDist = vPos.SquareDistance( vNearest );
 
     // check extremity segments
     
@@ -882,6 +931,83 @@ bool MIL_Fuseau::ComputePointsBeforeLima( const MIL_LimaOrder& lima, MT_Float rD
     return true;
 }
 
+namespace 
+{
+    MT_Float ComputeDistance( const T_PointVector& points, const CIT_PointVector& itNextRefPos, const MT_Vector2D& refPos )
+    {
+        assert( itNextRefPos != points.begin() );
+        MT_Float rDist = 0.;
+        CIT_PointVector itPrev = points.begin(); 
+        CIT_PointVector itCur = itPrev;
+        ++itCur;
+        for( ; itCur != itNextRefPos; ++itCur )
+        {
+            rDist += itPrev->Distance( *itCur );
+            itPrev = itCur;
+        }
+        rDist += itPrev->Distance( refPos );
+        return rDist;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::ComputeAverageDistanceFromLima
+// Created: NLD 2007-04-29
+// -----------------------------------------------------------------------------
+MT_Float MIL_Fuseau::ComputeAverageDistanceFromLima( const MIL_LimaOrder& lima, const MT_Vector2D& refPoint ) const
+{
+    assert( pMiddleLimit_ );
+
+    // projection de refPoint sur middle limit
+    MT_Vector2D    refPointProjection;
+    IT_PointVector itAfterRefPointProjection;
+    if( !GetPolyLineClosestPoint( refPoint, pMiddleLimit_->GetPoints(), refPointProjection, itAfterRefPointProjection ) )
+        return 0.;
+    
+    // point intersection entre lima et middle limit
+    MT_Vector2D    limaPoint;
+    IT_PointVector itAfterLimaPoint;
+    if( !ComputeIntersectionWithLima( pMiddleLimit_->GetPoints(), lima, limaPoint, itAfterLimaPoint ) )
+        return 0.;
+
+    // Calcul distance
+    const MT_Float rDist1 = ComputeDistance( pMiddleLimit_->GetPoints(), itAfterRefPointProjection, refPointProjection );
+    const MT_Float rDist2 = ComputeDistance( pMiddleLimit_->GetPoints(), itAfterLimaPoint         , limaPoint          );
+    
+    if( rDist1 > rDist2 )
+        return 0;
+    return rDist2 - rDist1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::ComputeAverageDistanceFromObjective
+// Created: NLD 2007-04-29
+// -----------------------------------------------------------------------------
+MT_Float MIL_Fuseau::ComputeAverageDistanceFromObjective( const DEC_Objective& objective, const MT_Vector2D& refPoint ) const
+{
+    assert( pMiddleLimit_ );
+
+    // projection de refPoint sur middle limit
+    MT_Vector2D    refPointProjection;
+    IT_PointVector itAfterRefPointProjection;
+    if( !GetPolyLineClosestPoint( refPoint, pMiddleLimit_->GetPoints(), refPointProjection, itAfterRefPointProjection ) )
+        return 0.;
+
+    // projection de barycentre de l'objectif sur middle limit
+    MT_Vector2D    objectiveProjection;
+    IT_PointVector itAfterObjectiveProjection;
+    if( !GetPolyLineClosestPoint( objective.ComputerBarycenter(), pMiddleLimit_->GetPoints(), objectiveProjection, itAfterObjectiveProjection ) )
+        return 0.;
+
+    // Calcul distance
+    const MT_Float rDist1 = ComputeDistance( pMiddleLimit_->GetPoints(), itAfterRefPointProjection , refPointProjection  );
+    const MT_Float rDist2 = ComputeDistance( pMiddleLimit_->GetPoints(), itAfterObjectiveProjection, objectiveProjection );
+    
+    if( rDist1 > rDist2 )
+        return 0;
+    return rDist2 - rDist1;
+}
+
 // =============================================================================
 // PATH FINDER
 // =============================================================================
@@ -955,14 +1081,18 @@ MT_Float MIL_Fuseau::GetCost( const MT_Vector2D&, const MT_Vector2D& to, MT_Floa
     const bool     bInside      = IsInsidish( to );
     const MT_Float rMinDistance = Distance( to, true );
 
-    if( bInside || rMinDistance < 0.1 )
+    if( bInside )
     {
         if( rMinDistance > rComfortDistanceIn )
             return 0;
         return ( rComfortDistanceIn - rMinDistance ) * rCostPerMeterIn;
-    } else {
+    } 
+    else 
+    {
         if( rMinDistance > rMaxDistanceOut )
             return -1;
         return rMinDistance * rCostPerMeterOut;
     }
 }
+
+

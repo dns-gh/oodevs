@@ -862,6 +862,16 @@ void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDip
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgAutomatChangeSuperiorAck
+// Created: NLD 2007-04-12
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgAutomatChangeSuperiorAck( const ASN1T_MsgAutomatChangeSuperiorAck& message, unsigned long )
+{
+    if( CheckAcknowledge( message, "AutomatChangeSuperiorAck" ) )
+        GetModel().agents_.GetAutomat( message.oid ).Update( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgAutomatChangeKnowledgeGroupAck
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
@@ -1211,7 +1221,7 @@ void AgentServerMsgMgr::OnMsgPopulationFlowUpdate( const ASN1T_MsgPopulationFlow
 // Name: AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck
 // Created: SBO 2005-11-02
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const ASN1T_MsgPopulationMagicActionAck& message, unsigned long /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const ASN1T_MsgPopulationMagicActionAck& message, unsigned long )
 {
     CheckAcknowledge( message, "PopulationMagicActionAck" );
 }
@@ -1297,8 +1307,10 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const ASN1
         case T_MsgsSimToClient_msg_msg_change_diplomacy_ack:                   OnReceiveMsgChangeDiplomacyAck                 ( *message.msg.u.msg_change_diplomacy_ack                    , message.context ); break;
         case T_MsgsSimToClient_msg_msg_automat_change_knowledge_group_ack:     OnReceiveMsgAutomatChangeKnowledgeGroupAck     ( *message.msg.u.msg_automat_change_knowledge_group_ack      , message.context ); break;
         case T_MsgsSimToClient_msg_msg_object_magic_action_ack:                OnReceiveMsgObjectMagicActionAck               ( *message.msg.u.msg_object_magic_action_ack                 , message.context ); break;
+
         case T_MsgsSimToClient_msg_msg_automat_change_logistic_links_ack:      OnReceiveMsgAutomatChangeLogisticLinksAck      ( *message.msg.u.msg_automat_change_logistic_links_ack       , message.context ); break;
         case T_MsgsSimToClient_msg_msg_automat_change_logistic_links:          OnReceiveMsgAutomatChangeLogisticLinks         ( *message.msg.u.msg_automat_change_logistic_links                             ); break;
+        case T_MsgsSimToClient_msg_msg_automat_change_superior_ack:            OnReceiveMsgAutomatChangeSuperiorAck           ( *message.msg.u.msg_automat_change_superior_ack             , message.context ); break;
         case T_MsgsSimToClient_msg_msg_log_supply_push_flow_ack:               OnReceiveMsgLogSupplyPushFlowAck               (  message.msg.u.msg_log_supply_push_flow_ack                , message.context ); break;
         case T_MsgsSimToClient_msg_msg_log_supply_change_quotas_ack:           OnReceiveMsgLogRavitaillementChangeQuotaAck    (  message.msg.u.msg_log_supply_change_quotas_ack            , message.context ); break;
         case T_MsgsSimToClient_msg_msg_population_magic_action_ack:            OnReceiveMsgPopulationMagicActionAck           ( *message.msg.u.msg_population_magic_action_ack             , message.context ); break;

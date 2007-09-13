@@ -24,7 +24,6 @@ namespace kernel
     class AgentType;
     class AutomatType;
     class PopulationType;
-    class Formation_ABC;
     class Team_ABC;
     class Controllers;
 }
@@ -62,9 +61,10 @@ public:
 
     //! @name Operations
     //@{
-    kernel::Automat_ABC& CreateAutomat( kernel::Formation_ABC& parent, const kernel::AutomatType& type );
-    void CreateAutomat( kernel::Formation_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
-    void CreateAutomat( xml::xistream& xis, kernel::Formation_ABC& parent, LimitsModel& limits );
+    void CreateAutomat( kernel::Entity_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
+    void CreateAutomat( xml::xistream& xis, kernel::Entity_ABC& parent, LimitsModel& limits );
+    kernel::Automat_ABC& CreateAutomat( kernel::Entity_ABC& parent, const kernel::AutomatType& type );
+    
     kernel::Automat_ABC& GetAutomat( unsigned long id );
     kernel::Automat_ABC* FindAutomat( unsigned long id );
 

@@ -69,6 +69,7 @@ public:
     const PHY_NatureAtlas&             GetNatureAtlas          () const;
     const MIL_AgentType_ABC*           GetAgentType            () const;
           bool                         IsPC                    () const;
+          bool                         IsHuman                 () const; // $$$$ NLD 2007-04-19: A CHIER
     //@}
 
 private:

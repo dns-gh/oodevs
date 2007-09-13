@@ -58,10 +58,11 @@ public:
     void Update        ( const ASN1T_MsgDecisionalState&         asnMsg );
     void Update        ( const ASN1T_MsgLogMedicalState&        asnMsg );
     void Update        ( const ASN1T_MsgLogMaintenanceState&    asnMsg );
-    void Update        ( const ASN1T_MsgLogSupplyState& asnMsg );
-    void Update        ( const ASN1T_MsgUnitChangeSuperior&    asnMsg );
-    void Update        ( const ASN1T_MsgUnitChangeSuperiorAck& asnMsg );
-    void Update        ( const ASN1T_MsgUnitOrder&             asnMsg );
+    void Update        ( const ASN1T_MsgLogSupplyState&         asnMsg );
+    void Update        ( const ASN1T_MsgUnitChangeSuperior&     asnMsg );
+    void Update        ( const ASN1T_MsgUnitChangeSuperiorAck&  asnMsg );
+    void Update        ( const ASN1T_MsgUnitOrder&              asnMsg );
+    
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendSpecialUpdate( ClientPublisher_ABC& publisher ) const;
@@ -134,15 +135,13 @@ private:
     const Side*                   pSideSurrenderedTo_;
     bool                          bPrisonner_;
     bool                          bRefugeeManaged_;
-
-    DecisionalState decisionalInfos_;
+    DecisionalState               decisionalInfos_;
 
     ModelsContainer< Equipment >  equipments_;
     ModelsContainer< Humans    >  troops_;
     ModelsContainer< Dotation  >  dotations_;
     ModelsContainer< Loan      >  borrowings_;
     ModelsContainer< Loan      >  lendings_;
-
 
     AgentLogMedical*              pLogMedical_;
     AgentLogMaintenance*          pLogMaintenance_;

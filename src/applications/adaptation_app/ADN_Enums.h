@@ -407,6 +407,8 @@ enum E_MissionParameterType
     eMissionParameterTypePopulationKnowledge,
     eMissionParameterTypeGenObject,
     eMissionParameterTypeGenObjectList,
+    eMissionParameterTypeObjective,
+    eMissionParameterTypeObjectiveList,
     eMissionParameterTypePath,
     eMissionParameterTypePathList,
     eMissionParameterTypePoint,

@@ -18,3 +18,13 @@ const MIL_AutomateMissionType& MIL_AutomateMission::GetType() const
 {
     return type_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateMission::GetAutomate
+// Created: NLD 2007-04-03
+// -----------------------------------------------------------------------------
+inline
+MIL_Automate& MIL_AutomateMission::GetAutomate() const
+{
+    return automate_;
+}

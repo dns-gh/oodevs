@@ -76,3 +76,13 @@ MIL_LimaOrder* MIL_Mission_ABC::FindLima( const MIL_LimaFunction& function )
 {
     return context_.FindLima( function );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Mission_ABC::FindNextScheduledLima
+// Created: NLD 2006-11-21
+// -----------------------------------------------------------------------------
+inline
+MIL_LimaOrder* MIL_Mission_ABC::FindNextScheduledLima()
+{
+    return context_.FindNextScheduledLima();
+}

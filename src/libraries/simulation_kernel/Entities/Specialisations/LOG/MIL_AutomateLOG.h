@@ -56,7 +56,8 @@ public:
     };
     
 public:
-             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Formation& formation, xml::xistream& xis );
+             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Formation& parent, xml::xistream& xis );
+             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Automate&  parent, xml::xistream& xis );
              MIL_AutomateLOG();
     virtual ~MIL_AutomateLOG();
 

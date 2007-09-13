@@ -60,6 +60,9 @@ public:
     //@{
     const std::string& GetSimulationHost() const;
     int  GetTime() const;                    //!< seconds since simulation start
+    unsigned ComputeTick( unsigned int day, const QTime& time ) const;
+    unsigned ComputeDay ( unsigned int ticks ) const;
+    QTime    ComputeTime( unsigned int ticks ) const;
     unsigned GetCurrentTick() const;         //!< tick since simulation start
     unsigned GetTickCount() const;           //!< total tick count (replayer)
     int GetDay() const; 

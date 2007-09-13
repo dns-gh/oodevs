@@ -15,6 +15,19 @@
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC constructor
+// Created: NLD 2006-11-24
+// -----------------------------------------------------------------------------
+MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver )
+    : DIA_Thing         ( DIA_Thing::ThingType(), type.GetDIAType() )
+    , type_             ( type )
+    , context_          ()
+    , knowledgeResolver_( knowledgeResolver )
+{    
+    // No parameters $$$
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Mission_ABC constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MissionParameters& parameters )
@@ -50,19 +63,6 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_Kno
     , knowledgeResolver_( knowledgeResolver )
 {
     // Parameters will be filled by DIA $$$
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Mission_ABC constructor
-// Created: NLD 2006-11-24
-// -----------------------------------------------------------------------------
-MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver )
-    : DIA_Thing         ( DIA_Thing::ThingType(), type.GetDIAType() )
-    , type_             ( type )
-    , context_          ()
-    , knowledgeResolver_( knowledgeResolver )
-{    
-    // No parameters $$$
 }
 
 // -----------------------------------------------------------------------------
@@ -138,5 +138,3 @@ void MIL_Mission_ABC::CleanAfterSerialization( ASN1T_MissionParameters& asn ) co
 {
     type_.CleanAfterSerialization( asn );
 }
-
-

@@ -37,12 +37,13 @@ public:
 
     //! @name Accessors
     //@{
-    const MT_Vector2D&   GetDirDanger() const;
-    const MIL_Fuseau&    GetFuseau   () const;
-    const T_LimaVector&  GetLimas    () const;
-          MIL_LimaOrder* FindLima    ( uint nID );
-          MIL_LimaOrder* FindLima    ( const MIL_LimaFunction& function );
-          void           AffectFuseau( const MIL_Fuseau& fuseau );
+    const MT_Vector2D&   GetDirDanger         () const;
+    const MIL_Fuseau&    GetFuseau            () const;
+    const T_LimaVector&  GetLimas             () const;
+          MIL_LimaOrder* FindLima             ( uint nID );
+          MIL_LimaOrder* FindLima             ( const MIL_LimaFunction& function );
+          MIL_LimaOrder* FindNextScheduledLima();
+          void           AffectFuseau         ( const MIL_Fuseau& fuseau );
     //@}
 
     //! @name Network

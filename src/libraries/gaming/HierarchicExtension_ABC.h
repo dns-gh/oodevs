@@ -35,6 +35,7 @@ class HierarchicExtension_ABC : public kernel::Extension_ABC
                               , public kernel::Updatable_ABC< ASN1T_MsgFormationCreation >
                               , public kernel::Updatable_ABC< ASN1T_MsgUnitChangeSuperior >
                               , public kernel::Updatable_ABC< ASN1T_MsgUnitChangeSuperiorAck >
+                              , public kernel::Updatable_ABC< ASN1T_MsgAutomatChangeSuperiorAck >
 {
 
 public:
@@ -66,6 +67,7 @@ private:
     virtual void DoUpdate( const ASN1T_MsgFormationCreation& message );
     virtual void DoUpdate( const ASN1T_MsgUnitChangeSuperior& message );
     virtual void DoUpdate( const ASN1T_MsgUnitChangeSuperiorAck& message );
+    virtual void DoUpdate( const ASN1T_MsgAutomatChangeSuperiorAck& message );
 
     void UpdateSuperior( const kernel::Entity_ABC& superior );
     //@}

@@ -52,6 +52,10 @@
         <source>Density</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Schedule</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActionParameterFactory</name>

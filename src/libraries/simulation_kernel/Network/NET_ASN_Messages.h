@@ -129,6 +129,7 @@ GENERATE_ASN_MSG_SENDER( SimToClient, ChangeDiplomacyAck            , change_dip
 GENERATE_ASN_MSG_SENDER( SimToClient, AutomatChangeKnowledgeGroupAck, automat_change_knowledge_group_ack  )
 GENERATE_ASN_MSG_SENDER( SimToClient, AutomatChangeLogisticLinksAck , automat_change_logistic_links_ack   )
 GENERATE_ASN_MSG_SENDER( SimToClient, AutomatChangeLogisticLinks    , automat_change_logistic_links       )
+GENERATE_ASN_MSG_SENDER( SimToClient, AutomatChangeSuperiorAck      , automat_change_superior_ack         )
 GENERATE_ASN_MSG_SENDER( SimToClient, UnitChangeSuperior            , unit_change_superior                )
 GENERATE_ASN_MSG_SENDER( SimToClient, UnitChangeSuperiorAck         , unit_change_superior_ack            )
 GENERATE_ASN_MSG_SENDER( SimToClient, ChangeDiplomacy               , change_diplomacy                    )

@@ -10,6 +10,28 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Tools::CheckTypeObjectif
+// Created: NLD 2007-05-14
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Tools::CheckTypeObjectif( const DIA_Variable_ABC& diaVariable )
+{
+    assert( pTypeObjectif_ );
+    return diaVariable.GetType() == *pTypeObjectif_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Tools::CheckTypeFuseau
+// Created: NLD 2007-04-05
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Tools::CheckTypeFuseau( const DIA_Variable_ABC& diaVariable )
+{
+    assert( pTypeFuseau_ );
+    return diaVariable.GetType() == *pTypeFuseau_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Tools::CheckTypeEquipement
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
@@ -356,6 +378,22 @@ bool DEC_Tools::CheckTypeMissionPion( const DIA_Variable_ABC& diaVariable )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Tools::CheckTypeMissionAutomate
+// Created: NLD 2004-10-20
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Tools::CheckTypeMissionAutomate( const DIA_Variable_ABC& diaVariable )
+{
+    assert( pTypeMissionAutomate_ );
+    if( diaVariable.Type() != eObject )
+        return false;
+    DIA_TypedObject* pObject = diaVariable.ToObject();
+    if( !pObject ) 
+        return diaVariable.GetType().IsKindOf( *pTypeMissionAutomate_ );
+    return pObject->GetType().IsKindOf( *pTypeMissionAutomate_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Tools
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
@@ -627,4 +665,26 @@ const DIA_TypeDef& DEC_Tools::GetTypeTirIndirect()
 {
     assert( pTypeTirIndirect_ );
     return *pTypeTirIndirect_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Tools::GetTypeFuseau
+// Created: NLD 2006-12-06
+// -----------------------------------------------------------------------------
+inline
+const DIA_TypeDef& DEC_Tools::GetTypeFuseau()
+{
+    assert( pTypeFuseau_ );
+    return *pTypeFuseau_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Tools::GetTypeObjectif
+// Created: NLD 2007-05-14
+// -----------------------------------------------------------------------------
+inline
+const DIA_TypeDef& DEC_Tools::GetTypeObjectif()
+{
+    assert( pTypeObjectif_ );
+    return *pTypeObjectif_;
 }

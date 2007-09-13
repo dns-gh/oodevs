@@ -32,6 +32,7 @@ class MissionInterface_ABC;
 class AgentKnowledgeConverter_ABC;
 class ObjectKnowledgeConverter_ABC;
 class Param_ABC;
+class Simulation;
 
 // =============================================================================
 /** @class  MissionInterfaceBuilder
@@ -52,7 +53,7 @@ public:
     //@{
              MissionInterfaceBuilder( kernel::ActionController& controller, gui::ParametersLayer& layer
                                     , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
-                                    , const StaticModel& staticModel );
+                                    , const StaticModel& staticModel, const Simulation& simulation );
     virtual ~MissionInterfaceBuilder();
     //@}
 
@@ -96,6 +97,8 @@ private:
     Param_ABC* BuildLocationList         ( const kernel::OrderParameter& parameter ) const;
     Param_ABC* BuildGenObject            ( const kernel::OrderParameter& parameter ) const;
     Param_ABC* BuildGenObjectList        ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildMissionObjective     ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildMissionObjectiveList ( const kernel::OrderParameter& parameter ) const;
     Param_ABC* BuildMaintenancePriorities( const kernel::OrderParameter& parameter ) const;
     Param_ABC* BuildMedicalPriorities    ( const kernel::OrderParameter& parameter ) const;
     Param_ABC* BuildEnumeration          ( const kernel::OrderParameter& parameter ) const;
@@ -127,6 +130,7 @@ private:
     AgentKnowledgeConverter_ABC&           knowledgeConverter_;
     ObjectKnowledgeConverter_ABC&          objectKnowledgeConverter_;
     const StaticModel&                     staticModel_;
+    const Simulation&                      simulation_;
     MissionInterface_ABC*                  missionInterface_;
     kernel::Entity_ABC*                    entity_;
     T_BuilderFunctors                      builderFunctors_;

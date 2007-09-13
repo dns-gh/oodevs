@@ -35,7 +35,8 @@ Automat::Automat( Model& model, const ASN1T_MsgAutomatCreation& msg )
     , nType_            ( msg.type_automate )
     , strName_          ( msg.nom )
     , side_             ( model.GetSides     ().Get( msg.oid_camp ) )
-    , formation_        ( model.GetFormations().Get( msg.oid_formation ) )
+    , pParentFormation_ ( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_formation ? &model.GetFormations().Get( msg.oid_parent.u.formation ) : 0 )
+    , pParentAutomat_   ( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_automate  ? &model.GetAutomats  ().Get( msg.oid_parent.u.automate  ) : 0 )
     , pKnowledgeGroup_  ( &model.GetKnowledgeGroups().Get( msg.oid_groupe_connaissance ) )
     , agents_           ()
     , quotas_           ()
@@ -50,8 +51,13 @@ Automat::Automat( Model& model, const ASN1T_MsgAutomatCreation& msg )
     , nRoe_             ( EnumRoe::tir_interdit )
     , pOrder_           ( 0 )
 {
+    assert( pParentFormation_ || pParentAutomat_ );
+
     pKnowledgeGroup_->GetAutomats().Register( *this );
-    formation_.GetAutomats().Register( *this );
+    if( pParentFormation_ )
+        pParentFormation_->GetAutomats().Register( *this );
+    else if( pParentAutomat_ )
+        pParentAutomat_->GetAutomats().Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +66,11 @@ Automat::Automat( Model& model, const ASN1T_MsgAutomatCreation& msg )
 // -----------------------------------------------------------------------------
 Automat::~Automat()
 {
-    formation_.GetAutomats().Unregister( *this );
+    if( pParentFormation_ )
+        pParentFormation_->GetAutomats().Unregister( *this );
+    else if( pParentAutomat_ )
+        pParentAutomat_->GetAutomats().Unregister( *this );
+
     pKnowledgeGroup_->GetAutomats().Unregister( *this );
 }
 
@@ -74,13 +84,36 @@ Automat::~Automat()
 // -----------------------------------------------------------------------------
 void Automat::Update( const ASN1T_MsgAutomatCreation& msg )
 {
-    const bool kgChanged = pKnowledgeGroup_->GetID() != msg.oid_groupe_connaissance;
-    FlagUpdate( kgChanged );
-    if( kgChanged )
+    FlagUpdate();
+    if( pKnowledgeGroup_->GetID() != msg.oid_groupe_connaissance )
     {
+        FlagUpdate( true );
         pKnowledgeGroup_->GetAutomats().Unregister( *this );
         pKnowledgeGroup_ = &model_.GetKnowledgeGroups().Get( msg.oid_groupe_connaissance );
         pKnowledgeGroup_->GetAutomats().Register( *this );
+    }
+    if(   pParentFormation_ && ( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_automate  || ( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_formation && msg.oid_parent.u.formation != pParentFormation_->GetID() ) )
+       || pParentAutomat_   && ( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_formation || ( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_automate  && msg.oid_parent.u.automate  != pParentAutomat_  ->GetID() ) )
+       )
+    {
+        FlagUpdate( true );
+        if( pParentFormation_ )
+            pParentFormation_->GetAutomats().Unregister( *this );
+        if( pParentAutomat_ )
+            pParentAutomat_->GetAutomats().Unregister( *this );
+        pParentFormation_ = 0;
+        pParentAutomat_   = 0;
+        if( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_formation )
+        {
+            pParentFormation_ = &model_.GetFormations().Get( msg.oid_parent.u.formation );
+            pParentFormation_->GetAutomats().Register( *this );
+        }
+        else if( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_automate )
+        {
+            pParentAutomat_ = &model_.GetAutomats().Get( msg.oid_parent.u.automate );
+            pParentAutomat_->GetAutomats().Register( *this );
+        }        
+        
     }
     decisionalInfos_.Clear();
 }
@@ -126,6 +159,33 @@ void Automat::Update( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& msg )
     pKnowledgeGroup_->GetAutomats().Unregister( *this );
     pKnowledgeGroup_ = &model_.GetKnowledgeGroups().Get( msg.oid_groupe_connaissance );
     pKnowledgeGroup_->GetAutomats().Register( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::Update
+// Created: NLD 2007-04-12
+// -----------------------------------------------------------------------------
+void Automat::Update( const ASN1T_MsgAutomatChangeSuperiorAck& msg )
+{
+    if( msg.error_code == EnumChangeHierarchyErrorCode::no_error )
+    {
+        if( pParentFormation_ )
+            pParentFormation_->GetAutomats().Unregister( *this );
+        if( pParentAutomat_ )
+            pParentAutomat_->GetAutomats().Unregister( *this );
+        pParentFormation_ = 0;
+        pParentAutomat_   = 0;
+        if( msg.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_formation )
+        {
+            pParentFormation_ = &model_.GetFormations().Get( msg.oid_superior.u.formation );
+            pParentFormation_->GetAutomats().Register( *this );
+        }
+        else if( msg.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_automate )
+        {
+            pParentAutomat_ = &model_.GetAutomats().Get( msg.oid_superior.u.automate );
+            pParentAutomat_->GetAutomats().Register( *this );
+        }        
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -190,7 +250,17 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().nom                     = strName_.c_str(); // !! pointeur sur const char*
     asn().oid_camp                = side_.GetID();
     asn().oid_groupe_connaissance = pKnowledgeGroup_->GetID();
-    asn().oid_formation           = formation_.GetID();
+
+    if( pParentFormation_ )
+    {
+        asn().oid_parent.t           = T_MsgAutomatCreation_oid_parent_formation;
+        asn().oid_parent.u.formation = pParentFormation_->GetID();
+    }
+    else if( pParentAutomat_ )
+    {
+        asn().oid_parent.t          = T_MsgAutomatCreation_oid_parent_automate;
+        asn().oid_parent.u.automate = pParentAutomat_->GetID();
+    }
     asn.Send( publisher );
 
     AsnMsgSimToClientLogSupplyQuotas asnQuotas;
@@ -263,7 +333,8 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 void Automat::Accept( ModelVisitor_ABC& visitor )
 {
     visitor.Visit( *this );
-    agents_.Apply( std::mem_fun_ref( &Agent::Accept ), visitor );
+    automats_.Apply( std::mem_fun_ref( &Automat::Accept ), visitor );
+    agents_  .Apply( std::mem_fun_ref( &Agent  ::Accept ), visitor );
 }
 
 // -----------------------------------------------------------------------------
@@ -272,12 +343,32 @@ void Automat::Accept( ModelVisitor_ABC& visitor )
 // -----------------------------------------------------------------------------
 void Automat::SendSpecialUpdate( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientAutomatChangeKnowledgeGroupAck ack;
-    ack().error_code = EnumChangeHierarchyErrorCode::no_error;
-    ack().oid = nID_;
-    ack().oid_camp = side_.GetID();
-    ack().oid_groupe_connaissance = pKnowledgeGroup_->GetID();
-    ack.Send( publisher );
+    {
+        AsnMsgSimToClientAutomatChangeKnowledgeGroupAck ack;
+        ack().error_code = EnumChangeHierarchyErrorCode::no_error;
+        ack().oid = nID_;
+        ack().oid_camp = side_.GetID();
+        ack().oid_groupe_connaissance = pKnowledgeGroup_->GetID();
+        ack.Send( publisher );
+    }
+    
+    {
+        AsnMsgSimToClientAutomatChangeSuperiorAck ack;
+        ack().error_code = EnumChangeHierarchyErrorCode::no_error;
+        ack().oid        = nID_;
+        
+        if( pParentFormation_ )
+        {
+            ack().oid_superior.t           = T_MsgAutomatCreation_oid_parent_formation;
+            ack().oid_superior.u.formation = pParentFormation_->GetID();
+        }
+        else if( pParentAutomat_ )
+        {
+            ack().oid_superior.t          = T_MsgAutomatCreation_oid_parent_automate;
+            ack().oid_superior.u.automate = pParentAutomat_->GetID();
+        }
+        ack.Send( publisher );
+    }
 }
 
 namespace
@@ -305,7 +396,7 @@ std::string Automat::BuildSymbol( bool up /*= true*/ ) const
     SymbolAggregator aggregator;
     agents_.Apply< SymbolAggregator& >( aggregator );
     if( up )
-        aggregator.symbol_ = tools::app6::MergeSymbol( formation_.BuildSymbol(), aggregator.symbol_ );
+        aggregator.symbol_ = tools::app6::MergeSymbol( pParentFormation_ ? pParentFormation_->BuildSymbol() : pParentAutomat_->BuildSymbol(), aggregator.symbol_ );
     tools::app6::SetLevel( aggregator.symbol_, aggregator.level_ + 1 );
     return aggregator.symbol_;
 }

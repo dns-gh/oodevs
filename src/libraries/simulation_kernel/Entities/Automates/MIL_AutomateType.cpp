@@ -241,19 +241,19 @@ bool MIL_AutomateType::CheckComposition( const MIL_Automate& automate ) const
     T_CounterMap currentComposition;
     const MIL_Automate::T_PionVector& pions = automate.GetPions();
     
-    for ( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
+    for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
     {
-        const MIL_AgentPion& pion = **itPion;
+        const MIL_AgentPion& pion = **it;
 
         if( pion == automate.GetPionPC() )
             continue;
 
         ++currentComposition[ &pion.GetType() ];
-        if ( composition_.find( &pion.GetType() ) == composition_.end() )
+        if( composition_.find( &pion.GetType() ) == composition_.end() )
             return false;
     }
     
-    for ( CIT_CompositionMap it = composition_.begin(); it != composition_.end(); ++it )
+    for( CIT_CompositionMap it = composition_.begin(); it != composition_.end(); ++it )
     {
         const sCompositionBounds& bounds   = it->second;
         const uint&               nRealNbr = currentComposition[ it->first ];
@@ -272,10 +272,13 @@ bool MIL_AutomateType::CheckComposition( const MIL_Automate& automate ) const
 void MIL_AutomateType::InitializeDiaFunctions()
 {
     // Accessors
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionsWithPC      , "DEC_Automate_PionsAvecPC"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionsWithoutPC   , "DEC_Automate_PionsSansPC"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionPC           , "DEC_Automate_PionPC"           );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionPCOfAutomate , "DEC_Automate_PionPCDeAutomate" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionsWithPC         , "DEC_Automate_PionsAvecPC"          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionsWithoutPC      , "DEC_Automate_PionsSansPC"          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionPC              , "DEC_Automate_PionPC"               );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionPCOfAutomate    , "DEC_Automate_PionPCDeAutomate"     );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetAutomates           , "DEC_Automate_AutomatesSubordonnes" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetParentAutomate      , "DEC_AutomateSuperieur"             );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsParentAutomateEngaged, "DEC_AutomateSuperieur_EstEmbraye"  );
 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionsOfAutomateWithoutPC, "DEC_Automate_PionsDeAutomateSansPC" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionsOfAutomateWithPC   , "DEC_Automate_PionsDeAutomateAvecPC" );
@@ -302,61 +305,64 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ObjectFunctions::ActivateObject< MIL_Automate >, "DEC_ActiverObjet" );
 
     // Connaissance
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::Lock                                  < MIL_Automate >, "DEC_ConnaissanceAgent_Verrouiller"                         );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::Unlock                                < MIL_Automate >, "DEC_ConnaissanceAgent_Deverrouiller"                       );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetPosition                           < MIL_Automate >, "DEC_ConnaissanceAgent_Position"                            );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsFlying                              < MIL_Automate >, "DEC_ConnaissanceAgent_EstEnVol"                            );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetSpeed                              < MIL_Automate >, "DEC_ConnaissanceAgent_Vitesse"                             );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsKnowledgeValid                      < MIL_Automate >, "DEC_ConnaissanceAgent_EstValide"                           );    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsRefugee                             < MIL_Automate >, "DEC_ConnaissanceAgent_EstRefugie"                          );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsRefugeeManaged                      < MIL_Automate >, "DEC_ConnaissanteAgent_EstRefugiePrisEnCompte"              );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsMilitia                             < MIL_Automate >, "DEC_ConnaissanceAgent_EstMilice"                           );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsTerrorist                           < MIL_Automate >, "DEC_ConnaissanceAgent_EstTerroriste"                       );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsDead                                < MIL_Automate >, "DEC_ConnaissanceAgent_EstMort"                             );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsSurrendered                         < MIL_Automate >, "DEC_ConnaissanceAgent_SEstRendu"                           );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsPrisoner                            < MIL_Automate >, "DEC_ConnaissanceAgent_EstPrisonnier"                       );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetDangerosityOnPion                  < MIL_Automate >, "DEC_ConnaissanceAgent_DangerositeSurPion"                  );    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetDangerosityOnKnowledge             < MIL_Automate >, "DEC_ConnaissanceAgent_DangerositeSurConnaissance"          );   
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetOperationalState                   < MIL_Automate >, "DEC_ConnaissanceAgent_EtatOps"                             );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetMajorOperationalState              < MIL_Automate >, "DEC_ConnaissanceAgent_EtatOpsMajeur"                       );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetMaxPerceptionLevelForKnowledgeGroup< MIL_Automate >, "DEC_ConnaissanceAgent_NiveauPerceptionMax"                 );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsKnowledgeValid                      < MIL_Automate >, "DEC_ConnaissanceObjet_EstValide"                           );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::Lock                                  < MIL_Automate >, "DEC_ConnaissanceAgent_Verrouiller"                          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::Unlock                                < MIL_Automate >, "DEC_ConnaissanceAgent_Deverrouiller"                        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetPosition                           < MIL_Automate >, "DEC_ConnaissanceAgent_Position"                             );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsFlying                              < MIL_Automate >, "DEC_ConnaissanceAgent_EstEnVol"                             );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetSpeed                              < MIL_Automate >, "DEC_ConnaissanceAgent_Vitesse"                              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsKnowledgeValid                      < MIL_Automate >, "DEC_ConnaissanceAgent_EstValide"                            );    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsRefugee                             < MIL_Automate >, "DEC_ConnaissanceAgent_EstRefugie"                           );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsRefugeeManaged                      < MIL_Automate >, "DEC_ConnaissanteAgent_EstRefugiePrisEnCompte"               );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsMilitia                             < MIL_Automate >, "DEC_ConnaissanceAgent_EstMilice"                            );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsTerrorist                           < MIL_Automate >, "DEC_ConnaissanceAgent_EstTerroriste"                        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsDead                                < MIL_Automate >, "DEC_ConnaissanceAgent_EstMort"                              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsSurrendered                         < MIL_Automate >, "DEC_ConnaissanceAgent_SEstRendu"                            );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsPrisoner                            < MIL_Automate >, "DEC_ConnaissanceAgent_EstPrisonnier"                        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetDangerosityOnPion                  < MIL_Automate >, "DEC_ConnaissanceAgent_DangerositeSurPion"                   );    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetDangerosityOnKnowledge             < MIL_Automate >, "DEC_ConnaissanceAgent_DangerositeSurConnaissance"           );   
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetOperationalState                   < MIL_Automate >, "DEC_ConnaissanceAgent_EtatOps"                              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetMajorOperationalState              < MIL_Automate >, "DEC_ConnaissanceAgent_EtatOpsMajeur"                        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetMaxPerceptionLevelForKnowledgeGroup< MIL_Automate >, "DEC_ConnaissanceAgent_NiveauPerceptionMax"                  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsKnowledgeValid                      < MIL_Automate >, "DEC_ConnaissanceObjet_EstValide"                            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated           < MIL_Automate >, "DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif"         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsReservedObstacle                    < MIL_Automate >, "DEC_ConnaissanceObjet_EstObstacleDeManoeuvre"              );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsBypassed                            < MIL_Automate >, "DEC_ConnaissanceObjet_EstContourne"                        );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsConstructed                         < MIL_Automate >, "DEC_ConnaissanceObjet_EstConstruit"                        );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::GetLocalisation                       < MIL_Automate >, "DEC_ConnaissanceObjet_Localisation"                        );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::GetType                               < MIL_Automate >, "DEC_ConnaissanceObjet_Type"                                );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth            < MIL_Automate >, "DEC_ConnaissanceObjet_LargeurSiteFranchissement"           );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsSiteFranchissementBanksToFitOut     < MIL_Automate >, "DEC_ConnaissanceObjet_BergesAAmenagerSiteFranchissement"   );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsRecon                               < MIL_Automate >, "DEC_ConnaissanceObjet_EstReconnu"                          );    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsLogisticRouteEquipped               < MIL_Automate >, "DEC_ConnaissanceObjet_ItineraireLogEstEquipe"              ); 
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ShareKnowledgesWith                   < MIL_Automate >, "DEC_Connaissances_PartageConnaissancesAvec"                );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ShareKnowledgesInZoneWith             < MIL_Automate >, "DEC_Connaissances_PartageConnaissancesDansZoneAvec"        );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetObjects                            < MIL_Automate >, "DEC_Connaissances_Objets"                                  );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetObjectsInCircle                    < MIL_Automate >, "DEC_Connaissances_ObjetsDansCercle"                        );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetObjectsInZone                      < MIL_Automate >, "DEC_Connaissances_ObjetsDansZone"                          );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetObjectsInFuseau                    < MIL_Automate >, "DEC_Connaissances_ObjetsDansFuseau"                        );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetFriendsInZone                      < MIL_Automate >, "DEC_Connaissances_UnitesAmiesDansZone"                     );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetLivingEnemiesPerceivedByPion       < MIL_Automate >, "DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion"    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetDangerousEnemiesInZoneOfPion       < MIL_Automate >, "DEC_Connaissances_UnitesEnnemiesDangereusesDansZoneDePion" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetRapForGlobal                                       , "DEC_RapportDeForceGlobal"                                  );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetPopulations                        < MIL_Automate >, "DEC_Connaissances_Populations"                             );
-    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsBypassed                            < MIL_Automate >, "DEC_ConnaissanceObjet_EstContourne"                         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsConstructed                         < MIL_Automate >, "DEC_ConnaissanceObjet_EstConstruit"                         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::GetLocalisation                       < MIL_Automate >, "DEC_ConnaissanceObjet_Localisation"                         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::GetType                               < MIL_Automate >, "DEC_ConnaissanceObjet_Type"                                 );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth            < MIL_Automate >, "DEC_ConnaissanceObjet_LargeurSiteFranchissement"            );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsSiteFranchissementBanksToFitOut     < MIL_Automate >, "DEC_ConnaissanceObjet_BergesAAmenagerSiteFranchissement"    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsRecon                               < MIL_Automate >, "DEC_ConnaissanceObjet_EstReconnu"                           );    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsLogisticRouteEquipped               < MIL_Automate >, "DEC_ConnaissanceObjet_ItineraireLogEstEquipe"               ); 
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ShareKnowledgesWith                   < MIL_Automate >, "DEC_Connaissances_PartageConnaissancesAvec"                 );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ShareKnowledgesInZoneWith             < MIL_Automate >, "DEC_Connaissances_PartageConnaissancesDansZoneAvec"         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetObjects                            < MIL_Automate >, "DEC_Connaissances_Objets"                                   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetObjectsInCircle                    < MIL_Automate >, "DEC_Connaissances_ObjetsDansCercle"                         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetObjectsInZone                      < MIL_Automate >, "DEC_Connaissances_ObjetsDansZone"                           );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetObjectsInFuseau                    < MIL_Automate >, "DEC_Connaissances_ObjetsDansFuseau"                         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetFriendsInZone                      < MIL_Automate >, "DEC_Connaissances_UnitesAmiesDansZone"                      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetLivingEnemiesPerceivedByPion       < MIL_Automate >, "DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion"     );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetDangerousEnemiesInZoneOfPion       < MIL_Automate >, "DEC_Connaissances_UnitesEnnemiesDangereusesDansZoneDePion"  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetRapForGlobal                                       , "DEC_RapportDeForceGlobal"                                   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetPopulations                        < MIL_Automate >, "DEC_Connaissances_Populations"                              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ComputeFuseauUnloadedEnemiesRatio     < MIL_Automate >, "DEC_Connaissances_PourcentageEnnemisDebarquesDansFuseau"    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ComputeFuseauLoadedEnemiesRatio       < MIL_Automate >, "DEC_Connaissances_PourcentageEnnemisEmbarquesDansFuseau"    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::SortFuseauxAccordingToUnloadedEnemies < MIL_Automate >, "DEC_Connaissances_TrierFuseauxSelonPresenceEnnemisDebarques" );
+
     // RCS
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Operational< MIL_Automate >, "DEC_RC"      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Message    < MIL_Automate >, "DEC_Message" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Warning    < MIL_Automate >, "DEC_Warning" );
 
     // Geometry       
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau  < MIL_Automate >         , "DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau"              );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::SplitLocalisationInParts               < MIL_Automate >         , "DEC_Geometrie_DecoupeLocalisation"                                   );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::SplitLocalisationInSections            < MIL_Automate >         , "DEC_Geometrie_DecoupeFuseauEnTroncons"                               );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeObstaclePosition                < MIL_Automate >         , "DEC_Geometrie_CalculerPositionObstacle"                              );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDestPoint                       < MIL_Automate >         , "DEC_Geometrie_CalculerPointArrivee"                                  ); 
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeStartPoint                      < MIL_Automate >         , "DEC_Geometrie_CalculerPointDepart"                                   );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::IsPointInFuseau                        < MIL_Automate >         , "DEC_Geometrie_EstPointDansFuseau"                                    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputePointBeforeLima                 < MIL_Automate >         , "DEC_Geometrie_CalculerPositionParRapportALima"                       );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau           < MIL_Automate >, "DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau"              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::SplitLocalisationInParts                        < MIL_Automate >, "DEC_Geometrie_DecoupeLocalisation"                                   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::SplitLocalisationInSections                     < MIL_Automate >, "DEC_Geometrie_DecoupeFuseauEnTroncons"                               );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeObstaclePosition                         < MIL_Automate >, "DEC_Geometrie_CalculerPositionObstacle"                              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDestPoint                                < MIL_Automate >, "DEC_Geometrie_CalculerPointArrivee"                                  ); 
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeStartPoint                               < MIL_Automate >, "DEC_Geometrie_CalculerPointDepart"                                   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::IsPointInFuseau                                 < MIL_Automate >, "DEC_Geometrie_EstPointDansFuseau"                                    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputePointBeforeLima                          < MIL_Automate >, "DEC_Geometrie_CalculerPositionParRapportALima"                       );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputePointsBeforeLima                                         , "DEC_Geometrie_CalculerPositionsParRapportALima"                      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau                       , "DEC_Geometrie_PositionsParRapportALocalisation"                      );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::StartComputingFrontAndBackLines                                 , "DEC_Geometrie_StartCalculLignesAvantEtArriere"                       );
@@ -366,32 +372,40 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDistancePointFromFrontLine                               , "DEC_Geometrie_CalculerDistancePointLigneAvant"                       );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDistancePointFromBackLine                                , "DEC_Geometrie_CalculerDistancePointLigneArriere"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDestPointForPion                                         , "DEC_Geometrie_CalculerPointArriveePourPion"                          );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau< MIL_Automate >         , "DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau"             );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau         < MIL_Automate >, "DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau"             );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau< MIL_Automate >, "DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau"   );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeFrontestAgent                   < MIL_Automate >         , "DEC_Geometrie_PionDevant"                                            );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeBackestAgent                    < MIL_Automate >         , "DEC_Geometrie_PionDerriere"                                          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeFrontestAgent                            < MIL_Automate >, "DEC_Geometrie_PionDevant"                                            );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeBackestAgent                             < MIL_Automate >, "DEC_Geometrie_PionDerriere"                                          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::SortFuseauxAccordingToSchedule                  < MIL_Automate >, "DEC_Geometrie_TrierFuseauxSelonHoraire"                              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDelayFromSchedule                        < MIL_Automate >, "DEC_Geometrie_CalculerRetard"                                        );
 
     // Orders
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::IsNewMissionStarted       < MIL_Automate >, "DEC_NouvelleMission"    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::FinishMission             < MIL_Automate >, "DEC_FinMission"         );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetMissionLimaFlag        < MIL_Automate >, "DEC_GetMissionLimaFlag" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::AutomateSetMissionLimaFlag                , "DEC_SetMissionLimaFlag" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetLima                   < MIL_Automate >, "DEC_GetLima"            );    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::IsNewMissionStarted               < MIL_Automate >, "DEC_NouvelleMission"                );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::FinishMission                     < MIL_Automate >, "DEC_FinMission"                     );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetLima                           < MIL_Automate >, "DEC_GetLima"                        );    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetNextScheduledLima              < MIL_Automate >, "DEC_ProchaineLimaHoraireNonFlagee"  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetNextScheduledElement           < MIL_Automate >, "DEC_ProchainElementHoraireNonFlage" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetFuseau                         < MIL_Automate >, "DEC_Fuseau"                         );    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::AutomateSetMissionLimaFlag                        , "DEC_SetMissionLimaFlag"             );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetMissionLimaFlag                < MIL_Automate >, "DEC_GetMissionLimaFlag"             );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag                , "DEC_SetMissionLimaFlagHoraire"      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetMissionLimaScheduleFlag        < MIL_Automate >, "DEC_GetMissionLimaFlagHoraire"      );
 
-    // MRT
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::MRT_CreatePionMission, "DEC_MRT_CreerMissionPion" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::MRT_Validate         , "DEC_MRT_Valide"           );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::MRT_AffectFuseaux    , "DEC_MRT_AffecteFuseaux"   );
-
-    // Conduite
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::CDT_CreatePionMission, "DEC_CDT_CreerMissionPion"              );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::CDT_GivePionMission  , "DEC_CDT_DonnerMissionPion"             );
+    // MRT / conduite
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::MRT_CreatePionMission        , "DEC_MRT_CreerMissionPion"           );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::MRT_Validate                 , "DEC_MRT_Valide"                     );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::MRT_AffectFuseaux            , "DEC_MRT_AffecteFuseaux"             );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::CDT_CreatePionMission        , "DEC_CDT_CreerMissionPion"           );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::CDT_GivePionMission          , "DEC_CDT_DonnerMissionPion"          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::CreateAutomateMission        , "DEC_CreerMissionAutomate"           );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GiveAutomateMission          , "DEC_DonnerMissionAutomate"          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::AssignFuseauToAutomateMission, "DEC_AssignerFuseauAMissionAutomate" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::SplitFuseau                  , "DEC_DecouperFuseau"                 );
 
     // Pion management
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::PionChangeAutomate , "DEC_Pion_ChangeAutomate" );
     
-    // Accesseurs sur les pions
-    
+    // Accesseurs sur les pions   
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPionFlying                               , "DEC_Automate_PionEstEnVol"                                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPionTransported                          , "DEC_Automate_PionEstTransporte"                                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPionContaminated                         , "DEC_Automate_PionEstContamine"                                 );
@@ -438,7 +452,18 @@ void MIL_AutomateType::InitializeDiaFunctions()
 // Name: MIL_AutomateType::InstanciateAutomate
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateType::InstanciateAutomate( uint nID, MIL_Formation& formation, xml::xistream& xis ) const
+MIL_Automate& MIL_AutomateType::InstanciateAutomate( uint nID, MIL_Formation& parent, xml::xistream& xis ) const
 {
-    return *new MIL_Automate( *this, nID, formation, xis );
+    return *new MIL_Automate( *this, nID, parent, xis );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateType::InstanciateAutomate
+// Created: NLD 2004-08-11
+// -----------------------------------------------------------------------------
+MIL_Automate& MIL_AutomateType::InstanciateAutomate( uint nID, MIL_Automate& parent, xml::xistream& xis ) const
+{
+    return *new MIL_Automate( *this, nID, parent, xis );
+}
+
+

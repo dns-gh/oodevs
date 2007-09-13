@@ -21,6 +21,19 @@ const MIL_AutomateMissionType* MIL_AutomateMissionType::Find( uint nID )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AutomateMissionType::FindFromDiaID
+// Created: NLD 2007-04-03
+// -----------------------------------------------------------------------------
+inline
+const MIL_AutomateMissionType* MIL_AutomateMissionType::FindFromDiaID( uint nID )
+{
+    CIT_MissionIDMap it = missionDiaIDs_.find( nID );
+    if( it == missionIDs_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AutomateMissionType::Find
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------

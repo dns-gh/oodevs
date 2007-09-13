@@ -52,7 +52,10 @@ void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgUnitCreation& message )
 // -----------------------------------------------------------------------------
 void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgAutomatCreation& message )
 {
-    superior_ = &formationResolver_.Get( message.oid_formation );
+    if( message.oid_parent.t == T_MsgAutomatCreation_oid_parent_automate )
+        superior_ = &automatResolver_.Get( message.oid_parent.u.automate );
+    else if( message.oid_parent.t == T_MsgAutomatCreation_oid_parent_formation )
+        superior_ = &formationResolver_.Get( message.oid_parent.u.formation );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,8 +85,22 @@ void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgUnitChangeSuperior& messa
 // -----------------------------------------------------------------------------
 void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgUnitChangeSuperiorAck& message )
 {
-    if( message.error_code == EnumObjectErrorCode::no_error )
+    if( !message.error_code )
         UpdateSuperior( automatResolver_.Get( message.oid_automate ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchicExtension_ABC::DoUpdate
+// Created: NLD 2007-04-12
+// -----------------------------------------------------------------------------
+void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgAutomatChangeSuperiorAck& message )
+{
+    if( message.error_code )
+        return;
+    if( message.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_automate )
+        UpdateSuperior( automatResolver_.Get( message.oid_superior.u.automate ) );
+    else if( message.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_formation )
+        UpdateSuperior( formationResolver_.Get( message.oid_superior.u.formation ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "ActionParameterLima.h"
 #include "ActionParameterLocation.h"
+#include "ActionParameterDateTime.h"
 #include "ActionParameterVisitor_ABC.h"
 #include "Tools.h"
 #include "xeumeuleu/xml.h"
@@ -23,24 +24,23 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 ActionParameterLima::ActionParameterLima( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Location_ABC& location )
     : ActionParameter< QString >( parameter )
-    , location_( new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, location ) )
 {
-    AddParameter( *location_ );
+    AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, location ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterLima constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-ActionParameterLima::ActionParameterLima( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_LimaOrder& asn )
+ActionParameterLima::ActionParameterLima( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Simulation& simulation, const ASN1T_LimaOrder& asn )
     : ActionParameter< QString >( parameter )
-    , location_( new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, asn.lima ) )
 {
     QStringList functions;
     for( unsigned int i = 0; i < asn.fonctions.n; ++i )
         functions.append( tools::ToString( (E_FuncLimaType)asn.fonctions.elem[i] ) );
     SetValue( functions.join( ", " ) );
-    AddParameter( *location_ );
+    AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, asn.lima ) );
+    AddParameter( *new ActionParameterDateTime( OrderParameter( tools::translate( "ActionParameter", "Schedule" ), "datetime", false ), simulation, asn.horaire ) );
 }
 
 namespace
@@ -57,15 +57,12 @@ namespace
 // Name: ActionParameterLima constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-ActionParameterLima::ActionParameterLima( const CoordinateConverter_ABC& converter, xml::xistream& xis )
+ActionParameterLima::ActionParameterLima( const CoordinateConverter_ABC& converter, const Simulation& simulation, xml::xistream& xis )
     : ActionParameter< QString >( OrderParameter( ReadName( xis ), "lima", false ) )
 {
     std::string value;
     xis >> attribute( "value", value )
-        >> start( "parameter" );
-    location_ = new ActionParameterLocation( converter, xis );
-    AddParameter( *location_ );
-    xis >> end();
+        >> list( "parameter", *this, &ActionParameterLima::ReadParameter, converter, simulation );
     SetValue( value.c_str() );
 }
 
@@ -110,6 +107,20 @@ void ActionParameterLima::Serialize( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionParameterLima::ReadParameter
+// Created: SBO 2007-06-25
+// -----------------------------------------------------------------------------
+void ActionParameterLima::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter, const Simulation& simulation )
+{
+    std::string type;
+    xis >> attribute( "type", type );
+    if( type == "location" )
+        AddParameter( *new ActionParameterLocation( converter, xis ) );
+    else if( type == "datetime" )
+        AddParameter( *new ActionParameterDateTime( OrderParameter( tools::translate( "ActionParameter", "Schedule" ), "datetime", false ), xis, simulation ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionParameterLima::DisplayInToolTip
 // Created: SBO 2007-05-15
 // -----------------------------------------------------------------------------
@@ -129,7 +140,15 @@ void ActionParameterLima::CommitTo( ASN1T_LimaOrder& asn ) const
     asn.fonctions.elem = new ASN1T_EnumLimaType[asn.fonctions.n];
     for( unsigned int i = 0; i < asn.fonctions.n; ++i )
         asn.fonctions.elem[i] = ASN1T_EnumLimaType( tools::LimaTypeFromString( functions[i] ) );
-    location_->CommitTo( asn.lima );
+
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    {
+        const QString& type = it->second->GetType();
+        if( type == "location" )
+            static_cast< const ActionParameterLocation* >( it->second )->CommitTo( asn.lima );
+        else if( type == "datetime" )
+            static_cast< const ActionParameterDateTime* >( it->second )->CommitTo( asn.horaire );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +158,12 @@ void ActionParameterLima::CommitTo( ASN1T_LimaOrder& asn ) const
 void ActionParameterLima::Clean( ASN1T_LimaOrder& asn ) const
 {
     delete[] asn.fonctions.elem;
-    location_->Clean( asn.lima );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    {
+        const QString& type = it->second->GetType();
+        if( type == "location" )
+            static_cast< const ActionParameterLocation* >( it->second )->Clean( asn.lima );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -88,9 +88,18 @@ void MIL_Formation::InitializeSubordinates( MIL_EntityManager& manager, MIL_Tact
 {
     assert( pArmy_ );
     xis >> list( "formation", manager, &MIL_EntityManager::CreateFormation, *pArmy_, this )
-        >> list( "automat"  , manager, &MIL_EntityManager::CreateAutomat, *this )
+        >> list( "automat"  , *this,   &MIL_Formation::CreateAutomat, manager, *this )
         >> list( "limit"    , *this,   &MIL_Formation::CreateLimit, tacticalLines )
         >> list( "lima"     , *this,   &MIL_Formation::CreateLima,  tacticalLines );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::CreateAutomat
+// Created: NLD 2007-09-07
+// -----------------------------------------------------------------------------
+void MIL_Formation::CreateAutomat( xml::xistream& xis, MIL_EntityManager& manager, MIL_Formation& formation )
+{
+    manager.CreateAutomat( xis, formation );
 }
 
 // -----------------------------------------------------------------------------

@@ -15,6 +15,7 @@
 #include "preparation/AgentPositions.h"
 #include "preparation/HierarchyTemplate.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 
 using namespace kernel;
@@ -110,7 +111,7 @@ bool AgentsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::
     // $$$$ SBO 2006-09-29: Unify mime-types
     return ( event->provides( "Agent" )                    && selectedAgent_     )
         || ( event->provides( "csword/AgentType" )         && selectedAutomat_   )
-        || ( event->provides( "csword/AutomatType" )       && selectedFormation_ )
+        || ( event->provides( "csword/AutomatType" )       && ( selectedFormation_ || selectedAutomat_ ) )
         || ( event->provides( "csword/HierarchyTemplate" ) && IsValidTemplate( event ) );
 }
 
@@ -162,13 +163,16 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
     }
     if( event->provides( "csword/AutomatType" ) )
     {
-        if( !selectedFormation_ )
+        Entity_ABC* selectedEntity = selectedFormation_.ConstCast();
+        if( ! selectedEntity )
+            selectedEntity = selectedAutomat_.ConstCast();
+        if( ! selectedEntity )
             return false;
         QByteArray tmp = event->encodedData( "csword/AutomatType" );
         const AutomatType* droppedItem = *reinterpret_cast< const AutomatType** >( tmp.data() );
         if( droppedItem )
         {
-            model_.agents_.CreateAutomat( *selectedFormation_.ConstCast(), *droppedItem, point );
+            model_.agents_.CreateAutomat( *selectedEntity, *droppedItem, point );
             return true;
         }
     }

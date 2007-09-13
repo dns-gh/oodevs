@@ -245,6 +245,34 @@ float Simulation::GetEffectiveSpeed() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Simulation::ComputeTick
+// Created: SBO 2007-05-04
+// -----------------------------------------------------------------------------
+unsigned Simulation::ComputeTick( unsigned int day, const QTime& time ) const
+{
+    const unsigned long secs = ( day - 1 ) * 3600 * 24 + QTime().secsTo( time );
+    return tickDuration_ ? secs / tickDuration_ : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::ComputeDay
+// Created: SBO 2007-05-15
+// -----------------------------------------------------------------------------
+unsigned Simulation::ComputeDay( unsigned int ticks ) const
+{
+    return 1 + ( ticks * tickDuration_ ) / ( 3600 * 24 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::ComputeTime
+// Created: SBO 2007-05-15
+// -----------------------------------------------------------------------------
+QTime Simulation::ComputeTime( unsigned int ticks ) const
+{
+    return QTime().addSecs( ( ticks * tickDuration_ ) % ( 3600 * 24 ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Simulation::GetDay
 // Created: AGE 2007-05-09
 // -----------------------------------------------------------------------------

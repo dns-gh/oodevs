@@ -36,7 +36,6 @@
 #include "PopulationPositions.h"
 #include "PopulationHierarchies.h"
 #include "Populations.h"
-#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -97,7 +96,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
 // Name: AgentFactory::Create
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
-kernel::Automat_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatType& type )
+kernel::Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType& type )
 {
     Automat* result = new Automat( type, controllers_.controller_, idManager_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
@@ -179,7 +178,7 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
 // Name: AgentFactory::Create
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Formation_ABC& parent )
+kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_ABC& parent )
 {
     Automat* result = new Automat( xis, controllers_.controller_, idManager_, static_.types_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();

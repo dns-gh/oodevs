@@ -29,21 +29,21 @@ ActionParameterLimaList::ActionParameterLimaList( const OrderParameter& paramete
 // Name: ActionParameterLimaList constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-ActionParameterLimaList::ActionParameterLimaList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_LimasOrder& limas )
+ActionParameterLimaList::ActionParameterLimaList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Simulation& simulation, const ASN1T_LimasOrder& limas )
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < limas.n; ++i )
-        AddParameter( *new ActionParameterLima( OrderParameter( tools::translate( "ActionParameter", "Lima %1" ).arg( i + 1 ), "lima", false ), converter, limas.elem[i] ) );
+        AddParameter( *new ActionParameterLima( OrderParameter( tools::translate( "ActionParameter", "Lima %1" ).arg( i ), "lima", true ), converter, simulation, limas.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterLimaList constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-ActionParameterLimaList::ActionParameterLimaList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, xml::xistream& xis )
+ActionParameterLimaList::ActionParameterLimaList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Simulation& simulation, xml::xistream& xis )
     : ActionParameter< QString >( parameter )
 {
-    xis >> list( "parameter", *this, &ActionParameterLimaList::ReadLima, converter );
+    xis >> list( "parameter", *this, &ActionParameterLimaList::ReadLima, converter, simulation );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,9 +59,9 @@ ActionParameterLimaList::~ActionParameterLimaList()
 // Name: ActionParameterLimaList::ReadLima
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-void ActionParameterLimaList::ReadLima( xml::xistream& xis, const CoordinateConverter_ABC& converter )
+void ActionParameterLimaList::ReadLima( xml::xistream& xis, const CoordinateConverter_ABC& converter, const Simulation& simulation )
 {
-    AddParameter( *new ActionParameterLima( converter, xis ) );
+    AddParameter( *new ActionParameterLima( converter, simulation, xis ) );
 }
 
 namespace
@@ -124,9 +124,9 @@ void ActionParameterLimaList::Clean( ASN1T_OrderContext& asn ) const
 // Name: ActionParameterLimaList::DisplayTooltip
 // Created: AGE 2007-07-10
 // -----------------------------------------------------------------------------
-void ActionParameterLimaList::DisplayTooltip( const kernel::GlTools_ABC& tools ) const
+void ActionParameterLimaList::DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    ActionParameter< QString >::DisplayTooltip( tools );
+    ActionParameter< QString >::DisplayTooltip( viewport, tools );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->DisplayTooltip( tools );
+        it->second->DisplayTooltip( viewport, tools );
 }

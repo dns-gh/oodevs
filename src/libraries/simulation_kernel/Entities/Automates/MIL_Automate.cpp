@@ -25,6 +25,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_SupplyDotationState.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_SupplyDotationRequestContainer.h"
+#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
@@ -57,10 +58,11 @@ BOOST_CLASS_EXPORT_GUID( MIL_Automate, "MIL_Automate" )
 // Name: MIL_Automate constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formation& formation, xml::xistream& xis )
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formation& parent, xml::xistream& xis )
     : pType_                             ( &type )
     , nID_                               ( nID )
-    , pFormation_                        ( &formation )
+    , pParentFormation_                  ( &parent )
+    , pParentAutomate_                   ( 0 )
     , strName_                           ( type.GetName() )
     , bEngaged_                          ( true )
     , pKnowledgeGroup_                   ( 0 )
@@ -69,6 +71,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formatio
     , pPionPC_                           ( 0 )
     , pions_                             ()
     , recycledPions_                     ()
+    , automates_                         ()
     , bAutomateModeChanged_              ( true )
     , pTC2_                              ( 0 )
     , pNominalTC2_                       ( 0 )
@@ -79,20 +82,40 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formatio
     , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) )
     , pArmySurrenderedTo_                ( 0 )
 {
-    xis >> optional() >> attribute( "engaged", bEngaged_ )
-        >> optional() >> attribute( "name", strName_ );
-
-    uint nKnowledgeGroup;
-    xis >> attribute( "knowledge-group", nKnowledgeGroup );
-    pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( nKnowledgeGroup );
-    if( !pKnowledgeGroup_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown knowledge group" ); // $$$$ ABL 2007-07-10: error context
-    pKnowledgeGroup_->RegisterAutomate( *this );
-    pFormation_     ->RegisterAutomate( *this );
-
-    pDecision_ = new DEC_AutomateDecision( *this ); //$$$ BULLSHIT : strName_ must be initialized ...
-
-    InitializeSubordinates( xis );
+    Initialize( xis );
+    pParentFormation_->RegisterAutomate( *this );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate constructor
+// Created: NLD 2007-03-29
+// -----------------------------------------------------------------------------
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Automate& parent, xml::xistream& xis )
+    : pType_                             ( &type )
+    , nID_                               ( nID )
+    , pParentFormation_                  ( 0 )
+    , pParentAutomate_                   ( &parent )
+    , strName_                           ( type.GetName() )
+    , bEngaged_                          ( true )
+    , pKnowledgeGroup_                   ( 0 )
+    , pDecision_                         ( 0 )
+    , orderManager_                      ( *this )
+    , pPionPC_                           ( 0 )
+    , pions_                             ()
+    , recycledPions_                     ()
+    , automates_                         ()
+    , bAutomateModeChanged_              ( true )
+    , pTC2_                              ( 0 )
+    , pNominalTC2_                       ( 0 )
+    , bDotationSupplyNeeded_             ( false )
+    , bDotationSupplyExplicitlyRequested_( false )
+    , dotationSupplyStates_              ( )
+    , nTickRcDotationSupplyQuerySent_    ( 0 )
+    , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) )
+    , pArmySurrenderedTo_                ( 0 )
+{
+    Initialize( xis );
+    pParentAutomate_->RegisterAutomate( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +125,8 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formatio
 MIL_Automate::MIL_Automate()
     : pType_                             ( 0 )
     , nID_                               ( 0 )
-    , pFormation_                        ( 0 )
+    , pParentFormation_                  ( 0 )
+    , pParentAutomate_                   ( 0 )
     , strName_                           ()
     , bEngaged_                          ( true )
     , pKnowledgeGroup_                   ( 0 )
@@ -111,6 +135,7 @@ MIL_Automate::MIL_Automate()
     , pPionPC_                           ( 0 )
     , pions_                             ()
     , recycledPions_                     ()
+    , automates_                         ()
     , bAutomateModeChanged_              ( true )
     , pTC2_                              ( 0 )
     , pNominalTC2_                       ( 0 )
@@ -121,6 +146,7 @@ MIL_Automate::MIL_Automate()
     , pKnowledgeBlackBoard_              ( 0 )
     , pArmySurrenderedTo_                ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -129,8 +155,11 @@ MIL_Automate::MIL_Automate()
 // -----------------------------------------------------------------------------
 MIL_Automate::~MIL_Automate()
 {
-    pFormation_     ->UnregisterAutomate( *this );
     pKnowledgeGroup_->UnregisterAutomate( *this );
+    if( pParentAutomate_ )
+        pParentAutomate_->UnregisterAutomate( *this );
+    if( pParentFormation_ )
+        pParentFormation_->UnregisterAutomate( *this );    
     delete pDecision_;
 }
 
@@ -191,7 +220,8 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
     assert( pType_ );
 
     file >> const_cast< uint& >( nID_ )
-         >> pFormation_
+         >> pParentFormation_
+         >> pParentAutomate_
          >> strName_
          >> bEngaged_
          >> pKnowledgeGroup_
@@ -199,6 +229,7 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
          >> pPionPC_
          >> pions_
          >> recycledPions_
+         >> automates_
          >> bAutomateModeChanged_
          >> bDotationSupplyNeeded_
          >> bDotationSupplyExplicitlyRequested_
@@ -220,7 +251,8 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
          << pNominalTC2_
          << type
          << const_cast< uint& >( nID_ )
-         << pFormation_
+         << pParentFormation_
+         << pParentAutomate_
          << strName_
          << bEngaged_
          << pKnowledgeGroup_
@@ -228,6 +260,7 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
          << pPionPC_
          << pions_
          << recycledPions_
+         << automates_
          << bAutomateModeChanged_
          << bDotationSupplyNeeded_
          << bDotationSupplyExplicitlyRequested_
@@ -238,15 +271,28 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::InitializeSubordinates
-// Created: NLD 2006-10-11
+// Name: MIL_Automate::Initialize
+// Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
-void MIL_Automate::InitializeSubordinates( xml::xistream& xis )
+void MIL_Automate::Initialize( xml::xistream& xis )
 {
-    xis >> list( "unit" , *this, &MIL_Automate::ReadUnit )
-        >> list( "limit", *this, &MIL_Automate::CreateLimit )
-        >> list( "lima" , *this, &MIL_Automate::CreateLima );
+    xis >> optional() >> attribute( "engaged", bEngaged_ )
+        >> optional() >> attribute( "name"   , strName_ );
 
+    uint nKnowledgeGroup;
+    xis >> attribute( "knowledge-group", nKnowledgeGroup );
+    pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( nKnowledgeGroup );
+    if( !pKnowledgeGroup_ )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown knowledge group" ); // $$$$ ABL 2007-07-10: error context
+    pKnowledgeGroup_->RegisterAutomate( *this );
+      
+    pDecision_ = new DEC_AutomateDecision( *this ); //$$$ BULLSHIT : strName_ must be initialized ...
+    
+    xis >> list( "unit"    , *this, &MIL_Automate::ReadUnitSubordinate    )
+        >> list( "automat" , *this, &MIL_Automate::ReadAutomatSubordinate )
+        >> list( "limit"   , *this, &MIL_Automate::CreateLimit            )
+        >> list( "lima"    , *this, &MIL_Automate::CreateLima             );
+        
     if( !pPionPC_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat's command post is not defined" ); // $$$$ ABL 2007-07-10: error context
 }
@@ -270,10 +316,10 @@ void MIL_Automate::CreateLima( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::ReadUnit
+// Name: MIL_Automate::ReadUnitSubordinate
 // Created: ABL 2007-07-10
 // -----------------------------------------------------------------------------
-void MIL_Automate::ReadUnit( xml::xistream& xis )
+void MIL_Automate::ReadUnitSubordinate( xml::xistream& xis )
 {
     uint        id;
     std::string strType;
@@ -294,6 +340,25 @@ void MIL_Automate::ReadUnit( xml::xistream& xis )
         pPionPC_ = &pion;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::ReadAutomatSubordinate
+// Created: NLD 2007-03-29
+// -----------------------------------------------------------------------------
+void MIL_Automate::ReadAutomatSubordinate( xml::xistream& xis )
+{
+    uint        id;
+    std::string strType;
+
+    xis >> attribute( "id", id )
+        >> attribute( "type", strType );
+
+    const MIL_AutomateType* pAutomateType = MIL_AutomateType::FindAutomateType( strType );
+    if( !pAutomateType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automat type" ); // $$$$ ABL 2007-07-10: error context
+
+    MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomat( xis, *this ); // Auto-registration
+}
+    
 // =============================================================================
 // DYNAMIC PIONS
 // =============================================================================
@@ -343,6 +408,9 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
             << attribute( "engaged", bEngaged_ )
             << attribute( "knowledge-group", pKnowledgeGroup_->GetID() )
             << attribute( "type", pType_->GetName() );
+
+    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+        (**it).WriteODB( xos );
 
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
         (**it).WriteODB( xos );
@@ -425,8 +493,8 @@ void MIL_Automate::UpdateDecision()
 void MIL_Automate::UpdateKnowledges()
 {
     // Pions (+ PC)
-    for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-        (**itPion).UpdateKnowledges();
+    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+        (**it).UpdateKnowledges();
 
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->Update();
@@ -560,12 +628,12 @@ void MIL_Automate::NotifyDotationSupplied( const PHY_SupplyDotationState& supply
 //-----------------------------------------------------------------------------
 void MIL_Automate::Disengage()
 {
-    if( !bEngaged_ )
-        return;
-
-    bEngaged_             = false;
-    bAutomateModeChanged_ = true;
     orderManager_.ReplaceMission();
+    if( bEngaged_ )
+    {
+        bEngaged_             = false;
+        bAutomateModeChanged_ = true;
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -574,15 +642,18 @@ void MIL_Automate::Disengage()
 //-----------------------------------------------------------------------------
 void MIL_Automate::Engage()
 {
-    if( bEngaged_ )
-        return;
-
-    bEngaged_             = true;
-    bAutomateModeChanged_ = true;
+    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+        (**it).Engage();
 
     orderManager_.ReplaceMission();
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
         (**it).GetOrderManager().ReplaceMission();
+
+    if( !bEngaged_ )
+    {
+        bEngaged_             = true;
+        bAutomateModeChanged_ = true;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -591,8 +662,8 @@ void MIL_Automate::Engage()
 // -----------------------------------------------------------------------------
 bool MIL_Automate::IsPerceived( const DEC_Knowledge_Agent&  knowledge ) const
 {
-    for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-        if( (**itPion).GetRole< PHY_RolePion_Perceiver >().ComputePerception( knowledge ) != PHY_PerceptionLevel::notSeen_ )
+    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+        if( (**it).GetRole< PHY_RolePion_Perceiver >().ComputePerception( knowledge ) != PHY_PerceptionLevel::notSeen_ )
             return true;
     return false;
 }
@@ -603,8 +674,8 @@ bool MIL_Automate::IsPerceived( const DEC_Knowledge_Agent&  knowledge ) const
 // -----------------------------------------------------------------------------
 bool MIL_Automate::IsPerceived( const DEC_Knowledge_Object& knowledge ) const
 {
-    for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-        if( (**itPion).GetRole< PHY_RolePion_Perceiver >().ComputePerception( knowledge ) != PHY_PerceptionLevel::notSeen_ )
+    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+        if( (**it).GetRole< PHY_RolePion_Perceiver >().ComputePerception( knowledge ) != PHY_PerceptionLevel::notSeen_ )
             return true;
     return false;
 }
@@ -615,8 +686,12 @@ bool MIL_Automate::IsPerceived( const DEC_Knowledge_Object& knowledge ) const
 // -----------------------------------------------------------------------------
 MIL_Army& MIL_Automate::GetArmy() const
 {
-    assert( pFormation_ );
-    return pFormation_->GetArmy();
+    assert( pParentFormation_ || pParentAutomate_ );
+
+    if( pParentFormation_ )
+        return pParentFormation_->GetArmy();
+    else
+        return pParentAutomate_->GetArmy();
 }
 
 // =============================================================================
@@ -728,6 +803,23 @@ bool MIL_Automate::NotifyImprisoned( const MIL_CampPrisonniers& camp )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Automate::GetAlivePionsMaxSpeed
+// Created: NLD 2007-04-30
+// -----------------------------------------------------------------------------
+MT_Float MIL_Automate::GetAlivePionsMaxSpeed() const
+{
+    MT_Float rMaxSpeed = std::numeric_limits< MT_Float >::max();
+    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+    {
+        const MIL_AgentPion& pion = **it;
+        const MT_Float rSpeed = pion.GetRole< PHY_RoleAction_Moving >().GetMaxSpeed();
+        if( rSpeed != 0. )
+            rMaxSpeed = std::min( rMaxSpeed, rSpeed );
+    }
+    return rMaxSpeed;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Automate::GetAlivePionsBarycenter
 // Created: NLD 2004-11-08
 // -----------------------------------------------------------------------------
@@ -765,9 +857,23 @@ void MIL_Automate::SendCreation() const
     asn().type_automate           = pType_->GetID();
     asn().oid_camp                = GetArmy().GetID();
     asn().oid_groupe_connaissance = GetKnowledgeGroup().GetID();
-    asn().oid_formation           = pFormation_->GetID();
     asn().nom                     = strName_.c_str();
+
+    assert( pParentAutomate_ || pParentFormation_ );
+    if( pParentAutomate_ )
+    {
+        asn().oid_parent.t          = T_MsgAutomatCreation_oid_parent_automate;
+        asn().oid_parent.u.automate = pParentAutomate_->GetID();
+    }
+    else if( pParentFormation_ )
+    {
+        asn().oid_parent.t           = T_MsgAutomatCreation_oid_parent_formation;
+        asn().oid_parent.u.formation = pParentFormation_->GetID();
+    }
     asn.Send();
+
+    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+        (**it).SendCreation();
 
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
         (**it).SendCreation();
@@ -793,6 +899,9 @@ void MIL_Automate::SendFullState() const
     for( CIT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
         it->second->SendFullState();
 
+    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+        (**it).SendFullState();
+
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
         (**it).SendFullState();
 }
@@ -817,15 +926,12 @@ void MIL_Automate::SendKnowledge() const
 void MIL_Automate::SendLogisticLinks() const
 {
     NET_ASN_MsgAutomatChangeLogisticLinks asn;
-
     asn().oid = nID_;
-
     if( pTC2_ )
     {
         asn().m.oid_tc2Present = 1;
         asn().oid_tc2          = pTC2_->GetID();
     }
-
     asn.Send();
 }
 
@@ -835,6 +941,8 @@ void MIL_Automate::SendLogisticLinks() const
 // -----------------------------------------------------------------------------
 void MIL_Automate::OnReceiveMsgSetAutomateMode( const ASN1T_MsgSetAutomatMode& asnMsg )
 {
+    if( pParentAutomate_ && pParentAutomate_->IsEngaged() )
+        throw NET_AsnException< ASN1T_EnumSetAutomatModeErrorCode >( EnumSetAutomatModeErrorCode::error_not_allowed );
     switch( asnMsg.mode )
     {
         case EnumAutomatMode::debraye: Disengage(); break;
@@ -943,6 +1051,46 @@ void MIL_Automate::OnReceiveMsgChangeLogisticLinks( const ASN1T_MsgAutomatChange
                 throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate_tc2 );
             pTC2_ = static_cast< MIL_AutomateLOG* >( pTC2 );
         }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::OnReceiveMsgChangeSuperior
+// Created: NLD 2007-04-11
+// -----------------------------------------------------------------------------
+void MIL_Automate::OnReceiveMsgChangeSuperior( const ASN1T_MsgAutomatChangeSuperior& msg )
+{
+    if( msg.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_formation )
+    {
+        MIL_Formation* pNewFormation = MIL_AgentServer::GetWorkspace().GetEntityManager().FindFormation( msg.oid_superior.u.formation );
+        if( !pNewFormation )
+            throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_formation );
+        if( pNewFormation->GetArmy() != GetArmy() )
+            throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_camps_incompatibles );
+        if( pParentAutomate_ )
+            pParentAutomate_->UnregisterAutomate( *this );
+        if( pParentFormation_ )
+            pParentFormation_->UnregisterAutomate( *this );    
+        pParentAutomate_  = 0;
+        pParentFormation_ = pNewFormation;
+        pNewFormation->RegisterAutomate( *this );
+    }
+    else if( msg.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_automate )
+    {
+        MIL_Automate* pNewAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( msg.oid_superior.u.automate );
+        if( !pNewAutomate )
+            throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate );
+        if( pNewAutomate->GetArmy() != GetArmy() )
+            throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_camps_incompatibles );
+        if( pNewAutomate == this ) 
+            throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate );
+        if( pParentAutomate_ )
+            pParentAutomate_->UnregisterAutomate( *this );
+        if( pParentFormation_ )
+            pParentFormation_->UnregisterAutomate( *this );    
+        pParentFormation_ = 0;
+        pParentAutomate_  = pNewAutomate;
+        pNewAutomate->RegisterAutomate( *this );
     }
 }
 

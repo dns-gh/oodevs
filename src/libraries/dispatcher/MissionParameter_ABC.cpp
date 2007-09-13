@@ -42,6 +42,8 @@
 #include "MissionParameter_MaintenancePriorities.h"
 #include "MissionParameter_MedicalPriorities.h"
 #include "MissionParameter_String.h"
+#include "MissionParameter_Objective.h"
+#include "MissionParameter_ObjectiveList.h"
 
 using namespace dispatcher;
 
@@ -89,6 +91,8 @@ MissionParameter_ABC* MissionParameter_ABC::Create( const ASN1T_MissionParameter
         case T_MissionParameter_value_logMaintenancePriorities  : return new MissionParameter_MaintenancePriorities ( asn );
         case T_MissionParameter_value_logMedicalPriorities      : return new MissionParameter_MedicalPriorities     ( asn );
         case T_MissionParameter_value_aCharStr                  : return new MissionParameter_String                ( asn );
+        case T_MissionParameter_value_missionObjective          : return new MissionParameter_Objective             ( asn );
+        case T_MissionParameter_value_missionObjectiveList      : return new MissionParameter_ObjectiveList         ( asn );
         default:
             throw std::runtime_error( "Invalid mission parameter type" );
     }

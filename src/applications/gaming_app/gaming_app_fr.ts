@@ -895,6 +895,10 @@
         <source>Set &apos;%1&apos; function</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Schedule</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LimitParameter</name>
@@ -1580,10 +1584,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unit missions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Fragmentary orders</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1593,6 +1593,10 @@
     </message>
     <message>
         <source>Population missions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agent missions</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

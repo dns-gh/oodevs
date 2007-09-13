@@ -49,19 +49,6 @@ MIL_PionMission::MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PionMission constructor
-// Created: NLD 2006-11-21
-// -----------------------------------------------------------------------------
-MIL_PionMission::MIL_PionMission( MIL_AgentPion& pion, const MIL_PionMission& rhs )
-    : MIL_Mission_ABC       ( pion.GetKnowledge(), rhs )
-    , type_                 ( rhs.type_ )
-    , pion_                 ( pion )
-    , bDIABehaviorActivated_( false )
-{
-    GetVariable( nDIADirectionDanger_ ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PionMission constructor
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
 MIL_PionMission::MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion& pion, const MIL_AutomateMission& parent )
@@ -84,6 +71,19 @@ MIL_PionMission::MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion
     , bDIABehaviorActivated_( false )
 {
     GetVariable( nDIADirectionDanger_ ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PionMission constructor
+// Created: NLD 2006-11-21
+// -----------------------------------------------------------------------------
+MIL_PionMission::MIL_PionMission( MIL_AgentPion& pion, const MIL_PionMission& rhs )
+    : MIL_Mission_ABC       ( pion.GetKnowledge(), rhs )
+    , type_                 ( rhs.type_ )
+    , pion_                 ( pion )
+    , bDIABehaviorActivated_( false )
+{
+    GetVariable( nDIADirectionDanger_ ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
 }
 
 // -----------------------------------------------------------------------------

@@ -38,6 +38,7 @@
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 
 #include "Decision/DEC_Gen_Object.h"
+#include "Decision/DEC_Objective.h"
 #include "Decision/DEC_Tools.h"
 
 #include "Network/NET_AsnException.h"
@@ -49,6 +50,11 @@
 typedef std::vector< DEC_Gen_Object* >    T_GenObjectVector;
 typedef T_GenObjectVector::iterator       IT_GenObjectVector;
 typedef T_GenObjectVector::const_iterator CIT_GenObjectVector;
+
+typedef std::vector< DEC_Objective* >     T_ObjectiveVector;
+typedef T_ObjectiveVector::iterator       IT_ObjectiveVector;
+typedef T_ObjectiveVector::const_iterator CIT_ObjectiveVector;
+
 
 //=============================================================================
 // PARAMETERS TOOLS
@@ -833,6 +839,29 @@ void NET_ASN_Tools::WriteGDH( ASN1T_DateTime& asnGDH )
 // Name: NET_ASN_Tools::Delete
 // Created: NLD 2006-10-26
 // -----------------------------------------------------------------------------
+void NET_ASN_Tools::Delete( ASN1T_MissionObjectiveList& asn )
+{
+    if( asn.n > 0 )
+    {
+        for( uint i = 0; i < asn.n; ++i )
+            Delete( asn.elem[i] );
+        delete [] asn.elem;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::Delete
+// Created: NLD 2006-10-26
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::Delete( ASN1T_MissionObjective& asn )
+{
+    NET_ASN_Tools::Delete( asn.localisation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::Delete
+// Created: NLD 2006-10-26
+// -----------------------------------------------------------------------------
 void NET_ASN_Tools::Delete( ASN1T_PlannedWorkList& asn )
 {
     if( asn.n > 0 )
@@ -1588,6 +1617,124 @@ void NET_ASN_Tools::CopyGenObjectList( const DIA_Variable_ABC& diaFrom, DIA_Vari
         objectsTo.push_back( pNewObject );
     }
     diaListTo.SetValueUserType( objectsTo, DEC_Tools::GetTypeGenObjet() );
+}
+
+// =============================================================================
+// Mission parameters tools : Objective
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyObjective
+// Created: AGE 2004-09-21
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::CopyObjective( const ASN1T_MissionObjective& asn, DIA_Variable_ABC& dia )
+{
+    DEC_Objective* pObjective = new DEC_Objective( asn );
+    dia.SetValue( pObjective, &DEC_Tools::GetTypeObjectif() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyObjective
+// Created: AGE 2004-09-21
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::CopyObjective( const DIA_Variable_ABC& dia, ASN1T_MissionObjective& asn )
+{
+    assert( DEC_Tools::CheckTypeObjectif( dia ) );
+    const DEC_Objective* pTmp = dia.ToUserPtr( pTmp );
+    if( !pTmp )
+    {
+        assert( false );
+        return false;
+    }
+    pTmp->Serialize( asn );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyObjective
+// Created: NLD 2006-10-26
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::CopyObjective( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo )
+{
+    assert( DEC_Tools::CheckTypeObjectif( diaFrom ) );
+    assert( DEC_Tools::CheckTypeObjectif( diaTo ) );
+
+    const DEC_Objective* pSrc = diaFrom.ToUserPtr( pSrc );
+    assert( pSrc );
+    DEC_Objective* pDest = new DEC_Objective( *pSrc );
+    diaTo.SetValue( pDest, &DEC_Tools::GetTypeObjectif() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyListObjectives
+// Created: NLD 2004-04-22
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::CopyObjectiveList( const ASN1T_MissionObjectiveList& asn, DIA_Variable_ABC& dia )
+{
+    T_ObjectiveVector objects;
+    objects.reserve( asn.n );
+    for( uint i = 0; i < asn.n; ++i )
+    {
+        try
+        {
+            DEC_Objective* pObjective = new DEC_Objective( asn.elem[i] );
+            objects.push_back( pObjective );
+        }
+        catch( NET_AsnException< ASN1T_EnumOrderErrorCode >& )
+        {
+             for( IT_ObjectiveVector it = objects.begin(); it != objects.end(); ++it )
+                delete *it;
+            throw;
+        }
+    }
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( dia );
+    diaObjectList.SetValueUserType( objects, DEC_Tools::GetTypeObjectif() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyListObjectives
+// Created: NLD 2004-04-22
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::CopyObjectiveList( const DIA_Variable_ABC& dia, ASN1T_MissionObjectiveList& asn )
+{
+    assert( DEC_Tools::CheckTypeListeObjectifs( dia ) );
+
+    const DIA_Variable_ObjectList& diaObjectList = static_cast< const DIA_Variable_ObjectList& >( dia );
+
+    T_ObjectiveVector objects = diaObjectList.ToUserTypeList( objects );
+
+    asn.n = objects.size();
+    if( !objects.empty() )
+    {
+        asn.elem = new ASN1T_MissionObjective[ objects.size() ];
+        for( CIT_ObjectiveVector it = objects.begin(); it != objects.end(); ++it )
+            (**it).Serialize( asn.elem[ it - objects.begin() ] );
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyObjectiveList
+// Created: NLD 2006-10-26
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::CopyObjectiveList( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo )
+{                       
+    assert( DEC_Tools::CheckTypeListeObjectifs( diaFrom ) );
+    assert( DEC_Tools::CheckTypeListeObjectifs( diaTo ) );
+
+    const DIA_Variable_ObjectList& diaListFrom = static_cast< const DIA_Variable_ObjectList& >( diaFrom );
+          DIA_Variable_ObjectList& diaListTo   = static_cast<       DIA_Variable_ObjectList& >( diaTo );
+
+    T_ObjectiveVector objectsFrom = diaListFrom.ToUserTypeList( objectsFrom );
+    T_ObjectiveVector objectsTo;
+
+    objectsTo.reserve( objectsFrom.size() );
+    for( CIT_ObjectiveVector it = objectsFrom.begin(); it != objectsFrom.end(); ++it )
+    {
+        DEC_Objective* pNewObject = new DEC_Objective( **it );
+        objectsTo.push_back( pNewObject );
+    }
+    diaListTo.SetValueUserType( objectsTo, DEC_Tools::GetTypeObjectif() );
 }
 
 // =============================================================================

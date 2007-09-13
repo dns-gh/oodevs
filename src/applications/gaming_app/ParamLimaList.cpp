@@ -24,10 +24,11 @@ using namespace kernel;
 // Name: ParamLimaList constructor
 // Created: SBO 2006-11-14
 // ----------------------------------------------------------------------------
-ParamLimaList::ParamLimaList( QObject* parent, const OrderParameter& parameter, const CoordinateConverter_ABC& converter, ActionController& controller )
+ParamLimaList::ParamLimaList( QObject* parent, const OrderParameter& parameter, const CoordinateConverter_ABC& converter, ActionController& controller, const Simulation& simulation )
     : ListParameter( parent, parameter.GetName(), controller, parameter.IsOptional() )
     , parameter_( parameter )
     , converter_( converter )
+    , simulation_( simulation )
     , count_( 0 )
     , potential_( 0 )
 {
@@ -72,7 +73,7 @@ Param_ABC* ParamLimaList::CreateElement()
 {
     if( potential_ )
     {
-        LimaParameter* lima = new LimaParameter( this, tr( "Lima %1" ).arg( ++count_ ), converter_, *potential_ );
+        LimaParameter* lima = new LimaParameter( this, tr( "Lima %1" ).arg( ++count_ ), converter_, simulation_, *potential_ );
         limas_[potential_] = lima;
         return lima;
     }

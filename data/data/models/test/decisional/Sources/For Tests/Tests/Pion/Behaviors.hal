@@ -24,12 +24,12 @@ default Default()
     DEC_DebugAffichePoint( DEC_Agent_Position() );
 
 //    DEC_RC( eRC_SurLima,eTypeLima_LD ); 
-    if( DEC_Agent_EstInstalle() )
+    /*if( DEC_Agent_EstInstalle() )
         DEC_Debug( "Installe" );
 
     if( DEC_Agent_EstDesinstalle() )
         DEC_Debug( "Desinstalle" );
-
+*/
    
 /*
     T_PerceptionRadar cock  = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_Radar, DEC_Geometrie_ConvertirPointEnLocalisation( DEC_Agent_Position() ) );
@@ -68,7 +68,7 @@ default Default()
 
     E_ValiditeRequete   nValidite;
     
-    T_ListeConnaissancesPopulation pop2 = DEC_Connaissances_Populations();
+    /*T_ListeConnaissancesPopulation pop2 = DEC_Connaissances_Populations();
     if( DIA_Size( pop2 ) > 0 )
     {
         with( p in pop2 )
@@ -76,7 +76,7 @@ default Default()
             if( DEC_ConnaissancePopulation_EstPercueParUnite( p, nValidite ) )
                 DEC_Debug( "-- Population percue" );
         }
-    }
+    }*/
    
     persistent T_Action              popuFire;
     persistent E_EtatActionTirDirect nTirDirectState;
@@ -630,7 +630,7 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
         if( DIA_ModuleBegins() )
         {
             //T_Localisation prout = DEC_Geometrie_CreerLocalisationCercle( DEC_Agent_Position(), 800 );
-            currentAction = DEC_StartPreparerObjet( nState, repObjet, mission.type_, mission.forme_, mission.param1_, mission.param2_, false );
+            currentAction = DEC_StartCreerObjet( nState, repObjet, mission.type_, mission.forme_, mission.param1_, mission.param2_, false );
             
             //currentAction =  DEC_StartControlerZone( mission.forme_, 12000, true );
             
@@ -1326,10 +1326,6 @@ behavior MIS_Pion_LOG_TrierBlesses( T_Mission_Pion_LOG_TrierBlesses mission, id 
     }         
 }
 
-
-
-
-
 behavior MIS_Pion_CanaliserPopulations( T_Mission_Pion_CanaliserPopulations mission, id nDummy )
 {
     when updated:
@@ -1344,8 +1340,16 @@ behavior MIS_Pion_CanaliserPopulations( T_Mission_Pion_CanaliserPopulations miss
     }
 }
 
-
+behavior MIS_Pion_LOG_SeDeployer( T_Mission_Pion_LOG_SeDeployer mission, id nDummy )
+{
+    if( DIA_ModuleBegins() )
+        DEC_Debug( "MIS_Pion_LOG_SeDeployer" );
+}
 
 behavior MIS_Pion_Test_All( T_Mission_Pion_Test_All mission, id nDummy )
+{
+}
+
+behavior MIS_Pion_Test_Objectifs( T_Mission_Pion_Test_Objectifs mission, id nDummy )
 {
 }

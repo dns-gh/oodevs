@@ -17,6 +17,7 @@
 
 namespace kernel
 {
+    class Automat_ABC;
     class Formation_ABC;
 }
 
@@ -26,7 +27,7 @@ namespace gui
 
 // =============================================================================
 /** @class  FormationLayer
-    @brief  Formation layer
+    @brief  Layer to display entities which have no real position
 */
 // Created: AGE 2007-05-31
 // =============================================================================

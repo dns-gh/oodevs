@@ -30,18 +30,34 @@ public:
 
 
     // Limas
-                           static void PionSetMissionLimaFlag    ( DIA_Call_ABC& call,       MIL_AgentPion& caller );
-                           static void AutomateSetMissionLimaFlag( DIA_Call_ABC& call,       MIL_Automate&  caller );
-    template< typename T > static void GetMissionLimaFlag        ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetLima                   ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetLima                           ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetNextScheduledElement           ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetNextScheduledLima              ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetFuseau                         ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetMissionLimaFlag                ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetMissionLimaScheduleFlag        ( DIA_Call_ABC& call, const T& caller );
+                           static void PionSetMissionLimaFlag            ( DIA_Call_ABC& call,       MIL_AgentPion& caller );
+                           static void PionSetMissionLimaScheduleFlag    ( DIA_Call_ABC& call,       MIL_AgentPion& caller );
+                           static void AutomateSetMissionLimaFlag        ( DIA_Call_ABC& call,       MIL_Automate& caller );
+                           static void AutomateSetMissionLimaScheduleFlag( DIA_Call_ABC& call,       MIL_Automate& caller );
 
     // Automate
-    static void MRT_CreatePionMission               ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    static void MRT_Validate                        ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    static void MRT_AffectFuseaux                   ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    
-    static void CDT_CreatePionMission               ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    static void CDT_GivePionMission                 ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static void MRT_CreatePionMission  ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static void MRT_Validate           ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static void MRT_AffectFuseaux      ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );   
+    static void CDT_CreatePionMission  ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static void CDT_GivePionMission    ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+
+    static void CreateAutomateMission        ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static void AssignFuseauToAutomateMission( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static void GiveAutomateMission          ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static void SplitFuseau                  ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+
+private:
+    //! @name Tools
+    //@{
+    static MIL_Automate& GetHigherEngagedAutomate( MIL_Automate& automate );
+    //@}
 };
 
 #include "DEC_OrdersFunctions.inl"

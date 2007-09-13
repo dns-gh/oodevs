@@ -42,11 +42,12 @@ public:
 
     // @name Accessors 
     //@{
-          MIL_LimaOrder* FindLima      ( const MIL_LimaFunction& function ) const;
-          MIL_LimaOrder* FindLima      ( uint nID ) const;
-    const T_LimaVector&  GetLimas      () const;
-    const MT_Vector2D&   GetDirDanger  () const;
-    const std::string&   GetMissionName() const;
+          MIL_LimaOrder* FindLima             ( const MIL_LimaFunction& function ) const;
+          MIL_LimaOrder* FindLima             ( uint nID ) const;
+          MIL_LimaOrder* FindNextScheduledLima() const;
+    const T_LimaVector&  GetLimas             () const;
+    const MT_Vector2D&   GetDirDanger         () const;
+    const std::string&   GetMissionName       () const;
     //@}
 
     //! @name Missions accessors

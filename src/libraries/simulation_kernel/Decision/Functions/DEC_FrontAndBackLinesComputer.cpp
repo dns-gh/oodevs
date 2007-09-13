@@ -17,6 +17,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Decision/DEC_Tools.h"
 
@@ -25,18 +26,26 @@
 // Created: NLD 2004-10-19
 // -----------------------------------------------------------------------------
 DEC_FrontAndBackLinesComputer::DEC_FrontAndBackLinesComputer( const MIL_Automate& caller, DIA_Call_ABC& call )
-    : automate_         ( caller )
+    : refAutomate_      ( caller )
     , nLastTimeComputed_( 0 )
-    , backLineDroite_    ( )
-    , frontLineDroite_   ( )
+    , pions_            ()
+    , automates_        ()
+    , backLineDroite_   ()
+    , frontLineDroite_  ()
 {
-    assert( DEC_Tools::CheckTypeListePions( call.GetParameter( 0 ) ) );
-    T_ObjectVector selPions = call.GetParameter( 0 ).ToSelection();
-    pions_.reserve( selPions.size() );
-    for( IT_ObjectVector itPion = selPions.begin(); itPion != selPions.end(); ++itPion )
+    if( DEC_Tools::CheckTypeListePions( call.GetParameter( 0 ) ) )
     {
-        MIL_AgentPion& pion = static_cast< DEC_RolePion_Decision& >( **itPion ).GetPion();
-        pions_.push_back( &pion );
+        T_ObjectVector sel = call.GetParameter( 0 ).ToSelection();
+        pions_.reserve( sel.size() );
+        for( IT_ObjectVector it = sel.begin(); it != sel.end(); ++it )
+            pions_.push_back( &static_cast< DEC_RolePion_Decision& >( **it ).GetPion() );
+    }
+    else if( DEC_Tools::CheckTypeListeAutomates( call.GetParameter( 0 ) ) )
+    {
+        T_ObjectVector sel = call.GetParameter( 0 ).ToSelection();
+        automates_.reserve( sel.size() );
+        for( IT_ObjectVector it = sel.begin(); it != sel.end(); ++it )
+            automates_.push_back( &static_cast< DEC_AutomateDecision& >( **it ).GetAutomate() );
     }
 }
 
@@ -62,10 +71,10 @@ void DEC_FrontAndBackLinesComputer::Compute()
 
     nLastTimeComputed_ = nCurrentTime;
     
-    if( automate_.GetFuseau().IsNull() || pions_.empty() )
+    if( refAutomate_.GetFuseau().IsNull() || ( pions_.empty() && automates_.empty() ) )
         return;
 
-    const MT_Line& fuseauGlobalDirLine = automate_.GetFuseau().GetGlobalDirection();
+    const MT_Line& fuseauGlobalDirLine = refAutomate_.GetFuseau().GetGlobalDirection();
 
     // Vecteur perpendiculaire direction globale du fuseau
     MT_Vector2D vDirPerpendicularFuseau( fuseauGlobalDirLine.GetPosEnd() - fuseauGlobalDirLine.GetPosStart() );
@@ -77,11 +86,17 @@ void DEC_FrontAndBackLinesComputer::Compute()
     TER_DistanceLess cmp ( fuseauGlobalDirLine.GetPosStart() );
     T_PointSet projectedPointSet( cmp );
                      
-    // Project all the pions positions on the fuseau global direction
-    for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+    // Project all the positions on the fuseau global direction
+    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
     {
-        if( !(**itPion).IsDead() )
-            projectedPointSet.insert( fuseauGlobalDirLine.ClosestPointOnLine( (**itPion).GetRole< PHY_RolePion_Location >().GetPosition() ) );
+        if( !(**it).IsDead() )
+            projectedPointSet.insert( fuseauGlobalDirLine.ClosestPointOnLine( (**it).GetRole< PHY_RolePion_Location >().GetPosition() ) );
+    }
+    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+    {
+        MT_Vector2D barycenter;
+        if( (**it).GetAlivePionsBarycenter( barycenter ) )
+            projectedPointSet.insert( barycenter );
     }
 
     if( projectedPointSet.empty() )

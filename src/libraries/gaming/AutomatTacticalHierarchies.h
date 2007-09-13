@@ -10,11 +10,14 @@
 #ifndef __AutomatTacticalHierarchies_h_
 #define __AutomatTacticalHierarchies_h_
 
+#include "game_asn/Asn.h"
 #include "clients_kernel/MergingTacticalHierarchies.h"
+#include "clients_kernel/Resolver_ABC.h"
 
 namespace kernel
 {
     class PropertiesDictionary;
+    class Automat_ABC;
     class Formation_ABC;
 }
 
@@ -25,14 +28,15 @@ namespace kernel
 // Created: AGE 2006-10-19
 // =============================================================================
 class AutomatTacticalHierarchies : public kernel::MergingTacticalHierarchies
+                                 , public kernel::Updatable_ABC< ASN1T_MsgAutomatChangeSuperiorAck >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
              AutomatTacticalHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder,
-                                         kernel::Formation_ABC& superior,
-                                         kernel::PropertiesDictionary& dictionary );
+                                         kernel::Entity_ABC& superior,
+                                         const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const kernel::Resolver_ABC< kernel::Formation_ABC >& formationResolver );
     virtual ~AutomatTacticalHierarchies();
     //@}
 
@@ -51,6 +55,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void DoUpdate( const ASN1T_MsgAutomatChangeSuperiorAck& message );
     virtual void DoUpdate( const kernel::InstanciationComplete& message );
     virtual void MergeSymbol( const kernel::Entity_ABC& entity );
     static std::string Max( const std::string& lhs, const std::string& rhs );
@@ -63,7 +68,9 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    kernel::Formation_ABC& superior_;
+    const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
+    const kernel::Resolver_ABC< kernel::Formation_ABC >& formationResolver_;
+    kernel::Entity_ABC& superior_;
     std::string level_;
     //@}
 };

@@ -24,6 +24,7 @@ namespace kernel
 
 class Lima;
 class LimaParameter;
+class Simulation;
 
 // =============================================================================
 /** @class  ParamLimaList
@@ -40,7 +41,7 @@ class ParamLimaList : public ListParameter
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLimaList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& controller );
+             ParamLimaList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& controller, const Simulation& simulation );
     virtual ~ParamLimaList();
     //@}
 
@@ -83,6 +84,7 @@ private:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::OrderParameter& parameter_;
+    const Simulation& simulation_;
     unsigned int count_;
     T_Limas limas_;
     const Lima* potential_;

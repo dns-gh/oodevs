@@ -17,6 +17,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
@@ -983,15 +984,28 @@ void DEC_GeometryFunctions::StopComputingFrontAndBackLines( DIA_Call_ABC& call, 
 void DEC_GeometryFunctions::ComputeDistanceFromFrontLine( DIA_Call_ABC& call, const MIL_Automate& /*callerAgent*/ )
 {
     assert( DEC_Tools::CheckTypeCalculLignesAvantArriere( call.GetParameter( 0 ) ) );
-    assert( DEC_Tools::CheckTypePion                    ( call.GetParameter( 1 ) ) );
 
-    DEC_FrontAndBackLinesComputer* pComputer = call.GetParameter( 0 ).ToUserPtr   ( pComputer );
-    DEC_RolePion_Decision*         pPion     = call.GetParameter( 1 ).ToUserObject( pPion );
+    DEC_FrontAndBackLinesComputer* pComputer = call.GetParameter( 0 ).ToUserPtr( pComputer );
+    assert( pComputer );
 
-    assert( pComputer);
-    assert( pPion );
+    MT_Float rDist = 0;
+    if( DEC_Tools::CheckTypePion( call.GetParameter( 1 ) ) )
+    {
+        DEC_RolePion_Decision* pPion = call.GetParameter( 1 ).ToUserObject( pPion );
+        assert( pPion );
+        rDist = pComputer->ComputeDistanceFromFrontLine( pPion->GetPion().GetRole< PHY_RolePion_Location >().GetPosition() );
+    }
+    else if( DEC_Tools::CheckTypeAutomate( call.GetParameter( 1 ) ) )
+    {
+        DEC_AutomateDecision* pAutomate = call.GetParameter( 1 ).ToUserObject( pAutomate );
+        assert( pAutomate );
+        MT_Vector2D barycenter;
+        if( pAutomate->GetAutomate().GetAlivePionsBarycenter( barycenter ) )
+            rDist = pComputer->ComputeDistanceFromFrontLine( barycenter );
+    }
+    else
+        assert( false );
 
-    MT_Float rDist = pComputer->ComputeDistanceFromFrontLine( pPion->GetPion().GetRole< PHY_RolePion_Location >().GetPosition() );
     call.GetResult().SetValue( MIL_Tools::ConvertSimToMeter( rDist ) );
 }
 
@@ -1021,15 +1035,28 @@ void DEC_GeometryFunctions::ComputeDistancePointFromFrontLine( DIA_Call_ABC& cal
 void DEC_GeometryFunctions::ComputeDistanceFromBackLine( DIA_Call_ABC& call, const MIL_Automate& /*callerAgent*/ )
 {
     assert( DEC_Tools::CheckTypeCalculLignesAvantArriere( call.GetParameter( 0 ) ) );
-    assert( DEC_Tools::CheckTypePion                    ( call.GetParameter( 1 ) ) );
 
-    DEC_FrontAndBackLinesComputer* pComputer = call.GetParameter( 0 ).ToUserPtr   ( pComputer );
-    DEC_RolePion_Decision*         pPion     = call.GetParameter( 1 ).ToUserObject( pPion );
-
+    DEC_FrontAndBackLinesComputer* pComputer = call.GetParameter( 0 ).ToUserPtr( pComputer );
     assert( pComputer );
-    assert( pPion );
 
-    MT_Float rDist = pComputer->ComputeDistanceFromBackLine( pPion->GetPion().GetRole< PHY_RolePion_Location >().GetPosition() );
+    MT_Float rDist = 0;
+    if( DEC_Tools::CheckTypePion( call.GetParameter( 1 ) ) )
+    {
+        DEC_RolePion_Decision* pPion = call.GetParameter( 1 ).ToUserObject( pPion );
+        assert( pPion );
+        rDist = pComputer->ComputeDistanceFromBackLine( pPion->GetPion().GetRole< PHY_RolePion_Location >().GetPosition() );
+    }
+    else if( DEC_Tools::CheckTypeAutomate( call.GetParameter( 1 ) ) )
+    {
+        DEC_AutomateDecision* pAutomate = call.GetParameter( 1 ).ToUserObject( pAutomate );
+        assert( pAutomate );
+        MT_Vector2D barycenter;
+        if( pAutomate->GetAutomate().GetAlivePionsBarycenter( barycenter ) )
+            rDist = pComputer->ComputeDistanceFromBackLine( barycenter );
+    }
+    else
+        assert( false );
+
     call.GetResult().SetValue( MIL_Tools::ConvertSimToMeter( rDist ) );
 }
 
@@ -1418,7 +1445,6 @@ void DEC_GeometryFunctions::IsPionCoordinated( DIA_Call_ABC& call )
     call.GetResult().SetValue( notCoordinatedPions );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::SplitListPoints
 // Created: NLD 2005-04-04
@@ -1445,7 +1471,6 @@ T_PointVector* SplitListPoints( const T_PointVector& points, MT_Float rNbrParts 
     
     return pResult;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::SplitListPoints
@@ -1481,4 +1506,149 @@ void DEC_GeometryFunctions::SplitPath( DIA_Call_ABC& call )
         points.push_back( (**it).GetPos() );
 
     call.GetResult().SetValue( ::SplitListPoints( points, rNbrParts ), &DEC_Tools::GetTypeListePoints() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeClosedTerrainRatioInFuseau
+// Created: NLD 2007-04-13
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::ComputeClosedTerrainRatioInFuseau( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) );
+    const MIL_Fuseau* pFuseau = call.GetParameter( 0 ).ToUserPtr( pFuseau );
+    assert( pFuseau );
+    call.GetResult().SetValue( pFuseau->ComputeClosedTerrainRatio() );
+}
+
+namespace {
+
+    bool CompareFuseauTerrainOpening( DIA_Variable_ABC* dia1, DIA_Variable_ABC* dia2 )
+    {
+        MIL_Fuseau* pFuseau1 = dia1->ToUserPtr( pFuseau1 );
+        MIL_Fuseau* pFuseau2 = dia2->ToUserPtr( pFuseau2 );
+
+        return pFuseau1->ComputeOpenTerrainRatio() < pFuseau2->ComputeOpenTerrainRatio();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::SortFuseauxAccordingToTerrainOpening
+// Created: NLD 2007-04-13
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::SortFuseauxAccordingToTerrainOpening( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) );   
+    
+    call.GetResult() = call.GetParameter( 0 );
+
+    T_ObjectVariableVector& fuseaux = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
+    std::sort( fuseaux.begin(), fuseaux.end(), CompareFuseauTerrainOpening );  
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::IsLocalisationInFuseau
+// Created: NLD 2007-04-17
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::IsLocalisationInFuseau( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypeFuseau      ( call.GetParameter( 1 ) ) );
+
+    const TER_Localisation* pLocalisation = call.GetParameter( 0 ).ToUserPtr( pLocalisation );
+    const MIL_Fuseau*       pFuseau       = call.GetParameter( 1 ).ToUserPtr( pFuseau );
+    assert( pLocalisation && pFuseau );
+
+    call.GetResult().SetValue( pLocalisation->IsIntersecting( *pFuseau ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ConvertFuseauToLocalisation
+// Created: NLD 2007-04-25
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::ConvertFuseauToLocalisation( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) );
+
+    const MIL_Fuseau* pFuseau = call.GetParameter( 0 ).ToUserPtr( pFuseau );
+    assert( pFuseau );
+
+    TER_Localisation* pLocalisation = new TER_Localisation( *pFuseau );
+    call.GetResult().SetValue( pLocalisation, &DEC_Tools::GetTypeLocalisation() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeAutomatesBarycenter
+// Created: NLD 2007-04-29
+// -----------------------------------------------------------------------------
+MT_Vector2D DEC_GeometryFunctions::_ComputeAutomatesBarycenter( const T_ObjectVector& automates )
+{
+    MT_Vector2D barycenter;
+    uint nNbrElt = 0;
+    for( CIT_ObjectVector it = automates.begin(); it != automates.end(); ++it )
+    {
+        MT_Vector2D tmp;
+        if( static_cast< DEC_AutomateDecision& >( **it ).GetAutomate().GetAlivePionsBarycenter( tmp ) )
+        {
+            barycenter += tmp;
+            ++ nNbrElt;
+        }
+    }
+    if( nNbrElt > 0 )
+        barycenter /= nNbrElt;
+    return barycenter;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeAutomatesBarycenter
+// Created: NLD 2007-04-29
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::ComputeAutomatesBarycenter( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeListeAutomates( call.GetParameter( 0 ) ) );
+
+    const T_ObjectVector automates = call.GetParameter( 0 ).ToSelection();
+    MT_Vector2D* pBarycenter = new MT_Vector2D( _ComputeAutomatesBarycenter( automates ) );
+    call.GetResult().SetValue( pBarycenter, &DEC_Tools::GetTypePoint() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::GetNextObjectiveInFuseau
+// Created: NLD 2007-05-16
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::GetNextObjectiveInFuseau( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeFuseau        ( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypePoint         ( call.GetParameter( 1 ) ) );
+    assert( DEC_Tools::CheckTypeListeObjectifs( call.GetParameter( 2 ) ) );
+
+    const MIL_Fuseau*  pFuseau   = call.GetParameter( 0 ).ToUserPtr( pFuseau   );
+    const MT_Vector2D* pRefPoint = call.GetParameter( 1 ).ToUserPtr( pRefPoint );
+    if( !pFuseau )
+    {
+        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeObjectif() );
+        return;
+    }
+
+    DIA_Variable_ABC* pNextObjective = 0;
+    MT_Float          rDist          = std::numeric_limits< MT_Float >::max();
+
+    T_ObjectVariableVector& objectives = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetParameter( 2 ) ).GetContainer() );
+    for( CIT_ObjectVariableVector it = objectives.begin(); it != objectives.end(); ++it )
+    {
+        const DEC_Objective* pObjective = (**it).ToUserPtr( pObjective );
+        if( !pObjective->IsFlagged() && pFuseau->IsInside( pObjective->ComputerBarycenter() ) )
+        {
+            const MT_Float rTmp = pFuseau->ComputeAverageDistanceFromObjective( *pObjective, *pRefPoint );
+            if( rTmp < rDist )
+            {
+                pNextObjective = *it;
+                rDist         = rTmp;
+            }
+        }
+    }
+    
+    if( pNextObjective )
+        call.GetResult() = *pNextObjective;
+    else
+        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeObjectif() );
 }

@@ -58,6 +58,7 @@ public:
     static bool CheckTypeGenObjet                           ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeListeGenObjets                     ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeMissionPion                        ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeMissionAutomate                    ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeConnaissanceAgent                  ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeListeConnaissancesAgent            ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeConnaissanceObjet                  ( const DIA_Variable_ABC& diaVariable );
@@ -79,6 +80,10 @@ public:
     static bool CheckTypeDotation                           ( const DIA_Variable_ABC& diaVariable ); 
     static bool CheckTypeEquipement                         ( const DIA_Variable_ABC& diaVariable ); 
     static bool CheckTypeTirIndirect                        ( const DIA_Variable_ABC& diaVariable ); 
+    static bool CheckTypeFuseau                             ( const DIA_Variable_ABC& diaVariable ); 
+    static bool CheckTypeListeFuseaux                       ( const DIA_Variable_ABC& diaVariable ); 
+    static bool CheckTypeObjectif                           ( const DIA_Variable_ABC& diaVariable ); 
+    static bool CheckTypeListeObjectifs                     ( const DIA_Variable_ABC& diaVariable ); 
     //@}
 
     //! @name Accessors
@@ -108,6 +113,8 @@ public:
     static const DIA_TypeDef& GetTypeGenObjet                       ();
     static const DIA_TypeDef& GetTypeEquipement                     ();
     static const DIA_TypeDef& GetTypeTirIndirect                    ();
+    static const DIA_TypeDef& GetTypeFuseau                         ();
+    static const DIA_TypeDef& GetTypeObjectif                       ();
     //@}
 
 private:
@@ -128,6 +135,7 @@ private:
     static const DIA_TypeDef* pTypeAutomate_;
     static const DIA_TypeDef* pTypeGenObjet_;
     static const DIA_TypeDef* pTypeMissionPion_;
+    static const DIA_TypeDef* pTypeMissionAutomate_;
     static const DIA_TypeDef* pTypePerceptionPoint_;
     static const DIA_TypeDef* pTypePerceptionLocalisation_;
     static const DIA_TypeDef* pTypePerceptionRadar_;
@@ -139,6 +147,8 @@ private:
     static const DIA_TypeDef* pTypeDotation_;
     static const DIA_TypeDef* pTypeEquipement_;
     static const DIA_TypeDef* pTypeTirIndirect_;
+    static const DIA_TypeDef* pTypeFuseau_;
+    static const DIA_TypeDef* pTypeObjectif_;
 };
 
 //! @name DIA Functions registration tools

@@ -17,6 +17,7 @@ namespace kernel
 {
     class Agent_ABC;
     class Automat_ABC;
+    class Formation_ABC;
 }
 
 class AutomatDecisions;
@@ -59,7 +60,9 @@ private:
     virtual void setColumnWidth( int column, int w );
 
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
-    bool Drop( const kernel::Agent_ABC& item,  const kernel::Automat_ABC& target );
+    bool Drop( const kernel::Agent_ABC&   item,  const kernel::Automat_ABC& target );
+    bool Drop( const kernel::Automat_ABC& item,  const kernel::Automat_ABC& target );
+    bool Drop( const kernel::Automat_ABC& item,  const kernel::Formation_ABC& target );
     //@}
 
 private:

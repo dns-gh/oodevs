@@ -177,5 +177,9 @@ typedef struct T_Mission_Pion_Test_All : T_Mission_Pion
     T_Dotation dotationType_;
 };
 
-
+typedef struct T_Mission_Pion_Test_Objectifs : T_Mission_Pion
+{
+    T_Objectif objectif_;
+    T_ListeObjectifs objectifs_;
+};
 

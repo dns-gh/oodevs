@@ -62,8 +62,10 @@ AutomatTemplateElement::~AutomatTemplateElement()
 // -----------------------------------------------------------------------------
 kernel::Entity_ABC* AutomatTemplateElement::Instanciate( kernel::Entity_ABC& superior, const geometry::Point2f& )
 {
-    kernel::Formation_ABC* parent = dynamic_cast< kernel::Formation_ABC* >( &superior );
-    return parent ? &agents_.CreateAutomat( *parent, type_ ) : 0;
+    if( dynamic_cast< kernel::Formation_ABC* >( &superior )
+     || dynamic_cast< kernel::Automat_ABC* >( &superior ) )
+        return &agents_.CreateAutomat( superior, type_ );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +84,8 @@ void AutomatTemplateElement::Serialize( xml::xostream& output )
 // -----------------------------------------------------------------------------
 bool AutomatTemplateElement::IsCompatible( const kernel::Entity_ABC& superior ) const
 {
-    return dynamic_cast< const kernel::Formation_ABC* >( &superior );
+    return dynamic_cast< const kernel::Formation_ABC* >( &superior )
+         || dynamic_cast< const kernel::Automat_ABC* >( &superior );
 }
 
 // -----------------------------------------------------------------------------

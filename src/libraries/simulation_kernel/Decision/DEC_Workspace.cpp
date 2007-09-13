@@ -31,6 +31,7 @@
 #include "Decision/Functions/DEC_DIAFunctions.h"
 #include "Decision/Functions/DEC_LogisticFunctions.h"
 #include "Decision/Functions/DEC_ObjectFunctions.h"
+#include "Decision/Functions/DEC_OrdersFunctions.h"
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
@@ -86,35 +87,41 @@ DEC_Workspace::~DEC_Workspace()
 void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* pFuncTable )
 {
     // Geometry
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::SplitListPoints               , "DEC_Geometrie_DecouperListePoints"            );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::SplitPath                     , "DEC_Geometrie_DecouperItineraire"             );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeCoverPosition          , "DEC_Geometrie_CalculerPositionCouverture"     );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeAgentsBarycenter       , "DEC_Geometrie_CalculerBarycentreAgents"       );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::TranslatePosition             , "DEC_Geometrie_PositionTranslate"              );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::TranslatePositionInDirection  , "DEC_Geometrie_PositionTranslateDir"           );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComparePositions              , "DEC_Geometrie_PositionsEgales"                );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CompareDirection              , "DEC_Geometrie_DirectionEgales"                );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::Distance                      , "DEC_Geometrie_Distance"                       );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ConvertPointToLocalisation    , "DEC_Geometrie_ConvertirPointEnLocalisation"   );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::IsPointInsideLocalisation     , "DEC_Geometrie_EstPointDansLocalisation"       );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CompareLocalisations          , "DEC_Geometrie_LocalisationsEgales"            );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateLocalisation            , "DEC_Geometrie_CreerLocalisation"              );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateListPoint               , "DEC_Geometrie_CreerListePoints"               );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreatePoint                   , "DEC_Geometrie_CreerPoint"                     );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateDirection               , "DEC_Geometrie_CreerDirection"                 );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateOrthoDirection          , "DEC_Geometrie_CreerDirectionPerpendiculaire"  );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ReverseDirection              , "DEC_Geometrie_InverseDirection"               );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::RotateDirection               , "DEC_Geometrie_RotateDirection"                );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CopyAndReverseDirection       , "DEC_Geometrie_CopieEtInverseDirection"        );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CopyAndRotateDirection        , "DEC_Geometrie_CopieEtRotateDirection"         );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeDistanceFromMiddleLine , "DEC_Geometrie_CalculerDistanceLigneMoyenne"   );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeLocalisationBarycenter , "DEC_Geometrie_CalculerBarycentreLocalisation" );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeMeanDirection          , "DEC_Geometrie_DirectionMoyenne"               );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeRandomPointOnCircle    , "DEC_Geometrie_PositionAleatoireSurCercle"     );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeRandomPointInCircle    , "DEC_Geometrie_PositionAleatoireDansCercle"    );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateCircleLocalisation      , "DEC_Geometrie_CreerLocalisationCercle"        );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::IsPionCoordinated             , "DEC_Geometrie_PionEstCoordonne"               );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeLocalisationArea       , "DEC_Geometrie_AireLocalisation"               );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::SplitListPoints                     , "DEC_Geometrie_DecouperListePoints"               );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::SplitPath                           , "DEC_Geometrie_DecouperItineraire"                );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeCoverPosition                , "DEC_Geometrie_CalculerPositionCouverture"        );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeAgentsBarycenter             , "DEC_Geometrie_CalculerBarycentreAgents"          );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::TranslatePosition                   , "DEC_Geometrie_PositionTranslate"                 );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::TranslatePositionInDirection        , "DEC_Geometrie_PositionTranslateDir"              );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComparePositions                    , "DEC_Geometrie_PositionsEgales"                   );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CompareDirection                    , "DEC_Geometrie_DirectionEgales"                   );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::Distance                            , "DEC_Geometrie_Distance"                          );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ConvertPointToLocalisation          , "DEC_Geometrie_ConvertirPointEnLocalisation"      );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::IsPointInsideLocalisation           , "DEC_Geometrie_EstPointDansLocalisation"          );    
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CompareLocalisations                , "DEC_Geometrie_LocalisationsEgales"               );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateLocalisation                  , "DEC_Geometrie_CreerLocalisation"                 );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateListPoint                     , "DEC_Geometrie_CreerListePoints"                  );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreatePoint                         , "DEC_Geometrie_CreerPoint"                        );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateDirection                     , "DEC_Geometrie_CreerDirection"                    );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateOrthoDirection                , "DEC_Geometrie_CreerDirectionPerpendiculaire"     );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ReverseDirection                    , "DEC_Geometrie_InverseDirection"                  );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::RotateDirection                     , "DEC_Geometrie_RotateDirection"                   );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CopyAndReverseDirection             , "DEC_Geometrie_CopieEtInverseDirection"           );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CopyAndRotateDirection              , "DEC_Geometrie_CopieEtRotateDirection"            );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeDistanceFromMiddleLine       , "DEC_Geometrie_CalculerDistanceLigneMoyenne"      );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeLocalisationBarycenter       , "DEC_Geometrie_CalculerBarycentreLocalisation"    );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeMeanDirection                , "DEC_Geometrie_DirectionMoyenne"                  );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeRandomPointOnCircle          , "DEC_Geometrie_PositionAleatoireSurCercle"        );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeRandomPointInCircle          , "DEC_Geometrie_PositionAleatoireDansCercle"       );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateCircleLocalisation            , "DEC_Geometrie_CreerLocalisationCercle"           );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::IsPionCoordinated                   , "DEC_Geometrie_PionEstCoordonne"                  );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeLocalisationArea             , "DEC_Geometrie_AireLocalisation"                  );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeClosedTerrainRatioInFuseau   , "DEC_Geometrie_PourcentageTerrainCompartimente"   );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::SortFuseauxAccordingToTerrainOpening, "DEC_Geometrie_TrierFuseauxSelonOuvertureTerrain" );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::IsLocalisationInFuseau              , "DEC_Geometrie_EstLocalisationDansFuseau"         );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ConvertFuseauToLocalisation         , "DEC_Geometrie_ConvertirFuseauEnLocalisation"     );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeAutomatesBarycenter          , "DEC_Geometrie_CalculerBarycentreAutomates"       );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::GetNextObjectiveInFuseau            , "DEC_Geometrie_ProchainObjectifDansFuseau"        );
 
     // Time management
     pFuncTable->RegisterFunction( DEC_DIAFunctions::GetSimTime         , "DEC_TempsSim"        );
@@ -165,6 +172,11 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectObstacleType     , "DEC_GenObject_TypeObstacle"       );
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectTC2              , "DEC_GenObject_TC2"                );
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectMinesActivityTime, "DEC_GenObject_DelaiActiviteMines" );
+
+    // Objectives
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetObjectiveLocalisation     , "DEC_Objectif_Localisation" );
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::IsObjectiveFlagged           , "DEC_Objectif_EstFlage"     );
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::SetObjectiveFlag             , "DEC_Objectif_Flag"         );
 
     // Debug
     pFuncTable->RegisterFunction( DEC_DIAFunctions::PointToString    , "DEC_PointToString"      );

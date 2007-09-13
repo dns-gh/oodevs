@@ -54,6 +54,7 @@ public:
      TER_Localisation();
      TER_Localisation( const TER_Localisation& );
      TER_Localisation( E_LocationType, const T_PointVector& );
+     TER_Localisation( const TER_Polygon&  );
      TER_Localisation( const MT_Vector2D& vPos, MT_Float rRadius );
     ~TER_Localisation();
 
@@ -102,6 +103,7 @@ public:
     bool IsInside             ( const MT_Vector2D& vPos, MT_Float rPrecision = rPrecision_ ) const;
     bool IsOnBorder           ( const MT_Vector2D& vPos ) const;
     bool IsIntersecting       ( const TER_Localisation& localisation ) const;
+    bool IsIntersecting       ( const TER_Polygon& polygon ) const;
     bool Intersect2D          ( const MT_Line& orientedLine, T_PointSet& collisions ) const;
     bool Intersect2D          ( const MT_Line& line ) const;
 

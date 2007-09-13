@@ -17,6 +17,8 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
+#include "Entities/Agents/Units/Categories/PHY_Protection.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposanteType_ABC.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_AgentDataRecognition, "DEC_Knowledge_AgentDataRecognition" )
@@ -218,4 +220,16 @@ void DEC_Knowledge_AgentDataRecognition::SendFullState( ASN1T_MsgUnitKnowledgeUp
 const PHY_NatureAtlas& DEC_Knowledge_AgentDataRecognition::GetNatureAtlas() const
 {
     return pAgentType_ ? pAgentType_->GetNatureAtlas() : PHY_NatureAtlas::notDefined_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataRecognition::IsHuman
+// Created: NLD 2007-04-19
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_AgentDataRecognition::IsHuman() const
+{
+    for( CIT_KnowledgeComposanteVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        if( it->GetType().GetProtection().IsHuman() )
+            return true;
+    return false;
 }

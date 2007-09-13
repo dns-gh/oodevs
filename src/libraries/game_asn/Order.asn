@@ -44,6 +44,13 @@ OrderContext ::= SEQUENCE
 
 -- TEST MISSIONS GENERIQUES
 
+MissionObjective ::= SEQUENCE
+{
+    localisation Location,
+    horaire      INTEGER DEFAULT 0
+}
+MissionObjectiveList ::= SEQUENCE OF MissionObjective
+
 PlannedWork ::= SEQUENCE
 {
     type                 EnumObjectType,
@@ -54,7 +61,6 @@ PlannedWork ::= SEQUENCE
     activity-time        INTEGER          DEFAULT 0
 }
 PlannedWorkList ::= SEQUENCE OF PlannedWork
-
 
 MissionParameter ::= SEQUENCE
 {
@@ -91,7 +97,9 @@ MissionParameter ::= SEQUENCE
         DateTime,
         LogMaintenancePriorities,
         LogMedicalPriorities,
-        VisibleString
+        VisibleString,
+        MissionObjective,
+        MissionObjectiveList
     }
 }
 

@@ -20,6 +20,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/CommandPostAttributes.h"
+#include "clients_kernel/Formation_ABC.h"
 
 #include "Agent.h"
 #include "Automat.h"
@@ -116,8 +117,12 @@ Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomatCreation& asnMsg )
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
 
     result->Attach< CommunicationHierarchies >( *new AutomatHierarchies        ( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
-    Formation_ABC& formation = ((Resolver< Formation_ABC >&)( model_.teams_ )).Get( asnMsg.oid_formation );
-    result->Attach< TacticalHierarchies >     ( *new AutomatTacticalHierarchies( controllers_.controller_, *result, formation, dico ) );
+    Entity_ABC* superior = 0;
+    if( asnMsg.oid_parent.t == T_MsgAutomatCreation_oid_parent_formation )
+        superior = & ((Resolver< Formation_ABC >&)( model_.teams_ )) .Get( asnMsg.oid_parent.u.formation );
+    else
+        superior = & ((Resolver< Automat_ABC >&)  ( model_.agents_ )).Get( asnMsg.oid_parent.u.automate );
+    result->Attach< TacticalHierarchies >     ( *new AutomatTacticalHierarchies( controllers_.controller_, *result, *superior, model_.agents_, model_.teams_ ) );
     result->Attach( *new AutomatLives( *result ) );
     result->Attach< LogisticLinks_ABC >( *new LogisticLinks( controllers_.controller_, model_.agents_, result->GetType(), dico ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );

@@ -79,8 +79,9 @@ private:
     //! @name Tools
     //@{
     void InitializeSubordinates( MIL_EntityManager& manager, MIL_TacticalLineManager& tacticalLines, xml::xistream& xis );
-    void CreateLimit( xml::xistream& xis, MIL_TacticalLineManager& tacticalLines );
-    void CreateLima ( xml::xistream& xis, MIL_TacticalLineManager& tacticalLines );
+    void CreateAutomat         ( xml::xistream& xis, MIL_EntityManager& manager, MIL_Formation& formation );
+    void CreateLimit           ( xml::xistream& xis, MIL_TacticalLineManager& tacticalLines );
+    void CreateLima            ( xml::xistream& xis, MIL_TacticalLineManager& tacticalLines );
     //@}
 
 private:

@@ -64,31 +64,19 @@ TER_Localisation::TER_Localisation( const TER_Localisation& localisation )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_Localisation::load
-// Created: JVT 2005-03-23
+// Name: TER_Localisation constructor
+// Created: NLD 2007-04-25
 // -----------------------------------------------------------------------------
-void TER_Localisation::load( boost::archive::binary_iarchive& file, const uint )
+TER_Localisation::TER_Localisation( const TER_Polygon& polygon )
+    : nType_        ( ePolygon )
+    , polygon_      ( polygon )
+    , pointVector_  ( polygon.GetBorderPoints() )
+    , boundingBox_  ( polygon.GetBoundingBox() )
+    , bWasCircle_   ( false )
+    , vCircleCenter_()
+    , rCircleRadius_( 0. )
 {
-    file >> nType_
-         >> pointVector_
-         >> bWasCircle_
-         >> vCircleCenter_
-         >> rCircleRadius_;
-
-    Initialize();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_Localisation::save
-// Created: JVT 2005-03-23
-// -----------------------------------------------------------------------------
-void TER_Localisation::save( boost::archive::binary_oarchive& file, const uint ) const
-{
-    file << nType_
-         << pointVector_
-         << bWasCircle_
-         << vCircleCenter_
-         << rCircleRadius_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -129,6 +117,34 @@ TER_Localisation::TER_Localisation( const MT_Vector2D& vPos, MT_Float rRadius )
 TER_Localisation::~TER_Localisation()
 {
 
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_Localisation::load
+// Created: JVT 2005-03-23
+// -----------------------------------------------------------------------------
+void TER_Localisation::load( boost::archive::binary_iarchive& file, const uint )
+{
+    file >> nType_
+         >> pointVector_
+         >> bWasCircle_
+         >> vCircleCenter_
+         >> rCircleRadius_;
+
+    Initialize();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_Localisation::save
+// Created: JVT 2005-03-23
+// -----------------------------------------------------------------------------
+void TER_Localisation::save( boost::archive::binary_oarchive& file, const uint ) const
+{
+    file << nType_
+         << pointVector_
+         << bWasCircle_
+         << vCircleCenter_
+         << rCircleRadius_;
 }
 
 //=============================================================================
@@ -1016,6 +1032,28 @@ void TER_Localisation::Scale( MT_Float rDist )
     }
     else
         assert( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_Localisation::IsIntersecting
+// Created: NLD 2007-04-17
+// -----------------------------------------------------------------------------
+bool TER_Localisation::IsIntersecting( const TER_Polygon& polygon ) const
+{
+    CIT_PointVector itPoint = pointVector_.begin();
+    const MT_Vector2D* pPrevPoint = &*itPoint;
+    for( ++itPoint; itPoint != pointVector_.end(); ++itPoint )
+    {
+        const MT_Vector2D* pCurPoint = &*itPoint;
+        if( polygon.IsInside( *pPrevPoint ) || polygon.Intersect2D( MT_Line( *pPrevPoint, *pCurPoint ), rPrecision_ ) )
+            return true;           
+        pPrevPoint = pCurPoint;
+    }
+    if( polygon.IsInside( *pPrevPoint ) )
+        return true;
+
+    // ici, les deux localisations sont disjointes OU polygon est inclu dans *this
+    return IsInside( polygon.GetBorderPoints().front() );
 }
 
 // -----------------------------------------------------------------------------

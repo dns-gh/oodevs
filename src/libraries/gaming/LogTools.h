@@ -22,7 +22,7 @@ namespace log_tools
 
     inline
     bool CheckAcknowledge( const char* logMessage ) {
-        return CheckAcknowledge( 1, logMessage );
+        return CheckAcknowledge( 0, logMessage );
     }
 
     template< typename T >

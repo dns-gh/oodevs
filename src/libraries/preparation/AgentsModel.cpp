@@ -66,7 +66,7 @@ void AgentsModel::Purge()
 // Name: AgentsModel::CreateAutomat
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-kernel::Automat_ABC& AgentsModel::CreateAutomat( kernel::Formation_ABC& parent, const kernel::AutomatType& type )
+kernel::Automat_ABC& AgentsModel::CreateAutomat( kernel::Entity_ABC& parent, const kernel::AutomatType& type )
 {
     Automat_ABC* agent = agentFactory_.Create( parent, type );
     Resolver< Automat_ABC >::Register( agent->GetId(), *agent );
@@ -77,7 +77,7 @@ kernel::Automat_ABC& AgentsModel::CreateAutomat( kernel::Formation_ABC& parent, 
 // Name: AgentsModel::CreateAutomat
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAutomat( kernel::Formation_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position )
+void AgentsModel::CreateAutomat( kernel::Entity_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position )
 {
     kernel::Automat_ABC& automat = CreateAutomat( parent, type );
     DiamondFormation formation( position );
@@ -95,13 +95,14 @@ void AgentsModel::CreateAutomat( kernel::Formation_ABC& parent, const kernel::Au
 // Name: AgentsModel::CreateAutomat
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAutomat( xml::xistream& xis, kernel::Formation_ABC& parent, LimitsModel& limits )
+void AgentsModel::CreateAutomat( xml::xistream& xis, kernel::Entity_ABC& parent, LimitsModel& limits )
 {
     Automat_ABC* agent = agentFactory_.Create( xis, parent );
     Resolver< Automat_ABC >::Register( agent->GetId(), *agent );
-    xis >> list( "unit" , *this , &AgentsModel::CreateAgent, *agent )
-        >> list( "lima" , limits, &LimitsModel::CreateLima , *(Entity_ABC*)agent )
-        >> list( "limit", limits, &LimitsModel::CreateLimit, *(Entity_ABC*)agent );
+    xis >> list( "automat", *this , &AgentsModel::CreateAutomat, *agent, limits )
+        >> list( "unit"   , *this , &AgentsModel::CreateAgent, *agent )
+        >> list( "lima"   , limits, &LimitsModel::CreateLima , *(Entity_ABC*)agent )
+        >> list( "limit"  , limits, &LimitsModel::CreateLimit, *(Entity_ABC*)agent );
 }
     
 // -----------------------------------------------------------------------------

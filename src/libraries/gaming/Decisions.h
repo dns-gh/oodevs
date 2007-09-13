@@ -13,16 +13,14 @@
 #include "game_asn/Asn.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
+#include "Decisions_ABC.h"
 
 namespace kernel
 {
     class Agent_ABC;
     class Controller;
-    class Mission;
-    class FragOrder;
     class Displayer_ABC;
     class DecisionalModel;
 }
@@ -37,6 +35,7 @@ class Decisions : public kernel::Extension_ABC
                 , public kernel::Updatable_ABC< ASN1T_MsgUnitOrder >
                 , public kernel::Displayable_ABC
                 , public kernel::Drawable_ABC
+                , public Decisions_ABC
 {
 
 public:
@@ -48,14 +47,12 @@ public:
 
     //! @name Operations
     //@{
-    bool IsEmbraye() const;
-
+    virtual bool CanBeOrdered() const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
-
-    const kernel::Agent_ABC& GetAgent() const;
     virtual kernel::Iterator< const kernel::Mission& > GetMissions() const;
     virtual kernel::Iterator< const kernel::FragOrder& > GetFragOrders() const;
-    const kernel::Mission* GetCurrentMission() const;
+    virtual const kernel::Mission* GetCurrentMission() const;
+    virtual const kernel::Entity_ABC& GetAgent() const;
     //@}
 
 private:

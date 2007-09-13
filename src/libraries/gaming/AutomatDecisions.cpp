@@ -15,6 +15,7 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "ASN_Messages.h"
 #include "Tools.h"
 
@@ -67,6 +68,26 @@ void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomatOrder& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AutomatDecisions::CanBeOrdered
+// Created: AGE 2007-04-04
+// -----------------------------------------------------------------------------
+bool AutomatDecisions::CanBeOrdered() const
+{
+    return bEmbraye_ && ! HasEngagedSuperior();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatDecisions::HasEngagedSuperior
+// Created: AGE 2007-04-04
+// -----------------------------------------------------------------------------
+bool AutomatDecisions::HasEngagedSuperior() const
+{
+    const Entity_ABC* superior = agent_.Get< TacticalHierarchies >().GetSuperior();
+    const AutomatDecisions* superiorDecisions = superior ? superior->Retrieve< AutomatDecisions >() : 0;
+    return superiorDecisions && superiorDecisions->bEmbraye_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Iterator< const Mission& > AutomatDecisions::GetMissions
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
@@ -99,7 +120,7 @@ const Mission* AutomatDecisions::GetCurrentMission() const
 // Name: AutomatDecisions::GetAgent
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-const Automat_ABC& AutomatDecisions::GetAgent() const
+const Entity_ABC& AutomatDecisions::GetAgent() const
 {
     return agent_;
 }

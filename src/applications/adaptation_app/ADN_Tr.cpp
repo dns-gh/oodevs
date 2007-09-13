@@ -403,6 +403,8 @@ ADN_Tr::T_ConverterMissionParameterType ADN_Tr::missionParameterTypeConverter_[]
     T_ConverterMissionParameterType( "PopulationKnowledge", QT_TRANSLATE_NOOP("ADN_Tr", "PopulationKnowledge" ), eMissionParameterTypePopulationKnowledge ),
     T_ConverterMissionParameterType( "GenObject", QT_TRANSLATE_NOOP("ADN_Tr", "GenObject" ), eMissionParameterTypeGenObject ),
     T_ConverterMissionParameterType( "GenObjectList", QT_TRANSLATE_NOOP("ADN_Tr", "GenObjectList" ), eMissionParameterTypeGenObjectList ),
+    T_ConverterMissionParameterType( "Objective", QT_TRANSLATE_NOOP("ADN_Tr", "Objective" ), eMissionParameterTypeObjective ),
+    T_ConverterMissionParameterType( "ObjectiveList", QT_TRANSLATE_NOOP("ADN_Tr", "ObjectiveList" ), eMissionParameterTypeObjectiveList ),
     T_ConverterMissionParameterType( "Path", QT_TRANSLATE_NOOP("ADN_Tr", "Path" ), eMissionParameterTypePath ),
     T_ConverterMissionParameterType( "PathList", QT_TRANSLATE_NOOP("ADN_Tr", "PathList" ), eMissionParameterTypePathList ),
     T_ConverterMissionParameterType( "Point", QT_TRANSLATE_NOOP("ADN_Tr", "Point" ), eMissionParameterTypePoint ),

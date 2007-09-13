@@ -38,9 +38,11 @@ public:
 
     //! @name Operations
     //@{
-    bool HasFunction( const MIL_LimaFunction& function ) const;
-    void Flag       ( bool bFlag );
-    bool IsFlagged  () const;
+    bool HasFunction      ( const MIL_LimaFunction& function ) const;
+    void Flag             ( bool bFlag );
+    bool IsFlagged        () const;
+    void FlagSchedule     ( bool bFlag );
+    bool IsScheduleFlagged() const;
     //@}
 
     //! @name Accessors
@@ -48,13 +50,13 @@ public:
           uint             GetID       () const;
     const T_PointVector&   GetPoints   () const;
     const T_LimaFunctions& GetFunctions() const;
+          uint             GetSchedule () const;
     //@}
 
     //! @name Geometry $$$ BULLSHIT
     //@{
-          bool           Intersect2D( const MT_Line& line, MT_Vector2D& vPos ) const;
-          bool           Intersect2D( const T_PointVector& polyline, T_PointSet& intersectionSet ) const; //$$$ devrait gicler
-
+    bool Intersect2D( const MT_Line& line, MT_Vector2D& vPos ) const;
+    bool Intersect2D( const T_PointVector& polyline, T_PointSet& intersectionSet ) const; //$$$ devrait gicler
     //@}
 
     //! @name Network
@@ -67,6 +69,8 @@ private:
     T_PointVector   points_;
     T_LimaFunctions functions_;
     bool            bFlag_;
+    bool            bScheduleFlag_;
+    uint            nSchedule_;
 
 private:
     static uint nNextID_;

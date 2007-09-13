@@ -16,7 +16,7 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "Tools.h"
 #include "AutomatDecisions.h"
@@ -46,15 +46,6 @@ Decisions::~Decisions()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Decisions::IsEmbraye
-// Created: AGE 2006-10-06
-// -----------------------------------------------------------------------------
-bool Decisions::IsEmbraye() const
-{
-    return agent_.Get< CommunicationHierarchies >().GetUp().Get< AutomatDecisions >().IsEmbraye();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Decisions::DoUpdate
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
@@ -63,6 +54,16 @@ void Decisions::DoUpdate( const ASN1T_MsgUnitOrder& message )
     const Resolver_ABC< Mission >& resolver = GetDecisionalModel();
     current_ = resolver.Find( message.mission );
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Decisions::CanBeOrdered
+// Created: AGE 2007-04-04
+// -----------------------------------------------------------------------------
+bool Decisions::CanBeOrdered() const
+{
+    const AutomatDecisions& superiorDecisions = agent_.Get< TacticalHierarchies >().GetUp().Get< AutomatDecisions >();
+    return !superiorDecisions.IsEmbraye();
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +90,7 @@ Iterator< const FragOrder& > Decisions::GetFragOrders() const
 // Name: Decisions::GetAgent
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-const Agent_ABC& Decisions::GetAgent() const
+const Entity_ABC& Decisions::GetAgent() const
 {
     return agent_;
 }
@@ -109,7 +110,7 @@ const Mission* Decisions::GetCurrentMission() const
 // -----------------------------------------------------------------------------
 void Decisions::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( IsEmbraye() && viewport.IsVisible( where ) )
+    if( !CanBeOrdered() && viewport.IsVisible( where ) )
         tools.DrawIcon( xpm_cadenas, where, 150.f );
 }
 

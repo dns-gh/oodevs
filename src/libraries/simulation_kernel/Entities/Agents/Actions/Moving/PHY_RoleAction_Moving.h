@@ -57,11 +57,12 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float GetMaxSlope                 () const;
-    MT_Float GetMaxSpeedWithReinforcement() const;
+            MT_Float GetMaxSlope                 () const;
+            MT_Float GetMaxSpeedWithReinforcement() const;
     virtual MT_Float GetSpeedWithReinforcement   ( const TerrainData& environment ) const;
-    void     SetSpeedModificator         ( MT_Float rFactor );
-    void     SetMaxSpeedModificator      ( MT_Float rFactor );
+    virtual MT_Float GetMaxSpeed                 () const;
+            void     SetSpeedModificator         ( MT_Float rFactor );
+            void     SetMaxSpeedModificator      ( MT_Float rFactor );
     //@}
 
     //! @name Network
@@ -104,7 +105,6 @@ private:
 
     //! @name Speed management
     //@{
-    virtual MT_Float GetMaxSpeed              () const;
             MT_Float GetMaxSpeed              ( const TerrainData& environment ) const;
             MT_Float GetMaxSpeed              ( const MIL_RealObject_ABC& object ) const;
             MT_Float ApplyMaxSpeedModificators( MT_Float rSpeed ) const;

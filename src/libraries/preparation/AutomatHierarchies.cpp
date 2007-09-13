@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "AutomatHierarchies.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "Tools.h"
 #include "xeumeuleu/xml.h"
 
@@ -52,7 +53,12 @@ void AutomatHierarchies::SerializeAttributes( xml::xostream& xos ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        xos << start( "unit" );
+        // $$$$ AGE 2007-04-05: quick ada fix. 
+        const kernel::Entity_ABC* child = it->second;
+        if( dynamic_cast< const kernel::Agent_ABC* >( child ) )
+            xos << start( "unit" );
+        else
+            xos << start( "automat" );
         it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
         xos << end();
     }
@@ -90,9 +96,9 @@ void AutomatHierarchies::MergeSymbol( const kernel::Entity_ABC& entity )
     if( const TacticalHierarchies* hierarchies = entity.Retrieve< TacticalHierarchies >() )
     {
         const std::string childLevel = hierarchies->GetLevel();
-        if( level_.empty() )
+        if( level_.empty() && !childLevel.empty() )
             level_ = Increase( childLevel );
-        else
+        else if( !childLevel.empty() )
             level_ = Max( level_, Increase( childLevel ) );
     }
     MergingTacticalHierarchies::MergeSymbol( entity );

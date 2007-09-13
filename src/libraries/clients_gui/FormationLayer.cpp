@@ -11,6 +11,8 @@
 #include "FormationLayer.h"
 #include "ColorStrategy_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 
 using namespace gui;
 

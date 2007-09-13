@@ -24,6 +24,7 @@
 
 #include <qstring.h>
 #include <qgl.h>
+#include <qdatetime.h>
 
 #include <stdexcept>
 #include <vector>

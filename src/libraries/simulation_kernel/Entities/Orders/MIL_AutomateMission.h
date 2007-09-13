@@ -30,6 +30,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_AutomateMission( const MIL_AutomateMissionType& type, MIL_Automate& automate, const ASN1T_MsgAutomatOrder& asn );
+             MIL_AutomateMission( const MIL_AutomateMissionType& type, MIL_Automate& automate, const MIL_AutomateMission& parent );
              MIL_AutomateMission( const MIL_AutomateMissionType& type, MIL_Automate& automate );
     virtual ~MIL_AutomateMission();
     //@}
@@ -41,7 +42,8 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const MIL_AutomateMissionType& GetType() const;
+                  MIL_Automate&            GetAutomate() const;
+    virtual const MIL_AutomateMissionType& GetType    () const;
     //@}
 
     //! @name Operations
