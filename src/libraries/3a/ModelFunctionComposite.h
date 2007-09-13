@@ -12,7 +12,7 @@
 
 #include "ModelFunction_ABC.h"
 #include <vector>
-#include <memory>
+#include <boost/shared_ptr.hpp>
 
 // =============================================================================
 /** @class  ModelFunctionComposite
@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    void Add( std::auto_ptr< ModelFunction_ABC > function );
+    void Add( boost::shared_ptr< ModelFunction_ABC > function );
 
     virtual void BeginTick();
     virtual void Receive( const ASN1T_MsgsSimToClient& message );
@@ -48,7 +48,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< ModelFunction_ABC* > T_Functions;
+    typedef std::vector< boost::shared_ptr< ModelFunction_ABC > > T_Functions;
     //@}
 
 private:

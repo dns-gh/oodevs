@@ -10,8 +10,7 @@
 #ifndef __Count_h_
 #define __Count_h_
 
-#include "Functions.h"
-#include "ValueHandler_ABC.h"
+#include "Reductor_ABC.h"
 #include <set>
 
 // =============================================================================
@@ -21,13 +20,13 @@
 // Created: AGE 2007-08-30
 // =============================================================================
 template< typename K, typename T >
-class Count : public Function1_ABC< K, T >
+class Count : public Reductor_ABC< K, T >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Count( ValueHandler_ABC< unsigned >& handler )
+    explicit Count( Function1_ABC< K, unsigned >& handler )
         : handler_( handler ) {}
     virtual ~Count() {}
     //@}
@@ -35,8 +34,9 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetName() const { return "Count"; }
-    virtual void BeginTick()
+    virtual void OnBeginTick()
     {
+        handler_.BeginTick();
         keys_.clear();
     }
     virtual void SetKey( const K& key )
@@ -47,9 +47,10 @@ public:
     {
         // NOTHING
     }
-    virtual void EndTick()
+    virtual void OnEndTick()
     {
-        handler_.Handle( keys_.size() );
+        handler_.Apply( keys_.size() );
+        handler_.EndTick();
     }
     //@}
 
@@ -67,7 +68,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ValueHandler_ABC< unsigned >& handler_;
+    Function1_ABC< K, unsigned >& handler_;
     std::set< K > keys_;
     //@}
 };

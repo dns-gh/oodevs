@@ -10,8 +10,7 @@
 #ifndef __Meaner_h_
 #define __Meaner_h_
 
-#include "Functions.h"
-#include "ValueHandler_ABC.h"
+#include "Reductor_ABC.h"
 
 // =============================================================================
 /** @class  Meaner
@@ -20,13 +19,13 @@
 // Created: AGE 2007-08-28
 // =============================================================================
 template< typename K, typename T >
-class Meaner : public Function1_ABC< K, T >
+class Meaner : public Reductor_ABC< K, T >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Meaner( ValueHandler_ABC< T >& handler )
+    explicit Meaner( Function1_ABC< K, T >& handler )
         : handler_( handler ), sum_(), count_( 0 ) {};
     virtual ~Meaner() {};
     //@}
@@ -34,10 +33,11 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetName() const { return "Mean"; }
-    virtual void BeginTick()
+    virtual void OnBeginTick()
     {
         sum_   = T();
         count_ = 0;
+        handler_.BeginTick();
     };
     virtual void SetKey( const K& )
     {
@@ -48,10 +48,11 @@ public:
         sum_ += value;
         ++count_;
     }
-    virtual void EndTick()
+    virtual void OnEndTick()
     {
         if( count_ )
-            handler_.Handle( sum_ / T( count_ ) );
+            handler_.Apply( sum_ / T( count_ ) );
+        handler_.EndTick();
     }
     //@}
 
@@ -65,7 +66,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ValueHandler_ABC< T >& handler_;
+    Function1_ABC< K, T >& handler_;
     T                      sum_;
     unsigned               count_;
     //@}

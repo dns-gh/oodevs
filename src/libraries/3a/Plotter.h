@@ -11,7 +11,7 @@
 #define __Plotter_h_
 
 #include "dispatcher/ClientPublisher_ABC.h"
-#include "ValueHandler_ABC.h"
+#include "Functions.h"
 #include "Result_ABC.h"
 
 // =============================================================================
@@ -20,8 +20,8 @@
 */
 // Created: AGE 2007-09-12
 // =============================================================================
-template< typename T >
-class Plotter : public ValueHandler_ABC< T >
+template< typename K, typename T >
+class Plotter : public Function1_ABC< K, T >
               , public Result_ABC
 {
 
@@ -35,10 +35,14 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetName() const { return "Plotter"; }
-    virtual void Handle( const T& value )
+    virtual void BeginTick() {};
+    virtual void SetKey( const K& ) {}
+    virtual void Apply( const T& arg )
     {
-        values_.push_back( value );
+        values_.push_back( arg );
     }
+    virtual void EndTick() {};
+
     virtual void Send( dispatcher::ClientPublisher_ABC& publisher ) const
     {
         std::vector< double > values; values.reserve( values_.size() );

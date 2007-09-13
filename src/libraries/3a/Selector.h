@@ -10,8 +10,7 @@
 #ifndef __Selector_h_
 #define __Selector_h_
 
-#include "Functions.h"
-#include "ValueHandler_ABC.h"
+#include "Reductor_ABC.h"
 
 // =============================================================================
 /** @class  Selector
@@ -20,13 +19,13 @@
 // Created: AGE 2007-08-29
 // =============================================================================
 template< typename K, typename T >
-class Selector : public Function1_ABC< K, T >
+class Selector : public Reductor_ABC< K, T >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Selector( const K& key, ValueHandler_ABC< T >& handler )
+             Selector( const K& key, Function1_ABC< K, T >& handler )
                 : key_( key ), handler_( handler ), found_( false ) {}
     virtual ~Selector() {};
     //@}
@@ -34,9 +33,10 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetName() const { return "Selector"; }
-    virtual void BeginTick()
+    virtual void OnBeginTick()
     {
         found_ = false;
+        handler_.BeginTick();
     }
     virtual void SetKey( const K& key )
     {
@@ -45,11 +45,11 @@ public:
     virtual void Apply( const T& value )
     {
         if( found_ )
-            handler_.Handle( value );
+            handler_.Apply( value );
     }
-    virtual void EndTick()
+    virtual void OnEndTick()
     {
-        // NOTHING
+        handler_.EndTick();
     }
     //@}
 
@@ -64,7 +64,7 @@ private:
     //! @name Member data
     //@{
     const K key_;
-    ValueHandler_ABC< T >& handler_;
+    Function1_ABC< K, T >& handler_;
     bool found_;
     //@}
 };

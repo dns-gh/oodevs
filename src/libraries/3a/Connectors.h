@@ -14,6 +14,9 @@
 #include "HandlerToFunction.h"
 #include "Slots.h"
 #include "ValueHandler_ABC.h"
+#include "KeyMarshaller.h"
+#include <vector>
+#include <boost/bind.hpp>
 
 #pragma warning (push)
 #pragma warning (disable : 4355)
@@ -36,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Connect( Slot_ABC& slot ) = 0;
+    virtual void Connect( Slot_ABC& slot, unsigned i ) = 0;
     //@}
 };
 
@@ -54,15 +57,14 @@ class FunctionConnector : public Function1_ABC< K, A >
 public:
     //! @name Constructors/Destructor
     //@{
-             FunctionConnector() : handlers_( *this ), next_( 0 ) {};
-    virtual ~FunctionConnector() {};
+    FunctionConnector() : handlers_( *this ) {};
     //@}
 
     //! @name Operations
     //@{
-    virtual void Connect( Slot_ABC& slot )
+    virtual void Connect( Slot_ABC& slot, unsigned i )
     {
-        next_ = & slot.Cast< Function1_ABC< K, A > >();
+        next_.push_back( & slot.Cast< Function1_ABC< K, A > >( i ) );
     };
     //@}
 
@@ -76,25 +78,25 @@ private:
     //@{
     virtual void BeginTick()
     {
-        if( next_ ) next_->BeginTick();
+        std::for_each( next_.begin(), next_.end(), boost::bind( &Function1_ABC< K, A >::BeginTick, _1 ) );
     }
     virtual void SetKey( const K& key )
     {
-        if( next_ ) next_->SetKey( key );
+        std::for_each( next_.begin(), next_.end(), boost::bind( &Function1_ABC< K, A >::SetKey, _1, key ) );
     }
     virtual void Apply( const A& arg )
     {
-        if( next_ ) next_->Apply( arg );
+        std::for_each( next_.begin(), next_.end(), boost::bind( &Function1_ABC< K, A >::Apply, _1, arg ) );
     }
     virtual void EndTick()
     {
-        if( next_ ) next_->EndTick();
+        std::for_each( next_.begin(), next_.end(), boost::bind( &Function1_ABC< K, A >::EndTick, _1 ) );
     }
     //@}
 
     //! @name Member data
     //@{
-    Function1_ABC< K, A >* next_;
+    std::vector< Function1_ABC< K, A >* > next_;
     //@}
 };
 
@@ -111,15 +113,14 @@ class HandlerConnector : public ValueHandler_ABC< T >
 public:
     //! @name Constructors/Destructor
     //@{
-             HandlerConnector() : next_( 0 ) {};
-    virtual ~HandlerConnector() {};
+    HandlerConnector() {};
     //@}
 
     //! @name Operations
     //@{
-    virtual void Connect( Slot_ABC& slot )
+    virtual void Connect( Slot_ABC& slot, unsigned i )
     {
-        next_ = & slot.Cast< ValueHandler_ABC< T > >();
+        next_ = & slot.Cast< ValueHandler_ABC< T > >( i );
     };
     //@}
 
@@ -128,14 +129,14 @@ private:
     //@{
     virtual void Handle( const T& value )
     {
-        if( next_ ) next_->Handle(  value );
+        std::for_each( next_.begin(), next_.end(), boost::bind( &ValueHandler_ABC< T >::Handle, _1, value ) );
     }
     //@}
 
 private:
     //! @name Member data
     //@{
-    ValueHandler_ABC< T >* next_;
+    std::vector< ValueHandler_ABC< T >* > next_;
     //@}
 };
 

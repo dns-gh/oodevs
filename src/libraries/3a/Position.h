@@ -7,28 +7,39 @@
 //
 // *****************************************************************************
 
-#ifndef __ValueHandler_ABC_h_
-#define __ValueHandler_ABC_h_
+#ifndef __Position_h_
+#define __Position_h_
+
+#include "game_asn/asn.h"
+#include <string>
 
 // =============================================================================
-/** @class  ValueHandler_ABC
-    @brief  ValueHandler_ABC
+/** @class  Position
+    @brief  Position
 */
-// Created: AGE 2007-07-12
+// Created: AGE 2007-09-12
 // =============================================================================
-class ValueHandler_ABC
+class Position
 {
 
 public:
     //! @name Constructors/Destructor
-    //@{
-    virtual ~ValueHandler_ABC() {};
+    //@{     
+             Position();
+    explicit Position( const ASN1T_CoordUTM& coord );
+    virtual ~Position();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Handle( float value ) = 0;
+    float Distance( const Position& rhs ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::string mgrs_;
     //@}
 };
 
-#endif // __ValueHandler_ABC_h_
+#endif // __Position_h_

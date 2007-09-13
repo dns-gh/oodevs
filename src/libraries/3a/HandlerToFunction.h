@@ -31,7 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit HandlerToFunction( Function1_ABC< K, A >& function )
-        : function_( function ), key_( this ), value_( this ) {};
+        : function_( function ), key_(), value_( this ) {};
     //@}
 
     //! @name Operations
@@ -52,25 +52,43 @@ private:
     template< typename T >
     struct ValueParameter : public ValueHandler_ABC< T >
     {
-        ValueParameter( HandlerToFunction* that ) : that_( that ), value_(), set_( false ) {}
+        ValueParameter( HandlerToFunction* that )
+            : that_( that ), value_()  {}
+        virtual void BeginTick()
+        {
+            that_->function_.BeginTick();
+        }
+        virtual void Handle( const T& value ) {
+            value_ = value;
+            that_->Commit();
+        }
+        virtual void EndTick()
+        {
+            that_->function_.EndTick();
+        }
+        T value_;
+        HandlerToFunction* that_;
+    };
+    template< typename T >
+    struct ValueHolder : public ValueHandler_ABC< T >
+    {
+        ValueHolder()
+            : value_(), set_( false )  {}
+        virtual void BeginTick() {}
         virtual void Handle( const T& value ) {
             value_ = value;
             set_ = true;
-            that_->Commit();
         }
+        virtual void EndTick() {}
         T value_;
         bool set_;
-        HandlerToFunction* that_;
     };
     void Commit()
     {
-        if( value_.set_ )
-        {
-            if( key_.set_ )
-                function_.SetKey( key_.value_ );
-            function_.Apply( value_.value_ );
-            key_.set_ = value_.set_ = false;
-        }
+        if( key_.set_ )
+            function_.SetKey( key_.value_ );
+        function_.Apply( value_.value_ );
+        key_.set_ = false;
     }
     //@}
 
@@ -78,7 +96,7 @@ private:
     //! @name Member data
     //@{
     Function1_ABC< K, A >& function_;
-    ValueParameter< K > key_;
+    ValueHolder< K >    key_;
     ValueParameter< A > value_;
     //@}
 };

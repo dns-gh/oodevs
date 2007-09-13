@@ -10,6 +10,8 @@
 #ifndef __Extractors_h_
 #define __Extractors_h_
 
+#include "Position.h"
+
 // =============================================================================
 /** @namespace Extractors
     @brief     Extractors
@@ -30,6 +32,13 @@ namespace extractors
         { return attributes.m.etat_operationnel_brutPresent; }
         float Extract( const ASN1T_MsgUnitAttributes& attributes ) 
         { return float( attributes.etat_operationnel_brut ) * 0.01f; }
+    };
+    struct Position : public Extractor< ::Position >
+    {
+        bool  HasFlag( const ASN1T_MsgUnitAttributes& attributes ) 
+        { return attributes.m.positionPresent; }
+        ::Position Extract( const ASN1T_MsgUnitAttributes& attributes ) 
+        { return ::Position( attributes.position ); }
     };
 }
 

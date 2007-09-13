@@ -27,15 +27,15 @@ class DispatchedFunction : public ModelFunction_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DispatchedFunction( const K& key, ValueHandler_ABC< K >& keyHandler, std::auto_ptr< ModelFunction_ABC > base )
+             DispatchedFunction( const K& key, ValueHandler_ABC< K >& keyHandler, boost::shared_ptr< ModelFunction_ABC > base )
                  : key_( key ), keyHandler_( keyHandler ), base_( base ) {}
-    virtual ~DispatchedFunction() {}
     //@}
 
     //! @name Operations
     //@{
     virtual void BeginTick()
     {
+        keyHandler_.BeginTick();
         base_->BeginTick();
     }
     virtual void Receive( const ASN1T_MsgsSimToClient& message )
@@ -45,6 +45,7 @@ public:
     virtual void EndTick()
     {
         keyHandler_.Handle( key_ );
+        keyHandler_.EndTick();
         base_->EndTick();
     }
     //@}
@@ -61,7 +62,7 @@ private:
     //@{
     const K key_;
     ValueHandler_ABC< K >& keyHandler_;
-    std::auto_ptr< ModelFunction_ABC > base_;
+    boost::shared_ptr< ModelFunction_ABC > base_;
     //@}
 };
 

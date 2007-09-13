@@ -11,6 +11,7 @@
 #define __Functions_h_
 
 #include "Slots.h"
+#include "ValueHandler_ABC.h"
 
 // =============================================================================
 /** @class  Function_ABC
@@ -46,6 +47,12 @@ public:
 template< typename K, typename A >
 class Function1_ABC : public Function_ABC
 {
+public:
+    //! @name Types
+    //@{
+    typedef K Key_Type;
+    typedef A Argument_Type;
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -72,6 +79,13 @@ public:
 template< typename K, typename A1, typename A2 >
 class Function2_ABC : public Function_ABC
 {
+public:
+    //! @name Types
+    //@{
+    typedef K Key_Type;
+    typedef A1 First_Argument_Type;
+    typedef A2 Second_Argument_Type;
+    //@}
 
 public:
     //! @name Constructors/Destructor

@@ -20,7 +20,9 @@ namespace
     template< typename T >
     struct NullValueHandler : public ValueHandler_ABC< T >
     {
+        virtual void BeginTick() {}
         virtual void Handle( const T& ) {}
+        virtual void EndTick() {}
     };
 }
 
@@ -37,7 +39,7 @@ BOOST_AUTO_TEST_CASE( Model_TestInstanciation )
     }
     {
         DispatcherFactory< IdentifierValue, attributes::OperationalState > factory;
-        std::auto_ptr< ModelFunction_ABC > function( factory( keyHandler, valueHandler ) );
+        boost::shared_ptr< ModelFunction_ABC > function( factory( keyHandler, valueHandler ) );
     }
 }
 
@@ -69,8 +71,10 @@ BOOST_AUTO_TEST_CASE( Model_TestValueExtraction )
     MockValueHandler< float > handler;
 
     std::auto_ptr< ModelFunction_ABC > function( new ModelFunction< attributes::OperationalState >( handler ) );
+    handler.BeginTick_mocker.expects( exactly( 4 ) );
     handler.Handle_mocker.expects( exactly( 2 ) ).with( eq( 0.25f ) );
     handler.Handle_mocker.expects( exactly( 2 ) ).with( eq( unsigned( 30 ) * 0.01f ) );
+    handler.EndTick_mocker.expects( exactly( 4 ) );
 
 
     ASN1T_MsgUnitAttributes attributes;
@@ -103,14 +107,18 @@ BOOST_AUTO_TEST_CASE( Model_TestDispatchedValueExtraction )
     MockValueHandler< unsigned long > keyHandler;
 
     DispatcherFactory< IdentifierValue, attributes::OperationalState > factory;
-    std::auto_ptr< ModelFunction_ABC > function( factory( keyHandler, handler ) );
+    boost::shared_ptr< ModelFunction_ABC > function( factory( keyHandler, handler ) );
 
+    handler.BeginTick_mocker.expects( exactly( 4 ) );
+    keyHandler.BeginTick_mocker.expects( exactly( 4 ) );
     handler.Handle_mocker.expects( exactly( 2 ) ).with( eq( 0.25f ) );
     keyHandler.Handle_mocker.expects( once() ).with( eq( unsigned long( 1 ) ) );
     keyHandler.Handle_mocker.expects( once() ).with( eq( unsigned long( 2 ) ) );
     handler.Handle_mocker.expects( exactly( 2 ) ).with( eq( unsigned( 30 ) * 0.01f ) );
     keyHandler.Handle_mocker.expects( once() ).with( eq( unsigned long( 1 ) ) );
     keyHandler.Handle_mocker.expects( once() ).with( eq( unsigned long( 2 ) ) );
+    handler.EndTick_mocker.expects( exactly( 4 ) );
+    keyHandler.EndTick_mocker.expects( exactly( 4 ) );
 
 
     ASN1T_MsgUnitAttributes attributes;

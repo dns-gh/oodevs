@@ -27,21 +27,33 @@ public:
     //@{
     MockValueHandler()
     : mockpp::ChainableMockObject( "MockValueHandler", 0 )
-    , Handle_mocker( "Handle", this )
+    , BeginTick_mocker( "BeginTick", this )
+    , Handle_mocker   ( "Handle", this )
+    , EndTick_mocker  ( "EndTick", this )
     {}
     //@}
 
     //! @name Operations
     //@{
+    virtual void BeginTick()
+    {
+        BeginTick_mocker.forward();
+    }
     virtual void Handle( const T& value )
     {
         Handle_mocker.forward( value );
+    }
+    virtual void EndTick()
+    {
+        EndTick_mocker.forward();
     }
     //@}
 
     //! @name Member data
     //@{
+    mockpp::ChainableMockMethod< void    > BeginTick_mocker;
     mockpp::ChainableMockMethod< void, T > Handle_mocker;
+    mockpp::ChainableMockMethod< void    > EndTick_mocker;
     //@}
 };
 

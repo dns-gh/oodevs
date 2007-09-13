@@ -34,13 +34,19 @@ public:
     //! @name Operations
     //@{
     template< typename Target >
-    Target& Cast()
+    Target& Cast( unsigned slot )
     {
-        Target* target = dynamic_cast< Target* >( this );
+        Target* target = dynamic_cast< Target* >( GetSubSlot( slot ) );
         if( ! target )
-            throw std::runtime_error( GetName() + " is not of type " + typeid( Target ).name() );
+            throw std::runtime_error( GetName() + " is not of expected type '" + typeid( Target ).name() );
         return *target;
     }
+    //@}
+
+protected:
+    //! @name Operations
+    //@{
+    virtual Slot_ABC* GetSubSlot( unsigned ) { return this; }
     //@}
 };
 

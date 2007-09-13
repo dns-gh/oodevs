@@ -49,6 +49,7 @@ public:
     //@{
     virtual void BeginTick()
     {
+        handler_.BeginTick();
         value_.Prepare();
     }
     virtual void Receive( const ASN1T_MsgsSimToClient& message )
@@ -58,6 +59,7 @@ public:
     virtual void EndTick()
     {
         value_.Push( handler_ );
+        handler_.EndTick();
     }
     //@}
 

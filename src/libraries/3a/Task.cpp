@@ -12,6 +12,8 @@
 #include "Result_ABC.h"
 #include "xeumeuleu/xml.h"
 #include "dispatcher/ClientPublisher_ABC.h"
+#pragma warning( disable : 4512 )
+#include <boost/algorithm/string.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: Task constructor
@@ -30,17 +32,14 @@ Task::Task( dispatcher::ClientPublisher_ABC& publisher )
 // -----------------------------------------------------------------------------
 Task::~Task()
 {
-    for( CIT_Connectors it = connectors_.begin(); it != connectors_.end(); ++it )
-        delete it->second;
-    for( CIT_Slots it = slots_.begin(); it != slots_.end(); ++it )
-        delete it->second;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: Task::AddExtractor
 // Created: AGE 2007-09-11
 // -----------------------------------------------------------------------------
-void Task::AddExtractor( std::auto_ptr< ModelFunction_ABC > function )
+void Task::AddExtractor( boost::shared_ptr< ModelFunction_ABC > function )
 {
     composite_.Add( function );
 }
@@ -49,24 +48,33 @@ void Task::AddExtractor( std::auto_ptr< ModelFunction_ABC > function )
 // Name: Task::AddFunction
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
-void Task::AddFunction( const std::string& name, std::auto_ptr< Slot_ABC > function )
+void Task::AddFunction( const std::string& name, boost::shared_ptr< Slot_ABC > function )
 {
-    Slot_ABC*& s = slots_[ name ];
+    boost::shared_ptr< Slot_ABC >& s = slots_[ name ];
     if( s )
         throw std::runtime_error( "A function '" + name + "' already exists" );
-    s = function.release();
+    s = function;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Task::AddFunction
+// Created: AGE 2007-09-13
+// -----------------------------------------------------------------------------
+void Task::AddFunction( boost::shared_ptr< Slot_ABC > function )
+{
+    objects_.push_back( function );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Task::AddConnector
 // Created: AGE 2007-09-11
 // -----------------------------------------------------------------------------
-void Task::AddConnector( const std::string& name, std::auto_ptr< Connector_ABC > connector )
+void Task::AddConnector( const std::string& name, boost::shared_ptr< Connector_ABC > connector )
 {
-    Connector_ABC*& c = connectors_[ name ];
+    boost::shared_ptr< Connector_ABC >& c = connectors_[ name ];
     if( c )
         throw std::runtime_error( "A function '" + name + "' already exists" );
-    c = connector.release();
+    c = connector;
 }
 
 // -----------------------------------------------------------------------------
@@ -90,21 +98,40 @@ void Task::Connect( const std::string& , xml::xistream& xis )
     const std::string input = xml::attribute< std::string >( xis, "input", "" );
 
     if( !name.empty() && !input.empty() )
-    {
-        CIT_Connectors itC = connectors_.find( input );
-        CIT_Slots itS = slots_.find( name );
-        if( itC != connectors_.end() && itS != slots_.end() )
-            itC->second->Connect( *(itS->second) );
-        else 
-            throw std::runtime_error( "Could not connect '" + input + "' to '" + name + "'" );
-    }
+        Connect( name, input );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Task::Connect
+// Created: AGE 2007-09-13
+// -----------------------------------------------------------------------------
+void Task::Connect( const std::string& name, const std::string& input )
+{
+    std::vector< std::string > inputs;
+    boost::algorithm::split( inputs, input, boost::algorithm::is_any_of( "," ) );
+    for( unsigned i = 0; i < inputs.size(); ++i )
+        Connect( name, inputs[i], i );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Task::Connect
+// Created: AGE 2007-09-13
+// -----------------------------------------------------------------------------
+void Task::Connect( const std::string& name, const std::string& input, unsigned i )
+{
+    CIT_Connectors itC = connectors_.find( input );
+    CIT_Slots itS = slots_.find( name );
+    if( itC != connectors_.end() && itS != slots_.end() )
+        itC->second->Connect( *(itS->second), i );
+    else 
+        throw std::runtime_error( "Could not connect '" + input + "' to '" + name + "'" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Task::SetResult
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
-void Task::SetResult( std::auto_ptr< Result_ABC > output )
+void Task::SetResult( boost::shared_ptr< Result_ABC > output )
 {
     result_ = output.get();
     AddFunction( "plot", output );

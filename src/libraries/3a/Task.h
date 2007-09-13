@@ -49,10 +49,11 @@ public:
 
     //! @name Operations
     //@{
-    void SetResult   ( std::auto_ptr< Result_ABC > output );
-    void AddExtractor( std::auto_ptr< ModelFunction_ABC > function );
-    void AddFunction ( const std::string& name, std::auto_ptr< Slot_ABC > function );
-    void AddConnector( const std::string& name, std::auto_ptr< Connector_ABC > connector );
+    void SetResult   ( boost::shared_ptr< Result_ABC > output );
+    void AddExtractor( boost::shared_ptr< ModelFunction_ABC > function );
+    void AddFunction ( const std::string& name, boost::shared_ptr< Slot_ABC > function );
+    void AddFunction ( boost::shared_ptr< Slot_ABC > function );
+    void AddConnector( const std::string& name, boost::shared_ptr< Connector_ABC > connector );
     void Connect( xml::xistream& xis );
 
     virtual void Receive( const ASN1T_MsgsSimToClient& message );
@@ -68,15 +69,18 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< std::string, Connector_ABC* >   T_Connectors;
-    typedef T_Connectors::const_iterator            CIT_Connectors;
-    typedef std::map< std::string, Slot_ABC* >        T_Slots;
-    typedef T_Slots::const_iterator                 CIT_Slots;
+    typedef std::map< std::string, boost::shared_ptr< Connector_ABC > >   T_Connectors;
+    typedef T_Connectors::const_iterator                                CIT_Connectors;
+    typedef std::map< std::string, boost::shared_ptr< Slot_ABC > >        T_Slots;
+    typedef T_Slots::const_iterator                                     CIT_Slots;
+    typedef std::vector< boost::shared_ptr< Slot_ABC > >                  T_Objects;
     //@}
 
     //! @name Helpers
     //@{
     void Connect( const std::string& , xml::xistream& xis );
+    void Connect( const std::string& name, const std::string& input );
+    void Connect( const std::string& name, const std::string& input, unsigned i );
     //@}
 
 private:
@@ -86,6 +90,7 @@ private:
     ModelFunctionComposite composite_;
     T_Connectors connectors_;
     T_Slots slots_;
+    T_Objects objects_;
     Result_ABC* result_;
     //@}
 };

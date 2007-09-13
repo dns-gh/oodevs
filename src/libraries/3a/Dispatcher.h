@@ -31,7 +31,7 @@ public:
     /*
     struct FunctionFactoryConcept
     {
-        std::auto_ptr< ModelFunction_ABC > operator()( K );
+        boost::shared_ptr< ModelFunction_ABC > operator()( K );
     };
     */
     //@}
@@ -42,11 +42,6 @@ public:
     explicit Dispatcher( const FunctionFactory& factory = FunctionFactory(), const KeyValue& keyValue = KeyValue() )
                 : factory_( factory )
                 , keyValue_( keyValue ) {}
-    virtual ~Dispatcher() 
-    {
-        for( IT_Functions it = dispatched_.begin(); it != dispatched_.end(); ++it )
-            delete it->second;
-    }
     //@}
 
     //! @name Operations
@@ -75,13 +70,18 @@ private:
     {
         Handler( Dispatcher& that, const ASN1T_MsgsSimToClient& message )
             : that_( &that ), message_( &message ) {}
+        virtual void BeginTick() {}
         virtual void Handle( const K& value )
         {
-            ModelFunction_ABC*& function = that_->dispatched_[ value ];
+            boost::shared_ptr< ModelFunction_ABC >& function = that_->dispatched_[ value ];
             if( ! function )
-                function = that_->factory_( value ).release();
+            {
+                function = that_->factory_( value );
+                function->BeginTick();
+            }
             function->Receive( *message_ );
         }
+        virtual void EndTick() {}
         Dispatcher* that_;
         const ASN1T_MsgsSimToClient* message_;
     };
@@ -96,8 +96,8 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< K, ModelFunction_ABC* >  T_Functions;
-    typedef typename T_Functions::iterator    IT_Functions;
+    typedef std::map< K, boost::shared_ptr< ModelFunction_ABC > >  T_Functions;
+    typedef typename T_Functions::iterator                        IT_Functions;
     //@}
 
 private:

@@ -29,7 +29,9 @@ public:
 
     //! @name Operations
     //@{
+    virtual void BeginTick() = 0;
     virtual void Handle( const T& value ) = 0;
+    virtual void EndTick() = 0;
     //@}
 };
 

@@ -20,9 +20,9 @@
 struct DispatchedFunctionFactory
 {
     template< typename K, typename BaseFactory >
-    std::auto_ptr< ModelFunction_ABC > operator()( const K& key, ValueHandler_ABC< K >& keyHandler, BaseFactory baseFactory ) const
+    boost::shared_ptr< ModelFunction_ABC > operator()( const K& key, ValueHandler_ABC< K >& keyHandler, BaseFactory baseFactory ) const
     {
-        return std::auto_ptr< ModelFunction_ABC >( new DispatchedFunction< K >( key, keyHandler, baseFactory() ) );
+        return boost::shared_ptr< ModelFunction_ABC >( new DispatchedFunction< K >( key, keyHandler, baseFactory() ) );
     }
 };
 
@@ -30,9 +30,9 @@ template< typename KeyValue >
 struct DispatcherFactoryHelper
 {
     template< typename FunctionFactory >
-    std::auto_ptr< ModelFunction_ABC > operator()( const FunctionFactory& factory ) const
+    boost::shared_ptr< ModelFunction_ABC > operator()( const FunctionFactory& factory ) const
     {
-        return std::auto_ptr< ModelFunction_ABC >( new Dispatcher< KeyValue, FunctionFactory >( factory ) );
+        return boost::shared_ptr< ModelFunction_ABC >( new Dispatcher< KeyValue, FunctionFactory >( factory ) );
     }
 };
 
@@ -40,9 +40,9 @@ template< typename Value >
 struct ValueFunctionFactory
 {
     typedef typename Value::Type Type;
-    std::auto_ptr< ModelFunction_ABC > operator()( ValueHandler_ABC< Type >& valueHandler ) const
+    boost::shared_ptr< ModelFunction_ABC > operator()( ValueHandler_ABC< Type >& valueHandler ) const
     {
-        return std::auto_ptr< ModelFunction_ABC >( new ModelFunction< Value >( valueHandler ) );
+        return boost::shared_ptr< ModelFunction_ABC >( new ModelFunction< Value >( valueHandler ) );
     }
 };
 
@@ -52,14 +52,14 @@ struct DispatcherFactory
     typedef typename KeyValue::Type K;
     typedef typename Value   ::Type T;
 
-    std::auto_ptr< ModelFunction_ABC > operator()( ValueHandler_ABC< K >& keyHandler, ValueHandler_ABC< T >& valueHandler ) const
+    boost::shared_ptr< ModelFunction_ABC > operator()( ValueHandler_ABC< K >& keyHandler, ValueHandler_ABC< T >& valueHandler ) const
     {
         return DispatcherFactoryHelper< KeyValue >()( 
-                   boost::bind< std::auto_ptr< ModelFunction_ABC > >(
+                   boost::bind< boost::shared_ptr< ModelFunction_ABC > >(
                        DispatchedFunctionFactory(), 
                        _1,
                        boost::ref( keyHandler ),
-                       boost::protect( boost::bind< std::auto_ptr< ModelFunction_ABC > >( ValueFunctionFactory< Value >(), boost::ref( valueHandler ) ) )
+                       boost::protect( boost::bind< boost::shared_ptr< ModelFunction_ABC > >( ValueFunctionFactory< Value >(), boost::ref( valueHandler ) ) )
                    )
                );
     }

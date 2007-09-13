@@ -26,17 +26,16 @@ ModelFunctionComposite::ModelFunctionComposite()
 // -----------------------------------------------------------------------------
 ModelFunctionComposite::~ModelFunctionComposite()
 {
-    for( T_Functions::const_iterator it = functions_.begin(); it != functions_.end(); ++it )
-        delete *it;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: ModelFunctionComposite::Add
 // Created: AGE 2007-08-30
 // -----------------------------------------------------------------------------
-void ModelFunctionComposite::Add( std::auto_ptr< ModelFunction_ABC > function )
+void ModelFunctionComposite::Add( boost::shared_ptr< ModelFunction_ABC > function )
 {
-    functions_.push_back( function.release() );
+    functions_.push_back( function );
 }
 
 // -----------------------------------------------------------------------------

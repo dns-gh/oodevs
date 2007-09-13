@@ -10,13 +10,15 @@
 #ifndef __FunctionFactory_h_
 #define __FunctionFactory_h_
 
+#include <string>
+#include <boost/shared_ptr.hpp>
+
 namespace dispatcher
 {
     class ClientPublisher_ABC;
 }
 
-#include <string>
-#include <memory>
+
 namespace xml
 {
     class xistream;
@@ -42,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    std::auto_ptr< Task > CreateTask( xml::xistream& xis );
+    boost::shared_ptr< Task > CreateTask( xml::xistream& xis );
     //@}
 
 private:
@@ -60,9 +62,13 @@ private:
     template< typename Value >
     void Extract( const std::string& name, xml::xistream& xis, Task& result );
 
-    void Reduce ( xml::xistream& xis, Task& result );
+    void Reduce( xml::xistream& xis, Task& result );
     template< typename T >
     void Reduce( const std::string& name, xml::xistream& xis, Task& result );
+
+    void Transform( xml::xistream& xis, Task& result );
+    template< typename T >
+    void Transform2( const std::string& name, Task& result );
 
     void Plot( xml::xistream& xis, Task& result );
     template< typename T >

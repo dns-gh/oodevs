@@ -10,8 +10,7 @@
 #ifndef __Adder_h_
 #define __Adder_h_
 
-#include "Functions.h"
-#include "ValueHandler_ABC.h"
+#include "Reductor_ABC.h"
 
 // =============================================================================
 /** @class  Adder
@@ -20,13 +19,13 @@
 // Created: AGE 2007-08-28
 // =============================================================================
 template< typename K, typename T >
-class Adder : public Function1_ABC< K, T >
+class Adder : public Reductor_ABC< K, T >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Adder( ValueHandler_ABC< T >& handler ) 
+    explicit Adder( Function1_ABC< K, T >& handler ) 
         : handler_( handler ), sum_() {};
     virtual ~Adder() {};
     //@}
@@ -34,9 +33,10 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetName() const { return "Add"; }
-    virtual void BeginTick()
+    virtual void OnBeginTick()
     {
         sum_ = T();
+        handler_.BeginTick();
     };
     virtual void SetKey( const K& )
     {
@@ -46,9 +46,10 @@ public:
     {
         sum_ += value;
     };
-    virtual void EndTick()
+    virtual void OnEndTick()
     {
-        handler_.Handle( sum_ );
+        handler_.Apply( sum_ );
+        handler_.EndTick();
     }
     //@}
 
@@ -62,7 +63,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ValueHandler_ABC< T >& handler_;
+    Function1_ABC< K, T >& handler_;
     T sum_;
     //@}
 };

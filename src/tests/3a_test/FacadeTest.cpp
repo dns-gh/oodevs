@@ -21,7 +21,7 @@ using namespace mockpp;
 
 namespace
 {
-    ASN1T_MsgsSimToClient MakeMessage( unsigned opstate, unsigned long id )
+    ASN1T_MsgsSimToClient OperationalState( unsigned opstate, unsigned long id )
     {
         static ASN1T_MsgUnitAttributes attributes;
         attributes.m.etat_operationnel_brutPresent = 1;
@@ -60,23 +60,21 @@ namespace
             const ASN1T_MsgIndicatorResult& result = *msg.msg.u.msg_indicator_result;
             std::vector< double > v;
             for( unsigned i = 0; i < result.values.n; ++i )
-                v.push_back( result.values.elem[i] );
-            Send_mocker.forward( v );
+                Send_mocker.forward( result.values.elem[i] );
         };
 
-        mockpp::ChainableMockMethod< void, std::vector< double > > Send_mocker;
+        mockpp::ChainableMockMethod< void, double > Send_mocker;
     };
 
-    template< std::size_t N >
-    std::vector< double > MakeResult( double (&data)[N] )
+    template< typename Mocker, std::size_t N >
+    void MakeExpectation( Mocker& mocker, double (&data)[N], double margin = 0 )
     {
-        std::vector< double > result;
-        std::copy( data, data + N, std::back_inserter( result ) );
-        return result;
+        for( unsigned i = 0; i < N; ++i )
+            mocker.expects( once() ).with( eq( data[i], margin ) );
     }
 }
 // -----------------------------------------------------------------------------
-// Name: Facade_TestConcept
+// Name: Facade_TestOperationalState
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestOperationalState )
@@ -91,30 +89,45 @@ BOOST_AUTO_TEST_CASE( Facade_TestOperationalState )
 
     MockPublisher publisher;
     FunctionFactory facade( publisher );
-    std::auto_ptr< Task > task( facade.CreateTask( xis ) );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
 
     task->Receive( BeginTick() );
-    task->Receive( MakeMessage( 50, 1 ) );
-    task->Receive( MakeMessage( 25, 2 ) );
-    task->Receive( MakeMessage( 75, 3 ) );
+    task->Receive( OperationalState( 50, 1 ) );
+    task->Receive( OperationalState( 25, 2 ) );
+    task->Receive( OperationalState( 75, 3 ) );
     task->Receive( EndTick() );
 
     task->Receive( BeginTick() );
-    task->Receive( MakeMessage( 75, 1 ) );
-    task->Receive( MakeMessage( 85, 3 ) );
+    task->Receive( OperationalState( 75, 1 ) );
+    task->Receive( OperationalState( 85, 3 ) );
     task->Receive( EndTick() );
 
     task->Receive( BeginTick() );
-    task->Receive( MakeMessage( 75, 2 ) );
+    task->Receive( OperationalState( 75, 2 ) );
     task->Receive( EndTick() );
 
     task->Receive( BeginTick() );
     task->Receive( EndTick() );
 
     double expectedResult[] = { 0.25, 0.25, 0.75, 0.75 };
-    publisher.Send_mocker.expects( once() ).with( eq( MakeResult( expectedResult ) ) );
+    MakeExpectation( publisher.Send_mocker, expectedResult );
     task->Commit();
     publisher.verify();
+}
+
+namespace
+{
+    ASN1T_MsgsSimToClient MakePosition( const char* position, unsigned long id )
+    {
+        static ASN1T_MsgUnitAttributes attributes;
+        attributes.m.positionPresent = 1;
+        attributes.position = position;
+        attributes.oid = id;
+        ASN1T_MsgsSimToClient result;
+        result.msg.t = T_MsgsSimToClient_msg_msg_unit_attributes;
+        result.msg.u.msg_unit_attributes = &attributes;
+        return result;
+    }
 }
 
 //CREATE PROCEDURE dbo.[AAAT_GENERAL_DISTANCE_ENTRE_DEUX_UNITES_A_LA_DATE_T]
@@ -124,6 +137,45 @@ BOOST_AUTO_TEST_CASE( Facade_TestOperationalState )
 //  @Unite2  unit_id,       -- Seconde d'unites
 //  @Resultat tablename OUTPUT  -- Distance entre les deux unites
 //)
+// -----------------------------------------------------------------------------
+// Name: Facade_TestDistanceBetweenTwoUnits
+// Created: AGE 2004-12-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Facade_TestDistanceBetweenTwoUnits )
+{
+    const std::string input =
+    "<indicator>"
+        "<extract value='position' name='position'/>"
+        "<reduce type='position' function='select' input='position' id='1' name='position1'/>"
+        "<reduce type='position' function='select' input='position' id='2' name='position2'/>"
+        "<transform function='distance' input='position1,position2' name='distance'/>"
+        "<plot input='distance' type='float'/>"
+    "</indicator>";
+    xml::xistringstream xis( input );
+
+    MockPublisher publisher;
+    FunctionFactory facade( publisher );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+    task->Receive( BeginTick() );
+    task->Receive( MakePosition( "31TBN7728449218", 1 ) );
+    task->Receive( MakePosition( "31TBN7728449218", 2 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakePosition( "31TBN7728449217", 1 ) );
+    task->Receive( MakePosition( "31TBN7728449219", 2 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakePosition( "31TBN7728449216", 1 ) );
+    task->Receive( MakePosition( "31TBN7728449220", 2 ) );
+    task->Receive( EndTick() );
+
+    double expectedResult[] = { 0., 2., 4. };
+    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    task->Commit();
+    publisher.verify();
+}
+
+
 
 //CREATE PROCEDURE DBO.[AAAT_LOGISTIQUE_MATERIELS_AU_NTI1_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Pourcentages)]
 //(

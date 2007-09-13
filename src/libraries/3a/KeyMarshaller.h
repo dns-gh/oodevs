@@ -11,6 +11,8 @@
 #define __KeyMarshaller_h_
 
 #include "Functions.h"
+#pragma warning (push)
+#pragma warning (disable : 4355)
 
 // =============================================================================
 /** @class  KeyMarshaller
@@ -19,7 +21,7 @@
 // Created: AGE 2007-08-30
 // =============================================================================
 template< typename K, typename A1, typename A2 >
-class KeyMarshaller
+class KeyMarshaller : public Slot_ABC
 {
 
 public:
@@ -43,6 +45,17 @@ private:
     //@{
     KeyMarshaller( const KeyMarshaller& );            //!< Copy constructor
     KeyMarshaller& operator=( const KeyMarshaller& ); //!< Assignment operator
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual std::string GetName() const { return function_.GetName(); }
+    virtual Slot_ABC* GetSubSlot( unsigned slot )
+    { 
+        return slot == 0 ? &first_ :
+               slot == 1 ? &second_ :
+               (Slot_ABC*)0;
+    }
     //@}
 
     //! @name Helpers
@@ -140,5 +153,7 @@ private:
     Function< A2 > second_;
     //@}
 };
+
+#pragma warning (pop)
 
 #endif // __KeyMarshaller_h_

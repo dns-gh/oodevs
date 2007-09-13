@@ -49,6 +49,7 @@ struct Attribute : public ContinuousValue< typename Extractor::Type >
 };
 
 struct OperationalState : public Attribute< extractors::OperationalState > {};
+struct Position         : public Attribute< extractors::Position > {};
 
 } // namespace attributes
 
