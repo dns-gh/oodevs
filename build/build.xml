@@ -243,6 +243,7 @@ BLOCK "VarFileInfo"
                          lib${ant.project.name}_dispatcher-${platform}-mt">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
             <includepath path="${include.dir}/ASN"/>
+            <linkerarg value="${applications.dir}/version.res"/>
         </build-app>
     </target>
 
@@ -258,6 +259,7 @@ BLOCK "VarFileInfo"
             <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
             <includepath path="${include.dir}/ASN"/>
             <defineset define="CROSSBOW_PLUGIN"/>
+            <linkerarg value="${applications.dir}/version.res"/>
         </build-app>
     </target>
 
@@ -276,6 +278,7 @@ BLOCK "VarFileInfo"
             <defineset define="_WIN32_WINNT=0x0400"/> <!-- for 'IsDebuggerPresent()' -->
             <linkerarg value="/STACK:15000000"/>      <!-- Because of boost serialization -->
             <linkerarg value="/LARGEADDRESSAWARE"/>   <!-- Executable can access 3GiB instead of 2GiB -->
+            <linkerarg value="${applications.dir}/version.res"/>
         </build-app>
     </target>
 
@@ -288,7 +291,8 @@ BLOCK "VarFileInfo"
                          lib${ant.project.name}_dispatcher-${platform}-mt" >
             <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
             <includepath path="${include.dir}/ASN"/>
-        </build-app>
+            <linkerarg value="${applications.dir}/version.res"/>
+        </build-app>        
     </target>
 
     <target name="application.simulation_tester" description="build CSword Simulation Tester executable" depends="library.game_asn,library.MT_Tools">
@@ -298,6 +302,7 @@ BLOCK "VarFileInfo"
                    excludes="**/Actions/Missions/Pawn/*.cpp,**/Actions/Missions/Automat/*.cpp,**/Actions/Missions/Population/*.cpp">
             <includepath path="${applications.dir}/simulation_tester"/>
             <includepath path="${include.dir}/ASN"/>
+            <linkerarg value="${applications.dir}/version.res"/>
         </build-app>-->
     </target>
 
@@ -307,6 +312,7 @@ BLOCK "VarFileInfo"
                          lib${ant.project.name}_clients_gui-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt" pch-excludes="qtundo.cpp">
             <syslibset libs="advapi32,user32"/>
+            <linkerarg value="${applications.dir}/version.res"/>
         </build-app>
     </target>
 
@@ -321,6 +327,7 @@ BLOCK "VarFileInfo"
                          lib${ant.project.name}_clients_kernel-${platform}-mt">
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,psapi,dbghelp"/>
+            <linkerarg value="${applications.dir}/version.res"/>
         </build-app>
     </target>
 
@@ -333,6 +340,7 @@ BLOCK "VarFileInfo"
                          lib${ant.project.name}_clients_gui-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt">
             <syslibset libs="gdi32,psapi,dbghelp"/>
+            <linkerarg value="${applications.dir}/version.res"/>
         </build-app>
     </target>
 
@@ -346,6 +354,7 @@ BLOCK "VarFileInfo"
                          lib${ant.project.name}_clients_gui-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt">
             <includepath path="${include.dir}/ASN"/>
+            <linkerarg value="${applications.dir}/version.res"/>
             <syslibset libs="gdi32"/>
         </build-app>
     </target>
@@ -359,6 +368,7 @@ BLOCK "VarFileInfo"
                          lib${ant.project.name}_master-${platform}-mt">
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,psapi,dbghelp"/>
+            <linkerarg value="${applications.dir}/version.res"/>
         </build-app>
     </target>
 
@@ -481,13 +491,15 @@ BLOCK "VarFileInfo"
     -->
 
     <target name="package" description="package the distribution" >
-<!--        <generation-version-resource file="${out.dir}/release/applications/adaptation_app/adaptation_app.exe"/>
-        <generation-version-resource file="${out.dir}/release/applications/gaming_app/gaming_app.exe"/>
-        <generation-version-resource file="${out.dir}/release/applications/preparation_app/preparation_app.exe"/>
+        <generation-version-resource file="${out.dir}/release/applications/dispatcher_app/dispatcher_app.exe"/>
         <generation-version-resource file="${out.dir}/release/applications/simulation_app/simulation_app.exe"/>
         <generation-version-resource file="${out.dir}/release/applications/replayer_app/replayer_app.exe"/>
--->
-
+        <generation-version-resource file="${out.dir}/release/applications/adaptation_app/adaptation_app.exe"/>
+        <generation-version-resource file="${out.dir}/release/applications/gaming_app/gaming_app.exe"/>
+        <generation-version-resource file="${out.dir}/release/applications/preparation_app/preparation_app.exe"/>
+        <generation-version-resource file="${out.dir}/release/applications/frontend_app/frontend_app.exe"/>
+        <generation-version-resource file="${out.dir}/release/applications/master_app/master_app.exe"/>
+        
         <zip destfile="${run.dir}/symbols.pak">
             <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
         </zip>
