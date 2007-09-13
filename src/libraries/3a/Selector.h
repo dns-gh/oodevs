@@ -11,6 +11,7 @@
 #define __Selector_h_
 
 #include "Reductor_ABC.h"
+#include <xeumeuleu/xml.h>
 
 // =============================================================================
 /** @class  Selector
@@ -30,8 +31,12 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
+             Selector( xml::xistream& xis, Function1_ABC< K, T >& handler )
+                 : key_( xml::attribute< K >( xis, "key" ) )
+                 , handler_( handler ), found_( false ) {}
              Selector( const K& key, Function1_ABC< K, T >& handler )
-                : key_( key ), handler_( handler ), found_( false ) {}
+                 : key_( key )
+                 , handler_( handler ), found_( false ) {}
     virtual ~Selector() {};
     //@}
 

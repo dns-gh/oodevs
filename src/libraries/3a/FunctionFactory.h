@@ -66,13 +66,13 @@ private:
     template< typename T >
     void Reduce( const std::string& name, xml::xistream& xis, Task& result );
     template< typename F >
-    void Reduce( const std::string& name, Task& result );
+    void ReduceFunction( const std::string& name, xml::xistream& xis, Task& result );
 
     void Transform( xml::xistream& xis, Task& result );
     template< typename T >
-    void Transform1( const std::string& name, Task& result );
+    void Transform1( const std::string& name, xml::xistream& xis, Task& result );
     template< typename T >
-    void Transform2( const std::string& name, Task& result );
+    void Transform2( const std::string& name, xml::xistream& xis, Task& result );
 
     void Plot( xml::xistream& xis, Task& result );
     template< typename T >

@@ -12,6 +12,8 @@
 
 #include "Reductor_ABC.h"
 
+namespace xml { class xistream; }
+
 // =============================================================================
 /** @class  Meaner
     @brief  Meaner
@@ -30,8 +32,10 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
+             Meaner( xml::xistream&, Function1_ABC< K, T >& handler )
+                : handler_( handler ), sum_(), count_( 0 ) {};
     explicit Meaner( Function1_ABC< K, T >& handler )
-        : handler_( handler ), sum_(), count_( 0 ) {};
+                : handler_( handler ), sum_(), count_( 0 ) {};
     virtual ~Meaner() {};
     //@}
 

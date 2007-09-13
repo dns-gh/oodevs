@@ -10,6 +10,7 @@
 #ifndef __Distance_h_
 #define __Distance_h_
 
+namespace xml { class xistream; }
 #include "Functions.h"
 #include "Position.h"
 
@@ -31,7 +32,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Distance( Function1_ABC< K, float >& next )
+    Distance( xml::xistream&, Function1_ABC< K, float >& next )
         : next_( next ) {}
     //@}
 

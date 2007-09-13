@@ -109,17 +109,17 @@ void FunctionFactory::Extract( xml::xistream& xis, Task& result )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FunctionFactory::Reduce
+// Name: FunctionFactory::ReduceFunction
 // Created: AGE 2007-09-13
 // -----------------------------------------------------------------------------
 template< typename F >
-void FunctionFactory::Reduce( const std::string& name, Task& result )
+void FunctionFactory::ReduceFunction( const std::string& name, xml::xistream& xis, Task& result )
 {
     typedef typename F::Key_Type K;
     typedef typename F::Argument_Type T;
     typedef typename F::Result_Type R;
     boost::shared_ptr< FunctionConnector< K, R > > connector( new FunctionConnector< K, R >() );
-    boost::shared_ptr< Function_ABC > function( new F( *connector ) );
+    boost::shared_ptr< Function_ABC > function( new F( xis, *connector ) );
     result.AddFunction( name, function );
     result.AddConnector( name, connector );
 }
@@ -135,15 +135,9 @@ void FunctionFactory::Reduce( const std::string& name, xml::xistream& xis, Task&
     const std::string functionName = xml::attribute< std::string >( xis, "function" );
 
     if( functionName == "select" )
-    {
-        boost::shared_ptr< FunctionConnector< K, T > > connector( new FunctionConnector< K, T >() );
-        const unsigned long id = xml::attribute< K >( xis, "id" );
-        boost::shared_ptr< Function_ABC > function( new Selector< K, T >( id, *connector ) );
-        result.AddFunction( name, function );
-        result.AddConnector( name, connector );
-    }
+        ReduceFunction< Selector< K, T > >( name, xis, result );
     else if( functionName == "count" )
-        Reduce< Count< K, T > >( name, result );
+        ReduceFunction< Count< K, T > >( name, xis, result );
     else
         ReductionError( functionName );
 }
@@ -172,14 +166,14 @@ void FunctionFactory::Reduce( xml::xistream& xis, Task& result )
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
 template< typename T >
-void FunctionFactory::Transform2( const std::string& name, Task& result )
+void FunctionFactory::Transform2( const std::string& name, xml::xistream& xis, Task& result )
 {
     typedef FunctionConnector< typename T::Key_Type, typename T::Result_Type > Connector;
     typedef KeyMarshaller< typename T::Key_Type,
                            typename T::First_Argument_Type,
                            typename T::Second_Argument_Type > Marshaller;
     boost::shared_ptr< Connector > connector( new Connector() );
-    boost::shared_ptr< T > function( new T( *connector ) );
+    boost::shared_ptr< T > function( new T( xis, *connector ) );
     boost::shared_ptr< Marshaller > marshaller( new Marshaller( *function ) );
 
     result.AddConnector( name, connector );
@@ -192,11 +186,11 @@ void FunctionFactory::Transform2( const std::string& name, Task& result )
 // Created: AGE 2007-09-13
 // -----------------------------------------------------------------------------
 template< typename T >
-void FunctionFactory::Transform1( const std::string& name, Task& result )
+void FunctionFactory::Transform1( const std::string& name, xml::xistream& xis, Task& result )
 {
     typedef FunctionConnector< typename T::Key_Type, typename T::Result_Type > Connector;
     boost::shared_ptr< Connector > connector( new Connector() );
-    boost::shared_ptr< T > function( new T( *connector ) );
+    boost::shared_ptr< T > function( new T( xis, *connector ) );
 
     result.AddConnector( name, connector );
     result.AddFunction ( name, function );
@@ -213,11 +207,11 @@ void FunctionFactory::Transform( xml::xistream& xis, Task& result )
         >> xml::attribute( "name", name )
         >> xml::optional() >> xml::attribute( "type", type );
     if( function == "distance" )
-        Transform2< Distance< unsigned long > >( name, result );
+        Transform2< Distance< unsigned long > >( name, xis, result );
     else if( function == "filter" )
     {
         if( type == "bool" )
-            Transform2< Filter< unsigned long, bool > >( name, result );
+            Transform2< Filter< unsigned long, bool > >( name, xis, result );
         else
             TypeError( type );
     }

@@ -13,6 +13,8 @@
 #include "Reductor_ABC.h"
 #include <set>
 
+namespace xml { class xistream; }
+
 // =============================================================================
 /** @class  Count
     @brief  Count
@@ -31,9 +33,12 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
+             Count( xml::xistream&, Function1_ABC< K, unsigned >& handler )
+                : handler_( handler )
+                , set_( false ){}
     explicit Count( Function1_ABC< K, unsigned >& handler )
-        : handler_( handler )
-        , set_( false ){}
+                : handler_( handler )
+                , set_( false ){}
     virtual ~Count() {}
     //@}
 

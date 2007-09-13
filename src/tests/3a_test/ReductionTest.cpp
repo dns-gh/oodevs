@@ -14,6 +14,7 @@
 #include "3a/Meaner.h"
 #include "3a/Selector.h"
 #include "3a/Functions.h"
+#include <xeumeuleu/xml.h>
 
 using namespace mockpp;
 

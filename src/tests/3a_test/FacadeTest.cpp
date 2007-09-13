@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestOperationalState )
     const std::string input =
     "<indicator>"
         "<extract value='operational-state' name='opstate'/>"
-        "<reduce type='float' function='select' input='opstate' id='2' name='myopstate'/>"
+        "<reduce type='float' function='select' input='opstate' key='2' name='myopstate'/>"
         "<plot input='myopstate' type='float'/>"
     "</indicator>";
     xml::xistringstream xis( input );
@@ -146,8 +146,8 @@ BOOST_AUTO_TEST_CASE( Facade_TestDistanceBetweenTwoUnits )
     const std::string input =
     "<indicator>"
         "<extract value='position' name='position'/>"
-        "<reduce type='position' function='select' input='position' id='1' name='position1'/>"
-        "<reduce type='position' function='select' input='position' id='2' name='position2'/>"
+        "<reduce type='position' function='select' input='position' key='1' name='position1'/>"
+        "<reduce type='position' function='select' input='position' key='2' name='position2'/>"
         "<transform function='distance' input='position1,position2' name='distance'/>"
         "<plot input='distance' type='float'/>"
     "</indicator>";

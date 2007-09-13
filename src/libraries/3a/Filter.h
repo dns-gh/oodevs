@@ -12,6 +12,8 @@
 
 #include "Functions.h"
 
+namespace xml { class xistream; }
+
 // =============================================================================
 /** @class  Filter
     @brief  Filter
@@ -29,7 +31,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Filter( Function1_ABC< K, T >& next )
+    Filter( xml::xistream&, Function1_ABC< K, T >& next )
         : next_( next ) {}
     //@}
 
