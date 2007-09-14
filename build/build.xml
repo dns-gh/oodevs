@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project name="csword" default="all">
 
-    <import file="../../tools/poney/src/poney.xml"/>
+    <import file="//install/masa/common/dev/common/poney/poney.xml"/>
 
     <exec executable="svn" outputproperty="svn.info" failonerror="true">
         <arg line="info"/>
