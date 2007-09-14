@@ -1,68 +1,21 @@
 <?xml version="1.0"?>
 <project name="csword" default="all">
 
-    <import file="//install/masa/common/dev/common/poney/poney.xml"/>
+    <import file="../../tools/poney/src/poney.xml"/>
+
+    <exec executable="svn" outputproperty="svn.info" failonerror="true">
+        <arg line="info"/>
+    </exec>
+    <propertyregex property="svn.version" input="${svn.info}" regexp="Last Changed Rev: ([0-9]+)" select="\1"/>
+    <property name="version.company" value="MASA-SCI"/>
+    <property name="version.product" value="C-Sword"/>
+    <property name="version.version" value="1,0,0,${svn.version}"/>
 
     <!--
     ============================================================================
       tools
     ============================================================================
     -->
-    <macrodef name="version">
-        <attribute name="company"/>
-        <attribute name="product"/>
-        <attribute name="version"/>
-        <element name="files" implicit="yes"/>
-        <sequential>
-            <tstamp>
-                <format property="year" pattern="yyyy"/>
-            </tstamp>
-            <for param="file">
-                <path>
-                    <files/>
-                </path>
-                <sequential>
-                    <basename property="@{file}-name" file="@{file}"/>
-                    <echo file="${out.dir}/version.rc">
-1 VERSIONINFO
-FILEVERSION     @{version}
-PRODUCTVERSION  @{version}
-FILEOS 0x4
-FILETYPE 0x1
-{
-BLOCK "StringFileInfo"
-{
-	BLOCK "040C04B0"
-	{
-	  VALUE "CompanyName", "@{company}"
-		VALUE "FileDescription", "@{product}"
-		VALUE "FileVersion", "@{version}"
-		VALUE "InternalName", "@{product}"
-		VALUE "LegalCopyright", "(c) @{company} ${year}"
-		VALUE "OriginalFilename", "${@{file}-name}"
-		VALUE "ProductName", "@{product}"
-		VALUE "ProductVersion", "@{version}"
-	}
-}
-
-BLOCK "VarFileInfo"
-{
-	VALUE "Translation", 0x040C 0x04B0
-}
-}
-                    </echo>
-                    <exec executable="rc" failonerror="true">
-                        <arg value="${out.dir}/version.rc"/>
-                    </exec>
-                    <!-- reshacker : http://angusj.com/resourcehacker-->
-                    <exec executable="reshacker" failonerror="true">
-                        <arg line="-addoverwrite @{file}, @{file}, ${out.dir}/version.res, versioninfo,1,"/>
-                    </exec>
-                </sequential>
-            </for>
-        </sequential>
-    </macrodef>
-
     <macrodef name="echo-files">
         <attribute name="files"/>
         <sequential>
@@ -173,7 +126,7 @@ BLOCK "VarFileInfo"
         <build-lib name="simulation_kernel" pattern="lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/ASN"/>
             <includepath path="${libraries.dir}/simulation_kernel"/> <!-- pour MIL.h -->
-	    <defineset define="USE_DLL"/> 	      <!-- Include folk library : use dll -->
+            <defineset define="USE_DLL"/> <!-- folk use dll -->
         </build-lib>
     </target>
 
@@ -236,7 +189,6 @@ BLOCK "VarFileInfo"
                          lib${ant.project.name}_dispatcher-${platform}-mt">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
             <includepath path="${include.dir}/ASN"/>
-            <linkerarg value="${applications.dir}/version.res"/>
         </build-app>
     </target>
 
@@ -252,7 +204,6 @@ BLOCK "VarFileInfo"
             <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
             <includepath path="${include.dir}/ASN"/>
             <defineset define="CROSSBOW_PLUGIN"/>
-            <linkerarg value="${applications.dir}/version.res"/>
         </build-app>
     </target>
 
@@ -271,7 +222,6 @@ BLOCK "VarFileInfo"
             <defineset define="_WIN32_WINNT=0x0400"/> <!-- for 'IsDebuggerPresent()' -->
             <linkerarg value="/STACK:15000000"/>      <!-- Because of boost serialization -->
             <linkerarg value="/LARGEADDRESSAWARE"/>   <!-- Executable can access 3GiB instead of 2GiB -->
-            <linkerarg value="${applications.dir}/version.res"/>
         </build-app>
     </target>
 
@@ -284,7 +234,6 @@ BLOCK "VarFileInfo"
                          lib${ant.project.name}_dispatcher-${platform}-mt" >
             <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
             <includepath path="${include.dir}/ASN"/>
-            <linkerarg value="${applications.dir}/version.res"/>
         </build-app>        
     </target>
 
@@ -295,7 +244,6 @@ BLOCK "VarFileInfo"
                    excludes="**/Actions/Missions/Pawn/*.cpp,**/Actions/Missions/Automat/*.cpp,**/Actions/Missions/Population/*.cpp">
             <includepath path="${applications.dir}/simulation_tester"/>
             <includepath path="${include.dir}/ASN"/>
-            <linkerarg value="${applications.dir}/version.res"/>
         </build-app>-->
     </target>
 
@@ -305,7 +253,6 @@ BLOCK "VarFileInfo"
                          lib${ant.project.name}_clients_gui-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt" pch-excludes="qtundo.cpp">
             <syslibset libs="advapi32,user32"/>
-            <linkerarg value="${applications.dir}/version.res"/>
         </build-app>
     </target>
 
@@ -320,7 +267,6 @@ BLOCK "VarFileInfo"
                          lib${ant.project.name}_clients_kernel-${platform}-mt">
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,psapi,dbghelp"/>
-            <linkerarg value="${applications.dir}/version.res"/>
         </build-app>
     </target>
 
@@ -333,7 +279,6 @@ BLOCK "VarFileInfo"
                          lib${ant.project.name}_clients_gui-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt">
             <syslibset libs="gdi32,psapi,dbghelp"/>
-            <linkerarg value="${applications.dir}/version.res"/>
         </build-app>
     </target>
 
@@ -347,7 +292,6 @@ BLOCK "VarFileInfo"
                          lib${ant.project.name}_clients_gui-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt">
             <includepath path="${include.dir}/ASN"/>
-            <linkerarg value="${applications.dir}/version.res"/>
             <syslibset libs="gdi32"/>
         </build-app>
     </target>
@@ -361,7 +305,6 @@ BLOCK "VarFileInfo"
                          lib${ant.project.name}_master-${platform}-mt">
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,psapi,dbghelp"/>
-            <linkerarg value="${applications.dir}/version.res"/>
         </build-app>
     </target>
 
@@ -482,20 +425,7 @@ BLOCK "VarFileInfo"
       package
     ============================================================================
     -->
-    <target name="svn.version">
-        <exec executable="svn" outputproperty="svn.info" failonerror="true">
-            <arg line="info"/>
-        </exec>
-        <propertyregex property="svn.version" input="${svn.info}" regexp="Last Changed Rev: (.*)" select="\1"/>
-    </target>
-
-    <target name="version" depends="svn.version" description="patch executables to include version resource">
-        <version company="MASA-SCI" product="C-Sword" version="1,0,0,${svn.version}">
-            <fileset dir="${out.dir}/release/applications" includes="**/*_app.exe"/>
-        </version>
-    </target>
-
-    <target name="package" depends="version" description="package the distribution">
+    <target name="package" description="package the distribution">
         <zip destfile="${run.dir}/symbols.pak">
             <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
         </zip>
