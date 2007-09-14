@@ -1,35 +1,32 @@
 <?xml version="1.0"?>
 <project name="csword" default="all">
 
-    <!-- reshacker : http://angusj.com/resourcehacker/-->
-
     <import file="//install/masa/common/dev/common/poney/poney.xml"/>
 
-   <!--
+    <!--
     ============================================================================
-      version generation
+      tools
     ============================================================================
     -->
-    <exec executable="svn" outputproperty="svn.info" failonerror="true">
-        <arg line="info"/>
-    </exec>
-    <propertyregex property="version.svn" input="${svn.info}" regexp="Last Changed Rev: ([0-9]+)" select="\1" defaultvalue="UNKNOWN"/>
-    <property name="version.major" value="1"/>
-    <property name="version.minor" value="0"/>
-    <property name="version.product" value="C-Sword"/>
-
-    <macrodef name="generation-version-resource">
-        <attribute name="file"/>
-
+    <macrodef name="version">
+        <attribute name="company"/>
+        <attribute name="product"/>
+        <attribute name="version"/>
+        <element name="files" implicit="yes"/>
         <sequential>
             <tstamp>
-                <format property="currentyear" pattern="yyyy"/>
+                <format property="year" pattern="yyyy"/>
             </tstamp>
-            <basename property="filename" file="@{file}"/>
-            <echo file="version.rc">
+            <for param="file">
+                <path>
+                    <files/>
+                </path>
+                <sequential>
+                    <basename property="@{file}-name" file="@{file}"/>
+                    <echo file="${out.dir}/version.rc">
 1 VERSIONINFO
-FILEVERSION     ${version.major},${version.minor},0,${version.svn}
-PRODUCTVERSION  ${version.major},${version.minor},0,${version.svn}
+FILEVERSION     @{version}
+PRODUCTVERSION  @{version}
 FILEOS 0x4
 FILETYPE 0x1
 {
@@ -37,14 +34,14 @@ BLOCK "StringFileInfo"
 {
 	BLOCK "040C04B0"
 	{
-	  VALUE "CompanyName", "MASA-SCI"
-		VALUE "FileDescription", "${version.product}"
-		VALUE "FileVersion", "${version.major}.${version.minor}.0.${version.svn}"
-		VALUE "InternalName", "${version.product}"
-		VALUE "LegalCopyright", "(c) MASA-SCI ${currentyear}"
-		VALUE "OriginalFilename", "${filename}"
-		VALUE "ProductName", "${version.product}"
-		VALUE "ProductVersion", "${version.major}.${version.minor}.0.${version.svn}"
+	  VALUE "CompanyName", "@{company}"
+		VALUE "FileDescription", "@{product}"
+		VALUE "FileVersion", "@{version}"
+		VALUE "InternalName", "@{product}"
+		VALUE "LegalCopyright", "(c) @{company} ${year}"
+		VALUE "OriginalFilename", "${@{file}-name}"
+		VALUE "ProductName", "@{product}"
+		VALUE "ProductVersion", "@{version}"
 	}
 }
 
@@ -53,23 +50,19 @@ BLOCK "VarFileInfo"
 	VALUE "Translation", 0x040C 0x04B0
 }
 }
-            </echo>
-            <exec executable="rc.exe" failonerror="true">
-                <arg value="version.rc"/>
-            </exec>
-            <exec executable="reshacker.exe">
-                <arg line="-addoverwrite @{file}, @{file}, version.res, versioninfo,1,"/>
-            </exec>
-            <delete file="version.rc"/>
-            <delete file="version.res"/>
+                    </echo>
+                    <exec executable="rc" failonerror="true">
+                        <arg value="${out.dir}/version.rc"/>
+                    </exec>
+                    <!-- reshacker : http://angusj.com/resourcehacker-->
+                    <exec executable="${bin.dir}/reshacker" failonerror="true">
+                        <arg line="-addoverwrite @{file}, @{file}, ${out.dir}/version.res, versioninfo,1,"/>
+                    </exec>
+                </sequential>
+            </for>
         </sequential>
     </macrodef>
 
-    <!--
-    ============================================================================
-      tools
-    ============================================================================
-    -->
     <macrodef name="echo-files">
         <attribute name="files"/>
         <sequential>
@@ -489,17 +482,20 @@ BLOCK "VarFileInfo"
       package
     ============================================================================
     -->
+    <target name="svn.version">
+        <exec executable="svn" outputproperty="svn.info" failonerror="true">
+            <arg line="info"/>
+        </exec>
+        <propertyregex property="svn.version" input="${svn.info}" regexp="Last Changed Rev: (.*)" select="\1"/>
+    </target>
 
-    <target name="package" description="package the distribution" >
-        <generation-version-resource file="${out.dir}/release/applications/dispatcher_app/dispatcher_app.exe"/>
-        <generation-version-resource file="${out.dir}/release/applications/simulation_app/simulation_app.exe"/>
-        <generation-version-resource file="${out.dir}/release/applications/replayer_app/replayer_app.exe"/>
-        <generation-version-resource file="${out.dir}/release/applications/adaptation_app/adaptation_app.exe"/>
-        <generation-version-resource file="${out.dir}/release/applications/gaming_app/gaming_app.exe"/>
-        <generation-version-resource file="${out.dir}/release/applications/preparation_app/preparation_app.exe"/>
-        <generation-version-resource file="${out.dir}/release/applications/frontend_app/frontend_app.exe"/>
-        <generation-version-resource file="${out.dir}/release/applications/master_app/master_app.exe"/>
-        
+    <target name="version" depends="svn.version" description="patch executables to include version resource">
+        <version company="MASA-SCI" product="C-Sword" version="1,0,0,${svn.version}">
+            <fileset dir="${out.dir}/release/applications" includes="**/*_app.exe"/>
+        </version>
+    </target>
+
+    <target name="package" depends="version" description="package the distribution">
         <zip destfile="${run.dir}/symbols.pak">
             <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
         </zip>
