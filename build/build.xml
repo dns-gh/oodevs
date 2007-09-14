@@ -55,7 +55,7 @@ BLOCK "VarFileInfo"
                         <arg value="${out.dir}/version.rc"/>
                     </exec>
                     <!-- reshacker : http://angusj.com/resourcehacker-->
-                    <exec executable="${bin.dir}/reshacker" failonerror="true">
+                    <exec executable="reshacker" failonerror="true">
                         <arg line="-addoverwrite @{file}, @{file}, ${out.dir}/version.res, versioninfo,1,"/>
                     </exec>
                 </sequential>
