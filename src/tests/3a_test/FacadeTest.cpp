@@ -218,9 +218,8 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdowns )
 {
     const std::string input =
     "<indicator>"
-        "<extract value='maintenance-handling' name='all-consigns'/>"
-        "<transform function='filter' type='bool' input='all-consigns,all-consigns' name='consigns'/>"
-        "<reduce type='bool' function='count' input='consigns' name='count'/>"
+        "<extract value='maintenance-handling-unit' name='consigns'/>"
+        "<reduce type='unsigned long' function='count' input='consigns' name='count'/>"
         "<plot input='count' type='unsigned'/>"
     "</indicator>";
     xml::xistringstream xis( input );
@@ -258,11 +257,9 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter )
 {
     const std::string input =
     "<indicator>"
-        "<extract value='maintenance-handling' name='consigns'/>"
-        "<extract value='maintenance-handling-unit' name='consigns-unit-ids'/>"
-        "<transform function='filter' type='unsigned long' input='consigns,consigns-unit-ids' name='valid-consigns-id'/>"
-        "<transform function='is-one-of' type='unsigned long' select='12,42' input='valid-consigns-id' name='selected-consigns'/>"
-        "<transform function='filter' type='unsigned long' input='selected-consigns,consigns-unit-ids' name='the-consigns'/>"
+        "<extract value='maintenance-handling-unit' name='consigns'/>"
+        "<transform function='is-one-of' type='unsigned long' select='12,42' input='consigns' name='selected-consigns'/>"
+        "<transform function='filter' type='unsigned long' input='selected-consigns,consigns' name='the-consigns'/>"
         "<reduce type='unsigned long' function='count' input='the-consigns' name='count'/>"
         "<plot input='count' type='unsigned'/>"
     "</indicator>";

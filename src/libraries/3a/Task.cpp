@@ -121,10 +121,12 @@ void Task::Connect( const std::string& name, const std::string& input, unsigned 
 {
     CIT_Connectors itC = connectors_.find( input );
     CIT_Slots itS = slots_.find( name );
-    if( itC != connectors_.end() && itS != slots_.end() )
+    if( itC == connectors_.end() )
+        throw std::runtime_error( "Could not connect '" + input + "' to '" + name + "' : could not find '" + input + "'" );
+    else if( itS == slots_.end() )
+        throw std::runtime_error( "Could not connect '" + input + "' to '" + name + "' : could not find '" + name + "'" );
+    else
         itC->second->Connect( *(itS->second), i );
-    else 
-        throw std::runtime_error( "Could not connect '" + input + "' to '" + name + "'" );
 }
 
 // -----------------------------------------------------------------------------

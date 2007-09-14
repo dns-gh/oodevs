@@ -98,6 +98,39 @@ struct InstantValue : public Value< T >
 };
 
 // =============================================================================
+/** @class  PulsedValue
+    @brief  "pulsed" value
+*/
+// Created: AGE 2007-08-30
+// =============================================================================
+template< typename T >
+struct PulsedValue : public Value< T >
+{
+    PulsedValue()
+        : value_(), set_( false ) {}
+    void Prepare()
+    {
+        // NOTHING
+    };
+    void Push( ValueHandler_ABC< Type >& handler )
+    {
+        if( set_ )
+            handler.Handle( value_ );
+    }
+    void Set( const Type& value )
+    {
+        value_ = value;
+        set_ = true;
+    }
+    void Reset()
+    {
+        set_ = false;
+    }
+    Type value_;
+    bool set_;
+};
+
+// =============================================================================
 /** @function  EvaluateValue
 */
 // Created: AGE 2007-08-30

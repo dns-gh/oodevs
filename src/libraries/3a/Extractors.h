@@ -44,13 +44,12 @@ namespace extractors
     };
 
     // Existences
-    struct Existence : public Extractor< bool >
-    {
-    };
-    struct MaintenanceHandling : public Existence
+    struct MaintenanceHandlingUnitId : public Extractor< unsigned long >
     {
         bool IsCreation( const ASN1T_MsgsSimToClient& message ) const
         { return message.msg.t == T_MsgsSimToClient_msg_msg_log_maintenance_handling_creation; }
+        unsigned long Extract( const ASN1T_MsgsSimToClient& message ) const
+        { return message.msg.u.msg_log_maintenance_handling_creation->oid_pion; }
         bool IsDestruction( const ASN1T_MsgsSimToClient& message ) const
         { return message.msg.t == T_MsgsSimToClient_msg_msg_log_maintenance_handling_destruction; }
     };

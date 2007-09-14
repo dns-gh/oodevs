@@ -51,18 +51,6 @@ struct UnitAttribute : public ContinuousValue< typename Extractor::Type >
 struct OperationalState : public UnitAttribute< extractors::OperationalState > {};
 struct Position         : public UnitAttribute< extractors::Position > {};
 
-struct MaintenanceHandlingUnitId : public ContinuousValue< unsigned long >
-{
-    void Receive( const ASN1T_MsgsSimToClient& message )
-    {
-        if( message.msg.t == T_MsgsSimToClient_msg_msg_log_maintenance_handling_creation )
-        {
-            const ASN1T_MsgLogMaintenanceHandlingCreation& creation = *message.msg.u.msg_log_maintenance_handling_creation;
-            Set( creation.oid_pion );
-        }
-    }
-};
-
 } // namespace attributes
 
 

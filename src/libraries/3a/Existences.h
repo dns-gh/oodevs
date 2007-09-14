@@ -22,21 +22,21 @@
 namespace existences
 {
     template< typename Extractor >
-    struct Existence : public ContinuousValue< bool >
+    struct Existence : public PulsedValue< typename Extractor::Type >
     {
         explicit Existence( const Extractor& extractor = Extractor() )
             : extractor_( extractor ) {}
         void Receive( const ASN1T_MsgsSimToClient& message )
         {
             if( extractor_.IsCreation( message ) )
-                Set( true );
+                Set( extractor_.Extract( message ) );
             else if( extractor_.IsDestruction( message ) )
-                Set( false );
+                Reset();
         }
         Extractor extractor_;
     };
 
-    struct MaintenanceHandling : public Existence< extractors::MaintenanceHandling > {};
+    struct MaintenanceHandlingUnitId : public Existence< extractors::MaintenanceHandlingUnitId > {};
 }
 
 #endif // __Existences_h_

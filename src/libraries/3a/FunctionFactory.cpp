@@ -103,10 +103,8 @@ void FunctionFactory::Extract( xml::xistream& xis, Task& result )
         Extract< attributes::OperationalState >( name, xis, result );
     else if( value == "position" )
         Extract< attributes::Position >( name, xis, result );
-    else if( value == "maintenance-handling" )
-        Extract< existences::MaintenanceHandling >( name, xis, result );
     else if( value == "maintenance-handling-unit" )
-        Extract< attributes::MaintenanceHandlingUnitId >( name, xis, result );
+        Extract< existences::MaintenanceHandlingUnitId >( name, xis, result );
     else
         ValueError( value );
 }
