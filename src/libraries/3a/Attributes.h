@@ -24,15 +24,15 @@ namespace attributes
 {
 
 // =============================================================================
-/** @class  Attribute
-    @brief  Attribute function
+/** @class  UnitAttribute
+    @brief  UnitAttribute function
 */
 // Created: AGE 2007-08-28
 // =============================================================================
 template< typename Extractor >
-struct Attribute : public ContinuousValue< typename Extractor::Type >
+struct UnitAttribute : public ContinuousValue< typename Extractor::Type >
 {
-    explicit Attribute( const Extractor& extractor = Extractor() )
+    explicit UnitAttribute( const Extractor& extractor = Extractor() )
         : extractor_( extractor ) {}
 
     void Receive( const ASN1T_MsgsSimToClient& message )
@@ -48,8 +48,20 @@ struct Attribute : public ContinuousValue< typename Extractor::Type >
     Extractor extractor_;
 };
 
-struct OperationalState : public Attribute< extractors::OperationalState > {};
-struct Position         : public Attribute< extractors::Position > {};
+struct OperationalState : public UnitAttribute< extractors::OperationalState > {};
+struct Position         : public UnitAttribute< extractors::Position > {};
+
+struct MaintenanceHandlingUnitId : public ContinuousValue< unsigned long >
+{
+    void Receive( const ASN1T_MsgsSimToClient& message )
+    {
+        if( message.msg.t == T_MsgsSimToClient_msg_msg_log_maintenance_handling_creation )
+        {
+            const ASN1T_MsgLogMaintenanceHandlingCreation& creation = *message.msg.u.msg_log_maintenance_handling_creation;
+            Set( creation.oid_pion );
+        }
+    }
+};
 
 } // namespace attributes
 

@@ -70,6 +70,8 @@ private:
 
     void Transform( xml::xistream& xis, Task& result );
     template< typename T >
+    void Transform( const std::string& name, xml::xistream& xis, Task& result );
+    template< typename T >
     void Transform1( const std::string& name, xml::xistream& xis, Task& result );
     template< typename T >
     void Transform2( const std::string& name, xml::xistream& xis, Task& result );

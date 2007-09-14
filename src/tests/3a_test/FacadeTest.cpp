@@ -177,10 +177,11 @@ BOOST_AUTO_TEST_CASE( Facade_TestDistanceBetweenTwoUnits )
 
 namespace
 {
-    ASN1T_MsgsSimToClient CreateConsign( unsigned long id )
+    ASN1T_MsgsSimToClient CreateConsign( unsigned long id, unsigned long unit_id = 0  )
     {
         static ASN1T_MsgLogMaintenanceHandlingCreation creation;
         creation.oid_consigne = id;
+        creation.oid_pion = unit_id;
 
         ASN1T_MsgsSimToClient result;
         result.msg.t = T_MsgsSimToClient_msg_msg_log_maintenance_handling_creation;
@@ -243,6 +244,53 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdowns )
     task->Receive( EndTick() );
 
     double expectedResult[] = { 1., 2., 2., 1., 1. };
+    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+
+    task->Commit();
+    publisher.verify();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestNumberOfBreakdownsWithUnitFilter
+// Created: AGE 2004-12-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter )
+{
+    const std::string input =
+    "<indicator>"
+        "<extract value='maintenance-handling' name='consigns'/>"
+        "<extract value='maintenance-handling-unit' name='consigns-unit-ids'/>"
+        "<transform function='filter' type='unsigned long' input='consigns,consigns-unit-ids' name='valid-consigns-id'/>"
+        "<transform function='is-one-of' type='unsigned long' select='12,42' input='valid-consigns-id' name='selected-consigns'/>"
+        "<transform function='filter' type='unsigned long' input='selected-consigns,consigns-unit-ids' name='the-consigns'/>"
+        "<reduce type='unsigned long' function='count' input='the-consigns' name='count'/>"
+        "<plot input='count' type='unsigned'/>"
+    "</indicator>";
+    xml::xistringstream xis( input );
+
+    MockPublisher publisher;
+    FunctionFactory facade( publisher );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+
+    task->Receive( BeginTick() );
+    task->Receive( CreateConsign( 12, 12 ) );
+    task->Receive( CreateConsign( 13, 13 ) );
+    task->Receive( CreateConsign( 14, 12 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( CreateConsign( 42, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( DestroyConsign( 13 ) );
+    task->Receive( CreateConsign( 15, 15 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( DestroyConsign( 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( EndTick() );
+
+    double expectedResult[] = { 2., 3., 3., 2., 2. };
     MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
 
     task->Commit();

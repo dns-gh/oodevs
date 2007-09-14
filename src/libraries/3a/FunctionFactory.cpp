@@ -19,6 +19,7 @@
 #include "Distance.h"
 #include "Filter.h"
 #include "Count.h"
+#include "IsOneOf.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -104,6 +105,8 @@ void FunctionFactory::Extract( xml::xistream& xis, Task& result )
         Extract< attributes::Position >( name, xis, result );
     else if( value == "maintenance-handling" )
         Extract< existences::MaintenanceHandling >( name, xis, result );
+    else if( value == "maintenance-handling-unit" )
+        Extract< attributes::MaintenanceHandlingUnitId >( name, xis, result );
     else
         ValueError( value );
 }
@@ -157,6 +160,8 @@ void FunctionFactory::Reduce( xml::xistream& xis, Task& result )
         Reduce< ::Position >( name, xis, result );
     else if( type == "bool" )
         Reduce< bool >( name, xis, result );
+    else if( type == "unsigned long" )
+        Reduce< unsigned long >( name, xis, result );
     else
         TypeError( type );
 }
@@ -198,25 +203,39 @@ void FunctionFactory::Transform1( const std::string& name, xml::xistream& xis, T
 
 // -----------------------------------------------------------------------------
 // Name: FunctionFactory::Transform
+// Created: AGE 2007-09-14
+// -----------------------------------------------------------------------------
+template< typename T >
+void FunctionFactory::Transform( const std::string& name, xml::xistream& xis, Task& result )
+{
+    const std::string function = xml::attribute< std::string >( xis, "function" );
+    if( function == "distance" )
+        Transform2< Distance< unsigned long > >( name, xis, result );
+    else if( function == "filter" )
+        Transform2< Filter< unsigned long, T > >( name, xis, result );
+    else if( function == "is-one-of" )
+        Transform1< IsOneOf< unsigned long, T > >( name, xis, result );
+    else
+        TransformationError( function );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FunctionFactory::Transform
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
 void FunctionFactory::Transform( xml::xistream& xis, Task& result )
 {
-    std::string function, name, type;
-    xis >> xml::attribute( "function", function )
-        >> xml::attribute( "name", name )
+    std::string name, type;
+    xis >> xml::attribute( "name", name )
         >> xml::optional() >> xml::attribute( "type", type );
-    if( function == "distance" )
-        Transform2< Distance< unsigned long > >( name, xis, result );
-    else if( function == "filter" )
-    {
-        if( type == "bool" )
-            Transform2< Filter< unsigned long, bool > >( name, xis, result );
-        else
-            TypeError( type );
-    }
+    if( type == "bool" )
+        Transform< bool >( name, xis, result );
+    else if( type == "unsigned long" )
+        Transform< unsigned long >( name, xis, result );
+    else if( type.empty() )
+        Transform< void* >( name, xis, result );
     else
-        TransformationError( function );
+        TypeError( type );
 }
 
 // -----------------------------------------------------------------------------
