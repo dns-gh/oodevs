@@ -64,6 +64,14 @@ namespace Crossbow
             }
         }
 
+        public string ExerciseDir
+        {
+            get
+            {
+                return m_exerciseFile.Substring(0, m_exerciseFile.LastIndexOf('\\'));
+            }
+        }
+
         public string WorkspaceFile
         {
             get

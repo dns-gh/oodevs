@@ -29,7 +29,6 @@ namespace Crossbow
         private void InitializeModel()
         {
             m_model.Add("Armor - To attack", new OrderParametersDefinition());
-
             {
                 OrderParametersDefinition param = new OrderParametersDefinition();
                 param.Add("Deployment area", "Polygon");
@@ -47,6 +46,36 @@ namespace Crossbow
                 m_model.Add("Infantry - To deny", param);
             }
             m_model.Add("Infantry - To reconnoiter", new OrderParametersDefinition());
+            {
+                OrderParametersDefinition param = new OrderParametersDefinition();
+                param.Add("Position", "Point");                
+                m_model.Add("Emergency - To BlockRoad", param);
+            }
+            {
+                OrderParametersDefinition param = new OrderParametersDefinition();
+                param.Add("Position", "Point");
+                m_model.Add("Emergency - To Organise a Shelter", param);
+            }
+            {
+                OrderParametersDefinition param = new OrderParametersDefinition();
+                param.Add("Position", "Point");
+                m_model.Add("Emergency - To Soothe", param);
+            }
+            {
+                OrderParametersDefinition param = new OrderParametersDefinition();
+                param.Add("Position", "Point");
+                m_model.Add("Emergency - To ProvideFirstAid", param);
+            }
+            {
+                OrderParametersDefinition param = new OrderParametersDefinition();
+                param.Add("Area", "Polygon");
+                m_model.Add("Emergency - To EvacuateArea", param);
+            }
+            {
+                OrderParametersDefinition param = new OrderParametersDefinition();
+                param.Add("Position", "Point");
+                m_model.Add("Emergency - To Riot", param);
+            }
         }
 
         public static void BuildMissionContextMenu(ICommandBar menu)

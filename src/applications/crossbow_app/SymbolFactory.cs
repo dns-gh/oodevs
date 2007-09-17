@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.MOLE;
 using ESRI.ArcGIS.Geometry;
@@ -12,6 +13,9 @@ namespace Crossbow
         private ISpatialReference          m_spatialReference;
         private IForceElement2525BRenderer m_forceElementRenderer;
         private ITacticalGraphicRenderer   m_tacticalElementRenderer;
+        
+        // Mapping of Symbol Id's (string) to IDynamicGlyph's
+        private Dictionary<string, IDynamicGlyph> m_Glyph = new Dictionary<string, IDynamicGlyph>();
 
         #region Factory initialization / configuration
         public SymbolFactory()
@@ -40,12 +44,17 @@ namespace Crossbow
         {
             if (IsTacticalElement(symbolId))
                 return CreateTacticalElement(display, dynamicDisplay, feature, symbolId);
+            else if (IsEmergencyForceElement(symbolId))
+                return CreateEmergencyForceElement(display, dynamicDisplay, symbolId);
             else
                 return CreateForceElement(display, dynamicDisplay, symbolId);
         }
 
         public System.Drawing.Bitmap GetSymbol(IDisplay pDisplay, string symbolId, string name, int size)
         {
+            if(IsEmergencyForceElement(symbolId))
+                return CreateBitmap(pDisplay, symbolId, size);
+            
             ICachedGraphic pGraphic = CreateForceElementGraphic(symbolId, name);
             pGraphic.Size = 0.5; // $$$$ SBO 2007-08-09: size ?
             return CreateBitmap(pDisplay, pGraphic, size);
@@ -53,11 +62,32 @@ namespace Crossbow
         #endregion
 
         #region Force Elements
+        private IDynamicElement CreateEmergencyForceElement(IDisplay display, IDynamicDisplay dynamicDisplay, string symbolId)
+        {
+            DynamicForceElement element = new DynamicForceElement();
+            if (!m_Glyph.ContainsKey(symbolId))
+            {
+                lock (m_Glyph)
+                {
+                    m_Glyph[symbolId] = CreateDynamicGlyphFromFile(dynamicDisplay, symbolId, 128, 64);
+                }
+            }
+            element.Glyph = m_Glyph[symbolId];
+            return element as IDynamicElement;
+        }
+       
         private IDynamicElement CreateForceElement(IDisplay display, IDynamicDisplay dynamicDisplay, string symbolId)
         {
             DynamicForceElement element = new DynamicForceElement();
             element.CachedGraphic = CreateForceElementGraphic(symbolId, "");
-            element.Glyph = CreateDynamicGlyph(display, dynamicDisplay, element.CachedGraphic, 128, 64);
+            if (!m_Glyph.ContainsKey(symbolId))
+            {
+                lock (m_Glyph)
+                {
+                    m_Glyph[symbolId] = CreateDynamicGlyph(display, dynamicDisplay, element.CachedGraphic, 128, 64);
+                }
+            }
+            element.Glyph = m_Glyph[symbolId];            
             return element as IDynamicElement;
         }
 
@@ -74,9 +104,15 @@ namespace Crossbow
             element.PropertySet.SetProperty("Symbol_ID", symbolId);
             element.PropertySet.SetProperty("Name", name);
             element.PropertySet.SetProperty("Info", "");
-            return element;    
+            return element;
         }
-    
+
+
+        private static string GetFileName(string symbolID)
+        {
+            return Tools.GetCSwordExtension().Config.ExerciseDir + "\\Resources\\Symbols\\HSWG_Small\\" + symbolID.Substring(0, symbolID.IndexOf('-')) + ".png";
+        }
+
         // Create dynamic glyph
         // textureSize in pixels
         // glyphSize in points
@@ -86,7 +122,7 @@ namespace Crossbow
             IPictureMarkerSymbol pMarker = new PictureMarkerSymbolClass();
             IColor bgColor = Tools.MakeColor(255, 255, 255);
             IDynamicGlyphFactory factory = (IDynamicGlyphFactory)pDynamicDisplay.DynamicGlyphFactory;
-
+            
             pMarker.Picture = pBitmap.DrawToPicture(pDisplay, textureSize, textureSize, 1, bgColor);
             pMarker.BitmapTransparencyColor = bgColor;
             pMarker.Size = glyphSize;
@@ -100,12 +136,32 @@ namespace Crossbow
             pMarker.Size = glyphSize / ratio;
             return factory.CreateDynamicGlyph(symbol);
         }
+
+        private static IDynamicGlyph CreateDynamicGlyphFromFile(IDynamicDisplay pDynamicDisplay, string symbolID, int textureSize, int glyphSize)
+        {
+            IColor bgColor = Tools.MakeColor(255, 0, 255);
+            
+            IDynamicGlyphFactory factory = (IDynamicGlyphFactory)pDynamicDisplay.DynamicGlyphFactory;
+            
+            string filename = GetFileName(symbolID);
+            // IPictureMarkerSymbol pMarker = new PictureMarkerSymbolClass();
+            // pMarker.CreateMarkerSymbolFromFile(esriIPictureType.esriIPictureEMF, filename);                       
+            // pMarker.BitmapTransparencyColor = bgColor;
+            // pMarker.Size = glyphSize;
+            // return factory.CreateDynamicGlyph(pMarker as ISymbol);
+            return factory.CreateDynamicGlyphFromFile(esriDynamicGlyphType.esriDGlyphMarker, filename, bgColor);
+        }        
         #endregion
 
         #region Tactical Elements
         private static bool IsTacticalElement(string symbolId)
         {
             return symbolId.StartsWith("G") || symbolId.StartsWith("W");
+        }
+
+        private static bool IsEmergencyForceElement(string symbolId)
+        {
+            return symbolId[5] == 'E';
         }
 
         private IDynamicElement CreateTacticalElement(IDisplay display, IDynamicDisplay dynamicDisplay, IFeature feature, string symbolId)
@@ -155,8 +211,25 @@ namespace Crossbow
             IColor bgColor = Tools.MakeColor(255, 255, 255);
             int hDIB = pBitmap.DrawToDIB(pDisplay, size, size, 1.2, bgColor);
             System.IntPtr iPtr = new IntPtr(hDIB);
-
+            
             return System.Drawing.Bitmap.FromHbitmap(iPtr);
+        }
+
+        private static System.Drawing.Bitmap CreateBitmap(IDisplay pDisplay, string symbolID, int size)
+        {
+            IColor bgColor = Tools.MakeColor(255, 255, 255);
+            string filename = GetFileName(symbolID);
+
+            try
+            {
+                System.Drawing.Image image = System.Drawing.Image.FromFile(filename);
+                return new System.Drawing.Bitmap(image, size, size);
+            }
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine("Exception catched: " + ex.Message);
+            }
+            return null;
         }
         #endregion
     }

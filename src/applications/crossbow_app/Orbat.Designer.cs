@@ -202,9 +202,12 @@ namespace Crossbow
                 string name = Tools.GetValue<string>(pRow, "Name");
                 string symbolID = Tools.GetValue<string>(pRow, "Symbol_ID");
 
-                TreeNodeCollection parentNode = m_symbolTree.Nodes;
-                if (oidParent > 0 && oidParent < 4472872)
-                    parentNode = m_symbolTree.Nodes.Find(oidParent.ToString(), true)[0].Nodes;
+                TreeNodeCollection parentNode = m_symbolTree.Nodes;                
+                TreeNode[] query = m_symbolTree.Nodes.Find(oidParent.ToString(), true);
+                // if something has been found, 
+                // add as children otherwise add to the root                
+                if (query.Length > 0) 
+                    parentNode = query[0].Nodes;                
                 TreeNode newNode = parentNode.Add(oid.ToString(), name, symbolID);
                 newNode.SelectedImageKey = symbolID;
                 pRow = pCursor.NextRow();
