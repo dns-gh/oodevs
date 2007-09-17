@@ -26,8 +26,8 @@
 // Name: FunctionFactory constructor
 // Created: AGE 2007-09-11
 // -----------------------------------------------------------------------------
-FunctionFactory::FunctionFactory( dispatcher::ClientPublisher_ABC& publisher )
-    : publisher_( publisher )
+FunctionFactory::FunctionFactory()
+    : currentContext_( 0 )
 {
     // NOTHING
 }
@@ -41,13 +41,106 @@ FunctionFactory::~FunctionFactory()
     // NOTHING
 }
 
+namespace
+{
+    // $$$$ AGE 2007-09-17: crap
+    const char* extractors[][3] =
+    {
+        // name,                         type,       key type
+        { "operational-state",          "float",    "unit" },
+        { "position",                   "position", "unit" },
+        { "maintenance-handling-unit",  "unit",     "maintenance-handling" },
+        { 0, 0, 0 }
+    };
+
+    const char* transformations[][6] =
+    {
+        // name,        input type 1   input type 2  output type   parameter type  parameter name
+        { "distance",  "position",    "position",   "float",      "",             "" },
+        { "filter",    "bool",        "any",        "input 2",    "",             "" },
+        { "is-one-of", "any",         "",           "input 1",    "list input 1", "select" },
+        { 0, 0, 0, 0, 0, 0 }
+    };
+
+    const char* reductions[][4] =
+    {
+        // name,     output,     parameter type  parameter name
+        { "select", "input",    "key",          "key" },
+        { "count",  "unsigned", "",             ""    },
+        { 0, 0, 0, 0 }
+    };
+
+    void DescribeExtractors( xml::xostream& xos )
+    {
+        unsigned i = 0;
+        while( extractors[i][0] )
+        {
+            xos << xml::start( "extractor" )
+                    << xml::attribute( "name",     extractors[i][0] )
+                    << xml::attribute( "type",     extractors[i][1] )
+                    << xml::attribute( "key-type", extractors[i][2] )
+                << xml::end();
+            ++i;
+        }
+    }
+    void DescribeTransformations( xml::xostream& xos )
+    {
+        unsigned i = 0;
+        while( transformations[i][0] )
+        {
+            xos << xml::start( "transformation" )
+                    << xml::attribute( "name",   transformations[i][0] )
+                    << xml::attribute( "input1", transformations[i][1] );
+            if( transformations[i][2] )
+                xos << xml::attribute( "input2", transformations[i][2] );
+            xos << xml::attribute( "output", transformations[i][3] );
+            if( transformations[i][4] )
+                xos << xml::attribute( "parameter-type", transformations[i][4] );
+            if( transformations[i][5] )
+                xos << xml::attribute( "parameter-name", transformations[i][5] );
+            xos << xml::end();
+            ++i;
+        }
+    }
+    void DescribeReductions( xml::xostream& xos )
+    {
+        unsigned i = 0;
+        while( reductions[i][0] )
+        {
+            xos << xml::start( "reduction" )
+                    << xml::attribute( "name",   reductions[i][0] )
+                    << xml::attribute( "output", reductions[i][1] );
+            if( transformations[i][2] )
+                xos << xml::attribute( "parameter-type", transformations[i][2] );
+            if( transformations[i][3] )
+                xos << xml::attribute( "parameter-name", transformations[i][3] );
+            xos << xml::end();
+            ++i;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: FunctionFactory::Describe
+// Created: AGE 2007-09-17
+// -----------------------------------------------------------------------------
+void FunctionFactory::Describe( xml::xostream& xos )
+{
+    xos << xml::start( "functions" );
+    DescribeExtractors( xos );
+    DescribeTransformations( xos );
+    DescribeReductions( xos );
+    xos << xml::end();
+}
+
 // -----------------------------------------------------------------------------
 // Name: boost::shared_ptr< Task > FunctionFactory::CreateTask
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
-boost::shared_ptr< Task > FunctionFactory::CreateTask( xml::xistream& xis )
+boost::shared_ptr< Task > FunctionFactory::CreateTask( int context, xml::xistream& xis )
 {
-    boost::shared_ptr< Task > result( new Task( publisher_ ) );
+    currentContext_ = context;
+    boost::shared_ptr< Task > result( new Task() );
     xis >> xml::start( "indicator" )
             >> xml::list( *this, &FunctionFactory::CreateFunction, *result )
         >> xml::end();
@@ -63,10 +156,10 @@ void FunctionFactory::CreateFunction( const std::string& type, xml::xistream& xi
 {
     if( type == "extract" )
         Extract( xis, result );
-    else if( type == "reduce" )
-        Reduce( xis, result );
     else if( type == "transform" )
         Transform( xis, result );
+    else if( type == "reduce" )
+        Reduce( xis, result );
     else if( type == "plot" )
         Plot( xis, result );
     else
@@ -258,7 +351,7 @@ void FunctionFactory::Plot( xml::xistream& xis, Task& result )
 template< typename T >
 void FunctionFactory::Plot( Task& result )
 {
-    boost::shared_ptr< Plotter< unsigned long, T > > plotter( new Plotter< unsigned long, T >() );
+    boost::shared_ptr< Plotter< unsigned long, T > > plotter( new Plotter< unsigned long, T >( currentContext_ ) );
     result.SetResult( plotter );
 }
 

@@ -28,7 +28,7 @@ class Plotter : public Function1_ABC< K, T >
 public:
     //! @name Constructors/Destructor
     //@{
-             Plotter() {};
+    explicit Plotter( int context ) : context_( context ) {};
     virtual ~Plotter() {};
     //@}
 
@@ -52,9 +52,9 @@ public:
         result.values.n    =  values.size();
         result.values.elem = &values.front();
 
-        ASN1T_MsgsAfterActionReviewToClient message;
-//        message.context = $$$$;
-        message.msg.t = T_MsgsAfterActionReviewToClient_msg_msg_indicator_result;
+        ASN1T_MsgsAarToClient message;
+        message.context = context_;
+        message.msg.t = T_MsgsAarToClient_msg_msg_indicator_result;
         message.msg.u.msg_indicator_result = &result;
 
         publisher.Send( message );
@@ -76,6 +76,7 @@ private:
 private:
     //! @name Member data
     //@{
+    int context_;
     T_Values values_;
     //@}
 };

@@ -65,6 +65,7 @@ private:
     void OnReceiveMsgSimToClient           ( const std::string& from, const ASN1T_MsgsSimToClient& message );
     void OnReceiveMsgAuthenticationToClient( const std::string& from, const ASN1T_MsgsAuthenticationToClient& message );
     void OnReceiveMsgReplayToClient        ( const std::string& from, const ASN1T_MsgsReplayToClient& message );
+    void OnReceiveMsgAarToClient           ( const std::string& from, const ASN1T_MsgsAarToClient& message );
 
     void OnReceiveMsgUnitVisionCones                       ( const ASN1T_MsgUnitVisionCones& message );
     void OnReceiveMsgUnitInterVisibility                   ( const ASN1T_MsgUnitDetection& message );
@@ -226,6 +227,10 @@ private:
     // Folk
     void OnReceiveMsgFolkCreation               ( const ASN1T_MsgFolkCreation& asnMsg );
     void OnReceiveMsgFolkGraphUpdate            ( const ASN1T_MsgFolkGraphUpdate& asnMsg );
+
+    // 3a
+    void OnReceiveMsgAarInformation( const ASN1T_MsgAarInformation& asnMsg );
+    void OnReceiveMsgAarResult     ( const ASN1T_MsgIndicatorResult& asnMsg );
     //@}
 
     //! @name Helpers

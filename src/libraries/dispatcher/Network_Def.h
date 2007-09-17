@@ -172,6 +172,9 @@ GENERATE_NOPTR_ASN_MSG_SENDER   ( ReplayToClient, ControlResumeAck             ,
 GENERATE_ASN_MSG_SENDER         ( ReplayToClient, ControlChangeTimeFactorAck   , control_change_time_factor_ack                    );
 GENERATE_ASN_MSG_SENDER         ( ReplayToClient, ControlSkipToTickAck         , control_skip_to_tick_ack        );
 
+GENERATE_ASN_MSG_SENDER         ( AarToClient, AarInformation,  aar_information );
+GENERATE_ASN_MSG_SENDER         ( AarToClient, IndicatorResult, indicator_result );
+
 GENERATE_EMPTY_ASN_MSG_SENDER   ( MiddleToSim, CtrlClientAnnouncement          , control_client_announcement     );
 
 GENERATE_EMPTY_ASN_MSG_SENDER   ( ClientToSim, ControlPause, control_pause );

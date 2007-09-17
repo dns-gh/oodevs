@@ -32,6 +32,7 @@
 #include "UserProfile.h"
 #include "LogTools.h"
 #include "FolkModel.h"
+#include "AfterActionModel.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Object_ABC.h"
@@ -60,6 +61,7 @@ AgentServerMsgMgr::AgentServerMsgMgr( MessageDispatcher_ABC& dispatcher, Message
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgSimToClient );
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgAuthenticationToClient );
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgReplayToClient );
+    dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgAarToClient );
 }
 
 //-----------------------------------------------------------------------------
@@ -1271,6 +1273,24 @@ void AgentServerMsgMgr::OnReceiveMsgFolkGraphUpdate( const ASN1T_MsgFolkGraphUpd
     GetModel().folk_.Update( asnMsg );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgAarInformation
+// Created: AGE 2007-09-17
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgAarInformation( const ASN1T_MsgAarInformation& asnMsg )
+{
+    GetModel().aar_.Update( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgAarResult
+// Created: AGE 2007-09-17
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgAarResult( const ASN1T_MsgIndicatorResult& asnMsg )
+{
+    GetModel().aar_.Update( asnMsg );
+}
+
 namespace
 {
     void UnhandledMessage( int message )
@@ -1473,6 +1493,23 @@ void AgentServerMsgMgr::OnReceiveMsgReplayToClient( const std::string& , const A
         case T_MsgsReplayToClient_msg_msg_control_change_time_factor_ack: OnReceiveMsgControlChangeTimeFactorAck( *message.msg.u.msg_control_change_time_factor_ack ); break;
         default:
             UnhandledMessage( message.msg.t );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgAarToClient
+// Created: AGE 2007-09-17
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgAarToClient( const std::string& from, const ASN1T_MsgsAarToClient& message )
+{
+    if( host_.empty() )
+        return;
+    switch( message.msg.t )
+    {
+    case T_MsgsAarToClient_msg_msg_aar_information:  OnReceiveMsgAarInformation( *message.msg.u.msg_aar_information     ); break;
+    case T_MsgsAarToClient_msg_msg_indicator_result: OnReceiveMsgAarResult     ( *message.msg.u.msg_indicator_result); break;
+    default:
+        UnhandledMessage( message.msg.t );
     }
 }
 

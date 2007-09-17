@@ -12,6 +12,7 @@
 #include "Result_ABC.h"
 #include "xeumeuleu/xml.h"
 #include "dispatcher/ClientPublisher_ABC.h"
+#include "dispatcher/MessageLoader_ABC.h"
 #pragma warning( disable : 4512 )
 #include <boost/algorithm/string.hpp>
 
@@ -19,9 +20,8 @@
 // Name: Task constructor
 // Created: AGE 2007-09-11
 // -----------------------------------------------------------------------------
-Task::Task( dispatcher::ClientPublisher_ABC& publisher )
-    : publisher_( publisher )
-    , result_   ( 0 )
+Task::Task()
+    : result_ ( 0 )
 {
     // NOTHING
 }
@@ -157,8 +157,21 @@ void Task::Receive( const ASN1T_MsgsSimToClient& message )
 // Name: Task::Commit
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
-void Task::Commit()
+void Task::Commit( dispatcher::ClientPublisher_ABC& publisher )
 {
     if( result_ )
-        result_->Send( publisher_ );
+        result_->Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Task::Process
+// Created: AGE 2007-09-17
+// -----------------------------------------------------------------------------
+void Task::Process( dispatcher::MessageLoader_ABC& loader, dispatcher::ClientPublisher_ABC& publisher )
+{
+    const unsigned ticks = loader.GetTickNumber();
+    loader.LoadKeyFrame( 0, *this );
+    for( unsigned i = 0; i < ticks-1; ++i )
+        loader.LoadFrame( i, *this );
+    loader.LoadFrame( ticks-1, *this, boost::bind( &Task::Commit, shared_from_this(), boost::ref( publisher ) ) );
 }

@@ -45,6 +45,7 @@ class ActionsModel;
 class ActionParameterFactory_ABC;
 class ActionFactory_ABC;
 class FolkModel;
+class AfterActionModel;
 
 // =============================================================================
 /** @class  Model
@@ -100,6 +101,7 @@ public:
     UserProfilesModel&    profiles_;
     ActionsModel&         actions_;
     FolkModel&            folk_;
+    AfterActionModel&     aar_;
     //@}
 
 private:

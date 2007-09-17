@@ -18,10 +18,10 @@ namespace dispatcher
     class ClientPublisher_ABC;
 }
 
-
 namespace xml
 {
     class xistream;
+    class xostream;
 }
 
 class Task;
@@ -38,13 +38,14 @@ class FunctionFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             FunctionFactory( dispatcher::ClientPublisher_ABC& publisher );
+             FunctionFactory();
     virtual ~FunctionFactory();
     //@}
 
     //! @name Operations
     //@{
-    boost::shared_ptr< Task > CreateTask( xml::xistream& xis );
+    boost::shared_ptr< Task > CreateTask( int context, xml::xistream& xis );
+    void Describe( xml::xostream& xos );
     //@}
 
 private:
@@ -89,7 +90,7 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::ClientPublisher_ABC& publisher_;
+    int currentContext_;
     //@}
 };
 

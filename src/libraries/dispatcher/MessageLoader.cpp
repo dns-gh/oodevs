@@ -34,10 +34,13 @@ namespace
 // Name: MessageLoader constructor
 // Created: AGE 2007-07-09
 // -----------------------------------------------------------------------------
-MessageLoader::MessageLoader( const Config& config, const std::string& records )
-//    : disk_( 1 )
-//    , cpu_ ( 1 )
+MessageLoader::MessageLoader( const Config& config, const std::string& records, bool threaded )
 {
+    if( threaded )
+    {
+        disk_.reset( new tools::thread::ThreadPool( 1 ) );
+        cpu_.reset ( new tools::thread::ThreadPool( 1 ) );
+    }
     const bfs::path dir( BuildInputDirectory( config, records ), bfs::native );
 
     LoadIndex   ( ( dir / "index" ).string() );
@@ -59,13 +62,15 @@ MessageLoader::~MessageLoader()
 // Name: MessageLoader::LoadFrame
 // Created: AGE 2007-07-09
 // -----------------------------------------------------------------------------
-bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& handler )
+bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback /*= T_Callback()*/ )
 {
     if( frameNumber >= frames_.size() )
         return false;
     const Frame& current = frames_[ frameNumber ];
-    Load( updates_, current.offset_, current.size_, handler );
-//    disk_.Enqueue( boost::bind( &MessageLoader::Load, this, boost::ref( updates_ ), current.offset_, current.size_, boost::ref( handler ) ) );
+    if( disk_.get() )
+        disk_->Enqueue( boost::bind( &MessageLoader::Load, this, boost::ref( updates_ ), current.offset_, current.size_, boost::ref( handler ), callback ) );
+    else
+        Load( updates_, current.offset_, current.size_, handler, callback );
     return true;
 }
 
@@ -73,14 +78,17 @@ bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& han
 // Name: MessageLoader::LoadKeyFrame
 // Created: AGE 2007-07-09
 // -----------------------------------------------------------------------------
-unsigned int MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& handler )
+unsigned int MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback /*= T_Callback()*/ )
 {
     unsigned key = frameNumber / 100;
     if( key >= keyFrames_.size() )
         key = keyFrames_.size() - 1;
     const KeyFrame& keyFrame = keyFrames_[ key ];
 
-    Load( keys_, keyFrame.offset_, keyFrame.size_, handler );
+    if( disk_.get() )
+        disk_->Enqueue( boost::bind( &MessageLoader::Load, this, boost::ref( keys_ ), keyFrame.offset_, keyFrame.size_, boost::ref( handler ), callback ) );
+    else
+        Load( keys_, keyFrame.offset_, keyFrame.size_, handler, callback );
 
     return keyFrame.frameNumber_;
 }
@@ -91,17 +99,19 @@ unsigned int MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandl
 // -----------------------------------------------------------------------------
 void MessageLoader::Synchronize()
 {
-//    {
-//        tools::thread::BarrierCommand barrier;
-//        disk_.Enqueue( barrier.command() );
-//        barrier.wait();
-//    }
-//
-//    {
-//        tools::thread::BarrierCommand barrier;
-//        cpu_.Enqueue( barrier.command() );
-//        barrier.wait();
-//    }
+    if( disk_.get() )
+    {
+        tools::thread::BarrierCommand barrier;
+        disk_->Enqueue( barrier.command() );
+        barrier.wait();
+    }
+
+    if( cpu_.get() )
+    {
+        tools::thread::BarrierCommand barrier;
+        cpu_->Enqueue( barrier.command() );
+        barrier.wait();
+    }
 }
 
 namespace dispatcher
@@ -121,29 +131,41 @@ namespace dispatcher
         unsigned char* data_;
         unsigned size_;
     };
+    void YieldMessages( unsigned pendingMessages )
+    {
+        if( pendingMessages > 10 )
+            tools::thread::Thread::Sleep( pendingMessages / 10 );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: MessageLoader::Load
 // Created: AGE 2007-07-13
 // -----------------------------------------------------------------------------
-void MessageLoader::Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler )
+void MessageLoader::Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler, const T_Callback& callback )
 {
     in.seekg( from );
     boost::shared_ptr< Buffer > buffer( new Buffer( size, in ) );
-    LoadBuffer( buffer, handler );
-//    cpu_.Enqueue( boost::bind( &MessageLoader::LoadBuffer, this, buffer, boost::ref( handler ) ) );
+    if( cpu_.get() )
+    {
+        YieldMessages( cpu_->PendingMessages() );
+        cpu_->Enqueue( boost::bind( &MessageLoader::LoadBuffer, this, buffer, boost::ref( handler ), callback ) );
+    }
+    else
+        LoadBuffer( buffer, handler, callback );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MessageLoader::LoadBuffer
 // Created: AGE 2007-07-13
 // -----------------------------------------------------------------------------
-void MessageLoader::LoadBuffer( const boost::shared_ptr< Buffer >& buffer, MessageHandler_ABC& handler )
+void MessageLoader::LoadBuffer( const boost::shared_ptr< Buffer >& buffer, MessageHandler_ABC& handler, const T_Callback& callback )
 {
     unsigned char* current = buffer->data_;
     while( current < buffer->data_ + buffer->size_ )
         LoadSimToClientMessage( current, handler );
+    if( callback )
+        callback();
 }
 
 // -----------------------------------------------------------------------------

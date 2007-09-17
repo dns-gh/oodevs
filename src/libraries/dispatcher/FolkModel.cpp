@@ -18,6 +18,8 @@ using namespace dispatcher;
 // Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
 FolkModel::FolkModel()
+    : container_size( 0 )
+    , edge_number   ( 0 )
 {
     // NOTHING
 }
@@ -64,19 +66,22 @@ void FolkModel::SendFullUpdate( ClientPublisher_ABC& ) const
 // -----------------------------------------------------------------------------
 void FolkModel::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientFolkCreation asn;
-    asn().container_size = container_size;
-    asn().edge_number    = edge_number;
-    std::vector< ASN1TDynOctStr > act, pro;
-    for( CIT_Names it = activities_.begin(); it != activities_.end(); ++it )
-        act.push_back( it->c_str() );
-    for( CIT_Names it = profiles_.begin(); it != profiles_.end(); ++it )
-        pro.push_back( it->c_str() );
+    if( container_size > 0 && edge_number > 0 )
+    {
+        AsnMsgSimToClientFolkCreation asn;
+        asn().container_size = container_size;
+        asn().edge_number    = edge_number;
+        std::vector< ASN1TDynOctStr > act, pro;
+        for( CIT_Names it = activities_.begin(); it != activities_.end(); ++it )
+            act.push_back( it->c_str() );
+        for( CIT_Names it = profiles_.begin(); it != profiles_.end(); ++it )
+            pro.push_back( it->c_str() );
 
-    asn().activities.n    = act.size();
-    asn().activities.elem = act.empty() ? 0 : &act.front();
-    asn().profiles.n    = pro.size();
-    asn().profiles.elem = pro.empty() ? 0 : &pro.front();
+        asn().activities.n    = act.size();
+        asn().activities.elem = act.empty() ? 0 : &act.front();
+        asn().profiles.n    = pro.size();
+        asn().profiles.elem = pro.empty() ? 0 : &pro.front();
 
-    asn.Send( publisher );
+        asn.Send( publisher );
+    }
 }

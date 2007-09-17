@@ -19,6 +19,7 @@
 #include "RightsPlugin.h"
 #include "DispatcherPlugin.h"
 #include "NoopPublisher.h"
+#include "AarPlugin.h"
 
 #include "xeumeuleu/xml.h"
 
@@ -59,6 +60,7 @@ Replayer::Replayer( const Config& config, const std::string& records )
     static NoopSimulationPublisher simu;
     handler_.Add( new DispatcherPlugin( *model_, simu, *clientsNetworker_, *rights ) );
     handler_.Add( plugin_ );
+    handler_.Add( new AarPlugin( *clientsNetworker_, *rights, config, records ) );
     loader_->Start();
 }
  

@@ -306,16 +306,17 @@ MsgsClientToAuthentication ::= SEQUENCE
 -- 
 -- 
 -- 
-MsgsAfterActionReviewToClient ::= SEQUENCE
+MsgsAarToClient ::= SEQUENCE
 {
     context INTEGER DEFAULT 0,
     msg     CHOICE
     {
+        msg-aar-information             MsgAarInformation,
         msg-indicator-result            MsgIndicatorResult
     }
 }
 
-MsgsClientToAfterActionReview ::= SEQUENCE
+MsgsClientToAar ::= SEQUENCE
 {
     context INTEGER DEFAULT 0,
     msg     CHOICE

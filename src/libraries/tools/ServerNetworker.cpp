@@ -140,7 +140,7 @@ ObjectMessageCallback_ABC* ServerNetworker::Retrieve( unsigned long id )
 // -----------------------------------------------------------------------------
 void ServerNetworker::Send( const std::string& endpoint, unsigned long tag, const Message& message )
 {
-    return sockets_->Send( endpoint, tag, message );
+    sockets_->Send( endpoint, tag, message );
 }
 
 // -----------------------------------------------------------------------------

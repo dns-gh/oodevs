@@ -12,7 +12,8 @@
 
 #include "game_asn/Asn.h"
 #include "Frames.h"
-//#include "tools/thread/ThreadPool.h"
+#include "MessageLoader_ABC.h"
+#include "tools/thread/ThreadPool.h"
 #include <vector>
 #include <fstream>
 #include <boost/shared_ptr.hpp>
@@ -34,20 +35,20 @@ namespace dispatcher
 */
 // Created: AGE 2007-07-09
 // =============================================================================
-class MessageLoader
+class MessageLoader : public MessageLoader_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MessageLoader( const Config& config, const std::string& records );
+             MessageLoader( const Config& config, const std::string& records, bool threaded );
     virtual ~MessageLoader();
     //@}
 
     //! @name Operations
     //@{
-    bool         LoadFrame   ( unsigned int frameNumber, MessageHandler_ABC& handler );
-    unsigned int LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& handler );
+    virtual bool         LoadFrame   ( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback = T_Callback() );
+    virtual unsigned int LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback = T_Callback()  );
     void Synchronize();
 
     unsigned int GetTickNumber() const;
@@ -70,8 +71,8 @@ private:
     //@{
     void LoadIndex( const std::string& file );
     void LoadKeyIndex( const std::string& file );
-    void Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler );
-    void LoadBuffer( const boost::shared_ptr< Buffer >& buffer, MessageHandler_ABC& handler );
+    void Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler, const T_Callback& callback );
+    void LoadBuffer( const boost::shared_ptr< Buffer >& buffer, MessageHandler_ABC& handler, const T_Callback& callback );
     void LoadSimToClientMessage( const unsigned char*& input, MessageHandler_ABC& handler );
     //@}
 
@@ -83,8 +84,8 @@ private:
     std::ifstream updates_;
     std::ifstream keys_;
 
-//    tools::thread::ThreadPool disk_;
-//    tools::thread::ThreadPool cpu_;
+    std::auto_ptr< tools::thread::ThreadPool > disk_;
+    std::auto_ptr< tools::thread::ThreadPool > cpu_;
     //@}
 };
 

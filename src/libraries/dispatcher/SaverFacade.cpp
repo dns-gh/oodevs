@@ -117,7 +117,7 @@ namespace
         }
         virtual void Send( const ASN1T_MsgsAuthenticationToClient& ) {}
         virtual void Send( const ASN1T_MsgsReplayToClient& ) {}
-        virtual void Send( const ASN1T_MsgsAfterActionReviewToClient& ) {}
+        virtual void Send( const ASN1T_MsgsAarToClient& ) {}
         void SendStartTick()
         {
             AsnMsgSimToClientControlBeginTick tick;

@@ -55,7 +55,7 @@ namespace
         virtual void Send( const ASN1T_MsgsSimToClient& ) { }
         virtual void Send( const ASN1T_MsgsAuthenticationToClient& ) { }
         virtual void Send( const ASN1T_MsgsReplayToClient& ) { }
-        virtual void Send( const ASN1T_MsgsAfterActionReviewToClient& msg )
+        virtual void Send( const ASN1T_MsgsAarToClient& msg )
         {
             const ASN1T_MsgIndicatorResult& result = *msg.msg.u.msg_indicator_result;
             std::vector< double > v;
@@ -87,9 +87,8 @@ BOOST_AUTO_TEST_CASE( Facade_TestOperationalState )
     "</indicator>";
     xml::xistringstream xis( input );
 
-    MockPublisher publisher;
-    FunctionFactory facade( publisher );
-    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+    FunctionFactory facade;
+    boost::shared_ptr< Task > task( facade.CreateTask( 42, xis ) );
 
     task->Receive( BeginTick() );
     task->Receive( OperationalState( 50, 1 ) );
@@ -110,8 +109,9 @@ BOOST_AUTO_TEST_CASE( Facade_TestOperationalState )
     task->Receive( EndTick() );
 
     double expectedResult[] = { 0.25, 0.25, 0.75, 0.75 };
+    MockPublisher publisher;
     MakeExpectation( publisher.Send_mocker, expectedResult );
-    task->Commit();
+    task->Commit( publisher );
     publisher.verify();
 }
 
@@ -153,9 +153,8 @@ BOOST_AUTO_TEST_CASE( Facade_TestDistanceBetweenTwoUnits )
     "</indicator>";
     xml::xistringstream xis( input );
 
-    MockPublisher publisher;
-    FunctionFactory facade( publisher );
-    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+    FunctionFactory facade;
+    boost::shared_ptr< Task > task( facade.CreateTask( 42, xis ) );
     task->Receive( BeginTick() );
     task->Receive( MakePosition( "31TBN7728449218", 1 ) );
     task->Receive( MakePosition( "31TBN7728449218", 2 ) );
@@ -170,8 +169,9 @@ BOOST_AUTO_TEST_CASE( Facade_TestDistanceBetweenTwoUnits )
     task->Receive( EndTick() );
 
     double expectedResult[] = { 0., 2., 4. };
+    MockPublisher publisher;
     MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
-    task->Commit();
+    task->Commit( publisher );
     publisher.verify();
 }
 
@@ -224,9 +224,8 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdowns )
     "</indicator>";
     xml::xistringstream xis( input );
 
-    MockPublisher publisher;
-    FunctionFactory facade( publisher );
-    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+    FunctionFactory facade;
+    boost::shared_ptr< Task > task( facade.CreateTask( 42, xis ) );
 
     task->Receive( BeginTick() );
     task->Receive( CreateConsign( 12 ) );
@@ -242,10 +241,10 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdowns )
     task->Receive( BeginTick() );
     task->Receive( EndTick() );
 
+    MockPublisher publisher;
     double expectedResult[] = { 1., 2., 2., 1., 1. };
     MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
-
-    task->Commit();
+    task->Commit( publisher );
     publisher.verify();
 }
 
@@ -265,9 +264,8 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter )
     "</indicator>";
     xml::xistringstream xis( input );
 
-    MockPublisher publisher;
-    FunctionFactory facade( publisher );
-    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+    FunctionFactory facade;
+    boost::shared_ptr< Task > task( facade.CreateTask( 42, xis ) );
 
     task->Receive( BeginTick() );
     task->Receive( CreateConsign( 12, 12 ) );
@@ -287,10 +285,10 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter )
     task->Receive( BeginTick() );
     task->Receive( EndTick() );
 
+    MockPublisher publisher;
     double expectedResult[] = { 2., 3., 3., 2., 2. };
     MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
-
-    task->Commit();
+    task->Commit( publisher );
     publisher.verify();
 }
 

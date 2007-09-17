@@ -23,7 +23,7 @@ using namespace dispatcher;
 Loader::Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Config& config, const std::string& records )
     : model_       ( model )
     , handler_     ( handler )
-    , loader_      ( new MessageLoader( config, records ) )
+    , loader_      ( new MessageLoader( config, records, false ) )
     , currentFrame_( 0 )
 {
     // NOTHING

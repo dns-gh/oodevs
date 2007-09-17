@@ -15,6 +15,7 @@
 #include <memory>
 #include <string>
 #include <map>
+#include <boost/enable_shared_from_this.hpp>
 
 class Connector_ABC;
 class ModelFunction_ABC;
@@ -24,6 +25,7 @@ class Result_ABC;
 namespace dispatcher
 {
     class ClientPublisher_ABC;
+    class MessageLoader_ABC;
 }
 
 namespace xml
@@ -38,12 +40,13 @@ namespace xml
 // Created: AGE 2007-09-11
 // =============================================================================
 class Task : public dispatcher::MessageHandler_ABC
+           , public boost::enable_shared_from_this< Task >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Task( dispatcher::ClientPublisher_ABC& publisher );
+             Task();
     virtual ~Task();
     //@}
 
@@ -57,7 +60,8 @@ public:
     void Connect( xml::xistream& xis );
 
     virtual void Receive( const ASN1T_MsgsSimToClient& message );
-    void Commit(); // $$$$ AGE 2007-09-12: temp
+    void Commit( dispatcher::ClientPublisher_ABC& publisher );
+    void Process( dispatcher::MessageLoader_ABC& loader, dispatcher::ClientPublisher_ABC& publisher );
     //@}
 
 private:
@@ -86,7 +90,6 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::ClientPublisher_ABC& publisher_;
     ModelFunctionComposite composite_;
     T_Connectors connectors_;
     T_Slots slots_;

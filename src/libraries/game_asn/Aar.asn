@@ -12,6 +12,11 @@ AarIncludes ::= SEQUENCE { BaseExports }
 AarExports  ::= NULL
 -- END includes
 
+MsgAarInformation ::= SEQUENCE
+{
+    information VisibleString -- $$$$ XmlOverAsn pattern
+}
+
 MsgIndicatorResult ::= SEQUENCE
 {
     values SEQUENCE OF REAL
@@ -19,7 +24,7 @@ MsgIndicatorResult ::= SEQUENCE
 
 MsgIndicatorRequest ::= SEQUENCE
 {
-    request VisibleString
+    request VisibleString -- $$$$ XmlOverAsn pattern again
 }
 
 END -- Aar

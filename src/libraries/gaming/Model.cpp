@@ -36,6 +36,7 @@
 #include "ActionFactory.h"
 #include "ActionsModel.h"
 #include "FolkModel.h"
+#include "AfterActionModel.h"
 
 using namespace kernel;
 
@@ -71,6 +72,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , profiles_( *new UserProfilesModel( userProfileFactory_ ) )
     , actions_( *new ActionsModel( actionFactory_, simulation ) )
     , folk_( *new FolkModel( controllers.controller_ ) )
+    , aar_( *new AfterActionModel() )
 {
     // NOTHING
 }
@@ -81,6 +83,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete &aar_;
     delete &folk_;
     delete &actions_;
     delete &profiles_;

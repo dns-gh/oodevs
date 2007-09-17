@@ -47,7 +47,7 @@ public:
     virtual void Send( const ASN1T_MsgsSimToClient& asnMsg );
     virtual void Send( const ASN1T_MsgsAuthenticationToClient& asnMsg );
     virtual void Send( const ASN1T_MsgsReplayToClient& );
-    virtual void Send( const ASN1T_MsgsAfterActionReviewToClient& msg );
+    virtual void Send( const ASN1T_MsgsAarToClient& msg );
 
     virtual Profile_ABC&         GetProfile  ( const std::string& link );
     virtual ClientPublisher_ABC& GetPublisher( const std::string& link );
