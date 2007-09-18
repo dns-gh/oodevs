@@ -110,8 +110,8 @@ Section "DirectIA models sources"
     SetOutPath "$INSTDIR\data\models\main\decisional"
     File /r /x ".svn" "${DATADIR}\data\models\main\decisional\Sources"
 
-    SetOutPath "$INSTDIR\exercises"
-    File /r /x ".svn" "${DATADIR}\exercises\empty-france"
+    ;SetOutPath "$INSTDIR\exercises"
+    ;File /r /x ".svn" "${DATADIR}\exercises\empty-france"
 SectionEnd
 
 ;--------------------------------
