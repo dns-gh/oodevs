@@ -66,6 +66,7 @@ private:
     void UpdateListeners() const;    
     void UpdateOnMessage( const ASN1T_MsgsSimToClient& asn );
     bool IsRelevant( const ASN1T_MsgsSimToClient& asn ) const;
+    bool InitializedToCurrentState( const ASN1T_MsgsSimToClient& asn );
     //@}
 
 private:
@@ -82,7 +83,8 @@ private:
     //@{    
     std::auto_ptr< kernel::OrderTypes > orderTypes_;
     std::auto_ptr< Connector >          connector_;
-    T_ListenerList                      listeners_;    
+    T_ListenerList                      listeners_;
+    bool                                initialized_;
     //@}
 };
 

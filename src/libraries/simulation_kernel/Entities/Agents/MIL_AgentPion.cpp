@@ -40,6 +40,7 @@
 #include "Actions/Firing/DirectFiring/PHY_RoleAction_DirectFiring.h"
 #include "Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"
 #include "Actions/Transport/PHY_RoleAction_Transport.h"
+#include "Actions/Emergency/PHY_RoleAction_FolkInfluence.h"
 
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
@@ -171,7 +172,8 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
     { PHY_RoleAction_DirectFiring   * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RoleAction_IndirectFiring * pRole; file >> pRole; RegisterRole( pRole ); } 
     { DEC_RolePion_Decision         * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RoleAction_InterfaceFlying* pRole; file >> pRole; RegisterRole( pRole ); }    
+    { PHY_RoleAction_InterfaceFlying* pRole; file >> pRole; RegisterRole( pRole ); }
+    { PHY_RoleAction_FolkInfluence  * pRole; file >> pRole; RegisterRole( pRole ); }
 }
 
 namespace
@@ -228,6 +230,7 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
     SaveRole< PHY_RoleAction_IndirectFiring  >( *this, file );
     SaveRole< DEC_RolePion_Decision          >( *this, file );
     SaveRole< PHY_RoleAction_InterfaceFlying >( *this, file );
+    SaveRole< PHY_RoleAction_FolkInfluence   >( *this, file );    
 }
 
 // -----------------------------------------------------------------------------
@@ -285,7 +288,8 @@ void MIL_AgentPion::Initialize( const MT_Vector2D& vPosition )
     RegisterRole< PHY_RoleAction_Objects         >( *this );
     RegisterRole< PHY_RoleAction_DirectFiring    >( *this );
     RegisterRole< PHY_RoleAction_IndirectFiring  >( *this );
-    RegisterRole< DEC_RolePion_Decision          >( *this );   
+    RegisterRole< DEC_RolePion_Decision          >( *this );
+    RegisterRole< PHY_RoleAction_FolkInfluence   >( *this );
 
     if( CanFly() )
         RegisterRole< PHY_RoleAction_Flying >( *this );
@@ -427,7 +431,8 @@ void MIL_AgentPion::UpdatePhysicalState()
     GetRole< PHY_RoleAction_Moving          >().Update( bIsDead );
     GetRole< PHY_RoleAction_InterfaceFlying >().Update( bIsDead );
     GetRole< PHY_RoleAction_DirectFiring    >().Update( bIsDead );
-    GetRole< PHY_RoleAction_IndirectFiring  >().Update( bIsDead );    
+    GetRole< PHY_RoleAction_IndirectFiring  >().Update( bIsDead );
+    GetRole< PHY_RoleAction_FolkInfluence   >().Update( bIsDead );
 }
 
 // -----------------------------------------------------------------------------
@@ -488,6 +493,7 @@ void MIL_AgentPion::Clean()
     GetRole< PHY_RoleAction_DirectFiring    >().Clean();
     GetRole< PHY_RoleAction_IndirectFiring  >().Clean();
     GetRole< DEC_RolePion_Decision          >().Clean();
+    GetRole< PHY_RoleAction_FolkInfluence   >().Clean();
 }
 
 // =============================================================================

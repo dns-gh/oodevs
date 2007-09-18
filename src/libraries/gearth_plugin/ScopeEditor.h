@@ -76,14 +76,17 @@ private:
     void Write( const ASN1T_MsgReport& msg );
     void Write( const ASN1T_MsgFormationCreation& asn );
     void Write( const ASN1T_MsgAutomatCreation& asn );    
+    void AppendCData();
     void Flush();
     //@}
 
 private:
     //! @name 
     //@{
+    typedef std::map< unsigned, std::string > T_CDATA;
+    typedef T_CDATA::iterator                       IT_CDATA;
     typedef std::map< unsigned, boost::shared_ptr< xml::xobufferstream > >   T_StubStreams;
-    typedef T_StubStreams::iterator                     IT_StubStreams;
+    typedef T_StubStreams::iterator            IT_StubStreams;
     //@}
 
 private:
@@ -93,6 +96,7 @@ private:
     const ReportFactory&         reportFactory_;
     std::auto_ptr<StyleEditor>   styles_;
     T_StubStreams                stubs_;
+    T_CDATA                      cdata_;
     std::auto_ptr<xml::xostream> xos_;
     //@}
 };

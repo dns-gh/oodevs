@@ -48,7 +48,7 @@ public:
 
     //! @name 
     //@{    
-//    const std::string& GetStyle( const std::string& type ) const;
+    std::string GetStyle( const std::string& type ) const;
     //@}
 
 private:
@@ -80,6 +80,8 @@ private:
     //! @name 
     //@{
     T_StyleMap  styles_;
+    std::string path_small_;
+    std::string path_large_;
     //@}
 };
 

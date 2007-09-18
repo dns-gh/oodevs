@@ -220,6 +220,17 @@ MIL_EntityManager& MIL_AgentServer::GetEntityManager() const
     return *pEntityManager_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetEntityManager
+// Created: NLD 2004-08-11
+// -----------------------------------------------------------------------------
+inline
+MIL_Folk& MIL_AgentServer::GetFolkManager() const
+{
+    assert( pFolk_ );
+    return *pFolk_;
+}
+
 //=============================================================================
 // STATICS
 //=============================================================================

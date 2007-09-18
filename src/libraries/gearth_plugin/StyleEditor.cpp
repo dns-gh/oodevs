@@ -12,8 +12,23 @@
 #include "dispatcher/PluginConfig.h"
 #include "dispatcher/Config.h"
 #include "xeumeuleu/xml.h"
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/path.hpp>
 
 using namespace gearth;
+
+namespace fs = boost::filesystem;
+namespace po = boost::program_options;
+
+
+namespace 
+{
+    std::string GetPath( const std::string& path )
+    {
+        fs::path full_path( fs::initial_path< fs::path >() );
+        return full_path.native_file_string() + "/" + path;        
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: StyleEditor constructor
@@ -21,13 +36,16 @@ using namespace gearth;
 // -----------------------------------------------------------------------------
 StyleEditor::StyleEditor( const dispatcher::Config& config )
 {
-    const dispatcher::PluginConfig& plugin = config.GetPluginConfig( "gearth" );
-    xml::xifstream xis( config.BuildGameChildFile( plugin.GetParameter( "styles" ) ) );
+    const dispatcher::PluginConfig& plugin = config.GetPluginConfig( "gearth" );        
+    xml::xifstream xis( config.BuildGameChildFile( plugin.GetParameter( "styles" ) ) );    
     xis >> xml::start( "kml-styles" )
-            >> xml::start( "icons" )
+        >> xml::start( "icons" ) >> xml::attribute( "small", path_small_ ) >> xml::attribute( "large", path_large_ )
                 >> xml::list( "icon", *this, ReadStyle )
             >> xml::end()
         >> xml::end();
+
+    path_small_ = GetPath( config.BuildGameChildFile( path_small_ ) );
+    path_large_ = GetPath( config.BuildGameChildFile( path_large_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,8 +80,8 @@ void StyleEditor::Load( xml::xostream& xos )
     
 //    WriteObjectStyle( xos, "Fire", "3f0000ff" );
 //    WriteLineStyle( xos, "Path", "3fff0000" );
-//    WriteLineStyle( xos, "Limit", "3fff0000" );
-//    WriteLineStyle( xos, "Lima", "3fff0000" );
+    WriteLineStyle( xos, "Limit", "3fff0000" );
+    WriteLineStyle( xos, "Lima", "3fff0000" );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,10 +90,10 @@ void StyleEditor::Load( xml::xostream& xos )
 // -----------------------------------------------------------------------------
 void StyleEditor::WriteEntityStyle( xml::xostream& xos, const std::string& style, const std::string& ref )
 {    
-    xos << xml::start( "Style" ) << xml::attribute( "id", style + "_PlaceMark" )
+    xos << xml::start( "Style" ) << xml::attribute( "id", style + "_Placemark" )
             << xml::start( "IconStyle" )
                 << xml::start( "Icon" )
-                    << xml::content( "href", ref )
+                    << xml::content( "href", path_small_ + ref )
                 << xml::end()
             << xml::end()
          << xml::end();
@@ -110,12 +128,19 @@ void StyleEditor::WriteLineStyle( xml::xostream& xos, const std::string& style, 
          << xml::end();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: StyleEditor::GetStyle
 // Created: JCR 2007-09-04
 // -----------------------------------------------------------------------------
-//const std::string& StyleEditor::GetStyle( const std::string& type ) const
-//{
-//    // return styles_[ type ];
-//}
+std::string StyleEditor::GetStyle( const std::string& type ) const
+{
+    if ( type.substr( 0, 2 ) == "HS" )
+    {
+        std::string ref( type, 5, type.size() );
+        if( styles_.find( ref ) != styles_.end() )
+            return "#" + ref + "_Placemark"; 
+    }
+    else if ( type == "Lima" || type == "Limit" )
+        return "#" + type;
+    return "";
+}

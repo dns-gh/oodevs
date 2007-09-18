@@ -14,6 +14,7 @@
 #include "folk/Config.h"
 #include "folk/FlowManagerFactory.h"
 #include "folk/FlowManager_ABC.h"
+#include "folk/ObjectManager_ABC.h"
 #include "folk/Serializer_ABC.h"
 #include "folk/Time.h"
 #include "Network/NET_ASN_Messages.h"
@@ -27,6 +28,7 @@ using namespace population;
 MIL_Folk::MIL_Folk( const MIL_Config& config )
     : pFlow_ ( ( config.IsPopulationEnabled() ) ? population::FlowManagerFactory::Create() : 0 )
     , first_update_ ( true )
+    , step_ ( 0 )
 {    
     if ( pFlow_ )
     {
@@ -43,6 +45,17 @@ MIL_Folk::MIL_Folk( const MIL_Config& config )
 MIL_Folk::~MIL_Folk()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Folk::GetObjectManager
+// Created: JCR 2007-09-12
+// -----------------------------------------------------------------------------
+ObjectManager_ABC* MIL_Folk::GetObjectManager() const
+{
+    if ( pFlow_ )
+        return &pFlow_->GetObjectManager();
+    return (ObjectManager_ABC*)0;
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +91,7 @@ void MIL_Folk::SendStateToNewClient() const
 // -----------------------------------------------------------------------------
 void MIL_Folk::UpdateNetwork() const
 {
-    if ( !first_update_ )
+    if ( !first_update_ && ( ++step_ % 10 ) == 0 )
         SendUpdate();
 }
 
@@ -217,6 +230,7 @@ void MIL_Folk::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_Folk::SendUpdate() const
 {
+    MT_LOG_INFO_MSG( "MIL_Folk::SendUpdate()" )
     FolkUpdateSerializer    serializer;    
     pFlow_->SerializePopulationUpdate( serializer );
     serializer.Commit();

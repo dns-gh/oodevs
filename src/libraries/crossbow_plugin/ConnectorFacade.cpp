@@ -25,7 +25,8 @@ using namespace crossbow;
 // -----------------------------------------------------------------------------
 ConnectorFacade::ConnectorFacade( const dispatcher::Model& model, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher )
     : orderTypes_( new kernel::OrderTypes( config ) )
-    , connector_ ( new Connector( config, model ) )    
+    , connector_ ( new Connector( config, model ) )
+    , initialized_ ( false )
 {
     listeners_.push_back( T_SharedListener( new OrderListener( *connector_, publisher, *orderTypes_, model ) ) );
     listeners_.push_back( T_SharedListener( new StatusListener( *connector_, publisher ) ) );
@@ -85,13 +86,52 @@ void ConnectorFacade::Receive( const ASN1T_MsgsSimToClient& asnMsg )
     {
         connector_->Lock();
     }
+    // if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_begin )
+    //    Reset()
+
 	UpdateOnMessage( asnMsg );
+    
     if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_end ||
         asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
-    {
         connector_->Unlock();
-    }    
+
+    // Crossbow initialization must be done after model creation     
+//    if ( InitializedToCurrentState( asnMsg ) )
+//    {
+//        if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_begin_tick )
+//            connector_->Lock();
+//	    UpdateOnMessage( asnMsg );
+//        if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
+//            connector_->Unlock();
+//    }
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: ConnectorFacade::SendCurrentState
+// Created: JCR 2007-05-14
+// -----------------------------------------------------------------------------
+bool ConnectorFacade::InitializedToCurrentState( const ASN1T_MsgsSimToClient& asnMsg )
+{
+    if ( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_end )
+    {
+        {
+            dispatcher::CreationVisitor visitor( *connector_ );
+            connector_->Lock();
+            connector_->VisitModel( visitor );
+            connector_->Unlock();
+        }
+        {
+            dispatcher::FullUpdateVisitor visitor( *connector_ );
+            connector_->Lock();
+            connector_->VisitModel( visitor );
+            connector_->Unlock();
+        }
+        initialized_ = true;
+    }
+    return initialized_;
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: ConnectorFacade::UpdateOnTick

@@ -204,7 +204,7 @@ ITablePtr Connector::GetTable( const std::string& name )
 // -----------------------------------------------------------------------------
 void Connector::Lock()
 {
-    scopeEditor_->StartEdit( spWorkspace_, spSpatialReference_ );
+    scopeEditor_->StartEditing( spWorkspace_, spSpatialReference_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -213,7 +213,7 @@ void Connector::Lock()
 // -----------------------------------------------------------------------------
 void Connector::Unlock()
 {
-    scopeEditor_->StopEdit();
+    scopeEditor_->StopEditing();
 }
 
 // -----------------------------------------------------------------------------
@@ -224,6 +224,25 @@ void Connector::Initialize()
 {
 	folk_->Initialize();
 }
+
+namespace 
+{
+    class ScopeEdit
+    {
+    public:    
+        explicit ScopeEdit( ScopeEditor& editor )
+            : editor_ ( editor ) 
+        {
+            editor_.StartEdit();
+        }
+        ~ScopeEdit()
+        {
+            editor_.StopEdit();
+        }
+    private:
+        ScopeEditor& editor_;
+    };
+}
 	
 // -----------------------------------------------------------------------------
 // Name: Connector::Finalize
@@ -231,7 +250,9 @@ void Connector::Initialize()
 // -----------------------------------------------------------------------------
 void Connector::Finalize()
 {
-	scopeEditor_->FlushPopulation( GetFeatureClass( "Population", false ) );
+    ScopeEdit locker( *scopeEditor_ );
+    if ( folk_->IsUpdated() )
+	    scopeEditor_->FlushPopulation( GetFeatureClass( "Population", false ) );    
 }
 
 // -----------------------------------------------------------------------------
@@ -250,6 +271,7 @@ void Connector::VisitModel( dispatcher::ModelVisitor_ABC& visitor )
 template< typename Message >
 void Connector::Create( IFeatureClassPtr spFeature, const Message& asn )
 {
+    ScopeEdit locker( *scopeEditor_ );
     scopeEditor_->Insert( spFeature, asn );
 }
 
@@ -260,6 +282,7 @@ void Connector::Create( IFeatureClassPtr spFeature, const Message& asn )
 template< typename Message >
 void Connector::Create( ITablePtr spTable, const Message& asn )
 {
+    ScopeEdit locker( *scopeEditor_ );
     scopeEditor_->Insert( spTable, asn );
 }
 
@@ -270,6 +293,7 @@ void Connector::Create( ITablePtr spTable, const Message& asn )
 template< typename Message >
 void Connector::Delete( IFeatureClassPtr spFeature, const Message& asn_oid )
 {
+    ScopeEdit locker( *scopeEditor_ );
     scopeEditor_->Delete( spFeature, asn_oid );
 }
 
@@ -280,6 +304,7 @@ void Connector::Delete( IFeatureClassPtr spFeature, const Message& asn_oid )
 template<typename Message >
 void Connector::Update( IFeatureClassPtr pFeatureClass, const Message& asn )
 {
+    ScopeEdit locker( *scopeEditor_ );
     if( scopeEditor_->Update( pFeatureClass, asn ) )
     {
         scopeEditor_->Write( asn );
@@ -344,6 +369,7 @@ void Connector::Send( const ASN1T_MsgsSimToClient& asn )
 // -----------------------------------------------------------------------------
 void Connector::Delete( const ASN1T_MsgObjectDestruction& asn )
 {
+    ScopeEdit locker( *scopeEditor_ );
     scopeEditor_->Delete( GetFeatureClass( "TacticalObjectPoint" ), asn );
     scopeEditor_->Delete( GetFeatureClass( "TacticalObjectLine" ), asn );
     scopeEditor_->Delete( GetFeatureClass( "TacticalObjectArea" ), asn );

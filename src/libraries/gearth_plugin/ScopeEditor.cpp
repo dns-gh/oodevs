@@ -20,6 +20,7 @@
 #include "dispatcher/Config.h"
 #include "dispatcher/PluginConfig.h"
 
+#include <sstream>
 #include "xeumeuleu/xml.h"
 
 using namespace gearth;
@@ -69,8 +70,25 @@ void ScopeEditor::VisitModel( dispatcher::ModelVisitor_ABC& visitor )
 // -----------------------------------------------------------------------------
 void ScopeEditor::Flush()
 {
+    AppendCData();
     for ( IT_StubStreams it = stubs_.begin(); it != stubs_.end(); ++it )
         (*xos_) << *(it->second);
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScopeEditor::AppendCData
+// Created: JCR 2007-09-05
+// -----------------------------------------------------------------------------
+void ScopeEditor::AppendCData()
+{    
+    for ( IT_CDATA it = cdata_.begin(); it != cdata_.end(); ++it )
+    {
+        IT_StubStreams itstub = stubs_.find( it->first );
+        if ( itstub != stubs_.end() )
+            *(itstub->second) << xml::start( "description" )
+                                << xml::cdata( it->second )
+                              << xml::end();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +130,13 @@ void ScopeEditor::Write( const ASN1T_MsgFormationCreation& /*asn*/ )
 // -----------------------------------------------------------------------------
 void ScopeEditor::Write( const ASN1T_MsgAutomatCreation& /*asn*/ )
 {
-    // TODO 
+    // $$$$ JCR 2007-09-05: TODO : No automat type loaded
+//    stubs_[ asn.oid ].reset( new xml::xobufferstream() );
+//    xml::xobufferstream& xobs = *stubs_[ asn.oid ];
+//    
+//    xobs << xml::start( "Placemark" )
+//          << xml::content( "name", asn.nom )
+//          << xml::content( "styleUrl", SymbolEditor( *styles_, model_ ).GetSymbol( asn ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +149,7 @@ void ScopeEditor::Write( const ASN1T_MsgLimaCreation& asn )
     xml::xobufferstream& xobs = *stubs_[ asn.oid ];
     
     xobs << xml::start( "Placemark" )
-            << xml::content( "Name", asn.tactical_line.name )
+            << xml::content( "name", asn.tactical_line.name )
             << xml::content( "styleUrl", SymbolEditor( *styles_, model_ ).GetSymbol( asn ) );
     LineEditor( xobs ).Write( asn.tactical_line.geometry );
 }
@@ -140,7 +164,7 @@ void ScopeEditor::Write( const ASN1T_MsgLimitCreation& asn )
     xml::xobufferstream& xobs = *stubs_[ asn.oid ];
     
     xobs << xml::start( "Placemark" )
-            << xml::content( "Name", asn.tactical_line.name )
+            << xml::content( "name", asn.tactical_line.name )
             << xml::content( "styleUrl", SymbolEditor( *styles_, model_ ).GetSymbol( asn ) );
     LineEditor( xobs ).Write( asn.tactical_line.geometry );
 }
@@ -155,8 +179,19 @@ void ScopeEditor::Write( const ASN1T_MsgUnitCreation& asn )
     xml::xobufferstream& xobs = *stubs_[ asn.oid ];
     
     xobs << xml::start( "Placemark" )
-          << xml::content( "Name", asn.nom )
+          << xml::content( "name", asn.nom )
           << xml::content( "styleUrl", SymbolEditor( *styles_, model_ ).GetSymbol( asn ) );
+}
+
+namespace 
+{
+    template<typename T> 
+        std::string ToString( T& type )
+    {
+        std::stringstream ss;
+        ss << type;
+        return ss.str();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -168,11 +203,11 @@ void ScopeEditor::Write( const ASN1T_MsgUnitAttributes& asn )
     // model_.GetAgents().Find( asn.oid );    
     T_StubStreams::iterator it = stubs_.find( asn.oid );
     if ( it != stubs_.end() )
-    {
-//        if( asn.m.vitessePresent ) ;
-//            Write( spFeature_, CComBSTR( L"Speed" ), asn.vitesse );
-//        if( asn.m.etat_operationnelPresent )
-//            Write( spFeature_, CComBSTR( L"OpsState" ), asn.etat_operationnel_brut );
+    {        
+        if( asn.m.vitessePresent )
+            cdata_[ asn.oid ] += "<br><b>Speed:</b>" + ToString( asn.vitesse ) + "</br>";        
+        if( asn.m.etat_operationnelPresent )
+            cdata_[ asn.oid ] += "<br><b>OpsState:</b>" + ToString( asn.etat_operationnel_brut ) + "</br>";
         if( asn.m.positionPresent )
             PositionEditor( *(it->second) ).Write( asn.position );
     }      
@@ -188,7 +223,7 @@ void ScopeEditor::Write( const ASN1T_MsgUnitKnowledgeCreation& asn )
     xml::xobufferstream& xobs = *stubs_[ asn.oid ];
 
     xobs << xml::start( "Placemark" )
-          << xml::content( "Name", asn.oid )
+          << xml::content( "name", asn.oid )
           << xml::content( "styleUrl", SymbolEditor( *styles_, model_ ).GetSymbol( asn ) );
 
 //    if( const dispatcher::Agent* realAgent = model_.GetAgents().Find( asn.oid_unite_reelle ) ) // $$$$ SBO 2007-08-24: snif
@@ -226,7 +261,7 @@ void ScopeEditor::Write( const ASN1T_MsgObjectCreation& asn )
     stubs_[ asn.oid ].reset( new xml::xobufferstream() );
     xml::xobufferstream& xobs = *stubs_[ asn.oid ];
     xobs << xml::start( "Placemark" )
-          << xml::content( "Name", asn.name )
+          << xml::content( "name", asn.name )
           << xml::content( "styleUrl", SymbolEditor( *styles_, model_ ).GetSymbol( asn ) );
 
     switch ( asn.location.type )
@@ -249,9 +284,5 @@ void ScopeEditor::Write( const ASN1T_MsgObjectCreation& asn )
 // -----------------------------------------------------------------------------
 void ScopeEditor::Write( const ASN1T_MsgReport& asn )
 {
-    T_StubStreams::iterator it = stubs_.find( asn.oid );
-    if ( it != stubs_.end() )
-    {
-        *(it->second) << reportFactory_.CreateMessage( asn ).c_str();
-    }    
+    cdata_[ asn.oid ] += "<br>" + reportFactory_.CreateMessage( asn ) + "</br>";
 }

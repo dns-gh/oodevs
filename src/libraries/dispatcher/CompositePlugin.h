@@ -38,6 +38,7 @@ public:
     {
         plugins_.push_back( plugin );
     }
+
     void Add( Plugin_ABC* plugin )
     {
         plugins_.push_back( boost::shared_ptr< Plugin_ABC >( plugin ) );
@@ -47,6 +48,7 @@ public:
     {
         handlers_.push_back( handler );
     }
+
     void AddHandler( MessageHandler_ABC* handler )
     {
         handlers_.push_back( boost::shared_ptr< MessageHandler_ABC >( handler ) );
@@ -54,17 +56,18 @@ public:
 
     virtual void Receive( const ASN1T_MsgsSimToClient& message )
     {
-        for( CIT_Plugins it = plugins_.begin(); it != plugins_.end(); ++it )
-            (*it)->Receive( message );
-
         for( CIT_Handlers it = handlers_.begin(); it != handlers_.end(); ++it )
             (*it)->Receive( message );
+        for( CIT_Plugins it = plugins_.begin(); it != plugins_.end(); ++it )
+            (*it)->Receive( message );
     }
+
     virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile )
     {
         for( CIT_Plugins it = plugins_.begin(); it != plugins_.end(); ++it )
             (*it)->NotifyClientAuthenticated( client, profile );
     }
+
     virtual void NotifyClientLeft( ClientPublisher_ABC& client )
     {
         for( CIT_Plugins it = plugins_.begin(); it != plugins_.end(); ++it )

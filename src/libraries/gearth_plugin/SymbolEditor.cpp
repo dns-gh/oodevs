@@ -21,6 +21,9 @@
 #include "dispatcher/Limit.h"
 #include "dispatcher/Lima.h"
 
+#include "dispatcher/AgentTypes.h"
+#include "dispatcher/AgentType.h"
+
 using namespace gearth;
 
 namespace
@@ -60,6 +63,13 @@ SymbolEditor::~SymbolEditor()
 // -----------------------------------------------------------------------------
 std::string SymbolEditor::GetSymbol( const ASN1T_MsgUnitCreation& asn ) const
 {
+    // $$$$ JCR 2007-09-05: Rustine pour NMSG-049
+    const kernel::AgentType& type = model_.GetAgentTypes().Get( asn.type_pion );
+    const std::string& name = type.GetName();
+        
+    if ( name.substr( 0, 2 ) == "HS" )
+        return styles_.GetStyle( name );
+
     if( const dispatcher::Agent* agent = model_.GetAgents().Find( asn.oid ) )
         return FormatSymbol( agent->BuildSymbol() ).c_str();
     return "";
@@ -83,6 +93,13 @@ std::string SymbolEditor::GetSymbol( const ASN1T_MsgUnitKnowledgeCreation& asn )
 // -----------------------------------------------------------------------------
 std::string SymbolEditor::GetSymbol( const ASN1T_MsgObjectCreation& asn ) const
 {
+    switch ( asn.type ) 
+    {
+    case EnumObjectType::bouchon_mines:
+        return styles_.GetStyle( "HS - Explosion" );
+    case EnumObjectType::nuage_nbc:
+        return styles_.GetStyle( "HS - Hazmat" );
+    }
     if( const dispatcher::Object* object = model_.GetObjects().Find( asn.oid ) )
         return FormatSymbol( object->BuildSymbol() ).c_str();
     return "";
@@ -94,6 +111,12 @@ std::string SymbolEditor::GetSymbol( const ASN1T_MsgObjectCreation& asn ) const
 // -----------------------------------------------------------------------------
 std::string SymbolEditor::GetSymbol( const ASN1T_MsgFormationCreation& asn ) const
 {
+    // $$$$ JCR 2007-09-05: Rustine pour NMSG-049
+    const kernel::AgentType& type = model_.GetAgentTypes().Get( asn.oid );
+    const std::string& name = type.GetName();
+    if ( name.substr( 0, 2 ) == "HS" )
+        return styles_.GetStyle( name );
+
     if( const dispatcher::Formation* formation = model_.GetFormations().Find( asn.oid ) )
         FormatSymbol( formation->BuildSymbol() ).c_str();
     return "";
@@ -105,8 +128,14 @@ std::string SymbolEditor::GetSymbol( const ASN1T_MsgFormationCreation& asn ) con
 // -----------------------------------------------------------------------------
 std::string SymbolEditor::GetSymbol( const ASN1T_MsgAutomatCreation& asn ) const
 {
-    if( const dispatcher::AgentKnowledge* knowledge = model_.GetAgentKnowledges().Find( asn.oid ) )
-        return FormatSymbol( knowledge->BuildSymbol() ).c_str();
+    // $$$$ JCR 2007-09-05: Rustine pour NMSG-049
+    const kernel::AgentType& type = model_.GetAgentTypes().Get( asn.type_automate );
+    const std::string& name = type.GetName();
+    if ( name.substr( 0, 2 ) == "HS" )
+        return styles_.GetStyle( name );
+
+//    if( const dispatcher::AgentKnowledge* knowledge = model_.GetAgentKnowledges().Find( asn.oid ) )
+//        return FormatSymbol( knowledge->BuildSymbol() ).c_str();
     return "";
 }
 
@@ -116,7 +145,7 @@ std::string SymbolEditor::GetSymbol( const ASN1T_MsgAutomatCreation& asn ) const
 // -----------------------------------------------------------------------------
 std::string SymbolEditor::GetSymbol( const ASN1T_MsgLimaCreation& /*asn*/ ) const
 {
-    return "Lima";
+    return styles_.GetStyle( "Lima" );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,5 +154,5 @@ std::string SymbolEditor::GetSymbol( const ASN1T_MsgLimaCreation& /*asn*/ ) cons
 // -----------------------------------------------------------------------------
 std::string SymbolEditor::GetSymbol( const ASN1T_MsgLimitCreation& /*asn*/ ) const
 {
-    return "Limit";
+    return styles_.GetStyle( "Limit" );
 }

@@ -63,6 +63,7 @@ public:
 
     //! @name 
     //@{
+    bool  IsUpdated() const;
 	const T_PopulationInfoVector& GetPopulationInfo() const;
     //@}
 

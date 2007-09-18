@@ -40,8 +40,10 @@ public:
 
     //! @name Operators
     //@{
-    void StartEdit( IWorkspacePtr spWorkspace, ISpatialReferencePtr spSpatialReference );
+    void StartEditing( IWorkspacePtr spWorkspace, ISpatialReferencePtr spSpatialReference );
+    void StartEdit();
     void StopEdit();
+    void StopEditing();
     bool Clear( IFeatureClassPtr spFeatureClass );
     template< typename ASN1T_MsgCreation >
     bool Insert( IFeatureClassPtr spFeatureClass, const ASN1T_MsgCreation& asn );

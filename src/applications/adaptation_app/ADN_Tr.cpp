@@ -144,6 +144,7 @@ ADN_Tr::T_ConverterAgentTypePion ADN_Tr::agentTypePionConverter_[] =
     T_ConverterAgentTypePion( "Pion MILICE"                     ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion MILICE" ),                        eAgentTypePionMILICE ),
     T_ConverterAgentTypePion( "Pion JOINT"                      ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion JOINT" ),                         eAgentTypePionJOINT ),
     T_ConverterAgentTypePion( "Pion ASY"                        ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion ASY" ),                           eAgentTypePionASY ),
+    T_ConverterAgentTypePion( "Pion Emergency"                  ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion Emergency" ),                     eAgentTypePionEmergency ),
     T_ConverterAgentTypePion( "",         "",          (E_AgentTypePion)-1 )
 };
 
@@ -171,6 +172,7 @@ ADN_Tr::T_ConverterAgentTypeAutomate ADN_Tr::agentTypeAutomateConverter_[] =
     T_ConverterAgentTypeAutomate( "Automate MILICE"                 ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate MILICE" ),                    eAgentTypeAutomateMILICE ),
     T_ConverterAgentTypeAutomate( "Automate JOINT"                  ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate JOINT" ),                     eAgentTypeAutomateJOINT ),
     T_ConverterAgentTypeAutomate( "Automate ASY"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate ASY" ),                       eAgentTypeAutomateASY ),
+    T_ConverterAgentTypeAutomate( "Automate Emergency"              ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate Emergency" ),                 eAgentTypeAutomateEmergency ),
     T_ConverterAgentTypeAutomate( "",         "",          (E_AgentTypeAutomate)-1 )
 };
 

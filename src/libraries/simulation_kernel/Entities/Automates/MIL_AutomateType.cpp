@@ -89,6 +89,7 @@ void MIL_AutomateType::Initialize( xml::xistream& xis )
     automateTypeAllocators_[ "Automate REFUGIE"                ] = &MIL_AutomateTypeREFUGIE::Create; 
     automateTypeAllocators_[ "Automate MILICE"                 ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate ASY"                    ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate Emergency"              ] = &MIL_AutomateType       ::Create;
     
     LoadingWrapper loader;
 

@@ -10,9 +10,12 @@
 #ifndef __MIL_Folk_h_
 #define __MIL_Folk_h_
 
+#include "folk/population.h"
+
 namespace population
 {
     class FlowManager_ABC;
+    class ObjectManager_ABC;
 }
 
 class MIL_Config;
@@ -38,6 +41,11 @@ public:
     void SendStateToNewClient() const;    
     //@}
 
+    //! @name Accessors
+    //@{
+    population::ObjectManager_ABC* GetObjectManager() const;
+    //@}
+
 private:
     //! @name 
     //@{
@@ -56,8 +64,9 @@ private:
 private:
     //! @name Member data
     //@{
-    boost::scoped_ptr< population::FlowManager_ABC >    pFlow_;    
+    boost::scoped_ptr< population::FlowManager_ABC >    pFlow_;
     mutable bool first_update_;
+    mutable unsigned step_;
     //@}
 };
 

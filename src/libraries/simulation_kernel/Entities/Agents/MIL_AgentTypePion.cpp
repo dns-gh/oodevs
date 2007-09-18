@@ -72,6 +72,12 @@
 #include "Entities/Agents/Actions/Loading/PHY_ActionUnload.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 
+#include "Entities/Agents/Actions/Emergency/PHY_ActionInfluence.h"
+#include "Entities/Agents/Actions/Emergency/PHY_ActionInfluenceInArea.h"
+#include "Entities/Agents/Actions/Emergency/PHY_ActionTriggerActivity.h"
+#include "Entities/Agents/Actions/Emergency/PHY_ActionTriggerActivityInArea.h"
+#include "Entities/Agents/Actions/Emergency/PHY_ActionUnloadActivity.h"
+
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
  
 #include "MIL_AgentServer.h"
@@ -131,7 +137,7 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
     pionTypeAllocators_[ "Pion MILICE"                 ] = &MIL_AgentTypePionMILICE         ::Create; 
     pionTypeAllocators_[ "Pion ASY"                    ] = &MIL_AgentTypePionASY            ::Create;
     pionTypeAllocators_[ "Pion REFUGIE"                ] = &MIL_AgentTypePionREFUGIE        ::Create; 
-
+    pionTypeAllocators_[ "Pion Emergency"              ] = &MIL_AgentTypePion               ::Create; 
     
     LoadingWrapper loader;
     
@@ -656,6 +662,13 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Refugees_UnloadInCamp                   , "DEC_Refugies_DebarquerDansCamp"   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Refugees_IsLoaded                       , "DEC_Refugies_EstEmbarque"         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Refugees_IsUnloadedInCamp               , "DEC_Refugies_EstDebarqueDansCamp" );
+
+    // Emergency functions
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction< PHY_ActionInfluence   >          , "DEC_Emergency_StartInfluence" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction< PHY_ActionTriggerActivity >      , "DEC_Emergency_StartTriggerActivity" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction< PHY_ActionInfluenceInArea >      , "DEC_Emergency_StartInfluenceInArea" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction< PHY_ActionTriggerActivityInArea >, "DEC_Emergency_StartTriggerActivityInArea" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction< PHY_ActionUnloadActivity >       , "DEC_Emergency_StartUnloadActivity" );    
 }
 
 // =============================================================================

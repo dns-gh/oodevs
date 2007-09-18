@@ -193,7 +193,7 @@
     </target>
 
     <target name="application.dispatcher_app.crossbowed" description="build CSword Dispatcher executable with crossbow plugin" depends="library.dispatcher,library.crossbow_plugin,library.gearth_plugin">
-        <build-app name="dispatcher_app_crossbowed" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu" input="dispatcher_app"
+        <build-app name="dispatcher_app_crossbowed" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu,geocoord" input="dispatcher_app"
                    libs="masalloc,paranoia,tools,asn1per
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt

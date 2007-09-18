@@ -42,7 +42,10 @@ ScopeEditor::~ScopeEditor()
 {
     VARIANT_BOOL editing;
     if( !FAILED( spWorkspaceEdit_->IsBeingEdited( &editing ) ) && editing == VARIANT_TRUE )
+    {
         StopEdit();
+        StopEditing();
+    }
     spWorkspaceEdit_ = 0;
     spSpatialReference_ = 0;
 }
@@ -51,30 +54,42 @@ ScopeEditor::~ScopeEditor()
 // Name: ScopeEditor::StartEdit
 // Created: JCR 2007-05-11
 // -----------------------------------------------------------------------------
-void ScopeEditor::StartEdit( IWorkspacePtr spWorkspace, ISpatialReferencePtr spSpatialReference )
+void ScopeEditor::StartEditing( IWorkspacePtr spWorkspace, ISpatialReferencePtr spSpatialReference )
 {
     if( FAILED( spWorkspace->QueryInterface( IID_IWorkspaceEdit, (LPVOID*)&spWorkspaceEdit_ ) ) || spWorkspaceEdit_ == 0 )
         return;
     spSpatialReference_ = spSpatialReference;
     VARIANT_BOOL editing;
     if( !FAILED( spWorkspaceEdit_->IsBeingEdited( &editing ) ) && editing == VARIANT_FALSE )
-    {
         spWorkspaceEdit_->StartEditing( VARIANT_FALSE );
-        spWorkspaceEdit_->StartEditOperation();
-    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScopeEditor::StartEdit
+// Created: JCR 2007-09-11
+// -----------------------------------------------------------------------------
+void ScopeEditor::StartEdit()
+{
+    spWorkspaceEdit_->StartEditOperation();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ScopeEditor::StopEdit
+// Created: JCR 2007-09-11
+// -----------------------------------------------------------------------------
+void ScopeEditor::StopEdit()
+{
+    spWorkspaceEdit_->StopEditOperation();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ScopeEditor::StopEdit
 // Created: JCR 2007-05-11
 // -----------------------------------------------------------------------------
-void ScopeEditor::StopEdit()
+void ScopeEditor::StopEditing()
 {
     if ( spWorkspaceEdit_ )
-    {
-        spWorkspaceEdit_->StopEditOperation();
         spWorkspaceEdit_->StopEditing( VARIANT_TRUE );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -83,6 +98,7 @@ void ScopeEditor::StopEdit()
 // -----------------------------------------------------------------------------
 bool ScopeEditor::Clear( IFeatureClassPtr spFeatureClass )
 {
+    spWorkspaceEdit_->StartEditOperation();
     ITablePtr table;
     if( !FAILED( spFeatureClass.QueryInterface( IID_ITable, &table ) ) )
     {
@@ -90,6 +106,7 @@ bool ScopeEditor::Clear( IFeatureClassPtr spFeatureClass )
         filter->put_WhereClause( CComBSTR( "1" ) );
         table->DeleteSearchedRows( filter );
     }
+    spWorkspaceEdit_->StopEditOperation();
     return true;
 }
 
@@ -131,10 +148,10 @@ IFeatureCursorPtr ScopeEditor::UpdateCursor( IFeatureClassPtr spFeatureClass, st
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
 bool ScopeEditor::Update( IFeatureClassPtr spFeatureClass, const ASN1T_MsgFolkGraphEdgeUpdate& asn )
-{
+{    
     IFeatureCursorPtr spCursor = UpdateCursor( spFeatureClass, "LINK_ID", asn.oid );
     if( spCursor )
-        spCursor->NextFeature( &spFeature_ );
+        spCursor->NextFeature( &spFeature_ );    
     return spFeature_ != NULL;
 }
 
@@ -165,9 +182,11 @@ void ScopeEditor::FlushPopulation( IFeatureClassPtr spFeatureClass )
 	IQueryFilterPtr		spNullQuery;
 	FolkEditor			folk( *this, folk_ );
 
+    spWorkspaceEdit_->StartEditOperation();
 	spFeatureClass->Update( spNullQuery, VARIANT_TRUE, &spCursor );
 	if( spCursor )
 		folk.Write( spCursor );	
+    spWorkspaceEdit_->StopEditOperation();
 }
 
 // -----------------------------------------------------------------------------
@@ -175,9 +194,13 @@ void ScopeEditor::FlushPopulation( IFeatureClassPtr spFeatureClass )
 // Created: JCR 2007-05-03
 // -----------------------------------------------------------------------------
 void ScopeEditor::Flush()
-{
+{    
     if( spFeature_ )
+    {
+        spWorkspaceEdit_->StartEditOperation();
         spFeature_->Store();
+        spWorkspaceEdit_->StopEditOperation();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -185,11 +208,11 @@ void ScopeEditor::Flush()
 // Created: JCR 2007-05-15
 // -----------------------------------------------------------------------------
 void ScopeEditor::Write( IRowBufferPtr spRow, const ASN1T_MsgFormationCreation& asn )
-{
+{    
     Write( spRow, CComBSTR( L"Public_OID" ), asn.oid );
     Write( spRow, CComBSTR( L"Parent_OID" ), asn.oid_formation_parente );
     Write( spRow, CComBSTR( L"Name" ), asn.nom  );
-    SymbolEditor( *this, model_ ).Write( spRow, asn );
+    SymbolEditor( *this, model_ ).Write( spRow, asn ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -197,7 +220,7 @@ void ScopeEditor::Write( IRowBufferPtr spRow, const ASN1T_MsgFormationCreation& 
 // Created: JCR 2007-05-15
 // -----------------------------------------------------------------------------
 void ScopeEditor::Write( IRowBufferPtr spRow, const ASN1T_MsgAutomatCreation& asn )
-{
+{    
     Write( spRow, CComBSTR( L"Public_OID" ), asn.oid );
     Write( spRow, CComBSTR( L"Parent_OID" ), asn.oid_parent.t == T_MsgAutomatCreation_oid_parent_formation ? asn.oid_parent.u.formation : asn.oid_parent.u.automate );
     Write( spRow, CComBSTR( L"Name" ), asn.nom );
