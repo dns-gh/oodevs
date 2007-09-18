@@ -350,7 +350,7 @@
       tests
     ============================================================================
     -->
-    <target name="test" depends="generate-license,test-test-scripts,test-main-scripts-france,test-main-scripts-worldwide,test-adaptation,3a_test" description="run all tests"/>
+    <target name="test" depends="generate-license,test-scripts,test-adaptation,3a_test" description="run all tests"/>
     
     <target name="3a_test" depends="library.3a">
       <build-test name="3a" depends="xeumeuleu,terrain" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix}">
@@ -364,29 +364,41 @@
             <arg value="sword"/>
         </exec>
     </target>
+    
+    <macrodef name="macro-test-scripts">
+        <attribute name="dataset"/>
+        <attribute name="physical"/>
+        
+        <sequential>
+            <delete dir="${data.dir}/exercises/test-scripts"/>
+            <mkdir dir="${data.dir}/exercises/test-scripts"/>
+            <copy file="test-scripts/game.xml" todir="${data.dir}/exercises/test-scripts"/>
+            <copy file="test-scripts/orbat.xml" todir="${data.dir}/exercises/test-scripts"/>
+            <copy file="test-scripts/profiles.xml" todir="${data.dir}/exercises/test-scripts"/>
+            <copy file="test-scripts/weather.xml" todir="${data.dir}/exercises/test-scripts"/>
+            
+            <copy file="test-scripts/exercise.xml.tmpl" tofile="${data.dir}/exercises/test-scripts/exercise.xml" overwrite="true">
+                <filterset>
+                    <filter token="DATASET" value="@{dataset}"/>
+                    <filter token="PHYSICAL" value="@{physical}"/>
+                </filterset>
+            </copy>         
+            
+            <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
+                <arg value="-root-dir=../../data"/>
+                <arg value="-exercise=test-scripts"/>
+                <arg value="-test"/>
+            </exec>
+            <delete dir="${data.dir}/exercises/test-scripts"/>
+        </sequential>
+    </macrodef>
 
-    <target name="test-main-scripts-france" description="run all tests">
-        <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
-            <arg value="--root-dir=../../data"/>
-            <arg value="--exercise=empty-france"/>
-            <arg value="--test"/>
-        </exec>
-    </target>
-
-    <target name="test-main-scripts-worldwide" description="run all tests">
-        <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
-            <arg value="--root-dir=../../data"/>
-            <arg value="--exercise=empty-worldwide"/>
-            <arg value="--test"/>
-        </exec>
-    </target>
-
-    <target name="test-test-scripts" description="run all tests">
-        <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
-            <arg value="--root-dir=../../data"/>
-            <arg value="--exercise=test"/>
-            <arg value="--test"/>
-        </exec>
+    <target name="test-scripts" description="run all tests">
+        <macro-test-scripts dataset="test" physical=""/>
+        <macro-test-scripts dataset="main" physical="france"/>
+        <macro-test-scripts dataset="main" physical="worldwide"/>
+        <macro-test-scripts dataset="ada" physical="france"/>
+        <macro-test-scripts dataset="ada" physical="worldwide"/>
     </target>
           
     <macrodef name="macro-test-adaptation">
