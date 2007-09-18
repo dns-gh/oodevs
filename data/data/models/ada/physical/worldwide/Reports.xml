@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<reports>
+  <report id="0" message="NTR"/>
+  <report id="1" message="blocked by obstacle %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report id="2" message="bypassing obstacle"/>
+  <report id="3" message="mission impossible, operational context inconsistent"/>
+  <report id="4" message="advancing"/>
+  <report id="5" message="advancing towards deployment area"/>
+  <report id="6" message="posted"/>
+  <report id="7" message="reconnoitering position"/>
+  <report id="8" message="posted, observing towards direction of the enemy"/>
+  <report id="9" message="screening"/>
+  <report id="10" message="preparing mission">
+    <parameter type="Numeric"/>
+  </report>
+  <report id="11" message="mission started"/>
+  <report id="12" message="mission completed"/>
+  <report id="13" message="deployed"/>
+  <report id="14" message="posted"/>
+  <report id="15" message="target reached"/>
+  <report id="16" message="crossing the line of departure"/>
+  <report id="17" message="joining unit"/>
+  <report id="18" message="guarding unit"/>
+  <report id="19" message="delaying"/>
+  <report id="20" message="assault"/>
+  <report id="21" message="covering"/>
+  <report id="22" message="scouting"/>
+  <report id="23" message="replenishing"/>
+  <report id="24" message="unit %1 on checkpoint">
+    <parameter type="Agent"/>
+  </report>
+  <report id="25" message="checkpoint passed"/>
+  <report id="26" message="rearward passage assistance of unit %1 done">
+    <parameter type="Agent"/>
+  </report>
+  <report id="27" message="crossing"/>
+  <report id="28" message="waiting for FRAGO to continue"/>
+  <report id="29" message="waiting for FRAGO to cross the line of departure"/>
+  <report id="30" message="fixed"/>
+  <report id="31" message="withdrawing"/>
+  <report id="32" message="gaining contact"/>
+  <report id="33" message="breaking contact"/>
+  <report id="34" message="identifying contact with unit %1">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report id="35" message="enemy unit %1 destroyed">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report id="36" message="under fire"/>
+  <report id="37" message="under artillery fire"/>
+  <report id="38" message="position hold by enemy unit %1">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report id="39" message="advancing towards enemy unit %1">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report id="40" message="breaking contact"/>
+  <report id="41" message="enemy unit %1 spotted on objective">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report id="42" message="retaliating"/>
+  <report id="43" message="ready for engagement"/>
+  <report id="44" message="zone control: started"/>
+  <report id="45" message="zone control: stopped"/>
+  <report id="46" message="monitoring: started"/>
+  <report id="47" message="monitoring: stopped"/>
+  <report id="48" message="infiltrating"/>
+  <report id="49" message="exfiltrating"/>
+  <report id="50" message="waiting for favorable conditions to infiltrate"/>
+  <report id="51" message="UAV launched"/>
+  <report id="52" message="UAV flying"/>
+  <report id="53" message="UAV back"/>
+  <report id="54" message="UAV ready"/>
+  <report id="55" message="UAV exploitation: started"/>
+  <report id="56" message="UAV exploitation: completed"/>
+  <report id="57" message="jamming system activated"/>
+  <report id="58" message="jamming system deactivated"/>
+  <report id="59" message="listening system activated"/>
+  <report id="60" message="listening system deactivated"/>
+  <report id="61" message="radar listening system activated"/>
+  <report id="62" message="radar listening system deactivated"/>
+  <report id="63" message="liaison started"/>
+  <report id="64" message="liaison completed"/>
+  <report id="65" message="cannot establish liaison"/>
+  <report id="66" message="unit %1 too far">
+    <parameter type="Agent"/>
+  </report>
+  <report id="67" message="data recorded"/>
+  <report id="68" message="data exploited"/>
+  <report id="69" message="data retrieved"/>
+  <report id="70" message="relieving unit %1">
+    <parameter type="Agent"/>
+  </report>
+  <report id="71" message="following unit"/>
+  <report id="72" message="ready to support"/>
+  <report id="73" message="supporting"/>
+  <report id="74" message="non operational"/>
+  <report id="75" message="operational"/>
+  <report id="76" message="standard posture"/>
+  <report id="77" message="safety posture"/>
+  <report id="78" message="on phase line. Type: %1">
+    <parameter type="Enumeration">
+      <value id="0" name="departure line"/>
+      <value id="1" name="change of posture line"/>
+      <value id="2" name="coordination line"/>
+      <value id="3" name="deny line"/>
+      <value id="4" name="objective line"/>
+      <value id="5" name="blocking line"/>
+      <value id="6" name="rearward passage line"/>
+      <value id="7" name="mission: start line"/>
+      <value id="8" name="mission: complete line"/>
+      <value id="9" name="checkpoint line"/>
+    </parameter>
+  </report>
+  <report id="79" message="work just started"/>
+  <report id="80" message="work finished"/>
+  <report id="81" message="obstacle cleared"/>
+  <report id="82" message="setting up work site"/>
+  <report id="83" message="dismantling work site"/>
+  <report id="84" message="obstacle position reconnaissance"/>
+  <report id="85" message="obstacle bypassed"/>
+  <report id="86" message="waiting for reinforcement"/>
+  <report id="87" message="crossing site operational"/>
+  <report id="88" message="crossing site closed"/>
+  <report id="89" message="unit %1 has successfully reinforced unit %2">
+    <parameter type="Agent"/>
+    <parameter type="Agent"/>
+  </report>
+  <report id="90" message="unit %1 has not successfully reinforced unit %2">
+    <parameter type="Agent"/>
+    <parameter type="Agent"/>
+  </report>
+  <report id="91" message="demolition reserved obstacle %1 ready for activation">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report id="92" message="improving banks"/>
+  <report id="93" message="banks improved"/>
+  <report id="94" message="maintenance work time: period exceeded"/>
+  <report id="95" message="section deployed"/>
+  <report id="96" message="reparation successful, ready to work"/>
+  <report id="97" message="equipment %1 back from maintenance chain">
+    <parameter type="EquipmentType"/>
+  </report>
+  <report id="98" message="equipment %1 fixed on site">
+    <parameter type="EquipmentType"/>
+  </report>
+  <report id="99" message="request for basic loads replenishment"/>
+  <report id="100" message="request for stock replenishment"/>
+  <report id="101" message="request for wounded evacuation"/>
+  <report id="102" message="request for equipment towage"/>
+  <report id="103" message="%1 stock quota almost consumed">
+    <parameter type="DotationType"/>
+  </report>
+  <report id="104" message="stock capacity exceeded"/>
+  <report id="105" message="%1 load supply threshold exceeded">
+    <parameter type="DotationType"/>
+  </report>
+  <report id="106" message="%1 stock supply threshold exceeded">
+    <parameter type="DotationType"/>
+  </report>
+  <report id="107" message="basic loads replenishment done"/>
+  <report id="108" message="stocks replenishment done"/>
+  <report id="109" message="basic loads replenishment cancelled"/>
+  <report id="110" message="stocks replenishment cancelled"/>
+  <report id="111" message="wounded back from medical system"/>
+  <report id="112" message="alert: almost out of evacuation ambulances"/>
+  <report id="113" message="alert: almost out of collection ambulances"/>
+  <report id="114" message="alert: almost out of doctors"/>
+  <report id="115" message="alert: almost out of towage trucks"/>
+  <report id="116" message="alert: almost out of repairers"/>
+  <report id="117" message="alert: almost out of conveyers"/>
+  <report id="118" message="equipment lent"/>
+  <report id="119" message="equipment lending cancelled"/>
+  <report id="120" message="equipment lending done"/>
+  <report id="121" message="equipment lending impossible"/>
+  <report id="122" message="equipment lending partially done"/>
+  <report id="123" message="impossible to take lent equipment back"/>
+  <report id="124" message="lent equipment reclaimed"/>
+  <report id="125" message="lent equipment partially reclaimed"/>
+  <report id="126" message="equipment lent"/>
+  <report id="127" message="lent equipment reclaimed"/>
+  <report id="128" message="convoy: moving towards loading point"/>
+  <report id="129" message="convoy: loading"/>
+  <report id="130" message="convoy: loading complete"/>
+  <report id="131" message="convoy: moving towards unloading point"/>
+  <report id="132" message="convoy: unloading"/>
+  <report id="133" message="convoy: unloading complete"/>
+  <report id="134" message="convoy: moving back to supply base"/>
+  <report id="135" message="replenishing"/>
+  <report id="136" message="replenishment complete"/>
+  <report id="137" message="helicopter observing"/>
+  <report id="138" message="target lost"/>
+  <report id="139" message="transport: unit %1 not ready">
+    <parameter type="Agent"/>
+  </report>
+  <report id="140" message="transport: unit %1 ready">
+    <parameter type="Agent"/>
+  </report>
+  <report id="141" message="transporting"/>
+  <report id="142" message="transport: embarking"/>
+  <report id="143" message="transport: disembarking"/>
+  <report id="144" message="transport: no carrier available"/>
+  <report id="145" message="equipment left on position"/>
+  <report id="146" message="moving towards embarkment position"/>
+  <report id="147" message="waiting for carriers"/>
+  <report id="148" message="nbc contaminated"/>
+  <report id="149" message="nbc decontaminated"/>
+  <report id="150" message="nbc suit put on"/>
+  <report id="151" message="nbc suit put off"/>
+  <report id="152" message="alert: nbc level 4"/>
+  <report id="153" message="nbc level 4 alert off"/>
+  <report id="154" message="decontamination site operated"/>
+  <report id="155" message="decontamination site dismantled"/>
+  <report id="156" message="request for decontamination"/>
+  <report id="157" message="area reconnoitered"/>
+  <report id="158" message="area decontaminated"/>
+  <report id="159" message="rota site reconnoitered"/>
+  <report id="160" message="nbc incident over"/>
+  <report id="161" message="unit decontaminated"/>
+  <report id="162" message="decontamination site saturated"/>
+  <report id="163" message="nbc monitoring in progress"/>
+  <report id="164" message="nbc monitoring done"/>
+  <report id="165" message="reconnaissance complete"/>
+  <report id="166" message="initial reconnaissance complete"/>
+  <report id="167" message="moving towards replenishment site"/>
+  <report id="168" message="first shell shot"/>
+  <report id="169" message="fire complete"/>
+  <report id="170" message="target out of range"/>
+  <report id="171" message="no more shells"/>
+  <report id="172" message="fire cancelled"/>
+  <report id="173" message="switching position"/>
+  <report id="174" message="deployment in progress"/>
+  <report id="175" message="deployment complete"/>
+  <report id="176" message="ready to fire"/>
+  <report id="177" message="indirect fire %1 spotted">
+    <parameter type="IndirectFire"/>
+  </report>
+  <report id="178" message="deployment area already used"/>
+  <report id="179" message="deployment on dedicated area"/>
+  <report id="180" message="fire request received"/>
+  <report id="181" message="ready to execute fire"/>
+  <report id="182" message="population nearby"/>
+  <report id="183" message="sending refugees to camp"/>
+  <report id="184" message="no refugee camp available"/>
+  <report id="185" message="surrendered enemy detected"/>
+  <report id="186" message="sending prisoners to camp"/>
+  <report id="187" message="no prisoner camp available"/>
+  <report id="188" message="surrendered"/>
+  <report id="189" message="surrender cancelled"/>
+  <report id="190" message="fire in forbidden area"/>
+  <report id="191" message="friendly fire"/>
+  <report id="192" message="sustaining friendly fire"/>
+  <report id="193" message="engaging neutral units"/>
+  <report id="194" message="sustaining neutral units fire"/>
+  <report id="195" message="civilian engaged"/>
+  <report id="196" message="sustaining civilian fire"/>
+  <report id="197" message="friendly indirect fire"/>
+  <report id="198" message="indirect fire on population"/>
+  <report id="199" message="CP destroyed"/>
+  <report id="200" message="wounded just died"/>
+  <report id="201" message="wounded dead during transportation"/>
+  <report id="202" message="wounded dead during hospitalization"/>
+  <report id="203" message="mission impossible: subordinated units not operational"/>
+  <report id="204" message="mission impossible: invalid phase line"/>
+  <report id="205" message="mission impossible: objective outside boundaries"/>
+  <report id="206" message="very low force ratio"/>
+  <report id="207" message="impossible to go through this!"/>
+  <report id="208" message="out of oil"/>
+  <report id="209" message="dismantled system"/>
+  <report id="210" message="neutralized"/>
+  <report id="211" message="just recovered from neutralization"/>
+  <report id="212" message="radio silence"/>
+  <report id="213" message="radio silence lifted"/>
+  <report id="214" message="radar silence"/>
+  <report id="215" message="radar silence lifted"/>
+  <report id="216" message="retaliation only"/>
+  <report id="217" message="upon order fire"/>
+  <report id="218" message="free fire"/>
+  <report id="219" message="message: %1">
+    <parameter type="String"/>
+  </report>
+  <report id="220" message="message id: %1">
+    <parameter type="Numeric"/>
+  </report>
+  <report id="221" message="use of force forbidden"/>
+  <report id="222" message="holding civilians in position by usage of non lethal means"/>
+  <report id="223" message="dispersing civilians by active defense means"/>
+  <report id="224" message="lethal weapons authorized for use"/>
+  <report id="225" message="population %1 detected">
+    <parameter type="PopulationKnowledge"/>
+  </report>
+  <report id="226" message="assaulted by population %1">
+    <parameter type="PopulationKnowledge"/>
+  </report>
+  <report id="227" message="retaliation on population %1">
+    <parameter type="PopulationKnowledge"/>
+  </report>
+  <report id="228" message="threatening population nearby"/>
+  <report id="229" message="breaking contact with population"/>
+  <report id="230" message="withdrawing from population"/>
+  <report id="231" message="controlling population"/>
+  <report id="232" message="re-orienting population"/>
+  <report id="233" message="blocking population"/>
+  <report id="234" message="channeling population"/>
+  <report id="235" message="monitoring population"/>
+  <report id="236" message="population recognized"/>
+  <report id="237" message="almost impossible to hold before population"/>
+  <report id="238" message="engaging population with non lethal weapons"/>
+  <report id="239" message="engaging population with active defense means"/>
+  <report id="240" message="engaging population with lethal weapons"/>
+  <report id="241" message="dealing with a %1 population">
+    <parameter type="Enumeration">
+      <value id="0" name="quiet"/>
+      <value id="1" name="turbulent"/>
+      <value id="2" name="agitated"/>
+      <value id="3" name="agressive"/>
+    </parameter>
+  </report>
+  <report id="242" message="%1 civilians killed during engagement, %2 wounded">
+    <parameter type="Numeric"/>
+    <parameter type="Numeric"/>
+  </report>
+  <report id="243" message="population is: %1">
+    <parameter type="Enumeration">
+      <value id="0" name="quiet"/>
+      <value id="1" name="turbulent"/>
+      <value id="2" name="agitated"/>
+      <value id="3" name="aggressive"/>
+    </parameter>
+  </report>
+  <report id="244" message="escalation of violence"/>
+  <report id="245" message="engaging enemy forces"/>
+  <report id="246" message="population temporarily brought under control"/>
+  <report id="247" message="population temporarily driven back"/>
+  <report id="248" message="clashes resume"/>
+  <report id="249" message="population %1 is being assaulted">
+    <parameter type="PopulationKnowledge"/>
+  </report>
+  <report id="250" message="sustaining assault from population %1">
+    <parameter type="PopulationKnowledge"/>
+  </report>
+  <report id="251" message="retaliating to population %1 assault">
+    <parameter type="PopulationKnowledge"/>
+  </report>
+  <report id="252" message="critical site under attack"/>
+  <report id="253" message="parking"/>
+  <report id="254" message="blocked"/>
+  <report id="255" message="checked"/>
+  <report id="256" message="terrorist bombing in population"/>
+  <report id="257" message="%1 civilians killed by mine explosion, %2 wounded">
+    <parameter type="Numeric"/>
+    <parameter type="Numeric"/>
+  </report>
+  <report id="258" message="carrying out bombing"/>
+</reports>

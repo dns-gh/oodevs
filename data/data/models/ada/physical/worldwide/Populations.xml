@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<populations>
+  <reloading-time-effect modifier="1" population-density="0.05"/>
+  <population concentration-density="0.05" decisional-model="Population" id="0" moving-base-density="0.5" moving-speed="6" name="Population standard">
+    <slowing-effects>
+      <slowing-effect population-attitude="calme">
+        <unit max-speed="30" population-density="0.5" unit-size="Heavy"/>
+        <unit max-speed="30" population-density="0.5" unit-size="Medium"/>
+        <unit max-speed="30" population-density="0.5" unit-size="Small"/>
+        <unit max-speed="15" population-density="0.5" unit-size="Personal"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="agitee">
+        <unit max-speed="15" population-density="0.5" unit-size="Heavy"/>
+        <unit max-speed="15" population-density="0.5" unit-size="Medium"/>
+        <unit max-speed="30" population-density="0.5" unit-size="Small"/>
+        <unit max-speed="15" population-density="0.5" unit-size="Personal"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="excitee">
+        <unit max-speed="5" population-density="0.5" unit-size="Heavy"/>
+        <unit max-speed="5" population-density="0.5" unit-size="Medium"/>
+        <unit max-speed="10" population-density="0.5" unit-size="Small"/>
+        <unit max-speed="10" population-density="0.5" unit-size="Personal"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="agressive">
+        <unit max-speed="5" population-density="0.5" unit-size="Heavy"/>
+        <unit max-speed="5" population-density="0.5" unit-size="Medium"/>
+        <unit max-speed="10" population-density="0.5" unit-size="Small"/>
+        <unit max-speed="5" population-density="0.5" unit-size="Personal"/>
+      </slowing-effect>
+    </slowing-effects>
+    <attrition-effects>
+      <attrition-effect intensity="1" population-attitude="calme" population-density="0.05"/>
+      <attrition-effect intensity="1" population-attitude="agitee" population-density="0.05">
+        <unit destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0.02"/>
+        <unit destruction="0" protection="MediumTank" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
+        <unit destruction="0" protection="LightTank" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+        <unit destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0" repairable-without-evacuation="0.01"/>
+        <unit destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0.01" repairable-without-evacuation="0.05"/>
+        <unit destruction="0" protection="Combatant" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="excitee" population-density="0.05">
+        <unit destruction="0" protection="HeavyTank" repairable-with-evacuation="0.02" repairable-without-evacuation="0.04"/>
+        <unit destruction="0.01" protection="MediumTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.08"/>
+        <unit destruction="0.01" protection="LightTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.08"/>
+        <unit destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+        <unit destruction="0.01" protection="Aircraft" repairable-with-evacuation="0.01" repairable-without-evacuation="0"/>
+        <unit destruction="0.08" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+        <unit destruction="0.1" protection="Combatant" repairable-with-evacuation="0.15" repairable-without-evacuation="0.5"/>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="agressive" population-density="0.05">
+        <unit destruction="0.05" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+        <unit destruction="0.05" protection="MediumTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.2"/>
+        <unit destruction="0.1" protection="LightTank" repairable-with-evacuation="0.15" repairable-without-evacuation="0.2"/>
+        <unit destruction="0.15" protection="ArmouredCarrier" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+        <unit destruction="0.02" protection="Aircraft" repairable-with-evacuation="0.02" repairable-without-evacuation="0"/>
+        <unit destruction="0.15" protection="UnarmouredVehicle" repairable-with-evacuation="0.3" repairable-without-evacuation="0.35"/>
+        <unit destruction="0.2" protection="Combatant" repairable-with-evacuation="0.25" repairable-without-evacuation="0.4"/>
+      </attrition-effect>
+    </attrition-effects>
+    <unit-fire-effects>
+      <unit attrition-surface="5" ph="0" rule-of-engagment="maintien a distance par moyens non letaux"/>
+      <unit attrition-surface="10" ph="0.0005" rule-of-engagment="dispersion par moyens de defense actifs"/>
+      <unit attrition-surface="10" ph="0.005" rule-of-engagment="armes letales autorisees"/>
+    </unit-fire-effects>
+  </population>
+</populations>

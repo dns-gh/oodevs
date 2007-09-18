@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<dotations>
+  <dotation category="12,7-mm Bullet" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="1" name="munition" nature="Solide" package-mass="0.035" package-size="200" package-volume="0.025" type="Mitraille">
+    <attritions>
+      <attrition destruction="0.01" protection="HeavyTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.01" protection="MediumTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.05" protection="LightTank" repairable-with-evacuation="0.15" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.05" protection="ArmouredCarrier" repairable-with-evacuation="0.15" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.5" protection="Aircraft" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.5" protection="UnarmouredVehicle" repairable-with-evacuation="0.3" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0.7" protection="Combatant" repairable-with-evacuation="0.25" repairable-without-evacuation="0.05"/>
+    </attritions>
+  </dotation>
+  <dotation category="14,5-mm Bullet" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="2" name="munition" nature="Solide" package-mass="0.035" package-size="200" package-volume="0.025" type="Mitraille">
+    <attritions>
+      <attrition destruction="0.01" protection="HeavyTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.01" protection="MediumTank" repairable-with-evacuation="0.07" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0.05" protection="LightTank" repairable-with-evacuation="0.15" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.05" protection="ArmouredCarrier" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.5" protection="Aircraft" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.5" protection="UnarmouredVehicle" repairable-with-evacuation="0.3" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0.7" protection="Combatant" repairable-with-evacuation="0.25" repairable-without-evacuation="0.05"/>
+    </attritions>
+  </dotation>
+  <dotation category="7.62-mm Bullet" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="3" name="munition" nature="Solide" package-mass="0.038" package-size="1000" package-volume="0.035" type="Mitraille">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+      <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0.1" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0.05" protection="Aircraft" repairable-with-evacuation="0.2" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0.05" protection="UnarmouredVehicle" repairable-with-evacuation="0.2" repairable-without-evacuation="0.4"/>
+      <attrition destruction="0.2" protection="Combatant" repairable-with-evacuation="0.6" repairable-without-evacuation="0.2"/>
+    </attritions>
+  </dotation>
+  <dotation category="120-mm Shaped Charge" codeEMAT6="" codeEMAT8="1315-860" codeLFRIL="" codeNNO="" id="4" name="munition" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.07" type="Obus">
+    <attritions>
+      <attrition destruction="0.2" protection="HeavyTank" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.3" protection="MediumTank" repairable-with-evacuation="0.5" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0.5" protection="LightTank" repairable-with-evacuation="0.5" repairable-without-evacuation="0"/>
+      <attrition destruction="0.5" protection="ArmouredCarrier" repairable-with-evacuation="0.5" repairable-without-evacuation="0"/>
+      <attrition destruction="0.8" protection="Aircraft" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
+      <attrition destruction="0.8" protection="UnarmouredVehicle" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
+      <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+  </dotation>
+  <dotation category="105-mm High Explosive Shell" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="5" name="munition" nature="Solide" package-mass="0.033" package-size="2" package-volume="0.078" type="Obus">
+    <attritions>
+      <attrition destruction="0.05" protection="HeavyTank" repairable-with-evacuation="0.3" repairable-without-evacuation="0.4"/>
+      <attrition destruction="0.15" protection="MediumTank" repairable-with-evacuation="0.4" repairable-without-evacuation="0.4"/>
+      <attrition destruction="0.5" protection="LightTank" repairable-with-evacuation="0.5" repairable-without-evacuation="0"/>
+      <attrition destruction="0.5" protection="ArmouredCarrier" repairable-with-evacuation="0.5" repairable-without-evacuation="0"/>
+      <attrition destruction="0.6" protection="Aircraft" repairable-with-evacuation="0.4" repairable-without-evacuation="0"/>
+      <attrition destruction="0.8" protection="UnarmouredVehicle" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
+      <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+  </dotation>
+  <dotation category="20-mm Shell" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="6" name="munition" nature="Solide" package-mass="0.03" package-size="60" package-volume="0.026" type="Obus">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.4"/>
+      <attrition destruction="0.1" protection="LightTank" repairable-with-evacuation="0.4" repairable-without-evacuation="0.5"/>
+      <attrition destruction="0.1" protection="ArmouredCarrier" repairable-with-evacuation="0.4" repairable-without-evacuation="0.5"/>
+      <attrition destruction="0.25" protection="Aircraft" repairable-with-evacuation="0.5" repairable-without-evacuation="0.25"/>
+      <attrition destruction="0.25" protection="UnarmouredVehicle" repairable-with-evacuation="0.5" repairable-without-evacuation="0.25"/>
+      <attrition destruction="0.8" protection="Combatant" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
+    </attritions>
+  </dotation>
+  <dotation category="5.56-mm Bullet" codeEMAT6="" codeEMAT8="1305-054" codeLFRIL="" codeNNO="" id="7" name="munition" nature="Solide" package-mass="0.021" package-size="1300" package-volume="0.018" type="Mitraille">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0.1" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0.05" protection="Aircraft" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.1" protection="UnarmouredVehicle" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.15" protection="Combatant" repairable-with-evacuation="0.5" repairable-without-evacuation="0.3"/>
+    </attritions>
+  </dotation>
+  <dotation category="Very Short Range Surface To Air Missile" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="8" name="munition" nature="Solide" package-mass="0.056" package-size="2" package-volume="0.04" type="MissileAir">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.6" protection="Aircraft" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="1"/>
+      <ph target-posture="PosteAmenage" value="0.5"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </dotation>
+  <dotation category="81-mm High Explosive Shell" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="9" name="munition" nature="Solide" package-mass="0.034" package-size="6" package-volume="0.058" type="Obus">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.05"/>
+      <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.05"/>
+      <attrition destruction="0.1" protection="LightTank" repairable-with-evacuation="0.3" repairable-without-evacuation="0.25"/>
+      <attrition destruction="0.3" protection="ArmouredCarrier" repairable-with-evacuation="0.3" repairable-without-evacuation="0.25"/>
+      <attrition destruction="0.3" protection="Aircraft" repairable-with-evacuation="0.3" repairable-without-evacuation="0.25"/>
+      <attrition destruction="0.2" protection="UnarmouredVehicle" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.1" protection="Combatant" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
+    </attritions>
+    <indirect-fire intervention-type="12" neutralization-ratio="2.5" type="explosif" x-dispersion="100" y-dispersion="100">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="1"/>
+      <ph target-posture="PosteAmenage" value="0.5"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </dotation>
+  <dotation category="120-mm Hight Explosive Shell" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="10" name="munition" nature="Solide" package-mass="0.06" package-size="2" package-volume="0.088" type="Obus">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.05"/>
+      <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.05"/>
+      <attrition destruction="0.1" protection="LightTank" repairable-with-evacuation="0.3" repairable-without-evacuation="0.25"/>
+      <attrition destruction="0.3" protection="ArmouredCarrier" repairable-with-evacuation="0.3" repairable-without-evacuation="0.25"/>
+      <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.2" protection="UnarmouredVehicle" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.1" protection="Combatant" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
+    </attritions>
+    <indirect-fire intervention-type="12" neutralization-ratio="1.5" type="explosif" x-dispersion="200" y-dispersion="200">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="0.9"/>
+      <ph target-posture="PosteAmenage" value="0.5"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </dotation>
+  <dotation category="155-mm High Explosive Shell Rear Skirt" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="11" name="munition" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+    <attritions>
+      <attrition destruction="0.2" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.2" protection="MediumTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.2" protection="LightTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.2" protection="ArmouredCarrier" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.5" protection="UnarmouredVehicle" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.2" protection="Combatant" repairable-with-evacuation="0.5" repairable-without-evacuation="0.1"/>
+    </attritions>
+    <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="0.9"/>
+      <ph target-posture="PosteAmenage" value="0.5"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </dotation>
+  <dotation category="155-mm Sub-Munition Shell" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="12" name="munition" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+    <attritions>
+      <attrition destruction="0.25" protection="HeavyTank" repairable-with-evacuation="0.15" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.25" protection="MediumTank" repairable-with-evacuation="0.15" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.25" protection="LightTank" repairable-with-evacuation="0.15" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.25" protection="ArmouredCarrier" repairable-with-evacuation="0.15" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.6" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0.3" protection="Combatant" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
+    </attritions>
+    <indirect-fire intervention-type="24" neutralization-ratio="3.5" type="grenade" x-dispersion="200" y-dispersion="200">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="0.9"/>
+      <ph target-posture="PosteAmenage" value="0.3"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </dotation>
+  <dotation category="155-mm Antitank High Explosive Shell" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="13" name="munition" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+    <attritions>
+      <attrition destruction="0.2" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.35" protection="MediumTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.25"/>
+      <attrition destruction="0.5" protection="LightTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.7" protection="ArmouredCarrier" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="1" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.05" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+    <indirect-fire intervention-type="4" neutralization-ratio="1.5" type="aced" x-dispersion="200" y-dispersion="200">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="0.9"/>
+      <ph target-posture="PosteAmenage" value="0.5"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </dotation>
+  <dotation category="155-mm Illumination Round" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="14" name="munition" nature="Solide" package-mass="0.652" package-size="8" package-volume="0.82" type="Obus">
+    <indirect-fire intervention-type="4" life-time="300s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1000"/>
+  </dotation>
+  <dotation category="155-mm Smoke Shell" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="15" name="munition" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
+    <indirect-fire intervention-type="4" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
+  </dotation>
+  <dotation category="277-mm Sub-Munition Rocket" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="16" name="munition" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
+    <attritions>
+      <attrition destruction="0.6" protection="HeavyTank" repairable-with-evacuation="0.3" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.7" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.8" protection="LightTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+      <attrition destruction="1" protection="ArmouredCarrier" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.3" protection="Aircraft" repairable-with-evacuation="0.3" repairable-without-evacuation="0.25"/>
+      <attrition destruction="1" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.1" protection="Combatant" repairable-with-evacuation="0.5" repairable-without-evacuation="0.3"/>
+    </attritions>
+    <indirect-fire intervention-type="1" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="1"/>
+      <ph target-posture="PosteAmenage" value="0.5"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </dotation>
+  <dotation category="9.00-mm Bullet" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="17" name="munition" nature="Solide" package-mass="0.045" package-size="3000" package-volume="0.025" type="Mitraille">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0.05" repairable-without-evacuation="0.05"/>
+      <attrition destruction="0.01" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0.2" protection="Combatant" repairable-with-evacuation="0.6" repairable-without-evacuation="0.2"/>
+    </attritions>
+  </dotation>
+  <dotation category="68-mm Rocket" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="18" name="munition" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
+    <attritions>
+      <attrition destruction="0.3" protection="HeavyTank" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.4" protection="MediumTank" repairable-with-evacuation="0.5" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.6" protection="LightTank" repairable-with-evacuation="0.3" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.6" protection="ArmouredCarrier" repairable-with-evacuation="0.3" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.9" protection="Aircraft" repairable-with-evacuation="0.1" repairable-without-evacuation="0"/>
+      <attrition destruction="0.9" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0"/>
+      <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="1"/>
+      <ph target-posture="PosteAmenage" value="0.5"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </dotation>
+  <dotation category="30-mm Shell" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="19" name="munition" nature="Solide" package-mass="0.03" package-size="60" package-volume="0.026" type="Obus">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.05" protection="MediumTank" repairable-with-evacuation="0.3" repairable-without-evacuation="0.5"/>
+      <attrition destruction="0.2" protection="LightTank" repairable-with-evacuation="0.6" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0.2" protection="ArmouredCarrier" repairable-with-evacuation="0.6" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0.4" protection="Aircraft" repairable-with-evacuation="0.5" repairable-without-evacuation="0"/>
+      <attrition destruction="0.4" protection="UnarmouredVehicle" repairable-with-evacuation="0.5" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.8" protection="Combatant" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
+    </attritions>
+  </dotation>
+  <dotation category="Theater High Altitude Aera Defense Missile" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="20" name="munition" nature="Solide" package-mass="0.029" package-size="1" package-volume="0.13" type="MissileAir">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.8" protection="Aircraft" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+  </dotation>
+  <dotation category="56-mm Explosive Grenade" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="21" name="munition" nature="Solide" package-mass="0.021" package-size="10" package-volume="0.04" type="Obus">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+    <indirect-fire intervention-type="1" neutralization-ratio="20" type="explosif" x-dispersion="10" y-dispersion="10">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="1"/>
+      <ph target-posture="PosteAmenage" value="0.5"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </dotation>
+  <dotation category="56-mm Smoke Grenade" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="22" name="munition" nature="Solide" package-mass="0.027" package-size="16" package-volume="0.04" type="Obus">
+    <indirect-fire intervention-type="1" life-time="300s" setup-time="10s" type="fumigene" x-dispersion="200" y-dispersion="200"/>
+  </dotation>
+  <dotation category="56-mm Light Grenade" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="23" name="munition" nature="Solide" package-mass="0.021" package-size="10" package-volume="0.04" type="Obus">
+    <indirect-fire intervention-type="1" life-time="0s" setup-time="0s" type="eclairant" x-dispersion="50" y-dispersion="50"/>
+  </dotation>
+  <dotation category="120-mm armour-piercing shell" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="24" name="munition" nature="Solide" package-mass="0.06" package-size="2" package-volume="0.14" type="Obus">
+    <attritions>
+      <attrition destruction="0.35" protection="HeavyTank" repairable-with-evacuation="0.5" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.45" protection="MediumTank" repairable-with-evacuation="0.55" repairable-without-evacuation="0"/>
+      <attrition destruction="0.65" protection="LightTank" repairable-with-evacuation="0.35" repairable-without-evacuation="0"/>
+      <attrition destruction="0.65" protection="ArmouredCarrier" repairable-with-evacuation="0.35" repairable-without-evacuation="0"/>
+      <attrition destruction="0.45" protection="Aircraft" repairable-with-evacuation="0.55" repairable-without-evacuation="0"/>
+      <attrition destruction="0.45" protection="UnarmouredVehicle" repairable-with-evacuation="0.45" repairable-without-evacuation="0.1"/>
+      <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+  </dotation>
+  <dotation category="105-mm armour-piercing shell" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="25" name="munition" nature="Solide" package-mass="0.046" package-size="2" package-volume="0.093" type="Obus">
+    <attritions>
+      <attrition destruction="0.3" protection="HeavyTank" repairable-with-evacuation="0.5" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.4" protection="MediumTank" repairable-with-evacuation="0.6" repairable-without-evacuation="0"/>
+      <attrition destruction="0.6" protection="LightTank" repairable-with-evacuation="0.4" repairable-without-evacuation="0"/>
+      <attrition destruction="0.6" protection="ArmouredCarrier" repairable-with-evacuation="0.4" repairable-without-evacuation="0"/>
+      <attrition destruction="0.4" protection="Aircraft" repairable-with-evacuation="0.5" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.4" protection="UnarmouredVehicle" repairable-with-evacuation="0.5" repairable-without-evacuation="0.1"/>
+      <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+  </dotation>
+  <dotation category="105-mm Shaped Charge" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="26" name="munition" nature="Solide" package-mass="0.067" package-size="2" package-volume="0.092" type="Obus">
+    <attritions>
+      <attrition destruction="0.3" protection="HeavyTank" repairable-with-evacuation="0.5" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.4" protection="MediumTank" repairable-with-evacuation="0.6" repairable-without-evacuation="0"/>
+      <attrition destruction="0.6" protection="LightTank" repairable-with-evacuation="0.4" repairable-without-evacuation="0"/>
+      <attrition destruction="0.6" protection="ArmouredCarrier" repairable-with-evacuation="0.4" repairable-without-evacuation="0"/>
+      <attrition destruction="0.4" protection="Aircraft" repairable-with-evacuation="0.5" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.4" protection="UnarmouredVehicle" repairable-with-evacuation="0.5" repairable-without-evacuation="0.1"/>
+      <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+  </dotation>
+  <dotation category="81-mm Smoke Shell" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="27" name="munition" nature="Solide" package-mass="0.038" package-size="6" package-volume="0.055" type="Obus">
+    <indirect-fire intervention-type="4" life-time="300s" setup-time="18s" type="fumigene" x-dispersion="400" y-dispersion="600"/>
+  </dotation>
+  <dotation category="81-mm Illumination Round" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="28" name="munition" nature="Solide" package-mass="0.036" package-size="6" package-volume="0.055" type="Obus">
+    <indirect-fire intervention-type="3" life-time="300s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
+  </dotation>
+  <dotation category="120-mm Smoke Shell" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="29" name="munition" nature="Solide" package-mass="0.06" package-size="2" package-volume="0.06" type="Obus">
+    <indirect-fire intervention-type="4" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
+  </dotation>
+  <dotation category="120-mm Illumination Shell" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="30" name="munition" nature="Solide" package-mass="0.06" package-size="2" package-volume="0.06" type="Obus">
+    <indirect-fire intervention-type="3" life-time="300s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1000"/>
+  </dotation>
+  <dotation category="Antitank Missile" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="31" name="munition" nature="Solide" package-mass="0.232" package-size="4" package-volume="0.486" type="MissileSol">
+    <attritions>
+      <attrition destruction="0.4" protection="HeavyTank" repairable-with-evacuation="0.5" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.5" protection="MediumTank" repairable-with-evacuation="0.4" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.7" protection="LightTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.7" protection="ArmouredCarrier" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.9" protection="Aircraft" repairable-with-evacuation="0.1" repairable-without-evacuation="0"/>
+      <attrition destruction="0.9" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0"/>
+      <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="1"/>
+      <ph target-posture="PosteAmenage" value="0.5"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </dotation>
+  <dotation category="Short Range Surface To Air Missile" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="32" name="munition" nature="Solide" package-mass="0.81" package-size="6" package-volume="3.907" type="MissileAir">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.6" protection="Aircraft" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="1"/>
+      <ph target-posture="PosteAmenage" value="0.5"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </dotation>
+  <dotation category="Air Bomb" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="33" name="munition" nature="Solide" package-mass="0.25" package-size="1" package-volume="0.2" type="Obus">
+    <attritions>
+      <attrition destruction="0.05" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.05" protection="MediumTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.15" protection="LightTank" repairable-with-evacuation="0.25" repairable-without-evacuation="0.35"/>
+      <attrition destruction="0.15" protection="ArmouredCarrier" repairable-with-evacuation="0.25" repairable-without-evacuation="0.35"/>
+      <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.3" protection="UnarmouredVehicle" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.6" protection="Combatant" repairable-with-evacuation="0.3" repairable-without-evacuation="0.1"/>
+    </attritions>
+    <indirect-fire intervention-type="1" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="1"/>
+      <ph target-posture="PosteAmenage" value="0.5"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </dotation>
+  <dotation category="Handmade Bomb" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="34" name="munition" nature="Solide" package-mass="0.05" package-size="1" package-volume="0.05" type="Obus">
+    <attritions>
+      <attrition destruction="1" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="1" protection="MediumTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="1" protection="LightTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="1" protection="ArmouredCarrier" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="1" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="1" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+    <indirect-fire intervention-type="1" neutralization-ratio="50" type="explosif" x-dispersion="20" y-dispersion="20">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="1"/>
+      <ph target-posture="PosteAmenage" value="0.5"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </dotation>
+  <dotation category="F63 Gasoil" codeEMAT6="F63" codeEMAT8="F63" codeLFRIL="" codeNNO="" id="35" name="carburant" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
+  <dotation category="F57 Essence" codeEMAT6="F57" codeEMAT8="F57" codeLFRIL="" codeNNO="" id="36" name="carburant" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
+  <dotation category="F35 Kerosene" codeEMAT6="F35" codeEMAT8="F35" codeLFRIL="" codeNNO="" id="37" name="carburant" nature="Kerosene" package-mass="1" package-size="1000" package-volume="1"/>
+  <dotation category="explosif classique" codeEMAT6="explosif classique" codeEMAT8="explosif classique" codeLFRIL="explosif classique" codeNNO="explosif classique" id="38" name="explosif" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005"/>
+  <dotation category="mine classique" codeEMAT6="mine classique" codeEMAT8="mine classique" codeLFRIL="mine classique" codeNNO="mine classique" id="39" name="mine" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005"/>
+  <dotation category="barbele classique" codeEMAT6="barbele classique" codeEMAT8="barbele classique" codeLFRIL="barbele classique" codeNNO="barbele classique" id="40" name="barbele" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005"/>
+  <dotation category="UR NTI1 MOB" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="41" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="UR NTI2 MOB" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="42" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="UR NTI3" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="43" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="UR NTI1 TCT" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="44" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="UR NTI2 TCT" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="45" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="UR NTI2 TRS" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="46" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="UR NTI2 COTAC" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="47" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="UR NTI2 DEM" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="48" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="UR AAC" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="49" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="UR NTI1 EA" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="50" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="Vivre" codeEMAT6="Vivre" codeEMAT8="Vivre" codeLFRIL="Vivre" codeNNO="Vivre" id="51" name="ration" nature="Solide" package-mass="0.015" package-size="10" package-volume="0.01"/>
+  <dotation category="Eau" codeEMAT6="Eau" codeEMAT8="Eau" codeLFRIL="Eau" codeNNO="Eau" id="52" name="ration" nature="Solide" package-mass="1" package-size="1000" package-volume="1"/>
+</dotations>
