@@ -109,7 +109,7 @@ namespace
         {
             xos << xml::start( "reduction" )
                     << xml::attribute( "name",   reductions[i][0] )
-                    << xml::attribute( "output", reductions[i][1] );
+                    << xml::attribute( "output", reductions[i][1] )
                     << xml::attribute( "input1", "any" );
             if( transformations[i][2] )
                 xos << xml::attribute( "parameter-type", transformations[i][2] );
