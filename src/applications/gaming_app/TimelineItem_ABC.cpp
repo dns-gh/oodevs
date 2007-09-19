@@ -38,7 +38,7 @@ TimelineItem_ABC::TimelineItem_ABC( QCanvas* canvas, const QRect& area )
 // -----------------------------------------------------------------------------
 TimelineItem_ABC::~TimelineItem_ABC()
 {
-    // NOTHING
+    hide();
 }
 
 // -----------------------------------------------------------------------------

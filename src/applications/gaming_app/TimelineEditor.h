@@ -91,7 +91,6 @@ private:
     kernel::Controllers& controllers_;
     T_EntityItems        items_;
     T_Lines              lines_;
-    QTimer*              updateTimer_;
     TimelineItem_ABC*    selectedItem_;
     QPoint               grabPoint_;
     //@}

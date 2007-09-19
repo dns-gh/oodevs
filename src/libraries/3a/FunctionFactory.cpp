@@ -77,7 +77,7 @@ namespace
         {
             xos << xml::start( "extractor" )
                     << xml::attribute( "name",     extractors[i][0] )
-                    << xml::attribute( "type",     extractors[i][1] )
+                    << xml::attribute( "output",   extractors[i][1] )
                     << xml::attribute( "key-type", extractors[i][2] )
                 << xml::end();
             ++i;
@@ -110,6 +110,7 @@ namespace
             xos << xml::start( "reduction" )
                     << xml::attribute( "name",   reductions[i][0] )
                     << xml::attribute( "output", reductions[i][1] );
+                    << xml::attribute( "input1", "any" );
             if( transformations[i][2] )
                 xos << xml::attribute( "parameter-type", transformations[i][2] );
             if( transformations[i][3] )

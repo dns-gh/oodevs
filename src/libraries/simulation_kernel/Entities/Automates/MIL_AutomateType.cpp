@@ -325,8 +325,8 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetMajorOperationalState              < MIL_Automate >, "DEC_ConnaissanceAgent_EtatOpsMajeur"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetMaxPerceptionLevelForKnowledgeGroup< MIL_Automate >, "DEC_ConnaissanceAgent_NiveauPerceptionMax"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsKnowledgeValid                      < MIL_Automate >, "DEC_ConnaissanceObjet_EstValide"                            );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated           < MIL_Automate >, "DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif"         );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsReservedObstacle                    < MIL_Automate >, "DEC_ConnaissanceObjet_EstObstacleDeManoeuvre"              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated           < MIL_Automate >, "DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif"          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsReservedObstacle                    < MIL_Automate >, "DEC_ConnaissanceObjet_EstObstacleDeManoeuvre"               );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsBypassed                            < MIL_Automate >, "DEC_ConnaissanceObjet_EstContourne"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsConstructed                         < MIL_Automate >, "DEC_ConnaissanceObjet_EstConstruit"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::GetLocalisation                       < MIL_Automate >, "DEC_ConnaissanceObjet_Localisation"                         );

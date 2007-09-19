@@ -49,6 +49,7 @@
 #include "AutomatsLayer.h"
 #include "FolkLayer.h"
 #include "FolkToolbar.h"
+#include "AfterAction.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -300,6 +301,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     // Drawer
     DrawerLayer* drawer = new DrawerLayer( *glProxy_ );
     new DrawerToolbar( this, *eventStrategy_, *drawer, *glProxy_, controllers_ );
+
+//    new AfterAction( this, controllers_ );
 
     new Menu( this, controllers, *prefDialog, *profileDialog, *browser, *factory );
 

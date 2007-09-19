@@ -37,10 +37,6 @@ TimelineEditor::TimelineEditor( QWidget* parent, QCanvas* canvas, Controllers& c
     new TimelineMarker( this, scheduler );
     lines_.push_back( new TimelineRuler( canvas, this ) );
     controllers_.Register( *this );
-
-    updateTimer_ = new QTimer( this );
-    connect( updateTimer_, SIGNAL( timeout()), SLOT( Update() ) );
-    updateTimer_->start( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,6 +62,7 @@ void TimelineEditor::NotifyCreated( const Action_ABC& action )
         lines_.push_back( line );
     }
     line->AddAction( action );
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -77,6 +74,7 @@ void TimelineEditor::NotifyDeleted( const Action_ABC& action )
     CIT_EntityItems it = items_.find( &action.GetEntity() );
     if( it != items_.end() )
         it->second->RemoveAction( action );
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -93,6 +91,7 @@ void TimelineEditor::NotifyDeleted( const kernel::Entity_ABC& entity )
             lines_.erase( itLine );
         delete it->second;
         items_.erase( it );
+        Update();
     }
 }
 
@@ -104,7 +103,6 @@ void TimelineEditor::Update()
 {
     for( T_Lines::const_iterator it = lines_.begin(); it != lines_.end(); ++it )
         (*it)->Update();
-    canvas()->setAllChanged();
     canvas()->update();
 }
 
@@ -120,6 +118,7 @@ void TimelineEditor::contentsMousePressEvent( QMouseEvent* event )
     if( list.empty() )
     {
         ClearSelection();
+        Update();
         return;
     }
     for( QCanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
@@ -128,7 +127,7 @@ void TimelineEditor::contentsMousePressEvent( QMouseEvent* event )
             {
                 ClearSelection();
                 SetSelected( *item );
-                return;
+                Update();
             }
 }
 
@@ -145,6 +144,7 @@ void TimelineEditor::contentsMouseMoveEvent( QMouseEvent* event )
         grabPoint_ = event->pos();
         setCursor( QCursor::sizeHorCursor );
     }
+    Update();
     QCanvasItemList list = canvas()->collisions( event->pos() );
     if( list.empty() )
     {
@@ -179,6 +179,7 @@ void TimelineEditor::keyPressEvent( QKeyEvent* event )
         const short sign = event->key() == Qt::Key_Left ? -1 : 1;
         selectedItem_->Shift( sign * ( ( event->state() & Qt::ShiftButton ) ? 100 : 5 ) ); // $$$$ SBO 2007-07-05: ruler.getPageStep / ruler.getTickStep
     }
+    Update();
 }
 
 // -----------------------------------------------------------------------------

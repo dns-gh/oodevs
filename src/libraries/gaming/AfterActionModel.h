@@ -10,7 +10,18 @@
 #ifndef __AfterActionModel_h_
 #define __AfterActionModel_h_
 
+#include "clients_kernel/Resolver.h"
 #include "game_asn/asn.h"
+
+namespace kernel
+{
+    class Controller;
+}
+namespace xml
+{
+    class xistream;
+}
+class AfterActionItem;
 
 // =============================================================================
 /** @class  AfterActionModel
@@ -18,13 +29,13 @@
 */
 // Created: AGE 2007-09-17
 // =============================================================================
-class AfterActionModel
+class AfterActionModel : public kernel::Resolver< AfterActionItem, QString >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionModel();
+             AfterActionModel( kernel::Controller& controller );
     virtual ~AfterActionModel();
     //@}
 
@@ -43,11 +54,13 @@ private:
 
     //! @name Helpers
     //@{
+    void ReadFunction( const std::string& type, xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     //@}
 };
 

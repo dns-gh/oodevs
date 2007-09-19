@@ -8,58 +8,66 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "AfterActionModel.h"
 #include "AfterActionItem.h"
-#include "clients_kernel/Controller.h"
+#include "AfterActionItemBuilder_ABC.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionModel constructor
+// Name: AfterActionItem constructor
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-AfterActionModel::AfterActionModel( kernel::Controller& controller )
-    : controller_( controller )
+AfterActionItem::AfterActionItem( const std::string& type, xml::xistream& xis )
+    : type_     ( type )
+    , name_     ( xml::attribute< std::string >( xis, "name" ) )
+    , output_   ( xml::attribute< std::string >( xis, "output" ) )
+    , input1_   ( xml::attribute( xis, "input1", std::string() ) )
+    , input2_   ( xml::attribute( xis, "input2", std::string() ) )
+    , paramName_( xml::attribute( xis, "parameter-name", std::string() ) )
+    , paramType_( xml::attribute( xis, "parameter-type", std::string() ) )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionModel destructor
+// Name: AfterActionItem destructor
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-AfterActionModel::~AfterActionModel()
+AfterActionItem::~AfterActionItem()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionModel::Update
+// Name: AfterActionItem::GetType
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AfterActionModel::Update( const ASN1T_MsgAarInformation& asnMsg )
+const std::string& AfterActionItem::GetType() const
 {
-    xml::xistringstream xis( asnMsg.information );
-    xis >> xml::start( "functions" )
-            >> xml::list( *this, &AfterActionModel::ReadFunction )
-        >> xml::end();
-    controller_.Update( *this );
+    return type_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionModel::ReadFunction
+// Name: AfterActionItem::GetName
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AfterActionModel::ReadFunction( const std::string& type, xml::xistream& xis )
+const std::string& AfterActionItem::GetName() const
 {
-    const std::string name = xml::attribute< std::string >( xis, "name" );
-    Register( name.c_str(), *new AfterActionItem( type, xis ) );
+    return name_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionModel::Update
-// Created: AGE 2007-09-17
+// Name: AfterActionItem::Build
+// Created: AGE 2007-09-18
 // -----------------------------------------------------------------------------
-void AfterActionModel::Update( const ASN1T_MsgIndicatorResult& asnMsg )
+void AfterActionItem::Build( AfterActionItemBuilder_ABC& builder ) const
 {
-
+    builder.Start( name_ );
+    if( ! input1_.empty() )
+        builder.AddInput ( input1_ );
+    if( ! input2_.empty() )
+        builder.AddInput ( input2_ );
+    if( ! output_.empty() )
+        builder.AddOutput( output_ );
+    if( ! paramName_.empty() )
+        builder.AddParameter( paramType_, paramName_ );
 }
