@@ -64,6 +64,7 @@ private:
     bool EndConnection( AfterActionCanvasConnection* connection, const QCanvasItem& item, const QPoint& point, int index );
     void Polish( QCanvasItem* subItem, double x, double y );
     void AdjustInputs();
+    bool IsFree( int index );
     //@}
 
     //! @name Types

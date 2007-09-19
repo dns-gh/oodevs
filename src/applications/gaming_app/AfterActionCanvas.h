@@ -73,11 +73,12 @@ private:
     //! @name Member data
     //@{
     T_Items items_;
-    AfterActionCanvasItem* selected_;
+    AfterActionCanvasItem*       selected_;
+    AfterActionCanvasConnection* selectedConnection_;
+    AfterActionCanvasConnection* currentConnection_;
     QPoint grabPoint_;
     bool connect_;
     unsigned currentId_;
-    AfterActionCanvasConnection* currentConnection_;
     //@}
 };
 

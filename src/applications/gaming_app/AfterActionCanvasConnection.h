@@ -25,7 +25,7 @@ class AfterActionCanvasConnection : public QCanvasLine
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionCanvasConnection( AfterActionCanvasItem* from, int index, const QPoint& attach );
+             AfterActionCanvasConnection( const QPalette& palette, AfterActionCanvasItem* from, int index, const QPoint& attach );
     virtual ~AfterActionCanvasConnection();
     //@}
 
@@ -35,6 +35,7 @@ public:
     void MoveBy( AfterActionCanvasItem* item, double x, double y );
     bool Close( AfterActionCanvasItem* item, int index, const QPoint& attach );
     void Disconnect( AfterActionCanvasItem* item = 0 );
+    bool IsConnected( AfterActionCanvasItem* item, int index ) const;
     //@}
 
 private:
@@ -44,9 +45,16 @@ private:
     AfterActionCanvasConnection& operator=( const AfterActionCanvasConnection& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void drawShape( QPainter& p );
+    void Remove( AfterActionCanvasItem*& mine, AfterActionCanvasItem* item );
+    //@}
+
 private:
     //! @name Member data
     //@{
+    const QPalette& palette_;
     AfterActionCanvasItem* from_; int fromIndex_;
     AfterActionCanvasItem* to_;   int toIndex_;
     //@}

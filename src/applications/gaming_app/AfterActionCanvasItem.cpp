@@ -36,9 +36,10 @@ AfterActionCanvasItem::AfterActionCanvasItem( QCanvas* canvas, const QPalette& p
 // -----------------------------------------------------------------------------
 AfterActionCanvasItem::~AfterActionCanvasItem()
 {
+    hide();
+    setCanvas( 0 );
     for( IT_Connections it = connections_.begin(); it != connections_.end(); ++it )
         (*it)->Disconnect( this );
-    hide();
     for( IT_Items it = subItems_.begin(); it != subItems_.end(); ++it )
         delete *it;
     for( IT_Connections it = connections_.begin(); it != connections_.end(); ++it )
@@ -68,7 +69,7 @@ AfterActionCanvasConnection* AfterActionCanvasItem::StartConnection( const QCanv
     const QRect rect = item.boundingRect();
     if( rect.contains( point ) )
     {
-        connections_.push_back( new AfterActionCanvasConnection( this, index, rect.center() ) );
+        connections_.push_back( new AfterActionCanvasConnection( palette_, this, index, rect.center() ) );
         return connections_.back();
     }
     return 0;
@@ -96,9 +97,9 @@ bool AfterActionCanvasItem::EndConnection( AfterActionCanvasConnection* connecti
 {
     bool found = false;
     for( int i = 0; i < inputs_.size() && !found; ++i )
-        found = EndConnection( connection, *inputs_[i], point, -i-1 );
+        found = IsFree( -i-1 ) && EndConnection( connection, *inputs_[i], point, -i-1 );
     for( int i = 0; i < outputs_.size() && !found; ++i )
-        found = EndConnection( connection, *outputs_[i], point, -i-1 );
+        found = EndConnection( connection, *outputs_[i], point, i+1 );
     return found;
 }
 
@@ -115,6 +116,18 @@ bool AfterActionCanvasItem::EndConnection( AfterActionCanvasConnection* connecti
         return true;
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvasItem::IsFree
+// Created: AGE 2007-09-19
+// -----------------------------------------------------------------------------
+bool AfterActionCanvasItem::IsFree( int index )
+{
+    for( IT_Connections it = connections_.begin(); it != connections_.end(); ++it )
+        if( (*it)->IsConnected( this, index ) )
+            return false;
+    return true;
 }
 
 // -----------------------------------------------------------------------------

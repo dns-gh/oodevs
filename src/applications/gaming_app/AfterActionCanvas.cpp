@@ -21,9 +21,10 @@
 AfterActionCanvas::AfterActionCanvas( QWidget* parent )
     : QCanvasView( parent )
     , selected_  ( 0 )
+    , selectedConnection_( 0 )
+    , currentConnection_( 0 )
     , connect_   ( false )
     , currentId_ ( 0 )
-    , currentConnection_( 0 )
 {
     QPalette palette;
     palette.setColor( QPalette::Disabled, QColorGroup::Foreground, QColor( 180, 180, 180 ) );
@@ -33,6 +34,7 @@ AfterActionCanvas::AfterActionCanvas( QWidget* parent )
 
     QCanvas* canvas = new QCanvas( this );
     canvas->resize( 600, 480 );
+    canvas->retune( 600, 1 );
     canvas->setDoubleBuffering( true );
     canvas->setBackgroundColor( Qt::white );
     setCanvas( canvas );
@@ -47,9 +49,7 @@ AfterActionCanvas::AfterActionCanvas( QWidget* parent )
 // -----------------------------------------------------------------------------
 AfterActionCanvas::~AfterActionCanvas()
 {
-    QCanvas* pCanvas = canvas();
     setCanvas( 0 );
-    delete pCanvas;
 }
 
 // -----------------------------------------------------------------------------
@@ -89,8 +89,9 @@ void AfterActionCanvas::ClearSelection()
     QCanvasItemList list = canvas()->allItems();
     for( QCanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
         (*it)->setSelected( false );
-    canvas()->update();
     selected_ = 0;
+    selectedConnection_ = 0;
+    canvas()->update();
 }
 
 // -----------------------------------------------------------------------------
@@ -103,12 +104,16 @@ void AfterActionCanvas::contentsMousePressEvent( QMouseEvent* event )
     setFocus();
     grabPoint_ = event->pos();
     QCanvasItemList list = canvas()->collisions( event->pos() );
-    for( QCanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
+    for( QCanvasItemList::iterator it = list.begin(); it != list.end() && !selected_ && !selectedConnection_; ++it )
     {
         if( AfterActionCanvasItem* item = dynamic_cast< AfterActionCanvasItem* >( *it ) )
         {
             selected_ = item;
             selected_->setSelected( true );
+        } else if( AfterActionCanvasConnection* item = dynamic_cast< AfterActionCanvasConnection* >( *it ) )
+        {
+            selectedConnection_ = item;
+            selectedConnection_->setSelected( true );
         }
     }
     if( selected_ && connect_ )
@@ -132,7 +137,6 @@ void AfterActionCanvas::contentsMouseReleaseEvent( QMouseEvent* event )
     }
     if( currentConnection_ )
     {
-        currentConnection_->Disconnect();
         delete currentConnection_;
         currentConnection_ = 0;
     }
@@ -159,11 +163,10 @@ void AfterActionCanvas::contentsMouseMoveEvent( QMouseEvent* event )
 // -----------------------------------------------------------------------------
 void AfterActionCanvas::keyPressEvent( QKeyEvent* event )
 {
-    if( ! selected_ )
-        return;
     if( event->key() == Qt::Key_Delete || event->key() == Qt::Key_BackSpace )
     {
         DeleteSelected();
+        canvas()->setAllChanged();
         canvas()->update();
     }
 }
@@ -182,6 +185,8 @@ void AfterActionCanvas::DeleteSelected()
     }
     delete selected_;
     selected_ = 0;
+    delete selectedConnection_;
+    selectedConnection_ = 0;
 }
 
 // -----------------------------------------------------------------------------

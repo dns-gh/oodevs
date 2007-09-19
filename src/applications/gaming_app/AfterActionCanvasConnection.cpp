@@ -10,19 +10,22 @@
 #include "gaming_app_pch.h"
 #include "AfterActionCanvasConnection.h"
 #include "AfterActionCanvasItem.h"
+#include <qpainter.h>
 
 // -----------------------------------------------------------------------------
 // Name: AfterActionCanvasConnection constructor
 // Created: AGE 2007-09-18
 // -----------------------------------------------------------------------------
-AfterActionCanvasConnection::AfterActionCanvasConnection( AfterActionCanvasItem* from, int index, const QPoint& attach )
+AfterActionCanvasConnection::AfterActionCanvasConnection( const QPalette& palette, AfterActionCanvasItem* from, int index, const QPoint& attach )
     : QCanvasLine( from->canvas() )
+    , palette_   ( palette )
     , from_      ( from )
     , fromIndex_ ( index )
     , to_        ( 0 )
     , toIndex_   ( 0 )
 {
     setPoints( attach.x(), attach.y(), attach.x(), attach.y() );
+    setEnabled( true );
     show();
 }
 
@@ -32,7 +35,9 @@ AfterActionCanvasConnection::AfterActionCanvasConnection( AfterActionCanvasItem*
 // -----------------------------------------------------------------------------
 AfterActionCanvasConnection::~AfterActionCanvasConnection()
 {
+    Disconnect();
     hide();
+    setCanvas( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,10 +46,29 @@ AfterActionCanvasConnection::~AfterActionCanvasConnection()
 // -----------------------------------------------------------------------------
 void AfterActionCanvasConnection::Disconnect( AfterActionCanvasItem* item )
 {
-    if( from_ && from_ != item )
-        from_->Remove( this );
-    if( to_ && to_ != item )
-        to_->Remove( this );
+    Remove( from_, item );
+    Remove( to_, item );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvasConnection::Remove
+// Created: AGE 2007-09-19
+// -----------------------------------------------------------------------------
+void AfterActionCanvasConnection::Remove( AfterActionCanvasItem*& mine, AfterActionCanvasItem* item )
+{
+    if( mine && mine != item )
+        mine->Remove( this );
+    mine = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvasConnection::IsConnected
+// Created: AGE 2007-09-19
+// -----------------------------------------------------------------------------
+bool AfterActionCanvasConnection::IsConnected( AfterActionCanvasItem* item, int index ) const
+{
+    return ( item == from_ && index == fromIndex_ )
+        || ( item == to_   && index == toIndex_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,4 +106,16 @@ bool AfterActionCanvasConnection::Close( AfterActionCanvasItem* item, int index,
     }
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvasConnection::drawShape
+// Created: AGE 2007-09-19
+// -----------------------------------------------------------------------------
+void AfterActionCanvasConnection::drawShape( QPainter& p )
+{
+    const QPalette::ColorGroup colorGroup = isEnabled() ? ( isSelected() ? QPalette::Active : QPalette::Inactive ) : QPalette::Disabled;
+    p.setPen( palette_.color( colorGroup, QColorGroup::Foreground ) );
+    QCanvasLine::drawShape( p );
+}
+
 
