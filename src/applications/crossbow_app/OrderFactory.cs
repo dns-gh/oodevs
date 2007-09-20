@@ -84,7 +84,7 @@ namespace Crossbow
                 return;
 
             UID uid = new UIDClass();
-            uid.Value = "Crossbow.MultiItemSelectionMenu";
+            uid.Value = "Crossbow.OrderSelectionMenu";
             object Missing = Type.Missing;
             menu.Add(uid, ref Missing);
         }
@@ -93,7 +93,7 @@ namespace Crossbow
         {
             try
             {
-                ICommandBar menu = ((IDocument)Tools.GetMxDocument()).CommandBars.Create("Menu", esriCmdBarType.esriCmdBarTypeShortcutMenu);
+                ICommandBar menu = ((IDocument)Tools.GetMxDocument()).CommandBars.Create("OrderMenu", esriCmdBarType.esriCmdBarTypeShortcutMenu);
                 BuildMissionContextMenu(menu);
                 if (menu.Count > 0)
                     menu.Popup(0, 0);
@@ -106,10 +106,10 @@ namespace Crossbow
             }
         }
 
-        public void BuildMissionContextMenu(MultiItemSelectionMenu menu)
+        public void BuildMissionContextMenu(MultiItemContextMenu menu)
         {
             foreach (KeyValuePair<string, OrderParametersDefinition> elt in m_model)
-                menu.Add(elt.Key.ToString());
+                menu.Add(elt.Key.ToString(), null);
         }
         
         public Order CreateOrder(string name, OrderHandler handler)

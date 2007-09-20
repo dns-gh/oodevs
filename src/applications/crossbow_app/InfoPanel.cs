@@ -119,13 +119,14 @@ namespace Crossbow
         {
             if (m_selectionChangedEvent == null)
             {
+                // $$$$ SBO 2007-08-29: hard coded shit
                 m_unitLayer = (IFeatureLayer)Tools.GetLayerByName(Tools.GetCSwordExtension().Config.LayersConfiguration.Units + " - Graphics");
-                //m_unitLayer = Tools.GetIFeatureLayerFromLayerName(Tools.GetCSwordExtension().Config.LayersConfiguration.Units + " - Graphics");
                 if (m_unitLayer == null)
-                    return; // $$$$ SBO 2007-08-28: display error message or something
+                    return;
                 m_selection = (IEnumFeature)m_unitLayer;
                 m_selectionChangedEvent = new IFeatureLayerSelectionEvents_FeatureLayerSelectionChangedEventHandler(OnSelectionChanged);
                 ((IFeatureLayerSelectionEvents_Event)m_unitLayer).FeatureLayerSelectionChanged += m_selectionChangedEvent;
+                // $$$$ SBO 2007-08-29: should also handle new report insertion event
             }
         }
 

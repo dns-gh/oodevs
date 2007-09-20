@@ -67,6 +67,7 @@ namespace Crossbow
 
         private WorkspaceConfiguration m_config = new WorkspaceConfiguration();
         private OrderHandler m_orderHandler;
+        private EmergencyHandler m_emergencyHandler;
         private SymbolFactory m_symbolFactory = new SymbolFactory();
 
         private IDocumentEvents_OnContextMenuEventHandler m_contextMenuEvent;
@@ -89,6 +90,7 @@ namespace Crossbow
 
         public void Shutdown()
         {
+            m_emergencyHandler = null;
             m_orderHandler = null;
             m_symbolFactory = null;
         }
@@ -140,6 +142,8 @@ namespace Crossbow
         {
             if (m_orderHandler == null)
                 m_orderHandler = new OrderHandler(m_config);
+            if (m_emergencyHandler == null)
+                m_emergencyHandler = new EmergencyHandler(m_config);
             ModelLoaded(this, EventArgs.Empty);
         }
 
@@ -148,6 +152,14 @@ namespace Crossbow
             get
             {
                 return m_orderHandler;
+            }
+        }
+
+        public EmergencyHandler EmergencyHandler
+        {
+            get
+            {
+                return m_emergencyHandler;
             }
         }
 

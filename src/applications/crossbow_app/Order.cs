@@ -11,7 +11,7 @@ namespace Crossbow
         string Target { get; }
         int Id { get; }
         void RegisterParameter(IOrderParameter parameter);
-        void OnContextMenu(MultiItemSelectionMenu menu, int x, int y, IFeature selected);
+        void OnContextMenu(MultiItemContextMenu menu, int x, int y, IFeature selected);
         void Validate();
     }
 
@@ -86,7 +86,7 @@ namespace Crossbow
             parameter.NotifyUpdate(m_orderForm);
         }
 
-        public void OnContextMenu(MultiItemSelectionMenu menu, int x, int y, IFeature selected)
+        public void OnContextMenu(MultiItemContextMenu menu, int x, int y, IFeature selected)
         {            
             m_limits.OnContextMenu(menu, x, y, selected);
             m_limas.OnContextMenu(menu, x, y, selected);

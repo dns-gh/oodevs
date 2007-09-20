@@ -70,6 +70,7 @@ namespace Crossbow
             AddItem("CSword.CreateWorkspace");
             AddItem("CSword.AddDynamicMoleLayer");
             AddItem("CSword.OrbatCommand");
+            AddItem("CSword.CreateEventTool");
             AddItem("CSword.FilterView");
         }
 

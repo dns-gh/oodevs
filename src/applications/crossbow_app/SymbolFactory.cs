@@ -42,6 +42,8 @@ namespace Crossbow
         #region Factory methods
         public IDynamicElement CreateElement(IDisplay display, IDynamicDisplay dynamicDisplay, IFeature feature, string symbolId)
         {
+            if (symbolId == null)
+                return null;
             if (IsTacticalElement(symbolId))
                 return CreateTacticalElement(display, dynamicDisplay, feature, symbolId);
             else if (IsEmergencyForceElement(symbolId))

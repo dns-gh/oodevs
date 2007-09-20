@@ -25,7 +25,7 @@ namespace Crossbow
             row.Store();
         }
 
-        public void OnContextMenu(MultiItemSelectionMenu menu, int x, int y, IFeature selected)
+        public void OnContextMenu(MultiItemContextMenu menu, int x, int y, IFeature selected)
         {
             if (menu == null || selected == null || selected.Class.AliasName != "BoundaryLimits")
                 return;

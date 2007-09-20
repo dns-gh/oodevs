@@ -147,7 +147,8 @@ namespace Crossbow
 
         public void SelectionChanged()
         {
-            FeatureLayerSelectionChanged();
+            if (FeatureLayerSelectionChanged != null)
+                FeatureLayerSelectionChanged();
         }
 
         public IColor SelectionColor

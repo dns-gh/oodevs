@@ -10,7 +10,7 @@ using ESRI.ArcGIS.Carto;
 
 namespace Crossbow
 {    
-    public class OrderHandler
+    public class OrderHandler : IMultiItemContextMenuHandler
     {
         private class Selection
         {
@@ -60,33 +60,12 @@ namespace Crossbow
                 m_selection = new Selection(x, y);
             return m_order != null || (m_targetFeature != null && m_targetFeature.Class.FindField("Public_OID") > 0); // m_order.NeedContextMenu()
         }
-                
-        public void OnContextMenu(MultiItemSelectionMenu menu)
-        {
-            if (m_order != null)
-                m_order.OnContextMenu(menu, m_selection.X, m_selection.Y, m_targetFeature);
-            else
-                m_orderFactory.BuildMissionContextMenu(menu);
-        }
 
         public bool OnContextMenu(int x, int y)
         {
             if (!OnFeatureSelectionChanged(Tools.GetMxDocument(), x, y))
                 return false;
             return m_orderFactory.OnContextMenu(x, y); // $$$$ SBO 2007-08-13: 
-        }
-
-        public void CreateOrder(string name)
-        {
-            m_order = m_orderFactory.CreateOrder(name, this);
-        }
-
-        public void SelectParameter(IOrderParameter param, string value)
-        {
-            if (m_order == null)
-                return;
-            m_order.SelectParameter(param, value);
-            m_selection = null;
         }
               
         private void UpdateSelection(ISelection selection)
@@ -96,15 +75,37 @@ namespace Crossbow
             m_targetFeature = pEnumFeature.Next();
         }
 
-        public string CurrentMessage
+        #region IMultiItemContextMenuHandler Members
+
+        public void BuildContextMenu(MultiItemContextMenu menu)
         {
-            get
+            if (m_order != null)
+                m_order.OnContextMenu(menu, m_selection.X, m_selection.Y, m_targetFeature);
+            else
+                m_orderFactory.BuildMissionContextMenu(menu);
+        }
+
+        public void ActivateItem(string name, object value)
+        {
+            if (value == null)
+                m_order = m_orderFactory.CreateOrder(name, this);
+            else
             {
-                if (m_order != null)
-                    return "Select parameter for " + m_order.Name + ".";
-                else                    
-                    return "Select unit mission.";
+                if (m_order == null)
+                    return;
+                m_order.SelectParameter(value as IOrderParameter, name);
+                m_selection = null;
             }
-        }        
+        }
+
+        public string GetCurrentMessage()
+        {
+            if (m_order != null)
+                return "Select parameter for " + m_order.Name + ".";
+            else
+                return "Select unit mission.";
+        }
+
+        #endregion
     }
 }
