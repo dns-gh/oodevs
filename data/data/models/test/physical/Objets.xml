@@ -1,60 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <objects>
   <real-objects>
-    <object avoid-distance="250" can-be-bypassed="true" can-be-developed="false" can-be-maneuver-obstacle="true" dangerous="true" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="0" max-animating-units="0" max-interaction-height="0" population-density="0.1" type="bouchon mines" unit-speed-impact-mode="AuPlusLent">
+    <object avoid-distance="500" can-be-bypassed="true" can-be-developed="true" can-be-maneuver-obstacle="true" dangerous="true" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="0" max-animating-units="0" max-interaction-height="0" type="bouchon mines" unit-speed-impact-mode="AuPlusLent">
       <sensible-positions>
         <sensible-position terrain="departementale" value="3"/>
         <sensible-position terrain="carrefour" value="10"/>
         <sensible-position terrain="autoroute" value="2"/>
         <sensible-position terrain="nationale" value="5"/>
         <sensible-position terrain="pont" value="8"/>
+        <sensible-position terrain="pont" value="8"/>
         <sensible-position terrain="banlieue" value="7"/>
       </sensible-positions>
       <dotations>
         <construction category="mine" count="10" dotation="mine classique"/>
+        <valorization category="mine" count="10" dotation="mine classique"/>
       </dotations>
-      <unit-attritions>
-        <unit-attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
-        <unit-attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
-        <unit-attrition destruction="0.1" protection="LightTank" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
-        <unit-attrition destruction="0.7" protection="ArmouredCarrier" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
-        <unit-attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        <unit-attrition destruction="0.8" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
-        <unit-attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      </unit-attritions>
-      <population-attrition ph="0.5" surface="3"/>
+      <population-attrition ph="0.2" surface="3"/>
     </object>
-    <object avoid-distance="500" can-be-bypassed="true" can-be-developed="false" can-be-maneuver-obstacle="true" dangerous="true" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="0" max-animating-units="0" max-interaction-height="0" population-density="0.1" type="zone minee lineaire" unit-speed-impact-mode="AuPlusLent">
+    <object avoid-distance="500" can-be-bypassed="true" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="0" max-animating-units="0" max-interaction-height="0" population-density="1" type="zone minee lineaire" unit-speed-impact-mode="AuPlusLent">
+      <dotations>
+        <construction category="mine" count="10" dotation="mine classique"/>
+      </dotations>
+    </object>
+    <object avoid-distance="500" can-be-bypassed="true" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="0" max-animating-units="0" max-interaction-height="0" type="zone minee par dispersion" unit-speed-impact-mode="AuPlusLent">
       <dotations>
         <construction category="mine" count="10" dotation="mine classique"/>
       </dotations>
       <unit-attritions>
-        <unit-attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
-        <unit-attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
-        <unit-attrition destruction="0.1" protection="LightTank" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
-        <unit-attrition destruction="0.7" protection="ArmouredCarrier" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
-        <unit-attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        <unit-attrition destruction="0.8" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
-        <unit-attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        <unit-attrition destruction="0.3" protection="CharLourd" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+        <unit-attrition destruction="0.3" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+        <unit-attrition destruction="0.3" protection="BlindeLeger" repairable-with-evacuation="0.2" repairable-without-evacuation="0.5"/>
+        <unit-attrition destruction="0.3" protection="TransportBlinde" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+        <unit-attrition destruction="0.3" protection="Aeronef" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+        <unit-attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
+        <unit-attrition destruction="0.3" protection="Combattant" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
       </unit-attritions>
-      <population-attrition ph="0.5" surface="3"/>
+      <population-attrition ph="0.2" surface="0.1"/>
     </object>
-    <object avoid-distance="500" can-be-bypassed="true" can-be-developed="false" can-be-maneuver-obstacle="true" dangerous="true" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="0" max-animating-units="0" max-interaction-height="0" population-density="0.1" type="zone minee par dispersion" unit-speed-impact-mode="AuPlusLent">
-      <dotations>
-        <construction category="mine" count="10" dotation="mine classique"/>
-      </dotations>
-      <unit-attritions>
-        <unit-attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
-        <unit-attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
-        <unit-attrition destruction="0.1" protection="LightTank" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
-        <unit-attrition destruction="0.7" protection="ArmouredCarrier" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
-        <unit-attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        <unit-attrition destruction="0.8" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
-        <unit-attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      </unit-attritions>
-      <population-attrition ph="0.5" surface="3"/>
-    </object>
-    <object avoid-distance="500" can-be-bypassed="true" can-be-developed="true" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="0" max-animating-units="0" max-interaction-height="0" population-density="0.5" type="fosse anti char" unit-speed-impact-mode="AuPlusLent">
+    <object avoid-distance="500" can-be-bypassed="true" can-be-developed="true" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="0" max-animating-units="0" max-interaction-height="0" type="fosse anti char" unit-speed-impact-mode="AuPlusLent">
       <sensible-positions>
         <sensible-position terrain="departementale" value="3"/>
         <sensible-position terrain="carrefour" value="10"/>
@@ -65,103 +48,80 @@
         <valorization category="mine" count="10" dotation="mine classique"/>
       </dotations>
     </object>
-    <object avoid-distance="1000" can-be-bypassed="true" can-be-developed="true" can-be-maneuver-obstacle="true" dangerous="true" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="0" max-animating-units="0" max-interaction-height="0" population-density="0.5" type="abattis" unit-speed-impact-mode="AuPlusLent">
+    <object avoid-distance="1000" can-be-bypassed="true" can-be-developed="true" can-be-maneuver-obstacle="true" dangerous="true" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="0" max-animating-units="0" max-interaction-height="0" type="abattis" unit-speed-impact-mode="AuPlusLent">
       <sensible-positions>
         <sensible-position terrain="lisiere" value="5"/>
-        <sensible-position terrain="foret" value="2"/>
+        <sensible-position terrain="foret" value="1"/>
         <sensible-position terrain="chemin" value="3"/>
-        <sensible-position terrain="departementale" value="1"/>
       </sensible-positions>
       <dotations>
         <construction category="explosif" count="50" dotation="explosif classique"/>
         <valorization category="mine" count="10" dotation="mine classique"/>
       </dotations>
     </object>
-    <object avoid-distance="500" can-be-bypassed="false" can-be-developed="true" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="0" max-animating-units="0" max-interaction-height="0" population-density="0.5" type="barricade" unit-speed-impact-mode="AuPlusLent">
-      <sensible-positions>
-        <sensible-position terrain="departementale" value="7"/>
-        <sensible-position terrain="carrefour" value="10"/>
-        <sensible-position terrain="autoroute" value="5"/>
-        <sensible-position terrain="nationale" value="6"/>
-        <sensible-position terrain="banlieue" value="1"/>
-        <sensible-position terrain="urbain" value="2"/>
-      </sensible-positions>
+    <object avoid-distance="1000" can-be-bypassed="false" can-be-developed="true" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="0" max-animating-units="0" max-interaction-height="0" type="barricade" unit-speed-impact-mode="AuPlusLent">
       <dotations>
         <construction category="barbele" count="10" dotation="barbele classique"/>
         <valorization category="mine" count="10" dotation="mine classique"/>
       </dotations>
     </object>
-    <object avoid-distance="500" can-be-bypassed="false" can-be-developed="true" can-be-maneuver-obstacle="true" dangerous="true" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="0" max-animating-units="0" max-interaction-height="0" population-density="0.5" type="eboulement" unit-speed-impact-mode="AuPlusLent">
-      <sensible-positions>
-        <sensible-position terrain="departementale" value="3"/>
-        <sensible-position terrain="carrefour" value="10"/>
-        <sensible-position terrain="autoroute" value="2"/>
-        <sensible-position terrain="nationale" value="5"/>
-      </sensible-positions>
+    <object avoid-distance="1000" can-be-bypassed="false" can-be-developed="true" can-be-maneuver-obstacle="true" dangerous="true" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="0" max-animating-units="0" max-interaction-height="0" type="eboulement" unit-speed-impact-mode="AuPlusLent">
       <dotations>
         <construction category="explosif" count="200" dotation="explosif classique"/>
         <valorization category="mine" count="17" dotation="mine classique"/>
       </dotations>
     </object>
-    <object avoid-distance="500" can-be-bypassed="true" can-be-developed="true" can-be-maneuver-obstacle="true" dangerous="true" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="0" max-animating-units="0" max-interaction-height="0" population-density="0.5" type="destruction route" unit-speed-impact-mode="AuPlusLent">
-      <sensible-positions>
-        <sensible-position terrain="carrefour" value="10"/>
-        <sensible-position terrain="departementale" value="3"/>
-        <sensible-position terrain="nationale" value="5"/>
-        <sensible-position terrain="autoroute" value="1"/>
-      </sensible-positions>
+    <object avoid-distance="500" can-be-bypassed="true" can-be-developed="true" can-be-maneuver-obstacle="true" dangerous="true" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="0" max-animating-units="0" max-interaction-height="0" type="destruction route" unit-speed-impact-mode="AuPlusLent">
       <dotations>
-        <construction category="explosif" count="300" dotation="explosif classique"/>
+        <construction category="explosif" count="301" dotation="explosif classique"/>
         <valorization category="mine" count="7" dotation="mine classique"/>
       </dotations>
     </object>
     <object avoid-distance="100" can-be-bypassed="false" can-be-developed="true" can-be-maneuver-obstacle="true" dangerous="true" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="0" max-animating-units="0" max-interaction-height="0" type="destruction pont" unit-speed-impact-mode="AuPlusLent">
-      <sensible-positions>
-        <sensible-position terrain="pont" value="10"/>
-      </sensible-positions>
       <dotations>
         <construction category="explosif" count="300" dotation="explosif classique"/>
         <valorization category="mine" count="7" dotation="mine classique"/>
       </dotations>
     </object>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="10" max-animating-units="0" max-interaction-height="0" type="pont flottant continu" unit-speed-impact-mode="VitesseMaxObjet"/>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="poste tir" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="10" max-animating-units="0" max-interaction-height="0" type="pont flottant continu" unit-speed-impact-mode="AuPlusLent">
+      <dotations>
+        <construction category="mine" count="1" dotation="pont flottant de la mort"/>
+      </dotations>
+    </object>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="poste tir" unit-speed-impact-mode="AuPlusLent"/>
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="zone protegee" unit-speed-impact-mode="AuPlusLent"/>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="1" max-interaction-height="0" type="zone implantation canon" unit-speed-impact-mode="AuPlusLent"/>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="1" max-interaction-height="0" type="zone implantation cobra" unit-speed-impact-mode="AuPlusLent"/>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="1" max-interaction-height="0" type="zone implantation lrm" unit-speed-impact-mode="AuPlusLent"/>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="zone implantation canon" unit-speed-impact-mode="AuPlusLent"/>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="zone implantation cobra" unit-speed-impact-mode="AuPlusLent"/>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="zone implantation lrm" unit-speed-impact-mode="AuPlusLent"/>
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="10" max-animating-units="0" max-interaction-height="0" type="site franchissement" unit-speed-impact-mode="AuPlusLent"/>
-    <object avoid-distance="100" can-be-bypassed="true" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="100" type="nuage nbc" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <object avoid-distance="100" can-be-bypassed="true" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="5" max-animating-units="0" max-interaction-height="100" type="nuage nbc" unit-speed-impact-mode="AuPlusLent"/>
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="plot ravitaillement" unit-speed-impact-mode="AuPlusLent"/>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="3" max-interaction-height="0" type="site decontamination" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="1" max-animating-units="3" max-interaction-height="0" type="site decontamination" unit-speed-impact-mode="AuPlusLent"/>
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="zone brouillage brod" unit-speed-impact-mode="AuPlusLent"/>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="rota" unit-speed-impact-mode="VitesseMaxObjet"/>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="zone nbc" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="rota" unit-speed-impact-mode="AuPlusLent"/>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="100" type="zone nbc" unit-speed-impact-mode="AuPlusLent"/>
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="zone brouillage bromure" unit-speed-impact-mode="AuPlusLent"/>
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="aire poser" unit-speed-impact-mode="AuPlusLent"/>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" max-unit-percentage-speed="90" type="piste" unit-speed-impact-mode="VitesseMaxAgent"/>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="piste" unit-speed-impact-mode="AuPlusLent"/>
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="plateforme" unit-speed-impact-mode="AuPlusLent"/>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" max-unit-percentage-speed="100" type="zone mobilite amelioree" unit-speed-impact-mode="VitesseMaxAgent"/>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="zone mobilite amelioree" unit-speed-impact-mode="AuPlusLent"/>
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="zone poser helicoptere" unit-speed-impact-mode="AuPlusLent"/>
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="aire logistique" unit-speed-impact-mode="AuPlusLent"/>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="200" max-animating-units="0" max-interaction-height="0" max-unit-percentage-speed="100" type="itineraire logistique" unit-speed-impact-mode="VitesseMaxAgent"/>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="camp prisonniers" unit-speed-impact-mode="AuPlusLent"/>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="200" max-animating-units="0" max-interaction-height="0" max-unit-percentage-speed="10" type="itineraire logistique" unit-speed-impact-mode="VitesseMaxAgent"/>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="2" max-animating-units="0" max-interaction-height="0" type="camp prisonniers" unit-speed-impact-mode="AuPlusLent"/>
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="camp refugies" unit-speed-impact-mode="AuPlusLent"/>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="3" max-interaction-height="0" type="poste controle" unit-speed-impact-mode="VitesseMaxObjet">
-      <sensible-positions>
-        <sensible-position terrain="departementale" value="3"/>
-        <sensible-position terrain="nationale" value="5"/>
-        <sensible-position terrain="autoroute" value="2"/>
-        <sensible-position terrain="carrefour" value="1"/>
-      </sensible-positions>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="666" max-animating-units="1" max-interaction-height="0" population-density="1.2" type="poste controle" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="666" max-animating-units="0" max-interaction-height="0" type="terrain largage" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="666" max-animating-units="0" max-interaction-height="0" type="zone interdite mouvement" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="zone interdite tir" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="zone implantation mortier" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="1" default-consumption-mode="EnTravaux" default-speed="1" max-animating-units="0" max-interaction-height="0" type="pont flottant discontinu" unit-speed-impact-mode="AuPlusLent">
+      <dotations>
+        <construction category="mine" count="2" dotation="pont flottant de la mort"/>
+      </dotations>
     </object>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="terrain largage" unit-speed-impact-mode="AuPlusLent"/>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="6000" population-density="0.5" type="zone interdite mouvement" unit-speed-impact-mode="AuPlusLent"/>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="6000" type="zone interdite tir" unit-speed-impact-mode="VitesseMaxObjet"/>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="1" max-interaction-height="0" type="zone implantation mortier" unit-speed-impact-mode="AuPlusLent"/>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="10" max-animating-units="0" max-interaction-height="0" type="pont flottant discontinu" unit-speed-impact-mode="VitesseMaxObjet"/>
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="installation" unit-speed-impact-mode="AuPlusLent"/>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="fire" unit-speed-impact-mode="AuPlusLent"/>
+	<object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="fire" unit-speed-impact-mode="AuPlusLent"/>
     <object can-be-bypassed="true" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="ArretMoteurAllume" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="emergency shelter" unit-speed-impact-mode="AuPlusLent">
       <sensible-positions>
         <sensible-position terrain="nationale" value="1"/>
@@ -172,15 +132,9 @@
   </real-objects>
   <virtual-objects>
     <object type="controle de zone">
-      <shot-percentage-per-human-per-hectare percentage="100" volume="Medium"/>
-      <shot-percentage-per-human-per-hectare percentage="10" volume="Small"/>
-      <shot-percentage-per-human-per-hectare percentage="20" volume="Personal"/>
-      <shot-percentage-per-human-per-hectare percentage="100" volume="Small"/>
-      <shot-percentage-per-human-per-hectare percentage="10" volume="Medium"/>
-      <shot-percentage-per-human-per-hectare percentage="20" volume="Heavy"/>
-      <shot-percentage-per-human-per-hectare percentage="100" volume="Medium"/>
-      <shot-percentage-per-human-per-hectare percentage="10" volume="Small"/>
-      <shot-percentage-per-human-per-hectare percentage="20" volume="Personal"/>
+      <shot-percentage-per-human-per-hectare percentage="100" volume="Moyen"/>
+      <shot-percentage-per-human-per-hectare percentage="10" volume="Petit"/>
+      <shot-percentage-per-human-per-hectare percentage="20" volume="Personnel"/>
     </object>
   </virtual-objects>
 </objects>
