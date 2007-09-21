@@ -11,19 +11,19 @@
 #define __AfterActionItemBuilder_ABC_h_
 
 // =============================================================================
-/** @class  AfterActionItemBuilder_ABC
-    @brief  AfterActionItemBuilder_ABC
+/** @class  AfterActionBuilder_ABC
+    @brief  AfterActionBuilder_ABC
 */
 // Created: AGE 2007-09-18
 // =============================================================================
-class AfterActionItemBuilder_ABC
+class AfterActionBuilder_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionItemBuilder_ABC() {};
-    virtual ~AfterActionItemBuilder_ABC() {};
+             AfterActionBuilder_ABC() {};
+    virtual ~AfterActionBuilder_ABC() {};
     //@}
 
     //! @name Operations

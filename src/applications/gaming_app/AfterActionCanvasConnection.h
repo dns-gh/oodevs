@@ -12,6 +12,7 @@
 
 #include <qcanvas.h>
 class AfterActionCanvasItem;
+class AfterActionItem_ABC;
 
 // =============================================================================
 /** @class  AfterActionCanvasConnection
@@ -25,7 +26,8 @@ class AfterActionCanvasConnection : public QCanvasLine
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionCanvasConnection( const QPalette& palette, AfterActionCanvasItem* from, int index, const QPoint& attach );
+             AfterActionCanvasConnection( const QPalette& palette, AfterActionCanvasItem* to, int index, double x, double y);
+             AfterActionCanvasConnection( const QPalette& palette, AfterActionCanvasItem* from, double x, double y );
     virtual ~AfterActionCanvasConnection();
     //@}
 
@@ -33,9 +35,11 @@ public:
     //@{
     void Move( const QPoint& to );
     void MoveBy( AfterActionCanvasItem* item, double x, double y );
-    bool Close( AfterActionCanvasItem* item, int index, const QPoint& attach );
-    void Disconnect( AfterActionCanvasItem* item = 0 );
-    bool IsConnected( AfterActionCanvasItem* item, int index ) const;
+    void Close( AfterActionCanvasItem* from, AfterActionCanvasItem* to, int i, double x1, double y1, double x2, double y2 );
+
+    AfterActionCanvasItem* From() const;
+    AfterActionCanvasItem* To() const;
+    int                    ToIndex() const;
     //@}
 
 private:
@@ -48,15 +52,14 @@ private:
     //! @name Helpers
     //@{
     virtual void drawShape( QPainter& p );
-    void Remove( AfterActionCanvasItem*& mine, AfterActionCanvasItem* item );
     //@}
 
 private:
     //! @name Member data
     //@{
     const QPalette& palette_;
-    AfterActionCanvasItem* from_; int fromIndex_;
-    AfterActionCanvasItem* to_;   int toIndex_;
+    AfterActionCanvasItem* from_;
+    AfterActionCanvasItem* to_; int toIndex_;
     //@}
 };
 

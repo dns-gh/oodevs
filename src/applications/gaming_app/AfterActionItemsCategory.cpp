@@ -10,13 +10,13 @@
 #include "gaming_app_pch.h"
 #include "AfterActionItemsCategory.h"
 #include "gaming/AfterActionModel.h"
-#include "gaming/AfterActionItem.h"
+#include "gaming/AfterActionFactory.h"
 
 // -----------------------------------------------------------------------------
 // Name: AfterActionItemsCategory constructor
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-AfterActionItemsCategory::AfterActionItemsCategory( QWidget* parent, const AfterActionModel& model, const std::string& category )
+AfterActionItemsCategory::AfterActionItemsCategory( QWidget* parent, const AfterActionModel& model, const QString& category )
     : QIconView( parent )
 {
     setGridX( 60 );
@@ -25,10 +25,10 @@ AfterActionItemsCategory::AfterActionItemsCategory( QWidget* parent, const After
     setItemsMovable( false );
     setHScrollBarMode( QScrollView::AlwaysOff );
 
-    kernel::Iterator< const AfterActionItem& > items = model.CreateIterator();
+    kernel::Iterator< const AfterActionFactory& > items = model.CreateIterator();
     while( items.HasMoreElements() )
     {
-        const AfterActionItem& item = items.NextElement();
+        const AfterActionFactory& item = items.NextElement();
         if( item.GetType() == category )
             AddItem( item );
     }
@@ -47,9 +47,9 @@ AfterActionItemsCategory::~AfterActionItemsCategory()
 // Name: AfterActionItemsCategory::AddItem
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AfterActionItemsCategory::AddItem( const AfterActionItem& item )
+void AfterActionItemsCategory::AddItem( const AfterActionFactory& item )
 {
-    QIconViewItem* pItem = new QIconViewItem( this, item.GetName().c_str() );
+    QIconViewItem* pItem = new QIconViewItem( this, item.GetName() );
     items_[ pItem->index() ] = &item;
 }
 
@@ -59,12 +59,12 @@ void AfterActionItemsCategory::AddItem( const AfterActionItem& item )
 // -----------------------------------------------------------------------------
 QDragObject* AfterActionItemsCategory::dragObject()
 {
-    const AfterActionItem* item = currentItem() ? items_[ currentItem()->index() ] : 0;
+    const AfterActionFactory* item = currentItem() ? items_[ currentItem()->index() ] : 0;
     if( item )
     {
         QByteArray* pBytes = new QByteArray();
-        pBytes->setRawData( (const char*)&item, sizeof( AfterActionItem* ) );
-        QStoredDrag* drag = new QStoredDrag( "AfterActionItem", this );
+        pBytes->setRawData( (const char*)&item, sizeof( AfterActionFactory* ) );
+        QStoredDrag* drag = new QStoredDrag( "AfterActionFactory", this );
         drag->setEncodedData( *pBytes );
         return drag;
     }

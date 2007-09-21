@@ -12,7 +12,8 @@
 #include "moc_AfterActionCanvas.cpp"
 #include "AfterActionCanvasItem.h"
 #include "AfterActionCanvasConnection.h"
-#include "gaming/AfterActionItem.h"
+#include "gaming/AfterActionItem_ABC.h"
+#include "gaming/AfterActionFactory.h"
 
 // -----------------------------------------------------------------------------
 // Name: AfterActionCanvas constructor
@@ -32,7 +33,7 @@ AfterActionCanvas::AfterActionCanvas( QWidget* parent )
     palette.setColor( QPalette::Active  , QColorGroup::Foreground, QColor(  50, 105, 200 ) );
     setPalette( palette );
 
-    QCanvas* canvas = new QCanvas( this );
+    QCanvas* canvas = new QCanvas();
     canvas->resize( 600, 480 );
     canvas->retune( 600, 1 );
     canvas->setDoubleBuffering( true );
@@ -58,7 +59,7 @@ AfterActionCanvas::~AfterActionCanvas()
 // -----------------------------------------------------------------------------
 void AfterActionCanvas::dragEnterEvent( QDragEnterEvent* event )
 {
-    event->accept( event->provides( "AfterActionItem" ) );
+    event->accept( event->provides( "AfterActionFactory" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,13 +68,13 @@ void AfterActionCanvas::dragEnterEvent( QDragEnterEvent* event )
 // -----------------------------------------------------------------------------
 void AfterActionCanvas::dropEvent( QDropEvent* event )
 {
-    if( event->provides( "AfterActionItem" ) )
+    if( event->provides( "AfterActionFactory" ) )
     {
-        QByteArray bytes = event->encodedData( "AfterActionItem" );
-        const AfterActionItem* droppedItem = *reinterpret_cast< const AfterActionItem** >( bytes.data() );
-        if( droppedItem )
+        QByteArray bytes = event->encodedData( "AfterActionFactory" );
+        const AfterActionFactory* factory = *reinterpret_cast< const AfterActionFactory** >( bytes.data() );
+        if( factory )
         {
-            AfterActionCanvasItem* item = new AfterActionCanvasItem( canvas(), palette(), *droppedItem, event->pos(), ++currentId_ );
+            AfterActionCanvasItem* item = new AfterActionCanvasItem( canvas(), palette(), factory->Create(), event->pos(), ++currentId_ );
             items_.push_back( item );
             canvas()->update();
         }
@@ -94,6 +95,20 @@ void AfterActionCanvas::ClearSelection()
     canvas()->update();
 }
 
+namespace 
+{
+    template< typename T, typename TO >
+    void ChangeSelection( T* newSelection, T*& selection, TO*& other )
+    {
+        if( selection ) selection->setSelected( false );
+        if( other )     other->setSelected( false );
+        other = 0;
+        selection = newSelection;
+        if( selection )
+            selection->setSelected( true );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: AfterActionCanvas::contentsMousePressEvent
 // Created: AGE 2007-09-18
@@ -104,17 +119,12 @@ void AfterActionCanvas::contentsMousePressEvent( QMouseEvent* event )
     setFocus();
     grabPoint_ = event->pos();
     QCanvasItemList list = canvas()->collisions( event->pos() );
-    for( QCanvasItemList::iterator it = list.begin(); it != list.end() && !selected_ && !selectedConnection_; ++it )
+    for( QCanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
     {
         if( AfterActionCanvasItem* item = dynamic_cast< AfterActionCanvasItem* >( *it ) )
-        {
-            selected_ = item;
-            selected_->setSelected( true );
-        } else if( AfterActionCanvasConnection* item = dynamic_cast< AfterActionCanvasConnection* >( *it ) )
-        {
-            selectedConnection_ = item;
-            selectedConnection_->setSelected( true );
-        }
+            ChangeSelection( item, selected_, selectedConnection_ );
+        else if( AfterActionCanvasConnection* item = dynamic_cast< AfterActionCanvasConnection* >( *it ) )
+            ChangeSelection( item, selectedConnection_, selected_ );
     }
     if( selected_ && connect_ )
         currentConnection_ = selected_->StartConnection( grabPoint_ );
@@ -131,15 +141,12 @@ void AfterActionCanvas::contentsMouseReleaseEvent( QMouseEvent* event )
     IT_Items it = items_.begin();
     while( connect_ && currentConnection_ && it != items_.end() )
     {
-        if( (*it)->EndConnection( currentConnection_, event->pos() ) )
+        if( (*it)->EndConnection( *currentConnection_, event->pos() ) )
             currentConnection_ = 0;
         ++it;
     }
-    if( currentConnection_ )
-    {
-        delete currentConnection_;
-        currentConnection_ = 0;
-    }
+    delete currentConnection_;
+    currentConnection_ = 0;
     canvas()->update();
 }
 

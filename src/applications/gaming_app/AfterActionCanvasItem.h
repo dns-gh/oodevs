@@ -10,10 +10,10 @@
 #ifndef __AfterActionCanvasItem_h_
 #define __AfterActionCanvasItem_h_
 
-#include "gaming/AfterActionItemBuilder_ABC.h"
+#include "gaming/AfterActionBuilder_ABC.h"
 #include <qcanvas.h>
 
-class AfterActionItem;
+class AfterActionItem_ABC;
 class AfterActionCanvasConnection;
 
 // =============================================================================
@@ -23,20 +23,20 @@ class AfterActionCanvasConnection;
 // Created: AGE 2007-09-18
 // =============================================================================
 class AfterActionCanvasItem : public QCanvasRectangle
-                            , private AfterActionItemBuilder_ABC
+                            , private AfterActionBuilder_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionCanvasItem( QCanvas* canvas, const QPalette& palette, const AfterActionItem& item, const QPoint& pos, unsigned id );
+             AfterActionCanvasItem( QCanvas* canvas, const QPalette& palette, std::auto_ptr< AfterActionItem_ABC > item, const QPoint& pos, unsigned id );
     virtual ~AfterActionCanvasItem();
     //@}
 
     //! @name Operations
     //@{
     AfterActionCanvasConnection* StartConnection( const QPoint& point );
-    bool EndConnection( AfterActionCanvasConnection* connection, const QPoint& point );
+    bool EndConnection( AfterActionCanvasConnection& connection, const QPoint& point );
     void Remove( AfterActionCanvasConnection* connection );
 
     virtual QRect boundingRect() const;
@@ -59,12 +59,15 @@ private:
     virtual void AddInput( const std::string& type );
     virtual void AddOutput( const std::string& type );
     virtual void AddParameter( const std::string& type, const std::string& name );
-
-    AfterActionCanvasConnection* StartConnection( const QCanvasItem& item, const QPoint& point, int index );
-    bool EndConnection( AfterActionCanvasConnection* connection, const QCanvasItem& item, const QPoint& point, int index );
+    
     void Polish( QCanvasItem* subItem, double x, double y );
-    void AdjustInputs();
-    bool IsFree( int index );
+    void SpreadInputs();
+
+    bool IsOnOutput( const QPoint& point ) const;
+    bool IsOnInput ( int i, const QPoint& point ) const;
+    double InputPosition( int i ) const;
+
+    static bool Connect( AfterActionCanvasConnection& connection, AfterActionCanvasItem* from, AfterActionCanvasItem* to, int i );
     //@}
 
     //! @name Types
@@ -79,10 +82,11 @@ private:
     //! @name Member data
     //@{
     const QPalette& palette_;
+    std::auto_ptr< AfterActionItem_ABC > item_;
     const unsigned id_;
     T_Items subItems_;
     T_Items inputs_;
-    T_Items outputs_;
+    QCanvasItem* output_;
     T_Connections connections_;
     //@}
 };

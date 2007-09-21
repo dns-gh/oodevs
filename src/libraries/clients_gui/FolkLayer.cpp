@@ -112,19 +112,22 @@ void FolkLayer::Paint( const Rectangle2f& viewport )
 {
     if( graph_.empty() && !graphFile_.empty() )
         LoadGraph( graphFile_ );
+    if( graph_.empty() )
+        return;
     if( updateGradient_ )
         UpdateGradient();
 
     if( ! box_.Intersect( viewport ).IsEmpty() )
     {
-        glPushAttrib( GL_CURRENT_BIT | GL_TEXTURE_BIT );
+        glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_TEXTURE_BIT );
         glLineWidth( 1 );
         gl::glActiveTexture( gl::GL_TEXTURE1 );
+        glBindTexture( GL_TEXTURE_1D, 0 );
         glDisable( GL_TEXTURE_1D );
         glDisable( GL_TEXTURE_2D );
         gl::glActiveTexture( gl::GL_TEXTURE0 );
-        glDisable(GL_TEXTURE_GEN_S);
-        glDisable(GL_TEXTURE_GEN_T);
+        glDisable( GL_TEXTURE_GEN_S );
+        glDisable( GL_TEXTURE_GEN_T );
         glEnable( GL_TEXTURE_1D );
         glDisable( GL_TEXTURE_2D );
         glBindTexture( GL_TEXTURE_1D, gradientTexture_ );
@@ -135,6 +138,7 @@ void FolkLayer::Paint( const Rectangle2f& viewport )
         glDrawArrays( GL_LINES, 0, graph_.size() );
         glDisableClientState( GL_TEXTURE_COORD_ARRAY );
         glPopAttrib();
+        glDisable( GL_TEXTURE_1D );
     }
 }
 

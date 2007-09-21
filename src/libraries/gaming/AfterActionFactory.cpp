@@ -8,62 +8,54 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "AfterActionModel.h"
 #include "AfterActionFactory.h"
-#include "AfterActionFunctions.h"
-#include "clients_kernel/Controller.h"
+#include "AfterActionItem.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionModel constructor
-// Created: AGE 2007-09-17
+// Name: AfterActionFactory constructor
+// Created: AGE 2007-09-19
 // -----------------------------------------------------------------------------
-AfterActionModel::AfterActionModel( kernel::Controller& controller )
-    : controller_( controller )
+AfterActionFactory::AfterActionFactory( const std::string& type, xml::xistream& xis )
+    : AfterActionItem( xis )
+    , type_( type.c_str() )
+    , name_( xml::attribute< std::string >( xis, "name" ).c_str() )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionModel destructor
-// Created: AGE 2007-09-17
+// Name: AfterActionFactory destructor
+// Created: AGE 2007-09-19
 // -----------------------------------------------------------------------------
-AfterActionModel::~AfterActionModel()
+AfterActionFactory::~AfterActionFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionModel::Update
-// Created: AGE 2007-09-17
+// Name: AfterActionFactory::GetType
+// Created: AGE 2007-09-20
 // -----------------------------------------------------------------------------
-void AfterActionModel::Update( const ASN1T_MsgAarInformation& asnMsg )
+const QString& AfterActionFactory::GetType() const
 {
-    {
-        xml::xistringstream xis( asnMsg.information );
-        xis >> xml::start( "functions" )
-                >> xml::list( *this, &AfterActionModel::ReadFunction )
-            >> xml::end();
-    }
-    functions_.reset( new AfterActionFunctions( *this ) );
-    controller_.Update( *this );
+    return type_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionModel::ReadFunction
-// Created: AGE 2007-09-17
+// Name: AfterActionFactory::GetName
+// Created: AGE 2007-09-19
 // -----------------------------------------------------------------------------
-void AfterActionModel::ReadFunction( const std::string& type, xml::xistream& xis )
+const QString& AfterActionFactory::GetName() const
 {
-    const std::string name = xml::attribute< std::string >( xis, "name" );
-    Register( name.c_str(), *new AfterActionFactory( type, xis ) );
+    return name_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionModel::Update
-// Created: AGE 2007-09-17
+// Name: std::auto_ptr< AfterActionItem_ABC > AfterActionFactory::Create
+// Created: AGE 2007-09-19
 // -----------------------------------------------------------------------------
-void AfterActionModel::Update( const ASN1T_MsgIndicatorResult& asnMsg )
+std::auto_ptr< AfterActionItem_ABC > AfterActionFactory::Create() const
 {
-
+    return std::auto_ptr< AfterActionItem_ABC >( new AfterActionItem( *this ) );
 }

@@ -12,7 +12,7 @@
 
 #include <qiconview.h>
 class AfterActionModel;
-class AfterActionItem;
+class AfterActionFactory;
 
 // =============================================================================
 /** @class  AfterActionItemsCategory
@@ -26,7 +26,7 @@ class AfterActionItemsCategory : public QIconView
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionItemsCategory( QWidget* parent, const AfterActionModel& model, const std::string& category );
+             AfterActionItemsCategory( QWidget* parent, const AfterActionModel& model, const QString& category );
     virtual ~AfterActionItemsCategory();
     //@}
 
@@ -43,14 +43,14 @@ private:
 
     //! @name Helpers
     //@{
-    void AddItem( const AfterActionItem& item );
+    void AddItem( const AfterActionFactory& item );
     virtual QDragObject* dragObject();
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::map< int, const AfterActionItem* > items_;
+    std::map< int, const AfterActionFactory* > items_;
     //@}
 };
 

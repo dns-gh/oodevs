@@ -10,21 +10,37 @@
 #include "gaming_app_pch.h"
 #include "AfterActionCanvasConnection.h"
 #include "AfterActionCanvasItem.h"
+#include "gaming/AfterActionItem_ABC.h"
 #include <qpainter.h>
 
 // -----------------------------------------------------------------------------
 // Name: AfterActionCanvasConnection constructor
 // Created: AGE 2007-09-18
 // -----------------------------------------------------------------------------
-AfterActionCanvasConnection::AfterActionCanvasConnection( const QPalette& palette, AfterActionCanvasItem* from, int index, const QPoint& attach )
+AfterActionCanvasConnection::AfterActionCanvasConnection( const QPalette& palette, AfterActionCanvasItem* to, int index, double x, double y )
+    : QCanvasLine( to->canvas() )
+    , palette_   ( palette )
+    , from_      ( 0 )
+    , to_        ( to )
+    , toIndex_   ( index )
+{
+    setPoints( x, y, x, y );
+    setEnabled( true );
+    show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvasConnection constructor
+// Created: AGE 2007-09-20
+// -----------------------------------------------------------------------------
+AfterActionCanvasConnection::AfterActionCanvasConnection( const QPalette& palette, AfterActionCanvasItem* from, double x, double y )
     : QCanvasLine( from->canvas() )
     , palette_   ( palette )
     , from_      ( from )
-    , fromIndex_ ( index )
     , to_        ( 0 )
     , toIndex_   ( 0 )
 {
-    setPoints( attach.x(), attach.y(), attach.x(), attach.y() );
+    setPoints( x, y, x, y );
     setEnabled( true );
     show();
 }
@@ -35,40 +51,25 @@ AfterActionCanvasConnection::AfterActionCanvasConnection( const QPalette& palett
 // -----------------------------------------------------------------------------
 AfterActionCanvasConnection::~AfterActionCanvasConnection()
 {
-    Disconnect();
     hide();
     setCanvas( 0 );
+    if( from_ ) from_->Remove( this );
+    if( to_ )   to_->Remove( this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionCanvasConnection::Disconnect
-// Created: AGE 2007-09-18
+// Name: AfterActionCanvasConnection::Close
+// Created: AGE 2007-09-21
 // -----------------------------------------------------------------------------
-void AfterActionCanvasConnection::Disconnect( AfterActionCanvasItem* item )
+void AfterActionCanvasConnection::Close( AfterActionCanvasItem* from, AfterActionCanvasItem* to, int i, double x1, double y1, double x2, double y2 )
 {
-    Remove( from_, item );
-    Remove( to_, item );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AfterActionCanvasConnection::Remove
-// Created: AGE 2007-09-19
-// -----------------------------------------------------------------------------
-void AfterActionCanvasConnection::Remove( AfterActionCanvasItem*& mine, AfterActionCanvasItem* item )
-{
-    if( mine && mine != item )
-        mine->Remove( this );
-    mine = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AfterActionCanvasConnection::IsConnected
-// Created: AGE 2007-09-19
-// -----------------------------------------------------------------------------
-bool AfterActionCanvasConnection::IsConnected( AfterActionCanvasItem* item, int index ) const
-{
-    return ( item == from_ && index == fromIndex_ )
-        || ( item == to_   && index == toIndex_ );
+    if( ( from_ && from_ != from )
+    ||  ( to_ && to_ != to && toIndex_ != i ) )
+        throw std::runtime_error( "Invalid connection" );
+    from_ = from;
+    to_   = to;
+    toIndex_ = i;
+    setPoints( x1, y1, x2, y2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +78,10 @@ bool AfterActionCanvasConnection::IsConnected( AfterActionCanvasItem* item, int 
 // -----------------------------------------------------------------------------
 void AfterActionCanvasConnection::Move( const QPoint& to )
 {
-    setPoints( startPoint().x(), startPoint().y(), to.x(), to.y() );
+    if( from_ )
+        setPoints( startPoint().x(), startPoint().y(), to.x(), to.y() );
+    else
+        setPoints( to.x(), to.y(), endPoint().x(), endPoint().y() );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,21 +97,6 @@ void AfterActionCanvasConnection::MoveBy( AfterActionCanvasItem* item, double x,
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionCanvasConnection::Close
-// Created: AGE 2007-09-18
-// -----------------------------------------------------------------------------
-bool AfterActionCanvasConnection::Close( AfterActionCanvasItem* item, int index, const QPoint& attach )
-{
-    if( !to_ && item != from_ && index * fromIndex_ < 0 )
-    {
-        setPoints( startPoint().x(), startPoint().y(), attach.x(), attach.y() );
-        to_ = item; toIndex_ = index;
-        return true;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: AfterActionCanvasConnection::drawShape
 // Created: AGE 2007-09-19
 // -----------------------------------------------------------------------------
@@ -118,4 +107,29 @@ void AfterActionCanvasConnection::drawShape( QPainter& p )
     QCanvasLine::drawShape( p );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvasConnection::From
+// Created: AGE 2007-09-20
+// -----------------------------------------------------------------------------
+AfterActionCanvasItem* AfterActionCanvasConnection::From() const
+{
+    return from_;
+}
 
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvasConnection::To
+// Created: AGE 2007-09-20
+// -----------------------------------------------------------------------------
+AfterActionCanvasItem* AfterActionCanvasConnection::To() const
+{
+    return to_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvasConnection::ToIndex
+// Created: AGE 2007-09-20
+// -----------------------------------------------------------------------------
+int AfterActionCanvasConnection::ToIndex() const
+{
+    return toIndex_;
+}

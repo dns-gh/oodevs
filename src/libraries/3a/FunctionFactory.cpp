@@ -58,7 +58,7 @@ namespace
         // name,        input type 1   input type 2  output type   parameter type  parameter name
         { "distance",  "position",    "position",   "float",      "",             "" },
         { "filter",    "bool",        "any",        "input 2",    "",             "" },
-        { "is-one-of", "any",         "",           "input 1",    "list input 1", "select" },
+        { "is-one-of", "any",         "",           "bool",       "list input 1", "select" },
         { 0, 0, 0, 0, 0, 0 }
     };
 
@@ -192,7 +192,7 @@ void FunctionFactory::Extract( const std::string& name, xml::xistream& , Task& r
 void FunctionFactory::Extract( xml::xistream& xis, Task& result )
 {
     std::string value, name;
-    xis >> xml::attribute( "value", value ) >> xml::attribute( "name", name );
+    xis >> xml::attribute( "function", value ) >> xml::attribute( "id", name );
     if( value == "operational-state" )
         Extract< attributes::OperationalState >( name, xis, result );
     else if( value == "position" )
@@ -244,7 +244,7 @@ void FunctionFactory::Reduce( const std::string& name, xml::xistream& xis, Task&
 void FunctionFactory::Reduce( xml::xistream& xis, Task& result )
 {
     std::string name, type;
-    xis >> xml::attribute( "name", name )
+    xis >> xml::attribute( "id", name )
         >> xml::attribute( "type", type );
     if( type == "float" )
         Reduce< float >( name, xis, result );
@@ -318,7 +318,7 @@ void FunctionFactory::Transform( const std::string& name, xml::xistream& xis, Ta
 void FunctionFactory::Transform( xml::xistream& xis, Task& result )
 {
     std::string name, type;
-    xis >> xml::attribute( "name", name )
+    xis >> xml::attribute( "id", name )
         >> xml::optional() >> xml::attribute( "type", type );
     if( type == "bool" )
         Transform< bool >( name, xis, result );

@@ -18,7 +18,7 @@ class AfterActionCanvasConnection;
 
 // =============================================================================
 /** @class  AfterActionCanvas
-    @brief  AfterActionCanvas
+    @brief  After action canvas
 */
 // Created: AGE 2007-09-17
 // =============================================================================
@@ -33,8 +33,13 @@ public:
     virtual ~AfterActionCanvas();
     //@}
 
+    //! @name Operations
+    //@{
+    void Load( const std::string& content );
+    std::string Save() const;
+    //@}
 
-public slots:
+private slots:
     //! @name Slots
     //@{
     void Connect();

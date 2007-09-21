@@ -81,8 +81,8 @@ BOOST_AUTO_TEST_CASE( Facade_TestOperationalState )
 {
     const std::string input =
     "<indicator>"
-        "<extract value='operational-state' name='opstate'/>"
-        "<reduce type='float' function='select' input='opstate' key='2' name='myopstate'/>"
+        "<extract function='operational-state' id='opstate'/>"
+        "<reduce type='float' function='select' input='opstate' key='2' id='myopstate'/>"
         "<plot input='myopstate' type='float'/>"
     "</indicator>";
     xml::xistringstream xis( input );
@@ -145,10 +145,10 @@ BOOST_AUTO_TEST_CASE( Facade_TestDistanceBetweenTwoUnits )
 {
     const std::string input =
     "<indicator>"
-        "<extract value='position' name='position'/>"
-        "<reduce type='position' function='select' input='position' key='1' name='position1'/>"
-        "<reduce type='position' function='select' input='position' key='2' name='position2'/>"
-        "<transform function='distance' input='position1,position2' name='distance'/>"
+        "<extract function='position' id='position'/>"
+        "<reduce type='position' function='select' input='position' key='1' id='position1'/>"
+        "<reduce type='position' function='select' input='position' key='2' id='position2'/>"
+        "<transform function='distance' input='position1,position2' id='distance'/>"
         "<plot input='distance' type='float'/>"
     "</indicator>";
     xml::xistringstream xis( input );
@@ -218,8 +218,8 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdowns )
 {
     const std::string input =
     "<indicator>"
-        "<extract value='maintenance-handling-unit' name='consigns'/>"
-        "<reduce type='unsigned long' function='count' input='consigns' name='count'/>"
+        "<extract function='maintenance-handling-unit' id='consigns'/>"
+        "<reduce type='unsigned long' function='count' input='consigns' id='count'/>"
         "<plot input='count' type='unsigned'/>"
     "</indicator>";
     xml::xistringstream xis( input );
@@ -256,10 +256,10 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter )
 {
     const std::string input =
     "<indicator>"
-        "<extract value='maintenance-handling-unit' name='consigns'/>"
-        "<transform function='is-one-of' type='unsigned long' select='12,42' input='consigns' name='selected-consigns'/>"
-        "<transform function='filter' type='unsigned long' input='selected-consigns,consigns' name='the-consigns'/>"
-        "<reduce type='unsigned long' function='count' input='the-consigns' name='count'/>"
+        "<extract function='maintenance-handling-unit' id='consigns'/>"
+        "<transform function='is-one-of' type='unsigned long' select='12,42' input='consigns' id='selected-consigns'/>"
+        "<transform function='filter' type='unsigned long' input='selected-consigns,consigns' id='the-consigns'/>"
+        "<reduce type='unsigned long' function='count' input='the-consigns' id='count'/>"
         "<plot input='count' type='unsigned'/>"
     "</indicator>";
     xml::xistringstream xis( input );

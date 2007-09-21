@@ -10,22 +10,26 @@
 #include "gaming_app_pch.h"
 #include "AfterActionCanvasItem.h"
 #include "AfterActionCanvasConnection.h"
-#include "gaming/AfterActionItem.h"
+#include "gaming/AfterActionItem_ABC.h"
 #include <boost/bind.hpp>
 #include <qpainter.h>
 #include <numeric>
 #include <boost/lexical_cast.hpp>
 
+#pragma warning (disable : 4018)
+
 // -----------------------------------------------------------------------------
 // Name: AfterActionCanvasItem constructor
 // Created: AGE 2007-09-18
 // -----------------------------------------------------------------------------
-AfterActionCanvasItem::AfterActionCanvasItem( QCanvas* canvas, const QPalette& palette, const AfterActionItem& item, const QPoint& pos, unsigned id )
+AfterActionCanvasItem::AfterActionCanvasItem( QCanvas* canvas, const QPalette& palette, std::auto_ptr< AfterActionItem_ABC > item, const QPoint& pos, unsigned id )
     : QCanvasRectangle( QRect( pos, QSize( 80, 30 ) ), canvas )
     , palette_        ( palette )
+    , item_           ( item )
     , id_             ( id )
+    , output_         ( 0 )
 {
-    item.Build( *this );
+    item_->Build( *this );
     setEnabled( true );
     show();
 }
@@ -38,11 +42,11 @@ AfterActionCanvasItem::~AfterActionCanvasItem()
 {
     hide();
     setCanvas( 0 );
-    for( IT_Connections it = connections_.begin(); it != connections_.end(); ++it )
-        (*it)->Disconnect( this );
     for( IT_Items it = subItems_.begin(); it != subItems_.end(); ++it )
         delete *it;
-    for( IT_Connections it = connections_.begin(); it != connections_.end(); ++it )
+
+    T_Connections toDelete( connections_ );
+    for( IT_Connections it = toDelete.begin(); it != toDelete.end(); ++it )
         delete *it;
 }
 
@@ -52,82 +56,82 @@ AfterActionCanvasItem::~AfterActionCanvasItem()
 // -----------------------------------------------------------------------------
 AfterActionCanvasConnection* AfterActionCanvasItem::StartConnection( const QPoint& point )
 {
-    AfterActionCanvasConnection* result = 0;
-    for( int i = 0; i < inputs_.size() && !result; ++i )
-        result = StartConnection( *inputs_[i], point, -i-1 );
-    for( int i = 0; i < outputs_.size() && !result; ++i )
-        result = StartConnection( *outputs_[i], point, i+1 );
-    return result;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AfterActionCanvasItem::StartConnection
-// Created: AGE 2007-09-18
-// -----------------------------------------------------------------------------
-AfterActionCanvasConnection* AfterActionCanvasItem::StartConnection( const QCanvasItem& item, const QPoint& point, int index )
-{
-    const QRect rect = item.boundingRect();
-    if( rect.contains( point ) )
-    {
-        connections_.push_back( new AfterActionCanvasConnection( palette_, this, index, rect.center() ) );
-        return connections_.back();
-    }
+    if( IsOnOutput( point ) )
+        return new AfterActionCanvasConnection( palette_, this, x() + 84, y() + 15 );
+    for( int i = 0; i < inputs_.size(); ++i )
+        if( IsOnInput( i, point ) && item_->CanConnect( i ) )
+            return new AfterActionCanvasConnection( palette_, this, i, x() - 4, y() + InputPosition( i ) );
     return 0;
 }
 
 // -----------------------------------------------------------------------------
+// Name: AfterActionCanvasItem::EndConnection
+// Created: AGE 2007-09-20
+// -----------------------------------------------------------------------------
+bool AfterActionCanvasItem::EndConnection( AfterActionCanvasConnection& connection, const QPoint& point )
+{
+    if( IsOnOutput( point ) )
+        return Connect( connection, this, connection.To(), connection.ToIndex() );
+
+    for( int i = 0; i < inputs_.size(); ++i )
+        if( IsOnInput( i, point ) )
+            return Connect( connection, connection.From(), this, i );
+
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AfterActionCanvasItem::Remove
-// Created: AGE 2007-09-18
+// Created: AGE 2007-09-21
 // -----------------------------------------------------------------------------
 void AfterActionCanvasItem::Remove( AfterActionCanvasConnection* connection )
 {
-    IT_Connections it = std::find( connections_.begin(), connections_.end(), connection );
+    IT_Connections it  = std::find( connections_.begin(), connections_.end(), connection );
     if( it != connections_.end() )
     {
+        if( connection->From() == this && connection->To() )
+            item_->Disconnect( connection->To()->item_.get() );
+        else if( connection->To() == this && connection->From() )
+            item_->Disconnect( connection->From()->item_.get() , connection->ToIndex() );
         std::swap( *it, connections_.back() );
         connections_.pop_back();
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionCanvasItem::EndConnection
-// Created: AGE 2007-09-18
+// Name: AfterActionCanvasItem::Connect
+// Created: AGE 2007-09-21
 // -----------------------------------------------------------------------------
-bool AfterActionCanvasItem::EndConnection( AfterActionCanvasConnection* connection, const QPoint& point )
+bool AfterActionCanvasItem::Connect( AfterActionCanvasConnection& connection, AfterActionCanvasItem* from, AfterActionCanvasItem* to, int i )
 {
-    bool found = false;
-    for( int i = 0; i < inputs_.size() && !found; ++i )
-        found = IsFree( -i-1 ) && EndConnection( connection, *inputs_[i], point, -i-1 );
-    for( int i = 0; i < outputs_.size() && !found; ++i )
-        found = EndConnection( connection, *outputs_[i], point, i+1 );
-    return found;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AfterActionCanvasItem::EndConnection
-// Created: AGE 2007-09-18
-// -----------------------------------------------------------------------------
-bool AfterActionCanvasItem::EndConnection( AfterActionCanvasConnection* connection, const QCanvasItem& item, const QPoint& point, int index )
-{
-    const QRect rect = item.boundingRect();
-    if( rect.contains( point ) && connection->Close( this, index, rect.center() ) )
+    if( from && to && to->item_->CanConnect( i, from->item_.get() ) )
     {
-        connections_.push_back( connection );
+        to->item_->Connect( i, *from->item_ );
+        from->connections_.push_back( &connection );
+        to  ->connections_.push_back( &connection );
+        connection.Close( from, to, i, from->x() + 84, from->y() + 15,
+                                         to->x() -  4, to->y() + to->InputPosition( i ) );
         return true;
     }
     return false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionCanvasItem::IsFree
-// Created: AGE 2007-09-19
+// Name: AfterActionCanvasItem::IsOnOutput
+// Created: AGE 2007-09-20
 // -----------------------------------------------------------------------------
-bool AfterActionCanvasItem::IsFree( int index )
+bool AfterActionCanvasItem::IsOnOutput( const QPoint& point ) const
 {
-    for( IT_Connections it = connections_.begin(); it != connections_.end(); ++it )
-        if( (*it)->IsConnected( this, index ) )
-            return false;
-    return true;
+    return output_ && output_->boundingRect().contains( point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvasItem::IsOnInput
+// Created: AGE 2007-09-20
+// -----------------------------------------------------------------------------
+bool AfterActionCanvasItem::IsOnInput( int i, const QPoint& point ) const
+{
+    return i >= 0 && i < inputs_.size() && inputs_[i]->boundingRect().contains( point );
 }
 
 // -----------------------------------------------------------------------------
@@ -195,21 +199,6 @@ void AfterActionCanvasItem::Polish( QCanvasItem* subItem, double dx, double dy )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionCanvasItem::AdjustInputs
-// Created: AGE 2007-09-18
-// -----------------------------------------------------------------------------
-void AfterActionCanvasItem::AdjustInputs()
-{
-    const double offset = 30. / double( inputs_.size() );
-    double y = this->y() + offset / 2;
-    for( unsigned i = 0; i < inputs_.size(); ++i )
-    {
-        inputs_[i]->move( x()-4, y );
-        y += offset;
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: AfterActionCanvasItem::Start
 // Created: AGE 2007-09-18
 // -----------------------------------------------------------------------------
@@ -218,6 +207,25 @@ void AfterActionCanvasItem::Start( const std::string& name )
     QCanvasText* text = new QCanvasText( name.c_str(), canvas() );
     text->setTextFlags( Qt::AlignCenter );
     Polish( text, 40, 15 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvasItem::SpreadInputs
+// Created: AGE 2007-09-20
+// -----------------------------------------------------------------------------
+void AfterActionCanvasItem::SpreadInputs()
+{
+    for( int i = 0; i < inputs_.size(); ++i )
+        inputs_[i]->move( x() - 4, y() + InputPosition( i ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvasItem::InputPosition
+// Created: AGE 2007-09-20
+// -----------------------------------------------------------------------------
+double AfterActionCanvasItem::InputPosition( int i ) const
+{
+    return 30. * ( 0.5 + i ) / inputs_.size();
 }
 
 // -----------------------------------------------------------------------------
@@ -230,7 +238,7 @@ void AfterActionCanvasItem::AddInput( const std::string& type )
     circle->setBrush( black );
     Polish( circle, -4, 15 );
     inputs_.push_back( circle );
-    AdjustInputs();
+    SpreadInputs();
 }
 
 // -----------------------------------------------------------------------------
@@ -242,7 +250,7 @@ void AfterActionCanvasItem::AddOutput( const std::string& type )
     QCanvasEllipse* circle = new QCanvasEllipse( 8, 8, canvas() );
     circle->setBrush( black );
     Polish( circle, 84, 15 );
-    outputs_.push_back( circle );
+    output_ = circle;
 }
 
 // -----------------------------------------------------------------------------

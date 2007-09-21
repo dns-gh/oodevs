@@ -21,7 +21,9 @@ namespace xml
 {
     class xistream;
 }
-class AfterActionItem;
+
+class AfterActionFactory;
+class AfterActionFunctions;
 
 // =============================================================================
 /** @class  AfterActionModel
@@ -29,13 +31,13 @@ class AfterActionItem;
 */
 // Created: AGE 2007-09-17
 // =============================================================================
-class AfterActionModel : public kernel::Resolver< AfterActionItem, QString >
+class AfterActionModel : public kernel::Resolver< AfterActionFactory, QString >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionModel( kernel::Controller& controller );
+    explicit AfterActionModel( kernel::Controller& controller );
     virtual ~AfterActionModel();
     //@}
 
@@ -61,6 +63,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
+    std::auto_ptr< AfterActionFunctions > functions_;
     //@}
 };
 
