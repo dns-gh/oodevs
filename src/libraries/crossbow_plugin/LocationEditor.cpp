@@ -9,6 +9,7 @@
 
 #include "crossbow_plugin_pch.h"
 #include "LocationEditor.h"
+#include "ScopeEditor.h"
 
 using namespace crossbow;
 
@@ -38,5 +39,18 @@ LocationEditor::~LocationEditor()
 // -----------------------------------------------------------------------------
 void LocationEditor::CreateGeometry( IFeatureBufferPtr spBuffer, const ASN1T_Location& asn )
 {
-    // $$$$ JCR 2007-05-23: TODO
+    IPointCollectionPtr spGeometry;
+    
+    spGeometry.CreateInstance( CLSID_Ring );
+    for ( int i = 0; i < asn.coordinates.n; ++i )
+    {
+        IPointPtr spPoint;
+        Create( spPoint, true );
+        if( UpdateCoord( spPoint, asn.coordinates.elem[ i ] ) )
+            spGeometry->AddPoint( spPoint );
+    }
+    long size = 0;
+    spGeometry->get_PointCount( &size );
+    if ( size > 0 )
+        scope_.WriteGeometry( spBuffer, spGeometry );
 }

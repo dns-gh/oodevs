@@ -54,14 +54,16 @@ ScopeEditor::~ScopeEditor()
 // Name: ScopeEditor::StartEdit
 // Created: JCR 2007-05-11
 // -----------------------------------------------------------------------------
-void ScopeEditor::StartEditing( IWorkspacePtr spWorkspace, ISpatialReferencePtr spSpatialReference )
+bool ScopeEditor::StartEditing( IWorkspacePtr spWorkspace, ISpatialReferencePtr spSpatialReference )
 {
+    HRESULT  result;
     if( FAILED( spWorkspace->QueryInterface( IID_IWorkspaceEdit, (LPVOID*)&spWorkspaceEdit_ ) ) || spWorkspaceEdit_ == 0 )
-        return;
+        return false;
     spSpatialReference_ = spSpatialReference;
-    VARIANT_BOOL editing;
+    VARIANT_BOOL editing;    
     if( !FAILED( spWorkspaceEdit_->IsBeingEdited( &editing ) ) && editing == VARIANT_FALSE )
-        spWorkspaceEdit_->StartEditing( VARIANT_FALSE );
+        result = spWorkspaceEdit_->StartEditing( VARIANT_FALSE );
+    return !FAILED( result );
 }
 
 // -----------------------------------------------------------------------------

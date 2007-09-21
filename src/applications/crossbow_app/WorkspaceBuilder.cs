@@ -18,6 +18,7 @@ namespace Crossbow
             document.AddLayer(BuildDynamicLayer(workspace, config.LayersConfiguration.Units));
             document.AddLayer(BuildMoleTacticalLayer(workspace, config.LayersConfiguration.Limits));
             document.AddLayer(BuildMoleTacticalLayer(workspace, config.LayersConfiguration.Limas));
+            document.AddLayer(BuildDynamicLayer(workspace, config.LayersConfiguration.TacticalObjectPoint));
             document.AddLayer(BuildDynamicLayer(workspace, config.LayersConfiguration.Emergencies));
             document.ActiveView.Refresh();
         }

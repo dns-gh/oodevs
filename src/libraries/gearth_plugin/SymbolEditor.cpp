@@ -99,6 +99,12 @@ std::string SymbolEditor::GetSymbol( const ASN1T_MsgObjectCreation& asn ) const
         return styles_.GetStyle( "HS - Explosion" );
     case EnumObjectType::nuage_nbc:
         return styles_.GetStyle( "HS - Hazmat" );
+    case EnumObjectType::poste_controle:
+        return styles_.GetStyle( "HS - BorderPatrol" );
+    case EnumObjectType::fire:
+        return styles_.GetStyle( "HS - Fire" );
+    case EnumObjectType::emergency_shelter:
+        return styles_.GetStyle( "HS - EmergencyShelter" );
     }
     if( const dispatcher::Object* object = model_.GetObjects().Find( asn.oid ) )
         return FormatSymbol( object->BuildSymbol() ).c_str();

@@ -315,6 +315,15 @@ namespace
             tools::app6::SetBattleDimension( symbol, 'G' );
             tools::app6::SetFunction( symbol, "GPP---" );
             break;
+        case EnumObjectType::poste_controle:
+            tools::app6::SetFunction( symbol, "OESP--" ); // 'O'bject 'E'mergency 'S'afety 'P'atrol
+            break;
+        case EnumObjectType::fire:
+            tools::app6::SetFunction( symbol, "OEIF--" ); // 'O'bject 'E'mergency 'I'ncident 'F'ire
+            break;
+        case EnumObjectType::emergency_shelter:
+            tools::app6::SetFunction( symbol, "OESS--" ); // 'O'bject 'E'mergency 'S'afety 'S'helter
+            break;
         }
         return symbol;
     }

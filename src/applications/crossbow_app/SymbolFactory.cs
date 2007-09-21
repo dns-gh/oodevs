@@ -44,13 +44,13 @@ namespace Crossbow
         {
             if (symbolId == null)
                 return null;
-            if (IsTacticalElement(symbolId))
-                return CreateTacticalElement(display, dynamicDisplay, feature, symbolId);
-            else if (IsEmergencyForceElement(symbolId))
+            if (IsEmergencyForceElement(symbolId))            
                 return CreateEmergencyForceElement(display, dynamicDisplay, symbolId);
+            if (IsTacticalElement(symbolId))
+                return CreateTacticalElement(display, dynamicDisplay, feature, symbolId);                
             else
-                return CreateForceElement(display, dynamicDisplay, symbolId);
-        }
+                return CreateForceElement(display, dynamicDisplay, symbolId);            
+        } 
 
         public System.Drawing.Bitmap GetSymbol(IDisplay pDisplay, string symbolId, string name, int size)
         {
@@ -142,7 +142,9 @@ namespace Crossbow
         private static IDynamicGlyph CreateDynamicGlyphFromFile(IDynamicDisplay pDynamicDisplay, string symbolID, int textureSize, int glyphSize)
         {
             IColor bgColor = Tools.MakeColor(255, 0, 255);
-            
+
+            // bgColor.NullColor = true;
+            // bgColor.Transparency = 0;
             IDynamicGlyphFactory factory = (IDynamicGlyphFactory)pDynamicDisplay.DynamicGlyphFactory;
             
             string filename = GetFileName(symbolID);
@@ -219,13 +221,14 @@ namespace Crossbow
 
         private static System.Drawing.Bitmap CreateBitmap(IDisplay pDisplay, string symbolID, int size)
         {
-            IColor bgColor = Tools.MakeColor(255, 255, 255);
             string filename = GetFileName(symbolID);
 
             try
             {
-                System.Drawing.Image image = System.Drawing.Image.FromFile(filename);
-                return new System.Drawing.Bitmap(image, size, size);
+                System.Drawing.Image image = System.Drawing.Image.FromFile(filename, true);                
+                System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(image);                 
+                bmp.MakeTransparent(System.Drawing.Color.FromArgb( 255, 0, 255 ));
+                return bmp;
             }
             catch (System.Exception ex)
             {

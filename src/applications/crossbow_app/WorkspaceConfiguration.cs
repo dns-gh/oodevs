@@ -101,6 +101,9 @@ namespace Crossbow
         private string m_limits = "BoundaryLimits";
         private string m_limas = "TacticalLines";
         private string m_reports = "Reports";
+        private string m_objectsPoint = "TacticalObjectPoint";
+        private string m_objectsLine = "TacticalObjectLine";
+        private string m_objectsArea = "TacticalObjectArea";        
         private string m_emergencies = "Emergencies";
 
         [DescriptionAttribute("Layer containing units")]
@@ -151,6 +154,22 @@ namespace Crossbow
             }
         }
 
+        [DescriptionAttribute("Layer containing tactical objects")]
+        [CategoryAttribute("Layer bindings")]
+        [TypeConverterAttribute(typeof(FeatureLayerList))]
+        [DefaultValue("TacticalObjectPoint")]
+        public string TacticalObjectPoint
+        {
+            get
+            {
+                return m_objectsPoint;
+            }
+            set
+            {
+                m_objectsPoint = value;
+            }
+        }
+
         [DescriptionAttribute("Table containing reports")]
         [CategoryAttribute("Table bindings")]
         [TypeConverterAttribute(typeof(FeatureLayerList))]
@@ -182,6 +201,8 @@ namespace Crossbow
                 m_emergencies = value;
             }
         }
+
+        
     }
     #endregion
 }

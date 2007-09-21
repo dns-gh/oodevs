@@ -58,6 +58,8 @@
 #include "MIL_ZoneForbiddenMove.h"
 #include "MIL_ZoneImplantationMortier.h"
 #include "MIL_Installation.h"
+#include "MIL_Fire.h"
+#include "MIL_EmergencyShelter.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
 #include "xeumeuleu/xml.h"
@@ -106,6 +108,8 @@ const MIL_RealObjectType& MIL_RealObjectType::zoneForbiddenFire_        = *new M
 const MIL_RealObjectType& MIL_RealObjectType::zoneForbiddenMove_        = *new MIL_RealObjectType( "zone interdite mouvement"  , eObjectTypeZoneForbiddenMove      , EnumObjectType::zone_interdite_mouvement , &MIL_ZoneForbiddenMove          ::Create );
 const MIL_RealObjectType& MIL_RealObjectType::zoneImplantationMortier_  = *new MIL_RealObjectType( "zone implantation mortier" , eObjectTypeZoneImplantationMortier, EnumObjectType::zone_implantation_mortier, &MIL_ZoneImplantationMortier    ::Create );
 const MIL_RealObjectType& MIL_RealObjectType::installation_             = *new MIL_RealObjectType( "installation"              , eObjectTypeInstallation           , EnumObjectType::installation             , &MIL_Installation               ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::fire_                     = *new MIL_RealObjectType( "fire"                      , eObjectTypeFire                   , EnumObjectType::fire                     , &MIL_Fire                       ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::emergencyShelter_         = *new MIL_RealObjectType( "emergency shelter"         , eObjectTypeEmergencyShelter       , EnumObjectType::emergency_shelter        , &MIL_EmergencyShelter           ::Create );
 
 // =============================================================================
 // MANAGER
@@ -166,6 +170,8 @@ void MIL_RealObjectType::Initialize( xml::xistream& xis )
     objectTypes_[ zoneForbiddenMove_      .GetID() ] = &zoneForbiddenMove_      ;
     objectTypes_[ zoneImplantationMortier_.GetID() ] = &zoneImplantationMortier_;
     objectTypes_[ installation_           .GetID() ] = &installation_;
+    objectTypes_[ fire_                   .GetID() ] = &fire_;
+    objectTypes_[ emergencyShelter_       .GetID() ] = &emergencyShelter_;
 
     pDangerousObjectTypes_ = new MIL_RealObjectTypeFilter();
     LoadingWrapper loader;

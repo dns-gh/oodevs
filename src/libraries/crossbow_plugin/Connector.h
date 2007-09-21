@@ -45,6 +45,7 @@ public:
     //! @name Operations
     //@{
     void Lock();
+    bool IsLocked() const;
     void Unlock();
     ITablePtr GetTable( const std::string& name );
 	void Initialize();
@@ -115,6 +116,7 @@ private:
     std::auto_ptr< ReportFactory > reportFactory_;
     std::auto_ptr< FolkManager >   folk_;
     std::auto_ptr< ScopeEditor >   scopeEditor_;
+    bool                           locked_;
     //@}
 };
 

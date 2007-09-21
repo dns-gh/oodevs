@@ -27,6 +27,7 @@ Connector::Connector( const dispatcher::Config& config, const dispatcher::Model&
     , reportFactory_( new ReportFactory( config, model_ ) )
     , folk_         ( new FolkManager( config ) )
     , scopeEditor_  ( new ScopeEditor( model_, *reportFactory_, *folk_ ) )
+    , locked_       ( false )
 {
     ::CoInitialize( NULL );
 //    #if ! defined( _ARCGIS_VERSION_ )  // $$$$ JCR 2007-06-14: do not use license checking on arcgis version lower than 9.2
@@ -204,7 +205,16 @@ ITablePtr Connector::GetTable( const std::string& name )
 // -----------------------------------------------------------------------------
 void Connector::Lock()
 {
-    scopeEditor_->StartEditing( spWorkspace_, spSpatialReference_ );
+    locked_ = scopeEditor_->StartEditing( spWorkspace_, spSpatialReference_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Connector::IsLocked
+// Created: JCR 2007-09-20
+// -----------------------------------------------------------------------------
+bool Connector::IsLocked() const
+{
+    return locked_;
 }
 
 // -----------------------------------------------------------------------------
@@ -333,6 +343,9 @@ IFeatureClassPtr Connector::GetObjectFeatureClass( const ASN1T_Location& locatio
 // -----------------------------------------------------------------------------
 void Connector::Send( const ASN1T_MsgsSimToClient& asn )
 {
+    if ( !IsLocked() )
+        return;
+
     switch ( asn.msg.t )
     {
     case T_MsgsSimToClient_msg_msg_formation_creation:  Create( GetTable( "Formations" ), *asn.msg.u.msg_formation_creation ); break;

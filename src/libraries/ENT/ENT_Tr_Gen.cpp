@@ -431,6 +431,8 @@ ENT_Tr::T_ConverterObjectType ENT_Tr::ObjectTypeConverter_[] =
     T_ConverterObjectType( "zone implantation mortier", QT_TRANSLATE_NOOP( "ENT_Tr", "zone implantation mortier" ), eObjectType_ZoneImplantationMortier ),
     T_ConverterObjectType( "pont flottant discontinu", QT_TRANSLATE_NOOP( "ENT_Tr", "pont flottant discontinu" ), eObjectType_PontFlottantDiscontinu ),
     T_ConverterObjectType( "installation", QT_TRANSLATE_NOOP( "ENT_Tr", "installation" ), eObjectType_Installation ),
+    T_ConverterObjectType( "fire", QT_TRANSLATE_NOOP( "ENT_Tr", "fire" ), eObjectType_Fire ),
+    T_ConverterObjectType( "emergency shelter", QT_TRANSLATE_NOOP( "ENT_Tr", "emergency shelter" ), eObjectType_EmergencyShelter ),
     T_ConverterObjectType( "", "", (E_ObjectType)-1 )
 };
 

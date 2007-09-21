@@ -81,15 +81,19 @@ void ConnectorFacade::Receive( const ASN1T_MsgsSimToClient& asnMsg )
 {    
     switch ( asnMsg.msg.t )
     {    
+    case T_MsgsSimToClient_msg_msg_control_send_current_state_begin:
+        bNeedUpdate_ = true;            
+        break;
     case T_MsgsSimToClient_msg_msg_control_begin_tick:
         bNeedUpdate_ = false;            
         break;
+    case T_MsgsSimToClient_msg_msg_control_send_current_state_end:
     case T_MsgsSimToClient_msg_msg_control_end_tick:
         if ( bNeedUpdate_ )
             UpdateCurrentState();
         break;
     default:
-        bNeedUpdate_ = IsRelevant( asnMsg );
+        bNeedUpdate_ |= IsRelevant( asnMsg );
     }
 }
 

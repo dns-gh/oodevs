@@ -23,10 +23,10 @@ namespace po = boost::program_options;
 
 namespace 
 {
-    std::string GetPath( const std::string& path )
+    std::string GetPath( const std::string& file )
     {
-        fs::path full_path( fs::initial_path< fs::path >() );
-        return full_path.native_file_string() + "/" + path;        
+        fs::path full_path( fs::initial_path< fs::path >() );        
+        return full_path.native_file_string() + "/" + file;        
     }
 }
 
@@ -44,8 +44,17 @@ StyleEditor::StyleEditor( const dispatcher::Config& config )
             >> xml::end()
         >> xml::end();
 
-    path_small_ = GetPath( config.BuildGameChildFile( path_small_ ) );
-    path_large_ = GetPath( config.BuildGameChildFile( path_large_ ) );
+    std::string opt_path = plugin.GetParameter( "virtual-path" );
+    if ( opt_path == "" )
+    {
+        path_small_ = GetPath( config.BuildGameChildFile( path_small_ ) );
+        path_large_ = GetPath( config.BuildGameChildFile( path_large_ ) );
+    }
+    else
+    {
+        path_small_ = opt_path + "/" + path_small_;
+        path_large_ = opt_path + "/" + path_large_;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -79,7 +88,7 @@ void StyleEditor::Load( xml::xostream& xos )
         WriteEntityStyle( xos, it->first, it->second );
     
 //    WriteObjectStyle( xos, "Fire", "3f0000ff" );
-//    WriteLineStyle( xos, "Path", "3fff0000" );
+    WriteLineStyle( xos, "Path", "3fff0000" );
     WriteLineStyle( xos, "Limit", "3fff0000" );
     WriteLineStyle( xos, "Lima", "3fff0000" );
 }

@@ -468,6 +468,8 @@ enum E_ObjectType
     eObjectType_ZoneImplantationMortier,
     eObjectType_PontFlottantDiscontinu,
     eObjectType_Installation,
+    eObjectType_Fire,
+    eObjectType_EmergencyShelter,
     eNbrObjectType
 };
 

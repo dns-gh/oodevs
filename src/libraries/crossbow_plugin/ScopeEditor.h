@@ -40,7 +40,7 @@ public:
 
     //! @name Operators
     //@{
-    void StartEditing( IWorkspacePtr spWorkspace, ISpatialReferencePtr spSpatialReference );
+    bool StartEditing( IWorkspacePtr spWorkspace, ISpatialReferencePtr spSpatialReference );
     void StartEdit();
     void StopEdit();
     void StopEditing();

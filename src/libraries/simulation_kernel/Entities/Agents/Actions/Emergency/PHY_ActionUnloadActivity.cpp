@@ -27,9 +27,8 @@ PHY_ActionUnloadActivity::PHY_ActionUnloadActivity( MIL_AgentPion& pion, DIA_Cal
     , activity_           ( diaCall[ 1 ].ToString() )
     , influence_          ( diaCall[ 2 ].ToFloat() )
 {    
-    const MT_Vector2D&  vPos = pion_.GetRole< PHY_RolePion_Location >().GetPosition();
-    float connectivity = diaCall.GetParameter( 3 ).ToFloat();
-    pObject_ = role_.InfluenceActivity( vPos, activity_, influence_, connectivity );
+    const MT_Vector2D&  vPos = pion_.GetRole< PHY_RolePion_Location >().GetPosition();    
+    pObject_ = role_.InfluenceActivity( vPos, activity_, influence_, 1 );
     if ( pObject_ )
     {
         pObject_->UnloadActivity( activity_, influence_ ); // population concerned
