@@ -194,7 +194,7 @@ bool EntityLayerBase::DisplayTooltip( unsigned i, const geometry::Point2f& point
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::DisplayTooltip( const Entity_ABC& entity, Displayer_ABC& displayer )
 {
-    entity.Interface().Apply( Displayable_ABC::DisplayInTooltip, displayer );
+    entity.Interface().Apply( & Displayable_ABC::DisplayInTooltip, displayer );
     return true;
 }
 
