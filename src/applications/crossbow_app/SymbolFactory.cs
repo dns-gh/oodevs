@@ -111,7 +111,7 @@ namespace Crossbow
         
         private static string GetFileName(string symbolID)
         {
-            return Tools.GetCSwordExtension().Config.ExerciseDir + "\\Resources\\Symbols\\HSWG_Small\\" + symbolID.Substring(0, symbolID.IndexOf('-')) + ".png";
+            return Tools.GetCSwordExtension().Config.BuildChildFile( "\\Resources\\Symbols\\HSWG_Big\\" + symbolID.Substring(0, symbolID.IndexOf('-')) + ".png" );
         }
 
         // Create dynamic glyph
@@ -140,7 +140,8 @@ namespace Crossbow
 
         private static IDynamicGlyph CreateDynamicGlyphFromFile(IDynamicDisplay pDynamicDisplay, string symbolID, int textureSize, int glyphSize)
         {
-            IColor bgColor = Tools.MakeColor(255, 0, 255);
+            IColor bgColor = Tools.MakeColor(255, 255, 255);
+            bgColor.Transparency = 0;
 
             // bgColor.NullColor = true;
             // bgColor.Transparency = 0;

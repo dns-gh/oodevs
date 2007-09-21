@@ -160,6 +160,7 @@ namespace Crossbow
             if (type == "Point") return new TypePoint();
             if (type == "Bool") return new TypeBool();
             if (type == "Polygon") return new TypePolygon();
+            if (type == "Location") return new TypePolygon();
             if (type == "Agent") return new TypeAgent();
             if (type == "Path") return new TypePath();
             return null;

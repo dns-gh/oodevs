@@ -16,100 +16,33 @@ namespace Crossbow
 
     public class OrderFactory : IParameterFactory
     {
-        private class OrderParametersDefinition : Dictionary<string, string> {} //--> name, type
+        private StaticModel m_model;
 
-        private Dictionary<string, OrderParametersDefinition> m_model = new Dictionary<string, OrderParametersDefinition>();
-
-        public OrderFactory(WorkspaceConfiguration config)
+        public OrderFactory(StaticModel model)
         {
-            // $$$$ SBO 2007-08-17: use config.ExerciseFile
-            InitializeModel();
+            m_model = model;
         }
 
-        private void InitializeModel()
+        public void BuildMissionContextMenu(MultiItemContextMenu menu, IFeature selected)
         {
-            m_model.Add("Armor - To attack", new OrderParametersDefinition());
+            string entityName = Tools.GetValue<string>(selected, "Name");
+            EntityModel model = null;
+            if (m_model.UnitTypes.ContainsKey(entityName))
             {
-                OrderParametersDefinition param = new OrderParametersDefinition();
-                param.Add("Deployment area", "Polygon");
-                m_model.Add("Armor - To hold", param);
+                string type = m_model.UnitTypes[entityName];
+                if (m_model.UnitModels.ContainsKey(type))
+                    model = m_model.UnitModels[type];
             }
+            else if (m_model.AutomatTypes.ContainsKey(entityName))
             {
-                OrderParametersDefinition param = new OrderParametersDefinition();
-                param.Add("Unit to support", "Agent");
-                m_model.Add("Armor - To support (dynamic)", param);
+                string type = m_model.AutomatTypes[entityName];
+                if (m_model.AutomatModels.ContainsKey(type))
+                    model = m_model.AutomatModels[type];
             }
-            {
-                OrderParametersDefinition param = new OrderParametersDefinition();
-                param.Add("Position to deny", "Point");
-                param.Add("Obstacle erection", "Bool");
-                m_model.Add("Infantry - To deny", param);
-            }
-            m_model.Add("Infantry - To reconnoiter", new OrderParametersDefinition());
-            {
-                OrderParametersDefinition param = new OrderParametersDefinition();
-                param.Add("Position", "Point");                
-                m_model.Add("Emergency - To BlockRoad", param);
-            }
-            {
-                OrderParametersDefinition param = new OrderParametersDefinition();
-                param.Add("Position", "Point");
-                m_model.Add("Emergency - To Organise a Shelter", param);
-            }
-            {
-                OrderParametersDefinition param = new OrderParametersDefinition();
-                param.Add("Position", "Point");
-                m_model.Add("Emergency - To Soothe", param);
-            }
-            {
-                OrderParametersDefinition param = new OrderParametersDefinition();
-                param.Add("Position", "Point");
-                m_model.Add("Emergency - To ProvideFirstAid", param);
-            }
-            {
-                OrderParametersDefinition param = new OrderParametersDefinition();
-                param.Add("Area", "Polygon");
-                m_model.Add("Emergency - To EvacuateArea", param);
-            }
-            {
-                OrderParametersDefinition param = new OrderParametersDefinition();
-                param.Add("Position", "Point");
-                m_model.Add("Emergency - To Riot", param);
-            }
-        }
-
-        public static void BuildMissionContextMenu(ICommandBar menu)
-        {
-            if (menu == null)
+            if (model == null)
                 return;
-
-            UID uid = new UIDClass();
-            uid.Value = "Crossbow.OrderSelectionMenu";
-            object Missing = Type.Missing;
-            menu.Add(uid, ref Missing);
-        }
-
-        public bool OnContextMenu(int x, int y)
-        {
-            try
-            {
-                ICommandBar menu = ((IDocument)Tools.GetMxDocument()).CommandBars.Create("OrderMenu", esriCmdBarType.esriCmdBarTypeShortcutMenu);
-                BuildMissionContextMenu(menu);
-                if (menu.Count > 0)
-                    menu.Popup(0, 0);
-                return true;
-            }
-            catch (Exception e)
-            {
-                System.Console.Write("OnContextMenu throws :" + e.Message);
-                return false;
-            }
-        }
-
-        public void BuildMissionContextMenu(MultiItemContextMenu menu)
-        {
-            foreach (KeyValuePair<string, OrderParametersDefinition> elt in m_model)
-                menu.Add(elt.Key.ToString(), null);
+            foreach (string mission in model)
+                menu.Add(mission, null);
         }
         
         public Order CreateOrder(string name, OrderHandler handler)
@@ -119,8 +52,11 @@ namespace Crossbow
 
         public virtual void CreateParameters(IOrder order)
         {
-            if (m_model.ContainsKey(order.Name))
-                foreach (KeyValuePair<string, string> definition in m_model[order.Name])
+            if (m_model.AutomatMissions.ContainsKey(order.Name))
+                foreach (KeyValuePair<string, string> definition in m_model.AutomatMissions[order.Name])
+                    order.RegisterParameter(new OrderParameter(definition.Key.ToString(), definition.Value.ToString()));
+            else if (m_model.UnitMissions.ContainsKey(order.Name))
+                foreach (KeyValuePair<string, string> definition in m_model.UnitMissions[order.Name])
                     order.RegisterParameter(new OrderParameter(definition.Key.ToString(), definition.Value.ToString()));
         }
     }

@@ -11,6 +11,8 @@ namespace Crossbow
     {
         public static void Build(WorkspaceConfiguration config)
         {
+            Tools.EnableDynamicDisplay(true);
+
             IWorkspaceFactory factory = new AccessWorkspaceFactoryClass();
             IFeatureWorkspace workspace = (IFeatureWorkspace)factory.OpenFromFile(config.WorkspaceFile, 0);
 
@@ -18,7 +20,7 @@ namespace Crossbow
             document.AddLayer(BuildDynamicLayer(workspace, config.LayersConfiguration.Units));
             document.AddLayer(BuildMoleTacticalLayer(workspace, config.LayersConfiguration.Limits));
             document.AddLayer(BuildMoleTacticalLayer(workspace, config.LayersConfiguration.Limas));
-            document.AddLayer(BuildDynamicLayer(workspace, config.LayersConfiguration.TacticalObjectPoint));
+            //document.AddLayer(BuildDynamicLayer(workspace, config.LayersConfiguration.TacticalObjectPoint));
             document.AddLayer(BuildDynamicLayer(workspace, config.LayersConfiguration.Emergencies));
             document.ActiveView.Refresh();
         }

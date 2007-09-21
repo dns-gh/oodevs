@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using ESRI.ArcGIS.Geodatabase;
 
 namespace Crossbow
@@ -64,12 +65,14 @@ namespace Crossbow
             }
         }
 
-        public string ExerciseDir
+        private static string ExtractDirectory(string filename)
         {
-            get
-            {
-                return m_exerciseFile.Substring(0, m_exerciseFile.LastIndexOf('\\'));
-            }
+            return Path.GetDirectoryName(filename);
+        }
+
+        public string BuildChildFile(string filename)
+        {
+            return Path.GetFullPath(ExtractDirectory(m_exerciseFile) + "/" + filename);
         }
 
         public string WorkspaceFile
@@ -102,8 +105,6 @@ namespace Crossbow
         private string m_limas = "TacticalLines";
         private string m_reports = "Reports";
         private string m_objectsPoint = "TacticalObjectPoint";
-        private string m_objectsLine = "TacticalObjectLine";
-        private string m_objectsArea = "TacticalObjectArea";        
         private string m_emergencies = "Emergencies";
 
         [DescriptionAttribute("Layer containing units")]

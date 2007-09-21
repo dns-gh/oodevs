@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 
@@ -8,15 +9,13 @@ namespace Crossbow
 {    
     public sealed class EmergencyHandler : IMultiItemContextMenuHandler
     {
-        private ArrayList m_types = new ArrayList();
+        private StaticModel m_model;
         private int m_contextMenuX;
         private int m_contextMenuY;
         
-        public EmergencyHandler(WorkspaceConfiguration config)
+        public EmergencyHandler(StaticModel model)
         {
-            // $$$$ SBO 2007-09-20: read object list from xml
-            m_types.Add("Fire");
-            m_types.Add("NBC");
+            m_model = model;
         }
 
         public void OnContextMenu(int x, int y)
@@ -29,10 +28,8 @@ namespace Crossbow
 
         public void BuildContextMenu(MultiItemContextMenu menu)
         {
-            foreach( string item in m_types )
-            {
-                menu.Add(item, null);
-            }
+            foreach (string type in m_model.ObjectTypes)
+                menu.Add(type, null);
         }
 
         public void ActivateItem(string name, object value)

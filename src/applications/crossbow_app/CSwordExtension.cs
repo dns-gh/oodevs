@@ -66,6 +66,7 @@ namespace Crossbow
         #endregion
 
         private WorkspaceConfiguration m_config = new WorkspaceConfiguration();
+        private StaticModel m_model;
         private OrderHandler m_orderHandler;
         private EmergencyHandler m_emergencyHandler;
         private SymbolFactory m_symbolFactory = new SymbolFactory();
@@ -101,7 +102,6 @@ namespace Crossbow
             if (app == null)
                 return;
             Tools.Initialize(app);
-            SetupEvents();
         }
 
         private void SetupEvents()
@@ -140,11 +140,13 @@ namespace Crossbow
 
         public void NotifyModelLoaded()
         {
+            m_model = new StaticModel(m_config);
             if (m_orderHandler == null)
-                m_orderHandler = new OrderHandler(m_config);
+                m_orderHandler = new OrderHandler(m_model);
             if (m_emergencyHandler == null)
-                m_emergencyHandler = new EmergencyHandler(m_config);
+                m_emergencyHandler = new EmergencyHandler(m_model);
             ModelLoaded(this, EventArgs.Empty);
+            SetupEvents();
         }
 
         public OrderHandler OrderHandler
