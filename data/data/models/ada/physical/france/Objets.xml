@@ -161,6 +161,14 @@
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="1" max-interaction-height="0" type="zone implantation mortier" unit-speed-impact-mode="AuPlusLent"/>
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="10" max-animating-units="0" max-interaction-height="0" type="pont flottant discontinu" unit-speed-impact-mode="VitesseMaxObjet"/>
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="installation" unit-speed-impact-mode="AuPlusLent"/>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="fire" unit-speed-impact-mode="AuPlusLent"/>
+    <object can-be-bypassed="true" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="ArretMoteurAllume" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="emergency shelter" unit-speed-impact-mode="AuPlusLent">
+      <sensible-positions>
+        <sensible-position terrain="nationale" value="1"/>
+        <sensible-position terrain="carrefour" value="3"/>
+        <sensible-position terrain="departementale" value="2"/>
+      </sensible-positions>
+    </object>
   </real-objects>
   <virtual-objects>
     <object type="controle de zone">
