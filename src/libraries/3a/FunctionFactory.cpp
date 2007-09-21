@@ -75,7 +75,7 @@ namespace
         unsigned i = 0;
         while( extractors[i][0] )
         {
-            xos << xml::start( "extractor" )
+            xos << xml::start( "extract" )
                     << xml::attribute( "name",     extractors[i][0] )
                     << xml::attribute( "output",   extractors[i][1] )
                     << xml::attribute( "key-type", extractors[i][2] )
@@ -88,7 +88,7 @@ namespace
         unsigned i = 0;
         while( transformations[i][0] )
         {
-            xos << xml::start( "transformation" )
+            xos << xml::start( "transform" )
                     << xml::attribute( "name",   transformations[i][0] )
                     << xml::attribute( "input1", transformations[i][1] );
             if( transformations[i][2] )
@@ -107,7 +107,7 @@ namespace
         unsigned i = 0;
         while( reductions[i][0] )
         {
-            xos << xml::start( "reduction" )
+            xos << xml::start( "reduce" )
                     << xml::attribute( "name",   reductions[i][0] )
                     << xml::attribute( "output", reductions[i][1] )
                     << xml::attribute( "input1", "any" );
@@ -131,6 +131,10 @@ void FunctionFactory::Describe( xml::xostream& xos )
     DescribeExtractors( xos );
     DescribeTransformations( xos );
     DescribeReductions( xos );
+    xos << xml::start( "plot" )
+            << xml::attribute( "name", "plot" )
+            << xml::attribute( "input1", "any" )
+        << xml::end();
     xos << xml::end();
 }
 

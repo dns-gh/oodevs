@@ -36,6 +36,7 @@ public:
 
     //! @name Operations
     //@{
+    std::string Commit() const;
     //@}
 
 private:

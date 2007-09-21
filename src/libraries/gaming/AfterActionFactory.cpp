@@ -17,7 +17,7 @@
 // Created: AGE 2007-09-19
 // -----------------------------------------------------------------------------
 AfterActionFactory::AfterActionFactory( const std::string& type, xml::xistream& xis )
-    : AfterActionItem( xis )
+    : AfterActionItem( type, xis )
     , type_( type.c_str() )
     , name_( xml::attribute< std::string >( xis, "name" ).c_str() )
 {

@@ -24,12 +24,14 @@ class AfterActionItem : public AfterActionItem_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AfterActionItem( xml::xistream& xis );
+             AfterActionItem( const std::string& type, xml::xistream& xis );
     virtual ~AfterActionItem();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Commit( xml::xostream& xos ) const;
+
     virtual void Build     ( AfterActionBuilder_ABC& builder ) const;
     virtual void Connect   ( xml::xistream& xis, kernel::Resolver_ABC< AfterActionItem_ABC, std::string >& items );
     virtual void Connect   ( int input, AfterActionItem_ABC& rhs );
@@ -53,6 +55,7 @@ private:
     std::string ConnectedOutputType( const AfterActionItem_ABC* ignore ) const;
     bool IsFree( int input ) const;
     virtual bool IsCompatible( const std::string& type, const AfterActionItem_ABC* connection ) const;
+    std::string BuildType() const;
     //@}
 
     //! @name Types
@@ -69,6 +72,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const std::string type_;
     const std::string name_;
     const std::string output_;
     T_Inputs              inputs_;

@@ -57,13 +57,10 @@ void AfterActionFunction::ReadParameter( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void AfterActionFunction::CreateItem( const std::string& type, xml::xistream& xis, Resolver_ABC< AfterActionFactory, QString >& factories )
 {
-    if( type != "plot" ) // $$$$ AGE 2007-09-20: 
-    {
-        const std::string functionName = xml::attribute< std::string >( xis, "function" );
-        const std::string id           = xml::attribute< std::string >( xis, "id" );
-        AfterActionFactory& function = factories.Get( functionName.c_str() );
-        Register( id, *function.Create().release() );
-    }
+    const std::string functionName = xml::attribute( xis, "function", type );
+    const std::string id           = xml::attribute( xis, "id", type );
+    AfterActionFactory& function = factories.Get( functionName.c_str() );
+    Register( id, *function.Create().release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,9 +69,32 @@ void AfterActionFunction::CreateItem( const std::string& type, xml::xistream& xi
 // -----------------------------------------------------------------------------
 void AfterActionFunction::LoadItem( const std::string& type, xml::xistream& xis )
 {
-    if( type != "plot" ) // $$$$ AGE 2007-09-20: 
+    const std::string id = xml::attribute( xis, "id", type );
+    Get( id ).Connect( xis, *this );
+}
+
+namespace 
+{
+    struct Serializer
     {
-        const std::string id = xml::attribute< std::string >( xis, "id" );
-        Get( id ).Connect( xis, *this );
-    }
+        Serializer( xml::xostream& xos ) : xos_( &xos ) {}
+        void operator()( const AfterActionItem_ABC& item ) const
+        {
+            item.Commit( *xos_ );
+        }
+        xml::xostream* xos_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunction::Commit
+// Created: AGE 2007-09-21
+// -----------------------------------------------------------------------------
+std::string AfterActionFunction::Commit() const
+{
+    xml::xostringstream xos;
+    xos << xml::start( "indicator" );
+    Apply( Serializer( xos ) );
+    xos << xml::end();
+    return xos.str();
 }

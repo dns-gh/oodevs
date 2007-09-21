@@ -16,6 +16,7 @@ class AfterActionBuilder_ABC;
 namespace xml
 {
     class xistream;
+    class xostream;
 }
 
 // =============================================================================
@@ -36,6 +37,8 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Commit( xml::xostream& xos ) const = 0;
+
     virtual void Connect   ( xml::xistream& xis, kernel::Resolver_ABC< AfterActionItem_ABC, std::string >& items ) = 0;
     virtual void Connect   ( int input, AfterActionItem_ABC& rhs ) = 0;
     virtual bool CanConnect( int input, const AfterActionItem_ABC* = 0 ) const = 0;

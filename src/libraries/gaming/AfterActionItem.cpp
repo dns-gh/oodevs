@@ -23,9 +23,10 @@ using namespace kernel;
 // Name: AfterActionItem constructor
 // Created: AGE 2007-09-19
 // -----------------------------------------------------------------------------
-AfterActionItem::AfterActionItem( xml::xistream& xis )
-    : name_  ( xml::attribute< std::string >( xis, "name" ) )
-    , output_( xml::attribute< std::string >( xis, "output" ) )
+AfterActionItem::AfterActionItem( const std::string& type, xml::xistream& xis )
+    : type_  ( type )
+    , name_  ( xml::attribute< std::string >( xis, "name" ) )
+    , output_( xml::attribute( xis, "output", std::string() ) )
 {
     std::string input1, input2;
     xis >> xml::optional() >> xml::attribute( "input1", input1 )
@@ -112,7 +113,7 @@ bool AfterActionItem::CanConnect( int input, const AfterActionItem_ABC* rhs /*=0
 // Name: AfterActionItem::Disconnect
 // Created: AGE 2007-09-21
 // -----------------------------------------------------------------------------
-void AfterActionItem::Disconnect( AfterActionItem_ABC* item ) 
+void AfterActionItem::Disconnect( AfterActionItem_ABC* item )
 {
     for( IT_OutgoingConnections it = outputConnections_.begin(); it!= outputConnections_.end(); )
         if( it->first == item )
@@ -183,7 +184,10 @@ std::string AfterActionItem::ConnectedOutputType( const AfterActionItem_ABC* ign
 int AfterActionItem::LinkOutput() const
 {
      if( ba::starts_with( output_, "input" ) )
-         return boost::lexical_cast< int >( ba::trim_copy( ba::erase_head_copy( output_, 5 ) ) ) - 1;
+     {
+         const std::string input = ba::trim_copy( ba::erase_head_copy( output_, 5 ) );
+         return input.empty() ? 0 : boost::lexical_cast< int >( input ) - 1;
+     }
      return -1;
 }
 
@@ -193,7 +197,7 @@ int AfterActionItem::LinkOutput() const
 // -----------------------------------------------------------------------------
 bool AfterActionItem::IsFree( int input ) const
 {
-    return input >= 0 
+    return input >= 0
         && input < inputConnections_.size()
         && inputConnections_[ input ] == 0;
 }
@@ -206,4 +210,50 @@ bool AfterActionItem::IsCompatible( const std::string& type, const AfterActionIt
 {
     const std::string mine = Resolve( connection );
     return type == "any" || mine == "any" || mine == type;
+}
+
+namespace
+{
+    std::string GetId( const AfterActionItem_ABC* item )
+    {
+        int id = reinterpret_cast< int >( item );
+        return boost::lexical_cast< std::string >( id );
+    }
+    template< typename C >
+    std::string BuildInput( const C& inputs )
+    {
+        std::vector< std::string > names;
+        std::transform( inputs.begin(), inputs.end(),
+                std::back_inserter( names ), boost::bind( &GetId, _1 ) );
+        return ba::join( names, "," );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionItem::BuildType
+// Created: AGE 2007-09-21
+// -----------------------------------------------------------------------------
+std::string AfterActionItem::BuildType() const
+{
+    for( int i = 0; i < inputs_.size(); ++i )
+        if( inputs_[i] == "any" )
+            return Resolve( i, 0 );
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionItem::Commit
+// Created: AGE 2007-09-21
+// -----------------------------------------------------------------------------
+void AfterActionItem::Commit( xml::xostream& xos ) const
+{
+    xos << xml::start( type_ )
+            << xml::attribute( "function", name_ )
+            << xml::attribute( "id", GetId( this ) );
+    if( ! inputs_.empty() )
+        xos << xml::attribute( "input", BuildInput( inputConnections_ ) );
+    const std::string type = BuildType();
+    if( ! type.empty() )
+        xos << xml::attribute( "type", type );
+    xos << xml::end();
 }
