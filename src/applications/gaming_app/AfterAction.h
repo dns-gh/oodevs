@@ -14,6 +14,10 @@ namespace kernel
 {
     class Controllers;
 }
+namespace gui
+{
+    class ItemFactory_ABC;
+}
 
 // =============================================================================
 /** @class  AfterAction
@@ -27,7 +31,7 @@ class AfterAction : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterAction( QMainWindow* window, kernel::Controllers& controllers );
+             AfterAction( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~AfterAction();
     //@}
 

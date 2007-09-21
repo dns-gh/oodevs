@@ -27,14 +27,12 @@ AfterActionCanvas::AfterActionCanvas( QWidget* parent )
     , connect_   ( false )
     , currentId_ ( 0 )
 {
-    QPalette palette;
-    palette.setColor( QPalette::Disabled, QColorGroup::Foreground, QColor( 180, 180, 180 ) );
-    palette.setColor( QPalette::Inactive, QColorGroup::Foreground, QColor(   0,   0,   0 ) );
+    QPalette palette( palette() );
     palette.setColor( QPalette::Active  , QColorGroup::Foreground, QColor(  50, 105, 200 ) );
     setPalette( palette );
 
     QCanvas* canvas = new QCanvas();
-    canvas->resize( 600, 480 );
+    canvas->resize( 610, 480 );
     canvas->retune( 600, 1 );
     canvas->setDoubleBuffering( true );
     canvas->setBackgroundColor( Qt::white );
@@ -176,6 +174,17 @@ void AfterActionCanvas::keyPressEvent( QKeyEvent* event )
         canvas()->setAllChanged();
         canvas()->update();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvas::resizeEvent
+// Created: AGE 2007-09-21
+// -----------------------------------------------------------------------------
+void AfterActionCanvas::resizeEvent( QResizeEvent* event )
+{
+    canvas()->resize( std::max( event->size().width(), canvas()->width() ),
+                      std::max( event->size().height(), canvas()->height() ) );
+    QCanvasView::resizeEvent( event );
 }
 
 // -----------------------------------------------------------------------------

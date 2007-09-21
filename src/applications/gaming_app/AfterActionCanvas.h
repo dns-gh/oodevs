@@ -61,6 +61,7 @@ private:
     virtual void contentsMouseReleaseEvent( QMouseEvent* event );
     virtual void contentsMouseMoveEvent( QMouseEvent* event );
     virtual void keyPressEvent( QKeyEvent* event );
+    virtual void resizeEvent( QResizeEvent* event );
     void ClearSelection();
 
     void Connect( QMouseEvent* event );

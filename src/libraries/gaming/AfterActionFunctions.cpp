@@ -31,8 +31,7 @@ AfterActionFunctions::AfterActionFunctions( Resolver_ABC< AfterActionFactory, QS
 // -----------------------------------------------------------------------------
 AfterActionFunctions::~AfterActionFunctions()
 {
-    for( CIT_Functions it = functions_.begin(); it != functions_.end(); ++it )
-        delete *it;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -53,5 +52,7 @@ void AfterActionFunctions::Load( const std::string& functions )
 // -----------------------------------------------------------------------------
 void AfterActionFunctions::ReadFunction( xml::xistream& xis )
 {
-    functions_.push_back( new AfterActionFunction( factories_, xis ) );
+    std::auto_ptr< AfterActionFunction > function( new AfterActionFunction( factories_, xis ) );
+    const QString name = function->GetName();
+    Register( name, *function.release() );
 }

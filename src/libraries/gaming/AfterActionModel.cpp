@@ -14,6 +14,8 @@
 #include "clients_kernel/Controller.h"
 #include <xeumeuleu/xml.h>
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: AfterActionModel constructor
 // Created: AGE 2007-09-17
@@ -66,4 +68,15 @@ void AfterActionModel::ReadFunction( const std::string& type, xml::xistream& xis
 void AfterActionModel::Update( const ASN1T_MsgIndicatorResult& asnMsg )
 {
 
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionModel::CreateFunctionIterator
+// Created: AGE 2007-09-21
+// -----------------------------------------------------------------------------
+Iterator< const AfterActionFunction& > AfterActionModel::CreateFunctionIterator() const
+{
+    if( functions_.get() )
+        return functions_->CreateIterator();
+    return new NullIterator< const AfterActionFunction& >();
 }

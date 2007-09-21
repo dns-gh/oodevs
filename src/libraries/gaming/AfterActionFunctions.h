@@ -10,7 +10,7 @@
 #ifndef __AfterActionFunctions_h_
 #define __AfterActionFunctions_h_
 
-#include "clients_kernel/Resolver_ABC.h"
+#include "clients_kernel/Resolver.h"
 namespace xml
 {
     class xistream;
@@ -24,7 +24,7 @@ class AfterActionFunction;
 */
 // Created: AGE 2007-09-20
 // =============================================================================
-class AfterActionFunctions
+class AfterActionFunctions : public kernel::Resolver< AfterActionFunction, QString >
 {
 
 public:
@@ -51,17 +51,10 @@ private:
     void ReadFunction( xml::xistream& xis );
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::vector< AfterActionFunction* >  T_Functions;
-    typedef T_Functions::const_iterator        CIT_Functions;
-    //@}
-
 private:
     //! @name Member data
     //@{
     kernel::Resolver_ABC< AfterActionFactory, QString >& factories_;
-    T_Functions functions_;
     //@}
 };
 

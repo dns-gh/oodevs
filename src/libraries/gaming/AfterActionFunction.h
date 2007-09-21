@@ -36,6 +36,7 @@ public:
 
     //! @name Operations
     //@{
+    QString GetName() const;
     std::string Commit() const;
     //@}
 

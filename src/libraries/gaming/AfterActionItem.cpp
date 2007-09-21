@@ -59,7 +59,8 @@ void AfterActionItem::Build( AfterActionBuilder_ABC& builder ) const
 {
     builder.Start( name_ );
     std::for_each( inputs_.begin(), inputs_.end(), boost::bind( &AfterActionBuilder_ABC::AddInput, &builder, _1 ) );
-    builder.AddOutput( output_ );
+    if( ! output_.empty() )
+        builder.AddOutput( output_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -44,7 +44,8 @@ AfterActionItemsPanel::~AfterActionItemsPanel()
 // -----------------------------------------------------------------------------
 void AfterActionItemsPanel::NotifyUpdated( const AfterActionModel& model )
 {
-    toolBox_->addItem( new AfterActionItemsCategory( this, model, "extractor" ),      tr( "Extraction" ) );
-    toolBox_->addItem( new AfterActionItemsCategory( this, model, "transformation" ), tr( "Transformation" ) );
-    toolBox_->addItem( new AfterActionItemsCategory( this, model, "reduction" ),      tr( "Reduction" ) );
+    toolBox_->addItem( new AfterActionItemsCategory( this, model, "extract" ),   tr( "Extraction" ) );
+    toolBox_->addItem( new AfterActionItemsCategory( this, model, "transform" ), tr( "Transformation" ) );
+    toolBox_->addItem( new AfterActionItemsCategory( this, model, "reduce" ),    tr( "Reduction" ) );
+    toolBox_->addItem( new AfterActionItemsCategory( this, model, "plot" ),      tr( "Plot" ) );
 }
