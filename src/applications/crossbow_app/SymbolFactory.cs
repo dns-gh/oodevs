@@ -104,12 +104,11 @@ namespace Crossbow
             element.Shape = CreatePoint(1.0, 1.0);
             element.MessageString = symbolId;
             element.PropertySet.SetProperty("Symbol_ID", symbolId);
-            element.PropertySet.SetProperty("Name", name);
-            element.PropertySet.SetProperty("Info", "");
+            // element.PropertySet.SetProperty("Name", name);
+            // element.PropertySet.SetProperty("Info", "");
             return element;
         }
-
-
+        
         private static string GetFileName(string symbolID)
         {
             return Tools.GetCSwordExtension().Config.ExerciseDir + "\\Resources\\Symbols\\HSWG_Small\\" + symbolID.Substring(0, symbolID.IndexOf('-')) + ".png";

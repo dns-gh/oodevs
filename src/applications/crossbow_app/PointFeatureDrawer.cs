@@ -31,10 +31,9 @@ namespace Crossbow
                 DrawEnvelope(dynamicDisplay, element, position);
 
             m_properties.set_DynamicGlyph(esriDynamicSymbolType.esriDSymbolText, m_textGlyph);
-            m_properties.set_DynamicGlyph(esriDynamicSymbolType.esriDSymbolMarker, element.Glyph);
-            m_properties.SetColor(esriDynamicSymbolType.esriDSymbolText, 1, 1, 1, 0.8f);
-            m_compoundMarker.DrawCompoundMarker4(position, "", "", Tools.GetValue< string >(feature, "Name"), "");
-
+            m_properties.SetColor(esriDynamicSymbolType.esriDSymbolText, 1, 1, 1, 0.1f);
+            m_properties.set_DynamicGlyph(esriDynamicSymbolType.esriDSymbolMarker, element.Glyph);            
+            m_compoundMarker.DrawCompoundMarker1(position, "");
             DrawLife(dynamicDisplay, element, feature, position);
         }
         #endregion
