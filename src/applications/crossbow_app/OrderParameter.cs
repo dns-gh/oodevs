@@ -56,7 +56,7 @@ namespace Crossbow
             }
             public override void OnSelect()
             {
-                m_point = Tools.MakePoint(m_x, m_y);                
+                m_point = Tools.MakePoint(m_x, m_y);
                 if (m_point != null)
                     Tools.Store(m_OrderPoint, m_point);
             }
@@ -75,7 +75,8 @@ namespace Crossbow
             IPointCollection m_polygon;
 
             public override void OnContextMenu(int x, int y, IFeature selected)
-            {               
+            {
+                // NOTHING
             }
             public override void OnSelect()
             {
@@ -141,7 +142,8 @@ namespace Crossbow
             IPolyline m_path;
 
             public override void OnContextMenu(int x, int y, IFeature selected)
-            {                
+            {
+                // NOTHING ?
             }
             public override void OnSelect() 
             {

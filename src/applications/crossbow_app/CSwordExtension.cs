@@ -71,7 +71,6 @@ namespace Crossbow
         private EmergencyHandler m_emergencyHandler;
         private SymbolFactory m_symbolFactory = new SymbolFactory();
 
-        private IDocumentEvents_OnContextMenuEventHandler m_contextMenuEvent;
         private IDocumentEvents_NewDocumentEventHandler   m_newDocumentEvent;
         private IDocumentEvents_OpenDocumentEventHandler  m_openDocumentEvent;
         private IDocumentEvents_CloseDocumentEventHandler m_closeDocumentEvent;
@@ -102,6 +101,7 @@ namespace Crossbow
             if (app == null)
                 return;
             Tools.Initialize(app);
+            SetupEvents();
         }
 
         private void SetupEvents()
@@ -112,8 +112,6 @@ namespace Crossbow
             ((IDocumentEvents_Event)(Tools.GetMxDocument())).OpenDocument += m_openDocumentEvent;
             m_closeDocumentEvent = new IDocumentEvents_CloseDocumentEventHandler(OnCloseDocumentHandler);
             ((IDocumentEvents_Event)(Tools.GetMxDocument())).CloseDocument += m_closeDocumentEvent;
-            m_contextMenuEvent = new IDocumentEvents_OnContextMenuEventHandler(OnContextMenuHandler);
-            ((IDocumentEvents_Event)(Tools.GetMxDocument())).OnContextMenu += m_contextMenuEvent;
         }
 
         private void OnNewDocumentHandler()
@@ -131,13 +129,6 @@ namespace Crossbow
             Tools.EnableDynamicDisplay(false);
         }
 
-        private void OnContextMenuHandler(int x, int y, out bool handled)
-        {
-            handled = false;
-            if (m_orderHandler != null)
-                handled = m_orderHandler.OnContextMenu(x, y);
-        }
-
         public void NotifyModelLoaded()
         {
             m_model = new StaticModel(m_config);
@@ -147,7 +138,6 @@ namespace Crossbow
                 m_emergencyHandler = new EmergencyHandler(m_model);
             ModelLoaded(this, EventArgs.Empty);
             OrderParameter.Initialize(Config.LayersConfiguration.Units);
-            SetupEvents();
         }
 
         public OrderHandler OrderHandler
