@@ -38,32 +38,42 @@ LocationEditor::~LocationEditor()
 // Created: JCR 2007-05-23
 // -----------------------------------------------------------------------------
 void LocationEditor::CreateGeometry( IFeatureBufferPtr spBuffer, const ASN1T_Location& asn )
-{
-    IRingPtr spRing;
-        
-    spRing.CreateInstance( CLSID_Ring );
-    IPointPtr spLast;
-    IPointPtr spFirst;
+{        
+    IPolygonPtr spPolygon;
+    ISegmentCollectionPtr spSegmentCollection;    
+    IPointPtr spLast; 
+
+    Create( spPolygon );
+    spPolygon.QueryInterface( IID_ISegmentCollection, &spSegmentCollection);
     for ( int i = 0; i < asn.coordinates.n; ++i )
-    {    
+    {
         IPointPtr spCurrent;
         Create( spCurrent, true );
         if ( UpdateCoord( spCurrent, asn.coordinates.elem[ i ] ) && spLast != NULL )
         {
-            ILinePtr spLine; spLine.CreateInstance( CLSID_Line );
-            spLine->put_FromPoint( spLast );
-            spLine->put_ToPoint( spCurrent );            
+            ILinePtr spLine; 
+            Create( spLine );
+            spLine->PutCoords( spLast, spCurrent );            
+            ISegmentPtr spSegment;
+            spLine.QueryInterface( IID_ISegment, &spSegment );            
+            spSegmentCollection->AddSegment( spSegment );
         }
-        if ( i == 0 )
-            spFirst = spCurrent;
         spLast = spCurrent;
     }
-    spRing->put_FromPoint( spFirst );
-    spRing->put_ToPoint( spFirst );
-//    IPointCollectionPtr spGeometry;
-//    spRing->QueryInterface( IID_IPointCollection, (LPVOID*)&spGeometry );
-//    long size = 0;
-//    spGeometry->get_PointCount( &size );
-//    if ( size > 0 )
-        scope_.WriteGeometry( spBuffer, spRing );
+    long count;
+    spSegmentCollection->get_SegmentCount( &count ); 
+    if ( !FAILED( spPolygon->Close() ) )    
+        scope_.WriteGeometry( spBuffer, spPolygon );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LineEditor::Update
+// Created: JCR 2007-05-15
+// -----------------------------------------------------------------------------
+void LocationEditor::Update( IPointCollectionPtr spPointCollection, const ASN1T_CoordUTM& asnUTM )
+{
+    IPointPtr spPoint;
+    Create( spPoint, true );
+    UpdateCoord( spPoint, asnUTM );
+    spPointCollection->AddPoint( spPoint );
 }

@@ -128,7 +128,7 @@ namespace Crossbow
             ICursor pCursor;
             IQueryFilter pQueryFilter = new QueryFilterClass();
             pQueryFilter.SubFields = "distinct (Symbol_ID)";
-            pCursor = pTable.Search(pQueryFilter, false);
+            pCursor = pTable.Search(pQueryFilter, true);
             pQueryFilter = null;
             return pCursor;
         }
@@ -151,7 +151,7 @@ namespace Crossbow
             IQueryFilter pQueryFilter = new QueryFilterClass();
             pQueryFilter.WhereClause = "Parent_OID = " + stOIDFormation + " AND Public_OID <> " + stOIDParent;
 
-            IFeatureCursor pCursor = pFeatureClass.Search(pQueryFilter, false);
+            IFeatureCursor pCursor = pFeatureClass.Search(pQueryFilter, true);
             IFeature pFeature = pCursor.NextFeature();
             TreeNode[] node = m_symbolTree.Nodes.Find(stOIDFormation, true);
             while (pFeature != null)
@@ -172,7 +172,7 @@ namespace Crossbow
             IQueryFilter pQueryFilter = new QueryFilterClass();
             pQueryFilter.WhereClause = "Symbol_ID Like \"??????????A????\"";
 
-            IFeatureCursor pCursor = pFeatureClass.Search(pQueryFilter, false);
+            IFeatureCursor pCursor = pFeatureClass.Search(pQueryFilter, true);
             IFeature pFeature = pCursor.NextFeature();
             while (pFeature != null)
             {
@@ -193,7 +193,7 @@ namespace Crossbow
 
         private void UpdateFormation(ITable table)
         {
-            ICursor pCursor = table.Search(null, false);
+            ICursor pCursor = table.Search(null, true);
             IRow pRow = pCursor.NextRow();
             while (pRow != null)
             {

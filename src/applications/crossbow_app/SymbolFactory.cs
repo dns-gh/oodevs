@@ -63,7 +63,7 @@ namespace Crossbow
         }
         #endregion
 
-        #region Force Elements
+        #region Emergency Elements
         private IDynamicElement CreateEmergencyForceElement(IDisplay display, IDynamicDisplay dynamicDisplay, string symbolId)
         {
             DynamicForceElement element = new DynamicForceElement();
@@ -77,7 +77,8 @@ namespace Crossbow
             element.Glyph = m_Glyph[symbolId];
             return element as IDynamicElement;
         }
-       
+        #endregion
+        #region Force Elements
         private IDynamicElement CreateForceElement(IDisplay display, IDynamicDisplay dynamicDisplay, string symbolId)
         {
             DynamicForceElement element = new DynamicForceElement();
@@ -109,9 +110,11 @@ namespace Crossbow
             return element;
         }
         
-        private static string GetFileName(string symbolID)
+        private static string GetFileName(string symbolID, bool large)
         {
-            return Tools.GetCSwordExtension().Config.BuildChildFile( "\\Resources\\Symbols\\HSWG_Big\\" + symbolID.Substring(0, symbolID.IndexOf('-')) + ".png" );
+            if(large)
+                return Tools.GetCSwordExtension().Config.BuildChildFile( "\\Resources\\Symbols\\HSWG_Big\\" + symbolID.Substring(0, symbolID.IndexOf('-')) + ".png" );
+            return Tools.GetCSwordExtension().Config.BuildChildFile("\\Resources\\Symbols\\HSWG_Small\\" + symbolID.Substring(0, symbolID.IndexOf('-')) + ".png");
         }
 
         // Create dynamic glyph
@@ -126,8 +129,7 @@ namespace Crossbow
             
             pMarker.Picture = pBitmap.DrawToPicture(pDisplay, textureSize, textureSize, 1, bgColor);
             pMarker.BitmapTransparencyColor = bgColor;
-            pMarker.Size = glyphSize;
-
+            pMarker.Size = glyphSize;            
             ISymbol symbol = (ISymbol)pMarker;
             IDynamicGlyph glyph = factory.CreateDynamicGlyph(symbol);
             float width = 0, height = 0;
@@ -140,14 +142,14 @@ namespace Crossbow
 
         private static IDynamicGlyph CreateDynamicGlyphFromFile(IDynamicDisplay pDynamicDisplay, string symbolID, int textureSize, int glyphSize)
         {
-            IColor bgColor = Tools.MakeColor(255, 255, 255);
+            IColor bgColor = Tools.MakeColor(255, 0, 255);
             bgColor.Transparency = 0;
 
             // bgColor.NullColor = true;
             // bgColor.Transparency = 0;
             IDynamicGlyphFactory factory = (IDynamicGlyphFactory)pDynamicDisplay.DynamicGlyphFactory;
             
-            string filename = GetFileName(symbolID);
+            string filename = GetFileName(symbolID, false);
             // IPictureMarkerSymbol pMarker = new PictureMarkerSymbolClass();
             // pMarker.CreateMarkerSymbolFromFile(esriIPictureType.esriIPictureEMF, filename);                       
             // pMarker.BitmapTransparencyColor = bgColor;
@@ -221,13 +223,13 @@ namespace Crossbow
 
         private static System.Drawing.Bitmap CreateBitmap(IDisplay pDisplay, string symbolID, int size)
         {
-            string filename = GetFileName(symbolID);
+            string filename = GetFileName(symbolID, true);
 
             try
             {
                 System.Drawing.Image image = System.Drawing.Image.FromFile(filename, true);                
                 System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(image);                 
-                bmp.MakeTransparent(System.Drawing.Color.FromArgb( 255, 0, 255 ));
+                bmp.MakeTransparent(System.Drawing.Color.FromArgb( 255, 255, 255 ));
                 return bmp;
             }
             catch (System.Exception ex)

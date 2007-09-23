@@ -105,7 +105,7 @@ bool GeometryEditor::UpdateCoord( IPointPtr spPoint, const ASN1T_CoordUTM& asnUT
 void GeometryEditor::Create( ILinePtr& spLine )
 {
     spLine.CreateInstance( CLSID_Line );
-    spLine->putref_SpatialReference( spSpatialReference_ );
+    spLine->putref_SpatialReference( spSpatialReference_ );    
 }
 
 // -----------------------------------------------------------------------------
@@ -120,6 +120,40 @@ void GeometryEditor::Create( IPolylinePtr& spPolyline )
     spPolyline.CreateInstance( CLSID_Polyline );
     spPolyline->putref_SpatialReference( spSpatialReference_ );    
     spPolyline.QueryInterface( IID_IZAware, &spZAware );            
+    spZAware->get_ZAware( &bZAware );
+    if ( bZAware == VARIANT_FALSE )
+        spZAware->put_ZAware( VARIANT_TRUE ); 
+}
+
+// -----------------------------------------------------------------------------
+// Name: GeometryEditor::Create
+// Created: JCR 2007-05-15
+// -----------------------------------------------------------------------------
+void GeometryEditor::Create( IRingPtr& spRing )
+{
+    VARIANT_BOOL    bZAware;
+    IZAwarePtr      spZAware;
+
+    spRing.CreateInstance( CLSID_Ring );
+    spRing->putref_SpatialReference( spSpatialReference_ );    
+    spRing.QueryInterface( IID_IZAware, &spZAware );            
+    spZAware->get_ZAware( &bZAware );
+    if ( bZAware == VARIANT_FALSE )
+        spZAware->put_ZAware( VARIANT_TRUE ); 
+}
+
+// -----------------------------------------------------------------------------
+// Name: GeometryEditor::Create
+// Created: JCR 2007-05-15
+// -----------------------------------------------------------------------------
+void GeometryEditor::Create( IPolygonPtr& spPolygon )
+{
+    VARIANT_BOOL    bZAware;
+    IZAwarePtr      spZAware;
+
+    spPolygon.CreateInstance( CLSID_Polygon );
+    spPolygon->putref_SpatialReference( spSpatialReference_ );    
+    spPolygon.QueryInterface( IID_IZAware, &spZAware );            
     spZAware->get_ZAware( &bZAware );
     if ( bZAware == VARIANT_FALSE )
         spZAware->put_ZAware( VARIANT_TRUE ); 

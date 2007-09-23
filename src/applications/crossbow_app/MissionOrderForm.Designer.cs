@@ -40,9 +40,6 @@ namespace Crossbow
             this.m_UnitName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.m_ParametersBox = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.m_Limit2 = new System.Windows.Forms.TextBox();
             this.m_Limit1 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -50,7 +47,6 @@ namespace Crossbow
             this.m_Direction = new System.Windows.Forms.TrackBar();
             this.m_OrderBox.SuspendLayout();
             this.m_ParametersBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.m_Direction)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,15 +57,15 @@ namespace Crossbow
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.m_ParameterTree.CheckBoxes = true;
             this.m_ParameterTree.FullRowSelect = true;
-            this.m_ParameterTree.Location = new System.Drawing.Point(6, 91);
+            this.m_ParameterTree.Location = new System.Drawing.Point(13, 70);
             this.m_ParameterTree.Name = "m_ParameterTree";
-            this.m_ParameterTree.Size = new System.Drawing.Size(295, 220);
+            this.m_ParameterTree.Size = new System.Drawing.Size(295, 174);
             this.m_ParameterTree.TabIndex = 0;
             // 
             // m_Execute
             // 
             this.m_Execute.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.m_Execute.Location = new System.Drawing.Point(195, 558);
+            this.m_Execute.Location = new System.Drawing.Point(195, 327);
             this.m_Execute.Name = "m_Execute";
             this.m_Execute.Size = new System.Drawing.Size(63, 27);
             this.m_Execute.TabIndex = 1;
@@ -81,7 +77,7 @@ namespace Crossbow
             // 
             this.m_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.m_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.m_Cancel.Location = new System.Drawing.Point(264, 558);
+            this.m_Cancel.Location = new System.Drawing.Point(264, 327);
             this.m_Cancel.Name = "m_Cancel";
             this.m_Cancel.Size = new System.Drawing.Size(63, 27);
             this.m_Cancel.TabIndex = 2;
@@ -128,9 +124,6 @@ namespace Crossbow
             this.m_ParametersBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.m_ParametersBox.Controls.Add(this.dataGridView1);
-            this.m_ParametersBox.Controls.Add(this.flowLayoutPanel1);
-            this.m_ParametersBox.Controls.Add(this.tableLayoutPanel1);
             this.m_ParametersBox.Controls.Add(this.m_Limit2);
             this.m_ParametersBox.Controls.Add(this.m_Limit1);
             this.m_ParametersBox.Controls.Add(this.label3);
@@ -139,46 +132,10 @@ namespace Crossbow
             this.m_ParametersBox.Controls.Add(this.m_ParameterTree);
             this.m_ParametersBox.Location = new System.Drawing.Point(14, 71);
             this.m_ParametersBox.Name = "m_ParametersBox";
-            this.m_ParametersBox.Size = new System.Drawing.Size(313, 481);
+            this.m_ParametersBox.Size = new System.Drawing.Size(313, 250);
             this.m_ParametersBox.TabIndex = 4;
             this.m_ParametersBox.TabStop = false;
             this.m_ParametersBox.Text = "Parameters";
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 419);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(294, 56);
-            this.dataGridView1.TabIndex = 10;
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(6, 354);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(294, 59);
-            this.flowLayoutPanel1.TabIndex = 9;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 317);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(295, 31);
-            this.tableLayoutPanel1.TabIndex = 8;
             // 
             // m_Limit2
             // 
@@ -238,7 +195,7 @@ namespace Crossbow
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.m_Cancel;
-            this.ClientSize = new System.Drawing.Size(334, 597);
+            this.ClientSize = new System.Drawing.Size(334, 366);
             this.ControlBox = false;
             this.Controls.Add(this.m_ParametersBox);
             this.Controls.Add(this.m_OrderBox);
@@ -255,7 +212,6 @@ namespace Crossbow
             this.m_OrderBox.PerformLayout();
             this.m_ParametersBox.ResumeLayout(false);
             this.m_ParametersBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.m_Direction)).EndInit();
             this.ResumeLayout(false);
 
@@ -286,8 +242,5 @@ namespace Crossbow
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }

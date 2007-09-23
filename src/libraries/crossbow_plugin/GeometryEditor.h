@@ -37,6 +37,8 @@ public:
     void Create     ( IPointPtr& spPoint, bool bUpdateZAxis = false );
     void Create     ( ILinePtr& spLine );
     void Create     ( IPolylinePtr& spPolyline );
+    void Create     ( IRingPtr& spRing );
+    void Create     ( IPolygonPtr& spPolygon );
     void Validate   ( IFeaturePtr spFeature, IPointPtr& spPoint );
     bool UpdateCoord( IPointPtr spPoint, const ASN1T_CoordUTM& asnUTM );
     //@}

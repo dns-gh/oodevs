@@ -46,6 +46,11 @@ private:
     LocationEditor& operator=( const LocationEditor& ); //!< Assignement operator
     //@}
 
+    //! @name 
+    //@{
+    void Update( IPointCollectionPtr spPointCollection, const ASN1T_CoordUTM& asnUTM );
+    //@}
+
 private:
     //! @name Member data
     //@{
