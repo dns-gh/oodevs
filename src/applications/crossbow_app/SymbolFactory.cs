@@ -167,7 +167,7 @@ namespace Crossbow
 
         private static bool IsEmergencyForceElement(string symbolId)
         {
-            return symbolId[5] == 'E';
+            return symbolId.Length > 5 && symbolId[5] == 'E';
         }
 
         private IDynamicElement CreateTacticalElement(IDisplay display, IDynamicDisplay dynamicDisplay, IFeature feature, string symbolId)

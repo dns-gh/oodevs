@@ -310,7 +310,7 @@ namespace Crossbow
             ICoordinateTool converter = new CoordinateToolClass();
             IPoint datum = new PointClass();
             IPoint wgs = new PointClass();
-            string dms = "", utm = "", mgrs = "";            
+            string dms = "", utm = "", mgrs = "";
             try
             {
                 point.Project(gcs); // Project point to WGS

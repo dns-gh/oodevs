@@ -105,7 +105,6 @@ namespace Crossbow
         private string m_limas = "TacticalLines";
         private string m_reports = "Reports";
         private string m_objectsPoint = "TacticalObjectPoint";
-        private string m_emergencies = "Emergencies";
 
         [DescriptionAttribute("Layer containing units")]
         [CategoryAttribute("Layer bindings")]
@@ -186,24 +185,7 @@ namespace Crossbow
                 m_reports = value;
             }
         }
-
-        [DescriptionAttribute("Table containing emergency events")]
-        [CategoryAttribute("Table bindings")]
-        [TypeConverterAttribute(typeof(FeatureLayerList))]
-        [DefaultValue("Emergencies")]
-        public string Emergencies
-        {
-            get
-            {
-                return m_emergencies;
-            }
-            set
-            {
-                m_emergencies = value;
-            }
-        }
-
-        
+       
     }
     #endregion
 }

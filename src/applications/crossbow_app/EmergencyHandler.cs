@@ -34,12 +34,16 @@ namespace Crossbow
 
         public void ActivateItem(string name, object value)
         {
-            string tableName = Tools.GetCSwordExtension().Config.LayersConfiguration.Emergencies;
+            string tableName = Tools.GetCSwordExtension().Config.LayersConfiguration.TacticalObjectPoint;
             IFeatureWorkspace workspace = Tools.OpenWorkspace(tableName);
             IFeatureClass featureClass = workspace.OpenFeatureClass(tableName);
             IFeature feature = featureClass.CreateFeature();
-            Tools.SetValue<string>(feature, "type", name);
-            feature.Shape = Tools.MakePoint(m_contextMenuX, m_contextMenuY);
+            Tools.SetValue<string>(feature, "Info", name);
+            IPoint point = Tools.MakePoint(m_contextMenuX, m_contextMenuY);
+            IZAware aware = point as IZAware;
+            aware.ZAware = true;
+            point.Z = 0;
+            feature.Shape = point;
             feature.Store();
         }
 
