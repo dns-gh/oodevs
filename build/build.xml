@@ -9,7 +9,7 @@
     <propertyregex property="svn.version" input="${svn.info}" regexp="Last Changed Rev: ([0-9]+)" select="\1"/>
     <property name="version.company" value="MASA-SCI"/>
     <property name="version.product" value="C-Sword"/>
-    <property name="version.version" value="1,0,0,${svn.version}"/>
+    <property name="version.version" value="1,0,0,0"/>
 
     <!--
     ============================================================================
@@ -512,7 +512,7 @@
         </zip>
      <!--   <delete file="${dist.dir}/current/exercise.xml"/>-->
     </target>
-
+    
     <target name="installer" description="create the installer">
         <nsis todir="${dist.dir}/current"/>
     </target>

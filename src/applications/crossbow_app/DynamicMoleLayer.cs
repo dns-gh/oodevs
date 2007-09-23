@@ -43,7 +43,7 @@ namespace Crossbow
         {
             m_symbolFactory = symbolFactory;
             m_selectionColor = Tools.MakeColor(255, 0, 0);
-            SetupTimer(5000);
+            SetupTimer(2000); // 2s
         }
 
         ~DynamicMoleLayer()
@@ -149,6 +149,7 @@ namespace Crossbow
                 feature = cursor.NextFeature();
             }
             cursor = null;
+            GC.Collect();
         }
 
         private void DrawFeature(IDisplay display, IDynamicDisplay dynamicDisplay, IFeature feature)
@@ -219,8 +220,7 @@ namespace Crossbow
         {
             try
             {
-                // Tools.GetDisplay().UpdateWindow();
-                // m_bIsImmediateDirty = true;
+                m_bIsImmediateDirty = true;
             }
             catch (Exception ex)
             {
