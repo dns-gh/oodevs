@@ -48,7 +48,8 @@ public:
     bool IsLocked() const;
     void Unlock();
     ITablePtr GetTable( const std::string& name );
-	void Initialize();
+    IFeatureClassPtr GetFeatureClass( const std::string& feature, bool clear = true );
+    void Initialize();
 	void Finalize();
     //@}
 
@@ -74,7 +75,6 @@ private:
     void             CheckOutLicences( esriLicenseProductCode eProcuct );
     void             LoadSpatialReference();
     IFeatureClassPtr LoadFeatureClass( const std::string& feature, bool clear );
-    IFeatureClassPtr GetFeatureClass( const std::string& feature, bool clear = true );
     IFeatureClassPtr GetObjectFeatureClass( const ASN1T_Location& location );
     void             ClearFeatureClass( IFeatureClassPtr spFeatureClass );
     void             SetSpatialReference( IFeatureClassPtr spFeatureClass );

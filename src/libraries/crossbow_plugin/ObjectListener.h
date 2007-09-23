@@ -7,42 +7,36 @@
 //
 // *****************************************************************************
 
-#ifndef __OrderListener_h_
-#define __OrderListener_h_
+#ifndef __ObjectListener_h_
+#define __ObjectListener_h_
 
 #include "ESRI.h"
 #include "Listener_ABC.h"
-
-namespace kernel
-{
-    class OrderTypes;
-}
+#include "game_asn/Asn.h"
 
 namespace dispatcher
 {
-    class Model;
     class SimulationPublisher_ABC;
 }
 
 namespace crossbow
 {
     class Connector;
-    class OrderDispatcher;
 
 // =============================================================================
-/** @class  OrderListener
-    @brief  OrderListener
+/** @class  ObjectListener
+    @brief  ObjectListener
 */
-// Created: SBO 2007-05-30
+// Created: SBO 2007-09-23
 // =============================================================================
-class OrderListener : public Listener_ABC
+class ObjectListener : public Listener_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderListener( Connector& connector, dispatcher::SimulationPublisher_ABC& publisher, const kernel::OrderTypes& types, const dispatcher::Model& model );
-    virtual ~OrderListener();
+             ObjectListener( Connector& connector, dispatcher::SimulationPublisher_ABC& publisher );
+    virtual ~ObjectListener();
     //@}
 
     //! @name Operations
@@ -53,26 +47,28 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    OrderListener( const OrderListener& );            //!< Copy constructor
-    OrderListener& operator=( const OrderListener& ); //!< Assignment operator
+    ObjectListener( const ObjectListener& );            //!< Copy constructor
+    ObjectListener& operator=( const ObjectListener& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
-    //@{    
-    void MarkProcessed( IRowPtr row ) const;
+    //@{
+    void SendCreation( const IFeaturePtr row );
+    void CleanPending();
+    void SerializeLocation( ASN1T_Location& asn, IGeometryPtr geometry ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     dispatcher::SimulationPublisher_ABC& publisher_;
-    std::auto_ptr< OrderDispatcher > dispatcher_;
+    IFeatureClassPtr featureClass_;
     ITablePtr table_;
-    IQueryFilterPtr waitingOrdersFilter_;
-    ICursorPtr cursor_;
+    IQueryFilterPtr pendingCreationFilter_;
+    IFeatureCursorPtr cursor_;
     //@}
 };
 
 }
 
-#endif // __OrderListener_h_
+#endif // __ObjectListener_h_

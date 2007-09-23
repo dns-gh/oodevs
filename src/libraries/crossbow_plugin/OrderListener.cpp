@@ -38,20 +38,20 @@ OrderListener::~OrderListener()
     waitingOrdersFilter_.Release();
 }
 /*
-namespace 
+namespace
 {
     class RunCursor
     {
         RunCursor( ICursorPtr cursor ) : cursor_ ( cursor ) {}
-        
+
         template< Functor > void Apply( OrderListener& listener, Functor& func )
         {
             IRowPtr row;
             cursor_->NextRow( &row );
             while( row != 0 )
             {
-                listener.func();                
-                
+                listener.func();
+
                 ProcessOrder( row );
                 cursor_->NextRow( &row );
             }
@@ -70,15 +70,15 @@ void OrderListener::Listen()
     IRowPtr row;
     HRESULT res = table_->Search( waitingOrdersFilter_, false, &cursor_ );
     if( FAILED( res ) )
-        throw std::runtime_error( "Search failed" ); // $$$$ SBO 2007-05-30: 
-    
+        throw std::runtime_error( "Search failed" ); // $$$$ SBO 2007-05-30:
+
     cursor_->NextRow( &row );
     while( row != 0 )
     {
         dispatcher_->Dispatch( publisher_, row );
         MarkProcessed( row );
         cursor_->NextRow( &row );
-    }    
+    }
 }
 
 // -----------------------------------------------------------------------------

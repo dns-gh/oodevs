@@ -13,6 +13,7 @@
 #include "OrderTypes.h"
 #include "OrderListener.h"
 #include "StatusListener.h"
+#include "ObjectListener.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Model.h"
 #include "dispatcher/Visitors.h"
@@ -30,6 +31,7 @@ ConnectorFacade::ConnectorFacade( const dispatcher::Model& model, const dispatch
 {
     listeners_.push_back( T_SharedListener( new OrderListener( *connector_, publisher, *orderTypes_, model ) ) );
     listeners_.push_back( T_SharedListener( new StatusListener( *connector_, publisher ) ) );
+    listeners_.push_back( T_SharedListener( new ObjectListener( *connector_, publisher ) ) );
 }
 
 // -----------------------------------------------------------------------------

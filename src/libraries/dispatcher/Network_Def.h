@@ -182,6 +182,7 @@ GENERATE_EMPTY_ASN_MSG_SENDER   ( ClientToSim, ControlResume, control_resume );
 GENERATE_ASN_MSG_SENDER         ( ClientToSim, UnitOrder, unit_order );
 GENERATE_ASN_MSG_SENDER         ( ClientToSim, FragOrder, frag_order );
 GENERATE_ASN_MSG_SENDER         ( ClientToSim, AutomatOrder, automat_order );
+GENERATE_ASN_MSG_SENDER         ( ClientToSim, ObjectMagicAction, object_magic_action );
 
 template< typename L, typename E, typename P > 
 void SendContainerValues( const P& container, L& asnList )
