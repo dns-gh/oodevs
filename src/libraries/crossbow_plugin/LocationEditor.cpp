@@ -39,18 +39,31 @@ LocationEditor::~LocationEditor()
 // -----------------------------------------------------------------------------
 void LocationEditor::CreateGeometry( IFeatureBufferPtr spBuffer, const ASN1T_Location& asn )
 {
-    IPointCollectionPtr spGeometry;
-    
-    spGeometry.CreateInstance( CLSID_Ring );
+    IRingPtr spRing;
+        
+    spRing.CreateInstance( CLSID_Ring );
+    IPointPtr spLast;
+    IPointPtr spFirst;
     for ( int i = 0; i < asn.coordinates.n; ++i )
-    {
-        IPointPtr spPoint;
-        Create( spPoint, true );
-        if( UpdateCoord( spPoint, asn.coordinates.elem[ i ] ) )
-            spGeometry->AddPoint( spPoint );
+    {    
+        IPointPtr spCurrent;
+        Create( spCurrent, true );
+        if ( UpdateCoord( spCurrent, asn.coordinates.elem[ i ] ) && spLast != NULL )
+        {
+            ILinePtr spLine; spLine.CreateInstance( CLSID_Line );
+            spLine->put_FromPoint( spLast );
+            spLine->put_ToPoint( spCurrent );            
+        }
+        if ( i == 0 )
+            spFirst = spCurrent;
+        spLast = spCurrent;
     }
-    long size = 0;
-    spGeometry->get_PointCount( &size );
-    if ( size > 0 )
-        scope_.WriteGeometry( spBuffer, spGeometry );
+    spRing->put_FromPoint( spFirst );
+    spRing->put_ToPoint( spFirst );
+//    IPointCollectionPtr spGeometry;
+//    spRing->QueryInterface( IID_IPointCollection, (LPVOID*)&spGeometry );
+//    long size = 0;
+//    spGeometry->get_PointCount( &size );
+//    if ( size > 0 )
+        scope_.WriteGeometry( spBuffer, spRing );
 }

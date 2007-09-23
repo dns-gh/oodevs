@@ -67,6 +67,7 @@ private:
     boost::scoped_ptr< population::FlowManager_ABC >    pFlow_;
     mutable bool first_update_;
     mutable unsigned step_;
+    unsigned start_;
     //@}
 };
 

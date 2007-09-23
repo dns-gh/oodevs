@@ -267,6 +267,21 @@ namespace Crossbow
                 System.Console.Write(e.Message);
             }
         }
+        public static void ClearClass(string workspace, string name)
+        {
+            try
+            {
+                IFeatureWorkspace ws = OpenWorkspace(workspace);
+                ITable table = ws.OpenFeatureClass(name) as ITable;
+                IQueryFilter filter = new QueryFilterClass();
+                filter.WhereClause = "1";
+                table.DeleteSearchedRows(filter);                
+            }
+            catch (System.Exception e)
+            {
+                System.Console.Write(e.Message);
+            }
+        }
         #endregion
 
         #region "Create IColor from RGB components"

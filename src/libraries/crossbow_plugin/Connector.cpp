@@ -37,6 +37,7 @@ Connector::Connector( const dispatcher::Config& config, const dispatcher::Model&
     const dispatcher::PluginConfig& pluginConfig = config.GetPluginConfig( "crossbow" );
     ConnectToGeodatabase( config.BuildGameChildFile( pluginConfig.GetParameter( "geodatabase" ) ) );
     LoadSpatialReference();
+    InitializeStructure();
 }
 
 // -----------------------------------------------------------------------------
@@ -93,6 +94,29 @@ void Connector::LoadSpatialReference()
     if( factory == NULL || FAILED( factory->CreateGeographicCoordinateSystem( (int)esriSRGeoCS_WGS1984, &geoCoordSystem ) ) ) // _NTF / _WGS1984
         throw std::runtime_error( "Unable to initialize coordinate system" );
     spSpatialReference_ = geoCoordSystem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Connector::InitializeStructure
+/* Clear old data
+*/
+// Created: JCR 2007-09-22
+// -----------------------------------------------------------------------------
+void Connector::InitializeStructure()
+{
+    Lock();
+    {
+        GetFeatureClass( "UnitForces" );    
+        // GetFeatureClass( "TacticalLines" );
+        // GetFeatureClass( "BoundaryLimits" ); 
+        GetFeatureClass( "TacticalObjectPoint" );
+        GetFeatureClass( "TacticalObjectLine" );
+        GetFeatureClass( "TacticalObjectArea" );
+        GetFeatureClass( "KnowledgeUnits" );
+        GetTable( "Reports" );
+        GetTable( "Formations" );
+    }
+    Unlock();
 }
 
 namespace
@@ -170,7 +194,7 @@ void Connector::SetSpatialReference( IFeatureClassPtr spFeatureClass )
 // Name: Connector::GetFeatureClass
 // Created: JCR 2007-05-23
 // -----------------------------------------------------------------------------
-IFeatureClassPtr Connector::GetFeatureClass( const std::string& feature, bool clear = true )
+IFeatureClassPtr Connector::GetFeatureClass( const std::string& feature, bool clear )
 {
     IFeatureClassPtr& spFeatureClass = features_[ feature ];
     if( spFeatureClass == NULL )
@@ -336,7 +360,7 @@ IFeatureClassPtr Connector::GetObjectFeatureClass( const ASN1T_Location& locatio
     }
     return GetFeatureClass( className );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Connector::Update
 // Created: JCR 2007-04-30

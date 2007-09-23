@@ -9,12 +9,21 @@ using ESRI.ArcGIS.Carto;
 
 namespace Crossbow
 {
-    
     public sealed class OrderParameter : IOrderParameter
     {        
         abstract class Type_ABC
         {
-            protected const string m_OrderShapeName = "OrderParameterShapes";
+            protected const string m_OrderPolygon = "OrderParameterArea";
+            protected const string m_OrderLine = "OrderParameterLine";
+            protected const string m_OrderPoint = "OrderParameterPoint";
+
+            protected enum Type { circle = 0,
+                        ellipse = 1,
+                        line = 2,
+                        polygon = 3,
+                        point = 4,
+                        sector = 5
+                      };
 
             bool m_selected;
             public bool Selected
@@ -49,12 +58,15 @@ namespace Crossbow
             {
                 m_point = Tools.MakePoint(m_x, m_y);                
                 if (m_point != null)
-                    Tools.Store(m_OrderShapeName, m_point);
+                    Tools.Store(m_OrderPoint, m_point);
             }
             public override string GetValue()
             {
                 if (m_point != null)
-                    return Tools.ConvertToMGRS(m_point);
+                {
+                    StringBuilder builder = new StringBuilder( 15 + 2 );
+                    return builder.Append((uint)Type.point).Append(";").Append(Tools.ConvertToMGRS(m_point)).ToString();
+                }
                 return "";
             }
         }
@@ -75,7 +87,7 @@ namespace Crossbow
                     ISpatialReference spRef = ((IGeometry)m_polygon).SpatialReference;
                     if (spRef == null)
                         ((IGeometry)m_polygon).SpatialReference = Tools.GetDisplay().DisplayTransformation.SpatialReference;
-                    Tools.Store(m_OrderShapeName, (IGeometry)m_polygon);
+                    Tools.Store(m_OrderPolygon, (IGeometry)m_polygon);
                 }                
             }
             public override string GetValue()
@@ -83,13 +95,13 @@ namespace Crossbow
                 if (m_polygon == null || m_polygon.PointCount == 0)
                     return "";
                 int count = m_polygon.PointCount;
-                StringBuilder builder = new StringBuilder(count * 15 + (count - 1));
+                StringBuilder builder = new StringBuilder( count * 15 + count + 1 );
+                builder.Append((uint)Type.polygon);
                 for (int i = 0; i < count; ++i)
                 {
-                    IPoint point = m_polygon.get_Point(i);
-                    if (builder.Length > 0)
-                        builder.Append(";");
-                    builder.Append(Tools.ConvertToMGRS(point));
+                    IPoint point = m_polygon.get_Point(i);                    
+                    builder.Append(";")
+                           .Append(Tools.ConvertToMGRS(point));
                 }
                 return builder.ToString();
             }
@@ -142,17 +154,28 @@ namespace Crossbow
                         ISpatialReference spRef = m_path.SpatialReference;
                         if (spRef == null)
                             m_path.SpatialReference = Tools.GetDisplay().DisplayTransformation.SpatialReference;
-                        Tools.Store(m_OrderShapeName, m_path);
+                        Tools.Store(m_OrderLine, m_path);
                     }
                 }
             }
             public override string GetValue()
             {
-                string value = "";
-                if (m_path != null)                
-                    value = Tools.ConvertToMGRS(m_path.FromPoint) + ";" + Tools.ConvertToMGRS(m_path.ToPoint);                    
-                return value;
+                if (m_path != null)
+                {
+                    StringBuilder builder = new StringBuilder(15 + 2);
+                    return builder.Append((uint)Type.line).Append(";")
+                                  .Append(Tools.ConvertToMGRS(m_path.FromPoint)).Append(";")
+                                  .Append(Tools.ConvertToMGRS(m_path.ToPoint)).ToString();
+                }
+                return "";
             }
+        }
+
+        public static void Initialize(string workspace)
+        {
+            Tools.ClearClass(workspace, "OrderParameterArea");
+            Tools.ClearClass(workspace, "OrderParameterLine");
+            Tools.ClearClass(workspace, "OrderParameterPoint");
         }
 
         static Type_ABC CreateType(string type)

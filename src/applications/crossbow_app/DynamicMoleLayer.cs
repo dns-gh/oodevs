@@ -43,7 +43,7 @@ namespace Crossbow
         {
             m_symbolFactory = symbolFactory;
             m_selectionColor = Tools.MakeColor(255, 0, 0);
-            SetupTimer(100);
+            SetupTimer(5000);
         }
 
         ~DynamicMoleLayer()
@@ -72,6 +72,9 @@ namespace Crossbow
                     return;
                 if (Visible)
                     DrawFeatureClass(Display, DynamicDisplay);
+
+                // set the dirty flag to true in order to let the DynamicDisplay that the layer needs redraw.
+                // base.m_bIsImmediateDirty = true;
             }
             catch (Exception ex)
             {
@@ -138,7 +141,7 @@ namespace Crossbow
                     if (FeatureClass == null)
                         return;
                 }
-            IFeatureCursor cursor = m_featureClass.Search(null, false);
+            IFeatureCursor cursor = m_featureClass.Search(null, true);
             IFeature feature = cursor.NextFeature();
             while (feature != null)
             {
@@ -216,7 +219,8 @@ namespace Crossbow
         {
             try
             {
-                // Update();
+                // Tools.GetDisplay().UpdateWindow();
+                // m_bIsImmediateDirty = true;
             }
             catch (Exception ex)
             {

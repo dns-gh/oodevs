@@ -146,6 +146,7 @@ namespace Crossbow
             if (m_emergencyHandler == null)
                 m_emergencyHandler = new EmergencyHandler(m_model);
             ModelLoaded(this, EventArgs.Empty);
+            OrderParameter.Initialize(Config.LayersConfiguration.Units);
             SetupEvents();
         }
 

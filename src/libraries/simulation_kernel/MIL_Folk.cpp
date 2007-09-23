@@ -28,13 +28,15 @@ using namespace population;
 MIL_Folk::MIL_Folk( const MIL_Config& config )
     : pFlow_ ( ( config.IsPopulationEnabled() ) ? population::FlowManagerFactory::Create() : 0 )
     , first_update_ ( true )
-    , step_ ( 0 )
+    , step_         ( 0 )
+    , start_        ( 0 )
 {    
     if ( pFlow_ )
     {
         MT_LOG_INFO_MSG( "Loading population module" )
         Config  popConfig( config.GetPopulationDir(), "population.xml" );
-        pFlow_->Load( popConfig );
+        pFlow_->Load( popConfig );        
+        start_ = 14 * 3600 * 1000; // 14h00m
     }
 }
 
@@ -66,7 +68,7 @@ void MIL_Folk::Update( unsigned utime, unsigned timeStep )
 {
     if ( pFlow_ )
     {
-        pFlow_->Update( population::Time( "", utime ), timeStep );
+        pFlow_->Update( population::Time( "", start_ + utime ), timeStep );
         UpdateNetwork();
     }
 }
