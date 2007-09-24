@@ -99,7 +99,6 @@ static const char* idClassesXml =
 "    <Classe nom=\"zone interdite mouvement\"              id=\"215\" />\n"
 "    <Classe nom=\"zone implantation mortier\"             id=\"167\" />\n"
 "    <Classe nom=\"installation\"                          id=\"210\" />\n"
-"    <Classe nom=\"installation\"                          id=\"210\" />\n"
 "    <Classe nom=\"fire\"                                  id=\"210\" />\n"
 "    <Classe nom=\"emergency shelter\"                     id=\"210\" />\n"
 "    <Classe nom=\"Population\"                            id=\"139\" />\n"
