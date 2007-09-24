@@ -506,8 +506,8 @@
             <!-- Cf defaultexcludes : no need of "svn export" -->
             <zipfileset prefix="data/models"   dir="${data.dir}/data/models/main"/>
             <zipfileset prefix="data/terrains" dir="${data.dir}/data/terrains"/>
-            <zipfileset prefix="exercises/empty-worldwide" dir="${data.dir}/exercises/empty-worldwide"/>
-            <zipfileset prefix="exercises/empty-france" dir="${data.dir}/exercises/empty-france"/>
+            <zipfileset prefix="exercises/ADA - Attaquer" dir="${data.dir}/exercises/ADA - Attaquer"/>
+            <zipfileset prefix="exercises/ADA - Freiner"  dir="${data.dir}/exercises/ADA - Freiner"/>
             <!--<zipfileset prefix="exercises/empty" dir="${dist.dir}/current" includes="exercise.xml"/>-->
         </zip>
      <!--   <delete file="${dist.dir}/current/exercise.xml"/>-->
