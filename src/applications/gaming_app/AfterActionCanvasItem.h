@@ -29,7 +29,7 @@ class AfterActionCanvasItem : public QCanvasRectangle
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionCanvasItem( QCanvas* canvas, const QPalette& palette, std::auto_ptr< AfterActionItem_ABC > item, const QPoint& pos, unsigned id );
+             AfterActionCanvasItem( QCanvas* canvas, const QPalette& palette, AfterActionItem_ABC& item, const QPoint& pos );
     virtual ~AfterActionCanvasItem();
     //@}
 
@@ -82,8 +82,7 @@ private:
     //! @name Member data
     //@{
     const QPalette& palette_;
-    std::auto_ptr< AfterActionItem_ABC > item_;
-    const unsigned id_;
+    AfterActionItem_ABC& item_;
     T_Items subItems_;
     T_Items inputs_;
     QCanvasItem* output_;

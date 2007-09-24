@@ -11,6 +11,7 @@
 #include "AfterActionFunction.h"
 #include "AfterActionFactory.h"
 #include "AfterActionItem_ABC.h"
+#include "AfterActionParameter.h"
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -48,7 +49,8 @@ AfterActionFunction::~AfterActionFunction()
 // -----------------------------------------------------------------------------
 void AfterActionFunction::ReadParameter( xml::xistream& xis )
 {
-
+    const std::string name = xml::attribute< std::string >( xis, "name" );
+    ParameterResolver::Register( name, *new AfterActionParameter( xis ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +62,7 @@ void AfterActionFunction::CreateItem( const std::string& type, xml::xistream& xi
     const std::string functionName = xml::attribute( xis, "function", type );
     const std::string id           = xml::attribute( xis, "id", type );
     AfterActionFactory& function = factories.Get( functionName.c_str() );
-    Register( id, *function.Create().release() );
+    ItemResolver::Register( id, *function.Create().release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,10 +72,10 @@ void AfterActionFunction::CreateItem( const std::string& type, xml::xistream& xi
 void AfterActionFunction::LoadItem( const std::string& type, xml::xistream& xis )
 {
     const std::string id = xml::attribute( xis, "id", type );
-    Get( id ).Connect( xis, *this );
+    ItemResolver::Get( id ).Connect( xis, *this );
 }
 
-namespace 
+namespace
 {
     struct Serializer
     {
@@ -103,7 +105,25 @@ std::string AfterActionFunction::Commit() const
 {
     xml::xostringstream xos;
     xos << xml::start( "indicator" );
-    Apply( Serializer( xos ) );
+    ItemResolver::Apply( Serializer( xos ) );
     xos << xml::end();
     return xos.str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunction::CreateParameterIterator
+// Created: AGE 2007-09-24
+// -----------------------------------------------------------------------------
+Iterator< const AfterActionParameter& > AfterActionFunction::CreateParameterIterator() const
+{
+    return ParameterResolver::CreateIterator();
+}
+
+// -----------------------------------------------------------------------------
+// AfterActionFunction::CreateItemIterator
+// Created: AGE 2007-09-24
+// -----------------------------------------------------------------------------
+kernel::Iterator< const AfterActionItem_ABC& > AfterActionFunction::CreateItemIterator() const
+{
+    return ItemResolver::CreateIterator();
 }

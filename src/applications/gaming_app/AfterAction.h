@@ -18,6 +18,8 @@ namespace gui
 {
     class ItemFactory_ABC;
 }
+class AfterActionFunction;
+class AfterActionCanvas;
 
 // =============================================================================
 /** @class  AfterAction
@@ -27,6 +29,7 @@ namespace gui
 // =============================================================================
 class AfterAction : public QObject
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -35,11 +38,25 @@ public:
     virtual ~AfterAction();
     //@}
 
+private slots:
+    //! @name Slots
+    //@{
+    void OnEditFunction( const AfterActionFunction* function );
+    void OnNewFunction();
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
     AfterAction( const AfterAction& );            //!< Copy constructor
     AfterAction& operator=( const AfterAction& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    QDockWindow* editionDock_;
+    AfterActionCanvas* canvas_;
     //@}
 };
 

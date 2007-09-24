@@ -13,6 +13,8 @@
 #include "clients_kernel/Resolver.h"
 class AfterActionFactory;
 class AfterActionItem_ABC;
+class AfterActionParameter;
+
 namespace xml
 {
     class xistream;
@@ -25,6 +27,7 @@ namespace xml
 // Created: AGE 2007-09-20
 // =============================================================================
 class AfterActionFunction : public kernel::Resolver< AfterActionItem_ABC, std::string >
+                          , public kernel::Resolver< AfterActionParameter, std::string >
 {
 
 public:
@@ -38,6 +41,9 @@ public:
     //@{
     QString GetName() const;
     std::string Commit() const;
+
+    kernel::Iterator< const AfterActionParameter& > CreateParameterIterator() const;
+    kernel::Iterator< const AfterActionItem_ABC& >  CreateItemIterator() const;
     //@}
 
 private:
@@ -52,6 +58,12 @@ private:
     void ReadParameter( xml::xistream& xis );
     void CreateItem( const std::string& type, xml::xistream& xis, kernel::Resolver_ABC< AfterActionFactory, QString >& factories );
     void LoadItem  ( const std::string& type, xml::xistream& xis );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef kernel::Resolver< AfterActionItem_ABC,  std::string > ItemResolver;
+    typedef kernel::Resolver< AfterActionParameter, std::string > ParameterResolver;
     //@}
 
 private:

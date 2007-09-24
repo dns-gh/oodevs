@@ -22,14 +22,13 @@
 // Name: AfterActionCanvasItem constructor
 // Created: AGE 2007-09-18
 // -----------------------------------------------------------------------------
-AfterActionCanvasItem::AfterActionCanvasItem( QCanvas* canvas, const QPalette& palette, std::auto_ptr< AfterActionItem_ABC > item, const QPoint& pos, unsigned id )
+AfterActionCanvasItem::AfterActionCanvasItem( QCanvas* canvas, const QPalette& palette, AfterActionItem_ABC& item, const QPoint& pos )
     : QCanvasRectangle( QRect( pos, QSize( 80, 30 ) ), canvas )
     , palette_        ( palette )
     , item_           ( item )
-    , id_             ( id )
     , output_         ( 0 )
 {
-    item_->Build( *this );
+    item_.Build( *this );
     setEnabled( true );
     show();
 }
@@ -59,7 +58,7 @@ AfterActionCanvasConnection* AfterActionCanvasItem::StartConnection( const QPoin
     if( IsOnOutput( point ) )
         return new AfterActionCanvasConnection( palette_, this, x() + 84, y() + 15 );
     for( int i = 0; i < inputs_.size(); ++i )
-        if( IsOnInput( i, point ) && item_->CanConnect( i ) )
+        if( IsOnInput( i, point ) && item_.CanConnect( i ) )
             return new AfterActionCanvasConnection( palette_, this, i, x() - 4, y() + InputPosition( i ) );
     return 0;
 }
@@ -90,9 +89,9 @@ void AfterActionCanvasItem::Remove( AfterActionCanvasConnection* connection )
     if( it != connections_.end() )
     {
         if( connection->From() == this && connection->To() )
-            item_->Disconnect( connection->To()->item_.get() );
+            item_.Disconnect( &connection->To()->item_ );
         else if( connection->To() == this && connection->From() )
-            item_->Disconnect( connection->From()->item_.get() , connection->ToIndex() );
+            item_.Disconnect( & connection->From()->item_, connection->ToIndex() );
         std::swap( *it, connections_.back() );
         connections_.pop_back();
     }
@@ -104,9 +103,9 @@ void AfterActionCanvasItem::Remove( AfterActionCanvasConnection* connection )
 // -----------------------------------------------------------------------------
 bool AfterActionCanvasItem::Connect( AfterActionCanvasConnection& connection, AfterActionCanvasItem* from, AfterActionCanvasItem* to, int i )
 {
-    if( from && to && to->item_->CanConnect( i, from->item_.get() ) )
+    if( from && to && to->item_.CanConnect( i, & from->item_ ) )
     {
-        to->item_->Connect( i, *from->item_ );
+        to->item_.Connect( i, from->item_ );
         from->connections_.push_back( &connection );
         to  ->connections_.push_back( &connection );
         connection.Close( from, to, i, from->x() + 84, from->y() + 15,

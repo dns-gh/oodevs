@@ -13,6 +13,7 @@
 #include <qcanvas.h>
 
 class AfterActionItem;
+class AfterActionFunction;
 class AfterActionCanvasItem;
 class AfterActionCanvasConnection;
 
@@ -29,14 +30,13 @@ class AfterActionCanvas : public QCanvasView
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionCanvas( QWidget* parent );
+    explicit AfterActionCanvas( QWidget* parent );
     virtual ~AfterActionCanvas();
     //@}
 
     //! @name Operations
     //@{
-    void Load( const std::string& content );
-    std::string Save() const;
+    void Edit( const AfterActionFunction* function );
     //@}
 
 private slots:
@@ -63,6 +63,7 @@ private:
     virtual void keyPressEvent( QKeyEvent* event );
     virtual void resizeEvent( QResizeEvent* event );
     void ClearSelection();
+    void Clear();
 
     void Connect( QMouseEvent* event );
     void Move( QMouseEvent* event );
@@ -78,13 +79,13 @@ private:
 private:
     //! @name Member data
     //@{
+    AfterActionFunction* function_;
     T_Items items_;
     AfterActionCanvasItem*       selected_;
     AfterActionCanvasConnection* selectedConnection_;
     AfterActionCanvasConnection* currentConnection_;
     QPoint grabPoint_;
     bool connect_;
-    unsigned currentId_;
     //@}
 };
 

@@ -14,6 +14,9 @@
 #include "AfterActionCanvasConnection.h"
 #include "gaming/AfterActionItem_ABC.h"
 #include "gaming/AfterActionFactory.h"
+#include "gaming/AfterActionFunction.h"
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: AfterActionCanvas constructor
@@ -21,11 +24,11 @@
 // -----------------------------------------------------------------------------
 AfterActionCanvas::AfterActionCanvas( QWidget* parent )
     : QCanvasView( parent )
-    , selected_  ( 0 )
+    , function_          ( 0 )
+    , selected_          ( 0 )
     , selectedConnection_( 0 )
-    , currentConnection_( 0 )
-    , connect_   ( false )
-    , currentId_ ( 0 )
+    , currentConnection_ ( 0 )
+    , connect_           ( false )
 {
     QPalette palette( palette() );
     palette.setColor( QPalette::Active  , QColorGroup::Foreground, QColor(  50, 105, 200 ) );
@@ -72,7 +75,9 @@ void AfterActionCanvas::dropEvent( QDropEvent* event )
         const AfterActionFactory* factory = *reinterpret_cast< const AfterActionFactory** >( bytes.data() );
         if( factory )
         {
-            AfterActionCanvasItem* item = new AfterActionCanvasItem( canvas(), palette(), factory->Create(), event->pos(), ++currentId_ );
+            std::auto_ptr< AfterActionItem_ABC > modelItem = factory->Create();
+            // $$$$ AGE 2007-09-24: ram
+            AfterActionCanvasItem* item = new AfterActionCanvasItem( canvas(), palette(), *modelItem.release(), event->pos() );
             items_.push_back( item );
             canvas()->update();
         }
@@ -245,4 +250,39 @@ void AfterActionCanvas::Connect()
 void AfterActionCanvas::Select()
 {
     connect_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvas::Clear
+// Created: AGE 2007-09-24
+// -----------------------------------------------------------------------------
+void AfterActionCanvas::Clear()
+{
+    ClearSelection();
+    for( IT_Items it = items_.begin(); it != items_.end(); ++it )
+        delete *it;
+    items_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvas::Edit
+// Created: AGE 2007-09-24
+// -----------------------------------------------------------------------------
+void AfterActionCanvas::Edit( const AfterActionFunction* function )
+{
+    Clear();
+    function_ = const_cast< AfterActionFunction* >( function );
+    if( function_ )
+    {
+        Iterator< const AfterActionItem_ABC& > it = function_->CreateItemIterator();
+        while( it.HasMoreElements() )
+        {
+            // $$$$ AGE 2007-09-24: 
+            AfterActionItem_ABC& item = const_cast< AfterActionItem_ABC& >( it.NextElement() );
+            // $$$$ AGE 2007-09-24: position
+            AfterActionCanvasItem* pItem = new AfterActionCanvasItem( canvas(), palette(), item, QPoint( 100, 100 ) );
+            items_.push_back( pItem );
+        }
+    }
+    canvas()->update();
 }

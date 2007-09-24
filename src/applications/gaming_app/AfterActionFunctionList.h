@@ -31,6 +31,7 @@ class AfterActionFunctionList : public QVBox
                               , public kernel::Observer_ABC
                               , public kernel::ElementObserver_ABC< AfterActionModel >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -42,6 +43,20 @@ public:
     //! @name Operations
     //@{
     void Display( const AfterActionFunction& function, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void NewFunction();
+    void EditFunction( const AfterActionFunction* function );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnSelectionChange( QListViewItem* item );
+    void EditFunction();
     //@}
 
 private:
@@ -60,7 +75,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    QToolBox*  buttons_;
     gui::ListDisplayer< AfterActionFunctionList >* functions_;
     QGroupBox* parameters_;
     //@}
