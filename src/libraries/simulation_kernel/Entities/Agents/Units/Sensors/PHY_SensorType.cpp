@@ -59,7 +59,7 @@ void PHY_SensorType::ReadSensor( xml::xistream& xis )
 
     const PHY_SensorType*& pSensorType = sensorTypes_[ strSensorName ];
     if( pSensorType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown sensor type" ); // $$$$ ABL 2007-07-25: "error context
+        xis.error( "Unknown sensor type" );
     pSensorType = new PHY_SensorType( strSensorName, xis );
 }
 

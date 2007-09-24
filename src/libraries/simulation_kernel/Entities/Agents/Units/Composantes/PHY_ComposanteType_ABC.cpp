@@ -37,12 +37,12 @@ PHY_ComposanteType_ABC::PHY_ComposanteType_ABC( const std::string& strName, xml:
         >> attribute( "protection", strVal );
     pProtection_ = PHY_Protection::Find( strVal );
     if ( !pProtection_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown protection '%s'", strVal.c_str() ) ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Unknown protection '" + strVal + "'" );
 
     xis >> attribute( "size", strVal );
     pVolume_ = PHY_Volume::FindVolume( strVal );
     if ( !pVolume_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown volume '%s'", strVal.c_str() ) ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Unknown volume '" + strVal + "'" );
 }
 
 // -----------------------------------------------------------------------------

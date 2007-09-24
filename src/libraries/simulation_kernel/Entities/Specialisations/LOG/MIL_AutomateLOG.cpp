@@ -216,15 +216,15 @@ void MIL_AutomateLOG::ReadDotation( xml::xistream& xis )
 
     const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
     if( !pDotationCategory )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Unknown dotation type" );
 
     if( stockQuotas_.find( pDotationCategory ) != stockQuotas_.end() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Quota already defined" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Quota already defined" );
 
     uint        nQuantity;
     xis >> attribute( "quantity", nQuantity );
     if( nQuantity < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "nQuantity is not greater or equal to 0" );
+        xis.error( "nQuantity is not greater or equal to 0" );
 
     sDotationQuota quota;
     quota.rQuota_          = nQuantity;

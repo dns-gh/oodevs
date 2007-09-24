@@ -107,7 +107,7 @@ void MIL_BouchonMines::Initialize( xml::xistream& xis )
     xis >> optional() >>content( "activity-time", nMinesActivityTime_ );
 
     if( nMinesActivityTime_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "nMinesActivityTime_ is not greater or equal than 0" );
+        xis.error( "nMinesActivityTime_ is not greater or equal than 0" );
 }
 
 // -----------------------------------------------------------------------------

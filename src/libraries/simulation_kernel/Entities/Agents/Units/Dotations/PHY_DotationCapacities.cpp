@@ -43,9 +43,9 @@ void PHY_DotationCapacities::ReadCategory( xml::xistream& xis )
     xis >> attribute( "name", strDotationType );
 
     const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( strDotationType );
-    if ( !pDotationType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type" ); // $$$$ ABL 2007-07-23: error context
-    
+    if( !pDotationType )
+        xis.error( "Unknown dotation type" );
+
     ReadDotationCategories( xis, *pDotationType );
 }
 
@@ -64,17 +64,17 @@ void PHY_DotationCapacities::ReadDotationCategories( xml::xistream& xis, const P
 // -----------------------------------------------------------------------------
 void PHY_DotationCapacities::ReadDotation( xml::xistream& xis, const PHY_DotationType& dotationType )
 {
-        std::string strCategoryName;
-        xis >> attribute( "name", strCategoryName );
+    std::string strCategoryName;
+    xis >> attribute( "name", strCategoryName );
 
-        const PHY_DotationCategory* pDotationCategory = dotationType.FindDotationCategory( strCategoryName );
-        if ( !pDotationCategory )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation category" ); // $$$$ ABL 2007-07-23: error context
+    const PHY_DotationCategory* pDotationCategory = dotationType.FindDotationCategory( strCategoryName );
+    if( !pDotationCategory )
+        xis.error( "Unknown dotation category" );
 
-        PHY_DotationCapacity*& pDotation = dotationCapacities_[ pDotationCategory ];
-        if( pDotation )        
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Dotation already defined" ); // $$$$ ABL 2007-07-23: error context
-        pDotation = new PHY_DotationCapacity( *pDotationCategory, xis );
+    PHY_DotationCapacity*& pDotation = dotationCapacities_[ pDotationCategory ];
+    if( pDotation )
+        xis.error( "Dotation already defined" );
+    pDotation = new PHY_DotationCapacity( *pDotationCategory, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,4 +111,3 @@ void PHY_DotationCapacities::UnregisterCapacities( PHY_DotationGroupContainer& c
     for( CIT_DotationCapacityMap it = dotationCapacities_.begin(); it != dotationCapacities_.end(); ++it )
         container.RemoveCapacity( *it->second );
 }
-

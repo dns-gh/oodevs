@@ -48,18 +48,18 @@ PHY_AttritionData::PHY_AttritionData( xml::xistream& xis )
         >> attribute( "repairable-without-evacuation", rReparableWithoutEvacuation );
 
     if( rDestroyed < 0. || rDestroyed > 1. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rDestroyed not in [0..1]" );
+        xis.error( "rDestroyed not in [0..1]" );
     if( rReparableWithEvacuation < 0. || rReparableWithEvacuation > 1. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rReparableWithEvacuation not in [0..1]" );
+        xis.error( "rReparableWithEvacuation not in [0..1]" );
     if( rReparableWithoutEvacuation < 0. || rReparableWithoutEvacuation > 1. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rReparableWithoutEvacuation not in [0..1]" );
+        xis.error( "rReparableWithoutEvacuation not in [0..1]" );
 
     rDestroyedBound_                    = rDestroyed;
     rReparableWithEvacuationBound_      = rDestroyedBound_ + rReparableWithEvacuation;
     rReparableWithoutEvacuationBound_   = rReparableWithEvacuationBound_ + rReparableWithoutEvacuation;
 
     if( rReparableWithoutEvacuationBound_ > 1. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Sum of attrition percentages is out of bound (%f > 1)", rReparableWithoutEvacuationBound_ ) ); // $$$$ ABL 2007-07-19: error context
+        xis.error( "Sum of attrition percentages is out of bound" );
 
     // Score
     rScore_ = rDestroyed + ( rReparableWithEvacuation / 2. ) + ( rReparableWithoutEvacuation / 4. );

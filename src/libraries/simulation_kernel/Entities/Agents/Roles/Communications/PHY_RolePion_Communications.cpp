@@ -38,9 +38,9 @@ void PHY_RolePion_Communications::Initialize( xml::xistream& xis )
         >> end();
 
     if( rCoefSpeedModificator_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "communication-breakdown: speed-modifier < 0" );
+        xis.error( "communication-breakdown: speed-modifier < 0" );
     if( rCoefReloadingTimeModificator_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "communication-breakdown: reloading-time-modifier <= 0" );
+        xis.error( "communication-breakdown: reloading-time-modifier <= 0" );
 }
 
 // -----------------------------------------------------------------------------

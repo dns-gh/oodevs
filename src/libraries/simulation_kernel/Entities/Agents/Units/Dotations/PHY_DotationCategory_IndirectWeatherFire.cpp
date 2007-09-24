@@ -43,9 +43,9 @@ PHY_DotationCategory_IndirectWeatherFire::PHY_DotationCategory_IndirectWeatherFi
         >> attribute( "life-time", lifeTime );
 
     if( ! tools::DecodeTime( setupTime, rDeploymentDuration_ ) || rDeploymentDuration_ < 0. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "indirect-fire: setup-time < 0" );
+        xis.error( "indirect-fire: setup-time < 0" );
     if( ! tools::DecodeTime( lifeTime, rLifeDuration_ ) || rLifeDuration_ < 0. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "indirect-fire: life-time < 0" );
+        xis.error( "indirect-fire: life-time < 0" );
 }
 
 // -----------------------------------------------------------------------------

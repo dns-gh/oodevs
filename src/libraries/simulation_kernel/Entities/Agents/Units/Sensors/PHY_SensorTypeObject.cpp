@@ -45,7 +45,7 @@ void PHY_SensorTypeObject::ReadObject( xml::xistream& xis )
 
     const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( strType );
     if( !pObjectType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type" ); // $$$$ ABL 2007-07-25: error context
+        xis.error( "Unknown object type" );
 
     assert( objectData_.size() > pObjectType->GetID() );
     const PHY_SensorTypeObjectData* pObjectData = new PHY_SensorTypeObjectData( xis );

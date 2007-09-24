@@ -57,7 +57,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Ar
     xis >> attribute( "attitude", strAttitude );
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( strAttitude );
     if( !pDefaultAttitude_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown attitude" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Unknown attitude" );
 
     pKnowledge_ = new DEC_PopulationKnowledge();
     pDecision_  = new DEC_PopulationDecision( *this );

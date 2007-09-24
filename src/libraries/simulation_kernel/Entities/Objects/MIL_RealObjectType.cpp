@@ -185,7 +185,7 @@ void MIL_RealObjectType::Initialize( xml::xistream& xis )
     // Post check
     for( CIT_ObjectTypeMap itType = objectTypes_.begin(); itType != objectTypes_.end(); ++itType )
         if( !itType->second->IsInitialized() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Object type '%s' not initialized", itType->second->GetName().c_str() ) ); // $$$$ ABL 2007-07-19: error context
+            xis.error( "Object type '" + itType->second->GetName() + " ' not initialized" );
 
 }
 
@@ -200,7 +200,7 @@ void MIL_RealObjectType::ReadObject( xml::xistream& xis )
 
     const MIL_RealObjectType* pType = Find( strType );
     if( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type" ); // $$$$ ABL 2007-07-19: error context
+        xis.error( "Unknown object type" );
 
     const_cast< MIL_RealObjectType* >( pType )->Read( xis );
 
@@ -288,7 +288,7 @@ void MIL_RealObjectType::ReadAttrition( xml::xistream& xis )
     PHY_Protection::CIT_ProtectionMap it = protections.find( protectionType );
 
     if( it == protections.end() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "invalid protection name" );
+        xis.error( "invalid protection name" );
 
     const PHY_Protection& protection = *it->second;
 
@@ -318,9 +318,9 @@ void MIL_RealObjectType::ReadPopulation( xml::xistream& xis )
         >> attribute( "ph", rPopulationAttritionPH_ );
 
     if( rPopulationAttritionPH_ <= 0. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population-attrition: ph <= 0" );
+        xis.error( "population-attrition: ph <= 0" );
     if( rPopulationAttritionSurface_ <= 0. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population-attrition: surface <= 0" );
+        xis.error( "population-attrition: surface <= 0" );
 }
 
 // -----------------------------------------------------------------------------
@@ -346,15 +346,15 @@ void MIL_RealObjectType::ReadValorizationOrConstruction( xml::xistream& xis, uin
 
     const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( strDotationType );
     if( !pDotationType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type" ); // $$$$ ABL 2007-07-19: error context
+        xis.error( "Unknown dotation type" );
     pDotationCategory = pDotationType->FindDotationCategory( strDotationCategory );
     if( !pDotationCategory )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation category" ); // $$$$ ABL 2007-07-19: error context
+        xis.error( "Unknown dotation category" );
 
     xis >> attribute( "count", nDotationValue );
 
     if( nDotationValue < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dotations: count < 0" );
+        xis.error( "dotations: count < 0" );
 }
 
 // -----------------------------------------------------------------------------
@@ -395,17 +395,17 @@ void MIL_RealObjectType::InitializePlacementScores( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_RealObjectType::ReadTerrain( xml::xistream& xis )
 {
-        std::string strTerrainType;
-        uint nScore = 0;
+    std::string strTerrainType;
+    uint nScore = 0;
 
-        xis >> attribute( "terrain", strTerrainType )
-            >> attribute( "value", nScore );
+    xis >> attribute( "terrain", strTerrainType )
+        >> attribute( "value", nScore );
 
-        TerrainData nLandType = MIL_Tools::ConvertLandType( strTerrainType );
-        if( nLandType.Area() == 0xFF )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown land type" ); // $$$$ ABL 2007-07-19: error context
+    TerrainData nLandType = MIL_Tools::ConvertLandType( strTerrainType );
+    if( nLandType.Area() == 0xFF )
+        xis.error( "Unknown land type" );
 
-        environmentScores_.push_back( std::make_pair( nLandType, nScore ) );
+    environmentScores_.push_back( std::make_pair( nLandType, nScore ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -440,7 +440,7 @@ void MIL_RealObjectType::InitializeSpeedData( xml::xistream& xis )
         nSpeedPolicy_ = eSpeedPolicy_AgentMaxSpeed;
         xis >> attribute( "max-unit-percentage-speed", rSpeedPolicyMaxSpeedAgentFactor_ );
         if( rSpeedPolicyMaxSpeedAgentFactor_ < 0 || rSpeedPolicyMaxSpeedAgentFactor_ > 100 )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "max-unit-percentage-speed not in [0..100]" );
+            xis.error( "max-unit-percentage-speed not in [0..100]" );
         rSpeedPolicyMaxSpeedAgentFactor_ /= 100.;
     }
 }
@@ -452,11 +452,11 @@ void MIL_RealObjectType::InitializeSpeedData( xml::xistream& xis )
 void MIL_RealObjectType::Read( xml::xistream& xis )
 {
     if( bInitialized_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Object types are already initialized" );
+        xis.error( "Object types are already initialized" );
 
     pIDManager_ = MIL_IDManager::FindObjectIDManager( strName_ );
     if( !pIDManager_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Class ID of object '%s' is not initialized", strName_.c_str() ) );
+        xis.error( "Class ID of object '" + strName_ + "' is not initialized" );
 
     bool bDangerous;
     xis >> attribute( "dangerous", bDangerous );
@@ -467,7 +467,7 @@ void MIL_RealObjectType::Read( xml::xistream& xis )
     xis >> attribute( "default-consumption-mode", strConsumptionMode );
     pDefaultConsumptionMode_ = PHY_ConsumptionType::FindConsumptionType( strConsumptionMode );
     if( !pDefaultConsumptionMode_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown consumption type" ); // $$$$ ABL 2007-07-19: error context
+        xis.error( "Unknown consumption type" );
 
     xis >> attribute( "can-be-maneuver-obstacle", bCanBeReservedObstacle_ )
         >> attribute( "can-be-developed", bCanBeMined_ )
@@ -488,9 +488,9 @@ void MIL_RealObjectType::Read( xml::xistream& xis )
             >> attribute( "population-density", rExitingPopulationDensity_ );
 
     if( nNbrMaxAnimators_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "max-animating-units < 0" );
+        xis.error( "max-animating-units < 0" );
     if( rExitingPopulationDensity_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population-density < 0" );
+        xis.error( "population-density < 0" );
 
     InitializeSpeedData              ( xis );
     InitializePlacementScores        ( xis );

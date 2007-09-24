@@ -140,7 +140,7 @@ void MIL_NuageNBC::Initialize( xml::xistream& xis )
     MIL_RealObject_ABC::Initialize( xis );
 
     if( !GetLocalisation().WasACircle() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Localisation of object type 'NuageNBC' MUST be a circle" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Localisation of object type 'NuageNBC' MUST be a circle" );
 
     xis >> start( "specific-attributes" )
             >> start( "nbc-agent" );
@@ -149,7 +149,7 @@ void MIL_NuageNBC::Initialize( xml::xistream& xis )
     xis >> attribute( "type", strNbcAgentType_ );
     const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( strNbcAgentType_ );
     if( !pNbcAgentType )
-        throw MT_ScipioException( "MIL_ZoneNBC::Initialize", __FILE__, __LINE__, MT_FormatString( "Unknown 'AgentNBC' '%s' for NBC object '%d'", strNbcAgentType_.c_str(), GetID() ) ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Unknown 'AgentNBC' '" + strNbcAgentType_ + "'" );
     pNbcAgent_ = new MIL_NbcAgent( *pNbcAgentType, MIL_NbcAgent::eGas );
 
     xis >> end()

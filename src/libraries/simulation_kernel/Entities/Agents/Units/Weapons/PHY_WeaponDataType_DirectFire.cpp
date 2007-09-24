@@ -99,9 +99,9 @@ void PHY_WeaponDataType_DirectFire::ReadHitProbability( xml::xistream& xis, MT_I
         >> attribute( "percentage", rPH );
 
     if( rDistance < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "hit-probability: distance <  0" );
+        xis.error( "hit-probability: distance <  0" );
     if( rPH < 0 || rPH > 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "hit-probability: percentage not in [0..1]" );
+        xis.error( "hit-probability: percentage not in [0..1]" );
 
     phFunction.AddNewPoint( MIL_Tools::ConvertMeterToSim( rDistance ), rPH );
 }

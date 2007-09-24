@@ -78,7 +78,7 @@ void PHY_WeaponType::ReadWeapon( xml::xistream& xis, MIL_EffectManager& manager,
 
     const PHY_WeaponType*& pWeaponType = weaponTypes_[ std::make_pair( strLauncher, strAmmunition ) ];
     if ( pWeaponType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Weapon %s/%s already registered", strLauncher.c_str(), strAmmunition.c_str() ) ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "Weapon " + strLauncher + "/" + strAmmunition + " already registered" );
     pWeaponType = new PHY_WeaponType( manager, time, strLauncher, strAmmunition, xis );
 }
 
@@ -113,9 +113,9 @@ PHY_WeaponType::PHY_WeaponType( MIL_EffectManager& manager, const MIL_Time_ABC& 
     , pIndirectFireData_  ( 0 )
 { 
     if( !pLauncherType_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown launcher type '%s'", strLauncher.c_str() ) ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "Unknown launcher type '" + strLauncher + "'" );
     if( !pDotationCategory_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown dotation category '%s'", strAmmunition.c_str() ) ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "Unknown dotation category '" + strAmmunition + "'" );
     std::string burstTime, reloadingTime;
 
     xis >> start( "burst" )
@@ -128,19 +128,19 @@ PHY_WeaponType::PHY_WeaponType( MIL_EffectManager& manager, const MIL_Time_ABC& 
         >> end();
     if( ! tools::DecodeTime( burstTime,     rBurstDuration_ )
      || ! tools::DecodeTime( reloadingTime, rReloadingDuration_ ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid burst or reloading durations" ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "Invalid burst or reloading durations" );
 
     rBurstDuration_      = MIL_Tools::ConvertSecondsToSim( rBurstDuration_     );
     rReloadingDuration_  = MIL_Tools::ConvertSecondsToSim( rReloadingDuration_ );
     
     if( nNbrAmmoPerBurst_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "burst: munition <= 0" );
+        xis.error( "burst: munition <= 0" );
     if( rBurstDuration_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "burst: duration <= 0" );
+        xis.error( "burst: duration <= 0" );
     if( nNbrAmmoPerLoader_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "reloading: munition <= 0" );
+        xis.error( "reloading: munition <= 0" );
     if( rReloadingDuration_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "reloading: duration <= 0" );
+        xis.error( "reloading: duration <= 0" );
 
     InitializeDirectFireData  ( manager, xis );
     InitializeIndirectFireData( xis );
@@ -181,9 +181,9 @@ void PHY_WeaponType::ReadDirect( xml::xistream& xis, MIL_EffectManager& manager 
     assert( pDotationCategory_ );
 
     if ( !pLauncherType_->CanDirectFire() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Associated launcher can not direct fire" ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "Associated launcher can not direct fire" );
     if ( !pDotationCategory_->CanBeUsedForDirectFire() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Associated ammunition can not direct fire" ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "Associated ammunition can not direct fire" );
 
     pDirectFireData_ = new PHY_WeaponDataType_DirectFire( manager, *this, xis );
 }
@@ -208,9 +208,9 @@ void PHY_WeaponType::ReadIndirect( xml::xistream& xis )
     assert( pDotationCategory_ );
 
     if ( !pLauncherType_->CanIndirectFire() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Associated launcher can not indirect fire" ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "Associated launcher can not indirect fire" );
     if ( !pDotationCategory_->CanBeUsedForIndirectFire() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Associated ammunition can not indirect fire" ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "Associated ammunition can not indirect fire" );
 
     pIndirectFireData_ = new PHY_WeaponDataType_IndirectFire( *this, xis );
 }

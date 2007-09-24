@@ -86,11 +86,11 @@ void PHY_RadarType::ReadRadar( xml::xistream& xis, const MIL_Time_ABC& time )
     xis >> attribute( "type", strType );
     const PHY_RadarClass* pType = PHY_RadarClass::Find( strType );
     if( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown radar type" ); // $$$$ ABL 2007-07-26: error context
+        xis.error( "Unknown radar type " + strType );
 
     const PHY_RadarType*& pRadarType = radarTypes_[ strRadarName ];
     if( pRadarType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Radar already exists" ); // $$$$ ABL 2007-07-26: error context
+        xis.error( "Radar " + strRadarName + " already exists" );
     pRadarType = new PHY_RadarType( strRadarName, *pType, time, xis );
 }
 
@@ -152,13 +152,13 @@ void PHY_RadarType::InitializeRange( xml::xistream& xis )
         >> optional() >> attribute( "max-height", rMaxHeight_ );
 
     if( rRadius_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "radar: action-range < 0" );
+        xis.error( "radar: action-range < 0" );
     rRadius_ = MIL_Tools::ConvertMeterToSim( rRadius_ );
 
     if( rMinHeight_ != -std::numeric_limits< MT_Float >::max() && rMinHeight_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "radar: min-height < 0" );
+        xis.error( "radar: min-height < 0" );
     if( rMaxHeight_ != std::numeric_limits< MT_Float >::max() && rMaxHeight_ < rMinHeight_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "radar: max-height < min-height" );
+        xis.error( "radar: max-height < min-height" );
 }
 
 // -----------------------------------------------------------------------------
@@ -258,13 +258,13 @@ void PHY_RadarType::ReadTime( xml::xistream& xis, bool& bIsPCTime )
     {
         if( ReadPcAndBaseTime( xis, "base-time", rDetectionTime_ ) )
             if( rDetectionTime_ < 0 )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "detection acquisition-time: base-time < 0" );
+                xis.error( "detection acquisition-time: base-time < 0" );
             else
                 rDetectionTime_ = MIL_Tools::ConvertSecondsToSim( rDetectionTime_ );
 
         if( ReadPcAndBaseTime( xis, "command-post-time", rPcDetectionTime_ ) )
             if( rPcDetectionTime_ < 0 )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "detection acquisition-time: command-post-time < 0" );
+                xis.error( "detection acquisition-time: command-post-time < 0" );
             else
             {
                 bIsPCTime = true;
@@ -275,13 +275,13 @@ void PHY_RadarType::ReadTime( xml::xistream& xis, bool& bIsPCTime )
     {
         if( ReadPcAndBaseTime( xis, "base-time", rRecognitionTime_ ) )
             if( rRecognitionTime_ < rDetectionTime_ )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "recoginition acquisition-time: base-time < detection base-time" );
+                xis.error( "recoginition acquisition-time: base-time < detection base-time" );
             else
                 rRecognitionTime_ = MIL_Tools::ConvertSecondsToSim( rRecognitionTime_ );
 
         if( ReadPcAndBaseTime( xis, "command-post-time", rPcRecognitionTime_ ) )
             if( rPcRecognitionTime_ < rPcDetectionTime_ )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "recognition acquisition-time: command-post-time < detection command-post-time" );
+                xis.error( "recognition acquisition-time: command-post-time < detection command-post-time" );
             else
                 rPcRecognitionTime_ = MIL_Tools::ConvertSecondsToSim( rPcRecognitionTime_ );
     }
@@ -289,18 +289,18 @@ void PHY_RadarType::ReadTime( xml::xistream& xis, bool& bIsPCTime )
     {
         if( ReadPcAndBaseTime( xis, "base-time", rIdentificationTime_ ) )
             if( rIdentificationTime_ < rRecognitionTime_ )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "identification acquisition-time: base-time < recognition base-time" );
+                xis.error( "identification acquisition-time: base-time < recognition base-time" );
             else
                 rIdentificationTime_ = MIL_Tools::ConvertSecondsToSim( rIdentificationTime_ );
 
         if( ReadPcAndBaseTime( xis, "command-post-time", rPcIdentificationTime_ ) )
             if( rPcIdentificationTime_ < rPcRecognitionTime_ )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "identification acquisition-time: command-post-time < recognition command-post-time" );
+                xis.error( "identification acquisition-time: command-post-time < recognition command-post-time" );
             else
                 rPcIdentificationTime_ = MIL_Tools::ConvertSecondsToSim( rPcIdentificationTime_ );
     }
     else
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown acquisition-time: " + acquisitionType );
+        xis.error( "Unknown acquisition-time: " + acquisitionType );
 }
 
 // =============================================================================

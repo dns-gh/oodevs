@@ -63,9 +63,9 @@ void MIL_PopulationType::Initialize( xml::xistream& xis )
             >> end();
 
     if( rEffectReloadingTimeDensity_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "reloading-time-effet: population-density < 0" );
+        xis.error( "reloading-time-effet: population-density < 0" );
     if( rEffectReloadingTimeFactor_ < 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "reloading-time-effect: modifier < 1" );
+        xis.error( "reloading-time-effect: modifier < 1" );
 
     LoadingWrapper loader;
 
@@ -84,7 +84,7 @@ void MIL_PopulationType::ReadPopulation( xml::xistream& xis )
 
     const MIL_PopulationType*& pPopulation = populations_[ strName ];
     if( pPopulation )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Population type already exists" ); // $$$$ ABL 2007-07-24: error context
+        xis.error( "Population type already exists" );
 
     pPopulation = new MIL_PopulationType( strName, xis );
 }
@@ -125,11 +125,11 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
         >> attribute( "moving-speed", rMaxSpeed_ );
 
     if( rConcentrationDensity_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population: concentration-density <= 0" );
+        xis.error( "population: concentration-density <= 0" );
     if( rDefaultFlowDensity_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population: moving-base-density <= 0" );
+        xis.error( "population: moving-base-density <= 0" );
     if( rMaxSpeed_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population: moving-speed" );
+        xis.error( "population: moving-speed" );
 
     rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ );
 
@@ -140,7 +140,7 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
     xis >> attribute( "decisional-model", strModel );
     pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPopulation( strModel );
     if( !pModel_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown population model" ); // $$$$ ABL 2007-07-24: error context
+        xis.error( "Unknown population model" );
 
     InitializeDiaFunctions();
 }
@@ -176,7 +176,7 @@ void MIL_PopulationType::ReadSlowingEffect( xml::xistream& xis )
 
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( strAttitude );
     if( !pAttitude )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown attitude '%s'", strAttitude.c_str() ) ); // $$$$ ABL 2007-07-24: error context
+        xis.error( "Unknown attitude '" + strAttitude + "'" );
 
     assert( slowDownData_.size() > pAttitude->GetID() );
     T_VolumeSlowDownData& volumeSlowDownData = slowDownData_[ pAttitude->GetID() ];
@@ -199,15 +199,15 @@ void MIL_PopulationType::ReadSlowingUnitEffect( xml::xistream& xis, T_VolumeSlow
         >> attribute( "max-speed", rMaxSpeed );
 
     if( rPopulationDensity <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit: population-density <= 0" );
+        xis.error( "unit: population-density <= 0" );
     if( rMaxSpeed < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit: max-speed < 0" );
+        xis.error( "unit: max-speed < 0" );
 
     rMaxSpeed = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed );
 
     const PHY_Volume* pVolume = PHY_Volume::FindVolume( strVolume );
     if( !pVolume )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown volume '%s'", strVolume.c_str() ) ); // $$$$ ABL 2007-07-24: error context
+        xis.error( "Unknown volume '" + strVolume + "'" );
 
     assert( volumeSlowDownData.size() > pVolume->GetID() );
     volumeSlowDownData[ pVolume->GetID() ] = sSlowDownData( rPopulationDensity, rMaxSpeed );
@@ -238,7 +238,7 @@ void MIL_PopulationType::ReadUnitFireEffect( xml::xistream& xis )
     xis >> attribute( "rule-of-engagment", strRoe );
     const PHY_RoePopulation* pRoe = PHY_RoePopulation::Find( strRoe );
     if( !pRoe )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown population roe '%s'", strRoe.c_str() ) ); // $$$$ ABL 2007-07-24: error context
+        xis.error( "Unknown population roe '" + strRoe + "'" );
 
     assert( damageData_.size() > pRoe->GetID() );
 
@@ -246,9 +246,9 @@ void MIL_PopulationType::ReadUnitFireEffect( xml::xistream& xis )
         >> attribute( "ph", damageData_[ pRoe->GetID() ].rPH_ );
 
     if( damageData_[ pRoe->GetID() ].rAttritionSurface_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit-fire-effect: rule-of-engagment < 0" );
+        xis.error( "unit-fire-effect: rule-of-engagment < 0" );
     if( damageData_[ pRoe->GetID() ].rPH_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit-fire-effect: ph < 0" );
+        xis.error( "unit-fire-effect: ph < 0" );
 }
 
 // -----------------------------------------------------------------------------

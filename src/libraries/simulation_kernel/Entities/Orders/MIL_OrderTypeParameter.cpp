@@ -36,7 +36,7 @@ MIL_OrderTypeParameter::MIL_OrderTypeParameter( const MIL_OrderType_ABC& orderTy
     xis >> attribute( "type", strType );
     pParameter_ = MIL_ParameterType_ABC::Find( strType );
     if( !pParameter_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown parameter type" ); // $$$$ ABL 2007-07-25: error context
+        xis.error( "Unknown parameter type" );
 
     xis >> optional() >> attribute( "optional", bIsOptional_ );
 

@@ -135,7 +135,7 @@ void PHY_RolePion_HumanFactors::ReadFatigue( xml::xistream& xis )
     xis >> strTmp;
     pTiredness_ = PHY_Tiredness::Find( strTmp );
     if( !pTiredness_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown tiredness type" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Unknown tiredness type" );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +148,7 @@ void PHY_RolePion_HumanFactors::ReadMoral( xml::xistream& xis )
     xis >> strTmp;
     pMorale_ = PHY_Morale::Find( strTmp );
     if( !pMorale_)
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown morale type" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Unknown morale type" );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,7 +161,7 @@ void PHY_RolePion_HumanFactors::ReadExperience( xml::xistream& xis )
     xis >> strTmp;
     pExperience_ = PHY_Experience::Find( strTmp );
     if( !pExperience_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown experience type" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Unknown experience type" );
 }
 // =============================================================================
 // NETWORK

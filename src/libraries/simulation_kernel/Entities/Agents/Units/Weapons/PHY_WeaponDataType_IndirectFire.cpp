@@ -37,11 +37,11 @@ PHY_WeaponDataType_IndirectFire::PHY_WeaponDataType_IndirectFire( const PHY_Weap
         >> attribute( "max-range", rMaxRange_ );
 
     if( rAverageSpeed_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "indirect-fire: average-speed < 0" );
+        xis.error( "indirect-fire: average-speed < 0" );
     if( rMinRange_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "indirect-fire: min-range < 0" );
+        xis.error( "indirect-fire: min-range < 0" );
     if( rMaxRange_ < rMinRange_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "indirect-fire: max-range < min-range" );
+        xis.error( "indirect-fire: max-range < min-range" );
 
     rAverageSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rAverageSpeed_ * 3.6 /* m/s -> km/h */ ); //$$$$
     rMinRange_ = MIL_Tools::ConvertMeterToSim( rMinRange_ );

@@ -47,7 +47,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
 
     pNature_ = PHY_DotationNature::Find( strNature );
     if( !pNature_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation nature" ); // $$$$ ABL 2007-07-19: error context
+        xis.error( "Unknown dotation nature" );
 
     InitializePackagingData   ( xis );
     InitializeAttritions      ( xis );
@@ -60,7 +60,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
         xis >> attribute( "type", strTmp );
         pAmmoDotationClass_ = PHY_AmmoDotationClass::Find( strTmp );
         if( !pAmmoDotationClass_ )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid ammo dotation class" ); // $$$$ ABL 2007-07-19: error context
+            xis.error( "Invalid ammo dotation class" );
     }
     else
         pAmmoDotationClass_ = 0;
@@ -87,11 +87,11 @@ void PHY_DotationCategory::InitializePackagingData( xml::xistream& xis )
         >> attribute( "package-volume", rVolume_ );
 
     if( rNbrInPackage <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dotation rNbrInPackage <= 0" );
+        xis.error( "dotation rNbrInPackage <= 0" );
     if( rWeight_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dotation rWeight_ <= 0" );
+        xis.error( "dotation rWeight_ <= 0" );
     if( rVolume_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dotation rVolume_ <= 0" );
+        xis.error( "dotation rVolume_ <= 0" );
 
     rWeight_ /= rNbrInPackage;
     rVolume_ /= rNbrInPackage;
@@ -129,7 +129,7 @@ void PHY_DotationCategory::ReadAttrition( xml::xistream& xis )
     const PHY_Protection::T_ProtectionMap& protections = PHY_Protection::GetProtections();
     PHY_Protection::CIT_ProtectionMap it = protections.find( protectionType );
     if( it == protections.end() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Undefined protection type: %s", protectionType.c_str() ) );
+        xis.error( "Undefined protection type: " + protectionType );
 
     const PHY_Protection& protection = *it->second;
     assert( attritions_.size() > protection.GetID() );
@@ -158,7 +158,7 @@ void PHY_DotationCategory::ReadIndirectFire( xml::xistream& xis )
 
     const PHY_IndirectFireDotationClass* pType = PHY_IndirectFireDotationClass::Find( strType );
     if( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown indirect fire data type" ); // $$$$ ABL 2007-07-19: error context
+        xis.error( "Unknown indirect fire data type" );
 
     pIndirectFireData_ = &pType->InstanciateDotationCategory( *this, xis );
 }

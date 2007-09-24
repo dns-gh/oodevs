@@ -174,16 +174,16 @@ void MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army& army )
 
     const MIL_RealObjectType* pType = MIL_RealObjectType::Find( strType );
     if( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type" ); // $$$$ ABL 2007-07-09: error context
+        xis.error( "Unknown object type" );
 
     id = pType->GetIDManager().ConvertSimIDToMosID( id );
     if( realObjects_.find( id ) != realObjects_.end() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "ID already exists" ); // $$$$ ABL 2007-07-09: error context
+        xis.error( "ID already exists" );
 
     if( pType->GetIDManager().IsMosIDValid( id ) )
     {
         if( !pType->GetIDManager().LockMosID( id ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "ID already used" ); // $$$$ ABL 2007-07-09: error context
+            xis.error( "ID already used" );
     }
 
     MIL_RealObject_ABC& object = pType->InstanciateObject( id, army );

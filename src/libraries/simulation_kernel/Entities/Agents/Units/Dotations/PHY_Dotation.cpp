@@ -118,7 +118,7 @@ void PHY_Dotation::ReadValue( xml::xistream& xis )
     MT_Float rValue;
     xis >> attribute( "quantity", rValue );
     if( rValue < 0. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rValue is not greater or equal to 0." );
+        xis.error( "rValue is not greater or equal to 0." );
 
     if( rValue > rCapacity_ )
     {

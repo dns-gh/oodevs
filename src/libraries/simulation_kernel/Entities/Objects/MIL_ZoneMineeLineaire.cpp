@@ -115,11 +115,11 @@ void MIL_ZoneMineeLineaire::Initialize( xml::xistream& xis )
 
     xis >> optional() >> content( "activity-time", nMinesActivityTime_ );
     if( nMinesActivityTime_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "nMinesActivityTime_ is not greater or equal to 0 " );
+        xis.error( "nMinesActivityTime_ is not greater or equal to 0 " );
 
     xis >> optional() >> content( "density", rMinesDensity_ );
     if( rMinesDensity_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rMinesDensity is not greater or equal to 0 " );
+        xis.error( "rMinesDensity is not greater or equal to 0 " );
 
     rSizeCoef_                       = MIL_Tools::ConvertSimToMeter(  GetLocalisation().GetLength() ); // Coef      : tps construction/destruction au m
     nFullNbrDotationForConstruction_ = std::max( (uint)1, (uint)( rMinesDensity_ * rSizeCoef_ ) );

@@ -495,7 +495,7 @@ void DEC_Workspace::ReadUnit( xml::xistream& xis, bool bNeedScriptParsing, MIL_C
 
     const DEC_ModelPion*& pModel = pionModels_[ strName ];
     if( pModel )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown model name" ); // $$$$ ABL 2007-07-26: error context
+        xis.error( "Unknown model name" ); // $$$$ AGE 2007-09-24: n'importe quoi
     pModel = new DEC_ModelPion( *this, strName, xis, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath );
     static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
 }
@@ -511,7 +511,7 @@ void DEC_Workspace::ReadAutomat( xml::xistream& xis, bool bNeedScriptParsing, MI
 
     const DEC_ModelAutomate*& pModel = automateModels_[ strName ];
     if( pModel )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknwon model name" ); // $$$$ ABL 2007-07-26: error context
+        xis.error( "Unknwon model name" );
     pModel = new DEC_ModelAutomate( *this, strName, xis, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath );
     static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
 }
@@ -527,7 +527,7 @@ void DEC_Workspace::ReadPopulation( xml::xistream& xis, bool bNeedScriptParsing,
 
     const DEC_ModelPopulation*& pModel = populationModels_[ strName ];
     if( pModel )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknwon model name" ); // $$$$ ABL 2007-07-26: error context
+        xis.error( "Unknwon model name" );
     pModel = new DEC_ModelPopulation( *this, strName, xis, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath );
     static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
 }

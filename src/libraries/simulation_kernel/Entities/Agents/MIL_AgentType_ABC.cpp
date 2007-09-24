@@ -54,11 +54,11 @@ void MIL_AgentType_ABC::InitializeNature( xml::xistream& xis )
         >> attribute( "level", strBuf );
     pNatureLevel_ = PHY_NatureLevel::Find( strBuf );
     if ( !pNatureLevel_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown nature level type" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Unknown nature level type" );
 
     xis >> attribute( "atlas-nature", strBuf );
     pNatureAtlas_ = PHY_NatureAtlas::Find( strBuf );
     if ( !pNatureAtlas_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown atlas qualificatif" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Unknown atlas qualificatif" );
     xis >> end();
 }

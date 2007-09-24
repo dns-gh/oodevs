@@ -283,7 +283,7 @@ void MIL_Automate::Initialize( xml::xistream& xis )
     xis >> attribute( "knowledge-group", nKnowledgeGroup );
     pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( nKnowledgeGroup );
     if( !pKnowledgeGroup_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown knowledge group" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Unknown knowledge group" );
     pKnowledgeGroup_->RegisterAutomate( *this );
       
     pDecision_ = new DEC_AutomateDecision( *this ); //$$$ BULLSHIT : strName_ must be initialized ...
@@ -294,7 +294,7 @@ void MIL_Automate::Initialize( xml::xistream& xis )
         >> list( "lima"    , *this, &MIL_Automate::CreateLima             );
         
     if( !pPionPC_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat's command post is not defined" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Automat's command post is not defined" );
 }
 
 // -----------------------------------------------------------------------------
@@ -329,11 +329,11 @@ void MIL_Automate::ReadUnitSubordinate( xml::xistream& xis )
         >> optional() >> attribute( "command-post", isPc );
 
     if( isPc && pPionPC_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat's command post already defined" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Automat's command post already defined" );
 
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( strType );
     if( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown pawn type" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Unknown pawn type" );
 
     MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, id, *this, xis ); // Auto-registration
     if( isPc )
@@ -354,7 +354,7 @@ void MIL_Automate::ReadAutomatSubordinate( xml::xistream& xis )
 
     const MIL_AutomateType* pAutomateType = MIL_AutomateType::FindAutomateType( strType );
     if( !pAutomateType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automat type" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Unknown automat type" );
 
     MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomat( xis, *this ); // Auto-registration
 }

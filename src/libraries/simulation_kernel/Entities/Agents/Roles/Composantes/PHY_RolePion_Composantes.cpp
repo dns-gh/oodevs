@@ -371,7 +371,7 @@ void PHY_RolePion_Composantes::ReadEquipement( xml::xistream& xis )
 
     const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::Find( strType );
     if( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknwon composante type" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Unknwon composante type" );
 
     uint nNbrRepairable;
     uint nNbrDead;
@@ -409,7 +409,6 @@ void PHY_RolePion_Composantes::ReadEquipement( xml::xistream& xis )
 void PHY_RolePion_Composantes::ReadHumansOverloading( xml::xistream& xis )
 {
     xis >> list( "Personnels", *this, &PHY_RolePion_Composantes::ReadPersonnels );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -434,7 +433,7 @@ void PHY_RolePion_Composantes::ReadPersonnel( xml::xistream& xis )
 
     const PHY_HumanWound* pWound = PHY_HumanWound::Find( strState );
     if( !pWound )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown human wound" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Unknown human wound" );
 
     const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
     for( PHY_HumanRank::CIT_HumanRankMap itRank = ranks.begin(); itRank != ranks.end(); ++itRank )

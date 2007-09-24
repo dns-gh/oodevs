@@ -90,11 +90,11 @@ void DEC_Agent_PathClass::ReadUnitRule( xml::xistream& xis )
     {
         pBase  = rules_[ T_RuleType( strBase, T_BooleanPair( bFlying, bAutonomous ) ) ];
         if( !pBase )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "base rule '" + strBase + "' is undefined" ); // $$$$ ABL 2007-07-25: error context
+            xis.error( "base rule '" + strBase + "' is undefined" );
     }
     DEC_Agent_PathClass*& pRule = rules_[ T_RuleType( strType, T_BooleanPair( bFlying, bAutonomous ) ) ];
     if( pRule )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strType + "' already defined" ); // $$$$ ABL 2007-07-25: error context
+        xis.error( "Rule '" + strType + "' already defined" );
     pRule = new DEC_Agent_PathClass( xis, pBase );
 }
 
@@ -205,7 +205,7 @@ void DEC_Agent_PathClass::ReadObject( xml::xistream& xis )
     xis >> attribute( "type", strObjectType );
     const MIL_RealObjectType* pType = MIL_RealObjectType::Find( strObjectType );
     if( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type" ); // $$$$ ABL 2007-07-25: error context
+        xis.error( "Unknown object type" );
 
     assert( objectCosts_.size() > pType->GetID() );
     xis >> attribute( "value", objectCosts_[ pType->GetID() ] );
@@ -241,7 +241,7 @@ void DEC_Agent_PathClass::ReadTerrain( xml::xistream& xis, TerrainData& destinat
     xis >> attribute( "type", strType );
     const TerrainData data = TerrainData( strType );
     if( data.Area() == 0xFF )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown terrain type '" + strType + "'" ); // $$$$ ABL 2007-07-25: error context
+        xis.error( "Unknown terrain type '" + strType + "'" );
     destinationData.Merge( data );
 }
 

@@ -58,7 +58,7 @@ void PHY_Volume::ReadVolume( xml::xistream& xis )
 
     const PHY_Volume*& pVolume = volumes_[ strVolume ];
     if( pVolume )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Volume '%s' already registered", strVolume.c_str() ) );
+        xis.error( "Volume '" + strVolume + "' already registered" );
     
     pVolume = new PHY_Volume( strVolume );
 }

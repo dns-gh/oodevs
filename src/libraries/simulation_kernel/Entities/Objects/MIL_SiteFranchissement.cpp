@@ -124,14 +124,13 @@ void MIL_SiteFranchissement::Initialize( xml::xistream& xis )
         >> end();
 
     if( rWidth_ <= 0. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rWidth_ is not greater than 0 " );
+        xis.error( "rWidth_ is not greater than 0 " );
 
     if( rDepth_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rDepth_ is not greater than 0 " );
+        xis.error( "rDepth_ is not greater than 0 " );
 
     if( rCurrentSpeed_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rCurrentSpeed_ is not greater or equal to 0 " );
-
+        xis.error( "rCurrentSpeed_ is not greater or equal to 0 " );
 }
 
 // -----------------------------------------------------------------------------

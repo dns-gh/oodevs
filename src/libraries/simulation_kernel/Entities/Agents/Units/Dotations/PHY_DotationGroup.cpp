@@ -69,20 +69,20 @@ namespace boost
         {
             split_free( file, map, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const PHY_DotationGroup::T_DotationMap& map, const uint )
         {
             unsigned size = map.size();
             file << size;
-            for ( PHY_DotationGroup::CIT_DotationMap it = map.begin(); it != map.end(); ++it )
+            for( PHY_DotationGroup::CIT_DotationMap it = map.begin(); it != map.end(); ++it )
             {
                 unsigned id = it->first->GetMosID();
                 file << id;
                 file << it->second;
             }
         }
-        
+
         template< typename Archive >
         void load( Archive& file, PHY_DotationGroup::T_DotationMap& map, const uint )
         {
@@ -106,7 +106,7 @@ void PHY_DotationGroup::load( MIL_CheckPointInArchive& file, const uint )
     uint nID;
     file >> nID;
     pType_ = PHY_DotationType::FindDotationType( nID );
-    
+
     file >> pGroupContainer_
          >> dotations_;
 }
@@ -134,8 +134,8 @@ void PHY_DotationGroup::save( MIL_CheckPointOutArchive& file, const uint ) const
 void PHY_DotationGroup::ReadValues( xml::xistream& xis, const PHY_DotationCategory& category )
 {
     PHY_Dotation* pDotation = GetDotation( category );
-    if( !pDotation )        
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation" ); // $$$$ ABL 2007-07-10: error context
+    if( !pDotation )
+        xis.error( "Unknown dotation" );
 
     pDotation->ReadValue( xis );
 }
@@ -350,8 +350,8 @@ void PHY_DotationGroup::ChangeDotationsValueUsingTC2( const PHY_AmmoDotationClas
 void PHY_DotationGroup::NotifyCaptured()
 {
     assert( pType_ );
-    
-    if ( *pType_ == PHY_DotationType::ration_ )
+
+    if( *pType_ == PHY_DotationType::ration_ )
         return;
 
     for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
@@ -365,8 +365,8 @@ void PHY_DotationGroup::NotifyCaptured()
 void PHY_DotationGroup::NotifyReleased()
 {
     assert( pType_ );
-    
-    if ( *pType_ == PHY_DotationType::ration_ )
+
+    if( *pType_ == PHY_DotationType::ration_ )
         return;
 
     for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )

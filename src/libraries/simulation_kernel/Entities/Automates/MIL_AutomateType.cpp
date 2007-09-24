@@ -113,16 +113,16 @@ void MIL_AutomateType::ReadAutomat( xml::xistream& xis )
 
     CIT_AutomateTypeAllocatorMap itAutomateAllocator = automateTypeAllocators_.find( strType );
     if( itAutomateAllocator == automateTypeAllocators_.end() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automate type" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Unknown automate type" );
 
     const MIL_AutomateType*& pType = automateTypes_[ strName ];
     if( pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automate type already defined" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Automate type already defined" );
 
     pType = (*itAutomateAllocator->second)( strName, xis );
 
     if( !ids_.insert( pType->GetID() ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automate type ID already used" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Automate type ID already used" );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +155,7 @@ MIL_AutomateType::MIL_AutomateType( const std::string& strName, xml::xistream& x
     xis >> attribute( "id", nID_ )
         >> list( "unit", *this, &MIL_AutomateType::ReadUnit );
     if( !pTypePC_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "No command-post defined for automat type: %s", strName_ ) );
+        xis.error( "No command-post defined for automat type: " + strName_ );
 
     InitializeRapFor      ( xis );
     InitializeModel       ( xis );
@@ -182,10 +182,10 @@ void MIL_AutomateType::ReadUnit( xml::xistream& xis )
 
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( strPionType );
     if( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown pawn type" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Unknown pawn type" );
 
     if( composition_.find( pType ) != composition_.end() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pawn type already defined in composition" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Pawn type already defined in composition" );
 
     composition_[ pType ].nMax_ = std::numeric_limits< uint >::max();
     composition_[ pType ].nMin_ = 0;
@@ -199,7 +199,7 @@ void MIL_AutomateType::ReadUnit( xml::xistream& xis )
         if( !pTypePC_ )
             pTypePC_ = pType;
         else
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Multiple command-post defined in automat type: %s", strName_ ) ); // $$$$ ABL 2007-07-23: error context
+            xis.error( "Multiple command-post defined in automat type: " + strName_ ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -212,7 +212,7 @@ void MIL_AutomateType::InitializeModel( xml::xistream& xis )
     xis >> attribute( "decisional-model", strModel );
     pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelAutomate( strModel );
     if( !pModel_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automata model" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Unknown automata model" );
 }
 
 // -----------------------------------------------------------------------------

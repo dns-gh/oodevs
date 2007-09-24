@@ -48,14 +48,14 @@ PHY_Meteo::PHY_Meteo( xml::xistream& xis, const PHY_Ephemeride& ephemeride )
     // Vitesse du vent
     xis >> content( "VitesseVent", wind_.rWindSpeed_ );
     if( wind_.rWindSpeed_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "meteo: VitesseVent < 0" );
+        xis.error( "meteo: VitesseVent < 0" );
     wind_.rWindSpeed_ = MIL_Tools::ConvertSpeedMosToSim( wind_.rWindSpeed_ );
     
     // Direction du vent
     uint nAngle;
     xis >> content( "DirectionVent", nAngle );
     if( nAngle < 0 || nAngle > 360 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "meteo: DirectionVent not in [0..360]" );
+        xis.error( "meteo: DirectionVent not in [0..360]" );
     NET_ASN_Tools::ReadDirection( nAngle, wind_.vWindDirection_ );
 
     // Précipitation
@@ -64,7 +64,7 @@ PHY_Meteo::PHY_Meteo( xml::xistream& xis, const PHY_Ephemeride& ephemeride )
 
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( strVal );
     if( !pPrecipitation_ )
-        throw MT_ScipioException( "PHY_Meteo::Initialize", __FILE__, __LINE__, MT_FormatString( "Unknown Precipitation type '%s'", strVal.c_str() ) );
+        xis.error( "Unknown Precipitation type '" + strVal + "'" );
     Update( ephemeride );
 }
 

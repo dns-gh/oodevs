@@ -58,7 +58,7 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
         strTmp >> sunriseTime_.first >> tmp >> sunriseTime_.second;
     }
     if ( tmp != 'h' || sunriseTime_.first < 0 || sunriseTime_.first > 23 || sunriseTime_.second < 0 || sunriseTime_.second > 59 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Bad time format (use 00h00)" ); // $$$$ ABL 2007-07-27: error context
+        xis.error( "Bad time format (use 00h00)" );
 
     // HeureCoucherSoleil
     xis >> content( "HeureCoucherSoleil", strVal );
@@ -68,18 +68,18 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
         strTmp >> sunsetTime_.first >> tmp >> sunsetTime_.second;
     }
     if ( tmp != 'h' || sunsetTime_.first < 0 || sunsetTime_.first > 23 || sunsetTime_.second < 0 || sunsetTime_.second > 59 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Bad time format (use 00h00)" ); // $$$$ ABL 2007-07-27: error context
+        xis.error( "Bad time format (use 00h00)" );
 
     // Lune
     xis >> content( "Lune", strVal );
     pNightBase_ = PHY_Lighting::FindLighting( strVal );
     if( !pNightBase_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown lighting '%s'", strVal.c_str() ) ); // $$$$ ABL 2007-07-27: error context
+        xis.error( "Unknown lighting '" + strVal + "'" );
 
     xis >> end();
 
     if( sunriseTime_ >= sunsetTime_  )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Sunrise time should be before sunset time" ); // $$$$ ABL 2007-07-27: error context
+        xis.error( "Sunrise time should be before sunset time" );
     UpdateNight();
 }
 

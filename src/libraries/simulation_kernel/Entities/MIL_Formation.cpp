@@ -41,7 +41,7 @@ MIL_Formation::MIL_Formation( MIL_EntityManager& manager, MIL_TacticalLineManage
 
     pLevel_ = PHY_NatureLevel::Find( strLevel );
     if( !pLevel_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown level" ); // $$$$ ABL 2007-07-09: error context
+        xis.error( "Unknown level" );
 
     if( pParent )
         pParent_->RegisterFormation( *this );

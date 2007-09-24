@@ -52,7 +52,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     MT_Float rNbrHumans;
     xis >> attribute( "humans", rNbrHumans );
     if( rNbrHumans <= 0. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rNbrHumans is not greater than 0." );
+        xis.error( "rNbrHumans is not greater than 0." );
 
     PushHumans( T_Humans( rNbrHumans, 0. ) );
         

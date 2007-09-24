@@ -120,7 +120,7 @@ void MIL_Report::ReadReport( xml::xistream& xis )
 
     const MIL_Report*& pReport = reports_[ id ];
     if( pReport )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Report id already defined" ); // $$$$ ABL 2007-07-18: error context
+        xis.error( "Report id already defined" );
     pReport = new MIL_Report( id, xis );
 }
 
@@ -150,7 +150,7 @@ void MIL_Report::ReadParameter( xml::xistream& xis )
     xis >> attribute( "type", strType );
     const MIL_ParameterType_ABC* pParameter = MIL_ParameterType_ABC::Find( strType );
     if( !pParameter )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown parameter type" ); // $$$$ _RC_ ABL 2007-07-18: error context
+        xis.error( "Unknown parameter type" );
 
     parameters_.push_back( pParameter );
 }

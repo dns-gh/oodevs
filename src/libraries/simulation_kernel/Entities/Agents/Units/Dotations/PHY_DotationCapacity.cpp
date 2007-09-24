@@ -31,9 +31,9 @@ PHY_DotationCapacity::PHY_DotationCapacity( const PHY_DotationCategory& category
         >> attribute( "logistic-threshold", rSupplyThresholdPercentage );
 
     if( rCapacity_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dotation: capacity <= 0" );
+        xis.error( "dotation: capacity <= 0" );
     if( rSupplyThresholdPercentage < 0 || rSupplyThresholdPercentage > 100 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dotation: logistic-threshold not in [0..100]" );
+        xis.error( "dotation: logistic-threshold not in [0..100]" );
 
     rSupplyThreshold_ = (float)( rCapacity_ * rSupplyThresholdPercentage / 100. );
 }

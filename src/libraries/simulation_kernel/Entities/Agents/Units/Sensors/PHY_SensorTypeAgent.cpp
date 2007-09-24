@@ -54,10 +54,10 @@ namespace
 
                 xis >> attribute( "value", rFactor );
                 if( rFactor < 0 || rFactor > 1 )
-                    throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "distance-modifier: value not in [0..1]" );
+                    xis.error( "distance-modifier: value not in [0..1]" );
             }
             else
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "distance-modifier: unknow type" );
+                xis.error( "distance-modifier: unknow type" );
         }
    private:
        const C& container_;
@@ -86,10 +86,10 @@ namespace
 
                 xis >> attribute( "value", rFactor );
                 if( rFactor < 0 || rFactor > 1 )
-                    throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "distance-modifier: value not in [0..1]" );
+                    xis.error( "distance-modifier: value not in [0..1]" );
             }
             else
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "distance-modifier: unknow type" );
+                xis.error( "distance-modifier: unknow type" );
         }
 
    private:
@@ -188,25 +188,25 @@ void PHY_SensorTypeAgent::ReadDistance( xml::xistream& xis )
     {
         xis >> attribute( "distance", rIdentificationDist_ );
         if( rIdentificationDist_ < 0 )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "base-distance: identification distance < 0" );
+            xis.error( "base-distance: identification distance < 0" );
         rIdentificationDist_ = MIL_Tools::ConvertMeterToSim( rIdentificationDist_ );
     }
     else if( distanceType == "recognition" )
     {
         xis >> attribute( "distance", rRecognitionDist_ );
         if( rRecognitionDist_ < rIdentificationDist_ )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "base-distance: recognition distance < identification distance" );
+            xis.error( "base-distance: recognition distance < identification distance" );
         rRecognitionDist_ = MIL_Tools::ConvertMeterToSim( rRecognitionDist_ );
     }
     else if( distanceType == "detection" )
     {
         xis >> attribute( "distance", rDetectionDist_ );
         if( rDetectionDist_ < rRecognitionDist_ )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "base-distance: detection distance < recognition distance" );
+            xis.error( "base-distance: detection distance < recognition distance" );
         rDetectionDist_ = MIL_Tools::ConvertMeterToSim( rDetectionDist_ );
     }
     else
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "base-distance: unknow distance level" );
+        xis.error( "base-distance: unknow distance level" );
 }
 
 // -----------------------------------------------------------------------------
@@ -233,7 +233,7 @@ void PHY_SensorTypeAgent::ReadTerrainModifier( xml::xistream& xis, unsigned int&
     xis >> attribute( "type", terrainType )
         >> attribute( "value", rFactor );
     if( rFactor < 0 || rFactor > 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "terrain-modifier: value not in [0..1]" );
+        xis.error( "terrain-modifier: value not in [0..1]" );
     ++visionObject;
 }
 
@@ -249,9 +249,9 @@ void PHY_SensorTypeAgent::ReadTerrainModifier( xml::xistream& xis, unsigned int&
         >> end();
 
     if( rPopulationDensity_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population-modifier: density < 0" );
+        xis.error( "population-modifier: density < 0" );
     if( rPopulationFactor_ < 0 || rPopulationFactor_ > 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population-modifier: modifier not in [0..1]" );
+        xis.error( "population-modifier: modifier not in [0..1]" );
 }
 
 // =============================================================================

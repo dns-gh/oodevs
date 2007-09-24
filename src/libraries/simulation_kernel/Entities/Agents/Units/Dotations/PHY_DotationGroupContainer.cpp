@@ -171,11 +171,11 @@ void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis )
     xis >> attribute( "name", strType );
     const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
     if( !pDotationCategory )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Unknown dotation type" );
 
     PHY_DotationGroup* pGroup = GetDotationGroup( pDotationCategory->GetType() ); //$$$$$ TEMPORAIRE : merger PHY_DotationGroupContainer et PHY_DotationGroup
     if( !pGroup )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Dotation type cannot be overloaded: not in types" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Dotation type cannot be overloaded: not in types" );
 
     pGroup->ReadValues( xis, *pDotationCategory );
 }

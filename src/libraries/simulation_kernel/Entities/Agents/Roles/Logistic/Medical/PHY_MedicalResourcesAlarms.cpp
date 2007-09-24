@@ -54,7 +54,7 @@ void PHY_MedicalResourcesAlarms::ReadResourceLevel( xml::xistream& xis )
         >> attribute( "availability-threshold", rRatio );
 
     if( rRatio < 0 || rRatio > 100 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "resource-availability-alert: availability-treshold not in [0..100]" );
+        xis.error( "resource-availability-alert: availability-treshold not in [0..100]" );
 
     rRatio /= 100.;
 
@@ -65,7 +65,7 @@ void PHY_MedicalResourcesAlarms::ReadResourceLevel( xml::xistream& xis )
     else if( resourceType == "doctor" )
         doctorsResourcesLevels_.insert( rRatio );
     else
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "resource-availability: unknow resource" );
+        xis.error( "resource-availability: unknow resource" );
 }
 
 // -----------------------------------------------------------------------------

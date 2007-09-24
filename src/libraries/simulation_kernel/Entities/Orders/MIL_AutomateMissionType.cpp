@@ -58,17 +58,17 @@ void MIL_AutomateMissionType::ReadMission( xml::xistream& xis )
     
     const MIL_AutomateMissionType*& pMission = missionIDs_[ nID ];
     if( pMission )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat mission already defined" ); // $$$$ ABL 2007-07-26: error context
+        xis.error( "Automat mission already defined" );
     pMission = new MIL_AutomateMissionType( nID, xis );
     
     const MIL_AutomateMissionType*& pMissionDiaID = missionDiaIDs_[ pMission->GetDIAType().GetDebugId() ];
     if( pMissionDiaID )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat mission DIA ID already defined" ); // $$$$ ABL 2007-07-26: error context
+        xis.error( "Automat mission DIA ID already defined" );
     pMissionDiaID = pMission;       
 
     const MIL_AutomateMissionType*& pMissionName = missionNames_[ pMission->GetName() ];
     if( pMissionName )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat mission name already defined" ); // $$$$ ABL 2007-07-26: error context
+        xis.error( "Automat mission name already defined" );
     pMissionName = pMission;       
 }
 
@@ -84,7 +84,7 @@ const MIL_AutomateMissionType& MIL_AutomateMissionType::InitializeAutomaticMissi
     xis >> attribute( "name", strMissionName );
     const MIL_AutomateMissionType* pType = MIL_AutomateMissionType::Find( strMissionName );
     if( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown mission" ); // $$$$ ABL 2007-07-26: error context
+        xis.error( "Unknown mission" );
     xis >> end();
     return *pType;
 }

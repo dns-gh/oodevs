@@ -78,7 +78,6 @@ bool MIL_AutomateTypeLOG::IsLogistic() const
 // -----------------------------------------------------------------------------
 MIL_Automate& MIL_AutomateTypeLOG::InstanciateAutomate( uint nID, MIL_Formation& parent, xml::xistream& xis ) const
 {
-
     return *new MIL_AutomateLOG( *this, nID, parent, xis );
 }
 

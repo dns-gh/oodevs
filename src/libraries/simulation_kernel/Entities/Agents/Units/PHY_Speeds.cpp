@@ -107,7 +107,7 @@ void PHY_Speeds::ReadSpeed( xml::xistream& xis )
 {
     xis >> attribute( "max", rMaxSpeed_ );
     if( rMaxSpeed_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "speeds: max <= 0" );
+        xis.error( "speeds: max <= 0" );
 
     rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ );
     xis >> list( "speed", *this, &PHY_Speeds::ReadTerrain );
@@ -125,14 +125,14 @@ void PHY_Speeds::ReadTerrain( xml::xistream& xis )
 
     const TerrainData data = MIL_Tools::ConvertLandType( strTerrainType );
     if( data.Area() == 0xFF )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown terrain type '" + strTerrainType + "'" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Unknown terrain type '" + strTerrainType + "'" );
 
     MT_Float& speed = SpeedFor( data );
 
     xis >> attribute( "value", speed );
 
     if( speed < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "speed: terrain < 0" );
+        xis.error( "speed: terrain < 0" );
 
     speed = MIL_Tools::ConvertSpeedMosToSim( speed );
     rMaxSpeed_ = std::max( rMaxSpeed_, speed );
@@ -178,7 +178,7 @@ void PHY_Speeds::CheckInitialization( xml::xistream& xis )
         
     }
     if( rMaxSpeed_ == 0. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Composante's max speed is 0 km/h ..." ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Composante's max speed is 0 km/h ..." );
 }
 
 // -----------------------------------------------------------------------------

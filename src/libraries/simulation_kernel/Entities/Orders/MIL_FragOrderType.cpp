@@ -57,12 +57,12 @@ void MIL_FragOrderType::ReadFragorder( xml::xistream& xis )
 
     const MIL_FragOrderType*& pMission = missionIDs_[ nID ];
     if( pMission )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Frag order already defined" ); // $$$$ ABL 2007-07-25: error context
+        xis.error( "Frag order already defined" );
     pMission = new MIL_FragOrderType( nID, xis );
 
     const MIL_FragOrderType*& pMissionName = missionNames_[ pMission->GetName() ];
     if( pMissionName )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat mission name already defined" ); // $$$$ ABL 2007-07-25: error context
+        xis.error( "Automat mission name already defined" );
     pMissionName = pMission;
 }
 

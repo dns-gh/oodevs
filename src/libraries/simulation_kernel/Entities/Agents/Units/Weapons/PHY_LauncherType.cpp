@@ -59,7 +59,7 @@ void PHY_LauncherType::ReadLauncher( xml::xistream& xis )
 
         const PHY_LauncherType*& pLauncherType = launcherTypes_[ strLauncherName ];
         if ( pLauncherType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Launcher type already registered" ); // $$$$ ABL 2007-07-20: error context
+            xis.error( "Launcher type already registered" );
 
         pLauncherType = new PHY_LauncherType( strLauncherName, xis );
 }
@@ -160,7 +160,7 @@ void PHY_LauncherType::ReadModifier( xml::xistream& xis, const PHY_Posture& post
     xis >> attribute( "value", rModificatorValue );
 
     if( rModificatorValue < 0 || rModificatorValue > 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "target-posture: value not in [0..1]" );
+        xis.error( "target-posture: value not in [0..1]" );
 
     RegisterPHModificator( postureSource, postureTarget, rModificatorValue );
 }

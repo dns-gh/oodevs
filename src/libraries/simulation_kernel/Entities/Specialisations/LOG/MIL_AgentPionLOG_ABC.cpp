@@ -34,7 +34,7 @@ MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint 
     , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
 {
     if( !GetAutomate().GetType().IsLogistic() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "The automata of this pion is not a logistic one" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "The automata of this pion is not a logistic one. Haaahahahahah" );
 }
 
 // -----------------------------------------------------------------------------

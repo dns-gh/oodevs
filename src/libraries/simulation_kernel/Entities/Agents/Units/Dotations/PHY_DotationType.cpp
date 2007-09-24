@@ -79,7 +79,7 @@ void PHY_DotationType::ReadDotation( xml::xistream& xis )
 
     CIT_DotationTypeMap it = dotationTypes_.find( strTypeName );
     if( it == dotationTypes_.end() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid dotation type name" ); // $$$$ ABL 2007-07-19: error context
+        xis.error( "Invalid dotation type name" );
 
     const_cast< PHY_DotationType& >( *it->second ).RegisterDotationCategory( strCategoryName, xis );
 }
@@ -121,13 +121,13 @@ void PHY_DotationType::RegisterDotationCategory( const std::string& strCategoryN
 {
     const PHY_DotationCategory*& pCategory = dotationCategories_[ strCategoryName ];
     if( pCategory )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Dotation category '%s' already registered", strCategoryName.c_str() ) ); // $$$$ ABL 2007-07-19: error context
+        xis.error( "Dotation category '" + strCategoryName + "' already registered" );
 
     pCategory = new PHY_DotationCategory( *this, strCategoryName, xis );
 
     const PHY_DotationCategory*& pCategoryID = dotationCategorieIDs_[ pCategory->GetMosID() ];
     if( pCategoryID )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Dotation category ID already registered", strCategoryName.c_str() ) ); // $$$$ ABL 2007-07-19: error context
+        xis.error( "Dotation category ID already registered" );
     pCategoryID = pCategory;
 }
 

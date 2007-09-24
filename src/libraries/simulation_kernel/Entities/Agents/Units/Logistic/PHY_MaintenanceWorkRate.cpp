@@ -96,16 +96,16 @@ void PHY_MaintenanceWorkRate::ReadWorkRate( xml::xistream& xis )
 
     T_WorkRateMap::iterator it = workRates_.find( name );
     if( it == workRates_.end() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Undefined working scheme" );
+        xis.error( "Undefined working scheme" );
 
     PHY_MaintenanceWorkRate& workRate = const_cast< PHY_MaintenanceWorkRate& >( *it->second );
     xis >> attribute( "working-time", workRate.rWorkTime_ );
     if( workRate.rWorkTime_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Working time <= 0" );
+        xis.error( "Working time <= 0" );
     workRate.rWorkerRatio_ = workRate.rWorkTime_ / 24.;
 
     std::string time;
     xis >> optional() >> attribute( "time-before-warning", time );
     if( tools::DecodeTime( time, workRate.nDelayBeforeWarningRC_ ) && workRate.nDelayBeforeWarningRC_ == 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Time before warning is null" );
+        xis.error( "Time before warning is null" );
 }

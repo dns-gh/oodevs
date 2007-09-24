@@ -58,17 +58,17 @@ void MIL_PionMissionType::ReadMission( xml::xistream& xis )
 
     const MIL_PionMissionType*& pMission = missionIDs_[ nID ];
     if( pMission )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unit mission id already defined" ); // $$$$ ABL 2007-07-26: error context
+        xis.error( "Unit mission id already defined" );
     pMission = new MIL_PionMissionType( nID, xis );
 
     const MIL_PionMissionType*& pMissionDiaID = missionDiaIDs_[ pMission->GetDIAType().GetDebugId() ];
     if( pMissionDiaID )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unit mission DIA ID already defined" ); // $$$$ ABL 2007-07-26: error context
+        xis.error( "Unit mission DIA ID already defined" );
     pMissionDiaID = pMission;       
 
     const MIL_PionMissionType*& pMissionName = missionNames_[ pMission->GetName() ];
     if( pMissionName )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unit mission name already defined" ); // $$$$ ABL 2007-07-26: error context
+        xis.error( "Unit mission name already defined" );
     pMissionName = pMission;
 }
 

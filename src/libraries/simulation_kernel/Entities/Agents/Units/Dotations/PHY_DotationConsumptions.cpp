@@ -41,15 +41,15 @@ void PHY_DotationConsumptions::ReadDotation( xml::xistream& xis )
 
     const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( category );
     if( !pDotationType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type " + category ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "Unknown dotation type " + category );
 
     const PHY_DotationCategory* pDotationCategory = pDotationType->FindDotationCategory( name );
-    if ( !pDotationCategory )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation category" ); // $$$$ ABL 2007-07-20: error context
+    if( !pDotationCategory )
+        xis.error( "Unknown dotation category" );
 
     PHY_DotationConsumption*& pDotation = dotationConsumptions_[ pDotationCategory ];
-    if ( pDotation )        
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Dotation category already defined" ); // $$$$ ABL 2007-07-20: error context
+    if( pDotation )
+        xis.error( "Dotation category already defined" );
     pDotation = new PHY_DotationConsumption( *pDotationCategory, xis );
 }
 
@@ -89,12 +89,11 @@ bool PHY_DotationConsumptions::RegisterConsumptionReservations( PHY_DotationGrou
 // -----------------------------------------------------------------------------
 void PHY_DotationConsumptions::AddConsumptionValues( T_ConsumptionValue& result ) const
 {
-    for ( CIT_DotationConsumptionMap it = dotationConsumptions_.begin(); it != dotationConsumptions_.end(); ++it )
+    for( CIT_DotationConsumptionMap it = dotationConsumptions_.begin(); it != dotationConsumptions_.end(); ++it )
     {
         const PHY_DotationConsumption* pConsumption = it->second;
-        
-        if ( pConsumption )
+
+        if( pConsumption )
             result[ it->first ] += pConsumption->GetConsumption();
     }
 }
-

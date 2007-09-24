@@ -305,7 +305,7 @@ void MIL_RealObject_ABC::Initialize( xml::xistream& xis )
         xis >> attribute( "obstacle-type", strObstacleTypeName );
         pObstacleType_ = MIL_ObstacleType::Find( strObstacleTypeName );
         if( !pObstacleType_ )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown obstacle type" );  // $$$$ ABL 2007-07-09: error context
+            xis.error( "Unknown obstacle type" );
         if( pObstacleType_->CouldBeActivated() )
             xis >> attribute( "reserved-obstacle-activated", bReservedObstacleActivated_ );
     }

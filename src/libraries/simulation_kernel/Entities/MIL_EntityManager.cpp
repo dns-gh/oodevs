@@ -416,7 +416,7 @@ void MIL_EntityManager::ReadDiplomacy( xml::xistream& xis )
 
     MIL_Army* pArmy = FindArmy( id );
     if( !pArmy )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown side" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Unknown side" );
     pArmy->InitializeDiplomacy( xis );
 }
 
@@ -446,7 +446,7 @@ void MIL_EntityManager::ReadArmy( xml::xistream& xis )
 
     MIL_Army*& pArmy = armies_[ id ];
     if( pArmy )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Army already exists" );  // $$$$ ABL 2007-07-09: error context
+        xis.error( "Army already exists" );
     pArmy = new MIL_Army( *this, id, xis );
 }
 
@@ -460,7 +460,7 @@ void MIL_EntityManager::CreateFormation( xml::xistream& xis, MIL_Army& army, MIL
     xis >> attribute( "id", id );
     MIL_Formation*& pFormation = formations_[ id ];
     if( pFormation )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Formation using this id already exists" ); // $$$$ ABL 2007-07-09: error context
+        xis.error( "Formation using this id already exists" );
     pFormation = new MIL_Formation( *this, MIL_AgentServer::GetWorkspace().GetTacticalLineManager(), id, army, xis, parent );
 }
 
@@ -478,11 +478,11 @@ void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Formation& format
 
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( strType );
     if( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automat type" ); // $$$$ ABL 2007-07-09: error context
+        xis.error( "Unknown automat type" );
 
     MIL_Automate*& pAutomate = automates_[ id ];
     if( pAutomate )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat using this id already exists" ); // $$$$ ABL 2007-07-09: error context
+        xis.error( "Automat using this id already exists" );
     pAutomate = (MIL_Automate*)0xdead;  // $$$$ NLD 2007-04-04: N'importe quoi
     
     pAutomate = &pType->InstanciateAutomate( id, formation, xis );
@@ -504,11 +504,11 @@ void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Automate& parent 
 
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( strType );
     if( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automat type" ); // $$$$ ABL 2007-07-09: error context
+        xis.error( "Unknown automat type" );
             
     MIL_Automate*& pAutomate = automates_[ id ];
     if( pAutomate )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat using this id already exists" ); // $$$$ ABL 2007-07-09: error context
+        xis.error( "Automat using this id already exists" );
     pAutomate = (MIL_Automate*)0xdead; // $$$$ NLD 2007-04-04: N'importe quoi
     
     pAutomate = &pType->InstanciateAutomate( id, parent, xis );
@@ -524,7 +524,7 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, uin
 {
     MIL_AgentPion*& pPion = pions_[ nID ];
     if( pPion )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pawn using this id already exists" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Pawn using this id already exists" );
 
     pPion = &type.InstanciatePion( nID, automate, xis );
     pPion->ReadOverloading( xis );
@@ -567,11 +567,11 @@ void MIL_EntityManager::CreatePopulation( xml::xistream& xis, MIL_Army& army )
 
     const MIL_PopulationType* pType = MIL_PopulationType::Find( strType );
     if( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown population type" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Unknown population type" );
 
     MIL_Population*& pPopulation = populations_[ id ];
     if( pPopulation )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Population using this id already exists" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Population using this id already exists" );
 
     pPopulation = &pType->InstanciatePopulation( MIL_IDManager::populations_.ConvertSimIDToMosID( id ), army, xis );
 }

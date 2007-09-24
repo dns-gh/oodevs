@@ -196,7 +196,7 @@ void PHY_DotationStockContainer::ReadStock( xml::xistream& xis )
 
     const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
     if( !pDotationCategory )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type" ); // $$$$ ABL 2007-07-27: error context
+        xis.error( "Unknown dotation type" );
 
     AddStock( *pDotationCategory, xis );
 }
@@ -260,7 +260,7 @@ PHY_DotationStock* PHY_DotationStockContainer::AddStock( const PHY_DotationCateg
     MT_Float rValue;
     xis >> attribute( "quantity", rValue );
     if( rValue < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "stock: quantity < 0" );
+        xis.error( "stock: quantity < 0" );
 
     const MT_Float rThresholdRatio = pRoleSupply_->GetPion().GetType().GetUnitType().GetStockLogisticThresholdRatio( category.GetLogisticType() );
 

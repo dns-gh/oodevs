@@ -126,9 +126,9 @@ void MIL_CampPrisonniers::Initialize( xml::xistream& xis )
 
     MIL_Automate* pTC2Tmp = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nTC2 );
     if( !pTC2Tmp )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automate TC2 specified is invalid" ); // $$$$ ABL 2007-07-09: error context
+        xis.error( "Automate TC2 specified is invalid" );
     if( !pTC2Tmp->GetType().IsLogistic() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automate TC2 specified is not a logistic automate" ); // $$$$ ABL 2007-07-09: error context
+        xis.error( "Automate TC2 specified is not a logistic automate" );
     pTC2_ = static_cast< MIL_AutomateLOG* >( pTC2Tmp );
 
     xis >> end()

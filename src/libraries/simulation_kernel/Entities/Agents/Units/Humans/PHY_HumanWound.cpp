@@ -76,12 +76,12 @@ void PHY_HumanWound::InitializeMedicalData( xml::xistream& xis )
     xis >> start( "times" );
     tools::ReadTimeAttribute( xis, "diagnosis-time", rTimeVal );
     if( rTimeVal < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "times: diagnosis-time < 0" );
+        xis.error( "times: diagnosis-time < 0" );
     nDiagnosticTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rTimeVal );
 
     tools::ReadTimeAttribute( xis, "sorting-time", rTimeVal );
     if( rTimeVal < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "times: sorting-time < 0" );
+        xis.error( "times: sorting-time < 0" );
     nSortingTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rTimeVal );
     xis >> end();
 
@@ -92,7 +92,7 @@ void PHY_HumanWound::InitializeMedicalData( xml::xistream& xis )
         >> end();
 
     if( std::fabs( 1. - rFactorSum ) > 0.01 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Total pourcentage is not 100%" ); // $$$$ ABL 2007-07-24: error context
+        xis.error( "Total pourcentage is not 100%" );
 
     const_cast< PHY_HumanWound& >( notWounded_ ).nLifeExpectancy_ = std::numeric_limits< uint >::max();
     const_cast< PHY_HumanWound& >( killed_     ).nLifeExpectancy_ = 0;
@@ -118,7 +118,7 @@ void PHY_HumanWound::ReadInjury( xml::xistream& xis, MT_Float& rFactorSum )
         MT_Float rValue = 0.;
         xis >> attribute( "percentage", rValue );
         if( rValue < 0 || rValue > 100 )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "injury: percentage not in [0..100]" );
+            xis.error( "injury: percentage not in [0..100]" );
 
         rValue /= 100.;
         rFactorSum += rValue;
@@ -128,18 +128,18 @@ void PHY_HumanWound::ReadInjury( xml::xistream& xis, MT_Float& rFactorSum )
         if( tools::ReadTimeAttribute( xis, "life-expectancy", rValue ) )
         {
             if( rValue <= 0 )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "injury: life-exectancy <= 0" );
+                xis.error( "injury: life-exectancy <= 0" );
             const_cast< PHY_HumanWound& >( wound ).nLifeExpectancy_ = (uint)MIL_Tools::ConvertSecondsToSim( rValue );
         }
 
         tools::ReadTimeAttribute( xis, "caring-time", rValue );
         if( rValue < 0 )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "injury: caring-time < 0" );
+            xis.error( "injury: caring-time < 0" );
         const_cast< PHY_HumanWound& >( wound ).nHealingTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rValue );
 
         tools::ReadTimeAttribute( xis, "resting-time", rValue );
         if( rValue < 0 )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "injury: resting-time < 0" );
+            xis.error( "injury: resting-time < 0" );
         const_cast< PHY_HumanWound& >( wound ).nRestingTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rValue );
     }
     else if( injuryType == "mental" )
@@ -147,17 +147,17 @@ void PHY_HumanWound::ReadInjury( xml::xistream& xis, MT_Float& rFactorSum )
         MT_Float rValue = 0.;
         tools::ReadTimeAttribute( xis, "caring-time", rValue );
         if( rValue < 0 )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "injury: caring-time < 0" );
+            xis.error( "injury: caring-time < 0" );
         nMentalDiseaseHealingTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rValue );
 
         tools::ReadTimeAttribute( xis, "resting-time", rValue );
         if( rValue < 0 )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "injury: resting-time < 0" );
+            xis.error( "injury: resting-time < 0" );
         nMentalDiseaseRestingTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rValue );
 
         tools::ReadTimeAttribute( xis, "percentage", rValue );
         if( rValue < 0 || rValue > 100 )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "injury: percentage not in [0..100]" );
+            xis.error( "injury: percentage not in [0..100]" );
         rMentalDiseaseFactor_      = rValue / 100.;
     }
     else if( injuryType == "contaminated" )
@@ -165,16 +165,16 @@ void PHY_HumanWound::ReadInjury( xml::xistream& xis, MT_Float& rFactorSum )
         MT_Float rValue = 0;
         tools::ReadTimeAttribute( xis, "caring-time", rValue );
         if( rValue < 0 )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "injury: caring-time < 0" );
+            xis.error( "injury: caring-time < 0" );
         nContaminatedHealingTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rValue );
 
         tools::ReadTimeAttribute( xis, "resting-time", rValue );
         if( rValue < 0 )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "injury: resting-time < 0" );
+            xis.error( "injury: resting-time < 0" );
         nContaminatedRestingTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rValue );
     }
     else
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "injury: unknow category" );
+        xis.error( "injury: unknow category" );
 }
 
 // -----------------------------------------------------------------------------

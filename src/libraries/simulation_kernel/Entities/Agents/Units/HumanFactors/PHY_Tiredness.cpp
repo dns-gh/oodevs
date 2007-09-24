@@ -65,7 +65,7 @@ void PHY_Tiredness::ReadTiredness( xml::xistream& xis )
     xis >> attribute( "state", type );
     T_TirednessMap::iterator it = tirednesses_.find( type );
     if( it == tirednesses_.end() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Undefined tiredness state" );
+        xis.error( "Undefined tiredness state" );
     const_cast< PHY_Tiredness* >( it->second )->Read( xis );
 
 }
@@ -122,13 +122,13 @@ void PHY_Tiredness::Read( xml::xistream& xis )
         >> attribute( "sensor-distance", rCoefSensorDistanceModificator_ );
 
     if( rCoefMaxSpeedModificator_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "max-speed <= 0" );
+        xis.error( "max-speed <= 0" );
     if( rCoefReloadingTimeModificator_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "loading-time <= 0" );
+        xis.error( "loading-time <= 0" );
     if( rCoefPhModificator_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "ph <= 0" );
+        xis.error( "ph <= 0" );
     if( rCoefPostureTimeModificator_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "posture-setup-time <= 0" );
+        xis.error( "posture-setup-time <= 0" );
     if( rCoefSensorDistanceModificator_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "sensor-distance <= 0" );
+        xis.error( "sensor-distance <= 0" );
 }

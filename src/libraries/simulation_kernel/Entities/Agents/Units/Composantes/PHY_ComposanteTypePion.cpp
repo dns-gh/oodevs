@@ -97,11 +97,11 @@ void PHY_ComposanteTypePion::ReadElement( xml::xistream& xis, const MIL_Time_ABC
     xis >> attribute( "name", strComposanteType );
     PHY_ComposanteTypePion*& pComposanteType = composantesTypes_[ strComposanteType ];
     if( pComposanteType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Composante type '%s' already registered", strComposanteType.c_str() ) ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "Composante type '" + strComposanteType + "' already registered" );
     pComposanteType = new PHY_ComposanteTypePion( time, strComposanteType, xis );
 
     if( !ids_.insert( pComposanteType->GetMosID() ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Composante ID already used" ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "Composante ID already used" );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,9 +169,9 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
         >> attribute( "weight", rWeight_ );
 
     if( rMaxSlope_ < 0 || rMaxSlope_ > 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "element: max-slope not in [0..1]" );
+        xis.error( "element: max-slope not in [0..1]" );
     if( rWeight_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "element: weight <= 0" );
+        xis.error( "element: weight <= 0" );
 
     InitializeWeapons       ( xis );
     InitializeSensors       ( xis );
@@ -215,10 +215,10 @@ void PHY_ComposanteTypePion::InitializeBreakdownTypes( xml::xistream& xis )
 
     if( randomBreakdownTypeProbabilities_.empty()
         || std::fabs( 1. - randomBreakdownTypeProbabilities_.back().rProbabilityBound_ ) > 0.01 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Total probability of random breakdowns is less than 100%" ) ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "Total probability of random breakdowns is less than 100%" );
     if( attritionBreakdownTypeProbabilities_.empty()
         || std::fabs( 1. - attritionBreakdownTypeProbabilities_.back().rProbabilityBound_  ) > 0.01 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Total probability of attrition breakdowns is less than 100%" ) ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "Total probability of attrition breakdowns is less than 100%" );
 }
 
 // -----------------------------------------------------------------------------
@@ -245,12 +245,12 @@ void PHY_ComposanteTypePion::InitializeRandomBreakdownTypes( xml::xistream& xis 
     xis >> attribute( "type", strBuf );
     const PHY_BreakdownType* pType = PHY_BreakdownType::Find( strBuf );
     if ( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown breakdown type '%s'", strBuf.c_str() ) ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "Unknown breakdown type '" + strBuf + "'" );
     
     MT_Float rPercentage;
     xis >> attribute( "percentage", rPercentage );
     if( rPercentage < 0 || rPercentage > 100 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "random breakdown: percentage not in [0..100]" );
+        xis.error( "random breakdown: percentage not in [0..100]" );
 
     rPercentage *= 0.01;
     if( !randomBreakdownTypeProbabilities_.empty() )
@@ -268,12 +268,12 @@ void PHY_ComposanteTypePion::InitializeAttritionBreakdownTypes( xml::xistream& x
     xis >> attribute( "type", strBuf );
     const PHY_BreakdownType* pType = PHY_BreakdownType::Find( strBuf );
     if ( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown breakdown type '%s'", strBuf.c_str() ) ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Unknown breakdown type '" + strBuf + "'" );
 
     MT_Float rPercentage;
     xis >> attribute( "percentage", rPercentage );
     if( rPercentage < 0 || rPercentage > 100 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "attrition breakdown: percentage not in [0..100]" );
+        xis.error( "attrition breakdown: percentage not in [0..100]" );
 
     rPercentage *= 0.01;
     if( !attritionBreakdownTypeProbabilities_.empty() )
@@ -309,10 +309,10 @@ void PHY_ComposanteTypePion::ReadWeaponSystem( xml::xistream& xis )
 
         const PHY_WeaponType* pWeaponType = PHY_WeaponType::FindWeaponType( strLauncher, strAmmunition );
         if( !pWeaponType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown weapon type (%s, %s)", strLauncher.c_str(), strAmmunition.c_str() ) ); // $$$$ ABL 2007-07-20: error context
+            xis.error( "Unknown weapon type (" + strLauncher + ", " + strAmmunition + ")" );
 
         if( weaponTypes_.find( pWeaponType ) != weaponTypes_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Weapon type %s,%s already initialized", strLauncher.c_str(), strAmmunition.c_str() ) ); // $$$$ ABL 2007-07-20: error context
+            xis.error( "Weapon type (" + strLauncher + ", " + strAmmunition + ") already initialized" );
             
         weaponTypes_[ pWeaponType ] = bMajor;
 }
@@ -347,10 +347,10 @@ void PHY_ComposanteTypePion::ReadSensor( xml::xistream& xis )
 
         const PHY_SensorType* pSensorType = PHY_SensorType::FindSensorType( strSensor );
         if( !pSensorType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown sensor type '%s'", strSensor.c_str() ) ); // $$$$ ABL 2007-07-20: error context
+            xis.error( "Unknown sensor type '" + strSensor + "'" );
 
         if( sensorTypes_.find( pSensorType ) != sensorTypes_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Sensor type '%s' already defined", strSensor.c_str() ) ); // $$$$ ABL 2007-07-20: error context
+            xis.error( "Sensor type '" + strSensor + "' already defined" );
 
         xis >> attribute( "height", sensorTypes_[ pSensorType ] );
 
@@ -381,10 +381,10 @@ void PHY_ComposanteTypePion::ReadRadar( xml::xistream& xis )
 
     const PHY_RadarType* pRadarType = PHY_RadarType::Find( strRadar );
     if( !pRadarType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown radar type" ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "Unknown radar type" );
 
     if( radarTypes_.find( pRadarType ) != radarTypes_.end() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Radar type already defined" ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "Radar type already defined" );
     radarTypes_.insert( pRadarType );
 }
 
@@ -407,9 +407,9 @@ void PHY_ComposanteTypePion::InitializeTransport( xml::xistream& xis )
 void PHY_ComposanteTypePion::ReadTransportCrew( xml::xistream& xis )
 {
     if( !tools::ReadTimeAttribute( xis, "man-boarding-time", rNbrHumansLoadedPerTimeStep_ ) || rNbrHumansLoadedPerTimeStep_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "crew: man-boarding-time < 0" );
+        xis.error( "crew: man-boarding-time < 0" );
     if( !tools::ReadTimeAttribute( xis, "man-unloading-time", rNbrHumansUnloadedPerTimeStep_ ) || rNbrHumansUnloadedPerTimeStep_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "crew: man-unloading-time < 0" );
+        xis.error( "crew: man-unloading-time < 0" );
 
     rNbrHumansLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansLoadedPerTimeStep_   );
     rNbrHumansUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansUnloadedPerTimeStep_ );
@@ -423,15 +423,15 @@ void PHY_ComposanteTypePion::ReadTransportUnit( xml::xistream& xis )
 {
     xis >> attribute( "capacity", rPionTransporterWeightCapacity_ );
     if( rPionTransporterWeightCapacity_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit: capacity <= 0" );
+        xis.error( "unit: capacity <= 0" );
     if( !tools::ReadTimeAttribute( xis, "ton-loading-time", rPionTransporterWeightLoadedPerTimeStep_ )
       || rPionTransporterWeightLoadedPerTimeStep_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit: ton-loading-time <= 0" );
+        xis.error( "unit: ton-loading-time <= 0" );
     rPionTransporterWeightLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightLoadedPerTimeStep_   );
 
     if( !tools::ReadTimeAttribute( xis, "ton-unloading-time", rPionTransporterWeightUnloadedPerTimeStep_ )
       || rPionTransporterWeightUnloadedPerTimeStep_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit: ton-unloading-time <= 0" );
+        xis.error( "unit: ton-unloading-time <= 0" );
     rPionTransporterWeightUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightUnloadedPerTimeStep_ );
 }
 
@@ -457,12 +457,12 @@ void PHY_ComposanteTypePion::ReadObject( xml::xistream& xis )
 
     const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( strType );
     if( !pObjectType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown object type '%s'", strType.c_str() ) ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "Unknown object type '" + strType + "'" );
 
     assert( objectData_.size() > pObjectType->GetID() );
     const PHY_ComposanteTypeObjectData*& pObject = objectData_[ pObjectType->GetID() ];
     if( pObject )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Object type '%s' already instanciated", strType.c_str() ) ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "Object type '" + strType + "' already instanciated" );
 
     pObject = new PHY_ComposanteTypeObjectData( *pObjectType, xis );
 }
@@ -551,15 +551,15 @@ void PHY_ComposanteTypePion::ReadRepairing( xml::xistream& xis )
     if( tools::ReadTimeAttribute( xis, "max-reparation-time", rTime ) )
     {
         if( rTime <= 0 )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "category: max-reparation-time <= 0" );
-        ntiCapability.nMaxTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rTime ); // $$$$ ABL 2007-07-23: tick/seconds...
+            xis.error( "category: max-reparation-time <= 0" );
+        ntiCapability.nMaxTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rTime );
     }
     
     if( !ntiCapability.bMobility_ && !ntiCapability.bElectronic_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "NTI has not 'EA' nor 'M'" ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "NTI has not 'EA' nor 'M'" );
 
     if( !ntiCapabilities_.insert( ntiCapability ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "NTI already defined" ); // $$$$ ABL 2007-07-20: error context
+        xis.error( "NTI already defined" );
 }
 
 // -----------------------------------------------------------------------------
@@ -573,9 +573,9 @@ void PHY_ComposanteTypePion::ReadTowing( xml::xistream& xis )
     tools::ReadTimeAttribute( xis, "unloading-time", rHaulerUnloadingTime_ );
 
     if( rHaulerWeightCapacity_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "towing: capacity <= 0" );
+        xis.error( "towing: capacity <= 0" );
     if( rHaulerLoadingTime_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "towing: loading-time" );
+        xis.error( "towing: loading-time" );
 
     rHaulerLoadingTime_   = MIL_Tools::ConvertSecondsToSim( rHaulerLoadingTime_ );
     rHaulerUnloadingTime_ = MIL_Tools::ConvertSecondsToSim( rHaulerUnloadingTime_ );
@@ -635,11 +635,11 @@ void PHY_ComposanteTypePion::ReadRelieving( xml::xistream& xis )
     tools::ReadTimeAttribute( xis, "man-unloading-time", rNbrHumansUnloadedForEvacuationPerTimeStep_ );
 
     if( nAmbulanceEvacuationCapacity_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "relieving: capacity <= 0" );
+        xis.error( "relieving: capacity <= 0" );
     if( rNbrHumansLoadedForEvacuationPerTimeStep_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "relieving: man-loading-time <= 0" );
+        xis.error( "relieving: man-loading-time <= 0" );
     if( rNbrHumansUnloadedForEvacuationPerTimeStep_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "relieving: man-unloading-time <= 0" );
+        xis.error( "relieving: man-unloading-time <= 0" );
 
     rNbrHumansLoadedForEvacuationPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansLoadedForEvacuationPerTimeStep_   );
     rNbrHumansUnloadedForEvacuationPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansUnloadedForEvacuationPerTimeStep_ );
@@ -663,11 +663,11 @@ void PHY_ComposanteTypePion::ReadCollecting( xml::xistream& xis )
     tools::ReadTimeAttribute( xis, "man-unloading-time", rNbrHumansUnloadedForCollectionPerTimeStep_ );
 
     if( nAmbulanceCollectionCapacity_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "collecting: capacity <= 0" );
+        xis.error( "collecting: capacity <= 0" );
     if( rNbrHumansLoadedForCollectionPerTimeStep_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "collecting: man-loading-time <= 0" );
+        xis.error( "collecting: man-loading-time <= 0" );
     if( rNbrHumansUnloadedForCollectionPerTimeStep_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "collecting: man-unloading-time <= 0" );
+        xis.error( "collecting: man-unloading-time <= 0" );
 
     rNbrHumansLoadedForCollectionPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansLoadedForCollectionPerTimeStep_   );
     rNbrHumansUnloadedForCollectionPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansUnloadedForCollectionPerTimeStep_ );
@@ -714,11 +714,11 @@ void PHY_ComposanteTypePion::ReadSupply( xml::xistream& xis )
 
     pStockTransporterNature_ = PHY_DotationNature::Find( strNature );
     if( !pStockTransporterNature_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unkown dotation nature" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Unkown dotation nature" );
     if( rStockTransporterWeightCapacity_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "supply: mass <= 0" );
+        xis.error( "supply: mass <= 0" );
     if( rStockTransporterVolumeCapacity_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "supply: volume <= 0" );
+        xis.error( "supply: volume <= 0" );
 }
 
 // -----------------------------------------------------------------------------

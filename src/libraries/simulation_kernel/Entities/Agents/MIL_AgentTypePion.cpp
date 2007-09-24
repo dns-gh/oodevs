@@ -161,16 +161,16 @@ void MIL_AgentTypePion::ReadUnit( xml::xistream& xis )
 
     CIT_PionTypeAllocatorMap itPionAllocator = pionTypeAllocators_.find( strType );
     if( itPionAllocator == pionTypeAllocators_.end() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown pion type" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Unknown pion type" );
 
     const MIL_AgentTypePion*& pType = pionTypes_[ strName ];
     if( pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pion type already defined" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Pion type already defined" );
 
     pType = (*itPionAllocator->second)( strName, xis );
 
     if( !ids_.insert( pType->GetID() ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pion type ID already used" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Pion type ID already used" );
 }
 
 // -----------------------------------------------------------------------------
@@ -248,10 +248,10 @@ void MIL_AgentTypePion::ReadPoint( xml::xistream& xis )
         const TerrainData nType = MIL_Tools::ConvertLandType( strTypePoint );
         
         if( nType.Area() == 0xFF )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown land type" ); // $$$$ ABL 2007-07-23: error context
+            xis.error( "Unknown land type" );
 
         if( distancesAvantPoints_.find( nType ) != distancesAvantPoints_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown 'distance avant point'" ); // $$$$ ABL 2007-07-23: error context
+            xis.error( "Unknown 'distance avant point'" );
 
         MT_Float& rDistance = distancesAvantPoints_[ nType ];
         xis >> attribute( "value", rDistance );
@@ -291,7 +291,7 @@ void MIL_AgentTypePion::InitializeModel( xml::xistream& xis )
 
     pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPion( strModel );
     if( !pModel_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown pawn model" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Unknown pawn model" );
 }
 
 // -----------------------------------------------------------------------------

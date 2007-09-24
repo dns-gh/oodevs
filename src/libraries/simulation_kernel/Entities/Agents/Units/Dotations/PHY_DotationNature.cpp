@@ -51,13 +51,13 @@ void PHY_DotationNature::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationNature::ReadNature( xml::xistream& xis )
 {
-        std::string strName;
-        xis >> attribute( "type", strName );
+    std::string strName;
+    xis >> attribute( "type", strName );
 
-        const PHY_DotationNature*& pDotationNature = natures_[ strName ];
-        if( pDotationNature )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Dotation nature '%s' already registered", strName.c_str() ) );
-        pDotationNature = new PHY_DotationNature( strName );
+    const PHY_DotationNature*& pDotationNature = natures_[ strName ];
+    if( pDotationNature )
+        xis.error( "Dotation nature '" + strName + "' already registered" );
+    pDotationNature = new PHY_DotationNature( strName );
 }
 
 // -----------------------------------------------------------------------------

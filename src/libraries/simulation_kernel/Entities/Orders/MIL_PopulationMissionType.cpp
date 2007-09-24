@@ -57,12 +57,12 @@ void MIL_PopulationMissionType::ReadMission( xml::xistream& xis )
 
     const MIL_PopulationMissionType*& pMission = missionIDs_[ nID ];
     if( pMission )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Population mission already defined" ); // $$$$ ABL 2007-07-25: error context
+        xis.error( "Population mission already defined" );
     pMission = new MIL_PopulationMissionType( nID, xis );
 
     const MIL_PopulationMissionType*& pMissionName = missionNames_[ pMission->GetName() ];
     if( pMissionName )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Population mission name already defined" ); // $$$$ ABL 2007-07-25: error context
+        xis.error( "Population mission name already defined" );
     pMissionName = pMission;
 }
 

@@ -153,7 +153,7 @@ void MIL_Rota::Initialize( xml::xistream& xis )
             >> content( "danger", nDanger_ );
 
     if( nDanger_ > 10 || nDanger_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "specific-attributes is not in bound( 0, 10 )" );
+        xis.error( "specific-attributes is not in bound( 0, 10 )" );
     
     nbcAgents_.clear();
     xis >> start( "nbc-agents" )
@@ -174,7 +174,7 @@ void MIL_Rota::ReadNbcAgent( xml::xistream& xis )
 
     const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( strNbcTmp );
     if( !pNbcAgentType )
-        throw MT_ScipioException( "MIL_Rota::Initialize", __FILE__, __LINE__, MT_FormatString( "Unknown 'AgentNBC' '%s' for rota object '%d'", strNbcTmp.c_str(), GetID() ) ); // $$$$ _RC_ ABL 2007-07-09: error context
+        xis.error( "Unknown 'AgentNBC' '" + strNbcTmp + "' for rota object" );
     nbcAgents_.insert( pNbcAgentType );
 }
 

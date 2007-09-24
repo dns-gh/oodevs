@@ -69,10 +69,10 @@ void PHY_SensorTypeObjectData::ReadPosture( xml::xistream& xis, const PHY_Postur
         MT_Float& rFactor = factors[ it->second->GetID() ];
         xis >> attribute( "value", rFactor );
         if( rFactor < 0 || rFactor > 1 )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "source-posture-modifier: value not in [0..1]" );
+            xis.error( "source-posture-modifier: value not in [0..1]" );
     }
     else
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "source-posture-modifier: unknow type" );
+        xis.error( "source-posture-modifier: unknow type" );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,9 +117,9 @@ void PHY_SensorTypeObjectData::InitializePopulationFactors( xml::xistream& xis )
         >> end();
 
     if( rPopulationDensity_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population-modifier: density < 0" );
+        xis.error( "population-modifier: density < 0" );
     if( rPopulationFactor_ < 0 || rPopulationFactor_ > 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population-modifier: modifier not in [0..1]" );
+        xis.error( "population-modifier: modifier not in [0..1]" );
 }
 
 // -----------------------------------------------------------------------------

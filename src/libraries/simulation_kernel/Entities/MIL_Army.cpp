@@ -271,16 +271,16 @@ void MIL_Army::ReadDiplomacy( xml::xistream& xis )
 
     E_Diplomacy nDiplomacy = diplomacyConverter_.Convert( strDiplomacy );
     if( nDiplomacy == eUnknown )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown diplomacy relation between armies" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Unknown diplomacy relation between armies" );
 
     MIL_Army* pArmy = manager_.FindArmy( nTeam );
     if( !pArmy )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown army" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Unknown army" );
 
     if( diplomacies_.find( pArmy ) != diplomacies_.end() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Diplomacy between armies already exist" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Diplomacy between armies already exist" );
     if( pArmy == this )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Self diplomacy not allowed" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Self diplomacy not allowed" );
 
     diplomacies_[ pArmy ] = nDiplomacy;
 }
@@ -298,10 +298,10 @@ void MIL_Army::ReadLogistic( xml::xistream& xis )
 
     const MIL_KnowledgeGroupType* pType = MIL_KnowledgeGroupType::FindType( strType );
     if( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Knowledge group type doesn't exist" ); // $$$$ ABL 2007-07-09: error context
+        xis.error( "Knowledge group type doesn't exist" );
 
     if( knowledgeGroups_.find( id ) != knowledgeGroups_.end() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Knowledge group id already defined" ); // $$$$ ABL 2007-07-09: error context
+        xis.error( "Knowledge group id already defined" );
     pType->InstanciateKnowledgeGroup( id, *this ); // Auto-registration
 }
 
@@ -316,11 +316,11 @@ void MIL_Army::ReadAutomat( xml::xistream& xis )
 
     MIL_Automate* pSuperior = manager_.FindAutomate( id );
     if( !pSuperior )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automat" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Unknown automat" );
     if( pSuperior->GetArmy() != *this )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid automat (not in specified side)" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Invalid automat (not in specified side)" );
     if( !pSuperior->GetType().IsLogistic() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat isn't a logistic automat" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Automat isn't a logistic automat" );
 
     xis >> list( "subordinate" , *this, &MIL_Army::ReadSubordinate, pSuperior );
 }
@@ -337,9 +337,9 @@ void MIL_Army::ReadSubordinate( xml::xistream& xis, MIL_Automate* pSuperior )
 
     MIL_Automate* pSubordinate = manager_.FindAutomate( nSubordinateID );
     if( !pSubordinate )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automat" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Unknown automat" );
     if( pSubordinate->GetArmy() != *this )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid automat (not in specified side)" ); // $$$$ ABL 2007-07-10: error context
+        xis.error( "Invalid automat (not in specified side)" );
 
     pSubordinate->ReadLogisticLink( static_cast< MIL_AutomateLOG& >( *pSuperior ), xis );
 }

@@ -100,7 +100,7 @@ void MIL_TacticalLine_ABC::Initialize( xml::xistream& xis )
     xis >> attribute( "name", strName_ )
         >> list( "point", *this, &MIL_TacticalLine_ABC::ReadPoint, points );
     if( points.size() < 2 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid tactical line geometry" );
+        xis.error( "Invalid tactical line geometry" );
     line_.Reset( TER_Localisation::eLine, points );
 }
 

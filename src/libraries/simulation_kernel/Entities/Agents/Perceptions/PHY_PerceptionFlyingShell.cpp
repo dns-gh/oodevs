@@ -37,7 +37,7 @@ void PHY_PerceptionFlyingShell::Initialize( xml::xistream& xis )
         >> end();
     
     if( rRadius_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "cobra-radar: action-range < 0" );
+        xis.error( "cobra-radar: action-range < 0" );
     rRadius_ = MIL_Tools::ConvertMeterToSim( rRadius_ );
 }
 

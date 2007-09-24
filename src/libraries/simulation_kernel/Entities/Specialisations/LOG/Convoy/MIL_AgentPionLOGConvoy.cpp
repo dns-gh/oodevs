@@ -27,7 +27,7 @@ MIL_AgentPionLOGConvoy::MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, u
     : MIL_AgentPionLOG_ABC( type, nID, automate, xis )
 {
     RegisterRole< PHY_RolePionLOGConvoy_Supply >( *this );
-    throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Creation of pion of type 'Pion LOG Convoi' not allowed in ODB" ); // $$$$ ABL 2007-07-10: error context
+    xis.error( "Creation of pion of type 'Pion LOG Convoi' not allowed in ODB" );
 }
 
 // -----------------------------------------------------------------------------

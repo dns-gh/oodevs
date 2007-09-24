@@ -85,7 +85,7 @@ void PHY_Convoy_ABC::InitializeConvoyUnitType( xml::xistream& xis )
 
     pConvoyAgentType_ = MIL_AgentTypePion::Find( strConvoyAgentType );
     if( !pConvoyAgentType_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown type for convoy" ); // $$$$ ABL 2007-07-24: error context
+        xis.error( "Unknown type for convoy" );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,11 +99,11 @@ void PHY_Convoy_ABC::InitializeConvoyMission( xml::xistream& xis )
 
     pConvoyMissionType_ = MIL_PionMissionType::Find( strMission );
     if( !pConvoyMissionType_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid mission name for convoy" ); // $$$$ ABL 2007-07-24: error context
+        xis.error( "Invalid mission name for convoy" );
 
     assert( pConvoyAgentType_ );
     if( !pConvoyAgentType_->GetModel().IsMissionAvailable( *pConvoyMissionType_ ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Convoy type pion cannot receive convoy mission" ); // $$$$ ABL 2007-07-24: error context
+        xis.error( "Convoy type pion cannot receive convoy mission" );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,11 +134,11 @@ void PHY_Convoy_ABC::ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFu
 
     xis >> attribute( "truck-count", nNbrCamions );
     if( nNbrCamions <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "time: truck-count <= 0" );
+        xis.error( "time: truck-count <= 0" );
 
     tools::ReadTimeAttribute( xis, "time", rTime );
     if( rTime <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "time: time <= 0" );
+        xis.error( "time: time <= 0" );
     rTime = MIL_Tools::ConvertSecondsToSim( rTime );
 
     data.AddNewPoint( nNbrCamions, rTime );
@@ -181,9 +181,9 @@ void PHY_Convoy_ABC::ReadSpeedModifier( xml::xistream& xis, std::pair< uint, MT_
         >> attribute( "value", rValue );
 
     if( nNbrCamions <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "speed-modifier: truck-count <= 0" );
+        xis.error( "speed-modifier: truck-count <= 0" );
     if( rValue <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "speed-modifier: value <= 0" );
+        xis.error( "speed-modifier: value <= 0" );
 
     coefSpeedModificator_.AddNewPoint( nNbrCamions, rValue ); 
 

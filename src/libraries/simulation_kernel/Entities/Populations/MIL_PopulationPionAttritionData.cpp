@@ -76,7 +76,7 @@ void MIL_PopulationPionAttritionData::ReadAttritionEffect( xml::xistream& xis )
 
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( strAttitude );
     if( !pAttitude )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown attitude '%s'", strAttitude.c_str() ) ); // $$$$ ABL 2007-07-24: error context
+        xis.error( "Unknown attitude '" + strAttitude + "'" );
 
     ReadAttitudeData( *pAttitude, xis );
 }
@@ -95,9 +95,9 @@ void MIL_PopulationPionAttritionData::ReadAttitudeData( const MIL_PopulationAtti
         >> attribute( "intensity", attitudeData.rIntensity_ );
 
     if( attitudeData.rPopulationDensity_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "attrition-effect: population-density < 0" );
+        xis.error( "attrition-effect: population-density < 0" );
     if( attitudeData.rIntensity_ < 0 || attitudeData.rIntensity_ > 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "attrition-effetc: intensity not in [0..1]" );
+        xis.error( "attrition-effetc: intensity not in [0..1]" );
 
     xis >> list( "unit", *this, &MIL_PopulationPionAttritionData::ReadAttritionUnitEffect, attitudeData );
 }
@@ -112,7 +112,7 @@ void MIL_PopulationPionAttritionData::ReadAttritionUnitEffect( xml::xistream& xi
     xis >> attribute( "protection", strProtection );
     const PHY_Protection* pProtection = PHY_Protection::Find( strProtection );
     if( !pProtection )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown protection '%s'", strProtection.c_str() ) ); // $$$$ ABL 2007-07-24: error context
+        xis.error( "Unknown protection '" + strProtection + "'" );
 
     assert( attitudeData.attritions_.size() > pProtection->GetID() );
     attitudeData.attritions_[ pProtection->GetID() ] = PHY_AttritionData( xis );

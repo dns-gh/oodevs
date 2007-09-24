@@ -123,7 +123,7 @@ void MIL_Config::ReadCheckPointConfiguration( xml::xistream& xis )
             >> attribute( "usecrc", bUseCheckPointCRC_ )
         >> end();
     if( !tools::DecodeTime( frequency, checkPointsFrequency_ ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid time specified for checkpoint frequency" );
+        xis.error( "Invalid time specified for checkpoint frequency" );
 }
 
 // -----------------------------------------------------------------------------

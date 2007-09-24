@@ -54,7 +54,7 @@ void MIL_VirtualObjectType::Initialize( xml::xistream& xis )
     // Post check
     for( CIT_ObjectTypeMap itType = objectTypes_.begin(); itType != objectTypes_.end(); ++itType )
         if( !itType->second->IsInitialized() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Object type '%s' not initialized", itType->second->GetName().c_str() ) ); // $$$$ ABL 2007-07-19: error context
+            xis.error( "Object type '" + itType->second->GetName() + "' not initialized" );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,14 +63,14 @@ void MIL_VirtualObjectType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_VirtualObjectType::ReadObject( xml::xistream& xis )
 {
-        std::string strType;
-        xis >> attribute( "type", strType );
+    std::string strType;
+    xis >> attribute( "type", strType );
 
-        const MIL_VirtualObjectType* pType = Find( strType );
-        if( !pType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type" ); // $$$$ ABL 2007-07-19: error context
+    const MIL_VirtualObjectType* pType = Find( strType );
+    if( !pType )
+        xis.error( "Unknown object type" );
 
-        const_cast< MIL_VirtualObjectType* >( pType )->Read( xis );
+    const_cast< MIL_VirtualObjectType* >( pType )->Read( xis );
 }
 
 // -----------------------------------------------------------------------------

@@ -57,7 +57,7 @@ void MIL_KnowledgeGroupType::ReadKnowledgeGroup( xml::xistream& xis )
 
     const MIL_KnowledgeGroupType*& pType = knowledgeGroupTypes_[ strName ];
     if( pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Type already defined" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Type already defined" );
     pType = new MIL_KnowledgeGroupType( strName, xis );
 }
 
@@ -93,18 +93,18 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml:
 
     tools::ReadTimeAttribute( xis, "max-lifetime", rKnowledgeAgentMaxLifeTime_ );
     if( rKnowledgeAgentMaxLifeTime_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit-knowledge: max-lifetime <= 0" );
+        xis.error( "unit-knowledge: max-lifetime <= 0" );
     rKnowledgeAgentMaxLifeTime_ = MIL_Tools::ConvertSecondsToSim( rKnowledgeAgentMaxLifeTime_ );
 
     uint nTmp = std::numeric_limits< unsigned int >::max();
     xis >> optional() >> attribute( "max-unit-to-knowledge-distance", nTmp );
     if( nTmp <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit-knowledge: max-unit-to-knowledge-distance <= 0" );
+        xis.error( "unit-knowledge: max-unit-to-knowledge-distance <= 0" );
     rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_ = MIL_Tools::ConvertMeterToSim( nTmp );
 
     if( tools::ReadTimeAttribute(xis, "interpolation-time", rKnowledgeAgentExtrapolationTime_ ) )
         if( rKnowledgeAgentExtrapolationTime_ <= 0 )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "unit-knowledge: interpolation-time <= 0" );
+            xis.error( "unit-knowledge: interpolation-time <= 0" );
     rKnowledgeAgentExtrapolationTime_ = std::max( 1., MIL_Tools::ConvertSecondsToSim( rKnowledgeAgentExtrapolationTime_ ) );
     // JVT : 1 car lorsque l'on perd de vue une unité, on veux au moins que l'emplacement de la connaissance soit celle au pas de temps suivant le non vu
 
@@ -115,7 +115,7 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml:
 
     tools::ReadTimeAttribute( xis, "max-lifetime", rKnowledgePopulationMaxLifeTime_ );
     if( rKnowledgePopulationMaxLifeTime_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "population-knowledge: max-lifetime <= 0" );
+        xis.error( "population-knowledge: max-lifetime <= 0" );
 
     rKnowledgePopulationMaxLifeTime_ = MIL_Tools::ConvertSecondsToSim( rKnowledgePopulationMaxLifeTime_ );
 

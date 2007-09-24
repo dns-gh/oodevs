@@ -53,10 +53,10 @@ PHY_DotationCategory_IndirectFire::PHY_DotationCategory_IndirectFire( const PHY_
 {
     xis >> attribute( "neutralization-ratio", rNeutralizationCoef_ );
     if( rNeutralizationCoef_ < 1. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "neutralization-ratio < 1" );
+        xis.error( "neutralization-ratio < 1" );
 
     if( !dotationCategory.HasAttritions() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Dotation has no attritions defined" ); // $$$$ ABL 2007-07-19: error context
+        xis.error( "Dotation has no attritions defined" );
 
     xis >> list( "ph", *this, &PHY_DotationCategory_IndirectFire::ReadPh );
 }

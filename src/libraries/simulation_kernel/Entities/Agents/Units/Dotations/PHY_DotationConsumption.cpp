@@ -28,7 +28,7 @@ PHY_DotationConsumption::PHY_DotationConsumption( const PHY_DotationCategory& ca
 {
     xis >> attribute( "value", rConsumption_ );
     if( rConsumption_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dotation: value < 0" );
+        xis.error( "dotation: value < 0" );
 
     if ( rConsumption_ != 0. )
         rConsumption_ = 1. / MIL_Tools::ConvertHoursToSim( 1. / rConsumption_ );

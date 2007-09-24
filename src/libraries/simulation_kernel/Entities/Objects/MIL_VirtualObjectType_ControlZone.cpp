@@ -62,12 +62,12 @@ void MIL_VirtualObjectType_ControlZone::ReadPercentage( xml::xistream& xis )
         xis >> attribute( "volume", strVolume );
         const PHY_Volume* pVolume = PHY_Volume::FindVolume( strVolume );
         if ( !pVolume )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown volume name" ); // $$$$ ABL 2007-07-19: error context
+            xis.error( "Unknown volume name" );
 
         MT_Float rUnitDensityFirePercentage;
         xis >> attribute( "percentage", rUnitDensityFirePercentage );
         if( rUnitDensityFirePercentage < 0 || rUnitDensityFirePercentage > 100 )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "percentage not in [0..100]" );
+            xis.error( "percentage not in [0..100]" );
         
         rUnitDensityFirePercentage *= 10000.;                                                          // hectare => m2
         rUnitDensityFirePercentage = MIL_Tools::ConvertMeterSquareToSim( rUnitDensityFirePercentage ); // m2 => px2

@@ -54,12 +54,12 @@ void MIL_NbcAgentType::Initialize( xml::xistream& xis )
             >> end();
 
     if( rCoefMaxSpeedModificator_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "nbc-suit: max-speed-modifier < 0" );
+        xis.error( "nbc-suit: max-speed-modifier < 0" );
     if( rCoefReloadingTimeModificator_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "nbc-suit: reloading-time-modifier <= 0" );
+        xis.error( "nbc-suit: reloading-time-modifier <= 0" );
 
     if( rMinPropagationSpeed_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "propagation: wind-speed-limit < 0" );
+        xis.error( "propagation: wind-speed-limit < 0" );
 
     rMinPropagationSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMinPropagationSpeed_ );
    
@@ -84,11 +84,11 @@ void MIL_NbcAgentType::ReadAgent( xml::xistream& xis )
 
     const MIL_NbcAgentType*& pNbcAgentType = nbcAgentTypes_[ strName ];
     if( pNbcAgentType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown NBC agent type" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Unknown NBC agent type" );
     pNbcAgentType = new MIL_NbcAgentType( strName, xis );
 
     if( !ids_.insert( pNbcAgentType->GetID() ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "NBC agent type ID already used" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "NBC agent type ID already used" );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,12 +168,12 @@ void MIL_NbcAgentType::ReadGaz( xml::xistream& xis )
 
     tools::ReadTimeAttribute( xis, "life-time", nGasLifeTime_ );
     if( nGasLifeTime_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "effects: life-time <= 0" );
+        xis.error( "effects: life-time <= 0" );
     nGasLifeTime_ = (uint)MIL_Tools::ConvertSecondsToSim( nGasLifeTime_ );
 
     xis >> attribute( "propagation", rGasPropagationAngle_ );
     if( rGasPropagationAngle_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "effects: propagation <= 0" );
+        xis.error( "effects: propagation <= 0" );
     rGasPropagationAngle_ *= ( MT_PI / 180. );
 }
 
@@ -200,7 +200,7 @@ bool MIL_NbcAgentType::ReadPoisonousData( xml::xistream& xis, T_HumanPoisonousVe
 
     const MT_Float total = std::accumulate( data.begin(), data.end(), 0. );
     if( std::fabs( 1. - total ) > 0.01 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Sum of poisonous percentage is out of bound (%.2f) for NBC Agent type '%s'", total, strName_.c_str() ) ); // $$$$ ABL 2007-07-24: error context
+        xis.error( "Sum of poisonous percentage is out of bound for NBC Agent type" );
     return true;
 }
 
@@ -218,7 +218,7 @@ void MIL_NbcAgentType::ReadEffect( xml::xistream& xis, T_HumanPoisonousVector& d
         MT_Float percentage;
         xis >> attribute( "percentage", percentage );
         if( percentage < 0.f || percentage > 1.f )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Poisonous percentage is out of bound (%.2f) for NBC Agent type '%s'", percentage, strName_.c_str() ) ); // $$$$ ABL 2007-07-24: error context
+            xis.error( "Poisonous percentage is out of bound for NBC Agent type" );
         data[it->second->GetID()] = percentage;
     }
 }

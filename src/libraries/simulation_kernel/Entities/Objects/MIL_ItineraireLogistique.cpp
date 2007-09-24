@@ -142,13 +142,13 @@ void MIL_ItineraireLogistique::Initialize( xml::xistream& xis )
         >> end();
 
     if( rWeightSupported_ <= 0. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "max-weight is not greater than 0" ); // $$$$ ABL 2007-07-09: xsd!
+        xis.error( "max-weight is not greater than 0" );
     if( rWidth_ <= 0. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "width is not greater than 0" ); // $$$$ ABL 2007-07-09: xsd!
+        xis.error( "width is not greater than 0" );
     if( rLength_ <= 0. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "length is not greater than 0" ); // $$$$ ABL 2007-07-09: xsd!
+        xis.error( "length is not greater than 0" );
     if( rFlow_ <= 0. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "flow is not greater than 0" ); // $$$$ ABL 2007-07-09: xsd!
+        xis.error( "flow is not greater than 0" );
 
     TransformLocalisation();
 }

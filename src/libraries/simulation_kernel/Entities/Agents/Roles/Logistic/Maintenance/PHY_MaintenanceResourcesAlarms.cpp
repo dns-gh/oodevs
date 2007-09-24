@@ -52,7 +52,7 @@ void PHY_MaintenanceResourcesAlarms::ReadResource( xml::xistream& xis )
     xis >> attribute( "resource", strType )
         >> attribute( "availability-threshold", rRation );
     if( rRation < 0 || rRation > 100 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "availability-threshod not in [0..100]" );
+        xis.error( "availability-threshod not in [0..100]" );
     rRation /= 100.;
     if( strType == "repairer" )
         repairerResourcesLevels_.insert( rRation );

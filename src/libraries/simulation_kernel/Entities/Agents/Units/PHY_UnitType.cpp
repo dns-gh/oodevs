@@ -101,14 +101,14 @@ void PHY_UnitType::ReadStock( xml::xistream& xis )
 
     const PHY_DotationLogisticType* pType = PHY_DotationLogisticType::Find( strCategory );
     if( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown logistic dotation type" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Unknown logistic dotation type" );
 
     assert( stockLogisticThresholdRatios_.size() > pType->GetID() );
 
     MT_Float rThreshold = 0.;
     xis >> attribute( "threshold", rThreshold );
     if( rThreshold < 0 || rThreshold > 100 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "stock: thresolh not in [0..100]" );
+        xis.error( "stock: thresolh not in [0..100]" );
 
     rThreshold /= 100.;                  
 
@@ -125,7 +125,7 @@ void PHY_UnitType::InitializeNBC( xml::xistream& xis )
     xis >> start( "nbc" );
     tools::ReadTimeAttribute( xis, "decontamination-delay", rTmp );
     if( rTmp <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "nbc: decontamination-delay <= 0" );
+        xis.error( "nbc: decontamination-delay <= 0" );
     rCoefDecontaminationPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rTmp );
     xis >> end();
 }
@@ -152,10 +152,10 @@ void PHY_UnitType::ReadEquipment( xml::xistream& xis )
 
     const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( strComposanteType );
     if( !pComposanteType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown composante type" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Unknown composante type" );
 
     if( composanteTypes_.find( pComposanteType ) != composanteTypes_.end() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Composante type already exist" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Composante type already exist" );
 
     sComposanteTypeData& compData = composanteTypes_[ pComposanteType ];
     compData.bMajor_ = false;
@@ -172,10 +172,10 @@ void PHY_UnitType::ReadEquipment( xml::xistream& xis )
         >> attribute( "crew", compData.nNbrHumanInCrew_ );
 
     if( compData.nNbrHumanInCrew_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "equipment: crew < 0" );
+        xis.error( "equipment: crew < 0" );
 
     if( compData.nNbrHumanInCrew_ == 0 && !IsAutonomous() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Composante not viable : no humans in crew" ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Composante not viable : no humans in crew" );
 
     xis >> attribute( "count", compData.nNbr_ );
 }
@@ -208,7 +208,7 @@ void PHY_UnitType::ReadCrewRank( xml::xistream& xis )
         return;
 
     if( commandersRepartition_.find( &rank ) != commandersRepartition_.end() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "crew-rank: type undefined" );        
+        xis.error( "crew-rank: type undefined" );        
 
     uint nValue = 0;
     xis >> attribute( "count", nValue );
@@ -266,9 +266,9 @@ void PHY_UnitType::ReadSetup( xml::xistream& xis )
     tools::ReadTimeAttribute( xis, "uninstallation-time", rUninstallationTime_ );
 
     if( rInstallationTime_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "setup: installation-time < 0" );
+        xis.error( "setup: installation-time < 0" );
     if( rUninstallationTime_ < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "setup: uninstallation-time < 0" );
+        xis.error( "setup: uninstallation-time < 0" );
 
     rInstallationTime_   = (uint)MIL_Tools::ConvertSecondsToSim( rInstallationTime_   );
     rUninstallationTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rUninstallationTime_ );
@@ -295,7 +295,7 @@ void PHY_UnitType::ReadDrill( xml::xistream& xis )
         >> attribute( "length", rCoupDeSondeLength_ );
 
     if ( rCoupDeSondeLength_ < rCoupDeSondeWidth_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Length (%f) should be greater than width (%f)", rCoupDeSondeLength_, rCoupDeSondeWidth_) ); // $$$$ ABL 2007-07-23: error context
+        xis.error( "Length should be greater than width" );
 
     rCoupDeSondeLength_ = MIL_Tools::ConvertMeterToSim( rCoupDeSondeLength_ );
     rCoupDeSondeWidth_  = MIL_Tools::ConvertMeterToSim( rCoupDeSondeWidth_  );

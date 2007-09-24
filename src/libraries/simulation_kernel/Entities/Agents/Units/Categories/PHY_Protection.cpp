@@ -71,7 +71,7 @@ void PHY_Protection::ReadProtection( xml::xistream& xis )
     
     const PHY_Protection*& pProtection = protections_[ strProtection ];
     if( pProtection )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Protection already defined" ); // $$$$ _RC_ ABL 2007-07-18: error context
+        xis.error( "Protection " + strProtection + " already defined" );
 
      pProtection = new PHY_Protection( strProtection, xis );
 }
@@ -115,9 +115,9 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
 
     MT_Float timeVal, variance;
     if( ! tools::DecodeTime( timeString, timeVal ) || timeVal < 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "average-time not defined or < 0" );
+        xis.error( "average-time not defined or < 0" );
     if( ! tools::DecodeTime( varianceString, variance ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "variance is not defined" );
+        xis.error( "variance is not defined" );
     neutralizationTime_ = MT_GaussianRandom( timeVal, fabs( variance ) );
 
     if( nType_ == eHuman )
@@ -140,9 +140,9 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
             >> end();
 
         if( rBreakdownProbabilityEva_ < 0 || rBreakdownProbabilityEva_ > 100 )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "random-breakdown-probability eva not in [0..100]" );
+            xis.error( "random-breakdown-probability eva not in [0..100]" );
         if( rBreakdownProbabilityNeva_ < 0 || rBreakdownProbabilityNeva_ > 100 )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "random-breakdown-probability neva not in [0..100]" );
+            xis.error( "random-breakdown-probability neva not in [0..100]" );
         rBreakdownProbabilityEva_  /= 100.;
         rBreakdownProbabilityNeva_ /= 100.;
 
@@ -162,7 +162,7 @@ void PHY_Protection::ReadAttrition( xml::xistream& xis )
     xis >> attribute( "equipment-state", state );
     const PHY_ComposanteState* pComposanteState = PHY_ComposanteState::Find( state );
     if( !pComposanteState )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown composante state" ); // $$$$ _RC_ ABL 2007-07-18: error context
+        xis.error( "Unknown composante state" );
 
     assert( attritionEffectsOnHumans_.size() > pComposanteState->GetID() );
 
@@ -171,12 +171,12 @@ void PHY_Protection::ReadAttrition( xml::xistream& xis )
     MT_Float rTmp;
     xis >> attribute( "injured-percentage", rTmp );
     if( rTmp < 0 || rTmp > 100 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "injured-percentage not in [0..100]" );
+        xis.error( "injured-percentage not in [0..100]" );
     data.rWoundedRatio_ = rTmp / 100.;
         
     xis >> attribute( "dead-percentage", rTmp );
     if( rTmp < 0 || rTmp > 100 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dead-percentage not in [0..100]" );
+        xis.error( "dead-percentage not in [0..100]" );
     data.rDeadRatio_ = rTmp / 100.;
 }
 

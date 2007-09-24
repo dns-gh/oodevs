@@ -61,7 +61,7 @@ PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( const MIL_RealObject
     {
         pConsumptionMode_ = PHY_ConsumptionType::FindConsumptionType( strConsumptionMode );
         if( !pConsumptionMode_ )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown consumption mode '%s'", strConsumptionMode.c_str() ) );
+            xis.error( "Unknown consumption mode '" + strConsumptionMode + "'" );
     }      
 }
 

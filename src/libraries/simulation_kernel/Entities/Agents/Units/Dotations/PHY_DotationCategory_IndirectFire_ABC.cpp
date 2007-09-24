@@ -33,11 +33,11 @@ PHY_DotationCategory_IndirectFire_ABC::PHY_DotationCategory_IndirectFire_ABC( co
         >> attribute( "y-dispersion", rDispersionY_ );
 
     if( nInterventionType_ <= 0. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "intervention-type <= 0" );
+        xis.error( "intervention-type <= 0" );
     if( rDispersionX_ <= 0. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rDispersionX_ <= 0" );
+        xis.error( "rDispersionX_ <= 0" );
     if( rDispersionY_ <= 0. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "rDispersionY_ <= 0" );
+        xis.error( "rDispersionY_ <= 0" );
 
     rDispersionX_ = MIL_Tools::ConvertMeterToSim( rDispersionX_ );
     rDispersionY_ = MIL_Tools::ConvertMeterToSim( rDispersionY_ );
