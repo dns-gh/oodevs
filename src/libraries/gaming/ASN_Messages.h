@@ -119,6 +119,9 @@ GENERATE_ASN_MSG_SENDER( ClientToSim, AutomatChangeSuperior      , automat_chang
 GENERATE_ASN_MSG_SENDER( ClientToSim, AutomatChangeLogisticLinks  , automat_change_logistic_links )
 GENERATE_ASN_MSG_SENDER( ClientToSim, LogSupplyPushFlow    , log_supply_push_flow )
 GENERATE_ASN_MSG_SENDER( ClientToSim, LogSupplyChangeQuotas   , log_supply_change_quotas )
+
+GENERATE_ASN_MSG_SENDER( ClientToAar, IndicatorRequest, indicator_request )
+
 #pragma warning( 4 : 4003 )
 
 #endif // __ASN_Messages_h_

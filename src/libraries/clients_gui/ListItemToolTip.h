@@ -37,7 +37,7 @@ private:
 
     //! @name Helpers
     //@{
-    void maybeTip( const QPoint& pos );
+    virtual void maybeTip( const QPoint& pos );
     //@}
 
 private:

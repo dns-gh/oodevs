@@ -141,6 +141,16 @@ void AgentServerMsgMgr::Send( ASN1T_MsgsClientToReplay& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::Send
+// Created: AGE 2007-09-25
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::Send( ASN1T_MsgsClientToAar& message )
+{
+    if( ! host_.empty() )
+        sender_.Send( host_, message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgAutomatCreation
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------

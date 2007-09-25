@@ -25,6 +25,8 @@ namespace xml
 class AfterActionFactory;
 class AfterActionFunction;
 class AfterActionFunctions;
+class AfterActionRequests;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  AfterActionModel
@@ -38,7 +40,7 @@ class AfterActionModel : public kernel::Resolver< AfterActionFactory, QString >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AfterActionModel( kernel::Controller& controller );
+             AfterActionModel( kernel::Controller& controller, Publisher_ABC& publisher );
     virtual ~AfterActionModel();
     //@}
 
@@ -48,6 +50,7 @@ public:
     void Update( const ASN1T_MsgIndicatorResult& asnMsg );
 
     const AfterActionFunction* CreateNewFunction();
+    void CreateRequest( const AfterActionFunction& function );
     //@}
 
 private:
@@ -67,6 +70,7 @@ private:
     //@{
     kernel::Controller& controller_;
     std::auto_ptr< AfterActionFunctions > functions_;
+    std::auto_ptr< AfterActionRequests > requests_;
     //@}
 };
 

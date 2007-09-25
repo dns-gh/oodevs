@@ -82,7 +82,7 @@ void FolkModel::Update( const ASN1T_MsgFolkGraphEdgeUpdate& update )
 {
     // $$$$ AGE 2007-09-05: 
     assert( update.population_occupation.n == edgeSize_ );
-    assert( update.shp_oid < edgeCount_ );
+    assert( unsigned( update.shp_oid ) < edgeCount_ );
 
     T_Values& values = *values_;
     memcpy( values[ update.shp_oid ].origin(), update.population_occupation.elem, edgeSize_ * sizeof( int ) );

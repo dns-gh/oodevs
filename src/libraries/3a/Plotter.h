@@ -49,6 +49,8 @@ public:
         std::copy( values_.begin(), values_.end(), std::back_inserter( values ) );
 
         ASN1T_MsgIndicatorResult result;
+        result.identifier = context_;
+        result.error = 0;
         result.values.n    =  values.size();
         result.values.elem = &values.front();
 

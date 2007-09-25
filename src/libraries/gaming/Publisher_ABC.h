@@ -33,6 +33,7 @@ public:
     virtual void Send( ASN1T_MsgsClientToSim& message ) = 0;
     virtual void Send( ASN1T_MsgsClientToAuthentication& message ) = 0;
     virtual void Send( ASN1T_MsgsClientToReplay& message ) = 0;
+    virtual void Send( ASN1T_MsgsClientToAar& message ) = 0;
     //@}
 };
 

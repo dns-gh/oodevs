@@ -11,7 +11,11 @@
 #define __FolkModel_h_
 
 #include "game_asn/asn.h"
+#pragma warning( push )
+#pragma warning( disable : 4100 )
 #include <boost/multi_array.hpp>
+#pragma warning( pop )
+
 
 namespace kernel
 {

@@ -81,7 +81,7 @@ void AarPlugin::OnReceive( const std::string& client, const ASN1T_MsgsClientToAa
     switch( asnMsg.msg.t )
     {
     case T_MsgsClientToAar_msg_msg_indicator_request:
-        OnReceiveIndicatorRequest( client, asnMsg.context, *asnMsg.msg.u.msg_indicator_request );
+        OnReceiveIndicatorRequest( client, *asnMsg.msg.u.msg_indicator_request );
         break;
     };
 }
@@ -90,9 +90,24 @@ void AarPlugin::OnReceive( const std::string& client, const ASN1T_MsgsClientToAa
 // Name: AarPlugin::OnReceiveIndicatorRequest
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, unsigned context, const ASN1T_MsgIndicatorRequest& request )
+void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const ASN1T_MsgIndicatorRequest& request )
 {
-    xml::xistringstream xis( request.request );
-    boost::shared_ptr< Task > task( factory_->CreateTask( context, xis ) );
-    task->Process( *messages_, resolver_.GetPublisher( client ) ); // $$$$ AGE 2007-09-17: deconnexion en route=>crash
+    try
+    {
+        xml::xistringstream xis( request.request );
+        boost::shared_ptr< Task > task( factory_->CreateTask( request.identifier, xis ) );
+        task->Process( *messages_, resolver_.GetPublisher( client ) ); // $$$$ AGE 2007-09-17: deconnexion en route=>crash
+    } 
+    catch( std::exception& e )
+    {
+        ASN1T_MsgIndicatorResult result;
+        result.values.n = 0; result.values.elem = 0;
+        result.identifier = request.identifier;
+        result.error = e.what();
+        ASN1T_MsgsAarToClient message;
+        message.msg.t = T_MsgsAarToClient_msg_msg_indicator_result;
+        message.msg.u.msg_indicator_result = &result;
+
+        resolver_.GetPublisher( client ).Send( message );
+    }
 }

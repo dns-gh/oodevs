@@ -30,6 +30,7 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& 
     : QVBox( parent )
     , controllers_( controllers )
     , parameters_( 0 )
+    , request_( 0 )
 {
     {
         QButtonGroup* buttons = new QButtonGroup( 2, Qt::Horizontal, this );
@@ -52,8 +53,10 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& 
     functions_ = new ListDisplayer< AfterActionFunctionList >( this, *this, factory );
     functions_->AddColumn( tr( "Name" ) );
     parameters_ = new QVGroupBox( tr( "Parameters" ), this );
-
     connect( functions_, SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChange( QListViewItem* ) ) );
+
+    CreateRequestButton();
+    request_->setEnabled( false );
 
     controllers_.Register( *this );
 }
@@ -65,6 +68,19 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& 
 AfterActionFunctionList::~AfterActionFunctionList()
 {
     controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunctionList::CreateRequestButton
+// Created: AGE 2007-09-25
+// -----------------------------------------------------------------------------
+void AfterActionFunctionList::CreateRequestButton()
+{
+    delete request_;
+    request_ = new QPushButton( tr( "Request" ), this );
+    QToolTip::add( request_, tr( "Send request" ) );
+    connect( request_, SIGNAL( clicked() ), SLOT( Request() ) );
+    request_->show();
 }
 
 // -----------------------------------------------------------------------------
@@ -93,6 +109,7 @@ void AfterActionFunctionList::Display( const AfterActionFunction& function, Disp
 // -----------------------------------------------------------------------------
 void AfterActionFunctionList::OnSelectionChange( QListViewItem* i )
 {
+    delete request_; request_ = 0;
     delete parameters_;
     parameters_ = new QVGroupBox( tr( "Parameters" ), this );
     if( ValuedListItem* item = static_cast< ValuedListItem* >( i ) )
@@ -106,6 +123,8 @@ void AfterActionFunctionList::OnSelectionChange( QListViewItem* i )
         }
     }
     parameters_->show();
+    CreateRequestButton();
+    request_->setEnabled( i != 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,4 +135,14 @@ void AfterActionFunctionList::EditFunction()
 {
     if( ValuedListItem* item = static_cast< ValuedListItem* >( functions_->selectedItem() ) )
         emit EditFunction( item->GetValue< const AfterActionFunction >() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunctionList::Request
+// Created: AGE 2007-09-25
+// -----------------------------------------------------------------------------
+void AfterActionFunctionList::Request()
+{
+    if( ValuedListItem* item = static_cast< ValuedListItem* >( functions_->selectedItem() ) )
+        emit CreateRequest( item->GetValue< const AfterActionFunction >() );
 }

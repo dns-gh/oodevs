@@ -11,6 +11,7 @@
 #include "AfterActionModel.h"
 #include "AfterActionFactory.h"
 #include "AfterActionFunctions.h"
+#include "AfterActionRequests.h"
 #include "clients_kernel/Controller.h"
 #include <xeumeuleu/xml.h>
 
@@ -20,8 +21,9 @@ using namespace kernel;
 // Name: AfterActionModel constructor
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-AfterActionModel::AfterActionModel( kernel::Controller& controller )
+AfterActionModel::AfterActionModel( kernel::Controller& controller, Publisher_ABC& publisher )
     : controller_( controller )
+    , requests_( new AfterActionRequests( controller, publisher ) )
 {
     // NOTHING
 }
@@ -67,7 +69,7 @@ void AfterActionModel::ReadFunction( const std::string& type, xml::xistream& xis
 // -----------------------------------------------------------------------------
 void AfterActionModel::Update( const ASN1T_MsgIndicatorResult& asnMsg )
 {
-    // $$$$ AGE 2007-09-25: 
+    requests_->Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,4 +81,13 @@ const AfterActionFunction* AfterActionModel::CreateNewFunction()
     if( functions_.get() )
         return functions_->Create();
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionModel::CreateRequest
+// Created: AGE 2007-09-25
+// -----------------------------------------------------------------------------
+void AfterActionModel::CreateRequest( const AfterActionFunction& function )
+{
+    requests_->CreateRequest( function );
 }

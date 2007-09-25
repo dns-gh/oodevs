@@ -23,6 +23,7 @@
 // -----------------------------------------------------------------------------
 AfterAction::AfterAction( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model )
     : model_( model )
+    , functionsTab_( 0 )
 {
     CreateEditionDock    ( window, controllers, factory );
     CreateAfterActionDock( window, controllers, factory );
@@ -92,15 +93,16 @@ void AfterAction::CreateAfterActionDock( QMainWindow* window, kernel::Controller
 {
     QDockWindow* aar = new QDockWindow( window );
     QVBox* box = new QVBox( aar );
-    QTabWidget* pTabWidget = new QTabWidget( box );
+    functionsTab_ = new QTabWidget( box );
 
-    AfterActionFunctionList* list = new AfterActionFunctionList( pTabWidget, controllers, factory );
+    AfterActionFunctionList* list = new AfterActionFunctionList( functionsTab_, controllers, factory );
     connect( list, SIGNAL( EditFunction( const AfterActionFunction* ) ), SLOT( OnEditFunction( const AfterActionFunction* ) ) );
     connect( list, SIGNAL( NewFunction() ), SLOT( OnNewFunction() ) );
-    pTabWidget->addTab( list, tr( "Functions" ) );
+    connect( list, SIGNAL( CreateRequest( const AfterActionFunction* ) ), SLOT( OnCreateRequest( const AfterActionFunction* ) ) );
+    functionsTab_->addTab( list, tr( "Functions" ) );
 
-    AfterActionRequestList* requests = new AfterActionRequestList( pTabWidget, controllers, factory );
-    pTabWidget->addTab( requests, tr( "Requests" ) );
+    AfterActionRequestList* requests = new AfterActionRequestList( functionsTab_, controllers, factory );
+    functionsTab_->addTab( requests, tr( "Requests" ) );
 
     aar->setResizeEnabled( true );
     aar->setWidget( box );
@@ -125,4 +127,17 @@ void AfterAction::OnEditFunction( const AfterActionFunction* function )
 void AfterAction::OnNewFunction()
 {
     OnEditFunction( model_.CreateNewFunction() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterAction::OnCreateRequest
+// Created: AGE 2007-09-25
+// -----------------------------------------------------------------------------
+void AfterAction::OnCreateRequest( const AfterActionFunction* function )
+{
+    if( function )
+    {
+        model_.CreateRequest( *function );
+        functionsTab_->showPage( functionsTab_->page( 1 ) );
+    }
 }

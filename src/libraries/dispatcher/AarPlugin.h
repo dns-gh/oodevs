@@ -59,7 +59,7 @@ private:
     //! @name Helpers
     //@{
     void OnReceive( const std::string&, const ASN1T_MsgsClientToAar& message );
-    void OnReceiveIndicatorRequest( const std::string& client, unsigned context, const ASN1T_MsgIndicatorRequest& request );
+    void OnReceiveIndicatorRequest( const std::string& client, const ASN1T_MsgIndicatorRequest& request );
     //@}
 
 private:

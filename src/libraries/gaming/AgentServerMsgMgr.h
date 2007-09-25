@@ -54,6 +54,7 @@ public:
     virtual void Send( ASN1T_MsgsClientToSim& message );
     virtual void Send( ASN1T_MsgsClientToAuthentication& message );
     virtual void Send( ASN1T_MsgsClientToReplay& message );
+    virtual void Send( ASN1T_MsgsClientToAar& message );
 
     void SetModel( Model& model );
     //@}

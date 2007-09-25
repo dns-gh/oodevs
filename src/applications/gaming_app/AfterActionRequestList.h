@@ -18,7 +18,7 @@ namespace kernel
     class Controllers;
 }
 
-class AfterActionModel;
+class AfterActionRequest;
 
 // =============================================================================
 /** @class  AfterActionRequestList
@@ -28,8 +28,9 @@ class AfterActionModel;
 // =============================================================================
 class AfterActionRequestList : public QVBox
                              , public kernel::Observer_ABC
-                             , public kernel::ElementObserver_ABC< AfterActionModel > 
+                             , public kernel::ElementObserver_ABC< AfterActionRequest > 
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -38,9 +39,11 @@ public:
     virtual ~AfterActionRequestList();
     //@}
 
-    //! @name Operations
+private slots:
+    //! @name Slots
     //@{
-    //@}
+    void OnDoubleClicked( QListViewItem* );
+    //@}    
 
 private:
     //! @name Copy/Assignment
@@ -51,12 +54,20 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void NotifyCreated( const AfterActionRequest& request );
+    virtual void NotifyUpdated( const AfterActionRequest& request );
+    void Display( const AfterActionRequest& request, gui::ValuedListItem* item );
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    gui::ItemFactory_ABC& factory_;
+    gui::ListDisplayer< AfterActionRequestList >* requests_;
+    QPixmap pendingPixmap_;
+    QPixmap donePixmap_;
+    QPixmap failedPixmap_;
     //@}
 };
 

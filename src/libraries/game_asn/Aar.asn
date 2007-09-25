@@ -19,12 +19,15 @@ MsgAarInformation ::= SEQUENCE
 
 MsgIndicatorResult ::= SEQUENCE
 {
+    identifier INTEGER,      -- $$$$ Context
+    error VisibleString, 
     values SEQUENCE OF REAL
 }
 
 MsgIndicatorRequest ::= SEQUENCE
 {
-    request VisibleString -- $$$$ XmlOverAsn pattern again
+    identifier INTEGER,    -- $$$$ Context 
+    request VisibleString  -- $$$$ XmlOverAsn pattern again
 }
 
 END -- Aar

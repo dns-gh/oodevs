@@ -44,6 +44,7 @@ private slots:
     //@{
     void OnEditFunction( const AfterActionFunction* function );
     void OnNewFunction();
+    void OnCreateRequest( const AfterActionFunction* function );
     //@}
 
 private:
@@ -65,6 +66,7 @@ private:
     AfterActionModel& model_;
     QDockWindow* editionDock_;
     AfterActionCanvas* canvas_;
+    QTabWidget* functionsTab_;
     //@}
 };
 
