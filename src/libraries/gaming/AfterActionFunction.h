@@ -34,6 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AfterActionFunction( kernel::Resolver_ABC< AfterActionFactory, QString >& factories, xml::xistream& xis );
+    explicit AfterActionFunction( const std::string& name );
     virtual ~AfterActionFunction();
     //@}
 

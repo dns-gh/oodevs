@@ -35,6 +35,16 @@ AfterActionFunction::AfterActionFunction( Resolver_ABC< AfterActionFactory, QStr
 }
 
 // -----------------------------------------------------------------------------
+// Name: AfterActionFunction constructor
+// Created: AGE 2007-09-25
+// -----------------------------------------------------------------------------
+AfterActionFunction::AfterActionFunction( const std::string& name )
+    : name_( name )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: AfterActionFunction destructor
 // Created: AGE 2007-09-20
 // -----------------------------------------------------------------------------

@@ -13,7 +13,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/ValuedListItem.h"
 #include "clients_gui/resources.h"
-#include "gaming/AfterActionModel.h"
+#include "gaming/AfterActionFunctions.h"
 #include "gaming/AfterActionFunction.h"
 #include "gaming/AfterActionParameter.h"
 #include <qtoolbox.h>
@@ -71,10 +71,10 @@ AfterActionFunctionList::~AfterActionFunctionList()
 // Name: AfterActionFunctionList::NotifyUpdated
 // Created: AGE 2007-09-21
 // -----------------------------------------------------------------------------
-void AfterActionFunctionList::NotifyUpdated( const AfterActionModel& model )
+void AfterActionFunctionList::NotifyUpdated( const AfterActionFunctions& model )
 {
     functions_->DeleteTail(
-        functions_->DisplayList( model.CreateFunctionIterator() )
+        functions_->DisplayList( model.CreateIterator() )
         );
 }
 

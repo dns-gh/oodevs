@@ -11,6 +11,11 @@
 #define __AfterActionFunctions_h_
 
 #include "clients_kernel/Resolver.h"
+
+namespace kernel
+{
+    class Controller;
+}
 namespace xml
 {
     class xistream;
@@ -30,13 +35,14 @@ class AfterActionFunctions : public kernel::Resolver< AfterActionFunction, QStri
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AfterActionFunctions( kernel::Resolver_ABC< AfterActionFactory, QString >& factories );
+             AfterActionFunctions( kernel::Controller& controller, kernel::Resolver_ABC< AfterActionFactory, QString >& factories );
     virtual ~AfterActionFunctions();
     //@}
 
     //! @name Operations
     //@{
     void Load( const std::string& functions );
+    AfterActionFunction* Create();
     //@}
 
 private:
@@ -54,6 +60,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     kernel::Resolver_ABC< AfterActionFactory, QString >& factories_;
     //@}
 };

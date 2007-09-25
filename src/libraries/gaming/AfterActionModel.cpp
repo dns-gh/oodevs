@@ -46,15 +46,15 @@ void AfterActionModel::Update( const ASN1T_MsgAarInformation& asnMsg )
         xis >> xml::start( "functions" )
                 >> xml::list( *this, &AfterActionModel::ReadFunction )
             >> xml::end();
+        controller_.Update( *this );
     }
-    functions_.reset( new AfterActionFunctions( *this ) );
-    controller_.Update( *this );
+    functions_.reset( new AfterActionFunctions( controller_, *this ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AfterActionModel::ReadFunction
 // Created: AGE 2007-09-17
-// -----------------------------------------------------------------------------
+// -------------------------------------------------*----------------------------
 void AfterActionModel::ReadFunction( const std::string& type, xml::xistream& xis )
 {
     const std::string name = xml::attribute< std::string >( xis, "name" );
@@ -67,16 +67,16 @@ void AfterActionModel::ReadFunction( const std::string& type, xml::xistream& xis
 // -----------------------------------------------------------------------------
 void AfterActionModel::Update( const ASN1T_MsgIndicatorResult& asnMsg )
 {
-
+    // $$$$ AGE 2007-09-25: 
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionModel::CreateFunctionIterator
-// Created: AGE 2007-09-21
+// Name: AfterActionModel::CreateNewFunction
+// Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-Iterator< const AfterActionFunction& > AfterActionModel::CreateFunctionIterator() const
+const AfterActionFunction* AfterActionModel::CreateNewFunction()
 {
     if( functions_.get() )
-        return functions_->CreateIterator();
-    return new NullIterator< const AfterActionFunction& >();
+        return functions_->Create();
+    return 0;
 }

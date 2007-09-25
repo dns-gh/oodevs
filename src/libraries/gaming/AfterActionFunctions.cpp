@@ -11,6 +11,7 @@
 #include "AfterActionFunctions.h"
 #include "AfterActionFactory.h"
 #include "AfterActionFunction.h"
+#include "clients_kernel/Controller.h"
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -19,8 +20,9 @@ using namespace kernel;
 // Name: AfterActionFunctions constructor
 // Created: AGE 2007-09-20
 // -----------------------------------------------------------------------------
-AfterActionFunctions::AfterActionFunctions( Resolver_ABC< AfterActionFactory, QString >& factories )
-    : factories_( factories )
+AfterActionFunctions::AfterActionFunctions( kernel::Controller& controller, Resolver_ABC< AfterActionFactory, QString >& factories )
+    : controller_( controller )
+    , factories_ ( factories )
 {
     Load( "functions.xml" ); // $$$$ AGE 2007-09-20: 
 }
@@ -55,4 +57,27 @@ void AfterActionFunctions::ReadFunction( xml::xistream& xis )
     std::auto_ptr< AfterActionFunction > function( new AfterActionFunction( factories_, xis ) );
     const QString name = function->GetName();
     Register( name, *function.release() );
+    controller_.Update( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunctions::Create
+// Created: AGE 2007-09-25
+// -----------------------------------------------------------------------------
+AfterActionFunction* AfterActionFunctions::Create()
+{
+    const QString base( "New function" );
+    QString name( base );
+    if( Find( name ) )
+    {
+        unsigned i = 1;
+        while( Find( name ) )
+            name = base + " " + QString::number( i++ );
+    }
+    AfterActionFunction* function = new AfterActionFunction( name.ascii() );
+    Register( function->GetName(), *function );
+    controller_.Update( *this );
+    return function;
+}
+
+

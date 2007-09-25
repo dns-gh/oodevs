@@ -47,7 +47,7 @@ public:
     void Update( const ASN1T_MsgAarInformation& asnMsg );
     void Update( const ASN1T_MsgIndicatorResult& asnMsg );
 
-    kernel::Iterator< const AfterActionFunction& > CreateFunctionIterator() const;
+    const AfterActionFunction* CreateNewFunction();
     //@}
 
 private:

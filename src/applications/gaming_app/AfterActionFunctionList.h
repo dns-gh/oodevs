@@ -17,8 +17,8 @@ namespace kernel
 {
     class Controllers;
 }
-class AfterActionModel;
 class AfterActionFunction;
+class AfterActionFunctions;
 class QToolBox;
 
 // =============================================================================
@@ -29,7 +29,7 @@ class QToolBox;
 // =============================================================================
 class AfterActionFunctionList : public QVBox
                               , public kernel::Observer_ABC
-                              , public kernel::ElementObserver_ABC< AfterActionModel >
+                              , public kernel::ElementObserver_ABC< AfterActionFunctions >
 {
     Q_OBJECT;
 
@@ -68,7 +68,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const AfterActionModel& );
+    virtual void NotifyUpdated( const AfterActionFunctions& );
     //@}
 
 private:
