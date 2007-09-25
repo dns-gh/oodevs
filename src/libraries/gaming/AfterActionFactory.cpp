@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "AfterActionFactory.h"
 #include "AfterActionItem.h"
+#include "AfterActionFunction.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -55,7 +56,7 @@ const QString& AfterActionFactory::GetName() const
 // Name: std::auto_ptr< AfterActionItem_ABC > AfterActionFactory::Create
 // Created: AGE 2007-09-19
 // -----------------------------------------------------------------------------
-std::auto_ptr< AfterActionItem_ABC > AfterActionFactory::Create() const
+std::auto_ptr< AfterActionItem_ABC > AfterActionFactory::Create( AfterActionFunction& function ) const
 {
-    return std::auto_ptr< AfterActionItem_ABC >( new AfterActionItem( *this ) );
+    return std::auto_ptr< AfterActionItem_ABC >( new AfterActionItem( *this, function ) );
 }

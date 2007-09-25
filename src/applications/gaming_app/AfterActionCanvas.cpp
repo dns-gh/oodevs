@@ -60,7 +60,7 @@ AfterActionCanvas::~AfterActionCanvas()
 // -----------------------------------------------------------------------------
 void AfterActionCanvas::dragEnterEvent( QDragEnterEvent* event )
 {
-    event->accept( event->provides( "AfterActionFactory" ) );
+    event->accept( event->provides( "AfterActionFactory" ) && function_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,13 +69,13 @@ void AfterActionCanvas::dragEnterEvent( QDragEnterEvent* event )
 // -----------------------------------------------------------------------------
 void AfterActionCanvas::dropEvent( QDropEvent* event )
 {
-    if( event->provides( "AfterActionFactory" ) )
+    if( event->provides( "AfterActionFactory" ) && function_ )
     {
         QByteArray bytes = event->encodedData( "AfterActionFactory" );
         const AfterActionFactory* factory = *reinterpret_cast< const AfterActionFactory** >( bytes.data() );
         if( factory )
         {
-            std::auto_ptr< AfterActionItem_ABC > modelItem = factory->Create();
+            std::auto_ptr< AfterActionItem_ABC > modelItem = factory->Create( *function_ );
             // $$$$ AGE 2007-09-24: ram
             AfterActionCanvasItem* item = new AfterActionCanvasItem( canvas(), palette(), *modelItem.release(), event->pos() );
             items_.push_back( item );

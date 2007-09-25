@@ -112,9 +112,9 @@ namespace
                     << xml::attribute( "output", reductions[i][1] )
                     << xml::attribute( "input1", "any" );
             if( transformations[i][2] )
-                xos << xml::attribute( "parameter-type", transformations[i][2] );
+                xos << xml::attribute( "parameter-type", reductions[i][2] );
             if( transformations[i][3] )
-                xos << xml::attribute( "parameter-name", transformations[i][3] );
+                xos << xml::attribute( "parameter-name", reductions[i][3] );
             xos << xml::end();
             ++i;
         }

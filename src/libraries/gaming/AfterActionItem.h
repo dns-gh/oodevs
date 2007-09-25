@@ -11,6 +11,8 @@
 #define __AfterActionItem_h_
 
 #include "AfterActionItem_ABC.h"
+#include "clients_kernel/Resolver_ABC.h"
+class AfterActionParameter;
 
 // =============================================================================
 /** @class  AfterActionItem
@@ -24,7 +26,9 @@ class AfterActionItem : public AfterActionItem_ABC
 public:
     //! @name Constructors/Destructor
     //@{
+    // $$$$ AGE 2007-09-25: faire une vrai factory et nettoyer ca
              AfterActionItem( const std::string& type, xml::xistream& xis );
+             AfterActionItem( const AfterActionItem& base, kernel::Resolver_ABC< AfterActionParameter, std::string >& parameters );
     virtual ~AfterActionItem();
     //@}
 
@@ -72,12 +76,16 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::Resolver_ABC< AfterActionParameter, std::string >* parameters_;
     const std::string type_;
     const std::string name_;
     const std::string output_;
+    const std::string parameterName_;
+    const std::string parameterType_;
     T_Inputs              inputs_;
     T_Connections         inputConnections_;
     T_OutgoingConnections outputConnections_;
+    AfterActionParameter* parameter_;
     //@}
 };
 

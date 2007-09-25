@@ -72,7 +72,7 @@ void AfterActionFunction::CreateItem( const std::string& type, xml::xistream& xi
     const std::string functionName = xml::attribute( xis, "function", type );
     const std::string id           = xml::attribute( xis, "id", type );
     AfterActionFactory& function = factories.Get( functionName.c_str() );
-    ItemResolver::Register( id, *function.Create().release() );
+    ItemResolver::Register( id, *function.Create( *this ).release() );
 }
 
 // -----------------------------------------------------------------------------

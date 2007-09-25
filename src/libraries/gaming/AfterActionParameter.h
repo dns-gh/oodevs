@@ -13,6 +13,7 @@
 namespace xml
 {
     class xistream;
+    class xostream;
 }
 
 // =============================================================================
@@ -34,6 +35,7 @@ public:
     //! @name Operations
     //@{
     QString GetName() const;
+    void Commit( xml::xostream& xos, const std::string& name ) const;
     //@}
 
 private:
@@ -52,6 +54,7 @@ private:
     //@{
     std::string name_;
     std::string type_;
+    std::string value_;
     //@}
 };
 

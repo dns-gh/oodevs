@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "AfterActionItem.h"
 #include "AfterActionBuilder_ABC.h"
+#include "AfterActionParameter.h"
 #include <xeumeuleu/xml.h>
 #pragma warning (disable : 4127 4511 4512 )
 #include <boost/algorithm/string.hpp>
@@ -21,12 +22,16 @@ using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: AfterActionItem constructor
-// Created: AGE 2007-09-19
+// Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
 AfterActionItem::AfterActionItem( const std::string& type, xml::xistream& xis )
-    : type_  ( type )
-    , name_  ( xml::attribute< std::string >( xis, "name" ) )
-    , output_( xml::attribute( xis, "output", std::string() ) )
+    : parameters_( 0 )
+    , type_      ( type )
+    , name_      ( xml::attribute< std::string >( xis, "name" ) )
+    , output_    ( xml::attribute( xis, "output", std::string() ) )
+    , parameterName_( xml::attribute( xis, "parameter-name", std::string() ) )
+    , parameterType_( xml::attribute( xis, "parameter-type", std::string() ) )
+    , parameter_( 0 )
 {
     std::string input1, input2;
     xis >> xml::optional() >> xml::attribute( "input1", input1 )
@@ -36,6 +41,25 @@ AfterActionItem::AfterActionItem( const std::string& type, xml::xistream& xis )
     if( ! input2.empty() )
         inputs_.push_back( input2 );
     inputConnections_.resize( inputs_.size() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionItem constructor
+// Created: AGE 2007-09-25
+// -----------------------------------------------------------------------------
+AfterActionItem::AfterActionItem( const AfterActionItem& base, kernel::Resolver_ABC< AfterActionParameter, std::string >& parameters )
+    : parameters_       ( &parameters )
+    , type_             ( base.type_ )
+    , name_             ( base.name_ )
+    , output_           ( base.output_ )
+    , parameterName_    ( base.parameterName_ )
+    , parameterType_    ( base.parameterType_ )
+    , inputs_           ( base.inputs_ )
+    , inputConnections_ ( base.inputConnections_ )
+    , outputConnections_( base.outputConnections_ )
+    , parameter_        ( 0 )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -61,6 +85,8 @@ void AfterActionItem::Build( AfterActionBuilder_ABC& builder ) const
     std::for_each( inputs_.begin(), inputs_.end(), boost::bind( &AfterActionBuilder_ABC::AddInput, &builder, _1 ) );
     if( ! output_.empty() )
         builder.AddOutput( output_ );
+    if( ! parameterName_.empty() )
+        builder.AddParameter( parameterType_, parameterName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,6 +103,8 @@ void AfterActionItem::Connect( xml::xistream& xis, Resolver_ABC< AfterActionItem
         for( unsigned i = 0; i < split.size(); ++i )
             inputConnections_.at( i ) = & items.Get( split.at( i ) );
     }
+    if( ! parameterName_.empty() && parameters_ )
+        parameter_ = &parameters_->Get( xml::attribute< std::string >( xis, parameterName_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -249,12 +277,15 @@ std::string AfterActionItem::BuildType() const
 void AfterActionItem::Commit( xml::xostream& xos ) const
 {
     xos << xml::start( type_ )
-            << xml::attribute( "function", name_ )
-            << xml::attribute( "id", GetId( this ) );
+            << xml::attribute( "function", name_ );
+    if( type_ != "plot" ) // $$$$ AGE 2007-09-25: 
+        xos << xml::attribute( "id", GetId( this ) );
     if( ! inputs_.empty() )
         xos << xml::attribute( "input", BuildInput( inputConnections_ ) );
     const std::string type = BuildType();
     if( ! type.empty() )
         xos << xml::attribute( "type", type );
+    if( ! parameterName_.empty() && parameter_ )
+        parameter_->Commit( xos, parameterName_ );
     xos << xml::end();
 }

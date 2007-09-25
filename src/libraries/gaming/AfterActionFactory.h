@@ -16,6 +16,7 @@ namespace xml
 {
     class xistream;
 };
+class AfterActionFunction;
 
 // =============================================================================
 /** @class  AfterActionFactory
@@ -37,7 +38,7 @@ public:
     //@{
     const QString& GetName() const;
     const QString& GetType() const;
-    std::auto_ptr< AfterActionItem_ABC > Create() const;
+    std::auto_ptr< AfterActionItem_ABC > Create( AfterActionFunction& function ) const;
     //@}
 
 private:
