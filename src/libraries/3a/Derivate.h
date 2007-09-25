@@ -7,22 +7,22 @@
 //
 // *****************************************************************************
 
-#ifndef __Adder_h_
-#define __Adder_h_
+#ifndef __Derivate_h_
+#define __Derivate_h_
 
-#include "Reductor_ABC.h"
+#include "Functions.h"
 #include "TypeChecks.h"
 
 namespace xml { class xistream; }
 
 // =============================================================================
-/** @class  Adder
-    @brief  Adder
+/** @class  Derivate
+    @brief  Derivate
 */
-// Created: AGE 2007-08-28
+// Created: AGE 2007-09-25
 // =============================================================================
 template< typename K, typename T >
-class Adder : public Reductor_ABC< K, T >, private types::Arithmetic< T >
+class Derivate : public Function1_ABC< K, T >, private types::Arithmetic< T >
 {
 public:
     //! @name Types
@@ -33,44 +33,46 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Adder( xml::xistream&, Function1_ABC< K, T >& handler ) 
-                 : handler_( handler ), sum_() {}
-    explicit Adder( Function1_ABC< K, T >& handler ) 
-                : handler_( handler ), sum_() {}
+    explicit Derivate( Function1_ABC< K, T >& next )
+                : next_( next ), previous_() {}
+             Derivate( xml::xistream& , Function1_ABC< K, T >& next )
+                : next_( next ), previous_() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual std::string GetName() const { return "Add"; }
-    virtual void OnBeginTick()
+    virtual void BeginTick()
     {
-        sum_ = T();
-        handler_.BeginTick();
-    };
-    virtual void Apply( const T& value )
+        next_.BeginTick();
+    }
+    virtual void SetKey( const K& key )
     {
-        sum_ += value;
-    };
-    virtual void OnEndTick()
+        next_.SetKey( key );
+    }
+    virtual void Apply( const T& arg )
     {
-        handler_.Apply( sum_ );
-        handler_.EndTick();
+        next_.Apply( T( arg - previous_ ) );
+        previous_ = arg;
+    }
+    virtual void EndTick()
+    {
+        next_.EndTick();
     }
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    Adder( const Adder& );
-    Adder& operator=( const Adder& );
+    Derivate( const Derivate& );            //!< Copy constructor
+    Derivate& operator=( const Derivate& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    Function1_ABC< K, T >& handler_;
-    T sum_;
+    Function1_ABC< K, T >& next_;
+    T previous_;
     //@}
 };
 
-#endif // __Adder_h_
+#endif // __Derivate_h_

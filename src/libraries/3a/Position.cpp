@@ -71,3 +71,39 @@ float Position::Distance( const Position& rhs ) const
 {
     return ToPoint( mgrs_ ).Distance( ToPoint( rhs.mgrs_ ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Position::operator<
+// Created: AGE 2007-09-25
+// -----------------------------------------------------------------------------
+bool Position::operator<( const Position& rhs ) const
+{
+    return mgrs_ < rhs.mgrs_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Position::operator>
+// Created: AGE 2007-09-25
+// -----------------------------------------------------------------------------
+bool Position::operator>( const Position& rhs ) const
+{
+    return mgrs_ > rhs.mgrs_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Position::operator==
+// Created: AGE 2007-09-25
+// -----------------------------------------------------------------------------
+bool Position::operator==( const Position& rhs ) const
+{
+    return mgrs_ == rhs.mgrs_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Position::operator!=
+// Created: AGE 2007-09-25
+// -----------------------------------------------------------------------------
+bool Position::operator!=( const Position& rhs ) const
+{
+    return mgrs_ != rhs.mgrs_;
+}

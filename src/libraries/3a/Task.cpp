@@ -145,12 +145,19 @@ void Task::SetResult( boost::shared_ptr< Result_ABC > output )
 // -----------------------------------------------------------------------------
 void Task::Receive( const ASN1T_MsgsSimToClient& message )
 {
-    if( message.msg.t == T_MsgsSimToClient_msg_msg_control_begin_tick )
-        composite_.BeginTick();
-    else if( message.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
-        composite_.EndTick();
-    else
-        composite_.Receive( message );
+    try
+    {
+        if( message.msg.t == T_MsgsSimToClient_msg_msg_control_begin_tick )
+            composite_.BeginTick();
+        else if( message.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
+            composite_.EndTick();
+        else
+            composite_.Receive( message );
+    } 
+    catch( std::exception& e )
+    {
+        // $$$$ AGE 2007-09-25:  ? 
+    }
 }
 
 // -----------------------------------------------------------------------------

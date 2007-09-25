@@ -11,6 +11,7 @@
 #define __Meaner_h_
 
 #include "Reductor_ABC.h"
+#include "TypeChecks.h"
 
 namespace xml { class xistream; }
 
@@ -21,7 +22,7 @@ namespace xml { class xistream; }
 // Created: AGE 2007-08-28
 // =============================================================================
 template< typename K, typename T >
-class Meaner : public Reductor_ABC< K, T >
+class Meaner : public Reductor_ABC< K, T >, private types::Arithmetic< T >
 {
 public:
     //! @name Types
@@ -36,7 +37,6 @@ public:
                 : handler_( handler ), sum_(), count_( 0 ) {};
     explicit Meaner( Function1_ABC< K, T >& handler )
                 : handler_( handler ), sum_(), count_( 0 ) {};
-    virtual ~Meaner() {};
     //@}
 
     //! @name Operations
@@ -48,10 +48,6 @@ public:
         count_ = 0;
         handler_.BeginTick();
     };
-    virtual void SetKey( const K& )
-    {
-        // NOTHING
-    }
     virtual void Apply( const T& value )
     {
         sum_ += value;

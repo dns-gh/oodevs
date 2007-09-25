@@ -7,20 +7,22 @@
 //
 // *****************************************************************************
 
-#ifndef __Selector_h_
-#define __Selector_h_
+#ifndef __Maximum_h_
+#define __Maximum_h_
 
 #include "Reductor_ABC.h"
-#include <xeumeuleu/xml.h>
+#include "TypeChecks.h"
+
+namespace xml { class xistream; }
 
 // =============================================================================
-/** @class  Selector
-    @brief  Selector
+/** @class  Maximum
+    @brief  Maximum
 */
-// Created: AGE 2007-08-29
+// Created: AGE 2007-09-25
 // =============================================================================
 template< typename K, typename T >
-class Selector : public Reductor_ABC< K, T >
+class Maximum : public Reductor_ABC< K, T >, private types::Arithmetic< T >
 {
 public:
     //! @name Types
@@ -31,33 +33,27 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Selector( xml::xistream& xis, Function1_ABC< K, T >& handler )
-                 : key_( xml::attribute< K >( xis, "key" ) )
-                 , handler_( handler ), found_( false ) {}
-             Selector( const K& key, Function1_ABC< K, T >& handler )
-                 : key_( key )
-                 , handler_( handler ), found_( false ) {}
+    explicit Maximum( Function1_ABC< K, T >& handler )
+                 : handler_( handler ), max_( std::numeric_limits< T >::min() ) {};
+             Maximum( xml::xistream&, Function1_ABC< K, T >& handler )
+                 : handler_( handler ), max_( std::numeric_limits< T >::min() ) {};
     //@}
 
     //! @name Operations
     //@{
-    virtual std::string GetName() const { return "Selector"; }
+    virtual std::string GetName() const { return "Maximum"; }
     virtual void OnBeginTick()
     {
-        found_ = false;
+        max_ = std::numeric_limits< T >::min();
         handler_.BeginTick();
-    }
-    virtual void SetKey( const K& key )
-    {
-        found_ = key_ == key;
     }
     virtual void Apply( const T& value )
     {
-        if( found_ )
-            handler_.Apply( value );
+        max_ = std::max( value, max_ );
     }
     virtual void OnEndTick()
     {
+        handler_.Apply( max_ );
         handler_.EndTick();
     }
     //@}
@@ -65,17 +61,16 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    Selector( const Selector& );            //!< Copy constructor
-    Selector& operator=( const Selector& ); //!< Assignment operator
+    Maximum( const Maximum& );            //!< Copy constructor
+    Maximum& operator=( const Maximum& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    const K key_;
     Function1_ABC< K, T >& handler_;
-    bool found_;
+    T max_;
     //@}
 };
 
-#endif // __Selector_h_
+#endif // __Maximum_h_

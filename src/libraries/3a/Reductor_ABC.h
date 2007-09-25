@@ -31,7 +31,10 @@ public:
     //! @name Operations
     //@{
     virtual void OnBeginTick() = 0;
-    virtual void SetKey( const K& key ) = 0;
+    virtual void SetKey( const K& )
+    {
+        // NOTHING
+    };
     virtual void Apply( const T& arg ) = 0;
     virtual void OnEndTick() = 0;
     //@}

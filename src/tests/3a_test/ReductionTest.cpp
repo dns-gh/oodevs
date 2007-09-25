@@ -13,6 +13,8 @@
 #include "3a/Count.h"
 #include "3a/Meaner.h"
 #include "3a/Selector.h"
+#include "3a/Minimum.h"
+#include "3a/Maximum.h"
 #include "3a/Functions.h"
 #include <xeumeuleu/xml.h>
 
@@ -119,6 +121,50 @@ BOOST_AUTO_TEST_CASE( Reduction_TestSelector )
 {
     MockFunction1< unsigned long, float > handler;
     std::auto_ptr< Function1_ABC< unsigned long, float > > selector( new Selector< unsigned long, float >( 2, handler ) );
+    {
+        handler.BeginTick_mocker.expects( once() );
+        handler.Apply_mocker.expects( once() ).with( eq( 24.f ) );
+        handler.EndTick_mocker.expects( once() );
+        ReduceSimple( *selector );
+    }
+    {
+        handler.BeginTick_mocker.expects( exactly( 2 ) );
+        handler.Apply_mocker.expects( exactly( 2 ) ).with( eq( 18.f ) );
+        handler.EndTick_mocker.expects( exactly( 2 ) );
+        ReduceTwoTicks( *selector );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Reduction_TestMinimum
+// Created: AGE 2004-12-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Reduction_TestMinimum )
+{
+    MockFunction1< unsigned long, float > handler;
+    std::auto_ptr< Function1_ABC< unsigned long, float > > selector( new Minimum< unsigned long, float >( handler ) );
+    {
+        handler.BeginTick_mocker.expects( once() );
+        handler.Apply_mocker.expects( once() ).with( eq( 18.f ) );
+        handler.EndTick_mocker.expects( once() );
+        ReduceSimple( *selector );
+    }
+    {
+        handler.BeginTick_mocker.expects( exactly( 2 ) );
+        handler.Apply_mocker.expects( exactly( 2 ) ).with( eq( 18.f ) );
+        handler.EndTick_mocker.expects( exactly( 2 ) );
+        ReduceTwoTicks( *selector );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Reduction_TestMaximum
+// Created: AGE 2004-12-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Reduction_TestMaximum )
+{
+    MockFunction1< unsigned long, float > handler;
+    std::auto_ptr< Function1_ABC< unsigned long, float > > selector( new Maximum< unsigned long, float >( handler ) );
     {
         handler.BeginTick_mocker.expects( once() );
         handler.Apply_mocker.expects( once() ).with( eq( 24.f ) );

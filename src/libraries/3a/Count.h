@@ -39,7 +39,6 @@ public:
     explicit Count( Function1_ABC< K, unsigned >& handler )
                 : handler_( handler )
                 , set_( false ){}
-    virtual ~Count() {}
     //@}
 
     //! @name Operations

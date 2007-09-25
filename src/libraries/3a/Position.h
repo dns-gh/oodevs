@@ -33,6 +33,21 @@ public:
     //! @name Operations
     //@{
     float Distance( const Position& rhs ) const;
+    bool operator<( const Position& rhs ) const;
+    bool operator>( const Position& rhs ) const;
+    bool operator==( const Position& rhs ) const;
+    bool operator!=( const Position& rhs ) const;
+    //@}
+
+    //! @name Compilation compatibility
+    //@{
+    template< typename T >
+    Position& operator+=( const T& ) { return *this; }
+    template< typename T >
+    Position operator+( const T& ) { return *this; }
+    explicit Position( unsigned int ) {};
+    template< typename T >
+    Position operator/( const T& ) { return *this; }
     //@}
 
 private:

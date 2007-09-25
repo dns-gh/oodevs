@@ -175,6 +175,23 @@ BOOST_AUTO_TEST_CASE( Facade_TestDistanceBetweenTwoUnits )
     publisher.verify();
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestTypeInstanciationIsVerifiedAtRuntime
+// Created: AGE 2004-12-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Facade_TestTypeInstanciationIsVerifiedAtRuntime )
+{
+    const std::string input =   
+    "<indicator>"
+        "<extract function='position' id='position'/>"
+        "<reduce type='position' function='sum' input='position' id='position2'/>" // summing positions
+    "</indicator>";
+    xml::xistringstream xis( input );
+    FunctionFactory facade;
+    BOOST_CHECK_THROW( facade.CreateTask( 42, xis ), std::invalid_argument );
+}
+
 namespace
 {
     ASN1T_MsgsSimToClient CreateConsign( unsigned long id, unsigned long unit_id = 0  )

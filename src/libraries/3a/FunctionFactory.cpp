@@ -20,6 +20,12 @@
 #include "Filter.h"
 #include "Count.h"
 #include "IsOneOf.h"
+#include "Derivate.h"
+#include "Integrate.h"
+#include "Minimum.h"
+#include "Maximum.h"
+#include "Adder.h"
+#include "Meaner.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -59,14 +65,20 @@ namespace
         { "distance",  "position",    "position",   "float",      "",             "" },
         { "filter",    "bool",        "any",        "input 2",    "",             "" },
         { "is-one-of", "any",         "",           "bool",       "list input 1", "select" },
+        { "derivate",  "any",         "",           "input 1",    "",             "" },
+        { "integrate", "any",         "",           "input 1",    "",             "" },
         { 0, 0, 0, 0, 0, 0 }
     };
 
     const char* reductions[][4] =
     {
         // name,     output,     parameter type  parameter name
-        { "select", "input",    "key",          "key" },
-        { "count",  "unsigned", "",             ""    },
+        { "select",  "input",    "key",          "key" },
+        { "count",   "unsigned", "",             ""    },
+        { "minimum", "input",    "",             ""    },
+        { "maximum", "input",    "",             ""    },
+        { "sum",     "input",    "",             ""    },
+        { "mean",    "input",    "",             ""    },
         { 0, 0, 0, 0 }
     };
 
@@ -237,6 +249,14 @@ void FunctionFactory::Reduce( const std::string& name, xml::xistream& xis, Task&
         ReduceFunction< Selector< K, T > >( name, xis, result );
     else if( functionName == "count" )
         ReduceFunction< Count< K, T > >( name, xis, result );
+    else if( functionName == "minimum" )
+        ReduceFunction< Minimum< K, T > >( name, xis, result );
+    else if( functionName == "maximum" )
+        ReduceFunction< Maximum< K, T > >( name, xis, result );
+    else if( functionName == "sum" )
+        ReduceFunction< Adder< K, T > >( name, xis, result );
+    else if( functionName == "mean" )
+        ReduceFunction< Meaner< K, T > >( name, xis, result );
     else
         ReductionError( functionName );
 }
@@ -311,8 +331,30 @@ void FunctionFactory::Transform( const std::string& name, xml::xistream& xis, Ta
         Transform2< Filter< unsigned long, T > >( name, xis, result );
     else if( function == "is-one-of" )
         Transform1< IsOneOf< unsigned long, T > >( name, xis, result );
+    else if( function == "derivate" )
+        Transform1< Derivate< unsigned long, T > >( name, xis, result );
+    else if( function == "integrate" )
+        Transform1< Integrate< unsigned long, T > >( name, xis, result );
     else
         TransformationError( function );
+}
+
+namespace
+{
+    struct NullType
+    {
+        NullType() {}
+        template< typename T > explicit NullType( const T& ) {}
+        template< typename T > NullType& operator+=( const T& )       { return *this; }
+        template< typename T > NullType  operator+ ( const T& ) const { return *this; }
+        template< typename T > NullType& operator-=( const T& )       { return *this; }
+        template< typename T > NullType  operator- ( const T& ) const { return *this; }
+        template< typename T > NullType& operator/=( const T& )       { return *this; }
+        template< typename T > NullType  operator/ ( const T& ) const { return *this; }
+        template< typename T > bool operator==( const T& ) const { return false; }
+        template< typename T > bool operator!=( const T& ) const { return false; }
+    };
+    std::istream& operator>>( std::istream& stream, NullType& ) { return stream; }
 }
 
 // -----------------------------------------------------------------------------
@@ -329,7 +371,7 @@ void FunctionFactory::Transform( xml::xistream& xis, Task& result )
     else if( type == "unsigned long" )
         Transform< unsigned long >( name, xis, result );
     else if( type.empty() )
-        Transform< void* >( name, xis, result );
+        Transform< NullType >( name, xis, result );
     else
         TypeError( type );
 }
