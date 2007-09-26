@@ -2320,6 +2320,7 @@
         <mission name="Battalion - To Attack"/>
         <mission name="Battalion - To conduct a blocking action"/>
         <mission name="Battalion - To delay"/>
+        <mission name="Battalion - To Reconnoiter"/>
       </missions>
     </automat>
   </automats>

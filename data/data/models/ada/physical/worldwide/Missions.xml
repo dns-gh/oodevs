@@ -1018,213 +1018,217 @@
       <parameter dia-name="DelaisCourts_" name="Short delay" optional="false" type="Bool"/>
       <parameter dia-name="sansRearticulation_" name="without dynamic assets organization" optional="true" type="Bool"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_GTIA_Freiner" dia-type="T_Mission_Automate_ABC_GTIA_Freiner" id="241" mrt-dia-behavior="MIS_Automate_MRT_ABC_GTIA_Freiner" name="Battalion - To delay">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_GTIA_Reconnaitre" dia-type="T_Mission_Automate_ABC_GTIA_Reconnaitre" id="241" mrt-dia-behavior="MIS_Automate_MRT_ABC_GTIA_Reconnaitre" name="Battalion - To Reconnoiter">
+      <parameter dia-name="DelaisCourts_" name="Short delay" optional="false" type="Bool"/>
+      <parameter dia-name="sansRearticulation_" name="without dynamic assets organization" optional="true" type="Bool"/>
+    </mission>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_GTIA_Freiner" dia-type="T_Mission_Automate_ABC_GTIA_Freiner" id="242" mrt-dia-behavior="MIS_Automate_MRT_ABC_GTIA_Freiner" name="Battalion - To delay">
       <parameter dia-name="DelaisCourts_" name="Short delay" optional="false" type="Bool"/>
       <parameter dia-name="travaux_" name="Engineer works" optional="true" type="GenObjectList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret" dia-type="T_Mission_Automate_ABC_GTIA_DonnerCoupArret" id="242" mrt-dia-behavior="MIS_Automate_MRT_ABC_GTIA_DonnerCoupArret" name="Battalion - To conduct a blocking action">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret" dia-type="T_Mission_Automate_ABC_GTIA_DonnerCoupArret" id="243" mrt-dia-behavior="MIS_Automate_MRT_ABC_GTIA_DonnerCoupArret" name="Battalion - To conduct a blocking action">
       <parameter dia-name="travaux_" name="Engineer works" optional="true" type="GenObjectList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_SeDeployer" dia-type="T_Mission_Automate_GEN_SeDeployer" id="243" mrt-dia-behavior="MIS_Automate_MRT_GEN_SeDeployer" name="Engineer - To deploy">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_SeDeployer" dia-type="T_Mission_Automate_GEN_SeDeployer" id="244" mrt-dia-behavior="MIS_Automate_MRT_GEN_SeDeployer" name="Engineer - To deploy">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_ReconnaitreZone" dia-type="T_Mission_Automate_GEN_ReconnaitreZone" id="244" mrt-dia-behavior="MIS_Automate_MRT_GEN_ReconnaitreZone" name="Engineer - To reconnoiter an area">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_ReconnaitreZone" dia-type="T_Mission_Automate_GEN_ReconnaitreZone" id="245" mrt-dia-behavior="MIS_Automate_MRT_GEN_ReconnaitreZone" name="Engineer - To reconnoiter an area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_RealiserTravaux" dia-type="T_Mission_Automate_GEN_RealiserTravaux" id="245" mrt-dia-behavior="MIS_Automate_MRT_GEN_RealiserTravaux" name="Engineer - To perform work">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_RealiserTravaux" dia-type="T_Mission_Automate_GEN_RealiserTravaux" id="246" mrt-dia-behavior="MIS_Automate_MRT_GEN_RealiserTravaux" name="Engineer - To perform work">
       <parameter dia-name="travaux_" name="Work" optional="false" type="GenObjectList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_OuvrirItineraires" dia-type="T_Mission_Automate_GEN_OuvrirItineraires" id="246" mrt-dia-behavior="MIS_Automate_MRT_GEN_OuvrirItineraires" name="Engineer - To open routes">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_OuvrirItineraires" dia-type="T_Mission_Automate_GEN_OuvrirItineraires" id="247" mrt-dia-behavior="MIS_Automate_MRT_GEN_OuvrirItineraires" name="Engineer - To open routes">
       <parameter dia-name="itineraires_" name="Routes" optional="false" type="PathList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_RetablirItineraires" dia-type="T_Mission_Automate_GEN_RetablirItineraires" id="247" mrt-dia-behavior="MIS_Automate_MRT_GEN_RetablirItineraires" name="Engineer - To restore routes">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_RetablirItineraires" dia-type="T_Mission_Automate_GEN_RetablirItineraires" id="248" mrt-dia-behavior="MIS_Automate_MRT_GEN_RetablirItineraires" name="Engineer - To restore routes">
       <parameter dia-name="itineraires_" name="Routes" optional="false" type="PathList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_FaireFranchir" dia-type="T_Mission_Automate_GEN_FaireFranchir" id="248" mrt-dia-behavior="MIS_Automate_MRT_GEN_FaireFranchir" name="Engineer - To support bridging">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_FaireFranchir" dia-type="T_Mission_Automate_GEN_FaireFranchir" id="249" mrt-dia-behavior="MIS_Automate_MRT_GEN_FaireFranchir" name="Engineer - To support bridging">
       <parameter dia-name="sitesDeFranchissement_" name="Crossing sites" optional="false" type="ObjectKnowledgeList"/>
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Location"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_FranchirDeViveForce" dia-type="T_Mission_Automate_GEN_FranchirDeViveForce" id="249" mrt-dia-behavior="MIS_Automate_MRT_GEN_FranchirDeViveForce" name="Engineer - To breach">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_FranchirDeViveForce" dia-type="T_Mission_Automate_GEN_FranchirDeViveForce" id="250" mrt-dia-behavior="MIS_Automate_MRT_GEN_FranchirDeViveForce" name="Engineer - To breach">
       <parameter dia-name="obstacles_" name="Obstacles" optional="false" type="ObjectKnowledgeList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_DegagerObstaclesDansZone" dia-type="T_Mission_Automate_GEN_DegagerObstaclesDansZone" id="250" mrt-dia-behavior="MIS_Automate_MRT_GEN_DegagerObstaclesDansZone" name="Engineer - To clear obstacles in an area">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_DegagerObstaclesDansZone" dia-type="T_Mission_Automate_GEN_DegagerObstaclesDansZone" id="251" mrt-dia-behavior="MIS_Automate_MRT_GEN_DegagerObstaclesDansZone" name="Engineer - To clear obstacles in an area">
       <parameter dia-name="obstacles_" name="Obstacles" optional="false" type="ObjectKnowledgeList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_AttaquerSouplesse" dia-type="T_Mission_Automate_INF_AttaquerSouplesse" id="251" mrt-dia-behavior="MIS_Automate_MRT_INF_AttaquerSouplesse" name="Infantry - To attack (smoothly)">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_AttaquerSouplesse" dia-type="T_Mission_Automate_INF_AttaquerSouplesse" id="252" mrt-dia-behavior="MIS_Automate_MRT_INF_AttaquerSouplesse" name="Infantry - To attack (smoothly)">
       <parameter dia-name="objectifs_" name="Objectives" optional="false" type="PointList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Appuyer" dia-type="T_Mission_Automate_INF_Appuyer" id="252" mrt-dia-behavior="MIS_Automate_MRT_INF_Appuyer" name="Infantry - To support">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Appuyer" dia-type="T_Mission_Automate_INF_Appuyer" id="253" mrt-dia-behavior="MIS_Automate_MRT_INF_Appuyer" name="Infantry - To support">
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automate"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Controler" dia-type="T_Mission_Automate_INF_Controler" id="253" mrt-dia-behavior="MIS_Automate_MRT_INF_Controler" name="Infantry - To control">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Controler" dia-type="T_Mission_Automate_INF_Controler" id="254" mrt-dia-behavior="MIS_Automate_MRT_INF_Controler" name="Infantry - To control">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Couvrir" dia-type="T_Mission_Automate_INF_Couvrir" id="254" mrt-dia-behavior="MIS_Automate_MRT_INF_Couvrir" name="Infantry - To cover">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Couvrir" dia-type="T_Mission_Automate_INF_Couvrir" id="255" mrt-dia-behavior="MIS_Automate_MRT_INF_Couvrir" name="Infantry - To cover">
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automate"/>
       <parameter dia-name="objectifs_" name="Objectives" optional="false" type="PointList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_DonnerCoupArret" dia-type="T_Mission_Automate_INF_DonnerCoupArret" id="255" mrt-dia-behavior="MIS_Automate_MRT_INF_DonnerCoupArret" name="Infantry - To block">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_DonnerCoupArret" dia-type="T_Mission_Automate_INF_DonnerCoupArret" id="256" mrt-dia-behavior="MIS_Automate_MRT_INF_DonnerCoupArret" name="Infantry - To block">
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Polygon"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Eclairer" dia-type="T_Mission_Automate_INF_Eclairer" id="256" mrt-dia-behavior="MIS_Automate_MRT_INF_Eclairer" name="Infantry - To scout"/>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_FlancGarder" dia-type="T_Mission_Automate_INF_FlancGarder" id="257" mrt-dia-behavior="MIS_Automate_MRT_INF_FlancGarder" name="Infantry - To flank-guard">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Eclairer" dia-type="T_Mission_Automate_INF_Eclairer" id="257" mrt-dia-behavior="MIS_Automate_MRT_INF_Eclairer" name="Infantry - To scout"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_FlancGarder" dia-type="T_Mission_Automate_INF_FlancGarder" id="258" mrt-dia-behavior="MIS_Automate_MRT_INF_FlancGarder" name="Infantry - To flank-guard">
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automate"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Freiner" dia-type="T_Mission_Automate_INF_Freiner" id="258" mrt-dia-behavior="MIS_Automate_MRT_INF_Freiner" name="Infantry - To delay"/>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Harceler" dia-type="T_Mission_Automate_INF_Harceler" id="259" mrt-dia-behavior="MIS_Automate_MRT_INF_Harceler" name="Infantry - To harass">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Freiner" dia-type="T_Mission_Automate_INF_Freiner" id="259" mrt-dia-behavior="MIS_Automate_MRT_INF_Freiner" name="Infantry - To delay"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Harceler" dia-type="T_Mission_Automate_INF_Harceler" id="260" mrt-dia-behavior="MIS_Automate_MRT_INF_Harceler" name="Infantry - To harass">
       <parameter dia-name="zoneSurveillance_" name="Surveillance area" optional="false" type="Polygon"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Interdire" dia-type="T_Mission_Automate_INF_Interdire" id="260" mrt-dia-behavior="MIS_Automate_MRT_INF_Interdire" name="Infantry - To deny">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Interdire" dia-type="T_Mission_Automate_INF_Interdire" id="261" mrt-dia-behavior="MIS_Automate_MRT_INF_Interdire" name="Infantry - To deny">
       <parameter dia-name="pointsAInterdire_" name="Positions to deny" optional="false" type="PointList"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_MenerDefenseUsure" dia-type="T_Mission_Automate_INF_MenerDefenseUsure" id="261" mrt-dia-behavior="MIS_Automate_MRT_INF_MenerDefenseUsure" name="Infantry - To defend (wear)"/>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_PrendrePreciserMaintenirContact" dia-type="T_Mission_Automate_INF_PrendrePreciserMaintenirContact" id="262" mrt-dia-behavior="MIS_Automate_MRT_INF_PrendrePreciserMaintenirContact" name="Infantry - To take and maintain contact"/>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_ReconnaissanceOffensive" dia-type="T_Mission_Automate_INF_ReconnaissanceOffensive" id="263" mrt-dia-behavior="MIS_Automate_MRT_INF_ReconnaissanceOffensive" name="Infantry - To reconnoiter"/>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_RecueillirUnite" dia-type="T_Mission_Automate_INF_RecueillirUnite" id="264" mrt-dia-behavior="MIS_Automate_MRT_INF_RecueillirUnite" name="Infantry - To assist units in their rearward maneuvers">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_MenerDefenseUsure" dia-type="T_Mission_Automate_INF_MenerDefenseUsure" id="262" mrt-dia-behavior="MIS_Automate_MRT_INF_MenerDefenseUsure" name="Infantry - To defend (wear)"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_PrendrePreciserMaintenirContact" dia-type="T_Mission_Automate_INF_PrendrePreciserMaintenirContact" id="263" mrt-dia-behavior="MIS_Automate_MRT_INF_PrendrePreciserMaintenirContact" name="Infantry - To take and maintain contact"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_ReconnaissanceOffensive" dia-type="T_Mission_Automate_INF_ReconnaissanceOffensive" id="264" mrt-dia-behavior="MIS_Automate_MRT_INF_ReconnaissanceOffensive" name="Infantry - To reconnoiter"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_RecueillirUnite" dia-type="T_Mission_Automate_INF_RecueillirUnite" id="265" mrt-dia-behavior="MIS_Automate_MRT_INF_RecueillirUnite" name="Infantry - To assist units in their rearward maneuvers">
       <parameter dia-name="zoneDeploiement_" name="Deployment area" optional="false" type="Polygon"/>
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automate"/>
       <parameter dia-name="pias_" name="Checkpoints" optional="false" type="PointList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Reduire" dia-type="T_Mission_Automate_INF_Reduire" id="265" mrt-dia-behavior="MIS_Automate_MRT_INF_Reduire" name="Infantry - To reduce">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Reduire" dia-type="T_Mission_Automate_INF_Reduire" id="266" mrt-dia-behavior="MIS_Automate_MRT_INF_Reduire" name="Infantry - To reduce">
       <parameter dia-name="pointsResistance_" name="Resistance Positions" optional="false" type="PointList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Relever" dia-type="T_Mission_Automate_INF_Relever" id="266" mrt-dia-behavior="MIS_Automate_MRT_INF_Relever" name="Infantry - To relieve">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Relever" dia-type="T_Mission_Automate_INF_Relever" id="267" mrt-dia-behavior="MIS_Automate_MRT_INF_Relever" name="Infantry - To relieve">
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automate"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_RompreContact" dia-type="T_Mission_Automate_INF_RompreContact" id="267" mrt-dia-behavior="MIS_Automate_MRT_INF_RompreContact" name="Infantry - To break contact">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_RompreContact" dia-type="T_Mission_Automate_INF_RompreContact" id="268" mrt-dia-behavior="MIS_Automate_MRT_INF_RompreContact" name="Infantry - To break contact">
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Surveiller" dia-type="T_Mission_Automate_INF_Surveiller" id="268" mrt-dia-behavior="MIS_Automate_MRT_INF_Surveiller" name="Infantry - To monitor">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Surveiller" dia-type="T_Mission_Automate_INF_Surveiller" id="269" mrt-dia-behavior="MIS_Automate_MRT_INF_Surveiller" name="Infantry - To monitor">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Semparer" dia-type="T_Mission_Automate_INF_Semparer" id="269" mrt-dia-behavior="MIS_Automate_MRT_INF_Semparer" name="Infantry - To seize">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Semparer" dia-type="T_Mission_Automate_INF_Semparer" id="270" mrt-dia-behavior="MIS_Automate_MRT_INF_Semparer" name="Infantry - To seize">
       <parameter dia-name="objectif_" name="Objective" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Fixer" dia-type="T_Mission_Automate_INF_Fixer" id="270" mrt-dia-behavior="MIS_Automate_MRT_INF_Fixer" name="Infantry - To fix">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Fixer" dia-type="T_Mission_Automate_INF_Fixer" id="271" mrt-dia-behavior="MIS_Automate_MRT_INF_Fixer" name="Infantry - To fix">
       <parameter dia-name="ennemis_" name="Ennemies" optional="false" type="AgentKnowledgeList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_AttaquerEnTerrainDifficile" dia-type="T_Mission_Automate_INF_AttaquerEnTerrainDifficile" id="271" mrt-dia-behavior="MIS_Automate_MRT_INF_AttaquerEnTerrainDifficile" name="Infantry - To attack (mobility limited terrain)">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_AttaquerEnTerrainDifficile" dia-type="T_Mission_Automate_INF_AttaquerEnTerrainDifficile" id="272" mrt-dia-behavior="MIS_Automate_MRT_INF_AttaquerEnTerrainDifficile" name="Infantry - To attack (mobility limited terrain)">
       <parameter dia-name="objectifs_" name="Objectives" optional="false" type="PointList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_BarrerDirection" dia-type="T_Mission_Automate_INF_BarrerDirection" id="272" mrt-dia-behavior="MIS_Automate_MRT_INF_BarrerDirection" name="Infantry - To bar a direction">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_BarrerDirection" dia-type="T_Mission_Automate_INF_BarrerDirection" id="273" mrt-dia-behavior="MIS_Automate_MRT_INF_BarrerDirection" name="Infantry - To bar a direction">
       <parameter dia-name="position_" name="Position" optional="false" type="Polygon"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_DefendreFerme" dia-type="T_Mission_Automate_INF_DefendreFerme" id="273" mrt-dia-behavior="MIS_Automate_MRT_INF_DefendreFerme" name="Infantry - To defend (until the end)">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_DefendreFerme" dia-type="T_Mission_Automate_INF_DefendreFerme" id="274" mrt-dia-behavior="MIS_Automate_MRT_INF_DefendreFerme" name="Infantry - To defend (until the end)">
       <parameter dia-name="position_" name="Position" optional="false" type="Polygon"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Tenir" dia-type="T_Mission_Automate_INF_Tenir" id="274" mrt-dia-behavior="MIS_Automate_MRT_INF_Tenir" name="Infantry - To hold">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Tenir" dia-type="T_Mission_Automate_INF_Tenir" id="275" mrt-dia-behavior="MIS_Automate_MRT_INF_Tenir" name="Infantry - To hold">
       <parameter dia-name="position_" name="Position" optional="false" type="Polygon"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_AppuyerUnFreinage" dia-type="T_Mission_Automate_INF_AppuyerUnFreinage" id="275" mrt-dia-behavior="MIS_Automate_MRT_INF_AppuyerUnFreinage" name="Infantry - To support a delay maneuver">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_AppuyerUnFreinage" dia-type="T_Mission_Automate_INF_AppuyerUnFreinage" id="276" mrt-dia-behavior="MIS_Automate_MRT_INF_AppuyerUnFreinage" name="Infantry - To support a delay maneuver">
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automate"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_AppuyerUneAttaque" dia-type="T_Mission_Automate_INF_AppuyerUneAttaque" id="276" mrt-dia-behavior="MIS_Automate_MRT_INF_AppuyerUneAttaque" name="Infantry - To support an attack">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_AppuyerUneAttaque" dia-type="T_Mission_Automate_INF_AppuyerUneAttaque" id="277" mrt-dia-behavior="MIS_Automate_MRT_INF_AppuyerUneAttaque" name="Infantry - To support an attack">
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automate"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Soutenir" dia-type="T_Mission_Automate_INF_Soutenir" id="277" mrt-dia-behavior="MIS_Automate_MRT_INF_Soutenir" name="Infantry - To support (dynamic)">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Soutenir" dia-type="T_Mission_Automate_INF_Soutenir" id="278" mrt-dia-behavior="MIS_Automate_MRT_INF_Soutenir" name="Infantry - To support (dynamic)">
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automate"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_EscorterUnite" dia-type="T_Mission_Automate_INF_EscorterUnite" id="278" mrt-dia-behavior="MIS_Automate_MRT_INF_EscorterUnite" name="Infantry - To escort">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_EscorterUnite" dia-type="T_Mission_Automate_INF_EscorterUnite" id="279" mrt-dia-behavior="MIS_Automate_MRT_INF_EscorterUnite" name="Infantry - To escort">
       <parameter dia-name="uniteAEscorter_" name="Unit to escort" optional="false" type="Agent"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_EscorterUnites" dia-type="T_Mission_Automate_INF_EscorterUnites" id="279" mrt-dia-behavior="MIS_Automate_MRT_INF_EscorterUnites" name="Infantry - To escort units">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_EscorterUnites" dia-type="T_Mission_Automate_INF_EscorterUnites" id="280" mrt-dia-behavior="MIS_Automate_MRT_INF_EscorterUnites" name="Infantry - To escort units">
       <parameter dia-name="automateAEscorter_" name="Units to escort" optional="false" type="Automate"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_AppuyerSurPosition" dia-type="T_Mission_Automate_INF_AppuyerSurPosition" id="280" mrt-dia-behavior="MIS_Automate_MRT_INF_AppuyerSurPosition" name="Infantry - To support (from a position)">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_AppuyerSurPosition" dia-type="T_Mission_Automate_INF_AppuyerSurPosition" id="281" mrt-dia-behavior="MIS_Automate_MRT_INF_AppuyerSurPosition" name="Infantry - To support (from a position)">
       <parameter dia-name="positionInstallation_" name="Deployment area" optional="false" type="Polygon"/>
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automate"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_SeDeployer" dia-type="T_Mission_Automate_LOG_SeDeployer" id="281" mrt-dia-behavior="MIS_Automate_MRT_LOG_SeDeployer" name="Logistics - To deploy">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_SeDeployer" dia-type="T_Mission_Automate_LOG_SeDeployer" id="282" mrt-dia-behavior="MIS_Automate_MRT_LOG_SeDeployer" name="Logistics - To deploy">
       <parameter dia-name="positionDeploiement_" name="Deployment position" optional="true" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_AppuyerMouvement" dia-type="T_Mission_Automate_LOG_AppuyerMouvement" id="282" mrt-dia-behavior="MIS_Automate_MRT_LOG_AppuyerMouvement" name="Logistics - To support mobility">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_AppuyerMouvement" dia-type="T_Mission_Automate_LOG_AppuyerMouvement" id="283" mrt-dia-behavior="MIS_Automate_MRT_LOG_AppuyerMouvement" name="Logistics - To support mobility">
       <parameter dia-name="unitesAAppuyer_" name="Units to support" optional="false" type="AgentList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_ReconnaitreItineraire" dia-type="T_Mission_Automate_LOG_ReconnaitreItineraire" id="283" mrt-dia-behavior="MIS_Automate_MRT_LOG_ReconnaitreItineraire" name="Logistics - To reconnoiter a route">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_ReconnaitreItineraire" dia-type="T_Mission_Automate_LOG_ReconnaitreItineraire" id="284" mrt-dia-behavior="MIS_Automate_MRT_LOG_ReconnaitreItineraire" name="Logistics - To reconnoiter a route">
       <parameter dia-name="itineraireLog_" name="Logistics routes" optional="false" type="Path"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_AppuyerMouvementDansZone" dia-type="T_Mission_Automate_LOG_AppuyerMouvementDansZone" id="284" mrt-dia-behavior="MIS_Automate_MRT_LOG_AppuyerMouvementDansZone" name="Logistics - To support mobility (in an area)">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_AppuyerMouvementDansZone" dia-type="T_Mission_Automate_LOG_AppuyerMouvementDansZone" id="285" mrt-dia-behavior="MIS_Automate_MRT_LOG_AppuyerMouvementDansZone" name="Logistics - To support mobility (in an area)">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_MettreEnOeuvreZoneStationnement" dia-type="T_Mission_Automate_LOG_MettreEnOeuvreZoneStationnement" id="285" mrt-dia-behavior="MIS_Automate_MRT_LOG_MettreEnOeuvreZoneStationnement" name="Logistics - To operate parking area">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_MettreEnOeuvreZoneStationnement" dia-type="T_Mission_Automate_LOG_MettreEnOeuvreZoneStationnement" id="286" mrt-dia-behavior="MIS_Automate_MRT_LOG_MettreEnOeuvreZoneStationnement" name="Logistics - To operate parking area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_AppuyerFranchissementDansZone" dia-type="T_Mission_Automate_LOG_AppuyerFranchissementDansZone" id="286" mrt-dia-behavior="MIS_Automate_MRT_LOG_AppuyerFranchissementDansZone" name="Logistics - To support crossing">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_AppuyerFranchissementDansZone" dia-type="T_Mission_Automate_LOG_AppuyerFranchissementDansZone" id="287" mrt-dia-behavior="MIS_Automate_MRT_LOG_AppuyerFranchissementDansZone" name="Logistics - To support crossing">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_BloquerZone" dia-type="T_Mission_Automate_LOG_BloquerZone" id="287" mrt-dia-behavior="MIS_Automate_MRT_LOG_BloquerZone" name="Logistics - To block an area">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_BloquerZone" dia-type="T_Mission_Automate_LOG_BloquerZone" id="288" mrt-dia-behavior="MIS_Automate_MRT_LOG_BloquerZone" name="Logistics - To block an area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_ReconnaitreZoneContaminee" dia-type="T_Mission_Automate_LOG_ReconnaitreZoneContaminee" id="288" mrt-dia-behavior="MIS_Automate_MRT_LOG_ReconnaitreZoneContaminee" name="Logistics - To reconnoiter a contaminated area">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_ReconnaitreZoneContaminee" dia-type="T_Mission_Automate_LOG_ReconnaitreZoneContaminee" id="289" mrt-dia-behavior="MIS_Automate_MRT_LOG_ReconnaitreZoneContaminee" name="Logistics - To reconnoiter a contaminated area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_ReconnaitreZoneDeDeploiement" dia-type="T_Mission_Automate_LOG_ReconnaitreZoneDeDeploiement" id="289" mrt-dia-behavior="MIS_Automate_MRT_LOG_ReconnaitreZoneDeDeploiement" name="Logistics - To reconnoiter a deployment area">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_ReconnaitreZoneDeDeploiement" dia-type="T_Mission_Automate_LOG_ReconnaitreZoneDeDeploiement" id="290" mrt-dia-behavior="MIS_Automate_MRT_LOG_ReconnaitreZoneDeDeploiement" name="Logistics - To reconnoiter a deployment area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_Surveiller" dia-type="T_Mission_Automate_LOG_Surveiller" id="290" mrt-dia-behavior="MIS_Automate_MRT_LOG_Surveiller" name="Logistics - To monitor">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_Surveiller" dia-type="T_Mission_Automate_LOG_Surveiller" id="291" mrt-dia-behavior="MIS_Automate_MRT_LOG_Surveiller" name="Logistics - To monitor">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_ArmerPIAs" dia-type="T_Mission_Automate_LOG_ArmerPIAs" id="291" mrt-dia-behavior="MIS_Automate_MRT_LOG_ArmerPIAs" name="Logistics - To operate checkpoints"/>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_Decrocher" dia-type="T_Mission_Automate_Decrocher" id="292" mrt-dia-behavior="MIS_Automate_MRT_Decrocher" name="To withdraw">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_ArmerPIAs" dia-type="T_Mission_Automate_LOG_ArmerPIAs" id="292" mrt-dia-behavior="MIS_Automate_MRT_LOG_ArmerPIAs" name="Logistics - To operate checkpoints"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_Decrocher" dia-type="T_Mission_Automate_Decrocher" id="293" mrt-dia-behavior="MIS_Automate_MRT_Decrocher" name="To withdraw">
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ReleverSurPlace" dia-type="T_Mission_Automate_ReleverSurPlace" id="293" mrt-dia-behavior="MIS_Automate_MRT_ReleverSurPlace" name="To relieve">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ReleverSurPlace" dia-type="T_Mission_Automate_ReleverSurPlace" id="294" mrt-dia-behavior="MIS_Automate_MRT_ReleverSurPlace" name="To relieve">
       <parameter dia-name="compagnieARelever_" name="Unit to relieve" optional="false" type="Automate"/>
       <parameter dia-name="zoneInstallation_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_FaireMouvement" dia-type="T_Mission_Automate_FaireMouvement" id="294" mrt-dia-behavior="MIS_Automate_MRT_FaireMouvement" name="To move">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_FaireMouvement" dia-type="T_Mission_Automate_FaireMouvement" id="295" mrt-dia-behavior="MIS_Automate_MRT_FaireMouvement" name="To move">
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireDecontaminer" dia-type="T_Mission_Automate_SeFaireDecontaminer" id="295" mrt-dia-behavior="MIS_Automate_MRT_SeFaireDecontaminer" name="To go through decontamination process">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireDecontaminer" dia-type="T_Mission_Automate_SeFaireDecontaminer" id="296" mrt-dia-behavior="MIS_Automate_MRT_SeFaireDecontaminer" name="To go through decontamination process">
       <parameter dia-name="zoneArrivee_" name="Meeting point" optional="false" type="Polygon"/>
       <parameter dia-name="siteDecontamination_" name="Decontamination site" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_Franchir" dia-type="T_Mission_Automate_Franchir" id="296" mrt-dia-behavior="MIS_Automate_MRT_Franchir" name="To cross">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_Franchir" dia-type="T_Mission_Automate_Franchir" id="297" mrt-dia-behavior="MIS_Automate_MRT_Franchir" name="To cross">
       <parameter dia-name="pontFlottant_" name="Bridge" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="zoneArrivee_" name="Meeting point" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_Stationner" dia-type="T_Mission_Automate_Stationner" id="297" mrt-dia-behavior="MIS_Automate_MRT_Stationner" name="To park">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_Stationner" dia-type="T_Mission_Automate_Stationner" id="298" mrt-dia-behavior="MIS_Automate_MRT_Stationner" name="To park">
       <parameter dia-name="zoneAttente_" name="Waiting area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter" dia-type="T_Mission_Automate_SeFaireTransporter" id="298" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" name="To adopt transportation posture">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter" dia-type="T_Mission_Automate_SeFaireTransporter" id="299" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" name="To adopt transportation posture">
       <parameter dia-name="zoneEmbarquement_" name="Embarking area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_Transporter" dia-type="T_Mission_Automate_Transporter" id="299" mrt-dia-behavior="MIS_Automate_MRT_Transporter" name="To transport">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_Transporter" dia-type="T_Mission_Automate_Transporter" id="300" mrt-dia-behavior="MIS_Automate_MRT_Transporter" name="To transport">
       <parameter dia-name="unitesATransporter_" name="Units to transport" optional="false" type="AgentList"/>
       <parameter dia-name="pointDebarquement_" name="Disembarking point" optional="false" type="Point"/>
       <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
       <parameter dia-name="avecMateriel_" name="With equipments" optional="false" type="Bool"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_SeRecompleter" dia-type="T_Mission_Automate_SeRecompleter" id="300" mrt-dia-behavior="MIS_Automate_MRT_SeRecompleter" name="To replenish">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_SeRecompleter" dia-type="T_Mission_Automate_SeRecompleter" id="301" mrt-dia-behavior="MIS_Automate_MRT_SeRecompleter" name="To replenish">
       <parameter dia-name="zoneRavitaillement_" name="Replenishment area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_InterdireFranchissementPopulations" dia-type="T_Mission_Automate_InterdireFranchissementPopulations" id="301" mrt-dia-behavior="MIS_Automate_MRT_InterdireFranchissementPopulations" name="To deny population crossing">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_InterdireFranchissementPopulations" dia-type="T_Mission_Automate_InterdireFranchissementPopulations" id="302" mrt-dia-behavior="MIS_Automate_MRT_InterdireFranchissementPopulations" name="To deny population crossing">
       <parameter dia-name="points_" name="Positions" optional="false" type="PointList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_FiltrerPopulations" dia-type="T_Mission_Automate_FiltrerPopulations" id="302" mrt-dia-behavior="MIS_Automate_MRT_FiltrerPopulations" name="To filttrate populations">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_FiltrerPopulations" dia-type="T_Mission_Automate_FiltrerPopulations" id="303" mrt-dia-behavior="MIS_Automate_MRT_FiltrerPopulations" name="To filttrate populations">
       <parameter dia-name="points_" name="Positions" optional="false" type="PointList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_CanaliserPopulations" dia-type="T_Mission_Automate_CanaliserPopulations" id="303" mrt-dia-behavior="MIS_Automate_MRT_CanaliserPopulations" name="To channel populations">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_CanaliserPopulations" dia-type="T_Mission_Automate_CanaliserPopulations" id="304" mrt-dia-behavior="MIS_Automate_MRT_CanaliserPopulations" name="To channel populations">
       <parameter dia-name="zones_" name="Areas" optional="false" type="LocationList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ControlerPopulationsDansZone" dia-type="T_Mission_Automate_ControlerPopulationsDansZone" id="304" mrt-dia-behavior="MIS_Automate_MRT_ControlerPopulationsDansZone" name="To control Populations (in an area)">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ControlerPopulationsDansZone" dia-type="T_Mission_Automate_ControlerPopulationsDansZone" id="305" mrt-dia-behavior="MIS_Automate_MRT_ControlerPopulationsDansZone" name="To control Populations (in an area)">
       <parameter dia-name="zones_" name="Areas" optional="false" type="PolygonList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_SecuriserZoneContrePopulations" dia-type="T_Mission_Automate_SecuriserZoneContrePopulations" id="305" mrt-dia-behavior="MIS_Automate_MRT_SecuriserZoneContrePopulations" name="To secure area (against populations assault)">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_SecuriserZoneContrePopulations" dia-type="T_Mission_Automate_SecuriserZoneContrePopulations" id="306" mrt-dia-behavior="MIS_Automate_MRT_SecuriserZoneContrePopulations" name="To secure area (against populations assault)">
       <parameter dia-name="points_" name="Positions" optional="false" type="PointList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASY_CommettreExactionsSurPopulationDansZone" dia-type="T_Mission_Automate_ASY_CommettreExactionsSurPopulationDansZone" id="306" mrt-dia-behavior="MIS_Automate_MRT_ASY_CommettreExactionsSurPopulationDansZone" name="Asymetric - To attack populations(in an area)">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ASY_CommettreExactionsSurPopulationDansZone" dia-type="T_Mission_Automate_ASY_CommettreExactionsSurPopulationDansZone" id="307" mrt-dia-behavior="MIS_Automate_MRT_ASY_CommettreExactionsSurPopulationDansZone" name="Asymetric - To attack populations(in an area)">
       <parameter dia-name="zones_" name="Areas" optional="false" type="PolygonList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_Generique" dia-type="T_Mission_Automate_Generique" id="307" mrt-dia-behavior="MIS_Automate_MRT_Generique" name="Generic mission">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_Generique" dia-type="T_Mission_Automate_Generique" id="308" mrt-dia-behavior="MIS_Automate_MRT_Generique" name="Generic mission">
       <parameter dia-name="zones_" name="Areas" optional="false" type="PolygonList"/>
       <parameter dia-name="points_" name="Positions" optional="false" type="PointList"/>
       <parameter dia-name="itineraires_" name="Routes" optional="false" type="PathList"/>
@@ -1233,89 +1237,89 @@
       <parameter dia-name="connaissancesAgents_" name="Enemy intelligence" optional="false" type="AgentKnowledgeList"/>
       <parameter dia-name="connaissancesObjets_" name="Obstacle intelligence" optional="false" type="ObjectKnowledgeList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreUnAxe" dia-type="T_Mission_Automate_NBC_ReconnaitreUnAxe" id="308" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreUnAxe" name="NBC - To reconnoiter an axis"/>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreUneZone" dia-type="T_Mission_Automate_NBC_ReconnaitreUneZone" id="309" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreUneZone" name="NBC - To reconnoiter an area">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreUnAxe" dia-type="T_Mission_Automate_NBC_ReconnaitreUnAxe" id="309" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreUnAxe" name="NBC - To reconnoiter an axis"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreUneZone" dia-type="T_Mission_Automate_NBC_ReconnaitreUneZone" id="310" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreUneZone" name="NBC - To reconnoiter an area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ArmerUnSiteDeDecontamination" dia-type="T_Mission_Automate_NBC_ArmerUnSiteDeDecontamination" id="310" mrt-dia-behavior="MIS_Automate_MRT_NBC_ArmerUnSiteDeDecontamination" name="NBC - To operate a decontamination site">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ArmerUnSiteDeDecontamination" dia-type="T_Mission_Automate_NBC_ArmerUnSiteDeDecontamination" id="311" mrt-dia-behavior="MIS_Automate_MRT_NBC_ArmerUnSiteDeDecontamination" name="NBC - To operate a decontamination site">
       <parameter dia-name="site_" name="Site position" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_DecontaminerUneZone" dia-type="T_Mission_Automate_NBC_DecontaminerUneZone" id="311" mrt-dia-behavior="MIS_Automate_MRT_NBC_DecontaminerUneZone" name="NBC - To decontaminate an area">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_DecontaminerUneZone" dia-type="T_Mission_Automate_NBC_DecontaminerUneZone" id="312" mrt-dia-behavior="MIS_Automate_MRT_NBC_DecontaminerUneZone" name="NBC - To decontaminate an area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreDesSitesROTA" dia-type="T_Mission_Automate_NBC_ReconnaitreDesSitesROTA" id="312" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreDesSitesROTA" name="NBC - To reconnoiter ROTA sites">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreDesSitesROTA" dia-type="T_Mission_Automate_NBC_ReconnaitreDesSitesROTA" id="313" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreDesSitesROTA" name="NBC - To reconnoiter ROTA sites">
       <parameter dia-name="sitesROTA_" name="Sites ROTA" optional="false" type="ObjectKnowledgeList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROHUM_RenseignerSur" dia-type="T_Mission_Automate_RENS_ROHUM_RenseignerSur" id="313" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROHUM_RenseignerSur" name="Human Intelligence - To report information">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROHUM_RenseignerSur" dia-type="T_Mission_Automate_RENS_ROHUM_RenseignerSur" id="314" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROHUM_RenseignerSur" name="Human Intelligence - To report information">
       <parameter dia-name="zoneAObserver_" name="Area to observe" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROHUM_OrienterGuider" dia-type="T_Mission_Automate_RENS_ROHUM_OrienterGuider" id="314" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROHUM_OrienterGuider" name="Human Intelligence - To guide">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROHUM_OrienterGuider" dia-type="T_Mission_Automate_RENS_ROHUM_OrienterGuider" id="315" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROHUM_OrienterGuider" name="Human Intelligence - To guide">
       <parameter dia-name="ami_" name="Unit" optional="false" type="Automate"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROHUM_SExfiltrer" dia-type="T_Mission_Automate_RENS_ROHUM_SExfiltrer" id="315" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROHUM_SExfiltrer" name="Human Intelligence - To exfiltrate">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROHUM_SExfiltrer" dia-type="T_Mission_Automate_RENS_ROHUM_SExfiltrer" id="316" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROHUM_SExfiltrer" name="Human Intelligence - To exfiltrate">
       <parameter dia-name="zoneDeRegroupement_" name="Area de regroupement" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROIM_CL289_RenseignerSur" dia-type="T_Mission_Automate_RENS_ROIM_CL289_RenseignerSur" id="316" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROIM_CL289_RenseignerSur" name="Imagery Intelligence (UAV) - To report information">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROIM_CL289_RenseignerSur" dia-type="T_Mission_Automate_RENS_ROIM_CL289_RenseignerSur" id="317" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROIM_CL289_RenseignerSur" name="Imagery Intelligence (UAV) - To report information">
       <parameter dia-name="ficelleDeVole_" name="Route" optional="false" type="Path"/>
       <parameter dia-name="zonesDeRecherche_" name="Areas to observe" optional="false" type="PolygonList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROIM_SDTI_RenseignerSur" dia-type="T_Mission_Automate_RENS_ROIM_SDTI_RenseignerSur" id="317" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROIM_SDTI_RenseignerSur" name="Imagery Intelligence (real time UAV) - To report information">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROIM_SDTI_RenseignerSur" dia-type="T_Mission_Automate_RENS_ROIM_SDTI_RenseignerSur" id="318" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROIM_SDTI_RenseignerSur" name="Imagery Intelligence (real time UAV) - To report information">
       <parameter dia-name="ficelleDeVole_" name="Route" optional="false" type="Path"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROEM_Appuyer" dia-type="T_Mission_Automate_RENS_ROEM_Appuyer" id="318" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROEM_Appuyer" name="Electronic Intelligence - To support">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROEM_Appuyer" dia-type="T_Mission_Automate_RENS_ROEM_Appuyer" id="319" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROEM_Appuyer" name="Electronic Intelligence - To support">
       <parameter dia-name="positionDeploiement_" name="Deployment position" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROEM_RenseignerSur" dia-type="T_Mission_Automate_RENS_ROEM_RenseignerSur" id="319" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROEM_RenseignerSur" name="Electronic Intelligence - To report information">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROEM_RenseignerSur" dia-type="T_Mission_Automate_RENS_ROEM_RenseignerSur" id="320" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROEM_RenseignerSur" name="Electronic Intelligence - To report information">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_RADINT_RenseignerSur" dia-type="T_Mission_Automate_RENS_RADINT_RenseignerSur" id="320" mrt-dia-behavior="MIS_Automate_MRT_RENS_RADINT_RenseignerSur" name="Radar Intelligence - To report information">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_RADINT_RenseignerSur" dia-type="T_Mission_Automate_RENS_RADINT_RenseignerSur" id="321" mrt-dia-behavior="MIS_Automate_MRT_RENS_RADINT_RenseignerSur" name="Radar Intelligence - To report information">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_TRANS_Commander" dia-type="T_Mission_Automate_TRANS_Commander" id="321" mrt-dia-behavior="MIS_Automate_MRT_TRANS_Commander" name="Communication - To command">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_TRANS_Commander" dia-type="T_Mission_Automate_TRANS_Commander" id="322" mrt-dia-behavior="MIS_Automate_MRT_TRANS_Commander" name="Communication - To command">
       <parameter dia-name="zoneDeploiement_" name="Deployment area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_PrendreEnComptePrisonniers" dia-type="T_Mission_Automate_PrendreEnComptePrisonniers" id="322" mrt-dia-behavior="MIS_Automate_MRT_PrendreEnComptePrisonniers" name="To manage prisoners">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_PrendreEnComptePrisonniers" dia-type="T_Mission_Automate_PrendreEnComptePrisonniers" id="323" mrt-dia-behavior="MIS_Automate_MRT_PrendreEnComptePrisonniers" name="To manage prisoners">
       <parameter dia-name="unitesRendues_" name="Surrendered units" optional="false" type="AgentKnowledgeList"/>
       <parameter dia-name="campPrisonniers_" name="Prisonners camp" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_OrienterRefugies" dia-type="T_Mission_Automate_OrienterRefugies" id="323" mrt-dia-behavior="MIS_Automate_MRT_OrienterRefugies" name="To manage refugees">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_OrienterRefugies" dia-type="T_Mission_Automate_OrienterRefugies" id="324" mrt-dia-behavior="MIS_Automate_MRT_OrienterRefugies" name="To manage refugees">
       <parameter dia-name="refugies_" name="Refugees" optional="false" type="AgentKnowledgeList"/>
       <parameter dia-name="campRefugies_" name="Refugees camp" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_Suivre" dia-type="T_Mission_Automate_Suivre" id="324" mrt-dia-behavior="MIS_Automate_MRT_Suivre" name="To Follow">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_Suivre" dia-type="T_Mission_Automate_Suivre" id="325" mrt-dia-behavior="MIS_Automate_MRT_Suivre" name="To Follow">
       <parameter dia-name="compagnie_" name="company to follow" optional="false" type="Automate"/>
     </mission>
   </automats>
   <populations>
-    <mission dia-behavior="MIS_Population_FaireMouvement" dia-type="T_Mission_Population_FaireMouvement" id="325" name="Population - To move">
+    <mission dia-behavior="MIS_Population_FaireMouvement" dia-type="T_Mission_Population_FaireMouvement" id="326" name="Population - To move">
       <parameter dia-name="destination_" name="Objective" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Population_Manifester" dia-type="T_Mission_Population_Manifester" id="326" name="Population - To demonstrate">
+    <mission dia-behavior="MIS_Population_Manifester" dia-type="T_Mission_Population_Manifester" id="327" name="Population - To demonstrate">
       <parameter dia-name="destination_" name="Objective" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Population_CommettreExactions" dia-type="T_Mission_Population_CommettreExactions" id="327" name="Population - To attack">
+    <mission dia-behavior="MIS_Population_CommettreExactions" dia-type="T_Mission_Population_CommettreExactions" id="328" name="Population - To attack">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
   </populations>
   <fragorders>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_MettreTenueNBC" id="328" name="NBC suit on"/>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_EnleverTenueNBC" id="329" name="NBC suit off"/>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadio" id="330" name="radio silence"/>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadio" id="331" name="Radio silence lifted"/>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadar" id="332" name="Radar silence"/>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadar" id="333" name="Radar silence lifted"/>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_RecupererTransporteurs" id="334" name="Get back carriers"/>
-    <fragorder available-for-all-mission="true" available-without-mission="false" dia-type="Rep_OrderConduite_AttendreSePoster" id="335" name="Pause maneuver"/>
-    <fragorder available-for-all-mission="true" available-without-mission="false" dia-type="Rep_OrderConduite_Poursuivre" id="336" name="Resume maneuver"/>
-    <fragorder available-for-all-mission="true" available-without-mission="false" dia-type="Rep_OrderConduite_Interrompre" id="337" name="Cancel maneuver"/>
-    <fragorder available-for-all-mission="true" available-without-mission="false" dia-type="Rep_OrderConduite_ChangerAmbiance" id="338" name="Switch posture">
+    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_MettreTenueNBC" id="329" name="NBC suit on"/>
+    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_EnleverTenueNBC" id="330" name="NBC suit off"/>
+    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadio" id="331" name="radio silence"/>
+    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadio" id="332" name="Radio silence lifted"/>
+    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadar" id="333" name="Radar silence"/>
+    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadar" id="334" name="Radar silence lifted"/>
+    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_RecupererTransporteurs" id="335" name="Get back carriers"/>
+    <fragorder available-for-all-mission="true" available-without-mission="false" dia-type="Rep_OrderConduite_AttendreSePoster" id="336" name="Pause maneuver"/>
+    <fragorder available-for-all-mission="true" available-without-mission="false" dia-type="Rep_OrderConduite_Poursuivre" id="337" name="Resume maneuver"/>
+    <fragorder available-for-all-mission="true" available-without-mission="false" dia-type="Rep_OrderConduite_Interrompre" id="338" name="Cancel maneuver"/>
+    <fragorder available-for-all-mission="true" available-without-mission="false" dia-type="Rep_OrderConduite_ChangerAmbiance" id="339" name="Switch posture">
       <parameter dia-name="orderConduiteChangerAmbiance_" name="Order conduite changer ambiance" optional="false" type="Enumeration">
         <value id="0" name="safety"/>
         <value id="1" name="standard"/>
       </parameter>
     </fragorder>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagement" id="339" name="Change ROE">
+    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagement" id="340" name="Change ROE">
       <parameter dia-name="orderConduiteChangerReglesEngagement_" name="ROE type" optional="false" type="Enumeration">
         <value id="0" name="none"/>
         <value id="1" name="free fire"/>
@@ -1323,7 +1327,7 @@
         <value id="3" name="fire upon order"/>
       </parameter>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ChangerParametresRecompletementALAT" id="340" name="Army Aviation - Change mission type">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ChangerParametresRecompletementALAT" id="341" name="Army Aviation - Change mission type">
       <parameter dia-name="porteeAction_" name="mission type" optional="false" type="Enumeration">
         <value id="0" name="low range"/>
         <value id="1" name="medium range"/>
@@ -1336,7 +1340,7 @@
         <value id="2" name="Mixed"/>
       </parameter>
     </fragorder>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagementPopulation" id="341" name="Change population ROE">
+    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagementPopulation" id="342" name="Change population ROE">
       <parameter dia-name="orderConduiteChangerReglesEngagementPopulation_" name="Order conduite changer regles engagement population" optional="false" type="Enumeration">
         <value id="0" name="none"/>
         <value id="1" name="emploi_force_interdit"/>
@@ -1345,56 +1349,56 @@
         <value id="4" name="lethal weapons authorized for use"/>
       </parameter>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Deboucher" id="342" name="Cross departure line"/>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Decrocher" id="343" name="Withdraw"/>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_AcquerirObjectif" id="344" name="Collect intelligence">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Deboucher" id="343" name="Cross departure line"/>
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Decrocher" id="344" name="Withdraw"/>
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_AcquerirObjectif" id="345" name="Collect intelligence">
       <parameter dia-name="orderConduiteAcquerirObjectif_" name="Area" optional="false" type="Location"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Brouiller" id="345" name="Jam"/>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ChangerPositionDebarquement" id="346" name="Modify Disembarking point">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Brouiller" id="346" name="Jam"/>
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ChangerPositionDebarquement" id="347" name="Modify Disembarking point">
       <parameter dia-name="orderConduiteChangerPositionDebarquement_" name="Disembarking point" optional="false" type="Point"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ChangerDePosition" id="347" name="Switch position">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ChangerDePosition" id="348" name="Switch position">
       <parameter dia-name="orderConduitePionChangerDePosition_" name="new position" optional="false" type="Point"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Contourner" id="348" name="Bypass"/>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_EnvoyerVehicule" id="349" name="Send equipment"/>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ActiverObstacle" id="350" name="Activate obstacle"/>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AppliquerFeux" id="351" name="Fire">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Contourner" id="349" name="Bypass"/>
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_EnvoyerVehicule" id="350" name="Send equipment"/>
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ActiverObstacle" id="351" name="Activate obstacle"/>
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AppliquerFeux" id="352" name="Fire">
       <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="DotationType"/>
       <parameter dia-name="nbIT_" name="Shells number" optional="false" type="Numeric"/>
       <parameter dia-name="cible_" name="Target" optional="false" type="Point"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ExecuterTir" id="352" name="Fire already prepared fire"/>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Emettre" id="353" name="Activate Radar"/>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_StopperEmission" id="354" name="Deactivate radar"/>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_RenforcerEnVSRAM" id="355" name="Send ambulances">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ExecuterTir" id="353" name="Fire already prepared fire"/>
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Emettre" id="354" name="Activate Radar"/>
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_StopperEmission" id="355" name="Deactivate radar"/>
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_RenforcerEnVSRAM" id="356" name="Send ambulances">
       <parameter dia-name="pionARenforcer_" name="Beneficiary" optional="false" type="Agent"/>
       <parameter dia-name="nbrAmbulances_" name="Ambulances number" optional="false" type="Numeric"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_TransfererVSRAM" id="356" name="Send lended ambulances">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_TransfererVSRAM" id="357" name="Send lended ambulances">
       <parameter dia-name="pionRenforce_" name="Previous beneficiary" optional="false" type="Agent"/>
       <parameter dia-name="pionARenforcer_" name="New beneficiary" optional="false" type="Agent"/>
       <parameter dia-name="nbrAmbulances_" name="Ambulances number" optional="false" type="Numeric"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM" id="357" name="Get back lended ambulances">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM" id="358" name="Get back lended ambulances">
       <parameter dia-name="pionRenforce_" name="Beneficiary" optional="false" type="Agent"/>
       <parameter dia-name="nbrAmbulances_" name="Ambulances number" optional="false" type="Numeric"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" id="358" name="Send carriers">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" id="359" name="Send carriers">
       <parameter dia-name="pionARenforcer_" name="Beneficiary" optional="false" type="Agent"/>
       <parameter dia-name="nbrRemorqueurs_" name="Carriers number" optional="false" type="Numeric"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_TransfererRemorqueurs" id="359" name="Send lended carriers">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_TransfererRemorqueurs" id="360" name="Send lended carriers">
       <parameter dia-name="pionRenforce_" name="Previous beneficiary" optional="false" type="Agent"/>
       <parameter dia-name="pionARenforcer_" name="New beneficiary" optional="false" type="Agent"/>
       <parameter dia-name="nbrRemorqueurs_" name="Carriers number" optional="false" type="Numeric"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" id="360" name="Get back lended carriers">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" id="361" name="Get back lended carriers">
       <parameter dia-name="pionRenforce_" name="beneficiary" optional="false" type="Agent"/>
       <parameter dia-name="nbrRemorqueurs_" name="Carriers number" optional="false" type="Numeric"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ModifierRegimeTravailMaintenance" id="361" name="Change work mode">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ModifierRegimeTravailMaintenance" id="362" name="Change work mode">
       <parameter dia-name="orderConduiteModifierRegimeTravailMaintenance_" name="work mode" optional="false" type="Enumeration">
         <value id="0" name="mode 1"/>
         <value id="1" name="mode 2"/>
@@ -1402,47 +1406,47 @@
         <value id="3" name="mode 4"/>
       </parameter>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesReparations" id="362" name="Change reparations priorities">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesReparations" id="363" name="Change reparations priorities">
       <parameter dia-name="orderConduiteModifierPrioritesReparations_" name="New priorities" optional="false" type="MaintenancePriorities"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesBlesses" id="363" name="Change wounded treatment priorities">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesBlesses" id="364" name="Change wounded treatment priorities">
       <parameter dia-name="orderConduiteModifierPrioritesBlesses_" name="New priorities" optional="false" type="MedicalPriorities"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesTactiquesReparations" id="364" name="Change tactical reparations priorities">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesTactiquesReparations" id="365" name="Change tactical reparations priorities">
       <parameter dia-name="orderConduiteModifierPrioritesTactiquesReparations_" name="New priorities" optional="false" type="AutomateList"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" id="365" name="Change tactical wounded treatment priorities">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" id="366" name="Change tactical wounded treatment priorities">
       <parameter dia-name="orderConduiteModifierPrioritesTactiquesBlesses_" name="New priorities" optional="false" type="AutomateList"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_RealiserVariantement" id="366" name="Change crossing site">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_RealiserVariantement" id="367" name="Change crossing site">
       <parameter dia-name="siteFranchissementOriginal_" name="Original crossing site" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="siteFranchissementVariante_" name="New crossing site" optional="false" type="ObjectKnowledge"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_DesequiperSiteFranchissement" id="367" name="Dismantle crossing site">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_DesequiperSiteFranchissement" id="368" name="Dismantle crossing site">
       <parameter dia-name="siteFranchissement_" name="Crossing site" optional="false" type="ObjectKnowledge"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_AffecterPionAObstacle" id="368" name="Assign obstacle work to subordinate">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_AffecterPionAObstacle" id="369" name="Assign obstacle work to subordinate">
       <parameter dia-name="pion_" name="Subordinate" optional="false" type="Agent"/>
       <parameter dia-name="obstacle_" name="Obstacle" optional="false" type="GenObject"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_ReconnaitreZoneImplantation" id="369" name="Reconnoiter Deployment area">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_ReconnaitreZoneImplantation" id="370" name="Reconnoiter Deployment area">
       <parameter dia-name="orderConduiteAutomateReconnaitreZoneImplantation_" name="Deployment area" optional="false" type="Point"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement" id="370" name="Logistic - Manage remaining tasks before moving">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement" id="371" name="Logistic - Manage remaining tasks before moving">
       <parameter dia-name="orderConduiteAutomateTc2GererMaterielAvantDeplacement_" name="Action type" optional="false" type="Enumeration">
         <value id="0" name="send equipments"/>
         <value id="1" name="destroy equipments"/>
         <value id="2" name="fix equipments"/>
       </parameter>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_ActiverObstacle" id="371" name="Activate this obstacle">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_ActiverObstacle" id="372" name="Activate this obstacle">
       <parameter dia-name="orderConduiteAutomateActiverObstacle_" name="obstacle" optional="false" type="ObjectKnowledge"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_TransfererRenforts" id="372" name="Send reinforcments">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_TransfererRenforts" id="373" name="Send reinforcments">
       <parameter dia-name="pionATransferer_" name="Reinforcements" optional="false" type="Agent"/>
       <parameter dia-name="automateARenforcer_" name="Beneficiary" optional="false" type="Automate"/>
     </fragorder>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_Population_ChangerAttitude" id="373" name="Population - Change attitude">
+    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_Population_ChangerAttitude" id="374" name="Population - Change attitude">
       <parameter dia-name="orderConduitePopulationChangerAttitude_" name="New attitude" optional="false" type="Enumeration">
         <value id="0" name="quiet"/>
         <value id="1" name="turbulent"/>

@@ -4349,6 +4349,7 @@
         <mission name="ABC GTIA DonnerCoupArret">
           <fragorder name="Decrocher"/>
         </mission>
+        <mission name="ABC GTIA Reconnaitre"/>
       </missions>
     </automat>
   </automats>
