@@ -101,7 +101,7 @@ void AfterAction::CreateAfterActionDock( QMainWindow* window, kernel::Controller
     connect( list, SIGNAL( CreateRequest( const AfterActionFunction* ) ), SLOT( OnCreateRequest( const AfterActionFunction* ) ) );
     functionsTab_->addTab( list, tr( "Functions" ) );
 
-    AfterActionRequestList* requests = new AfterActionRequestList( functionsTab_, controllers, factory );
+    AfterActionRequestList* requests = new AfterActionRequestList( functionsTab_, window, controllers, factory );
     functionsTab_->addTab( requests, tr( "Requests" ) );
 
     aar->setResizeEnabled( true );

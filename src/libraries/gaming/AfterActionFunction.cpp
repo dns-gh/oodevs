@@ -72,7 +72,7 @@ void AfterActionFunction::CreateItem( const std::string& type, xml::xistream& xi
     const std::string functionName = xml::attribute( xis, "function", type );
     const std::string id           = xml::attribute( xis, "id", type );
     AfterActionFactory& function = factories.Get( functionName.c_str() );
-    ItemResolver::Register( id, *function.Create( *this ).release() );
+    ItemResolver::Register( id, *function.Create( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,4 +136,13 @@ Iterator< const AfterActionParameter& > AfterActionFunction::CreateParameterIter
 kernel::Iterator< const AfterActionItem_ABC& > AfterActionFunction::CreateItemIterator() const
 {
     return ItemResolver::CreateIterator();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunction::Add
+// Created: AGE 2007-09-25
+// -----------------------------------------------------------------------------
+void AfterActionFunction::Add( AfterActionItem_ABC* item )
+{
+    // $$$$ AGE 2007-09-25: 
 }

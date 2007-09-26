@@ -19,6 +19,7 @@ namespace kernel
 }
 
 class AfterActionRequest;
+class AfterActionPlot;
 
 // =============================================================================
 /** @class  AfterActionRequestList
@@ -35,7 +36,7 @@ class AfterActionRequestList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionRequestList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             AfterActionRequestList( QWidget* parent, QMainWindow* mainWindow, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~AfterActionRequestList();
     //@}
 
@@ -57,11 +58,13 @@ private:
     virtual void NotifyCreated( const AfterActionRequest& request );
     virtual void NotifyUpdated( const AfterActionRequest& request );
     void Display( const AfterActionRequest& request, gui::ValuedListItem* item );
+    AfterActionPlot* CreateNewPlot();
     //@}
 
 private:
     //! @name Member data
     //@{
+    QMainWindow* mainWindow_;
     kernel::Controllers& controllers_;
     gui::ItemFactory_ABC& factory_;
     gui::ListDisplayer< AfterActionRequestList >* requests_;

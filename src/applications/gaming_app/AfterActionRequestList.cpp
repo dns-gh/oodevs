@@ -15,6 +15,7 @@
 #include "clients_gui/resources.h"
 #include "clients_gui/ListItemToolTip.h"
 #include "gaming/AfterActionRequest.h"
+#include "AfterActionPlot.h"
 
 using namespace kernel;
 using namespace gui;
@@ -23,13 +24,14 @@ using namespace gui;
 // Name: AfterActionRequestList constructor
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-AfterActionRequestList::AfterActionRequestList( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory )
+AfterActionRequestList::AfterActionRequestList( QWidget* parent, QMainWindow* mainWindow, Controllers& controllers, ItemFactory_ABC& factory )
     : QVBox( parent )
+    , mainWindow_( mainWindow )
     , controllers_( controllers )
     , factory_( factory )
-    , pendingPixmap_( MAKE_PIXMAP( autolog ) ) // $$$$ AGE 2007-09-25: 
+    , pendingPixmap_( MAKE_PIXMAP( autolog ) ) // $$$$ AGE 2007-09-25:
     , donePixmap_   ( MAKE_PIXMAP( check ) )
-    , failedPixmap_ ( MAKE_PIXMAP( conflict ) ) // $$$$ AGE 2007-09-25: 
+    , failedPixmap_ ( MAKE_PIXMAP( conflict ) ) // $$$$ AGE 2007-09-25:
 {
     requests_ = new gui::ListDisplayer< AfterActionRequestList >( this, *this, factory );
     requests_->AddColumn( tr( "Request" ) );
@@ -54,9 +56,37 @@ AfterActionRequestList::~AfterActionRequestList()
 // Name: AfterActionRequestList::OnDoubleClicked
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterActionRequestList::OnDoubleClicked( QListViewItem * )
+void AfterActionRequestList::OnDoubleClicked( QListViewItem * i )
 {
+    ValuedListItem* item = static_cast< ValuedListItem* >( i );
+    if( item )
+    {
+        const AfterActionRequest* request = item->GetValue< const AfterActionRequest >();
+        if( request && request->IsDone() )
+        {
+            AfterActionPlot* plot = CreateNewPlot();
+            plot->Add( *request );
+        }
+    }
+}
 
+// -----------------------------------------------------------------------------
+// Name: AfterActionRequestList::CreateNewPlot
+// Created: AGE 2007-09-26
+// -----------------------------------------------------------------------------
+AfterActionPlot* AfterActionRequestList::CreateNewPlot()
+{
+    QDockWindow* plotDock = new QDockWindow( mainWindow_, "plot", WDestructiveClose );
+    QVBox* box = new QVBox( plotDock );
+    AfterActionPlot* plot = new AfterActionPlot( box, plotDock );
+    plotDock->setWidget( box );
+    plotDock->setResizeEnabled( true );
+    plotDock->setCloseMode( QDockWindow::Always );
+    plotDock->setCaption( tr( "Plot" ) );
+    plotDock->undock();
+    mainWindow_->setAppropriate( plotDock, false );
+    box->show();
+    return plot;
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +97,6 @@ void AfterActionRequestList::NotifyCreated( const AfterActionRequest& request )
 {
     ValuedListItem* item = factory_.CreateItem( requests_ );
     Display( request, item );
-    
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +119,7 @@ void AfterActionRequestList::Display( const AfterActionRequest& request, gui::Va
     item->SetNamed( request );
     item->setPixmap( 1, request.IsPending() ? pendingPixmap_ :
                         request.IsDone() ? donePixmap_ :
-                        request.IsFailed() ? failedPixmap_ : 
+                        request.IsFailed() ? failedPixmap_ :
                         QPixmap() );
     item->SetToolTip( request.ErrorMessage() );
 }

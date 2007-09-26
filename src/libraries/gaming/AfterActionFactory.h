@@ -38,7 +38,7 @@ public:
     //@{
     const QString& GetName() const;
     const QString& GetType() const;
-    std::auto_ptr< AfterActionItem_ABC > Create( AfterActionFunction& function ) const;
+    AfterActionItem_ABC* Create( AfterActionFunction& function ) const;
     //@}
 
 private:

@@ -45,6 +45,8 @@ public:
 
     kernel::Iterator< const AfterActionParameter& > CreateParameterIterator() const;
     kernel::Iterator< const AfterActionItem_ABC& >  CreateItemIterator() const;
+
+    void Add( AfterActionItem_ABC* item );
     //@}
 
 private:

@@ -28,6 +28,11 @@ class Publisher_ABC;
 // =============================================================================
 class AfterActionRequest
 {
+public:
+    //! @name Types
+    //@{
+    typedef std::vector< double > T_Data;
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -45,6 +50,7 @@ public:
     bool IsFailed() const;
 
     QString ErrorMessage() const;
+    const T_Data& Result() const;
     //@}
 
 private:
@@ -52,11 +58,6 @@ private:
     //@{
     AfterActionRequest( const AfterActionRequest& );            //!< Copy constructor
     AfterActionRequest& operator=( const AfterActionRequest& ); //!< Assignment operator
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< double > T_Data;
     //@}
 
 private:

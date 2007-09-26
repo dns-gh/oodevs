@@ -97,3 +97,12 @@ QString AfterActionRequest::ErrorMessage() const
 {
     return QString( error_.c_str() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionRequest::Result
+// Created: AGE 2007-09-26
+// -----------------------------------------------------------------------------
+const AfterActionRequest::T_Data& AfterActionRequest::Result() const
+{
+    return result_;
+}

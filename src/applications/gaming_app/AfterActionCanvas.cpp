@@ -75,9 +75,8 @@ void AfterActionCanvas::dropEvent( QDropEvent* event )
         const AfterActionFactory* factory = *reinterpret_cast< const AfterActionFactory** >( bytes.data() );
         if( factory )
         {
-            std::auto_ptr< AfterActionItem_ABC > modelItem = factory->Create( *function_ );
-            // $$$$ AGE 2007-09-24: ram
-            AfterActionCanvasItem* item = new AfterActionCanvasItem( canvas(), palette(), *modelItem.release(), event->pos() );
+            AfterActionItem_ABC* modelItem = factory->Create( *function_ );
+            AfterActionCanvasItem* item = new AfterActionCanvasItem( canvas(), palette(), *modelItem, event->pos() );
             items_.push_back( item );
             canvas()->update();
         }

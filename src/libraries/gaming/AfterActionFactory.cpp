@@ -56,7 +56,9 @@ const QString& AfterActionFactory::GetName() const
 // Name: std::auto_ptr< AfterActionItem_ABC > AfterActionFactory::Create
 // Created: AGE 2007-09-19
 // -----------------------------------------------------------------------------
-std::auto_ptr< AfterActionItem_ABC > AfterActionFactory::Create( AfterActionFunction& function ) const
+AfterActionItem_ABC* AfterActionFactory::Create( AfterActionFunction& function ) const
 {
-    return std::auto_ptr< AfterActionItem_ABC >( new AfterActionItem( *this, function ) );
+    AfterActionItem_ABC* result = new AfterActionItem( *this, function );
+    function.Add( result );
+    return result;
 }
