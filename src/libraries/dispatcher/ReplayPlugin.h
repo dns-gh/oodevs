@@ -23,6 +23,7 @@ namespace tools
 namespace dispatcher
 {
     class Loader;
+    class Model;
 
 // =============================================================================
 /** @class  ReplayPlugin
@@ -37,7 +38,7 @@ class ReplayPlugin : public Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayPlugin( ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands, Loader& loader );
+             ReplayPlugin( Model& model, ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands, Loader& loader );
     virtual ~ReplayPlugin();
     //@}
 
@@ -70,6 +71,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Model& model_;
     ClientPublisher_ABC& clients_;
     Loader& loader_;
 

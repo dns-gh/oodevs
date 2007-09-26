@@ -72,11 +72,12 @@ void ClientsNetworker::ConnectionSucceeded( const std::string& link  )
 void ClientsNetworker::ConnectionError( const std::string& link , const std::string& reason )
 {
     ServerNetworker::ConnectionError( link, reason );
-    Client* client = clients_[ link ];
-    if( client )
+    T_Clients::iterator it = clients_.find( link );
+    if( it != clients_.end() && it->second )
     {
-        plugin_.NotifyClientLeft( *client );
-        clients_.erase( link );
+        Client* client = it->second;
+        plugin_.NotifyClientLeft( *client);
+        clients_.erase( it );
         delete client;
     }
 }
@@ -140,8 +141,8 @@ Profile_ABC& ClientsNetworker::GetProfile( const std::string& )
 // -----------------------------------------------------------------------------
 ClientPublisher_ABC& ClientsNetworker::GetPublisher( const std::string& link )
 {
-    Client* client = clients_[ link ];
-    if( ! client )
+    CIT_Clients it = clients_.find( link );
+    if( it == clients_.end() || !it->second )
         throw std::runtime_error( link + " is not a valid client" );
-    return *client;
+    return *it->second;
 }

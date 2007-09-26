@@ -13,6 +13,7 @@
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/FourStateOption.h"
 #include "ASN_Messages.h"
+#include "Simulation.h"
 
 using namespace kernel;
 
@@ -26,6 +27,7 @@ VisionConesToggler::VisionConesToggler( Controllers& controllers, Publisher_ABC&
     , publisher_( publisher )
     , displayCones_   ( false )
     , displaySurfaces_( false )
+    , replay_         ( false )
 {
     controllers_.Register( *this );
 }
@@ -66,12 +68,24 @@ void VisionConesToggler::NotifyUpdated( const Profile_ABC& )
 }
 
 // -----------------------------------------------------------------------------
+// Name: VisionConesToggler::NotifyUpdated
+// Created: AGE 2007-09-26
+// -----------------------------------------------------------------------------
+void VisionConesToggler::NotifyUpdated( const Simulation& simulation)
+{
+    replay_ = ( simulation.GetTickCount() != unsigned( -1 ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: VisionConesToggler::ToggleVisionCones
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
 void VisionConesToggler::ToggleVisionCones()
 {
-    ASN_MsgControlToggleVisionCones msg;
-    msg() = displayCones_ || displaySurfaces_;
-    msg.Send( publisher_ );
+    if( ! replay_ )
+    {
+        ASN_MsgControlToggleVisionCones msg;
+        msg() = displayCones_ || displaySurfaces_;
+        msg.Send( publisher_ );
+    }
 }

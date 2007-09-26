@@ -50,15 +50,13 @@ Replayer::Replayer( const Config& config, const std::string& records )
     , clientsNetworker_( new ClientsNetworker( config, handler_ ) )
     , simulation_      ( CreateSimulation( *clientsNetworker_, *model_, handler_ ) )
     , loader_          ( new Loader( *simulation_, handler_, config, records ) )
-    , plugin_          ( new ReplayPlugin( *clientsNetworker_, *clientsNetworker_, *loader_ ) )
+    , plugin_          ( new ReplayPlugin( *model_, *clientsNetworker_, *clientsNetworker_, *loader_ ) )
 {
     handler_.AddHandler( clientsNetworker_ );
 
     // $$$$ AGE 2007-08-27: utiliser la PluginFactory => replay ESRI
     RightsPlugin* rights = new RightsPlugin( *model_, *clientsNetworker_, config, *clientsNetworker_, handler_, *clientsNetworker_ );
     handler_.Add( rights  );
-    static NoopSimulationPublisher simu;
-    handler_.Add( new DispatcherPlugin( *model_, simu, *clientsNetworker_, *rights ) );
     handler_.Add( plugin_ );
     handler_.Add( new AarPlugin( *clientsNetworker_, *rights, config, records ) );
     loader_->Start();

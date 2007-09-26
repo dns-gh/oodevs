@@ -86,8 +86,15 @@ void ServerNetworker::AllowConnections()
 // -----------------------------------------------------------------------------
 void ServerNetworker::Update()
 {
-    connectionBuffer_->Commit( *this );
-    messageBuffer_->Commit( *messageService_ );
+    try
+    {
+        connectionBuffer_->Commit( *this );
+        messageBuffer_->Commit( *messageService_ );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Receiving message : " << e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------

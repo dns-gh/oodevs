@@ -15,6 +15,7 @@
 #include "game_asn/Asn.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include "tools/MessageDispatcher_ABC.h"
+#include "Model.h"
 
 using namespace dispatcher;
 
@@ -22,8 +23,9 @@ using namespace dispatcher;
 // Name: ReplayPlugin constructor
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-ReplayPlugin::ReplayPlugin( ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands, Loader& loader )
-    : clients_    ( clients )
+ReplayPlugin::ReplayPlugin( Model& model, ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands, Loader& loader )
+    : model_      ( model )
+    , clients_    ( clients )
     , loader_     ( loader )
     , factor_     ( 1 )
     , running_    ( false )
@@ -72,6 +74,8 @@ void ReplayPlugin::Receive( const ASN1T_MsgsSimToClient& )
 // -----------------------------------------------------------------------------
 void ReplayPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& )
 {
+    model_.Send( client );
+
     AsnMsgReplayToClientControlReplayInformation asn;
     asn().current_tick  = loader_.GetCurrentTick();
     asn().tick_duration = 10; // $$$$ AGE 2007-04-11: 

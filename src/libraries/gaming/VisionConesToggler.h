@@ -20,6 +20,7 @@ namespace kernel
     class OptionVariant;
 }
 class Publisher_ABC;
+class Simulation;
 
 // =============================================================================
 /** @class  VisionConesToggler
@@ -31,6 +32,7 @@ class VisionConesToggler : public QObject
                          , public kernel::Observer_ABC
                          , public kernel::OptionsObserver_ABC
                          , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
+                         , public kernel::ElementObserver_ABC< Simulation >
 {
 
 public:
@@ -49,6 +51,7 @@ protected:
     //@{
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     virtual void NotifyUpdated( const kernel::Profile_ABC& );
+    virtual void NotifyUpdated( const Simulation& );
     //@}
 
 private:
@@ -69,6 +72,7 @@ private:
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
     bool displayCones_, displaySurfaces_;
+    bool replay_;
     //@}
 };
 
