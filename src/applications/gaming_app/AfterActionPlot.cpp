@@ -29,6 +29,7 @@ AfterActionPlot::AfterActionPlot( QWidget* parent, Controllers& controllers, Pub
     , min_( 0 )
     , max_( -std::numeric_limits< double >::infinity() )
 {
+    setAcceptDrops( true );
     YAxis().ShowAxis( true );
     YAxis().ShowGrid( true );
     YAxis().SetAxisCaption( tr( "Value" ).ascii() );
@@ -43,8 +44,8 @@ AfterActionPlot::AfterActionPlot( QWidget* parent, Controllers& controllers, Pub
     XAxis().SetAxisCaption( tr( "Time (Tick)" ).ascii() );
 
     SetBackgroundColor( Qt::white );
-    setMinimumHeight( 320 );
-    setMinimumWidth( 200 );
+    setMinimumWidth( 320 );
+    setMinimumHeight( 200 );
 
     controllers_.Register( *this );
 }
@@ -70,6 +71,7 @@ AfterActionPlot::~AfterActionPlot()
 void AfterActionPlot::Add( const AfterActionRequest& request )
 {
     GQ_PlotData* data = new GQ_PlotData( datas_.size()+1, *this );
+    data->SetLinePen( GetPlotColor( datas_.size() ) );
 
     for( unsigned i = 0; i < request.Result().size(); ++i )
     {
@@ -125,4 +127,47 @@ void AfterActionPlot::NotifyUpdated( const Simulation& simulation )
     tickData_->ClearData();
     tickData_->AddPoint( simulation.GetCurrentTick(), min_       );
     tickData_->AddPoint( simulation.GetCurrentTick(), max_ * 1.1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionPlot::dragEnterEvent
+// Created: AGE 2007-09-27
+// -----------------------------------------------------------------------------
+void AfterActionPlot::dragEnterEvent( QDragEnterEvent* e )
+{
+    e->accept( e->provides( "AfterActionRequest" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionPlot::dropEvent
+// Created: AGE 2007-09-27
+// -----------------------------------------------------------------------------
+void AfterActionPlot::dropEvent( QDropEvent* e )
+{
+    if( !e->provides( "AfterActionRequest" ) )
+         return;
+
+    QByteArray tmp = e->encodedData( "AfterActionRequest" );
+    const AfterActionRequest* request = *reinterpret_cast< const AfterActionRequest** >( tmp.data() );
+    if( request )
+        Add( *request );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionPlot::GetPlotColor
+// Created: AGE 2007-09-27
+// -----------------------------------------------------------------------------
+QColor AfterActionPlot::GetPlotColor( unsigned i )
+{
+    switch( i % 7 )
+    {
+    default:
+    case 0: return Qt::black;
+    case 1: return Qt::green;
+    case 2: return Qt::blue;
+    case 3: return Qt::cyan;
+    case 4: return Qt::magenta;
+    case 5: return Qt::yellow;
+    case 6: return Qt::darkYellow;
+    }
 }

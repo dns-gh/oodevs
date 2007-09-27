@@ -55,7 +55,10 @@ private:
     //@{
     virtual void hideEvent( QHideEvent* event );
     virtual void mouseReleaseEvent( QMouseEvent* e );
+    virtual void dragEnterEvent( QDragEnterEvent* e );
+    virtual void dropEvent( QDropEvent* e );
     virtual void NotifyUpdated( const Simulation& simulation );
+    static QColor GetPlotColor( unsigned i );
     //@}
 
     //! @name Types

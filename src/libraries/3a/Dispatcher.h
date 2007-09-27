@@ -41,13 +41,17 @@ public:
     //@{
     explicit Dispatcher( const FunctionFactory& factory = FunctionFactory(), const KeyValue& keyValue = KeyValue() )
                 : factory_( factory )
-                , keyValue_( keyValue ) {}
+                , keyValue_( keyValue )
+                , frameWasEnded_( false ) {}
     //@}
 
     //! @name Operations
     //@{
     virtual void BeginTick()
     {
+        if( ! frameWasEnded_ )
+            EndTick();
+        frameWasEnded_ = false;
         for( IT_Functions it = dispatched_.begin(); it != dispatched_.end(); ++it )
             it->second->BeginTick();
     }
@@ -58,6 +62,7 @@ public:
     };
     virtual void EndTick()
     {
+        frameWasEnded_ = true;
         for( IT_Functions it = dispatched_.begin(); it != dispatched_.end(); ++it )
             it->second->EndTick();
     }
@@ -106,6 +111,7 @@ private:
     FunctionFactory factory_;
     KeyValue        keyValue_;
     T_Functions     dispatched_;
+    bool            frameWasEnded_;
     //@}
 };
 

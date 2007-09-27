@@ -20,6 +20,30 @@
 using namespace kernel;
 using namespace gui;
 
+namespace
+{
+    // $$$$ AGE 2007-09-27: 
+    class MyList : public ListDisplayer< AfterActionRequestList >
+    {
+    public:
+        MyList( AfterActionRequestList* parent, ItemFactory_ABC& factory )
+            : ListDisplayer< AfterActionRequestList >( parent, *parent, factory )
+        {}
+        virtual QDragObject* dragObject()
+        {
+            ValuedListItem* item = (ValuedListItem*)selectedItem();
+            if( !item ) return 0;
+            const AfterActionRequest* request = item->GetValue< const AfterActionRequest >();
+
+            QByteArray* pBytes = new QByteArray();
+            pBytes->setRawData( (const char*)&request, sizeof( const AfterActionRequest* ) );
+            QStoredDrag* data = new QStoredDrag( "AfterActionRequest", this );
+            data->setEncodedData( *pBytes );
+            return data;
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: AfterActionRequestList constructor
 // Created: AGE 2007-09-25
@@ -34,7 +58,7 @@ AfterActionRequestList::AfterActionRequestList( QWidget* parent, QMainWindow* ma
     , donePixmap_   ( MAKE_PIXMAP( check ) )
     , failedPixmap_ ( MAKE_PIXMAP( conflict ) ) // $$$$ AGE 2007-09-25:
 {
-    requests_ = new gui::ListDisplayer< AfterActionRequestList >( this, *this, factory );
+    requests_ = new MyList( this, factory );
     requests_->AddColumn( tr( "Request" ) );
     requests_->AddColumn( tr( "Status" ) );
     new ListItemToolTip( requests_->viewport(), *requests_ );
@@ -123,4 +147,5 @@ void AfterActionRequestList::Display( const AfterActionRequest& request, gui::Va
                         request.IsFailed() ? failedPixmap_ :
                         QPixmap() );
     item->SetToolTip( request.ErrorMessage() );
+    item->setDragEnabled( request.IsDone() );
 }

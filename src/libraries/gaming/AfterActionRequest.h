@@ -65,6 +65,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const AfterActionFunction& function_;
+    bool done_;
     T_Data result_;
     std::string error_;
     //@}

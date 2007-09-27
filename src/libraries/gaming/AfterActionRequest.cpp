@@ -20,6 +20,7 @@
 AfterActionRequest::AfterActionRequest( kernel::Controller& controller, const AfterActionFunction& function, Publisher_ABC& publisher )
     : controller_( controller )
     , function_( function )
+    , done_( false )
 {
     ASN_MsgIndicatorRequest request;
     const std::string xmlRequest = function.Commit();
@@ -46,6 +47,7 @@ void AfterActionRequest::Update( const ASN1T_MsgIndicatorResult& message )
 {
     if( message.identifier == reinterpret_cast< int >( this ) )
     {
+        done_ = true;
         result_.resize( message.values.n );
         std::copy( message.values.elem, message.values.elem + message.values.n, result_.begin() );
         error_ = message.error;
@@ -68,7 +70,7 @@ QString AfterActionRequest::GetName() const
 // -----------------------------------------------------------------------------
 bool AfterActionRequest::IsPending() const
 {
-    return result_.empty() && error_.empty();
+    return !done_;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +79,7 @@ bool AfterActionRequest::IsPending() const
 // -----------------------------------------------------------------------------
 bool AfterActionRequest::IsDone() const
 {
-    return !result_.empty();
+    return done_ && !result_.empty();
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +88,7 @@ bool AfterActionRequest::IsDone() const
 // -----------------------------------------------------------------------------
 bool AfterActionRequest::IsFailed() const
 {
-    return !error_.empty();
+    return done_ && result_.empty();
 }
 
 // -----------------------------------------------------------------------------
