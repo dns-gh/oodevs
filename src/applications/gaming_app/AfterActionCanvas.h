@@ -12,7 +12,7 @@
 
 #include <qcanvas.h>
 
-class AfterActionItem;
+class AfterActionItem_ABC;
 class AfterActionFunction;
 class AfterActionCanvasItem;
 class AfterActionCanvasConnection;
@@ -37,6 +37,7 @@ public:
     //! @name Operations
     //@{
     void Edit( const AfterActionFunction* function );
+    AfterActionCanvasItem* Resolve( AfterActionItem_ABC* item ) const;
     //@}
 
 private slots:
@@ -68,6 +69,8 @@ private:
     void Connect( QMouseEvent* event );
     void Move( QMouseEvent* event );
     void DeleteSelected();
+
+    void Add( AfterActionItem_ABC& i, const QPoint& position = QPoint() );
     //@}
 
     //! @name Types

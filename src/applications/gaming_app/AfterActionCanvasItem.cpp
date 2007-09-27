@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "AfterActionCanvasItem.h"
 #include "AfterActionCanvasConnection.h"
+#include "AfterActionCanvas.h"
 #include "gaming/AfterActionItem_ABC.h"
 #include <boost/bind.hpp>
 #include <qpainter.h>
@@ -22,9 +23,9 @@
 // Name: AfterActionCanvasItem constructor
 // Created: AGE 2007-09-18
 // -----------------------------------------------------------------------------
-AfterActionCanvasItem::AfterActionCanvasItem( QCanvas* canvas, const QPalette& palette, AfterActionItem_ABC& item, const QPoint& pos )
-    : QCanvasRectangle( QRect( pos, QSize( 80, 30 ) ), canvas )
-    , palette_        ( palette )
+AfterActionCanvasItem::AfterActionCanvasItem( AfterActionCanvas& canvas, AfterActionItem_ABC& item, const QPoint& pos )
+    : QCanvasRectangle( QRect( pos, QSize( 80, 30 ) ), canvas.canvas() )
+    , canvas_         ( canvas )
     , item_           ( item )
     , output_         ( 0 )
 {
@@ -56,10 +57,10 @@ AfterActionCanvasItem::~AfterActionCanvasItem()
 AfterActionCanvasConnection* AfterActionCanvasItem::StartConnection( const QPoint& point )
 {
     if( IsOnOutput( point ) )
-        return new AfterActionCanvasConnection( palette_, this, x() + 84, y() + 15 );
+        return new AfterActionCanvasConnection( canvas_.palette(), this, x() + 84, y() + 15 );
     for( int i = 0; i < inputs_.size(); ++i )
         if( IsOnInput( i, point ) && item_.CanConnect( i ) )
-            return new AfterActionCanvasConnection( palette_, this, i, x() - 4, y() + InputPosition( i ) );
+            return new AfterActionCanvasConnection( canvas_.palette(), this, i, x() - 4, y() + InputPosition( i ) );
     return 0;
 }
 
@@ -101,11 +102,12 @@ void AfterActionCanvasItem::Remove( AfterActionCanvasConnection* connection )
 // Name: AfterActionCanvasItem::Connect
 // Created: AGE 2007-09-21
 // -----------------------------------------------------------------------------
-bool AfterActionCanvasItem::Connect( AfterActionCanvasConnection& connection, AfterActionCanvasItem* from, AfterActionCanvasItem* to, int i )
+bool AfterActionCanvasItem::Connect( AfterActionCanvasConnection& connection, AfterActionCanvasItem* from, AfterActionCanvasItem* to, int i, bool alreadyConnected /*= false*/ )
 {
-    if( from && to && to->item_.CanConnect( i, & from->item_ ) )
+    if( from && to && ( alreadyConnected || to->item_.CanConnect( i, & from->item_ ) ) )
     {
-        to->item_.Connect( i, from->item_ );
+        if( ! alreadyConnected )
+            to->item_.Connect( i, from->item_ );
         from->connections_.push_back( &connection );
         to  ->connections_.push_back( &connection );
         connection.Close( from, to, i, from->x() + 84, from->y() + 15,
@@ -182,7 +184,7 @@ QRect AfterActionCanvasItem::boundingRect() const
 void AfterActionCanvasItem::drawShape( QPainter& p )
 {
     const QPalette::ColorGroup colorGroup = isEnabled() ? ( isSelected() ? QPalette::Active : QPalette::Inactive ) : QPalette::Disabled;
-    p.setPen( palette_.color( colorGroup, QColorGroup::Foreground ) );
+    p.setPen( canvas_.palette().color( colorGroup, QColorGroup::Foreground ) );
     QCanvasRectangle::drawShape( p );
 }
 
@@ -258,5 +260,54 @@ void AfterActionCanvasItem::AddOutput( const std::string& type )
 // -----------------------------------------------------------------------------
 void AfterActionCanvasItem::AddParameter( const std::string& type, const std::string& name )
 {
+    // $$$$ AGE 2007-09-27: TODO
+}
 
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvasItem::Connect
+// Created: AGE 2007-09-27
+// -----------------------------------------------------------------------------
+void AfterActionCanvasItem::Connect( AfterActionItem_ABC* target, int targetSlot )
+{
+    // $$$$ AGE 2007-09-27: ...
+    if( ! isEnabled() )
+        return;
+    AfterActionCanvasConnection* connection = new AfterActionCanvasConnection( canvas_.palette(), this, x() + 84, y() + 15 );
+    Connect( *connection, this, canvas_.Resolve( target ), targetSlot, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvasItem::Holds
+// Created: AGE 2007-09-27
+// -----------------------------------------------------------------------------
+bool AfterActionCanvasItem::Holds( AfterActionItem_ABC* item ) const
+{
+    return item == &item_;
+}
+
+namespace
+{
+    struct Connector : public AfterActionBuilder_ABC
+    {
+        Connector( AfterActionBuilder_ABC& next ) : next_( &next ) {}
+        virtual void Start( const std::string& ){};
+        virtual void AddInput( const std::string& ){};
+        virtual void AddOutput( const std::string& ){};
+        virtual void AddParameter( const std::string& , const std::string& ){};
+        virtual void Connect( AfterActionItem_ABC* target, int targetSlot )
+        {
+            next_->Connect( target, targetSlot );
+        }
+        AfterActionBuilder_ABC* next_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvasItem::Reconnect
+// Created: AGE 2007-09-27
+// -----------------------------------------------------------------------------
+void AfterActionCanvasItem::Reconnect()
+{
+    Connector connector( *this );
+    item_.Build( connector );
 }

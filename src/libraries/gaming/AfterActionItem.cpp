@@ -87,6 +87,8 @@ void AfterActionItem::Build( AfterActionBuilder_ABC& builder ) const
         builder.AddOutput( output_ );
     if( ! parameterName_.empty() )
         builder.AddParameter( parameterType_, parameterName_ );
+    for( CIT_OutgoingConnections it = outputConnections_.begin(); it != outputConnections_.end(); ++it )
+        builder.Connect( it->first, it->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +103,12 @@ void AfterActionItem::Connect( xml::xistream& xis, Resolver_ABC< AfterActionItem
         T_Inputs split;
         ba::split( split, input, ba::is_any_of( "," ) );
         for( unsigned i = 0; i < split.size(); ++i )
-            inputConnections_.at( i ) = & items.Get( split.at( i ) );
+        {
+            AfterActionItem_ABC* target = & items.Get( split.at( i ) );
+            inputConnections_.at( i ) = target;
+            // $$$$ AGE 2007-09-27: 
+            static_cast< AfterActionItem *>( target )->outputConnections_.push_back( T_OutgoingConnection( this, i ) );
+        }
     }
     if( ! parameterName_.empty() && parameters_ )
         parameter_ = &parameters_->Get( xml::attribute< std::string >( xis, parameterName_ ) );

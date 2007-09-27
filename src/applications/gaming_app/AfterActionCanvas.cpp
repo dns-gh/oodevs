@@ -15,6 +15,7 @@
 #include "gaming/AfterActionItem_ABC.h"
 #include "gaming/AfterActionFactory.h"
 #include "gaming/AfterActionFunction.h"
+#include <boost/bind.hpp>
 
 using namespace kernel;
 
@@ -75,9 +76,7 @@ void AfterActionCanvas::dropEvent( QDropEvent* event )
         const AfterActionFactory* factory = *reinterpret_cast< const AfterActionFactory** >( bytes.data() );
         if( factory )
         {
-            AfterActionItem_ABC* modelItem = factory->Create( *function_ );
-            AfterActionCanvasItem* item = new AfterActionCanvasItem( canvas(), palette(), *modelItem, event->pos() );
-            items_.push_back( item );
+            Add( *factory->Create( *function_), event->pos() );
             canvas()->update();
         }
     }
@@ -275,13 +274,29 @@ void AfterActionCanvas::Edit( const AfterActionFunction* function )
     {
         Iterator< const AfterActionItem_ABC& > it = function_->CreateItemIterator();
         while( it.HasMoreElements() )
-        {
-            // $$$$ AGE 2007-09-24: 
-            AfterActionItem_ABC& item = const_cast< AfterActionItem_ABC& >( it.NextElement() );
-            // $$$$ AGE 2007-09-24: position
-            AfterActionCanvasItem* pItem = new AfterActionCanvasItem( canvas(), palette(), item, QPoint( 100, 100 ) );
-            items_.push_back( pItem );
-        }
+            Add( const_cast< AfterActionItem_ABC& >( it.NextElement() ) );
+        std::for_each( items_.begin(), items_.end(), boost::bind( &AfterActionCanvasItem::Reconnect, _1 ) );
     }
     canvas()->update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvas::Add
+// Created: AGE 2007-09-27
+// -----------------------------------------------------------------------------
+void AfterActionCanvas::Add( AfterActionItem_ABC& item, const QPoint& p /*= QPoint()*/ )
+{
+    QPoint position = p.isNull() ? QPoint( 100, 100 ) : p;
+    AfterActionCanvasItem* pItem = new AfterActionCanvasItem( *this, item, position );
+    items_.push_back( pItem );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvas::Resolve
+// Created: AGE 2007-09-27
+// -----------------------------------------------------------------------------
+AfterActionCanvasItem* AfterActionCanvas::Resolve( AfterActionItem_ABC* item ) const
+{
+    T_Items::const_iterator it = std::find_if( items_.begin(), items_.end(), boost::bind( &AfterActionCanvasItem::Holds, _1, item ) );
+    return it != items_.end() ? *it : 0;
 }

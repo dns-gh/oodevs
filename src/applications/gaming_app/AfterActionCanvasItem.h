@@ -15,6 +15,7 @@
 
 class AfterActionItem_ABC;
 class AfterActionCanvasConnection;
+class AfterActionCanvas;
 
 // =============================================================================
 /** @class  AfterActionCanvasItem
@@ -29,15 +30,17 @@ class AfterActionCanvasItem : public QCanvasRectangle
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionCanvasItem( QCanvas* canvas, const QPalette& palette, AfterActionItem_ABC& item, const QPoint& pos );
+             AfterActionCanvasItem( AfterActionCanvas& canvas, AfterActionItem_ABC& item, const QPoint& pos );
     virtual ~AfterActionCanvasItem();
     //@}
 
     //! @name Operations
     //@{
+    void Reconnect();
     AfterActionCanvasConnection* StartConnection( const QPoint& point );
     bool EndConnection( AfterActionCanvasConnection& connection, const QPoint& point );
     void Remove( AfterActionCanvasConnection* connection );
+    bool Holds( AfterActionItem_ABC* item ) const;
 
     virtual QRect boundingRect() const;
     virtual void setSelected( bool yes );
@@ -59,7 +62,8 @@ private:
     virtual void AddInput( const std::string& type );
     virtual void AddOutput( const std::string& type );
     virtual void AddParameter( const std::string& type, const std::string& name );
-    
+    virtual void Connect( AfterActionItem_ABC* target, int targetSlot );
+
     void Polish( QCanvasItem* subItem, double x, double y );
     void SpreadInputs();
 
@@ -67,7 +71,7 @@ private:
     bool IsOnInput ( int i, const QPoint& point ) const;
     double InputPosition( int i ) const;
 
-    static bool Connect( AfterActionCanvasConnection& connection, AfterActionCanvasItem* from, AfterActionCanvasItem* to, int i );
+    static bool Connect( AfterActionCanvasConnection& connection, AfterActionCanvasItem* from, AfterActionCanvasItem* to, int i, bool alreadyConnected = false );
     //@}
 
     //! @name Types
@@ -81,7 +85,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const QPalette& palette_;
+    const AfterActionCanvas& canvas_;
     AfterActionItem_ABC& item_;
     T_Items subItems_;
     T_Items inputs_;
