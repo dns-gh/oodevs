@@ -57,6 +57,7 @@ private:
     virtual void mouseReleaseEvent( QMouseEvent* e );
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void resizeEvent( QResizeEvent* e );
+    void UpdateAxis();
     //@}
 
     //! @name Types

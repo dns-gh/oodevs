@@ -139,5 +139,5 @@ void AfterActionPlot::NotifyUpdated( const Simulation& simulation )
 // -----------------------------------------------------------------------------
 void AfterActionPlot::UpdateAxis()
 {
-
+    
 }
