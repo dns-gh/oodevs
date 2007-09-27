@@ -7,63 +7,63 @@
 //
 // *****************************************************************************
 
-#ifndef __ObjectListener_h_
-#define __ObjectListener_h_
+#ifndef __Row_h_
+#define __Row_h_
 
-#include "Listener_ABC.h"
-
-namespace dispatcher
-{
-    class SimulationPublisher_ABC;
-}
+#include "FieldVariant.h"
+#include "Row_ABC.h"
+#include "ESRI.h"
 
 namespace crossbow
 {
-    class Connector;
-    class Row_ABC;
-    class Table_ABC;
+    class Shape_ABC;
 
 // =============================================================================
-/** @class  ObjectListener
-    @brief  ObjectListener
+/** @class  Row
+    @brief  Row
 */
-// Created: SBO 2007-09-23
+// Created: SBO 2007-08-30
 // =============================================================================
-class ObjectListener : public Listener_ABC
+class Row : public Row_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectListener( Connector& connector, dispatcher::SimulationPublisher_ABC& publisher );
-    virtual ~ObjectListener();
+             Row();
+    virtual ~Row();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Listen();
+    virtual void SetField( const std::string& name, const FieldVariant& value );
+    virtual void SetShape( const Shape_ABC& value );
+    virtual FieldVariant GetField( const std::string& name ) const;
+    virtual Shape_ABC& GetShape() const;
+
+    void BindRow( IRowPtr row );
+    void Commit( ICursorPtr cursor = NULL );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ObjectListener( const ObjectListener& );            //!< Copy constructor
-    ObjectListener& operator=( const ObjectListener& ); //!< Assignment operator
+    Row( const Row& );            //!< Copy constructor
+    Row& operator=( const Row& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
-    void SendCreation( const Row_ABC& row );
+    long GetFieldIndex( const std::string& name ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    dispatcher::SimulationPublisher_ABC& publisher_;
-    Table_ABC& table_;
+    IRowPtr row_;
     //@}
 };
 
 }
 
-#endif // __ObjectListener_h_
+#endif // __Row_h_

@@ -10,6 +10,8 @@
 #include "crossbow_plugin_pch.h"
 #include "StatusListener.h"
 #include "Connector.h"
+#include "Table_ABC.h"
+#include "Row_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "dispatcher/Network_Def.h"
 
@@ -20,34 +22,11 @@ using namespace crossbow;
 // Created: JCR 2007-06-13
 // -----------------------------------------------------------------------------
 StatusListener::StatusListener( Connector& connector, dispatcher::SimulationPublisher_ABC& publisher )
-    : publisher_( publisher )
-    , paused_( false )
+    : publisher_      ( publisher )
+    , propertiesTable_( connector.GetTable( "SimulationProperties" ) )
+    , paused_         ( false )
 {
-    // $$$$ SBO 2007-08-29: Create a wrapper for Properties access
-    try
-    {
-        ITablePtr   spTable;
-        ICursorPtr  spCursor;
-
-        spTable = connector.GetTable( "SimulationProperties" );
-        spTable->FindField( CComBSTR( L"PropertyValue" ), &lFieldValue_ );
-        
-        IQueryFilterPtr spQueryFilter( CLSID_QueryFilter );
-        spQueryFilter->put_WhereClause( CComBSTR( L"Property=Status" ) );
-        if( FAILED( spTable->Search( spQueryFilter, false, &spCursor ) ) )
-        {
-            // $$$$ SBO 2007-08-29: create property if not exist...
-            //throw std::runtime_error( "Search failed" ); // $$$$ SBO 2007-05-30: !!!!!
-            return;
-        }
-        // $$$$ SBO 2007-08-29: is keeping IRowPtr really supposed to work ?
-        if( spCursor != NULL )
-            spCursor->NextRow( &spRow_ );
-    }
-    catch( std::exception& )
-    {
-        spRow_ = (IRowPtr)0;
-    }
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -61,15 +40,10 @@ StatusListener::~StatusListener()
 
 namespace
 {
-    std::string GetString( const CComVariant& value )
+    template< typename Type >
+    Type GetField( const Row_ABC& row, const std::string& name )
     {
-        switch( value.vt )
-        {
-        case VT_BSTR:
-            return std::string( _bstr_t( value.bstrVal ) ); // $$$$ SBO 2007-05-31: !!
-        default:
-            return "";
-        }
+        return boost::get< Type >( row.GetField( name ) );
     }
 }
 
@@ -79,12 +53,9 @@ namespace
 // -----------------------------------------------------------------------------
 void StatusListener::Listen()
 {
-    if( spRow_ )
-    {
-        CComVariant value;
-        spRow_->get_Value( lFieldValue_, &value );        
-        ChangeStatus( GetString( value ) );
-    }
+    Row_ABC* result = propertiesTable_.Find( "Property='Status'" );
+    if( result )
+        ChangeStatus( GetField< std::string >( *result, "PropertyValue" ) );
 }
 
 // -----------------------------------------------------------------------------

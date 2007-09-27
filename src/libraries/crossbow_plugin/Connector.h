@@ -23,9 +23,11 @@ namespace dispatcher
 
 namespace crossbow
 {
+    class Database_ABC;
+    class Table_ABC;
     class ScopeEditor;
     class ReportFactory;
-    class FolkManager;
+    class FolkEditor;
 
 // =============================================================================
 /** @class  Connector
@@ -45,21 +47,12 @@ public:
     //! @name Operations
     //@{
     void Lock();
-    bool IsLocked() const;
     void Unlock();
-    ITablePtr GetTable( const std::string& name );
-    IFeatureClassPtr GetFeatureClass( const std::string& feature, bool clear = true );
-    void Initialize();
-	void Finalize();
-    //@}
-
-    //! @name
-    //@{
-    void VisitModel( dispatcher::ModelVisitor_ABC& visitor );
-    virtual void Send( const ASN1T_MsgsSimToClient&            msg );
-    virtual void Send( const ASN1T_MsgsAuthenticationToClient&    ) {}
-    virtual void Send( const ASN1T_MsgsReplayToClient&            ) {}
-    virtual void Send( const ASN1T_MsgsAarToClient& ) {}
+    Table_ABC& GetTable( const std::string& name, bool clear = true );
+    virtual void Send( const ASN1T_MsgsSimToClient& msg );
+    virtual void Send( const ASN1T_MsgsAuthenticationToClient& ) {}
+    virtual void Send( const ASN1T_MsgsReplayToClient&         ) {}
+    virtual void Send( const ASN1T_MsgsAarToClient&            ) {}
     //@}
 
 private:
@@ -71,53 +64,26 @@ private:
 
     //! @name Helpers
     //@{
-    void             ConnectToGeodatabase( const std::string& geodatabase );
-    void             CheckOutLicences( esriLicenseProductCode eProcuct );
-    void             LoadSpatialReference();
-    IFeatureClassPtr LoadFeatureClass( const std::string& feature, bool clear );
-    IFeatureClassPtr GetObjectFeatureClass( const ASN1T_Location& location );
-    void             ClearFeatureClass( IFeatureClassPtr spFeatureClass );
-    void             SetSpatialReference( IFeatureClassPtr spFeatureClass );
-    void             InitializeStructure();
-    //@}
-
-    //! @name Message handlers
-    //@{
+    void CheckOutLicences( esriLicenseProductCode eProcuct );
+    Table_ABC& GetTable( const ASN1T_Location& location );
     void Delete( const ASN1T_MsgObjectDestruction& msg );
-
-    template< typename Message >
-    void Create( IFeatureClassPtr spFeature, const Message& asn );
-    template< typename Message >
-    void Create( ITablePtr spTable, const Message& asn );
-    template< typename Message >
-    void Delete( IFeatureClassPtr spFeature, const Message& asn );
-    template< typename Message >
-    void Update( IFeatureClassPtr pFeatureClass, const Message& asn );
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< std::string, IFeatureClassPtr > T_FeatureMap;
-    typedef std::map< std::string, ITablePtr >        T_Tables;
+    typedef std::map< std::string, Table_ABC* > T_Tables;
     //@}
 
 private:
     //! @name Member data
     //@{
-    IAoInitializePtr        spLicenseHandler_;
-    IFeatureWorkspacePtr    spWorkspace_;
-    T_FeatureMap            features_;
-    T_Tables                tables_;
-    ISpatialReferencePtr    spSpatialReference_;
-    //@}
-
-    //! @name
-    //@{
+    IAoInitializePtr               spLicenseHandler_;
+    std::auto_ptr< Database_ABC >  database_;                  
     const dispatcher::Model&       model_;
     std::auto_ptr< ReportFactory > reportFactory_;
-    std::auto_ptr< FolkManager >   folk_;
+    std::auto_ptr< FolkEditor >    folkEditor_;
     std::auto_ptr< ScopeEditor >   scopeEditor_;
-    bool                           locked_;
+    T_Tables                       tables_;
     //@}
 };
 

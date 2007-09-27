@@ -10,7 +10,6 @@
 #ifndef __OrderListener_h_
 #define __OrderListener_h_
 
-#include "ESRI.h"
 #include "Listener_ABC.h"
 
 namespace kernel
@@ -28,6 +27,8 @@ namespace crossbow
 {
     class Connector;
     class OrderDispatcher;
+    class Table_ABC;
+    class Row_ABC;
 
 // =============================================================================
 /** @class  OrderListener
@@ -59,7 +60,7 @@ private:
 
     //! @name Helpers
     //@{    
-    void MarkProcessed( IRowPtr row ) const;
+    void MarkProcessed( Row_ABC& row ) const;
     //@}
 
 private:
@@ -67,9 +68,7 @@ private:
     //@{
     dispatcher::SimulationPublisher_ABC& publisher_;
     std::auto_ptr< OrderDispatcher > dispatcher_;
-    ITablePtr table_;
-    IQueryFilterPtr waitingOrdersFilter_;
-    ICursorPtr cursor_;
+    Table_ABC& table_;
     //@}
 };
 

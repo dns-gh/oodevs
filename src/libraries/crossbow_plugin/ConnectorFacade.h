@@ -22,10 +22,8 @@ namespace kernel
 namespace dispatcher
 {
     class Model;
-    class Config;    
+    class Config;
     class SimulationPublisher_ABC;
-    class ClientPublisher_ABC;
-    class Profile_ABC;
 }
 
 namespace crossbow
@@ -35,7 +33,7 @@ namespace crossbow
 
 // =============================================================================
 /** @class  ConnectorFacade
-    @brief  ConnectorFacade    
+    @brief  ConnectorFacade
 */
 // Created: JCR 2007-04-30
 // =============================================================================
@@ -50,7 +48,7 @@ public:
     //@}
 
     //! @name Operations
-    //@{ 
+    //@{
     virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg );
     //@}
 
@@ -62,11 +60,9 @@ private:
     //@}
 
     //! @name Helpers
-    //@{    
-    void UpdateListeners() const;    
-    void UpdateOnMessage( const ASN1T_MsgsSimToClient& asn );
+    //@{
     bool IsRelevant( const ASN1T_MsgsSimToClient& asn ) const;
-    bool InitializedToCurrentState( const ASN1T_MsgsSimToClient& asn );
+    void UpdateListeners() const;
     //@}
 
 private:
@@ -80,11 +76,11 @@ private:
 
 private:
     //! @name Member data
-    //@{    
+    //@{
     std::auto_ptr< kernel::OrderTypes > orderTypes_;
     std::auto_ptr< Connector >          connector_;
     T_ListenerList                      listeners_;
-    bool                                initialized_;
+    bool                                loading_;
     //@}
 };
 

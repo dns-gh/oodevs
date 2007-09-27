@@ -10,7 +10,6 @@
 #ifndef __OrderDispatcher_h_
 #define __OrderDispatcher_h_
 
-#include "ESRI.h"
 #include "game_asn/Asn.h"
 
 namespace kernel
@@ -29,8 +28,9 @@ namespace dispatcher
 
 namespace crossbow
 {
-    class Connector;
     class OrderParameterSerializer;
+    class Table_ABC;
+    class Row_ABC;
 
 // =============================================================================
 /** @class  OrderDispatcher
@@ -44,13 +44,13 @@ class OrderDispatcher
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderDispatcher( Connector& connector, const kernel::OrderTypes& types, const dispatcher::Model& model );
+             OrderDispatcher( Table_ABC& table, const kernel::OrderTypes& types, const dispatcher::Model& model );
     virtual ~OrderDispatcher();
     //@}
 
     //! @name Operations
     //@{
-    void Dispatch( dispatcher::SimulationPublisher_ABC& publisher, const IRowPtr& row );
+    void Dispatch( dispatcher::SimulationPublisher_ABC& publisher, const Row_ABC& row );
     //@}
 
 private:
@@ -62,18 +62,18 @@ private:
 
     //! @name Helpers
     //@{
-    void DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Agent& agent, const IRowPtr& row );
-    void DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Automat& automat, const IRowPtr& row );
-    void DispatchFragOrder( dispatcher::SimulationPublisher_ABC& publisher, unsigned long targetId, const IRowPtr& row );
+    void DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Agent& agent, const Row_ABC& row );
+    void DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Automat& automat, const Row_ABC& row );
+    void DispatchFragOrder( dispatcher::SimulationPublisher_ABC& publisher, unsigned long targetId, const Row_ABC& row );
 
-    unsigned long GetTargetId( const IRowPtr& row ) const;
-    const kernel::OrderType* GetAgentMission( const IRowPtr& row ) const;
-    const kernel::OrderType* GetAutomatMission( const IRowPtr& row ) const;
+    unsigned long GetTargetId( const Row_ABC& row ) const;
+    const kernel::OrderType* GetAgentMission( const Row_ABC& row ) const;
+    const kernel::OrderType* GetAutomatMission( const Row_ABC& row ) const;
     void SetParameters( ASN1T_MissionParameters& parameters, unsigned long orderId, const kernel::OrderType& type );
-    void SetParameter( ASN1T_MissionParameter& parameter, const IRowPtr& row, const kernel::OrderType& type );
+    void SetParameter( ASN1T_MissionParameter& parameter, const Row_ABC& row, const kernel::OrderType& type );
     void CleanParameters( ASN1T_MissionParameters& parameters );
     void SetOrderContext( ASN1T_OrderContext& asn, unsigned long orderId );
-    void SetParameter( ASN1T_OrderContext& asn, const IRowPtr& row );
+    void SetParameter( ASN1T_OrderContext& asn, const Row_ABC& row );
     void CleanOrderContext( ASN1T_OrderContext& asn );
     unsigned int GetLimaCount( unsigned long orderId );
     //@}
@@ -83,7 +83,7 @@ private:
     //@{    
     const kernel::OrderTypes& types_;
     const dispatcher::Model& model_;
-    ITablePtr paramTable_;
+    Table_ABC& paramTable_;
     std::auto_ptr< OrderParameterSerializer > serializer_;
     //@}
 };

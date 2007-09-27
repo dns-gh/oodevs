@@ -7,63 +7,58 @@
 //
 // *****************************************************************************
 
-#ifndef __ObjectListener_h_
-#define __ObjectListener_h_
+#ifndef __Database_h_
+#define __Database_h_
 
-#include "Listener_ABC.h"
+#include "Database_ABC.h"
+#include "ESRI.h"
 
 namespace dispatcher
 {
-    class SimulationPublisher_ABC;
+    class Config;
 }
 
 namespace crossbow
 {
-    class Connector;
-    class Row_ABC;
-    class Table_ABC;
 
 // =============================================================================
-/** @class  ObjectListener
-    @brief  ObjectListener
+/** @class  Database
+    @brief  Database
 */
-// Created: SBO 2007-09-23
+// Created: SBO 2007-08-30
 // =============================================================================
-class ObjectListener : public Listener_ABC
+class Database : public Database_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectListener( Connector& connector, dispatcher::SimulationPublisher_ABC& publisher );
-    virtual ~ObjectListener();
+    explicit Database( const dispatcher::Config& config );
+    virtual ~Database();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Listen();
+    virtual void Lock();
+    virtual void UnLock();
+    virtual Table_ABC* OpenTable( const std::string& name );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ObjectListener( const ObjectListener& );            //!< Copy constructor
-    ObjectListener& operator=( const ObjectListener& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void SendCreation( const Row_ABC& row );
+    Database( const Database& );            //!< Copy constructor
+    Database& operator=( const Database& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    dispatcher::SimulationPublisher_ABC& publisher_;
-    Table_ABC& table_;
+    IFeatureWorkspacePtr workspace_;
+    IWorkspaceEditPtr    workspaceEdit_;
     //@}
 };
 
 }
 
-#endif // __ObjectListener_h_
+#endif // __Database_h_

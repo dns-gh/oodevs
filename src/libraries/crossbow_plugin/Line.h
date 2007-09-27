@@ -7,63 +7,61 @@
 //
 // *****************************************************************************
 
-#ifndef __ObjectListener_h_
-#define __ObjectListener_h_
+#ifndef __Line_h_
+#define __Line_h_
 
-#include "Listener_ABC.h"
-
-namespace dispatcher
-{
-    class SimulationPublisher_ABC;
-}
+#include "game_asn/Asn.h"
+#include "Shape_ABC.h"
+#include "ESRI.h"
 
 namespace crossbow
 {
-    class Connector;
-    class Row_ABC;
-    class Table_ABC;
+    class Point;
 
 // =============================================================================
-/** @class  ObjectListener
-    @brief  ObjectListener
+/** @class  Line
+    @brief  Line
 */
-// Created: SBO 2007-09-23
+// Created: SBO 2007-08-30
 // =============================================================================
-class ObjectListener : public Listener_ABC
+class Line : public Shape_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectListener( Connector& connector, dispatcher::SimulationPublisher_ABC& publisher );
-    virtual ~ObjectListener();
+             Line();
+    explicit Line( const ASN1T_CoordUTMList& asn );
+    virtual ~Line();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Listen();
+    virtual void Accept( ShapeVisitor_ABC& visitor ) const;
+    void UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const;
+    void Serialize( ASN1T_Location& asn ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ObjectListener( const ObjectListener& );            //!< Copy constructor
-    ObjectListener& operator=( const ObjectListener& ); //!< Assignment operator
+    Line( const Line& );            //!< Copy constructor
+    Line& operator=( const Line& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
-    void SendCreation( const Row_ABC& row );
+    typedef std::vector< Point >       T_Points;
+    typedef T_Points::const_iterator CIT_Points;
     //@}
 
 private:
     //! @name Member data
     //@{
-    dispatcher::SimulationPublisher_ABC& publisher_;
-    Table_ABC& table_;
+    T_Points points_;
     //@}
 };
 
 }
 
-#endif // __ObjectListener_h_
+#endif // __Line_h_

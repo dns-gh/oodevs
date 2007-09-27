@@ -15,8 +15,6 @@
 #include "StatusListener.h"
 #include "ObjectListener.h"
 #include "dispatcher/Config.h"
-#include "dispatcher/Model.h"
-#include "dispatcher/Visitors.h"
 
 using namespace crossbow;
 
@@ -27,7 +25,7 @@ using namespace crossbow;
 ConnectorFacade::ConnectorFacade( const dispatcher::Model& model, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher )
     : orderTypes_( new kernel::OrderTypes( config ) )
     , connector_ ( new Connector( config, model ) )
-    , initialized_ ( false )
+    , loading_   ( true )
 {
     listeners_.push_back( T_SharedListener( new OrderListener( *connector_, publisher, *orderTypes_, model ) ) );
     listeners_.push_back( T_SharedListener( new StatusListener( *connector_, publisher ) ) );
@@ -48,7 +46,7 @@ ConnectorFacade::~ConnectorFacade()
 // Created: JCR 2007-05-14
 // -----------------------------------------------------------------------------
 bool ConnectorFacade::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
-{    
+{
     switch ( asn.msg.t )
     {
     case T_MsgsSimToClient_msg_msg_lima_creation:
@@ -64,96 +62,40 @@ bool ConnectorFacade::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
     case T_MsgsSimToClient_msg_msg_unit_knowledge_update:
     case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:
     case T_MsgsSimToClient_msg_msg_unit_creation:
-    case T_MsgsSimToClient_msg_msg_unit_destruction:        
+    case T_MsgsSimToClient_msg_msg_unit_destruction:
     case T_MsgsSimToClient_msg_msg_report:
     case T_MsgsSimToClient_msg_msg_folk_creation:
     case T_MsgsSimToClient_msg_msg_folk_graph_update:
-        return true;            
+        return true;
     case T_MsgsSimToClient_msg_msg_unit_attributes:
         const ASN1T_MsgUnitAttributes* attributes = asn.msg.u.msg_unit_attributes;
         if( attributes->m.positionPresent || attributes->m.vitessePresent || attributes->m.etat_operationnelPresent )
-            return true;        
+            return true;
     }
     return false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConnectorFacade::Update
+// Name: ConnectorFacade::Receive
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
 void ConnectorFacade::Receive( const ASN1T_MsgsSimToClient& asnMsg )
 {
-    if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_begin ||
-        asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_begin_tick )
+    switch( asnMsg.msg.t )
     {
+    case T_MsgsSimToClient_msg_msg_control_send_current_state_begin: loading_ = true;  break;
+    case T_MsgsSimToClient_msg_msg_control_send_current_state_end:   loading_ = false; break;
+    case T_MsgsSimToClient_msg_msg_control_begin_tick:
         connector_->Lock();
-    }
-    // if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_begin )
-    //    Reset()
-
-	UpdateOnMessage( asnMsg );
-    
-    if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_end ||
-        asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
+        UpdateListeners();
+        break;
+    case T_MsgsSimToClient_msg_msg_control_end_tick:
         connector_->Unlock();
-
-    // Crossbow initialization must be done after model creation     
-//    if ( InitializedToCurrentState( asnMsg ) )
-//    {
-//        if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_begin_tick )
-//            connector_->Lock();
-//	    UpdateOnMessage( asnMsg );
-//        if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
-//            connector_->Unlock();
-//    }
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ConnectorFacade::SendCurrentState
-// Created: JCR 2007-05-14
-// -----------------------------------------------------------------------------
-bool ConnectorFacade::InitializedToCurrentState( const ASN1T_MsgsSimToClient& asnMsg )
-{
-    if ( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_end )
-    {
-        {
-            dispatcher::CreationVisitor visitor( *connector_ );
-            connector_->Lock();
-            connector_->VisitModel( visitor );
-            connector_->Unlock();
-        }
-        {
-            dispatcher::FullUpdateVisitor visitor( *connector_ );
-            connector_->Lock();
-            connector_->VisitModel( visitor );
-            connector_->Unlock();
-        }
-        initialized_ = true;
+        break;
+    default:
+        if( IsRelevant( asnMsg ) )
+            connector_->Send( asnMsg );
     }
-    return initialized_;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ConnectorFacade::UpdateOnTick
-// Created: JCR 2007-05-14
-// -----------------------------------------------------------------------------
-void ConnectorFacade::UpdateOnMessage( const ASN1T_MsgsSimToClient& asnMsg )
-{
-	switch ( asnMsg.msg.t )
-	{
-	case T_MsgsSimToClient_msg_msg_control_begin_tick:
-		connector_->Initialize();
-        UpdateListeners(); // $$$$ JCR 2007-08-02: Push it out of here ...
-		break;
-	case T_MsgsSimToClient_msg_msg_control_end_tick:
-		connector_->Finalize();        
-		break;
-	default:
-		if( IsRelevant( asnMsg ) )
-			connector_->Send( asnMsg );
-	}    
 }
 
 // -----------------------------------------------------------------------------
@@ -162,6 +104,9 @@ void ConnectorFacade::UpdateOnMessage( const ASN1T_MsgsSimToClient& asnMsg )
 // -----------------------------------------------------------------------------
 void ConnectorFacade::UpdateListeners() const
 {
+    if( loading_ )
+        return;
+    MT_LOG_INFO_MSG( "tick" );
     for( CIT_ListenerList it = listeners_.begin(); it != listeners_.end(); ++it )
         (*it)->Listen();
 }

@@ -11,6 +11,8 @@
 #include "OrderListener.h"
 #include "Connector.h"
 #include "OrderDispatcher.h"
+#include "Table_ABC.h"
+#include "Row_ABC.h"
 
 using namespace dispatcher;
 using namespace crossbow;
@@ -20,13 +22,11 @@ using namespace crossbow;
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
 OrderListener::OrderListener( Connector& connector, dispatcher::SimulationPublisher_ABC& publisher, const kernel::OrderTypes& types, const Model& model )
-    : publisher_          ( publisher )
-    , dispatcher_         ( new OrderDispatcher( connector, types, model ) )
-    , table_              ( connector.GetTable( "Orders" ) )
-    , waitingOrdersFilter_( CLSID_QueryFilter )
-    , cursor_             ()
+    : publisher_ ( publisher )
+    , dispatcher_( new OrderDispatcher( connector.GetTable( "OrdersParameters" ), types, model ) )
+    , table_     ( connector.GetTable( "Orders" ) )
 {
-    waitingOrdersFilter_->put_WhereClause( CComBSTR( "processed=false" ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -35,49 +35,21 @@ OrderListener::OrderListener( Connector& connector, dispatcher::SimulationPublis
 // -----------------------------------------------------------------------------
 OrderListener::~OrderListener()
 {
-    waitingOrdersFilter_.Release();
+    // NOTHING
 }
-/*
-namespace
-{
-    class RunCursor
-    {
-        RunCursor( ICursorPtr cursor ) : cursor_ ( cursor ) {}
 
-        template< Functor > void Apply( OrderListener& listener, Functor& func )
-        {
-            IRowPtr row;
-            cursor_->NextRow( &row );
-            while( row != 0 )
-            {
-                listener.func();
-
-                ProcessOrder( row );
-                cursor_->NextRow( &row );
-            }
-        }
-    private:
-        ICursorPtr cursor_;
-    };
-}
-*/
 // -----------------------------------------------------------------------------
 // Name: OrderListener::Listen
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
 void OrderListener::Listen()
 {
-    IRowPtr row;
-    HRESULT res = table_->Search( waitingOrdersFilter_, false, &cursor_ );
-    if( FAILED( res ) )
-        throw std::runtime_error( "Search failed" ); // $$$$ SBO 2007-05-30:
-
-    cursor_->NextRow( &row );
+    Row_ABC* row = table_.Find( "processed=false" );
     while( row != 0 )
     {
-        dispatcher_->Dispatch( publisher_, row );
-        MarkProcessed( row );
-        cursor_->NextRow( &row );
+        dispatcher_->Dispatch( publisher_, *row );
+        MarkProcessed( *row );
+        row = table_.GetNextRow();
     }
 }
 
@@ -85,12 +57,8 @@ void OrderListener::Listen()
 // Name: OrderListener::MarkProcessed
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
-void OrderListener::MarkProcessed( IRowPtr row ) const
+void OrderListener::MarkProcessed( Row_ABC& row ) const
 {
-    IFieldsPtr fields;
-    row->get_Fields( &fields );
-    long index;
-    fields->FindField( CComBSTR( "processed" ), &index );
-    row->put_Value( index, CComVariant( true ) );
-    row->Store();
+    row.SetField( "processed", FieldVariant( true ) );
+    table_.UpdateRow( row );
 }

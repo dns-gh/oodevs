@@ -10,13 +10,12 @@
 #ifndef __crossbow_FolkEditor_h_
 #define __crossbow_FolkEditor_h_
 
-#include "ESRI.h"
 #include "game_asn/Asn.h"
-#include "FolkManager.h"
 
 namespace crossbow
 {    
-    class ScopeEditor;
+    class Table_ABC;
+    class Row_ABC;
 
 // =============================================================================
 /** @class  FolkEditor
@@ -29,15 +28,15 @@ class FolkEditor
 public:
     //! @name Constructors/Destructor
     //@{
-            FolkEditor( ScopeEditor& scope, const FolkManager& folk );
+             FolkEditor();
     virtual ~FolkEditor();
     //@}
 
-    //! @name 
+    //! @name Operations
     //@{
-    void Write( IFeaturePtr spFeature, const ASN1T_MsgFolkGraphEdgeUpdate& asn );
-    void Write( IFeatureCursorPtr spCursor );
-	//@}
+    void Update( const ASN1T_MsgFolkCreation& msg );
+    void Update( Table_ABC& table, const ASN1T_MsgFolkGraphUpdate& msg );
+    //@}
 
 private:
     //! @name Copy/Assignement
@@ -46,16 +45,34 @@ private:
     FolkEditor& operator=( const FolkEditor& ); //!< Assignement operator
     //@}
 
-    //! @name 
+    //! @name Types
     //@{
-	void Write( IFeaturePtr spFeature, const FolkManager::PopulationInfo& info );
+    struct Edge
+	{
+		Edge() : population_( 0 ), containers_( 5, 0 ) {}
+		unsigned population_;
+		std::vector< unsigned > containers_;
+	};
+
+    typedef std::vector< Edge > T_Edges;
+    typedef T_Edges::const_iterator CIT_Edges;
+    //@}
+
+    //! @name Helpers
+    //@{
+    void Commit( Table_ABC& table );
+    void CommitEdge( Row_ABC& row, const Edge& edge );
+    void Update( Table_ABC& table, const ASN1T_MsgFolkGraphEdgeUpdate& msg );
+    void Update( Edge& edge, const ASN1T_MsgFolkGraphEdgeUpdate& msg ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    ScopeEditor& scope_;
-    const FolkManager& folk_;
+    std::vector< std::string > activities_;
+    std::vector< std::string > profiles_;
+    T_Edges edges_;
+    unsigned long updated_;
     //@}
 };
 

@@ -9,8 +9,8 @@
 
 #include "crossbow_plugin_pch.h"
 #include "FolkEditor.h"
-#include "FolkManager.h"
-#include "ScopeEditor.h"
+#include "Table_ABC.h"
+#include "Row_ABC.h"
 
 using namespace crossbow;
 
@@ -18,9 +18,8 @@ using namespace crossbow;
 // Name: FolkEditor constructor
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-FolkEditor::FolkEditor( ScopeEditor& scope, const FolkManager& folk )
-    : folk_ ( folk )
-    , scope_ ( scope )
+FolkEditor::FolkEditor()
+    : updated_( 0 )
 {
     // NOTHING
 }
@@ -34,48 +33,105 @@ FolkEditor::~FolkEditor()
     // NOTHING
 }
 
+namespace
+{
+    template< typename Message >
+    void Update( std::vector< std::string >& list, const Message& msg )
+    {
+        list.resize( msg.n );
+        for( unsigned i = 0; i < msg.n; ++i )
+            list[i] = (const char*)msg.elem[i].data; // $$$$ SBO 2007-09-26: length ?
+    }
+}
+
 // -----------------------------------------------------------------------------
-// Name: FolkEditor::Write
+// Name: FolkEditor::Update
+// Created: SBO 2007-09-19
+// -----------------------------------------------------------------------------
+void FolkEditor::Update( const ASN1T_MsgFolkCreation& msg )
+{
+    ::Update( activities_, msg.activities );
+    ::Update( profiles_, msg.profiles );
+    // $$$$ SBO 2007-09-19: container_size/edge_number
+    edges_.resize( msg.edge_number );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FolkEditor::Update
+// Created: SBO 2007-09-19
+// -----------------------------------------------------------------------------
+void FolkEditor::Update( Table_ABC& table, const ASN1T_MsgFolkGraphUpdate& msg )
+{
+    if( edges_.size() == 0 )
+        throw std::runtime_error( "Trying to update population graph before its creation." );
+    table.BeginTransaction();
+    for( unsigned int i = 0; i < msg.n; ++i )
+        Update( table, msg.elem[i] );
+    table.EndTransaction();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FolkEditor::Update
+// Created: SBO 2007-09-19
+// -----------------------------------------------------------------------------
+void FolkEditor::Update( Table_ABC& table, const ASN1T_MsgFolkGraphEdgeUpdate& msg )
+{
+    Edge& edge = edges_[msg.shp_oid];
+    Update( edge, msg );
+    if( ++updated_ >= edges_.size() )
+    {
+        Commit( table );
+        updated_ = 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: FolkEditor::Commit
+// Created: SBO 2007-09-19
+// -----------------------------------------------------------------------------
+void FolkEditor::Commit( Table_ABC& table )
+{
+    Row_ABC* row = table.Find( "" );
+    for( CIT_Edges it = edges_.begin(); it != edges_.end() && row; ++it )
+    {
+        CommitEdge( *row, *it );
+        table.UpdateRow( *row );
+        row = table.GetNextRow();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: FolkEditor::CommitEdge
+// Created: SBO 2007-09-19
+// -----------------------------------------------------------------------------
+void FolkEditor::CommitEdge( Row_ABC& row, const Edge& edge )
+{
+    row.SetField( "Individuals", FieldVariant( (long)edge.population_ ) );
+    row.SetField( "Pavement"   , FieldVariant( (long)edge.containers_[0] ) );
+    row.SetField( "Road"       , FieldVariant( (long)edge.containers_[1] ) );
+    row.SetField( "Office"     , FieldVariant( (long)edge.containers_[2] ) );
+    row.SetField( "Residential", FieldVariant( (long)edge.containers_[3] ) );
+    row.SetField( "Shop"       , FieldVariant( (long)edge.containers_[4] ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FolkEditor::Update
+/* Read asn message containing population information and store appropriate 
+   indiviudals
+*/
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-void FolkEditor::Write( IFeaturePtr spFeature, const ASN1T_MsgFolkGraphEdgeUpdate& asn )
+void FolkEditor::Update( Edge& edge, const ASN1T_MsgFolkGraphEdgeUpdate& msg ) const
 {
-	FolkManager::PopulationInfo	info;
-
-	info.population_ = folk_.Filter( asn, info.containers_ );
-    Write( spFeature, info );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FolkEditor::Write
-// Created: JCR 2007-08-31
-// -----------------------------------------------------------------------------
-void FolkEditor::Write( IFeatureCursorPtr spCursor )
-{	
-    // $$$$ JCR 2007-08-31: Revoir tout ca...
-	typedef FolkManager::T_PopulationInfoVector::const_iterator	CIT_PopulationInfoVector;
-	
-	IFeaturePtr spFeature;
-	CIT_PopulationInfoVector it = folk_.GetPopulationInfo().begin(); 
-	
-	spCursor->NextFeature( &spFeature );
-	while ( spFeature )
-	{
-		Write( spFeature, *it++ );
-		spCursor->NextFeature( &spFeature );
-	}
-}
-
-// -----------------------------------------------------------------------------
-// Name: FolkEditor::Write
-// Created: JCR 2007-08-31
-// -----------------------------------------------------------------------------
-void FolkEditor::Write( IFeaturePtr spFeature, const FolkManager::PopulationInfo& info )
-{
-	scope_.Write( spFeature, CComBSTR( L"Individuals" ), info.population_ );
-    scope_.Write( spFeature, CComBSTR( L"Pavement" ), info.containers_[0] );
-    scope_.Write( spFeature, CComBSTR( L"Road" ), info.containers_[1] );
-    scope_.Write( spFeature, CComBSTR( L"Office" ), info.containers_[2] );
-    scope_.Write( spFeature, CComBSTR( L"Residential" ), info.containers_[3] );
-    scope_.Write( spFeature, CComBSTR( L"Shop" ), info.containers_[4] );
+	const unsigned size = activities_.size() * profiles_.size();
+    int c = -1;
+    edge.population_ = 0;
+	for ( unsigned i = 0; i < msg.population_occupation.n; ++i )
+    {
+        const int individuals = msg.population_occupation.elem[i];
+        if ( i % size == 0 )
+            ++c;
+        edge.population_    += individuals;
+        edge.containers_[c] += individuals;		
+    }
 }

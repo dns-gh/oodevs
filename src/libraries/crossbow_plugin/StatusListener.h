@@ -10,18 +10,18 @@
 #ifndef __StatusListener_h_
 #define __StatusListener_h_
 
-#include "ESRI.h"
 #include "Listener_ABC.h"
 
 namespace dispatcher
 {
-    class Model;
     class SimulationPublisher_ABC;
 }
 
 namespace crossbow
 {
     class Connector;
+    class Table_ABC;
+    class Row_ABC;
 
 // =============================================================================
 /** @class  StatusListener
@@ -56,18 +56,12 @@ private:
     void ChangeStatus( const std::string& status );
     //@}
 
-    //! @name Types
-    //@{
-    enum E_Status { eResumed, ePaused }; // $$$$ SBO 2007-08-24: a bool should be enough
-    //@}
-
 private:
     //! @name Member data
     //@{
     dispatcher::SimulationPublisher_ABC& publisher_;
+    Table_ABC& propertiesTable_;
     bool paused_;
-    IRowPtr spRow_;
-    long lFieldValue_;
     //@}
 };
 

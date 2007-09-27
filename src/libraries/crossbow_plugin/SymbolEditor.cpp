@@ -9,7 +9,7 @@
 
 #include "crossbow_plugin_pch.h"
 #include "SymbolEditor.h"
-#include "ScopeEditor.h"
+#include "Row_ABC.h"
 #include "dispatcher/Model.h"
 #include "dispatcher/Side.h"
 #include "dispatcher/Formation.h"
@@ -37,9 +37,8 @@ namespace
 // Name: SymbolEditor::SymbolEditor
 // Created: JCR 2007-05-15
 // -----------------------------------------------------------------------------
-SymbolEditor::SymbolEditor( ScopeEditor& scope, const dispatcher::Model& model )
-    : scope_ ( scope )
-    , model_ ( model )
+SymbolEditor::SymbolEditor( const dispatcher::Model& model )
+    : model_ ( model )
 {
     // NOTHING
 }
@@ -54,82 +53,81 @@ SymbolEditor::~SymbolEditor()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SymbolEditor::Write
-// Created: JCR 2007-05-23
+// Name: SymbolEditor::Update
+// Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void SymbolEditor::Write( IFeaturePtr spFeature, const ASN1T_MsgLimitCreation& msg )
+void SymbolEditor::Update( Row_ABC& row, const ASN1T_MsgLimitCreation& msg )
 {
-    if( const dispatcher::Limit* limit = model_.GetLimits().Find( msg.oid ) )
-        scope_.Write(spFeature, CComBSTR( L"Symbol_ID" ), FormatSymbol( limit->BuildSymbol() ).c_str() );
+    if( const dispatcher::Limit* element = model_.GetLimits().Find( msg.oid ) )
+        row.SetField( "Symbol_ID", FieldVariant( FormatSymbol( element->BuildSymbol() ) ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SymbolEditor::Write
-// Created: JCR 2007-05-23
+// Name: SymbolEditor::Update
+// Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void SymbolEditor::Write( IFeaturePtr spFeature, const ASN1T_MsgLimaCreation& msg )
+void SymbolEditor::Update( Row_ABC& row, const ASN1T_MsgLimaCreation& msg )
 {
-    if( const dispatcher::Lima* lima = model_.GetLimas().Find( msg.oid ) )
-        scope_.Write(spFeature, CComBSTR( L"Symbol_ID" ), FormatSymbol( lima->BuildSymbol() ).c_str() );
+    if( const dispatcher::Lima* element = model_.GetLimas().Find( msg.oid ) )
+        row.SetField( "Symbol_ID", FieldVariant( FormatSymbol( element->BuildSymbol() ) ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SymbolEditor::Write
-// Created: JCR 2007-05-23
+// Name: SymbolEditor::Update
+// Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void SymbolEditor::Write( IFeaturePtr spRow, const ASN1T_MsgObjectCreation& msg )
+void SymbolEditor::Update( Row_ABC& row, const ASN1T_MsgObjectCreation& msg )
 {
-    if( const dispatcher::Object* object = model_.GetObjects().Find( msg.oid ) )
-        scope_.Write(spRow, CComBSTR( L"Symbol_ID" ), FormatSymbol( object->BuildSymbol() ).c_str() );
+    if( const dispatcher::Object* element = model_.GetObjects().Find( msg.oid ) )
+        row.SetField( "Symbol_ID", FieldVariant( FormatSymbol( element->BuildSymbol() ) ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SymbolEditor::Write
-// Created: JCR 2007-06-12
+// Name: SymbolEditor::Update
+// Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void SymbolEditor::Write( IRowBufferPtr spRow, const ASN1T_MsgFormationCreation& asn )
+void SymbolEditor::Update( Row_ABC& row, const ASN1T_MsgUnitCreation& msg )
 {
-    if( const dispatcher::Formation* formation = model_.GetFormations().Find( asn.oid ) )
-        scope_.Write(spRow, CComBSTR( L"Symbol_ID" ), FormatSymbol( formation->BuildSymbol() ).c_str() );
+    if( const dispatcher::Agent* element = model_.GetAgents().Find( msg.oid ) )
+        row.SetField( "Symbol_ID", FieldVariant( FormatSymbol( element->BuildSymbol() ) ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SymbolEditor::Write
-// Created: JCR 2007-05-15
+// Name: SymbolEditor::Update
+// Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void SymbolEditor::Write( IFeaturePtr spFeature, const ASN1T_MsgUnitCreation& asn )
+void SymbolEditor::Update( Row_ABC& row, const ASN1T_MsgUnitKnowledgeCreation& msg )
 {
-    if( const dispatcher::Agent* agent = model_.GetAgents().Find( asn.oid ) )
-        scope_.Write(spFeature, CComBSTR( L"Symbol_ID" ), FormatSymbol( agent->BuildSymbol() ).c_str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SymbolEditor::Write
-// Created: JCR 2007-06-12
-// -----------------------------------------------------------------------------
-void SymbolEditor::Write( IRowBufferPtr spRow, const ASN1T_MsgAutomatCreation& asn )
-{
-    if( const dispatcher::Automat* automat = model_.GetAutomats().Find( asn.oid ) )
-        scope_.Write(spRow, CComBSTR( L"Symbol_ID" ), FormatSymbol( automat->BuildSymbol() ).c_str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SymbolEditor::Write
-// Created: JCR 2007-05-23
-// -----------------------------------------------------------------------------
-void SymbolEditor::Write( IFeaturePtr spFeature, const ASN1T_MsgUnitKnowledgeCreation& /*asn*/ )
-{
-    // $$$$ SBO 2007-08-22: TODO !
     std::string symbol( "SUZP********---" );
-    scope_.Write( spFeature, CComBSTR( L"Symbol_ID" ), FormatSymbol( symbol ).c_str() );
+    row.SetField( "Symbol_ID", FieldVariant( FormatSymbol( symbol ) ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SymbolEditor::Write
-// Created: JCR 2007-05-23
+// Name: SymbolEditor::Update
+// Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void SymbolEditor::Write( IFeaturePtr spFeature, const ASN1T_MsgUnitKnowledgeUpdate& asn )
+void SymbolEditor::Update( Row_ABC& row, const ASN1T_MsgUnitKnowledgeUpdate& msg )
 {
-    if( const dispatcher::AgentKnowledge* knowledge = model_.GetAgentKnowledges().Find( asn.oid ) )
-        scope_.Write( spFeature, CComBSTR( L"Symbol_ID" ), FormatSymbol( knowledge->BuildSymbol() ).c_str() );
+    if( const dispatcher::AgentKnowledge* element = model_.GetAgentKnowledges().Find( msg.oid ) )
+        row.SetField( "Symbol_ID", FieldVariant( FormatSymbol( element->BuildSymbol() ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolEditor::Update
+// Created: SBO 2007-08-30
+// -----------------------------------------------------------------------------
+void SymbolEditor::Update( Row_ABC& row, const ASN1T_MsgFormationCreation& msg )
+{
+    if( const dispatcher::Formation* element = model_.GetFormations().Find( msg.oid ) )
+        row.SetField( "Symbol_ID", FieldVariant( FormatSymbol( element->BuildSymbol() ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolEditor::Update
+// Created: SBO 2007-08-30
+// -----------------------------------------------------------------------------
+void SymbolEditor::Update( Row_ABC& row, const ASN1T_MsgAutomatCreation& msg )
+{
+    if( const dispatcher::Automat* element = model_.GetAutomats().Find( msg.oid ) )
+        row.SetField( "Symbol_ID", FieldVariant( FormatSymbol( element->BuildSymbol() ) ) );
 }

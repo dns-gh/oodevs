@@ -9,10 +9,11 @@
 
 #include "crossbow_plugin_pch.h"
 #include "OrderDispatcher.h"
-#include "Connector.h"
 #include "OrderTypes.h"
 #include "OrderType.h"
 #include "OrderParameterSerializer.h"
+#include "Table_ABC.h"
+#include "Row_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "dispatcher/Network_Def.h"
 #include "dispatcher/Model.h"
@@ -26,10 +27,10 @@ using namespace crossbow;
 // Name: OrderDispatcher constructor
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-OrderDispatcher::OrderDispatcher( Connector& connector, const OrderTypes& types, const dispatcher::Model& model )
+OrderDispatcher::OrderDispatcher( Table_ABC& table, const OrderTypes& types, const dispatcher::Model& model )
     : types_( types )
     , model_( model )
-    , paramTable_( connector.GetTable( "OrdersParameters" ) )
+    , paramTable_( table )
     , serializer_( new OrderParameterSerializer( model ) )
 {
     // NOTHING
@@ -44,49 +45,11 @@ OrderDispatcher::~OrderDispatcher()
     // NOTHING
 }
 
-namespace
-{
-    CComVariant GetFieldValue( const IRowPtr& row, const std::string& name )
-    {
-        IFieldsPtr fields;
-        row->get_Fields( &fields );
-        long index;
-        fields->FindField( CComBSTR( name.c_str() ), &index );
-        CComVariant value;
-        row->get_Value( index, &value );
-        return value;
-    }
-
-    unsigned long GetInteger( const CComVariant& value )
-    {
-        switch( value.vt )
-        {
-        case VT_I2:
-            return value.iVal;
-        case VT_I4:
-            return value.lVal;
-        default:
-            return 0;
-        }
-    }
-
-    std::string GetString( const CComVariant& value )
-    {
-        switch( value.vt )
-        {
-        case VT_BSTR:
-            return std::string( _bstr_t( value.bstrVal ) ); // $$$$ SBO 2007-05-31: !!
-        default:
-            return "";
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: OrderDispatcher::Dispatch
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::Dispatch( dispatcher::SimulationPublisher_ABC& publisher, const IRowPtr& row )
+void OrderDispatcher::Dispatch( dispatcher::SimulationPublisher_ABC& publisher, const Row_ABC& row )
 {
     const unsigned long id = GetTargetId( row );
     if( const dispatcher::Agent* agent = model_.GetAgents().Find( id ) )
@@ -97,11 +60,20 @@ void OrderDispatcher::Dispatch( dispatcher::SimulationPublisher_ABC& publisher, 
         MT_LOG_ERROR_MSG( "Unable to resolve order target unit : " << id );
 }
 
+namespace
+{
+    template< typename Type >
+    Type GetField( const Row_ABC& row, const std::string& name )
+    {
+        return boost::get< Type >( row.GetField( name ) );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: OrderDispatcher::DispatchMission
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Agent& agent, const IRowPtr& row )
+void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Agent& agent, const Row_ABC& row )
 {
     if( agent.GetAutomat().IsEngaged() )
     {
@@ -116,8 +88,7 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
         return;
     }
 
-    long orderId;
-    row->get_OID( &orderId );
+    const long orderId = GetField< long >( row, "id" );
 
     dispatcher::AsnMsgClientToSimUnitOrder asn;
     asn().oid = agent.GetID();
@@ -133,7 +104,7 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
 // Name: OrderDispatcher::DispatchMission
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Automat& automat, const IRowPtr& row )
+void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Automat& automat, const Row_ABC& row )
 {
     const OrderType* type = GetAutomatMission( row );
     if( !type )
@@ -142,8 +113,7 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
         return;
     }
 
-    long orderId;
-    row->get_OID( &orderId );
+    const long orderId = GetField< long >( row, "id" );
 
     dispatcher::AsnMsgClientToSimAutomatOrder asn;
     asn().oid = automat.GetID();
@@ -160,9 +130,9 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
 // Name: OrderDispatcher::DispatchFragOrder
 // Created: SBO 2007-06-07
 // -----------------------------------------------------------------------------
-void OrderDispatcher::DispatchFragOrder( dispatcher::SimulationPublisher_ABC& publisher, unsigned long targetId, const IRowPtr& row )
+void OrderDispatcher::DispatchFragOrder( dispatcher::SimulationPublisher_ABC& publisher, unsigned long targetId, const Row_ABC& row )
 {
-    const OrderType* type = types_.FindFragOrder( GetString( GetFieldValue( row, "OrderName" ) ) );
+    const OrderType* type = types_.FindFragOrder( GetField< std::string >( row, "OrderName" ) );
     if( !type )
         return; // $$$$ SBO 2007-06-07:
 
@@ -177,20 +147,19 @@ void OrderDispatcher::DispatchFragOrder( dispatcher::SimulationPublisher_ABC& pu
 // Name: OrderDispatcher::GetTargetId
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-unsigned long OrderDispatcher::GetTargetId( const IRowPtr& row ) const
+unsigned long OrderDispatcher::GetTargetId( const Row_ABC& row ) const
 {
-    return GetInteger( GetFieldValue( row, "target_id" ) );
+    return GetField< int >( row, "target_id" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrderDispatcher::GetAgentMission
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-const OrderType* OrderDispatcher::GetAgentMission( const IRowPtr& row ) const
+const OrderType* OrderDispatcher::GetAgentMission( const Row_ABC& row ) const
 {
-    std::string         name( GetString( GetFieldValue( row, "OrderName" ) ) );
-    const OrderType*    order( types_.FindAgentMission( name ) );
-
+    std::string      name( GetField< std::string >( row, "OrderName" ) );
+    const OrderType* order( types_.FindAgentMission( name ) );
     if( !order )
         MT_LOG_ERROR_MSG( "Unknown agent mission : " << name );
     return order;
@@ -200,11 +169,10 @@ const OrderType* OrderDispatcher::GetAgentMission( const IRowPtr& row ) const
 // Name: OrderDispatcher::GetAutomatMission
 // Created: SBO 2007-06-01
 // -----------------------------------------------------------------------------
-const OrderType* OrderDispatcher::GetAutomatMission( const IRowPtr& row ) const
+const OrderType* OrderDispatcher::GetAutomatMission( const Row_ABC& row ) const
 {
-    std::string         name( GetString( GetFieldValue( row, "OrderName" ) ) );
-    const OrderType*    order( types_.FindAutomatMission( name ) );
-
+    std::string      name( GetField< std::string >( row, "OrderName" ) );
+    const OrderType* order( types_.FindAutomatMission( name ) );
     if( !order )
         MT_LOG_ERROR_MSG( "Unknown automat mission : " << name );
     return order;
@@ -219,20 +187,13 @@ void OrderDispatcher::SetParameters( ASN1T_MissionParameters& parameters, unsign
     parameters.n = type.GetParameterCount();
     parameters.elem = new ASN1T_MissionParameter[ parameters.n ];
 
-    IQueryFilterPtr parametersFilter( CLSID_QueryFilter );
-    ICursorPtr cursor;
     std::stringstream ss;
     ss << "order_id=" << orderId << " AND context=false";
-    parametersFilter->put_WhereClause( CComBSTR( ss.str().c_str() ) );
-    HRESULT res = paramTable_->Search( parametersFilter, true, &cursor );
-    if( FAILED( res ) )
-        throw std::runtime_error( "Search failed" ); // $$$$ SBO 2007-05-30:
-    IRowPtr row;
-    cursor->NextRow( &row );
-    for( unsigned int i = 0; row != 0 && i < parameters.n; ++i )
+    Row_ABC* result = paramTable_.Find( ss.str() );
+    for( unsigned int i = 0; result != 0 && i < parameters.n; ++i )
     {
-        SetParameter( parameters.elem[i], row, type );
-        cursor->NextRow( &row );
+        SetParameter( parameters.elem[i], *result, type );
+        result = paramTable_.GetNextRow();
     }
 }
 
@@ -240,13 +201,13 @@ void OrderDispatcher::SetParameters( ASN1T_MissionParameters& parameters, unsign
 // Name: OrderDispatcher::SetParameter
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::SetParameter( ASN1T_MissionParameter& parameter, const IRowPtr& row, const OrderType& type )
+void OrderDispatcher::SetParameter( ASN1T_MissionParameter& parameter, const Row_ABC& row, const OrderType& type )
 {
-    const std::string name = GetString( GetFieldValue( row, "name" ) );
+    const std::string name = GetField< std::string >( row, "name" );
     const OrderParameter* param = type.FindParameter( name );
     parameter.null_value = param ? 0 : 1;
     if( param )
-        serializer_->Serialize( parameter, *param, GetString( GetFieldValue( row, "ParamValue" ) ) );
+        serializer_->Serialize( parameter, *param, GetField< std::string >( row, "ParamValue" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -271,20 +232,13 @@ void OrderDispatcher::SetOrderContext( ASN1T_OrderContext& asn, unsigned long or
     asn.m.limite_droitePresent = 0;
     asn.m.limite_gauchePresent = 0;
 
-    IQueryFilterPtr parametersFilter( CLSID_QueryFilter );
-    ICursorPtr cursor;
     std::stringstream ss;
     ss << "order_id=" << orderId << " AND context=true";
-    parametersFilter->put_WhereClause( CComBSTR( ss.str().c_str() ) );
-    HRESULT res = paramTable_->Search( parametersFilter, false, &cursor );
-    if( FAILED( res ) )
-        throw std::runtime_error( "Search failed" ); // $$$$ SBO 2007-05-30:
-    IRowPtr row;
-    cursor->NextRow( &row );
-    for( unsigned int i = 0; row != 0; ++i )
+    Row_ABC* result = paramTable_.Find( ss.str() );
+    while( result )
     {
-        SetParameter( asn, row );
-        cursor->NextRow( &row );
+        SetParameter( asn, *result );
+        result = paramTable_.GetNextRow();
     }
 }
 
@@ -292,15 +246,15 @@ void OrderDispatcher::SetOrderContext( ASN1T_OrderContext& asn, unsigned long or
 // Name: OrderDispatcher::SetParameter
 // Created: SBO 2007-06-01
 // -----------------------------------------------------------------------------
-void OrderDispatcher::SetParameter( ASN1T_OrderContext& asn, const IRowPtr& row )
+void OrderDispatcher::SetParameter( ASN1T_OrderContext& asn, const Row_ABC& row )
 {
-    const std::string name = GetString( GetFieldValue( row, "name" ) );
+    const std::string name = GetField< std::string >( row, "name" );
     if( name == "limits" )
-        serializer_->SerializeLimits( asn, GetString( GetFieldValue( row, "ParamValue" ) ) );
+        serializer_->SerializeLimits( asn, GetField< std::string >( row, "ParamValue" ) );
     else if( name == "lima" )
-        serializer_->SerializeLima( asn, GetString( GetFieldValue( row, "ParamValue" ) ) );
+        serializer_->SerializeLima( asn, GetField< std::string >( row, "ParamValue" ) );
     else if( name == "direction" )
-        serializer_->SerializeDirection( asn, GetString( GetFieldValue( row, "ParamValue" ) ) );
+        serializer_->SerializeDirection( asn, GetField< std::string >( row, "ParamValue" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -318,14 +272,14 @@ void OrderDispatcher::CleanOrderContext( ASN1T_OrderContext& asn )
 // -----------------------------------------------------------------------------
 unsigned int OrderDispatcher::GetLimaCount( unsigned long orderId )
 {
-    IQueryFilterPtr parametersFilter( CLSID_QueryFilter );
-    ICursorPtr cursor;
     std::stringstream ss;
     ss << "order_id=" << orderId << " AND context=true AND name='lima'";
-    parametersFilter->put_WhereClause( CComBSTR( ss.str().c_str() ) );
-    long count = 0;
-    HRESULT res = paramTable_->RowCount( parametersFilter, &count );
-    if( FAILED( res ) )
-        throw std::runtime_error( "Search failed" ); // $$$$ SBO 2007-05-30:
+    Row_ABC* result = paramTable_.Find( ss.str() );
+    unsigned int count = 0;
+    while( result != 0 )
+    {
+        ++count;
+        result = paramTable_.GetNextRow();
+    }
     return count;
 }

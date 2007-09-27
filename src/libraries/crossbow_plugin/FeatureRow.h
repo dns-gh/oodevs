@@ -7,63 +7,58 @@
 //
 // *****************************************************************************
 
-#ifndef __ObjectListener_h_
-#define __ObjectListener_h_
+#ifndef __FeatureRow_h_
+#define __FeatureRow_h_
 
-#include "Listener_ABC.h"
-
-namespace dispatcher
-{
-    class SimulationPublisher_ABC;
-}
+#include "Row.h"
 
 namespace crossbow
 {
-    class Connector;
-    class Row_ABC;
-    class Table_ABC;
 
 // =============================================================================
-/** @class  ObjectListener
-    @brief  ObjectListener
+/** @class  FeatureRow
+    @brief  FeatureRow
 */
-// Created: SBO 2007-09-23
+// Created: SBO 2007-08-30
 // =============================================================================
-class ObjectListener : public Listener_ABC
+class FeatureRow : public crossbow::Row
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectListener( Connector& connector, dispatcher::SimulationPublisher_ABC& publisher );
-    virtual ~ObjectListener();
+    explicit FeatureRow( ISpatialReferencePtr spatialReference );
+    virtual ~FeatureRow();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Listen();
+    virtual void SetShape( const Shape_ABC& value );
+    virtual Shape_ABC& GetShape() const;
+    void BindFeature( IFeaturePtr feature );
+    void Commit( IFeatureCursorPtr cursor = NULL );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ObjectListener( const ObjectListener& );            //!< Copy constructor
-    ObjectListener& operator=( const ObjectListener& ); //!< Assignment operator
+    FeatureRow( const FeatureRow& );            //!< Copy constructor
+    FeatureRow& operator=( const FeatureRow& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
-    void SendCreation( const Row_ABC& row );
     //@}
 
 private:
     //! @name Member data
     //@{
-    dispatcher::SimulationPublisher_ABC& publisher_;
-    Table_ABC& table_;
+    ISpatialReferencePtr spatialReference_;
+    IFeaturePtr feature_;
+    mutable std::auto_ptr< Shape_ABC > shape_;
     //@}
 };
 
 }
 
-#endif // __ObjectListener_h_
+#endif // __FeatureRow_h_

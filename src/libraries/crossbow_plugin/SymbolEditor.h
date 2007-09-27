@@ -10,7 +10,6 @@
 #ifndef __SymbolEditor_h_
 #define __SymbolEditor_h_
 
-#include "ESRI.h"
 #include "game_asn/Asn.h"
 
 namespace dispatcher
@@ -20,7 +19,7 @@ namespace dispatcher
 
 namespace crossbow
 {
-    class ScopeEditor;
+    class Row_ABC;
 
 // =============================================================================
 /** @class  SymbolEditor
@@ -33,20 +32,20 @@ class SymbolEditor
 public:
     //! @name Constructors/Destructor
     //@{
-             SymbolEditor( ScopeEditor& scope, const dispatcher::Model& model );
+    explicit SymbolEditor( const dispatcher::Model& model );
     virtual ~SymbolEditor();
     //@}
 
     //! @name Operations
     //@{
-    void Write( IFeaturePtr spFeature, const ASN1T_MsgLimitCreation& asn );
-    void Write( IFeaturePtr spFeature, const ASN1T_MsgLimaCreation& asn );
-    void Write( IFeaturePtr spFeature, const ASN1T_MsgObjectCreation& asn );
-    void Write( IFeaturePtr spFeature, const ASN1T_MsgUnitCreation& asn );
-    void Write( IFeaturePtr spFeature, const ASN1T_MsgUnitKnowledgeCreation& asn );
-    void Write( IFeaturePtr spFeature, const ASN1T_MsgUnitKnowledgeUpdate& asn );
-    void Write( IRowBufferPtr spRow, const ASN1T_MsgFormationCreation& asn );
-    void Write( IRowBufferPtr spRow, const ASN1T_MsgAutomatCreation& asn );
+    void Update( Row_ABC& row, const ASN1T_MsgLimitCreation& asn );
+    void Update( Row_ABC& row, const ASN1T_MsgLimaCreation& asn );
+    void Update( Row_ABC& row, const ASN1T_MsgObjectCreation& asn );
+    void Update( Row_ABC& row, const ASN1T_MsgUnitCreation& asn );
+    void Update( Row_ABC& row, const ASN1T_MsgUnitKnowledgeCreation& asn );
+    void Update( Row_ABC& row, const ASN1T_MsgUnitKnowledgeUpdate& asn );
+    void Update( Row_ABC& row, const ASN1T_MsgFormationCreation& asn );
+    void Update( Row_ABC& row, const ASN1T_MsgAutomatCreation& asn );
     //@}
 
 private:
@@ -59,7 +58,6 @@ private:
 private:
     //! @name Member data
     //@{
-    ScopeEditor& scope_;
     const dispatcher::Model& model_;
     //@}
 };

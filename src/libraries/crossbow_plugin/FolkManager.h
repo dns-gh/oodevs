@@ -37,7 +37,7 @@ public:
     //@{
 	struct PopulationInfo
 	{
-		explicit PopulationInfo() : id_ ( 0 ), population_ ( 0 ), containers_ ( 5, 0 ) {}
+		PopulationInfo() : id_ ( 0 ), population_ ( 0 ), containers_ ( 5, 0 ) {}
 		int		 id_;
 		unsigned population_; 
 		std::vector<unsigned> containers_;
