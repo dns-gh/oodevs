@@ -32,15 +32,19 @@ AfterActionPlot::AfterActionPlot( QWidget* parent, Controllers& controllers, Pub
     YAxis().ShowAxis( true );
     YAxis().ShowGrid( true );
     YAxis().SetAxisCaption( tr( "Value" ).ascii() );
+    YAxis().ShowTicks( 25 );
+    YAxis().ShowTicksValue( true );
     YAxis().SetCaptionMargin( 8 );
 
     XAxis().ShowAxis( true );
     XAxis().ShowGrid( true );
+    XAxis().ShowTicks( 25 );
+    XAxis().ShowTicksValue( true );
     XAxis().SetAxisCaption( tr( "Time (Tick)" ).ascii() );
 
     SetBackgroundColor( Qt::white );
-    setMinimumHeight( 130 );
-    setMinimumWidth( 160 );
+    setMinimumHeight( 320 );
+    setMinimumWidth( 200 );
 
     controllers_.Register( *this );
 }
@@ -107,16 +111,6 @@ void AfterActionPlot::mouseReleaseEvent( QMouseEvent* e )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionPlot::resizeEvent
-// Created: AGE 2007-09-27
-// -----------------------------------------------------------------------------
-void AfterActionPlot::resizeEvent( QResizeEvent* e )
-{
-    GQ_Plot::resizeEvent( e );
-    UpdateAxis();
-}
-
-// -----------------------------------------------------------------------------
 // Name: AfterActionPlot::NotifyUpdated
 // Created: AGE 2007-09-27
 // -----------------------------------------------------------------------------
@@ -131,13 +125,4 @@ void AfterActionPlot::NotifyUpdated( const Simulation& simulation )
     tickData_->ClearData();
     tickData_->AddPoint( simulation.GetCurrentTick(), min_       );
     tickData_->AddPoint( simulation.GetCurrentTick(), max_ * 1.1 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AfterActionPlot::UpdateAxis
-// Created: AGE 2007-09-27
-// -----------------------------------------------------------------------------
-void AfterActionPlot::UpdateAxis()
-{
-    
 }

@@ -56,8 +56,6 @@ private:
     virtual void hideEvent( QHideEvent* event );
     virtual void mouseReleaseEvent( QMouseEvent* e );
     virtual void NotifyUpdated( const Simulation& simulation );
-    virtual void resizeEvent( QResizeEvent* e );
-    void UpdateAxis();
     //@}
 
     //! @name Types
