@@ -21,7 +21,7 @@ namespace dispatcher
 
 namespace crossbow
 {
-    class ConnectorFacade;
+    class DatabasePublisher;
 
 // =============================================================================
 /** @class  CrossbowPlugin
@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg );
+    virtual void Receive                  ( const ASN1T_MsgsSimToClient& asnMsg );
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
     //@}
@@ -56,7 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ConnectorFacade > facade_;
+    std::auto_ptr< DatabasePublisher > databasePublisher_;
     //@}
 };
 }

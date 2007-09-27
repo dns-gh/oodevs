@@ -9,7 +9,7 @@
 
 #include "crossbow_plugin_pch.h"
 #include "StatusListener.h"
-#include "Connector.h"
+#include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
@@ -21,9 +21,9 @@ using namespace crossbow;
 // Name: StatusListener constructor
 // Created: JCR 2007-06-13
 // -----------------------------------------------------------------------------
-StatusListener::StatusListener( Connector& connector, dispatcher::SimulationPublisher_ABC& publisher )
+StatusListener::StatusListener( Database_ABC& database, dispatcher::SimulationPublisher_ABC& publisher )
     : publisher_      ( publisher )
-    , propertiesTable_( connector.GetTable( "SimulationProperties" ) )
+    , propertiesTable_( database.OpenTable( "SimulationProperties" ) )
     , paused_         ( false )
 {
     // NOTHING

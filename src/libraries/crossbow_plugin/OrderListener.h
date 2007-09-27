@@ -25,10 +25,10 @@ namespace dispatcher
 
 namespace crossbow
 {
-    class Connector;
-    class OrderDispatcher;
+    class Database_ABC;
     class Table_ABC;
     class Row_ABC;
+    class OrderDispatcher;
 
 // =============================================================================
 /** @class  OrderListener
@@ -42,7 +42,7 @@ class OrderListener : public Listener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderListener( Connector& connector, dispatcher::SimulationPublisher_ABC& publisher, const kernel::OrderTypes& types, const dispatcher::Model& model );
+             OrderListener( Database_ABC& database, const dispatcher::Model& model, const kernel::OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher );
     virtual ~OrderListener();
     //@}
 
@@ -67,8 +67,8 @@ private:
     //! @name Member data
     //@{
     dispatcher::SimulationPublisher_ABC& publisher_;
-    std::auto_ptr< OrderDispatcher > dispatcher_;
-    Table_ABC& table_;
+    std::auto_ptr< OrderDispatcher >     dispatcher_;
+    Table_ABC&                           table_;
     //@}
 };
 

@@ -7,37 +7,29 @@
 //
 // *****************************************************************************
 
-#ifndef __Database_ABC_h_
-#define __Database_ABC_h_
+#ifndef __Workspace_ABC_h_
+#define __Workspace_ABC_h_
 
 namespace crossbow
 {
-    class Table_ABC;
 
 // =============================================================================
-/** @class  Database_ABC
-    @brief  Database_ABC
+/** @class  Workspace_ABC
+    @brief  Workspace base class: designed for COM initialization abstraction
 */
-// Created: SBO 2007-08-30
+// Created: SBO 2007-09-27
 // =============================================================================
-class Database_ABC
+class Workspace_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Database_ABC() {}
-    virtual ~Database_ABC() {}
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void Lock() = 0;
-    virtual void UnLock() = 0;
-    virtual Table_ABC& OpenTable( const std::string& name, bool clear = true ) = 0;
+             Workspace_ABC() {}
+    virtual ~Workspace_ABC() {}
     //@}
 };
 
 }
 
-#endif // __Database_ABC_h_
+#endif // __Workspace_ABC_h_

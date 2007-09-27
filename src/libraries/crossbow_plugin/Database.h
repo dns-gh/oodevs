@@ -41,7 +41,7 @@ public:
     //@{
     virtual void Lock();
     virtual void UnLock();
-    virtual Table_ABC* OpenTable( const std::string& name );
+    virtual Table_ABC& OpenTable( const std::string& name, bool clear = true );
     //@}
 
 private:
@@ -51,11 +51,22 @@ private:
     Database& operator=( const Database& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    Table_ABC* OpenWrappedTable( const std::string& name );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< std::string, Table_ABC* > T_Tables;
+    //@}
+
 private:
     //! @name Member data
     //@{
     IFeatureWorkspacePtr workspace_;
     IWorkspaceEditPtr    workspaceEdit_;
+    T_Tables             openedTables_;
     //@}
 };
 

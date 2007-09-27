@@ -9,8 +9,8 @@
 
 #include "crossbow_plugin_pch.h"
 #include "OrderListener.h"
-#include "Connector.h"
 #include "OrderDispatcher.h"
+#include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
 
@@ -21,10 +21,10 @@ using namespace crossbow;
 // Name: OrderListener constructor
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
-OrderListener::OrderListener( Connector& connector, dispatcher::SimulationPublisher_ABC& publisher, const kernel::OrderTypes& types, const Model& model )
+OrderListener::OrderListener( Database_ABC& database, const dispatcher::Model& model, const kernel::OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher )
     : publisher_ ( publisher )
-    , dispatcher_( new OrderDispatcher( connector.GetTable( "OrdersParameters" ), types, model ) )
-    , table_     ( connector.GetTable( "Orders" ) )
+    , dispatcher_( new OrderDispatcher( database, types, model ) )
+    , table_     ( database.OpenTable( "Orders" ) )
 {
     // NOTHING
 }

@@ -19,7 +19,7 @@ namespace dispatcher
 
 namespace crossbow
 {
-    class Connector;
+    class Database_ABC;
     class Row_ABC;
     class Table_ABC;
 
@@ -35,7 +35,7 @@ class ObjectListener : public Listener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectListener( Connector& connector, dispatcher::SimulationPublisher_ABC& publisher );
+             ObjectListener( Database_ABC& database, dispatcher::SimulationPublisher_ABC& publisher );
     virtual ~ObjectListener();
     //@}
 

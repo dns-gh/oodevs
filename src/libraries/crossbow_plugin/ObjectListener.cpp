@@ -9,7 +9,7 @@
 
 #include "crossbow_plugin_pch.h"
 #include "ObjectListener.h"
-#include "Connector.h"
+#include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
 #include "Line.h"
@@ -22,9 +22,9 @@ using namespace crossbow;
 // Name: ObjectListener constructor
 // Created: SBO 2007-09-23
 // -----------------------------------------------------------------------------
-ObjectListener::ObjectListener( Connector& connector, dispatcher::SimulationPublisher_ABC& publisher )
+ObjectListener::ObjectListener( Database_ABC& database, dispatcher::SimulationPublisher_ABC& publisher )
     : publisher_( publisher )
-    , table_    ( connector.GetTable( "TacticalObjectPoint" ) )
+    , table_    ( database.OpenTable( "TacticalObjectPoint" ) )
 {
     // NOTHING
 }

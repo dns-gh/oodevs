@@ -9,7 +9,7 @@
 
 #include "crossbow_plugin_pch.h"
 #include "CrossbowPlugin.h"
-#include "ConnectorFacade.h"
+#include "DatabasePublisher.h"
 
 using namespace crossbow;
 
@@ -18,7 +18,7 @@ using namespace crossbow;
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
 CrossbowPlugin::CrossbowPlugin( const dispatcher::Model& model, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher )
-    : facade_ ( new ConnectorFacade( model, config, publisher ) )
+    : databasePublisher_( new DatabasePublisher( config, model, publisher ) )
 {
     // NOTHING
 }
@@ -38,7 +38,7 @@ CrossbowPlugin::~CrossbowPlugin()
 // -----------------------------------------------------------------------------
 void CrossbowPlugin::Receive( const ASN1T_MsgsSimToClient& asnMsg )
 {
-    facade_->Receive( asnMsg );
+    databasePublisher_->Receive( asnMsg );
 }
 
 // -----------------------------------------------------------------------------

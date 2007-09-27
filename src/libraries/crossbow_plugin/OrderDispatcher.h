@@ -28,6 +28,7 @@ namespace dispatcher
 
 namespace crossbow
 {
+    class Database_ABC;
     class OrderParameterSerializer;
     class Table_ABC;
     class Row_ABC;
@@ -44,7 +45,7 @@ class OrderDispatcher
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderDispatcher( Table_ABC& table, const kernel::OrderTypes& types, const dispatcher::Model& model );
+             OrderDispatcher( Database_ABC& database, const kernel::OrderTypes& types, const dispatcher::Model& model );
     virtual ~OrderDispatcher();
     //@}
 

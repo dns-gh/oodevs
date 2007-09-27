@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __crossbow_FolkEditor_h_
-#define __crossbow_FolkEditor_h_
+#ifndef __crossbow_FolkUpdater_h_
+#define __crossbow_FolkUpdater_h_
 
 #include "game_asn/Asn.h"
 
@@ -18,18 +18,18 @@ namespace crossbow
     class Row_ABC;
 
 // =============================================================================
-/** @class  FolkEditor
-    @brief  FolkEditor
+/** @class  FolkUpdater
+    @brief  FolkUpdater
 */
 // Created: JCR 2007-08-29
 // =============================================================================
-class FolkEditor
+class FolkUpdater
 {	
 public:
     //! @name Constructors/Destructor
     //@{
-             FolkEditor();
-    virtual ~FolkEditor();
+             FolkUpdater();
+    virtual ~FolkUpdater();
     //@}
 
     //! @name Operations
@@ -41,8 +41,8 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    FolkEditor( const FolkEditor& );            //!< Copy constructor
-    FolkEditor& operator=( const FolkEditor& ); //!< Assignement operator
+    FolkUpdater( const FolkUpdater& );            //!< Copy constructor
+    FolkUpdater& operator=( const FolkUpdater& ); //!< Assignement operator
     //@}
 
     //! @name Types
@@ -78,4 +78,4 @@ private:
 
 }
 
-#endif // __crossbow_FolkEditor_h_
+#endif // __crossbow_FolkUpdater_h_

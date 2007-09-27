@@ -12,6 +12,7 @@
 #include "OrderTypes.h"
 #include "OrderType.h"
 #include "OrderParameterSerializer.h"
+#include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
@@ -27,10 +28,10 @@ using namespace crossbow;
 // Name: OrderDispatcher constructor
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-OrderDispatcher::OrderDispatcher( Table_ABC& table, const OrderTypes& types, const dispatcher::Model& model )
+OrderDispatcher::OrderDispatcher( Database_ABC& database, const OrderTypes& types, const dispatcher::Model& model )
     : types_( types )
     , model_( model )
-    , paramTable_( table )
+    , paramTable_( database.OpenTable( "OrdersParameters" ) )
     , serializer_( new OrderParameterSerializer( model ) )
 {
     // NOTHING

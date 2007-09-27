@@ -80,7 +80,25 @@ void Database::UnLock()
 // Name: Database::OpenTable
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-Table_ABC* Database::OpenTable( const std::string& name )
+Table_ABC& Database::OpenTable( const std::string& name, bool clear /*=true*/ )
+{
+    Table_ABC*& table = openedTables_[name];
+    if( !table )
+    {
+        table = OpenWrappedTable( name );
+        if( table && clear )
+            table->Clear();
+    }
+    if( !table )
+        throw std::runtime_error( "Unable to open table : " + name );
+    return *table;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Database::OpenWrappedTable
+// Created: SBO 2007-09-27
+// -----------------------------------------------------------------------------
+Table_ABC* Database::OpenWrappedTable( const std::string& name )
 {
     IFeatureClassPtr featureClass;
     if( SUCCEEDED( workspace_->OpenFeatureClass( CComBSTR( name.c_str() ), &featureClass ) ) )
@@ -89,5 +107,4 @@ Table_ABC* Database::OpenTable( const std::string& name )
     if( SUCCEEDED( workspace_->OpenTable( CComBSTR( name.c_str() ), &table ) ) )
         return new Table( table, name );
     return 0;
-    
 }

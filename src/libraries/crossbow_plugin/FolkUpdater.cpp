@@ -8,27 +8,27 @@
 // *****************************************************************************
 
 #include "crossbow_plugin_pch.h"
-#include "FolkEditor.h"
+#include "FolkUpdater.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
 
 using namespace crossbow;
 
 // -----------------------------------------------------------------------------
-// Name: FolkEditor constructor
+// Name: FolkUpdater constructor
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-FolkEditor::FolkEditor()
+FolkUpdater::FolkUpdater()
     : updated_( 0 )
 {
     // NOTHING
 }
     
 // -----------------------------------------------------------------------------
-// Name: FolkEditor destructor
+// Name: FolkUpdater destructor
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-FolkEditor::~FolkEditor()
+FolkUpdater::~FolkUpdater()
 {
     // NOTHING
 }
@@ -45,10 +45,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: FolkEditor::Update
+// Name: FolkUpdater::Update
 // Created: SBO 2007-09-19
 // -----------------------------------------------------------------------------
-void FolkEditor::Update( const ASN1T_MsgFolkCreation& msg )
+void FolkUpdater::Update( const ASN1T_MsgFolkCreation& msg )
 {
     ::Update( activities_, msg.activities );
     ::Update( profiles_, msg.profiles );
@@ -57,10 +57,10 @@ void FolkEditor::Update( const ASN1T_MsgFolkCreation& msg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FolkEditor::Update
+// Name: FolkUpdater::Update
 // Created: SBO 2007-09-19
 // -----------------------------------------------------------------------------
-void FolkEditor::Update( Table_ABC& table, const ASN1T_MsgFolkGraphUpdate& msg )
+void FolkUpdater::Update( Table_ABC& table, const ASN1T_MsgFolkGraphUpdate& msg )
 {
     if( edges_.size() == 0 )
         throw std::runtime_error( "Trying to update population graph before its creation." );
@@ -71,10 +71,10 @@ void FolkEditor::Update( Table_ABC& table, const ASN1T_MsgFolkGraphUpdate& msg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FolkEditor::Update
+// Name: FolkUpdater::Update
 // Created: SBO 2007-09-19
 // -----------------------------------------------------------------------------
-void FolkEditor::Update( Table_ABC& table, const ASN1T_MsgFolkGraphEdgeUpdate& msg )
+void FolkUpdater::Update( Table_ABC& table, const ASN1T_MsgFolkGraphEdgeUpdate& msg )
 {
     Edge& edge = edges_[msg.shp_oid];
     Update( edge, msg );
@@ -86,10 +86,10 @@ void FolkEditor::Update( Table_ABC& table, const ASN1T_MsgFolkGraphEdgeUpdate& m
 }
 
 // -----------------------------------------------------------------------------
-// Name: FolkEditor::Commit
+// Name: FolkUpdater::Commit
 // Created: SBO 2007-09-19
 // -----------------------------------------------------------------------------
-void FolkEditor::Commit( Table_ABC& table )
+void FolkUpdater::Commit( Table_ABC& table )
 {
     Row_ABC* row = table.Find( "" );
     for( CIT_Edges it = edges_.begin(); it != edges_.end() && row; ++it )
@@ -101,10 +101,10 @@ void FolkEditor::Commit( Table_ABC& table )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FolkEditor::CommitEdge
+// Name: FolkUpdater::CommitEdge
 // Created: SBO 2007-09-19
 // -----------------------------------------------------------------------------
-void FolkEditor::CommitEdge( Row_ABC& row, const Edge& edge )
+void FolkUpdater::CommitEdge( Row_ABC& row, const Edge& edge )
 {
     row.SetField( "Individuals", FieldVariant( (long)edge.population_ ) );
     row.SetField( "Pavement"   , FieldVariant( (long)edge.containers_[0] ) );
@@ -115,13 +115,13 @@ void FolkEditor::CommitEdge( Row_ABC& row, const Edge& edge )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FolkEditor::Update
+// Name: FolkUpdater::Update
 /* Read asn message containing population information and store appropriate 
    indiviudals
 */
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-void FolkEditor::Update( Edge& edge, const ASN1T_MsgFolkGraphEdgeUpdate& msg ) const
+void FolkUpdater::Update( Edge& edge, const ASN1T_MsgFolkGraphEdgeUpdate& msg ) const
 {
 	const unsigned size = activities_.size() * profiles_.size();
     int c = -1;
