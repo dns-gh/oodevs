@@ -24,11 +24,12 @@ using namespace gui;
 // Name: AfterActionRequestList constructor
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-AfterActionRequestList::AfterActionRequestList( QWidget* parent, QMainWindow* mainWindow, Controllers& controllers, ItemFactory_ABC& factory )
+AfterActionRequestList::AfterActionRequestList( QWidget* parent, QMainWindow* mainWindow, Controllers& controllers, ItemFactory_ABC& factory, Publisher_ABC& publisher )
     : QVBox( parent )
     , mainWindow_( mainWindow )
     , controllers_( controllers )
     , factory_( factory )
+    , publisher_( publisher )
     , pendingPixmap_( MAKE_PIXMAP( autolog ) ) // $$$$ AGE 2007-09-25:
     , donePixmap_   ( MAKE_PIXMAP( check ) )
     , failedPixmap_ ( MAKE_PIXMAP( conflict ) ) // $$$$ AGE 2007-09-25:
@@ -78,7 +79,7 @@ AfterActionPlot* AfterActionRequestList::CreateNewPlot()
 {
     QDockWindow* plotDock = new QDockWindow( mainWindow_, "plot", WDestructiveClose );
     QVBox* box = new QVBox( plotDock );
-    AfterActionPlot* plot = new AfterActionPlot( box, plotDock );
+    AfterActionPlot* plot = new AfterActionPlot( box, controllers_, publisher_, plotDock );
     plotDock->setWidget( box );
     plotDock->setResizeEnabled( true );
     plotDock->setCloseMode( QDockWindow::Always );

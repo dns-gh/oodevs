@@ -11,7 +11,15 @@
 #define __AfterActionPlot_h_
 
 #include "GQ_Plot.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+namespace kernel
+{
+    class Controllers;
+}
+
 class AfterActionRequest;
+class Publisher_ABC;
+class Simulation;
 
 // =============================================================================
 /** @class  AfterActionPlot
@@ -20,12 +28,14 @@ class AfterActionRequest;
 // Created: AGE 2007-09-26
 // =============================================================================
 class AfterActionPlot : public GQ_Plot
+                      , public kernel::Observer_ABC
+                      , public kernel::ElementObserver_ABC< Simulation >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionPlot( QWidget* parent, QDockWindow* dock );
+             AfterActionPlot( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock );
     virtual ~AfterActionPlot();
     //@}
 
@@ -44,6 +54,9 @@ private:
     //! @name Helpers
     //@{
     virtual void hideEvent( QHideEvent* event );
+    virtual void mouseReleaseEvent( QMouseEvent* e );
+    virtual void NotifyUpdated( const Simulation& simulation );
+    virtual void resizeEvent( QResizeEvent* e );
     //@}
 
     //! @name Types
@@ -54,8 +67,11 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
+    Publisher_ABC& publisher_;
     QDockWindow* dock_;
     T_Datas datas_;
+    GQ_PlotData* tickData_;
     double min_;
     double max_;
     //@}

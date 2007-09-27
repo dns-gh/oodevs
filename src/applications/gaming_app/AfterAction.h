@@ -21,6 +21,7 @@ namespace gui
 class AfterActionFunction;
 class AfterActionCanvas;
 class AfterActionModel;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  AfterAction
@@ -35,7 +36,7 @@ class AfterAction : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterAction( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model );
+             AfterAction( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model, Publisher_ABC& publisher );
     virtual ~AfterAction();
     //@}
 
@@ -57,7 +58,7 @@ private:
     //! @name Helpers
     //@{
     void CreateEditionDock    ( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
-    void CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+    void CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher );
     //@}
 
 private:

@@ -20,6 +20,7 @@ namespace kernel
 
 class AfterActionRequest;
 class AfterActionPlot;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  AfterActionRequestList
@@ -36,7 +37,7 @@ class AfterActionRequestList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionRequestList( QWidget* parent, QMainWindow* mainWindow, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             AfterActionRequestList( QWidget* parent, QMainWindow* mainWindow, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher );
     virtual ~AfterActionRequestList();
     //@}
 
@@ -67,6 +68,7 @@ private:
     QMainWindow* mainWindow_;
     kernel::Controllers& controllers_;
     gui::ItemFactory_ABC& factory_;
+    Publisher_ABC& publisher_;
     gui::ListDisplayer< AfterActionRequestList >* requests_;
     QPixmap pendingPixmap_;
     QPixmap donePixmap_;

@@ -21,12 +21,12 @@
 // Name: AfterAction constructor
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-AfterAction::AfterAction( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model )
+AfterAction::AfterAction( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model, Publisher_ABC& publisher )
     : model_( model )
     , functionsTab_( 0 )
 {
     CreateEditionDock    ( window, controllers, factory );
-    CreateAfterActionDock( window, controllers, factory );
+    CreateAfterActionDock( window, controllers, factory, publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +89,7 @@ void AfterAction::CreateEditionDock( QMainWindow* window, kernel::Controllers& c
 // Name: AfterAction::CreateAfterActionDock
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterAction::CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
+void AfterAction::CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher )
 {
     QDockWindow* aar = new QDockWindow( window );
     QVBox* box = new QVBox( aar );
@@ -101,7 +101,7 @@ void AfterAction::CreateAfterActionDock( QMainWindow* window, kernel::Controller
     connect( list, SIGNAL( CreateRequest( const AfterActionFunction* ) ), SLOT( OnCreateRequest( const AfterActionFunction* ) ) );
     functionsTab_->addTab( list, tr( "Functions" ) );
 
-    AfterActionRequestList* requests = new AfterActionRequestList( functionsTab_, window, controllers, factory );
+    AfterActionRequestList* requests = new AfterActionRequestList( functionsTab_, window, controllers, factory, publisher );
     functionsTab_->addTab( requests, tr( "Requests" ) );
 
     aar->setResizeEnabled( true );
